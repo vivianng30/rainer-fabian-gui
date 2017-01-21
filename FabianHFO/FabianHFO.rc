@@ -1,0 +1,1901 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// German (Germany) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DEU)
+#ifdef _WIN32
+LANGUAGE LANG_GERMAN, SUBLANG_GERMAN
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DEU)\r\n"
+    "LANGUAGE 7, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#include ""res\\FabianHFO.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""     // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\FabianHFO.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About FabianHFO...",         ID_APP_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS 
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_TLSMESSAGEBOX DIALOG  0, 0, 182, 111
+STYLE DS_SETFONT | WS_POPUP
+FONT 12, "@Arial Unicode MS"
+BEGIN
+    CONTROL         "",IDC_PICTURE,"Static",SS_BITMAP,100,26,10,8
+END
+
+IDD_PASSWRD_DLG DIALOG  0, 0, 192, 195
+STYLE DS_SETFONT | DS_CENTER | WS_POPUP | WS_CAPTION
+EXSTYLE WS_EX_STATICEDGE
+CAPTION "Module activation"
+FONT 11, "@Arial Unicode MS"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,7,171,74,17
+    PUSHBUTTON      "Cancel",IDCANCEL,111,171,74,17
+    PUSHBUTTON      "1",IDC_BUTTON1,49,55,25,24
+    PUSHBUTTON      "2",IDC_BUTTON2,78,55,25,24
+    PUSHBUTTON      "3",IDC_BUTTON3,107,55,25,24
+    PUSHBUTTON      "4",IDC_BUTTON4,20,83,25,24
+    PUSHBUTTON      "5",IDC_BUTTON5,49,83,25,24
+    PUSHBUTTON      "6",IDC_BUTTON6,78,83,25,24
+    PUSHBUTTON      "7",IDC_BUTTON7,107,83,25,24
+    PUSHBUTTON      "8",IDC_BUTTON8,20,111,25,24
+    PUSHBUTTON      "9",IDC_BUTTON9,49,111,25,24
+    PUSHBUTTON      "0",IDC_BUTTON0,20,55,25,24
+    PUSHBUTTON      "Del",IDC_BUTTON_DEL,139,138,39,24
+    PUSHBUTTON      "A",IDC_BUTTONA,78,111,25,24
+    PUSHBUTTON      "B",IDC_BUTTONB,107,111,25,24
+    PUSHBUTTON      "C",IDC_BUTTONC,20,138,25,24
+    PUSHBUTTON      "D",IDC_BUTTOND,49,138,25,24
+    PUSHBUTTON      "E",IDC_BUTTONE,78,138,25,24
+    PUSHBUTTON      "F",IDC_BUTTONF,107,138,25,24
+    EDITTEXT        IDC_EDIT1,10,7,31,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT2,45,7,31,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT3,80,7,31,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT4,115,7,31,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT5,150,7,31,12,ES_AUTOHSCROLL
+    CTEXT           "Static",IDC_STATICPWDLG,7,23,178,9
+    CTEXT           "Static",IDC_STATICPWDLG2,7,37,178,9
+END
+
+IDD_OXYCALMSG DIALOG  0, 0, 182, 96
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION
+EXSTYLE WS_EX_STATICEDGE
+CAPTION "Dialog"
+FONT 12, "@Arial Unicode MS"
+BEGIN
+    PUSHBUTTON      "0mbar",IDC_BTN_OXY0,7,76,55,17
+    PUSHBUTTON      "Cancel",IDCANCEL,120,76,55,17
+    PUSHBUTTON      "60mbar",IDC_BTN_OXY60,64,76,55,17
+    CTEXT           "Static",IDC_TEXTMSG,7,39,168,25
+    CONTROL         "",IDC_CALPIC,"Static",SS_BITMAP,86,7,10,8
+    CTEXT           "Pressure:",IDC_PROXCAL_PRESSURE,7,65,84,8
+    CTEXT           "PPROX ADC:",IDC_PROXCAL_PROXADC,94,65,81,8
+END
+
+IDD_DLGACCUTEST DIALOG  0, 0, 360, 229
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Capacitance Test"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,7,197,150,25
+    PUSHBUTTON      "Cancel",IDCANCEL,203,197,150,25
+END
+
+IDD_NUMINPUT_DLG DIALOG  0, 0, 152, 196
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION
+CAPTION "Input panel"
+FONT 11, "@Arial Unicode MS"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,7,172,60,17
+    PUSHBUTTON      "Cancel",IDCANCEL,85,172,60,17
+    PUSHBUTTON      "1",IDC_BUTTON1,49,55,25,24
+    PUSHBUTTON      "2",IDC_BUTTON2,78,55,25,24
+    PUSHBUTTON      "3",IDC_BUTTON3,107,55,25,24
+    PUSHBUTTON      "4",IDC_BUTTON4,20,83,25,24
+    PUSHBUTTON      "5",IDC_BUTTON5,49,83,25,24
+    PUSHBUTTON      "6",IDC_BUTTON6,78,83,25,24
+    PUSHBUTTON      "7",IDC_BUTTON7,107,83,25,24
+    PUSHBUTTON      "8",IDC_BUTTON8,20,111,25,24
+    PUSHBUTTON      "9",IDC_BUTTON9,49,111,25,24
+    PUSHBUTTON      "0",IDC_BUTTON0,20,55,25,24
+    PUSHBUTTON      "Del",IDC_BUTTON_DEL,78,111,54,24
+    EDITTEXT        IDC_EDIT1,17,7,115,12,ES_AUTOHSCROLL
+    CTEXT           "Static",IDC_STATICPWDLG,7,23,138,9
+END
+
+IDD_DLGPROXP60CAL DIALOG  0, 0, 229, 148
+STYLE DS_SETFONT | WS_POPUP
+FONT 12, "@Arial Unicode MS"
+BEGIN
+    LTEXT           "Pressure:",IDC_PRESSURE,55,96,50,8
+    LTEXT           "PPROX ADC:",IDC_PROXADC,110,96,72,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 5,0,1,2
+ PRODUCTVERSION 5,0,1,2
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "Comments", "Alle Rechte vorbehalten."
+            VALUE "CompanyName", "Acutronic Medical Systems AG"
+            VALUE "FileVersion", "5, 0, 1, 2"
+            VALUE "InternalName", "FabianHFO.exe"
+            VALUE "LegalCopyright", "(c) Acutronic Medical Systems AG. "
+            VALUE "OriginalFilename", "FabianHFO.exe"
+            VALUE "ProductName", " FabianHFO"
+            VALUE "ProductVersion", "5, 0, 1, 2"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_TLSMESSAGEBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 175
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 106
+    END
+
+    IDD_PASSWRD_DLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 185
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 188
+    END
+
+    IDD_OXYCALMSG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 175
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 93
+    END
+
+    IDD_DLGACCUTEST, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 353
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 222
+    END
+
+    IDD_NUMINPUT_DLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 145
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 189
+    END
+
+    IDD_DLGPROXP60CAL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 222
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 141
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_DTB_NUMHEADER       BITMAP                  "res\\Btn\\BTN_HARDKEY.bmp"
+IDB_NUMPARA_1           BITMAP                  "res\\Numerics\\numpara1.bmp"
+IDB_NUMPARA_2           BITMAP                  "res\\Numerics\\numpara2.bmp"
+IDB_NUMPARA_3           BITMAP                  "res\\Numerics\\numpara3.bmp"
+IDB_EXCLAMATION         BITMAP                  "res\\Pics\\warning.bmp"
+IDB_CALSENSOR           BITMAP                  "res\\Pics\\sensor.bmp"
+IDB_ALARMCLOCK_DW       BITMAP                  "res\\Pics\\alarmclock_dw.bmp"
+IDB_ALARMCLOCK_FC       BITMAP                  "res\\Pics\\alarmclock_fc.bmp"
+IDB_LIMIT_HIGH_DW       BITMAP                  "res\\Pics\\limit_high_dw.bmp"
+IDB_LIMIT_HIGH_FC       BITMAP                  "res\\Pics\\limit_high_fc.bmp"
+IDB_LIMIT_LOW_DW        BITMAP                  "res\\Pics\\limit_low_dw.bmp"
+IDB_LIMIT_LOW_FC        BITMAP                  "res\\Pics\\limit_low_fc.bmp"
+IDB_CLOCK_INACT_DW      BITMAP                  "res\\Pics\\clock_inactive_dw.bmp"
+IDB_CLOCK_INACT_FC      BITMAP                  "res\\Pics\\clock_inactive_fc.bmp"
+IDB_EXCLAMATION_RED     BITMAP                  "res\\btn\\exclamatred.bmp"
+IDB_EXCLAMATION_BACK    BITMAP                  "res\\btn\\exclamatback.bmp"
+IDB_PIC_SYSALARM        BITMAP                  "res\\Pics\\sysalarm_pic.bmp"
+IDB_SYSAL_USE_ERROR     BITMAP                  "res\\Pics\\sysal_usererror.bmp"
+IDB_SYSAL_DEV_ERROR     BITMAP                  "res\\Pics\\sysal_deviceerror.bmp"
+IDB_ACLOCK_SYS_RED      BITMAP                  "res\\Pics\\alarmclock_sysal_red.bmp"
+IDB_ACLOCK_SYS_GREY     BITMAP                  "res\\Pics\\alarmclock_sysal_grey.bmp"
+IDB_DTB_DATE_BAT        BITMAP                  "res\\Btn\\BTN_DATE_BAT.bmp"
+IDB_BTN_NUMERICSTATE    BITMAP                  "res\\Btn\\BTN_NUMERICSTATE.bmp"
+IDB_BTN_SUBPARA_DW      BITMAP                  "res\\btn\\subpara_dw.bmp"
+IDB_BTN_SUBPARA_SIG     BITMAP                  "res\\btn\\subpara_sig.bmp"
+IDB_BTN_SUBPARA_UP      BITMAP                  "res\\btn\\subpara_up.bmp"
+IDB_BTN_4MENU_UP        BITMAP                  "res\\Btn\\btn4_up.bmp"
+IDB_BTN_NUM_BACK_UP     BITMAP                  "res\\Btn\\btnnumback_up.bmp"
+IDB_BTN_NUMERIC_DW      BITMAP                  "res\\Btn\\btnnum_dw.bmp"
+IDB_BTN_NUMERIC_UP      BITMAP                  "res\\Btn\\btnnum_up.bmp"
+IDB_BTN_NUM_BACK_DW     BITMAP                  "res\\Btn\\btnnumback_dw.bmp"
+IDB_BTN_SETUP_BOT_DW    BITMAP                  "res\\Btn\\btnsetup_bot_dw.bmp"
+IDB_BTN_SETUP_BOT_UP    BITMAP                  "res\\Btn\\btnsetup_bot_up.bmp"
+IDB_BTN_SETUP_TOP_UP    BITMAP                  "res\\Btn\\btnsetup_top_up.bmp"
+IDB_BTN_SETUP1_UPUP     BITMAP                  "res\\Btn\\btnsetupsmall_nextupup.bmp"
+IDB_BTN_SETUP1_DWDW     BITMAP                  "res\\Btn\\btnsetupsmall_nextdwdw.bmp"
+IDB_BTN_SETUP1_DWUP     BITMAP                  "res\\Btn\\btnsetupsmall_nextdwup.bmp"
+IDB_BTN_SETUP1_UPDW     BITMAP                  "res\\Btn\\btnsetupsmall_nextupdw.bmp"
+IDB_BTN_SETUP_SEL       BITMAP                  "res\\btn\\btnsetup_set_sel.bmp"
+IDB_BTN_SETUP_FOC       BITMAP                  "res\\btn\\btnsetup_set_fc.bmp"
+IDB_BTN_SETUP_TOP_DW    BITMAP                  "res\\Btn\\btnsetup_top_dw.bmp"
+IDB_BTN_SETUP_NOT       BITMAP                  "res\\btn\\btnsetup_set_not.bmp"
+IDB_BTN_5MENU_ASILENT_UP BITMAP                  "res\\Btn\\btn5alarm_silent_up.bmp"
+IDB_BTN_5MENU_ALOUD_DW  BITMAP                  "res\\Btn\\btn5alarm_laud_dw.bmp"
+IDB_BTN_5MENU_ALOUD_UP  BITMAP                  "res\\Btn\\btn5alarm_laud_up.bmp"
+IDB_BTN_5MENU_AMEDIUM_DW BITMAP                  "res\\Btn\\btn5alarm_medium_dw.bmp"
+IDB_BTN_5MENU_AMEDIUM_UP BITMAP                  "res\\Btn\\btn5alarm_medium_up.bmp"
+IDB_BTN_5MENU_AOFF_DW   BITMAP                  "res\\Btn\\btn5alarm_off_dw.bmp"
+IDB_BTN_5MENU_AOFF_UP   BITMAP                  "res\\Btn\\btn5alarm_off_up.bmp"
+IDB_BTN_5MENU_ASILENT_DW BITMAP                  "res\\Btn\\btn5alarm_silent_dw.bmp"
+IDB_BTN_KBRD_ALPHANUM_UP BITMAP                  "res\\Btn\\btnkbrd_alphanum_up.bmp"
+IDB_BTN_KBRD_ALPHANUM_DW BITMAP                  "res\\Btn\\btnkbrd_alphanum_dw.bmp"
+IDB_BTN_KBRD_SPACE_UP   BITMAP                  "res\\Btn\\btnkbrd_space_up.bmp"
+IDB_BTN_KBRD_DEL_DW     BITMAP                  "res\\Btn\\btnkbrd_del_dw.bmp"
+IDB_BTN_KBRD_DEL_UP     BITMAP                  "res\\Btn\\btnkbrd_del_up.bmp"
+IDB_BTN_KBRD_SHIFT_DW   BITMAP                  "res\\Btn\\btnkbrd_shift_dw.bmp"
+IDB_BTN_KBRD_SHIFT_UP   BITMAP                  "res\\Btn\\btnkbrd_shift_up.bmp"
+IDB_BTN_KBRD_SPACE_DW   BITMAP                  "res\\Btn\\btnkbrd_space_dw.bmp"
+IDB_BTN_HEAD_ALIMIT     BITMAP                  "res\\Btn\\BTN_HEAD_ALIMIT.bmp"
+IDB_PARA_WARN_UP        BITMAP                  "res\\Pics\\parawarning_up.bmp"
+IDB_PARA_KEY_DW         BITMAP                  "res\\Pics\\parakey_dw.bmp"
+IDB_PARA_WARN_DW        BITMAP                  "res\\Pics\\parawarning_dw.bmp"
+IDB_BTN_PARA_UP_TOP     BITMAP                  "res\\Btn\\para_btn_up_top.bmp"
+IDB_BTN_PARA_DW_BOT     BITMAP                  "res\\Btn\\para_btn_dw_bot.bmp"
+IDB_BTN_PARA_DW_TOP     BITMAP                  "res\\Btn\\para_btn_dw_top.bmp"
+IDB_BTN_PARA_UP_BOT     BITMAP                  "res\\Btn\\para_btn_up_bot.bmp"
+IDB_BTN_MONTH_UP        BITMAP                  "res\\btn\\btn_month_up.bmp"
+IDB_BTN_MONTH_DW        BITMAP                  "res\\btn\\btn_month_dw.bmp"
+IDB_BTN_TIME_UP         BITMAP                  "res\\btn\\btn_time_up.bmp"
+IDB_BTN_TIME_DW         BITMAP                  "res\\btn\\btn_time_dw.bmp"
+IDB_BTN_YEAR_UP         BITMAP                  "res\\btn\\btn_year_up.bmp"
+IDB_BTN_MONTH_FC        BITMAP                  "res\\btn\\btn_mont_fc.bmp"
+IDB_BTN_TIME_FC         BITMAP                  "res\\btn\\btn_time_fc.bmp"
+IDB_OK_UP               BITMAP                  "res\\Pics\\ok_up.bmp"
+IDB_OK_DW               BITMAP                  "res\\Pics\\ok_dw.bmp"
+IDB_OK_FC               BITMAP                  "res\\Pics\\ok_fc.bmp"
+IDB_BTN_PARA_FC_TOP     BITMAP                  "res\\Btn\\para_btn_fc_top.bmp"
+IDB_BTN_PARA_FC_BOT     BITMAP                  "res\\Btn\\para_btn_fc_bot.bmp"
+IDB_PARA_WARN_FC        BITMAP                  "res\\Pics\\parawarning_fc.bmp"
+IDB_GRAPH_CURSOR        BITMAP                  "res\\Pics\\cursor.bmp"
+IDB_EXCLAMATION_40x35   BITMAP                  "res\\btn\\exclamatInfotxt.bmp"
+IDB_NUM_INFO_TOP        BITMAP                  "res\\Numerics\\numinfotop.bmp"
+IDB_NUM_INFO_BOT        BITMAP                  "res\\Numerics\\numinfobot.bmp"
+IDB_BTN_PAT_UP          BITMAP                  "res\\Btn\\btnpat_apply_up.bmp"
+IDB_BTN_PAT_DW          BITMAP                  "res\\Btn\\btnpat_apply_dw.bmp"
+IDB_BTN_ALIMIT_UP       BITMAP                  "res\\Btn\\btnalimit_up.bmp"
+IDB_BTN_ALIMIT_DW       BITMAP                  "res\\Btn\\btnalimit_dw.bmp"
+IDB_BTN_ALIMIT_FC       BITMAP                  "res\\Btn\\btnalimit_fc.bmp"
+IDB_LIMIT_LOW_UP        BITMAP                  "res\\Pics\\limit_low_up.bmp"
+IDB_ALARMCLOCK_UP       BITMAP                  "res\\Pics\\alarmclock_up.bmp"
+IDB_CLOCK_INACT_UP      BITMAP                  "res\\Pics\\clock_inactive_up.bmp"
+IDB_LIMIT_HIGH_UP       BITMAP                  "res\\Pics\\limit_high_up.bmp"
+IDB_LIMIT_LOW           BITMAP                  "res\\Pics\\limit_low.bmp"
+IDB_LIMIT_HIGH          BITMAP                  "res\\Pics\\limit_high.bmp"
+IDB_DTB_ASILENT_GREY    BITMAP                  "res\\Pics\\alarsilent_grey.bmp"
+IDB_WARNING_GREY_23x20  BITMAP                  "res\\Pics\\warning20x23_grey.bmp"
+IDB_BTN_PARA_SIG_BOT    BITMAP                  "res\\Btn\\para_btn_sig_bot.bmp"
+IDB_BTN_SUBPARA_TRIG    BITMAP                  "res\\btn\\btn_subp_trig.bmp"
+IDB_PIC_ACULOGO         BITMAP                  "res\\Pics\\acutronic_logo.bmp"
+IDB_PIC_FabianHFO       BITMAP                  "res\\Pics\\FabianHFO.bmp"
+IDB_BTN_5MENU_DW        BITMAP                  "res\\Btn\\5er_dw.bmp"
+IDB_BTN_5MENU_FC        BITMAP                  "res\\Btn\\5er_fc.bmp"
+IDB_BTN_5MENU_UP        BITMAP                  "res\\Btn\\5er_up.bmp"
+IDB_GRAPHBTN_ARW_UP     BITMAP                  "res\\Btn\\btn_selgraph_arw_up.bmp"
+IDB_GRAPHBTN_ARW_DW     BITMAP                  "res\\Btn\\btn_selgraph_arw_dw.bmp"
+IDB_BTN_4MENU_DW        BITMAP                  "res\\Btn\\btn4_dw.bmp"
+IDB_BTN_SETUP_OKGREENDW BITMAP                  "res\\Btn\\btnsetup_okgreen_dw.bmp"
+IDB_BTN_SETUP_OKGREENUP BITMAP                  "res\\Btn\\btnsetup_okgreen_up.bmp"
+IDB_BTN_SETUP_OKREDDW   BITMAP                  "res\\Btn\\btnsetup_okred_dw.bmp"
+IDB_BTN_SETUP_OKREDUP   BITMAP                  "res\\Btn\\btnsetup_okred_up.bmp"
+IDB_BTN_PAT_RED         BITMAP                  "res\\Btn\\btnpat_apply_red.bmp"
+IDB_BTN_KBRD_DOWN_DW    BITMAP                  "res\\Btn\\keybrd_down_dw.bmp"
+IDB_BTN_KBRD_DOWN_UP    BITMAP                  "res\\Btn\\keybrd_down_up.bmp"
+IDB_BTN_KBRD_LEFT_DW    BITMAP                  "res\\Btn\\keybrd_left_dw.bmp"
+IDB_BTN_KBRD_LEFT_UP    BITMAP                  "res\\Btn\\keybrd_left_up.bmp"
+IDB_BTN_KBRD_RIGHT_DW   BITMAP                  "res\\Btn\\keybrd_right_dw.bmp"
+IDB_BTN_KBRD_RIGHT_UP   BITMAP                  "res\\Btn\\keybrd_right_up.bmp"
+IDB_BTN_KBRD_UP_DW      BITMAP                  "res\\Btn\\keybrd_up_dw.bmp"
+IDB_BTN_KBRD_UP_UP      BITMAP                  "res\\Btn\\keybrd_up_up.bmp"
+IDB_CURBTN_DOWN_DW      BITMAP                  "res\\Btn\\cursor_down_dw.bmp"
+IDB_CURBTN_DOWN_UP      BITMAP                  "res\\Btn\\cursor_down_up.bmp"
+IDB_CURBTN_LEFT_DW      BITMAP                  "res\\Btn\\cursor_left_dw.bmp"
+IDB_CURBTN_LEFT_UP      BITMAP                  "res\\Btn\\cursor_left_up.bmp"
+IDB_CURBTN_RIGHT_DW     BITMAP                  "res\\Btn\\cursor_right_dw.bmp"
+IDB_CURBTN_RIGHT_UP     BITMAP                  "res\\Btn\\cursor_right_up.bmp"
+IDB_CURBTN_UP_DW        BITMAP                  "res\\Btn\\cursor_up_dw.bmp"
+IDB_CURBTN_UP_UP        BITMAP                  "res\\Btn\\cursor_up_up.bmp"
+IDB_CURSOR_GRAPH        BITMAP                  "res\\Pics\\cursor_graph.bmp"
+IDB_BTN_SETUP_TODAY_DW  BITMAP                  "res\\Btn\\today_dw.bmp"
+IDB_BTN_SETUP_TODAY_UP  BITMAP                  "res\\Btn\\today_up.bmp"
+IDB_BTN_4MENU_DIS       BITMAP                  "res\\Btn\\btn4_dis.bmp"
+IDB_BTN_PAT_BACK_DW     BITMAP                  "res\\Btn\\btnpat_back_dw.bmp"
+IDB_BTN_PAT_BACK_UP     BITMAP                  "res\\Btn\\btnpat_back_up.bmp"
+IDB_BTN_VALV_DW         BITMAP                  "res\\Btn\\btn_valv_dw.bmp"
+IDB_BTN_VALV_UP         BITMAP                  "res\\Btn\\btn_valv_up.bmp"
+IDB_BTN_5MENU_DECR_DW   BITMAP                  "res\\Btn\\decreaseDw.bmp"
+IDB_BTN_5MENU_DECR_UP   BITMAP                  "res\\Btn\\decreaseUp.bmp"
+IDB_BTN_5MENU_INCR_DW   BITMAP                  "res\\Btn\\increaseDw.bmp"
+IDB_BTN_5MENU_INCR_UP   BITMAP                  "res\\Btn\\increaseUp.bmp"
+IDB_BTN_5MENU_MOVEL_DW  BITMAP                  "res\\Btn\\moveLeftDw.bmp"
+IDB_BTN_5MENU_MOVEL_UP  BITMAP                  "res\\Btn\\moveLeftUp.bmp"
+IDB_BTN_5MENU_MOVER_DW  BITMAP                  "res\\Btn\\moveRightDw.bmp"
+IDB_BTN_5MENU_MOVER_UP  BITMAP                  "res\\Btn\\moveRightUp.bmp"
+IDB_BTN_PAT_DIS         BITMAP                  "res\\Btn\\btnpat_apply_dis.bmp"
+IDB_BTN_LEFT_DW         BITMAP                  "res\\Btn\\btn_leftdw.bmp"
+IDB_BTN_LEFT_UP         BITMAP                  "res\\Btn\\btn_leftup.bmp"
+IDB_BTN_RIGHT_DW        BITMAP                  "res\\Btn\\btn_rightdw.bmp"
+IDB_BTN_RIGHT_UP        BITMAP                  "res\\Btn\\btn_rightup.bmp"
+IDB_BTN_VALVOFF_DW      BITMAP                  "res\\Btn\\btn_valvoff_dw.bmp"
+IDB_BTN_VALVOFF_UP      BITMAP                  "res\\Btn\\btn_valvoff_up.bmp"
+IDB_BTN_FG_DW           BITMAP                  "res\\Btn\\btn_valvval_dw.bmp"
+IDB_BTN_FG_UP           BITMAP                  "res\\Btn\\btn_valvval_up.bmp"
+IDB_BTN_OPENCLOSE_DW    BITMAP                  "res\\Btn\\btn_openclose_dw.bmp"
+IDB_BTN_OPENCLOSE_UP    BITMAP                  "res\\Btn\\btn_openclose_up.bmp"
+IDB_PATIENTDATA         BITMAP                  "res\\Pics\\patient.bmp"
+IDB_BTN_POPUP_DW        BITMAP                  "res\\Btn\\btn_popup_dw.bmp"
+IDB_BTN_POPUP_UP        BITMAP                  "res\\Btn\\btn_popup_up.bmp"
+IDB_TIMEAXIS            BITMAP                  "res\\Pics\\timeaxistrend.bmp"
+IDB_BATTERY_LOAD        BITMAP                  "res\\Pics\\battery.bmp"
+IDB_SYSFAIL             BITMAP                  "res\\Pics\\sysfail.bmp"
+IDB_WARNING_RED_23x20   BITMAP                  "res\\Pics\\warning20x23_red.bmp"
+IDB_BTN_5MENU_DIS       BITMAP                  "res\\Btn\\5er_dis.bmp"
+IDB_PARA_WARN_SUB       BITMAP                  "res\\Pics\\subparawarning_up.bmp"
+IDB_ARROWDW_DW          BITMAP                  "res\\Pics\\arrowdw_dw.bmp"
+IDB_ARROWDW_FC          BITMAP                  "res\\Pics\\arrowdw_fc.bmp"
+IDB_ARROWDW_UP          BITMAP                  "res\\Pics\\arrowdw_up.bmp"
+IDB_ARROWUP_DW          BITMAP                  "res\\Pics\\arrowup_dw.bmp"
+IDB_ARROWUP_FC          BITMAP                  "res\\Pics\\arrowup_fc.bmp"
+IDB_ARROWUP_UP          BITMAP                  "res\\Pics\\arrowup_up.bmp"
+IDB_BTN_GRAPHDW_DW      BITMAP                  "res\\Btn\\btn_graphdw_dw.bmp"
+IDB_BTN_GRAPHDW_UP      BITMAP                  "res\\Btn\\btn_graphdw_up.bmp"
+IDB_BTN_GRAPHUP_DW      BITMAP                  "res\\Btn\\btn_graphup_dw.bmp"
+IDB_BTN_GRAPHUP_UP      BITMAP                  "res\\Btn\\btn_graphup_up.bmp"
+IDB_BTN_DECREASE_DW     BITMAP                  "res\\Btn\\btn_decrease_dw.bmp"
+IDB_BTN_DECREASE_UP     BITMAP                  "res\\Btn\\btn_decrease_up.bmp"
+IDB_BTN_INCREASE_DW     BITMAP                  "res\\Btn\\btn_increase_dw.bmp"
+IDB_BTN_INCREASE_UP     BITMAP                  "res\\Btn\\btn_increase_up.bmp"
+IDB_BTN_PARA_SIG_TOP    BITMAP                  "res\\Btn\\para_btn_sig_top.bmp"
+IDB_PARA_WARN_RED       BITMAP                  "res\\Pics\\parawarning_red.bmp"
+IDB_ARROWDW_RED         BITMAP                  "res\\Pics\\arrowdw_red.bmp"
+IDB_ARROWUP_RED         BITMAP                  "res\\Pics\\arrowup_red.bmp"
+IDB_DTB_NUMHEAD_ASILENT BITMAP                  "res\\Pics\\numheader_asilent.bmp"
+IDB_DTB_ASILENT_YELLOW  BITMAP                  "res\\Pics\\alarsilent_yellow.bmp"
+IDB_PATIENTDATA_SETTING BITMAP                  "res\\Pics\\patientdata.bmp"
+IDB_MSG_CONFIG          BITMAP                  "res\\Pics\\Config.bmp"
+IDB_MSG_DELTREND        BITMAP                  "res\\Pics\\deltrends.bmp"
+IDB_MSG_INFO            BITMAP                  "res\\Pics\\info.bmp"
+IDB_MSG_STOP            BITMAP                  "res\\Pics\\msgstop.bmp"
+IDB_MSG_CAL0MBAR        BITMAP                  "res\\Pics\\calibrate0mbar.bmp"
+IDB_MSG_CAL60MBAR       BITMAP                  "res\\Pics\\calibrate60mbar.bmp"
+IDB_ALARMARROWDW_DW     BITMAP                  "res\\Pics\\alarmarrowdw_dw.bmp"
+IDB_ALARMARROWDW_FC     BITMAP                  "res\\Pics\\alarmarrowdw_fc.bmp"
+IDB_ALARMARROWDW_UP     BITMAP                  "res\\Pics\\alarmarrowdw_up.bmp"
+IDB_ALARMARROWUP_DW     BITMAP                  "res\\Pics\\alarmarrowup_dw.bmp"
+IDB_ALARMARROWUP_FC     BITMAP                  "res\\Pics\\alarmarrowup_fc.bmp"
+IDB_ALARMARROWUP_UP     BITMAP                  "res\\Pics\\alarmarrowup_up.bmp"
+IDB_NUMALIMIT_1         BITMAP                  "res\\Numerics\\numalimit1.bmp"
+IDB_NUMALIMIT_2         BITMAP                  "res\\Numerics\\numalimit2.bmp"
+IDB_CURSOR_MOVEXSCALE   BITMAP                  "res\\Pics\\moveXscale.bmp"
+IDB_CURSOR_MOVEYSCALE   BITMAP                  "res\\Pics\\moveYscale.bmp"
+IDB_CURBTN_XDOWN_DW     BITMAP                  "res\\Btn\\xMoveDown_dw.bmp"
+IDB_CURBTN_XDOWN_UP     BITMAP                  "res\\Btn\\xMoveDown_up.bmp"
+IDB_CURBTN_XUP_DW       BITMAP                  "res\\Btn\\xMoveUp_dw.bmp"
+IDB_CURBTN_XUP_UP       BITMAP                  "res\\Btn\\xMoveUp_up.bmp"
+IDB_CURBTN_YLEFT_DW     BITMAP                  "res\\Btn\\yMoveLeft_dw.bmp"
+IDB_CURBTN_YLEFT_UP     BITMAP                  "res\\Btn\\yMoveLeft_up.bmp"
+IDB_CURBTN_YRIGHT_DW    BITMAP                  "res\\Btn\\yMoveRight_dw.bmp"
+IDB_CURBTN_YRIGHT_UP    BITMAP                  "res\\Btn\\yMoveRight_up.bmp"
+IDB_BTN_FACTORY_DW      BITMAP                  "res\\Btn\\factory_dw.bmp"
+IDB_BTN_FACTORY_UP      BITMAP                  "res\\Btn\\factory_up.bmp"
+IDB_BTN_SCREENLOCK_DW   BITMAP                  "res\\Btn\\btn_screenlock_dw.bmp"
+IDB_BTN_SCREENLOCK_UP   BITMAP                  "res\\Btn\\btn_screenlock_up.bmp"
+IDB_BTN_5MENU_REFRESH_DW BITMAP                  "res\\Btn\\refresh_dw.bmp"
+IDB_BTN_5MENU_REFRESH_UP BITMAP                  "res\\Btn\\refresh_up.bmp"
+IDB_BTN_MOVEMENUL_DWN   BITMAP                  "res\\Btn\\movemenu_left_dwn.bmp"
+IDB_BTN_MOVEMENUL_UP    BITMAP                  "res\\Btn\\movemenu_left_up.bmp"
+IDB_BTN_MOVEMENUR_DWN   BITMAP                  "res\\Btn\\movemenu_right_dwn.bmp"
+IDB_BTN_MOVEMENUR_UP    BITMAP                  "res\\Btn\\movemenu_right_up.bmp"
+IDB_BTN_MOVEMENUL_DIS   BITMAP                  "res\\Btn\\movemenu_left_dis.bmp"
+IDB_BTN_MOVEMENUR_DIS   BITMAP                  "res\\Btn\\movemenu_right_dis.bmp"
+IDB_BTNMNU_CAL_DW       BITMAP                  "res\\Btn\\mnu_calibration_dw.bmp"
+IDB_BTNMNU_CAL_UP       BITMAP                  "res\\Btn\\mnu_calibration_up.bmp"
+IDB_BTNMNU_DATE_DW      BITMAP                  "res\\Btn\\mnu_datetime_dw.bmp"
+IDB_BTNMNU_DATE_UP      BITMAP                  "res\\Btn\\mnu_datetime_up.bmp"
+IDB_BTNMNU_DISPL_DW     BITMAP                  "res\\Btn\\mnu_display_dw.bmp"
+IDB_BTNMNU_DISPL_UP     BITMAP                  "res\\Btn\\mnu_display_up.bmp"
+IDB_BTNMNU_HELP_DIS     BITMAP                  "res\\Btn\\mnu_help_dis.bmp"
+IDB_BTNMNU_HELP_DW      BITMAP                  "res\\Btn\\mnu_help_dw.bmp"
+IDB_BTNMNU_HELP_UP      BITMAP                  "res\\Btn\\mnu_help_up.bmp"
+IDB_BTNMNU_INFO_DW      BITMAP                  "res\\Btn\\mnu_info_dw.bmp"
+IDB_BTNMNU_INFO_UP      BITMAP                  "res\\Btn\\mnu_info_up.bmp"
+IDB_BTNMNU_LANG_DW      BITMAP                  "res\\Btn\\mnu_language_dw.bmp"
+IDB_BTNMNU_LANG_UP      BITMAP                  "res\\Btn\\mnu_language_up.bmp"
+IDB_BTNMNU_PAT_DW       BITMAP                  "res\\Btn\\mnu_patdata_dw.bmp"
+IDB_BTNMNU_PAT_UP       BITMAP                  "res\\Btn\\mnu_patdata_up.bmp"
+IDB_BTNMNU_SERVICE_DW   BITMAP                  "res\\Btn\\mnu_service_dw.bmp"
+IDB_BTNMNU_SERVICE_UP   BITMAP                  "res\\Btn\\mnu_service_up.bmp"
+IDB_BTNMNU_TOOLS_DW     BITMAP                  "res\\Btn\\mnu_tools_dw.bmp"
+IDB_BTNMNU_TOOLS_UP     BITMAP                  "res\\Btn\\mnu_tools_up.bmp"
+IDB_BTNMNU_VENT_DW      BITMAP                  "res\\Btn\\mnu_ventilation_dw.bmp"
+IDB_BTNMNU_VENT_UP      BITMAP                  "res\\Btn\\mnu_ventilation_up.bmp"
+IDB_BTNMNU_CAL_FC       BITMAP                  "res\\Btn\\mnu_calibration_fc.bmp"
+IDB_BTNMNU_DATE_FC      BITMAP                  "res\\Btn\\mnu_datetime_fc.bmp"
+IDB_BTNMNU_DISPL_FC     BITMAP                  "res\\Btn\\mnu_display_fc.bmp"
+IDB_BTNMNU_HELP_FC      BITMAP                  "res\\Btn\\mnu_help_fc.bmp"
+IDB_BTNMNU_INFO_FC      BITMAP                  "res\\Btn\\mnu_info_fc.bmp"
+IDB_BTNMNU_LANG_FC      BITMAP                  "res\\Btn\\mnu_language_fc.bmp"
+IDB_BTNMNU_PAT_FC       BITMAP                  "res\\Btn\\mnu_patdata_fc.bmp"
+IDB_BTNMNU_SERVICE_FC   BITMAP                  "res\\Btn\\mnu_service_fc.bmp"
+IDB_BTNMNU_TOOLS_FC     BITMAP                  "res\\Btn\\mnu_tools_fc.bmp"
+IDB_BTNMNU_VENT_FC      BITMAP                  "res\\Btn\\mnu_ventilation_fc.bmp"
+IDB_PIC_SHUTDOWN        BITMAP                  "res\\Pics\\shutdown.bmp"
+IDB_BTN_CONTR_DW        BITMAP                  "res\\Btn\\decr_contrast_dwn.bmp"
+IDB_BTN_CONTR_UP        BITMAP                  "res\\Btn\\decr_contrast_up.bmp"
+IDB_BTN_DECRMAXCONTR_DW BITMAP                  "res\\Btn\\decrmax_contrast_dwn.bmp"
+IDB_BTN_DECRMAXCONTR_UP BITMAP                  "res\\Btn\\decrmax_contrast_up.bmp"
+IDB_BTN_INCRMAXCONTR_DW BITMAP                  "res\\Btn\\incrmax_contrast_dwn.bmp"
+IDB_BTN_INCRMAXCONTR_UP BITMAP                  "res\\Btn\\incrmax_contrast_up.bmp"
+IDB_SETUP_LE_BOT_CORNER BITMAP                  "res\\Pics\\setup_le_bot_corner.bmp"
+IDB_SETUP_LE_TOP_CORNER BITMAP                  "res\\Pics\\setup_le_top_corner.bmp"
+IDB_SETUP_RI_BOT_CORNER BITMAP                  "res\\Pics\\setup_ri_bot_corner.bmp"
+IDB_SETUP_RI_TOP_CORNER BITMAP                  "res\\Pics\\setup_ri_top_corner.bmp"
+IDB_SLD_CHAN_GREY       BITMAP                  "res\\Slider\\channel.bmp"
+IDB_SLD_THUMB_ACT_GREY  BITMAP                  "res\\Slider\\thumb_active.bmp"
+IDB_SLD_THUMB_GREY      BITMAP                  "res\\Slider\\thumb_notact.bmp"
+IDB_PIC_FILLED_GRAPH    BITMAP                  "res\\Pics\\filledGraph.bmp"
+IDB_PIC_NOTFIL_GRAPH    BITMAP                  "res\\Pics\\notfilledGraph.bmp"
+IDB_PIC_BRIGHTNESS1     BITMAP                  "res\\Pics\\brighntness1.bmp"
+IDB_PIC_BRIGHTNESS2     BITMAP                  "res\\Pics\\brighntness2.bmp"
+IDB_PIC_BRIGHTNESS3     BITMAP                  "res\\Pics\\brighntness3.bmp"
+IDB_PIC_BRIGHTNESS4     BITMAP                  "res\\Pics\\brighntness4.bmp"
+IDB_PIC_BRIGHTNESS5     BITMAP                  "res\\Pics\\brighntness5.bmp"
+IDB_PIC_NOAUTOSCALE     BITMAP                  "res\\Pics\\noautoscale.bmp"
+IDB_BTN_SCREENLOCKTIME_DIS BITMAP                  "res\\Btn\\scrrenlocktime_dis.bmp"
+IDB_BTN_SCREENLOCKTIME_DW BITMAP                  "res\\Btn\\scrrenlocktime_dw.bmp"
+IDB_BTN_SCREENLOCKTIME_FC BITMAP                  "res\\Btn\\scrrenlocktime_fc.bmp"
+IDB_BTN_SCREENLOCKTIME_UP BITMAP                  "res\\Btn\\scrrenlocktime_up.bmp"
+IDB_BTN_BACKSET_DW      BITMAP                  "res\\Btn\\backSet_dw.bmp"
+IDB_BTN_BACKSET_FC      BITMAP                  "res\\Btn\\backSet_fc.bmp"
+IDB_BTN_BACKSET_UP      BITMAP                  "res\\Btn\\backSet_up.bmp"
+IDB_BTN_CALDISPLAY_DW   BITMAP                  "res\\Btn\\btn_caldis_dw.bmp"
+IDB_BTN_CALDISPLAY_UP   BITMAP                  "res\\Btn\\btn_caldis_up.bmp"
+IDB_BTN_SETUPVENT_DW    BITMAP                  "res\\Btn\\btnSetup_dw.bmp"
+IDB_BTN_SETUPVENT_FC    BITMAP                  "res\\Btn\\btnSetup_fc.bmp"
+IDB_BTN_SETUPVENT_UP    BITMAP                  "res\\Btn\\btnSetup_up.bmp"
+IDB_OKSETTING_UP        BITMAP                  "res\\Pics\\settings_ok_up.bmp"
+IDB_BTN_SETUP_SETLANG_FOC BITMAP                  "res\\Btn\\btnlanguage_set_fc.bmp"
+IDB_BTN_SETUP_SETLANG_NOT BITMAP                  "res\\Btn\\btnlanguage_set_not.bmp"
+IDB_BTN_SETUP_SETLANG_SEL BITMAP                  "res\\Btn\\btnlanguage_set_sel.bmp"
+IDB_BTN_VALUE_DW        BITMAP                  "res\\Btn\\btn_value_dw.bmp"
+IDB_BTN_VALUE_FC        BITMAP                  "res\\Btn\\btn_value_fc.bmp"
+IDB_BTN_VALUE_UP        BITMAP                  "res\\Btn\\btn_value_up.bmp"
+IDB_BTN_SETUP_DWDW      BITMAP                  "res\\Btn\\down_dw.bmp"
+IDB_BTN_SETUP_DWFC      BITMAP                  "res\\Btn\\down_fc.bmp"
+IDB_BTN_SETUP_DWUP      BITMAP                  "res\\Btn\\down_up.bmp"
+IDB_BTN_SETUP_UPDW      BITMAP                  "res\\Btn\\up_dw.bmp"
+IDB_BTN_SETUP_UPFC      BITMAP                  "res\\Btn\\up_fc.bmp"
+IDB_BTN_SETUP_UPUP      BITMAP                  "res\\Btn\\up_up.bmp"
+IDB_BTN_FACTORY_FC      BITMAP                  "res\\Btn\\factory_fc.bmp"
+IDB_BTNMNU_TOOLS_DIS    BITMAP                  "res\\Btn\\mnu_tools_dis.bmp"
+IDB_PIC_NEONATAL        BITMAP                  "res\\Pics\\neonatal.bmp"
+IDB_PIC_PEDIATRIC       BITMAP                  "res\\Pics\\pediatric.bmp"
+IDB_CLOCK_FACE_GREY     BITMAP                  "res\\Pics\\Clock_grey.bmp"
+IDB_PIC_ACCU_0          BITMAP                  "res\\Pics\\accu_0.bmp"
+IDB_PIC_ACCU_20         BITMAP                  "res\\Pics\\accu_20.bmp"
+IDB_PIC_ACCU_40         BITMAP                  "res\\Pics\\accu_40.bmp"
+IDB_PIC_ACCU_60         BITMAP                  "res\\Pics\\accu_60.bmp"
+IDB_PIC_ACCU_80         BITMAP                  "res\\Pics\\accu_80.bmp"
+IDB_PIC_ACCU_100        BITMAP                  "res\\Pics\\accu_100.bmp"
+IDB_PIC_ACCULOAD_20     BITMAP                  "res\\Pics\\accu_charge20.bmp"
+IDB_PIC_ACCULOAD_40     BITMAP                  "res\\Pics\\accu_charge40.bmp"
+IDB_PIC_ACCULOAD_60     BITMAP                  "res\\Pics\\accu_charge60.bmp"
+IDB_PIC_ACCULOAD_80     BITMAP                  "res\\Pics\\accu_charge80.bmp"
+IDB_PIC_ACCULOAD_100    BITMAP                  "res\\Pics\\accu_charge100.bmp"
+IDB_PIC_NOMANATZ        BITMAP                  "res\\Pics\\no_manbreath.bmp"
+IDB_PIC_NURSE32         BITMAP                  "res\\Pics\\nurse_32.bmp"
+IDB_PIC_NURSEALARM      BITMAP                  "res\\Pics\\nurse_32alarm.bmp"
+IDB_BTN160_LG_DIS       BITMAP                  "res\\Btn\\btn160_lg_dis.bmp"
+IDB_BTN160_LG_DW        BITMAP                  "res\\Btn\\btn160_lg_dwn.bmp"
+IDB_BTN160_LG_UP        BITMAP                  "res\\Btn\\btn160_lg_up.bmp"
+IDB_WAIT30_GREY1        BITMAP                  "res\\Anim\\wait30_grey1.bmp"
+IDB_WAIT30_GREY2        BITMAP                  "res\\Anim\\wait30_grey2.bmp"
+IDB_WAIT30_GREY3        BITMAP                  "res\\Anim\\wait30_grey3.bmp"
+IDB_WAIT30_GREY4        BITMAP                  "res\\Anim\\wait30_grey4.bmp"
+IDB_WAIT30_GREY5        BITMAP                  "res\\Anim\\wait30_grey5.bmp"
+IDB_WAIT30_GREY6        BITMAP                  "res\\Anim\\wait30_grey6.bmp"
+IDB_WAIT30_GREY7        BITMAP                  "res\\Anim\\wait30_grey7.bmp"
+IDB_WAIT30_GREY8        BITMAP                  "res\\Anim\\wait30_grey8.bmp"
+IDB_WAIT30_YEL1         BITMAP                  "res\\Anim\\wait30_yel1.bmp"
+IDB_WAIT30_YEL2         BITMAP                  "res\\Anim\\wait30_yel2.bmp"
+IDB_WAIT30_YEL3         BITMAP                  "res\\Anim\\wait30_yel3.bmp"
+IDB_WAIT30_YEL4         BITMAP                  "res\\Anim\\wait30_yel4.bmp"
+IDB_WAIT30_YEL5         BITMAP                  "res\\Anim\\wait30_yel5.bmp"
+IDB_WAIT30_YEL6         BITMAP                  "res\\Anim\\wait30_yel6.bmp"
+IDB_WAIT30_YEL7         BITMAP                  "res\\Anim\\wait30_yel7.bmp"
+IDB_WAIT30_YEL8         BITMAP                  "res\\Anim\\wait30_yel8.bmp"
+IDB_WAIT85_BLUE1        BITMAP                  "res\\Anim\\wait85_blue1.bmp"
+IDB_WAIT85_BLUE2        BITMAP                  "res\\Anim\\wait85_blue2.bmp"
+IDB_WAIT85_BLUE3        BITMAP                  "res\\Anim\\wait85_blue3.bmp"
+IDB_WAIT85_BLUE4        BITMAP                  "res\\Anim\\wait85_blue4.bmp"
+IDB_WAIT85_BLUE5        BITMAP                  "res\\Anim\\wait85_blue5.bmp"
+IDB_WAIT85_BLUE6        BITMAP                  "res\\Anim\\wait85_blue6.bmp"
+IDB_WAIT85_BLUE7        BITMAP                  "res\\Anim\\wait85_blue7.bmp"
+IDB_WAIT85_BLUE8        BITMAP                  "res\\Anim\\wait85_blue8.bmp"
+IDB_BTNMNU_CO2_DIS      BITMAP                  "res\\Btn\\menu_co2_dis.bmp"
+IDB_BTNMNU_CO2_DW       BITMAP                  "res\\Btn\\menu_co2_dw.bmp"
+IDB_BTNMNU_CO2_FC       BITMAP                  "res\\Btn\\menu_co2_fc.bmp"
+IDB_BTNMNU_CO2_UP       BITMAP                  "res\\Btn\\menu_co2_up.bmp"
+IDB_BTN_6MENU_DW        BITMAP                  "res\\Btn\\6er_dw.bmp"
+IDB_BTN_6MENU_UP        BITMAP                  "res\\Btn\\6er_up.bmp"
+IDB_CO2PARA_LE          BITMAP                  "res\\Numerics\\co2para_left.bmp"
+IDB_CO2PARA_RI          BITMAP                  "res\\Numerics\\co2para_right.bmp"
+IDB_DTB_STARTHFO_GREY   BITMAP                  "res\\Pics\\starthfo_grey.bmp"
+IDB_DTB_STARTHFO_ALARM  BITMAP                  "res\\Pics\\starthfo_red.bmp"
+IDB_DTB_STARTHFO_YELLOW BITMAP                  "res\\Pics\\starthfo_yellow.bmp"
+IDB_WARNING_BACKGRND    BITMAP                  "res\\Pics\\warning_backgrnd.bmp"
+IDB_BTN_CALIBRATE_DW    BITMAP                  "res\\Btn\\btn_calibration_dw.bmp"
+IDB_BTN_CALIBRATE_FC    BITMAP                  "res\\Btn\\btn_calibration_fc.bmp"
+IDB_BTN_CALIBRATE_UP    BITMAP                  "res\\Btn\\btn_calibration_up.bmp"
+IDB_BTN_6MENU_DIS       BITMAP                  "res\\Btn\\6er_dis.bmp"
+IDB_BTN_SETUPVENT_DIS   BITMAP                  "res\\Btn\\btnSetup_dis.bmp"
+IDB_DTB_INFOLINE_GREY   BITMAP                  "res\\Pics\\infoline_grey.bmp"
+IDB_DTB_INFOLINE_ORANGE BITMAP                  "res\\Pics\\infoline_orange.bmp"
+IDB_DTB_INFOLINE_RED    BITMAP                  "res\\Pics\\infoline_red.bmp"
+IDB_DTB_INFOLINE_SCREENLOCK BITMAP                  "res\\Pics\\infoline_screenlock.bmp"
+IDB_DTB_INFOLINE_YELLOW BITMAP                  "res\\Pics\\infoline_yellow.bmp"
+IDB_DTB_STARTHFO_ORANGE BITMAP                  "res\\Pics\\starthfo_orange.bmp"
+IDB_DTB_NUMHEAD_ALOG    BITMAP                  "res\\Pics\\alarmlog.bmp"
+IDB_BTN_HOSPITAL_DW     BITMAP                  "res\\Btn\\hospital_dw.bmp"
+IDB_BTN_HOSPITAL_FC     BITMAP                  "res\\Btn\\hospital_fc.bmp"
+IDB_BTN_HOSPITAL_UP     BITMAP                  "res\\Btn\\hospital_up.bmp"
+IDB_SELMENU_DIS         BITMAP                  "res\\Btn\\menu_dis.bmp"
+IDB_SELMENU_DW          BITMAP                  "res\\Btn\\menu_dw.bmp"
+IDB_SELMENU_FC          BITMAP                  "res\\Btn\\menu_fc.bmp"
+IDB_SELMENU_UP          BITMAP                  "res\\Btn\\menu_up.bmp"
+IDB_ALARM_SIGNALED      BITMAP                  "res\\Pics\\alarmsignaled.bmp"
+IDB_MSG_HOSPITAL        BITMAP                  "res\\Pics\\hospital.bmp"
+IDB_NUMERIC_BOT         BITMAP                  "res\\Numerics\\numericbot.bmp"
+IDB_NUMERIC_TOP         BITMAP                  "res\\Numerics\\numerictop.bmp"
+IDB_FLOWMETER_LEFT      BITMAP                  "res\\Pics\\flowmeter_left.bmp"
+IDB_FLOWMETER_RIGHT     BITMAP                  "res\\Pics\\flowmeter_right.bmp"
+IDB_FLOWKEGEL_0         BITMAP                  "res\\Pics\\kegel0.bmp"
+IDB_FLOWKEGEL_1         BITMAP                  "res\\Pics\\kegel1.bmp"
+IDB_FLOWKEGEL_2         BITMAP                  "res\\Pics\\kegel2.bmp"
+IDB_FLOWKEGEL_3         BITMAP                  "res\\Pics\\kegel3.bmp"
+IDB_FLOWKEGEL_4         BITMAP                  "res\\Pics\\kegel4.bmp"
+IDB_FLOWKEGEL_5         BITMAP                  "res\\Pics\\kegel5.bmp"
+IDB_FLOWKEGEL_6         BITMAP                  "res\\Pics\\kegel6.bmp"
+IDB_FLOWKEGEL_7         BITMAP                  "res\\Pics\\kegel7.bmp"
+IDB_FLOWKEGEL_8         BITMAP                  "res\\Pics\\kegel8.bmp"
+IDB_FLOWKEGEL_9         BITMAP                  "res\\Pics\\kegel9.bmp"
+IDB_PIC_NIGHT           BITMAP                  "res\\Pics\\night.bmp"
+IDB_MSG_USB             BITMAP                  "res\\Pics\\msgusb.bmp"
+IDB_PIC_MIXERALARM      BITMAP                  "res\\Pics\\mixer.bmp"
+IDB_PIC_MIXERSIGNAL     BITMAP                  "res\\Pics\\mixer_signal.bmp"
+IDB_BTNMNU_VIDEO_DIS    BITMAP                  "res\\Btn\\menu_video_dis.bmp"
+IDB_BTNMNU_VIDEO_DW     BITMAP                  "res\\Btn\\menu_video_dw.bmp"
+IDB_BTNMNU_VIDEO_FC     BITMAP                  "res\\Btn\\menu_video_fc.bmp"
+IDB_BTNMNU_VIDEO_UP     BITMAP                  "res\\Btn\\menu_video_up.bmp"
+IDB_PIC_NOVIDEO         BITMAP                  "res\\Pics\\noSignal.bmp"
+IDB_BTN_VIDEOPLAY_DW    BITMAP                  "res\\Btn\\video_play_dw.bmp"
+IDB_BTN_VIDEOPLAY_UP    BITMAP                  "res\\Btn\\video_play_up.bmp"
+IDB_BTN_VIDEOSTOP_DW    BITMAP                  "res\\Btn\\video_stop_dw.bmp"
+IDB_BTN_VIDEOSTOP_UP    BITMAP                  "res\\Btn\\video_stop_up.bmp"
+IDB_BTN_PARAMENU_DW     BITMAP                  "res\\Btn\\btn_paramenu_dw.bmp"
+IDB_BTN_PARAMENU_UP     BITMAP                  "res\\Btn\\btn_paramenu_up.bmp"
+IDB_BTN_PARAMENUBCK_DW  BITMAP                  "res\\Btn\\btn_paramenubck_dw.bmp"
+IDB_BTN_PARAMENUBCK_UP  BITMAP                  "res\\Btn\\btn_paramenubck_up.bmp"
+IDB_BTN_PARASET_DW_BOT  BITMAP                  "res\\Btn\\paraset_btn_dw_bot.bmp"
+IDB_BTN_PARASET_DW_TOP  BITMAP                  "res\\Btn\\paraset_btn_dw_top.bmp"
+IDB_BTN_PARASET_FC_BOT  BITMAP                  "res\\Btn\\paraset_btn_fc_bot.bmp"
+IDB_BTN_PARASET_FC_TOP  BITMAP                  "res\\Btn\\paraset_btn_fc_top.bmp"
+IDB_BTN_PARASET_UP_BOT  BITMAP                  "res\\Btn\\paraset_btn_up_bot.bmp"
+IDB_BTN_PARASET_UP_TOP  BITMAP                  "res\\Btn\\paraset_btn_up_top.bmp"
+IDB_PCTRL_AUTOFLOW      BITMAP                  "res\\Pics\\autoflow.bmp"
+IDB_PCTRL_IFLOW         BITMAP                  "res\\Pics\\iflow.bmp"
+IDB_PCTRL_RAMPE         BITMAP                  "res\\Pics\\rampe.bmp"
+IDB_BTN_SELMOD_BOT_DW   BITMAP                  "res\\Btn\\selmodus_bot_dw.bmp"
+IDB_BTN_SELMOD_BOT_UP   BITMAP                  "res\\Btn\\selmodus_bot_up.bmp"
+IDB_BTN_SELMOD_MID_DW   BITMAP                  "res\\Btn\\selmodus_mid_dw.bmp"
+IDB_BTN_SELMOD_MID_UP   BITMAP                  "res\\Btn\\selmodus_mid_up.bmp"
+IDB_BTN_SELMOD_TOP_DW   BITMAP                  "res\\Btn\\selmodus_top_dw.bmp"
+IDB_BTN_SELMOD_TOP_UP   BITMAP                  "res\\Btn\\selmodus_top_up.bmp"
+IDB_BTN_SELVIEW_LE_DW   BITMAP                  "res\\Btn\\selview_left_dw.bmp"
+IDB_BTN_SELVIEW_LE_UP   BITMAP                  "res\\Btn\\selview_left_up.bmp"
+IDB_BTN_SELVIEW_RI_DW   BITMAP                  "res\\Btn\\selview_right_dw.bmp"
+IDB_BTN_SELVIEW_RI_UP   BITMAP                  "res\\Btn\\selview_right_up.bmp"
+IDC_BTN_CONFIGBORDER_BOT BITMAP                  "res\\Pics\\config_border_bottom.bmp"
+IDC_BTN_CONFIGBORDER_LEFTBOTCORNER BITMAP                  "res\\Pics\\config_border_leftbotcorner.bmp"
+IDC_BTN_CONFIGBORDER_TOP BITMAP                  "res\\Pics\\config_border_top.bmp"
+IDB_BTN_CONFIG_CHANGEBOT_DW BITMAP                  "res\\Btn\\changenumerics_bot_dw.bmp"
+IDB_BTN_CONFIG_CHANGEBOT_UP BITMAP                  "res\\Btn\\changenumerics_bot_up.bmp"
+IDB_PIC_CONFIG_CHANGE_DW BITMAP                  "res\\Btn\\changenumerics_mid_dw.bmp"
+IDB_PIC_CONFIG_CHANGE_UP BITMAP                  "res\\Btn\\changenumerics_mid_up.bmp"
+IDB_BTN_CONFIG_CHANGETOP_DW BITMAP                  "res\\Btn\\changenumerics_top_dw.bmp"
+IDB_BTN_CONFIG_CHANGETOP_UP BITMAP                  "res\\Btn\\changenumerics_top_up.bmp"
+IDB_BTN_SIZE_DW         BITMAP                  "res\\Btn\\size_dw.bmp"
+IDB_BTN_SIZE_UP         BITMAP                  "res\\Btn\\size_up.bmp"
+IDB_BTN_CONFIG_NUM1_DW  BITMAP                  "res\\Btn\\confignumerics1_dw.bmp"
+IDB_BTN_CONFIG_NUM1_UP  BITMAP                  "res\\Btn\\confignumerics1_up.bmp"
+IDB_BTN_CONFIG_NUM2_DW  BITMAP                  "res\\Btn\\confignumerics2_dw.bmp"
+IDB_BTN_CONFIG_NUM2_UP  BITMAP                  "res\\Btn\\confignumerics2_up.bmp"
+IDB_BTN_CONFIG_NUM3_DW  BITMAP                  "res\\Btn\\confignumerics3_dw.bmp"
+IDB_BTN_CONFIG_NUM3_UP  BITMAP                  "res\\Btn\\confignumerics3_up.bmp"
+IDB_BTN_CONFIG_NUM1_FC  BITMAP                  "res\\Btn\\confignumerics1_fc.bmp"
+IDB_BTN_CONFIG_NUM2_FC  BITMAP                  "res\\Btn\\confignumerics2_fc.bmp"
+IDB_BTN_CONFIG_NUM3_FC  BITMAP                  "res\\Btn\\confignumerics3_fc.bmp"
+IDB_DLG_BOT             BITMAP                  "res\\Pics\\dlg_bot.bmp"
+IDB_DLG_LEFT            BITMAP                  "res\\Pics\\dlg_lft.bmp"
+IDB_DLG_LEFT_BOT        BITMAP                  "res\\Pics\\dlg_lft_bot_co.bmp"
+IDB_DLG_LEFT_TOP        BITMAP                  "res\\Pics\\dlg_lft_top_co.bmp"
+IDB_DLG_RIGHT           BITMAP                  "res\\Pics\\dlg_rght.bmp"
+IDB_DLG_RIGHT_BOT       BITMAP                  "res\\Pics\\dlg_rght_bot_co.bmp"
+IDB_DLG_RIGHT_TOP       BITMAP                  "res\\Pics\\dlg_rght_top_co.bmp"
+IDB_DLG_TOP             BITMAP                  "res\\Pics\\dlg_top.bmp"
+IDB_NEBULIZER           BITMAP                  "res\\Pics\\nebulizer.bmp"
+IDB_NEBUL_BCKGD         BITMAP                  "res\\Pics\\nebulizer_bkgd.bmp"
+IDB_NEBUL_INFO          BITMAP                  "res\\Pics\\nebulizer_info.bmp"
+IDB_WARNING_BCKG40      BITMAP                  "res\\Pics\\warning_40.bmp"
+IDB_BTNMNU_NETWORK_DIS  BITMAP                  "res\\Btn\\menu_network_dis.bmp"
+IDB_BTNMNU_NETWORK_DW   BITMAP                  "res\\Btn\\menu_network_dw.bmp"
+IDB_BTNMNU_NETWORK_FC   BITMAP                  "res\\Btn\\menu_network_fc.bmp"
+IDB_BTNMNU_NETWORK_UP   BITMAP                  "res\\Btn\\menu_network_up.bmp"
+IDB_BTN_WAVE_UP         BITMAP                  "res\\btn\\bmp00002.bmp"
+IDB_BTN_WAVE_FC         BITMAP                  "res\\btn\\bmp00001.bmp"
+IDB_BTN_WAVE_DW         BITMAP                  "res\\btn\\btn_mont.bmp"
+IDB_DTB_INFOLINE_GREY_DEMO BITMAP                  "res\\Pics\\infoline_grey_demo.bmp"
+IDB_DTB_INFOLINE_ORANGE_DEMO BITMAP                  "res\\Pics\\infoline_orange_demo.bmp"
+IDB_DTB_INFOLINE_RED_DEMO BITMAP                  "res\\Pics\\infoline_red_demo.bmp"
+IDB_DTB_INFOLINE_SCREENLOCK_DEMO BITMAP                  "res\\Pics\\infoline_screenlock_demo.bmp"
+IDB_DTB_INFOLINE_YELLOW_DEMO BITMAP                  "res\\Pics\\infoline_yellow_demo.bmp"
+IDB_HELP_DW_BLUE        BITMAP                  "res\\Btn\\HelpDw_blue.bmp"
+IDB_HELP_DW_DARKGREY    BITMAP                  "res\\Btn\\HelpDw_darkgrey.bmp"
+IDB_HELP_DW_LIGHTGREY   BITMAP                  "res\\Btn\\HelpDw_lightgrey.bmp"
+IDB_HELP_DW_YELLOW      BITMAP                  "res\\Btn\\HelpDw_yelow.bmp"
+IDB_HELP_UP_BLUE        BITMAP                  "res\\Btn\\HelpUp_blue.bmp"
+IDB_HELP_UP_DARKGREY    BITMAP                  "res\\Btn\\HelpUp_darkgrey.bmp"
+IDB_HELP_UP_LIGHTGREY   BITMAP                  "res\\Btn\\HelpUp_lightgrey.bmp"
+IDB_HELP_UP_YELLOW      BITMAP                  "res\\Btn\\HelpUp_yelow.bmp"
+IDB_BTN6_YEL_DW         BITMAP                  "res\\Btn\\6er_yel_dw.bmp"
+IDB_BTN6_YEL_UP         BITMAP                  "res\\Btn\\6er_yel_up.bmp"
+IDB_DTB_ALARMSILENT_GREY BITMAP                  "res\\Pics\\asilentHFO_audio_grey.bmp"
+IDB_DTB_ALARMSILENT_YELLOW BITMAP                  "res\\Pics\\asilentHFO_audio_yel.bmp"
+IDB_BTN_AUTOSET_DW      BITMAP                  "res\\Btn\\5menu_autoset_dw.bmp"
+IDB_BTN_AUTOSET_UP      BITMAP                  "res\\Btn\\5menu_autoset_up.bmp"
+IDB_FLOWMETER_THERAPY   BITMAP                  "res\\Pics\\flowmeter_therapy.bmp"
+IDC_BTN_CONFIGBORDER_LEFT BITMAP                  "res\\Pics\\config_border_left.bmp"
+IDB_BTN_SELMENU_DW      BITMAP                  "res\\Btn\\btnOpenMnuBot_Dw.bmp"
+IDB_BTN_SELMENU_UP      BITMAP                  "res\\Btn\\btnOpenMnuBot_Up.bmp"
+IDB_BTN_SELMENU_BACK_DW BITMAP                  "res\\Btn\\btnOpenMnuBack_Dw.bmp"
+IDB_BTN_SELMENU_BACK_UP BITMAP                  "res\\Btn\\btnOpenMnuBack_Up.bmp"
+IDB_BTN_POPUP_DIS       BITMAP                  "res\\Btn\\btn_popup_dis.bmp"
+IDB_TRENDBTN_ARW_DW     BITMAP                  "res\\Btn\\btn_seltrend_arw_dw.bmp"
+IDB_PIC_AVCAL           BITMAP                  "res\\Pics\\av_ventil.bmp"
+IDB_PIC_AVCALALARM      BITMAP                  "res\\Pics\\av_ventil_alarm.bmp"
+IDB_PIC_AVCALSIGNAL     BITMAP                  "res\\Pics\\av_ventil_sig.bmp"
+IDB_BTN_7MENU_DIS       BITMAP                  "res\\Btn\\7er_dis.bmp"
+IDB_BTN_7MENU_DW        BITMAP                  "res\\Btn\\7er_dwn.bmp"
+IDB_BTN_7MENU_UP        BITMAP                  "res\\Btn\\7er_up.bmp"
+IDB_BTNMNU7_FREEZE_DIS  BITMAP                  "res\\Btn\\7er_freeze_dis.bmp"
+IDB_BTNMNU7_FREEZE_DWN  BITMAP                  "res\\Btn\\7er_freeze_dwn.bmp"
+IDB_BTNMNU7_FREEZE_UP   BITMAP                  "res\\Btn\\7er_freeze_up.bmp"
+IDB_BTNMNU7_GRAPH_DIS   BITMAP                  "res\\Btn\\7er_graph_dis.bmp"
+IDB_BTNMNU7_GRAPH_DWN   BITMAP                  "res\\Btn\\7er_graph_dwn.bmp"
+IDB_BTNMNU7_GRAPH_UP    BITMAP                  "res\\Btn\\7er_graph_up.bmp"
+IDB_BTNMNU7_LOOP_DIS    BITMAP                  "res\\Btn\\7er_loop_dis.bmp"
+IDB_BTNMNU7_LOOP_DWN    BITMAP                  "res\\Btn\\7er_loop_dwn.bmp"
+IDB_BTNMNU7_LOOP_UP     BITMAP                  "res\\Btn\\7er_loop_up.bmp"
+IDB_BTNMNU7_SAVE_DIS    BITMAP                  "res\\Btn\\7er_save_dis.bmp"
+IDB_BTNMNU7_SAVE_DWN    BITMAP                  "res\\Btn\\7er_save_dwn.bmp"
+IDB_BTNMNU7_SAVE_UP     BITMAP                  "res\\Btn\\7er_save_up.bmp"
+IDB_BTNMNU7_TREND_DIS   BITMAP                  "res\\Btn\\7er_trend_dis.bmp"
+IDB_BTNMNU7_TREND_DWN   BITMAP                  "res\\Btn\\7er_trend_dwn.bmp"
+IDB_BTNMNU7_TREND_UP    BITMAP                  "res\\Btn\\7er_trend_up.bmp"
+IDB_BTNMNU_SPO2_DIS     BITMAP                  "res\\Btn\\menu_spo2_dis.bmp"
+IDB_BTNMNU_SPO2_DW      BITMAP                  "res\\Btn\\menu_spo2_dw.bmp"
+IDB_BTNMNU_SPO2_FC      BITMAP                  "res\\Btn\\menu_spo2_fc.bmp"
+IDB_BTNMNU_SPO2_UP      BITMAP                  "res\\Btn\\menu_spo2_up.bmp"
+IDB_BTN_ALIMITNUMERIC_DW BITMAP                  "res\\Btn\\alimit_numeric_dw.bmp"
+IDB_BTN_ALIMITNUMERIC_UP BITMAP                  "res\\Btn\\alimit_numeric_up.bmp"
+IDB_BTN_SETUPVENTDIS_FC BITMAP                  "res\\btn\\bmp00003.bmp"
+IDB_BTN_SETUPVENTDIS_DW BITMAP                  "res\\btn\\bmp00004.bmp"
+IDB_NUM_TAU2            BITMAP                  "res\\Numerics\\tau2.bmp"
+IDB_NUM_TAU1            BITMAP                  "res\\Numerics\\tau1.bmp"
+IDB_BTN_NUMERIC3_DW     BITMAP                  "res\\Btn\\numeric_dw.bmp"
+IDB_BTN_NUMERIC3_UP     BITMAP                  "res\\Btn\\numeric_up.bmp"
+IDB_BTNPOPUP_LOOP_DIS   BITMAP                  "res\\Btn\\4er_loop_dis.bmp"
+IDB_BTNPOPUP_LOOP_DW    BITMAP                  "res\\Btn\\4er_loop_dwn.bmp"
+IDB_BTNPOPUP_LOOP_UP    BITMAP                  "res\\Btn\\4er_loop_up.bmp"
+IDB_BTNPOPUP_TRD_DIS    BITMAP                  "res\\Btn\\4er_trend_dis.bmp"
+IDB_BTNPOPUP_TRD_DW     BITMAP                  "res\\Btn\\4er_trend_dwn.bmp"
+IDB_BTNPOPUP_TRD_UP     BITMAP                  "res\\Btn\\4er_trend_up.bmp"
+IDB_BTNPOPUP_WAV_DIS    BITMAP                  "res\\Btn\\4er_wave_dis.bmp"
+IDB_BTNPOPUP_WAV_DW     BITMAP                  "res\\Btn\\4er_wave_dwn.bmp"
+IDB_BTNPOPUP_WAV_UP     BITMAP                  "res\\Btn\\4er_wave_up.bmp"
+IDB_BTN_PARA_ONOFF_UP   BITMAP                  "res\\Btn\\para_onoff_up.bmp"
+IDB_BTN_PARA_ONOFF_DW   BITMAP                  "res\\Btn\\para_onoff_dw.bmp"
+IDB_BTN_SELSETTING_DW   BITMAP                  "res\\Btn\\selSettings_dw.bmp"
+IDB_BTN_SELSETTING_UP   BITMAP                  "res\\Btn\\selSettings_up.bmp"
+IDB_BTN_SELSETTING_FC   BITMAP                  "res\\Btn\\selSettings_fc.bmp"
+IDB_BTN_PARA_DIS_BOT    BITMAP                  "res\\Btn\\para_btn_dis_bot.bmp"
+IDB_PIC_GROUP_BOT       BITMAP                  "res\\Pics\\para_group_bot.bmp"
+IDB_PIC_GROUP_TOP_BOT   BITMAP                  "res\\Pics\\para_group_top_bot.bmp"
+IDB_BTN_GROUP_DW_BOT    BITMAP                  "res\\Btn\\para_btn_group_dw_bot.bmp"
+IDB_BTN_GROUP_DW_TOP    BITMAP                  "res\\Btn\\para_btn_group_dw_top.bmp"
+IDB_BTN_GROUP_FC_BOT    BITMAP                  "res\\Btn\\para_btn_group_fc_bot.bmp"
+IDB_BTN_GROUP_FC_TOP    BITMAP                  "res\\Btn\\para_btn_group_fc_top.bmp"
+IDB_BTN_GROUP_SIG_BOT   BITMAP                  "res\\Btn\\para_btn_group_sig_bot.bmp"
+IDB_BTN_GROUP_SIG_TOP   BITMAP                  "res\\Btn\\para_btn_group_sig_top.bmp"
+IDB_BTN_GROUP_UP_BOT    BITMAP                  "res\\Btn\\para_btn_group_up_bot.bmp"
+IDB_BTN_GROUP_UP_TOP    BITMAP                  "res\\Btn\\para_btn_group_up_top.bmp"
+IDB_BTN_SELECT_YES      BITMAP                  "res\\Btn\\select_yes.bmp"
+IDB_BTN_SELECT_NO       BITMAP                  "res\\Btn\\select_no.bmp"
+IDB_BTN_PARA_DIS_TOP    BITMAP                  "res\\Btn\\paraset_btn_dis_top.bmp"
+IDB_PARA_WARN_DIS       BITMAP                  "res\\Pics\\parawarning_dis.bmp"
+IDB_ARROWUP_GREY        BITMAP                  "res\\Pics\\arrowup_grey.bmp"
+IDB_EXCLAMATION_LGHTGREY BITMAP                  "res\\Pics\\warning_lghtgrey.bmp"
+IDB_BTN_SETPED_DW       BITMAP                  "res\\Btn\\ped_dw.bmp"
+IDB_BTN_SETPED_FC       BITMAP                  "res\\Btn\\ped_fc.bmp"
+IDB_BTN_SETPED_UP       BITMAP                  "res\\Btn\\ped_up.bmp"
+IDB_BTN_SETNEO_DW       BITMAP                  "res\\Btn\\neo_dw.bmp"
+IDB_BTN_SETNEO_FC       BITMAP                  "res\\Btn\\neo_fc.bmp"
+IDB_BTN_SETNEO_UP       BITMAP                  "res\\Btn\\neo_up.bmp"
+IDB_BTNMNU_O2_DIS       BITMAP                  "res\\Btn\\menu_o2_dis.bmp"
+IDB_BTNMNU_O2_DW        BITMAP                  "res\\Btn\\menu_o2_dw.bmp"
+IDB_BTNMNU_O2_FC        BITMAP                  "res\\Btn\\menu_o2_fc.bmp"
+IDB_BTNMNU_O2_UP        BITMAP                  "res\\Btn\\menu_o2_up.bmp"
+IDB_BTN_DELAYVALUE_DW   BITMAP                  "res\\Btn\\btn_delayvalue_dw.bmp"
+IDB_BTN_DELAYVALUE_FC   BITMAP                  "res\\Btn\\btn_delayvalue_fc.bmp"
+IDB_BTN_DELAYVALUE_UP   BITMAP                  "res\\Btn\\btn_delayvalue_up.bmp"
+IDB_SPO2PARA_LE_TOP     BITMAP                  "res\\Numerics\\spo2para_left_top.bmp"
+IDB_SPO2PARA_RI_TOP     BITMAP                  "res\\Numerics\\spo2para_right_top.bmp"
+IDB_SPO2PARA_LE_BOT     BITMAP                  "res\\Numerics\\spo2para_left_bot.bmp"
+IDB_SPO2PARA_RI_BOT     BITMAP                  "res\\Numerics\\spo2para_right_bot.bmp"
+IDB_BTN_ONOFF_DW        BITMAP                  "res\\Btn\\PRICOonoff_dw.bmp"
+IDB_BTN_ONOFF_UP        BITMAP                  "res\\Btn\\PRICOonoff_up.bmp"
+IDB_PIC_PRICO_1         BITMAP                  "res\\Anim\\radar1.bmp"
+IDB_PIC_PRICO_2         BITMAP                  "res\\Anim\\radar2.bmp"
+IDB_PIC_PRICO_3         BITMAP                  "res\\Anim\\radar3.bmp"
+IDB_PIC_PRICO_4         BITMAP                  "res\\Anim\\radar4.bmp"
+IDB_PIC_PRICO_5         BITMAP                  "res\\Anim\\radar5.bmp"
+IDB_PIC_PRICO_6         BITMAP                  "res\\Anim\\radar6.bmp"
+IDB_PIC_PRICO_7         BITMAP                  "res\\Anim\\radar7.bmp"
+IDB_PIC_PRICO_8         BITMAP                  "res\\Anim\\radar8.bmp"
+IDB_PIC_PRICO_9         BITMAP                  "res\\Anim\\radar9.bmp"
+IDB_PIC_PRICO_10        BITMAP                  "res\\Anim\\radar10.bmp"
+IDB_PIC_PRICO_11        BITMAP                  "res\\Anim\\radar11.bmp"
+IDB_PIC_PRICO_12        BITMAP                  "res\\Anim\\radar12.bmp"
+IDB_PIC_PRICO_13        BITMAP                  "res\\Anim\\radar13.bmp"
+IDB_PIC_PRICO_14        BITMAP                  "res\\Anim\\radar14.bmp"
+IDB_PIC_PRICO_15        BITMAP                  "res\\Anim\\radar15.bmp"
+IDB_PIC_PRICO_16        BITMAP                  "res\\Anim\\radar16.bmp"
+IDB_PIC_PRICO_17        BITMAP                  "res\\Anim\\radar17.bmp"
+IDB_PIC_PRICO_18        BITMAP                  "res\\Anim\\radar18.bmp"
+IDB_PIC_PRICO_19        BITMAP                  "res\\Anim\\radar19.bmp"
+IDB_PIC_PRICO_20        BITMAP                  "res\\Anim\\radar20.bmp"
+IDB_PIC_PRICO_21        BITMAP                  "res\\Anim\\radar21.bmp"
+IDB_PIC_PRICO_22        BITMAP                  "res\\Anim\\radar22.bmp"
+IDB_PIC_PRICO_23        BITMAP                  "res\\Anim\\radar23.bmp"
+IDB_PIC_PRICO_24        BITMAP                  "res\\Anim\\radar24.bmp"
+IDB_FRAME_SIQ           BITMAP                  "res\\Pics\\siq_frame.bmp"
+IDB_BTN_PRICOLIMIT_LE_DW BITMAP                  "res\\Btn\\PricoBtnLe_Dw.bmp"
+IDB_BTN_PRICOLIMIT_LE_UP BITMAP                  "res\\Btn\\PricoBtnLe_Up.bmp"
+IDB_BTN_PRICOLIMIT_RI_DW BITMAP                  "res\\Btn\\PricoBtnRi_Dw.bmp"
+IDB_BTN_PRICOLIMIT_RI_UP BITMAP                  "res\\Btn\\PricoBtnRi_Up.bmp"
+IDB_BTN_ONOFF_DIS       BITMAP                  "res\\Btn\\PRICOonoff_dis.bmp"
+IDB_PIC_MAINTENANCE     BITMAP                  "res\\Pics\\maintenance.bmp"
+IDB_BTN_SETUP_OK_DIS    BITMAP                  "res\\Btn\\btnsetup_ok_disabled.bmp"
+IDB_BTN_SELSETTING_DIS  BITMAP                  "res\\Btn\\selSettings_dis.bmp"
+IDB_FOT_DECREASE_DIS    BITMAP                  "res\\Btn\\fot_decr_dis.bmp"
+IDB_FOT_DECREASE_DW     BITMAP                  "res\\Btn\\fot_decr_dw.bmp"
+IDB_FOT_DECREASE_UP     BITMAP                  "res\\Btn\\fot_decr_up.bmp"
+IDB_FOT_REPEAT_DIS      BITMAP                  "res\\Btn\\fot_repeat_dis.bmp"
+IDB_FOT_REPEAT_DW       BITMAP                  "res\\Btn\\fot_repeat_dw.bmp"
+IDB_FOT_REPEAT_UP       BITMAP                  "res\\Btn\\fot_repeat_up.bmp"
+IDB_FOT_RUN_DIS         BITMAP                  "res\\Btn\\fot_run_dis.bmp"
+IDB_FOT_RUN_DW          BITMAP                  "res\\Btn\\fot_run_dw.bmp"
+IDB_FOT_RUN_UP          BITMAP                  "res\\Btn\\fot_run_up.bmp"
+IDB_FOT_ONOFF_DIS       BITMAP                  "res\\Btn\\fot_start_dis.bmp"
+IDB_FOT_ONOFF_DW        BITMAP                  "res\\Btn\\fot_start_dw.bmp"
+IDB_FOT_ONOFF_UP        BITMAP                  "res\\Btn\\fot_start_up.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDR_MAINFRAME           "FabianHFO"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "FabianHFO"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCCLOSE         "Close"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LANGPATH            "\\ffsdisk\\Language\\"
+    IDS_CURLANGUAGE         "English"
+    IDS_LANGID              "engl"
+    IDS_VERSION_LANGUAGE    "Version: 1.0.0.0"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IPPV                "IPPV"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SIPPV               "SIPPV"
+    IDS_SIMV                "SIMV"
+    IDS_SIMVPSV             "SIMV+PSV"
+    IDS_PSV                 "PSV"
+    IDS_CPAP                "CPAP"
+    IDS_NCPAP               "NCPAP"
+    IDS_DUOPAP              "DUOPAP"
+    IDS_HFO                 "HFO"
+    IDS_IPPV_PRE            "IPPV-Preset"
+    IDS_SIPPV_PRE           "SIPPV-Preset"
+    IDS_SIMV_PRE            "SIMV-Preset"
+    IDS_SIMVPSV_PRE         "SIMV+PSV-Preset"
+    IDS_PSV_PRE             "PSV-Preset"
+    IDS_HFO_PRE             "HFO-Preset"
+    IDS_CPAP_PRE            "CPAP-Preset"
+    IDS_NCPAP_PRE           "NCPAP-Preset"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DUOPAP_PRE          "DUOPAP-Preset"
+    IDS_SERVICE             "Service Mode"
+    IDS_SYSALARM            "System alarm"
+    IDS_STANDBY             "Standby"
+    IDS_EXHALVALV_CAL       "Calibrate Exhalation Valve"
+    IDS_O2THERAPIE          "O2 Therapy"
+    IDS_THERAPIE_PRE        "O2 Therapy-Preset"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MENU_LANGUAGE       "Language"
+    IDS_MENU_DATETIME       "Date/Time"
+    IDS_MENU_SETTINGS       "Settings"
+    IDS_MENU_PATIENT        "Patient"
+    IDS_MENU_SYSTEM         "System"
+    IDS_MENU_AUTOSET        "Autoset"
+    IDS_MENU_ALL            "all"
+    IDS_MENU_SINGLE         "single"
+    IDS_MENU_SHOWLOG        "Show Log"
+    IDS_MENU_CLOSELOG       "Hide Log"
+    IDS_MENU_CURVES         "Waves"
+    IDS_MENU_LOOPS          "Loops"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MENU_FREEZE         "Freeze"
+    IDS_MENU_SAVE           "Save"
+    IDS_MENU_OPEN_TOP       "open"
+    IDS_MENU_OPEN_BOT       "menu"
+    IDS_MENU_CLOSE_TOP      "close"
+    IDS_MENU_CLOSE_BOT      "menu"
+    IDS_MENU_CAL1           "Turn off"
+    IDS_MENU_CAL2           "flow sensor"
+    IDS_MENU_CAL3           "Turn on"
+    IDS_MENU_CAL4           "flow sensor"
+    IDS_MENU_CAL5           "Turn off"
+    IDS_MENU_CAL6           "O2 sensor"
+    IDS_MENU_CAL7           "Turn on"
+    IDS_MENU_CAL8           "O2 sensor"
+    IDS_MENU_O2CAL          "O2 Cal"
+    IDS_MENU_FLOWCAL        "Flow Cal"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MENU_SPO2           "SpO2"
+    IDS_MENU_FOT            "FOT"
+    IDS_MENU_ALIMIT_SPO2    "show SpO2"
+    IDS_MENU_ALIMIT_CO2     "show etCO2"
+    IDS_MENU_ALIMIT_VENT    "show ventilation"
+    IDS_UNIT_MBAR           "mbar"
+    IDS_UNIT_OVERPEEP       "a. PEEP"
+    IDS_UNIT_LITER          "liter"
+    IDS_UNIT_BPM            "bpm"
+    IDS_UNIT_PERCENT        "%"
+    IDS_UNIT_SECONDS        "sec"
+    IDS_UNIT_LPM            "lpm"
+    IDS_UNIT_MILLILITER     "ml"
+    IDS_UNIT_LMIN           "l/min"
+    IDS_UNIT_HZ             "Hz"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ALARM_IF_PIF        "parallel interface"
+    IDS_ALARM_DISCONNECTION "Patient disconnect"
+    IDS_ALARM_PO2IN         "Oxygen supply pressure"
+    IDS_ALARM_PAIRIN        "Air supply pressure"
+    IDS_ALARM_TUBEEXSP      "Exhalatory tube"
+    IDS_ALARM_TUBEINSP      "Inspiratory tube"
+    IDS_ALARM_FLOWSENSOR_DEFECT "Flow sensor defect"
+    IDS_ALARM_FLOWSENSOR_CLEAN "Clean flow sensor"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ALARM_FLOWSENSOR_NOTCON "Flow sensor not connected"
+    IDS_ALARM_O2SENSOR_DEFECT "Oxygen sensor defect"
+    IDS_ALARM_O2SENSOR_USED "Oxygen sensor used up"
+    IDS_ALARM_O2VALUE       "O2 value out of range"
+    IDS_ALARM_RELAIS_DEFECT "Safety relay defect"
+    IDS_ALARM_PPROXIMAL     "Sensor deviation proximal pressure"
+    IDS_ALARM_PIN_MIXER     "Input pressure blender"
+    IDS_ALARM_OVERPRESSURE  "Excess pressure"
+    IDS_ALARM_VOLTAGE       "Voltage monitoring"
+    IDS_ALARM_IF_TERM       "serial Terminal interface"
+    IDS_ALARM_BACKUP_ACTIVE "Backup active"
+    IDS_ALARM_MVMAX         "High minute volume"
+    IDS_ALARM_MVMIN         "Low minute volume"
+    IDS_ALARM_PMAX          "PIP too high"
+    IDS_ALARM_PMIN          "PEEP low"
+    IDS_ALARM_BPMMAX        "High breath rate"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ALARM_LEAKMAX       "High tube leak"
+    IDS_ALARM_APNOE         "Apnea alarm"
+    IDS_ALARM_O2SENSOR      "Oxygen sensor defect/used up"
+    IDS_ALARM_INTERNALERROR "Internal error:"
+    IDS_ALARM_DCO2_HI       "High DCO2 value"
+    IDS_ALARM_DCO2_LO       "Low DCO2 value"
+    IDS_ALARM_AIR           "Air"
+    IDS_ALARM_OXY           "Oxygen"
+    IDS_ALARM_BLENDER       "Blender"
+    IDS_ALARM_IF_CO2        "CO2 interface"
+    IDS_ALARM_PINSP_NOTREACH "Inspiratory pressure not reached"
+    IDS_ALARM_VLIMIT        "Tidal Volume limited"
+    IDS_ALARM_TUBUSBLOCK    "check ET tube"
+    IDS_ALARM_SYSAL         "Sys"
+    IDS_ALARM_AKKU60        "Charge battery (<60min)"
+    IDS_ALARM_AKKU30        "Charge battery (<30min)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PARA_MV             "MV"
+    IDS_PARA_PMAX           "Ppeak"
+    IDS_PARA_PEEP           "PEEP"
+    IDS_PARA_FREQ           "Freq"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PARA_LEAK           "Leak"
+    IDS_PARA_APNOE          "Apnea"
+    IDS_PARA_P              "P"
+    IDS_PARA_MAX            "peak"
+    IDS_PARA_T              "T"
+    IDS_PARA_TE             "Te"
+    IDS_PARA_INSPIRATION    "insp"
+    IDS_PARA_EXPIRATION     "exp"
+    IDS_PARA_MITT           "mean"
+    IDS_PARA_HFO            "HFO"
+    IDS_PARA_AMPL           "amp"
+    IDS_PARA_DEMFLOW        "Demand Flow"
+    IDS_PARA_GES            "tot"
+    IDS_PARA_RESP           "resp"
+    IDS_PARA_PROZANTEIL     "Share % MV"
+    IDS_PARA_PAT            "pat"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_BTN_SELPRESSUREGRAPH "PRESSURE"
+    IDS_BTN_SELFLOWGRAPH    "FLOW"
+    IDS_BTN_SELVOLUMEGRAPH  "VOLUME"
+    IDS_BTN_SCREENLOCK      "lock"
+    IDS_BTN_CALIBRATION     "calibrate"
+    IDS_BTN_SAVE            "Save"
+    IDS_BTN_START           "Start"
+    IDS_BTN_OK              "Ok"
+    IDS_BTN_CANCEL          "Cancel"
+    IDS_BTN_SYNCCURSOR_TOP  "sync."
+    IDS_BTN_SYNCCURSOR_BOTTOM "cursor"
+    IDS_BTN_DEFAULTS        "Factory defaults"
+    IDS_BTN_MNU_CAL         "Calibration"
+    IDS_BTN_MNU_DIS         "Display"
+    IDS_BTN_MNU_VENT        "Ventilation"
+    IDS_BTN_MNU_PAT         "Patient data"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_AUTO            "auto"
+    IDS_TXT_OFF             "off"
+    IDS_TXT_ENDRANGE        "end of range"
+    IDS_TXT_LIMITTED        "limited"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_ALIMITS         "Alarm limits"
+    IDS_TXT_CHCKSENSOR      "checking ..."
+    IDS_TXT_CALCNCL         "Calibration canceled"
+    IDS_TXT_CALRUNNING      "Calibration running"
+    IDS_TXT_CALIBRATED      "calibrated"
+    IDS_TXT_SENSOROFF       "sensor off"
+    IDS_TXT_SENSORON        "sensor on"
+    IDS_TXT_CONNECTED       "connected"
+    IDS_TXT_NOTCONNECTED    "disconnected"
+    IDS_TXT_AUTOCAL_OXY     "Automatic Oxycalibration"
+    IDS_TXT_21PERC          "only 21%"
+    IDS_TXT_21_100PERC      "21% and 100%"
+    IDS_TXT_SCREENLOCK      "!!! SCREENLOCK ACTIVE !!!"
+    IDS_TXT_FLOWSENSOR      "Flow sensor"
+    IDS_TXT_O2SENSOR        "O2 sensor"
+    IDS_TXT_JANUARY         "January"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_GRAPH_PRESSURE      "Pressure"
+    IDS_GRAPH_VOLUME        "Volume"
+    IDS_GRAPH_FLOW          "Flow"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_UNIT_CMH2O          "cmH2O"
+    IDS_UNIT_1PERMIN        "1/min"
+    IDS_UNIT_MLMBAR         "ml/mbar"
+    IDS_UNIT_MBARLPS        "mbar/lps"
+    IDS_UNIT_MLSEC          "ml/sec"
+    IDS_UNIT_HRS            "hrs"
+    IDS_UNIT_MIN            "min"
+    IDS_UNIT_MMHG           "mmHg"
+    IDS_UNIT_KPA            "kPa"
+    IDS_UNIT_VOLPERCENT     "Vol%"
+    IDS_UNIT_MLCMH2O        "ml/cmH2O"
+    IDS_UNIT_CMH2OLPS       "cmH2O/lps"
+    IDS_UNIT_DUO_BPM        "1/min"
+    IDS_UNIT_MLLPS          "ml/lps"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PARA_IFLOW          "I-Flow"
+    IDS_PARA_EFLOW          "E-Flow"
+    IDS_PARA_FLOW           "Flow"
+    IDS_PARA_MIN            "min"
+    IDS_PARA_HF             "HF"
+    IDS_PARA_CPAP           "CPAP"
+    IDS_PARA_INSP           "insp"
+    IDS_PARA_DUO            "Duo"
+    IDS_PARA_PSV            "PSV"
+    IDS_PARA_V              "V"
+    IDS_PARA_LIMIT          "limit"
+    IDS_PARA_GARANT         "guarant"
+    IDS_PARA_TRIGGER        "Trigger"
+    IDS_PARA_ITIME          "I-Time"
+    IDS_PARA_BACKUP         "Backup"
+    IDS_PARA_ETIME          "E-Time"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PARA_PLATEAU        "Plateau"
+    IDS_PARA_TRIGVOL        "Trig Vol"
+    IDS_PARA_IE             "I:E"
+    IDS_PARA_REC            "rec"
+    IDS_PARA_C              "C"
+    IDS_PARA_R              "R"
+    IDS_PARA_EXP            "exp"
+    IDS_PARA_TRIGFLOW       "Trig Flow"
+    IDS_PARA_MANUAL         "manual"
+    IDS_PARA_TI             "   Ti"
+    IDS_PARA_ACRITPSV_TOP   "abort criteria"
+    IDS_PARA_ACRITPSV_BOT   "PSV"
+    IDS_PARA_MANBREATHTIME_TOP "max. time"
+    IDS_PARA_MANBREATHTIME_BOT "manual breath"
+    IDS_PARA_PRESSURERISE_TOP "pressure"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_FEBRUARY        "February"
+    IDS_TXT_MARCH           "March"
+    IDS_TXT_APRIL           "April"
+    IDS_TXT_MAY             "May"
+    IDS_TXT_JUNE            "June"
+    IDS_TXT_JULY            "July"
+    IDS_TXT_AUGUST          "August"
+    IDS_TXT_SEPTEMBER       "September"
+    IDS_TXT_OCTOBER         "October"
+    IDS_TXT_NOVEMBER        "November"
+    IDS_TXT_DECEMBER        "December"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_RANGE           "Range"
+    IDS_TXT_PEDIATRIC       "PEDIATRIC"
+    IDS_TXT_NEONATAL        "NEONATAL"
+    IDS_TXT_RATIOITIME      "Ratio of I-Time"
+    IDS_TXT_BPMITIME        "Frequency / I-Time"
+    IDS_TXT_ITIMEETIME      "I-Time / E-Time"
+    IDS_TXT_SETUPAUTOSCALE_GRAPH "Autoscale graphs"
+    IDS_TXT_FLOWSENSOR_OFF  "Flow sensor off"
+    IDS_TXT_ON              "on"
+    IDS_TXT_GRAPHDISPL      "Display graphs"
+    IDS_TXT_FILLED          "filled"
+    IDS_TXT_NOTFILLED       "not filled"
+    IDS_TXT_AUTOSCALE       "autoscale"
+    IDS_TXT_FLUSHTIME       "Flush time"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_NTPD            "NTPD"
+    IDS_TXT_BTPS            "BTPS"
+    IDS_TXT_REFFLOWSENSOR   "Reference flow sensor"
+    IDS_TXT_REF             "Reference"
+    IDS_TXT_AUTOSCREENLOCK  "automatic screenlock"
+    IDS_TXT_LOADLANG        "... language will be loaded ..."
+    IDS_TXT_RESPIR_STOPPED  "Respirator stopped"
+    IDS_TXT_WARN_MEDIJET    "Use Medijet tube set!"
+    IDS_TXT_WARN_INFANTFLOW "Use InfantFlow tube set!"
+    IDS_TXT_WARN_INFANTFLOWLP "Use InfantFlowLP tube set!"
+    IDS_TXT_NOTACTIVE       "disabled"
+    IDS_TXT_NAME            "Name"
+    IDS_TXT_FIRSTNAME       "First Name"
+    IDS_TXT_PERSID          "PatientID"
+    IDS_TXT_BIRTH           "Day of birth"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_WEIGHT          "Weight [ g ]"
+    IDS_TXT_DDMMYY          "[day.month.year]"
+    IDS_TXT_RESET           "Reset"
+    IDS_TXT_APPLY           "Apply"
+    IDS_TXT_ASKPATDATA      "Patient data"
+    IDS_TXT_ASKSTARTUP      "check at startup"
+    IDS_TXT_ASKNOTSTARTUP   "check not at startup"
+    IDS_TXT_SHUTDOWN        "... device is shutting down ..."
+    IDS_TXT_WARNNOPSWRD     "Warning! Password is disabled! System can be damaged!"
+    IDS_TXT_SELFTEST        "Sytem Self Test"
+    IDS_TXT_TRIGMODE        "Trigger (conventional)"
+    IDS_TXT_VOLTRIGGER      "Volume Trigger"
+    IDS_TXT_FLOWTRIGGER     "Flow Trigger"
+    IDS_TXT_TODAY           "today"
+    IDS_TXT_MANBREATHTIME   "Max. time manual breath"
+    IDS_TXT_CHANGE          "Change data"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COM_ERROR           "COM-ERROR"
+    IDS_COM_CHKSUM_ERROR    "Checksum-ERROR"
+    IDS_COM_CHKSUM          "Checksum"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_CAL_NOTPOSSIBLE "calibration not possible"
+    IDS_TXT_REMARK          "Remark"
+    IDS_TXT_PATDATASAVE     "Patient data saved"
+    IDS_TXT_CANCEL          "Cancel"
+    IDS_TXT_STARTVENT       "Start ventilation"
+    IDS_TXT_SYSINF          "System information"
+    IDS_TXT_OPDEV           "Operating hours device"
+    IDS_TXT_OPACCU          "Operating hours battery"
+    IDS_TXT_DEVID           "Device ID"
+    IDS_TXT_SOFTVERS        "Software version"
+    IDS_TXT_MONPICVERS      "Version Monitor PIC"
+    IDS_TXT_CONPICVERS      "Version Conductor PIC"
+    IDS_TXT_BRIGHTNESS      "Brightness"
+    IDS_TXT_TOUCH           "Touch"
+    IDS_TXT_SERVMOD         "Service mode"
+    IDS_TXT_KERNELVERS      "Version Kernel"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_SAVELOG         "Do you want to save the log files to USB?  Do not unplug the USB while saving!"
+    IDS_TXT_LOGUSB          "Save log files to USB:"
+    IDS_TXT_FILESCOPIED     "files copied successful"
+    IDS_TXT_LUNGREC         "lung recruitment"
+    IDS_ERR_YEAR            "Invalid year"
+    IDS_ERR_DATE            "Invalid date"
+    IDS_ERR_PERSID          "Name or PatientID required"
+    IDS_ERR_ERROR           "- error -"
+    IDS_ERR_FLOWA_DEF       "heatwire A defect!"
+    IDS_ERR_FLOWB_DEF       "heatwire B defect!"
+    IDS_ERR_FLOWAB_DEF      "both heatwire defect!"
+    IDS_ERR_FLOW_DEF        "heatwire defect!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_STOPVENT1       "Stop"
+    IDS_TXT_STOPVENT2       "Ventilation"
+    IDS_TXT_SETPWD          "Enter password"
+    IDS_TXT_INVPWD          "Invalid password!"
+    IDS_TXT_DT_TREND        "Changing will affect date/time-relevant settings like trend and last calibration!"
+    IDS_TXT_SCALELIMIT      "Limit of scale"
+    IDS_TXT_FLATBATT        "Flat battery!"
+    IDS_TXT_TURNOFF         "- turn off device -"
+    IDS_TXT_CONNECTPOW      "- connect power line -"
+    IDS_TXT_CHARGE          "- charge battery about 5 hours -"
+    IDS_TXT_SYSFAIL         "System failure"
+    IDS_TXT_SYSFAILCODE     "Failure code:"
+    IDS_TXT_O2USED          "replace O2"
+    IDS_TXT_O2CAL           "calibrate"
+    IDS_TXT_BATT_FULL       "full"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MSG_CALIBRATION     "To calibrate the display you need a stylus! Alarms will be deactivated! Do you want to continue?"
+    IDS_MSG_CAPTION_CALIBRATION "Touch calibration"
+    IDS_MSG_DELTRENDDATA    "Do you want to delete the trend data of the previous patient?"
+    IDS_MSG_CAPTION_DELTRENDDATA "Delete trend data?"
+    IDS_MSG_CAPTION_PATWEIGHT "Weight dependent settings"
+    IDS_MSG_PATWEIGHT       "Do you want to use the weight dependent ventilation settings?"
+    IDS_MSG_CAPTION_FACTORY "Default Factory Settings"
+    IDS_MSG_FACTORY         "This will set the parameter values to the default factory settings. Continue?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ALARM_AKKU15        "Charge battery (<15min)"
+    IDS_ALARM_POWERFAIL     "Power failure"
+    IDS_ALARM_IF_TERMINAL   "Terminal interface"
+    IDS_ALARM_O2CALERROR    "O2 sensor calibration error"
+    IDS_ALARM_CSCONPIC      "checksum conductor PIC"
+    IDS_ALARM_CSMONPIC      "checksum monitor PIC"
+    IDS_ALARM_IF_SPI        "SPI interface"
+    IDS_ALARM_IF_DIO        "DIO interface"
+    IDS_ALARM_IF_COM        "COM interface"
+    IDC_ALARM_IF_I2C        "I2C interface"
+    IDS_ALARM_OUTOFMEMORY   "Low physical memory - please reboot!"
+    IDS_ALARM_VGARANTY      "VTe not reached / check settings"
+    IDS_ALARM_FAN           "Coolingfan defect"
+    IDS_ALARM_ETCO2_HI      "High ETCO2 value"
+    IDS_ALARM_ETCO2_LO      "Low ETCO2 value"
+    IDS_ALARM_PMIN_HIGH     "High PEEP value"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MENU_ALARM          "Alarm"
+    IDS_MENU_RESET          "Reset"
+    IDS_MENU_TREND          "Trends"
+    IDS_MENU_FLOWCAL_INT_TOP "internal"
+    IDS_MENU_FLOWCAL_INT_BOT "Flow Cal"
+    IDS_MENU_FLOWCAL_EXT_TOP "external"
+    IDS_MENU_FLOWCAL_EXT_BOT "Flow Cal"
+    IDS_MENU_CO2            "CO2"
+    IDS_MENU_CONTROLLED     "CONTROL"
+    IDS_MENU_TRIGGER        "TRIGGER"
+    IDS_MENU_NMODE          "N-MODE"
+    IDS_MENU_MAINBOARD      "Mainboard"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_BATT_CHARGE     "charge"
+    IDS_TXT_RESPOFF1        "Turn off"
+    IDS_TXT_RESPOFF2        "respirator"
+    IDS_TXT_OXYCALRUN       "O2 calibration running..."
+    IDS_TXT_O2FLUSH_RUNNING "O2 flush running..."
+    IDS_TXT_O2FLUSH_STOPPED "O2 flush stopped"
+    IDS_TXT_MANBREATH_RUN   "manual breath running..."
+    IDS_TXT_MANBREATH_STOP  "manual breath stopped"
+    IDS_TXT_DEFECTSENS_TOP  "defect"
+    IDS_TXT_DEFECTSENS_BOT  "sensor"
+    IDS_TXT_CHECK_PINAIR    "- Check air supply"
+    IDS_TXT_CHECK_PINO2     "- Check oxygen"
+    IDS_TXT_CHECK_PINSP     "- Inspiratory tube blocked, check tube"
+    IDS_TXT_CHECK_PEX       "- Expiratory tube blocked, check tube"
+    IDS_TXT_TUBESET         "Tube set"
+    IDS_TXT_MEDIJET         "MediJet"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_INFANTFLOW      "InfantFlow"
+    IDS_TXT_REPLACESOON     "replace soon!"
+    IDS_TXT_NOTCALIBRATED   "not calibrated!"
+    IDS_TXT_UNKNOWN         "- unknown -"
+    IDS_TXT_LAST21CAL       "Last 21% calibration:"
+    IDS_TXT_LAST100CAL      "Last 100% calibration:"
+    IDS_TXT_LASTFLOWCAL     "Last calibration:"
+    IDS_TXT_CLEAN           "need to be cleaned"
+    IDS_TXT_3SECPUSH        "Keep 3 seconds pushed"
+    IDS_TXT_CO2AUTOPUMP     "pump auto-restart"
+    IDS_TXT_CO2PUMPENABLED  "! CO2 pump will be restarted in 1min !"
+    IDS_TXT_TRIGBREATH      "Triggered breath"
+    IDS_TXT_ACOUSTICSIGNAL  "with beep"
+    IDS_TXT_NOACOUSTICSIGNAL "no beep"
+    IDS_TXT_HFOPICVERS      "Version HFO PIC"
+    IDS_TXT_SELMENU         "select menu"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TREND_PINSP         "PINSP"
+    IDS_TREND_PMEAN         "PMEAN"
+    IDS_TREND_FIO2          "FIO2"
+    IDS_TREND_VTE           "VTE"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TREND_COMPL         "COMPLIANCE"
+    IDS_TREND_CO2           "DCO2"
+    IDS_TREND_LOADDATA      "... trend data will be loaded ..."
+    IDS_TREND_DELETEDATA    "... trend data will be deleted ..."
+    IDS_TREND_MV            "MV"
+    IDS_TREND_HFAMP         "HF AMPL"
+    IDS_TREND_SAVETOUSB     "Save trends to USB:"
+    IDS_TREND_SAVEING       "...saving trends..."
+    IDS_TREND_MSGSAVEUSB    "Do you want to save the trend data to USB? Do not disconnect the USB stick while saving the trend data!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_GRAPHS          "Graphs"
+    IDS_TXT_AUTOLOCK        "automatic lock"
+    IDS_TXT_SETUPAUTOSCALE_TREND "Autoscale trends"
+    IDS_TXT_TRENDDISPL      "Display trends"
+    IDS_TXT_ABORTCRITPSV    "Abort criterion PSV"
+    IDS_TXT_ENABLED         "enabled"
+    IDS_TXT_DISABLED        "disabled"
+    IDS_TXT_HFOMANBREATH    "Manual breath in HFO"
+    IDS_TXT_CONFIRMHIGHRANGE "confirm higher range of values"
+    IDS_TXT_HFOSTOPPED      "HFO stopped"
+    IDS_TXT_ACCUDEFECT      "battery defect"
+    IDS_TXT_CHECKACCU       "check battery"
+    IDS_TXT_CO2UNITS        "CO2 units"
+    IDS_TXT_BAROMETRICPRESSURE "Barometric Pressure"
+    IDS_TXT_O2COMPENSATION  "O2 Compensation"
+    IDS_TXT_CONFIRMLOWRANGE "confirm lower range of values"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MSGBOX_YES          "Yes"
+    IDS_MSGBOX_NO           "No"
+    IDS_MSGBOX_OK           "Ok"
+    IDS_MSGBOX_CANCEL       "Cancel"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_BTN_MNU_LANG        "Language"
+    IDS_BTN_MNU_DATETIME    "Date/Time"
+    IDS_BTN_MNU_INFO        "Info"
+    IDS_BTN_MNU_SERVICE     "Service mode"
+    IDS_BTN_MNU_TOOLS       "Tools"
+    IDS_BTN_MNU_HELP        "Help"
+    IDS_BTN_MNU_CO2         "CO2 sensor"
+    IDS_BTN_HOSPITALSET     "Hospital settings"
+    IDS_BTN_MNU_VIDEO       "Video"
+    IDS_BTN_MNU_PDMS        "PDMS"
+    IDS_BTN_MNU_SPO2        "SpO2 sensor"
+    IDS_BTN_BIAS_INT1       "Bias Flow"
+    IDS_BTN_BIAS_INT2       "intern"
+    IDS_BTN_BIAS_EXT1       "Bias Flow"
+    IDS_BTN_BIAS_EXT2       "extern"
+    IDS_BTN_VG1             "Volume"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_CHECKFLOWSENSOR "check flow sensor calibration at first"
+    IDS_TXT_SENSOR_OFF      "off"
+    IDS_TXT_SENSOR_OVERTEMP "over temperature"
+    IDS_TXT_SENSOR_FAULTY   "faulty"
+    IDS_TXT_SENSOR_NOMESSAGE "no message"
+    IDS_TXT_SENSOR_SLEEP    "standby"
+    IDS_TXT_SENSOR_ZEROPROGRESS "Zero in progress"
+    IDS_TXT_SENSOR_WARMUP   "warm up"
+    IDS_TXT_SENSOR_ZEROREQUIRED "Zero required"
+    IDS_TXT_SENSOR_OUTOFRANGE "CO2 out of range"
+    IDS_TXT_SENSOR_CHECKAIRWAY "check airway adapter"
+    IDS_TXT_SENSOR_CHECKSAMPLING "check sampling line"
+    IDS_TXT_SENSOR_OK       "ok"
+    IDS_TXT_CO2_ZEROCAL     "Zero calibration:"
+    IDS_TXT_NOTAVAILABLE    "not available"
+    IDS_TXT_REPLACESENS_TOP "replace"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MSG_CAPTION_CO2CAL  "CO2 sensor calibration"
+    IDS_MSG_CO2CAL          "This will start the zero calibration of the CO2 sensor. Continue?"
+    IDS_MSG_HOSPITAL        "This will set the ventilation values to the hospital settings. Continue?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_REPLACESENS_BOT "sensor"
+    IDS_TXT_DEFECT          "defect"
+    IDS_TXT_CHECK_PPROXIMAL "check pressure messurement tube"
+    IDS_TXT_REPLACECAL      "replace and calibrate"
+    IDS_TXT_PMINDELAY       "Delay Pmin alarm"
+    IDS_TXT_DIFF_CONFIGURATION "!!! Not possible, different versions !!!"
+    IDS_TXT_OPHFO           "Operating hours HFO module"
+    IDS_TXT_SAVE            "save"
+    IDS_TXT_CHECK_MIXER     "check Blender"
+    IDS_TXT_USBNOTAVAILABLE "USB stick not available"
+    IDS_TXT_DISCON_PAT      "disconnect patient before changing"
+    IDS_TXT_BLENDERPICVERS  "Version Blender PIC"
+    IDS_TXT_PRESSUREUNIT    "unit for pressure"
+    IDS_TXT_SETTINGS        "SETTINGS"
+    IDS_TXT_VENTRANGE       "Ventilator range"
+    IDS_TXT_LOGFILE         "Log files"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ALARM_MIXER         "Blender defect"
+    IDS_ALARM_NEBUL_DISCON  "Nebulizer disconnected"
+    IDS_ALARM_NEBUL_ERROR   "Nebulizer ERROR"
+    IDS_ALARM_CO2_MODULE_NOTCONNECTED "CO2 module disconnected"
+    IDS_ALARM_CO2_FILTERLINE_NOTCONNECTED "CO2 FilterLine disconnected"
+    IDS_ALARM_CO2_CHECKSAMPLINGLINE "CO2 sampling line"
+    IDS_ALARM_CO2_CHECKAIRWAYADAPTER "CO2 airway adapter"
+    IDS_ALARM_CO2_SENSORFAULTY "CO2 sensor faulty"
+    IDS_ALARM_CO2_OCCLUSION "CO2 occlusion in gas input line"
+    IDS_ALARM_VGARANTY_HI   "High Tidal Volume"
+    IDS_ALARM_TUBE_OCCLUSION "Tube Occlusion"
+    IDS_ALARM_APNEAVENT_ACTIVE "apnea ventilation active"
+    IDS_ALARM_SPO2_MODULE_NOTCONNECTED "SpO2 module disconnected"
+    IDS_ALARM_SPO2_SENSORFAULTY "SpO2 sensor failure"
+    IDS_ALARM_SPO2_CHECKSENSOR "check SpO2 sensor"
+    IDS_ALARM_SPO2_HI       "High SpO2 alarm"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PARA_PRESSURERISE_BOT "rise control"
+    IDS_PARA_AUTOFLOW       "PFG"
+    IDS_PARA_RAMP           "ramp"
+    IDS_PARA_PSVTIME        "PSV"
+    IDS_PARA_DUOFREQ        "Freq"
+    IDS_PARA_HF_FREQ        "HF"
+    IDS_PARA_CO2FREQ        "Freq"
+    IDS_PARA_FLUSH          "Flush"
+    IDS_PARA_O2             "O2"
+    IDS_PARA_DUO_ITIME      "T-High"
+    IDS_PARA_DUO_ETIME      "T-Low"
+    IDS_PARA_DUO_CPAP       "P-Low"
+    IDS_PARA_DUO_MAX        "max"
+    IDS_PARA_DUO_PEEP       "PEEP"
+    IDS_PARA_HF_AMP         "HF"
+    IDS_PARA_HFFREQ_NOTE    "Freq"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PARA_HFO_AMP        "HFO"
+    IDS_PARA_ETCO           "etCO"
+    IDS_PARA_HFO_FREQ       "HFO"
+    IDS_PARA_DUO_P          "P"
+    IDS_PARA_DUO_PEEP_NOTE  "0"
+    IDS_PARA_PROZENT        "Share%"
+    IDS_PARA_SPO2_PI        "PI"
+    IDS_PARA_SPO2_PULSERATE "Pulse Rate"
+    IDS_PARA_TAU            "t"
+    IDS_PARA_RSBI           "RSBI"
+    IDS_PARA_SPO2_PR        "PR"
+    IDS_PARA_PIP            "PIP"
+    IDS_PARA_FICO           "FiCO"
+    IDS_PARA_RISETIME       "RiseTime"
+    IDS_PARA_LEAKCOMP       "Leak comp."
+    IDS_PARA_FREQBACKUP     "BackupRate"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_INSP            "Insp"
+    IDS_TXT_PROX            "Prox"
+    IDS_TXT_EXP             "Exp"
+    IDS_TXT_THERAP_NOALARM1 "patient alarms"
+    IDS_TXT_THERAP_NOALARM2 "not active"
+    IDS_TXT_PMINDELAY2      "(NCPAP/DUOPAP)"
+    IDS_TXT_MANBREATH_LUNGREC "disabled while lung recruitment"
+    IDS_TXT_PERSONALIZATION "Personalization"
+    IDS_TXT_NUMERICBLOCKS   "Numeric blocks:"
+    IDS_TXT_SENSITIVITY     "sensitivity"
+    IDS_TXT_SENS_HIGH       "high"
+    IDS_TXT_SENS_MID        "middle"
+    IDS_TXT_SENS_LOW        "low"
+    IDS_TXT_PDMSACTIVE      "! NOT POSSIBLE, PDMS IS ACTIVE !"
+    IDS_TXT_NOSDCARD        "! NO SD CARD AVAILABLE !"
+    IDS_TXT_NEBULIZER       "Nebulizer"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_START           "start"
+    IDS_TXT_STOP            "stop"
+    IDS_TXT_CLOSE           "close"
+    IDS_TXT_NEB_FLOWSENSOROFF "Flow sensor is disabled!"
+    IDS_TXT_NEB_FOLLDISABLED "While running nebulizer it will be disabled:"
+    IDS_TXT_NEB_FLOWSENSOR  "Flow sensor"
+    IDS_TXT_NEB_VOLUMEGUARANT "Volume guaranty"
+    IDS_TXT_NEB_VOLUMELIMIT "Volume limit"
+    IDS_TXT_NEB_DELAY       "Delay time flow sensor:"
+    IDS_TXT_AV_CAL_FAIL     "Exhalation calibration"
+    IDS_TXT_PDMS_PORT       "Port:"
+    IDS_TXT_PDMS_PROTOCOL   "Protocol:"
+    IDS_TXT_PDMS_VERSION    "Version:"
+    IDS_TXT_PDMS_INTERFACE  "Interface:"
+    IDS_TXT_PDMS_RS232      "RS-232"
+    IDS_TXT_PDMS_RJ45       "RJ-45"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_PDMS_IP         "IP:"
+    IDS_TXT_PDMS_DEFAULTGATEW "Default gateway:"
+    IDS_TXT_PDMS_SUBNETMASK "Subnetmask:"
+    IDS_TXT_PDMS_DHCP       "DHCP:"
+    IDS_TXT_SENSOR_STATE    "Sensor state:"
+    IDS_TXT_SENSOR_STANDBY  "standby"
+    IDS_TXT_SENSOR_PUMPOFF  "pump off"
+    IDS_TXT_SENSOR_INVALIDCO2 "invalid CO2 value"
+    IDS_TXT_SENSOR_INIT     "initialization"
+    IDS_TXT_SENSOR_CO2RANGE "CO2 value over-range"
+    IDS_TXT_SENSOR_SFM      "SFM in progress"
+    IDS_TXT_SENSOR_PURGING  "purging in progress"
+    IDS_TXT_SENSOR_LINENOTCON "filter line not connected"
+    IDS_TXT_SENSOR_CHECKCAL "check calibration"
+    IDS_TXT_SENSOR_CHECKFLOW "check flow"
+    IDS_TXT_SENSOR_OCCLUSION "occlusion in gas input line"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_SENSOR_MALFUNC  "malfunction, service code is set"
+    IDS_TXT_SENSOR_PUMPONOFF "Pump [on/off]"
+    IDS_TXT_INFANTFLOWLP    "InfantFlowLP"
+    IDS_TXT_CO2CAL_REQUIRE  "calibration required"
+    IDS_TXT_MAXOPHRS_CALIBRATION "Operating hours until calibration"
+    IDS_TXT_SERVICE_REQUIRE "service required"
+    IDS_TXT_DATELAST_CO2CAL "Date of last calibration"
+    IDS_TXT_MAXOPHRS_SERVICE "Operating hours until service"
+    IDS_TXT_WRONG_SYSTEMDATE "wrong system date"
+    IDS_TXT_CO2_RESTARTTIMER_TOP "restart"
+    IDS_TXT_CO2_RESTARTTIMER_BOT "timer"
+    IDS_TXT_ALARMSRESETED   "signaled alarms deleted"
+    IDS_TXT_VIDEO_STOPVENT  "!!! Ventilaton will be stopped while video capture is running !!!"
+    IDS_TXT_ALAMDELAY       "Alarm delay"
+    IDS_TXT_CO2_PUMP_OFF    "Pump off"
+    IDS_TXT_CO2_RESTARTTIMER "restart timer"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_EXHVALVE        "Exh.Valve"
+    IDS_TXT_DEFAULT         "default"
+    IDS_TXT_PPSV_SETTING    "Ppsv parameter"
+    IDS_TXT_PPSV_ABOVEPEEP  "above PEEP parameter"
+    IDS_TXT_PPSV_ABSOLUTE   "absolute value"
+    IDS_TXT_SPO2_NOCONUSB   "not connected to USB"
+    IDS_TXT_SPO2_NOCONMODULE "not connected to module"
+    IDS_TXT_SPO2_DEFSENS    "defective sensor"
+    IDS_TXT_SPO2_LOWPERF    "low perfusion"
+    IDS_TXT_SPO2_PULSESEARCH "pulse search"
+    IDS_TXT_SPO2_INTERFERENCE "interference detected"
+    IDS_TXT_SPO2_OFFPATIENT "sensor off patient"
+    IDS_TXT_SPO2_AMBIENTLIGHT "too much ambient light"
+    IDS_TXT_SPO2_UNRECSENS  "unrecognized sensor"
+    IDS_TXT_SPO2_LOWIQ      "low signal IQ"
+    IDS_TXT_SPO2_NOCABLE    "no cable connected"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ALARM_SPO2_LO       "Low SpO2 alarm"
+    IDS_ALARM_PULSERATE_HI  "High Pulse Rate alarm"
+    IDS_ALARM_PULSERATE_LO  "Low Pulse Rate alarm"
+    IDS_ALARM_SPO2_PI_LO    "Low Perfusion Index alarm"
+    IDS_ALARM_PRESSURE_NOTREACH "Pressure not reached"
+    IDS_ALARM_FICO2_HI      "High FiCO2 alarm"
+    IDS_ALARM_FICO2_LO      "Low FiCO2 alarm"
+    IDS_ALARM_FIO2MAX       "FiO2 at max target"
+    IDS_ALARM_FIO2MIN       "Lower minimum FiO2"
+    IDS_ALARM_PRICOSIQ      "low SIQ"
+    IDS_ALARM_PIPMIN        "PIP too low"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_SPO2_NOADHESIVE "no adhesive sensor connected"
+    IDS_TXT_SPO2_DEMO       "demo mode"
+    IDS_TXT_SPO2_ACTIVE     "processing active"
+    IDS_TXT_CONFIGLOADED    "configuration reloaded"
+    IDS_TXT_CO2PUMPON       "CO2 pump turned on"
+    IDS_TXT_GENERICCO2      "Generic Mainstream"
+    IDS_TXT_FRESHGAS_EXT1   "Attention: Select this option if your NO application device is using a flow sensor for NO dosage calculation. It is mandatory to connect left port FG/nCPAP with inspiratory limb and flow sensor of NO device in between."
+    IDS_TXT_FRESHGAS_EXT2   "!! If not connected with inspiratory limb, no freshgas is delivered to patient !!"
+    IDS_TXT_FRESHGAS_INT1   "Attention: Select this option if your NO application device has no flow sensor or if no NO is used!"
+    IDS_TXT_FRESHGAS_INT2   "Please read user manual!"
+    IDS_TXT_CALREQUIRED     "! flow sensor calibration required !"
+    IDS_TXT_RANGE_CALIBR    "Flow sensor calibration is required after changing!"
+    IDS_TXT_CONFIRM_WARNING "! please confirm the warning first !"
+    IDS_TXT_SETNEONATAL     "This will set the patient range to NEONATAL. Disconnect patient before changing. Flow sensor calibration is required after changing! Continue?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_BTN_VG2             "Guarantee"
+    IDS_BTN_VL1             "Volume"
+    IDS_BTN_VL2             "Limit"
+    IDS_BTN_CONFIRM         "confirm"
+    IDS_BTN_MNU_O2          "O2 sensor"
+    IDS_BTN_PRESSURERISE    "pressure rise"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_SETPEDIATRIC    "This will set the patient range to PEDIATRIC. Disconnect patient before changing. Flow sensor calibration is required after changing! Continue?"
+    IDS_TXT_EFLOW_SHORTCUT  "shortcut in settings menu"
+    IDS_TXT_PRICORUNS       "PRICO is active!"
+    IDS_TXT_SPO_SENSITIVITY "Sensitivity mode"
+    IDS_TXT_SPO_SENSMODE_NORMAL "normal"
+    IDS_TXT_SPO_SENSMODE_MAX "maximum"
+    IDS_TXT_SPO_SENSMODE_APOD "APOD"
+    IDS_TXT_SPO_FASTSAT     "Fast SAT"
+    IDS_TXT_SPO_ALARMDELAY  "Alarm delay"
+    IDS_TXT_SPO_AVERAGING   "SpO2 averaging time"
+    IDS_TXT_PRICOOFF        "PRICO off"
+    IDS_TXT_PRETRIGGER      "Pressure Trigger"
+    IDS_TXT_LEAKCOMP        "Leak compensation"
+    IDS_TXT_SPO2_LOWRANGE   "limited by SpO2 low range"
+    IDS_TXT_SPO2_LIMITTED   "limited by SpO2 alarm limit"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_SPO2_HIGHRANGE  "limited by SpO2 high range"
+    IDS_TXT_FIO2_LOWMIN     "Lower minimum FiO2"
+    IDS_TXT_DEVICEINFO      "Device Info"
+    IDS_TXT_SAVEDEVICEINFO  "Save device info to USB:"
+    IDS_TXT_SAVEINFO        "Do you want to save the device information to USB? Do not unplug the USB while saving!"
+    IDS_TXT_FILEWRITTEN     "file saved"
+END
+
+#endif    // German (Germany) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DEU)
+LANGUAGE 7, 1
+#pragma code_page(1252)
+#include "res\FabianHFO.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"     // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

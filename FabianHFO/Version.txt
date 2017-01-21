@@ -1,0 +1,2005 @@
+--------------------------------
+
+   FabianHFO (major.minor.patch.build)
+
+   (C) ACUTRONIC MedicalSystems AG
+
+--------------------------------
+
+03.08.2009: FabianHFO 1.0.0.4
+- Diagramme verschieben sich beim skalieren nicht mehr
+
+05.08.2009: FabianHFO 1.0.0.5
+- bei AV-Abgleich sowie bei Umstellung von "no autoscale" zu "autoscale" des Druckgraphen stellt sich die y-Skala automatisch auf den eingestellten Druck ein
+- bei FlowSensorAlarm wird in der CalibrationView kein Rückkehr-Timer gesetzt
+- Oxy 21% + 100%-Kalibrierung wird bei Start und dann alle 24 Stunden während des Betriebs automatisch ausgeführt, wird im SubParaBtn und O2-NumericBtn durch Sanduhr gekennzeichnet sowie in InfoTextZeile
+
+10.08.2009: FabianHFO 1.0.0.6
+- Speicherung der ConfigDaten im FRAM implementiert
+
+11.08.2009: FabianHFO 1.0.0.7
+- Anzeige Akku lädt/voll implementiert
+
+12.08.2009: FabianHFO 1.0.0.8
+- InfoText neu implementiert
+- Language mit CriticalSection versehen
+- MatrixTastatur an RegFile angeglichen
+- STANDBY und StopVentilation gem. neuem Fabian umgebaut
+
+17.08.2009: FabianHFO 1.0.0.9
+- Alarme neu implementiert
+- O2-Alarme in die CalibrationView verschoben
+- Anzeige wenn O2-Sensor "ausgeschaltet ist/ausgetauscht werden muss" im SubPara bzw Numeric
+
+18.08.2009: FabianHFO 1.0.0.10
+- Alarmesilent in NumericHeader verschoben
+
+08.09.2009: FabianHFO 1.0.0.11
+- Auswahl des Schlauchsets in den Settings implementiert
+
+10.09.2009: FabianHFO 1.0.0.12
+- Kalibrierung Oxy und Flow-Sensor neu implementiert
+
+15.09.2009: FabianHFO 1.0.0.13
+- Oxy und Flow-Sensor Status neu, bei automatischer OxyKal-> Alarm wenn nicht ok
+- wenn Flow == off -> keine getriggerten Modi
+
+17.09.2009: FabianHFO 1.0.0.14
+- Startsequenz neu implementiert
+- Überprüfung der MODE-Bits korrigiert
+- Anzeige Akku/Netz-Power und deren Alarme überarbeitet
+
+22.09.2009: FabianHFO 1.0.0.15
+- wenn Disconnections-Alarm und ähnliche selbst behoben sind, wird AutoSilent gesetzt (1 min)
+
+23.09.2009: FabianHFO 1.0.0.16
+- Alarm AL_SysLimit_Pinsp_NotReached neu implementiert:
+		View wechselt zur ParaView (ausser CalibrationView oder AlarmLimitView),
+		kein Alarm in CalibrationView,
+		kein Alarm, wenn O2Flush oder MANBREATH aktiv, oder bei aktiver/signalisierter Disconnection,
+- CViewFullscreenMsg (SysFailure & Battery) mit CViewDTBField implementiert
+- AlarmAL_SysLimit_Vlimitted neu implementiert, Graph wechselt zum Volumen-Graph
+- weitere SysFail-Alarme hinzugefügt (Interface, Checksum etc)
+- ERROR-Codes implementiert (ERRC_SET_FLOWSENSSTATE, etc), werden nach Startup überprüft und evtl SysFail-Alarm ausgelöst
+
+28.09.2009: FabianHFO 1.0.0.17
+- wenn Wert I:E > 10 -> Anzeige < 1:10
+- Rücklesen der COM-Werte bei Moduswechsel für 3 Sec unterbunden
+- Software umbenannt von "Fabian plus (FabianHFO 1.0.0.17)" nach "Fabian HFO 1.0.0.17"
+
+29.09.2009: FabianHFO 1.0.0.18
+- ParaButton Pmanual in CPAP und NCPAP implementiert
+
+30.09.2009: FabianHFO 1.0.0.19
+- Korrekturfaktor Flow implementiert
+- während O2-Kalibrierung und Check wird Read_OXY_DEFAULT angezeigt
+- bei Init Flow-Kalibrierung wird kein Check vorgenommen
+- Key und Warning bei HFO -> Pmean, HFamp und HFfreq eingebaut
+
+01.10.2009: FabianHFO 1.0.0.20
+- SystemSettings: Filter Volumengarantie & Triggersound einstellbar
+- Anzahl der Atemzüge der Filter Volumengarantie wird bei EV_CONTROL_STARTUP_SUCCESS an SPI geschickt
+- bei jedem ATZ wird die Volumenkorrektur an SteuerPIC geschickt
+- Änderund der Obergrenze bei Pediatric -> Pinsp auf 80 mbar
+- Änderund der Obergrenze von PEEP auf 30 mbar
+
+05.10.2009: FabianHFO 1.0.0.21
+- Parameter Volumenlimit & Volumengarantie wird bei Moduswechsel an SPI & COM geschickt
+- bei Moduswechsel wird jetzt bei CPAP der Backup-Wert, Apnoe-Wert und T_insp =500/T_exp =500 geschickt
+- Resistance -> Maximum auf 5000 cm/lps gesetzt
+
+06.10.2009: FabianHFO 1.0.0.22
+- Unterscheidung Average & BTB-Werte, ALarmlimits werden mit den Average-Werten berechnet
+- Disconnection & TubusBlockiert werden nicht automatisch gelöscht, wenn ekin Alarm mehr besteht, erst wenn manuell bestätigt wurde bzw nach 1 Minute autosilent
+
+07.10.2009: FabianHFO 1.0.0.23
+- während O2 oder Flowkalibrierung kann jetzt die View verlassen werden (Home etc)
+- Autoset Pmax & PEEP bei Alarmlimits wird direkt ausgerechnet
+- Update/Anzeige der Numerikdaten ist auf 1 Sec begrenzt
+- gelbe Alarmsilent-Glocke
+- keine Anzeige BTB / Average
+
+10.10.2009: FabianHFO 1.0.0.24
+- Weiterentwicklung Trend, CPoints als Member & mit new allokiert!
+- Diagramme -> CPoints als Member & mit new allokiert!
+
+20.10.2009: FabianHFO 1.0.0.25
+- Trend implementiert
+- ParaWerte -> Limits werden abgesichert
+- Service: unter "Interfaces" kann der Auslieferzustand wieder hergestellt werden "set factory defaults"
+
+22.10.2009: FabianHFO 1.0.0.26
+- Graphen: min & max-Werte werden bei Mittelung gezeichnet
+
+26.10.2009: FabianHFO 1.0.0.27
+- Memoryleak entfernt!!!!!!!!!!!!!!!!!!!!!!!!!
+- alle 30 sec Speicherprüfung in CMainFrame::WriteOpTime(void) 
+- diverse Anpassungen
+
+27.10.2009: FabianHFO 1.0.0.28
+- wenn V-Garantie ausgeschaltet wird, wird der Pinsp-Parameter auf den gemessenen Wert gesetzt
+- Running-Mode wird an SPI und COM gesendet (STANDBY,RUNNING,STOPPED)
+
+28.10.2009: FabianHFO 1.0.0.29
+- Bereinigung der Memoryleaks etc
+- Filter Volumengarantie wird bei Moduswechsel geschickt
+
+29.10.2009: FabianHFO 1.0.0.30
+- Testversion Franz
+
+29.10.2009: FabianHFO 1.0.0.31
+- wenn AlarmsilentState==ASTATE_SYSTEM_SILENT oder AlarmsilentState==ASTATE_SILENT werden Alarme+Flowsensoralarme aus SPI nicht weitergereicht
+- HFO-Graph -> Diagrammtypen implementiert ....
+
+04.11.2009: FabianHFO 1.0.0.33
+- Volumengarantie & Volumenlimit neu implementiert
+
+05.11.2009: FabianHFO 1.0.0.34
+- Default Factory Parameter über Button in den Settings einstellbar
+- Volumengarantie & Volumenlimit nachgebessert
+
+11.11.2009: FabianHFO 1.0.0.36
+- HFO-Skalierung implementiert
+- "Affengriff" Systemalarme stumm [HOME] + [ALARMSTUMM] für 3 Sekunden -> muss auch in Registry editiert werden
+- Volumengarantie für alle Modi gleich
+
+11.11.2009: FabianHFO 1.0.0.37
+- Numerikblock für HFO und FlowSensor==off implementiert
+
+11.11.2009: FabianHFO 1.0.0.38
+- MV-Numeric bei HFO über 10000 Kommastelle begrenzt 
+
+16.11.2009: FabianHFO 1.0.0.43
+- wenn Systemalarme deaktiviert werden, wird ein Log-Eintrag geschrieben 
+- VolumenGaranty: Diagramm wird nicht bei PRESET auf PRESSURE umgeschaltet
+- ACHTUNG: Rücklesen der COM-Werte deaktiviert!!!!!!!!!!!!!!!!
+
+17.11.2009: FabianHFO 1.0.0.44
+- VolumenKorrektur wird nur geschickt, wenn VolGaranty == on
+- O2 wird nur noch alle 1000 sec von SPI gelesen und an COM weitergeleitet
+- ACHTUNG: Rücklesen der COM-Werte deaktiviert!!!!!!!!!!!!!!!!
+
+23.11.2009: FabianHFO 1.0.0.45
+- Synchronisation der Diagramme bei HFO auf ATZ
+- Parabutton Ppsv aus Mode PSV entfernt
+
+30.11.2009: FabianHFO 1.0.0.46
+- im Graph-Modus werden jetzt die 3 Liniendiagramme in einer Funktion berechnet und gezeichnet 
+- VLimit ist jetzt bei allen Modi gleich
+
+30.11.2009: FabianHFO 1.0.0.47
+- wird ein Parameter-Wert, welcher über dem MaxKeyWert liegt, nicht explizit mittels UDP bestätigt,
+  wechselt der Wert bei Focusverlust zu dem MaxKeyWert
+- Alarme werden im AlarmLog farbig dargestellt
+- Pressure-Volume-Loop bei HFO wird jetzt autoskaliert, manuelle Skalierung ins negative muss noch implementiert werden!!!!!!!!!!
+
+02.12.2009: FabianHFO 1.0.0.48
+- Graphendesign geändert
+- HFO -> Verschiebung der x-Achse mittels MouseMove (noch auskommentiert)
+
+03.12.2009: FabianHFO 1.0.0.49
+- HFO-Amplitude begrenzt auf 80mbar
+- bei Wechsel in den HFO-Mode wird der Graph automatisch nicht gefüllt gezeichnet
+- bei PSV kein SubPara I:E, nur PSV-Zeit
+- bei Kalibrierung bleibt der Text "Keep 3 sec pushed" stehen, bis Kalibrierung beginnt bzw Check nicht erfolgreich war
+- CPAP: Signalton bei jedem Backup-ATZ
+- ACHTUNG: Rücklesen der COM-Werte noch deaktiviert!!!!!!!!!!!!!!!!
+
+08.12.2009: FabianHFO 1.0.0.50
+- IFlow & EFlow in allen Modi gleich
+- PIP - PEEP -Verriegelung bei allen Modi auf "DIFF_PEEP_PINSP" = 2mbar gesetzt
+- Parameter-Timer von 20sec auf 15sec geändert
+- akustische Alarmtonunterdrückung von 60sec auf 30sec geändert
+- Graphik für Patientendaten und View Patientendaten geändert
+
+09.12.2009: FabianHFO 1.0.0.51
+- Beenden der Threads abgesichert
+- ENTREK erfolgreich geprüft!!!!!!!!!!!!!!!!!!!!!!!
+
+10.12.2009: FabianHFO 1.0.0.52
+- NeoVent umbenannt nach FabianHFO, auch den Installer sowie die Pfade auf USB-Stick etc !!!!
+
+14.12.2009: FabianHFO 1.0.0.53
+- Cursor-Zeichen im Graph nach rechts oben verschoben
+- Geschwindigkeitsabgleich der Graphen
+
+15.12.2009: FabianHFO 1.0.0.54
+- MCP23016 für Multiplexer implementiert
+- diverse Graphiken implementiert (Messagebox etc)
+- Wert von VLimit & VGarant werden beim einschalten automatisch berechnet
+- Taste "AlarmSilent":	- GetAlarmSilentState()==ASTATE_AUTOSILENT -> SetAlarmsilentActive()
+						- GetAlarmSilentState()==ASTATE_MANSILENT -> SetManualSilent()
+						- else -> SetAlarmsilentActive()
+
+16.12.2009: FabianHFO 1.0.0.55
+- Pfeile Up/Down der ParaBtns bei Alarmen rot 
+
+17.12.2009: FabianHFO 1.0.0.56
+- Bei Moduswechsel wird AutoAlarmlimits neu berechnet 
+
+22.12.2009: FabianHFO 1.0.0.57
+- CPAP: wenn Flowsensor aus ist, wird kein Backup-Para angezeigt sowie kein Pmax und PEEP im NumericWindow 
+- CPAP -> Numeric: LowerLimit von MV wird jetzt richtig dargestellt
+- wenn Flowsensor off und Modus IPPV()-> NumerikWnd IDC_VIEW_NUM_FLOWOFF wird mit BtB-Werten gespeißt
+
+22.12.2009: FabianHFO 1.0.0.58
+- TriggerPara Maxwert auf 20 erhöht
+- werden verstellte Parameter nicht bestätigt, wird der letzte Wert wieder gesetzt
+
+04.01.2010: FabianHFO 1.0.0.59
+- Trigger-/ITime-/O2-/Vgarant-Parameter in allen Modi gleich
+- PSV: Pinsp, I-Time und Freq werden grau dargestellt solange der Patient selbst atmet
+- Autogrenzen AlarmLimits bei CPAP/NCPAP/DUOPAP bereinigt: 
+	CPAP: +/- 5 von akt. CPAP-Para
+	NCPAP: +/- 2 von akt. CPAP-Para
+	DUOPAP: - 2 von akt. CPAP-Para, + 2 von akt. PDuo-Para
+- Anzeige Alarmsilent schneller
+
+11.01.2010: FabianHFO 1.0.0.60
+- COM: bei Sendqueue wird max. 100ms auf Antwort gewartet, nach 3 Fehler wird Message aus Queue gelöscht
+- Alarmlimits Druck wird jeder Wert in SPI geprüft -> Alarmfilter 70ms, manuellem ATZ und Backup-ATZ (CPAP) wird ignoriert, 
+  Delaytime nach manuellem ATZ und Backup-ATZ (CPAP) eingebaut
+  
+  
+19.01.2010: FabianHFO 1.0.0.61
+- Alarmlimits: CPAP/NCPAP -> Grenzen nur vom CPAP-Para, andere Modi bereinigt
+- Fehler "Out of memory" beseitigt -> Ursache: Trendspeicherung
+
+20.01.2010: FabianHFO 1.0.0.62
+- Sprachen erweitert:	Default:	##english.lang##	
+						Englisch:	##english.lang##
+						Deutsch:	##german.lang##
+						RUSSISCH:	##russian.lang##
+						FRENCH:		##french.lang##
+						ITALIAN:	##italian.lang##
+						FINNISH:	##finnish.lang##
+						CHINESE:	##chinese.lang##
+						SPANISH:	##spanish.lang##
+						PORTUGUESE:	##portuguese.lang##
+- diverse Textergänzungen/-korrekturen
+- ist eine Sprachdatei nicht im UNICODE-Format hinterlegt, wird ein Eintrag im SystemLog erzeugt und die Default-Sprache geladen
+- Kontrast lässt sich in Release-Version einstellen
+
+20.01.2010: FabianHFO 1.0.0.64
+- bei Moduswechsel werden alle signalisierten Alarme der Alarmlimits gelöscht
+
+15.02.2010: FabianHFO 1.0.0.67
+- FlowSensor NotConnected wird erkannt
+
+15.02.2010: FabianHFO 1.0.0.68
+- Apnoe-Zeit wird jetzt auch an SerialIF gesendet
+- NCPAP: obere und untere Grenzen an DUOPAP angeglichen
+
+15.02.2010: FabianHFO 1.0.0.69
+- AlarmLog in anderer Reihenfolge
+
+17.02.2010: FabianHFO 1.0.0.70
+- Graph-View: Fehler aus Freeze und Save beseitigt
+- AlarmLog-Liste mit breitem Scrollbalken und Farbe
+
+22.02.2010: FabianHFO 1.0.0.71
+- Graph-View: Redraw/Skalierung etc verbessert
+
+22.02.2010: FabianHFO 1.0.0.72
+- Klasse CircularBuffer als Template implementiert
+- CircularBuffer für Trends implementiert
+- Schreiben von Trend auf FRAMs implementiert
+
+25.02.2010: FabianHFO 1.0.0.73
+- Alarmklasse umgebaut (Anfang)
+- PSV-Apnoe implemetiert -> Backup aktiv
+
+01.03.2010: FabianHFO 1.0.0.74
+- im CPAP kein STANDBY sondern "Beatmung anhalten"
+- Delay von 200 ms wenn Flowsensorstatus etc von SPI zu of wechselt
+- PSV-Apnoe weiter entwickelt -> wird nur von COM gesetzt, SPI-> Apnoealarm wird unterdrückt von Franz!!!
+- Abbruchkriterium PSV wird an SPI gesendet
+
+03.03.2010: FabianHFO 1.0.0.75
+- Abbruchkriterium PSV wird auch bei Moduswechsel an SPI gesendet 
+- Zeichnen des Cursors in Diagrammen geändert
+
+08.03.2010: FabianHFO 1.0.0.76
+- Einstellmöglichkeit für die Autokalibrierung Oxy in den Settings implementiert (nur 21% Kalibrierung oder 21 u.100% Kalibrierung)
+- Während die Berechnung des Pinsp durch Volumengarantie läuft, wird die Gegenprüfung der seriellen Parameterwerte nicht durchgeführt
+- Alarm Tubus blockiert wird aus der Queue richtig gelöscht
+
+10.03.2010: FabianHFO 1.0.0.77
+- Screenlock implementiert
+- Verschiebung HFO-Pressuregraph up/down implementiert
+
+16.03.2010: FabianHFO 1.0.0.78
+- automatischer Screenlock implementiert
+- wird der UDP für 3 sec gedrückt, aktiviert sich der Screenlock
+
+16.03.2010: FabianHFO 1.0.0.79
+- Speicherung der Max-/Min-Werte der Graphen/Loops neu implemntiert 
+
+22.03.2010: FabianHFO 1.0.0.80
+- Fehler aus Statusanzeige O2-Kalibrierung beseitigt, Anzeige der Defaultwerte bei SensorCheck
+- PSV: ParaBtns bei Moduswechsel nicht mehr grau
+
+23.03.2010: FabianHFO 1.0.0.81
+- V-Garantie: Autoset -> Pinsp + 5mbar, wird jetzt bei Systemstart ausgeschaltet wenn an
+- V-Limit: wird jetzt bei Systemstart ausgeschaltet wenn an
+
+09.04.2010: FabianHFO 1.0.0.83
+- V-Garantie: Autoberechnung PInsp +-5 implementiert
+
+15.04.2010: FabianHFO 1.0.0.84
+- folgende Sprachen sind bisher implementiert:
+	Default:	##english.lang##	
+	Englisch:	LAN_ENGLISH##english.lang##
+	Deutsch:	LAN_GERMAN##german.lang##
+	RUSSISCH:	LAN_RUSSIAN##russian.lang##
+	FRENCH:		LAN_FRENCH##french.lang##
+	ITALIAN:	LAN_ITALIAN##italian.lang##
+	FINNISH:	LAN_FINNISH##finnish.lang##
+	CHINESE:	LAN_CHINESE##chinese.lang##
+	SPANISH:	LAN_SPANISH##spanish.lang##
+	PORTUGUESE:	LAN_PORTUGUESE##portuguese.lang##
+	SLOVENSKO:	LAN_SLOVENSKO##slovensko.lang##
+	CZECH:		LAN_CZECH##czech.lang##
+- Trend deaktiviert!
+
+17.04.2010: FabianHFO 1.0.0.85
+- Trend aktiviert
+
+19.04.2010: FabianHFO 1.0.0.86
+- Trend deaktiviert
+- WM_CHECK_ALARMS implementiert ( Gemeinsamer Aufruf der Funktionen getModel()->getALARMHANDLER()->CheckAlarmStateBytes() && getModel()->getALARMHANDLER()->CheckFlowSensorState())
+- CTlsRegistry: FlushHKLM() + FlushHKCU() implementiert
+
+20.04.2010: FabianHFO 1.0.0.87
+- SubParaBtn V-Ti nur wenn Flowsensor==on
+- WM_LBUTTONDBLCLK + WM_LBUTTONDOWN bei SubParaBtn wird ignoriert -> PreTranslateMessage -> return 1;
+- Countdown der O2-Flush-Zeit nur noch im Info-Header, nicht mehr im SubParaBtn O2Flush
+- Fehler aus Volumengarantie entfernt (Pinsp)
+- bei Sprachenwechsel wird Batteriestatus neu gezeichnet
+- bei ProximalPressureCalibration werden laufend aktuelle Werte (PPROX ADC + Pressure) im Fenster angezeigt
+
+23.04.2010: FabianHFO 1.0.0.88
+- kein akustisches Signal bei manuzellem ATZ mehr
+
+26.04.2010: FabianHFO 1.0.0.89
+- AL_TUBUSBLOCKED hat jetzt höhere Piorität als AL_DISCONNECTION
+- Flushzeit 30sec/60sec/120sec einstellbar
+- nach Ablauf der Flush-Zeit wird der eingestellte O2-Wert an Schnittstelle gesendet (ERROR checking O2Para)
+- nach STARTUP kleine Pause eingefügt
+- Doppelklick bei Menü (CPresetMenuBtn) abgefangen
+
+27.04.2010: FabianHFO 1.0.0.89
+- sämtliche Arrys > 1KB als "static" implementiert
+
+30.04.2010: FabianHFO 1.0.0.90
+- HFO aktiviert
+- Trend weiter implementiert
+
+04.05.2010: FabianHFO 1.0.0.92
+- AlarmHandler geändert
+
+06.05.2010: FabianHFO 1.0.0.93
+- System-Fehler werden gezählt und angezeigt, Reset im Service-Menü -> System
+- Leak-Alarm Bereich geändert: 10 - 50% bei HFO unterdrückt
+- ViewDiagramm: LPG_FUNCTIONSTRUCT_LD wird im Create... initialisiert (FilledGraph etc)
+- Bereich Druck-Diagramm HFO geändert 200
+
+10.05.2010: FabianHFO 1.0.0.94
+- O2-Kalibrierung 100% Timeout auf 50 sec gesetzt
+- Bug aus System-Fehler-Anzeige entfernt
+- Send_ALARMKEY_PUSH() [Kommando 57] wird an SPI gesendet, sobald der Alarm-Silent-Key gedrückt wird
+- Debuglog für Batteriestatus implementiert (CModel()) -  muss wieder entfernt werden!!!
+- Volumen-Korrektur wird nur an Steuer-PIC geschickt, wenn Volumengarantie an ist
+- beim änder der Lautstärke (Alarmlimit-View) wird erst die Latsträrke an PIF gesendet, dann erst nach 200ms ein PEEP ausgelöst
+- ParaData von O2-Flush wurde noch nicht für alle Modi gleich gesetzt
+- wenn während der Flush-Zeit der O2Flush-Wert verstellt wird, wird dieser jetzt an SPI/COM geschickt (ERROR checking O2Para)
+- I2C-Watchdog implementiert (alle 40 msec)
+- COM: bei 4maligem Rücklesefehler CheckSerialData() werden nochmals alle Daten mittels Send_VENT_MODE() geschickt und 300ms gewartet, wenn immer noch falsch -> ERROR checking COM values
+- wenn SPI-Fehler -> keine SPI-Aktionen solnage Alarm besteht (auch kein Eintrag in SPI-Sendqueue)
+- wenn COM-Fehler -> keine COM-Aktionen solnage Alarm besteht (auch kein Eintrag in COM-Sendqueue)
+
+12.05.2010: FabianHFO 1.0.0.95
+- Buffer-Überlauf in Diagrammfunktionen abgefangen -> Fehlermeldung ins SysLog
+	m_pPlotItemsPressure=new G_PLOTITEMSSTRUCT_LD[G_MAXLINEPOINTS];
+	m_pPlotItemsFlow=new G_PLOTITEMSSTRUCT_LD[G_MAXLINEPOINTS];
+	m_pPlotItemsVolume=new G_PLOTITEMSSTRUCT_LD[G_MAXLINEPOINTS];
+	m_pPlotItemsPressureVolume=new G_PLOTITEMSSTRUCT_LD[G_MAXLOOPPOINTS];
+	m_pPlotItemsVolumeFlow=new G_PLOTITEMSSTRUCT_LD[G_MAXLOOPPOINTS];
+- Loops: wenn Loops eingefroren werden, wird der aktuelle ATZ sowie die 3 vorherigen neu gezeichnet (wie beim skalieren)
+- Waves/Loops ->Freeze: Diagramme werden komplett neu gezeichnet
+- falscher PushStatus des Freeze-Buttons wird abgefangen
+- AlarmHandler geändert (bezügl. ActiveAlarm)
+
+14.05.2010: FabianHFO 1.0.0.96
+- LogFile -> static
+- IPPV: BtB-Werte werden auch in ViewState "VS_ALARM_LIMIT" bei den Numerics angezeigt
+- Alarme mit niederer Priorität werden durch höherwertige gelöscht
+- Alarmlimits von Druck werden auf BTB-Werte geprüft
+- bei O2-Kalibrierung kein AlarmSilent
+- O2-100%-Kalibrierung timeout auf 120 sec
+- CMVView + CParaBtn: im Destruktor getModel() nicht auf NULL setzen
+
+15.05.2010: FabianHFO 1.0.0.97
+- m_pModel durch Funktion getModel() in allen Klassen ersetzt
+
+17.05.2010: FabianHFO 1.0.0.98
+- Überlauf der Buffergröße beim Zeichnen der Diagramme (G_MAXLOOPPOINTS,G_MAXLINEPOINTS) in Klasse CDiagramm und CViewDiagramm abgefangen
+- Flowsensor-Status "Kalibrierung nocht möglich" implementiert
+- Logfiles werden bei Akku-Alarm 0% zwischengespeichert
+
+18.05.2010: FabianHFO 1.0.0.99
+- SPI-Error und COM-Error umorganisiert
+- Anzeige der O2-Autokalibrierung in CViewCalibration angepasst
+
+19.05.2010: FabianHFO 1.0.0.100
+- Änderung im Alarmhandler: SetAlarmsilentActive() aus SetAlarm... entfernt, etc
+
+19.05.2010: FabianHFO 1.0.0.101
+- Hourglass in Trends implementiert
+
+20.05.2010: FabianHFO 1.0.0.102
+- Prüfzeit der Sensorkalibrierung auf 2 sec gesetzt, 21%-Kal von O2 auf 40sec erhöht
+- Fehler aus CInterfaceSerial::CheckSerialData bezüglich Aufruf GetM_StatusByte beseitigt
+
+21.05.2010: FabianHFO 1.0.0.103
+- m_cCopyOfRingbuf.setSize(MAXSIZE_RING_BUFFER) aus ViewDiagramm entfernt
+
+21.05.2010: FabianHFO 1.0.0.104
+- CriticalSections als static deklariert
+- Ringbuffer umorganisiert
+- CString durch CStringW ersetzt
+
+24.05.2010: FabianHFO 1.0.0.105
+- Zentrale Klassen im Model etc als "static" implementiert
+
+25.05.2010: FabianHFO 1.0.0.106
+- Ausstieg aus Trendthread CViewTrend::Load(void) verbessert
+- zugehörige Sprachversion 1.0.0.6
+- Hourglass in CWndSetupPatient, CWndSetupDateTime und CWndSetupLanguage implementiert
+
+26.05.2010: FabianHFO 1.0.0.107
+- Preset-Menu-Buttons vereinfacht
+
+10.06.2010: FabianHFO 1.0.0.108
+- Button "end application" im Service-Mode nur bei DEBUG-Version enabled
+- Druckalarme im Alarmlog ohne Dezimalstellen
+- IDS_TXT_AUTOSCALEON durch IDS_TXT_ON ersetzt
+- "Backup active" sowie Aufhebung wird ins Alarmlog geschrieben
+- zugehörige Sprachversion 1.0.0.10
+- Absicherung Berechnung von I-TIME/E-TIME/BPM: schlägt in Funktion CParaBtn::WriteCurrentValue() das Berechnen von I-TIME/E-TIME/BPM fehl, werden die Werte zurückgesetzt und ein LogEintrag geschrieben
+- Alarm Druck tief um 500ms verzögert
+- wird während der AutoOxiKalibrierung der Bildschirm gewechselt, läuft in der Oxi-Anzeige die Sanduhr
+- Start/Stop/Standby-Ventilation wird nur noch über MODE_OPTION gesendet
+- Trend: Deadlock bei Autoscale entfernt, Darstellung verändert (Strichstärke, Cursor etc)
+- ParaBtns: weitere Absicherung gegen obere und untere Limits in CViewParaBtn implementiert
+- CWndMenuVentState::OnBnClickedMenu...(): weitere Absicherung
+- CDataHandler::DeleteAllTrendData(): Nummerierung beim löschen der Trendfiles angepasst
+- Anzeigen des O2 in HOME und Graphik-Schirm werden gleichermaßen gerundet
+- Disconnectionsalarm FlowSensor -> wieder anstecken wird jetzt erkannt
+- Strichstärke der Liniendiagramme auf 2 Pixel geändert (HFO = 1 Pixel!)
+- Flowsensor-Relevante ParaButtons werden im PRESET nur bei "m_eFlowSensorState==FLOWSENSOR_MANOFF" nicht angezeigt
+- wenn Flowsensor manuell ausgeschalten wird, wird Volumengarantie und Volumenlimit auch ausgeschaltet (bleibt aus bei Wiedereinschalten Flowsensor)
+- Threads werden erst im Destruktor auf NULL gesetzt
+- DeleteAllTrendData() aus CWndSetupDateTime und CWndSetupPatient nach CMainFrame verlagert
+- Farben Alarmlog geändert: SYSALARM->rot, PATALARM->orange, SYSLIMIT->gelb
+- Schließen von MessageBox bei View-wechsel neu implementiert
+- CWndSetupDateTime::OnBnClickedSetDateTime(): wenn Date/Time nicht geändert wurde -> keine Aktion
+- MV-Trend implementiert
+- Skalierung Trends geändert
+
+11.06.2010: FabianHFO 1.0.0.109
+- nicht benötigte Fonts gelöscht
+- HFO-Diagramme: x-Achse lässt sich nach oben/unten verschieben
+
+14.06.2010: FabianHFO 1.0.0.110
+- TrendMenü: der aktuell ausgewählte Trendtyp wird auch im Popup-Menü selektiert, Farbe geändert
+- Oxy-Kal läuft im Hintergrund weiter
+- Uhrzeit der letzten Kalibrierung wird upgedated
+- Texte "auto calibration" etc ersetzt durch "calibartion" etc
+- zugehörige Sprachversion 1.0.0.13 oder höher
+
+21.06.2010: FabianHFO 1.0.0.111
+- Überprüfung beim Einlesen CConfiguration::GetAlarmlimitPmaxHF() des oberen Grenzwertes auf 90mbar erhöht
+
+23.06.2010: FabianHFO 1.0.0.112
+- HFO: Pmanual ParaButton implementiert, Absicherung gegen Pmean. Pmanual mindestens 2 mbar über Pmean , Pmanual entspricht Pinsp, ist Pinsp < Pmean, wird Pinsp, d.h. Pmanual dementsprechend geändert
+- HFO: I:E ParaButton implementiert, 1:3, 1:2, 1:1 -> benötigt SteuerPIC-Version 1.3.13 oder höher!!!!!!!
+- HFO: SetAlarm_BPMmax entfernt
+- Diff zwischen O2 und Flush == 10%
+- HFO: Numeric mit Frequenz-Anzeige, aber ohne Alarmlimits
+- HFO abschaltbar im Service-Modus -> Interfaces -> enable/disable HFO
+- Druckgrenze der Alarmlimits von HFO wird richtig gespeichert und nicht mehr überschrieben
+- Autoskalierung Zeitachse bei Modewechsel nach HFO und von HFO implementiert: nach HFO 1,2 Sec, von HFO 10 Sec
+- Grenzwert von Pmean in HFO auf 40 mbar erhöht, Warndreieck ab 15mbar
+
+24.06.2010: FabianHFO 1.0.0.113
+- Gegenseitige Absicherung ITIME/ETIME/BPM implementiert
+
+26.06.2010: FabianHFO 1.0.0.114
+- HFO: max. Skala vom Volumen-Diagramm 40 ml, bei Autoscale -> Einstieg mit 5 ml (wird aber von vorherigen Werten evtl direkt überschrieben)
+- HF-Amplitude im Trend implementiert, Language-File 1.0.0.14 oder höher nötig!
+- Trends: Zeitaktualisierung nur bei Refresh
+
+28.06.2010: FabianHFO 1.0.0.115
+- HFO: Pman ist nicht mehr mit Pmean verriegelt, Pman wird als eigener Wert gespeichert (nicht mehr als Pinsp!!!)
+
+29.06.2010: FabianHFO 1.0.0.116
+- beim Einstieg in CViewPara wird die Differenz zwischen O2 und O2-Flush überprüft und gegebenenfalls korrigiert
+- Nachlauf für Sanduhr von Oxy-Kalibrierung implementiert
+- Trend: Verschiebung der Zeitachse verbessert, HFAMP-Trend wird jetzt richtig geladen
+
+01.07.2010: FabianHFO 1.0.0.117
+- Sprachenfile 1.0.0.15 oder höher verwenden!
+- Fehler aus O2-Flush (PRESET) entfernt
+- Diff zwischen O2 und Flush == 5%
+- #define PROTOTYP imlementiert in Hinblick auf neue Folie
+- HFO: ParaButtom Pmean verschoben
+- Warndreieck bei Überschreitung MaxKey bei jedem Aufruf von CViewParaBtn::ShowParaBtn neu überprüft
+- MaxKey wird nach NEONATAL/PEDIATRIC unterschieden -> HFOamp: Neonatal: MaxKey=30 & MaxLimit=60, Pediatric: MaxKey=40 & MaxLimit=80
+
+07.07.2010: FabianHFO 1.0.0.118
+- HFO: HFampl wird bei Volumengarantie automatisch um 5mbar erhöht, HFampl wird rot, rote Begrenzungslinie oben/unten
+- Sprachenfile 1.0.0.16 oder höher verwenden!
+- HF-Freq ohne MaxKey
+- Timer Para-Buttons auf 30 sec erhöht
+- HFO: Neonatal -> Pmean 30mbar begrenzt, Pediatric -> Pmean 40 mbar begrenzt
+- Diff zwischen O2 und Flush == 2%
+- Text O2-Button Kalibrierung fest implementeirt
+
+10.07.2010: FabianHFO 1.0.0.119
+- O2-Flush in HFO implementiert
+- Shutdown Bildschirm implementiert
+- Diagrammgeschwindigkeit angepasst
+- CViewDiagramm::RefreshGraphs() implementiert
+- Fehler bei Loops mit hoher Frequenz beseitigt (20Hz)
+
+12.07.2010: FabianHFO 1.0.0.120
+- CheckThread in serieller Schnittstelle wieder aktiviert -> PSV-Backup geht wieder
+- Sicherung bei SPI bezüglich Einrastung HFO implementiert -> großes Volumen  -> Erkennung ATZ
+- I:E-Relation von HFO wird jetzt von serieller Schnittstelle->CheckThread überprüft
+
+20.07.2010: FabianHFO 1.0.0.121
+- bei ALarm & GetViewState()==VS_GRAPH wird GraphThread gestoppt
+- Auto-Skalierung bei HFO berücksichtigt Pmanual erst bei manuellem ATZ und wird danach wieder zurückgesetzt
+- AccuPIC Testversion CModel Accu ALarm + Star,tupView
+- bei FlowCalibration werden OxyCalButtons disabled, bei OxyCalibration werden FlowCalButtons disabled (im neuen Menü, ist aber noch deaktiviert!!!)
+- Fehler aus FlowSensor-Statuserkennung beseitigt(im neuen Menü, ist aber noch deaktiviert!!!)
+- ERROR: CAlarmHandler::SetAlarm_P_IN_O2 O2Sensor off && O2Sensoralarm wird durchgelassen
+- während die Trenddaten geladen werden, werden alle Tastendrücke etc innerhalb der Trendview ignoriert (ausser RETURN)
+- AkkuPIC deaktiviert
+
+20.07.2010: FabianHFO 1.0.0.122
+- Sprachenfiles werden alphabetisch sortiert
+- Fehler aus Oxy-Cal && Flow-Cal bezüglich Alarmsilent entfernt
+
+02.08.2010: FabianHFO 1.0.0.125
+- bei Interfacefehler wird die jeweilige Verfügbarkeit deaktiviert
+- Fehler aus Autoscreenlock beseitigt
+- Passwortabfrage ServiceModus kann im ServiceModus selbst unter System -> deaktiviert werden, wird im FRAM gespeichert
+- neues Menü für Systemsettings etc implementiert
+- AccuPIC implementiert
+- Pmean in SIMV / SIMV+PSV implementiert
+- Fehler aus Volumengarantie (an -> automatischer Wert am Limit) entfernt
+- Sprachenfile 1.0.0.19 oder höher verwenden
+- Timer ins Settings-Menü implementiert
+- diverse Verbesserungen
+
+04.08.2010: FabianHFO 1.0.0.126
+- debuggen des ACCU-PICs wird unterstützt
+- große Sleep()-Befehle unterteilt
+- Trend-Absturz beseitigt
+- Oxy-Cal läuft im Hintergrund weiter
+- Fehler in SubSettings beseitigt, Werte werden auch bei Home etc übernommen
+- neu Infoleiste implementiert (Akku, Uhr, Neonatal/Pediatric etc)
+- Shutdown-Bildschirm (Flat Battery!) implementiert
+- Batterielaufzeit im ServiceBS wird jetzt richtig angezeigt
+- Ausschaltsequenz hat höchste Priorität, wird auch bei aktiven Alarmen angezeigt!
+- Backup PSV wird Orange dargestellt
+- E-Flow Maxwert SIMV/SIMV+PSV/PSV auf 20 l/min erhöht
+- Trend MOVE <- -> geht wieder
+- Alarm Volumengarantie bei HFO wird nur alle 2 sec signalisiert
+- ViewFocus auf SubViewMenu wird gesetzt
+- Respirator stopped wird jetzt richtig von 2 Minuten herunter gezählt
+
+06.08.2010: FabianHFO 1.0.0.127
+- Manueller ATZ kann im HFO deaktiviert werden -> Ventilation-Settings, Anzeige im Statusfeld DTBView
+- Volumengarantie in SIMV/PSV + PSV implementiert
+- Alarmlimits für DCO2 in HFO implementiert
+- Manueller ATZ kann auch im Service Mode ausgeführt werden
+- Nursecall implementiert
+
+10.08.2010: FabianHFO 1.0.0.129
+- SPI: bei neuem ATZ wird nach HFO unterschieden
+
+10.08.2010: FabianHFO 1.0.0.130
+- Verhalten der Buttons verbessert
+- Preset-Menu-Buttons umgebaut
+
+10.08.2010: FabianHFO 1.0.0.131
+- Symbol für Man.ATZ bei HFO nur im HFO-Modus sichtbar
+- Maximalwerte der Trends herausgenommen
+- Fehler aus Preset-Modus entfernt (Preset-Menu-Buttons umgebaut)
+
+11.08.2010: FabianHFO 1.0.0.132
+- Numerikblock der eingefrorenen Daten auf HFO angepasst 
+- Service: Accuboard -> Werte werden mit Dezimalstellen und Einheit dargestellt
+- CMVModel::ParseAlarmStateBytes: SetAlarm_Accu_POWER von SPI nur wenn kein AccuPIC
+- Fehler aus CheckLimits bei CPAP/NCPAP beseitigt: Anzeige des PEEP-Wert im ALarmlog bei Alarm MaxLimit
+- in CDataHandler::GetVGarantMinPara() HFO und PSV berücksichtigt
+- Volumengarantie HFO: unteres Limit 0,8 ml
+- bei CDataHandler::CalculateAutoAlarmlimitVgaranty() wird HFO unterschieden
+
+12.08.2010: FabianHFO 1.0.0.133
+- Numerikblöcke: Pmean mit einer Nachkommastelle
+- Service: Factory settings -> Reboot muss manuell initiiert werden....
+
+06.09.2010: FabianHFO 1.0.0.134
+- Schwedisch hinzugefügt
+- XML-Sprachdatei "languages.xml" implementiert, alte Sprachimplementierung wir weiter unterstützt, wenn kein XML-File vorhanden ist
+	<FabianHFO>
+		<Language>
+			<ID>0</ID>
+			<FILE>english.lang</FILE></Language>
+		<Language>
+			<ID>1</ID>
+			<FILE>german.lang</FILE></Language>
+		<Language>
+			<ID>2</ID>
+			<FILE>russian.lang</FILE></Language>
+		<Language>
+			<ID>3</ID>
+			<FILE>french.lang</FILE></Language>
+		<Language>
+			<ID>4</ID>
+			<FILE>italian.lang</FILE></Language>
+		<Language>
+			<ID>5</ID>
+			<FILE>finnish.lang</FILE></Language>
+		<Language>
+			<ID>6</ID>
+			<FILE>chinese.lang</FILE></Language>
+		<Language>
+			<ID>7</ID>
+			<FILE>spanish.lang</FILE></Language>
+		<Language>
+			<ID>8</ID>
+			<FILE>portuguese.lang</FILE></Language>
+		<Language>
+			<ID>9</ID>
+			<FILE>slovensko.lang</FILE></Language>
+		<Language>
+			<ID>10</ID>
+			<FILE>czech.lang</FILE></Language>
+		<Language>
+			<ID>11</ID>
+			<FILE>swedish.lang</FILE></Language>
+	</FabianHFO>
+- ViewStartup: bei letzten beiden Punkten -> je ein Beep
+- Versuch schwarzen Bildschirm zu reduzieren
+- Passworteingabe Buchstabe "F" ist jetzt enabled
+- Numerik SIMV / SIMV+PSV: Leak & Freq richtig dargestellt
+
+13.09.2010: FabianHFO 1.0.0.135
+- PEEP in 0,5 Schritten sowie PEEP-Numerik mit Nachkommastelle, Volumengarantie ab0,8 in 0,1 Schritten bei HFO
+- Fehler aus PSV beseitigt: ParaBtn PSV berücksichtigt jetzt auch Volumengarantie-Status in Bezug auf Pinsp
+- PSV:grau hinterlegte Schrift entfernt, ParaBtn I-Time jetzt orange
+- Volumengarantie: Pinsp jetzt orange anstatt rot
+- Abbruchkriterium PSV von 10 - 70 % einstellbar
+- HFO: Pmean in 0,2er Schritten
+- O2Flush-Para wird automatisch mit O2-Para angepasst
+- geänderte Limit, Limits jetzt in "config.h" definiert
+- neue Sanduhr implementiert
+
+13.09.2010: FabianHFO 1.0.0.136
+- ParaButtons: verliert ein ParaBtn den Focus, wird der vorherige Wert wieder hergestellt
+- MaxKey muss durch Encoder (Key) explizit bestätigt werden
+
+14.09.2010: FabianHFO 1.0.0.137
+- MaxKey von I-Time/BPM/E-Time korrigiert
+
+20.09.2010: FabianHFO 1.0.0.138
+- Fehler aus "autoset" der Alarmlimits (DCO2) beseitigt
+- Im Akkubetrieb ist die maximale HFO Amplitude auf 60 mbar begrenzt (auf neonatale Limits beschränkt)
+- diverse Änderungen beim Neuzeichnen der ParaBtns + SubParaBtns bei Wertänderung
+- Im Service-Mode lässt sich die Laufzeit vom Gerät und der Akkus zurück setzen
+
+27.09.2010: FabianHFO 1.0.0.139
+- bei Umschaltung in Batteriebetrieb zeigt InfoZeile für 30sec die Restlaufzeit in Prozent, danach in Stunden & Minuten 
+- ViewSystemAlarm: rote Hinweise werden nur bei aktivem Alarm gezeichnet
+- Bei Gerätestart wird alter Zustand des Flowsensors wieder hergestellt (on/off/manoff)
+- bei Systemstart ist das akustische Alarmsignal für 30 Sekunden inaktiv, bis Zeit vorbei oder AlarmsilentTaste gedrückt wurde
+- Ventilation anhalten: geht nur, wenn kein Systemalarm aktiv ist, Patientenalarmne werden dann gelöscht
+
+29.09.2010: FabianHFO 1.0.0.140
+- Flowsensor: DAC-Werte werden angezeigt
+- Menü-Buttons der Alarmlimits reagieren schon bei WM_MENUBUTTONDOWN
+- Beep bei ParaButtons bei Schlüssel nur einmalig
+- ViewSystemAlarm: rote Hinweise werden nur bei aktivem Alarm gezeichnet, bei Silent oder selbst aufgehoben -> grau
+
+01.10.2010: FabianHFO 1.0.0.141
+- I-Flow generell bei 32 lpm begrenzt -> Proportionalventil
+
+04.10.2010: FabianHFO 1.0.0.142
+- PEEP: Alarmlimits auto wird automatisch angepaßt
+- SubParaBtn PSV TIME: SIMV+PSV wie bei PSV (ohne I:E)
+- Anzeige O2-Kalibrierung gerundet
+- ANzeige bei O2-Kalibrierungsfehler
+
+06.10.2010: FabianHFO 1.0.0.143
+- Fehler aus ParaData Initialisierung beseitigt (ConfirmItoErelation)
+- SPI Fehler bei Startup werden richtig dargestellt
+
+11.10.2010: FabianHFO 1.0.0.148
+- I2C-Kommunikation als Thread implementiert
+- Thread-Handling allgemein neu implementiert
+- OxyKalibrierung in einen Thread zusammengefasst
+- diverse Memoryleaks beseitigt
+
+13.10.2010: FabianHFO 1.0.0.149
+- HFO: Neonatal+Pediatric: PMEAN bei 30 mbar und HFAMPL bei 60mbar begrenzt
+
+18.10.2010: FabianHFO 1.0.0.150
+- ParaBtn BPM: Fehler bei dekrementieren und anschließendem push auf Encoder beseitigt
+- Delay der Zeitskalierung der Graphen/Trend beschleunigt
+- ParaBtns: Warndreieck wird bei MaxKey-> Confirm beseitigt
+
+19.10.2010: FabianHFO 1.0.0.151
+- Serielle Schnittstelle neu implementiert
+- Alarm "Lüfter defekt" hinzugefügt
+- Accu-Alarme nur noch über AccuPIC! Nicht mehr über SPI!
+
+
+22.10.2010: FabianHFO 1.0.0.152
+- StartHFO implementiert
+- serielle Kom. geändert
+
+26.10.2010: FabianHFO 1.0.0.153
+- Text HFO stopped implementiert
+- bei Verstellung von O2+O2-FlushPara wird der Patientenalarm Druck für 3 Sekunden ignoriert
+- Autoscale: Loops werden mit größter Auflösung initialisiert
+
+02.11.2010: FabianHFO 1.0.0.154
+- HFO: untere Grenze Pmean bei 5 mbar (Neonatal & Pediatric)
+
+02.11.2010: FabianHFO 1.0.0.155
+- Alarm "AL_Accu_Defect" hinzu gefügt
+- gemessener O2-Wert mindestens 21% und höchstens 100%
+- AlarmlimitBtn schneller gemacht
+
+05.11.2010: FabianHFO 1.0.0.156
+- Y-Legende der Loops angepasst
+- Freeze der Graphen neu implementiert
+- I/E-Verhältnis ohne "double" berechnet, Warning & I/E-Invers wird richtig dargestellt
+- Auto-Alarmlimit Pmax bei HFO vom Meßwert berechnet
+
+08.11.2010: FabianHFO 1.0.0.157
+- Alarmlimits wird beim Init auf oberen und unteren Grenzwert überprüft
+
+08.11.2010: FabianHFO 1.0.0.158
+- Fehler aus AlarmHandler -> DCO2 beseitigt
+- Alarm AccuDefect lässt sich stumm schalten
+
+09.11.2010: FabianHFO 1.0.0.159
+- Delay bei Buttons auf 150 ms gesetzt
+- ViewSystemAlarm: Alarm-Text nicht mehr rot unterlegt
+
+10.11.2010: FabianHFO 1.0.0.160
+- Hourglass von OxyCal extern mit Timer gesteuert
+- Pmean bei HFO in 0,5er Schritten
+- Fehler aus CPAP -> FlowMIN  beseitigt
+
+11.11.2010: FabianHFO 1.0.0.161
+- Fehler aus AlarmLimits beseitigt (MV / DCO2 / ETCO2)
+
+12.11.2010: FabianHFO 1.0.0.162
+- Warndreieck bei PEEP + PPSV (SIMV+PSV / PSV) wird neu berechnet
+- Warndreieck bei PEEP für KeyMinimum
+- ParaBtn I-Time -> Fehler bei Warndreieck beseitigt
+- Flowkalibrierung: Fehler aus Datumskonvertierung beseitigt
+- Graphik für HFO stopped implementiert
+
+14.11.2010: FabianHFO 1.0.0.163
+- - ParaBtn allgemein -> Fehler bei Warndreieck beseitigt
+- bei Startup Warnhinweis "check flow sensor ..."
+- Diagramme: Fehler aus FREEZE beseitigt
+
+17.11.2010: FabianHFO 1.0.0.164
+- Sicherheitsüberprüfung bei Screenlock implementiert
+
+17.11.2010: FabianHFO 1.0.0.165
+- Auto-Alarmlimits: Pins erhöhen/erniedrigen bei Vgarant ein/aus
+
+25.11.2010: FabianHFO 1.0.0.166
+- Numerics SIMV etc: Vte über 100 ml ohne Kommastelle
+
+25.11.2010: FabianHFO 1.0.0.167
+- Betriebsstunden -> Registry Flush
+
+26.11.2010: FabianHFO 1.0.0.168
+- SPI-Error weiter eingegrenzt
+
+/***************************************************************************/
+
+02.12.2010: FabianHFO 1.1.0.5
+- etCO2 implementiert
+- etCO2-Modul über Registry zuschaltbar
+
+02.12.2010: FabianHFO 1.1.0.6
+- Option zum deaktivieren von Vlimit & Vgarantie implementiert (Registry, später über Lizens!)
+- HFO modul auch über Registry aktivierbar, aus Service-Mode entfernt
+- PSVPara wird jetzt für PSV und SIMV+PSV separat gespeichert (Fehler beseitigt)
+
+07.12.2010: FabianHFO 1.1.0.7
+- CO2 & Flowsensor aus: es wird jetzt nur Druck und CO2 Graph angezeigt
+- Fehler aus Graphikview beseitigt (Volumengraph in HauptBS wählen, dann aus dem Menü zu den Graphen wechseln -> Kurven -> Schleifen: Volumengraph war an falscher Stelle)
+
+10.12.2010: FabianHFO 1.1.0.8
+- Pmax-Alarm hat jetzt hohe Priorität
+- AlarmLog Farben geändert
+- AlarmPrios Farben & Blinkfrequenz geändert gem. Norm
+- ViewDTBField geändert
+- Fabrikeinstellungen werden jetzt richtig übernommen
+- wenn Alarme "selbst" aufgehoben werden, wird AlarmLog-Symbol im Numericheader angezeigt (Glocke mit LogListe) 
+	-> d.h. Alarm signalisiert -> Aufhebung in Alarmlimits über "Reset alarms" -> ViewAlarmlimits öffnet dann automatisch ALarmLog
+- Menü-> Ventilation: Button Hospital settings implementiert
+- erweiterete Ausgaben im Service-Modus in das System-Logfile
+- try/catch-Blöcke implementiert
+- CReadO2Thread wird jetzt mit Event beendet
+- Model-Observer über CriticalSection gesichert
+- neues Service-Menü implementiert
+- Oxi-Kal_Ventil-Burn-in implementiert
+- Hospitalsettings können geladen werden, auf USB gespeichert und von dort wieder hergestellt werden
+
+20.12.2010: FabianHFO 1.1.0.9
+- Fehler aus Oxy-/ und Flowkalibrierung beseitigt, AlarmSilent an Flowkalibrierung angepasst 
+
+
+21.12.2010: FabianHFO 1.1.0.10
+- Threads Trend/OpTime/AkkuCheck zusammengefasst
+- CDataHandler::RefreshOpTime mit CriticalSection abgesichert
+- EV_CONTROL_POWERSTATE_CHANGED in MainFrame mittels AfxGetMainWnd()->PostMessage(WM_POWERSTATE_CHANGED) verlagert
+- CDataHandler::ChangeVgarantState(eVgarantState state) in MainFrame mittels AfxGetMainWnd()->PostMessage(xxx) verlagert
+- CMVEventControl::EV_CONTROL_DEL_MODE_EXHALVALVCAL in MainFrame mittels AfxGetMainWnd()->PostMessage(xxx) verlagert
+- alle relevanten getModel()->Trigger(&event) über PostMessage(xxx) initiiert
+- SubPara_O2act wird nicht mehr zuerst gezeichnet
+- Oxy-Cal: Alarm "NotCalibrated" wird über AlarmSilent gelöscht
+- globale Variablen reduziert
+
+23.12.2010: FabianHFO 1.1.0.11
+- Anzeigenfehler HFO starten bereinigt
+
+23.12.2010: FabianHFO 1.1.0.12
+- Trend werden jetzt wieder geschrieben
+
+23.12.2010: FabianHFO 1.1.0.13
+- HFO: AlarmlimitState Pmax -> AUTO wird nicht mehr in Config gespeichert
+- Sprachenfiles angepasst
+
+27.12.2010: FabianHFO 1.1.0.14
+- HFO start/stop wird als Event weiter gegeben
+- Model::Trigger mit CriticalSection abgesichert
+- Serial COMs without Overlapped etc
+
+28.12.2010: FabianHFO 1.1.0.15
+- bei Startup wird zuerst das Kalibriermenü geöffnet
+- System-Logfile auf 100kB begrenzt, dafür 20 Stück
+- SendSerialData: iCountError=0 wird bei Erfolg zurück gesetzt
+
+29.12.2010: FabianHFO 1.1.0.16
+- Sprachenfiles angepasst IDS_PARA_ETCO2 / IDS_PARA_DCO2 / IDS_PARA_2
+- ViewAlarmLimit umorganisiert
+- ETCO2: InspCO2 durch Freq ersetzt
+- AlarmLog-Sybol geändert
+- AlarmLog wir nur automatisch geöffnet, wenn es kein PatientenAlarm war
+- Anzeige O2-Sensor defekt/ersetzen im Numerikblock jetzt 2-zeilig
+
+08.01.2011: FabianHFO 1.1.0.17
+- HFO-Statusänderung wird über PostMessage MainWnd signalisiert
+- Sprachänderung wird über PostMessage MainWnd signalisiert 
+- CDataHandler::SetPinspNotReachedFlag wird über PostMessage MainWnd signalisiert
+- Serielle Alarme von CInterfaceSerial::CheckStatusBits werden über PostMessage MainWnd signalisiert
+- CMVModel::GetLanguageString(int nID) mit CriticalSection gesichert
+- Systemalarm: wird dieser beseitigt und zur vorherigen View mittels Return gewechselt, werden die signalisierten Alarme gelöscht -> rote Alarmglocke verschwindet
+
+09.01.2011: FabianHFO 1.1.0.18
+- CAlarmHandler::checkLimits(): Unit (GetLanguageString) von etCO2 wird erst bei Alarm eingelesen
+- Screenlock wird über PostMessage MainWnd signalisiert
+- EV_DATA_ALARMLIMITS_CHANGED + EV_DATA_CALCULATE_ALARMLIMITS wird über PostMessage signalisiert
+- Matrix-Buttons werden über PostMessage MainWnd signalisiert
+- AlarmLimits von CO2 werden nur geprüft, wenn Sensorstatus==ok
+- alle CMVEventInfotext::EV_TIMETEXT werden über PostMessage MainWnd signalisiert
+- EV_CONTROL_FLOWSENSORSTATE + EV_CONTROL_O2SENSORSTATE werden über PostMessage MainWnd signalisiert
+- EV_BN_NUMERIC wird über PostMessage MainWnd signalisiert
+- alle getModel()->Trigger nach CMainFrame::DefWindowProc verlegt
+- Manuelle Skalierung der Trends neu implementiert (CTrendScaleBtn)
+- Kalibrierbildschirm 2min Silent werden beim Verlassen weiter gezählt 
+- Anzeige eines signalisierten Alarms nur wenn Typ < AT_SYSALARM
+- Anzeige "check flow sensor calibration at first" von Startupview nach Calibrationview verlagert
+- Graphen: Freeze + Continue -> x-Skalierung geht wieder
+- Startupphase -> Kalibrierbildschirm ohne Timer
+- bei Moduswechsel werden signalisierte Alarme gelöscht
+
+10.01.2011: FabianHFO 1.1.0.20
+- Änderungen gem. Protokoll und Besprechung bei MIM
+
+11.01.2011: FabianHFO 1.1.0.21
+- SetPIFSound über PostMessage MainWnd signalisiert
+- bei signalisierten Patientenalarmen wird graue Glocke im NumHeader angezeigt
+
+11.01.2011: FabianHFO 1.1.0.22
+- bei Startup ist das System für 120 Sekunden silent
+- wenn Zeit/Datum geändert wird steht bei letzter Kalibrierung "--- unknown ---"
+
+13.01.2011: FabianHFO 1.1.0.23
+- Starttöne werden direkt gesendet
+- SPI VENTILBURN14_BIT & MANBREAT15_BIT wird gesendet
+- Inspirationsschlauch/Exspirationsschlauch-Alarm SERIAL implementiert
+- Initialisierung IDC_BTN_PARA_PPSV geändert
+
+14.01.2011: FabianHFO 1.1.0.24
+- SPI-Alarme neu implementiert
+- Bug aus ApnoeLimit (off) entfernt
+- try/catch-Blöcke erweitert
+- Alarm P_PROXIMAL wird jetzt in SystemAlarm-View angezeigt
+- Parameter wird bei Schlüssel + UDP-Click bestätigt
+
+17.01.2011: FabianHFO 1.1.0.25
+- Beim Aufstarten in NCPAP/DUOPAP wird nicht zur Kalibrierung gewechselt
+- beim Moduswechsel werden ALLE Alarme gelöscht
+- im Graphikmodus von SIMV & SIMV+PSV wird Mechanik-Block angezeigt
+- 3 Sekundenspanne aus Flow + Oxykalibrierung entfernt 
+- Diskonnektion -> HFO starten -> orange
+- Warndreieck bei NCPAP/DUOPAP -> "use InfantFlow tube set" entfernt
+
+17.01.2011: FabianHFO 1.1.0.26
+- Alarme über WM_Messages implementiert
+- Anwendung wird richtig beendet, CircularBuffer wird auf NULL gesetzt, InstallerProgramm sollte jetzt gestartet werden können
+
+18.01.2011: FabianHFO 1.1.0.27
+- Flowsensor reinigen: -> Text "replace and calibrate"
+- Sprachenfiles 1.0.0.35 nötig
+- während Flowkalibrierung wird der Button "Flowsensor on/off" deaktiviert
+- wird im NCPAP/DUOPAP aufgestartet und in einen anderen Modus gewechselt, wechselt die View einmalig zur Kalibrierungdes Flowsensor
+- Hinweis zur Flowkalibrierung wird in NCPAP/DUOPAP nicht angezeigt
+- SPI-Verfügbarkeit wird bei allen AlarmsilentStati gleich behandelt
+
+19.01.2011: FabianHFO 1.1.0.28
+- gesamten Code auf NULL-Pointer überprüft
+
+19.01.2011: FabianHFO 1.1.0.29
+- Beatmungsmode (NEONATAL/PEDIATRC) wird ins Logfile geschrieben
+- Alarm "Sensor reinigen" implementiert, während Prüfung wird kein Status eingelesen
+
+20.01.2011: FabianHFO 1.1.0.30
+- für Alarm Druck tief lässt sich ein delay 1 - 10 sec einstellen
+- SPI überprüft sich selbst
+
+21.01.2011: FabianHFO 1.1.0.31
+- Flowsensor-Stati bereinigt ....
+
+24.01.2011: FabianHFO 1.1.0.32
+- I:E Verhältnis wird im ServiceMode (wenn HFO) geschickt
+- Automatische Oxy-Kalibrierung wird solange verzögert, bis Startup-View nicht mehr in der KalView (gem Protokoll22.01.2011)
+- DCO2-Alarmlimits lassen sich ausschalten (gem Protokoll22.01.2011)
+
+24.01.2011: FabianHFO 1.1.0.33
+- Win32 exception handling implementiert
+- manuelle Oxy-Kalibrierung bricht Verzögerung der automat. Kalibrierung ab (gem Protokoll22.01.2011)
+- Fehler aus Oxy-Kalibrierung entfernt (wird richtig beendet)
+
+25.01.2011: FabianHFO 1.1.0.34 (Ctrl 2.1.03 / Mon 2.3.17 / HFO 2.0.1) (Ctrl 2.1.03 enthält Fehler bei O2-Kal && Service-Mode!!!!)
+- Flowmeter implementiert (language1.0.0.37.xlsm nötig)
+- Trigger-Beep aus Ventilation-Settings entfernt (gem Protokoll22.01.2011)
+- Ventilation-Settings umorganisiert (gem Protokoll22.01.2011)
+- Version Config 1002 -> neue Hospitalsettings!!!
+
+26.01.2011: FabianHFO 1.1.0.35 
+- Fehler beim Wechsel in den Service-Mode beseitigt
+
+26.01.2011: FabianHFO 1.1.0.36
+- Alarme werden überprüft auf Zulässigkeit bevor sie mit WM_MESSAGES signalisiert werden
+
+27.01.2011: FabianHFO 1.1.0.37
+- Buttons Graphik-View umorganisiert
+- FLowmeter-Daten werden nur in NCPAP & DUOPAP eingelesen
+
+27.01.2011: FabianHFO 1.1.0.38 (Ctrl 2.1.04 / Mon 2.3.17 / HFO 2.0.1)
+- Code mit CppCheck überprüft und bereinigt
+
+28.01.2011: FabianHFO 1.1.0.39 (Ctrl 2.1.04 / Mon 2.3.19 / HFO 2.0.1)
+- HFO-SRM_28012011: Punkte 6,7,20,29,30,43 behoben
+
+31.01.2011: FabianHFO 1.1.0.40 
+- m_pcwtCO2SensorCheckThread mit NULL initialisiert
+- HFO-SRM_28012011: Punkte 9,31,32,34,37,39,40, behoben
+- Pmin-Alarm-Delay nur bei NCPAP/DUOPAP
+
+31.01.2011: FabianHFO 1.1.0.41 (Ctrl 2.1.04 / Mon 2.3.20 / HFO 2.0.1)
+- Alarmlimit-Zeichen aus dem NumericBlock (SIMV/SIMV+PSV) in der GraphikView entfernt 
+
+01.02.2011: FabianHFO 1.1.0.42 (Ctrl 2.1.04 / Mon 2.3.20 / HFO 2.0.1)
+- Alarmlimit-Werte werden im NumerikBlock (SIMV/SIMV+PSV) in der GraphikView angezeigt 
+
+01.02.2011: FabianHFO 1.1.0.43 (Ctrl 2.1.04 / Mon 2.3.20 / HFO 2.0.1)
+- ViewTrend: SelectTrendBtns neu implementiert (nur noch einer kann grün sein)
+- ServiceMenü: MonitorPIC: "AccuSupply" durch "Fan defect" ergänzt, System: Textgröße angepasst
+
+01.02.2011: FabianHFO 1.1.0.44(Ctrl 2.1.04 / Mon 2.3.20 / HFO 2.0.1)
+- Logeintrag im Fall "if(iBufCnt>G_MAXLOOPPOINTS)" aus CViewDiagramm entfernt
+- MemoryLeak aus WndNumeric -> m_pcNumericTop entfernt
+- alle Thread-Handles werden geschlossen
+
+01.02.2011: FabianHFO 1.1.0.45(Ctrl 2.1.04 / Mon 2.3.20 / HFO 2.0.1)
+- CCriticalSection durch CRITICAL_SECTION ersetzt
+
+01.02.2011: FabianHFO 1.1.0.46(Ctrl 2.1.04 / Mon 2.3.20 / HFO 2.0.1)
+- CDC* pDCMem=CDC::FromHandle(hdcMem); aus dem kompletten Projekt entfernt -> MemoryLeak !!!
+
+03.02.2011: FabianHFO 1.1.0.47(Ctrl 2.1.04 / Mon 2.3.20 / HFO 2.0.1)
+- Apnoe-Alarm wird bei N-Mode ignoriert
+- solange HFO gestoppt ist ertönt im 5 Sek.intervall ein Ton (wenn kein ALarm aktiv ist!)
+- HFO Alarmlimits: DCO2 Minimum lässt sich jetzt einschalten
+
+04.02.2011: FabianHFO 1.1.0.48(Ctrl 2.1.04 / Mon 2.4.3 / HFO 2.0.1)
+- Bufferüberlauf in Trends bei 10 Tage beseitigt, Exception Handling in alle for()-Schleifen implementiert
+- Font-Handling geändert
+
+04.02.2011: FabianHFO 1.1.0.49(Ctrl 2.1.04 / Mon 2.4.3 / HFO 2.0.1)
+- Chinesisch teilweise implementiert
+
+
+08.02.2011: FabianHFO 1.1.0.50(Ctrl 2.1.04 / Mon 2.4.3 / HFO 2.0.1)
+- Trenddaten deaktiviert!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+- Wenn Trenddaten gelöscht werden wird ein Logeintarg erstellt
+- Laden der Trenddaten geändert
+- bei jedem WM_ALARMSTATE_CHANGED wird WM_CHECK_ALARMS auf Änderungen überprüft
+- während dem Laden der Trends reagieren die CSelectTrendBtn nicht auf drücken
+- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+- Alarmlimits MV etc wird nicht ausgeschaltet
+- Log wird in CFabianHFOApp geschrieben
+- CFabianHFOApp::ReportException implementiert
+- neue Klasse Logfiles implementiert
+
+09.02.2011: FabianHFO 1.1.0.51(Ctrl 2.1.05 / Mon 2.5.0 / HFO 2.0.1)
+- AlarmLimitBtns werden mit AL_ON initialisiert
+- Getriggerten ATZ (grüne Darstellung) geändert
+- Trends über Compilerschalter "TREND_AVAILABLE" aktivierbar
+
+10.02.2011: FabianHFO 1.1.0.52(Ctrl 2.1.05 / Mon 2.5.0 / HFO 2.0.1)
+- DefWindowProc -> WindowProc;
+- SPI MesData_Freq_Max auf 250 erhöht
+- CViewDiagramm m_bExit implementiert
+- Display -> Helligkeit: Mond implemntiert
+
+11.02.2011: FabianHFO 1.1.0.53(Ctrl 2.2.01 / Mon 2.5.3 / HFO 2.0.1)
+- FlowDisconnection (SPI) wird an SERIAL weitergeleitet
+- Alarm PEEP high implementiert
+- Lautstärke Button "leise" mit Warndreieck
+- Flowmeter: Werte mit 1 Nachkommastelle und in 0,5er Schritten, Anzeige
+- Service: Button VentilBurnIn geändert
+- Trends: Grafik-Fehler aus Wertanzeige entfernt
+- PSV-Backup wird nicht mehr ins Log geschrieben
+- language1.0.0.40.xlsm nötig
+- Betriebsstunden HFO implementiert (Systeminfo & Service->System)
+- NCPAP/DUOPAP zuschaltbar über Registry-Files (NMODE_enable.reg + NMODE_disable.reg)
+
+14.02.2011: FabianHFO 1.1.0.54 (Ctrl 2.2.02 / Mon 2.5.4 / HFO 2.0.1)
+- WM_STOP_PMIN_ALARMDELAY: AL_PatAl_PminLow wird nur auf AS_SIGNALED gesetzt, wenn dieser AS_ACTIVE war
+- bei Systeminfo wird die Version der Sprachenfiles angezeigt
+- Einheit für DCO2 einheitlich Dargestellt [ml^2/sec] (Sprachenkonflikt)
+
+15.02.2011: FabianHFO 1.1.0.55 (Ctrl 2.2.02 / Mon 2.5.4 / HFO 2.0.1)
+- Logfiles::SaveLog() implementiert
+- SPI GetMessureData() wird ausgewertet
+- AfxGetMainWnd() abgesischert
+
+16.02.2011: FabianHFO 1.1.0.56 (Ctrl 2.2.02 / Mon 2.5.4 / HFO 2.0.1)
+- Thread FlowSensorCheckThread: Überprüfung auf !m_bExit ->ApplicationERROR
+
+18.02.2011: FabianHFO 1.1.0.57 (Ctrl 2.2.02 / Mon 2.5.4 / HFO 2.0.1)
+- Initialisierung ParaDat GetIERelationMode angepasst
+- StopFlowSensorCheckThread aus OnDestroy entfernt
+
+21.02.2011: FabianHFO 1.1.0.58 (Ctrl 2.2.02 / Mon 2.5.5 / HFO 2.0.1)
+- AlarmHandler: m_eVentSilentState=ASTATE_SYSTEM_SILENT initialisiert, SetSystemSilent aus Initialisierung Model herausgenommen
+- MemoryLeaks aus ServiceMode entfernt
+- CTime aus Logfile entfernt -> anscheinend MemoryLeak bei CrticialSection in CTime::GetYear()
+- CSubViewCO2: zuletzt fokusierter/selektierter Button wird wieder fokusiert
+
+22.02.2011: FabianHFO 1.1.0.59 (Ctrl 2.2.02 / Mon 2.5.5 / HFO 2.0.1)
+- Text CWndSubSettingsPminDelay angepasst
+
+23.02.2011: FabianHFO 1.1.0.60 (Ctrl 2.3.00 / Mon 2.5.7 / HFO 2.0.1)
+- Start HFO ausgebaut
+- Alarm AL_PatAl_PEEPminHigh als Prio 7 implementiert (hohe Prio)
+- wenn CFile::Open beim einlesen der Trends fehlschlägt wird ein Logeintrag geschrieben
+- wenn Focus auf ViewLog der ALarmLimits wird beim scrollen mit UDP nur Liste gescrollt (nicht mehr der Graph) und Timer erneuert
+- Nursecall reagiert wie Alarme
+- Service-Menü -> System: Betriebsstunden für Device, Accu und HFO lassen sich separat zurücksetzen
+- Trends: SerializeAllTrends wird vor Laden der Trends aufgerufen
+- CDlgMessageBox wird über m_pDlg->EndDialog(IDCLOSE) beendet, alle iRes==IDCLOSE abgefangen
+- beim Aufstarten + Graphik freeze -> save -> richtige Anzeige der Numerikwerte
+- SHUTDOWN-Bit (AL_5) wird an PIF geschickt
+- Trenddaten können als csv-Dateien auf USB gespeichert werden, jeder Trend separat
+- Languagefiles Version: 1.0.0.44 nötig
+- CPAP: SubParaBtn "Demand Flow" implementiert
+- Threading: alle m_bDo...Thread-Membervariablen mit false initialisiert
+- Code mit CppCheck überprüft und bereinigt
+	-> bool CTlsBlob::Append(const CTlsBlob& bl): CTlsBlob passed as reference
+	-> CTlsOStream_Base: bool Write(const CTlsBlob&   blDate) : CTlsBlob passed as reference
+	
+10.03.2011: FabianHFO 1.1.0.61 (Ctrl 2.3.01 / Mon 2.5.8 / HFO 2.0.1)
+- Bug entfernt: Disconnection signalisiert -> Volumengaranty oder Volumenlimit-Alarm
+
+15.03.2011: FabianHFO 1.1.0.62 (Ctrl 2.3.01 / Mon 2.5.8 / HFO 2.0.1)
+- Service-Passwort lässt sich aktivieren
+
+21.03.2011: FabianHFO 1.1.0.63 (Ctrl 2.3.01 / Mon 2.5.9 / HFO 2.0.1)
+- Im "Standby/Beatmung angehalten" wird die Autoskalierung der Graphen ignoriert
+- neuen Alarm "Mischer defekt" implementiert
+- Languagefiles Version: 1.0.0.46 nötig
+- Im Bereich Pediatrie werden NMODEs ausgeblendet
+- HFO-SRM_V62_140311 folgende Punkte gefixt: 48/49/52/55/56/57/62/63/68/70/71
+- Gespeicherte Loops nach CDataHandler verschoben -> lässt sich auch nach Verlassen der Graphikview wieder aufrufen
+- Graphik-View Loops/CO2: Betätigung des UDP bewirkt Wechsel der Kurve
+
+
+29.03.2011: FabianHFO 1.1.0.64 (Ctrl 2.3.01 / Mon 2.5.9 / HFO 2.0.1)
+- Parameterwerte werden bei Moduswechsel übernommen, dadurch auch neue Wertebereiche
+
+09.04.2011: FabianHFO 1.1.0.65 (Ctrl 2.3.01 / Mon 2.5.9 / HFO 2.0.1)
+- Laden der Trends: Sleep(0) eingefügt und bei fehlerhafter Initialisierung werden diese gelöscht und zurück gesetzt
+- Lizensierung ausgeblendet
+
+12.04.2011: FabianHFO 1.1.0.66 (Ctrl 2.3.01 / Mon 2.5.9 / HFO 2.0.1)
+- Fabian HFO Installer 1.0.0.30 sollte verwendet werden -> Licensing
+- Bug bei DeleteAllTrends beseitigt -> Deadlock!
+
+12.04.2011: FabianHFO 1.1.0.67 (Ctrl 2.3.01 / Mon 2.5.9 / HFO 2.0.1)
+- Bug beim Herunterfahren beseitigt (Destructor von CParaData)
+
+/***************************************************************************/
+
+14.04.2011: FabianHFO 1.2.0.0 (Ctrl 2.3.01 / Mon 2.5.9 / HFO 2.0.1)
+- Lizensierung implementiert, FabianInstaller 1.0.0.31 benützen (Lizensierung)
+
+15.04.2011: FabianHFO 1.2.0.1 (Ctrl 2.3.01 / Mon 2.5.9 / HFO 2.0.1)
+- Touch-Einstellungen optimiert, Samplingrate verringert & LoopBuffer begrenzt
+
+15.04.2011: FabianHFO 1.2.0.2 (Ctrl 2.3.01 / Mon 2.5.9 / HFO 2.0.1)
+- MainThread wird durch WatchDogThread überwacht
+
+16.04.2011: FabianHFO 1.2.0.3 (Ctrl 2.3.01 / Mon 2.5.9 / HFO 2.0.1)
+- CO2-Alrmlimits werden bei deaktiviertem Modul nicht mehr angezeigt
+
+16.04.2011: FabianHFO 1.2.0.4 (Ctrl 2.3.01 / Mon 2.5.9 / HFO 2.0.1)
+- ParaButton Pmanual wird bei deaktiviertem man. ATZ nicht mehr angezeigt
+
+28.04.2011: FabianHFO 1.2.0.5 (Ctrl 2.3.04 / Mon 2.5.9 / HFO 2.0.1 / Blender 2.5)
+- Trend: m_pcSelectTrend1->LoadDataRunning(false) etc nur wenn !m_bExit und Überprüfung auf m_pcSelectTrend1
+- Watchdog-Überwachung wird während der Bildschirmkalibrierung deaktiviert
+- Languagefiles Version: 1.0.0.47 nötig
+- Flowboard im Service-Menü nach Blenderboard umbenannt
+- Trend: bei Push UDP wird Focus auf MainFrame gesetzt
+
+12.05.2011: FabianHFO 1.2.0.6 (Ctrl 2.3.0x / Mon 2.5.x / HFO 2.0.1 / Blender 2.5)
+- Hardware-Konfiguration -> konische HFO - Feder wird berücksichtigt (höhere Druckbereiche bei HFO)
+- Anzeige der HW-Config im ServiceMenu->System
+
+13.05.2011: FabianHFO 1.2.0.7 (Ctrl 2.3.0x / Mon 2.5.x / HFO 2.0.1 / Blender 2.5)
+- Diagramme: bei Autoscale wird die Y-Skala mit Minimum gestartet
+- Hardware-Konfiguration -> BIT0 wird gesetzt
+- FactorySettings geändert: Kurven gefüllt, Autoscale, Schwesternruf aus, Man Atemzug HFO aus, Abbruchkriterium PSV 15%, volumentrigger
+
+16.05.2011: FabianHFO 1.2.0.8 (Ctrl 2.3.0x / Mon 2.5.x / HFO 2.0.1 / Blender 2.5)
+- Testversion HFO mit 100er Amplitude einstellbar
+
+16.05.2011: FabianHFO 1.2.0.9 (Ctrl 2.4.0 / Mon 2.5.11 / HFO 2.0.1 / Blender 2.5)
+- Fehler aus x-Achsenberechnung (Autoscale) bei Volumen-Diagramm entfernt
+
+23.05.2011: FabianHFO 1.2.0.10 (Ctrl 2.4.1 / Mon 2.5.12 / HFO 2.0.1 / Blender 2.5)
+- Display-Settings: ContrastParm -> Defaultwert wird abgefangen
+- Orientierungsleiste beim Sprachenmenü
+- Netzalarm niedrige Priorität
+- Warnhinweis bei V-Limit/V-Garantie wird bei Status "off" nicht mehr angezeigt
+- Delay für Graph-Menü
+- Sleep(0) in allen Notify-Funktionen
+- MainThread wird durch WatchDogThread vorerst nicht mehr überwacht
+
+23.05.2011: FabianHFO 1.2.0.11 (Ctrl 2.4.2 / Mon 2.5.12 / HFO 2.0.1 / Blender 2.5)
+- MainThread wird durch Windows-WatchDogThread überwacht
+
+09.06.2011: FabianHFO 1.2.0.12 (Ctrl 2.4.2 / Mon 2.5.12 / HFO 2.0.1 / Blender 2.5)
+- Japanisch implementiert
+- Fehler aus Orientierungsleiste beim Sprachenmenü beseitigt (bei gerader Anzahl der Sprachen)
+
+19.06.2011: FabianHFO 1.2.0.13 (Ctrl 2.4.3 / Mon 2.6.1 / HFO 2.0.1 / Blender 2.5)
+- Watchdog wird auch während Display-Kalibrierung betätigt
+- HF-Amplitude: bei Akkubetrieb begrenzt bei 60mbar
+- Größe von System-Logfile auf 200kB begrenzt (insgesamt 10 Files)
+- Languagefiles Version: 1.0.0.50 nötig
+
+28.06.2011: FabianHFO 1.2.0.14 (Ctrl 2.4.3 / Mon 2.6.1 / HFO 2.0.1 / Blender 2.5)
+- HFO 100er Amplitude
+- Configuration: eingelesene HFamplitude wird bei Start gegen die Max-Min-Werte geprüft, abhängig von verwendeter HF-Feder (vorher gegen feste Werte 5 + 60 mbar)
+- Volumengarantie: von 3 bis 10 ml in 0.2-Schritten verstellbar
+
+29.06.2011: FabianHFO 1.2.0.15 (Ctrl 2.4.3 / Mon 2.6.1 / HFO 2.0.1 / Blender 2.5)
+- HFO wieder 80er Amplitude wie bei 1.2.0.13
+- Japanisch: Font MS PGothic implementiert, Fontgröße angepasst
+
+16.07.2011: FabianHFO 1.2.0.16 (Ctrl 2.4.4 / Mon 2.6.2 / HFO 2.0.1 / Blender 2.5)
+- CheckUSB 1.0.0.4 verfügbar, überprüft auf FabianHFO & Fabian sowie die richtigen Display-Settings
+- Fabian Installer 1.0.0.34: verwendetes Schlauchset je nach Konfiguration im Installationsprogramm (entweder konfigurierbar (=default) oder vorgegeben)
+- ViewSystemAlarme: Anschlüsse Insp,Exp und Prox beschriftet
+- Languagefiles Version: 1.0.0.52 nötig
+- Vlimit: akustisches Signal lässt sich abschalten
+- Einheit für Druck einstellbar (mbar / cmH2O)
+- Logfile "***FILESIZE END***" und Ventmode wird geschrieben
+- Alarmlog "**** finished ****" wird geschrieben
+- CViewDiagramm::RedrawDiagrammData -> Abfrage auf m_bDoGraphThread
+- void CViewDiagramm::StartGraphThread() -> "m_bDoGraphThread=true;" erst an Schluß
+- Schwesternruf bei V-Limited deaktiviert
+- Alarm AL_SysFail_P_PROXIMAL: Priorität wie AL_DISCONNECTION
+- bei Flowsensor-Alarm wird Vlimit bzw Vgarantie deaktiviert -> Hinweis im Infofeld
+- Alarmlimits: Btn4 SetFocus ParentView geändert
+- NumerikView: bei Wechsel werden keine Messwerte geschrieben
+- Loop autoscale: decrease erst bei neuem ATZ
+- Systemlogeinträge erweitert
+- Loops HFO: nur noch 1 Levelplot
+
+19.07.2011: FabianHFO 1.2.0.17 (Ctrl 2.4.4 / Mon 2.6.2 / HFO 2.0.1 / Blender 2.5)
+- Diagramm-Aerea vergrössert, Cursor angepasst
+- Watchdog-Status wird eingelesen und im Service-Menü und Logs eingetragen
+- Trend: Files als CriticalSection, Laden der Trends wird durch Timer überwacht und bei Bedarf der Watchdog alarmiert
+
+29.07.2011: FabianHFO 1.2.0.18 (Ctrl 2.4.4 / Mon 2.6.2 / HFO 2.0.1 / Blender 2.5)
+- Darstellung Graphik: Y-Ticks werden richtig gezeichnet, negatives X-Grid wird richtig gezeichnet
+- Manuelle Graph-Skalierung PRESSURE_VOLUME_HF_LOOP x/y-Achse korrigiert
+- Alarm-Blinkfrequenz angepasst, rot 300ms, gelb 800ms
+- Menü Display: Btn Screenlock wird erst bei WM_MENUBUTTONUP ausgeführt -> Button bleibt nicht mehr grün
+- CSubViewPatient: Buttons werden über afx_msg void OnBnClicked...() abgearbeitet
+- Helligkeitsregelung geändert
+- Log-Files lassen sich im ServiceMenü->Interfaces auf USB speichern
+- EnterCriticalSection(&csDrawGraph) erweitert
+- CDiagramm mit m_bExit abgesichert
+- Zeitachse synchronisiert
+
+29.07.2011: FabianHFO 1.2.0.19 (Ctrl 2.4.4 / Mon 2.6.2 / HFO 2.0.1 / Blender 2.5)
+- Bug aus ViewDiagramm entfernt
+
+29.07.2011: FabianHFO 1.2.0.20 (Ctrl 2.4.4 / Mon 2.6.2 / HFO 2.0.1 / Blender 2.5)
+- Text geändert Umschaltung CMH2O<->mbar
+- Languagefiles angepasst,  Languagefiles Version: 1.0.0.54 nötig
+
+30.07.2011: FabianHFO 1.2.0.21 (Ctrl 2.4.4 / Mon 2.6.2 / HFO 2.0.1 / Blender 2.5)
+- Umschaltung der Graphen ist jetzt flüssiger
+
+30.07.2011: FabianHFO 1.2.0.22 (Ctrl 2.4.4 / Mon 2.6.2 / HFO 2.0.1 / Blender 2.5)
+- Bug aus Trend1 bei HFOamp entfernt
+
+04.08.2011: FabianHFO 1.2.0.23 (Ctrl 2.4.4 / Mon 2.6.2 / HFO 2.0.1 / Blender 2.5)
+- V-Garantie Pediatric bei 500 ml begrenzt
+- Volumen-Achsen Diagramme angepasst (600ml)
+- IPPV-Numeric -> MV bei über 10 nur 1 Kommastelle
+
+08.08.2011: FabianHFO 1.2.0.24 (Ctrl 3.0.2 / Mon 2.6.4 / HFO 2.0.1 / Blender 2.5)
+- Trend: CriticalSections geändert, Debug-Ausgaben, Numerikblöcke werden angezeigt, aktueller Trendwert neben Cursor 
+- Languagefiles Version: 1.0.0.56 nötig
+
+11.08.2011: FabianHFO 1.2.0.25 (Ctrl 3.0.2 / Mon 2.6.4 / HFO 2.0.1 / Blender 2.5)
+- im Falle eines FLowsensor-Alarms werden Vgarantie und Vlimit deaktiviert und nach Aufhebung des Alarms wieder automatisch aktiviert
+
+14.09.2011: FabianHFO 1.2.0.26 (Ctrl 3.0.2 / Mon 2.6.4 / HFO 2.0.1 / Blender 2.5)
+- ViewDiagramm durch "m_bInProgress" abgesichert
+- Türkisch implementiert
+- Trends auf 5 Tage verkürzt, Löschen der Trends umorganisiert (Hintergrund)
+- Alarmstummschaltung überarbeitet
+- Fehler (Deadlock) aus Autoscale -> Trends (Compliance und Vte) beseitigt
+- Skaliercursor der Numerikblöcke wird beim Wechsel zu den Trends gelöscht, sofern er aktiv war
+
+22.09.2011: FabianHFO 1.2.0.27 (Ctrl 3.0.2 / Mon 2.6.5 / HFO 2.0.1 / Blender 2.5)
+- HFO: Vgarant limit wird richtig eingelesen
+- Automatisiertes Deaktivieren von V-Garantie und V-Limit geändert: bei jedem ATZ wird ermittelt, ob es einen gültigen Pinsp/HFampl-Wert gibt
+  (gemessenes T-VE muss innerhalb 15% vom eingestellten V-Garantie-/V-Limitwert sein) und als letzten gültigen Wert gespeichert, wird
+  V-Garantie/V-Limit Aufgrund Flowsensor-Alarm automatisch deaktiviert, wird der Pinsp/HFampl auf diesen Wert eingestellt. Gibt es
+  noch keinen gültigen Wert, wird der alte Pinsp-Wert (PinspVgarant-5mbar) wieder eingestellt. Der letzte gültige Wert wird durch Modeumschaltung oder Ein-/Ausschalten von V-Garantie/V-Limit ungültig und wird dann wieder neu ermittelt.
+- jeder Zugriff auf einzelne Diagramme wird auf NULL überprüft
+- Debug-Ausgaben entfernt
+
+26.09.2011: FabianHFO 1.2.0.28 (Ctrl 3.0.2 / Mon 2.6.5 / HFO 2.0.1 / Blender 2.5)
+- Display-Einstellungen werden automatisch gesetzt (LED/LCD)
+- Begriff "Range" mit 2 unterschiedlichen Bedeutungen/Übersetzungen implementiert
+
+26.09.2011: FabianHFO 1.2.0.29 (Ctrl 3.0.2 / Mon 2.6.5 / HFO 2.0.1 / Blender 2.5)
+- Hoher Druck bei HFO über Flag "HFO_HIGHPRESSURERANGE" aktivierbar
+- HFO 100er Amplitude, Pmean 50mbar
+
+
+29.09.2011: FabianHFO 1.2.0.30 (Ctrl 3.0.2 / Mon 2.6.5 / HFO 2.0.1 / Blender 2.5)
+- Logausgaben entfernt
+- HFO 80er Amplitude, Pmean 40mbar
+- auto V-Garantie verbessert -> gültiger Pinsp-Wert ohne Kommastellen
+- COM-Error delay auf 2500ms verlängert
+
+30.09.2011: FabianHFO 1.2.0.31 (Ctrl 3.0.2 / Mon 2.6.5 / HFO 2.0.1 / Blender 2.5)
+- HFO 100er Amplitude, Pmean 50mbar
+
+15.10.2011: FabianHFO 1.2.0.32 (Ctrl 3.0.2 / Mon 2.6.5 / HFO 2.0.1 / Blender 2.5)
+- HFO 80er Amplitude, Pmean 40mbar
+- Datum wird bei Wechsel geändert
+- Messwert Pmax wird breath-to-breath angezeigt, auch in den Alarmlimits
+
+
+		
+
+
+21.10.2011: FabianHFO 1.2.0.33 (Ctrl 3.0.2 / Mon 2.6.5 / HFO 2.0.1 / Blender 2.5)
+- HFO 100er Amplitude, Pmean 50mbar
+
+18.11.2011: FabianHFO 1.2.0.34 (Ctrl 3.0.2 / Mon 2.6.5 / HFO 2.0.1 / Blender 2.5)
+- HFO 80er Amplitude, Pmean 40mbar 
+- Begriife für die Japaner überarbeitet
+
+08.12.2011: FabianHFO 1.2.0.35 (Ctrl 3.0.2 / Mon 2.6.5 / HFO 2.0.1 / Blender 2.5)
+- Languagefiles Version: 1.0.0.69 nötig 
+- Änderungen an DialogKlasse -> Caption
+- Begriffe für japanische Version überarbeitet
+- Loops: x-Achsenbeschriftung ->japanisch angepasst
+- eigene Fonts für numerische Daten
+- Begriife für die Japaner überarbeitet
+09.08.2011: FabianHFO 1.3.0.0 (Ctrl 3.0.3 / Mon 2.6.5 / HFO 2.0.1 / Blender 2.5)
+- m_iConfigVersion=1005
+- Autoflow implementiert
+- Abbruchkrit. PSV, Flush-Time und Max. Man Breath Time in Para-Settings implementiert
+- Languagefile 1.0.0.57 nötig
+- HFO:Recruitment implementiert
+- Flow-ParaBtn bei HFO implementiert
+- I-Time rec bis 1 Minute einstellbar
+- Datentypen geändert
+- P_peak wird bei Exspiration breath-to-breath geholt und angezeigt
+- Log-Files können im Menü->Tools auf USB kopiert werden
+- Trends und Lungen Recruitment über Lizenz zuschaltbar
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!! Monitor-PIC: Versionen ab Mon 3.x sind nur für das neue Mainboard 3.x oder höher, 
+!!!!!!!!!!!!!!!!!!! altes Mainboard benötigt Mon 2.x
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+//etCO2 development
+//VueLink development
+15.12.2011: FabianHFO 2.0.0.0 (Ctrl 3.0.x / Mon 2.7.2 oder 3.0.1 / HFO 2.0.1 / Blender 2.5)
+- Video implementiert (es muss künftig die Video-DLL im Verzeichnis FFSDISK der NetDCU liegen, auch NetDCU11!)
+- PDMS implementiert (acuLink)
+- Trends mit Lizenzschlüssel
+- AutoIFlow + Lungenrekruitment implementiert
+- Lungenrekruitment mit Lizenzschlüssel implementiert
+- Mainboard-Version wird unterstützt, wird bei Startup an SPI & COM geschickt,
+	wird bei System-Info im Menü und im Service-Mode angezeigt
+- Serielle Schnittstellen sind an Mainboard-Version angepasst
+- Autoscale Pressure-Graoh an Pmean rec (Lungenrekruitment) angepasst
+- FlowTrigger: Einheit jetzt als Liter/Minute
+- Pmanual wir in HFO mit Lungenrecruitment ausgeblendet
+- minimale Differenz Pmean und Pmean rec beträgt jetzt 2mbar
+- CO2-Modul: ALarmlimits an Einheit angepasst
+- Send_PARAVAL_EXH_TIME(iETIME/1000);
+- Signaltöne SetPIFSound(PIF_SIGNAL) werden mit minimaler Lautstärke gesendet
+- Flowkalibrierung: DAC-Werte aus Anzeige entfernt
+- MAC-Adresse wir überprüft
+- Trends: Kommastelle bei COMPLIANCE, Vte, MV und Pmean
+- Nebulizer implementiert, Alarme: 
+	AL_Nebulizer_Disconnection,			// 37,
+	AL_Nebulizer_SysError,				// 38,
+- Languagefiles 1.0.0.73 nötig
+- I2C: delay bei I2C-Alarm von 15 sec, Überprüfung der CalibratioBits vom AccuStatus
+- CModelObserver	* pObserver wird auf NULL geprüft
+- I2C über CriticalSection abgesichert
+- SERIAL über CriticalSection abgesichert
+- etCO2: Capnostat -> GasCompensation wird vom aktuellen O2 Wert automatisch geschickt, kann nicht mehr eingestellt werden
+- CMVModel::SaveLastGuiltyBreathValues() nur wenn VENT_RUNNING==GetVentRunState()
+- Volumengarantie/-limit: ResetLastGuiltyPINSP() und ResetLastGuiltyHFamp() wird erst nach Deaktivierung durchgeführt 
+- CO2 Implementierung: neue ALarme: 
+	AL_Sens_CO2_MODULE_NOTCONNECTED,	// 32,
+	AL_Sens_CO2_FILTERLINE_NOTCONNECTED,// 33,
+	AL_Sens_CO2_CHECKSAMPLINGLINE,	// 34,
+	AL_Sens_CO2_CHECKAIRWAYADAPTER,	// 35,
+	AL_Sens_CO2_SENSORFAULTY,		// 36,
+- CO2 neu implementiert (MicroPod & Capnostat)
+- wenn CO2-Modul aktiv und FLowsensor ausgeschaltet -> RR wird von CO2-Modul angezeigt
+- P-PROXIMAL-Alarm über serielle Schnittstelle implementiert
+- Erkennung NetDCU9 + LED/LCD Display mittels RegKey "HKLM\\Drivers\\Display\\SMIVGX\\Mode20"
+- etCO2 development project merged
+- Nebulizer implementiert
+- Languagefiles 1.0.0.74 nötig
+- CMVModel::SaveLastGuiltyBreathValues() nur wenn VENT_RUNNING==GetVentRunState()
+- DEMOVERSION als #define implementiert
+- AlarmLogList: wenn voll wird ältester Eintrag gelöscht 
+- ViewDiagramm/CircularBuffer: for-Schleifen durch memcpy ersetzt
+- Timer zum Wechsel von den Menüs zum HomeBS auf 45 Sekunden erhöht
+- Timer der Parameterbuttons auf 45 Sekunden erhöht
+- HOMETIMER (Moduswechsel) auf 45 Sekunden erhöht
+- Trigger ParaBtn: Anzeige je nach Wert: sensitivity high/middle/low
+- PSV-Modus: Pinsp wir bei Aktivierung nicht erhöht, bei Alarm "Volumen nicht erreicht" wird Pfeil nach oben in Ppsv-Para gezeichnet (nicht mehr Pinsp)
+- PDMS und CO2-Project zusammen geführt
+- InfantFlowLP included, LanguageFile 1.0.0.76 nötig!
+- Sprachfiles bezüglich Tubeset angepasst
+- AfxGetMainWnd()->PostMessage() durch AfxGetApp()->GetMainWnd()->PostMessage() ersetzt
+- bei VueLink wird nur der aktive Alarm gesetzt, alle anderen sind '0', bei acuLink werden alle Alarmstati gesetzt
+- acuLink: ALINK_ALARM_ENABLED implementiert, Messwerte werden nicht mehr in AVG und BTB unterschieden
+- autoIFlow deaktiviert
+- View wird bei ASTATE_MANSILENT und Patientenalarm nicht mehr umgeschaltet
+
+24.05.2012: FabianHFO 2.0.0.0beta40
+- PDMS-Testversion für Holland
+
+
+31.05.2012: FabianHFO 2.0.0.0beta41
+- SIMULATION_VERSION implementiert
+
+11.06.2012: FabianHFO 2.0.0.0beta42
+- TVE-Werte werden nur noch BTB angezeigt
+
+
+14.06.2012: FabianHFO 2.0.0.0beta43
+- Referenzschleife wird jetzt gleich gespeichert
+- Alarmlimit Leak: on/off-Regelung geändert -> off -> 10 -> 50
+- Verzögerung Alarm "Druck tief" (AL_PatAl_PminLow) von 500ms auf 1000ms erhöht
+- Im NMODE wird bei Aufhebung Disconnectionsalarm kein Autosilent(30sec) gesetzt
+
+18.06.2012: FabianHFO 2.0.0.0beta44
+- Therapie-Modus auch im Pediatriebereich
+
+21.06.2012: FabianHFO 2.0.0.0beta45
+- Autoset Alarmlimit lässt sich deaktivieren
+- Button Factory Settings lässt sich ausblenden
+
+22.06.2012: FabianHFO 2.0.0.0beta46
+- Volumengarantie neu implementiert:
+SIMV+PSV+VG:	VG aktiv für SIMV Atemhub, PSV Atemhub nicht VG kontolliert. 
+				I-Time + Pinsp Button wird orange, Pinsp erhöht sich um 5mbar bei 
+				zuschalten der VG, bei nichgt erreichen von VG -> Pfeil nach oben 
+				in der Pinsp-Taste
+PSV+VG:			VG aktiv für PSV Atemhub, Taste I-Time + Pinsp wird orange, 
+				im Apnoe-Fall wird mit Pinsp beatmet und an die VG herangetastet, 
+				maximale Grenze Pinsp
+- Button I-Time bei PSV und SIMV+PSV auch ohne VG orange
+
+25.06.2012: FabianHFO 2.0.0.0beta47
+- Volumengarantie geändert:
+PSV+VG:			VG aktiv für PSV Atemhub, Taste I-Time + Pinsp wird orange, Taste P_PSV dird nicht angezeigt 
+				im Apnoe-Fall wird mit Pinsp beatmet und an die VG herangetastet, Pinsp erhöht sich um 5mbar bei 
+				zuschalten der VG, maximale Grenze Pinsp
+- CPAP: bei Backup wird "Backup aktiv" in der Infozeile angezeigt
+- Verriegelung Pinsp bei PSV+VG entfernt
+- Verriegelung PEEP bei PSV+VG entfernt
+
+26.06.2012: FabianHFO 2.0.0.0beta48
+- CO2:	Anzeige der verbleibenden Stunden bis zur Kalibrierung im CO2-Menü(nur Oridion)
+		Anzeige, wenn Kalibrierung oder Service erforderlich ist ->Status CO2Sensor, wenn erforderlich dann rot (nur Oridion, Anzeigen-Bsp: Sensor state: ok (calibration required) )
+		Anzeide des Datum der letzten Kalibrierung, ANzeige, wenn Systemzeit ungültig
+		Factory-Werte: etCO2 high: 50mmHg, etCO2 low: 20mmHg
+		Alarmlimit range: etCO2 high: 5 - 150mmHg, etCO2 low: 0 - 145mmHg
+- Volumengarantie geändert: bei SIMVPSV wird beim EInschalten der VG der VG-Wert vom TVEresp ermittelt
+
+27.06.2012: FabianHFO 2.0.0.0beta49
+- ALARMLIMITS werden geloggt
+
+27.06.2012: FabianHFO 2.0.0.0beta50
+- CO2: bei ALarm werden die Messwerte auf "invalid" gesetzt
+
+29.06.2012: FabianHFO 2.0.0.0beta51
+- Filter Volumengarntie entfernt
+- Menü-Struktur geändert (Return-Button etc)
+- VTe-Werte können entweder BTB oder AVG verwendet werden, Service-Menü->Settings->Use BTB for VTe
+- Languagefiles 1.0.0.79 nötig
+- O2 aus Numerik ausgebaut
+- Anzeige Tubeset aus Numerik ausgebaut
+- Numerik: Mechanikblöcke nur noch bei Loops
+- CPAP: "Backup aktiv" in der Infozeile geändert
+
+29.06.2012: FabianHFO 2.0.0.0beta52
+- Numerik angepasst
+
+04.7.2012: FabianHFO 2.0.0.0beta53
+- DUOPAP -> PEEP: Einheit jetzt sichtbar
+- CO2 Factory ALarmlimits: High 60 mmHg, Low 8 mmHg
+- Diverse Änderungen bei CO2-Implementierung MicroPod (Zeit einstellbar bis Pumpe automatisch eingeschaltet wird etc)
+- Languagefile Version 1.0.0.81 nötig
+
+04.7.2012: FabianHFO 2.0.0.0beta54
+- HFO + VG:  bei "Volumen nicht erreicht" -> Pfeil aufwärts bei Amplitude
+- Autoscale: X-Achse gewählte Einstellung wird bei HFO sepaart gespeichert, auch bei Autoscale wird die letzte Einstellung geladen
+- HFO + VG + Autoscale:Skalierung richtet sich auch nach den roten Linien der VG
+- PSV: "Backup aktiv" aus der Infozeile entfernt
+- Alarmstummschaltung "Manual Silent": Alle Alarme sind für 2 Minuten stumm
+- Alarmglocke für Alarmstumm rot gestrichelt
+- Backup-Anzeige nur wenn FLowsensor on
+- Signalton bei Backup läsdst sich im Menü ausschalten
+
+
+07.7.2012: FabianHFO 2.0.0.0beta55
+- VG geändert:
+Während der Beatmung wird ständig der aktuelle und gültige Pins mitgeloggt (mit jedem Atemzug). Der Wert wird als gültig angesehen, wenn der Wert folgende Kriterien erfüllt:
+- bei eingeschalteter VG: wenn das gemessene Vte +-15% im Bereich der eingestellten VG liegt
+- bei ausgeschalteter VG und bei Preset: wenn der gemessene Pmax +-15% im Bereich des eingestellten Pinsp liegt
+Wird nun die VG eingeschaltet, erhöht sich der erlaubte Pins (Parameter) wie bisher um 5mbar, wird VG ausgeschaltet, wird nachgesehen, ob ein letzter gültiger Pins vorliegt, wenn ja, wird dieser verwendet, wenn nein, wird der eingestellte/max. erlaubte Pins um 5 mbar verringert.
+Kriterien, wenn Pinsp verringert wird: 
+- Pinsp >= PEEP+Ppsv: der Pinsp darf, wenn er verringert wird, nicht kleiner PEEP+Ppsv sein (bei SIMV+PSV). In diesem Fall (habe ich bereits mit Franz W geklärt), wird der Ppsv ebenfalls reduziert
+- Pinsp muss immer 2mbar größer als PEEP sein
+- SIMV+PSV+VG: bei automatischer Deaktivierung und Reaktivierung wird der ursprünglich P-PSV wider hergestellt (sofern Bereich passt)
+- es wird nur noch bei ff Alarmen die aktuelle View in die entsprechende Alarmview gewechselt:
+	AL_Accu_Defect
+	AL_Accu_Empty
+	AL_SysFail_MIXER:
+	AL_SysFail_P_PROXIMAL:
+	AL_SysAl_P_IN_O2:
+	AL_SysAl_P_IN_AIR:
+	AL_SysAl_P_EXSPIRATIONTUBE:
+	AL_SysAl_P_INSPIRATIONTUBE:
+	AL_SysFail_ChecksumConPIC:
+	AL_SysFail_ChecksumMonPIC:
+	AL_SysFail_IF_SPI:
+	AL_SysFail_IF_DIO:
+	AL_SysFail_IF_COM:
+	AL_SysFail_IF_I2C:
+	AL_SysFail_IF_PIF:
+	AL_SysFail_IF_ACULINK:
+	AL_SysFail_RELAIS_DEFECT:
+	AL_SysFail_P_IN_MIXER:
+	AL_SysFail_OVERPRESSURE:
+	AL_SysFail_VOLTAGE:
+	AL_SysFail_OUTOFMEMORY:
+	AL_SysFail_Fan:
+
+09.07.2012: FabianHFO 2.0.0.0beta56
+- wenn ALarme signalisiert sind (graue Glocke) können diese mit der gelben Alarmstumm-Taste gelöscht (reset) werden
+- Languagefiles 1.0.0.82 nötig
+
+10.07.2012: FabianHFO 2.0.0.0beta57
+- Während autoset Alarmlimts läuft und Modus gewechselt wird, wird autoset abgebrochen
+- Languagefiles 1.0.0.84 nötig
+- graue Alarmglocke nicht mehr in Infozeile, nur noch in Numerikzeile
+- Alarm "High Tidal Volume" der Volumengarantie implementiert
+- Autosilent 30sec nur, wenn Wert geändert wurde
+- Alarme Inspirationsschlauch, Exspirationsschlauch, ProximalPressure sind durch Alarm Tobe Occlusion ersetzt
+
+12.07.2012: FabianHFO 2.0.0.0beta58
+- 2 graue Glocke + Alarmtext bei signalisiertem Alarme in Infozeile
+- kein Text "signalisierte Alarme gelöscht"
+- letzter signalisierter Alarm bleibt in Infozeile stehen bis RESET
+- wenn signalisierte Alarme mit der Tatse "Alarmsilent" gelöscht werden, wird kein "Send_ALARMKEY_PUSH" an SPI gesendet
+- wenn Alarmsilent aktiv geschalten wird, wird ein Delay von 20 Sekunden für alle Patientenalarme gesetzt
+- CPAP: wenn BackupParaBtn auf aus geschalten wird, wird aktiver Backup gelöscht
+- Alarmlimits: Reset-Btn gelöscht, Rest nur noch über Alarmsilent-Taste
+- Menüführung Setup/Service geändert
+- Backup-Akustik-Meldung wählbar in Ventilation Settings
+- erledigt: HFO + VG + Autoscale: rote Linie in Druckkurve rutscht mitunter aus dem Bild oben oder unten hinaus.
+- erledigt: HFO + VG:  bei "Volumen nicht erreicht" -> Pfeil aufwärts bei Amplitude setzen
+- erledigt: Autoscale: X-Achse manuell verstellt: -> nach Alarmbildschirm Rückkehr immer in "10 sek" Einstellung (gewählte Einstellung geht verloren)
+- erledigt: •	die Alarmgeschichte wieder so wie zu Beginn gelöst werden, d.h. wenn der Alarm stumm geschalten ist, dann ist er stumm, egal was kommt. 
+	Der Alarm soll aber visuell dargestellt werden. So ist es bei der ganzen fabian-Familie und Mitbewerbern bisher umgesetzt worden. 
+	Gemäss Norm entspricht das einem „Audio AUS“. Da die Stummschaltung bei uns zeitlich begrenzt ist muss die Glocke oben rechts der Richtigkeit halber 
+	gestrichelte gekreuzte Linien und keine durchgezogenen haben. Im Service Modus muss die Glocke durchgezogene Linien haben, da nicht zeitlich begrenzt.
+
+
+19.07.2012: FabianHFO 2.0.0.0beta59
+- Liste des Besprechnungsprotokolls vom 16.07.2012 durchgearbeitet:
+Punkt 3/9: ist die VG aktiv und der Flowsensor wird ausgeschaltet, geht der Pinsp auf den letzten gültigen Wert, der während der VG verwendet wurde, ist kein gültiger Wert vorhanden auf den vom Anwender zuvor eingestellten Wert
+Punkt 4: kein Autosilent nach "Disconnection" und "Tubus blockiert"
+Punkt 5: bei Dekonnektion wird die Autoskalierung ausser Kraft gesetzt
+Punkt 10: beim Einschalten von VLimit dird die Kurve nicht mehr gewechselt
+Punkt 11: Pfeil bei Pinsp bei Alarm "Tidalvolumen zu hoch" weg, Text von "Volumen nicht erreicht" nach "Tidalvolumen nicht erreicht" geändert, 
+Punkt 13: Backup-Btn ohne 1/min
+Punkt 15: PSV Abbruchkriterium von 5-70 einstellbar
+Punkt 16: wird der Flowsensor ausgeschaltet, werden MV-Alarme gelöscht
+Sprachenfiles 1.0.0.85 nötig
+
+23.07.2012: FabianHFO 2.0.0.0beta60
+- BPM und E-Time bei SIMV/SIMV+PSV begrenzt: 
+	BPM bei 150bpm
+	E-Time bei 0,5sec
+- Autosilent aus ff Alarme entfernt:
+	AL_SysAl_P_IN_O2
+	AL_SysAl_P_IN_AIR
+	AL_SysAl_TUBE_OCCLUSION
+- werden Alarmlits ausgeschalten, werden entsprechende Alarme gelöscht (AL_PatAl_Apnoe, AL_PatAl_Leakmax, AL_PatAl_BPMmax, AL_PatAl_DCO2max, AL_PatAl_DCO2min, AL_PatAl_ETCO2max, AL_PatAl_ETCO2min)
+- ist VG oder VL aktiv, wird zusätzlich zum Modus "+VG" oder "+VL" in der Infozeile angezeigt
+- untere Grenze CPAP-Parameter im NMODE jetzt 2 mbar
+
+23.07.2012: FabianHFO 2.0.0.0beta61
+- Apnoe-Alarm PSV frei geschalten
+
+24.07.2012: FabianHFO 2.0.0.0beta62
+- NMODE auch im Pediatrie-Modus (sofern NMODE lizensiert)
+- Autosilent bei TubeOcclusion im HFO entfernt
+- Flowsensor lässt sich auch mit Alarm "Flowsensor reinigen" kalibrieren
+- bei Flowsensorkalibrierung werden alte Flowsennsoralrme gelöscht
+
+24.07.2012: FabianHFO 2.0.0.0beta63
+- kein AUTOSET ALL mehr bei den Alarmlimits
+- Frequenz bei SIMV / SIMV+PSV automatisch bei 100 begrenzt (durch Begrenzung E-Time 0,5 sec)
+
+25.07.2012: FabianHFO 2.0.0.0beta64
+- O2-Flush: keine Anzeige mehr "gestartet/gestoppt"
+- bei Autoset (Alarmlimits) kein Autosilent 15sec mehr
+
+26.07.2012: FabianHFO 2.0.0.0beta65
+- CalculateAutoAlarmlimitVgaranty + CalculateAutoAlarmlimitVlimit: bei VM_SIMV und VM_SIMVPSV wird Wert von getAVGMessureDataTVEresp genommen, sonst getAVGMessureDataTVE
+- Service-Menü->MonitorPIC: Reihenfolge der ADC,OFFS,SCL-Werte geändert
+- Trigger-Bereich auf 1-10 verringert
+- Autoset Alarmlimits: ist der entsprechende Wert ein Alarm, wird dieser gelöscht
+- Btn Autoset Alarmlimits: mit Graphik
+- Sprachen-Menü: beim Laden wird der Focus auf die eingestellte Sprache gesetzt und diese angezeigt
+
+27.07.2012: FabianHFO 2.0.0.0beta66
+- Therapie -> FLow: unterster Wert = 0lpm, von 0 bis 1lpm in 0,1er Schritte einstellbar
+- Rücksetzen der Patientenalarme unterliegt nicht dem 20sec Alarmdelay
+
+27.07.2012: FabianHFO 2.0.0.0beta67
+- Alarmdelay einstellbar im Menü->Ventilation
+
+01.08.2012: FabianHFO 2.0.0.0beta68
+- Datum Logfile wird zyklisch überprüft
+- Watchdog WD_PERIODE 20000
+
+08.08.2012: FabianHFO 2.0.0.0beta69
+- PDMS mit Ethernet implementiert (noch nicht aktiv!)
+
+08.08.2012: FabianHFO 2.0.0.0beta70
+- CriticalSection der Trends geändert
+
+10.08.2012: FabianHFO 2.0.0.0beta71
+- Lizensierung CO2 entfernt, einstellbar im CO2-Menü (disabled,MicroPod,Capnostat)
+
+10.09.2012: FabianHFO 2.0.0.0beta72
+- Alarmlimitprüfung PminHigh bei PRESET -> wird jetzt vom aktiven Modus genommen
+- beim STARTUP gilt ein Alarmdelay von 10 Sekunden, unabhängig von dem eingestellten Alarmdelay
+- Text "autoset alarm limits canceled" gelöscht
+- bei Aufhebung Schlauchalarm wird Alarmdelay aktiviert
+- Alarm "Volumengarantie hoch" entfernt
+- im Falle eines COM-Errors wird die serielle Schnittstelle erst noch neu initialisiert, wenn kein Erfolg -> Alarm
+- wenn O2-Flush aktiv ist und O2-Para geändert wird, wird der Wert nicht an PICs gesendet, O2-Para wird disabled
+
+10.09.2012: FabianHFO 2.0.0.0beta73 
+- Therapy: Flowmeter an Range (PEDIATRIC) angepasst
+- Datum der letzten Flow-Kalibrierung wird ins Log gechrieben
+- Sprachenänderung neu implementiert
+- Logo kann ersetzt werden: logoFabianHFO.bmp -> Verzeichnis FFSDISK\\logoFabianHFO.bmp, wenn SW dies Datei vorfindet, wird dieses Bitmap als Logo verwendet, ansonst defaultmäßig das Acutronic-Logo
+
+21.09.2012: FabianHFO 2.0.0.0beta74
+- Reinitialisierung der seriellen Schnittstelle neu implementiert
+- Button-Klicks werden geloggt:
+	"$M1$": MATRIX_ALARMSILENT
+	"$M2$": MATRIX_GRAPH
+	"$M3$": MATRIX_ONOFF
+	"$M4$": MATRIX_STARTSTOP
+	"$M5$": MATRIX_MANBREATH
+	"$M6$": MATRIX_ALIMITS
+	"$M7$": MATRIX_O2FLUSH
+	"$M8$": MATRIX_HOME/MATRIX_MODE
+	"$M9$": MATRIX_MENU
+	"$M10$": MATRIX_NEBULISER
+	"$M20$": BN_IPPV
+	"$M21$": BN_SIPPV
+	"$M22$": BN_SIMV
+	"$M23$": BN_SIMVPSV
+	"$M24$": BN_PSV
+	"$M25$": BN_HFO
+	"$M26$": BN_CPAP
+	"$M27$": BN_NCPAP
+	"$M28$": BN_DUOPAP
+	"$M29$": BN_THERAPIE
+	"$M30$": RETURN VS_SYSFAIL
+	"$M31$": RETURN VS_BATTERY
+	"$M32$": RETURN VS_PATDATA
+	"$M33$": RETURN VS_TREND
+	"$M34$": RETURN VS_ALARM_SYS
+	"$M35$": RETURN VS_GRAPH
+	"$M36$": RETURN VS_PARA
+	"$M37$": RETURN VS_SETUP
+	"$M38$": RETURN VS_ALARM_LIMIT
+	"$M39$": RETURN VS_SERVICE
+	"$M50$": MATRIX_SOFTKEY1
+	"$M51$": MATRIX_SOFTKEY2
+	"$M52$": MATRIX_SOFTKEY3
+	"$M53$": MATRIX_SOFTKEY4
+
+25.09.2012: FabianHFO 2.0.0.0beta75
+- Apnoe-Alarm aus IPPV und SIPPV entfernt
+- in der Wahl manuelle Skalierung der Diagramm: die Zeitskalierung lässt sich nicht mehr mit dem Encoder, sondern nur noch über die Cursor Tastatur skalieren
+- wenn im Schleifenbildschirm „Freeze“ betätigt wird, wird kein Numerikblock mit den gespeicherten Meßwerten mehr angezeigt
+- Languagefile 1.0.0.88 verwenden
+
+27.09.2012: FabianHFO 2.0.0.0 betaVG02 (Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
+- IPPV + SIPPV: Alarmlimit State Apnoe wird auf OFF gesetzt (zur Sicherheit für die PICs)
+- V-Ti wird BTB angezeigt
+- Range Abbruchkriterium in den Para-Settings geht jetzt auch von 5 bis 70
+- Logo logoFabianHFO.bmp jetzt auch in der Shutdown-View
+- Apnoe-Bereich einstellbar von 2 bis 20 sec + off
+- MV-Bereich Neo einstellbar bis 7 lpm
+- P-PSV als Absolutwert (nicht mehr "über PEEP") -> BENÖTIGT NEUE PIC VERSIONEN!!!!!!!!!!!!!!
+- PSV-Modus: Anzeige "Apnoebeatmung aktiv" implementiert -> Languagefile 1.0.0.89 nötig!!!!
+- Wird VG on/off nicht bestätigt, wird P-Insp wieder auf den alten Wert gesetzt
+- bei eingeschaltener VG (noch nicht bestätigt) und Focusverlust wird Pinsp auf richtigen Wert zurückgesetzt
+- Änderungen aus FabianHFO 2.0.0.0 übernommen
+- Limits von Pinsp wird bei VG-Decrease jetzt richtig gesetzt
+- Kalibrierung Ausatemventil gefixt
+- Infoanzeige: bei ein-/ausschalten VG wird Infoanzeige neu gezeichnet -> "IPPV + VG"
+- Überprüfung gegenüber alter SW + Ppsv ü.PEEP -> Ppsv >= PEEP+2mbar
+- "Apnoebeatmung aktiv" und "Backup aktiv" wird generell bei Moduswechsel gelöscht
+- Controller-PIC-Version wird im Log richtig eingetragen
+- GetParent() wird überprüft
+- Ausatemventilkalibrierung: I:E wird richtig gesetzt
+- Servicemenü: Satz „connect test lung“ durch „close Y-Piece at ET tube connector“ ersetzt
+- O2-Flush-Button bleibt aktiv auch bei mehrmaligem on/off
+- View-Menü implementiert
+- Trend-Menü an View-Menü angepasst
+- Graph-Menü angepasst (CO2 etc)
+- CO2-View MicroPod angepasst
+- Startup-Delay von 2 Minuten auch in NMODE
+- Interface Terminal nach AcuLink umbenannt
+- Volumengarantie bis 1,2 ml Minimum
+- Bug beim Startup I:E-Verhältnis beseitigt
+27.09.2012: FabianHFO 2.0.0.0beta76
+- IPPV + SIPPV: Alarmlimit State Apnoe wird auf OFF gesetzt (zur Sicherheit für die PICs)
+- V-Ti wird BTB angezeigt
+
+27.09.2012: FabianHFO 2.0.0.0beta77
+- Range Abbruchkriterium in den Para-Settings geht jetzt auch von 5 bis 70
+
+01.10.2012: FabianHFO 2.0.0.0beta78
+- Logo logoFabianHFO.bmp jetzt auch in der Shutdown-View
+
+01.10.2012: FabianHFO 2.0.0.0beta79
+- Apnoe-Bereich einstellbar von 2 bis 20 sec + off
+- MV-Bereich Neo einstellbar bis 7 lpm
+
+02.10.2012: FabianHFO 2.0.0.0beta80(Ctrl 3.2.6 / Mon 2.8.6 oder 3.8.6 / HFO 2.0.1 / Blender 2.6)
+- P-PSV als Absolutwert (nicht mehr "über PEEP") -> BENÖTIGT NEUE PIC VERSIONEN!!!!!!!!!!!!!!
+- PSV-Modus: Anzeige "Apnoebeatmung aktiv" implementiert -> Languagefile 1.0.0.89 nötig!!!!
+- Port für PDMS->Ethernet wird eingelesen und gesetzt
+- Port und PDMS-Protokoll werden als Hospitalsettings geschrieben und eingelesen
+
+08.10.2012: FabianHFO 2.0.0.0beta81(Ctrl 3.2.6 / Mon 2.8.6 oder 3.8.6 / HFO 2.0.1 / Blender 2.6)
+- Wird VG on/off nicht bestätigt, wird P-Insp wieder auf den alten Wert gesetzt
+- Netzwerk: Anzeige geändert, Port hinzugefügt
+- Port mit Installer konfigurierbar
+
+08.10.2012: FabianHFO 2.0.0.0beta82(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
+- bei VG: decrease/increase von Pinsp geändert
+- Werte werden richtig in die Config übernommen
+- PDMS-VueLink: Sprache wird gesetzt
+- Ppsv immer mindestens 2mbar über PEEP und immer kleiner oder gleich dem Pinsp sein
+- HF-Amplitude über Registry konfigurierbar
+- Lungenrecruitment disabled -> Flag: TODO_LUNREC
+
+11.10.2012: FabianHFO 2.0.0.0beta83(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
+- Alarmdelay bei NMODE (BREATH_ALARMDELAY) von 400 auf 3000 ms gesetzt
+- Alarmlimits: NCPAP, CPAP und DUOPAP -> Druck bis max 40mbar
+- Nebulizer deaktiviert
+
+15.10.2012: FabianHFO 2.0.0.0(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
+- Release-Version
+
+17.10.2012: FabianHFO 2.0.0.1(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
+- Limits von Pinsp wird bei VG-Decrease jetzt richtig gesetzt
+
+17.10.2012: FabianHFO 2.0.0.2(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
+- Kalibrierung Ausatemventil gefixt
+
+18.10.2012: FabianHFO 2.0.0.3(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
+- Infoanzeige: bei ein-/ausschalten VG wird Infoanzeige neu gezeichnet -> "IPPV + VG"
+- Überprüfung gegenüber alter SW + Ppsv ü.PEEP -> Ppsv >= PEEP+2mbar
+
+23.10.2012: FabianHFO 2.0.0.4(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
+- "Apnoebeatmung aktiv" und "Backup aktiv" wird generell bei Moduswechsel gelöscht
+- Controller-PIC-Version wird im Log richtig eingetragen
+
+24.10.2012: FabianHFO 2.0.0.5(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
+- Ausatemventilkalibrierung: I:E wird richtig gesetzt
+
+
+26.10.2012: FabianHFO 2.0.0.6(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
+- O2-Flush-Button bleibt aktiv auch bei mehrmaligem on/off
+
+30.10.2012: FabianHFO 2.0.0.7(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
+- Startup-Delay von 2 Minuten auch in NMODE
+
+02.11.2012: FabianHFO 2.0.0.8(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
+- Volumengarantie bis 1,2 ml Minimum
+
+05.11.2012: FabianHFO 2.0.0.9(Ctrl 3.2.7 / Mon 2.8.8 oder 3.8.8 / HFO 2.0.1 / Blender 2.6)
+- Interface Terminal nach AcuLink umbenannt
+- Bug beim Startup I:E-Verhältnis beseitigt
+- Projekt mit CppCheck Version 1.57 überprüft und bereinigt
+- Mischer alarm erweiter: SelfTest
+- Alarm AV-Abgleich implementiert
+- Language file 1.0.0.92 nötig
+
+
+05.11.2012: FabianHFO 2.0.0.9betaVG03(Ctrl 3.2.7 / Mon 2.8.8 oder 3.8.8 / HFO 2.0.1 / Blender 2.6)
+- FI von Version FabianHFO 2.0.0.9!!
+- CO2-Lizenzdatei über Servicemenü komplett entfernt
+- CO2-Umschaltung geändert -> kein Absturz mehr
+
+07.12.2012: FabianHFO 2.0.0.10betaVG04(Ctrl 3.2.7 / Mon 2.8.8 oder 3.8.8 / HFO 2.0.1 / Blender 2.6)
+- Servicemenü: Satz „connect test lung“ durch „close Y-Piece at ET tube connector“ ersetzt
+- Voulmengarantie: bei PSV-Mode wird Wert der rote Linie vom P-PSV-Para genommen, sonst vom P-Insp
+
+10.12.2012: FabianHFO 2.0.0.11betaVG(Ctrl 3.2.7 / Mon 2.8.10 oder 3.8.10 / HFO 2.0.1 / Blender 2.6)
+- Verriegelung P-Insp / PEEP bei PSV angepasst
+- VT wird generell je nach Einstellung Service BTB oder Average angezeigt
+- Flowsensor ausgeschalten: Numeriks werden richtig angezeigt (CPAP), "Backup aktiv" wird deaktiviert
+- Therapie-Flow: einstellbar 0, 1 bis 5 l/min(0,2er Schritten), über 5l/min in 1er Schritten
+- Alarm AL_SysLimit_Vgaranty -> im PSV wird Pfeil bei ParaBtn P-PSV angezeigt
+- Licensing: wird in Eingabefenster für jeweilige Lizenznummer "Cancel" gedrückt, wird die Lizens nicht mehr gelöscht
+- P-Mean bei HFO: ist Lungenrekruitment deaktiviert, wird P-Mean-rec nicht nachgezogen
+- Pmean-Rec wird bezüglich Pmean überprüpft (HFO)
+
+17.12.2012: FabianHFO 2.0.0.12betaVG(Ctrl 3.2.xx / Mon 2.8.xxx oder 3.8.xxx / HFO 2.0.1 / Blender 2.6)
+- Alarm "Volumen nicht erreicht": je nach Ursache wird entweder bei Pinsp/Ppsv oder I-Flow der Pfeil nach oben gesetzt
+- PSV-Modus: "P insp" heisst jetzt "P Backup"
+- Mischeralarm -> Bit wird ins Log geschrieben
+
+21.12.2012: BUG!!!!!! FabianHFO 2.0.0.13betaVG(Ctrl 3.2.xx / Mon 2.8.xxx oder 3.8.xxx / HFO 2.0.1 / Blender 2.6)
+- P-PSV erhöht/verringert sich automatisch, wenn PEEP erhöht/verringert wird
+- Pmean + PmeanRec bei Lungenrekruitment gem PEEP/P-PSV implementiert
+
+26.12.2012: FabianHFO 2.0.0.14betaVG(Ctrl 3.2.xx / Mon 2.8.xxx oder 3.8.xxx / HFO 2.0.1 / Blender 2.6)
+- Pmean lässt sich auch wieder dekrementieren 
+
+29.12.2012: FabianHFO 2.0.0.15betaVG(Ctrl 3.2.xx / Mon 2.8.xxx oder 3.8.xxx / HFO 2.0.1 / Blender 2.6)
+- PSV: bei automatischem VG-off wird P-Backup richtig gesetzt
+
+07.01.2013: FabianHFO 2.0.0.16(Ctrl 3.2.xx / Mon 2.8.xxx oder 3.8.xxx / HFO 2.0.1 / Blender 2.6)
+- Version-Datum des Kernel wird angezeigt (PDMS-Version: 1.27 Oct 19 2012)
+
+11.01.2013: FabianHFO 2.0.0.17(Ctrl 3.3.01 / Mon 2.8.12 oder 3.8.12 / HFO 2.0.1 / Blender 2.6)
+- Serial CheckThread alle 1000 ms 
+
+22.01.2013: FabianHFO 2.0.0.18(Ctrl 3.3.01 / Mon 2.8.12 oder 3.8.12 / HFO 2.0.1 / Blender 2.6)
+- Alarm "Flat battery" löscht vorherige Alarme AL_Accu_60, AL_Accu_30, AL_Accu_15
+- doxygen angefangen
+
+30.01.2013: FabianHFO 2.0.0.19(Ctrl 3.3.01 / Mon 2.8.12 oder 3.8.12 / HFO 2.0.1 / Blender 2.6)
+- AutoIFlow aktiviert
+- Datum wird bei Start ins Log geschrieben
+
+04.02.2013: FabianHFO 2.0.0.20(Ctrl 3.3.01 / Mon 2.8.12 oder 3.8.12 / HFO 2.0.1 / Blender 2.6)
+- Plateau als T_ramp umgerechnet und an PIC gesendet (T_rampe =  (T_insp * (100 - Plateau)) / 100)
+
+05.02.2013: FabianHFO 2.0.0.21(Ctrl 3.3.01 / Mon 2.8.12 oder 3.8.12 / HFO 2.0.1 / Blender 2.6)
+- Graphik-Menü zurück gebaut, SPO2 ins Menü eingebaut
+
+07.02.2013: FabianHFO 2.0.0.22(Ctrl 3.3.01 / Mon 2.8.12 oder 3.8.12 / HFO 2.0.1 / Blender 2.6)
+- AutoIFlow deaktiviert
+
+
+09.02.2013: FabianHFO 2.0.0.23(Ctrl 3.3.01 / Mon 2.8.12 oder 3.8.12 / HFO 2.0.1 / Blender 2.6)
+- HRESULT res= entfernt aus allen HRESULT res=CloseHandle(..)
+- #define SIMULATION_ENTREK implementiert
+- :DrawLine(...): ohne try/catch, ist bereits in der Funktion
+- bei Startup CDataHandler::PatientDataAvailable() ... und bei Änderung....wird sonst laufend durch ViewDTBField aufgerufen -> Zugriff auf Registry....
+
+18.02.2013: FabianHFO 2.0.0.24(Ctrl 3.3.01 / Mon 2.8.12 oder 3.8.12 / HFO 2.0.1 / Blender 2.6)
+- StartupDelay 10sec
+- beim Einschalten von VG wird der Auto-Wert je nach Bereich gerundet
+- bei "Apnoebeatmung aktiv" wird die rote Linie VG nicht gezeichnet
+- Alarmhandler: Membervariable m_pTempAlarmClass gelöscht
+- CDataHandler::checkLimits() wird nur ausgeführt, wenn 
+			getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_SYSTEM_SILENT
+		&&	getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_SILENT
+		&&	getModel()->getVIEWHANDLER()->getViewState()!=VS_STARTUP
+- Code mit cppCheck überprüft und bereinigt
+- Version für Customer besteht nur noch aus <major release>.<minor release>
+- Lizenzdatei wird auf Schreibschutz überprüft und wenn vorhanden beseitigt
+- VG: wenn VG wieder automatisch eingeschalten wird, wird der max erlaubte Pinsp wieder auf alten Wert gesetzt
+
+
+28.02.2013: FabianHFO 2.0.0.25(Ctrl 3.3.01 / Mon 2.8.12 oder 3.8.12 / HFO 2.0.1 / Blender 2.6)
+- tsAlarmTime aus CAlarm entfernt (Performance)
+- wird der AV Abgleich ausgeführt und Flowsensor war ausgeschalten (DUOPAP/NCPAP), wird dieser eingeschalten
+- PSV + VG: Volumen nicht erreicht -> bei Apnoebeatmung aktiv wird Pfeil in Pbackup angezeigt, sonst bei Ppsv
+- Einstellung Pmin Alarmdelay -> Setup: Text ist jetzt mittig
+
+01.03.2013: FabianHFO 2.0.0.26(Ctrl 3.3.02 / Mon 2.8.13 oder 3.8.13 / HFO 2.0.1 / Blender 2.7)
+- wenn ParaBtn mit UDP grün geschalten wird und der UDP weiterhin gedrückt wird, wird nach 3 Sekunden der Screenlock aktiv und der ParaBtn wird inaktiv
+- Pfeil bei I-Flow wird bezüglich Vgaranty und PinspNotReached überprüft
+- Einträge ins LogFile: Kernelversion, SerialTreiber, acuLink
+- *.dl_ Dateien von der Installation werden gelöscht
+
+06.03.2013: FabianHFO 2.0.0.27(Ctrl 3.3.02 / Mon 2.8.13 oder 3.8.13 / HFO 2.0.1 / Blender 2.7)
+- I2CWatchdog-Thread überprüft verfügbaren Systemspeicher, wenn unter 1000k fällt -> Alarm OUTOFMEMORY
+
+11.03.2013: FabianHFO 2.0.0.28(Ctrl 3.3.02 / Mon 2.8.14 oder 3.8.14 / HFO 2.0.1 / Blender 2.7)
+- neue MonitorPIC Version
+
+14.03.2013: FabianHFO 2.0.0.29(Ctrl 3.3.02 / Mon 2.8.14 oder 3.8.14 / HFO 2.0.1 / Blender 2.7)
+- neuen Kernel (NK11MIM_UARTx_130313) implementiert -> KernelVersion in Systeminfo + Systemlog: KernelVersion + SpezialVersion (wenn Eintrag in Registry vorhanden), sonst wie bisher Datum des Kernel
+- 2er von etCO2 und SPO2 im Graphikmenü tiefgestellt, Text wird nicht von Language-Files bezogen!
+- im ServiceMenü System wird die Buildversion angezeigt
+
+15.03.2013: FabianHFO 2.0.0.30(Ctrl 3.3.02 / Mon 2.8.14 oder 3.8.14 / HFO 2.0.1 / Blender 2.7)
+- Version jetzt 3stellig <major><minor><patch>
+- CO2 disabled
+- Lungrekruitment disabled
+
+
+19.03.2013: FabianHFO 2.0.0.31(Ctrl 3.3.02 / Mon 2.8.14 oder 3.8.14 / HFO 2.0.1 / Blender 2.7)
+- ALarm PIF (ParallelInterface) löst WD0 aus
+
+20.03.2013: FabianHFO 2.0.0.32(Ctrl 3.3.02 / Mon 2.8.14 oder 3.8.14 / HFO 2.0.1 / Blender 2.7)
+- Demo-Version Graz
+
+20.03.2013: FabianHFO 2.0.0.33(Ctrl 3.3.02 / Mon 2.8.15 oder 3.8.15 / HFO 2.0.1 / Blender 2.7)
+- Flowsensor und OxySensor haben jetzt unterschiedliche Adresse für Kommandos
+
+21.03.2013: FabianHFO 2.0.0.34(Ctrl 3.3.02 / Mon 2.8.15 oder 3.8.15 / HFO 2.0.1 / Blender 2.7)
+- CInterfaceSerial::CheckSerialData geändert:
+- es wird alle 2 Sekunden ein Wert abgefragt
+- stimmt der Wert nicht überein, wird dieser noch 2x mal geprüft
+- stimmt der Wert immer noch nicht, werden alle Vent-Settings nochmal geschickt
+- stimmt der Wert nicht überein, wird dieser noch 1x mal geprüft
+- stimmt der Wert immer noch nicht, wird der entsprechende ERROR-Code gesetzt und alarmiert
+- die Schnittstelle wird darauf hin alle 2 Sekunden erneut überprüft (gem. )
+- folgende ERROR-Code bezüglich Wertüberprüfung existieren:
+		ERRC_COM_CHECK_VENTMODE:	//"Oq"
+		ERRC_COM_CHECK_ITIME:		//"Wq"
+		ERRC_COM_CHECK_ETIME:		//"Eq"
+		ERRC_COM_CHECK_IFLOW:		//"Uq"
+		ERRC_COM_CHECK_EFLOW:		//"Aq"
+		ERRC_COM_CHECK_PINSP:		//"Tq"
+		ERRC_COM_CHECK_PEEP:		//"Zq"
+		ERRC_COM_CHECK_O2:			//"Dq"
+		ERRC_COM_CHECK_MODEOPTION: //"Rq"
+		ERRC_COM_CHECK_PPSV:		//"Cq"
+		ERRC_COM_CHECK_HFFREQ:		//"Fq"
+		ERRC_COM_CHECK_HFPMEAN:	//"Jq"
+		ERRC_COM_CHECK_HFAMP:		//"Mq" 
+- Therapy in CInterfaceSerial::CheckSerialData eingefügt
+
+28.03.2013: FabianHFO 2.0.0.35(Ctrl 3.3.03 / Mon 2.9.1 oder 3.9.1 / HFO 2.0.1 / Blender 2.7)
+- CInterfaceSerial::CheckSerialData geändert bezüglich ERROR-Code
+- Mischer Checksum fail-> Mischdefekt Alarm           28.3.13
+	'g_bMischAlarm'
+	bei Ausfall HFO-Modul:'g_b_HFO_HW_ok' sicherer Zustand Druck
+	FILTER_UEB_HFO_E (35)-> 90 ms Prox-Filt bei HFO
+	sonst sporadisch Entlüftg.bei Start Man_ATZ
+	Ctl_3_3_03 CS= 9F0B  MPLAB= 4e2a (combi)
+	Fct_3_3_03 CS= C0CA  MPLAB= 71a7 (combi)
+
+08.04.2013: FabianHFO 2.0.0.36(Ctrl 3.3.03 / Mon 2.9.1 oder 3.9.1 / HFO 2.0.1 / Blender 2.7)
+- Operating time lässt sich im ServiceMenü einstellen
+- AcuLink wird explizit beendet
+
+10.04.2013: FabianHFO 2.0.0.37(Ctrl 3.3.03 / Mon 2.9.1 oder 3.9.1 / HFO 2.0.1 / Blender 2.7)
+- Operating time: "Operating time HFO module" wird in der Caption dargestellt
+
+15.04.2013: FabianHFO 3.0.0.0(Ctrl 3.3.05 / Mon 2.9.2 oder 3.9.2 / HFO 2.0.1 / Blender 2.7)
+- Terminal-Funktionalität implementiert
+- MAXRANGE_PEDIATRIC_THERAPYFLOW bei 20l/min begrenzt
+- Config-Version wird in das Systemlog eingetragen (Kompatibilität für Hospital-Settings)
+- Service-Menü: P-Mix -> P-insp umbenannt
+- ParaBtn Abbruchkriterium in den Schnelleinstellungen nur bei den PSV-Modi
+- FlowParaBtn HFO umbenannt von "auto" nach "default"
+- Languagefiles 1.0.0.99 nötig
+- im HFO wird bei FREEZE nur 1 ATZ-Loop gezeichnet
+
+26.04.2013: FabianHFO 3.0.0.1(Ctrl 3.3.08(ohne VGLimit) oder 3.3.09(mit VGLimit) / Mon 2.9.2(ohne VGLimit) bzw 3.9.2(ohne VGLimit) oder 2.9.3(mit VGLimit) bzw 3.9.3(mit VGLimit) / HFO 2.0.1 / Blender 2.7)
+- Dellaca-Terminal implementiert
+- Graphik: Skalierung Flow auf 80l/min erhöht
+- Graphik: Skalierung HFO VOlumen auf 80ml erhöht
+- Cursor manual scaling of graphs in therapy mode will be displayed now
+- MAXRANGE_PEDIATRIC_THERAPYFLOW auf 19lpm begrenzt
+
+//TODO_LUNREC
+//TODO_AUTOIFLOW
+//TODO_CO2
+
+//SPO2???????????????????????
+rainer
+
+

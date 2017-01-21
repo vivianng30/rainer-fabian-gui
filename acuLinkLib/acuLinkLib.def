@@ -1,0 +1,7 @@
+; acuLinkLib.def : Declares the module parameters for the DLL.
+
+LIBRARY      "acuLinkLib"
+
+EXPORTS
+	AddTest	@1
+    ; Explicit exports can go here
