@@ -107,7 +107,7 @@ CMVModel::CMVModel(void)
 	m_szBuildVersion = _T("9.0.0.0");
 #else
 	m_szVersion = _T("5.0.1");
-	m_szBuildVersion = _T("5.0.1.2");
+	m_szBuildVersion = _T("5.0.1.3");
 #endif
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO"),true);
@@ -5323,7 +5323,7 @@ WORD CMVModel::Send_MODE_OPTION2(bool bSPI,bool bSerial)
 			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 CURVE_LINEAR\r\n")));
 		}
 		break;
-	case CURVE_AUTOFLOW: //TODO_AUTOIFLOW
+	case CURVE_AUTOFLOW: 
 		{
 			wMode=setBitOfWord(wMode, MODOPT2_CURVEFORM2_BIT);
 			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 CURVE_AUTOFLOW\r\n")));
@@ -6143,7 +6143,7 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 				getAcuLink()->setParaData(ALINK_SETT_RISETIME,iRisetime);
 			}
 			break;
-		case CURVE_AUTOFLOW://TODO_AUTOIFLOW
+		case CURVE_AUTOFLOW:
 			{
 				getAcuLink()->setParaData(ALINK_SETT_INSP_FLOW,ALINK_NOTVALID);
 				getAcuLink()->setParaData(ALINK_SETT_RISETIME,ALINK_NOTVALID);
@@ -6393,7 +6393,7 @@ void CMVModel::Send_PARA_RISETIME(int iVal, bool bSerial, bool bSPI)
 				getAcuLink()->setParaData(ALINK_SETT_RISETIME,iVal);
 			}
 			break;
-		case CURVE_AUTOFLOW://TODO_AUTOIFLOW
+		case CURVE_AUTOFLOW:
 			{
 				getAcuLink()->setParaData(ALINK_SETT_RISETIME,ALINK_NOTVALID);
 			}
@@ -6536,7 +6536,7 @@ void CMVModel::Send_PARA_INSP_FLOW(int iVal, bool bSerial, bool bSPI)
 				getAcuLink()->setParaData(ALINK_SETT_INSP_FLOW,ALINK_NOTVALID);
 			}
 			break;
-		case CURVE_AUTOFLOW://TODO_AUTOIFLOW
+		case CURVE_AUTOFLOW:
 			{
 				getAcuLink()->setParaData(ALINK_SETT_INSP_FLOW,ALINK_NOTVALID);
 			}

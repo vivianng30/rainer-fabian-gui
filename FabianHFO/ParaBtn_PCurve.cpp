@@ -200,7 +200,7 @@ void CParaBtn_PCurve::Draw(int nState)
 
 				}
 				break;
-			case CURVE_AUTOFLOW://TODO_AUTOIFLOW
+			case CURVE_AUTOFLOW:
 				{
 					m_pcAutoflow->Draw(m_hDC,23,30);
 
@@ -262,12 +262,17 @@ void CParaBtn_PCurve::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 			if(m_bDepressed)
 			{
 				if(m_v.iValue>m_v.iLowerLimit)
-					m_v.iValue--;
-				/*else if(m_bScrollOver)
-					m_v.iValue=m_v.iUpperLimit;
-				else
-					m_bEndOfRange = true;*/
-	
+				{
+					//TODO_AUTOIFLOW
+					if(false==getModel()->getCONFIG()->isRISETIMEREGISTRYenabled())
+					{
+						m_v.iValue=CURVE_IFLOW;
+					}
+					else
+					{
+						m_v.iValue--;
+					}
+				}
 
 				if(m_bTextOnly)// notify parent by message
 				{
@@ -279,8 +284,6 @@ void CParaBtn_PCurve::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 					Draw(BTN_DW_DW);
 					BitBlt(dc.m_hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);
 				}
-
-
 			}
 			else
 			{
@@ -293,12 +296,17 @@ void CParaBtn_PCurve::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 			if(m_bDepressed)
 			{
 				if(m_v.iValue<m_v.iUpperLimit)
-					m_v.iValue++;
-				/*else if(m_bScrollOver)
-					m_v.iValue=m_v.iLowerLimit;
-				else
-					m_bEndOfRange = true;*/
-
+				{
+					//TODO_AUTOIFLOW
+					if(false==getModel()->getCONFIG()->isRISETIMEREGISTRYenabled())
+					{
+						m_v.iValue=CURVE_AUTOFLOW;
+					}
+					else
+					{
+						m_v.iValue++;
+					}
+				}
 
 				if(m_bTextOnly)// notify parent by message
 				{

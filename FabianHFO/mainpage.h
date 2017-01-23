@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver5013 Version 5.0.1.3
+ * @date 2017-01-23
+ * @verbatim
+	- AUTOIFLOW enabled //TODO_AUTOIFLOW
+ @endverbatim
+ *
  * @subsection ver5012 Version 5.0.1.2
  * @date 2017-01-13
  * @verbatim

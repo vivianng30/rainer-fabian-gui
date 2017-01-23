@@ -1072,7 +1072,7 @@ void CConfiguration::LoadSettings()
 		m_bRISETIMEregistry=true;
 	else
 		m_bRISETIMEregistry=false;
-	//TODO_AUTOIFLOW
+	
 	if(!m_bRISETIMEregistry)
 	{
 		m_eCurveForm=CURVE_IFLOW;
@@ -1081,8 +1081,8 @@ void CConfiguration::LoadSettings()
 	{
 		m_eCurveForm=(eCurveForm)getModel()->getI2C()->ReadConfigByte(PRESSURERISECTRL_8);
 	}
-	if(m_eCurveForm<CURVE_IFLOW || m_eCurveForm>CURVE_LINEAR)
-	//if(m_eCurveForm<CURVE_IFLOW || m_eCurveForm>CURVE_AUTOFLOW)//TODO_AUTOIFLOW
+	//if(m_eCurveForm<CURVE_IFLOW || m_eCurveForm>CURVE_LINEAR)
+	if(m_eCurveForm<CURVE_IFLOW || m_eCurveForm>CURVE_AUTOFLOW)//TODO_AUTOIFLOW
 	{
 		m_eCurveForm=CURVE_IFLOW;
 		getModel()->getI2C()->WriteConfigByte(PRESSURERISECTRL_8,0);
@@ -6430,7 +6430,7 @@ void CConfiguration::SetCurPressureRiseCtrl(eCurveForm form)
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_RISETIME,iRiseTime);
 		}
 		break;
-	case CURVE_AUTOFLOW://TODO_AUTOIFLOW
+	case CURVE_AUTOFLOW:
 		{
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_INSP_FLOW,ALINK_NOTVALID);
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_RISETIME,ALINK_NOTVALID);
