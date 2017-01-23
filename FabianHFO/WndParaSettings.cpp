@@ -454,9 +454,9 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
 
 
-		//fv.iLowerLimit=CURVE_IFLOW;
+		fv.iLowerLimit=CURVE_IFLOW;
 		fv.iUpperLimit=CURVE_AUTOFLOW; //TODO_AUTOIFLOW
-		fv.iUpperLimit=CURVE_LINEAR;
+		//fv.iUpperLimit=CURVE_LINEAR;
 
 		fv.iValue=(int)getModel()->getCONFIG()->GetCurPressureRiseCtrl();
 		if(fv.iValue>fv.iUpperLimit)
