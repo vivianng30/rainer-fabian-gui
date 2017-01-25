@@ -264,11 +264,11 @@ void CParaBtn_PCurve::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 				if(m_v.iValue>m_v.iLowerLimit)
 				{
 					//TODO_AUTOIFLOW
-					if(false==getModel()->getCONFIG()->isRISETIMEREGISTRYenabled())
+					/*if(false==getModel()->getCONFIG()->isRISETIMEREGISTRYenabled())
 					{
 						m_v.iValue=CURVE_IFLOW;
 					}
-					else
+					else*/
 					{
 						m_v.iValue--;
 					}
@@ -298,11 +298,11 @@ void CParaBtn_PCurve::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 				if(m_v.iValue<m_v.iUpperLimit)
 				{
 					//TODO_AUTOIFLOW
-					if(false==getModel()->getCONFIG()->isRISETIMEREGISTRYenabled())
+					/*if(false==getModel()->getCONFIG()->isRISETIMEREGISTRYenabled())
 					{
 						m_v.iValue=CURVE_AUTOFLOW;
 					}
-					else
+					else*/
 					{
 						m_v.iValue++;
 					}

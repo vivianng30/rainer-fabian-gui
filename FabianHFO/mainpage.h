@@ -7,6 +7,13 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver5014 Version 5.0.1.4
+ * @date 2017-01-25
+ * @verbatim
+	- AUTOIFLOW disabled //TODO_AUTOIFLOW
+	- Trigger NMode new setting: 1-10, then off
+ @endverbatim
+ *
  * @subsection ver5013 Version 5.0.1.3
  * @date 2017-01-23
  * @verbatim

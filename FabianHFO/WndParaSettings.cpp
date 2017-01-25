@@ -455,9 +455,9 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 
 
 		fv.iLowerLimit=CURVE_IFLOW;
-		fv.iUpperLimit=CURVE_AUTOFLOW; //TODO_AUTOIFLOW
-		//fv.iUpperLimit=CURVE_LINEAR;
-
+		fv.iUpperLimit=CURVE_LINEAR;
+		//fv.iUpperLimit=CURVE_AUTOFLOW; //TODO_AUTOIFLOW
+		
 		fv.iValue=(int)getModel()->getCONFIG()->GetCurPressureRiseCtrl();
 		if(fv.iValue>fv.iUpperLimit)
 			fv.iValue=fv.iUpperLimit;
@@ -709,19 +709,15 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 			m_pcPara_PCurve->EnableWindow(FALSE);
 			//m_pcPara_PCurve->ShowWindow(SW_HIDE);
 		}
-		//else if(NEONATAL==getModel()->getCONFIG()->GetVentRange())//RISE_NEO
-		//{
-		//	m_pcPara_PCurve->ShowWindow(SW_HIDE);
-		//}
 		else
 		{
 			//TODO_AUTOIFLOW
-			/*if(false==getModel()->getCONFIG()->isRISETIMEREGISTRYenabled())
+			if(false==getModel()->getCONFIG()->isRISETIMEREGISTRYenabled())
 			{
 				m_pcPara_PCurve->ShowWindow(SW_SHOW);
 				m_pcPara_PCurve->EnableWindow(FALSE);
 			}
-			else*/
+			else
 			{
 				m_pcPara_PCurve->ShowWindow(SW_SHOW);
 				m_pcPara_PCurve->EnableWindow(TRUE);
@@ -802,12 +798,12 @@ void CWndParaSettings::Show(bool bShow)
 			else
 			{
 				//TODO_AUTOIFLOW
-				/*if(false==getModel()->getCONFIG()->isRISETIMEREGISTRYenabled())
+				if(false==getModel()->getCONFIG()->isRISETIMEREGISTRYenabled())
 				{
 					m_pcPara_PCurve->ShowWindow(SW_SHOW);
 					m_pcPara_PCurve->EnableWindow(FALSE);
 				}
-				else*/
+				else
 				{
 					m_pcPara_PCurve->ShowWindow(SW_SHOW);
 					m_pcPara_PCurve->EnableWindow(TRUE);

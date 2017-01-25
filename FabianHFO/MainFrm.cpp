@@ -4431,7 +4431,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_TURNOFF_TRIGGERNMODE:
 		{
-			getModel()->getDATAHANDLER()->SetTriggerNMODEParadata(0,true);
+			getModel()->getDATAHANDLER()->SetTriggerNMODEParadata(MAXRANGE_TRIGGER_NMODE_OFF,true);
 			return 1;
 		}
 		break;

@@ -97,7 +97,7 @@ void CParaBtn_TRIGGERNMODE::Draw(int nState)
 
 			TCHAR psz[MAX_PATH];
 
-			if(m_v.iValue==0)
+			if(m_v.iValue==MAXRANGE_TRIGGER_NMODE_OFF)
 			{
 				SelectObject(m_hDC,g_hf23AcuBold);
 				DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_OFF),-1,&rc,m_btn.dwFormat);
@@ -142,7 +142,7 @@ void CParaBtn_TRIGGERNMODE::Draw(int nState)
 					DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENSITIVITY),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
 
 				rcUnit.bottom = m_rcClient.bottom-1;
-				if(m_v.iValue==0)//off
+				if(m_v.iValue==MAXRANGE_TRIGGER_NMODE_OFF)//off
 				{
 					//DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_HIGH),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
 				}

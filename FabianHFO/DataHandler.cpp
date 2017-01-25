@@ -3843,22 +3843,22 @@ void CDataHandler::checkTriggerTubeDependency()
 	{
 		if(GetTubeSet()==TUBE_MEDIJET)//pressure trigger
 		{
-			if(		PRESET()->GetTriggerNMODEPara()!=0 
+			if(		PRESET()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF 
 				&& getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP 
 				&& PRESET()->GetITimeNMODEPara()>600)
 			{
 				SetNMODEtriggerAutoenableFlag(PRESET()->GetTriggerNMODEPara());
-				PRESET()->SetTriggerNMODEPara(0, false, false);
+				PRESET()->SetTriggerNMODEPara(MAXRANGE_TRIGGER_NMODE_OFF, false, false);
 				
 				if(AfxGetApp() != NULL)
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
 			}
-			else if(		PARADATA()->GetTriggerNMODEPara()!=0 
+			else if(		PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF 
 				&& getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP 
 				&& PARADATA()->GetITimeNMODEPara()>600)
 			{
 				SetNMODEtriggerAutoenableFlag(PARADATA()->GetTriggerNMODEPara());
-				SetTriggerNMODEParadata(0,true);
+				SetTriggerNMODEParadata(MAXRANGE_TRIGGER_NMODE_OFF,true);
 
 				if(AfxGetApp() != NULL)
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
@@ -3871,7 +3871,7 @@ void CDataHandler::checkTriggerTubeDependency()
 			}
 			else if(GetNMODEtriggerAutoenableFlag())
 			{
-				if(		PARADATA()->GetTriggerNMODEPara()==0 
+				if(		PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF 
 					&&	getModel()->getCONFIG()->GetCurMode()==VM_NCPAP)
 				{
 					if(AfxGetApp() != NULL)
@@ -3881,7 +3881,7 @@ void CDataHandler::checkTriggerTubeDependency()
 					if(AfxGetApp() != NULL)
 						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
 				}
-				else if(		PARADATA()->GetTriggerNMODEPara()==0 
+				else if(		PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF 
 					&&	PARADATA()->GetITimeNMODEPara()<=600
 					&&	getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP)
 				{
@@ -3894,21 +3894,21 @@ void CDataHandler::checkTriggerTubeDependency()
 						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
 				}
 			}
-			else if(PARADATA()->GetTriggerNMODEPara()==0 && getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()!=AL_OFF)
+			else if(PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF && getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()!=AL_OFF)
 			{
 				if(AfxGetApp() != NULL)
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_TURNOFF_APNEA);
 			}
 			else if(false==GetTriggerNMODEenabled())
 			{
-				if(		PARADATA()->GetTriggerNMODEPara()==0 
+				if(		PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF
 					&&	PARADATA()->GetITimeNMODEPara()<=600
 					&&	getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP)
 				{
 					if(AfxGetApp() != NULL)
 						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
 				}
-				else if(		PRESET()->GetTriggerNMODEPara()==0 
+				else if(		PRESET()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF 
 					&&	PRESET()->GetITimeNMODEPara()<=600
 					&&	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
 				{
@@ -3935,7 +3935,7 @@ void CDataHandler::checkTriggerTubeDependency()
 		{
 			if(IsFlowSensorStateOff()==true)
 			{
-				if(PARADATA()->GetTriggerNMODEPara()!=0)
+				if(PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
 				{
 					if(AfxGetApp() != NULL)
 						AfxGetApp()->GetMainWnd()->PostMessage(WM_TURNOFF_TRIGGERNMODE);
@@ -3948,22 +3948,22 @@ void CDataHandler::checkTriggerTubeDependency()
 			}
 			else
 			{
-				if(		PRESET()->GetTriggerNMODEPara()!=0 
+				if(		PRESET()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF 
 					&& getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP 
 					&& PRESET()->GetITimeNMODEPara()>600)
 				{
 					SetNMODEtriggerAutoenableFlag(PRESET()->GetTriggerNMODEPara());
-					PRESET()->SetTriggerNMODEPara(0, false, false);
+					PRESET()->SetTriggerNMODEPara(MAXRANGE_TRIGGER_NMODE_OFF, false, false);
 
 					if(AfxGetApp() != NULL)
 						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
 				}
-				else if(		PARADATA()->GetTriggerNMODEPara()!=0 
+				else if(		PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF 
 					&& getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP 
 					&& PARADATA()->GetITimeNMODEPara()>600)
 				{
 					SetNMODEtriggerAutoenableFlag(PARADATA()->GetTriggerNMODEPara());
-					SetTriggerNMODEParadata(0,true);
+					SetTriggerNMODEParadata(MAXRANGE_TRIGGER_NMODE_OFF,true);
 
 					if(AfxGetApp() != NULL)
 						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
@@ -3976,7 +3976,7 @@ void CDataHandler::checkTriggerTubeDependency()
 				}
 				else if(GetNMODEtriggerAutoenableFlag())
 				{
-					if(		PARADATA()->GetTriggerNMODEPara()==0 
+					if(		PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF 
 						&&	getModel()->getCONFIG()->GetCurMode()==VM_NCPAP)
 					{
 						if(AfxGetApp() != NULL)
@@ -3986,7 +3986,7 @@ void CDataHandler::checkTriggerTubeDependency()
 						if(AfxGetApp() != NULL)
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
 					}
-					else if(		PARADATA()->GetTriggerNMODEPara()==0 
+					else if(		PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF 
 						&&	PARADATA()->GetITimeNMODEPara()<=600
 						&&	getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP)
 					{
@@ -3999,21 +3999,21 @@ void CDataHandler::checkTriggerTubeDependency()
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
 					}
 				}
-				else if(PARADATA()->GetTriggerNMODEPara()==0 && getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()!=AL_OFF)
+				else if(PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF && getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()!=AL_OFF)
 				{
 					if(AfxGetApp() != NULL)
 						AfxGetApp()->GetMainWnd()->PostMessage(WM_TURNOFF_APNEA);
 				}
 				else if(false==GetTriggerNMODEenabled())
 				{
-					if(		PARADATA()->GetTriggerNMODEPara()==0 
+					if(		PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF 
 						&&	PARADATA()->GetITimeNMODEPara()<=600
 						&&	getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP)
 					{
 						if(AfxGetApp() != NULL)
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
 					}
-					else if(		PRESET()->GetTriggerNMODEPara()==0 
+					else if(		PRESET()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF 
 						&&	PRESET()->GetITimeNMODEPara()<=600
 						&&	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
 					{
@@ -9010,12 +9010,12 @@ void CDataHandler::SetCurrentTriggerPara(BYTE val)
 				getModel()->getALARMHANDLER()->setAutoSilent();
 			}
 
-			if(iOldVal==0 && val !=0)
+			if(iOldVal==MAXRANGE_TRIGGER_NMODE_OFF && val !=MAXRANGE_TRIGGER_NMODE_OFF)//MAXRANGE_PED_TRIGGER_NMODE==0ff
 			{
 				if(AfxGetApp() != NULL)
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 			}
-			else if(iOldVal!=0 && val ==0)
+			else if(iOldVal!=MAXRANGE_TRIGGER_NMODE_OFF && val ==MAXRANGE_TRIGGER_NMODE_OFF)
 			{
 				if(AfxGetApp() != NULL)
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
@@ -9027,7 +9027,7 @@ void CDataHandler::SetCurrentTriggerPara(BYTE val)
 				ResetNMODEtriggerAutoenableFlag();
 			}
 
-			if(val==0)
+			if(val==MAXRANGE_TRIGGER_NMODE_OFF)
 				checkTriggerTubeDependency();
 		}
 		break;

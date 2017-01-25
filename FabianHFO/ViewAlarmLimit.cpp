@@ -1361,12 +1361,12 @@ void CViewAlarmLimit::DrawFrames(CDC* pDC)
 
 			if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false 
 				&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET 
-				&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=0)
+				&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
 			{
 				if(m_pcAlarmlimitPara1)
 					m_pcAlarmlimitPara1->Draw(hdc,0,266);	//Apnea
 			}
-			else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=0)
+			else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
 			{
 				if(m_pcAlarmlimitPara1)
 					m_pcAlarmlimitPara1->Draw(hdc,0,266);	//Apnea
@@ -1383,12 +1383,12 @@ void CViewAlarmLimit::DrawFrames(CDC* pDC)
 
 			if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false 
 				&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET 
-				&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=0)
+				&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
 			{
 				if(m_pcAlarmlimitPara1)
 					m_pcAlarmlimitPara1->Draw(hdc,0,266);	//Apnea
 			}
-			else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=0)
+			else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
 			{
 				if(m_pcAlarmlimitPara1)
 					m_pcAlarmlimitPara1->Draw(hdc,0,266);	//Apnea
@@ -1972,11 +1972,11 @@ void CViewAlarmLimit::drawLabel_VENTILATION(CDC* pDC)
 		bool bShowApnea=false;
 		if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false 
 			&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET 
-			&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=0)
+			&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
 		{
 			bShowApnea=true;
 		}
-		else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=0)
+		else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
 		{
 			bShowApnea=true;
 		}
@@ -2060,11 +2060,11 @@ void CViewAlarmLimit::drawLabel_VENTILATION(CDC* pDC)
 		bool bShowApnea=false;
 		if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false 
 			&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET 
-			&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=0)
+			&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
 		{
 			bShowApnea=true;
 		}
-		else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=0)
+		else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
 		{
 			bShowApnea=true;
 		}
@@ -3646,14 +3646,14 @@ void CViewAlarmLimit::showALimitButtons()
 		{
 			if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false 
 				&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET 
-				&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=0)
+				&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
 			{
 				if(m_pcAlarmLimit_Apnoe)
 				{
 					m_pcAlarmLimit_Apnoe->ShowWindow(SW_SHOW);
 				}
 			}
-			else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=0)
+			else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
 			{
 				if(m_pcAlarmLimit_Apnoe)
 				{
