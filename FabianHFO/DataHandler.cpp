@@ -652,17 +652,9 @@ void CDataHandler::setExit()
 		m_rbufCopy.~CircularBuffer();
 		LeaveCriticalSection(&csCopyDataBuffer);
 
-		/*EnterCriticalSection(&csFOTDataBuffer);
-		m_rbufFOT.~CircularBuffer();
-		LeaveCriticalSection(&csFOTDataBuffer);*/
-
 		EnterCriticalSection(&csSPIDataBuffer);
 		m_rbufSPI.~CircularBuffer();
 		LeaveCriticalSection(&csSPIDataBuffer);
-
-		/*EnterCriticalSection(&csEMGDataBuffer);
-		m_rbufEMG.~CircularBuffer();
-		LeaveCriticalSection(&csEMGDataBuffer);*/
 
 		EnterCriticalSection(&csSPO2DataBuffer);
 		m_rbufSPO2.~CircularBuffer();
@@ -709,7 +701,6 @@ void CDataHandler::setExit()
 	DeleteCriticalSection(&csVentDataBuffer);
 	DeleteCriticalSection(&csCO2DataBuffer);
 	DeleteCriticalSection(&csSPO2DataBuffer);
-	//DeleteCriticalSection(&csFOTDataBuffer);
 	DeleteCriticalSection(&csMainboardData);
 	DeleteCriticalSection(&csMessureDataAVG);
 	DeleteCriticalSection(&csMessureDataBTB);
@@ -907,6 +898,9 @@ void CDataHandler::init()
 	{
 		m_dwOpTimeHFOTickCountStarted=0;
 	}
+
+	checkTriggerTubeDependency();
+
 	/*DEBUGMSG(TRUE, (TEXT("OpTime DEV %d\r\n"),(int)m_ullOpTimeDevTickCountStarted));
 	DEBUGMSG(TRUE, (TEXT("OpTime ACU %d\r\n"),(int)m_ullOpTimeBattTickCountStarted));
 	DEBUGMSG(TRUE, (TEXT("OpTime HFO %d\r\n"),(int)m_ullOpTimeHFOTickCountStarted));*/
@@ -3851,7 +3845,7 @@ void CDataHandler::checkTriggerTubeDependency()
 				PRESET()->SetTriggerNMODEPara(MAXRANGE_TRIGGER_NMODE_OFF, false, false);
 				
 				if(AfxGetApp() != NULL)
-					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 			}
 			else if(		PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF 
 				&& getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP 
@@ -3861,7 +3855,7 @@ void CDataHandler::checkTriggerTubeDependency()
 				SetTriggerNMODEParadata(MAXRANGE_TRIGGER_NMODE_OFF,true);
 
 				if(AfxGetApp() != NULL)
-					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 
 				if(getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()!=AL_OFF)
 				{
@@ -3874,24 +3868,20 @@ void CDataHandler::checkTriggerTubeDependency()
 				if(		PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF 
 					&&	getModel()->getCONFIG()->GetCurMode()==VM_NCPAP)
 				{
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 					SetTriggerNMODEParadata(GetPrevTRIGGERnmodePara(),true);
 
 					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 				}
 				else if(		PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF 
 					&&	PARADATA()->GetITimeNMODEPara()<=600
 					&&	getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP)
 				{
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 					SetTriggerNMODEParadata(GetPrevTRIGGERnmodePara(),true);
 					ResetNMODEtriggerAutoenableFlag();
 
 					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 				}
 			}
 			else if(PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF && getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()!=AL_OFF)
@@ -3906,14 +3896,14 @@ void CDataHandler::checkTriggerTubeDependency()
 					&&	getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP)
 				{
 					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 				}
 				else if(		PRESET()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF 
 					&&	PRESET()->GetITimeNMODEPara()<=600
 					&&	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
 				{
 					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 				}
 			}
 			else if(	true==GetTriggerNMODEenabled() 
@@ -3921,14 +3911,14 @@ void CDataHandler::checkTriggerTubeDependency()
 				&& PARADATA()->GetITimeNMODEPara()>600)
 			{
 				if(AfxGetApp() != NULL)
-					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 			}
 			else if(	true==GetTriggerNMODEenabled() 
 				&& getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP 
 				&& PRESET()->GetITimeNMODEPara()>600)
 			{
 				if(AfxGetApp() != NULL)
-					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 			}
 		}
 		else//flow trigger
@@ -3956,7 +3946,7 @@ void CDataHandler::checkTriggerTubeDependency()
 					PRESET()->SetTriggerNMODEPara(MAXRANGE_TRIGGER_NMODE_OFF, false, false);
 
 					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 				}
 				else if(		PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF 
 					&& getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP 
@@ -3966,7 +3956,7 @@ void CDataHandler::checkTriggerTubeDependency()
 					SetTriggerNMODEParadata(MAXRANGE_TRIGGER_NMODE_OFF,true);
 
 					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 
 					if(getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()!=AL_OFF)
 					{
@@ -3979,24 +3969,20 @@ void CDataHandler::checkTriggerTubeDependency()
 					if(		PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF 
 						&&	getModel()->getCONFIG()->GetCurMode()==VM_NCPAP)
 					{
-						if(AfxGetApp() != NULL)
-							AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 						SetTriggerNMODEParadata(GetPrevTRIGGERnmodePara(),true);
 
 						if(AfxGetApp() != NULL)
-							AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+							AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 					}
 					else if(		PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF 
 						&&	PARADATA()->GetITimeNMODEPara()<=600
 						&&	getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP)
 					{
-						if(AfxGetApp() != NULL)
-							AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 						SetTriggerNMODEParadata(GetPrevTRIGGERnmodePara(),true);
 						ResetNMODEtriggerAutoenableFlag();
 
 						if(AfxGetApp() != NULL)
-							AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+							AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 					}
 				}
 				else if(PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF && getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()!=AL_OFF)
@@ -4011,14 +3997,14 @@ void CDataHandler::checkTriggerTubeDependency()
 						&&	getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP)
 					{
 						if(AfxGetApp() != NULL)
-							AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 					}
 					else if(		PRESET()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF 
 						&&	PRESET()->GetITimeNMODEPara()<=600
 						&&	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
 					{
 						if(AfxGetApp() != NULL)
-							AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 					}
 				}
 				else if(	true==GetTriggerNMODEenabled() 
@@ -4026,26 +4012,38 @@ void CDataHandler::checkTriggerTubeDependency()
 					&& PARADATA()->GetITimeNMODEPara()>600)
 				{
 					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 				}
 				else if(	true==GetTriggerNMODEenabled() 
 					&& getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP 
 					&& PRESET()->GetITimeNMODEPara()>600)
 				{
 					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 				}
 			}
 		}
 	}
-	/*else if(true==getModel()->getVMODEHANDLER()->activeModeIsCPAP && Drucktrigger)
+	else if(true==getModel()->getVMODEHANDLER()->activeModeIsCPAP())
 	{
-		if(PARADATA()->GetTriggerCONVPara()==0 && getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()!=AL_OFF)
+		if(		GetFlowSensorState()==FLOWSENSOR_MANOFF
+			&&	getTriggerOptionCONV()!=TRIGGER_PRESSURE)
+		{
+			setTriggerOptionCONV(TRIGGER_PRESSURE);
+			getModel()->Send_MODE_OPTION1();
+
+			if(AfxGetApp() != NULL)
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
+		}
+
+		/*if(PARADATA()->GetTriggerCONVPara()==0 && getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()!=AL_OFF)
 		{
 			if(AfxGetApp() != NULL)
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_TURNOFF_APNEA);
-		}
-	}*/
+		}*/
+
+		
+	}
 }
 void CDataHandler::SetTriggerNMODEenabled()
 {
@@ -8985,6 +8983,7 @@ void CDataHandler::SetCurrentTriggerPara(BYTE val)
 	case VM_SIMV:
 	case VM_SIMVPSV:
 	case VM_SIPPV:
+	case VM_CPAP:
 		{
 			if(PARADATA()->GetTriggerCONVPara()!=val)
 			{
@@ -8997,6 +8996,7 @@ void CDataHandler::SetCurrentTriggerPara(BYTE val)
 	case VM_PRE_SIMVPSV:
 	case VM_PRE_SIPPV:
 	case VM_PRE_PSV:
+	case VM_PRE_CPAP:
 		{
 			PRESET()->SetTriggerCONVPara(val,false,false);
 		}
@@ -9064,6 +9064,7 @@ BYTE CDataHandler::GetCurrentTriggerPara()
 	case VM_SIMV:
 	case VM_SIMVPSV:
 	case VM_SIPPV:
+	case VM_CPAP:
 		{
 			iValue=PARADATA()->GetTriggerCONVPara();
 		}
@@ -9072,6 +9073,7 @@ BYTE CDataHandler::GetCurrentTriggerPara()
 	case VM_PRE_SIMVPSV:
 	case VM_PRE_SIPPV:
 	case VM_PRE_PSV:
+	case VM_PRE_CPAP:
 		{
 			iValue=PRESET()->GetTriggerCONVPara();
 		}

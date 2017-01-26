@@ -76,9 +76,7 @@ void CParaBtn_TRIGGER::Draw(int nState)
 			RECT rc;
 			memcpy(&rc,&m_rcClient,sizeof(RECT));
 
-
 			rc.top = 5;
-			//rc.bottom = 94;
 
 			if(m_btn.dwFormat&DT_RIGHT)
 				rc.right-=m_nOffset;
@@ -92,12 +90,9 @@ void CParaBtn_TRIGGER::Draw(int nState)
 			else
 				wsprintf(psz,_T("%df"),0);
 
-
 			DrawText(m_hDC,psz,-1,&rc,m_btn.dwFormat);
 
 			CRect rcName;
-
-
 			rcName.top = m_rcClient.top;
 			rcName.bottom = 30;
 			rcName.left = m_rcClient.left;
@@ -105,39 +100,67 @@ void CParaBtn_TRIGGER::Draw(int nState)
 
 			SelectObject(m_hDC,g_hf14AcuBold);
 
-			DrawText(m_hDC,m_pszNameText,-1,&rcName,m_btn.dwFormat);
-
-
-			RECT rcUnit;
-			rcUnit.top = m_rcClient.top;
-			
-			rcUnit.left = m_rcClient.left;
-			rcUnit.right = m_rcClient.right;
-
-			SelectObject(m_hDC,g_hf7AcuNorm);
-
-			if(m_bEndOfRange)
+			if(getModel()->getCONFIG()->GetCurMode()==VM_CPAP
+				||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_CPAP)
 			{
+				SelectObject(m_hDC,g_hf9AcuBold);
+				DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENSITIVITY),-1,&rcName,m_btn.dwFormat);
+
+				RECT rcUnit;
+				rcUnit.top = m_rcClient.top;
+				rcUnit.left = m_rcClient.left;
+				rcUnit.right = m_rcClient.right;
+
+				SelectObject(m_hDC,g_hf7AcuNorm);
 				rcUnit.bottom = m_rcClient.bottom-5;
-				DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_ENDRANGE),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+
+				if(m_bEndOfRange)
+				{
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_ENDRANGE),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+				}
+				else
+				{
+					if(m_v.iValue<=40)
+						DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_HIGH),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+					else if(m_v.iValue<=70)
+						DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_MID),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+					else
+						DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_LOW),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+				}
 			}
 			else
 			{
-				rcUnit.bottom = m_rcClient.bottom-13;
-				DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENSITIVITY),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+				DrawText(m_hDC,m_pszNameText,-1,&rcName,m_btn.dwFormat);
 
-				rcUnit.bottom = m_rcClient.bottom-1;
-				if(m_v.iValue<=40)
-					DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_HIGH),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
-				else if(m_v.iValue<=70)
-					DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_MID),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+				RECT rcUnit;
+				rcUnit.top = m_rcClient.top;
+				rcUnit.left = m_rcClient.left;
+				rcUnit.right = m_rcClient.right;
+
+				SelectObject(m_hDC,g_hf7AcuNorm);
+
+				if(m_bEndOfRange)
+				{
+					rcUnit.bottom = m_rcClient.bottom-5;
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_ENDRANGE),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+				}
 				else
-					DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_LOW),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+				{
+					rcUnit.bottom = m_rcClient.bottom-13;
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENSITIVITY),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
 
+					rcUnit.bottom = m_rcClient.bottom-1;
+					if(m_v.iValue<=40)
+						DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_HIGH),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+					else if(m_v.iValue<=70)
+						DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_MID),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+					else
+						DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_LOW),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+
+				}
 			}
+			
 			m_bEndOfRange=false;
-
-		
 
 			SetTextColor(m_hDC,nPrevTxtColor);
 			SetBkMode(m_hDC,nBkMode);

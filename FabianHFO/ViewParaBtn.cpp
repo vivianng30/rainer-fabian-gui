@@ -5489,6 +5489,7 @@ void CViewParaBtn::show_PRE_SIMVPSVmode()
 // **************************************************************************
 void CViewParaBtn::load_CPAPmode()
 {
+	load_TRIGGERCONVpara(false);
 	load_FLOWMINpara(false);	
 	load_CPAPpara(false);
 	load_PMANUALpara(false,false);
@@ -5506,12 +5507,28 @@ void CViewParaBtn::show_CPAPmode()
 	if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
 	{
 		if(m_pcPara_BACKUP)
-			m_pcPara_BACKUP->ShowWindow(SW_HIDE);
+			m_pcPara_BACKUP->ShowWindow(SW_SHOW);
+
+		if(m_pcPara_TRIGGERCONV)
+			m_pcPara_TRIGGERCONV->ShowWindow(SW_SHOW);
+		if(m_pcPara_TRIGGERNMODE)
+			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
+		if(m_pcSubPara_TrigThreshold)
+			m_pcSubPara_TrigThreshold->ShowWindow(SW_SHOW);
+		if(m_pcSubPara_TrigThreshold)
+			m_pcSubPara_TrigThreshold->RefreshBtn();
 	}
 	else
 	{
 		if(m_pcPara_BACKUP)
 			m_pcPara_BACKUP->ShowWindow(SW_SHOW);
+
+		if(m_pcPara_TRIGGERCONV)
+			m_pcPara_TRIGGERCONV->ShowWindow(SW_HIDE);
+		if(m_pcPara_TRIGGERNMODE)
+			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
+		if(m_pcSubPara_TrigThreshold)
+			m_pcSubPara_TrigThreshold->ShowWindow(SW_HIDE);
 	}
 
 	if(m_pcPara_ITIME)
@@ -5556,12 +5573,6 @@ void CViewParaBtn::show_CPAPmode()
 		m_pcPara_AMPMAXI->ShowWindow(SW_HIDE);
 	if(m_pcPara_OnOff)
 		m_pcPara_OnOff->ShowWindow(SW_HIDE);
-	if(m_pcPara_TRIGGERCONV)
-		m_pcPara_TRIGGERCONV->ShowWindow(SW_HIDE);
-	if(m_pcPara_TRIGGERNMODE)
-		m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
-	if(m_pcSubPara_TrigThreshold)
-		m_pcSubPara_TrigThreshold->ShowWindow(SW_HIDE);
 	if(m_pcSubPara_LEAKCOMP) 
 		m_pcSubPara_LEAKCOMP->ShowWindow(SW_HIDE);
 	if(m_pcSubPara_BIASFLOW) 
@@ -5604,6 +5615,7 @@ void CViewParaBtn::show_CPAPmode()
 // **************************************************************************
 void CViewParaBtn::load_PRE_CPAPmode()
 {
+	load_TRIGGERCONVpara(true);
 	load_FLOWMINpara(true);	
 	load_CPAPpara(true);
 	load_PMANUALpara(false,true);
@@ -5618,16 +5630,31 @@ void CViewParaBtn::show_PRE_CPAPmode()
 {
 	/** \brief The enter critical section. */
 	EnterCriticalSection(&csDraw);
-	if(		getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF
-		||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_AUTOOFF)
+	if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
 	{
 		if(m_pcPara_BACKUP)
-			m_pcPara_BACKUP->ShowWindow(SW_HIDE);
+			m_pcPara_BACKUP->ShowWindow(SW_SHOW);
+
+		if(m_pcPara_TRIGGERCONV)
+			m_pcPara_TRIGGERCONV->ShowWindow(SW_SHOW);
+		if(m_pcPara_TRIGGERNMODE)
+			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
+		if(m_pcSubPara_TrigThreshold)
+			m_pcSubPara_TrigThreshold->ShowWindow(SW_SHOW);
+		if(m_pcSubPara_TrigThreshold)
+			m_pcSubPara_TrigThreshold->RefreshBtn();
 	}
 	else
 	{
 		if(m_pcPara_BACKUP)
 			m_pcPara_BACKUP->ShowWindow(SW_SHOW);
+
+		if(m_pcPara_TRIGGERCONV)
+			m_pcPara_TRIGGERCONV->ShowWindow(SW_HIDE);
+		if(m_pcPara_TRIGGERNMODE)
+			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
+		if(m_pcSubPara_TrigThreshold)
+			m_pcSubPara_TrigThreshold->ShowWindow(SW_HIDE);
 	}
 
 	if(m_pcPara_ITIME)
@@ -5673,12 +5700,6 @@ void CViewParaBtn::show_PRE_CPAPmode()
 		m_pcPara_VGARANT->ShowWindow(SW_HIDE);
 	if(m_pcPara_OnOff)
 		m_pcPara_OnOff->ShowWindow(SW_HIDE);
-	if(m_pcPara_TRIGGERCONV)
-		m_pcPara_TRIGGERCONV->ShowWindow(SW_HIDE);
-	if(m_pcPara_TRIGGERNMODE)
-		m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
-	if(m_pcSubPara_TrigThreshold)
-		m_pcSubPara_TrigThreshold->ShowWindow(SW_HIDE);
 	if(m_pcSubPara_LEAKCOMP) 
 		m_pcSubPara_LEAKCOMP->ShowWindow(SW_HIDE);
 	if(m_pcSubPara_BIASFLOW) 

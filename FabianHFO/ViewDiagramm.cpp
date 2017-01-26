@@ -2506,7 +2506,8 @@ void CViewDiagramm::drawParaview()
 	if(		getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF
 		||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF
 		||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_AUTOOFF
-		||	(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getVMODEHANDLER()->activeModeIsNMODETrigger()) )
+		||	getModel()->getVMODEHANDLER()->activeModeIsDUOPAP()
+		||	(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getVMODEHANDLER()->activeModeIsNCPAP()) )
 	{
 		MoveWindow(0,48,605,164);
 
@@ -2611,7 +2612,8 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 		if(		getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF
 			||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF
 			||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_AUTOOFF
-			||	(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getVMODEHANDLER()->activeModeIsNMODETrigger()) )
+			||	getModel()->getVMODEHANDLER()->activeModeIsDUOPAP()
+			||	(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getVMODEHANDLER()->activeModeIsNCPAP()) )
 		{
 			DestroyWndGraphPressure();
 			DestroyWndGraphVolume();
@@ -2746,7 +2748,8 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 		if(		getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF
 			||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF
 			||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_AUTOOFF
-			||	(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getVMODEHANDLER()->activeModeIsNMODETrigger()) )
+			||	getModel()->getVMODEHANDLER()->activeModeIsDUOPAP()
+			||	(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getVMODEHANDLER()->activeModeIsNCPAP()) )
 		{
 			DestroyWndGraphPressure();
 			DestroyWndGraphVolume();
@@ -2868,7 +2871,8 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 		if(		getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF
 			||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF
 			||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_AUTOOFF
-			||	(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getVMODEHANDLER()->activeModeIsNMODETrigger()) )
+			||	getModel()->getVMODEHANDLER()->activeModeIsDUOPAP()
+			||	(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getVMODEHANDLER()->activeModeIsNCPAP()) )
 		{
 			DestroyWndGraphPressure();
 			DestroyWndGraphVolume();
@@ -3065,7 +3069,8 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 		if(		getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF
 			||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF
 			||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_AUTOOFF
-			||	(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getVMODEHANDLER()->activeModeIsNMODETrigger()) )
+			||	getModel()->getVMODEHANDLER()->activeModeIsDUOPAP()
+			||	(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getVMODEHANDLER()->activeModeIsNCPAP()) )
 		{
 			DestroyWndGraphPressure();
 			DestroyWndGraphVolume();
@@ -3161,7 +3166,8 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 		if(		getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF
 			||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF
 			||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_AUTOOFF
-			||	(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getVMODEHANDLER()->activeModeIsNMODETrigger()) )
+			||	getModel()->getVMODEHANDLER()->activeModeIsDUOPAP()
+			||	(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getVMODEHANDLER()->activeModeIsNCPAP()) )
 		{
 			DestroyWndGraphPressure();
 			DestroyWndGraphVolume();

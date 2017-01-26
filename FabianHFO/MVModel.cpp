@@ -1845,15 +1845,12 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			{
 				theApp.getLog()->WriteLine(_T("#FlowSensor turned off -> VG/VL turned off"));
 
-				//getDATAHANDLER()->SetVGarantState_IPPV(false);
 				getDATAHANDLER()->PARADATA()->SetVGarantState_IPPV(false,false,true);
 				getDATAHANDLER()->PRESET()->SetVGarantState_IPPV(false,false,false);
 
-				//getDATAHANDLER()->SetVGarantState_TRIGGER(false);
 				getDATAHANDLER()->PARADATA()->SetVGarantState_TRIGGER(false,false,true);
 				getDATAHANDLER()->PRESET()->SetVGarantState_TRIGGER(false,false,false);
 
-				//getDATAHANDLER()->SetHFVGarantState(false);
 				getDATAHANDLER()->PARADATA()->SetHFVGarantState(false,false,true);
 				getDATAHANDLER()->PRESET()->SetHFVGarantState(false,false,false);
 
@@ -1893,8 +1890,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 							theApp.getLog()->WriteLine(_T("#HFO:0230"));
 						else
 						{
-							eTriggereType trigger=getDATAHANDLER()->getTriggerOptionCONV();
-							if(trigger!=TRIGGER_PRESSURE)
+							if(getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
 							{
 								getDATAHANDLER()->setTriggerOptionCONV(TRIGGER_PRESSURE);
 							}
@@ -1913,8 +1909,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 							theApp.getLog()->WriteLine(_T("#HFO:0230"));
 						else
 						{
-							eTriggereType trigger=getDATAHANDLER()->getTriggerOptionCONV();
-							if(trigger!=TRIGGER_PRESSURE)
+							if(getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
 							{
 								getDATAHANDLER()->setTriggerOptionCONV(TRIGGER_PRESSURE);
 							}
@@ -1930,8 +1925,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 						/*if(false==getVMODEHANDLER()->changeVentMode(VM_IPPV))
 							theApp.getLog()->WriteLine(_T("#HFO:0231"));*/
 
-						eTriggereType trigger=getDATAHANDLER()->getTriggerOptionCONV();
-						if(trigger!=TRIGGER_PRESSURE)
+						if(getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
 						{
 							getDATAHANDLER()->setTriggerOptionCONV(TRIGGER_PRESSURE);
 						}
@@ -1946,8 +1940,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 						/*if(false==getVMODEHANDLER()->changeVentMode(VM_IPPV))
 							theApp.getLog()->WriteLine(_T("#HFO:0232"));*/
 
-						eTriggereType trigger=getDATAHANDLER()->getTriggerOptionCONV();
-						if(trigger!=TRIGGER_PRESSURE)
+						if(getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
 						{
 							getDATAHANDLER()->setTriggerOptionCONV(TRIGGER_PRESSURE);
 						}
@@ -5853,6 +5846,15 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 			getSPI()->Send_PARAVAL_INSP_TIME(500);
 			getSPI()->Send_PARAVAL_EXH_TIME(500);
 
+			if(getDATAHANDLER()->IsFlowSensorStateOff()==true)
+			{
+				getSPI()->Send_PARAVAL_TRIG_SCHWELLE(iTrigger);
+			}
+			else
+			{
+				iTrigger=ALINK_NOTVALID;
+			}
+
 			if(false==bPRICOrunning)//PRICO04
 				Send_PARA_OXY_RATIO(iO2, true, true);
 
@@ -5866,7 +5868,7 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 			iVLimit=ALINK_NOTVALID;
 			iVGarant=ALINK_NOTVALID;
 			iPpsv=ALINK_NOTVALID;
-			iTrigger=ALINK_NOTVALID;
+			
 			iAbortCriterionPSV=ALINK_NOTVALID;
 			iEFlow=iFlowmin;
 			iCPAPnmode=ALINK_NOTVALID;

@@ -456,10 +456,13 @@ void CVentModeHandler::setCPAP()
 			getModel()->getALARMHANDLER()->resetVgVlAutoTurnedOff();
 
 
-			if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF)
+			if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF 
+				&& getModel()->getDATAHANDLER()->GetPrevFlowSensorState()==FLOWSENSOR_ON)
 			{
 				getModel()->getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_ON);
 			}
+
+			getModel()->getDATAHANDLER()->checkTriggerTubeDependency();
 
 			getModel()->getALARMHANDLER()->deleteAllAlarms(false);
 
@@ -470,10 +473,13 @@ void CVentModeHandler::setCPAP()
 		{
 			changeVentMode(VM_CPAP,0);
 			
-			if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF)
+			if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF 
+				&& getModel()->getDATAHANDLER()->GetPrevFlowSensorState()==FLOWSENSOR_ON)
 			{
 				getModel()->getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_ON);
 			}
+
+			getModel()->getDATAHANDLER()->checkTriggerTubeDependency();
 		}
 		else
 		{

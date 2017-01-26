@@ -26,6 +26,25 @@ public:
 public:
 	virtual void Draw(int nState);
 
+protected:
+	void DrawSUBPARA_I_E(int nState);
+	void DrawSUBPARA_O2REAL(int nState);
+	void DrawSUBPARA_O2FLUSH(int nState);
+	void DrawSUBPARA_BIASFLOW(int nState);
+	void DrawSUBPARA_PSVTIME(int nState);
+	void DrawSUBPARA_DEMFLOW(int nState);
+	void DrawSUBPARA_BPM(int nState);
+	void DrawSUBPARA_ETIME(int nState);
+	void DrawSUBPARA_LEAKCOMP(int nState);
+	void DrawSUBPARA_TRIGGER(int nState);
+	void DrawSUBPARA_TRIGGER_DUOPAP(int nState);
+	void DrawSUBPARA_TRIGGER_NCPAP(int nState);
+	void DrawSUBPARA_TRIGGER_CPAP(int nState);
+	void DrawSUBPARA_TRIGGER_DEFAULT(int nState);
+	void DrawDEFAULT(int nState);
+
+	int GetTextColorStateDependend(int nState);
+
 	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CUDParaBtn)

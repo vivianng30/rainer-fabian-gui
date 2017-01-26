@@ -31,40 +31,7 @@ class CMVModel;
 
 class CDataHandler
 {
-	/**< typedef structure of the limits of measurement values. */
-	/*typedef struct messureRangeData
-	{
-		SHORT		m_iPINSP_UpperLimit;
-		SHORT		m_iPINSP_LowerLimit;
-		SHORT		m_iPmitt_UpperLimit;
-		SHORT		m_iPmitt_LowerLimit;
-		SHORT		m_iPEEP_UpperLimit;
-		SHORT		m_iPEEP_LowerLimit;
-		SHORT		m_iMV_UpperLimit_NEONATAL;
-		SHORT		m_iMV_LowerLimit_NEONATAL;
-		SHORT		m_iMV_UpperLimit_PEDIATRIC;
-		SHORT		m_iMV_LowerLimit_PEDIATRIC;
-		SHORT		m_iTVE_UpperLimit_NEONATAL;
-		SHORT		m_iTVE_LowerLimit_NEONATAL;
-		SHORT		m_iTVE_UpperLimit_PEDIATRIC;
-		SHORT		m_iTVE_LowerLimit_PEDIATRIC;
-		SHORT		m_iLeak_UpperLimit;
-		SHORT		m_iLeak_LowerLimit;
-		SHORT		m_iDynCompl_UpperLimit;
-		SHORT		m_iDynCompl_LowerLimit;
-		SHORT		m_iResistance_UpperLimit;
-		SHORT		m_iResistance_LowerLimit;
-		SHORT		m_iO2_UpperLimit;
-		SHORT		m_iO2_LowerLimit;
-		SHORT		m_iHFAmpl_UpperLimit;
-		SHORT		m_iHFAmpl_LowerLimit;
-		SHORT		m_iHFFreq_UpperLimit;
-		SHORT		m_iHFFreq_LowerLimit;
-		SHORT		m_iDCO2_UpperLimit;
-		SHORT		m_iDCO2_LowerLimit;
-	}MESSURE_RANGE_DATA;*/
 public:
-	
 
 	static CDataHandler* getInstance();	
 	static void destroyInstance();		

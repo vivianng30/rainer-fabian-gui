@@ -579,7 +579,8 @@ void CWndMenuGraphs::Show(BOOL bShow)
 		if(		getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF
 			||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF
 			||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_AUTOOFF
-			||	getModel()->getVMODEHANDLER()->activeModeIsNMODETrigger())//rku,PRETRIGGER)
+			||	getModel()->getVMODEHANDLER()->activeModeIsDUOPAP()
+			||	(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getVMODEHANDLER()->activeModeIsNCPAP()))
 		{
 			if(m_pcMenuLoops)
 				m_pcMenuLoops->EnableWindow(FALSE);
@@ -803,6 +804,7 @@ void CWndMenuGraphs::Show(BOOL bShow)
 			m_pcMenuWave->ShowWindow(SW_HIDE);
 		if(m_pcMenuLoops)
 			m_pcMenuLoops->ShowWindow(SW_HIDE);
+
 		if(getModel()->getDATAHANDLER()->isTRENDLicenseAvailable())
 		{
 			if(m_pcMenuTrend)
@@ -1300,13 +1302,20 @@ void CWndMenuGraphs::FlowSensorStateChanged()
 #ifndef INBIOLAB_VERSION
 	if(		getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF
 		||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF
-		||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_AUTOOFF)
+		||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_AUTOOFF
+		||	getModel()->getVMODEHANDLER()->activeModeIsDUOPAP()
+		||	(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getVMODEHANDLER()->activeModeIsNCPAP()))
 	{
 		if(m_pcMenuLoops)
-			m_pcMenuLoops->ShowWindow(SW_HIDE);
+			m_pcMenuLoops->EnableWindow(FALSE);
+		if(m_pcMenuLoops)
+			m_pcMenuLoops->ShowWindow(TRUE);
 	}
 	else
 	{
+
+		if(m_pcMenuLoops)
+			m_pcMenuLoops->EnableWindow(TRUE);
 		if(m_pcMenuLoops)
 			m_pcMenuLoops->ShowWindow(SW_SHOW);
 	}

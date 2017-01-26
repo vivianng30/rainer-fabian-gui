@@ -1580,14 +1580,15 @@ void CParaData::SetDataFromMode(eVentMode mode)
 	case VM_PRE_CPAP:
 		{
 			getModel()->getDATAHANDLER()->PRESET()->GetParaData(&m_data);
+			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerCONVPara(getModel()->getDATAHANDLER()->PRESET()->GetTriggerCONVPara(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 		}
 		break;
 	case VM_PRE_NCPAP:
 		{
-			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerNMODEPara(getModel()->getDATAHANDLER()->PRESET()->GetTriggerNMODEPara(),false,true);
 			getModel()->getDATAHANDLER()->PRESET()->GetParaData(&m_data);
+			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerNMODEPara(getModel()->getDATAHANDLER()->PRESET()->GetTriggerNMODEPara(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 		}
@@ -1601,8 +1602,8 @@ void CParaData::SetDataFromMode(eVentMode mode)
 		break;
 	case VM_PRE_DUOPAP:
 		{
-			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerNMODEPara(getModel()->getDATAHANDLER()->PRESET()->GetTriggerNMODEPara(),false,true);
 			getModel()->getDATAHANDLER()->PRESET()->GetParaData(&m_data);
+			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerNMODEPara(getModel()->getDATAHANDLER()->PRESET()->GetTriggerNMODEPara(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 		}

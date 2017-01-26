@@ -119,44 +119,71 @@ void CParaBtn_TRIGGERNMODE::Draw(int nState)
 
 			SelectObject(m_hDC,g_hf14AcuBold);
 
-			DrawText(m_hDC,m_pszNameText,-1,&rcName,m_btn.dwFormat);
-
-
-			RECT rcUnit;
-			rcUnit.top = m_rcClient.top;
-
-			rcUnit.left = m_rcClient.left;
-			rcUnit.right = m_rcClient.right;
-
-			SelectObject(m_hDC,g_hf7AcuNorm);
-
-			if(m_bEndOfRange)
+			if(getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
+				||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_NCPAP)
 			{
+				SelectObject(m_hDC,g_hf9AcuBold);
+				DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENSITIVITY),-1,&rcName,m_btn.dwFormat);
+
+				RECT rcUnit;
+				rcUnit.top = m_rcClient.top;
+				rcUnit.left = m_rcClient.left;
+				rcUnit.right = m_rcClient.right;
+
+				SelectObject(m_hDC,g_hf7AcuNorm);
 				rcUnit.bottom = m_rcClient.bottom-5;
-				DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_ENDRANGE),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+
+				if(m_bEndOfRange)
+				{
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_ENDRANGE),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+				}
+				else
+				{
+					if(m_v.iValue<=40)
+						DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_HIGH),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+					else if(m_v.iValue<=70)
+						DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_MID),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+					else
+						DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_LOW),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+				}
 			}
 			else
 			{
-				rcUnit.bottom = m_rcClient.bottom-13;
-				if(m_v.iValue!=0)
-					DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENSITIVITY),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+				DrawText(m_hDC,m_pszNameText,-1,&rcName,m_btn.dwFormat);
 
-				rcUnit.bottom = m_rcClient.bottom-1;
-				if(m_v.iValue==MAXRANGE_TRIGGER_NMODE_OFF)//off
+				RECT rcUnit;
+				rcUnit.top = m_rcClient.top;
+
+				rcUnit.left = m_rcClient.left;
+				rcUnit.right = m_rcClient.right;
+
+				SelectObject(m_hDC,g_hf7AcuNorm);
+
+				if(m_bEndOfRange)
 				{
-					//DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_HIGH),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+					rcUnit.bottom = m_rcClient.bottom-5;
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_ENDRANGE),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
 				}
-				else if(m_v.iValue<=40)
-					DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_HIGH),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
-				else if(m_v.iValue<=70)
-					DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_MID),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
 				else
-					DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_LOW),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+				{
+					rcUnit.bottom = m_rcClient.bottom-13;
+					if(m_v.iValue!=0)
+						DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENSITIVITY),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
 
+					rcUnit.bottom = m_rcClient.bottom-1;
+					if(m_v.iValue==MAXRANGE_TRIGGER_NMODE_OFF)//off
+					{
+						//DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_HIGH),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+					}
+					else if(m_v.iValue<=40)
+						DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_HIGH),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+					else if(m_v.iValue<=70)
+						DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_MID),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+					else
+						DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_SENS_LOW),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+				}
 			}
 			m_bEndOfRange=false;
-
-
 
 			SetTextColor(m_hDC,nPrevTxtColor);
 			SetBkMode(m_hDC,nBkMode);

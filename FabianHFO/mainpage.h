@@ -12,6 +12,10 @@
  * @verbatim
 	- AUTOIFLOW disabled //TODO_AUTOIFLOW
 	- Trigger NMode new setting: 1-10, then off
+	- graph handling changed:
+		DUOPAP: only pressure graph available
+		NCPAP: with MEDIJET only pressure graph available, else all graphs
+	- CPAP pressure trigger included
  @endverbatim
  *
  * @subsection ver5013 Version 5.0.1.3
