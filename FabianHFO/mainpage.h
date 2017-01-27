@@ -16,6 +16,7 @@
 		DUOPAP: only pressure graph available
 		NCPAP: with MEDIJET only pressure graph available, else all graphs
 	- CPAP pressure trigger included
+	- range change: also in NIV mode "Flow Sensor Calibration Required"
  @endverbatim
  *
  * @subsection ver5013 Version 5.0.1.3
