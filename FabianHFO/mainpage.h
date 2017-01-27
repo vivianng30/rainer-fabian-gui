@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver5015 Version 5.0.1.5
+ * @date 2017-01-27
+ * @verbatim
+	- auto turn on of PRICO implemented//rku AUTOPRICO
+ @endverbatim
+ *
  * @subsection ver5014 Version 5.0.1.4
  * @date 2017-01-25
  * @verbatim

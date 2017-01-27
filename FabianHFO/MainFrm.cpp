@@ -4882,6 +4882,11 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 						getModel()->triggerEvent(&event2);
 						getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
 						getModel()->getDATAHANDLER()->setPRICOoff();
+
+						if(getModel()->getALARMHANDLER()->isPRICOAutoTurnedOff())//rku AUTOPRICO
+						{
+							getModel()->getALARMHANDLER()->resetPRICOAutoTurnedOff();
+						}
 					}
 				}
 

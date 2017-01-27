@@ -1362,8 +1362,13 @@ LRESULT CSubViewCalOxySensor::WindowProc(UINT message, WPARAM wParam, LPARAM lPa
 						{
 							if(getModel()->getPRICOThread()->isPRICOalgorithmRunning())
 							{
-								getModel()->getALARMHANDLER()->setPRICOAutoTurnedOff();
-								getModel()->getDATAHANDLER()->setPRICOoff();//PRICO04
+								//getModel()->getALARMHANDLER()->setPRICOAutoTurnedOff();//rku AUTOPRICO
+								getModel()->getDATAHANDLER()->setPRICOoff();
+
+								if(getModel()->getALARMHANDLER()->isPRICOAutoTurnedOff())//rku AUTOPRICO
+								{
+									getModel()->getALARMHANDLER()->resetPRICOAutoTurnedOff();
+								}
 
 								CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  getModel()->GetLanguageString(IDS_TXT_PRICOOFF), 3000);
 								getModel()->triggerEvent(&event2);

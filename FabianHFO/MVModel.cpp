@@ -1329,6 +1329,11 @@ void CMVModel::SetVentRunState(eRunState state)
 			getDATAHANDLER()->setPRICOoff();
 		}
 	}
+
+	if(getALARMHANDLER()->isPRICOAutoTurnedOff())//rku AUTOPRICO
+	{
+		getALARMHANDLER()->resetPRICOAutoTurnedOff();
+	}
 	
 
 }
@@ -1764,6 +1769,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			getSPI()->resetPressureAlarmDelay();
 			
 			getALARMHANDLER()->resetVgVlAutoTurnedOff();
+			getALARMHANDLER()->resetPRICOAutoTurnedOff();//rku AUTOPRICO
 
 			if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF)
 			{

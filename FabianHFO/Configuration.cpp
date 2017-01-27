@@ -6031,6 +6031,11 @@ void CConfiguration::SetSPO2module(BYTE mod, bool bReinit)
 			{
 				getModel()->getDATAHANDLER()->setPRICOoff();//PRICO04
 			}
+
+			if(getModel()->getALARMHANDLER()->isPRICOAutoTurnedOff())//rku AUTOPRICO
+			{
+				getModel()->getALARMHANDLER()->resetPRICOAutoTurnedOff();
+			}
 		}
 
 		getModel()->DeinitSPO2module();

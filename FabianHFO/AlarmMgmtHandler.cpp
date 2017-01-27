@@ -1742,7 +1742,6 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 			{
 				if(isPRICOAutoTurnedOff())
 				{
-					//resetPRICOAutoTurnedOff();
 					sz+=_T("/")
 						+getModel()->GetLanguageString(IDS_TXT_PRICOOFF);
 				}
@@ -1756,7 +1755,6 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 			{
 				if(isPRICOAutoTurnedOff())
 				{
-					//resetPRICOAutoTurnedOff();
 					sz+=_T("/")
 						+getModel()->GetLanguageString(IDS_TXT_PRICOOFF);
 				}
@@ -1770,7 +1768,6 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 			{
 				if(isPRICOAutoTurnedOff())
 				{
-					//resetPRICOAutoTurnedOff();
 					sz+=_T("/")
 						+getModel()->GetLanguageString(IDS_TXT_PRICOOFF);
 				}
@@ -1785,7 +1782,6 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 			{
 				if(isPRICOAutoTurnedOff())
 				{
-					//resetPRICOAutoTurnedOff();
 					sz+=_T("/")
 						+getModel()->GetLanguageString(IDS_TXT_PRICOOFF);
 				}
@@ -1876,7 +1872,6 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 			{
 				if(isPRICOAutoTurnedOff())
 				{
-					//resetPRICOAutoTurnedOff();
 					sz+=_T("/")
 						+getModel()->GetLanguageString(IDS_TXT_PRICOOFF);
 				}
@@ -1891,7 +1886,6 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 			{
 				if(isPRICOAutoTurnedOff())
 				{
-					//resetPRICOAutoTurnedOff();
 					sz+=_T("/")
 						+getModel()->GetLanguageString(IDS_TXT_PRICOOFF);
 				}
@@ -1906,7 +1900,6 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 			{
 				if(isPRICOAutoTurnedOff())
 				{
-					//resetPRICOAutoTurnedOff();
 					sz+=_T("/")
 						+getModel()->GetLanguageString(IDS_TXT_PRICOOFF);
 				}
@@ -1921,7 +1914,6 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 			{
 				if(isPRICOAutoTurnedOff())
 				{
-					//resetPRICOAutoTurnedOff();
 					sz+=_T("/")
 						+getModel()->GetLanguageString(IDS_TXT_PRICOOFF);
 				}
@@ -1936,7 +1928,6 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 			{
 				if(isPRICOAutoTurnedOff())
 				{
-					//resetPRICOAutoTurnedOff();
 					sz+=_T("/")
 						+getModel()->GetLanguageString(IDS_TXT_PRICOOFF);
 				}
@@ -2000,7 +1991,6 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 			{
 				if(isPRICOAutoTurnedOff())
 				{
-					//resetPRICOAutoTurnedOff();
 					sz+=_T("/")
 						+getModel()->GetLanguageString(IDS_TXT_PRICOOFF);
 				}
@@ -2014,7 +2004,6 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 			{
 				if(isPRICOAutoTurnedOff())
 				{
-					//resetPRICOAutoTurnedOff();
 					sz+=_T("/")
 						+getModel()->GetLanguageString(IDS_TXT_PRICOOFF);
 				}
@@ -2101,7 +2090,6 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 			//{
 			//	if(isPRICOAutoTurnedOff())
 			//	{
-			//		//resetPRICOAutoTurnedOff();
 			//		sz+=_T("/")
 			//			+getModel()->GetLanguageString(IDS_TXT_PRICOOFF);
 			//	}
@@ -2116,7 +2104,6 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 			//{
 			//	if(isPRICOAutoTurnedOff())
 			//	{
-			//		//resetPRICOAutoTurnedOff();
 			//		sz+=_T("/")
 			//			+getModel()->GetLanguageString(IDS_TXT_PRICOOFF);
 			//	}
@@ -2291,7 +2278,6 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 			{
 				if(isPRICOAutoTurnedOff())
 				{
-					//resetPRICOAutoTurnedOff();
 					sz+=_T("/")
 						+getModel()->GetLanguageString(IDS_TXT_PRICOOFF);
 				}
@@ -2305,7 +2291,6 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 			{
 				if(isPRICOAutoTurnedOff())
 				{
-					//resetPRICOAutoTurnedOff();
 					sz+=_T("/")
 						+getModel()->GetLanguageString(IDS_TXT_PRICOOFF);
 				}
@@ -2320,7 +2305,6 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 				//DEBUGMSG(TRUE, (TEXT("TEXT AL_Sens_SPO2_CHECKSENSOR\r\n")));
 				if(isPRICOAutoTurnedOff())
 				{
-					//resetPRICOAutoTurnedOff();
 					sz+=_T("/")
 						+getModel()->GetLanguageString(IDS_TXT_PRICOOFF);
 				}
@@ -5708,25 +5692,24 @@ void CAlarmMgmtHandler::setActiveAlarm(eAlarm actAlarm, CStringW alarmTxt)
 	{
 		if(getModel()->getPRICOThread()->isPRICOalgorithmRunning())
 		{
-			if(		getAlarmType(actAlarm)==AT_SYSFAIL
-				||	getAlarmType(actAlarm)==AT_SYSALARM
-				||	getAlarmType(actAlarm)==AT_DISCON_TUBUS)
+			if(		actAlarm == AL_PatAl_SPO2_SIQmin
+				||	actAlarm == AL_DISCONNECTION
+				||	actAlarm == AL_TUBUSBLOCKED
+				||	actAlarm == AL_Sens_SPO2_MODULE_NOTCONNECTED
+				||	actAlarm == AL_Sens_SPO2_SENSORFAULTY
+				||	actAlarm == AL_Sens_SPO2_CHECKSENSOR
+				||	actAlarm == AL_Sens_O2_SENSOR_DEFECT
+				||	actAlarm == AL_Sens_O2_SENSOR_USED
+				||	actAlarm == AL_Sens_O2_VALUE_INCORRECT
+				||	actAlarm == AL_Sens_O2_NOT_CALIBRATED
+				||	actAlarm == AL_Sens_PRICO_FiO2outOfRange
+				||	actAlarm == AL_SysAl_P_IN_O2
+				||	actAlarm == AL_SysAl_P_IN_AIR
+				||	actAlarm == AL_SysFail_P_IN_MIXER
+				||	actAlarm == AL_SysAl_TUBE_OCCLUSION)
 			{
 				setPRICOAutoTurnedOff();
 				getModel()->getDATAHANDLER()->setPRICOoff();
-			}
-			else if(	actAlarm == AL_PatAl_SPO2_SIQmin
-					||	actAlarm == AL_Sens_SPO2_MODULE_NOTCONNECTED
-					||	actAlarm == AL_Sens_SPO2_SENSORFAULTY
-					||	actAlarm == AL_Sens_SPO2_CHECKSENSOR
-					||	actAlarm == AL_Sens_O2_SENSOR_DEFECT
-					||	actAlarm == AL_Sens_O2_SENSOR_USED
-					||	actAlarm == AL_Sens_O2_VALUE_INCORRECT
-					||	actAlarm == AL_Sens_O2_NOT_CALIBRATED
-					||	actAlarm == AL_Sens_PRICO_FiO2outOfRange)
-			{
-				setPRICOAutoTurnedOff();
-				getModel()->getDATAHANDLER()->setPRICOoff();//PRICO04
 			}
 		}
 	}
@@ -5798,46 +5781,30 @@ void CAlarmMgmtHandler::updateActiveAlarm()
 	setActiveAlarm(newActive);
 	setPrioActiveAlarm(getAlarmPrio(newActive));
 
-	if(isPRICOAutoTurnedOff())
+	if(isPRICOAutoTurnedOff())//rku AUTOPRICO
 	{
-		if(		getAlarmType(oldActive)==AT_SYSFAIL
-			||	getAlarmType(oldActive)==AT_SYSALARM
-			||	getAlarmType(oldActive)==AT_DISCON_TUBUS)
-		{
-			resetPRICOAutoTurnedOff();
-		}
-		else if(	oldActive == AL_PatAl_SPO2_SIQmin
-			||	oldActive == AL_Sens_SPO2_MODULE_NOTCONNECTED
-			||	oldActive == AL_Sens_SPO2_SENSORFAULTY
+		if(		oldActive == AL_PatAl_SPO2_SIQmin
+			||	oldActive == AL_DISCONNECTION
+			||	oldActive == AL_TUBUSBLOCKED
 			||	oldActive == AL_Sens_SPO2_CHECKSENSOR
+			||	oldActive == AL_Sens_O2_VALUE_INCORRECT
+			||	oldActive == AL_Sens_PRICO_FiO2outOfRange
+			||	oldActive == AL_SysAl_TUBE_OCCLUSION)
+		{	
+			resetPRICOAutoTurnedOff();
+			getModel()->getDATAHANDLER()->setPRICOon();
+		}
+		else if(		oldActive == AL_Sens_SPO2_MODULE_NOTCONNECTED 
+			||	oldActive == AL_Sens_SPO2_SENSORFAULTY
 			||	oldActive == AL_Sens_O2_SENSOR_DEFECT
 			||	oldActive == AL_Sens_O2_SENSOR_USED
-			||	oldActive == AL_Sens_O2_VALUE_INCORRECT
 			||	oldActive == AL_Sens_O2_NOT_CALIBRATED
-			||	oldActive == AL_Sens_PRICO_FiO2outOfRange)
-		{
+			||	oldActive == AL_SysAl_P_IN_O2
+			||	oldActive == AL_SysAl_P_IN_AIR
+			||	oldActive == AL_SysFail_P_IN_MIXER)
+		{	
 			resetPRICOAutoTurnedOff();
 		}
-
-		//if(		oldActive == AL_PatAl_SPO2_SIQmin
-		//||	oldActive == AL_DISCONNECTION
-		//||	oldActive == AL_TUBUSBLOCKED
-		//||	oldActive == AL_Sens_SPO2_MODULE_NOTCONNECTED
-		//||	oldActive == AL_Sens_SPO2_SENSORFAULTY
-		//||	oldActive == AL_Sens_SPO2_CHECKSENSOR
-		////||	oldActive == AL_PRICO_SpO2value
-		//||	oldActive == AL_Sens_O2_SENSOR_DEFECT
-		//||	oldActive == AL_Sens_O2_SENSOR_USED
-		//||	oldActive == AL_Sens_O2_VALUE_INCORRECT
-		//||	oldActive == AL_Sens_O2_NOT_CALIBRATED
-		//||	oldActive == AL_Sens_PRICO_FiO2outOfRange
-		//||	oldActive == AL_SysAl_P_IN_O2
-		//||	oldActive == AL_SysAl_P_IN_AIR
-		//||	oldActive == AL_SysFail_P_IN_MIXER
-		//||	oldActive == AL_SysAl_TUBE_OCCLUSION)
-		//{	
-		//	resetPRICOAutoTurnedOff();
-		//}
 	}
 
 	if(getModel()->getAcuLink() && getModel()->getAcuLink()!=NULL)
@@ -5872,55 +5839,33 @@ void CAlarmMgmtHandler::updateActiveAlarm(eAlarm alarm,eStateOfAlarm state)
 		setPrioActiveAlarm(getAlarmPrio(newActive));
 	}
 
-	if(		getAlarmType(alarm)==AT_SYSFAIL
-		||	getAlarmType(alarm)==AT_SYSALARM
-		||	getAlarmType(alarm)==AT_DISCON_TUBUS)
+	if(isPRICOAutoTurnedOff())//rku AUTOPRICO
 	{
-		if(isPRICOAutoTurnedOff())
-		{
+		if(	(alarm == AL_PatAl_SPO2_SIQmin
+				||	alarm == AL_DISCONNECTION
+				||	alarm == AL_TUBUSBLOCKED
+				||	alarm == AL_Sens_SPO2_CHECKSENSOR
+				||	alarm == AL_Sens_O2_VALUE_INCORRECT
+				||	alarm == AL_Sens_PRICO_FiO2outOfRange
+				||	alarm == AL_SysAl_TUBE_OCCLUSION)
+			&& state != AS_ACTIVE)
+		{	
+			resetPRICOAutoTurnedOff();
+			getModel()->getDATAHANDLER()->setPRICOon();
+		}
+		else if((alarm == AL_Sens_SPO2_MODULE_NOTCONNECTED 
+					||	alarm == AL_Sens_SPO2_SENSORFAULTY
+					||	alarm == AL_Sens_O2_SENSOR_DEFECT
+					||	alarm == AL_Sens_O2_SENSOR_USED
+					||	alarm == AL_Sens_O2_NOT_CALIBRATED
+					||	alarm == AL_SysAl_P_IN_O2
+					||	alarm == AL_SysAl_P_IN_AIR
+					||	alarm == AL_SysFail_P_IN_MIXER)
+				&& state != AS_ACTIVE)
+		{	
 			resetPRICOAutoTurnedOff();
 		}
 	}
-	else if(	alarm == AL_PatAl_SPO2_SIQmin
-		||	alarm == AL_Sens_SPO2_MODULE_NOTCONNECTED
-		||	alarm == AL_Sens_SPO2_SENSORFAULTY
-		||	alarm == AL_Sens_SPO2_CHECKSENSOR
-		||	alarm == AL_Sens_O2_SENSOR_DEFECT
-		||	alarm == AL_Sens_O2_SENSOR_USED
-		||	alarm == AL_Sens_O2_VALUE_INCORRECT
-		||	alarm == AL_Sens_O2_NOT_CALIBRATED
-		||	alarm == AL_Sens_PRICO_FiO2outOfRange)
-	{
-		if(isPRICOAutoTurnedOff())
-		{
-			resetPRICOAutoTurnedOff();
-		}
-	}
-
-	//if(		(alarm == AL_PatAl_SPO2_SIQmin
-	//	||	alarm == AL_DISCONNECTION
-	//	||	alarm == AL_TUBUSBLOCKED
-	//	||	alarm == AL_Sens_SPO2_MODULE_NOTCONNECTED
-	//	||	alarm == AL_Sens_SPO2_SENSORFAULTY
-	//	||	alarm == AL_Sens_SPO2_CHECKSENSOR
-	//	//||	alarm == AL_PRICO_FiO2limit
-	//	//||	alarm == AL_PRICO_SpO2value
-	//	||	alarm == AL_Sens_O2_SENSOR_DEFECT
-	//	||	alarm == AL_Sens_O2_SENSOR_USED
-	//	||	alarm == AL_Sens_O2_VALUE_INCORRECT
-	//	||	alarm == AL_Sens_O2_NOT_CALIBRATED
-	//	||	alarm == AL_Sens_PRICO_FiO2outOfRange
-	//	||	alarm == AL_SysAl_P_IN_O2
-	//	||	alarm == AL_SysAl_P_IN_AIR
-	//	||	alarm == AL_SysFail_P_IN_MIXER
-	//	||	alarm == AL_SysAl_TUBE_OCCLUSION)
-	//	&& state != AS_ACTIVE)
-	//{	
-	//	if(isPRICOAutoTurnedOff())
-	//	{
-	//		resetPRICOAutoTurnedOff();
-	//	}
-	//}
 	
 	if(getModel()->getAcuLink() && getModel()->getAcuLink()!=NULL)
 	{
@@ -6998,6 +6943,7 @@ bool CAlarmMgmtHandler::isPRICOAutoTurnedOff()
 	LeaveCriticalSection(&csPRICOautoOffState);
 	return bState;
 }
+
 
 
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_MVmaxLimit()

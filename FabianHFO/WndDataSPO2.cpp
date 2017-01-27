@@ -1959,6 +1959,11 @@ LRESULT CWndDataSPO2::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 						m_pcPRICO_OnOff->Depress(true);
 						getModel()->getDATAHANDLER()->setPRICOon();//PRICO04
 					}
+
+					if(getModel()->getALARMHANDLER()->isPRICOAutoTurnedOff())//rku AUTOPRICO
+					{
+						getModel()->getALARMHANDLER()->resetPRICOAutoTurnedOff();
+					}
 				}
 				break;
 			default:
