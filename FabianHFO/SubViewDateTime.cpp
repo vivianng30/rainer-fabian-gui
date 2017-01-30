@@ -1863,8 +1863,8 @@ void CSubViewDateTime::OnBnClickedSetDateTime()
 			getModel()->getCONFIG()->SetLastCalOxy21(_T(""));
 			getModel()->getCONFIG()->SetLastCalOxy100(_T(""));
 			getModel()->getCONFIG()->SetLastCalFlow(_T(""));
-			getModel()->getCONFIG()->SetLastCal0mbar(_T(""));
-			getModel()->getCONFIG()->SetLastCal60mbar(_T(""));
+			//getModel()->getCONFIG()->SetLastCal0mbar(_T(""));
+			//getModel()->getCONFIG()->SetLastCal60mbar(_T(""));
 
 			Sleep(500);
 

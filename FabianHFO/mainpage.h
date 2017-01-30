@@ -11,6 +11,7 @@
  * @date 2017-01-27
  * @verbatim
 	- auto turn on of PRICO implemented//rku AUTOPRICO
+	- date change will not affect 0mbar cal and 60mab cal
  @endverbatim
  *
  * @subsection ver5014 Version 5.0.1.4
