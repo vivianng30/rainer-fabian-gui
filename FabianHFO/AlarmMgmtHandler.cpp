@@ -5790,9 +5790,26 @@ void CAlarmMgmtHandler::updateActiveAlarm()
 			||	oldActive == AL_Sens_O2_VALUE_INCORRECT
 			||	oldActive == AL_Sens_PRICO_FiO2outOfRange
 			||	oldActive == AL_SysAl_TUBE_OCCLUSION)
-		{	
-			resetPRICOAutoTurnedOff();
-			getModel()->getDATAHANDLER()->setPRICOon();
+		{
+			if(		newActive != AL_PatAl_SPO2_SIQmin
+				&&	newActive != AL_DISCONNECTION
+				&&	newActive != AL_TUBUSBLOCKED
+				&&	newActive != AL_Sens_SPO2_MODULE_NOTCONNECTED
+				&&	newActive != AL_Sens_SPO2_SENSORFAULTY
+				&&	newActive != AL_Sens_SPO2_CHECKSENSOR
+				&&	newActive != AL_Sens_O2_SENSOR_DEFECT
+				&&	newActive != AL_Sens_O2_SENSOR_USED
+				&&	newActive != AL_Sens_O2_VALUE_INCORRECT
+				&&	newActive != AL_Sens_O2_NOT_CALIBRATED
+				&&	newActive != AL_Sens_PRICO_FiO2outOfRange
+				&&	newActive != AL_SysAl_P_IN_O2
+				&&	newActive != AL_SysAl_P_IN_AIR
+				&&	newActive != AL_SysFail_P_IN_MIXER
+				&&	newActive != AL_SysAl_TUBE_OCCLUSION)
+			{
+				resetPRICOAutoTurnedOff();
+				getModel()->getDATAHANDLER()->setPRICOon();
+			}
 		}
 		else if(		oldActive == AL_Sens_SPO2_MODULE_NOTCONNECTED 
 			||	oldActive == AL_Sens_SPO2_SENSORFAULTY
