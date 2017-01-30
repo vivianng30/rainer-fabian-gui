@@ -189,7 +189,7 @@ int CInterfaceMasimoSPO2::Deinit(bool bReinit)
 
 	if(!bReinit)
 		theApp.getLog()->WriteLine(_T("#SPO2: DEINIT"));
-	DEBUGMSG(TRUE, (TEXT("#SPO2: DEINIT\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("#SPO2: DEINIT\r\n")));
 	/*dwEnd=GetTickCount();
 	DEBUGMSG(TRUE, (TEXT("CInterfaceMasimoSPO2::Deinit8 %d\r\n"),dwEnd-dwStart));*/
 	return 0;

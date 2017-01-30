@@ -130,9 +130,12 @@ public:
 	void resetVlimitAutoTurnedOff_Tube();
 	bool isVlimitAutoTurnedOff_Tube();
 
-	void setPRICOAutoTurnedOff();
+	void checkAutoEnablePRICO();
+	void setPRICOAutoTurnedOff(bool bAutoTurnOn, eAlarmPrio prioAlarm);
 	void resetPRICOAutoTurnedOff();
 	bool isPRICOAutoTurnedOff();
+	bool isPRICOAutoTurneOn();
+	eAlarmPrio getPRICOAutoAlarmPriority();
 
 	void setPIPminAlarmText(CStringW alarmTxt);
 	void setPIPmaxAlarmText(CStringW alarmTxt);
@@ -610,6 +613,8 @@ private:
 	bool m_bVlimitAutoTurnedOff_Tube;
 
 	bool m_bPRICOAutoTurnedOff;
+	bool m_bPRICOAutoTurnOn;
+	eAlarmPrio m_ePRICOAutoAlarmPriority;
 	bool m_bStartupSilent;
 };
 

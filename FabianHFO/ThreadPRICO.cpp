@@ -313,7 +313,7 @@ DWORD CThreadPRICO::PRICOData(void)
 					if( iCalcFiO2 >= iFIO2low && iCalcFiO2 <= iFIO2high) //will update the value to the calculated one if it is in the range
 					{
 						bUpdateFiO2=true;
-						DEBUGMSG(TRUE, (TEXT("normal update %d\r\n"),iCalcFiO2));
+						//DEBUGMSG(TRUE, (TEXT("normal update %d\r\n"),iCalcFiO2));
 						bLowerAlarmReset=true;
 						bHigherAlarmReset=true;
 					}

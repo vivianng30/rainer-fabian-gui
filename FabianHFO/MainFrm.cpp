@@ -3325,7 +3325,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			if(getModel()->isSPO2running() && false==getModel()->getCONFIG()->isSpO2ConfigInProgress())
 			{
-				DEBUGMSG(TRUE, (TEXT("WM_REINIT_SPO2_MODULE\r\n")));
+				//DEBUGMSG(TRUE, (TEXT("WM_REINIT_SPO2_MODULE\r\n")));
 				getModel()->getCONFIG()->SetSPO2module(getModel()->getCONFIG()->GetSPO2module(),true);
 			}
 			
@@ -8699,7 +8699,7 @@ DWORD CMainFrame::DoTimerFunctions(void)
 									CString szMem=_T("");
 									szMem.Format(L"MEMORY [%d]",dwMem);
 									//theApp.getLog()->WriteLine(szMem);
-									DEBUGMSG(TRUE, (szMem));
+									//DEBUGMSG(TRUE, (szMem));
 									//DEBUGMSG(TRUE, (TEXT("MEMORY %d\r\n"),dwMem));
 
 									if(dwMem<2000)	//rkuNEWFIX		

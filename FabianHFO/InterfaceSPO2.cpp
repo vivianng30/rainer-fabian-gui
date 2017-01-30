@@ -620,7 +620,7 @@ void CInterfaceSPO2::checkLastSpO2Cmd()
 		}
 		else if(getModel()->getALARMHANDLER()->ALARM_Sens_SPO2_MODULE_NOTCONNECTED->getAlarmState()==AS_ACTIVE && m_bSensorConnectedToUSB==true)
 		{
-			DEBUGMSG(TRUE, (TEXT("WM_REINIT_SPO2_MODULE m_bSensorConnectedToUSB\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("WM_REINIT_SPO2_MODULE m_bSensorConnectedToUSB\r\n")));
 			if(AfxGetApp())
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_REINIT_SPO2_MODULE);
 		}

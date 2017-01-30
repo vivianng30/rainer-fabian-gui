@@ -5996,7 +5996,7 @@ BYTE CConfiguration::GetSPO2module()
 }
 void CConfiguration::SetSPO2module(BYTE mod, bool bReinit)
 {
-	DEBUGMSG(TRUE, (TEXT("SetSPO2module start\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("SetSPO2module start\r\n")));
 	/*if(m_iSPO2module==mod)
 		return;*/
 	m_bSpO2ConfigInProgress=true;
@@ -6069,7 +6069,7 @@ void CConfiguration::SetSPO2module(BYTE mod, bool bReinit)
 		}
 	}
 	m_bSpO2ConfigInProgress=false;
-	DEBUGMSG(TRUE, (TEXT("SetSPO2module end\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("SetSPO2module end\r\n")));
 }
 
 bool CConfiguration::isSpO2ConfigInProgress()

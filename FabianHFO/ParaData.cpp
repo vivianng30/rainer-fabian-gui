@@ -1957,7 +1957,7 @@ void CParaData::SetO2Para(BYTE value, bool bSend, bool bConfig)
 
 	if(bConfig)
 	{
-		DEBUGMSG(TRUE, (TEXT("CParaData::SetO2Para config %d\r\n"),value));
+		//DEBUGMSG(TRUE, (TEXT("CParaData::SetO2Para config %d\r\n"),value));
 		getModel()->getCONFIG()->SetParaDataO2(value);
 		if(bSend && getModel()->isO2FlushActive()==false)
 		{

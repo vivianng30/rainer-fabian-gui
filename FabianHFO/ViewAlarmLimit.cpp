@@ -4136,12 +4136,12 @@ void CViewAlarmLimit::RefreshAlarmStates()
 					&&	getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
 				{
 					eTempALimitNumeric=ALIMITNUM_ETCO2;
-					DEBUGMSG(TRUE, (TEXT("RefreshAlarmStates() ALIMITNUM_ETCO2\r\n")));
+					//DEBUGMSG(TRUE, (TEXT("RefreshAlarmStates() ALIMITNUM_ETCO2\r\n")));
 				}
 				else
 				{
 					eTempALimitNumeric=ALIMITNUM_VENTILATION;
-					DEBUGMSG(TRUE, (TEXT("RefreshAlarmStates() ALIMITNUM_VENTILATION\r\n")));
+					//DEBUGMSG(TRUE, (TEXT("RefreshAlarmStates() ALIMITNUM_VENTILATION\r\n")));
 				}
 			}
 			break;
@@ -4156,7 +4156,7 @@ void CViewAlarmLimit::RefreshAlarmStates()
 		case AL_PatAl_DCO2min:
 			{
 				eTempALimitNumeric=ALIMITNUM_VENTILATION;
-				DEBUGMSG(TRUE, (TEXT("RefreshAlarmStates() ALIMITNUM_VENTILATION\r\n")));
+				//DEBUGMSG(TRUE, (TEXT("RefreshAlarmStates() ALIMITNUM_VENTILATION\r\n")));
 			}
 			break;
 		case AL_PatAl_ETCO2max:
@@ -4165,7 +4165,7 @@ void CViewAlarmLimit::RefreshAlarmStates()
 		case AL_PatAl_FICO2min:
 			{
 				eTempALimitNumeric=ALIMITNUM_ETCO2;
-				DEBUGMSG(TRUE, (TEXT("RefreshAlarmStates() ALIMITNUM_ETCO2\r\n")));
+				//DEBUGMSG(TRUE, (TEXT("RefreshAlarmStates() ALIMITNUM_ETCO2\r\n")));
 			}
 			break;
 		case AL_PatAl_SPO2max:						
@@ -4176,7 +4176,7 @@ void CViewAlarmLimit::RefreshAlarmStates()
 		case AL_PatAl_SPO2_SIQmin:
 			{
 				eTempALimitNumeric=ALIMITNUM_SPO2;
-				DEBUGMSG(TRUE, (TEXT("RefreshAlarmStates() ALIMITNUM_VENTILATION\r\n")));
+				//DEBUGMSG(TRUE, (TEXT("RefreshAlarmStates() ALIMITNUM_VENTILATION\r\n")));
 			}
 			break;
 		}

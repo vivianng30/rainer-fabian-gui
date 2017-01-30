@@ -2245,14 +2245,14 @@ bool CDataHandler::getPRICOState()
 void CDataHandler::setPRICOon()//PRICO04
 {
 	m_bPRICOrunning=true;
-	DEBUGMSG(TRUE, (TEXT("setPRICOState true\r\n")));
+	DEBUGMSG(TRUE, (TEXT("setPRICOState on\r\n")));
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_START_PRICO);
 }
 void CDataHandler::setPRICOoff()//PRICO04
 {
 	m_bPRICOrunning=false;
-	DEBUGMSG(TRUE, (TEXT("setPRICOState false\r\n")));
+	DEBUGMSG(TRUE, (TEXT("setPRICOState off\r\n")));
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_STOP_PRICO);
 

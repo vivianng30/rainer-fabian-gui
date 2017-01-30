@@ -2329,6 +2329,10 @@ void CMVViewHandler::setPRICOrunning(bool state)
 {
 	if(state)
 	{
+		EnterCriticalSection(&csViewDiagramm);
+		if(m_vDiagramm)
+			m_vDiagramm->PostMessage(WM_SETPRICO_TRUE);
+		LeaveCriticalSection(&csViewDiagramm);
 		//rku cs1
 		EnterCriticalSection(&csViewDTBField);
 		if(m_vDTBField)
@@ -2340,11 +2344,7 @@ void CMVViewHandler::setPRICOrunning(bool state)
 			m_vParaBtn->PostMessage(WM_SETPRICO_TRUE);
 		LeaveCriticalSection(&csViewParaBtn);
 		//rku cs1
-		EnterCriticalSection(&csViewDiagramm);
-		if(m_vDiagramm)
-			m_vDiagramm->PostMessage(WM_SETPRICO_TRUE);
-		LeaveCriticalSection(&csViewDiagramm);
-	}
+	}		
 	else
 	{
 		//rku cs1
