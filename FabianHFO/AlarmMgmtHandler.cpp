@@ -5895,7 +5895,7 @@ void CAlarmMgmtHandler::checkAutoEnablePRICO()//rku AUTOPRICO
 		&&	curActive != AL_SysAl_TUBE_OCCLUSION
 		&&	curActive != AL_Sens_FLOW_SENSOR_DEFECT
 		&&	curActive != AL_Sens_FLOW_SENSOR_CLEANING
-		&	curActive != AL_Sens_FLOW_SENSOR_NOTCONNECTED)
+		&&	curActive != AL_Sens_FLOW_SENSOR_NOTCONNECTED)
 	{
 		if(curActive==AL_NONE)//no alarm active, check autoenable PRICO
 		{
