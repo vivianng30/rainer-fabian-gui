@@ -4731,6 +4731,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_CHECK_ALARMS:
 		{
 			//checkhere
+			getModel()->getALARMHANDLER()->CheckPRICOalarms();//rku AUTOPRICO
 			getModel()->getALARMHANDLER()->CheckAlarmStateBytes();
 			getModel()->getALARMHANDLER()->CheckFlowSensorState();
 			return 1;

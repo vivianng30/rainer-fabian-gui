@@ -130,12 +130,10 @@ public:
 	void resetVlimitAutoTurnedOff_Tube();
 	bool isVlimitAutoTurnedOff_Tube();
 
-	void checkAutoEnablePRICO();
-	void setPRICOAutoTurnedOff(bool bAutoTurnOn, eAlarmPrio prioAlarm);
+	void CheckPRICOalarms();
 	void resetPRICOAutoTurnedOff();
 	bool isPRICOAutoTurnedOff();
-	bool isPRICOAutoTurneOn();
-	eAlarmPrio getPRICOAutoAlarmPriority();
+
 
 	void setPIPminAlarmText(CStringW alarmTxt);
 	void setPIPmaxAlarmText(CStringW alarmTxt);
@@ -410,6 +408,11 @@ protected:
 	virtual ~CAlarmMgmtHandler();
 
 	CMVModel *getModel();
+
+	void checkAutoEnablePRICO();
+	void setPRICOAutoTurnedOff(bool bAutoTurnOn, eAlarmPrio prioAlarm);
+	bool isPRICOAutoTurneOn();
+	eAlarmPrio getPRICOAutoAlarmPriority();
 
 	//alarm log
 	void setLogAlarm(eAlarm	enAlarm, CStringW szAlarmTxt);

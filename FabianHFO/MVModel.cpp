@@ -3358,18 +3358,6 @@ void CMVModel::triggerAlarmEvent(CMVEvent* pEvent)
 							}
 						}
 					}
-					/*else if(	getALARMHANDLER()->ALARM_PRICO_FiO2limit->getAlarmState()==AS_ACTIVE
-						&&	getALARMHANDLER()->getAlarmSilentState()==ASTATE_MANSILENT)
-					{
-						if(AfxGetApp())
-							AfxGetApp()->GetMainWnd()->PostMessage(WM_DELALARM_PRICO_FiO2);
-					}
-					else if(	getALARMHANDLER()->ALARM_PRICO_SpO2value->getAlarmState()==AS_ACTIVE
-						&&	getALARMHANDLER()->getAlarmSilentState()==ASTATE_MANSILENT)
-					{
-						if(AfxGetApp())
-							AfxGetApp()->GetMainWnd()->PostMessage(WM_DELALARM_PRICO_SpO2);
-					}*/
 				}
 				else if(getCONFIG()->IsAutoScreenlockActive())
 				{
