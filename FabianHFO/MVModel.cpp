@@ -4576,6 +4576,7 @@ bool CMVModel::ParseAlarmStateBytes(int iAlarmState)
 		{
 			bRes=true;
 
+			DEBUGMSG(TRUE, (TEXT("AL_TUBUSBLOCKED,AS_SIGNALED\r\n")));
 			getALARMHANDLER()->setStateOfAlarm(AL_TUBUSBLOCKED,AS_SIGNALED);
 
 			if(getALARMHANDLER()->isVgarantAutoTurnedOff_Tube() 
