@@ -238,8 +238,6 @@ void CThreadFOT::stopFOT()
 	}
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_TXT_STOP_FOT);
-
-
 }
 
 void CThreadFOT::startFOToscillation()
@@ -471,7 +469,7 @@ void CThreadFOT::setDecreaseParaFOTCONV()
 		fALVALUE fv;
 		fv.iAbsoluteLowerLimit=getModel()->getALARMHANDLER()->getAlimitMinRangePIPmin();
 		fv.iAbsoluteUpperLimit=getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmin();
-		DEBUGMSG(TRUE, (TEXT("getAlimitPEEPmin %d\r\n"),getModel()->getALARMHANDLER()->getAlimitPEEPmin()));
+		//DEBUGMSG(TRUE, (TEXT("getAlimitPEEPmin %d\r\n"),getModel()->getALARMHANDLER()->getAlimitPEEPmin()));
 		fv.iCurrentLimit=getModel()->getALARMHANDLER()->getAlimitPEEPmin()+m_iFOToriginPIPlowPEEPAlimitDiff;
 
 		if(fv.iCurrentLimit<fv.iAbsoluteLowerLimit)
@@ -485,7 +483,7 @@ void CThreadFOT::setDecreaseParaFOTCONV()
 			getModel()->getALARMHANDLER()->setAlimitPIPmin(fv.iCurrentLimit);
 		}
 		getModel()->getALARMHANDLER()->setAlimitPIPmin(fv.iCurrentLimit);
-		DEBUGMSG(TRUE, (TEXT("setAlimitPIPmin %d\r\n"),fv.iCurrentLimit));
+		//DEBUGMSG(TRUE, (TEXT("setAlimitPIPmin %d\r\n"),fv.iCurrentLimit));
 	}
 
 	if(AfxGetApp() != NULL)
@@ -984,7 +982,7 @@ void CThreadFOT::increaseFOTsequence()
 	LeaveCriticalSection(&csFOTsequence);
 
 	m_iFOTdisplaySequence++;
-	//DEBUGMSG(TRUE, (TEXT("increaseFOTsequence %d\r\n"),m_iFOTsequence));
+	DEBUGMSG(TRUE, (TEXT("increaseFOTsequence %d\r\n"),m_iFOTsequence));
 }
 
 void CThreadFOT::resetFOTsequence()
@@ -1105,11 +1103,13 @@ void CThreadFOT::writeFOTventdataBuffer(int iPRESSURE, double iFlow)
 	EnterCriticalSection(&csFOTventBuffer);
 	if(m_ibufCountFOTventilation<MAXSIZE_FOT_BUFFER)
 	{
+		//DEBUGMSG(TRUE, (TEXT("writeFOTventdataBuffer m_ibufCountFOTventilation %d\r\n"),m_ibufCountFOTventilation));
 		m_pbufFOTventilation[m_ibufCountFOTventilation].iValPressure=iPRESSURE;
 		m_pbufFOTventilation[m_ibufCountFOTventilation].iValFlow=iFlow;
 		m_ibufCountFOTventilation++;
 		//DEBUGMSG(TRUE, (TEXT("m_ibufCountFOTventilation %d\r\n"),m_ibufCountFOTventilation));
 	}
+	//DEBUGMSG(TRUE, (TEXT("m_ibufCountFOTventilation %d\r\n"),m_ibufCountFOTventilation));
 	LeaveCriticalSection(&csFOTventBuffer);
 }
 
@@ -1124,7 +1124,7 @@ void CThreadFOT::writeFOTventdataBuffer(int iPRESSURE, double iFlow)
 
 void CThreadFOT::resetFOTventdataBuffer()
 {
-	//DEBUGMSG(TRUE, (TEXT("CThreadFOT::resetFOTventdataBuffer()\r\n")));
+	DEBUGMSG(TRUE, (TEXT("CThreadFOT::resetFOTventdataBuffer()\r\n")));
 	EnterCriticalSection(&csFOTventBuffer);
 	if(m_ibufCountFOTventilation>0)
 	{
@@ -1149,7 +1149,7 @@ void CThreadFOT::resetFOTventdataBuffer()
  **************************************************************************************************/
 void CThreadFOT::resetFOTdisplayBuffer()
 {
-	//DEBUGMSG(TRUE, (TEXT("CThreadFOT::resetFOTcalculateBuffer()\r\n")));
+	DEBUGMSG(TRUE, (TEXT("CThreadFOT::resetFOTdisplayBuffer() m_iCountFOTdisplay\r\n")));
 	EnterCriticalSection(&csFOTcalcBuffer);
 	m_iCountFOTdisplay=0;
 
@@ -1160,6 +1160,7 @@ void CThreadFOT::resetFOTdisplayBuffer()
 	}
 	LeaveCriticalSection(&csFOTcalcBuffer);
 
+	m_iFOTdisplaySequence=0;
 	resetDateLastSequence();
 }
 BYTE CThreadFOT::getBufSizeFOTdisplay()
@@ -1286,6 +1287,8 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 	m_iCountFOTdisplay++;
 	LeaveCriticalSection(&csFOTcalcBuffer);
 
+	sz.Format(_T("m_pbufFOTdisplay pressure %d iYValXRS %.2f, m_iCountFOTdisplay %d m_iFOTdisplaySequence %d\r\n"),curPressure,m_pbufFOTdisplay[m_iFOTdisplaySequence-1].iYValXRS, m_iCountFOTdisplay, m_iFOTdisplaySequence);
+	DEBUGMSG(TRUE, (sz));
 	
 	DWORD dwEnd=GetTickCount();
 	DEBUGMSG(TRUE, (TEXT("calculateFOTCONVdata END %d\r\n"),dwEnd-dwStart));

@@ -3043,7 +3043,7 @@ void CInterfaceSPI::Send_PARAVAL_TRIG_SCHWELLE(int val)
 
 	SendSPICommand(pMessage);
 
-	DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_TRIG_SCHWELLE %d\r\n"),val));
+	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_TRIG_SCHWELLE %d\r\n"),val));
 #endif
 
 }

@@ -5781,16 +5781,12 @@ eAlarm CAlarmMgmtHandler::getNextActiveAlarm()
 
 void CAlarmMgmtHandler::updateActiveAlarm()
 {
-	DEBUGMSG(TRUE, (TEXT("CAlarmMgmtHandler::updateActiveAlarm()\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("CAlarmMgmtHandler::updateActiveAlarm()\r\n")));
 
 	eAlarm oldActive=getActiveAlarm();
 	eAlarm newActive=getNextActiveAlarm();
 	setActiveAlarm(newActive);
 	setPrioActiveAlarm(getAlarmPrio(newActive));
-
-	CString szTemp=_T("");
-	szTemp.Format(_T("updateActiveAlarm() %d"), newActive);
-	theApp.getLog()->WriteLine(szTemp);
 
 
 	if(getModel()->getAcuLink() && getModel()->getAcuLink()!=NULL)
@@ -5802,11 +5798,8 @@ void CAlarmMgmtHandler::updateActiveAlarm()
 
 void CAlarmMgmtHandler::updateActiveAlarm(eAlarm alarm,eStateOfAlarm state)
 {
-	DEBUGMSG(TRUE, (TEXT("updateActiveAlarm(eAlarm alarm,eStateOfAlarm state) %d\r\n"), alarm));
-	CString szTemp=_T("");
-	szTemp.Format(_T("updateActiveAlarm(eAlarm alarm,eStateOfAlarm state) %d"), alarm);
-	theApp.getLog()->WriteLine(szTemp);
-
+	//DEBUGMSG(TRUE, (TEXT("updateActiveAlarm(eAlarm alarm,eStateOfAlarm state) %d\r\n"), alarm));
+	
 	eAlarm oldActive=getActiveAlarm();
 	eAlarmPrio prioAlarm = getAlarmPrio(alarm);
 
@@ -5877,26 +5870,16 @@ void CAlarmMgmtHandler::CheckPRICOalarms()//rku AUTOPRICO
 
 		if(isPRICOAutoTurnedOff())
 		{
-			theApp.getLog()->WriteLine(_T("checkAutoEnablePRICO"));
 			checkAutoEnablePRICO();//rku AUTOPRICO
 		}
-		else
-		{
-			theApp.getLog()->WriteLine(_T("not checkAutoEnablePRICO"));
-		}
 	}
-
-	
 }
 void CAlarmMgmtHandler::checkAutoEnablePRICO()//rku AUTOPRICO
 {
 	eAlarm curActive=getActiveAlarm();
 	eAlarmPrio prioActAlarm = getPrioActiveAlarm();
 
-	CString szTemp=_T("");
-	szTemp.Format(_T("checkAutoEnablePRICO curActiv %d"), curActive);
-	theApp.getLog()->WriteLine(szTemp);
-	DEBUGMSG(TRUE, (TEXT("checkAutoEnablePRICO curActiv\r\n"),curActive));
+	//DEBUGMSG(TRUE, (TEXT("checkAutoEnablePRICO curActiv\r\n"),curActive));
 
 	if(		curActive != AL_PatAl_SPO2_SIQmin
 		&&	curActive != AL_DISCONNECTION
@@ -5919,22 +5902,19 @@ void CAlarmMgmtHandler::checkAutoEnablePRICO()//rku AUTOPRICO
 	{
 		if(curActive==AL_NONE)//no alarm active, check autoenable PRICO
 		{
-			theApp.getLog()->WriteLine(_T("checkAutoEnablePRICO curActive==AL_NONE"));
-			DEBUGMSG(TRUE, (TEXT("checkAutoEnablePRICO curActive==AL_NONE\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("checkAutoEnablePRICO curActive==AL_NONE\r\n")));
 			if(isPRICOAutoTurneOn())
 				getModel()->getDATAHANDLER()->setPRICOon();
 			resetPRICOAutoTurnedOff();
 		}
 		else if(prioActAlarm<getPRICOAutoAlarmPriority())//active alarm with higher priority than PRICO alarm, reset autoenable PRICO
 		{
-			theApp.getLog()->WriteLine(_T("checkAutoEnablePRICO prioActAlarm<getPRICOAutoAlarmPriority"));
-			DEBUGMSG(TRUE, (TEXT("checkAutoEnablePRICO prioActAlarm<getPRICOAutoAlarmPriority\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("checkAutoEnablePRICO prioActAlarm<getPRICOAutoAlarmPriority\r\n")));
 			resetPRICOAutoTurnedOff();
 		}
 		else //active alarm with lower priority than PRICO alarm, check autoenable PRICO
 		{
-			theApp.getLog()->WriteLine(_T("checkAutoEnablePRICO else"));
-			DEBUGMSG(TRUE, (TEXT("checkAutoEnablePRICO else\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("checkAutoEnablePRICO else\r\n")));
 			if(isPRICOAutoTurneOn())
 				getModel()->getDATAHANDLER()->setPRICOon();
 			resetPRICOAutoTurnedOff();
@@ -5953,8 +5933,7 @@ void CAlarmMgmtHandler::checkAutoEnablePRICO()//rku AUTOPRICO
 			||	curActive == AL_Sens_FLOW_SENSOR_CLEANING
 			||	curActive == AL_Sens_FLOW_SENSOR_NOTCONNECTED)
 		{	
-			theApp.getLog()->WriteLine(_T("checkAutoEnablePRICO2"));
-			DEBUGMSG(TRUE, (TEXT("checkAutoEnablePRICO2\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("checkAutoEnablePRICO2\r\n")));
 			setPRICOAutoTurnedOff(true, prioActAlarm);
 			getModel()->getDATAHANDLER()->setPRICOoff();
 		}
@@ -5967,15 +5946,9 @@ void CAlarmMgmtHandler::checkAutoEnablePRICO()//rku AUTOPRICO
 			||	curActive == AL_SysAl_P_IN_AIR
 			||	curActive == AL_SysFail_P_IN_MIXER)
 		{	
-			theApp.getLog()->WriteLine(_T("checkAutoEnablePRICO3"));
-			DEBUGMSG(TRUE, (TEXT("checkAutoEnablePRICO3\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("checkAutoEnablePRICO3\r\n")));
 			setPRICOAutoTurnedOff(false, prioActAlarm);
 			getModel()->getDATAHANDLER()->setPRICOoff();
-		}
-		else
-		{
-			theApp.getLog()->WriteLine(_T("checkAutoEnablePRICO ERROR"));
-			DEBUGMSG(TRUE, (TEXT("checkAutoEnablePRICO ERROR\r\n")));
 		}
 	}
 }

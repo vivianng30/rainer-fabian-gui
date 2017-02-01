@@ -11082,6 +11082,8 @@ void CViewDiagramm::drawFOTsteps()
 	else
 		return;
 
+	DEBUGMSG(TRUE, (TEXT("CViewDiagramm::drawFOTsteps getBufSizeFOTdisplay %d\r\n"),iSize));
+
 	if(iSize==0)
 	{
 		//LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
