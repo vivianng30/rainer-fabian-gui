@@ -192,6 +192,11 @@ BOOL CPasswordDlg::OnInitDialog()
 			szMode=_T("PRICO");
 		}
 		break;
+	case MOD_FOT:
+		{
+			szMode=_T("FOT");
+		}
+		break;
 	default:
 		{
 			szMode=_T("- ERROR -");
@@ -398,6 +403,11 @@ void CPasswordDlg::OnBnClickedOk()
 			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_PRICO));
 		}
 		break;
+	case MOD_FOT:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_FOT));
+		}
+		break;
 	default:
 		{
 			m_InfoText.SetWindowText(_T("- ERROR: wrong mode -"));
@@ -512,8 +522,6 @@ void CPasswordDlg::OnBnClickedButtonDel()
 
 void CPasswordDlg::Key(int c)
 {
-	
-
 	if(c == -1)
 	{
 		int iLen=m_ebpFocused->LineLength();
@@ -561,14 +569,13 @@ void CPasswordDlg::Key(int c)
 			if(m_ebpFocused)
 				m_ebpFocused->SendMessage(WM_CHAR, VK_BACK, 1);
 		}
-		
 	}
 	else
 	{
 		if(m_ebpFocused)
 			m_ebpFocused->SendMessage(WM_CHAR, c, 1);
 	}
-	//ClearInfo();
+	
 	if(m_ebpFocused)
 	{
 		int iLen=m_ebpFocused->LineLength();
@@ -613,7 +620,6 @@ void CPasswordDlg::Key(int c)
 			m_ebpFocused->SetFocus();
 		}
 	}
-
 }
 void CPasswordDlg::OnEnSetfocusEdit1()
 {

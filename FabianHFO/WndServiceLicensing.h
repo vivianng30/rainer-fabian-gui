@@ -36,7 +36,6 @@ private:
 
 	CKbrdBtn* m_pcActivateFOT;
 	CKbrdBtn* m_pcActivateHFO;
-	//CKbrdBtn* m_pcActivateCO2;
 	CKbrdBtn* m_pcActivateNMODE;
 	CKbrdBtn* m_pcActivateVguaranty;
 	CKbrdBtn* m_pcActivateVlimit;

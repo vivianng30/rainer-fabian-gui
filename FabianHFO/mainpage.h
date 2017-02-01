@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver5017 Version 5.0.1.7
+ * @date 2017-02-01
+ * @verbatim
+	- FOT licensing implemented
+ @endverbatim
+ *
  * @subsection ver5016 Version 5.0.1.6
  * @date 2017-01-31
  * @verbatim

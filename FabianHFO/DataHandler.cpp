@@ -2407,8 +2407,8 @@ bool CDataHandler::isFOTLicenseAvailable()
 	//return false;
 	 
 	//todoFOT
-	return true;
-	//return m_bFOTLicenseAvailable;
+	//return true;
+	return m_bFOTLicenseAvailable;
 }
 void CDataHandler::enableFOTLicense()
 {

@@ -25,11 +25,9 @@ CWndService()
 
 	m_pcActivate_Up=NULL;
 	m_pcActivate_Dw=NULL;
-	//m_pcActivate_Dis=NULL;
-
+	
 	m_pcActivateFOT=NULL;
 	m_pcActivateHFO=NULL;
-	//m_pcActivateCO2=NULL;
 	m_pcActivateNMODE=NULL;
 	m_pcActivateVguaranty=NULL;
 	m_pcActivateVlimit=NULL;
@@ -40,7 +38,6 @@ CWndService()
 
 	m_pcDelFOT=NULL;
 	m_pcDelHFO=NULL;
-	//m_pcDelCO2=NULL;
 	m_pcDelNMODE=NULL;
 	m_pcDelVguaranty=NULL;
 	m_pcDelVlimit=NULL;
@@ -50,7 +47,6 @@ CWndService()
 	m_pcDelPRICO=NULL;
 
 	m_szParsedHFOKey=_T("0");
-	//m_szParsedCO2Key=_T("0");
 	m_szParsedNMODEKey=_T("0");
 	m_szParsedVGUARANTYKey=_T("0");
 	m_szParsedVLIMITKey=_T("0");
@@ -89,7 +85,6 @@ CWndServiceLicensing::~CWndServiceLicensing()
 {
 	delete m_pcActivateFOT;
 	delete m_pcActivateHFO;
-	//delete m_pcActivateCO2;
 	delete m_pcActivateNMODE;
 	delete m_pcActivateVguaranty;
 	delete m_pcActivateVlimit;
@@ -142,7 +137,6 @@ BEGIN_MESSAGE_MAP(CWndServiceLicensing, CWnd)
 	ON_WM_DESTROY()
 	ON_BN_CLICKED(IDC_BTN_SERVICE_FOT_KEY, &CWndServiceLicensing::OnBnClickedActivateFOT)
 	ON_BN_CLICKED(IDC_BTN_SERVICE_HFO_KEY, &CWndServiceLicensing::OnBnClickedActivateHFO)
-	//ON_BN_CLICKED(IDC_BTN_SERVICE_CO2_KEY, &CWndServiceLicensing::OnBnClickedActivateCO2)
 	ON_BN_CLICKED(IDC_BTN_SERVICE_NMODE_KEY, &CWndServiceLicensing::OnBnClickedActivateNMODE)
 	ON_BN_CLICKED(IDC_BTN_SERVICE_VGUARANTY_KEY, &CWndServiceLicensing::OnBnClickedActivateVGUARANTY)
 	ON_BN_CLICKED(IDC_BTN_SERVICE_VLIMIT_KEY, &CWndServiceLicensing::OnBnClickedActivateVLIMIT)
@@ -152,7 +146,6 @@ BEGIN_MESSAGE_MAP(CWndServiceLicensing, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SERVICE_LUNGREC_KEY, &CWndServiceLicensing::OnBnClickedActivateLUNGREC)
 	ON_BN_CLICKED(IDC_BTN_SERVICE_FOT_DELKEY, &CWndServiceLicensing::OnBnClickedDelFOT)
 	ON_BN_CLICKED(IDC_BTN_SERVICE_HFO_DELKEY, &CWndServiceLicensing::OnBnClickedDelHFO)
-	//ON_BN_CLICKED(IDC_BTN_SERVICE_CO2_DELKEY, &CWndServiceLicensing::OnBnClickedDelCO2)
 	ON_BN_CLICKED(IDC_BTN_SERVICE_NMODE_DELKEY, &CWndServiceLicensing::OnBnClickedDelNMODE)
 	ON_BN_CLICKED(IDC_BTN_SERVICE_VGUARANTY_DELKEY, &CWndServiceLicensing::OnBnClickedDelVGUARANTY)
 	ON_BN_CLICKED(IDC_BTN_SERVICE_VLIMIT_DELKEY, &CWndServiceLicensing::OnBnClickedDelVLIMIT)
@@ -916,7 +909,7 @@ void CWndServiceLicensing::Draw()
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 	
-	/*if(m_bFOTModuleEnabled)
+	if(m_bFOTModuleEnabled)
 	{
 		m_pcActivateFOT->ShowWindow(SW_HIDE);
 		rc.left = 230;  
@@ -934,9 +927,9 @@ void CWndServiceLicensing::Draw()
 
 		m_pcDelFOT->ShowWindow(SW_SHOW);
 	}
-	else*/
+	else
 	{
-		//m_pcActivateFOT->ShowWindow(SW_SHOW);
+		m_pcActivateFOT->ShowWindow(SW_SHOW);
 		rc.left = 230;  
 		rc.top = 30;  
 		rc.right  = 760;  
@@ -944,7 +937,7 @@ void CWndServiceLicensing::Draw()
 		cs = _T("disabled");
 		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-		//m_pcDelFOT->ShowWindow(SW_HIDE);
+		m_pcDelFOT->ShowWindow(SW_HIDE);
 	}
 
 	rc.left = 50;  
