@@ -7,10 +7,16 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50110 Version 5.0.1.10
+ * @date 2017-02-01
+ * @verbatim
+	- quick settings: buttons depends on vent mode
+ @endverbatim
+ *
  * @subsection ver5019 Version 5.0.1.9
  * @date 2017-02-01
  * @verbatim
- - FOT running fixed, restart possible
+	- FOT running fixed, restart possible
  @endverbatim
  *
  * @subsection ver5018 Version 5.0.1.8

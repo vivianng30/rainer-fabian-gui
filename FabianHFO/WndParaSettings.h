@@ -74,7 +74,7 @@ private:
 	CBmp* m_pcSelSetting_Up;
 	CBmp* m_pcSelSetting_Dw;
 	CBmp* m_pcSelSetting_Fc;
-	CBmp* m_pcSelSetting_Dis;
+	//CBmp* m_pcSelSetting_Dis;
 	/*CDwnBtn* m_pcSIMVPSV_ON;
 	CDwnBtn* m_pcSIMVPSV_OFF;
 	CDwnBtn* m_pcFreshgasInt;

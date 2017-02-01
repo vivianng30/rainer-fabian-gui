@@ -91,7 +91,7 @@ CWndParaSettings::CWndParaSettings()
 	m_pcSelSetting_Up=NULL;
 	m_pcSelSetting_Dw=NULL;
 	m_pcSelSetting_Fc=NULL;
-	m_pcSelSetting_Dis=NULL;
+	//m_pcSelSetting_Dis=NULL;
 
 	/*m_pcSIMVPSV_ON=NULL;
 	m_pcSIMVPSV_OFF=NULL;*/
@@ -144,8 +144,8 @@ CWndParaSettings::~CWndParaSettings()
 	m_pcSelSetting_Dw=NULL;
 	delete m_pcSelSetting_Fc;
 	m_pcSelSetting_Fc=NULL;
-	delete m_pcSelSetting_Dis;
-	m_pcSelSetting_Dis=NULL;
+	//delete m_pcSelSetting_Dis;
+	//m_pcSelSetting_Dis=NULL;
 	
 	delete m_pcParaMenu_Up;
 	m_pcParaMenu_Up=NULL;
@@ -256,7 +256,7 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		m_pcSelSetting_Up		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SELSETTING_UP);
 		m_pcSelSetting_Dw		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SELSETTING_DW);
 		m_pcSelSetting_Fc		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SELSETTING_FC);
-		m_pcSelSetting_Dis		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SELSETTING_DIS);
+		//m_pcSelSetting_Dis		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SELSETTING_DIS);
 
 		m_pcParaMenu_Up		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_PARAMENUBCK_UP);
 		m_pcParaMenu_Dw		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_PARAMENUBCK_DW);
@@ -541,7 +541,7 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		btn.pcBmpUp				= m_pcSelSetting_Up;
 		btn.pcBmpDown			= m_pcSelSetting_Dw;
 		btn.pcBmpFocus			= m_pcSelSetting_Fc;
-		btn.pcBmpDisabled		= m_pcSelSetting_Dis;
+		btn.pcBmpDisabled		= m_pcSelSetting_Up;
 		btn.dwFormat			= DT_VCENTER|DT_CENTER;
 
 		/*CString szTop=_T("Bias Flow");
@@ -556,13 +556,13 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		if(getModel()->getCONFIG()->isBiasFlowActive()==true)
 		{
 			m_pcFreshgasInt->ShowWindow(SW_SHOW);
-			m_pcFreshgasInt->EnableWindow(TRUE);
+			//m_pcFreshgasInt->EnableWindow(TRUE);
 		}
 		else
 		{
-			//m_pcFreshgasInt->ShowWindow(SW_HIDE);
-			m_pcFreshgasInt->ShowWindow(SW_SHOW);
-			m_pcFreshgasInt->EnableWindow(FALSE);
+			m_pcFreshgasInt->ShowWindow(SW_HIDE);
+			//m_pcFreshgasInt->ShowWindow(SW_SHOW);
+			//m_pcFreshgasInt->EnableWindow(FALSE);
 		}
 
 
@@ -573,7 +573,7 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		btn.pcBmpUp				= m_pcSelSetting_Up;
 		btn.pcBmpDown			= m_pcSelSetting_Dw;
 		btn.pcBmpFocus			= m_pcSelSetting_Fc;
-		btn.pcBmpDisabled		= m_pcSelSetting_Dis;
+		btn.pcBmpDisabled		= m_pcSelSetting_Up;
 		btn.dwFormat			= DT_VCENTER|DT_CENTER;
 
 		//szTop=_T("Bias Flow");
@@ -586,13 +586,13 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		if(getModel()->getCONFIG()->isBiasFlowActive()==true)
 		{
 			m_pcFreshgasExt->ShowWindow(SW_SHOW);
-			m_pcFreshgasExt->EnableWindow(TRUE);
+			//m_pcFreshgasExt->EnableWindow(TRUE);
 		}
 		else
 		{
-			//m_pcFreshgasExt->ShowWindow(SW_HIDE);
-			m_pcFreshgasExt->ShowWindow(SW_SHOW);
-			m_pcFreshgasExt->EnableWindow(FALSE);
+			m_pcFreshgasExt->ShowWindow(SW_HIDE);
+			//m_pcFreshgasExt->ShowWindow(SW_SHOW);
+			//m_pcFreshgasExt->EnableWindow(FALSE);
 		}
 
 		
@@ -603,7 +603,7 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		btn.pcBmpUp				= m_pcSelSetting_Up;
 		btn.pcBmpDown			= m_pcSelSetting_Dw;
 		btn.pcBmpFocus			= m_pcSelSetting_Fc;
-		btn.pcBmpDisabled		= m_pcSelSetting_Dis;
+		btn.pcBmpDisabled		= m_pcSelSetting_Up;
 		btn.dwFormat			= DT_VCENTER|DT_CENTER;
 
 		/*szTop=_T("Volume");
@@ -624,7 +624,7 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		btn.pcBmpUp				= m_pcSelSetting_Up;
 		btn.pcBmpDown			= m_pcSelSetting_Dw;
 		btn.pcBmpFocus			= m_pcSelSetting_Fc;
-		btn.pcBmpDisabled		= m_pcSelSetting_Dis;
+		btn.pcBmpDisabled		= m_pcSelSetting_Up;
 		btn.dwFormat			= DT_VCENTER|DT_CENTER;
 
 		//szTop=_T("Volume");
@@ -675,10 +675,10 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 				&& getModel()->getDATAHANDLER()->isVGUARANTLicenseAvailable())
 		{
 			m_pcVolumeGuarantee->ShowWindow(SW_SHOW);
-			m_pcVolumeGuarantee->EnableWindow(TRUE);
+			//m_pcVolumeGuarantee->EnableWindow(TRUE);
 
 			m_pcVolumeLimit->ShowWindow(SW_SHOW);
-			m_pcVolumeLimit->EnableWindow(TRUE);
+			//m_pcVolumeLimit->EnableWindow(TRUE);
 
 			if(getModel()->getCONFIG()->GetVolumeControl()==VCTRL_VGARANT)
 			{
@@ -693,13 +693,13 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		}
 		else
 		{
-			//m_pcVolumeGuarantee->ShowWindow(SW_HIDE);
-			//m_pcVolumeLimit->ShowWindow(SW_HIDE);
-			m_pcVolumeGuarantee->ShowWindow(SW_SHOW);
-			m_pcVolumeGuarantee->EnableWindow(FALSE);
+			m_pcVolumeGuarantee->ShowWindow(SW_HIDE);
+			m_pcVolumeLimit->ShowWindow(SW_HIDE);
+			//m_pcVolumeGuarantee->ShowWindow(SW_SHOW);
+			//m_pcVolumeGuarantee->EnableWindow(FALSE);
 
-			m_pcVolumeLimit->ShowWindow(SW_SHOW);
-			m_pcVolumeLimit->EnableWindow(FALSE);
+			//m_pcVolumeLimit->ShowWindow(SW_SHOW);
+			//m_pcVolumeLimit->EnableWindow(FALSE);
 		}
 
 		if(getModel()->getCONFIG()->GetCurMode()==VM_PRE_HFO 
@@ -727,34 +727,34 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		if(getModel()->getVMODEHANDLER()->activeModeHasPSV())
 		{
 			m_pcPara_AbortPSV->ShowWindow(SW_SHOW);
-			m_pcPara_AbortPSV->EnableWindow(TRUE);
+			//m_pcPara_AbortPSV->EnableWindow(TRUE);
 		}
 		else
 		{
-			m_pcPara_AbortPSV->ShowWindow(SW_SHOW);
-			m_pcPara_AbortPSV->EnableWindow(FALSE);
-			//m_pcPara_AbortPSV->ShowWindow(SW_HIDE);
+			//m_pcPara_AbortPSV->ShowWindow(SW_SHOW);
+			//m_pcPara_AbortPSV->EnableWindow(FALSE);
+			m_pcPara_AbortPSV->ShowWindow(SW_HIDE);
 		}
 
 		if(getModel()->getCONFIG()->GetCurMode()==VM_PRE_HFO 
 			||	getModel()->getCONFIG()->GetCurMode()==VM_HFO)
 		{
-			//m_pcPara_EFLOW->ShowWindow(SW_HIDE);
-			m_pcPara_EFLOW->ShowWindow(SW_SHOW);
-			m_pcPara_EFLOW->EnableWindow(FALSE);
+			m_pcPara_EFLOW->ShowWindow(SW_HIDE);
+			//m_pcPara_EFLOW->ShowWindow(SW_SHOW);
+			//m_pcPara_EFLOW->EnableWindow(FALSE);
 		}
 		else if(	getModel()->getVMODEHANDLER()->curModeIsConventionalMode()//EFLOW1
 				&&	getModel()->getCONFIG()->getShowEFlowInSettings()==true
 				/*&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW*/)
 		{
 			m_pcPara_EFLOW->ShowWindow(SW_SHOW);
-			m_pcPara_EFLOW->EnableWindow(TRUE);
+			//m_pcPara_EFLOW->EnableWindow(TRUE);
 		}
 		else
 		{
-			m_pcPara_EFLOW->ShowWindow(SW_SHOW);
-			m_pcPara_EFLOW->EnableWindow(FALSE);
-			//m_pcPara_EFLOW->ShowWindow(SW_HIDE);
+			//m_pcPara_EFLOW->ShowWindow(SW_SHOW);
+			//m_pcPara_EFLOW->EnableWindow(FALSE);
+			m_pcPara_EFLOW->ShowWindow(SW_HIDE);
 		}
 
 		SelectObject(m_hDC,hpenprev);
@@ -787,9 +787,9 @@ void CWndParaSettings::Show(bool bShow)
 			if(getModel()->getCONFIG()->GetCurMode()==VM_PRE_HFO 
 				||	getModel()->getCONFIG()->GetCurMode()==VM_HFO)
 			{
-				m_pcPara_PCurve->ShowWindow(SW_SHOW);
-				m_pcPara_PCurve->EnableWindow(FALSE);
-				//m_pcPara_PCurve->ShowWindow(SW_HIDE);
+				//m_pcPara_PCurve->ShowWindow(SW_SHOW);
+				//m_pcPara_PCurve->EnableWindow(FALSE);
+				m_pcPara_PCurve->ShowWindow(SW_HIDE);
 			}
 			//else if(NEONATAL==getModel()->getCONFIG()->GetVentRange())//RISE_NEO
 			//{
@@ -800,47 +800,48 @@ void CWndParaSettings::Show(bool bShow)
 				//TODO_AUTOIFLOW
 				if(false==getModel()->getCONFIG()->isRISETIMEREGISTRYenabled())
 				{
-					m_pcPara_PCurve->ShowWindow(SW_SHOW);
-					m_pcPara_PCurve->EnableWindow(FALSE);
+					m_pcPara_PCurve->ShowWindow(SW_HIDE);
+					//m_pcPara_PCurve->ShowWindow(SW_SHOW);
+					//m_pcPara_PCurve->EnableWindow(FALSE);
 				}
 				else
 				{
 					m_pcPara_PCurve->ShowWindow(SW_SHOW);
-					m_pcPara_PCurve->EnableWindow(TRUE);
+					//m_pcPara_PCurve->EnableWindow(TRUE);
 				}
 			}
 
 			if(getModel()->getVMODEHANDLER()->activeModeHasPSV())
 			{
 				m_pcPara_AbortPSV->ShowWindow(SW_SHOW);
-				m_pcPara_AbortPSV->EnableWindow(TRUE);
+				//m_pcPara_AbortPSV->EnableWindow(TRUE);
 			}
 			else
 			{
-				//m_pcPara_AbortPSV->ShowWindow(SW_HIDE);
-				m_pcPara_AbortPSV->ShowWindow(SW_SHOW);
-				m_pcPara_AbortPSV->EnableWindow(FALSE);
+				m_pcPara_AbortPSV->ShowWindow(SW_HIDE);
+				//m_pcPara_AbortPSV->ShowWindow(SW_SHOW);
+				//m_pcPara_AbortPSV->EnableWindow(FALSE);
 			}
 
 			if(getModel()->getCONFIG()->GetCurMode()==VM_PRE_HFO 
 				||	getModel()->getCONFIG()->GetCurMode()==VM_HFO)
 			{
-				//m_pcPara_EFLOW->ShowWindow(SW_HIDE);
-				m_pcPara_EFLOW->ShowWindow(SW_SHOW);
-				m_pcPara_EFLOW->EnableWindow(FALSE);
+				m_pcPara_EFLOW->ShowWindow(SW_HIDE);
+				//m_pcPara_EFLOW->ShowWindow(SW_SHOW);
+				//m_pcPara_EFLOW->EnableWindow(FALSE);
 			}
 			else if(	getModel()->getVMODEHANDLER()->curModeIsConventionalMode()//EFLOW1
 					&&	getModel()->getCONFIG()->getShowEFlowInSettings()==true
 					/*&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW*/)
 			{
 				m_pcPara_EFLOW->ShowWindow(SW_SHOW);
-				m_pcPara_EFLOW->EnableWindow(TRUE);
+				//m_pcPara_EFLOW->EnableWindow(TRUE);
 			}
 			else
 			{
-				//m_pcPara_EFLOW->ShowWindow(SW_HIDE);
-				m_pcPara_EFLOW->ShowWindow(SW_SHOW);
-				m_pcPara_EFLOW->EnableWindow(FALSE);
+				m_pcPara_EFLOW->ShowWindow(SW_HIDE);
+				//m_pcPara_EFLOW->ShowWindow(SW_SHOW);
+				//m_pcPara_EFLOW->EnableWindow(FALSE);
 			}
 
 			m_pcPara_ManBreath->ShowWindow(SW_SHOW);
@@ -852,13 +853,13 @@ void CWndParaSettings::Show(bool bShow)
 				&& getModel()->getDATAHANDLER()->isHFOLicenseAvailable())
 			{
 				m_pcPara_FREQ_REC->ShowWindow(SW_SHOW);
-				m_pcPara_FREQ_REC->EnableWindow(TRUE);
+				//m_pcPara_FREQ_REC->EnableWindow(TRUE);
 			}
 			else
 			{
-				//m_pcPara_FREQ_REC->ShowWindow(SW_HIDE);
-				m_pcPara_FREQ_REC->ShowWindow(SW_SHOW);
-				m_pcPara_FREQ_REC->EnableWindow(FALSE);
+				m_pcPara_FREQ_REC->ShowWindow(SW_HIDE);
+				//m_pcPara_FREQ_REC->ShowWindow(SW_SHOW);
+				//m_pcPara_FREQ_REC->EnableWindow(FALSE);
 			}
 			m_pcPara_Confirm->ShowWindow(SW_HIDE);
 
@@ -879,41 +880,41 @@ void CWndParaSettings::Show(bool bShow)
 			&& getModel()->getDATAHANDLER()->isVGUARANTLicenseAvailable())
 		{
 			m_pcVolumeGuarantee->ShowWindow(SW_SHOW);
-			m_pcVolumeGuarantee->EnableWindow(TRUE);
+			//m_pcVolumeGuarantee->EnableWindow(TRUE);
 
 			m_pcVolumeLimit->ShowWindow(SW_SHOW);
-			m_pcVolumeLimit->EnableWindow(TRUE);
+			//m_pcVolumeLimit->EnableWindow(TRUE);
 		}
 		else
 		{
-			m_pcVolumeGuarantee->ShowWindow(SW_SHOW);
+			/*m_pcVolumeGuarantee->ShowWindow(SW_SHOW);
 			m_pcVolumeGuarantee->EnableWindow(FALSE);
 
 			m_pcVolumeLimit->ShowWindow(SW_SHOW);
-			m_pcVolumeLimit->EnableWindow(FALSE);
-			/*m_pcVolumeGuarantee->ShowWindow(SW_HIDE);
-			m_pcVolumeLimit->ShowWindow(SW_HIDE);*/
+			m_pcVolumeLimit->EnableWindow(FALSE);*/
+			m_pcVolumeGuarantee->ShowWindow(SW_HIDE);
+			m_pcVolumeLimit->ShowWindow(SW_HIDE);
 		}
 
 
 		if(getModel()->getCONFIG()->isBiasFlowActive()==true)
 		{
 			m_pcFreshgasInt->ShowWindow(SW_SHOW);
-			m_pcFreshgasInt->EnableWindow(TRUE);
+			//m_pcFreshgasInt->EnableWindow(TRUE);
 
 			m_pcFreshgasExt->ShowWindow(SW_SHOW);
-			m_pcFreshgasExt->EnableWindow(TRUE);
+			//m_pcFreshgasExt->EnableWindow(TRUE);
 		}
 		else
 		{
-			m_pcFreshgasInt->ShowWindow(SW_SHOW);
+			/*m_pcFreshgasInt->ShowWindow(SW_SHOW);
 			m_pcFreshgasInt->EnableWindow(FALSE);
 
 			m_pcFreshgasExt->ShowWindow(SW_SHOW);
-			m_pcFreshgasExt->EnableWindow(FALSE);
+			m_pcFreshgasExt->EnableWindow(FALSE);*/
 
-			//m_pcFreshgasInt->ShowWindow(SW_HIDE);
-			//m_pcFreshgasExt->ShowWindow(SW_HIDE);
+			m_pcFreshgasInt->ShowWindow(SW_HIDE);
+			m_pcFreshgasExt->ShowWindow(SW_HIDE);
 		}
 		
 		this->ShowWindow(SW_SHOW);
@@ -1305,13 +1306,13 @@ void CWndParaSettings::Draw()
 
 	//}
 	
-	//if(getModel()->getCONFIG()->isBiasFlowActive()==true)
+	if(getModel()->getCONFIG()->isBiasFlowActive()==true)
 	{
 		RoundRect(hdcMem, 430, 3, 540, 113,20,20);
 	}
 	
-	/*if(getModel()->getDATAHANDLER()->isVLIMITLicenseAvailable() 
-		&& getModel()->getDATAHANDLER()->isVGUARANTLicenseAvailable())*/
+	if(getModel()->getDATAHANDLER()->isVLIMITLicenseAvailable() 
+		&& getModel()->getDATAHANDLER()->isVGUARANTLicenseAvailable())
 	{
 		RoundRect(hdcMem, 430, 117, 540, 227,20,20);
 	}
