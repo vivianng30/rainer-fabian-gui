@@ -1426,6 +1426,14 @@ void CViewAlarmLimit::DrawFrames(CDC* pDC)
 						m_pcAlarmlimitPara1->Draw(hdc,0,431);	//Apnoe
 				}
 			}
+			else if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_PRESSURE)
+			{
+				if(m_eCurVentMode!=VM_IPPV && m_eCurVentMode!=VM_SIPPV)
+				{
+					if(m_pcAlarmlimitPara1)
+						m_pcAlarmlimitPara1->Draw(hdc,0,431);	//Apnoe
+				}
+			}
 		}
 	}
 
@@ -2241,6 +2249,27 @@ void CViewAlarmLimit::drawLabel_VENTILATION(CDC* pDC)
 			rc.left = 15+sz.cx;
 			pDC->DrawText(_T("[")+getModel()->GetLanguageString(IDS_UNIT_SECONDS)+_T("]"),&rc,DT_VCENTER|DT_SINGLELINE|DT_LEFT);
 
+		}
+		else if(m_eCurVentMode!=VM_IPPV && m_eCurVentMode!=VM_SIPPV && getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_PRESSURE)
+		{
+			SelectObject(hdc,g_hf10AcuBold);
+
+			//--------------------Apnoe-------------------------------------
+			rc.top = 431;
+			rc.bottom = 481;
+			rc.left = 10;
+			rc.right = 210;
+
+			nameText=getModel()->GetLanguageString(IDS_PARA_APNOE);
+			DrawText(hdc,nameText,-1,&rc,DT_VCENTER|DT_SINGLELINE|DT_LEFT);
+			CSize sz = pDC->GetTextExtent(nameText);
+
+			SelectObject(hdc,g_hf6AcuNorm);
+
+			rc.top = 432;
+			rc.bottom = 481;
+			rc.left = 15+sz.cx;
+			pDC->DrawText(_T("[")+getModel()->GetLanguageString(IDS_UNIT_SECONDS)+_T("]"),&rc,DT_VCENTER|DT_SINGLELINE|DT_LEFT);
 		}
 	}
 
@@ -3675,7 +3704,16 @@ void CViewAlarmLimit::showALimitButtons()
 				m_pcAlarmLimit_Apnoe->ShowWindow(SW_SHOW);
 			}
 		}
-		else if(m_eCurVentMode!=VM_IPPV && m_eCurVentMode!=VM_SIPPV && m_eCurVentMode!=VM_THERAPIE /*&& m_eCurVentMode!=VM_NCPAP && m_eCurVentMode!=VM_DUOPAP*/ && m_eCurVentMode!=VM_HFO && getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
+		else if(	m_eCurVentMode!=VM_IPPV && m_eCurVentMode!=VM_SIPPV && m_eCurVentMode!=VM_THERAPIE && m_eCurVentMode!=VM_HFO 
+				&&	getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false )
+		{
+			if(m_pcAlarmLimit_Apnoe)
+			{
+				m_pcAlarmLimit_Apnoe->ShowWindow(SW_SHOW);
+			}
+		}
+		else if(	m_eCurVentMode!=VM_IPPV && m_eCurVentMode!=VM_SIPPV && m_eCurVentMode!=VM_THERAPIE && m_eCurVentMode!=VM_HFO 
+				&&	getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_PRESSURE)
 		{
 			if(m_pcAlarmLimit_Apnoe)
 			{

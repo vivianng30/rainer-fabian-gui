@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver5018 Version 5.0.1.8
+ * @date 2017-02-01
+ * @verbatim
+	- apnea alarm limit displayed if pressure trigger and SIMV and flow sensor == off
+ @endverbatim
+ *
  * @subsection ver5017 Version 5.0.1.7
  * @date 2017-02-01
  * @verbatim
