@@ -8519,11 +8519,7 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 
 
 
-	if(eActiveVentMode==VM_CPAP || eActiveVentMode==VM_NCPAP)
-	{
-
-	}
-	else
+	if(eActiveVentMode!=VM_CPAP && eActiveVentMode!=VM_NCPAP)
 	{
 		if(statePIPmax==AL_ON || statePIPmax==AL_AUTO)
 		{
@@ -8618,6 +8614,17 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 		m_dwPminHighValueOk=GetTickCount();
 	}
 
+	bool bCheckBPMinNMODE=false;
+	if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false 
+		&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET 
+		&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
+	{
+		bCheckBPMinNMODE=true;
+	}
+	else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
+	{
+		bCheckBPMinNMODE=true;
+	}
 
 	if(bActiveModeIsNMODE==false && getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
 	{
@@ -8679,6 +8686,16 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 				{
 					bDCO2min_Alarm=true;
 				}
+			}
+		}
+	}
+	else if(bCheckBPMinNMODE)
+	{
+		if(stateBPMmax==AL_ON || stateBPMmax==AL_AUTO)
+		{
+			if(	MessureData.m_iBPM > getAlimitBPMmax())
+			{
+				bBPMmax_Alarm=true;
 			}
 		}
 	}
@@ -8825,7 +8842,9 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 		&&	getAlarmSilentState()!=ASTATE_AUTOSILENT
 		&&	getModel()->isActiveAlarmDelay()==false)
 	{
-		if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
+		if(bCheckBPMinNMODE)
+			sz.Format(_T(" [%d]"),MessureData.m_iBPM);
+		else if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
 			sz.Format(_T(" [%d]"),MessureData.m_iBPMco2);
 		else
 			sz.Format(_T(" [%d]"),MessureData.m_iBPM);

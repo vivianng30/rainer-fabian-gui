@@ -6808,6 +6808,10 @@
 			>
 		</File>
 		<File
+			RelativePath=".\HWconfig.ini"
+			>
+		</File>
+		<File
 			RelativePath=".\limits.reg"
 			>
 		</File>

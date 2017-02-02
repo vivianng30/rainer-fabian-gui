@@ -543,6 +543,9 @@ void CAlarmConditionHandler::setAlarmLimitValues_NCPAP()
 	ALIMIT_APNOE->setCurValue(getModel()->getCONFIG()->GetAlarmlimitApnoe());//rku,PRETRIGGER
 	ALIMIT_APNOE->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateApnoe());//rku,PRETRIGGER
 
+	ALIMIT_FREQMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitBPMmax());
+	ALIMIT_FREQMAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateBPMmax());
+
 	ALIMIT_PIPMAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStatePmaxNCPAP());
 	ALIMIT_PIPMIN->setLimitState(AL_OFF);
 	ALIMIT_PEEPMIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStatePEEPminNCPAP());
@@ -576,6 +579,8 @@ void CAlarmConditionHandler::setAlarmLimitValues_DUOPAP()
 	ALIMIT_APNOE->setCurValue(getModel()->getCONFIG()->GetAlarmlimitApnoe());//rku,PRETRIGGER
 	ALIMIT_APNOE->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateApnoe());//rku,PRETRIGGER
 
+	ALIMIT_FREQMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitBPMmax());
+	ALIMIT_FREQMAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateBPMmax());
 
 	ALIMIT_PIPMAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStatePmaxDUOPAP());
 	ALIMIT_PIPMIN->setLimitState(AL_OFF);
@@ -1152,6 +1157,10 @@ void CAlarmConditionHandler::setAlarmLimitRanges_NMODE()
 		//Apnoe
 		ALIMIT_APNOE->setMaxValue(MAXRANGE_NEONATAL_APNOE);
 		ALIMIT_APNOE->setMinValue(MINRANGE_NEONATAL_APNOE);
+
+		//BPM
+		ALIMIT_FREQMAX->setMaxValue(MAXRANGE_NEONATAL_BPMMAX);
+		ALIMIT_FREQMAX->setMinValue(MINRANGE_NEONATAL_BPMMIN);
 	}
 	else
 	{
@@ -1166,6 +1175,10 @@ void CAlarmConditionHandler::setAlarmLimitRanges_NMODE()
 		//Apnoe
 		ALIMIT_APNOE->setMaxValue(MAXRANGE_PEDIATRIC_APNOE);
 		ALIMIT_APNOE->setMinValue(MINRANGE_PEDIATRIC_APNOE);
+
+		//BPM
+		ALIMIT_FREQMAX->setMaxValue(MAXRANGE_PEDIATRIC_BPMMAX);
+		ALIMIT_FREQMAX->setMinValue(MINRANGE_PEDIATRIC_BPMMIN);
 	}
 }
 

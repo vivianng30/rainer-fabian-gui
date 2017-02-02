@@ -31,8 +31,10 @@ enum eHFModuleRevision {
 #define MAINBOARD_13			0x13
 #define MAINBOARD_20			0x20
 #define MAINBOARD_21			0x21
+#define MAINBOARD_21			0x22
 #define MAINBOARD_30			0x30
 #define MAINBOARD_31			0x31
+#define MAINBOARD_33			0x33
 #define MAINBOARD_40			0x40
 
 #define SERIAL_COM1				0x01

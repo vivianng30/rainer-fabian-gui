@@ -602,7 +602,15 @@ bool CViewAlarmLimit::Initialize()
 	////-------------------------------------------------------------
 	////Button------BPM---------------------------------
 	btn.wID					= IDC_BTN_ALARM_BPM_HI;	
-	if(m_eCurVentMode==VM_CPAP)
+	if(m_eCurVentMode==VM_DUOPAP || m_eCurVentMode==VM_NCPAP)
+	{
+		/*btn.poPosition.x		= 100;
+		btn.poPosition.y		= 321;*/
+
+		btn.poPosition.x		= 100;
+		btn.poPosition.y		= 266;
+	}
+	else if(m_eCurVentMode==VM_CPAP)
 	{
 		btn.poPosition.x		= 100;
 		btn.poPosition.y		= 266;
@@ -691,7 +699,7 @@ bool CViewAlarmLimit::Initialize()
 	if(m_eCurVentMode==VM_DUOPAP || m_eCurVentMode==VM_NCPAP)
 	{
 		btn.poPosition.x		= 100;
-		btn.poPosition.y		= 266;
+		btn.poPosition.y		= 321;
 	}
 	else if(m_eCurVentMode==VM_CPAP)
 	{
@@ -1111,29 +1119,8 @@ bool CViewAlarmLimit::Initialize()
 	m_pcAlarmLimit_SPO2_SIQ->ShowWindow(SW_HIDE);
 
 
-	if(m_eCurVentMode==VM_NCPAP || m_eCurVentMode==VM_DUOPAP)
+	if(m_eCurVentMode==VM_NCPAP || m_eCurVentMode==VM_DUOPAP || m_eCurVentMode==VM_CPAP)
 	{
-		CStringW strVal;
-		strVal.Format(_T("%d"),m_iValueDelay);
-		
-		//*******************alarm delay Pmin*****************************
-		btn.wID					= IDC_BTN_ALIMIT_DELAY;	
-		btn.poPosition.x		= 40;
-		btn.poPosition.y		= 347;//292
-		btn.pcBmpUp				= m_pcStatic_Up;
-		btn.pcBmpDown			= m_pcStatic_Dw;
-		btn.pcBmpFocus			= m_pcStatic_Fc;
-		btn.pcBmpDisabled		= m_pcStatic_Up;
-		btn.dwFormat			= DT_VCENTER|DT_CENTER;
-
-		m_pbtnValueDelay=new CSelectSetupBtn(btn,COLOR_TXTBTNUP);
-		m_pbtnValueDelay->Create(this,g_hf33AcuBold,0,dwStyleNoTab);
-		m_pbtnValueDelay->SetText(strVal);
-		m_pbtnValueDelay->ShowWindow(SW_HIDE);
-	}
-	else if(m_eCurVentMode==VM_CPAP)
-	{
-		
 		CStringW strVal;
 		strVal.Format(_T("%d"),m_iValueDelay);
 		
@@ -1141,6 +1128,8 @@ bool CViewAlarmLimit::Initialize()
 		btn.wID					= IDC_BTN_ALIMIT_DELAY;	
 		btn.poPosition.x		= 40;
 		btn.poPosition.y		= 457;
+		//btn.poPosition.x		= 40;
+		//btn.poPosition.y		= 347;
 		btn.pcBmpUp				= m_pcStatic_Up;
 		btn.pcBmpDown			= m_pcStatic_Dw;
 		btn.pcBmpFocus			= m_pcStatic_Fc;
@@ -1152,6 +1141,27 @@ bool CViewAlarmLimit::Initialize()
 		m_pbtnValueDelay->SetText(strVal);
 		m_pbtnValueDelay->ShowWindow(SW_HIDE);
 	}
+	//else if(m_eCurVentMode==VM_CPAP)
+	//{
+	//	
+	//	CStringW strVal;
+	//	strVal.Format(_T("%d"),m_iValueDelay);
+	//	
+	//	//*******************alarm delay Pmin*****************************
+	//	btn.wID					= IDC_BTN_ALIMIT_DELAY;	
+	//	btn.poPosition.x		= 40;
+	//	btn.poPosition.y		= 457;
+	//	btn.pcBmpUp				= m_pcStatic_Up;
+	//	btn.pcBmpDown			= m_pcStatic_Dw;
+	//	btn.pcBmpFocus			= m_pcStatic_Fc;
+	//	btn.pcBmpDisabled		= m_pcStatic_Up;
+	//	btn.dwFormat			= DT_VCENTER|DT_CENTER;
+
+	//	m_pbtnValueDelay=new CSelectSetupBtn(btn,COLOR_TXTBTNUP);
+	//	m_pbtnValueDelay->Create(this,g_hf33AcuBold,0,dwStyleNoTab);
+	//	m_pbtnValueDelay->SetText(strVal);
+	//	m_pbtnValueDelay->ShowWindow(SW_HIDE);
+	//}
 
 
 
@@ -1346,6 +1356,11 @@ void CViewAlarmLimit::DrawFrames(CDC* pDC)
 					m_pcAlarmlimitPara1->Draw(hdc,0,321);	//Leak
 				
 			}
+			else if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_PRESSURE)
+			{
+				if(m_pcAlarmlimitPara1)
+					m_pcAlarmlimitPara1->Draw(hdc,0,266);	//BPM
+			}
 			if(		getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET
 				||	(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false
 				&& getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET))
@@ -1364,14 +1379,19 @@ void CViewAlarmLimit::DrawFrames(CDC* pDC)
 				&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
 			{
 				if(m_pcAlarmlimitPara1)
-					m_pcAlarmlimitPara1->Draw(hdc,0,266);	//Apnea
+					m_pcAlarmlimitPara1->Draw(hdc,0,266);	//BPM
+
+				if(m_pcAlarmlimitPara1)
+					m_pcAlarmlimitPara1->Draw(hdc,0,321);	//Apnea
 			}
 			else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
 			{
 				if(m_pcAlarmlimitPara1)
-					m_pcAlarmlimitPara1->Draw(hdc,0,266);	//Apnea
+					m_pcAlarmlimitPara1->Draw(hdc,0,266);	//BPM
+
+				if(m_pcAlarmlimitPara1)
+					m_pcAlarmlimitPara1->Draw(hdc,0,321);	//Apnea
 			}
-			
 		}
 		else if(m_eCurVentMode==VM_DUOPAP)
 		{
@@ -1386,14 +1406,19 @@ void CViewAlarmLimit::DrawFrames(CDC* pDC)
 				&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
 			{
 				if(m_pcAlarmlimitPara1)
-					m_pcAlarmlimitPara1->Draw(hdc,0,266);	//Apnea
+					m_pcAlarmlimitPara1->Draw(hdc,0,266);	//BPM
+
+				if(m_pcAlarmlimitPara1)
+					m_pcAlarmlimitPara1->Draw(hdc,0,321);	//Apnea
 			}
 			else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
 			{
 				if(m_pcAlarmlimitPara1)
-					m_pcAlarmlimitPara1->Draw(hdc,0,266);	//Apnea
-			}
+					m_pcAlarmlimitPara1->Draw(hdc,0,266);	//BPM
 
+				if(m_pcAlarmlimitPara1)
+					m_pcAlarmlimitPara1->Draw(hdc,0,321);	//Apnea
+			}
 		}
 		else //if(m_eCurVentMode!=VM_THERAPIE)
 		{
@@ -1432,6 +1457,12 @@ void CViewAlarmLimit::DrawFrames(CDC* pDC)
 				{
 					if(m_pcAlarmlimitPara1)
 						m_pcAlarmlimitPara1->Draw(hdc,0,431);	//Apnoe
+				}
+
+				if(m_eCurVentMode==VM_SIPPV || m_eCurVentMode==VM_SIMV)
+				{
+					if(m_pcAlarmlimitPara1)
+						m_pcAlarmlimitPara1->Draw(hdc,0,321);	//BPM
 				}
 			}
 		}
@@ -1923,6 +1954,24 @@ void CViewAlarmLimit::drawLabel_VENTILATION(CDC* pDC)
 			rc.left = 15+sz.cx;
 			pDC->DrawText(_T("[")+getModel()->GetLanguageString(IDS_UNIT_PERCENT)+_T("]"),&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 		}
+		else if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_PRESSURE)
+		{
+			SelectObject(hdc,g_hf10AcuBold);
+
+			//--------------------BPM-------------------------------------
+			rc.top = 266;
+			rc.bottom = 354;
+			nameText=getModel()->GetLanguageString(IDS_PARA_FREQ);
+			DrawText(hdc,nameText,-1,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
+			CSize sz = pDC->GetTextExtent(nameText);
+
+			SelectObject(hdc,g_hf6AcuNorm);
+
+			rc.top = 267;
+			rc.bottom = 354;
+			rc.left = 15+sz.cx;
+			pDC->DrawText(_T("[")+getModel()->GetLanguageString(IDS_UNIT_BPM)+_T("]"),&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
+		}
 
 		if(		getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET
 			||	(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false
@@ -1991,21 +2040,58 @@ void CViewAlarmLimit::drawLabel_VENTILATION(CDC* pDC)
 
 		if(bShowApnea)
 		{
+			//---------- BPM -----------------------------
 			rc.left = 10;
 			rc.right = 210;
 			rc.top = 266;
 			rc.bottom = 316;
 
-			nameText=getModel()->GetLanguageString(IDS_PARA_APNOE);
-			DrawText(hdc,nameText,-1,&rc,DT_VCENTER|DT_SINGLELINE|DT_LEFT);
+			/*rc.top = 321;
+			rc.bottom = 416;
+			rc.left = 10;
+			rc.right = 210;*/
+			nameText=getModel()->GetLanguageString(IDS_PARA_FREQ);
+			DrawText(hdc,nameText,-1,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 			CSize sz = pDC->GetTextExtent(nameText);
 
 			SelectObject(hdc,g_hf6AcuNorm);
 
+			/*rc.top = 322;
+			rc.bottom = 416;
+			rc.left = 15+sz.cx;*/
+
 			rc.top = 266;
 			rc.bottom = 316;
 			rc.left = 15+sz.cx;
+			pDC->DrawText(_T("[")+getModel()->GetLanguageString(IDS_UNIT_BPM)+_T("]"),&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
+
+			SelectObject(hdc,g_hf10AcuBold);
+
+			//-------------Apnea---------------------
+			rc.top = 321;
+			rc.bottom = 371;
+			rc.left = 10;
+			rc.right = 210;
+			/*rc.left = 10;
+			rc.right = 210;
+			rc.top = 266;
+			rc.bottom = 316;*/
+
+			nameText=getModel()->GetLanguageString(IDS_PARA_APNOE);
+			DrawText(hdc,nameText,-1,&rc,DT_VCENTER|DT_SINGLELINE|DT_LEFT);
+			sz = pDC->GetTextExtent(nameText);
+
+			SelectObject(hdc,g_hf6AcuNorm);
+
+			/*rc.top = 266;
+			rc.bottom = 316;
+			rc.left = 15+sz.cx;*/
+
+			rc.top = 322;
+			rc.bottom = 372;
+			rc.left = 15+sz.cx;
 			pDC->DrawText(_T("[")+getModel()->GetLanguageString(IDS_UNIT_SECONDS)+_T("]"),&rc,DT_VCENTER|DT_SINGLELINE|DT_LEFT);
+
 		}
 	}
 	else if(m_eCurVentMode==VM_DUOPAP)
@@ -2079,21 +2165,59 @@ void CViewAlarmLimit::drawLabel_VENTILATION(CDC* pDC)
 
 		if(bShowApnea)
 		{
+
+			//---------- BPM -----------------------------
 			rc.left = 10;
 			rc.right = 210;
 			rc.top = 266;
 			rc.bottom = 316;
 
-			nameText=getModel()->GetLanguageString(IDS_PARA_APNOE);
-			DrawText(hdc,nameText,-1,&rc,DT_VCENTER|DT_SINGLELINE|DT_LEFT);
+			/*rc.top = 321;
+			rc.bottom = 416;
+			rc.left = 10;
+			rc.right = 210;*/
+			nameText=getModel()->GetLanguageString(IDS_PARA_FREQ);
+			DrawText(hdc,nameText,-1,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 			CSize sz = pDC->GetTextExtent(nameText);
 
 			SelectObject(hdc,g_hf6AcuNorm);
 
+			/*rc.top = 322;
+			rc.bottom = 416;
+			rc.left = 15+sz.cx;*/
+
 			rc.top = 266;
 			rc.bottom = 316;
 			rc.left = 15+sz.cx;
+			pDC->DrawText(_T("[")+getModel()->GetLanguageString(IDS_UNIT_BPM)+_T("]"),&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
+
+			SelectObject(hdc,g_hf10AcuBold);
+
+			//-------------Apnea---------------------
+			rc.top = 321;
+			rc.bottom = 371;
+			rc.left = 10;
+			rc.right = 210;
+			/*rc.left = 10;
+			rc.right = 210;
+			rc.top = 266;
+			rc.bottom = 316;*/
+
+			nameText=getModel()->GetLanguageString(IDS_PARA_APNOE);
+			DrawText(hdc,nameText,-1,&rc,DT_VCENTER|DT_SINGLELINE|DT_LEFT);
+			sz = pDC->GetTextExtent(nameText);
+
+			SelectObject(hdc,g_hf6AcuNorm);
+
+			/*rc.top = 266;
+			rc.bottom = 316;
+			rc.left = 15+sz.cx;*/
+
+			rc.top = 322;
+			rc.bottom = 372;
+			rc.left = 15+sz.cx;
 			pDC->DrawText(_T("[")+getModel()->GetLanguageString(IDS_UNIT_SECONDS)+_T("]"),&rc,DT_VCENTER|DT_SINGLELINE|DT_LEFT);
+
 		}
 		
 	}
@@ -2226,6 +2350,28 @@ void CViewAlarmLimit::drawLabel_VENTILATION(CDC* pDC)
 			rc.bottom = 471;
 			rc.left = 15+sz.cx;
 			pDC->DrawText(_T("[")+getModel()->GetLanguageString(IDS_UNIT_PERCENT)+_T("]"),&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
+		}
+		else if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_PRESSURE
+			&&	(m_eCurVentMode==VM_SIPPV || m_eCurVentMode==VM_SIMV))
+		{
+			SelectObject(hdc,g_hf10AcuBold);
+
+			//--------------------BPM-------------------------------------
+			rc.left = 10;
+			rc.right = 210;
+			rc.top = 321;
+			rc.bottom = 409;
+
+			nameText=getModel()->GetLanguageString(IDS_PARA_FREQ);
+			DrawText(hdc,nameText,-1,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
+			CSize sz = pDC->GetTextExtent(nameText);
+
+			SelectObject(hdc,g_hf6AcuNorm);
+
+			rc.top = 322;
+			rc.bottom = 409;
+			rc.left = 15+sz.cx;
+			pDC->DrawText(_T("[")+getModel()->GetLanguageString(IDS_UNIT_BPM)+_T("]"),&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 		}
 
 		if(m_eCurVentMode!=VM_IPPV && m_eCurVentMode!=VM_SIPPV && getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
@@ -2612,6 +2758,14 @@ void CViewAlarmLimit::drawDataVentilation_CPAP(HDC hdc)
 		wsprintf(psz,_T("%d"),getModel()->getDATAHANDLER()->getAVGMessureDataBPM());
 		DrawText(hdc,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 	}
+	else if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_PRESSURE)
+	{
+		//--------------------BPM-------------------------------------
+		rc.top = 280;
+		rc.bottom = 315;
+		wsprintf(psz,_T("%d"),getModel()->getDATAHANDLER()->getAVGMessureDataBPM());
+		DrawText(hdc,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
+	}
 
 	//delay
 	SelectObject(hdc,g_hf8AcuBold);
@@ -2686,8 +2840,29 @@ void CViewAlarmLimit::drawDataVentilation_NCPAP(HDC hdc)
 	wsprintf(psz,_T("%0.1f"), ((double)iData)/10);
 	DrawText(hdc,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 
+	bool bShowBPM=false;
+	if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false 
+		&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET 
+		&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
+	{
+		bShowBPM=true;
+	}
+	else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
+	{
+		bShowBPM=true;
+	}
+
+	if(bShowBPM)
+	{
+		//--------------------BPM-------------------------------------
+		rc.top = 280;
+		rc.bottom = 315;
+		wsprintf(psz,_T("%d"),getModel()->getDATAHANDLER()->getAVGMessureDataBPM());
+		DrawText(hdc,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
+	}
+
 	//delay
-	SelectObject(hdc,g_hf8AcuBold);
+	/*SelectObject(hdc,g_hf8AcuBold);
 	Rectangle(hdc, 0, 321, 190, 426);
 
 	rc.left = 0;  
@@ -2723,6 +2898,47 @@ void CViewAlarmLimit::drawDataVentilation_NCPAP(HDC hdc)
 
 	MoveToEx(hdc, 40, 398, NULL);
 	LineTo(hdc, 140, 398);
+
+	penBlack.DeleteObject();*/
+
+	//delay
+	SelectObject(hdc,g_hf8AcuBold);
+
+	Rectangle(hdc, 0, 431, 190, 536);
+
+	rc.left = 0;  
+	rc.top = 435;
+	rc.right  = 190;  
+	rc.bottom = 470;
+	DrawText(hdc,getModel()->GetLanguageString(IDS_TXT_PMINDELAY),-1,&rc,DT_CENTER|DT_SINGLELINE|DT_TOP);
+
+	rc.top = 517;  
+	rc.bottom = 586;
+	CStringW sz=_T("");
+	sz.Format(_T("%s: %d - %d %s"),
+		getModel()->GetLanguageString(IDS_TXT_RANGE),
+		MIN_TIME_PMINDELAY,
+		MAX_TIME_PMINDELAY,
+		getModel()->GetLanguageString(IDS_UNIT_SECONDS));
+	DrawText(hdc,sz,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
+
+	SelectObject(hdc,g_hf11AcuBold);
+
+	rc.left = 145;  
+	rc.top = 452;  
+	rc.right  = 220;  
+	rc.bottom = 512;
+	DrawText(hdc,getModel()->GetLanguageString(IDS_UNIT_SECONDS),-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
+
+	CPen penBlack;
+	penBlack.CreatePen(PS_SOLID,2,RGB(0,0,0));
+	SelectObject(hdc,(HPEN)penBlack);
+
+	MoveToEx(hdc, 40, 456, NULL);
+	LineTo(hdc, 140, 456);
+
+	MoveToEx(hdc, 40, 508, NULL);
+	LineTo(hdc, 140, 508);
 
 	penBlack.DeleteObject();
 
@@ -2766,8 +2982,29 @@ void CViewAlarmLimit::drawDataVentilation_DUOPAP(HDC hdc)
 	wsprintf(psz,_T("%0.1f"), ((double)iData)/10);
 	DrawText(hdc,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 
+	bool bShowBPM=false;
+	if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false 
+		&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET 
+		&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
+	{
+		bShowBPM=true;
+	}
+	else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
+	{
+		bShowBPM=true;
+	}
+
+	if(bShowBPM)
+	{
+		//--------------------BPM-------------------------------------
+		rc.top = 280;
+		rc.bottom = 315;
+		wsprintf(psz,_T("%d"),getModel()->getDATAHANDLER()->getAVGMessureDataBPM());
+		DrawText(hdc,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
+	}
+
 	//delay
-	SelectObject(hdc,g_hf8AcuBold);
+	/*SelectObject(hdc,g_hf8AcuBold);
 	Rectangle(hdc, 0, 321, 190, 426);
 
 	rc.left = 0;  
@@ -2804,8 +3041,49 @@ void CViewAlarmLimit::drawDataVentilation_DUOPAP(HDC hdc)
 	MoveToEx(hdc, 40, 398, NULL);
 	LineTo(hdc, 140, 398);
 
-	penBlack.DeleteObject();
+	penBlack.DeleteObject();*/
 
+
+	//delay
+	SelectObject(hdc,g_hf8AcuBold);
+
+	Rectangle(hdc, 0, 431, 190, 536);
+
+	rc.left = 0;  
+	rc.top = 435;
+	rc.right  = 190;  
+	rc.bottom = 470;
+	DrawText(hdc,getModel()->GetLanguageString(IDS_TXT_PMINDELAY),-1,&rc,DT_CENTER|DT_SINGLELINE|DT_TOP);
+
+	rc.top = 517;  
+	rc.bottom = 586;
+	CStringW sz=_T("");
+	sz.Format(_T("%s: %d - %d %s"),
+		getModel()->GetLanguageString(IDS_TXT_RANGE),
+		MIN_TIME_PMINDELAY,
+		MAX_TIME_PMINDELAY,
+		getModel()->GetLanguageString(IDS_UNIT_SECONDS));
+	DrawText(hdc,sz,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
+
+	SelectObject(hdc,g_hf11AcuBold);
+
+	rc.left = 145;  
+	rc.top = 452;  
+	rc.right  = 220;  
+	rc.bottom = 512;
+	DrawText(hdc,getModel()->GetLanguageString(IDS_UNIT_SECONDS),-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
+
+	CPen penBlack;
+	penBlack.CreatePen(PS_SOLID,2,RGB(0,0,0));
+	SelectObject(hdc,(HPEN)penBlack);
+
+	MoveToEx(hdc, 40, 456, NULL);
+	LineTo(hdc, 140, 456);
+
+	MoveToEx(hdc, 40, 508, NULL);
+	LineTo(hdc, 140, 508);
+
+	penBlack.DeleteObject();
 	SetTextColor(hdc,nPrevTxtColor);
 	SetBkMode(hdc,nBkMode);
 	SelectObject(hdc,hPrevFont);
@@ -2873,6 +3151,15 @@ void CViewAlarmLimit::drawDataVentilation_CONVENTIONAL(HDC hdc)
 		wsprintf(psz,_T("%d"),getModel()->getDATAHANDLER()->getAVGMessureDataLeak());
 		DrawText(hdc,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 
+		//--------------------BPM-------------------------------------
+		rc.top = 280+55;
+		rc.bottom = 315+55;
+		wsprintf(psz,_T("%d"),getModel()->getDATAHANDLER()->getAVGMessureDataBPM());
+		DrawText(hdc,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
+	}
+	else if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_PRESSURE
+		&&	(m_eCurVentMode==VM_SIPPV || m_eCurVentMode==VM_SIMV))
+	{
 		//--------------------BPM-------------------------------------
 		rc.top = 280+55;
 		rc.bottom = 315+55;
@@ -3593,8 +3880,6 @@ void CViewAlarmLimit::showALimitButtons()
 	}
 	else //if (m_eCurALimitNumeric==ALIMITNUM_VENTILATION)
 	{
-		
-
 		//-------------------------------------------------------------
 		//Button------MV---------------------------------
 		if(m_eCurVentMode!=VM_THERAPIE && m_eCurVentMode!=VM_NCPAP && m_eCurVentMode!=VM_DUOPAP && getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
@@ -3664,11 +3949,13 @@ void CViewAlarmLimit::showALimitButtons()
 			{
 				m_pcAlarmLimit_BPM->ShowWindow(SW_SHOW);
 			}
-
-			/*if(m_pcAlarmLimit_Leak)
+		}
+		else if(m_eCurVentMode!=VM_THERAPIE && m_eCurVentMode!=VM_NCPAP && m_eCurVentMode!=VM_DUOPAP && m_eCurVentMode!=VM_HFO && getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_PRESSURE)
+		{
+			if(m_pcAlarmLimit_BPM)
 			{
-				m_pcAlarmLimit_Leak->ShowWindow(SW_SHOW);
-			}*/
+				m_pcAlarmLimit_BPM->ShowWindow(SW_SHOW);
+			}
 		}
 		
 		if(m_eCurVentMode==VM_NCPAP || m_eCurVentMode==VM_DUOPAP)//rku,PRETRIGGER
@@ -3681,12 +3968,20 @@ void CViewAlarmLimit::showALimitButtons()
 				{
 					m_pcAlarmLimit_Apnoe->ShowWindow(SW_SHOW);
 				}
+				if(m_pcAlarmLimit_BPM)
+				{
+					m_pcAlarmLimit_BPM->ShowWindow(SW_SHOW);
+				}
 			}
 			else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
 			{
 				if(m_pcAlarmLimit_Apnoe)
 				{
 					m_pcAlarmLimit_Apnoe->ShowWindow(SW_SHOW);
+				}
+				if(m_pcAlarmLimit_BPM)
+				{
+					m_pcAlarmLimit_BPM->ShowWindow(SW_SHOW);
 				}
 			}
 		}

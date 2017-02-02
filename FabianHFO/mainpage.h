@@ -7,6 +7,14 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50111 Version 5.0.1.11
+ * @date 2017-02-02
+ * @verbatim
+	- MAINBOARD 2.2 and 3.3 included in HWconfig.ini
+	- Frequency alarm setting always available  in SIPPV, SIMV and CPAP modes
+	- Frequency alarm setting available in DUOPAP and NCPAP modes when the Trigger/sensitivity is turned on
+ @endverbatim
+ *
  * @subsection ver50110 Version 5.0.1.10
  * @date 2017-02-01
  * @verbatim
