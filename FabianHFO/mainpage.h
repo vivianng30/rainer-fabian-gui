@@ -12,6 +12,7 @@
  * @verbatim
 	- new ConfigVersion=3005
 	- new leak compensation settings: disabled, low, middle, high
+	- leak compensation written to log file
  @endverbatim
  *
  * @subsection ver50112 Version 5.0.1.12

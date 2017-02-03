@@ -558,6 +558,7 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	//writeSerialBuiltInToLog();
 	writeConfigVersionToLog();
 	writeBIASFlowStateToLog();
+	writeLEAKCOMPENSATIONToLog();
 
 	startThreads();
 
@@ -605,7 +606,33 @@ void CMVModel::writeVentRangeToLog()
 	else
 		theApp.getLog()->WriteLine(_T("### PEDIATRIC MODE"));
 }
-	
+void CMVModel::writeLEAKCOMPENSATIONToLog()
+{
+	eLeakCompensation eLeakCompOff=getCONFIG()->getLeakCompOff();
+	switch(eLeakCompOff)
+	{
+	case LC_OFF:
+		{
+			theApp.getLog()->WriteLine(_T("### LeakCompensatino disabled"));
+		}
+		break;
+	case LC_LOW:
+		{
+			theApp.getLog()->WriteLine(_T("### LeakCompensation low"));
+		}
+		break;
+	case LC_MIDDLE:
+		{
+			theApp.getLog()->WriteLine(_T("### LeakCompensation middle"));
+		}
+		break;
+	case LC_HIGH:
+		{
+			theApp.getLog()->WriteLine(_T("### LeakCompensation high"));
+		}
+		break;
+	}
+}	
 void CMVModel::writeBIASFlowStateToLog()
 {
 	if(getCONFIG()->isBiasFlowActive())

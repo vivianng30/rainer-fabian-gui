@@ -385,6 +385,9 @@ public:
 	bool isInbiolabInitialized();*/
 
 	void isMaintenanceNeeded();
+
+	void writeLEAKCOMPENSATIONToLog();
+
 protected:
 	void checkUniqueID();
 	void setNetworkAddressAsUniqueID();

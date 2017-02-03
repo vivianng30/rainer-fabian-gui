@@ -5906,6 +5906,7 @@ void CConfiguration::setLeakCompOff(eLeakCompensation leakComp)
 	getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8, (int)m_eLeakCompOff);
 
 	getModel()->Send_MODE_OPTION2(true,true);
+	getModel()->writeLEAKCOMPENSATIONToLog();
 }
 eLeakCompensation CConfiguration::getLeakCompOff()
 {
