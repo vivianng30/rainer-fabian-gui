@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50112 Version 5.0.1.12
+ * @date 2017-02-03
+ * @verbatim
+	- new language menu icon
+ @endverbatim
+ *
  * @subsection ver50111 Version 5.0.1.11
  * @date 2017-02-02
  * @verbatim
