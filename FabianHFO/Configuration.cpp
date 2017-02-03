@@ -17,7 +17,7 @@ CConfiguration::CConfiguration()
 	m_bSpO2ConfigInProgress=false;
 
 	m_wOldConfigVersion=0;
-	m_iConfigVersion=3004;
+	m_iConfigVersion=3005;
 	m_iParaDataHFFlow=0;
 	m_iLanguageID=0;
 	//m_wHFamp=0;
@@ -355,7 +355,8 @@ CConfiguration::CConfiguration()
 	m_iAlarmlimitPEEPminNCPAP=0;
 	m_iAlarmlimitStatePEEPminNCPAP=0;
 
-	m_bLeakCompOff=FALSE;
+	m_eLeakCompOff=LC_MIDDLE;
+	
 	m_dtNextServiceDate.SetStatus(COleDateTime::null);
 }
 
@@ -405,7 +406,7 @@ void CConfiguration::Init()
 {
 	m_pModel=NULL;
 
-	m_iConfigVersion=3004;
+	m_iConfigVersion=3005;
 	m_iParaDataHFFlow=0;
 	m_iLanguageID=0;
 	m_iFOTventDelaytime=0;
@@ -744,7 +745,8 @@ void CConfiguration::Init()
 	m_iAlarmlimitPEEPminNCPAP=0;
 	m_iAlarmlimitStatePEEPminNCPAP=0;
 
-	m_bLeakCompOff=FALSE;
+	m_eLeakCompOff=LC_MIDDLE;
+	
 	m_dtNextServiceDate.SetStatus(COleDateTime::null);
 
 	if(theConfig)
@@ -3695,11 +3697,11 @@ void CConfiguration::LoadSettings()
 		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_HFO_8,m_iCurNumericBlock_HFO);
 	}
 
-	m_bLeakCompOff=(BOOL)getModel()->getI2C()->ReadConfigByte(LEAKCOMPENSATIONOFF_8);
-	if(m_bLeakCompOff<FALSE || m_bLeakCompOff>TRUE)
+	m_eLeakCompOff=(eLeakCompensation)getModel()->getI2C()->ReadConfigByte(LEAKCOMPENSATIONOFF_8);
+	if(m_eLeakCompOff<LC_OFF || m_eLeakCompOff>LC_HIGH)
 	{
-		m_bLeakCompOff=FALSE;
-		getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8,FALSE);
+		m_eLeakCompOff=LC_MIDDLE;
+		getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8,(int)m_eLeakCompOff);
 	}
 
 	WORD iServiceYear=getModel()->getI2C()->ReadConfigWord(SERVICE_YEAR_16);
@@ -5898,19 +5900,16 @@ BOOL CConfiguration::isPpsvAsDeltaPEEPValue()
  *
  * @param	bState	true to state.
  **************************************************************************************************/
-void CConfiguration::setLeakCompOff(BOOL bState)
+void CConfiguration::setLeakCompOff(eLeakCompensation leakComp)
 {
-	m_bLeakCompOff=bState;
-	if (bState)
-		getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8, TRUE);
-	else
-		getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8, FALSE);
+	m_eLeakCompOff=leakComp;
+	getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8, (int)m_eLeakCompOff);
 
 	getModel()->Send_MODE_OPTION2(true,true);
 }
-BOOL CConfiguration::isLeakCompOff()
+eLeakCompensation CConfiguration::getLeakCompOff()
 {
-	return m_bLeakCompOff;
+	return m_eLeakCompOff;
 }
 // **************************************************************************
 // 
@@ -9387,6 +9386,9 @@ void CConfiguration::Serialize(CArchive& ar)
 		ar<<(int)m_eTriggerTypeCONV;
 		ar<<(int)m_eTriggerTypeNMODE;
 		ar<<m_iParaDataTriggerNMODE;
+
+		//##################### m_iConfigVersion 3005
+		ar<<(int)m_eLeakCompOff;
 	}
 	else
 	{
@@ -10022,7 +10024,14 @@ void CConfiguration::Serialize(CArchive& ar)
 
 		}
 
-
+		//##################### m_iConfigVersion 3005
+		if(iConfigVersion>=3005)
+		{
+			BYTE eLeakCompOff=0;
+			ar>>eLeakCompOff;
+			m_eLeakCompOff=(eLeakCompensation)eLeakCompOff;
+			getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8, (int)m_eLeakCompOff);
+		}
 	}
 }
 

@@ -110,7 +110,7 @@ private:
 	int m_iManBreathTime;
 	UINT m_iPatientAlarmDelay;
 	BOOL m_bPpsvAsDeltaPEEPValue;
-	BOOL m_bLeakCompOff;
+	eLeakCompensation m_eLeakComp;
 	//BYTE m_byFlushTime;
 	bool m_bHFOManBreathEnabled;
 	//bool m_bVolumeTrigger;

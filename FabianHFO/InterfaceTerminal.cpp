@@ -1844,9 +1844,35 @@ void CInterfaceTerminal::sendModeOption2()
 	{
 		wMode=getModel()->setBitOfWord(wMode, MODOPT2_NEBULIZER_BIT);
 	}*/
-	if(getModel()->getCONFIG()->isLeakCompOff())
+	/*if(getModel()->getCONFIG()->isLeakCompOff())
 	{
 		wMode=getModel()->setBitOfWord(wMode, MODOPT2_LEAKCOMPENSATION_BIT);
+	}*/
+
+	eLeakCompensation eLeakCompOff=getModel()->getCONFIG()->getLeakCompOff();
+	switch(eLeakCompOff)
+	{
+	case LC_OFF:
+		{
+			//
+		}
+		break;
+	case LC_LOW:
+		{
+			wMode=getModel()->setBitOfWord(wMode, MODOPT2_LEAKCOMPENSATION1_BIT);
+		}
+		break;
+	case LC_MIDDLE:
+		{
+			wMode=getModel()->setBitOfWord(wMode, MODOPT2_LEAKCOMPENSATION2_BIT);
+		}
+		break;
+	case LC_HIGH:
+		{
+			wMode=getModel()->setBitOfWord(wMode, MODOPT2_LEAKCOMPENSATION1_BIT);
+			wMode=getModel()->setBitOfWord(wMode, MODOPT2_LEAKCOMPENSATION2_BIT);
+		}
+		break;
 	}
 
 	sendData_SHORT(TERM_MODE_OPTION2, wMode);

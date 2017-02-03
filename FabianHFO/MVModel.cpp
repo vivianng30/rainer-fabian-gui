@@ -107,7 +107,7 @@ CMVModel::CMVModel(void)
 	m_szBuildVersion = _T("9.0.0.0");
 #else
 	m_szVersion = _T("5.0.1");
-	m_szBuildVersion = _T("5.0.1.12");
+	m_szBuildVersion = _T("5.0.1.13");
 #endif
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO"),true);
@@ -5343,10 +5343,30 @@ WORD CMVModel::Send_MODE_OPTION2(bool bSPI,bool bSerial)
 		
 	}*/
 
-	if(getCONFIG()->isLeakCompOff())
+	eLeakCompensation eLeakCompOff=getCONFIG()->getLeakCompOff();
+	switch(eLeakCompOff)
 	{
-		//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 isLeakCompOff\r\n")));
-		wMode=setBitOfWord(wMode, MODOPT2_LEAKCOMPENSATION_BIT);
+	case LC_OFF:
+		{
+			//
+		}
+		break;
+	case LC_LOW:
+		{
+			wMode=setBitOfWord(wMode, MODOPT2_LEAKCOMPENSATION1_BIT);
+		}
+		break;
+	case LC_MIDDLE:
+		{
+			wMode=setBitOfWord(wMode, MODOPT2_LEAKCOMPENSATION2_BIT);
+		}
+		break;
+	case LC_HIGH:
+		{
+			wMode=setBitOfWord(wMode, MODOPT2_LEAKCOMPENSATION1_BIT);
+			wMode=setBitOfWord(wMode, MODOPT2_LEAKCOMPENSATION2_BIT);
+		}
+		break;
 	}
 
 	if(getVMODEHANDLER()->activeModeIsHFO())

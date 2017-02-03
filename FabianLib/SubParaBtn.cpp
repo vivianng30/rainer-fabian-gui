@@ -1334,20 +1334,34 @@ void CSubParaBtn::DrawSUBPARA_LEAKCOMP(int nState)
 
 	DrawText(m_hDC,szText,-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
 
-	if(getModel()->getCONFIG()->isLeakCompOff())
+	eLeakCompensation eLeakCompOff=getModel()->getCONFIG()->getLeakCompOff();
+	switch(eLeakCompOff)
 	{
-		wsprintf(psz,getModel()->GetLanguageString(IDS_TXT_OFF));
-		/*if(m_pcWarning_Up)
-			m_pcWarning_Up->Draw(m_hDC,65,m_rcClient.top+5);*/
-		if(m_pcWarning_Up)
-			m_pcWarning_Up->Draw(m_hDC,65,m_rcClient.bottom-20);
-	}
-	else
-	{
-		wsprintf(psz,getModel()->GetLanguageString(IDS_TXT_ON));
+	case LC_OFF:
+		{
+			wsprintf(psz,getModel()->GetLanguageString(IDS_TXT_OFF));
+			if(m_pcWarning_Up)
+				m_pcWarning_Up->Draw(m_hDC,65,m_rcClient.bottom-20);
+		}
+		break;
+	case LC_LOW:
+		{
+			wsprintf(psz,getModel()->GetLanguageString(IDS_TXT_SENS_LOW));
+		}
+		break;
+	case LC_MIDDLE:
+		{
+			wsprintf(psz,getModel()->GetLanguageString(IDS_TXT_SENS_MID));
+		}
+		break;
+	case LC_HIGH:
+		{
+			wsprintf(psz,getModel()->GetLanguageString(IDS_TXT_SENS_HIGH));
+		}
+		break;
 	}
 
-	SelectObject(m_hDC,g_hf14AcuBold);
+	SelectObject(m_hDC,g_hf10AcuBold);
 
 	rcSubBtn.top = m_rcClient.top+9;
 	DrawText(m_hDC,psz,-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);

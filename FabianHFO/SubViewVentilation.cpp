@@ -91,7 +91,7 @@ CSubViewVentilation::CSubViewVentilation()
 	m_bHFOManBreathEnabled=getModel()->getCONFIG()->IsHFOManBreathEnabled();
 	m_iPatientAlarmDelay=getModel()->getCONFIG()->getCurPatientAlarmDelay();
 	m_bPpsvAsDeltaPEEPValue=getModel()->getCONFIG()->isPpsvAsDeltaPEEPValue();
-	m_bLeakCompOff=getModel()->getCONFIG()->isLeakCompOff();
+	m_eLeakComp=getModel()->getCONFIG()->getLeakCompOff();
 
 	m_kUp					= VK_UP;//up dw revers
 	m_kDown					= VK_DOWN;
@@ -341,13 +341,36 @@ BOOL CSubViewVentilation::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCre
 
 		m_pcLeakComp->SetText(getModel()->GetLanguageString(IDS_TXT_LEAKCOMP)+_T(":"));
 
-		if(TRUE==m_bLeakCompOff)
+		/*if(TRUE==m_bLeakCompOff)
 		{
 			m_pcLeakComp->SetValueText(getModel()->GetLanguageString(IDS_TXT_DISABLED));
 		}
 		else
 		{
 			m_pcLeakComp->SetValueText(getModel()->GetLanguageString(IDS_TXT_ENABLED));
+		}*/
+		switch(m_eLeakComp)
+		{
+		case LC_OFF:
+			{
+				m_pcLeakComp->SetValueText(getModel()->GetLanguageString(IDS_TXT_OFF));
+			}
+			break;
+		case LC_LOW:
+			{
+				m_pcLeakComp->SetValueText(getModel()->GetLanguageString(IDS_TXT_SENS_LOW));
+			}
+			break;
+		case LC_MIDDLE:
+			{
+				m_pcLeakComp->SetValueText(getModel()->GetLanguageString(IDS_TXT_SENS_MID));
+			}
+			break;
+		case LC_HIGH:
+			{
+				m_pcLeakComp->SetValueText(getModel()->GetLanguageString(IDS_TXT_SENS_HIGH));
+			}
+			break;
 		}
 
 		if(getModel()->getDATAHANDLER()->isNMODELicenseAvailable()==true) //Leak - license dependency

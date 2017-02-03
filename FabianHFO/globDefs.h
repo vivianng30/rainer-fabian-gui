@@ -2439,6 +2439,8 @@ enum eCurveForm {
 #define MODOPT2_TRIGGERFLOW_BIT			6
 #define MODOPT2_TRIGGERPRESSURE_BIT		7
 #define MODOPT2_FOTRUN_BIT				9
+#define MODOPT2_LEAKCOMPENSATION1_BIT	10
+#define MODOPT2_LEAKCOMPENSATION2_BIT	11
 
 #define STARTSTOPVENT_BIT	0
 #define PARAVGARANTY_BIT	1
@@ -3236,6 +3238,12 @@ enum eSPO2averagingtime {
 //	CO2_AVG_20SEC		= 2
 //};
 
+enum eLeakCompensation {
+	LC_OFF,		// 0, 
+	LC_LOW,		// 1
+	LC_MIDDLE,	//2
+	LC_HIGH		//3
+};
 
 //Mode of I:E-Time
 enum eIERelationMode {

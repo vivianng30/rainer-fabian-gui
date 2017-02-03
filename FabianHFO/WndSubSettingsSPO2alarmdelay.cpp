@@ -123,7 +123,6 @@ void CWndSubSettingsSPO2alarmdelay::Draw()
 
 	CBrush cbrFill;
 	cbrFill.CreateSolidBrush(RGB(181,178,181));
-	//cbrFill.CreateSolidBrush(RGB(150,150,150));
 	SelectObject(hdcMem,cbrFill);
 
 	Rectangle(hdcMem, 200, 30, 600, 465);
@@ -135,10 +134,6 @@ void CWndSubSettingsSPO2alarmdelay::Draw()
 	m_pcRegionTopRiCorner->Draw(hdcMem,580,10);
 	m_pcRegionBotLeCorner->Draw(hdcMem,200,465);
 	m_pcRegionBotRiCorner->Draw(hdcMem,580,465);
-
-	//CDC* pDCMem=CDC::FromHandle(hdcMem);
-
-
 
 
 	rc.left = 220;  
@@ -160,8 +155,6 @@ void CWndSubSettingsSPO2alarmdelay::Draw()
 	SelectObject(hdcMem,cbrRound);
 	RoundRect(hdcMem, 210, 70, 590, 272,20,20);
 
-
-
 	MoveToEx(hdcMem, 210, 126, NULL);
 	LineTo(hdcMem, 590, 126);
 
@@ -170,7 +163,6 @@ void CWndSubSettingsSPO2alarmdelay::Draw()
 
 	MoveToEx(hdcMem, 210, 218, NULL);
 	LineTo(hdcMem, 590, 218);
-
 
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,hdcMem,0,0,SRCCOPY);
 

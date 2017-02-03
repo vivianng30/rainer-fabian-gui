@@ -17,7 +17,7 @@ protected:
 	void setLeakCompOff(UINT btn);
 
 protected:
-	BOOL m_bLeakCompOff;
+	eLeakCompensation m_eLeakCompOff;
 
 protected:
 	DECLARE_MESSAGE_MAP()
@@ -27,8 +27,8 @@ public:
 	//afx_msg LRESULT OnMyMessage(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnBnClicked1();
 	afx_msg void OnBnClicked2();
-	//afx_msg void OnBnClicked3();
-	//afx_msg void OnBnClicked4();
+	afx_msg void OnBnClicked3();
+	afx_msg void OnBnClicked4();
 	//afx_msg void OnBnClicked5();
 	//afx_msg void OnBnClicked6();
 	//afx_msg void OnBnClicked7();

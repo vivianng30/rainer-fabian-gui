@@ -7,6 +7,13 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50113 Version 5.0.1.13
+ * @date 2017-02-03
+ * @verbatim
+	- new ConfigVersion=3005
+	- new leak compensation settings: disabled, low, middle, high
+ @endverbatim
+ *
  * @subsection ver50112 Version 5.0.1.12
  * @date 2017-02-03
  * @verbatim
