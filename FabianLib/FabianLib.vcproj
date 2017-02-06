@@ -224,11 +224,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Fabianlib.cpp"
+				RelativePath=".\FabianLib.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Fabianlib.def"
+				RelativePath=".\FabianLib.def"
 				>
 			</File>
 			<File
@@ -390,7 +390,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Fabianlib.h"
+				RelativePath=".\FabianLib.h"
 				>
 			</File>
 			<File
@@ -496,11 +496,11 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath=".\Fabianlib.rc"
+				RelativePath=".\FabianLib.rc"
 				>
 			</File>
 			<File
-				RelativePath=".\res\Fabianlib.rc2"
+				RelativePath=".\res\FabianLib.rc2"
 				>
 			</File>
 		</Filter>

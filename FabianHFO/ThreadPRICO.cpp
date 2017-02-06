@@ -3,7 +3,7 @@
 
 // CThreadPRICO
 #include "stdafx.h"
-#include "Fabianlib.h"
+#include "FabianLib.h"
 #include "ThreadPRICO.h"
 #include "MVModel.h"
 

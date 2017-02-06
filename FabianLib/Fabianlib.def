@@ -1,6 +1,6 @@
-; Fabianlib.def : Declares the module parameters for the DLL.
+; FabianLib.def : Declares the module parameters for the DLL.
 
-LIBRARY      "Fabianlib"
+LIBRARY      "FabianLib"
 
 EXPORTS
     ; Explicit exports can go here

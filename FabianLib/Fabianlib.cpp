@@ -1,8 +1,8 @@
-// Fabianlib.cpp : Defines the initialization routines for the DLL.
+// FabianLib.cpp : Defines the initialization routines for the DLL.
 //
 
 #include "stdafx.h"
-#include "Fabianlib.h"
+#include "FabianLib.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -34,29 +34,29 @@
 //
 
 
-// CFabianlibApp
+// CFabianLibApp
 
-BEGIN_MESSAGE_MAP(CFabianlibApp, CWinApp)
+BEGIN_MESSAGE_MAP(CFabianLibApp, CWinApp)
 END_MESSAGE_MAP()
 
 
-// CFabianlibApp construction
+// CFabianLibApp construction
 
-CFabianlibApp::CFabianlibApp()
+CFabianLibApp::CFabianLibApp()
 {
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
 }
 
 
-// The one and only CFabianlibApp object
+// The one and only CFabianLibApp object
 
-CFabianlibApp theApp;
+CFabianLibApp theApp;
 
 
-// CFabianlibApp initialization
+// CFabianLibApp initialization
 
-BOOL CFabianlibApp::InitInstance()
+BOOL CFabianLibApp::InitInstance()
 {
 	CWinApp::InitInstance();
 

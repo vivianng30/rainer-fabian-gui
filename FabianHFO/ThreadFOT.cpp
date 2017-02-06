@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "FabianHFO.h"
-#include "Fabianlib.h"
+#include "FabianLib.h"
 #include "ThreadFOT.h"
 #include "MVModel.h"
 #include "MVViewHandler.h"
