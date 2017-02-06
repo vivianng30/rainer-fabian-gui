@@ -1,4 +1,4 @@
-// FabianHFOlib.h : main header file for the FabianHFOlib DLL
+// Fabianlib.h : main header file for the Fabianlib DLL
 //
 
 #pragma once
@@ -9,14 +9,14 @@
 
 #include "resource.h"
 
-// CFabianHFOlibApp
-// See FabianHFOlib.cpp for the implementation of this class
+// CFabianlibApp
+// See Fabianlib.cpp for the implementation of this class
 //
 
-class CFabianHFOlibApp : public CWinApp
+class CFabianlibApp : public CWinApp
 {
 public:
-	CFabianHFOlibApp();
+	CFabianlibApp();
 
 // Overrides
 public:

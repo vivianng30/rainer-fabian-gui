@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by FabianHFOlib.RC
+// Used by Fabianlib.RC
 //
 
 // Next default values for new objects
