@@ -1,6 +1,5 @@
 #include "StdAfx.h"
 #include "AlarmLimitList.h"
-#include "FabianHFO.h"
 
 CAlarmLimitList::CAlarmLimitList(void)
 {
@@ -15,30 +14,14 @@ CAlarmLimitList::CAlarmLimitList(void)
 
 CAlarmLimitList::~CAlarmLimitList(void)
 {
-	//EnterCriticalSection(&csAlimitListLock);
-	//CAlarmLimit* pTempClass = NULL;
-	//for(int i=0; i < m_count;i++)//search
-	//{
-	//	pTempClass = &m_bufAlarmLimitArray[i];
-	//	//m_pAlarmArray.RemoveAt( iIndex-1 );
-	//	if(pTempClass)
-	//	{
-	//		delete pTempClass;
-	//	}
-	//	else
-	//	{
-	//	}
-	//}
-	//pTempClass = NULL;
-	//LeaveCriticalSection(&csAlimitListLock);
-
 	DeleteCriticalSection(&csAlimitListLock);
 }
 CAlarmLimitPtr CAlarmLimitList::operator[](int i)
 {
 	if( i < 0 || i >= NUMALARMLIMITS)
 	{
-		theApp.ReportException(_T("EXCEPTION: CAlarmLimitList NUMALARMLIMITS"));
+		AfxMessageBox( _T("EXCEPTION: CAlarmLimitList NUMALARMLIMITS") );
+		//theApp.ReportException(_T("EXCEPTION: CAlarmLimitList NUMALARMLIMITS"));
 		exit(1);
 	}
 	return m_bufAlarmLimitArray[i];
@@ -86,44 +69,8 @@ bool CAlarmLimitList::appendAlarmLimit(CAlarmLimitPtr alarmLimit)
 		LeaveCriticalSection(&csAlimitListLock);
 	}
 	return bResult;
-
-	/*return appendAlarmLimit(	alarmLimit->getAlarmLimit(),
-		alarmLimit->getLimitState(),
-		alarmLimit->getCurValue(),
-		alarmLimit->getMaxValue(),
-		alarmLimit->getMinValue());*/
 }
 
-//bool CAlarmLimitList::appendAlarmLimit(	const eAlarmLimits&			enAlarmLimit,
-//					  eAlarmLimitState eLimitState,
-//					  int iCurValue,
-//					  int iMax,
-//					  int iMin)
-//{
-//	bool bResult=false;
-//	if(searchAlarmLimit(enAlarmLimit)==PSEUDO)//doesn't exist yet
-//	{
-//		EnterCriticalSection(&csAlimitListLock);
-//		if(m_count<NUMALARMS)
-//		{
-//			m_bufAlarmLimitArray[enAlarmLimit].setAlarmLimit(enAlarmLimit);
-//			m_bufAlarmLimitArray[enAlarmLimit].setLimitState(eLimitState);
-//			m_bufAlarmLimitArray[enAlarmLimit].setCurValue(iCurValue);
-//			m_bufAlarmLimitArray[enAlarmLimit].setMaxValue(iMax);
-//			m_bufAlarmLimitArray[enAlarmLimit].setMinValue(iMin);
-//			m_count++;
-//			bResult=true;
-//		}
-//		LeaveCriticalSection(&csAlimitListLock);
-//	}
-//	else
-//	{
-//		CString szError=_T("");
-//		szError.Format(_T("EXCEPTION: CAlarmLimitList append: #%d"),(int)enAlarmLimit);
-//		theApp.ReportException(szError);
-//	}
-//	return bResult;
-//}
 //*****************************************************************
 // Method:    getCurValue
 // FullName:  CAlarmLimitList::getCurValue
@@ -146,7 +93,8 @@ int CAlarmLimitList::getCurValue(eAlarmLimits enAlarmLimit)
 	{
 		CString szError=_T("");
 		szError.Format(_T("EXCEPTION: CAlarmLimitList getCurValue: #%d"),(int)enAlarmLimit);
-		theApp.ReportException(szError);
+		AfxMessageBox(szError);
+		//theApp.ReportException(szError);
 	}
 	return iResult;
 }
@@ -164,7 +112,8 @@ bool CAlarmLimitList::setCurValue(eAlarmLimits enAlarmLimit,int iVal)
 	{
 		CString szError=_T("");
 		szError.Format(_T("EXCEPTION: CAlarmLimitList setCurValue: #%d"),(int)enAlarmLimit);
-		theApp.ReportException(szError);
+		AfxMessageBox(szError);
+		//theApp.ReportException(szError);
 	}
 	return bResult;
 }
@@ -191,7 +140,8 @@ int CAlarmLimitList::getMaxValue(eAlarmLimits enAlarmLimit)
 	{
 		CString szError=_T("");
 		szError.Format(_T("EXCEPTION: CAlarmLimitList getMaxValue: #%d"),(int)enAlarmLimit);
-		theApp.ReportException(szError);
+		AfxMessageBox(szError);
+		//theApp.ReportException(szError);
 	}
 	return iResult;
 }
@@ -209,7 +159,8 @@ bool CAlarmLimitList::setMaxValue(eAlarmLimits enAlarmLimit,int iVal)
 	{
 		CString szError=_T("");
 		szError.Format(_T("EXCEPTION: CAlarmLimitList setMaxValue: #%d"),(int)enAlarmLimit);
-		theApp.ReportException(szError);
+		AfxMessageBox(szError);
+		//theApp.ReportException(szError);
 	}
 	return bResult;
 }
@@ -236,7 +187,8 @@ int CAlarmLimitList::getMinValue(eAlarmLimits enAlarmLimit)
 	{
 		CString szError=_T("");
 		szError.Format(_T("EXCEPTION: CAlarmLimitList getMinValue: #%d"),(int)enAlarmLimit);
-		theApp.ReportException(szError);
+		AfxMessageBox(szError);
+		//theApp.ReportException(szError);
 	}
 	return iResult;
 }
@@ -254,7 +206,8 @@ bool CAlarmLimitList::setMinValue(eAlarmLimits enAlarmLimit,int iVal)
 	{
 		CString szError=_T("");
 		szError.Format(_T("EXCEPTION: CAlarmLimitList setMinValue: #%d"),(int)enAlarmLimit);
-		theApp.ReportException(szError);
+		AfxMessageBox(szError);
+		//theApp.ReportException(szError);
 	}
 	return bResult;
 }
@@ -281,7 +234,8 @@ eAlarmLimitState CAlarmLimitList::getLimitState(eAlarmLimits enAlarmLimit)
 	{
 		CString szError=_T("");
 		szError.Format(_T("EXCEPTION: CAlarmLimitList getLimitState: #%d"),(int)enAlarmLimit);
-		theApp.ReportException(szError);
+		AfxMessageBox(szError);
+		//theApp.ReportException(szError);
 	}
 	return eResult;
 }
@@ -299,7 +253,8 @@ bool CAlarmLimitList::setLimitState(eAlarmLimits enAlarmLimit,eAlarmLimitState e
 	{
 		CString szError=_T("");
 		szError.Format(_T("EXCEPTION: CAlarmLimitList setLimitState: #%d"),(int)enAlarmLimit);
-		theApp.ReportException(szError);
+		AfxMessageBox(szError);
+		//theApp.ReportException(szError);
 	}
 	return bResult;
 }

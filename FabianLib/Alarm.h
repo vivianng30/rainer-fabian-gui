@@ -12,7 +12,6 @@ public:
 		eStateOfAlarm	enAlarmState,
 		UINT iDelaySec);
 	virtual ~CAlarm(void);
-	//CAlarm& operator=( const CAlarm& );
 
 	eAlarmType		getAlarmType();
 	void			setAlarmType(eAlarmType type);
@@ -30,7 +29,7 @@ public:
 	void			setAlarmDelayTimeSec(UINT timeSec);
 
 	void			setTriggerTimestamp();
-	DWORD		getTriggerTimestamp();
+	DWORD			getTriggerTimestamp();
 	void			resetTriggerTimestamp();
 
 	bool isSafeTickCountDelayExpired(DWORD oldTickCount, UINT delay=0);//used for (dwLastTickCount+DELAY<getTickCount64())
@@ -42,7 +41,7 @@ private:
 	eAlarmPrio		m_enPriority;
 	eStateOfAlarm	m_enAlarmState;
 	UINT			m_iAlarmDelayTimeMiliSec;
-	DWORD		m_dwAlarmTriggerTime;
+	DWORD			m_dwAlarmTriggerTime;
 	
 	
 };

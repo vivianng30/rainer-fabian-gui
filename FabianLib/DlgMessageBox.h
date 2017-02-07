@@ -15,46 +15,29 @@ public:
 
 protected:
 	
-
 // Dialog Data
 	enum { IDD = IDD_TLSMESSAGEBOX };
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	
-
-	/*TCHAR m_pszFontName[32];
-	HFONT CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation);*/
-
 	CMVModel *getModel();
 
 	void Draw();
 
 	DECLARE_MESSAGE_MAP()
 public:
-	//INT_PTR DoModal() ;
 	
 private:
 	CMVModel* m_pModel;
-
-	/*CBrush m_brushBACKGND;
-	CBrush m_brushTITLE;*/
-	/*HFONT m_hfont;
-	HFONT m_hfontButton;*/
 
 	CKbrdBtn* m_pcYes;
 	CKbrdBtn* m_pcNo;
 	CKbrdBtn* m_pcOk;
 	CKbrdBtn* m_pcCancel;
-	//CKbrdBtn* m_pcRetry;
 
-
-	
-	//CStatic m_szStaticTextMsg;
 	CStringW m_szTextMsg;
-	CStringW m_szCaption;
-
-	
+	CStringW m_szCaption;	
 
 	UINT m_iFlags;
 	UINT m_iHelpID;
@@ -81,7 +64,5 @@ public:
 	afx_msg void OnBnClickedYes();
 	afx_msg void OnBnClickedNo();
 	CStatic m_pcRessource;
-	//afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg void OnPaint();
-	//CStatic m_szStaticTextCaption;
 };

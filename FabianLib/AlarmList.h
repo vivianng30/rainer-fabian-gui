@@ -23,11 +23,4 @@ public:
 	int searchAlarm(eAlarm enAlarm);
 
 	bool appendAlarm( CAlarmPtr alarm);
-
-protected:
-	/*bool appendAlarm(	const eAlarm&			enAlarm,
-						const eAlarmType&		enType,
-						const eAlarmPrio&		enPriority,
-						eStateOfAlarm	enAlarmState,
-						UINT				iDelaySec);*/
 };

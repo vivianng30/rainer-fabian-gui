@@ -3882,18 +3882,6 @@ typedef struct tagfVALUE
 #define IDS_OLDTRD_FOLDER_SPO2PR _T("TrendOld\\SPO2PR\\")
 
 
-//typedef signed long       MIMDWORD;
-//typedef signed char       MIMBYTE;
-//typedef signed short      MIMWORD;
-//
-//#define MIMMAKEWORD(a, b)      ((MIMWORD)(((MIMBYTE)(a)) | ((MIMWORD)((MIMBYTE)(b))) << 8))
-//#define MIMLOWORD(l)           ((MIMWORD)(l))
-//#define MIMHIWORD(l)           ((MIMWORD)(((MIMDWORD)(l) >> 16) & 0xFFFF))
-//#define MIMLOBYTE(w)           ((MIMBYTE)(w))
-//#define MIMHIBYTE(w)           ((MIMBYTE)(((MIMWORD)(w) >> 8) & 0xFF))
-
-
-
 //Help IDs
 #define HLP_0001	1
 #define HLP_0002	2
@@ -3910,7 +3898,6 @@ typedef struct tagfVALUE
 #define MAX_NUMERICWND				8
 #define MAX_NUMERICVALUES			34
 
-//#define MAX_NUMERICBLOCKSINI		21	
 #define MAX_NUMERICMODE				7	
 #define MAX_NUMERICMODEBLOCK		3
 

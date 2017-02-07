@@ -2,7 +2,6 @@
 //
 
 #include "stdafx.h"
-//#include "../FabianHFO.h"
 #include "AlarmBtn.h"
 #include "globDefs.h"
 
@@ -87,12 +86,12 @@ void CAlarmBtn::SetText(TCHAR* pszTextTop,TCHAR* pszTextBottom,int nNbr,bool bRe
 		UpdateWindow();
 	}
 }
-//void CAlarmBtn::RefreshText(TCHAR* pszTextTop,TCHAR* pszTextBottom,int nNbr)
-//{
-//	SetText(pszTextTop,pszTextBottom,nNbr);
-//	Invalidate();
-//	UpdateWindow();
-//}
+void CAlarmBtn::RefreshText(TCHAR* pszTextTop,TCHAR* pszTextBottom,int nNbr)
+{
+	SetText(pszTextTop,pszTextBottom,nNbr);
+	Invalidate();
+	UpdateWindow();
+}
 void CAlarmBtn::SetText(TCHAR* pszText, int nNbr,bool bRefresh) 
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),pszText);
@@ -116,12 +115,12 @@ void CAlarmBtn::SetText(const CStringW& pszTextTop,const CStringW& pszTextBottom
 		UpdateWindow();
 	}
 }
-//void CAlarmBtn::RefreshText(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr)
-//{
-//	SetText(pszTextTop,pszTextBottom,nNbr);
-//	Invalidate();
-//	UpdateWindow();
-//}
+void CAlarmBtn::RefreshText(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr)
+{
+	SetText(pszTextTop,pszTextBottom,nNbr);
+	Invalidate();
+	UpdateWindow();
+}
 void CAlarmBtn::SetText(const CStringW& szText, int nNbr,bool bRefresh) 
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),szText);
@@ -132,18 +131,18 @@ void CAlarmBtn::SetText(const CStringW& szText, int nNbr,bool bRefresh)
 		UpdateWindow();
 	}
 }
-//void CAlarmBtn::RefreshText(CStringW& szText, int nNbr) 
-//{
-//	SetText(szText,nNbr);
-//	Invalidate();
-//	UpdateWindow();
-//} 
-//void CAlarmBtn::RefreshText(TCHAR* pszText, int nNbr) 
-//{
-//	SetText(pszText,nNbr);
-//	Invalidate();
-//	UpdateWindow();
-//} 
+void CAlarmBtn::RefreshText(CStringW& szText, int nNbr) 
+{
+	SetText(szText,nNbr);
+	Invalidate();
+	UpdateWindow();
+} 
+void CAlarmBtn::RefreshText(TCHAR* pszText, int nNbr) 
+{
+	SetText(pszText,nNbr);
+	Invalidate();
+	UpdateWindow();
+} 
 void CAlarmBtn::SetChar(TCHAR t) 
 {
 	m_pszText[0]=t;
@@ -157,7 +156,6 @@ void CAlarmBtn::SetChar(TCHAR t)
 // **************************************************************************
 void CAlarmBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
-	//	Rectangle(lpDrawItemStruct->hDC,0,0,m_rcClient.right,m_rcClient.bottom);
 	if (lpDrawItemStruct->itemState & ODS_SELECTED)
 	{
 		// Button down
@@ -206,8 +204,6 @@ void CAlarmBtn::Draw(int nState/*,TCHAR* psz*/)
 		else if(!(m_btn.dwFormat&DT_CENTER)) // left
 			rc.left+=m_nXOffset;
 
-		
-
 		switch(nState)
 		{
 		case BTN_DW_FOCUS:
@@ -232,8 +228,6 @@ void CAlarmBtn::Draw(int nState/*,TCHAR* psz*/)
 		}
 
 		int nPrevTxtColor=SetTextColor(m_hDC,nTxtColor);
-
-		
 
 		if(m_bTwoLine)
 		{
@@ -298,7 +292,6 @@ void CAlarmBtn::OnLButtonDblClk(UINT nFlags, CPoint point)
 	WORD  po[2]={static_cast<WORD>(point.x),static_cast<WORD>(point.y)};
 	memcpy(&lParam,po,sizeof(DWORD));
 
-	//SendMessage(WM_LBUTTONDOWN,nFlags,lParam);
 	PostMessage(WM_LBUTTONDOWN,nFlags,lParam);
 	CButton::OnLButtonDblClk(nFlags, point);
 }
@@ -314,10 +307,6 @@ void CAlarmBtn::OnLButtonDown(UINT nFlags, CPoint point)
 		CButton::OnLButtonDown(nFlags, point);
 	}
 }
-
-
-
-
 
 void CAlarmBtn::OnLButtonUp(UINT nFlags, CPoint point) 
 {

@@ -527,7 +527,6 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	writeMainboardVersionToLog();
 	writeVentRangeToLog();
 	writeKernelVersionToLog();
-	//writeSerialBuiltInToLog();
 	writeConfigVersionToLog();
 	writeBIASFlowStateToLog();
 	writeLEAKCOMPENSATIONToLog();

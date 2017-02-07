@@ -10,14 +10,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
-//
-// CBitmapSlider v1.5
-//
-// It's free for everywhere - 16/September/2003 - Joon-ho Ryu
-//
-/////////////////////////////////////////////////////////////////////////////
-
 
 CBitmapSlider::CBitmapSlider():
 m_nMax(100),m_nMin(0),m_nPos(0),m_nPage(20),m_nWidth(0),m_nHeight(0),m_nThumbWidth(0),m_nThumbHeight(0),m_nMarginLeft(0),m_nMarginRight(0),m_nMarginTop(0),m_nMarginBottom(0),

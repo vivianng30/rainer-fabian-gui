@@ -132,6 +132,7 @@ public:
 
 	void CheckPRICOalarms();
 	void resetPRICOAutoTurnedOff();
+	void resetPRICOAutoTurneOnFlag();
 	bool isPRICOAutoTurnedOff();
 
 

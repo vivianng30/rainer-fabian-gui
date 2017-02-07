@@ -5867,6 +5867,19 @@ void CAlarmMgmtHandler::CheckPRICOalarms()//rku AUTOPRICO
 				getModel()->getDATAHANDLER()->setPRICOoff();
 			}
 		}
+		else if(isPRICOAutoTurneOn()
+			&&	(actAlarm == AL_Sens_SPO2_MODULE_NOTCONNECTED 
+			||	actAlarm == AL_Sens_SPO2_SENSORFAULTY
+			||	actAlarm == AL_Sens_O2_SENSOR_DEFECT
+			||	actAlarm == AL_Sens_O2_SENSOR_USED
+			||	actAlarm == AL_Sens_O2_NOT_CALIBRATED
+			||	actAlarm == AL_SysAl_P_IN_O2
+			||	actAlarm == AL_SysAl_P_IN_AIR
+			||	actAlarm == AL_SysFail_P_IN_MIXER))
+		{
+			resetPRICOAutoTurneOnFlag();
+		}
+
 
 		if(isPRICOAutoTurnedOff())
 		{
@@ -7010,13 +7023,22 @@ void CAlarmMgmtHandler::setPRICOAutoTurnedOff(bool bAutoTurnOn, eAlarmPrio prioA
 }
 void CAlarmMgmtHandler::resetPRICOAutoTurnedOff()
 {
-	theApp.getLog()->WriteLine(_T("resetPRICOAutoTurnedOff"));
+	//theApp.getLog()->WriteLine(_T("resetPRICOAutoTurnedOff"));
 	DEBUGMSG(TRUE, (TEXT("CAlarmMgmtHandler::resetPRICOAutoTurnedOff()\r\n")));
 	
 	EnterCriticalSection(&csPRICOautoOffState);
 	m_bPRICOAutoTurnedOff=false;
 	m_bPRICOAutoTurnOn=false;
 	m_ePRICOAutoAlarmPriority=AP_NONE;
+	LeaveCriticalSection(&csPRICOautoOffState);
+}
+void CAlarmMgmtHandler::resetPRICOAutoTurneOnFlag()
+{
+	//theApp.getLog()->WriteLine(_T("resetPRICOAutoTurnedOff"));
+	DEBUGMSG(TRUE, (TEXT("CAlarmMgmtHandler::resetPRICOAutoTurnedOff()\r\n")));
+
+	EnterCriticalSection(&csPRICOautoOffState);
+	m_bPRICOAutoTurnOn=false;
 	LeaveCriticalSection(&csPRICOautoOffState);
 }
 bool CAlarmMgmtHandler::isPRICOAutoTurnedOff()

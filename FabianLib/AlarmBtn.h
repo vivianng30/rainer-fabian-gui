@@ -26,13 +26,13 @@ public:
 
 	void SetText(TCHAR* pszText, int nNbr=-1,bool bRefresh=false);
 	void SetText(const CStringW& szText, int nNbr=-1,bool bRefresh=false);
-	//void RefreshText(CStringW& szText, int nNbr=-1);
-	//void RefreshText(TCHAR* pszText, int nNbr=-1);
+	void RefreshText(CStringW& szText, int nNbr=-1);
+	void RefreshText(TCHAR* pszText, int nNbr=-1);
 	void SetChar(TCHAR t);
 	void SetText(TCHAR* pszTextTop,TCHAR* pszTextBottom,int nNbr=-1,bool bRefresh=false);
-	//void RefreshText(TCHAR* pszTextTop,TCHAR* pszTextBottom,int nNbr=-1);
+	void RefreshText(TCHAR* pszTextTop,TCHAR* pszTextBottom,int nNbr=-1);
 	void SetText(const CStringW& pszTextTop,const CStringW& pszTextBottom,int nNbr=-1,bool bRefresh=false);
-	//void RefreshText(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr=-1);
+	void RefreshText(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr=-1);
 
 
 	void SetBitmaps(CBmp*	pcBmpUp,
@@ -41,7 +41,7 @@ public:
 		CBmp*	pcBmpFocus);
 
 protected:
-	void Draw(int nState/*, TCHAR* psz=NULL*/);
+	void Draw(int nState);
 	// Attributes
 private:
 
@@ -64,7 +64,6 @@ private:
 	bool m_bTwoLine;
 	bool m_bLMouseButtonDown;
 
-	//CMVViewHandler* m_pViewHandler;
 	// Operations
 public:
 
