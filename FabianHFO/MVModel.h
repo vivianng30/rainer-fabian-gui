@@ -159,24 +159,6 @@ public:
 	bool isSafeTickCountDelayExpired(DWORD oldTickCount, UINT delay=0);//used for (dwLastTickCount+DELAY<getTickCount64())
 
 	/**
-	* @brief Start/Stop thread for alarm handling.
-	**/
-	/*void StartAlarmThread(void);
-	void StopAlarmThread( void );*/
-
-	/**
-	* @brief Start/Stop thread for flow sensor state.
-	**/
-	/*void StartFlowsensorThread(void);
-	void StopFlowsensorThread( void );*/
-
-	/**
-	* @brief Start/Stop threads for exspiration state.
-	**/
-	/*void StartExspirationThread(void);
-	void StopExspirationThread( void );*/
-
-	/**
 	* @brief Attache/detach to observer.
 	**/
 	void AttachObserver(CModelObserver* pObserver);
@@ -184,29 +166,15 @@ public:
 
 	CStringW GetLanguageString(int nID);
 
-	/*void ChangeViewState(eViewState state,eViewSubState substate);*/
 	void notifyViewStateChanged();
 
 	bool IsSPIDisconnection();
 	bool IsSPI_TUBE_OCCLUSION();
 
-	/*eViewState GetViewState();
-	void SetViewState(eViewState state,eViewSubState substate);
-	eViewSubState GetViewSubState();
-
-	eViewState GetPrevViewState();
-	void SetPrevViewState(eViewState state,eViewSubState substate);
-	eViewSubState GetPrevViewSubState();
-
-	eViewState GetPrevGraphState();
-	void SetPrevGraphState();
-	eViewSubState GetPrevGraphSubState();*/
-
 	void triggerEvent(CMVEvent* pEvent=0,int btnID=0, int iGroupId=0);
 
 	bool ParseAlarmStateBytes(int iAlarmState);
 	int ParseFlowsensorAlarmStateBytes(int iState);
-	//bool canChangeViewStateAlarmDependend();
 
 	CStringW GetMainVersion();
 	CStringW GetBuildVersion();
@@ -220,7 +188,6 @@ public:
 	void DeleteO2calFlag();
 	bool IsFlowsensorFlag();
 	void DeleteFlowsensorFlag();
-
 	
 	bool GetVlimittedFlag();
 	eVolumeGuarantyAlarm getVGarantyAlarmFlag();
@@ -232,30 +199,13 @@ public:
 	eRunState GetVentRunState();
 	void SetVentRunState(eRunState state);
 
-	/*void SetReinitSERIALFlag(bool state);
-	bool IsReinitSERIALFlag();*/
 	bool reinitSERIAL();
 	void setSERIALavailable(bool state);
 	bool isSERIALavailable();
 
 	//newSPI
-	/*void SetCheckSPIavailability(bool state);
-	bool CheckSPIavailability();*/
 	void setSPIavailability(bool state);
 	bool isSPIavailabel();
-
-	/*BOOL ReinitI2C();
-	bool SetI2Cerror(BYTE iAdresse);
-	void ResetI2Cerror();
-
-	void SetI2C_FRAMavailability(BOOL state);
-	BOOL IsI2C_FRAMavailability();
-
-	void SetI2C_ACCUavailability(BOOL state);
-	BOOL IsI2C_ACCUavailability();
-
-	void SetI2C_MCPavailability(BOOL state);
-	BOOL IsI2C_MCPavailability();*/
 
 	void SetDIOavailability(bool state);
 	bool IsDIOavailability();
@@ -300,17 +250,6 @@ public:
 
 	void Quit();
 
-	//void SetIPPV();
-	void SetSIPPV();
-	void SetSIMV();
-	void SetSIMVPSV();
-	void SetPSV();
-	void SetHFO();
-	void SetCPAP();
-	void SetNCPAP();
-	void SetDUOPAP();
-	void SetTHERAPIE();
-
 	void EnablePatAlarmO2dependend();
 	void DisablePatAlarmO2dependend();
 	bool IsPatAlarmO2dependendEnabled();
@@ -334,8 +273,8 @@ public:
 	void Send_PARA_RISETIME(int iVal, bool bSerial, bool bSPI);
 	void Send_PARA_PEEP(int iVal, bool bSerial, bool bSPI);
 	void Send_PARA_P_PSV(int iVal, bool bSerial, bool bSPI);
-	void Send_PARA_PINSP(int iVal, bool bSerial, bool bSPI);//newVG
-	void Send_PARA_PMAXVG(int iVal, bool bSerial, bool bSPI);//newVG
+	void Send_PARA_PINSP(int iVal, bool bSerial, bool bSPI);
+	void Send_PARA_PMAXVG(int iVal, bool bSerial, bool bSPI);
 	void Send_PARA_OXY_RATIO(SHORT iVal, bool bSerial, bool bSPI);
 	void Send_PARA_INSP_TIME(int iVal, bool bSerial, bool bSPI);
 	void Send_PARA_INSP_FLOW(int iVal, bool bSerial, bool bSPI);
@@ -366,7 +305,6 @@ public:
 	void setLoadHospitalSettingsFailed(bool failed);
 	bool SaveHospitalSettings();
 	bool LoadHospitalSettings();
-	//bool WriteHospitalSettingsToUSB();
 
 	void setVentilationRangeChanged(bool bState);
 	bool getVentilationRangeChanged();
@@ -379,10 +317,6 @@ public:
 	void DeinitSPO2module(bool bReinit=false);
 	bool isSPO2running();
 	void logSPO2module();
-
-	/*void InitInbiolabModule();
-	void DeinitInbiolabModule();
-	bool isInbiolabInitialized();*/
 
 	void isMaintenanceNeeded();
 
@@ -424,15 +358,9 @@ protected:
 
 	void ChangeLanguage();
 
-	
-
 	int _httoi(const TCHAR *value);
 
 private:
-
-	// Added wrapper for GetTickCount handling values larger than 32 bits
-	
-	//static CRITICAL_SECTION m_csI2C;
 	static CRITICAL_SECTION m_csObservers;
 	static CRITICAL_SECTION m_csSerial;
 	static CRITICAL_SECTION	m_csLangString;
@@ -466,46 +394,35 @@ private:
 	static CInterfaceI2C *I2C;
 	static CInterfaceCO2 *ETCO2;
 	static CInterfaceSPO2 *SPO2;
-
 	
-	//rkuINITIF //static CInterfaceCOMport *INBIOLAB;
+	static CList <CModelObserver*, CModelObserver*> m_ObserverList;
+
+	eVentMode m_eVentModePrevFOT;
+	eVolumeGuarantyAlarm m_eVGaranty;
+	eRunState m_eVentRunState;
 
 	CStringA m_szUniqueID;
-
 	CStringW m_szFontName;
-	WORD m_wLanguageID;
-
-	eRunState m_eVentRunState;
 	CStringW m_szVersion;
 	CStringW m_szBuildVersion;
 
 	int m_iCountDownAlarmSilent;
+	int m_iOldPPSV;
+
+	DWORD m_dwLastVolGarAlarmSound;
+	WORD m_wLanguageID;
+	
 	bool m_bMANBREATHrunning;
 	bool m_bO2FlushActive;
 	bool m_bSERIALavailability;
 	bool m_bSPIavailability;
-	//bool m_bCheckSPIavailability;
 	bool m_bDIOavailability;
 	bool m_bPIFavailability;
 	bool m_bAcuLinkAvailability;
 	bool m_bVlimitted;
 	bool m_bCalibrationViewActive;
-	
 	bool m_bLoadHospitalSettingsFailed;
-
-	int m_iOldPPSV;
-
 	bool m_bActiveAlarmDelay;
-
-	eVolumeGuarantyAlarm m_eVGaranty;
-
-	static CList <CModelObserver*, CModelObserver*> m_ObserverList;
-
-	eVentMode m_eVentModePrevFOT;
-	
-
-	DWORD m_dwLastVolGarAlarmSound;
-
 	bool m_bAutoResetFromPreset;
 	bool m_bSPIDisconnection;
 	bool m_bSPI_TUBE_OCCLUSION;
@@ -513,23 +430,12 @@ private:
 	bool m_bInstaller;
 	bool m_bExit;
 	bool m_bPatAlarmO2dependendEnabled;
-	//bool m_bMainthreadPending;
-	bool m_bVideoRunning;
 	bool m_bO2calFlag;
 	bool m_bFlowsensor;
 	bool m_bCalculateAlarmlimitRunning;
-	//bool m_bReinitSERIALFlag;
-
-	//bool m_bDIOerror;
-
-	//BYTE m_byTempCO2module;
-	//BYTE m_byTempSpO2module;
-
 	bool m_bSPO2running;
-	//bool m_bETCO2initialized;
-	//bool m_bInbiolabInitialized;
-
+	bool m_bVentilationRangeChanged;
+	bool m_bVideoRunning;
 	bool m_bCO2inprogress;
 
-	bool m_bVentilationRangeChanged;
 };
