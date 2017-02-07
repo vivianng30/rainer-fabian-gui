@@ -10,11 +10,9 @@
 
 
 #define VOLGARANTY_DELAY 2000
-//#define REFRESH_MONITORDATA 1000
 
 CRITICAL_SECTION CMVModel::m_csO2Flush;
 CRITICAL_SECTION CMVModel::m_csSerial;
-//CRITICAL_SECTION CMVModel::m_csI2C;
 CRITICAL_SECTION CMVModel::m_csObservers;
 CRITICAL_SECTION CMVModel::m_csLangString;
 CRITICAL_SECTION CMVModel::m_csTrigger;
@@ -159,7 +157,6 @@ CMVModel::~CMVModel(void)
 	DeleteCriticalSection(&m_csLangString);
 	DeleteCriticalSection(&m_csTrigger);
 	DeleteCriticalSection(&m_csObservers);
-	//DeleteCriticalSection(&m_csI2C);
 	DeleteCriticalSection(&m_csSerial);
 }
 
@@ -190,7 +187,6 @@ CThreadAlarm *CMVModel::getAlarmThread()
 {
 	if(ALARMTHR==NULL)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: ALARMTHR"));
 		ALARMTHR=CThreadAlarm::getInstance();
 	}
 	return ALARMTHR;
@@ -199,7 +195,6 @@ CThreadFlowsensor *CMVModel::getFlowsensorThread()
 {
 	if(FLOWSENSORTHR==NULL)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: FLOWSENSORTHR"));
 		FLOWSENSORTHR=CThreadFlowsensor::getInstance();
 	}
 	return FLOWSENSORTHR;
@@ -208,7 +203,6 @@ CThreadExspiration *CMVModel::getExspirationThread()
 {
 	if(EXSPIRATIONTHR==NULL)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: EXSPIRATIONTHR"));
 		EXSPIRATIONTHR=CThreadExspiration::getInstance();
 	}
 	return EXSPIRATIONTHR;
@@ -238,7 +232,6 @@ CThreadMonitor *CMVModel::getMonitorThread()
 {
 	if(MONITORTHR==NULL)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: MONITORTHR"));
 		MONITORTHR=CThreadMonitor::getInstance();
 	}
 	return MONITORTHR;
@@ -248,7 +241,6 @@ CVentModeHandler *CMVModel::getVMODEHANDLER()
 {
 	if(MODEHANDLER==NULL)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: MODEHANDLER"));
 		MODEHANDLER=CVentModeHandler::getInstance();
 	}
 	return MODEHANDLER;
@@ -257,7 +249,6 @@ CDataHandler *CMVModel::getDATAHANDLER()
 {
 	if(DATAHANDLER==NULL)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: DATAHANDLER"));
 		DATAHANDLER=CDataHandler::getInstance();
 	}
 	return DATAHANDLER;
@@ -267,7 +258,6 @@ CConfiguration *CMVModel::getCONFIG()
 {
 	if(CONFIG==NULL)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: CONFIG"));
 		CONFIG=CConfiguration::GetInstance();
 	}
 	return CONFIG;
@@ -276,7 +266,6 @@ CLanguage *CMVModel::getLANGUAGE()
 { 
 	if(LANGUAGE==NULL)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: LANGUAGE"));
 		LANGUAGE=CLanguage::GetInstance();
 	}
 	return LANGUAGE;
@@ -285,7 +274,6 @@ CInterfaceTerminal *CMVModel::getTERMINAL()
 { 
 	if(TERMINAL==NULL)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: TERMINAL"));
 		TERMINAL=CInterfaceTerminal::GetInstance();
 	}
 	return TERMINAL;
@@ -294,7 +282,6 @@ CInterfaceAcuLink *CMVModel::getAcuLink()
 { 
 	if(ACULINK==NULL)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: ACULINK"));
 		ACULINK=CInterfaceAcuLink::getInstance(getCONFIG()->GetPDMSprotocol());
 	}
 	return ACULINK;
@@ -304,7 +291,6 @@ CInterfaceCO2 *CMVModel::getETCO2()
 	EnterCriticalSection(&m_csETCO2);
 	if(ETCO2==NULL && getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: ETCO2"));
 		ETCO2=CInterfaceCO2::GetInstance(getCONFIG()->GetCO2module());
 	}
 	LeaveCriticalSection(&m_csETCO2);
@@ -316,7 +302,6 @@ CInterfaceSPO2 *CMVModel::getSPO2()
 	EnterCriticalSection(&m_csSPO2);
 	if(SPO2==NULL && getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: SPO2"));
 		SPO2=CInterfaceSPO2::GetInstance(getCONFIG()->GetSPO2module());
 	}
 	LeaveCriticalSection(&m_csSPO2);
@@ -329,7 +314,6 @@ CInterfaceSerial *CMVModel::getSERIAL()
 	EnterCriticalSection(&m_csSerial);
 	if(SERIAL==NULL)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: SERIAL"));
 		SERIAL=CInterfaceSerial::GetInstance();
 	}
 	LeaveCriticalSection(&m_csSerial);
@@ -340,7 +324,6 @@ CInterfaceSPI *CMVModel::getSPI()
 {
 	if(SPI==NULL)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: SERIAL"));
 		SPI=CInterfaceSPI::GetInstance();
 	}
 	return SPI;
@@ -349,7 +332,6 @@ CInterfaceFSBus *CMVModel::getPIF()
 { 
 	if(PIF==NULL)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: PIF"));
 		PIF=CInterfaceFSBus::GetInstance();
 	}
 	return PIF;
@@ -358,27 +340,22 @@ CInterfaceDIO *CMVModel::getDIO()
 { 
 	if(DIO==NULL /*&& !m_bDIOerror*/)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: DIO"));
 		DIO=CInterfaceDIO::GetInstance();
 	}
 	return DIO;
 }
 CInterfaceI2C *CMVModel::getI2C()
 { 
-	//EnterCriticalSection(&m_csI2C);
 	if(I2C==NULL)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: I2C"));
 		I2C=CInterfaceI2C::GetInstance();
 	}
-	//LeaveCriticalSection(&m_csI2C);
 	return I2C;
 }
 CSoundPlayer *CMVModel::getSOUND()
 { 
 	if(SOUND==NULL)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: SOUND"));
 		SOUND=CSoundPlayer::GetInstance();
 	}
 	return SOUND;
@@ -387,7 +364,6 @@ CAlarmMgmtHandler* CMVModel::getALARMHANDLER()
 { 
 	if(ALARMHANDLER==NULL)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: ALARMHANDLER"));
 		ALARMHANDLER=CAlarmMgmtHandler::getInstance();
 	}
 	return ALARMHANDLER;
@@ -415,10 +391,6 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 			int iStoip=0;
 		}	
 	}*/
-	
-
-
-
 
 	GetAdapterInfo();
 	checkUniqueID();
