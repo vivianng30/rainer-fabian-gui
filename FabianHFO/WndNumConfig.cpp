@@ -189,88 +189,287 @@ void CWndNumConfig::createNumericFields(BYTE block)
 	rcLd.right=190;
 	rcLd.top=m_iCurrentNumPositionYaxes;	
 	
+	//NUMERICINI* pbufNumeric=
+
 	switch(block)
 	{
 	case 1:
 		{
-			numType=m_pbufNumeric->VAL1;
-			numSize=m_pbufNumeric->SIZE1;
-			numBlockID=IDC_VIEW_NUM_FIELD1;
+			createNumericField1();
 		}
 		break;
 	case 2:
 		{
-			numType=m_pbufNumeric->VAL2;
-			numSize=m_pbufNumeric->SIZE2;
-			numBlockID=IDC_VIEW_NUM_FIELD2;
+			createNumericField2();
 		}
 		break;
 	case 3:
 		{
-			numType=m_pbufNumeric->VAL3;
-			numSize=m_pbufNumeric->SIZE3;
-			numBlockID=IDC_VIEW_NUM_FIELD3;
+			createNumericField3();
 		}
 		break;
 	case 4:
 		{
-			numType=m_pbufNumeric->VAL4;
-			numSize=m_pbufNumeric->SIZE4;
-			numBlockID=IDC_VIEW_NUM_FIELD4;
+			createNumericField4();
 		}
 		break;
 	case 5:
 		{
-			numType=m_pbufNumeric->VAL5;
-			numSize=m_pbufNumeric->SIZE5;
-			numBlockID=IDC_VIEW_NUM_FIELD5;
+			createNumericField5();
 		}
 		break;
 	case 6:
 		{
-			numType=m_pbufNumeric->VAL6;
-			numSize=m_pbufNumeric->SIZE6;
-			numBlockID=IDC_VIEW_NUM_FIELD6;
+			createNumericField6();
 		}
 		break;
 	case 7:
 		{
-			numType=m_pbufNumeric->VAL7;
-			numSize=m_pbufNumeric->SIZE7;
-			numBlockID=IDC_VIEW_NUM_FIELD7;
+			createNumericField7();
 		}
 		break;
 	case 8:
 		{
-			numType=m_pbufNumeric->VAL8;
-			numSize=m_pbufNumeric->SIZE8;
-			numBlockID=IDC_VIEW_NUM_FIELD8;
+			createNumericField8();
 		}
 		break;
 	}
+}
+SHORT CWndNumConfig::getBottomNumPositionYaxes(eNumericSize numSize)
+{
+	SHORT iBottom=0;
+	switch(numSize)
+	{
+	case NUMERICSIZE_2:
+		{
+			iBottom=m_iCurrentNumPositionYaxes+119+5;
+		}
+		break;
+	case NUMERICSIZE_3:
+		{
+			iBottom=m_iCurrentNumPositionYaxes+181+5;
+		}
+		break;
+	case NUMERICSIZE_1:
+	default:
+		{
+			iBottom=m_iCurrentNumPositionYaxes+57+5;
+		}
+		break;
+	}
+	return iBottom;
+}
+void CWndNumConfig::createNewNumericField(CNumericField *pNumField, eNumericType numType, eNumericSize numSize)
+{
+	EnterCriticalSection(&csDraw);
+	switch(numType)
+	{
+	case NUMT_PPEAK:
+		{
+			pNumField= new CNumericFieldPPEAK(numSize);
+		}
+		break;
+	case NUMT_PMEAN:
+		{
+			pNumField= new CNumericFieldPMEAN(numSize);
+		}
+		break;
+	case NUMT_PEEP:
+		{
+			pNumField= new CNumericFieldPEEP(numSize);
+		}
+		break;
+	case NUMT_PSVTIME:
+		{
+			pNumField= new CNumericFieldPSVTIME(numSize);
+		}
+		break;
+	case NUMT_COMPLIANCE:
+		{
+			pNumField= new CNumericFieldCOMPLIANCE(numSize);
+		}
+		break;
+	case NUMT_C20C:
+		{
+			pNumField= new CNumericFieldC20C(numSize);
+		}
+		break;
+	case NUMT_RESISTANCE:
+		{
+			pNumField= new CNumericFieldRESISTANCE(numSize);
+		}
+		break;
+	case NUMT_MVEXP:
+		{
+			pNumField= new CNumericFieldMVEXP(numSize);
+		}
+		break;
+	case NUMT_SHAREMV:
+		{
+			pNumField= new CNumericFieldSHAREMV(numSize);
+		}
+		break;
+	case NUMT_VTE:
+		{
+			pNumField= new CNumericFieldVTE(numSize);
+		}
+		break;
+	case NUMT_VTEMAND:
+		{
+			pNumField= new CNumericFieldVTEMAND(numSize);
+		}
+		break;
+	case NUMT_VTESPONT:
+		{
+			pNumField= new CNumericFieldVTESPONT(numSize);
+		}
+		break;
+	case NUMT_LEAK:
+		{
+			pNumField= new CNumericFieldLEAK(numSize);
+		}
+		break;
+	case NUMT_FREQ:
+		{
+			pNumField= new CNumericFieldFREQ(numSize);
+		}
+		break;
+	case NUMT_TRIGGER:
+		{
+			pNumField= new CNumericFieldTRIGGER(numSize);
+		}
+		break;
+	case NUMT_VTI:
+		{
+			pNumField= new CNumericFieldVTI(numSize);
+		}
+		break;
+	case NUMT_HFOAMP:
+		{
+			pNumField= new CNumericFieldHFOAMP(numSize);
+		}
+		break;
+	case NUMT_HFOVTE:
+		{
+			pNumField= new CNumericFieldHFOVTE(numSize);
+		}
+		break;
+	case NUMT_DCO2:
+		{
+			pNumField= new CNumericFieldDCO2(numSize);
+		}
+		break;
+	case NUMT_HFOFREQ:
+		{
+			pNumField= new CNumericFieldHFOFREQ(numSize);
+		}
+		break;
+	case NUMT_OXY:
+		{
+			pNumField= new CNumericFieldOXY(numSize);
+		}
+		break;
+	case NUMT_ETCO2:
+		{
+			pNumField= new CNumericFieldETCO2(numSize);
+		}
+		break;
+	case NUMT_DEMANDFLOW:
+		{
+			pNumField= new CNumericFieldDEMANDFLOW(numSize);
+		}
+		break;
+	case NUMT_IFLOW:
+		{
+			pNumField= new CNumericFieldIFLOW(numSize);
+		}
+		break;
+	case NUMT_EFLOW:
+		{
+			pNumField= new CNumericFieldEFLOW(numSize);
+		}
+		break;
+	case NUMT_TAU:
+		{
+			pNumField= new CNumericFieldTAU(numSize);
+		}
+		break;
+	case NUMT_FREQETCO2:
+		{
+			pNumField= new CNumericFieldFREQETCO2(numSize);
+		}
+		break;
+	case NUMT_SPO2:
+		{
+			pNumField= new CNumericFieldSPO2(numSize);
+		}
+		break;
+	case NUMT_SPO2_PI:
+		{
+			pNumField= new CNumericFieldSPO2PI(numSize);
+		}
+		break;
+	case NUMT_SPO2_PR:
+		{
+			pNumField= new CNumericFieldSPO2PULSERATE(numSize);
+		}
+		break;
+	case NUMT_RSBI:
+		{
+			pNumField= new CNumericFieldRSBI(numSize);
+		}
+		break;
+	case NUMT_MECHANIC:
+		{
+			pNumField= new CNumericFieldMECHANIC(numSize);
+		}
+		break;
+	case NUMT_VTE2:
+		{
+			pNumField= new CNumericFieldVTEMANDSPONT(numSize);
+		}
+		break;
+	case NUMT_FICO2:
+		{
+			pNumField= new CNumericFieldFICO2(numSize);
+		}
+		break;
+	case NUMT_VTEKG:
+		{
+			pNumField= new CNumericFieldVTEKG(numSize);
+		}
+		break;
+	case NUMT_INFO_PATAL:
+		{
+			pNumField= new CNumericFieldINFO_PATAL(numSize);
+		}
+		break;
+	case NUMT_INFO_TUBE:
+		{
+			pNumField= new CNumericFieldINFO_TUBE(numSize);
+		}
+		break;
+	}
+	LeaveCriticalSection(&csDraw);
+}
+
+void CWndNumConfig::createNumericField1()
+{
+	bool bCursorField=false;
+	CNumericField* pNumField=NULL;
+	eNumericType numType=m_pbufNumeric->VAL1;
+	eNumericSize numSize=m_pbufNumeric->SIZE1;
+	UINT numBlockID=IDC_VIEW_NUM_FIELD1;
+	RECT rcLd;
+	rcLd.left=0;
+	rcLd.right=190;
+	rcLd.top=m_iCurrentNumPositionYaxes;	
 
 	if(numSize!=NUMERICSIZE_0)
 	{
 		m_iSizeComplete+=(BYTE)numSize;
 
-		switch(numSize)
-		{
-		case NUMERICSIZE_1:
-			{
-				rcLd.bottom=m_iCurrentNumPositionYaxes+57+5;
-			}
-			break;
-		case NUMERICSIZE_2:
-			{
-				rcLd.bottom=m_iCurrentNumPositionYaxes+119+5;
-			}
-			break;
-		case NUMERICSIZE_3:
-			{
-				rcLd.bottom=m_iCurrentNumPositionYaxes+181+5;
-			}
-			break;
-		}
+		rcLd.bottom=getBottomNumPositionYaxes(numSize);
 	}
 
 	if(rcLd.top>=191 && rcLd.top<434)
@@ -282,356 +481,305 @@ void CWndNumConfig::createNumericFields(BYTE block)
 		bCursorField=true;
 	}
 
-	//DEBUGMSG(TRUE, (TEXT("create num: top %d bottom %d\r\n"),rcLd.top,rcLd.bottom));
-
+	createNewNumericField(pNumField, numType, numSize);
 	EnterCriticalSection(&csDraw);
-	switch(numType)
+	if(pNumField!=NULL)
 	{
-		case NUMT_PPEAK:
-			{
-				pNumField= new CNumericFieldPPEAK(numSize);
-				
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_PMEAN:
-			{
-				pNumField= new CNumericFieldPMEAN(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_PEEP:
-			{
-				pNumField= new CNumericFieldPEEP(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_PSVTIME:
-			{
-				pNumField= new CNumericFieldPSVTIME(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_COMPLIANCE:
-			{
-				pNumField= new CNumericFieldCOMPLIANCE(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_C20C:
-			{
-				pNumField= new CNumericFieldC20C(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_RESISTANCE:
-			{
-				pNumField= new CNumericFieldRESISTANCE(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_MVEXP:
-			{
-				pNumField= new CNumericFieldMVEXP(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_SHAREMV:
-			{
-				pNumField= new CNumericFieldSHAREMV(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_VTE:
-			{
-				pNumField= new CNumericFieldVTE(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_VTEMAND:
-			{
-				pNumField= new CNumericFieldVTEMAND(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_VTESPONT:
-			{
-				pNumField= new CNumericFieldVTESPONT(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_LEAK:
-			{
-				pNumField= new CNumericFieldLEAK(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_FREQ:
-			{
-				pNumField= new CNumericFieldFREQ(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_TRIGGER:
-			{
-				pNumField= new CNumericFieldTRIGGER(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_VTI:
-			{
-				pNumField= new CNumericFieldVTI(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_HFOAMP:
-			{
-				pNumField= new CNumericFieldHFOAMP(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_HFOVTE:
-			{
-				pNumField= new CNumericFieldHFOVTE(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_DCO2:
-			{
-				pNumField= new CNumericFieldDCO2(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_HFOFREQ:
-			{
-				pNumField= new CNumericFieldHFOFREQ(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_OXY:
-			{
-				pNumField= new CNumericFieldOXY(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_ETCO2:
-			{
-				pNumField= new CNumericFieldETCO2(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_DEMANDFLOW:
-			{
-				pNumField= new CNumericFieldDEMANDFLOW(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_IFLOW:
-			{
-				pNumField= new CNumericFieldIFLOW(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_EFLOW:
-			{
-				pNumField= new CNumericFieldEFLOW(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_TAU:
-			{
-				pNumField= new CNumericFieldTAU(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_FREQETCO2:
-			{
-				pNumField= new CNumericFieldFREQETCO2(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_SPO2:
-			{
-				pNumField= new CNumericFieldSPO2(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_SPO2_PI:
-			{
-				pNumField= new CNumericFieldSPO2PI(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_SPO2_PR:
-			{
-				pNumField= new CNumericFieldSPO2PULSERATE(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_RSBI:
-			{
-				pNumField= new CNumericFieldRSBI(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_MECHANIC:
-			{
-				pNumField= new CNumericFieldMECHANIC(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_VTE2:
-			{
-				pNumField= new CNumericFieldVTEMANDSPONT(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
-		case NUMT_FICO2:
-			{
-				pNumField= new CNumericFieldFICO2(numSize);
-
-				if(pNumField->Create(this,rcLd,numBlockID))
-				{
-					m_pNumFieldArray.Add(pNumField);
-				}
-			}
-			break;
+		if(pNumField->Create(this,rcLd,numBlockID))
+		{
+			m_pNumFieldArray.Add(pNumField);
+		}
+		pNumField->setCursorField(bCursorField);
 	}
-	pNumField->setCursorField(bCursorField);
 	LeaveCriticalSection(&csDraw);
 	m_iCurrentNumPositionYaxes=(SHORT)rcLd.bottom;
+}
+void CWndNumConfig::createNumericField2()
+{
+	bool bCursorField=false;
+	CNumericField* pNumField=NULL;
+	eNumericType numType=m_pbufNumeric->VAL2;
+	eNumericSize numSize=m_pbufNumeric->SIZE2;
+	UINT numBlockID=IDC_VIEW_NUM_FIELD2;
+	RECT rcLd;
+	rcLd.left=0;
+	rcLd.right=190;
+	rcLd.top=m_iCurrentNumPositionYaxes;	
 
+	if(numSize!=NUMERICSIZE_0)
+	{
+		m_iSizeComplete+=(BYTE)numSize;
+
+		rcLd.bottom=getBottomNumPositionYaxes(numSize);
+	}
+
+	if(rcLd.top>=191 && rcLd.top<434)
+	{
+		bCursorField=true;
+	}
+	else if(rcLd.bottom>=191 && rcLd.bottom<434)
+	{
+		bCursorField=true;
+	}
+
+	createNewNumericField(pNumField, numType, numSize);
+	EnterCriticalSection(&csDraw);
+	if(pNumField!=NULL)
+	{
+		if(pNumField->Create(this,rcLd,numBlockID))
+		{
+			m_pNumFieldArray.Add(pNumField);
+		}
+		pNumField->setCursorField(bCursorField);
+	}
+	LeaveCriticalSection(&csDraw);
+	m_iCurrentNumPositionYaxes=(SHORT)rcLd.bottom;
+}
+void CWndNumConfig::createNumericField3()
+{
+	bool bCursorField=false;
+	CNumericField* pNumField=NULL;
+	eNumericType numType=m_pbufNumeric->VAL3;
+	eNumericSize numSize=m_pbufNumeric->SIZE3;
+	UINT numBlockID=IDC_VIEW_NUM_FIELD3;
+	RECT rcLd;
+	rcLd.left=0;
+	rcLd.right=190;
+	rcLd.top=m_iCurrentNumPositionYaxes;	
+
+	if(numSize!=NUMERICSIZE_0)
+	{
+		m_iSizeComplete+=(BYTE)numSize;
+
+		rcLd.bottom=getBottomNumPositionYaxes(numSize);
+	}
+
+	if(rcLd.top>=191 && rcLd.top<434)
+	{
+		bCursorField=true;
+	}
+	else if(rcLd.bottom>=191 && rcLd.bottom<434)
+	{
+		bCursorField=true;
+	}
+
+	createNewNumericField(pNumField, numType, numSize);
+	EnterCriticalSection(&csDraw);
+	if(pNumField!=NULL)
+	{
+		if(pNumField->Create(this,rcLd,numBlockID))
+		{
+			m_pNumFieldArray.Add(pNumField);
+		}
+		pNumField->setCursorField(bCursorField);
+	}
+	LeaveCriticalSection(&csDraw);
+	m_iCurrentNumPositionYaxes=(SHORT)rcLd.bottom;
+}
+void CWndNumConfig::createNumericField4()
+{
+	bool bCursorField=false;
+	CNumericField* pNumField=NULL;
+	eNumericType numType=m_pbufNumeric->VAL4;
+	eNumericSize numSize=m_pbufNumeric->SIZE4;
+	UINT numBlockID=IDC_VIEW_NUM_FIELD4;
+	RECT rcLd;
+	rcLd.left=0;
+	rcLd.right=190;
+	rcLd.top=m_iCurrentNumPositionYaxes;	
+
+	if(numSize!=NUMERICSIZE_0)
+	{
+		m_iSizeComplete+=(BYTE)numSize;
+
+		rcLd.bottom=getBottomNumPositionYaxes(numSize);
+	}
+
+	if(rcLd.top>=191 && rcLd.top<434)
+	{
+		bCursorField=true;
+	}
+	else if(rcLd.bottom>=191 && rcLd.bottom<434)
+	{
+		bCursorField=true;
+	}
+
+	createNewNumericField(pNumField, numType, numSize);
+	EnterCriticalSection(&csDraw);
+	if(pNumField!=NULL)
+	{
+		if(pNumField->Create(this,rcLd,numBlockID))
+		{
+			m_pNumFieldArray.Add(pNumField);
+		}
+		pNumField->setCursorField(bCursorField);
+	}
+	LeaveCriticalSection(&csDraw);
+	m_iCurrentNumPositionYaxes=(SHORT)rcLd.bottom;
+}
+void CWndNumConfig::createNumericField5()
+{
+	bool bCursorField=false;
+	CNumericField* pNumField=NULL;
+	eNumericType numType=m_pbufNumeric->VAL5;
+	eNumericSize numSize=m_pbufNumeric->SIZE5;
+	UINT numBlockID=IDC_VIEW_NUM_FIELD5;
+	RECT rcLd;
+	rcLd.left=0;
+	rcLd.right=190;
+	rcLd.top=m_iCurrentNumPositionYaxes;	
+
+	if(numSize!=NUMERICSIZE_0)
+	{
+		m_iSizeComplete+=(BYTE)numSize;
+
+		rcLd.bottom=getBottomNumPositionYaxes(numSize);
+	}
+
+	if(rcLd.top>=191 && rcLd.top<434)
+	{
+		bCursorField=true;
+	}
+	else if(rcLd.bottom>=191 && rcLd.bottom<434)
+	{
+		bCursorField=true;
+	}
+
+	createNewNumericField(pNumField, numType, numSize);
+	EnterCriticalSection(&csDraw);
+	if(pNumField!=NULL)
+	{
+		if(pNumField->Create(this,rcLd,numBlockID))
+		{
+			m_pNumFieldArray.Add(pNumField);
+		}
+		pNumField->setCursorField(bCursorField);
+	}
+	LeaveCriticalSection(&csDraw);
+	m_iCurrentNumPositionYaxes=(SHORT)rcLd.bottom;
+}
+void CWndNumConfig::createNumericField6()
+{
+	bool bCursorField=false;
+	CNumericField* pNumField=NULL;
+	eNumericType numType=m_pbufNumeric->VAL6;
+	eNumericSize numSize=m_pbufNumeric->SIZE6;
+	UINT numBlockID=IDC_VIEW_NUM_FIELD6;
+	RECT rcLd;
+	rcLd.left=0;
+	rcLd.right=190;
+	rcLd.top=m_iCurrentNumPositionYaxes;	
+
+	if(numSize!=NUMERICSIZE_0)
+	{
+		m_iSizeComplete+=(BYTE)numSize;
+
+		rcLd.bottom=getBottomNumPositionYaxes(numSize);
+	}
+
+	if(rcLd.top>=191 && rcLd.top<434)
+	{
+		bCursorField=true;
+	}
+	else if(rcLd.bottom>=191 && rcLd.bottom<434)
+	{
+		bCursorField=true;
+	}
+
+	createNewNumericField(pNumField, numType, numSize);
+	EnterCriticalSection(&csDraw);
+	if(pNumField!=NULL)
+	{
+		if(pNumField->Create(this,rcLd,numBlockID))
+		{
+			m_pNumFieldArray.Add(pNumField);
+		}
+		pNumField->setCursorField(bCursorField);
+	}
+	LeaveCriticalSection(&csDraw);
+	m_iCurrentNumPositionYaxes=(SHORT)rcLd.bottom;
+}
+void CWndNumConfig::createNumericField7()
+{
+	bool bCursorField=false;
+	CNumericField* pNumField=NULL;
+	eNumericType numType=m_pbufNumeric->VAL7;
+	eNumericSize numSize=m_pbufNumeric->SIZE7;
+	UINT numBlockID=IDC_VIEW_NUM_FIELD7;
+	RECT rcLd;
+	rcLd.left=0;
+	rcLd.right=190;
+	rcLd.top=m_iCurrentNumPositionYaxes;	
+
+	if(numSize!=NUMERICSIZE_0)
+	{
+		m_iSizeComplete+=(BYTE)numSize;
+
+		rcLd.bottom=getBottomNumPositionYaxes(numSize);
+	}
+
+	if(rcLd.top>=191 && rcLd.top<434)
+	{
+		bCursorField=true;
+	}
+	else if(rcLd.bottom>=191 && rcLd.bottom<434)
+	{
+		bCursorField=true;
+	}
+
+	createNewNumericField(pNumField, numType, numSize);
+	EnterCriticalSection(&csDraw);
+	if(pNumField!=NULL)
+	{
+		if(pNumField->Create(this,rcLd,numBlockID))
+		{
+			m_pNumFieldArray.Add(pNumField);
+		}
+		pNumField->setCursorField(bCursorField);
+	}
+	LeaveCriticalSection(&csDraw);
+	m_iCurrentNumPositionYaxes=(SHORT)rcLd.bottom;
+}
+void CWndNumConfig::createNumericField8()
+{
+	bool bCursorField=false;
+	CNumericField* pNumField=NULL;
+	eNumericType numType=m_pbufNumeric->VAL8;
+	eNumericSize numSize=m_pbufNumeric->SIZE8;
+	UINT numBlockID=IDC_VIEW_NUM_FIELD8;
+	RECT rcLd;
+	rcLd.left=0;
+	rcLd.right=190;
+	rcLd.top=m_iCurrentNumPositionYaxes;	
+
+	if(numSize!=NUMERICSIZE_0)
+	{
+		m_iSizeComplete+=(BYTE)numSize;
+
+		rcLd.bottom=getBottomNumPositionYaxes(numSize);
+	}
+
+	if(rcLd.top>=191 && rcLd.top<434)
+	{
+		bCursorField=true;
+	}
+	else if(rcLd.bottom>=191 && rcLd.bottom<434)
+	{
+		bCursorField=true;
+	}
+
+	createNewNumericField(pNumField, numType, numSize);
+	EnterCriticalSection(&csDraw);
+	if(pNumField!=NULL)
+	{
+		if(pNumField->Create(this,rcLd,numBlockID))
+		{
+			m_pNumFieldArray.Add(pNumField);
+		}
+		pNumField->setCursorField(bCursorField);
+	}
+	LeaveCriticalSection(&csDraw);
+	m_iCurrentNumPositionYaxes=(SHORT)rcLd.bottom;
 }
 // **************************************************************************
 // 

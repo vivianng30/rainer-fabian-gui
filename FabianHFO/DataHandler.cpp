@@ -2904,8 +2904,21 @@ void CDataHandler::readNumericINIvalues(NUMERICINI* pbufNumeric,BYTE iBlock,BYTE
 	{
 	case 1:
 		{
-			pbufNumeric->VAL1=getNumericType(CTlsIniFile::ReadIniStr(szNum, _T("VAL1"), _T("NONE"), NUMERICCONFINI));
-			pbufNumeric->SIZE1=getNumericSize(CTlsIniFile::ReadIniStr(szNum, _T("SIZE1"), _T("0"), NUMERICCONFINI));
+			if(if(pbufNumeric->eNumMode==NUMMODE_THERAPY)
+			{
+				pbufNumeric->VAL1=NUMT_INFO_PATAL;
+				pbufNumeric->SIZE1=NUMERICSIZE_1;
+			}
+			else if(if(pbufNumeric->eNumMode==NUMMODE_NCPAP || pbufNumeric->eNumMode==NUMMODE_DUOPAP)
+			{
+				pbufNumeric->VAL1=NUMT_INFO_TUBE;
+				pbufNumeric->SIZE1=NUMERICSIZE_1;
+			}
+			else
+			{
+				pbufNumeric->VAL1=getNumericType(CTlsIniFile::ReadIniStr(szNum, _T("VAL1"), _T("NONE"), NUMERICCONFINI));
+				pbufNumeric->SIZE1=getNumericSize(CTlsIniFile::ReadIniStr(szNum, _T("SIZE1"), _T("0"), NUMERICCONFINI));
+			}
 		}
 		break;
 	case 2:
@@ -3078,6 +3091,10 @@ eNumericType CDataHandler::getNumericType(CStringW szVal)
 	{
 		return NUMT_RSBI;
 	}
+	else if(szVal==_T("FICO2"))
+	{
+		return NUMT_FICO2;
+	}
 	else if(szVal==_T("MECHANIC"))
 	{
 		return NUMT_MECHANIC;
@@ -3086,9 +3103,17 @@ eNumericType CDataHandler::getNumericType(CStringW szVal)
 	{
 		return NUMT_VTE2;
 	}
-	else if(szVal==_T("FICO2"))
+	else if(szVal==_T("VTEKG"))
 	{
-		return NUMT_FICO2;
+		return NUMT_VTEKG;
+	}
+	else if(szVal==_T("INFO_PATAL"))
+	{
+		return NUMT_INFO_PATAL;
+	}
+	else if(szVal==_T("INFO_TUBE"))
+	{
+		return NUMT_INFO_TUBE;
 	}
 	else
 	{

@@ -3986,12 +3986,14 @@ enum eNumericType {
 	NUMT_RSBI,			//30	ALINK_MSMNT_RSBI, rapid shallow breathing index
 	NUMT_FICO2,			//31	ALINK_MSMNT_FICO2, FiCO2 of CO2 modules
 	NUMT_MECHANIC ,		//32	
-	NUMT_VTE2			//33	VTEMAND + VTESPONT
-	
+	NUMT_VTE2,			//33	VTEMAND + VTESPONT
+	NUMT_VTEKG,			//34
+	NUMT_INFO_PATAL,	//35
+	NUMT_INFO_TUBE		//36
 };
 //ACHTUNG, bei Änderung immer den Buffer CDataHandler::m_pbufMessureAVG und CDataHandler::m_pbufMessureBTB anpassen!!! MAX_NUMERICVALUES
 #define MAX_NUMERICWND				8
-#define MAX_NUMERICVALUES			34
+#define MAX_NUMERICVALUES			37
 
 #define MAX_NUMERICMODE				10	
 #define MAX_NUMERICMODEBLOCK		3

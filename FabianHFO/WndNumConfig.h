@@ -23,6 +23,16 @@ private:
 	bool DrawLimits(CDC* pDC);
 
 	void createNumericFields(BYTE block);
+	void createNumericField1();
+	void createNumericField2();
+	void createNumericField3();
+	void createNumericField4();
+	void createNumericField5();
+	void createNumericField6();
+	void createNumericField7();
+	void createNumericField8();
+	void createNewNumericField(CNumericField *pNumField, eNumericType numType, eNumericSize numSize);
+	SHORT getBottomNumPositionYaxes(eNumericSize numSize);
 
 protected:
 
