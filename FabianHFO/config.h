@@ -877,6 +877,9 @@ enum eLanguage {
 #define NUMBLOCK_PSV_8					0x0034
 #define NUMBLOCK_CPAP_8					0x0035
 #define NUMBLOCK_HFO_8					0x0036
+#define NUMBLOCK_NCPAP_8				0x0037
+#define NUMBLOCK_DUOPAP_8				0x0038
+#define NUMBLOCK_THERAPY_8				0x0039
 
 #define PRICOSPO2LOW_8				0x0040
 #define PRICOSPO2HIGH_8				0x0041

@@ -39,6 +39,9 @@ CConfiguration::CConfiguration()
 	m_iCurNumericBlock_PSV=0;
 	m_iCurNumericBlock_CPAP=0;
 	m_iCurNumericBlock_HFO=0;
+	m_iCurNumericBlock_NCPAP=0;
+	m_iCurNumericBlock_DUOPAP=0;
+	m_iCurNumericBlock_THERAPY=0;
 	
 	m_iEthernetPort=DEFAULT_PORT;
 	m_iPDMSProtocol=ACL_NOPDMS;
@@ -429,6 +432,9 @@ void CConfiguration::Init()
 	m_iCurNumericBlock_PSV=0;
 	m_iCurNumericBlock_CPAP=0;
 	m_iCurNumericBlock_HFO=0;
+	m_iCurNumericBlock_NCPAP=0;
+	m_iCurNumericBlock_DUOPAP=0;
+	m_iCurNumericBlock_THERAPY=0;
 	
 	m_iEthernetPort=DEFAULT_PORT;
 	m_iPDMSProtocol=ACL_NOPDMS;
@@ -3695,6 +3701,27 @@ void CConfiguration::LoadSettings()
 	{
 		m_iCurNumericBlock_HFO=FACTORY_NUMBLOCK;
 		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_HFO_8,m_iCurNumericBlock_HFO);
+	}
+
+	m_iCurNumericBlock_NCPAP=getModel()->getI2C()->ReadConfigByte(NUMBLOCK_NCPAP_8);
+	if(m_iCurNumericBlock_NCPAP<0 || m_iCurNumericBlock_NCPAP>2)
+	{
+		m_iCurNumericBlock_NCPAP=FACTORY_NUMBLOCK;
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_NCPAP_8,m_iCurNumericBlock_NCPAP);
+	}
+
+	m_iCurNumericBlock_DUOPAP=getModel()->getI2C()->ReadConfigByte(NUMBLOCK_DUOPAP_8);
+	if(m_iCurNumericBlock_DUOPAP<0 || m_iCurNumericBlock_DUOPAP>2)
+	{
+		m_iCurNumericBlock_DUOPAP=FACTORY_NUMBLOCK;
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_DUOPAP_8,m_iCurNumericBlock_DUOPAP);
+	}
+
+	m_iCurNumericBlock_THERAPY=getModel()->getI2C()->ReadConfigByte(NUMBLOCK_THERAPY_8);
+	if(m_iCurNumericBlock_THERAPY<0 || m_iCurNumericBlock_THERAPY>2)
+	{
+		m_iCurNumericBlock_THERAPY=FACTORY_NUMBLOCK;
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_THERAPY_8,m_iCurNumericBlock_THERAPY);
 	}
 
 	m_eLeakCompOff=(eLeakCompensation)getModel()->getI2C()->ReadConfigByte(LEAKCOMPENSATIONOFF_8);
@@ -9390,6 +9417,9 @@ void CConfiguration::Serialize(CArchive& ar)
 
 		//##################### m_iConfigVersion 3005
 		ar<<(int)m_eLeakCompOff;
+		ar<<m_iCurNumericBlock_NCPAP;
+		ar<<m_iCurNumericBlock_DUOPAP;
+		ar<<m_iCurNumericBlock_THERAPY;
 	}
 	else
 	{
@@ -10032,6 +10062,15 @@ void CConfiguration::Serialize(CArchive& ar)
 			ar>>eLeakCompOff;
 			m_eLeakCompOff=(eLeakCompensation)eLeakCompOff;
 			getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8, (int)m_eLeakCompOff);
+
+			ar>>m_iCurNumericBlock_NCPAP;
+			setLastNumericNCPAP(m_iCurNumericBlock_NCPAP);
+
+			ar>>m_iCurNumericBlock_DUOPAP;
+			setLastNumericDUOPAP(m_iCurNumericBlock_DUOPAP);
+
+			ar>>m_iCurNumericBlock_THERAPY;
+			setLastNumericTHERAPY(m_iCurNumericBlock_THERAPY);
 		}
 	}
 }
@@ -10305,4 +10344,100 @@ void CConfiguration::setLastNumericHFO(BYTE num)
 	m_iCurNumericBlock_HFO=num;
 
 	getModel()->getI2C()->WriteConfigByte(NUMBLOCK_HFO_8, num);
+}
+
+/**********************************************************************************************//**
+ * @fn	BYTE CConfiguration::getLastNumericNCPAP()
+ *
+ * @brief	Gets the last numeric ncpap.
+ *
+ * @author	Rainer Kuehner
+ * @date	08.02.2017
+ *
+ * @return	The last numeric ncpap.
+ **************************************************************************************************/
+BYTE CConfiguration::getLastNumericNCPAP()
+{
+	return m_iCurNumericBlock_NCPAP;
+}
+
+/**********************************************************************************************//**
+ * @fn	void CConfiguration::setLastNumericNCPAP(BYTE num)
+ *
+ * @brief	Sets last numeric ncpap.
+ *
+ * @author	Rainer Kuehner
+ * @date	08.02.2017
+ *
+ * @param	num	Number of.
+ **************************************************************************************************/
+void CConfiguration::setLastNumericNCPAP(BYTE num)
+{
+	m_iCurNumericBlock_NCPAP=num;
+
+	getModel()->getI2C()->WriteConfigByte(NUMBLOCK_NCPAP_8, num);
+}
+
+/**********************************************************************************************//**
+ * @fn	BYTE CConfiguration::getLastNumericDUOPAP()
+ *
+ * @brief	Gets the last numeric duopap.
+ *
+ * @author	Rainer Kuehner
+ * @date	08.02.2017
+ *
+ * @return	The last numeric duopap.
+ **************************************************************************************************/
+BYTE CConfiguration::getLastNumericDUOPAP()
+{
+	return m_iCurNumericBlock_DUOPAP;
+}
+
+/**********************************************************************************************//**
+ * @fn	void CConfiguration::setLastNumericDUOPAP(BYTE num)
+ *
+ * @brief	Sets last numeric duopap.
+ *
+ * @author	Rainer Kuehner
+ * @date	08.02.2017
+ *
+ * @param	num	Number of.
+ **************************************************************************************************/
+void CConfiguration::setLastNumericDUOPAP(BYTE num)
+{
+	m_iCurNumericBlock_DUOPAP=num;
+
+	getModel()->getI2C()->WriteConfigByte(NUMBLOCK_DUOPAP_8, num);
+}
+
+/**********************************************************************************************//**
+ * @fn	BYTE CConfiguration::getLastNumericTHERAPY()
+ *
+ * @brief	Gets the last numeric therapy.
+ *
+ * @author	Rainer Kuehner
+ * @date	08.02.2017
+ *
+ * @return	The last numeric therapy.
+ **************************************************************************************************/
+BYTE CConfiguration::getLastNumericTHERAPY()
+{
+	return m_iCurNumericBlock_THERAPY;
+}
+
+/**********************************************************************************************//**
+ * @fn	void CConfiguration::setLastNumericTHERAPY(BYTE num)
+ *
+ * @brief	Sets last numeric therapy.
+ *
+ * @author	Rainer Kuehner
+ * @date	08.02.2017
+ *
+ * @param	num	Number of.
+ **************************************************************************************************/
+void CConfiguration::setLastNumericTHERAPY(BYTE num)
+{
+	m_iCurNumericBlock_THERAPY=num;
+
+	getModel()->getI2C()->WriteConfigByte(NUMBLOCK_THERAPY_8, num);
 }

@@ -886,6 +886,12 @@ public:
 	void setLastNumericCPAP(BYTE num);
 	BYTE getLastNumericHFO();
 	void setLastNumericHFO(BYTE num);
+	BYTE getLastNumericNCPAP();
+	void setLastNumericNCPAP(BYTE num);
+	BYTE getLastNumericDUOPAP();
+	void setLastNumericDUOPAP(BYTE num);
+	BYTE getLastNumericTHERAPY();
+	void setLastNumericTHERAPY(BYTE num);
 
 	int getConfigVersion();
 private:
@@ -1184,6 +1190,9 @@ private:
 	BYTE	m_iCurNumericBlock_PSV;
 	BYTE	m_iCurNumericBlock_CPAP;
 	BYTE	m_iCurNumericBlock_HFO;
+	BYTE	m_iCurNumericBlock_NCPAP;
+	BYTE	m_iCurNumericBlock_DUOPAP;
+	BYTE	m_iCurNumericBlock_THERAPY;
 
 	BYTE	m_iParaDataTriggerCONV;
 	BYTE	m_iParaDataTriggerNMODE;

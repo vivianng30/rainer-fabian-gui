@@ -50,7 +50,7 @@ class CViewNumericWnd :public CMVView
 		NUMB_NCPAP			= 7,
 		NUMB_DUOPAP			= 8,
 		NUMB_HFO			= 9,
-		NUMB_THERAPIE		= 10, 
+		NUMB_THERAPY		= 10, 
 		NUMB_FLOWOFF		= 11,
 		NUMB_FLOWOFF_HFO	= 12
 	};
@@ -111,7 +111,7 @@ protected:
 	bool CreateWndNumHFO_DefaultMech();
 	bool CreateWndNumFlowOff();
 	bool CreateWndNumFlowOffHFO();
-	bool CreateWndNumTHERAPIE_Default();
+	bool CreateWndNumTHERAPY_Default();
 	bool CreateWndNumDUOPAP_Default();
 	bool CreateWndNumNCPAP_Default();
 
@@ -133,7 +133,7 @@ protected:
 	void deleteWndNumCPAP_DefaultMech();
 	void deleteWndNumHFO_Default();
 	void deleteWndNumHFO_DefaultMech();
-	void deleteWndNumTHERAPIE_Default();
+	void deleteWndNumTHERAPY_Default();
 	void deleteWndNumDUOPAP_Default();
 	void deleteWndNumNCPAP_Default();
 	
@@ -148,7 +148,7 @@ protected:
 	void deleteWndNumHFO();
 	void deleteWndNumFlowOff();
 	void deleteWndNumFlowOffHFO();
-	void deleteWndNumTHERAPIE();
+	void deleteWndNumTHERAPY();
 	void deleteWndNumDUOPAP();
 	void deleteWndNumNCPAP();
 
@@ -166,7 +166,7 @@ protected:
 	void ShowWndNumHFO();
 	void ShowWndNumFlowOff();
 	void ShowWndNumFlowOffHFO();
-	void ShowWndNumTHERAPIE();
+	void ShowWndNumTHERAPY();
 
 	//void showWndNumConfig();
 
@@ -216,7 +216,7 @@ protected:
 	CWndNumCPAP_Mech* m_pcWndNumCPAPdefaultmech;
 	CWndNumAvNCPAP* m_pcWndNumNCPAPdefault;
 	CWndNumAvDUOPAP* m_pcWndNumDUOPAPdefault;
-	CWndNumAvTHERAPIE* m_pcWndNumTHERAPIEdefault;
+	CWndNumAvTHERAPIE* m_pcWndNumTHERAPYdefault;
 	CWndNumHFO_Av* m_pcWndNumHFOdefault;
 	CWndNumHFO_Mech* m_pcWndNumHFOdefaultmech;
 	CWndNumFlowOff_Av* m_pcWndNumFlowOff;

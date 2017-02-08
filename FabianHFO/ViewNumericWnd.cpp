@@ -8,10 +8,16 @@
 #define COLOR_TXTBTNDW				0x00FFFFFF
 #define COLOR_TXTBTNFC				0x00000000
 
-
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	CViewNumericWnd::CViewNumericWnd(int ViewID)
+ *
+ * @brief	Constructor.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @param	ViewID	Identifier for the view.
+ **************************************************************************************************/
 CViewNumericWnd::CViewNumericWnd(int ViewID):
 CMVView(ViewID)
 {
@@ -24,12 +30,10 @@ CMVView(ViewID)
 	
 	m_iCurrWnd=0;
 
-
 	m_nwa.nX=610;
 	m_nwa.nY=41;
 
 	m_nwa.nCx=190;
-	//m_nwa.nCy=559;
 	m_nwa.nCy=559;
 
 	m_pcWndNumIPPVdefault=NULL;
@@ -42,12 +46,11 @@ CMVView(ViewID)
 	m_pcWndNumCPAPdefaultmech=NULL;
 	m_pcWndNumNCPAPdefault=NULL;
 	m_pcWndNumDUOPAPdefault=NULL;
-	m_pcWndNumTHERAPIEdefault=NULL;
+	m_pcWndNumTHERAPYdefault=NULL;
 	m_pcWndNumHFOdefault=NULL;
 	m_pcWndNumHFOdefaultmech=NULL;
 	m_pcWndNumFlowOff=NULL;
 	m_pcWndNumFlowOffHFO=NULL;
-
 	m_pcWndNumPSVdefault=NULL;
 	m_pcWndNumPSVdefaultmech=NULL;
 	m_pcWndNumSIMVPSVdefault=NULL;
@@ -61,12 +64,16 @@ CMVView(ViewID)
 
 	m_iCurNumericBlock=0;
 	m_iCountNumericBlock=0;
-
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	CViewNumericWnd::~CViewNumericWnd(void)
+ *
+ * @brief	Destructor.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 CViewNumericWnd::~CViewNumericWnd(void)
 {
 	if(m_pcMenuNumeric)
@@ -87,9 +94,16 @@ BEGIN_MESSAGE_MAP(CViewNumericWnd, CMVView)
 	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateView()
+ *
+ * @brief	Creates the view.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::CreateView()
 {
 	RECT rcLd={m_nwa.nX,m_nwa.nY,m_nwa.nX+m_nwa.nCx,m_nwa.nY+m_nwa.nCy};
@@ -104,10 +118,21 @@ bool CViewNumericWnd::CreateView()
 	return true;
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	BOOL CViewNumericWnd::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext)
+ *
+ * @brief	Creates the Window instance that will be represented by this object.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @param [in,out]	pParentWnd	If non-null, the parent window.
+ * @param	rc				  	The rectangle.
+ * @param	nID				  	The identifier.
+ * @param [in,out]	pContext  	If non-null, the context.
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 BOOL CViewNumericWnd::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -139,10 +164,16 @@ BOOL CViewNumericWnd::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateC
 		return 0;
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::Initialize()
+ *
+ * @brief	Initializes this object.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::Initialize()
 {
 	CClientDC dc(this);
@@ -151,11 +182,9 @@ bool CViewNumericWnd::Initialize()
 
 	m_pcNumeric_Up		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_NUMERIC3_UP);
 	m_pcNumeric_Dw		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_NUMERIC3_DW);
-	//m_pcNumeric_Fc		= new CBmp(theApp.m_hInstance,hdc,	IDB_BTN_NUMMENU_FC);
 
 	btn.wID					= IDC_BTN_MENU_NUMERIC;	
 	btn.poPosition.x		= 15;
-	//btn.poPosition.y		= 550;
 	btn.poPosition.y		= 509;
 	btn.pcBmpUp				= m_pcNumeric_Up;
 	btn.pcBmpDown			= m_pcNumeric_Dw;
@@ -165,28 +194,35 @@ bool CViewNumericWnd::Initialize()
 
 	m_pcMenuNumeric=new CPushBtn(btn,COLOR_TXTBTNUP);
 	m_pcMenuNumeric->Create(this,g_hf21AcuBold,0);
-	//m_pcMenuNumeric->SetText(getModel()->GetLanguageString(IDS_BTN_NUMERICS));
 	m_pcMenuNumeric->SetText(_T(""));
 	m_pcMenuNumeric->ShowWindow(SW_HIDE);
 
-	//Open();
 	Show();
 
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::Open()
+ *
+ * @brief	Opens this view.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::Open()
 {
-
 	Show();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::Close()
+ *
+ * @brief	Closes this view.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::Close()
 {
 	deleteWndNumIPPV();
@@ -198,32 +234,48 @@ void CViewNumericWnd::Close()
 	deleteWndNumHFO();
 	deleteWndNumFlowOff();
 	deleteWndNumFlowOffHFO();
-	deleteWndNumTHERAPIE();
+	deleteWndNumTHERAPY();
 	deleteWndNumDUOPAP();
 	deleteWndNumNCPAP();
 	deleteWndNumConfig();
-	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::Show()
+ *
+ * @brief	Shows this view.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::Show()
 {
 	SetNumericBlock(false);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::Hide()
+ *
+ * @brief	Hides this view.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::Hide()
 {
 	HideNumWnd();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateWndNumHFO_Default()
+ *
+ * @brief	Creates numeric window hfo default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::CreateWndNumHFO_Default()
 {
 	if(m_pcWndNumHFOdefault==NULL && m_nwa.nX>-1)
@@ -235,8 +287,6 @@ bool CViewNumericWnd::CreateWndNumHFO_Default()
 		{
 			m_iCurrWnd=IDC_VIEW_NUM_HFO_DEFAULT;
 
-			/*if(AfxGetApp())
-				AfxGetApp()->GetMainWnd()->PostMessage(WM_CALCULATE_AUTOALARMLIMITS);*/
 			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
 			{
 				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
@@ -248,9 +298,16 @@ bool CViewNumericWnd::CreateWndNumHFO_Default()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	ool CViewNumericWnd::CreateWndNumHFO_DefaultMech()
+ *
+ * @brief	Creates numeric window hfo default mech.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	The new window number hfo default mech.
+ *************************************************************************************************/
 bool CViewNumericWnd::CreateWndNumHFO_DefaultMech()
 {
 	if(m_pcWndNumHFOdefaultmech==NULL && m_nwa.nX>-1)
@@ -272,9 +329,16 @@ bool CViewNumericWnd::CreateWndNumHFO_DefaultMech()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateWndNumCPAP_Default()
+ *
+ * @brief	Creates numeric window cpap default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::CreateWndNumCPAP_Default()
 {
 	if(m_pcWndNumCPAPdefault==NULL && m_nwa.nX>-1)
@@ -301,9 +365,16 @@ bool CViewNumericWnd::CreateWndNumCPAP_Default()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateWndNumCPAP_DefaultMech()
+ *
+ * @brief	Creates numeric window cpap default mech.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::CreateWndNumCPAP_DefaultMech()
 {
 	if(m_pcWndNumCPAPdefaultmech==NULL && m_nwa.nX>-1)
@@ -329,9 +400,16 @@ bool CViewNumericWnd::CreateWndNumCPAP_DefaultMech()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateWndNumDUOPAP_Default()
+ *
+ * @brief	Creates numeric window duopap default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::CreateWndNumDUOPAP_Default()
 {
 	if(m_pcWndNumDUOPAPdefault==NULL && m_nwa.nX>-1)
@@ -341,7 +419,7 @@ bool CViewNumericWnd::CreateWndNumDUOPAP_Default()
 
 		if(m_pcWndNumDUOPAPdefault->Create(this,rcLd,IDC_VIEW_NUM_DUOPAP))
 		{
-			m_iCurrWnd=IDC_VIEW_NUM_DUOPAP;
+			m_iCurrWnd=IDC_VIEW_NUM_DUOPAP_DEFAULT;
 
 			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
 			{
@@ -358,10 +436,16 @@ bool CViewNumericWnd::CreateWndNumDUOPAP_Default()
 	return true;
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateWndNumFlowOff()
+ *
+ * @brief	Creates numeric window flow off.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::CreateWndNumFlowOff()
 {
 	if(m_pcWndNumFlowOff==NULL && m_nwa.nX>-1)
@@ -392,9 +476,16 @@ bool CViewNumericWnd::CreateWndNumFlowOff()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateWndNumFlowOffHFO()
+ *
+ * @brief	Creates numeric window flowoff hfo.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::CreateWndNumFlowOffHFO()
 {
 	if(m_pcWndNumFlowOffHFO==NULL && m_nwa.nX>-1)
@@ -421,9 +512,16 @@ bool CViewNumericWnd::CreateWndNumFlowOffHFO()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateWndNumNCPAP_Default()
+ *
+ * @brief	Creates numeric window ncpap default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::CreateWndNumNCPAP_Default()
 {
 	if(m_pcWndNumNCPAPdefault==NULL && m_nwa.nX>-1)
@@ -433,7 +531,7 @@ bool CViewNumericWnd::CreateWndNumNCPAP_Default()
 
 		if(m_pcWndNumNCPAPdefault->Create(this,rcLd,IDC_VIEW_NUM_NCPAP))
 		{
-			m_iCurrWnd=IDC_VIEW_NUM_NCPAP;
+			m_iCurrWnd=IDC_VIEW_NUM_NCPAP_DEFAULT;
 
 			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
 			{
@@ -450,19 +548,26 @@ bool CViewNumericWnd::CreateWndNumNCPAP_Default()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-bool CViewNumericWnd::CreateWndNumTHERAPIE_Default()
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateWndNumTHERAPIE_Default()
+ *
+ * @brief	Creates numeric window therapie default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
+bool CViewNumericWnd::CreateWndNumTHERAPY_Default()
 {
-	if(m_pcWndNumTHERAPIEdefault==NULL && m_nwa.nX>-1)
+	if(m_pcWndNumTHERAPYdefault==NULL && m_nwa.nX>-1)
 	{
-		m_pcWndNumTHERAPIEdefault = new CWndNumAvTHERAPIE();
+		m_pcWndNumTHERAPYdefault = new CWndNumAvTHERAPIE();
 		RECT rcLd={0,0,210,560};
 
-		if(m_pcWndNumTHERAPIEdefault->Create(this,rcLd,IDC_VIEW_NUM_THERAPIE))
+		if(m_pcWndNumTHERAPYdefault->Create(this,rcLd,IDC_VIEW_NUM_THERAPY))
 		{
-			m_iCurrWnd=IDC_VIEW_NUM_THERAPIE;
+			m_iCurrWnd=IDC_VIEW_NUM_THERAPY_DEFAULT;
 
 			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
 			{
@@ -473,16 +578,23 @@ bool CViewNumericWnd::CreateWndNumTHERAPIE_Default()
 				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
 			}
 
-			m_pcWndNumTHERAPIEdefault->DrawData(true,true,true,true,false);
+			m_pcWndNumTHERAPYdefault->DrawData(true,true,true,true,false);
 		}
 	}
 	return true;
 }
 
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateWndNumIPPV_Default()
+ *
+ * @brief	Creates numeric window ippv default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewNumericWnd::CreateWndNumIPPV_Default()
 {
 	if(m_pcWndNumIPPVdefault==NULL && m_nwa.nX>-1)
@@ -513,9 +625,16 @@ bool CViewNumericWnd::CreateWndNumIPPV_Default()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateWndNumIPPV_DefaultMech()
+ *
+ * @brief	Creates numeric window ippv default mech.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::CreateWndNumIPPV_DefaultMech()
 {
 	if(m_pcWndNumIPPVdefaultmech==NULL && m_nwa.nX>-1)
@@ -546,9 +665,16 @@ bool CViewNumericWnd::CreateWndNumIPPV_DefaultMech()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateWndNumSIPPV_Default()
+ *
+ * @brief	Creates numeric window sippv default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::CreateWndNumSIPPV_Default()
 {
 	if(m_pcWndNumSIPPVdefault==NULL && m_nwa.nX>-1)
@@ -579,9 +705,16 @@ bool CViewNumericWnd::CreateWndNumSIPPV_Default()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateWndNumSIPPV_DefaultMech()
+ *
+ * @brief	Creates numeric window sippv default mech.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::CreateWndNumSIPPV_DefaultMech()
 {
 	if(m_pcWndNumSIPPVdefaultmech==NULL && m_nwa.nX>-1)
@@ -612,9 +745,16 @@ bool CViewNumericWnd::CreateWndNumSIPPV_DefaultMech()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateWndNumPSV_Default()
+ *
+ * @brief	Creates numeric window psv default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::CreateWndNumPSV_Default()
 {
 	if(m_pcWndNumPSVdefault==NULL && m_nwa.nX>-1)
@@ -645,9 +785,16 @@ bool CViewNumericWnd::CreateWndNumPSV_Default()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateWndNumPSV_DefaultMech()
+ *
+ * @brief	Creates numeric window psv default mech.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::CreateWndNumPSV_DefaultMech()
 {
 	if(m_pcWndNumPSVdefaultmech==NULL && m_nwa.nX>-1)
@@ -678,9 +825,16 @@ bool CViewNumericWnd::CreateWndNumPSV_DefaultMech()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateWndNumSIMV_Default()
+ *
+ * @brief	Creates numeric window simv default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::CreateWndNumSIMV_Default()
 {
 	if(m_pcWndNumSIMVdefault==NULL && m_nwa.nX>-1)
@@ -711,9 +865,16 @@ bool CViewNumericWnd::CreateWndNumSIMV_Default()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateWndNumSIMV_DefaultMech()
+ *
+ * @brief	Creates numeric window simv default mech.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::CreateWndNumSIMV_DefaultMech()
 {
 	if(m_pcWndNumSIMVdefaultmech==NULL && m_nwa.nX>-1)
@@ -744,9 +905,16 @@ bool CViewNumericWnd::CreateWndNumSIMV_DefaultMech()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateWndNumSIMVPSV_Default()
+ *
+ * @brief	Creates numeric window simvpsv default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::CreateWndNumSIMVPSV_Default()
 {
 	if(m_pcWndNumSIMVPSVdefault==NULL && m_nwa.nX>-1)
@@ -777,9 +945,16 @@ bool CViewNumericWnd::CreateWndNumSIMVPSV_Default()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::CreateWndNumSIMVPSV_DefaultMech()
+ *
+ * @brief	Creates numeric window simvpsv default mech.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::CreateWndNumSIMVPSV_DefaultMech()
 {
 	if(m_pcWndNumSIMVPSVdefaultmech==NULL && m_nwa.nX>-1)
@@ -810,9 +985,19 @@ bool CViewNumericWnd::CreateWndNumSIMVPSV_DefaultMech()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	bool CViewNumericWnd::createWndNumConfig(UINT ID, NUMERICINI* pbufNumeric)
+ *
+ * @brief	Creates numeric window configuration.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @param	ID				   	The identifier.
+ * @param [in,out]	pbufNumeric	If non-null, the pbuf numeric.
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CViewNumericWnd::createWndNumConfig(UINT ID, NUMERICINI* pbufNumeric)
 {
 	if(m_pcWndNumConfig==NULL && m_nwa.nX>-1)
@@ -822,8 +1007,6 @@ bool CViewNumericWnd::createWndNumConfig(UINT ID, NUMERICINI* pbufNumeric)
 		RECT rcLd={0,0,210,560};
 		if(m_pcWndNumConfig->Create(this,rcLd,ID))
 		{
-			/*m_pcWndNumConfig->Invalidate();
-			m_pcWndNumConfig->UpdateWindow();*/
 			m_pcWndNumConfig->init();
 			m_iCurrWnd=ID;
 
@@ -841,16 +1024,19 @@ bool CViewNumericWnd::createWndNumConfig(UINT ID, NUMERICINI* pbufNumeric)
 			}
 
 			m_pcWndNumConfig->DrawData(true,true,true,true,false);
-
 		}
 	}
 	return true;
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumHFO_Default()
+ *
+ * @brief	Deletes the window numeric hfo default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumHFO_Default()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -863,9 +1049,14 @@ void CViewNumericWnd::deleteWndNumHFO_Default()
 	LeaveCriticalSection(&csNumWnd);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumHFO_DefaultMech()
+ *
+ * @brief	Deletes the window numeric hfo default mech.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumHFO_DefaultMech()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -878,10 +1069,14 @@ void CViewNumericWnd::deleteWndNumHFO_DefaultMech()
 	LeaveCriticalSection(&csNumWnd);
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumIPPV_Default()
+ *
+ * @brief	Deletes the window numeric ippv default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumIPPV_Default()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -894,9 +1089,14 @@ void CViewNumericWnd::deleteWndNumIPPV_Default()
 	LeaveCriticalSection(&csNumWnd);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumIPPV_DefaultMech()
+ *
+ * @brief	Deletes the window numeric ippv default mech.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumIPPV_DefaultMech()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -909,9 +1109,14 @@ void CViewNumericWnd::deleteWndNumIPPV_DefaultMech()
 	LeaveCriticalSection(&csNumWnd);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumSIPPV_Default()
+ *
+ * @brief	Deletes the window numeric sippv default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumSIPPV_Default()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -923,9 +1128,15 @@ void CViewNumericWnd::deleteWndNumSIPPV_Default()
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumSIPPV_DefaultMech()
+ *
+ * @brief	Deletes the window numeric sippv default mech.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumSIPPV_DefaultMech()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -937,9 +1148,15 @@ void CViewNumericWnd::deleteWndNumSIPPV_DefaultMech()
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumPSV_Default()
+ *
+ * @brief	Deletes the window numeric psv default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumPSV_Default()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -951,9 +1168,15 @@ void CViewNumericWnd::deleteWndNumPSV_Default()
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumPSV_DefaultMech()
+ *
+ * @brief	Deletes the window numeric psv default mech.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumPSV_DefaultMech()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -965,9 +1188,15 @@ void CViewNumericWnd::deleteWndNumPSV_DefaultMech()
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumSIMVPSV_Default()
+ *
+ * @brief	Deletes the window numeric simvpsv default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumSIMVPSV_Default()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -979,9 +1208,15 @@ void CViewNumericWnd::deleteWndNumSIMVPSV_Default()
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumSIMVPSV_DefaultMech()
+ *
+ * @brief	Deletes the window numeric simvpsv default mech.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumSIMVPSV_DefaultMech()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -994,10 +1229,14 @@ void CViewNumericWnd::deleteWndNumSIMVPSV_DefaultMech()
 	LeaveCriticalSection(&csNumWnd);
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumSIMV_Default()
+ *
+ * @brief	Deletes the window numeric simv default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumSIMV_Default()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -1010,9 +1249,14 @@ void CViewNumericWnd::deleteWndNumSIMV_Default()
 	LeaveCriticalSection(&csNumWnd);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumSIMV_DefaultMech()
+ *
+ * @brief	Deletes the window numeric simv default mech.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumSIMV_DefaultMech()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -1025,10 +1269,14 @@ void CViewNumericWnd::deleteWndNumSIMV_DefaultMech()
 	LeaveCriticalSection(&csNumWnd);
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumCPAP_Default()
+ *
+ * @brief	Deletes the window numeric cpap default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumCPAP_Default()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -1041,9 +1289,14 @@ void CViewNumericWnd::deleteWndNumCPAP_Default()
 	LeaveCriticalSection(&csNumWnd);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumCPAP_DefaultMech()
+ *
+ * @brief	Deletes the window numeric cpap default mech.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumCPAP_DefaultMech()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -1056,9 +1309,14 @@ void CViewNumericWnd::deleteWndNumCPAP_DefaultMech()
 	LeaveCriticalSection(&csNumWnd);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumNCPAP_Default()
+ *
+ * @brief	Deletes the window numeric ncpap default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumNCPAP_Default()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -1070,23 +1328,35 @@ void CViewNumericWnd::deleteWndNumNCPAP_Default()
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
-// **************************************************************************
-// 
-// **************************************************************************
-void CViewNumericWnd::deleteWndNumTHERAPIE_Default()
+
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumTHERAPIE_Default()
+ *
+ * @brief	Deletes the window numeric therapie default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
+void CViewNumericWnd::deleteWndNumTHERAPY_Default()
 {
 	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumTHERAPIEdefault)
+	if(m_pcWndNumTHERAPYdefault)
 	{
-		m_pcWndNumTHERAPIEdefault->DestroyWindow();
-		delete m_pcWndNumTHERAPIEdefault;
-		m_pcWndNumTHERAPIEdefault=NULL;
+		m_pcWndNumTHERAPYdefault->DestroyWindow();
+		delete m_pcWndNumTHERAPYdefault;
+		m_pcWndNumTHERAPYdefault=NULL;
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumDUOPAP_Default()
+ *
+ * @brief	Deletes the window numeric duopap default.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumDUOPAP_Default()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -1099,9 +1369,14 @@ void CViewNumericWnd::deleteWndNumDUOPAP_Default()
 	LeaveCriticalSection(&csNumWnd);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumFlowOff()
+ *
+ * @brief	Deletes the window numeric flow off.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumFlowOff()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -1114,9 +1389,14 @@ void CViewNumericWnd::deleteWndNumFlowOff()
 	LeaveCriticalSection(&csNumWnd);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumFlowOffHFO()
+ *
+ * @brief	Deletes the window numeric flow off hfo.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumFlowOffHFO()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -1129,9 +1409,14 @@ void CViewNumericWnd::deleteWndNumFlowOffHFO()
 	LeaveCriticalSection(&csNumWnd);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumConfig()
+ *
+ * @brief	Deletes the window numeric configuration.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumConfig()
 {
 	EnterCriticalSection(&csNumWnd);
@@ -1144,9 +1429,14 @@ void CViewNumericWnd::deleteWndNumConfig()
 	LeaveCriticalSection(&csNumWnd);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumIPPV()
+ *
+ * @brief	Deletes the window numeric ippv.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumIPPV()
 {
 	switch(m_iCurrWnd)
@@ -1171,9 +1461,15 @@ void CViewNumericWnd::deleteWndNumIPPV()
 		break;
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumSIPPV()
+ *
+ * @brief	Deletes the window numeric sippv.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumSIPPV()
 {
 	switch(m_iCurrWnd)
@@ -1198,9 +1494,15 @@ void CViewNumericWnd::deleteWndNumSIPPV()
 		break;
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumPSV()
+ *
+ * @brief	Deletes the window numeric psv.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumPSV()
 {
 	switch(m_iCurrWnd)
@@ -1225,9 +1527,15 @@ void CViewNumericWnd::deleteWndNumPSV()
 		break;
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumSIMV()
+ *
+ * @brief	Deletes the window numeric simv.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumSIMV()
 {
 	switch(m_iCurrWnd)
@@ -1252,9 +1560,15 @@ void CViewNumericWnd::deleteWndNumSIMV()
 		break;
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumSIMVPSV()
+ *
+ * @brief	Deletes the window numeric simvpsv.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumSIMVPSV()
 {
 	switch(m_iCurrWnd)
@@ -1279,9 +1593,15 @@ void CViewNumericWnd::deleteWndNumSIMVPSV()
 		break;
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumCPAP()
+ *
+ * @brief	Deletes the windownumeric cpap.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumCPAP()
 {
 	switch(m_iCurrWnd)
@@ -1307,9 +1627,14 @@ void CViewNumericWnd::deleteWndNumCPAP()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumHFO()
+ *
+ * @brief	Deletes the window numeric hfo.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::deleteWndNumHFO()
 {
 	switch(m_iCurrWnd)
@@ -1334,31 +1659,96 @@ void CViewNumericWnd::deleteWndNumHFO()
 		break;
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
-void CViewNumericWnd::deleteWndNumTHERAPIE()
+
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumTHERAPIE()
+ *
+ * @brief	Deletes the window numeric therapie.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
+void CViewNumericWnd::deleteWndNumTHERAPY()
 {
-	deleteWndNumTHERAPIE_Default();
-}
-// **************************************************************************
-// 
-// **************************************************************************
-void CViewNumericWnd::deleteWndNumDUOPAP()
-{
-	deleteWndNumDUOPAP_Default();
-}
-// **************************************************************************
-// 
-// **************************************************************************
-void CViewNumericWnd::deleteWndNumNCPAP()
-{
-	deleteWndNumNCPAP_Default();
+	switch(m_iCurrWnd)
+	{
+	case IDC_VIEW_NUM_THERAPY_DEFAULT:
+		{
+			deleteWndNumTHERAPY_Default();
+			m_iCurrWnd=0;
+		}
+		break;
+	case IDC_VIEW_NUM_THERAPY:
+		{
+			deleteWndNumConfig();
+			m_iCurrWnd=0;
+		}
+		break;
+	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumDUOPAP()
+ *
+ * @brief	Deletes the window numeric duopap.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
+void CViewNumericWnd::deleteWndNumDUOPAP()
+{
+	switch(m_iCurrWnd)
+	{
+	case IDC_VIEW_NUM_DUOPAP_DEFAULT:
+		{
+			deleteWndNumDUOPAP_Default();
+			m_iCurrWnd=0;
+		}
+		break;
+	case IDC_VIEW_NUM_DUOPAP:
+		{
+			deleteWndNumConfig();
+			m_iCurrWnd=0;
+		}
+		break;
+	}
+}
+
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::deleteWndNumNCPAP()
+ *
+ * @brief	Deletes the window numeric ncpap.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
+void CViewNumericWnd::deleteWndNumNCPAP()
+{
+	switch(m_iCurrWnd)
+	{
+	case IDC_VIEW_NUM_DUOPAP_DEFAULT:
+		{
+			deleteWndNumNCPAP_Default();
+			m_iCurrWnd=0;
+		}
+		break;
+	case IDC_VIEW_NUM_NCPAP:
+		{
+			deleteWndNumConfig();
+			m_iCurrWnd=0;
+		}
+		break;
+	}
+}
+
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::ShowWndNumFlowOff()
+ *
+ * @brief	Shows the window numeric flow off.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::ShowWndNumFlowOff()
 {
 	if(m_pcMenuNumeric)
@@ -1372,9 +1762,14 @@ void CViewNumericWnd::ShowWndNumFlowOff()
 	LeaveCriticalSection(&csNumWnd);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::ShowWndNumFlowOffHFO()
+ *
+ * @brief	Shows the window numeric flow off hfo.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::ShowWndNumFlowOffHFO()
 {
 	if(m_pcMenuNumeric)
@@ -1388,9 +1783,14 @@ void CViewNumericWnd::ShowWndNumFlowOffHFO()
 	LeaveCriticalSection(&csNumWnd);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::ShowWndNumHFO()
+ *
+ * @brief	Shows the window numeric hfo.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::ShowWndNumHFO()
 {
 	if(getModel()->getDATAHANDLER()->getCountNumericHFO()>1)
@@ -1445,10 +1845,14 @@ void CViewNumericWnd::ShowWndNumHFO()
 	LeaveCriticalSection(&csNumWnd);
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::ShowWndNumIPPV()
+ *
+ * @brief	Shows the window numeric ippv.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::ShowWndNumIPPV()
 {
 	if(getModel()->getDATAHANDLER()->getCountNumericIPPV()>1)
@@ -1502,9 +1906,15 @@ void CViewNumericWnd::ShowWndNumIPPV()
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::ShowWndNumSIPPV()
+ *
+ * @brief	Shows the window numeric sippv.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::ShowWndNumSIPPV()
 {
 	if(getModel()->getDATAHANDLER()->getCountNumericSIPPV()>1)
@@ -1558,9 +1968,15 @@ void CViewNumericWnd::ShowWndNumSIPPV()
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::ShowWndNumSIMV()
+ *
+ * @brief	Shows the window numeric simv.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::ShowWndNumSIMV()
 {
 	if(getModel()->getDATAHANDLER()->getCountNumericSIMV()>1)
@@ -1615,9 +2031,14 @@ void CViewNumericWnd::ShowWndNumSIMV()
 	LeaveCriticalSection(&csNumWnd);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * @fn	void CViewNumericWnd::ShowWndNumSIMVPSV()
+ *
+ * @brief	Shows the window numeric simvpsv.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CViewNumericWnd::ShowWndNumSIMVPSV()
 {
 	if(getModel()->getDATAHANDLER()->getCountNumericSIMVPSV()>1)
@@ -1788,7 +2209,7 @@ void CViewNumericWnd::ShowWndNumCPAP()
 // **************************************************************************
 void CViewNumericWnd::ShowWndNumDUOPAP()
 {
-	if(m_pcMenuNumeric)
+	/*if(m_pcMenuNumeric)
 		m_pcMenuNumeric->ShowWindow(SW_HIDE);
 
 	EnterCriticalSection(&csNumWnd);
@@ -1796,6 +2217,50 @@ void CViewNumericWnd::ShowWndNumDUOPAP()
 		CreateWndNumDUOPAP_Default();
 	else
 		m_pcWndNumDUOPAPdefault->DrawData(true,true,true,true,true);
+	LeaveCriticalSection(&csNumWnd);*/
+
+
+	if(getModel()->getDATAHANDLER()->getCountNumericDUOPAP()>1)
+	{
+		CString szText=_T("");
+		szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
+		m_pcMenuNumeric->RefreshText(szText);
+		if(m_pcMenuNumeric)
+			m_pcMenuNumeric->ShowWindow(SW_SHOW);
+	}
+	else
+	{
+		if(m_pcMenuNumeric)
+			m_pcMenuNumeric->ShowWindow(SW_HIDE);
+	}
+
+	BYTE byBlock=getModel()->getDATAHANDLER()->m_pbufNumericDUOPAP[m_iCurNumericBlock].SHOW;
+
+	EnterCriticalSection(&csNumWnd);
+	switch(byBlock)
+	{
+	case FALSE:
+		{
+
+		}
+		break;
+	case TRUE:
+		{
+			if(m_pcWndNumConfig==NULL)
+				createWndNumConfig(IDC_VIEW_NUM_DUOPAP,&getModel()->getDATAHANDLER()->m_pbufNumericDUOPAP[m_iCurNumericBlock]);
+			else
+				m_pcWndNumConfig->DrawData(true,true,true,true,false);
+		}
+		break;
+	case DEFAULTBLOCK:
+		{
+			if(m_pcWndNumDUOPAPdefault==NULL)
+				CreateWndNumDUOPAP_Default();
+			else
+				m_pcWndNumDUOPAPdefault->DrawData(true,true,true,true,false);
+		}
+		break;
+	}
 	LeaveCriticalSection(&csNumWnd);
 }
 // **************************************************************************
@@ -1803,7 +2268,7 @@ void CViewNumericWnd::ShowWndNumDUOPAP()
 // **************************************************************************
 void CViewNumericWnd::ShowWndNumNCPAP()
 {
-	if(m_pcMenuNumeric)
+	/*if(m_pcMenuNumeric)
 		m_pcMenuNumeric->ShowWindow(SW_HIDE);
 
 	EnterCriticalSection(&csNumWnd);
@@ -1811,14 +2276,57 @@ void CViewNumericWnd::ShowWndNumNCPAP()
 		CreateWndNumNCPAP_Default();
 	else
 		m_pcWndNumNCPAPdefault->DrawData(true,true,true,true,true);
+	LeaveCriticalSection(&csNumWnd);*/
+
+	if(getModel()->getDATAHANDLER()->getCountNumericNCPAP()>1)
+	{
+		CString szText=_T("");
+		szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
+		m_pcMenuNumeric->RefreshText(szText);
+		if(m_pcMenuNumeric)
+			m_pcMenuNumeric->ShowWindow(SW_SHOW);
+	}
+	else
+	{
+		if(m_pcMenuNumeric)
+			m_pcMenuNumeric->ShowWindow(SW_HIDE);
+	}
+
+	BYTE byBlock=getModel()->getDATAHANDLER()->m_pbufNumericNCPAP[m_iCurNumericBlock].SHOW;
+
+	EnterCriticalSection(&csNumWnd);
+	switch(byBlock)
+	{
+	case FALSE:
+		{
+
+		}
+		break;
+	case TRUE:
+		{
+			if(m_pcWndNumConfig==NULL)
+				createWndNumConfig(IDC_VIEW_NUM_NCPAP,&getModel()->getDATAHANDLER()->m_pbufNumericNCPAP[m_iCurNumericBlock]);
+			else
+				m_pcWndNumConfig->DrawData(true,true,true,true,false);
+		}
+		break;
+	case DEFAULTBLOCK:
+		{
+			if(m_pcWndNumNCPAPdefault==NULL)
+				CreateWndNumNCPAP_Default();
+			else
+				m_pcWndNumNCPAPdefault->DrawData(true,true,true,true,false);
+		}
+		break;
+	}
 	LeaveCriticalSection(&csNumWnd);
 }
 // **************************************************************************
 // 
 // **************************************************************************
-void CViewNumericWnd::ShowWndNumTHERAPIE()
+void CViewNumericWnd::ShowWndNumTHERAPY()
 {
-	if(m_pcMenuNumeric)
+	/*if(m_pcMenuNumeric)
 		m_pcMenuNumeric->ShowWindow(SW_HIDE);
 	
 	EnterCriticalSection(&csNumWnd);
@@ -1826,6 +2334,49 @@ void CViewNumericWnd::ShowWndNumTHERAPIE()
 		CreateWndNumTHERAPIE_Default();
 	else
 		m_pcWndNumTHERAPIEdefault->DrawData(true,true,true,true,true);
+	LeaveCriticalSection(&csNumWnd);*/
+
+	if(getModel()->getDATAHANDLER()->getCountNumericTHERAPY()>1)
+	{
+		CString szText=_T("");
+		szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
+		m_pcMenuNumeric->RefreshText(szText);
+		if(m_pcMenuNumeric)
+			m_pcMenuNumeric->ShowWindow(SW_SHOW);
+	}
+	else
+	{
+		if(m_pcMenuNumeric)
+			m_pcMenuNumeric->ShowWindow(SW_HIDE);
+	}
+
+	BYTE byBlock=getModel()->getDATAHANDLER()->m_pbufNumericTHERAPY[m_iCurNumericBlock].SHOW;
+
+	EnterCriticalSection(&csNumWnd);
+	switch(byBlock)
+	{
+	case FALSE:
+		{
+
+		}
+		break;
+	case TRUE:
+		{
+			if(m_pcWndNumConfig==NULL)
+				createWndNumConfig(IDC_VIEW_NUM_THERAPY,&getModel()->getDATAHANDLER()->m_pbufNumericTHERAPY[m_iCurNumericBlock]);
+			else
+				m_pcWndNumConfig->DrawData(true,true,true,true,false);
+		}
+		break;
+	case DEFAULTBLOCK:
+		{
+			if(m_pcWndNumTHERAPYdefault==NULL)
+				CreateWndNumTHERAPY_Default();
+			else
+				m_pcWndNumNCPAPdefault->DrawData(true,true,true,true,false);
+		}
+		break;
+	}
 	LeaveCriticalSection(&csNumWnd);
 }
 
@@ -1896,19 +2447,22 @@ void CViewNumericWnd::HideNumWnd()
 			deleteWndNumHFO();
 		}
 		break;
+	case IDC_VIEW_NUM_DUOPAP_DEFAULT:
 	case IDC_VIEW_NUM_DUOPAP:
 		{
 			deleteWndNumDUOPAP();
 		}
 		break;
+	case IDC_VIEW_NUM_NCPAP_DEFAULT:
 	case IDC_VIEW_NUM_NCPAP:
 		{
 			deleteWndNumNCPAP();
 		}
 		break;
-	case IDC_VIEW_NUM_THERAPIE:
+	case IDC_VIEW_NUM_THERAPY_DEFAULT:
+	case IDC_VIEW_NUM_THERAPY:
 		{
-			deleteWndNumTHERAPIE();
+			deleteWndNumTHERAPY();
 		}
 		break;
 	default:
@@ -1983,9 +2537,9 @@ void CViewNumericWnd::ShowNumWnd(eNumBlock eBlock,bool bChangeCurNumBlock)
 			ShowWndNumNCPAP();
 		}
 		break;
-	case NUMB_THERAPIE: 
+	case NUMB_THERAPY: 
 		{
-			ShowWndNumTHERAPIE();
+			ShowWndNumTHERAPY();
 		}
 		break;
 	case NUMB_HFO: 
@@ -1998,15 +2552,11 @@ void CViewNumericWnd::ShowNumWnd(eNumBlock eBlock,bool bChangeCurNumBlock)
 		}
 		break;
 	}
-
-	
-
 	
 	if(getModel()->getVIEWHANDLER()->getViewState()==VS_TREND)
 	{
 		DeleteGraphCursor();
 	}
-
 }
 
 
@@ -2142,7 +2692,6 @@ void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 			{
 				eBlock=NUMB_FLOWOFF;
 			}
-			
 		}
 		break;
 	case VM_HFO:
@@ -2169,16 +2718,40 @@ void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 	case VM_NCPAP:
 		{
 			eBlock=NUMB_NCPAP;
+			m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericNCPAP();
+			m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericNCPAP();
+
+			if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+			{
+				m_iCurNumericBlock=0;
+				getModel()->getCONFIG()->setLastNumericNCPAP(m_iCurNumericBlock);
+			}
 		}
 		break;
 	case VM_DUOPAP:
 		{
 			eBlock=NUMB_DUOPAP;
+			m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericDUOPAP();
+			m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericDUOPAP();
+
+			if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+			{
+				m_iCurNumericBlock=0;
+				getModel()->getCONFIG()->setLastNumericDUOPAP(m_iCurNumericBlock);
+			}
 		}
 		break;
 	case VM_THERAPIE:
 		{
-			eBlock=NUMB_THERAPIE;
+			eBlock=NUMB_THERAPY;
+			m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericTHERAPY();
+			m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericTHERAPY();
+
+			if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+			{
+				m_iCurNumericBlock=0;
+				getModel()->getCONFIG()->setLastNumericTHERAPY(m_iCurNumericBlock);
+			}
 		}
 		break;
 	default:
@@ -2187,8 +2760,6 @@ void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 		}
 		break;
 	}
-
-	
 
 	ShowNumWnd(eBlock,bChangeCurNumBlock);
 }
@@ -2220,7 +2791,6 @@ void CViewNumericWnd::NotifyEvent(CMVEvent* pEvent)
 					{
 						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewNumericWnd::NotifyEvent()"));
 					}
-					
 				}
 				break;
 			default:
@@ -2241,67 +2811,6 @@ void CViewNumericWnd::NotifyEvent(CMVEvent* pEvent)
 					ShowNextNumericWnd();
 				}
 				break;
-			//case CMVEventUI::EV_BN_GRAPH_FREEZED:
-			//	{
-			//		if(		getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_LOOPGRAPHS
-			//			&&	getModel()->getCONFIG()->GetCurMode()!=VM_CPAP
-			//			&&	getModel()->getCONFIG()->GetCurMode()!=VM_NCPAP
-			//			&&	getModel()->getCONFIG()->GetCurMode()!=VM_DUOPAP
-			//			&&	getModel()->getCONFIG()->GetCurMode()!=VM_THERAPIE)
-			//		{
-			//			try
-			//			{
-			//				ShowNumWnd(IDC_VIEW_NUM_BREATH);
-			//			}
-			//			catch (...)
-			//			{
-			//				CFabianHFOApp::ReportException(_T("EXCEPTION: CViewNumericWnd::NotifyEvent() EV_BN_GRAPH_FREEZED"));
-			//				//AfxMessageBox( _T("EXCEPTION: CViewNumericWnd::NotifyEvent() EV_BN_GRAPH_FREEZED") );
-			//				
-			//			}
-			//			
-			//		}
-
-			//	}
-			//	break;
-			//case CMVEventUI::EV_BN_GRAPH_CONTINUE:
-			//	{
-			//		if(		getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_LOOPGRAPHS
-			//			&&	getModel()->getCONFIG()->GetCurMode()!=VM_CPAP
-			//			&&	getModel()->getCONFIG()->GetCurMode()!=VM_NCPAP
-			//			&&	getModel()->getCONFIG()->GetCurMode()!=VM_DUOPAP
-			//			&&	getModel()->getCONFIG()->GetCurMode()!=VM_THERAPIE)
-			//		{
-			//			try
-			//			{
-			//				SetNumericBlock();
-			//			}
-			//			catch (...)
-			//			{
-			//				CFabianHFOApp::ReportException(_T("EXCEPTION: CViewNumericWnd::NotifyEvent() EV_BN_GRAPH_CONTINUE"));
-			//				//AfxMessageBox( _T("EXCEPTION: CViewNumericWnd::NotifyEvent() EV_BN_GRAPH_CONTINUE") );
-			//				
-			//			}
-			//			
-			//		}
-
-			//	}
-			//	break;
-			//case CMVEventUI::EV_BN_GRAPH_SAVE:
-			//	{
-			//		try
-			//		{
-			//			ShowNumWnd(IDC_VIEW_NUM_BREATH);
-			//		}
-			//		catch (...)
-			//		{
-			//			CFabianHFOApp::ReportException(_T("EXCEPTION: CViewNumericWnd::NotifyEvent() EV_BN_GRAPH_SAVE"));
-			//			//AfxMessageBox( _T("EXCEPTION: CViewNumericWnd::NotifyEvent() EV_BN_GRAPH_SAVE") );
-			//			
-			//		}
-			//		
-			//	}
-			//	break;
 			case CMVEventUI::EV_GRAPH_SETCURSOR:
 				{
 					DrawGraphCursor(pUIEvent->GetIData());
@@ -2331,9 +2840,6 @@ void CViewNumericWnd::ShowNextNumericWnd()
 // **************************************************************************
 void CViewNumericWnd::DrawGraphCursor(int iDiagrmm)
 {
-	
-	//m_bDrawGraphCursor=true;
-
 	bool bMoveXscale=false;
 	bool bMoveYscale=false;
 
@@ -2360,7 +2866,6 @@ void CViewNumericWnd::DrawGraphCursor(int iDiagrmm)
 			}
 		}
 	}
-
 
 	try
 	{
@@ -2437,9 +2942,9 @@ void CViewNumericWnd::DrawGraphCursor(int iDiagrmm)
 		{
 			m_pcWndNumSIMVdefaultmech->SetGraphCursor(true, bMoveXscale, bMoveYscale);
 		}
-		else if(m_pcWndNumTHERAPIEdefault)
+		else if(m_pcWndNumTHERAPYdefault)
 		{
-			m_pcWndNumTHERAPIEdefault->SetGraphCursor(true, bMoveXscale, bMoveYscale);
+			m_pcWndNumTHERAPYdefault->SetGraphCursor(true, bMoveXscale, bMoveYscale);
 		}
 		else if(m_pcWndNumConfig)
 		{
@@ -2533,9 +3038,9 @@ void CViewNumericWnd::DeleteGraphCursor()
 		{
 			m_pcWndNumSIMVdefaultmech->SetGraphCursor(false,false,false);
 		}
-		else if(m_pcWndNumTHERAPIEdefault)
+		else if(m_pcWndNumTHERAPYdefault)
 		{
-			m_pcWndNumTHERAPIEdefault->SetGraphCursor(false,false,false);
+			m_pcWndNumTHERAPYdefault->SetGraphCursor(false,false,false);
 		}
 		else if(m_pcWndNumConfig)
 		{
@@ -2733,7 +3238,6 @@ void CViewNumericWnd::NotifyViewStateChanged()
 				{
 					m_bBackState=false;
 				}
-
 				break;
 			}
 
@@ -2742,27 +3246,27 @@ void CViewNumericWnd::NotifyViewStateChanged()
 				m_bBackState=false;
 			}
 
-			try
-			{
-				//SetNumericBlock();
-			}
-			catch (...)
-			{
-				CFabianHFOApp::ReportException(_T("EXCEPTION: CViewNumericWnd::NotifyViewStateChanged() VS_PARA"));
-			}
+			//try
+			//{
+			//	//SetNumericBlock();
+			//}
+			//catch (...)
+			//{
+			//	CFabianHFOApp::ReportException(_T("EXCEPTION: CViewNumericWnd::NotifyViewStateChanged() VS_PARA"));
+			//}
 		}
 		break;
 	case VS_GRAPH:
 	case VS_TREND:
 		{
-			try
-			{
-				//SetNumericBlock();
-			}
-			catch (...)
-			{
-				CFabianHFOApp::ReportException(_T("EXCEPTION: CViewNumericWnd::NotifyViewStateChanged() VS_GRAPH"));
-			}
+			//try
+			//{
+			//	//SetNumericBlock();
+			//}
+			//catch (...)
+			//{
+			//	CFabianHFOApp::ReportException(_T("EXCEPTION: CViewNumericWnd::NotifyViewStateChanged() VS_GRAPH"));
+			//}
 			
 		}
 		break;
@@ -2792,10 +3296,6 @@ void CViewNumericWnd::NotifyVentModeChanged()
 
 	switch(getModel()->getVIEWHANDLER()->getViewState())
 	{
-	//case CMVModel::VS_NUMERIC:
-	//	{
-	//	}
-	//	break;
 	case VS_PARA:
 		{
 			if(false==getModel()->getCONFIG()->CurModeIsPresetMode())
@@ -2999,6 +3499,9 @@ void CViewNumericWnd::redrawNumerics(bool bData, bool bFrames, bool bText, bool 
 	EnterCriticalSection(&csNumWnd);
 	switch(m_iCurrWnd)
 	{
+	case IDC_VIEW_NUM_NCPAP:
+	case IDC_VIEW_NUM_DUOPAP:
+	case IDC_VIEW_NUM_THERAPY:
 	case IDC_VIEW_NUM_HFO:
 	case IDC_VIEW_NUM_CPAP:
 	case IDC_VIEW_NUM_PSV:
@@ -3095,22 +3598,22 @@ void CViewNumericWnd::redrawNumerics(bool bData, bool bFrames, bool bText, bool 
 				m_pcWndNumHFOdefaultmech->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
 		}
 		break;
-	case IDC_VIEW_NUM_NCPAP:
+	case IDC_VIEW_NUM_NCPAP_DEFAULT:
 		{
 			if(m_pcWndNumNCPAPdefault)
 				m_pcWndNumNCPAPdefault->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
 		}
 		break;
-	case IDC_VIEW_NUM_DUOPAP:
+	case IDC_VIEW_NUM_DUOPAP_DEFAULT:
 		{
 			if(m_pcWndNumDUOPAPdefault)
 				m_pcWndNumDUOPAPdefault->DrawData(bData, bFrames, bText, bLimits, true);
 		}
 		break;
-	case IDC_VIEW_NUM_THERAPIE:
+	case IDC_VIEW_NUM_THERAPY_DEFAULT:
 		{
-			if(m_pcWndNumTHERAPIEdefault)
-				m_pcWndNumTHERAPIEdefault->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
+			if(m_pcWndNumTHERAPYdefault)
+				m_pcWndNumTHERAPYdefault->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
 		}
 		break;
 	case IDC_VIEW_NUM_FLOWOFF:
@@ -3194,19 +3697,22 @@ void CViewNumericWnd::OnDestroy()
 			deleteWndNumHFO();
 		}
 		break;
+	case IDC_VIEW_NUM_NCPAP_DEFAULT:
 	case IDC_VIEW_NUM_NCPAP:
 		{
 			deleteWndNumNCPAP();
 		}
 		break;
+	case IDC_VIEW_NUM_DUOPAP_DEFAULT:
 	case IDC_VIEW_NUM_DUOPAP:
 		{
 			deleteWndNumDUOPAP();
 		}
 		break;
-	case IDC_VIEW_NUM_THERAPIE:
+	case IDC_VIEW_NUM_THERAPY_DEFAULT:
+	case IDC_VIEW_NUM_THERAPY:
 		{
-			deleteWndNumTHERAPIE();
+			deleteWndNumTHERAPY();
 		}
 		break;
 	case IDC_VIEW_NUM_FLOWOFF:
@@ -3341,19 +3847,46 @@ void CViewNumericWnd::BnMenuNUMERIC()
 			bChangeCurNumBlock=true;
 		}
 		break;
+	case IDC_VIEW_NUM_NCPAP_DEFAULT:
 	case IDC_VIEW_NUM_NCPAP:
 		{
-			
+			m_iCurNumericBlock++;
+			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericNCPAP())
+			{
+				m_iCurNumericBlock=0;
+			}
+			getModel()->getCONFIG()->setLastNumericNCPAP(m_iCurNumericBlock);
+			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
+			m_pcMenuNumeric->RefreshText(szText);
+			bChangeCurNumBlock=true;
 		}
 		break;
+	case IDC_VIEW_NUM_DUOPAP_DEFAULT:
 	case IDC_VIEW_NUM_DUOPAP:
 		{
-			
+			m_iCurNumericBlock++;
+			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericDUOPAP())
+			{
+				m_iCurNumericBlock=0;
+			}
+			getModel()->getCONFIG()->setLastNumericDUOPAP(m_iCurNumericBlock);
+			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
+			m_pcMenuNumeric->RefreshText(szText);
+			bChangeCurNumBlock=true;
 		}
 		break;
-	case IDC_VIEW_NUM_THERAPIE:
+	case IDC_VIEW_NUM_THERAPY_DEFAULT:
+	case IDC_VIEW_NUM_THERAPY:
 		{
-			
+			m_iCurNumericBlock++;
+			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericTHERAPY())
+			{
+				m_iCurNumericBlock=0;
+			}
+			getModel()->getCONFIG()->setLastNumericTHERAPY(m_iCurNumericBlock);
+			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
+			m_pcMenuNumeric->RefreshText(szText);
+			bChangeCurNumBlock=true;
 		}
 		break;
 	case IDC_VIEW_NUM_FLOWOFF:

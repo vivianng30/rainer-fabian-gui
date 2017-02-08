@@ -99,19 +99,11 @@ enum eTrendTimespanToDelete {
 
 CDataHandler* CDataHandler::theDataHandler=0;
 
-//CircularBuffer<PBUFEMG> CDataHandler::m_rbufEMG(MAXSIZE_EMGREADIN_BUFFER); 
-//CircularBuffer<PBUFSPO2> CDataHandler::m_rbufSPO2(MAXSIZE_SPO2READIN_BUFFER); 
-//CircularBuffer<SHORT> CDataHandler::m_rbufCO2(MAXSIZE_CO2READIN_BUFFER); 
-//CircularBuffer<PBUFEMG> CDataHandler::m_rbufEMG(MAXSIZE_SPIREADIN_BUFFER); 
 CircularBuffer<PBUFSPO2> CDataHandler::m_rbufSPO2(MAXSIZE_SPIREADIN_BUFFER); 
 CircularBuffer<SHORT> CDataHandler::m_rbufCO2(MAXSIZE_SPIREADIN_BUFFER); 
-
 CircularBuffer<PBUFSPI> CDataHandler::m_rbufSPI(MAXSIZE_SPIREADIN_BUFFER); 
 CircularBuffer<PBUFSPI> CDataHandler::m_rbufVent(MAXSIZE_RING_BUFFER); 
 CircularBuffer<PBUFSPI> CDataHandler::m_rbufCopy(MAXSIZE_RING_BUFFER); 
-
-//PBUFFOTvent* CDataHandler::m_pbufFOTventilation=NULL;
-//PBUFFOTcalc* CDataHandler::m_pbufFOTcalculate=NULL;
 
 PBUFSPI* CDataHandler::m_pbufSavedBreath=NULL;
 
@@ -125,32 +117,29 @@ LPNUMERICINI CDataHandler::m_pbufNumericSIMVPSV=NULL;
 LPNUMERICINI CDataHandler::m_pbufNumericPSV=NULL;
 LPNUMERICINI CDataHandler::m_pbufNumericCPAP=NULL;
 LPNUMERICINI CDataHandler::m_pbufNumericHFO=NULL;
-//LPNUMERICBLOCK CDataHandler::m_pnbNumericFieldDataBlock=NULL;
+LPNUMERICINI CDataHandler::m_pbufNumericNCPAP=NULL;
+LPNUMERICINI CDataHandler::m_pbufNumericDUOPAP=NULL;
+LPNUMERICINI CDataHandler::m_pbufNumericTHERAPY=NULL;
 
 INT* CDataHandler::m_pbufMessureAVG=NULL;
 INT* CDataHandler::m_pbufMessureBTB=NULL;
 
 
-
-//=============================================================================
-/**
- * @brief Constructor of CDataHandler.
+/**********************************************************************************************//**
+ * @fn	CDataHandler::CDataHandler(void)
  *
- *   - initializes all critical sections
- *   - initializes all member variables
- *   
- **/
-//=============================================================================
+ * @brief	Default constructor.
+ * 			- initializes all critical sections
+ *			- initializes all member variables
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 CDataHandler::CDataHandler(void)
 {
 	m_bExit=false;
 	m_pModel = NULL;
 	m_pbufSavedBreath=NULL;
-	/*m_pbufFOTventilation=NULL;
-	m_ibufCountFOTventilation=0;
-	m_pbufFOTcalculate=NULL;
-	m_iCountFOTcalculate=0;
-	m_bFOTvalidData=false;*/
 
 	InitializeCriticalSection(&csOpTime);
 	InitializeCriticalSection(&csSPIDataBuffer);
@@ -158,7 +147,6 @@ CDataHandler::CDataHandler(void)
 	InitializeCriticalSection(&csVentDataBuffer);
 	InitializeCriticalSection(&csCO2DataBuffer);
 	InitializeCriticalSection(&csSPO2DataBuffer);
-	//InitializeCriticalSection(&csFOTDataBuffer);
 	InitializeCriticalSection(&csMainboardData);
 	InitializeCriticalSection(&csMessureDataAVG);
 	InitializeCriticalSection(&csMessureDataBTB);
@@ -170,7 +158,7 @@ CDataHandler::CDataHandler(void)
 	InitializeCriticalSection(&csOxyState);
 	InitializeCriticalSection(&csTrendFileData);
 	InitializeCriticalSection(&csTrend);
-	InitializeCriticalSection(&csDelTrendThread);//rkuNEWFIX
+	InitializeCriticalSection(&csDelTrendThread);
 	InitializeCriticalSection(&csSavedBreath);
 	InitializeCriticalSection(&csFOTosciState);
 
@@ -186,6 +174,9 @@ CDataHandler::CDataHandler(void)
 	m_iNumericPSVcount=0;
 	m_iNumericCPAPcount=0;
 	m_iNumericHFOcount=0;
+	m_iNumericNCPAPcount=0;
+	m_iNumericDUOPAPcount=0;
+	m_iNumericTHERAPYcount=0;
 
 	m_iOldOxyValue=0;
 
@@ -214,12 +205,6 @@ CDataHandler::CDataHandler(void)
 	m_pbufSavedBreath = new PBUFSPI[G_MAXPOINTS];
 	m_iSizeSavedBreath=0;
 
-	/*m_pbufFOTcalculate = new PBUFFOTcalc[MAXSIZE_FOT_STEPS];
-	m_iCountFOTcalculate=0;
-	m_pbufFOTventilation = new PBUFFOTvent[MAXSIZE_FOT_BUFFER];
-	m_ibufCountFOTventilation=0;
-	m_bFOTvalidData=false;*/
-
 	m_pbufMessureAVG=new INT[MAX_NUMERICVALUES];
 	m_pbufMessureBTB=new INT[MAX_NUMERICVALUES];
 
@@ -230,9 +215,13 @@ CDataHandler::CDataHandler(void)
 	m_pbufNumericPSV = new NUMERICINI[MAX_NUMERICMODEBLOCK];
 	m_pbufNumericCPAP = new NUMERICINI[MAX_NUMERICMODEBLOCK];
 	m_pbufNumericHFO = new NUMERICINI[MAX_NUMERICMODEBLOCK];
+	m_pbufNumericNCPAP = new NUMERICINI[MAX_NUMERICMODEBLOCK];
+	m_pbufNumericDUOPAP = new NUMERICINI[MAX_NUMERICMODEBLOCK];
+	m_pbufNumericTHERAPY = new NUMERICINI[MAX_NUMERICMODEBLOCK];
 
 	for(int i=0;i<3;i++)
 	{
+		m_pbufNumericIPPV[i].eNumMode=NUMMODE_IPPV;
 		m_pbufNumericIPPV[i].SHOW=FALSE;
 		m_pbufNumericIPPV[i].VAL1=NUMT_PPEAK;
 		m_pbufNumericIPPV[i].VAL2=NUMT_PPEAK;
@@ -251,6 +240,7 @@ CDataHandler::CDataHandler(void)
 		m_pbufNumericIPPV[i].SIZE7=NUMERICSIZE_0;
 		m_pbufNumericIPPV[i].SIZE8=NUMERICSIZE_0;
 
+		m_pbufNumericSIPPV[i].eNumMode=NUMMODE_SIPPV;
 		m_pbufNumericSIPPV[i].SHOW=FALSE;
 		m_pbufNumericSIPPV[i].VAL1=NUMT_PPEAK;
 		m_pbufNumericSIPPV[i].VAL2=NUMT_PPEAK;
@@ -269,6 +259,7 @@ CDataHandler::CDataHandler(void)
 		m_pbufNumericSIPPV[i].SIZE7=NUMERICSIZE_0;
 		m_pbufNumericSIPPV[i].SIZE8=NUMERICSIZE_0;
 
+		m_pbufNumericSIMV[i].eNumMode=NUMMODE_SIMV;
 		m_pbufNumericSIMV[i].SHOW=FALSE;
 		m_pbufNumericSIMV[i].VAL1=NUMT_PPEAK;
 		m_pbufNumericSIMV[i].VAL2=NUMT_PPEAK;
@@ -287,6 +278,7 @@ CDataHandler::CDataHandler(void)
 		m_pbufNumericSIMV[i].SIZE7=NUMERICSIZE_0;
 		m_pbufNumericSIMV[i].SIZE8=NUMERICSIZE_0;
 
+		m_pbufNumericSIMVPSV[i].eNumMode=NUMMODE_SIMVPSV;
 		m_pbufNumericSIMVPSV[i].SHOW=FALSE;
 		m_pbufNumericSIMVPSV[i].VAL1=NUMT_PPEAK;
 		m_pbufNumericSIMVPSV[i].VAL2=NUMT_PPEAK;
@@ -305,6 +297,7 @@ CDataHandler::CDataHandler(void)
 		m_pbufNumericSIMVPSV[i].SIZE7=NUMERICSIZE_0;
 		m_pbufNumericSIMVPSV[i].SIZE8=NUMERICSIZE_0;
 
+		m_pbufNumericPSV[i].eNumMode=NUMMODE_PSV;
 		m_pbufNumericPSV[i].SHOW=FALSE;
 		m_pbufNumericPSV[i].VAL1=NUMT_PPEAK;
 		m_pbufNumericPSV[i].VAL2=NUMT_PPEAK;
@@ -323,6 +316,7 @@ CDataHandler::CDataHandler(void)
 		m_pbufNumericPSV[i].SIZE7=NUMERICSIZE_0;
 		m_pbufNumericPSV[i].SIZE8=NUMERICSIZE_0;
 
+		m_pbufNumericCPAP[i].eNumMode=NUMMODE_CPAP;
 		m_pbufNumericCPAP[i].SHOW=FALSE;
 		m_pbufNumericCPAP[i].VAL1=NUMT_PPEAK;
 		m_pbufNumericCPAP[i].VAL2=NUMT_PPEAK;
@@ -341,6 +335,7 @@ CDataHandler::CDataHandler(void)
 		m_pbufNumericCPAP[i].SIZE7=NUMERICSIZE_0;
 		m_pbufNumericCPAP[i].SIZE8=NUMERICSIZE_0;
 
+		m_pbufNumericHFO[i].eNumMode=NUMMODE_HFO;
 		m_pbufNumericHFO[i].SHOW=FALSE;
 		m_pbufNumericHFO[i].VAL1=NUMT_PPEAK;
 		m_pbufNumericHFO[i].VAL2=NUMT_PPEAK;
@@ -358,6 +353,63 @@ CDataHandler::CDataHandler(void)
 		m_pbufNumericHFO[i].SIZE6=NUMERICSIZE_0;
 		m_pbufNumericHFO[i].SIZE7=NUMERICSIZE_0;
 		m_pbufNumericHFO[i].SIZE8=NUMERICSIZE_0;
+
+		m_pbufNumericNCPAP[i].eNumMode=NUMMODE_NCPAP;
+		m_pbufNumericNCPAP[i].SHOW=FALSE;
+		m_pbufNumericNCPAP[i].VAL1=NUMT_PPEAK;
+		m_pbufNumericNCPAP[i].VAL2=NUMT_PPEAK;
+		m_pbufNumericNCPAP[i].VAL3=NUMT_PPEAK;
+		m_pbufNumericNCPAP[i].VAL4=NUMT_PPEAK;
+		m_pbufNumericNCPAP[i].VAL5=NUMT_PPEAK;
+		m_pbufNumericNCPAP[i].VAL6=NUMT_PPEAK;
+		m_pbufNumericNCPAP[i].VAL7=NUMT_PPEAK;
+		m_pbufNumericNCPAP[i].VAL8=NUMT_PPEAK;
+		m_pbufNumericNCPAP[i].SIZE1=NUMERICSIZE_0;
+		m_pbufNumericNCPAP[i].SIZE2=NUMERICSIZE_0;
+		m_pbufNumericNCPAP[i].SIZE3=NUMERICSIZE_0;
+		m_pbufNumericNCPAP[i].SIZE4=NUMERICSIZE_0;
+		m_pbufNumericNCPAP[i].SIZE5=NUMERICSIZE_0;
+		m_pbufNumericNCPAP[i].SIZE6=NUMERICSIZE_0;
+		m_pbufNumericNCPAP[i].SIZE7=NUMERICSIZE_0;
+		m_pbufNumericNCPAP[i].SIZE8=NUMERICSIZE_0;
+
+		m_pbufNumericDUOPAP[i].eNumMode=NUMMODE_DUOPAP;
+		m_pbufNumericDUOPAP[i].SHOW=FALSE;
+		m_pbufNumericDUOPAP[i].VAL1=NUMT_PPEAK;
+		m_pbufNumericDUOPAP[i].VAL2=NUMT_PPEAK;
+		m_pbufNumericDUOPAP[i].VAL3=NUMT_PPEAK;
+		m_pbufNumericDUOPAP[i].VAL4=NUMT_PPEAK;
+		m_pbufNumericDUOPAP[i].VAL5=NUMT_PPEAK;
+		m_pbufNumericDUOPAP[i].VAL6=NUMT_PPEAK;
+		m_pbufNumericDUOPAP[i].VAL7=NUMT_PPEAK;
+		m_pbufNumericDUOPAP[i].VAL8=NUMT_PPEAK;
+		m_pbufNumericDUOPAP[i].SIZE1=NUMERICSIZE_0;
+		m_pbufNumericDUOPAP[i].SIZE2=NUMERICSIZE_0;
+		m_pbufNumericDUOPAP[i].SIZE3=NUMERICSIZE_0;
+		m_pbufNumericDUOPAP[i].SIZE4=NUMERICSIZE_0;
+		m_pbufNumericDUOPAP[i].SIZE5=NUMERICSIZE_0;
+		m_pbufNumericDUOPAP[i].SIZE6=NUMERICSIZE_0;
+		m_pbufNumericDUOPAP[i].SIZE7=NUMERICSIZE_0;
+		m_pbufNumericDUOPAP[i].SIZE8=NUMERICSIZE_0;
+
+		m_pbufNumericTHERAPY[i].eNumMode=NUMMODE_THERAPY;
+		m_pbufNumericTHERAPY[i].SHOW=FALSE;
+		m_pbufNumericTHERAPY[i].VAL1=NUMT_PPEAK;
+		m_pbufNumericTHERAPY[i].VAL2=NUMT_PPEAK;
+		m_pbufNumericTHERAPY[i].VAL3=NUMT_PPEAK;
+		m_pbufNumericTHERAPY[i].VAL4=NUMT_PPEAK;
+		m_pbufNumericTHERAPY[i].VAL5=NUMT_PPEAK;
+		m_pbufNumericTHERAPY[i].VAL6=NUMT_PPEAK;
+		m_pbufNumericTHERAPY[i].VAL7=NUMT_PPEAK;
+		m_pbufNumericTHERAPY[i].VAL8=NUMT_PPEAK;
+		m_pbufNumericTHERAPY[i].SIZE1=NUMERICSIZE_0;
+		m_pbufNumericTHERAPY[i].SIZE2=NUMERICSIZE_0;
+		m_pbufNumericTHERAPY[i].SIZE3=NUMERICSIZE_0;
+		m_pbufNumericTHERAPY[i].SIZE4=NUMERICSIZE_0;
+		m_pbufNumericTHERAPY[i].SIZE5=NUMERICSIZE_0;
+		m_pbufNumericTHERAPY[i].SIZE6=NUMERICSIZE_0;
+		m_pbufNumericTHERAPY[i].SIZE7=NUMERICSIZE_0;
+		m_pbufNumericTHERAPY[i].SIZE8=NUMERICSIZE_0;
 	}
 
 	m_bO21SensorCalState=false;
@@ -372,17 +424,15 @@ CDataHandler::CDataHandler(void)
 	m_iCountDIOERROR=0;
 
 	m_bFreezedGraphs=false;
-	/*m_bFOTrunning=false;
-	m_bFOTsequenceRunning=false;*/
-
+	
 	m_bSavingTrendToUSB=false;
 	m_bTrendsLoading=false;
 
 	m_iCO2ErrorCodeBits=0;
 	m_iCOMErrorCodeBits=0;
-	//m_iCOMErrorCommandBits=0;
 	m_iSPIErrorCodeBits=0;
-	m_szCOMlastSendError=_T("");//newVG
+
+	m_szCOMlastSendError=_T("");
 
 	m_bShowFlowAC=FALSE;
 
@@ -510,8 +560,6 @@ CDataHandler::CDataHandler(void)
 	m_iLastHFVGarantParam=0;
 	m_iLastVLimitParam=0;
 
-	
-
 	m_crGraphColor_PRESSURE=0x8c8c8c;
 	m_crGraphColor_FLOW=0x8c8c8c;
 	m_crGraphColor_VOLUME=0x8c8c8c;
@@ -531,26 +579,31 @@ CDataHandler::CDataHandler(void)
 	m_bTriggerNMODEenabled=true;
 }
 
-//=============================================================================
-/**
- * @brief Destructor of CDataHandler.
+/**********************************************************************************************//**
+ * @fn	CDataHandler::~CDataHandler(void)
  *
- **/
-//=============================================================================
+ * @brief	Destructor.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
+
 CDataHandler::~CDataHandler(void)
 {
 	
 }
 
 
-//=============================================================================
-/**
- * @brief Get the instance of para data structure ventilation mode (singleton).
+/**********************************************************************************************//**
+ * @fn	CParaData* CDataHandler::PARADATA()
  *
- * @return the instance of para data structure
+ * @brief	Get the instance of para data structure ventilation mode (singleton).
  *
- **/
-//=============================================================================
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	null if it fails, else a CParaData*.
+ **************************************************************************************************/
 CParaData* CDataHandler::PARADATA()
 { 
 	if(m_PARADATA==NULL)
@@ -559,14 +612,16 @@ CParaData* CDataHandler::PARADATA()
 	}
 	return m_PARADATA;
 }
-//=============================================================================
-/**
- * @brief Get the instance of para data structure preset mode (singleton).
+/**********************************************************************************************//**
+ * @fn	CParaDataPRESET* CDataHandler::PRESET()
  *
- * @return the instance of preset para data structure
+ * @brief	Get the instance of para data structure preset mode (singleton).
  *
- **/
-//=============================================================================
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	null if it fails, else a CParaDataPRESET*.
+ **************************************************************************************************/
 CParaDataPRESET* CDataHandler::PRESET()
 { 
 	if(m_PRESET==NULL)
@@ -577,14 +632,17 @@ CParaDataPRESET* CDataHandler::PRESET()
 }
 
 
-//=============================================================================
-/**
- * @brief Get the instance of data handler (singleton).
+/**********************************************************************************************//**
+ * @fn	CDataHandler* CDataHandler::getInstance()
  *
- * @return the instance of data handler
+ * @brief	Get the instance of data handler (singleton).
  *
- **/
-//=============================================================================
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	null if it fails, else the instance.
+ **************************************************************************************************/
+
 CDataHandler* CDataHandler::getInstance()
 {
 	if(theDataHandler == 0)
@@ -594,11 +652,14 @@ CDataHandler* CDataHandler::getInstance()
 	return theDataHandler;
 }
 
-//=============================================================================
-/**
- * @brief Destroys the instance of data handler (singleton).
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * @fn	void CDataHandler::destroyInstance()
+ *
+ * @brief	Destroys the instance of data handler (singleton).
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CDataHandler::destroyInstance()
 {
 	if(theDataHandler != NULL)
@@ -607,14 +668,20 @@ void CDataHandler::destroyInstance()
 		theDataHandler = NULL;
 	}
 }
-//=============================================================================
-/**
- * @brief Destruct and clean.
+
+/**********************************************************************************************//**
+ * @fn	void CDataHandler::setExit()
  *
- *   - deinitializes all critical sections
- *   - deletes all memory allocations
- **/
-//=============================================================================
+ * @brief	Sets the exit, destruct and clean.
+ * 			- deinitializes all critical sections
+ *			- deletes all memory allocations
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @exception	std	Thrown when a standard error condition occurs.
+ **************************************************************************************************/
+
 void CDataHandler::setExit()
 {
 	m_bExit=true;
@@ -625,16 +692,6 @@ void CDataHandler::setExit()
 
 		m_PARADATA->DestroyInstance();
 		m_PRESET->DestroyInstance();
-
-		/*if (m_pbufFOTcalculate != NULL) {
-			delete [] m_pbufFOTcalculate;
-		}
-		m_pbufFOTcalculate=NULL;
-
-		if (m_pbufFOTventilation != NULL) {
-			delete [] m_pbufFOTventilation;
-		}
-		m_pbufFOTventilation=NULL;*/
 
 		EnterCriticalSection(&csSavedBreath);
 		if (m_pbufSavedBreath != NULL) {
@@ -678,13 +735,17 @@ void CDataHandler::setExit()
 		m_pbufNumericCPAP=NULL;
 		delete [] m_pbufNumericHFO;
 		m_pbufNumericHFO=NULL;
+		delete [] m_pbufNumericNCPAP;
+		m_pbufNumericNCPAP=NULL;
+		delete [] m_pbufNumericDUOPAP;
+		m_pbufNumericDUOPAP=NULL;
+		delete [] m_pbufNumericTHERAPY;
+		m_pbufNumericTHERAPY=NULL;
 
 		delete [] m_pbufMessureAVG;
 		m_pbufMessureAVG=NULL;
 		delete [] m_pbufMessureBTB;
 		m_pbufMessureBTB=NULL;
-
-
 	}
 	catch (std::exception& e)
 	{
@@ -712,22 +773,22 @@ void CDataHandler::setExit()
 	DeleteCriticalSection(&csOxyState);
 	DeleteCriticalSection(&csTrendFileData);
 	DeleteCriticalSection(&csTrend);
-	DeleteCriticalSection(&csDelTrendThread);//rkuNEWFIX
+	DeleteCriticalSection(&csDelTrendThread);
 	DeleteCriticalSection(&csSavedBreath);
 	DeleteCriticalSection(&csFOTosciState);
-
 }
 
 
-
-//=============================================================================
-/**
- * @brief Get the instance of the model (singleton).
+/**********************************************************************************************//**
+ * @fn	CMVModel *CDataHandler::getModel()
  *
- * @return the instance of the model
+ * @brief	Get the instance of the model (singleton).
  *
- **/
-//=============================================================================
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	null if it fails, else the model.
+ **************************************************************************************************/
 CMVModel *CDataHandler::getModel()
 {
 	if(m_pModel==NULL)
@@ -735,24 +796,16 @@ CMVModel *CDataHandler::getModel()
 	return m_pModel;
 }
 
-//int CDataHandler::GetFileSize( CStringW filename )
-//{
-//	WIN32_FIND_DATA ffdata;
-//	HANDLE hFindFile;
-//
-//	hFindFile = ::FindFirstFile( filename, &ffdata );
-//	if ( hFindFile == INVALID_HANDLE_VALUE )
-//		return -1;
-//
-//	int result = ffdata.nFileSizeLow;
-//
-//	::FindClose( hFindFile );
-//
-//	return result;
-//}
-
-//###########################################################################
-//NEWLOOP
+/**********************************************************************************************//**
+ * @fn	int CDataHandler::getSizeSavedBreath()
+ *
+ * @brief	Gets size saved breath.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	The size saved breath.
+ **************************************************************************************************/
 int CDataHandler::getSizeSavedBreath()
 {
 	EnterCriticalSection(&csSavedBreath);
@@ -760,6 +813,17 @@ int CDataHandler::getSizeSavedBreath()
 	LeaveCriticalSection(&csSavedBreath);
 	return iSize;
 }
+
+/**********************************************************************************************//**
+ * @fn	void CDataHandler::setSizeSavedBreath(int iSize)
+ *
+ * @brief	Sets size saved breath.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @param	iSize	Zero-based index of the size.
+ **************************************************************************************************/
 void CDataHandler::setSizeSavedBreath(int iSize)
 {
 	EnterCriticalSection(&csSavedBreath);
@@ -767,9 +831,10 @@ void CDataHandler::setSizeSavedBreath(int iSize)
 	LeaveCriticalSection(&csSavedBreath);
 }
 
-//=============================================================================
-/**
- * @brief Initializes the data handler.
+/**********************************************************************************************//**
+ * @fn	void CDataHandler::init()
+ *
+ * @brief	Initializes the data handler.
  *
  *   This function initializes the members of the data handler and:
  *   - initializes the operating times
@@ -778,8 +843,9 @@ void CDataHandler::setSizeSavedBreath(int iSize)
  *   - load the configuration
  *   - load the numeric configuration
  *
- **/
-//=============================================================================
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CDataHandler::init()
 {
 	m_szLicenseFile=_T("AL");
@@ -852,7 +918,6 @@ void CDataHandler::init()
 
 	checkLicensing();
 
-	//VG_VL_NEW
 	if(!m_bVLIMITLicenseAvailable && getModel()->getCONFIG()->GetVolumeControl()==VCTRL_VLIMIT)
 	{
 		if(m_bVGUARANTLicenseAvailable)
@@ -881,7 +946,7 @@ void CDataHandler::init()
 		m_eCurVgarantState=VOLUMEGAR_OFF;
 	}
 
-	checkVentRangeSettings();//EFLOW_CHECK
+	checkVentRangeSettings();
 	
 
 	m_iContrastParm=GetContrast();
@@ -939,20 +1004,17 @@ void CDataHandler::checkVentRangeSettings()//EFLOW_CHECK
 	{
 		SetEFlowParadata_TRIGGER(iLowerLimit,false);
 	}
-
-	
 }
 
 /**********************************************************************************************//**
  * @fn	void CDataHandler::initTrend()
  *
- * @brief	Initialises the trend.
+ * @brief	Initializes the trend.
  * 			This function deserializes the trend data if license is available
  *
  * @author	Rainer
  * @date	14.03.2016
  **************************************************************************************************/
-
 void CDataHandler::initTrend()
 {
 	CString sFile=_T("");
@@ -962,7 +1024,6 @@ void CDataHandler::initTrend()
 	{
 		szPath=_T("\\FFSDISK\\");
 	}
-
 
 	if (!CTlsFile::Exists(szPath+IDS_TRD_FOLDER))
 	{
@@ -1351,21 +1412,24 @@ void CDataHandler::initTrend()
 			theApp.getLog()->WriteLine(sz);
 			DeleteAllTrendData();
 		}
-		
 	}
 
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_DEL_TRENDDATA);
 }
-//=============================================================================
-/**
- * @brief Checks the licensing data.
+
+/**********************************************************************************************//**
+ * @fn	bool CDataHandler::checkLicensing()
  *
- * @return false if no unique ID, else true
+ * @brief	Checks the licensing data.
+ * 			
+ * 			This function read the licensing and enables/disables  the modules.
  *
- *   This function read the licensing and enables/disables  the modules.
-  **/
-//=============================================================================
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	false if no unique ID, else true
+ **************************************************************************************************/
 bool CDataHandler::checkLicensing()
 {
 	if(getModel()->GetUniqueID()==_T("-ERROR-"))
@@ -1466,7 +1530,6 @@ bool CDataHandler::checkLicensing()
 								if(sKey == "module")
 								{
 									sModuleName=sValue;
-
 								}
 								else
 								{
@@ -1474,16 +1537,12 @@ bool CDataHandler::checkLicensing()
 									sTemp += sKey;
 									sTemp += " ";
 									sTemp += sValue;
-
 									break;
 								}
 							}
 							else if(Type == CTlsXmlScanner::TT_BS)
 							{
-								//SetError(scanner, "Fehler Parse");
-								{
-									break;
-								}
+								break;
 							}
 							else if(Type == CTlsXmlScanner::TT_ES)
 							{
@@ -1507,22 +1566,12 @@ bool CDataHandler::checkLicensing()
 									sTemp += sKey;
 									sTemp += " ";
 									sTemp += sValue;
-
-									//SetError(scanner, sTemp);
-									{
-										break;
-									}
+									break;
 								}
-
-
-
 							}
 							else if(Type == CTlsXmlScanner::TT_BS)
 							{
-								//SetError(scanner, "Fehler Parse");
-								{
-									break;
-								}
+								break;
 							}
 							else if(Type == CTlsXmlScanner::TT_ES)
 							{
@@ -1550,14 +1599,7 @@ bool CDataHandler::checkLicensing()
 								}
 								else if(sModuleName==_T("CO2"))
 								{
-									//szParsedCO2Key=sModuleKey;
-									//if(sModuleKey!=_T("0"))
-									//{
-									//	if(getModel()->getCONFIG()->GetMainBoardVersion()<MAINBOARD3_0
-									//		&&	getModel()->getAcuLink()==NULL
-									//		/*&&	getModel()->IsTERMINALavailability()*/)
-									//		bCheckCO2Feature=true;
-									//}
+									//old, do nothing here
 								}
 								else if(sModuleName==_T("NMODE"))
 								{
@@ -1624,7 +1666,6 @@ bool CDataHandler::checkLicensing()
 									}
 								}
 							}
-
 						}
 					}
 					else 
@@ -1765,9 +1806,17 @@ bool CDataHandler::checkLicensing()
 	if(bOldMasterFeature)
 		WriteLicenseFile();
 
-
 	return true;
 }
+
+/**********************************************************************************************//**
+ * @fn	void CDataHandler::WriteLicenseFile()
+ *
+ * @brief	Writes the license file.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CDataHandler::WriteLicenseFile()
 {
 	CString szLicenseFile=_T("\\FFSDISK\\AL");
@@ -1865,86 +1914,79 @@ void CDataHandler::WriteLicenseFile()
 			case 0:
 				{
 					xml.WriteTextTag(_T("MODULE"), _T("HFO"));
-					//xml.WriteTextTag(_T("KEY"), _T("0F8FA61401714C32BECE"));
 					xml.WriteTextTag(_T("KEY"), szEncryptedHFOKey);
 				}
 				break;
 			case 1:
 				{
 					xml.WriteTextTag(_T("MODULE"), _T("NMODE"));
-					//xml.WriteTextTag(_T("KEY"), _T("00D9D41FBCF263CB1737"));
 					xml.WriteTextTag(_T("KEY"), szEncryptedNMODEKey);
 				}
 				break;
 			case 2:
 				{
 					xml.WriteTextTag(_T("MODULE"), _T("VGUARANTY"));
-					//xml.WriteTextTag(_T("KEY"), _T("6607A0E9629CDD0DBD5B"));
 					xml.WriteTextTag(_T("KEY"), szEncryptedVGUARANTYKey);
 				}
 				break;
 			case 3:
 				{
 					xml.WriteTextTag(_T("MODULE"), _T("VLIMIT"));
-					//xml.WriteTextTag(_T("KEY"), _T("4AD1BE6777DDE0D5E697"));
 					xml.WriteTextTag(_T("KEY"), szEncryptedVLIMITKey);
 				}
 				break;
 			case 4:
 				{
 					xml.WriteTextTag(_T("MODULE"), _T("LUNGREC"));
-					//xml.WriteTextTag(_T("KEY"), _T("4AD1BE6777DDE0D5E697"));
 					xml.WriteTextTag(_T("KEY"), szEncryptedLUNGRECKey);
 				}
 				break;
 			case 5:
 				{
 					xml.WriteTextTag(_T("MODULE"), _T("TRENDS"));
-					//xml.WriteTextTag(_T("KEY"), _T("4AD1BE6777DDE0D5E697"));
 					xml.WriteTextTag(_T("KEY"), szEncryptedTRENDSKey);
 				}
 				break;
 			case 6:
 				{
 					xml.WriteTextTag(_T("MODULE"), _T("THERAPY"));
-					//xml.WriteTextTag(_T("KEY"), _T("4AD1BE6777DDE0D5E697"));
 					xml.WriteTextTag(_T("KEY"), szEncryptedTHERAPYKey);
 				}
 				break;
 			case 7:
 				{
 					xml.WriteTextTag(_T("MODULE"), _T("PRICO"));
-					//xml.WriteTextTag(_T("KEY"), _T("4AD1BE6777DDE0D5E697"));
 					xml.WriteTextTag(_T("KEY"), szEncryptedPRICOKey);
 				}
 				break;
 			case 8:
 				{
 					xml.WriteTextTag(_T("MODULE"), _T("FOT"));
-					//xml.WriteTextTag(_T("KEY"), _T("4AD1BE6777DDE0D5E697"));
 					xml.WriteTextTag(_T("KEY"), szEncryptedFOTKey);
 				}
 				break;
 			default:
 				break;
 			}
-
 			xml.CloseTag(_T("License"), true);
 		}
 	}
 
 	xml.CloseTag(_T("FabianHFO"), true);
-
 	os.Close();
 }
-//=============================================================================
-/**
- * @brief Formats the encrypted key for licensing.
- * @param [in] Encrypted string of license.
+/**********************************************************************************************//**
+ * @fn	CString CDataHandler::getFormattedEncryptKey(CStringA szEncryptedKey)
  *
- * @return the formatted string
- **/
-//=============================================================================
+ * @brief	Gets formatted encrypt key for licensing.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @param	szEncryptedKey	The encrypted key.
+ *
+ * @return	The formatted encrypt key.
+ **************************************************************************************************/
 CString CDataHandler::getFormattedEncryptKey(CStringA szEncryptedKey)
 {
 	CString szForamttedKey=_T("");
@@ -2019,12 +2061,6 @@ CStringA CDataHandler::encryptKey(eModule module)
 			oRijndael.MakeKey("AcutronicHFO0000", CRijndael::sm_chain0, 16, 16);
 		}
 		break;
-	//case MOD_CO2:
-	//	{
-	//		//Initialization
-	//		oRijndael.MakeKey("AcutronicCO20000", CRijndael::sm_chain0, 16, 16);
-	//	}
-	//	break;
 	case MOD_NMODE:
 		{
 			oRijndael.MakeKey("AcutronicNMODE00", CRijndael::sm_chain0, 16, 16);
@@ -2072,10 +2108,8 @@ CStringA CDataHandler::encryptKey(eModule module)
 		break;
 	}
 
-	//strcpy(szDataIn,szUniqueID16);
 	strcpy_s(szDataIn,_countof(szDataIn),szUniqueID16);
 	
-
 	//Encryption
 	oRijndael.EncryptBlock(szDataIn, szDataOut);
 
@@ -2163,10 +2197,31 @@ void CDataHandler::hexStr2CharStr(char const* pszHexStr, unsigned char* pucCharS
 	}
 }
 
+/**********************************************************************************************//**
+ * @fn	BYTE CDataHandler::getPRICO_SPO2lowRange()
+ *
+ * @brief	Gets prico spo2low range.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	The calculated prico spo2low range.
+ **************************************************************************************************/
 BYTE CDataHandler::getPRICO_SPO2lowRange()
 {
 	return getModel()->getCONFIG()->getPRICO_SPO2lowRange();
 }
+
+/**********************************************************************************************//**
+ * @fn	void CDataHandler::setPRICO_SPO2lowRange(BYTE SPO2low)
+ *
+ * @brief	Sets prico spo2low range.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @param	SPO2low	The spo2low.
+ **************************************************************************************************/
 void CDataHandler::setPRICO_SPO2lowRange(BYTE SPO2low)
 {
 	getModel()->getCONFIG()->setPRICO_SPO2lowRange(SPO2low);
@@ -2178,10 +2233,32 @@ void CDataHandler::setPRICO_SPO2lowRange(BYTE SPO2low)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * @fn	BYTE CDataHandler::getPRICO_SPO2highRange()
+ *
+ * @brief	Gets prico spo2high range.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	The calculated prico spo2high range.
+ **************************************************************************************************/
 BYTE CDataHandler::getPRICO_SPO2highRange()
 {
 	return getModel()->getCONFIG()->getPRICO_SPO2highRange();
 }
+
+/**********************************************************************************************//**
+ * @fn	void CDataHandler::setPRICO_SPO2highRange(BYTE SPO2high)
+ *
+ * @brief	Sets prico spo2high range.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @param	SPO2high	The spo2high.
+ **************************************************************************************************/
 void CDataHandler::setPRICO_SPO2highRange(BYTE SPO2high)
 {
 	getModel()->getCONFIG()->setPRICO_SPO2highRange(SPO2high);
@@ -2194,10 +2271,31 @@ void CDataHandler::setPRICO_SPO2highRange(BYTE SPO2high)
 	}
 }
 
+/**********************************************************************************************//**
+ * @fn	BYTE CDataHandler::getPRICO_FIO2lowRange()
+ *
+ * @brief	Gets prico fio2low range.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	The calculated prico fio2low range.
+ **************************************************************************************************/
 BYTE CDataHandler::getPRICO_FIO2lowRange()
 {
 	return getModel()->getCONFIG()->getPRICO_FIO2lowRange();
 }
+
+/**********************************************************************************************//**
+ * @fn	void CDataHandler::setPRICO_FIO2lowRange(BYTE FIO2low)
+ *
+ * @brief	Sets prico fio2low range.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @param	FIO2low	The fio2low.
+ **************************************************************************************************/
 void CDataHandler::setPRICO_FIO2lowRange(BYTE FIO2low)
 {
 	getModel()->getCONFIG()->setPRICO_FIO2lowRange(FIO2low);
@@ -2210,12 +2308,33 @@ void CDataHandler::setPRICO_FIO2lowRange(BYTE FIO2low)
 			getModel()->getPRICOThread()->setStartupOxyValue(FIO2low); //pro, change 3
 		}
 	}
-	
 }
+
+/**********************************************************************************************//**
+ * @fn	BYTE CDataHandler::getPRICO_FIO2highRange()
+ *
+ * @brief	Gets prico fio2high range.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	The calculated prico fio2high range.
+ **************************************************************************************************/
 BYTE CDataHandler::getPRICO_FIO2highRange()
 {
 	return getModel()->getCONFIG()->getPRICO_FIO2highRange();
 }
+
+/**********************************************************************************************//**
+ * @fn	void CDataHandler::setPRICO_FIO2highRange(BYTE FIO2high)
+ *
+ * @brief	Sets prico fio2high range.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @param	FIO2high	The fio2high.
+ **************************************************************************************************/
 void CDataHandler::setPRICO_FIO2highRange(BYTE FIO2high)
 {
 	getModel()->getCONFIG()->setPRICO_FIO2highRange(FIO2high);
@@ -2231,32 +2350,51 @@ void CDataHandler::setPRICO_FIO2highRange(BYTE FIO2high)
 	
 }
 
-//=============================================================================
- /**
- * @brief Check PRICO state.
+/**********************************************************************************************//**
+ * @fn	bool CDataHandler::getPRICOState()
  *
- * @return true if running, else false
- **/
-//=============================================================================
+ * @brief	Gets prico state.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 bool CDataHandler::getPRICOState()
 {
 	return m_bPRICOrunning;
 }
-void CDataHandler::setPRICOon()//PRICO04
+
+/**********************************************************************************************//**
+ * @fn	void CDataHandler::setPRICOon()
+ *
+ * @brief	Sets PRICO on.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
+void CDataHandler::setPRICOon()
 {
 	m_bPRICOrunning=true;
-	DEBUGMSG(TRUE, (TEXT("setPRICOState on\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("setPRICOState on\r\n")));
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_START_PRICO);
 }
-void CDataHandler::setPRICOoff()//PRICO04
+
+/**********************************************************************************************//**
+ * @fn	void CDataHandler::setPRICOoff()
+ *
+ * @brief	Sets PRICO off.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
+void CDataHandler::setPRICOoff()
 {
 	m_bPRICOrunning=false;
-	DEBUGMSG(TRUE, (TEXT("setPRICOState off\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("setPRICOState off\r\n")));
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_STOP_PRICO);
-
-	//SetCurrentO2Para(PARADATA()->GetO2Para());
 }
 
 //=============================================================================
@@ -2403,11 +2541,6 @@ void CDataHandler::disableTRENDLicense()
 //=============================================================================
 bool CDataHandler::isFOTLicenseAvailable()
 {
-	//TESTtrigge
-	//return false;
-	 
-	//todoFOT
-	//return true;
 	return m_bFOTLicenseAvailable;
 }
 void CDataHandler::enableFOTLicense()
@@ -2436,9 +2569,6 @@ void CDataHandler::enableTHERAPYLicense()
 {
 	m_bTHERAPYLicenseAvailable=true;
 	theApp.getLog()->WriteLine(_T("-enableTHERAPYmodule"));
-
-	/*m_bTHERAPYFeatureAvailable=false;
-	theApp.getLog()->WriteLine(_T("#THERAPY NOT ACTIVATED YET#"));*/
 }
 void CDataHandler::disableTHERAPYLicense()
 {
@@ -2468,9 +2598,16 @@ void CDataHandler::disablePRICOLicense()
 	theApp.getLog()->WriteLine(_T("-disablePRICOmodule"));
 }
 
-
-
-
+/**********************************************************************************************//**
+ * @fn	BOOL CDataHandler::showFlowAC()
+ *
+ * @brief	Shows the flow AC.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ *
+ * @return	true if it succeeds, false if it fails.
+ **************************************************************************************************/
 BOOL CDataHandler::showFlowAC()
 {
 	return m_bShowFlowAC;
@@ -2521,11 +2658,6 @@ void CDataHandler::loadDiagrammColor()
 	m_crGraphColor_LOOP=CTlsIniFile::ReadIniDWORD(_T("WAVE"), _T("LOOP"), 0x0000ff, FABIANINI);
 	m_crGraphColor_SAVEDLOOP=CTlsIniFile::ReadIniDWORD(_T("WAVE"),_T("SAVEDLOOP") , 0x000000, FABIANINI);
 	m_crGraphColor_TRIGGER=CTlsIniFile::ReadIniDWORD(_T("WAVE"),  _T("TRIGGER"), 0x00dc00, FABIANINI);
-
-	/*COLORREF cl =RGB(255,255,255);
-	CString hexString;
-	hexString.Format("#%X",cl);*/
-
 }
 
 COLORREF CDataHandler::getGraphColor_PRESSURE()
@@ -2560,13 +2692,17 @@ COLORREF CDataHandler::getGraphColor_TRIGGER()
 {
 	return m_crGraphColor_TRIGGER;
 }
-//=============================================================================
-/**
- * @brief Load the numeric blocks.
+
+/**********************************************************************************************//**
+ * @fn	void CDataHandler::loadNumerics()
  *
- *   This function load the numeric blocks from the file fabianhfo.ini.
- **/
-//=============================================================================
+ * @brief	Loads the numerics.
+ * 			
+ +			This function load the numeric blocks from the file fabianhfo.ini.
+ *
+ * @author	Rainer Kuehner
+ * @date	07.02.2017
+ **************************************************************************************************/
 void CDataHandler::loadNumerics()
 {
 	NUMERICINI* pbufNumeric=NULL;
@@ -2619,6 +2755,24 @@ void CDataHandler::loadNumerics()
 				eMode=NUMMODE_HFO;
 				break;
 			}
+		case NUMMODE_NCPAP:
+			{
+				szMode=_T("NUMERIC_NCPAP");
+				eMode=NUMMODE_NCPAP;
+				break;
+			}
+		case NUMMODE_DUOPAP:
+			{
+				szMode=_T("NUMERIC_DUOPAP");
+				eMode=NUMMODE_DUOPAP;
+				break;
+			}
+		case NUMMODE_THERAPY:
+			{
+				szMode=_T("NUMERIC_THERAPY");
+				eMode=NUMMODE_THERAPY;
+				break;
+			}
 		}
 
 		for(BYTE iBlock=0;iBlock<MAX_NUMERICMODEBLOCK;iBlock++)
@@ -2648,9 +2802,17 @@ void CDataHandler::loadNumerics()
 			case NUMMODE_HFO:
 				pbufNumeric=&m_pbufNumericHFO[iBlock];
 				break;
+			case NUMMODE_NCPAP:
+				pbufNumeric=&m_pbufNumericNCPAP[iBlock];
+				break;
+			case NUMMODE_DUOPAP:
+				pbufNumeric=&m_pbufNumericDUOPAP[iBlock];
+				break;
+			case NUMMODE_THERAPY:
+				pbufNumeric=&m_pbufNumericTHERAPY[iBlock];
+				break;
 			}
 			CStringW szState=CTlsIniFile::ReadIniStr(szNum, _T("SHOW"), _T("DEFAULT"), NUMERICCONFINI);
-			//DEBUGMSG(TRUE, (TEXT("SHOW =  %s\r\n"),szState));
 			setNumericINIstate(pbufNumeric,iBlock,szState);
 
 			bool bCount=false;
@@ -2695,6 +2857,15 @@ void CDataHandler::loadNumerics()
 					break;
 				case NUMMODE_HFO:
 					m_iNumericHFOcount++;
+					break;
+				case NUMMODE_NCPAP:
+					m_iNumericNCPAPcount++;
+					break;
+				case NUMMODE_DUOPAP:
+					m_iNumericDUOPAPcount++;
+					break;
+				case NUMMODE_THERAPY:
+					m_iNumericTHERAPYcount++;
 					break;
 				}
 			}
@@ -16118,6 +16289,18 @@ BYTE CDataHandler::getCountNumericHFO()
 	return m_iNumericHFOcount;
 }
 
+BYTE CDataHandler::getCountNumericNCPAP()
+{
+	return m_iNumericNCPAPcount;
+}
+BYTE CDataHandler::getCountNumericDUOPAP()
+{
+	return m_iNumericDUOPAPcount;
+}
+BYTE CDataHandler::getCountNumericTHERAPY()
+{
+	return m_iNumericTHERAPYcount;
+}
 
 void CDataHandler::setAcuLinkStarted()
 {

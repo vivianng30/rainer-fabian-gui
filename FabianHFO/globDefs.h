@@ -1101,12 +1101,17 @@
 #define IDC_VIEW_NUM_HFO_DEFAULTMECH		320
 #define IDC_VIEW_NUM_HFO					321
 
-#define IDC_VIEW_NUM_NCPAP					322
-#define IDC_VIEW_NUM_DUOPAP					323
-#define IDC_VIEW_NUM_THERAPIE				324
+#define IDC_VIEW_NUM_NCPAP_DEFAULT			322
+#define IDC_VIEW_NUM_NCPAP					323
 
-#define IDC_VIEW_NUM_FLOWOFF				325
-#define IDC_VIEW_NUM_FLOWOFF_HFO			326
+#define IDC_VIEW_NUM_DUOPAP_DEFAULT			324
+#define IDC_VIEW_NUM_DUOPAP					325
+
+#define IDC_VIEW_NUM_THERAPY_DEFAULT		326
+#define IDC_VIEW_NUM_THERAPY				327
+
+#define IDC_VIEW_NUM_FLOWOFF				328
+#define IDC_VIEW_NUM_FLOWOFF_HFO			329
 
 #define IDC_VIEW_NUM_FIELD1					330
 #define IDC_VIEW_NUM_FIELD2					331
@@ -3895,11 +3900,7 @@ typedef struct tagfVALUE
 #define HLP_0010	10
 
 
-#define MAX_NUMERICWND				8
-#define MAX_NUMERICVALUES			34
 
-#define MAX_NUMERICMODE				7	
-#define MAX_NUMERICMODEBLOCK		3
 
 #define NUMERIC_IPPV1		0
 #define NUMERIC_IPPV2		1
@@ -3920,6 +3921,16 @@ typedef struct tagfVALUE
 #define NUMERIC_HFO2		16
 #define NUMERIC_HFO3		17
 
+#define NUMERIC_NCPAP1		18
+#define NUMERIC_NCPAP2		19
+#define NUMERIC_NCPAP3		20
+#define NUMERIC_DUOPAP1		21
+#define NUMERIC_DUOPAP2		22
+#define NUMERIC_DUOPAP3		23
+#define NUMERIC_THERAPY1	24
+#define NUMERIC_THERAPY2	25
+#define NUMERIC_THERAPY3	26
+
 enum eNumericMode {
 	NUMMODE_IPPV,	
 	NUMMODE_SIPPV,
@@ -3927,7 +3938,10 @@ enum eNumericMode {
 	NUMMODE_SIMVPSV,
 	NUMMODE_PSV,
 	NUMMODE_CPAP,
-	NUMMODE_HFO
+	NUMMODE_HFO,
+	NUMMODE_NCPAP,
+	NUMMODE_DUOPAP,
+	NUMMODE_THERAPY
 };
 
 enum eNumericSize {
@@ -3935,7 +3949,6 @@ enum eNumericSize {
 	NUMERICSIZE_1,
 	NUMERICSIZE_2,
 	NUMERICSIZE_3	//mechanic block
-	//NUMERICSIZE_4	//flow glas
 };
 
 //ACHTUNG, bei Änderung immer den Buffer CDataHandler::m_pbufMessureAVG und CDataHandler::m_pbufMessureBTB anpassen!!!
@@ -3974,39 +3987,20 @@ enum eNumericType {
 	NUMT_FICO2,			//31	ALINK_MSMNT_FICO2, FiCO2 of CO2 modules
 	NUMT_MECHANIC ,		//32	
 	NUMT_VTE2			//33	VTEMAND + VTESPONT
+	
 };
-//ACHTUNG, bei Änderung immer den Buffer CDataHandler::m_pbufMessureAVG und CDataHandler::m_pbufMessureBTB anpassen!!!
+//ACHTUNG, bei Änderung immer den Buffer CDataHandler::m_pbufMessureAVG und CDataHandler::m_pbufMessureBTB anpassen!!! MAX_NUMERICVALUES
+#define MAX_NUMERICWND				8
+#define MAX_NUMERICVALUES			34
 
+#define MAX_NUMERICMODE				10	
+#define MAX_NUMERICMODEBLOCK		3
 
-
-
-//structure for numeric block data
-//typedef struct tagNUMERICBLOCK
-//{
-//	eNumericType eType;
-//	eNumericSize eSize;
-//	TCHAR	numName[15];
-//	TCHAR	numNameNote[10];
-//	TCHAR	numUnit[15];//
-//	INT		iNumValue;//
-//	bool	bHiAlarmLimit;
-//	eAlarmLimitState enumStateHiAlarmLimit;
-//	INT		iHiAlarmLimit;
-//	bool	bLoAlarmLimit;
-//	eAlarmLimitState enumStateLoAlarmLimit;
-//	INT		iLoAlarmLimit;
-//}NUMERICBLOCK, *LPNUMERICBLOCK;
-
-//typedef struct tagNUMERICSTATICTXT
-//{
-//	TCHAR	numName[15];
-//	TCHAR	numNameNote[10];
-//	TCHAR	numUnit[15];//
-//}NUMERICSTATICTXT, *LPNUMERICSTATICTXT;
 
 //structure for numeric block data
 typedef struct tagNUMERICINI
 {
+	eNumericMode eNumMode;
 	BYTE SHOW;//=TRUE, FALSE oder DEFAULT / DEFAULTMECHANIC
 	eNumericType VAL1;
 	eNumericSize SIZE1;

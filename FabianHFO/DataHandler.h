@@ -792,6 +792,9 @@ public:
 	BYTE getCountNumericPSV();
 	BYTE getCountNumericCPAP();
 	BYTE getCountNumericHFO();
+	BYTE getCountNumericNCPAP();
+	BYTE getCountNumericDUOPAP();
+	BYTE getCountNumericTHERAPY();
 
 	COLORREF getGraphColor_PRESSURE();
 	COLORREF getGraphColor_FLOW();
@@ -862,6 +865,9 @@ public:
 	static LPNUMERICINI m_pbufNumericPSV;
 	static LPNUMERICINI m_pbufNumericCPAP;
 	static LPNUMERICINI m_pbufNumericHFO;
+	static LPNUMERICINI m_pbufNumericNCPAP;
+	static LPNUMERICINI m_pbufNumericDUOPAP;
+	static LPNUMERICINI m_pbufNumericTHERAPY;
 	
 	CTrend m_cTrendTemporary;
 
@@ -952,6 +958,9 @@ private:
 	BYTE m_iNumericPSVcount;
 	BYTE m_iNumericCPAPcount;
 	BYTE m_iNumericHFOcount;
+	BYTE m_iNumericNCPAPcount;
+	BYTE m_iNumericDUOPAPcount;
+	BYTE m_iNumericTHERAPYcount;
 
 	BYTE m_chFilenumPINSP;
 	BYTE m_chFilenumPMEAN;

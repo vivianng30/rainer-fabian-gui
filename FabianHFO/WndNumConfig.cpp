@@ -40,6 +40,7 @@
 #include "NumericFieldVTI.h"
 #include "NumericFieldFICO2.h"
 
+
 // CWndNumConfig
 
 IMPLEMENT_DYNAMIC(CWndNumConfig, CWnd)
@@ -50,12 +51,8 @@ CWndNumeric()
 	m_pbufNumeric=pbufNumeric;
 	 m_bExit=false;
 	
-
 	m_iSizeComplete=0;
 	m_iCurrentNumPositionYaxes=0;
-	
-	
-
 }
 
 CWndNumConfig::~CWndNumConfig()
@@ -190,9 +187,7 @@ void CWndNumConfig::createNumericFields(BYTE block)
 	RECT rcLd;
 	rcLd.left=0;
 	rcLd.right=190;
-	rcLd.top=m_iCurrentNumPositionYaxes;
-
-	
+	rcLd.top=m_iCurrentNumPositionYaxes;	
 	
 	switch(block)
 	{
@@ -276,10 +271,6 @@ void CWndNumConfig::createNumericFields(BYTE block)
 			}
 			break;
 		}
-	}
-	else
-	{
-		//error
 	}
 
 	if(rcLd.top>=191 && rcLd.top<434)
@@ -665,8 +656,6 @@ void CWndNumConfig::SetGraphCursor(bool bDraw, bool bMoveXscale, bool bMoveYscal
 		DrawData(true,true, true, true,true);
 		
 	}
-
-	
 }
 // **************************************************************************
 // 
@@ -699,26 +688,10 @@ bool CWndNumConfig::DrawData(bool bData, bool bFrames, bool bText, bool bLimits,
 				pNumField->ShowWindow(SW_SHOW);
 				pNumField->drawData(bData, bFrames, bText, bLimits, bFlowmeter);
 			}
-			
-			/*if(bFrames)
-			{
-				pNumField->drawFrames(pDCStatic);
-			}
-
-			if(bText)
-			{
-				pNumField->drawStaticText(pDCStatic);
-			}
-
-			if(bLimits)
-			{
-				pNumField->drawLimits(pDCStatic);
-			}*/
 		}
 	}
 
 	pNumField = NULL;
-
 
 	LeaveCriticalSection(&csDraw);
 
@@ -729,8 +702,6 @@ bool CWndNumConfig::DrawData(bool bData, bool bFrames, bool bText, bool bLimits,
 // **************************************************************************
 bool CWndNumConfig::DrawFrames(CDC* pDC)
 {
-
-
 	return true;
 }
 
@@ -749,7 +720,6 @@ bool CWndNumConfig::drawCursor()
 
 	HBRUSH hPrevBrush = (HBRUSH)SelectObject(m_hdcStatic, (HBRUSH)GetStockObject(WHITE_BRUSH));	
 	HPEN hPrevPen = (HPEN)SelectObject(m_hdcStatic, (HPEN)GetStockObject(WHITE_PEN));
-	//CDC* pDCStatic=CDC::FromHandle(m_hdcStatic);
 
 	RECT rc;
 
@@ -905,7 +875,6 @@ bool CWndNumConfig::drawCursor()
 // **************************************************************************
 bool CWndNumConfig::DrawStaticText(CDC* pDC)
 {
-	
 	return true;
 }
 
@@ -915,7 +884,6 @@ bool CWndNumConfig::DrawStaticText(CDC* pDC)
 // **************************************************************************
 bool CWndNumConfig::DrawLimits(CDC* pDC)
 {
-	
 	return true;
 }
 
