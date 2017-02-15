@@ -32,6 +32,9 @@ CNumericField::CNumericField(eNumericSize size)
 	m_pcLimitHigh_Up=NULL;
 	m_pcLimitLow_Up=NULL;
 
+	m_pcNumInfoTop= NULL;
+	m_pcNumInfoBot= NULL;
+
 	m_pcTauSize1=NULL;
 	//m_pcTauSize2=NULL;
 
@@ -133,6 +136,9 @@ BOOL CNumericField::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateCon
 		//m_pcTauSize2	= new CBmp(theApp.m_hInstance,m_hDC,	IDB_NUM_TAU2);
 
 		m_pcWarningYellow = new CBmp(theApp.m_hInstance,m_hDC,IDB_PARA_WARN_SUB);
+
+		m_pcNumInfoTop		= new CBmp(theApp.m_hInstance,m_hDC,	IDB_NUM_INFO_TOP);
+		m_pcNumInfoBot		= new CBmp(theApp.m_hInstance,m_hDC,	IDB_NUM_INFO_BOT);
 
 		SelectObject(m_hdcStatic, hpenprevStatic);	
 		SelectObject(m_hdcStatic,hbrprevStatic);
@@ -268,6 +274,14 @@ BOOL CNumericField::PreTranslateMessage(MSG* pMsg)
 //************************************
 void CNumericField::OnDestroy() 
 {
+	if(m_pcNumInfoTop)
+		delete m_pcNumInfoTop;
+	m_pcNumInfoTop=NULL;
+
+	if(m_pcNumInfoBot)
+		delete m_pcNumInfoBot;
+	m_pcNumInfoBot=NULL;
+
 	if(m_pcWarningYellow)
 		delete m_pcWarningYellow;
 	m_pcWarningYellow=NULL;

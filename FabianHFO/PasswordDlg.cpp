@@ -342,86 +342,39 @@ void CPasswordDlg::OnBnClickedOk()
 
 
 	// check key
-	bool bKeyOk=false;
 	m_ebHexString1.GetWindowText(m_szEdit1);
 	m_ebHexString2.GetWindowText(m_szEdit2);
 	m_ebHexString3.GetWindowText(m_szEdit3);
 	m_ebHexString4.GetWindowText(m_szEdit4);
 	m_ebHexString5.GetWindowText(m_szEdit5);
 	CString szInputKey=m_szEdit1+_T("-")+m_szEdit2+_T("-")+m_szEdit3+_T("-")+m_szEdit4+_T("-")+m_szEdit5;
-	CString szEncryptedFormattedKey=_T("");
+	//CString szEncryptedFormattedKey=_T("");
 
-	switch(m_eModule)
+	//szEncryptedFormattedKey=encryptKey(m_eModule);
+
+	if(encryptKey(m_eModule)==szInputKey)
 	{
-	case MOD_MASTER:
-		{
-			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_MASTER));
-		}
-		break;
-	case MOD_HFO:
-		{
-			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_HFO));
-		}
-		break;
-	/*case MOD_CO2:
-		{
-			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_CO2));
-		}
-		break;*/
-	case MOD_NMODE:
-		{
-			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_NMODE));
-		}
-		break;
-	case MOD_VGUARANTY:
-		{
-			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_VGUARANTY));
-		}
-		break;
-	case MOD_VLIMIT:
-		{
-			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_VLIMIT));
-		}
-		break;
-	case MOD_LUNGREC:
-		{
-			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_LUNGREC));
-		}
-		break;
-	case MOD_TREND:
-		{
-			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_TREND));
-		}
-		break;
-	case MOD_THERAPY:
-		{
-			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_THERAPY));
-		}
-		break;
-	case MOD_PRICO:
-		{
-			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_PRICO));
-		}
-		break;
-	case MOD_FOT:
-		{
-			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_FOT));
-		}
-		break;
-	default:
-		{
-			m_InfoText.SetWindowText(_T("- ERROR: wrong mode -"));
-		}
-		break;
-	}
-
-	if(szEncryptedFormattedKey==szInputKey)
-		bKeyOk=true;
-
-
-	if(bKeyOk)
-	{
+		getModel()->getDATAHANDLER()->delDemoLicense(m_eModule, true);
 		OnOK();
+	}
+	else if(encryptDemoKey(m_eModule)==szInputKey)
+	{
+		COleDateTime dtLicenseTimestamp = getModel()->getDATAHANDLER()->GetdemoTimestamp(m_eModule);
+		
+		if(dtLicenseTimestamp.GetStatus() != COleDateTime::valid)//already set, could not be written once more
+		{
+			getModel()->getDATAHANDLER()->setDemoLicense(m_eModule);
+			OnOK();
+		}
+		else
+		{
+			m_InfoText.SetWindowText(_T("- already set -"));
+			m_ebHexString1.SetWindowText(_T(""));
+			m_ebHexString2.SetWindowText(_T(""));
+			m_ebHexString3.SetWindowText(_T(""));
+			m_ebHexString4.SetWindowText(_T(""));
+			m_ebHexString5.SetWindowText(_T(""));
+		}
 	}
 	else
 	{
@@ -672,4 +625,127 @@ void CPasswordDlg::OnDestroy()
 	KillTimer(FOCUSTIMER);
 
 	CDialog::OnDestroy();
+}
+
+
+CString CPasswordDlg::encryptKey(eModule module)
+{
+	CString szEncryptedFormattedKey=_T("");
+	switch(m_eModule)
+	{
+	case MOD_MASTER:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_MASTER));
+		}
+		break;
+	case MOD_HFO:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_HFO));
+		}
+		break;
+	case MOD_NMODE:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_NMODE));
+		}
+		break;
+	case MOD_VGUARANTY:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_VGUARANTY));
+		}
+		break;
+	case MOD_VLIMIT:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_VLIMIT));
+		}
+		break;
+	case MOD_LUNGREC:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_LUNGREC));
+		}
+		break;
+	case MOD_TREND:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_TREND));
+		}
+		break;
+	case MOD_THERAPY:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_THERAPY));
+		}
+		break;
+	case MOD_PRICO:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_PRICO));
+		}
+		break;
+	case MOD_FOT:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_FOT));
+		}
+		break;
+	default:
+		{
+			m_InfoText.SetWindowText(_T("- ERROR: wrong mode -"));
+		}
+		break;
+	}
+	return szEncryptedFormattedKey;
+}
+CString CPasswordDlg::encryptDemoKey(eModule module)
+{
+	CString szEncryptedFormattedKey=_T("");
+	switch(m_eModule)
+	{
+	case MOD_HFO:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_HFO));
+		}
+		break;
+	case MOD_NMODE:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_NMODE));
+		}
+		break;
+	case MOD_VGUARANTY:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_VGUARANTY));
+		}
+		break;
+	case MOD_VLIMIT:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_VLIMIT));
+		}
+		break;
+	case MOD_LUNGREC:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_LUNGREC));
+		}
+		break;
+	case MOD_TREND:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_TREND));
+		}
+		break;
+	case MOD_THERAPY:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_THERAPY));
+		}
+		break;
+	case MOD_PRICO:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_PRICO));
+		}
+		break;
+	case MOD_FOT:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_FOT));
+		}
+		break;
+	default:
+		{
+			m_InfoText.SetWindowText(_T("- ERROR: wrong mode -"));
+		}
+		break;
+	}
+	return szEncryptedFormattedKey;
 }

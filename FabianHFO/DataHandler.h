@@ -55,9 +55,28 @@ public:
 	bool checkLicensing();
 	void WriteLicenseFile();
 
+	void setDemoLicense(eModule module);
+	void delDemoLicense(eModule module, bool bReset);
+	void endableDemoLicense(eModule module);
+	//void checkDemoLicense();
+	void checkDemoLicense(eModule module);
+	COleDateTime GetdemoTimestamp(eModule module);
+
+	void checkDemoLicense_HFO();
+	void checkDemoLicense_NMODE();
+	void checkDemoLicense_VGUARANTY();
+	void checkDemoLicense_VLIMIT();
+	void checkDemoLicense_LUNGREC();
+	void checkDemoLicense_TREND();
+	void checkDemoLicense_THERAPY();
+	void checkDemoLicense_PRICO();
+	void checkDemoLicense_FOT();
+	
 	CString getFormattedEncryptKey(CStringA szEncryptedKey);
 
 	CStringA encryptKey(eModule module);
+	CStringA encryptDEMOKey(eModule module);
+	
 	void char2Hex(unsigned char ch, char* szHex);
 	void hex2Char(char const* szHex, unsigned char& rch);
 	void charStr2HexStr(unsigned char const* pucCharStr, char* pszHexStr, int iSize);
@@ -80,38 +99,47 @@ public:
 	bool isHFOLicenseAvailable();
 	void enableHFOLicense();
 	void disableHFOLicense();
+	bool isHFODemoLicAvailable();
 
 	bool isNMODELicenseAvailable();
 	void enableNMODELicense();
 	void disableNMODELicense();
+	bool isNMODEDemoLicAvailable();
 
 	bool isVGUARANTLicenseAvailable();
 	void enableVGUARANTLicense();
 	void disableVGUARANTLicense();
+	bool isVGUARANTDemoLicAvailable();
 
 	bool isVLIMITLicenseAvailable();
 	void enableVLIMITLicense();
 	void disableVLIMITLicense();
+	bool isVLIMITDemoLicAvailable();
 
 	bool isLUNGRECLicenseAvailable();
 	void enableLUNGRECLicense();
 	void disableLUNGRECLicense();
+	bool isLUNGRECDemoLicAvailable();
 
 	bool isTRENDLicenseAvailable();
 	void enableTRENDLicense();
 	void disableTRENDLicense();
+	bool isTRENDDemoLicAvailable();
 
 	bool isTHERAPYLicenseAvailable();
 	void enableTHERAPYLicense();
 	void disableTHERAPYLicense();
+	bool isTHERAPYDemoLicAvailable();
 
 	bool isPRICOLicenseAvailable();
 	void enablePRICOLicense();
 	void disablePRICOLicense();
+	bool isPRICODemoLicAvailable();
 
 	bool isFOTLicenseAvailable();
 	void enableFOTLicense();
 	void disableFOTLicense();
+	bool isFOTDemoLicAvailable();
 
 	//bool isHFOManBreathAvailable();PMAN1
 
@@ -795,6 +823,9 @@ public:
 	BYTE getCountNumericNCPAP();
 	BYTE getCountNumericDUOPAP();
 	BYTE getCountNumericTHERAPY();
+	BYTE getCountNumericFLOWOFFCONV();
+	BYTE getCountNumericFLOWOFFHFO();
+
 
 	COLORREF getGraphColor_PRESSURE();
 	COLORREF getGraphColor_FLOW();
@@ -868,6 +899,8 @@ public:
 	static LPNUMERICINI m_pbufNumericNCPAP;
 	static LPNUMERICINI m_pbufNumericDUOPAP;
 	static LPNUMERICINI m_pbufNumericTHERAPY;
+	static LPNUMERICINI m_pbufNumericFLOWOFFCONV;
+	static LPNUMERICINI m_pbufNumericFLOWOFFHFO;
 	
 	CTrend m_cTrendTemporary;
 
@@ -962,6 +995,9 @@ private:
 	BYTE m_iNumericDUOPAPcount;
 	BYTE m_iNumericTHERAPYcount;
 
+	BYTE m_iNumericFLOWOFFCONVcount;
+	BYTE m_iNumericFLOWOFFHFOcount;
+
 	BYTE m_chFilenumPINSP;
 	BYTE m_chFilenumPMEAN;
 	BYTE m_chFilenumFIO2;
@@ -979,6 +1015,16 @@ private:
 	BYTE m_chFilenumEtCO2;
 	BYTE m_chFilenumSpO2PR;
 	
+	bool m_bVGUARANTDemoLicAvailable;
+	bool m_bVLIMITDemoLicAvailable;
+	bool m_bHFODemoLicAvailable;
+	bool m_bNMODEDemoLicAvailable;
+	bool m_bLUNGRECDemoLicAvailable;
+	bool m_bTRENDDemoLicAvailable;
+	bool m_bTHERAPYDemoLicAvailable;
+	bool m_bPRICODemoLicAvailable;
+	bool m_bFOTDemoLicAvailable;
+
 	bool m_bVGUARANTLicenseAvailable;
 	bool m_bVLIMITLicenseAvailable;
 	bool m_bHFOLicenseAvailable;

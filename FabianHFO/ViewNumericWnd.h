@@ -50,9 +50,9 @@ class CViewNumericWnd :public CMVView
 		NUMB_NCPAP			= 7,
 		NUMB_DUOPAP			= 8,
 		NUMB_HFO			= 9,
-		NUMB_THERAPY		= 10, 
-		NUMB_FLOWOFF		= 11,
-		NUMB_FLOWOFF_HFO	= 12
+		NUMB_THERAPY		= 10,
+		NUMB_FLOWOFFCONV	= 11,
+		NUMB_FLOWOFFHFO		= 12
 	};
 public:
 	CViewNumericWnd(int ViewID = 0);
@@ -95,62 +95,9 @@ public:
 	//bool isGraphCursor();
 
 protected:
-	bool CreateWndNumIPPV_Default();
-	bool CreateWndNumIPPV_DefaultMech();
-	bool CreateWndNumSIPPV_Default();
-	bool CreateWndNumSIPPV_DefaultMech();
-	bool CreateWndNumPSV_Default();
-	bool CreateWndNumPSV_DefaultMech();
-	bool CreateWndNumSIMV_Default();
-	bool CreateWndNumSIMV_DefaultMech();
-	bool CreateWndNumSIMVPSV_Default();
-	bool CreateWndNumSIMVPSV_DefaultMech();
-	bool CreateWndNumCPAP_Default();
-	bool CreateWndNumCPAP_DefaultMech();
-	bool CreateWndNumHFO_Default();
-	bool CreateWndNumHFO_DefaultMech();
-	bool CreateWndNumFlowOff();
-	bool CreateWndNumFlowOffHFO();
-	bool CreateWndNumTHERAPY_Default();
-	bool CreateWndNumDUOPAP_Default();
-	bool CreateWndNumNCPAP_Default();
-
-	bool createWndNumConfig(UINT ID, NUMERICINI* pbufNumeric);
-
-
-
-	void deleteWndNumIPPV_Default();
-	void deleteWndNumIPPV_DefaultMech();
-	void deleteWndNumSIPPV_Default();
-	void deleteWndNumSIPPV_DefaultMech();
-	void deleteWndNumPSV_Default();
-	void deleteWndNumPSV_DefaultMech();
-	void deleteWndNumSIMV_Default();
-	void deleteWndNumSIMV_DefaultMech();
-	void deleteWndNumSIMVPSV_Default();
-	void deleteWndNumSIMVPSV_DefaultMech();
-	void deleteWndNumCPAP_Default();
-	void deleteWndNumCPAP_DefaultMech();
-	void deleteWndNumHFO_Default();
-	void deleteWndNumHFO_DefaultMech();
-	void deleteWndNumTHERAPY_Default();
-	void deleteWndNumDUOPAP_Default();
-	void deleteWndNumNCPAP_Default();
 	
 
-
-	void deleteWndNumIPPV();
-	void deleteWndNumSIPPV();
-	void deleteWndNumPSV();
-	void deleteWndNumSIMV();
-	void deleteWndNumSIMVPSV();
-	void deleteWndNumCPAP();
-	void deleteWndNumHFO();
-	void deleteWndNumFlowOff();
-	void deleteWndNumFlowOffHFO();
-	void deleteWndNumTHERAPY();
-	void deleteWndNumDUOPAP();
-	void deleteWndNumNCPAP();
+	bool createWndNumConfig(UINT ID, NUMERICINI* pbufNumeric);
 
 	void deleteWndNumConfig();
 	
@@ -164,9 +111,9 @@ protected:
 	void ShowWndNumDUOPAP();
 	void ShowWndNumNCPAP();
 	void ShowWndNumHFO();
-	void ShowWndNumFlowOff();
-	void ShowWndNumFlowOffHFO();
 	void ShowWndNumTHERAPY();
+	void ShowWndNumFLOWOFFCONV();
+	void ShowWndNumFLOWOFFHFO();
 
 	//void showWndNumConfig();
 
@@ -202,28 +149,7 @@ protected:
 	CBmp* m_pcNumeric_Up;
 	CBmp* m_pcNumeric_Dw;
 
-	CWndNumIPPV_BtB* m_pcWndNumIPPVdefault;
-	CWndNumIPPV_Mech* m_pcWndNumIPPVdefaultmech;
-	CWndNumSIPPV_Av* m_pcWndNumSIPPVdefault;
-	CWndNumSIPPV_Mech* m_pcWndNumSIPPVdefaultmech;
-	CWndNumPSV_Av* m_pcWndNumPSVdefault;
-	CWndNumPSV_Mech* m_pcWndNumPSVdefaultmech;
-	CWndNumSIMVPSV_Av* m_pcWndNumSIMVPSVdefault;
-	CWndNumSIMVPSV_Mech* m_pcWndNumSIMVPSVdefaultmech;
-	CWndNumSIMV_Av* m_pcWndNumSIMVdefault;
-	CWndNumSIMV_Mech* m_pcWndNumSIMVdefaultmech;
-	CWndNumCPAP_Av* m_pcWndNumCPAPdefault;
-	CWndNumCPAP_Mech* m_pcWndNumCPAPdefaultmech;
-	CWndNumAvNCPAP* m_pcWndNumNCPAPdefault;
-	CWndNumAvDUOPAP* m_pcWndNumDUOPAPdefault;
-	CWndNumAvTHERAPIE* m_pcWndNumTHERAPYdefault;
-	CWndNumHFO_Av* m_pcWndNumHFOdefault;
-	CWndNumHFO_Mech* m_pcWndNumHFOdefaultmech;
-	CWndNumFlowOff_Av* m_pcWndNumFlowOff;
-	CWndNumFlowOffHFO_Av* m_pcWndNumFlowOffHFO;
-
 	CWndNumConfig* m_pcWndNumConfig;
-
 
 
 	NUMWNDATTRIB m_nwa;

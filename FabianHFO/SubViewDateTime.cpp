@@ -315,14 +315,12 @@ BOOL CSubViewDateTime::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		SYSTEMTIME st;
 		GetLocalTime(&st);
 		m_dtDateTime=COleDateTime(st);
-		//CStringW szTime = m_dtDateTime.Format(LOCALE_NOUSEROVERRIDE,LANG_USER_DEFAULT);
 
 		m_iYear=m_dtDateTime.GetYear();
 		m_iMonth=m_dtDateTime.GetMonth();
 		m_iDay=m_dtDateTime.GetDay();
 		m_iHour=m_dtDateTime.GetHour();
 		m_iMinute=m_dtDateTime.GetMinute();
-		
 		
 		BTN btn;
 
@@ -378,8 +376,6 @@ BOOL CSubViewDateTime::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		m_plStaticBtn.AddTail(m_pbtnMonth);
 
 
-	
-
 		//CUpDwnBtn* m_pbtnHour;
 		btn.wID					= IDC_BTN_SETUP_HOUR;	
 		btn.poPosition.x		= 320;
@@ -414,9 +410,6 @@ BOOL CSubViewDateTime::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		m_pbtnMinute->ShowWindow(SW_SHOW);
 		m_plStaticBtn.AddTail(m_pbtnMinute);
 
-		
-
-
 		btn.wID					= IDC_BTN_SETUP_DT_OK;	
 		btn.poPosition.x		= 540;
 		btn.poPosition.y		= 365;
@@ -430,9 +423,6 @@ BOOL CSubViewDateTime::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		m_pbtnOk->Create(this,g_hf21AcuBold,0);
 		m_pbtnOk->SetText(_T(""));
 		m_pbtnOk->ShowWindow(SW_SHOW);
-
-
-
 
 		//*******************Days*****************************
 		btn.wID					= IDC_BTN_SETUPDAY_NEXTUP;	
@@ -467,12 +457,7 @@ BOOL CSubViewDateTime::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		//*******************Month*****************************
 		HFONT hPrevFont=(HFONT)SelectObject(m_hDC,g_hf21AcuBold);
 		int nBkMode=SetBkMode(m_hDC,TRANSPARENT);
-		/*rc.top = 50;
-		rc.bottom = 100;
-		rc.left = 270;
-		rc.right = 420;
-		DrawText(m_hDC,strMonDate,-1,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);*/
-
+		
 		btn.wID					= IDC_BTN_SETUPMONTH_NEXTUP;	
 		btn.poPosition.x		= 530;
 		btn.poPosition.y		= 154;
@@ -502,12 +487,6 @@ BOOL CSubViewDateTime::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		m_pcMonthNextDwn->ShowWindow(SW_SHOW);
 
 		//*******************Year*****************************
-		/*rc.top = 50;
-		rc.bottom = 100;
-		rc.left = 440;
-		rc.right = 515;
-		DrawText(m_hDC,strYearDate,-1,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);*/
-
 		btn.wID					= IDC_BTN_SETUPYEAR_NEXTUP;	
 		btn.poPosition.x		= 445;
 		btn.poPosition.y		= 43;
@@ -537,12 +516,6 @@ BOOL CSubViewDateTime::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		m_pcYearNextDwn->ShowWindow(SW_SHOW);
 
 		//*******************Hour*****************************
-		/*SelectObject(m_hDC,g_hf33AcuBold);
-		rc.top = 390;
-		rc.bottom = 450;
-		rc.left = 310;
-		rc.right = 465;
-		DrawText(m_hDC,_T("08 : 24"),-1,&rc,DT_TOP|DT_SINGLELINE|DT_CENTER);*/
 		btn.wID					= IDC_BTN_SETUPHOUR_NEXTUP;	
 		btn.poPosition.x		= 255;
 		btn.poPosition.y		= 265;
@@ -760,7 +733,6 @@ void CSubViewDateTime::Draw()
 	SYSTEMTIME st;
 	GetLocalTime(&st);
 	m_dtDateTime=COleDateTime(st);
-	//CStringW szTime = m_dtDateTime.Format(LOCALE_NOUSEROVERRIDE,LANG_USER_DEFAULT);
 
 	m_iYear=m_dtDateTime.GetYear();
 	m_iMonth=m_dtDateTime.GetMonth();
@@ -786,7 +758,6 @@ void CSubViewDateTime::Draw()
 	CBrush cbrFill;
 	cbrFill.CreateSolidBrush(RGB(181,178,181));
 
-	
 	HPEN hpenprev=(HPEN)SelectObject(m_hDC, (HPEN)GetStockObject(NULL_PEN));
 	HBRUSH hbrprev=(HBRUSH)SelectObject(m_hDC,cbrFill);
 
@@ -801,14 +772,11 @@ void CSubViewDateTime::Draw()
 
 	int tc=SetTextColor(m_hDC,0x0000000);
 
-	//COleDateTime date = m_wndCalendar.MakeDate();
-
 	// Load up months
 	CStringW strMonDate;
 	CStringW strYearDate;
 	CStringW strHourDate;
 	CStringW strMinuteDate;
-	//CStringW strTimeDate;
 
 	strMonDate=_T(" ")+GetMonthString(m_dtDateTime.GetMonth());
 
@@ -816,23 +784,10 @@ void CSubViewDateTime::Draw()
 
 	strHourDate =m_dtDateTime.Format(_T("%H"));
 	strMinuteDate = m_dtDateTime.Format(_T("%M"));
-	//strTimeDate.Format(_T("%.2d : %.2d"),m_iHour,m_iMinute);
-	
 
-	/*rc.top = 50;
-	rc.bottom = 100;
-	rc.left = 270;
-	rc.right = 420;
-	DrawText(m_hDC,strMonDate,-1,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);*/
 	if(m_pbtnMonth)
 		m_pbtnMonth->RefreshText(strMonDate);
 
-
-	/*rc.top = 50;
-	rc.bottom = 100;
-	rc.left = 440;
-	rc.right = 515;
-	DrawText(m_hDC,strYearDate,-1,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);*/
 	if(m_pbtnYear)
 		m_pbtnYear->RefreshText(strYearDate);
 
@@ -846,7 +801,6 @@ void CSubViewDateTime::Draw()
 		m_pbtnHour->RefreshText(strHourDate);
 	if(m_pbtnMinute)
 		m_pbtnMinute->RefreshText(strMinuteDate);
-
 	
 	//dot of day/month
 	rc.top = 165;
@@ -855,22 +809,15 @@ void CSubViewDateTime::Draw()
 	rc.right = 340;
 	DrawText(m_hDC,_T("."),-1,&rc,DT_VCENTER|DT_SINGLELINE|DT_CENTER);
 
-
-	
 	SelectObject(m_hDC,g_hf10AcuBold);
 	SetTextColor(m_hDC,RGB(255,100,0));
 
-	/*rc.top = 380;
-	rc.bottom = 460;
-	rc.left = 650;
-	rc.right = 795;*/
 	rc.top = 390;
 	rc.bottom = 470;
 	rc.left = 140;
 	rc.right = 530;
 	DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_DT_TREND),-1,&rc,DT_TOP|DT_WORDBREAK|DT_RIGHT);
 
-	//CDC* pDC=CDC::FromHandle(m_hDC);
 	CPen penLine;
 	penLine.CreatePen(PS_SOLID,1,RGB(200,200,200));
 
@@ -892,8 +839,6 @@ void CSubViewDateTime::Draw()
 	LineTo(m_hDC, 465, 347);
 
 
-	
-
 	SetTextColor(m_hDC,tc);
 	SetBkMode(m_hDC,nBkMode);
 	SelectObject(m_hDC,hbrprev);
@@ -903,8 +848,6 @@ void CSubViewDateTime::Draw()
 	penLine.DeleteObject();
 	Invalidate();
 	UpdateWindow();
-	
-
 }
 
 // **************************************************************************
@@ -986,8 +929,6 @@ void CSubViewDateTime::SetOneButtonDepressed(int btnID)
 	catch (...)
 	{
 		CFabianHFOApp::ReportException(_T("EXCEPTION: CSubViewDateTime::SetOneButtonDepressed"));
-		//AfxMessageBox( _T("EXCEPTION: CMVModel::VentModeChanged()()") );
-
 	}
 	
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
@@ -1020,8 +961,6 @@ void CSubViewDateTime::SetAllButtonUnpressed()
 	catch (...)
 	{
 		CFabianHFOApp::ReportException(_T("EXCEPTION: CSubViewDateTime::SetAllButtonUnpressed"));
-		//AfxMessageBox( _T("EXCEPTION: CMVModel::VentModeChanged()()") );
-
 	}
 	
 	m_iCurrentField=0;
@@ -1058,14 +997,12 @@ void CSubViewDateTime::SetOneButtonFocused(int btnID)
 				pBtn->SetState(BS_FOCUSED);
 
 				m_iCurrentField=btnID;
-				//getModel()->getCONFIG()->SetLastSelectedSVSettingBtns(m_iCurPara);
 			}
 		}
 	}
 	catch (...)
 	{
 		CFabianHFOApp::ReportException(_T("EXCEPTION: CSubViewDateTime::SetOneButtonFocused"));
-		//AfxMessageBox( _T("EXCEPTION: CMVModel::VentModeChanged()()") );
 
 	}
 	
@@ -1091,8 +1028,6 @@ void CSubViewDateTime::SetNextButtonFocused()
 
 		//int iT = pBtn->GetBtnId();
 
-
-
 		if(m_iCurrentField == pBtn->GetBtnId())
 		{
 			
@@ -1106,7 +1041,6 @@ void CSubViewDateTime::SetNextButtonFocused()
 				pBtn->SetState(BS_FOCUSED);
 				
 				m_iCurrentField=pBtn->GetBtnId();
-				//getModel()->getCONFIG()->SetLastSelectedSVSettingBtns(m_iCurPara);
 				break;
 			}
 			else
@@ -1114,12 +1048,9 @@ void CSubViewDateTime::SetNextButtonFocused()
 				pBtn = m_plStaticBtn.GetNext( pos );
 				pBtn->SetState(BS_FOCUSED);
 				m_iCurrentField=pBtn->GetBtnId();
-				//getModel()->getCONFIG()->SetLastSelectedSVSettingBtns(m_iCurPara);
 				break;
 			}
 		}
-
-
 	} while (pos != NULL);
 
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
@@ -1156,8 +1087,6 @@ void CSubViewDateTime::SetPrevButtonFocused()
 
 				pBtn->SetState(BS_FOCUSED);
 				m_iCurrentField=pBtn->GetBtnId();
-				//getModel()->getCONFIG()->SetLastSelectedSVSettingBtns(m_iCurrentField);
-
 				break;
 			}
 			else
@@ -1165,13 +1094,9 @@ void CSubViewDateTime::SetPrevButtonFocused()
 				pBtn = m_plStaticBtn.GetPrev( pos );
 				pBtn->SetState(BS_FOCUSED);
 				m_iCurrentField=pBtn->GetBtnId();
-				//getModel()->getCONFIG()->SetLastSelectedSVSettingBtns(m_iCurPara);
-
 				break;
 			}
 		}
-
-
 	} while (pos != NULL);
 
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
@@ -1783,27 +1708,6 @@ LRESULT CSubViewDateTime::WindowProc(UINT message, WPARAM wParam, LPARAM lParam 
 			
 		}
 		break;
-	/*case WM_CALBTN_DOWN:
-		{
-			SetAllButtonUnpressed();
-		}
-		break;*/
-	/*case WM_CHANGE_YEAR:
-		{
-			m_iYear=wParam;
-			Draw();
-
-			DateTimeChanged();
-		}
-		break;
-	case WM_CHANGE_MONTH:
-		{
-			m_iMonth=wParam;
-			Draw();
-
-			DateTimeChanged();
-		}
-		break;*/
 	}
 	return CWnd::WindowProc(message, wParam, lParam);
 }
@@ -1818,23 +1722,18 @@ void CSubViewDateTime::OnBnClickedSetDateTime()
 	if(m_bDateTimeChanged==false)
 		return;
 
-	//BYTE test[5];
-
 	SYSTEMTIME stTimeOld;
 	SYSTEMTIME stTime;
-
-	
 
 	GetLocalTime(&stTimeOld);
 	GetLocalTime(&stTime);
 
 	COleDateTime dtTimeOld(stTimeOld);
-
 	COleDateTime oletimeTime;
 
 	bool bInvalid=true;
 
-	if(oletimeTime.SetDateTime(m_iYear, m_iMonth, m_iDay, m_iHour, m_iMinute, 0)==0)
+	if(oletimeTime.SetDateTime(m_iYear, m_iMonth, m_iDay, m_iHour, m_iMinute, dtTimeOld.GetSecond())==0)
 	{
 		bInvalid=false;
 
@@ -1843,84 +1742,136 @@ void CSubViewDateTime::OnBnClickedSetDateTime()
 		stTime.wDay		=oletimeTime.GetDay();
 		stTime.wHour	= oletimeTime.GetHour();
 		stTime.wMinute	= oletimeTime.GetMinute();
-		stTime.wSecond	= 0;
+		stTime.wSecond	= oletimeTime.GetSecond();
 		stTime.wMilliseconds = 0;
-		/*try
-		{*/
+
+		//check demo licenses
+		COleDateTime dtLicenseTimestamp;
+		COleDateTimeSpan tsDiff = dtTimeOld - oletimeTime;
+		
+		if(getModel()->getDATAHANDLER()->isHFODemoLicAvailable())
+		{
+			dtLicenseTimestamp = getModel()->getCONFIG()->GetHFOdemoTimestamp();
+			dtLicenseTimestamp -= tsDiff;
+			getModel()->getCONFIG()->SetHFOdemoTimestamp(dtLicenseTimestamp);
+		}
+
+		if(getModel()->getDATAHANDLER()->isNMODEDemoLicAvailable())
+		{
+			dtLicenseTimestamp = getModel()->getCONFIG()->GetNMODEdemoTimestamp();
+			dtLicenseTimestamp -= tsDiff;
+			getModel()->getCONFIG()->SetNMODEdemoTimestamp(dtLicenseTimestamp);
+		}
+
+		if(getModel()->getDATAHANDLER()->isVGUARANTDemoLicAvailable())
+		{
+			dtLicenseTimestamp = getModel()->getCONFIG()->GetVGUARANTYdemoTimestamp();
+			dtLicenseTimestamp -= tsDiff;
+			getModel()->getCONFIG()->SetVGUARANTYdemoTimestamp(dtLicenseTimestamp);
+		}
+
+		if(getModel()->getDATAHANDLER()->isVLIMITDemoLicAvailable())
+		{
+			dtLicenseTimestamp = getModel()->getCONFIG()->GetVLIMITdemoTimestamp();
+			dtLicenseTimestamp -= tsDiff;
+			getModel()->getCONFIG()->SetVLIMITdemoTimestamp(dtLicenseTimestamp);
+		}
+
+		if(getModel()->getDATAHANDLER()->isLUNGRECDemoLicAvailable())
+		{
+			dtLicenseTimestamp = getModel()->getCONFIG()->GetLUNGRECdemoTimestamp();
+			dtLicenseTimestamp -= tsDiff;
+			getModel()->getCONFIG()->SetLUNGRECdemoTimestamp(dtLicenseTimestamp);
+		}
+
+		if(getModel()->getDATAHANDLER()->isTRENDDemoLicAvailable())
+		{
+			dtLicenseTimestamp = getModel()->getCONFIG()->GetTRENDdemoTimestamp();
+			dtLicenseTimestamp -= tsDiff;
+			getModel()->getCONFIG()->SetTRENDdemoTimestamp(dtLicenseTimestamp);
+		}
+
+		if(getModel()->getDATAHANDLER()->isTHERAPYDemoLicAvailable())
+		{
+			dtLicenseTimestamp = getModel()->getCONFIG()->GetTHERAPYdemoTimestamp();
+			dtLicenseTimestamp -= tsDiff;
+			getModel()->getCONFIG()->SetTHERAPYdemoTimestamp(dtLicenseTimestamp);
+		}
+
+		if(getModel()->getDATAHANDLER()->isPRICODemoLicAvailable())
+		{
+			/*int iDifftd1=tsDiff.GetTotalDays();
+			int iDiffd1=tsDiff.GetDays();*/
+
+			dtLicenseTimestamp = getModel()->getCONFIG()->GetPRICOdemoTimestamp();
+			/*int ilicYear=dtLicenseTimestamp.GetYear();
+			int ilicMonth=dtLicenseTimestamp.GetMonth();
+			int ilicDay=dtLicenseTimestamp.GetDay();*/
+
+			dtLicenseTimestamp -= tsDiff;
+
+			/*ilicYear=dtLicenseTimestamp.GetYear();
+			ilicMonth=dtLicenseTimestamp.GetMonth();
+			ilicDay=dtLicenseTimestamp.GetDay();*/
+
+			getModel()->getCONFIG()->SetPRICOdemoTimestamp(dtLicenseTimestamp);
+
+		}
+
+		if(getModel()->getDATAHANDLER()->isFOTDemoLicAvailable())
+		{
+			dtLicenseTimestamp = getModel()->getCONFIG()->GetFOTdemoTimestamp();
+
+			dtLicenseTimestamp -= tsDiff;
+
+			getModel()->getCONFIG()->SetFOTdemoTimestamp(dtLicenseTimestamp);
+		}
+
+
+		SetLocalTime(&stTime);
+
+		m_bDateTimeChanged=false;
+
+		if(m_pbtnOk)
+			m_pbtnOk->SetBitmaps(m_pcOkGreen_Up,m_pcOkGreen_Dw,m_pcOkGreen_Up,m_pcOkGreen_Up);
+
+		theApp.getLog()->WriteLine(_T("CSubViewDateTime::OnBnClickedSetDateTime"));
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_DELETE_TRENDS);
+
+		getModel()->getCONFIG()->SetLastCalOxy21(_T(""));
+		getModel()->getCONFIG()->SetLastCalOxy100(_T(""));
+		getModel()->getCONFIG()->SetLastCalFlow(_T(""));
+		//getModel()->getCONFIG()->SetLastCal0mbar(_T(""));
+		//getModel()->getCONFIG()->SetLastCal60mbar(_T(""));
+
+		Sleep(500);
+
+		GetLocalTime(&stTime);
+
+		if(stTime.wHour != oletimeTime.GetHour())
+		{
+			stTime.wYear	=oletimeTime.GetYear();
+			stTime.wMonth	=oletimeTime.GetMonth();
+			stTime.wDay		=oletimeTime.GetDay();
+			stTime.wHour	= oletimeTime.GetHour();
+			stTime.wMinute	= oletimeTime.GetMinute();
+			stTime.wSecond	= 0;
+			stTime.wMilliseconds = 0;
+
 			SetLocalTime(&stTime);
-			//SetSystemTime(&stTime);
 
-			m_bDateTimeChanged=false;
+			theApp.getLog()->WriteLine(_T("HFO:0290"));
+		}
 
-			if(m_pbtnOk)
-				m_pbtnOk->SetBitmaps(m_pcOkGreen_Up,m_pcOkGreen_Dw,m_pcOkGreen_Up,m_pcOkGreen_Up);
-
-			
-			theApp.getLog()->WriteLine(_T("CSubViewDateTime::OnBnClickedSetDateTime"));
-			if(AfxGetApp())
-				AfxGetApp()->GetMainWnd()->PostMessage(WM_DELETE_TRENDS);
-			
-			getModel()->getCONFIG()->SetLastCalOxy21(_T(""));
-			getModel()->getCONFIG()->SetLastCalOxy100(_T(""));
-			getModel()->getCONFIG()->SetLastCalFlow(_T(""));
-			//getModel()->getCONFIG()->SetLastCal0mbar(_T(""));
-			//getModel()->getCONFIG()->SetLastCal60mbar(_T(""));
-
-			Sleep(500);
-
-			GetLocalTime(&stTime);
-
-			if(stTime.wHour != oletimeTime.GetHour())
-			{
-				stTime.wYear	=oletimeTime.GetYear();
-				stTime.wMonth	=oletimeTime.GetMonth();
-				stTime.wDay		=oletimeTime.GetDay();
-				stTime.wHour	= oletimeTime.GetHour();
-				stTime.wMinute	= oletimeTime.GetMinute();
-				stTime.wSecond	= 0;
-				stTime.wMilliseconds = 0;
-
-				SetLocalTime(&stTime);
-
-				theApp.getLog()->WriteLine(_T("HFO:0290"));
-			}
-
-			if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE && getModel()->getETCO2()!=NULL)
-			{
-				getModel()->getETCO2()->get_LastCalDate();
-			}
-			getModel()->isMaintenanceNeeded();
-		//}
-		//__except (EXCEPTION_EXECUTE_HANDLER) {  // Handle all exceptions
-		//	// Respond (perhaps only partially) to exception
-			//	getModel()->SaveSystemLog();
-			//AfxMessageBox( _T("EXCEPTION: test"));
-		//	throw;       // Pass exception to some other handler
-		//}
-
+		if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE && getModel()->getETCO2()!=NULL)
+		{
+			getModel()->getETCO2()->get_LastCalDate();
+		}
+		getModel()->isMaintenanceNeeded();
 	}
 	if(bInvalid)	//not valid
 	{
-		/*if(oletimeTime.GetStatus() == COleDateTime::valid)
-		{
-
-		}
-		else if(oletimeTime.GetStatus() == COleDateTime::invalid)
-		{
-
-		}
-		else if(oletimeTime.GetStatus() == COleDateTime::null)
-		{
-
-		}
-		else if(oletimeTime.GetStatus() == COleDateTime::error )
-		{
-
-		}*/
-		/*CStringW sData = getModel()->GetLanguageString(IDS_ERR_DATE);
-		CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-		getModel()->Trigger(&event);*/
-
 		if(AfxGetApp())
 		{
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_TIMETEXT_ERR_DATE);
@@ -1936,9 +1887,6 @@ void CSubViewDateTime::OnBnClickedSetDateTime()
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_STOPANDRESET_FOT);
 		}
 	}
-	//VERIFY(pCtrl->SetTime(oletimeTime));
-
-
 }
 
 // **************************************************************************

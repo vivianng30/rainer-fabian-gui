@@ -2183,6 +2183,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\NumericFieldINFOFLOWOFF.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\NumericFieldINFOPATAL.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\NumericFieldINFOTUBE.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\NumericFieldLEAK.cpp"
 				>
 			</File>
@@ -2227,6 +2239,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\NumericFieldSPACE.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\NumericFieldSPO2.cpp"
 				>
 			</File>
@@ -2248,6 +2264,10 @@
 			</File>
 			<File
 				RelativePath=".\NumericFieldVTE.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\NumericFieldVTEKG.cpp"
 				>
 			</File>
 			<File
@@ -3385,6 +3405,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\NumericFieldINFOFLOWOFF.h"
+				>
+			</File>
+			<File
+				RelativePath=".\NumericFieldINFOPATAL.h"
+				>
+			</File>
+			<File
+				RelativePath=".\NumericFieldINFOTUBE.h"
+				>
+			</File>
+			<File
 				RelativePath=".\NumericFieldLEAK.h"
 				>
 			</File>
@@ -3429,6 +3461,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\NumericFieldSPACE.h"
+				>
+			</File>
+			<File
 				RelativePath=".\NumericFieldSPO2.h"
 				>
 			</File>
@@ -3450,6 +3486,10 @@
 			</File>
 			<File
 				RelativePath=".\NumericFieldVTE.h"
+				>
+			</File>
+			<File
+				RelativePath=".\NumericFieldVTEKG.h"
 				>
 			</File>
 			<File

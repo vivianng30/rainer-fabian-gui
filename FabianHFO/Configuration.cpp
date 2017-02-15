@@ -42,6 +42,8 @@ CConfiguration::CConfiguration()
 	m_iCurNumericBlock_NCPAP=0;
 	m_iCurNumericBlock_DUOPAP=0;
 	m_iCurNumericBlock_THERAPY=0;
+	m_iCurNumericBlock_FLOWOFFCONV=0;
+	m_iCurNumericBlock_FLOWOFFHFO=0;
 	
 	m_iEthernetPort=DEFAULT_PORT;
 	m_iPDMSProtocol=ACL_NOPDMS;
@@ -435,6 +437,8 @@ void CConfiguration::Init()
 	m_iCurNumericBlock_NCPAP=0;
 	m_iCurNumericBlock_DUOPAP=0;
 	m_iCurNumericBlock_THERAPY=0;
+	m_iCurNumericBlock_FLOWOFFCONV=0;
+	m_iCurNumericBlock_FLOWOFFHFO=0;
 	
 	m_iEthernetPort=DEFAULT_PORT;
 	m_iPDMSProtocol=ACL_NOPDMS;
@@ -3722,6 +3726,21 @@ void CConfiguration::LoadSettings()
 	{
 		m_iCurNumericBlock_THERAPY=FACTORY_NUMBLOCK;
 		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_THERAPY_8,m_iCurNumericBlock_THERAPY);
+	}
+
+	//m_iCurNumericBlock_FLOWOFFCONV=0;
+	m_iCurNumericBlock_FLOWOFFCONV=getModel()->getI2C()->ReadConfigByte(NUMBLOCK_FLOWOFFCONV_8);
+	if(m_iCurNumericBlock_FLOWOFFCONV<0 || m_iCurNumericBlock_FLOWOFFCONV>2)
+	{
+		m_iCurNumericBlock_FLOWOFFCONV=FACTORY_NUMBLOCK;
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_FLOWOFFCONV_8,m_iCurNumericBlock_FLOWOFFCONV);
+	}
+	//m_iCurNumericBlock_FLOWOFFHFO=0;
+	m_iCurNumericBlock_FLOWOFFHFO=getModel()->getI2C()->ReadConfigByte(NUMBLOCK_FLOWOFFHFO_8);
+	if(m_iCurNumericBlock_FLOWOFFHFO<0 || m_iCurNumericBlock_FLOWOFFHFO>2)
+	{
+		m_iCurNumericBlock_FLOWOFFHFO=FACTORY_NUMBLOCK;
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_FLOWOFFHFO_8,m_iCurNumericBlock_FLOWOFFHFO);
 	}
 
 	m_eLeakCompOff=(eLeakCompensation)getModel()->getI2C()->ReadConfigByte(LEAKCOMPENSATIONOFF_8);
@@ -9420,6 +9439,8 @@ void CConfiguration::Serialize(CArchive& ar)
 		ar<<m_iCurNumericBlock_NCPAP;
 		ar<<m_iCurNumericBlock_DUOPAP;
 		ar<<m_iCurNumericBlock_THERAPY;
+		ar<<m_iCurNumericBlock_FLOWOFFCONV;
+		ar<<m_iCurNumericBlock_FLOWOFFHFO;
 	}
 	else
 	{
@@ -10071,6 +10092,12 @@ void CConfiguration::Serialize(CArchive& ar)
 
 			ar>>m_iCurNumericBlock_THERAPY;
 			setLastNumericTHERAPY(m_iCurNumericBlock_THERAPY);
+
+			ar>>m_iCurNumericBlock_FLOWOFFCONV;
+			setLastNumericFLOWOFFCONV(m_iCurNumericBlock_FLOWOFFCONV);
+
+			ar>>m_iCurNumericBlock_FLOWOFFHFO;
+			setLastNumericFLOWOFFHFO(m_iCurNumericBlock_FLOWOFFHFO);
 		}
 	}
 }
@@ -10440,4 +10467,611 @@ void CConfiguration::setLastNumericTHERAPY(BYTE num)
 	m_iCurNumericBlock_THERAPY=num;
 
 	getModel()->getI2C()->WriteConfigByte(NUMBLOCK_THERAPY_8, num);
+}
+
+/**********************************************************************************************//**
+ * @fn	BYTE CConfiguration::getLastNumericFLOWOFFCONV()
+ *
+ * @brief	Gets the last numeric flowoffconv.
+ *
+ * @author	Rainer Kuehner
+ * @date	13.02.2017
+ *
+ * @return	The last numeric flowoffconv.
+ **************************************************************************************************/
+BYTE CConfiguration::getLastNumericFLOWOFFCONV()
+{
+	return m_iCurNumericBlock_FLOWOFFCONV;
+}
+
+/**********************************************************************************************//**
+ * @fn	void CConfiguration::setLastNumericFLOWOFFCONV(BYTE num)
+ *
+ * @brief	Sets last numeric flowoffconv.
+ *
+ * @author	Rainer Kuehner
+ * @date	13.02.2017
+ *
+ * @param	num	Number of.
+ **************************************************************************************************/
+void CConfiguration::setLastNumericFLOWOFFCONV(BYTE num)
+{
+	m_iCurNumericBlock_FLOWOFFCONV=num;
+
+	getModel()->getI2C()->WriteConfigByte(NUMBLOCK_FLOWOFFCONV_8, num);
+}
+
+/**********************************************************************************************//**
+ * @fn	BYTE CConfiguration::getLastNumericFLOWOFFHFO()
+ *
+ * @brief	Gets the last numeric flowoffhfo.
+ *
+ * @author	Rainer Kuehner
+ * @date	13.02.2017
+ *
+ * @return	The last numeric flowoffhfo.
+ **************************************************************************************************/
+BYTE CConfiguration::getLastNumericFLOWOFFHFO()
+{
+	return m_iCurNumericBlock_FLOWOFFHFO;
+}
+
+/**********************************************************************************************//**
+ * @fn	void CConfiguration::setLastNumericFLOWOFFHFO(BYTE num)
+ *
+ * @brief	Sets last numeric flowoffhfo.
+ *
+ * @author	Rainer Kuehner
+ * @date	13.02.2017
+ *
+ * @param	num	Number of.
+ **************************************************************************************************/
+void CConfiguration::setLastNumericFLOWOFFHFO(BYTE num)
+{
+	m_iCurNumericBlock_FLOWOFFHFO=num;
+
+	getModel()->getI2C()->WriteConfigByte(NUMBLOCK_FLOWOFFHFO_8, num);
+}
+
+/**********************************************************************************************//**
+ * @fn	COleDateTime CConfiguration::GetFOTdemoTimestamp()
+ *
+ * @brief	Gets fotdemo timestamp.
+ *
+ * @author	Rainer Kuehner
+ * @date	09.02.2017
+ *
+ * @return	The fotdemo timestamp.
+ **************************************************************************************************/
+COleDateTime CConfiguration::GetFOTdemoTimestamp()
+{
+	WORD iDemoYear=getModel()->getI2C()->ReadConfigWord(DEMO_FOT_YEAR_16);
+	WORD iDemoMonth=getModel()->getI2C()->ReadConfigByte(DEMO_FOT_MONTH_8);
+	WORD iDemoDay=getModel()->getI2C()->ReadConfigByte(DEMO_FOT_DAY_8);
+
+	COleDateTime dtdemoTimestamp;
+	if (iDemoYear<1899 || iDemoMonth>12 || iDemoMonth<1 || iDemoDay>31 || iDemoDay<1)
+	{
+		dtdemoTimestamp.SetStatus(COleDateTime::null);
+		iDemoYear=0;
+		iDemoMonth=0;
+		iDemoDay=0;
+		//theApp.getLog()->WriteLine(_T("*** FOTdemo license false ***"));
+		getModel()->getI2C()->WriteConfigWord(DEMO_FOT_YEAR_16, iDemoYear);
+		getModel()->getI2C()->WriteConfigByte(DEMO_FOT_MONTH_8, iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_FOT_DAY_8, iDemoDay);
+	}
+	else
+	{
+		dtdemoTimestamp.SetDateTime(iDemoYear, iDemoMonth, iDemoDay,0,0,0);
+	}
+	
+	return dtdemoTimestamp;
+}
+void CConfiguration::SetFOTdemoTimestamp(COleDateTime dateTime)
+{
+	WORD iDemoYear=0;
+	WORD iDemoMonth=0;
+	WORD iDemoDay=0;
+
+	if(dateTime.GetStatus()==COleDateTime::null)
+	{
+
+	}
+	else if(dateTime.GetStatus()!=COleDateTime::valid)
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	else
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	getModel()->getI2C()->WriteConfigWord(DEMO_FOT_YEAR_16, iDemoYear);
+	getModel()->getI2C()->WriteConfigByte(DEMO_FOT_MONTH_8, iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_FOT_DAY_8, iDemoDay);
+
+	CString szTxt=_T("");
+	szTxt.Format(_T("***Set FOTdemo license:%02d.%02d.%04d"),
+		dateTime.GetDay(),
+		dateTime.GetMonth(),
+		dateTime.GetYear());
+	theApp.getLog()->WriteLine(szTxt);
+}
+
+
+COleDateTime CConfiguration::GetPRICOdemoTimestamp()
+{
+	WORD iDemoYear=getModel()->getI2C()->ReadConfigWord(DEMO_PRICO_YEAR_16);
+	WORD iDemoMonth=getModel()->getI2C()->ReadConfigByte(DEMO_PRICO_MONTH_8);
+	WORD iDemoDay=getModel()->getI2C()->ReadConfigByte(DEMO_PRICO_DAY_8);
+
+	COleDateTime dtdemoTimestamp;
+	if (iDemoYear<1899 || iDemoMonth>12 || iDemoMonth<1 || iDemoDay>31 || iDemoDay<1)
+	{
+		dtdemoTimestamp.SetStatus(COleDateTime::null);
+		iDemoYear=0;
+		iDemoMonth=0;
+		iDemoDay=0;
+		//theApp.getLog()->WriteLine(_T("*** PRICOdemo license false ***"));
+		getModel()->getI2C()->WriteConfigWord(DEMO_PRICO_YEAR_16, iDemoYear);
+		getModel()->getI2C()->WriteConfigByte(DEMO_PRICO_MONTH_8, iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_PRICO_DAY_8, iDemoDay);
+	}
+	else
+	{
+		dtdemoTimestamp.SetDateTime(iDemoYear, iDemoMonth, iDemoDay,0,0,0);
+	}
+
+	return dtdemoTimestamp;
+}
+void CConfiguration::SetPRICOdemoTimestamp(COleDateTime dateTime)
+{
+	WORD iDemoYear=0;
+	WORD iDemoMonth=0;
+	WORD iDemoDay=0;
+
+	if(dateTime.GetStatus()==COleDateTime::null)
+	{
+
+	}
+	else if(dateTime.GetStatus()!=COleDateTime::valid)
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	else
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	getModel()->getI2C()->WriteConfigWord(DEMO_PRICO_YEAR_16, iDemoYear);
+	getModel()->getI2C()->WriteConfigByte(DEMO_PRICO_MONTH_8, iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_PRICO_DAY_8, iDemoDay);
+
+	CString szTxt=_T("");
+	szTxt.Format(_T("***Set PRICOdemo license:%02d.%02d.%04d"),
+		dateTime.GetDay(),
+		dateTime.GetMonth(),
+		dateTime.GetYear());
+	theApp.getLog()->WriteLine(szTxt);
+}
+
+COleDateTime CConfiguration::GetTHERAPYdemoTimestamp()
+{
+	WORD iDemoYear=getModel()->getI2C()->ReadConfigWord(DEMO_THERAPY_YEAR_16);
+	WORD iDemoMonth=getModel()->getI2C()->ReadConfigByte(DEMO_THERAPY_MONTH_8);
+	WORD iDemoDay=getModel()->getI2C()->ReadConfigByte(DEMO_THERAPY_DAY_8);
+
+	COleDateTime dtdemoTimestamp;
+	if (iDemoYear<1899 || iDemoMonth>12 || iDemoMonth<1 || iDemoDay>31 || iDemoDay<1)
+	{
+		dtdemoTimestamp.SetStatus(COleDateTime::null);
+		iDemoYear=0;
+		iDemoMonth=0;
+		iDemoDay=0;
+		//theApp.getLog()->WriteLine(_T("*** THERAPYdemo license false ***"));
+		getModel()->getI2C()->WriteConfigWord(DEMO_THERAPY_YEAR_16, iDemoYear);
+		getModel()->getI2C()->WriteConfigByte(DEMO_THERAPY_MONTH_8, iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_THERAPY_DAY_8, iDemoDay);
+	}
+	else
+	{
+		dtdemoTimestamp.SetDateTime(iDemoYear, iDemoMonth, iDemoDay,0,0,0);
+	}
+
+	return dtdemoTimestamp;
+}
+void CConfiguration::SetTHERAPYdemoTimestamp(COleDateTime dateTime)
+{
+	WORD iDemoYear=0;
+	WORD iDemoMonth=0;
+	WORD iDemoDay=0;
+
+	if(dateTime.GetStatus()==COleDateTime::null)
+	{
+
+	}
+	else if(dateTime.GetStatus()!=COleDateTime::valid)
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	else
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	getModel()->getI2C()->WriteConfigWord(DEMO_THERAPY_YEAR_16, iDemoYear);
+	getModel()->getI2C()->WriteConfigByte(DEMO_THERAPY_MONTH_8, iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_THERAPY_DAY_8, iDemoDay);
+
+	CString szTxt=_T("");
+	szTxt.Format(_T("***Set THERAPYdemo license:%02d.%02d.%04d"),
+		dateTime.GetDay(),
+		dateTime.GetMonth(),
+		dateTime.GetYear());
+	theApp.getLog()->WriteLine(szTxt);
+}
+
+COleDateTime CConfiguration::GetTRENDdemoTimestamp()
+{
+	WORD iDemoYear=getModel()->getI2C()->ReadConfigWord(DEMO_TREND_YEAR_16);
+	WORD iDemoMonth=getModel()->getI2C()->ReadConfigByte(DEMO_TREND_MONTH_8);
+	WORD iDemoDay=getModel()->getI2C()->ReadConfigByte(DEMO_TREND_DAY_8);
+
+	COleDateTime dtdemoTimestamp;
+	if (iDemoYear<1899 || iDemoMonth>12 || iDemoMonth<1 || iDemoDay>31 || iDemoDay<1)
+	{
+		dtdemoTimestamp.SetStatus(COleDateTime::null);
+		iDemoYear=0;
+		iDemoMonth=0;
+		iDemoDay=0;
+		//theApp.getLog()->WriteLine(_T("*** TRENDdemo license false ***"));
+		getModel()->getI2C()->WriteConfigWord(DEMO_TREND_YEAR_16, iDemoYear);
+		getModel()->getI2C()->WriteConfigByte(DEMO_TREND_MONTH_8, iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_TREND_DAY_8, iDemoDay);
+	}
+	else
+	{
+		dtdemoTimestamp.SetDateTime(iDemoYear, iDemoMonth, iDemoDay,0,0,0);
+	}
+
+	return dtdemoTimestamp;
+}
+void CConfiguration::SetTRENDdemoTimestamp(COleDateTime dateTime)
+{
+	WORD iDemoYear=0;
+	WORD iDemoMonth=0;
+	WORD iDemoDay=0;
+
+	if(dateTime.GetStatus()==COleDateTime::null)
+	{
+
+	}
+	else if(dateTime.GetStatus()!=COleDateTime::valid)
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	else
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	getModel()->getI2C()->WriteConfigWord(DEMO_TREND_YEAR_16, iDemoYear);
+	getModel()->getI2C()->WriteConfigByte(DEMO_TREND_MONTH_8, iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_TREND_DAY_8, iDemoDay);
+
+	CString szTxt=_T("");
+	szTxt.Format(_T("***Set TRENDdemo license:%02d.%02d.%04d"),
+		dateTime.GetDay(),
+		dateTime.GetMonth(),
+		dateTime.GetYear());
+	theApp.getLog()->WriteLine(szTxt);
+}
+
+COleDateTime CConfiguration::GetLUNGRECdemoTimestamp()
+{
+	WORD iDemoYear=getModel()->getI2C()->ReadConfigWord(DEMO_LUNGREC_YEAR_16);
+	WORD iDemoMonth=getModel()->getI2C()->ReadConfigByte(DEMO_LUNGREC_MONTH_8);
+	WORD iDemoDay=getModel()->getI2C()->ReadConfigByte(DEMO_LUNGREC_DAY_8);
+
+	COleDateTime dtdemoTimestamp;
+	if (iDemoYear<1899 || iDemoMonth>12 || iDemoMonth<1 || iDemoDay>31 || iDemoDay<1)
+	{
+		dtdemoTimestamp.SetStatus(COleDateTime::null);
+		iDemoYear=0;
+		iDemoMonth=0;
+		iDemoDay=0;
+		//theApp.getLog()->WriteLine(_T("*** LUNGRECdemo license false ***"));
+		getModel()->getI2C()->WriteConfigWord(DEMO_LUNGREC_YEAR_16, iDemoYear);
+		getModel()->getI2C()->WriteConfigByte(DEMO_LUNGREC_MONTH_8, iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_LUNGREC_DAY_8, iDemoDay);
+	}
+	else
+	{
+		dtdemoTimestamp.SetDateTime(iDemoYear, iDemoMonth, iDemoDay,0,0,0);
+	}
+
+	return dtdemoTimestamp;
+}
+void CConfiguration::SetLUNGRECdemoTimestamp(COleDateTime dateTime)
+{
+	WORD iDemoYear=0;
+	WORD iDemoMonth=0;
+	WORD iDemoDay=0;
+
+	if(dateTime.GetStatus()==COleDateTime::null)
+	{
+
+	}
+	else if(dateTime.GetStatus()!=COleDateTime::valid)
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	else
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	getModel()->getI2C()->WriteConfigWord(DEMO_LUNGREC_YEAR_16, iDemoYear);
+	getModel()->getI2C()->WriteConfigByte(DEMO_LUNGREC_MONTH_8, iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_LUNGREC_DAY_8, iDemoDay);
+
+	CString szTxt=_T("");
+	szTxt.Format(_T("***Set LUNGRECdemo license:%02d.%02d.%04d"),
+		dateTime.GetDay(),
+		dateTime.GetMonth(),
+		dateTime.GetYear());
+	theApp.getLog()->WriteLine(szTxt);
+}
+
+COleDateTime CConfiguration::GetVLIMITdemoTimestamp()
+{
+	WORD iDemoYear=getModel()->getI2C()->ReadConfigWord(DEMO_VLIMIT_YEAR_16);
+	WORD iDemoMonth=getModel()->getI2C()->ReadConfigByte(DEMO_VLIMIT_MONTH_8);
+	WORD iDemoDay=getModel()->getI2C()->ReadConfigByte(DEMO_VLIMIT_DAY_8);
+
+	COleDateTime dtdemoTimestamp;
+	if (iDemoYear<1899 || iDemoMonth>12 || iDemoMonth<1 || iDemoDay>31 || iDemoDay<1)
+	{
+		dtdemoTimestamp.SetStatus(COleDateTime::null);
+		iDemoYear=0;
+		iDemoMonth=0;
+		iDemoDay=0;
+		//theApp.getLog()->WriteLine(_T("*** VLIMITdemo license false ***"));
+		getModel()->getI2C()->WriteConfigWord(DEMO_VLIMIT_YEAR_16, iDemoYear);
+		getModel()->getI2C()->WriteConfigByte(DEMO_VLIMIT_MONTH_8, iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_VLIMIT_DAY_8, iDemoDay);
+	}
+	else
+	{
+		dtdemoTimestamp.SetDateTime(iDemoYear, iDemoMonth, iDemoDay,0,0,0);
+	}
+
+	return dtdemoTimestamp;
+}
+void CConfiguration::SetVLIMITdemoTimestamp(COleDateTime dateTime)
+{
+	WORD iDemoYear=0;
+	WORD iDemoMonth=0;
+	WORD iDemoDay=0;
+
+	if(dateTime.GetStatus()==COleDateTime::null)
+	{
+
+	}
+	else if(dateTime.GetStatus()!=COleDateTime::valid)
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	else
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	getModel()->getI2C()->WriteConfigWord(DEMO_VLIMIT_YEAR_16, iDemoYear);
+	getModel()->getI2C()->WriteConfigByte(DEMO_VLIMIT_MONTH_8, iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_VLIMIT_DAY_8, iDemoDay);
+
+	CString szTxt=_T("");
+	szTxt.Format(_T("***Set VLIMITdemo license:%02d.%02d.%04d"),
+		dateTime.GetDay(),
+		dateTime.GetMonth(),
+		dateTime.GetYear());
+	theApp.getLog()->WriteLine(szTxt);
+}
+
+COleDateTime CConfiguration::GetVGUARANTYdemoTimestamp()
+{
+	WORD iDemoYear=getModel()->getI2C()->ReadConfigWord(DEMO_VGUARANTY_YEAR_16);
+	WORD iDemoMonth=getModel()->getI2C()->ReadConfigByte(DEMO_VGUARANTY_MONTH_8);
+	WORD iDemoDay=getModel()->getI2C()->ReadConfigByte(DEMO_VGUARANTY_DAY_8);
+
+	COleDateTime dtdemoTimestamp;
+	if (iDemoYear<1899 || iDemoMonth>12 || iDemoMonth<1 || iDemoDay>31 || iDemoDay<1)
+	{
+		dtdemoTimestamp.SetStatus(COleDateTime::null);
+		iDemoYear=0;
+		iDemoMonth=0;
+		iDemoDay=0;
+		//theApp.getLog()->WriteLine(_T("*** VGUARANTYdemo license false ***"));
+		getModel()->getI2C()->WriteConfigWord(DEMO_VGUARANTY_YEAR_16, iDemoYear);
+		getModel()->getI2C()->WriteConfigByte(DEMO_VGUARANTY_MONTH_8, iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_VGUARANTY_DAY_8, iDemoDay);
+	}
+	else
+	{
+		dtdemoTimestamp.SetDateTime(iDemoYear, iDemoMonth, iDemoDay,0,0,0);
+	}
+
+	return dtdemoTimestamp;
+}
+void CConfiguration::SetVGUARANTYdemoTimestamp(COleDateTime dateTime)
+{
+	WORD iDemoYear=0;
+	WORD iDemoMonth=0;
+	WORD iDemoDay=0;
+
+	if(dateTime.GetStatus()==COleDateTime::null)
+	{
+
+	}
+	else if(dateTime.GetStatus()!=COleDateTime::valid)
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	else
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	getModel()->getI2C()->WriteConfigWord(DEMO_VGUARANTY_YEAR_16, iDemoYear);
+	getModel()->getI2C()->WriteConfigByte(DEMO_VGUARANTY_MONTH_8, iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_VGUARANTY_DAY_8, iDemoDay);
+
+	CString szTxt=_T("");
+	szTxt.Format(_T("***Set VGUARANTYdemo license:%02d.%02d.%04d"),
+		dateTime.GetDay(),
+		dateTime.GetMonth(),
+		dateTime.GetYear());
+	theApp.getLog()->WriteLine(szTxt);
+}
+
+COleDateTime CConfiguration::GetNMODEdemoTimestamp()
+{
+	WORD iDemoYear=getModel()->getI2C()->ReadConfigWord(DEMO_NMODE_YEAR_16);
+	WORD iDemoMonth=getModel()->getI2C()->ReadConfigByte(DEMO_NMODE_MONTH_8);
+	WORD iDemoDay=getModel()->getI2C()->ReadConfigByte(DEMO_NMODE_DAY_8);
+
+	COleDateTime dtdemoTimestamp;
+	if (iDemoYear<1899 || iDemoMonth>12 || iDemoMonth<1 || iDemoDay>31 || iDemoDay<1)
+	{
+		dtdemoTimestamp.SetStatus(COleDateTime::null);
+		iDemoYear=0;
+		iDemoMonth=0;
+		iDemoDay=0;
+		//theApp.getLog()->WriteLine(_T("*** NMODEdemo license false ***"));
+		getModel()->getI2C()->WriteConfigWord(DEMO_NMODE_YEAR_16, iDemoYear);
+		getModel()->getI2C()->WriteConfigByte(DEMO_NMODE_MONTH_8, iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_NMODE_DAY_8, iDemoDay);
+	}
+	else
+	{
+		dtdemoTimestamp.SetDateTime(iDemoYear, iDemoMonth, iDemoDay,0,0,0);
+	}
+
+	return dtdemoTimestamp;
+}
+void CConfiguration::SetNMODEdemoTimestamp(COleDateTime dateTime)
+{
+	WORD iDemoYear=0;
+	WORD iDemoMonth=0;
+	WORD iDemoDay=0;
+
+	if(dateTime.GetStatus()==COleDateTime::null)
+	{
+
+	}
+	else if(dateTime.GetStatus()!=COleDateTime::valid)
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	else
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	getModel()->getI2C()->WriteConfigWord(DEMO_NMODE_YEAR_16, iDemoYear);
+	getModel()->getI2C()->WriteConfigByte(DEMO_NMODE_MONTH_8, iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_NMODE_DAY_8, iDemoDay);
+
+	CString szTxt=_T("");
+	szTxt.Format(_T("***Set NMODEdemo license:%02d.%02d.%04d"),
+		dateTime.GetDay(),
+		dateTime.GetMonth(),
+		dateTime.GetYear());
+	theApp.getLog()->WriteLine(szTxt);
+}
+
+COleDateTime CConfiguration::GetHFOdemoTimestamp()
+{
+	WORD iDemoYear=getModel()->getI2C()->ReadConfigWord(DEMO_HFO_YEAR_16);
+	WORD iDemoMonth=getModel()->getI2C()->ReadConfigByte(DEMO_HFO_MONTH_8);
+	WORD iDemoDay=getModel()->getI2C()->ReadConfigByte(DEMO_HFO_DAY_8);
+
+	COleDateTime dtdemoTimestamp;
+	if (iDemoYear<1899 || iDemoMonth>12 || iDemoMonth<1 || iDemoDay>31 || iDemoDay<1)
+	{
+		dtdemoTimestamp.SetStatus(COleDateTime::null);
+		iDemoYear=0;
+		iDemoMonth=0;
+		iDemoDay=0;
+		//theApp.getLog()->WriteLine(_T("*** HFOdemo license false ***"));
+		getModel()->getI2C()->WriteConfigWord(DEMO_HFO_YEAR_16, iDemoYear);
+		getModel()->getI2C()->WriteConfigByte(DEMO_HFO_MONTH_8, iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_HFO_DAY_8, iDemoDay);
+	}
+	else
+	{
+		dtdemoTimestamp.SetDateTime(iDemoYear, iDemoMonth, iDemoDay,0,0,0);
+	}
+
+	return dtdemoTimestamp;
+}
+void CConfiguration::SetHFOdemoTimestamp(COleDateTime dateTime)
+{
+	WORD iDemoYear=0;
+	WORD iDemoMonth=0;
+	WORD iDemoDay=0;
+
+	if(dateTime.GetStatus()==COleDateTime::null)
+	{
+		
+	}
+	else if(dateTime.GetStatus()!=COleDateTime::valid)
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	else
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	
+	getModel()->getI2C()->WriteConfigWord(DEMO_HFO_YEAR_16, iDemoYear);
+	getModel()->getI2C()->WriteConfigByte(DEMO_HFO_MONTH_8, iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_HFO_DAY_8, iDemoDay);
+
+	CString szTxt=_T("");
+	szTxt.Format(_T("***Set HFOdemo license:%02d.%02d.%04d"),
+		dateTime.GetDay(),
+		dateTime.GetMonth(),
+		dateTime.GetYear());
+	theApp.getLog()->WriteLine(szTxt);
 }

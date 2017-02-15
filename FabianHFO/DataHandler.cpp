@@ -58,8 +58,6 @@
 #define NUMERICCONFINI       _T("\\FFSDISK\\numericconfig.ini")
 
 
-
-
 #define	MIN_ETIME_RECRUITMENT		2000	//!< minimum for E-TIME lung recruitment
 
  /**
@@ -120,6 +118,8 @@ LPNUMERICINI CDataHandler::m_pbufNumericHFO=NULL;
 LPNUMERICINI CDataHandler::m_pbufNumericNCPAP=NULL;
 LPNUMERICINI CDataHandler::m_pbufNumericDUOPAP=NULL;
 LPNUMERICINI CDataHandler::m_pbufNumericTHERAPY=NULL;
+LPNUMERICINI CDataHandler::m_pbufNumericFLOWOFFCONV=NULL;
+LPNUMERICINI CDataHandler::m_pbufNumericFLOWOFFHFO=NULL;
 
 INT* CDataHandler::m_pbufMessureAVG=NULL;
 INT* CDataHandler::m_pbufMessureBTB=NULL;
@@ -177,6 +177,8 @@ CDataHandler::CDataHandler(void)
 	m_iNumericNCPAPcount=0;
 	m_iNumericDUOPAPcount=0;
 	m_iNumericTHERAPYcount=0;
+	m_iNumericFLOWOFFCONVcount=0;
+	m_iNumericFLOWOFFHFOcount=0;
 
 	m_iOldOxyValue=0;
 
@@ -200,6 +202,17 @@ CDataHandler::CDataHandler(void)
 	m_bPRICOLicenseAvailable=false;
 	m_bFOTLicenseAvailable=false;
 
+	m_bVGUARANTDemoLicAvailable=false;
+	m_bVLIMITDemoLicAvailable=false;
+	m_bHFODemoLicAvailable=false;
+	m_bNMODEDemoLicAvailable=false;
+	m_bLUNGRECDemoLicAvailable=false;
+	m_bTRENDDemoLicAvailable=false;
+	m_bTHERAPYDemoLicAvailable=false;
+	m_bPRICODemoLicAvailable=false;
+	m_bFOTDemoLicAvailable=false;
+
+
 	m_bFOToscillationState=false;
 
 	m_pbufSavedBreath = new PBUFSPI[G_MAXPOINTS];
@@ -218,6 +231,8 @@ CDataHandler::CDataHandler(void)
 	m_pbufNumericNCPAP = new NUMERICINI[MAX_NUMERICMODEBLOCK];
 	m_pbufNumericDUOPAP = new NUMERICINI[MAX_NUMERICMODEBLOCK];
 	m_pbufNumericTHERAPY = new NUMERICINI[MAX_NUMERICMODEBLOCK];
+	m_pbufNumericFLOWOFFCONV = new NUMERICINI[MAX_NUMERICMODEBLOCK];
+	m_pbufNumericFLOWOFFHFO = new NUMERICINI[MAX_NUMERICMODEBLOCK];
 
 	for(int i=0;i<3;i++)
 	{
@@ -410,6 +425,44 @@ CDataHandler::CDataHandler(void)
 		m_pbufNumericTHERAPY[i].SIZE6=NUMERICSIZE_0;
 		m_pbufNumericTHERAPY[i].SIZE7=NUMERICSIZE_0;
 		m_pbufNumericTHERAPY[i].SIZE8=NUMERICSIZE_0;
+
+		m_pbufNumericFLOWOFFCONV[i].eNumMode=NUMMODE_FLOWOFFCONV;
+		m_pbufNumericFLOWOFFCONV[i].SHOW=FALSE;
+		m_pbufNumericFLOWOFFCONV[i].VAL1=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFCONV[i].VAL2=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFCONV[i].VAL3=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFCONV[i].VAL4=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFCONV[i].VAL5=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFCONV[i].VAL6=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFCONV[i].VAL7=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFCONV[i].VAL8=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFCONV[i].SIZE1=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFCONV[i].SIZE2=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFCONV[i].SIZE3=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFCONV[i].SIZE4=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFCONV[i].SIZE5=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFCONV[i].SIZE6=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFCONV[i].SIZE7=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFCONV[i].SIZE8=NUMERICSIZE_0;
+
+		m_pbufNumericFLOWOFFHFO[i].eNumMode=NUMMODE_FLOWOFFHFO;
+		m_pbufNumericFLOWOFFHFO[i].SHOW=FALSE;
+		m_pbufNumericFLOWOFFHFO[i].VAL1=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFHFO[i].VAL2=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFHFO[i].VAL3=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFHFO[i].VAL4=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFHFO[i].VAL5=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFHFO[i].VAL6=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFHFO[i].VAL7=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFHFO[i].VAL8=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFHFO[i].SIZE1=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFHFO[i].SIZE2=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFHFO[i].SIZE3=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFHFO[i].SIZE4=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFHFO[i].SIZE5=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFHFO[i].SIZE6=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFHFO[i].SIZE7=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFHFO[i].SIZE8=NUMERICSIZE_0;
 	}
 
 	m_bO21SensorCalState=false;
@@ -741,6 +794,10 @@ void CDataHandler::setExit()
 		m_pbufNumericDUOPAP=NULL;
 		delete [] m_pbufNumericTHERAPY;
 		m_pbufNumericTHERAPY=NULL;
+		delete [] m_pbufNumericFLOWOFFCONV;
+		m_pbufNumericFLOWOFFCONV=NULL;
+		delete [] m_pbufNumericFLOWOFFHFO;
+		m_pbufNumericFLOWOFFHFO=NULL;
 
 		delete [] m_pbufMessureAVG;
 		m_pbufMessureAVG=NULL;
@@ -915,6 +972,27 @@ void CDataHandler::init()
 	{
 		m_bLEDdisplay=false;
 	}
+
+	//test reset demo timestamp
+	/*COleDateTime dtCurrentTime;
+	dtCurrentTime.SetStatus(COleDateTime::null);
+	getModel()->getCONFIG()->SetFOTdemoTimestamp(dtCurrentTime);*/
+			
+	/*COleDateTime dtCurrentTime(2014,11,7,0,0,0);
+	getModel()->getCONFIG()->SetFOTdemoTimestamp(dtCurrentTime);
+
+	getModel()->getCONFIG()->SetPRICOdemoTimestamp(dtCurrentTime);
+
+	COleDateTime dtTime=getModel()->getCONFIG()->GetPRICOdemoTimestamp();
+	if(dtTime.GetStatus()==COleDateTime::valid)
+	{
+		int iDiffYear=dtTime.GetYear();
+		int iDiffMonth=dtTime.GetMonth();
+		int iDiffDay=dtTime.GetDay();
+
+		int iStop=0;
+	}*/
+	
 
 	checkLicensing();
 
@@ -1735,6 +1813,11 @@ bool CDataHandler::checkLicensing()
 			if(szParsedHFOKey==encryptKey(MOD_HFO))
 			{
 				enableHFOLicense();
+				delDemoLicense(MOD_HFO,true);
+			}
+			else if(szParsedHFOKey==encryptDEMOKey(MOD_HFO))
+			{
+				checkDemoLicense(MOD_HFO);
 			}
 		}
 		if(bCheckNMODEFeature)
@@ -1743,6 +1826,11 @@ bool CDataHandler::checkLicensing()
 			if(szParsedNMODEKey==encryptKey(MOD_NMODE))
 			{
 				enableNMODELicense();
+				delDemoLicense(MOD_NMODE,true);
+			}
+			else if(szParsedNMODEKey==encryptDEMOKey(MOD_NMODE))
+			{
+				checkDemoLicense(MOD_NMODE);
 			}
 		}
 		if(bCheckVGUARANTFeature)
@@ -1751,6 +1839,11 @@ bool CDataHandler::checkLicensing()
 			if(szParsedVGUARANTYKey==encryptKey(MOD_VGUARANTY))
 			{
 				enableVGUARANTLicense();
+				delDemoLicense(MOD_VGUARANTY,true);
+			}
+			else if(szParsedVGUARANTYKey==encryptDEMOKey(MOD_VGUARANTY))
+			{
+				checkDemoLicense(MOD_VGUARANTY);
 			}
 		}
 		if(bCheckVLIMITFeature)
@@ -1759,6 +1852,11 @@ bool CDataHandler::checkLicensing()
 			if(szParsedVLIMITKey==encryptKey(MOD_VLIMIT))
 			{
 				enableVLIMITLicense();
+				delDemoLicense(MOD_VLIMIT,true);
+			}
+			else if(szParsedVLIMITKey==encryptDEMOKey(MOD_VLIMIT))
+			{
+				checkDemoLicense(MOD_VLIMIT);
 			}
 		}
 		if(bCheckLUNGRECFeature)
@@ -1767,6 +1865,11 @@ bool CDataHandler::checkLicensing()
 			if(szParsedLUNGRECKey==encryptKey(MOD_LUNGREC))
 			{
 				enableLUNGRECLicense();
+				delDemoLicense(MOD_LUNGREC,true);
+			}
+			else if(szParsedLUNGRECKey==encryptDEMOKey(MOD_LUNGREC))
+			{
+				checkDemoLicense(MOD_LUNGREC);
 			}
 		}
 		if(bCheckTRENDFeature)
@@ -1775,6 +1878,11 @@ bool CDataHandler::checkLicensing()
 			if(szParsedTRENDKey==encryptKey(MOD_TREND))
 			{
 				enableTRENDLicense();
+				delDemoLicense(MOD_TREND,true);
+			}
+			else if(szParsedTRENDKey==encryptDEMOKey(MOD_TREND))
+			{
+				checkDemoLicense(MOD_TREND);
 			}
 		}
 		if(bCheckTHERAPYFeature)
@@ -1783,6 +1891,11 @@ bool CDataHandler::checkLicensing()
 			if(szParsedTHERAPYKey==encryptKey(MOD_THERAPY))
 			{
 				enableTHERAPYLicense();
+				delDemoLicense(MOD_THERAPY,true);
+			}
+			else if(szParsedTHERAPYKey==encryptDEMOKey(MOD_THERAPY))
+			{
+				checkDemoLicense(MOD_THERAPY);
 			}
 		}
 		if(bCheckPRICOFeature)
@@ -1791,6 +1904,11 @@ bool CDataHandler::checkLicensing()
 			if(szParsedPRICOKey==encryptKey(MOD_PRICO))
 			{
 				enablePRICOLicense();
+				delDemoLicense(MOD_PRICO,true);
+			}
+			else if(szParsedPRICOKey==encryptDEMOKey(MOD_PRICO))
+			{
+				checkDemoLicense(MOD_PRICO);
 			}
 		}
 		if(bCheckFOTFeature)
@@ -1799,6 +1917,11 @@ bool CDataHandler::checkLicensing()
 			if(szParsedFOTKey==encryptKey(MOD_FOT))
 			{
 				enableFOTLicense();
+				delDemoLicense(MOD_FOT,true);
+			}
+			else if(szParsedFOTKey==encryptDEMOKey(MOD_FOT))
+			{
+				checkDemoLicense(MOD_FOT);
 			}
 		}
 	}
@@ -1807,6 +1930,640 @@ bool CDataHandler::checkLicensing()
 		WriteLicenseFile();
 
 	return true;
+}
+
+//void CDataHandler::checkDemoLicense()
+//{
+//	for(int i=0; i<=MOD_FOT;i++)
+//	{
+//		checkDemoLicense((eModule)i);
+//	}
+//}
+
+COleDateTime CDataHandler::GetdemoTimestamp(eModule module)
+{
+	switch(module)
+	{
+	case MOD_HFO:
+		{
+			return getModel()->getCONFIG()->GetHFOdemoTimestamp();
+		}
+		break;
+	case MOD_NMODE:
+		{
+			return getModel()->getCONFIG()->GetNMODEdemoTimestamp();
+		}
+		break;
+	case MOD_VGUARANTY:
+		{
+			return getModel()->getCONFIG()->GetVGUARANTYdemoTimestamp();
+		}
+		break;
+	case MOD_VLIMIT:
+		{
+			return getModel()->getCONFIG()->GetVLIMITdemoTimestamp();
+		}
+		break;
+	case MOD_LUNGREC:
+		{
+			return getModel()->getCONFIG()->GetLUNGRECdemoTimestamp();
+		}
+		break;
+	case MOD_TREND:
+		{
+			return getModel()->getCONFIG()->GetTRENDdemoTimestamp();
+		}
+		break;
+	case MOD_THERAPY:
+		{
+			return getModel()->getCONFIG()->GetTHERAPYdemoTimestamp();
+		}
+		break;
+	case MOD_PRICO:
+		{
+			return getModel()->getCONFIG()->GetPRICOdemoTimestamp();
+		}
+		break;
+	case MOD_FOT:
+		{
+			return getModel()->getCONFIG()->GetFOTdemoTimestamp();
+		}
+		break;
+	default:
+		{
+			COleDateTime dtLicenseTimestamp;
+			dtLicenseTimestamp.SetStatus(COleDateTime::null);
+			return dtLicenseTimestamp;
+		}
+		break;
+	}
+}
+
+void CDataHandler::checkDemoLicense(eModule module)
+{
+	switch(module)
+	{
+	case MOD_HFO:
+		{
+			checkDemoLicense_HFO();
+		}
+		break;
+	case MOD_NMODE:
+		{
+			checkDemoLicense_NMODE();
+		}
+		break;
+	case MOD_VGUARANTY:
+		{
+			checkDemoLicense_VGUARANTY();
+		}
+		break;
+	case MOD_VLIMIT:
+		{
+			checkDemoLicense_VLIMIT();
+		}
+		break;
+	case MOD_LUNGREC:
+		{
+			checkDemoLicense_LUNGREC();
+		}
+		break;
+	case MOD_TREND:
+		{
+			checkDemoLicense_TREND();
+		}
+		break;
+	case MOD_THERAPY:
+		{
+			checkDemoLicense_THERAPY();
+		}
+		break;
+	case MOD_PRICO:
+		{
+			checkDemoLicense_PRICO();
+		}
+		break;
+	case MOD_FOT:
+		{
+			checkDemoLicense_FOT();
+		}
+		break;
+	default:
+		{
+
+		}
+		break;
+	}
+}
+
+void CDataHandler::checkDemoLicense_HFO()
+{
+	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetHFOdemoTimestamp();
+
+	if(dtLicenseTimestamp.GetStatus() != COleDateTime::valid)//license timestamp not yet set
+	{
+		enableHFOLicense();
+		setDemoLicense(MOD_HFO);
+	}
+	else//check elapsed time
+	{
+		SYSTEMTIME stTime;
+		GetLocalTime(&stTime);
+		COleDateTime dtCurrentTime(stTime);
+
+		COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+		if(dtElapsePeriod.GetTotalDays()>DEMOLICENSE)
+		{
+			//license time elapsed
+			disableHFOLicense();
+			delDemoLicense(MOD_HFO,false);
+		} 
+		else
+		{
+			enableHFOLicense();
+			endableDemoLicense(MOD_HFO);
+		}
+	}
+}
+void CDataHandler::checkDemoLicense_NMODE()
+{
+	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetNMODEdemoTimestamp();
+
+	if(dtLicenseTimestamp.GetStatus() != COleDateTime::valid)//license timestamp not yet set
+	{
+		enableNMODELicense();
+		setDemoLicense(MOD_NMODE);
+	}
+	else//check elapsed time
+	{
+		SYSTEMTIME stTime;
+		GetLocalTime(&stTime);
+		COleDateTime dtCurrentTime(stTime);
+
+		COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+		if(dtElapsePeriod.GetTotalDays()>DEMOLICENSE)
+		{
+			//license time elapsed
+			disableNMODELicense();
+			delDemoLicense(MOD_NMODE,false);
+		} 
+		else
+		{
+			enableNMODELicense();
+			endableDemoLicense(MOD_NMODE);
+		}
+	}
+}
+void CDataHandler::checkDemoLicense_VGUARANTY()
+{
+	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetVGUARANTYdemoTimestamp();
+
+	if(dtLicenseTimestamp.GetStatus() != COleDateTime::valid)//license timestamp not yet set
+	{
+		enableVGUARANTLicense();
+		setDemoLicense(MOD_VGUARANTY);
+	}
+	else//check elapsed time
+	{
+		SYSTEMTIME stTime;
+		GetLocalTime(&stTime);
+		COleDateTime dtCurrentTime(stTime);
+
+		COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+		if(dtElapsePeriod.GetTotalDays()>DEMOLICENSE)
+		{
+			//license time elapsed
+			disableVGUARANTLicense();
+			delDemoLicense(MOD_VGUARANTY,false);
+		} 
+		else
+		{
+			enableVGUARANTLicense();
+			endableDemoLicense(MOD_VGUARANTY);
+		}
+	}
+}
+void CDataHandler::checkDemoLicense_VLIMIT()
+{
+	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetVLIMITdemoTimestamp();
+
+	if(dtLicenseTimestamp.GetStatus() != COleDateTime::valid)//license timestamp not yet set
+	{
+		enableVLIMITLicense();
+		setDemoLicense(MOD_VLIMIT);
+	}
+	else//check elapsed time
+	{
+		SYSTEMTIME stTime;
+		GetLocalTime(&stTime);
+		COleDateTime dtCurrentTime(stTime);
+
+		COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+		if(dtElapsePeriod.GetTotalDays()>DEMOLICENSE)
+		{
+			//license time elapsed
+			disableVLIMITLicense();
+			delDemoLicense(MOD_VLIMIT,false);
+		} 
+		else
+		{
+			enableVLIMITLicense();
+			endableDemoLicense(MOD_VLIMIT);
+		}
+	}
+}
+void CDataHandler::checkDemoLicense_LUNGREC()
+{
+	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetLUNGRECdemoTimestamp();
+
+	if(dtLicenseTimestamp.GetStatus() != COleDateTime::valid)//license timestamp not yet set
+	{
+		enableLUNGRECLicense();
+		setDemoLicense(MOD_LUNGREC);
+	}
+	else//check elapsed time
+	{
+		SYSTEMTIME stTime;
+		GetLocalTime(&stTime);
+		COleDateTime dtCurrentTime(stTime);
+
+		COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+		if(dtElapsePeriod.GetTotalDays()>DEMOLICENSE)
+		{
+			//license time elapsed
+			disableLUNGRECLicense();
+			delDemoLicense(MOD_LUNGREC,false);
+		} 
+		else
+		{
+			enableLUNGRECLicense();
+			endableDemoLicense(MOD_LUNGREC);
+		}
+	}
+}
+void CDataHandler::checkDemoLicense_TREND()
+{
+	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetTRENDdemoTimestamp();
+
+	if(dtLicenseTimestamp.GetStatus() != COleDateTime::valid)//license timestamp not yet set
+	{
+		enableTRENDLicense();
+		setDemoLicense(MOD_TREND);
+	}
+	else//check elapsed time
+	{
+		SYSTEMTIME stTime;
+		GetLocalTime(&stTime);
+		COleDateTime dtCurrentTime(stTime);
+
+		COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+		if(dtElapsePeriod.GetTotalDays()>DEMOLICENSE)
+		{
+			//license time elapsed
+			disableTRENDLicense();
+			delDemoLicense(MOD_TREND,false);
+		} 
+		else
+		{
+			enableTRENDLicense();
+			endableDemoLicense(MOD_TREND);
+		}
+	}
+}
+void CDataHandler::checkDemoLicense_THERAPY()
+{
+	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetTHERAPYdemoTimestamp();
+
+	if(dtLicenseTimestamp.GetStatus() != COleDateTime::valid)//license timestamp not yet set
+	{
+		enableTHERAPYLicense();
+		setDemoLicense(MOD_THERAPY);
+	}
+	else//check elapsed time
+	{
+		SYSTEMTIME stTime;
+		GetLocalTime(&stTime);
+		COleDateTime dtCurrentTime(stTime);
+
+		COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+		if(dtElapsePeriod.GetTotalDays()>DEMOLICENSE)
+		{
+			//license time elapsed
+			disableTHERAPYLicense();
+			delDemoLicense(MOD_THERAPY,false);
+		} 
+		else
+		{
+			enableTHERAPYLicense();
+			endableDemoLicense(MOD_THERAPY);
+		}
+	}
+}
+void CDataHandler::checkDemoLicense_PRICO()
+{
+	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetPRICOdemoTimestamp();
+
+	if(dtLicenseTimestamp.GetStatus() != COleDateTime::valid)//license timestamp not yet set
+	{
+		enablePRICOLicense();
+		setDemoLicense(MOD_PRICO);
+	}
+	else//check elapsed time
+	{
+		SYSTEMTIME stTime;
+		GetLocalTime(&stTime);
+		COleDateTime dtCurrentTime(stTime);
+
+		COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+		if(dtElapsePeriod.GetTotalDays()>DEMOLICENSE)
+		{
+			//license time elapsed
+			disablePRICOLicense();
+			delDemoLicense(MOD_PRICO,false);
+		} 
+		else
+		{
+			enablePRICOLicense();
+			endableDemoLicense(MOD_PRICO);
+		}
+	}
+}
+void CDataHandler::checkDemoLicense_FOT()
+{
+	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetFOTdemoTimestamp();
+
+	if(dtLicenseTimestamp.GetStatus() != COleDateTime::valid)//license timestamp not yet set
+	{
+		enableFOTLicense();
+		setDemoLicense(MOD_FOT);
+	}
+	else//check elapsed time
+	{
+		SYSTEMTIME stTime;
+		GetLocalTime(&stTime);
+		COleDateTime dtCurrentTime(stTime);
+
+		//COleDateTimeSpan dtElapsePeriod;
+		//dtElapsePeriod.SetDateTimeSpan(90,0,0,0);//90 days ~ 3 month
+
+		COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+		if(dtLicenseTimestamp.GetYear()==dtCurrentTime.GetYear())
+		{
+			int iLicMonth=dtLicenseTimestamp.GetMonth();
+			int iLicDay=dtLicenseTimestamp.GetDay();
+
+			int iCurMonth=dtLicenseTimestamp.GetMonth();
+			int iLCurDay=dtLicenseTimestamp.GetDay();
+
+			int iStop=0;
+		}
+		int iTest=dtElapsePeriod.GetTotalDays();
+		if(dtElapsePeriod.GetTotalDays()>DEMOLICENSE)
+		///if (dtCurrentTime >= dtLicenseTimestamp - dtElapsePeriod)
+		{
+			//license time elapsed
+			disableFOTLicense();
+			delDemoLicense(MOD_FOT,false);
+		} 
+		else
+		{
+			enableFOTLicense();
+			endableDemoLicense(MOD_FOT);
+		}
+	}
+}
+
+
+void CDataHandler::setDemoLicense(eModule module)
+{
+	SYSTEMTIME stTime;
+	GetLocalTime(&stTime);
+	COleDateTime dtCurrentTime(stTime);
+
+	switch(module)
+	{
+	case MOD_HFO:
+		{
+			getModel()->getCONFIG()->SetHFOdemoTimestamp(dtCurrentTime);
+		}
+		break;
+	case MOD_NMODE:
+		{
+			getModel()->getCONFIG()->SetNMODEdemoTimestamp(dtCurrentTime);
+		}
+		break;
+	case MOD_VGUARANTY:
+		{
+			getModel()->getCONFIG()->SetVGUARANTYdemoTimestamp(dtCurrentTime);
+		}
+		break;
+	case MOD_VLIMIT:
+		{
+			getModel()->getCONFIG()->SetVLIMITdemoTimestamp(dtCurrentTime);
+		}
+		break;
+	case MOD_LUNGREC:
+		{
+			getModel()->getCONFIG()->SetLUNGRECdemoTimestamp(dtCurrentTime);
+		}
+		break;
+	case MOD_TREND:
+		{
+			getModel()->getCONFIG()->SetTRENDdemoTimestamp(dtCurrentTime);
+		}
+		break;
+	case MOD_THERAPY:
+		{
+			getModel()->getCONFIG()->SetTHERAPYdemoTimestamp(dtCurrentTime);
+		}
+		break;
+	case MOD_PRICO:
+		{
+			getModel()->getCONFIG()->SetPRICOdemoTimestamp(dtCurrentTime);
+		}
+		break;
+	case MOD_FOT:
+		{
+			getModel()->getCONFIG()->SetFOTdemoTimestamp(dtCurrentTime);
+		}
+		break;
+	default:
+		{
+
+		}
+		break;
+	}
+
+	endableDemoLicense(module);
+}
+void CDataHandler::delDemoLicense(eModule module, bool bReset)
+{
+	
+	COleDateTime dtLicenseTimestamp;//midnight, 30 December 1899
+	dtLicenseTimestamp.SetStatus(COleDateTime::null);
+
+	switch(module)
+	{
+	case MOD_HFO:
+		{
+			m_bHFODemoLicAvailable=false;
+			if(bReset)
+			{
+				getModel()->getCONFIG()->SetHFOdemoTimestamp(dtLicenseTimestamp);
+			}
+		}
+		break;
+	case MOD_NMODE:
+		{
+			m_bNMODEDemoLicAvailable=false;
+			if(bReset)
+			{
+				getModel()->getCONFIG()->SetNMODEdemoTimestamp(dtLicenseTimestamp);
+			}
+		}
+		break;
+	case MOD_VGUARANTY:
+		{
+			m_bVGUARANTDemoLicAvailable=false;
+			if(bReset)
+			{
+				getModel()->getCONFIG()->SetVGUARANTYdemoTimestamp(dtLicenseTimestamp);
+			}
+		}
+		break;
+	case MOD_VLIMIT:
+		{
+			m_bVLIMITDemoLicAvailable=false;
+			if(bReset)
+			{
+				getModel()->getCONFIG()->SetVLIMITdemoTimestamp(dtLicenseTimestamp);
+			}
+		}
+		break;
+	case MOD_LUNGREC:
+		{
+			m_bLUNGRECDemoLicAvailable=false;
+			if(bReset)
+			{
+				getModel()->getCONFIG()->SetLUNGRECdemoTimestamp(dtLicenseTimestamp);
+			}
+		}
+		break;
+	case MOD_TREND:
+		{
+			m_bTRENDDemoLicAvailable=false;
+			if(bReset)
+			{
+				getModel()->getCONFIG()->SetTRENDdemoTimestamp(dtLicenseTimestamp);
+			}
+		}
+		break;
+	case MOD_THERAPY:
+		{
+			m_bTHERAPYDemoLicAvailable=false;
+			if(bReset)
+			{
+				getModel()->getCONFIG()->SetTHERAPYdemoTimestamp(dtLicenseTimestamp);
+			}
+		}
+		break;
+	case MOD_PRICO:
+		{
+			m_bPRICODemoLicAvailable=false;
+			if(bReset)
+			{
+				getModel()->getCONFIG()->SetPRICOdemoTimestamp(dtLicenseTimestamp);
+			}
+		}
+		break;
+	case MOD_FOT:
+		{
+			m_bFOTDemoLicAvailable=false;
+			if(bReset)
+			{
+				getModel()->getCONFIG()->SetFOTdemoTimestamp(dtLicenseTimestamp);
+			}
+		}
+		break;
+	default:
+		{
+			
+		}
+		break;
+	}
+
+	/*if(AfxGetApp() != NULL)
+		AfxGetApp()->GetMainWnd()->PostMessage(WM_LICENSING_CHANGED);*/
+
+}
+void CDataHandler::endableDemoLicense(eModule module)
+{
+	switch(module)
+	{
+	case MOD_HFO:
+		{
+			m_bHFODemoLicAvailable=true;
+		}
+		break;
+	case MOD_NMODE:
+		{
+			m_bNMODEDemoLicAvailable=true;
+		}
+		break;
+	case MOD_VGUARANTY:
+		{
+			m_bVGUARANTDemoLicAvailable=true;
+		}
+		break;
+	case MOD_VLIMIT:
+		{
+			m_bVLIMITDemoLicAvailable=true;
+		}
+		break;
+	case MOD_LUNGREC:
+		{
+			m_bLUNGRECDemoLicAvailable=true;
+		}
+		break;
+	case MOD_TREND:
+		{
+			m_bTRENDDemoLicAvailable=true;
+		}
+		break;
+	case MOD_THERAPY:
+		{
+			m_bTHERAPYDemoLicAvailable=true;
+		}
+		break;
+	case MOD_PRICO:
+		{
+			m_bPRICODemoLicAvailable=true;
+		}
+		break;
+	case MOD_FOT:
+		{
+			m_bFOTDemoLicAvailable=true;
+		}
+		break;
+	default:
+		{
+
+		}
+		break;
+	}
+
+	/*if(AfxGetApp() != NULL)
+		AfxGetApp()->GetMainWnd()->PostMessage(WM_LICENSING_CHANGED);*/
+
 }
 
 /**********************************************************************************************//**
@@ -1838,63 +2595,90 @@ void CDataHandler::WriteLicenseFile()
 
 	if(isHFOLicenseAvailable())
 	{
-		szEncryptedHFOKey+=encryptKey(MOD_HFO);
+		if(isHFODemoLicAvailable())
+			szEncryptedHFOKey+=encryptDEMOKey(MOD_HFO);
+		else
+			szEncryptedHFOKey+=encryptKey(MOD_HFO);
 	}
 	else
 		szEncryptedHFOKey=_T("0");
 
 	if(isNMODELicenseAvailable())
 	{
-		szEncryptedNMODEKey+=encryptKey(MOD_NMODE);
+		if(isNMODEDemoLicAvailable())
+			szEncryptedNMODEKey+=encryptDEMOKey(MOD_NMODE);
+		else
+			szEncryptedNMODEKey+=encryptKey(MOD_NMODE);
 	}
 	else
 		szEncryptedNMODEKey=_T("0");
 
 	if(isVGUARANTLicenseAvailable())
 	{
-		szEncryptedVGUARANTYKey+=encryptKey(MOD_VGUARANTY);
+		if(isVGUARANTDemoLicAvailable())
+			szEncryptedVGUARANTYKey+=encryptDEMOKey(MOD_VGUARANTY);
+		else
+			szEncryptedVGUARANTYKey+=encryptKey(MOD_VGUARANTY);
 	}
 	else
 		szEncryptedVGUARANTYKey=_T("0");
 
 	if(isVLIMITLicenseAvailable())
 	{
-		szEncryptedVLIMITKey+=encryptKey(MOD_VLIMIT);
+		if(isVLIMITDemoLicAvailable())
+			szEncryptedVLIMITKey+=encryptDEMOKey(MOD_VLIMIT);
+		else
+			szEncryptedVLIMITKey+=encryptKey(MOD_VLIMIT);
 	}
 	else
 		szEncryptedVLIMITKey=_T("0");
 
 	if(isLUNGRECLicenseAvailable())
 	{
-		szEncryptedLUNGRECKey+=encryptKey(MOD_LUNGREC);
+		if(isLUNGRECDemoLicAvailable())
+			szEncryptedLUNGRECKey+=encryptDEMOKey(MOD_LUNGREC);
+		else
+			szEncryptedLUNGRECKey+=encryptKey(MOD_LUNGREC);
 	}
 	else
 		szEncryptedLUNGRECKey=_T("0");
 
 	if(isTRENDLicenseAvailable())
 	{
-		szEncryptedTRENDSKey+=encryptKey(MOD_TREND);
+		if(isTRENDDemoLicAvailable())
+			szEncryptedTRENDSKey+=encryptDEMOKey(MOD_TREND);
+		else
+			szEncryptedTRENDSKey+=encryptKey(MOD_TREND);
 	}
 	else
 		szEncryptedTRENDSKey=_T("0");
 
 	if(isTHERAPYLicenseAvailable())
 	{
-		szEncryptedTHERAPYKey+=encryptKey(MOD_THERAPY);
+		if(isTHERAPYDemoLicAvailable())
+			szEncryptedTHERAPYKey+=encryptDEMOKey(MOD_THERAPY);
+		else
+			szEncryptedTHERAPYKey+=encryptKey(MOD_THERAPY);
 	}
 	else
 		szEncryptedTHERAPYKey=_T("0");
 
 	if(isPRICOLicenseAvailable())
 	{
-		szEncryptedPRICOKey+=encryptKey(MOD_PRICO);
+		if(isPRICODemoLicAvailable())
+			szEncryptedPRICOKey+=encryptDEMOKey(MOD_PRICO);
+		else
+			szEncryptedPRICOKey+=encryptKey(MOD_PRICO);
 	}
 	else
 		szEncryptedPRICOKey=_T("0");
 
 	if(isFOTLicenseAvailable())
 	{
-		szEncryptedFOTKey+=encryptKey(MOD_FOT);
+		if(isFOTDemoLicAvailable())
+			szEncryptedFOTKey+=encryptDEMOKey(MOD_FOT);
+		else
+			szEncryptedFOTKey+=encryptKey(MOD_FOT);
 	}
 	else
 		szEncryptedFOTKey=_T("0");
@@ -2110,6 +2894,110 @@ CStringA CDataHandler::encryptKey(eModule module)
 
 	strcpy_s(szDataIn,_countof(szDataIn),szUniqueID16);
 	
+	//Encryption
+	oRijndael.EncryptBlock(szDataIn, szDataOut);
+
+	charStr2HexStr((unsigned char*)szDataOut, szHex, 10);
+
+	CStringA szRes(szHex);
+	return szRes;
+}
+
+/**********************************************************************************************//**
+ * @fn	CStringA CDataHandler::encryptDEMOKey(eModule module)
+ *
+ * @brief	Encrypt demo key.
+ *
+ * @author	Rainer Kuehner
+ * @date	09.02.2017
+ *
+ * @param	module	The module.
+ *
+ * @return	A CStringA.
+ **************************************************************************************************/
+CStringA CDataHandler::encryptDEMOKey(eModule module)
+{
+	CStringA szUniqueID16="";
+
+
+	if(getModel()->GetUniqueID()=="" || getModel()->GetUniqueID()=="-ERROR-")
+		return "";
+
+	char szDataIn[17]= {0};
+	char szDataOut[16] = {0};
+	char szHex[30];
+	CRijndael oRijndael;
+
+	szUniqueID16=getModel()->GetUniqueID();
+	int iLenUniqueID=szUniqueID16.GetLength();
+
+	if(iLenUniqueID>16)
+	{
+		theApp.getLog()->WriteLine(_T("#HFO:0060"));
+	}
+
+	for(iLenUniqueID;iLenUniqueID<16;iLenUniqueID++)
+	{
+		szUniqueID16.AppendChar('0');
+	}
+
+	switch(module)
+	{
+	case MOD_HFO:
+		{
+			//Initialization
+			oRijndael.MakeKey("AcutrDemoHFO0000", CRijndael::sm_chain0, 16, 16);
+		}
+		break;
+	case MOD_NMODE:
+		{
+			oRijndael.MakeKey("AcutrDemoNMODE00", CRijndael::sm_chain0, 16, 16);
+		}
+		break;
+	case MOD_VGUARANTY:
+		{
+			oRijndael.MakeKey("AcutrDemoVGUARAN", CRijndael::sm_chain0, 16, 16);
+		}
+		break;
+	case MOD_VLIMIT:
+		{
+			oRijndael.MakeKey("AcutrDemoVLIMIT0", CRijndael::sm_chain0, 16, 16);
+		}
+		break;
+	case MOD_LUNGREC:
+		{
+			oRijndael.MakeKey("AcutrDemoLUNGREC", CRijndael::sm_chain0, 16, 16);
+		}
+		break;
+	case MOD_TREND:
+		{
+			oRijndael.MakeKey("AcutrDemoTRENDS0", CRijndael::sm_chain0, 16, 16);
+		}
+		break;
+	case MOD_THERAPY:
+		{
+			oRijndael.MakeKey("AcutrDemoTHERAPY", CRijndael::sm_chain0, 16, 16);
+		}
+		break;
+	case MOD_PRICO:
+		{
+			oRijndael.MakeKey("AcutrDemoPRICO00", CRijndael::sm_chain0, 16, 16);
+		}
+		break;
+	case MOD_FOT:
+		{
+			oRijndael.MakeKey("AcutrDemoFOT0000", CRijndael::sm_chain0, 16, 16);
+		}
+		break;
+	default:
+		{
+			return "";
+		}
+		break;
+	}
+
+	strcpy_s(szDataIn,_countof(szDataIn),szUniqueID16);
+
 	//Encryption
 	oRijndael.EncryptBlock(szDataIn, szDataOut);
 
@@ -2418,8 +3306,14 @@ void CDataHandler::disableHFOLicense()
 {
 	m_bHFOLicenseAvailable=false;
 	theApp.getLog()->WriteLine(_T("-disableHFOmodule"));
+
+	delDemoLicense(MOD_HFO,false);
 }
 
+bool CDataHandler::isHFODemoLicAvailable()
+{
+	return m_bHFODemoLicAvailable;
+}
 
 //=============================================================================
  /**
@@ -2441,6 +3335,14 @@ void CDataHandler::disableNMODELicense()
 {
 	m_bNMODELicenseAvailable=false;
 	theApp.getLog()->WriteLine(_T("-disableNMODEmodule"));
+
+	delDemoLicense(MOD_NMODE,false);
+
+}
+
+bool CDataHandler::isNMODEDemoLicAvailable()
+{
+	return m_bNMODEDemoLicAvailable;
 }
 
 //=============================================================================
@@ -2464,8 +3366,14 @@ void CDataHandler::disableVGUARANTLicense()
 {
 	m_bVGUARANTLicenseAvailable=false;
 	theApp.getLog()->WriteLine(_T("-disableVGUARANTmodule"));
-}
 
+	delDemoLicense(MOD_VGUARANTY,false);
+
+}
+bool CDataHandler::isVGUARANTDemoLicAvailable()
+{
+	return m_bVGUARANTDemoLicAvailable;
+}
 //=============================================================================
  /**
  * @brief Check Volume Limit module license.
@@ -2486,8 +3394,14 @@ void CDataHandler::disableVLIMITLicense()
 {
 	m_bVLIMITLicenseAvailable=false;
 	theApp.getLog()->WriteLine(_T("-disableVLIMITmodule"));
-}
 
+	delDemoLicense(MOD_VLIMIT,false);
+
+}
+bool CDataHandler::isVLIMITDemoLicAvailable()
+{
+	return m_bVLIMITDemoLicAvailable;
+}
 //=============================================================================
  /**
  * @brief Check Lungrecruitment module license.
@@ -2508,6 +3422,13 @@ void CDataHandler::disableLUNGRECLicense()
 {
 	m_bLUNGRECLicenseAvailable=false;
 	theApp.getLog()->WriteLine(_T("-disableLUNGRECmodule"));
+
+	delDemoLicense(MOD_LUNGREC,false);
+
+}
+bool CDataHandler::isLUNGRECDemoLicAvailable()
+{
+	return m_bLUNGRECDemoLicAvailable;
 }
 
 //=============================================================================
@@ -2530,8 +3451,13 @@ void CDataHandler::disableTRENDLicense()
 {
 	m_bTRENDLicenseAvailable=false;
 	theApp.getLog()->WriteLine(_T("-disableTRENDmodule"));
-}
 
+	delDemoLicense(MOD_TREND,false);
+}
+bool CDataHandler::isTRENDDemoLicAvailable()
+{
+	return m_bTRENDDemoLicAvailable;
+}
 //=============================================================================
  /**
  * @brief Check FOT module license.
@@ -2552,7 +3478,15 @@ void CDataHandler::disableFOTLicense()
 {
 	m_bFOTLicenseAvailable=false;
 	theApp.getLog()->WriteLine(_T("-disableFOTmodule"));
+
+	delDemoLicense(MOD_FOT,false);
 }
+
+bool CDataHandler::isFOTDemoLicAvailable()
+{
+	return m_bFOTDemoLicAvailable;
+}
+
 
 //=============================================================================
  /**
@@ -2574,6 +3508,13 @@ void CDataHandler::disableTHERAPYLicense()
 {
 	m_bTHERAPYLicenseAvailable=false;
 	theApp.getLog()->WriteLine(_T("-disableTHERAPYmodule"));
+
+	delDemoLicense(MOD_THERAPY,false);
+
+}
+bool CDataHandler::isTHERAPYDemoLicAvailable()
+{
+	return m_bTHERAPYDemoLicAvailable;
 }
 //=============================================================================
  /**
@@ -2596,6 +3537,13 @@ void CDataHandler::disablePRICOLicense()
 {
 	m_bPRICOLicenseAvailable=false;
 	theApp.getLog()->WriteLine(_T("-disablePRICOmodule"));
+
+	delDemoLicense(MOD_PRICO,false);
+
+}
+bool CDataHandler::isPRICODemoLicAvailable()
+{
+	return m_bPRICODemoLicAvailable;
 }
 
 /**********************************************************************************************//**
@@ -2773,6 +3721,18 @@ void CDataHandler::loadNumerics()
 				eMode=NUMMODE_THERAPY;
 				break;
 			}
+		case NUMMODE_FLOWOFFCONV:
+			{
+				szMode=_T("NUMERIC_FLOWOFFCONV");
+				eMode=NUMMODE_FLOWOFFCONV;
+				break;
+			}
+		case NUMMODE_FLOWOFFHFO:
+			{
+				szMode=_T("NUMERIC_FLOWOFFHFO");
+				eMode=NUMMODE_FLOWOFFHFO;
+				break;
+			}
 		}
 
 		for(BYTE iBlock=0;iBlock<MAX_NUMERICMODEBLOCK;iBlock++)
@@ -2811,6 +3771,12 @@ void CDataHandler::loadNumerics()
 			case NUMMODE_THERAPY:
 				pbufNumeric=&m_pbufNumericTHERAPY[iBlock];
 				break;
+			case NUMMODE_FLOWOFFCONV:
+				pbufNumeric=&m_pbufNumericFLOWOFFCONV[iBlock];
+				break;
+			case NUMMODE_FLOWOFFHFO:
+				pbufNumeric=&m_pbufNumericFLOWOFFHFO[iBlock];
+				break;
 			}
 			CStringW szState=CTlsIniFile::ReadIniStr(szNum, _T("SHOW"), _T("DEFAULT"), NUMERICCONFINI);
 			setNumericINIstate(pbufNumeric,iBlock,szState);
@@ -2822,14 +3788,6 @@ void CDataHandler::loadNumerics()
 				{
 					readNumericINIvalues(pbufNumeric,iBlock,num,szNum);
 				}
-				bCount=true;
-			}
-			else if(szState==_T("DEFAULT"))
-			{
-				bCount=true;
-			}
-			else if(szState==_T("DEFAULTMECHANIC"))
-			{
 				bCount=true;
 			}
 
@@ -2867,6 +3825,12 @@ void CDataHandler::loadNumerics()
 				case NUMMODE_THERAPY:
 					m_iNumericTHERAPYcount++;
 					break;
+				case NUMMODE_FLOWOFFCONV:
+					m_iNumericFLOWOFFCONVcount++;
+					break;
+				case NUMMODE_FLOWOFFHFO:
+					m_iNumericFLOWOFFHFOcount++;
+					break;
 				}
 			}
 		}
@@ -2875,7 +3839,6 @@ void CDataHandler::loadNumerics()
 
 void CDataHandler::setNumericINIstate(NUMERICINI* pbufNumeric,BYTE iBlock,CStringW szState)
 {
-
 	if(szState==_T("FALSE"))
 	{
 		pbufNumeric->SHOW=FALSE;
@@ -2883,14 +3846,6 @@ void CDataHandler::setNumericINIstate(NUMERICINI* pbufNumeric,BYTE iBlock,CStrin
 	else if(szState==_T("TRUE"))
 	{
 		pbufNumeric->SHOW=TRUE;
-	}
-	else if(szState==_T("DEFAULT"))
-	{
-		pbufNumeric->SHOW=DEFAULTBLOCK;
-	}
-	else if(szState==_T("DEFAULTMECHANIC"))
-	{
-		pbufNumeric->SHOW=DEFAULTMECHANICBLOCK;
 	}
 	else
 	{
@@ -2904,14 +3859,19 @@ void CDataHandler::readNumericINIvalues(NUMERICINI* pbufNumeric,BYTE iBlock,BYTE
 	{
 	case 1:
 		{
-			if(if(pbufNumeric->eNumMode==NUMMODE_THERAPY)
+			if(pbufNumeric->eNumMode==NUMMODE_THERAPY)
 			{
 				pbufNumeric->VAL1=NUMT_INFO_PATAL;
 				pbufNumeric->SIZE1=NUMERICSIZE_1;
 			}
-			else if(if(pbufNumeric->eNumMode==NUMMODE_NCPAP || pbufNumeric->eNumMode==NUMMODE_DUOPAP)
+			else if(pbufNumeric->eNumMode==NUMMODE_NCPAP || pbufNumeric->eNumMode==NUMMODE_DUOPAP)
 			{
 				pbufNumeric->VAL1=NUMT_INFO_TUBE;
+				pbufNumeric->SIZE1=NUMERICSIZE_1;
+			}
+			else if(pbufNumeric->eNumMode==NUMMODE_FLOWOFFCONV || pbufNumeric->eNumMode==NUMMODE_FLOWOFFHFO)
+			{
+				pbufNumeric->VAL1=NUMT_INFO_FLOWOFF;
 				pbufNumeric->SIZE1=NUMERICSIZE_1;
 			}
 			else
@@ -3114,6 +4074,14 @@ eNumericType CDataHandler::getNumericType(CStringW szVal)
 	else if(szVal==_T("INFO_TUBE"))
 	{
 		return NUMT_INFO_TUBE;
+	}
+	else if(szVal==_T("INFO_FLOWOFF"))
+	{
+		return NUMT_INFO_FLOWOFF;
+	}
+	else if(szVal==_T("SPACE"))
+	{
+		return NUMT_SPACE;
 	}
 	else
 	{
@@ -16277,6 +17245,15 @@ void CDataHandler::setStatus2(SHORT state)
 SHORT CDataHandler::getStatus2()
 {
 	return m_Status2;
+}
+
+BYTE CDataHandler::getCountNumericFLOWOFFCONV()
+{
+	return m_iNumericFLOWOFFCONVcount;
+}
+BYTE CDataHandler::getCountNumericFLOWOFFHFO()
+{
+	return m_iNumericFLOWOFFHFOcount;
 }
 
 BYTE CDataHandler::getCountNumericIPPV()

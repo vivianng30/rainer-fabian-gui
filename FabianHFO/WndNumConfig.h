@@ -31,7 +31,7 @@ private:
 	void createNumericField6();
 	void createNumericField7();
 	void createNumericField8();
-	void createNewNumericField(CNumericField *pNumField, eNumericType numType, eNumericSize numSize);
+	CNumericField* createNewNumericField(eNumericType numType, eNumericSize numSize);
 	SHORT getBottomNumPositionYaxes(eNumericSize numSize);
 
 protected:

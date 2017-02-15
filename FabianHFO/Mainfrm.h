@@ -53,8 +53,8 @@ protected:
 
 	void checkSERIAL();
 
-	void StartThreadWatchdogThread(void);//rkuNEWFIX
-	void StopThreadWatchdogThread( void );//rkuNEWFIX
+	//void StartThreadWatchdogThread(void);//rkuNEWFIX
+	//void StopThreadWatchdogThread( void );//rkuNEWFIX
 	
 	void StartI2CWatchdogThread(void);
 	void StopI2CWatchdogThread( void );
@@ -94,7 +94,7 @@ public:
 #endif
 
 protected: 
-	CRITICAL_SECTION	csThreadWatchdog;
+	//CRITICAL_SECTION	csThreadWatchdog;
 
 	CMVModel *m_pModel;//WEC2013
 
@@ -193,15 +193,15 @@ protected:
 	HFONT m_hf70BoldNum;
 
 	//rkuNEWFIX
-	friend UINT CThreadWatchdogThread(LPVOID pc);
+	/*friend UINT CThreadWatchdogThread(LPVOID pc);
 	CWinThread*	m_pcwtThreadWatchdogThread;
 	DWORD ThreadWatchdog(void);
 	bool m_bDoThreadWatchdogThread;
 	CEvent eventThreadWatchdog;
-	HANDLE m_hThreadThreadWatchdog;
+	HANDLE m_hThreadThreadWatchdog;*/
 
-	UINT faThreadWatchdog[MAXSIZE_THREADS];//rkuNEWFIX
-	UINT faPrevstateThreadWatchdog[MAXSIZE_THREADS];//rkuNEWFIX
+	//UINT faThreadWatchdog[MAXSIZE_THREADS];
+	//UINT faPrevstateThreadWatchdog[MAXSIZE_THREADS];
 	
 	//Threads
 	//WEC2013

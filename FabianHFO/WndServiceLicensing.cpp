@@ -10,6 +10,7 @@
 #include "PasswordDlg.h"
 #include "DlgMessageBox.h"
 
+
 // CWndServiceLicensing
 
 IMPLEMENT_DYNAMIC(CWndServiceLicensing, CWnd)
@@ -442,168 +443,250 @@ void CWndServiceLicensing::Init()
 		m_bFOTModuleEnabled=false;
 	}
 
-	//TEST
-	//bCheckMasterFeature=false;
-	
-	//if(bCheckMasterFeature)
-	//{
-	//	CStringA szEncryptedMasterKey=getModel()->getDATAHANDLER()->encryptKey(MOD_MASTER);
-
-	//	char szHex[30];
-	//	//strcpy(szHex,szEncryptedMasterKey);
-	//	strcpy_s(szHex,_countof(szHex),szEncryptedMasterKey);
-
-	//	m_szEncryptedFormattedMasterKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedMasterKey);
-
-	//	//check master key
-	//	if(m_szParsedMasterKey==szHex)
-	//	{
-	//		m_bMasterModuleEnabled=true;
-	//	}
-	//}
-	//else
+	if(bCheckHFOFeature)
 	{
-		if(bCheckHFOFeature)
+		CStringA szEncryptedKey="";
+		char szHex[30];
+
+		if(false==getModel()->getDATAHANDLER()->isHFODemoLicAvailable())
 		{
-			CStringA szEncryptedHFOKey=getModel()->getDATAHANDLER()->encryptKey(MOD_HFO);
+			szEncryptedKey=getModel()->getDATAHANDLER()->encryptKey(MOD_HFO);
+			strcpy_s(szHex,_countof(szHex),szEncryptedKey);
 
-			char szHex[30];
-			//strcpy(szHex,szEncryptedHFOKey);
-			strcpy_s(szHex,_countof(szHex),szEncryptedHFOKey);
-
-			m_szEncryptedFormattedHFOKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedHFOKey);
-
-			//check master key
 			if(m_szParsedHFOKey==szHex)
 			{
 				m_bHFOModuleEnabled=true;
 			}
 		}
-		if(bCheckNMODEFeature)
+		else
 		{
-			CStringA szEncryptedNMODEKey=getModel()->getDATAHANDLER()->encryptKey(MOD_NMODE);
+			szEncryptedKey=getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_HFO);
+			strcpy_s(szHex,_countof(szHex),szEncryptedKey);
 
-			char szHex[30];
-			//strcpy(szHex,szEncryptedNMODEKey);
-			strcpy_s(szHex,_countof(szHex),szEncryptedNMODEKey);
+			if(m_szParsedHFOKey==szHex)
+			{
+				m_bHFOModuleEnabled=true;
+			}
+		}
+		m_szEncryptedFormattedHFOKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedKey);
+	}
+	if(bCheckNMODEFeature)
+	{
+		CStringA szEncryptedKey="";
+		char szHex[30];
 
-			m_szEncryptedFormattedNMODEKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedNMODEKey);
-			
-			//check master key
+		if(false==getModel()->getDATAHANDLER()->isNMODEDemoLicAvailable())
+		{
+			szEncryptedKey=getModel()->getDATAHANDLER()->encryptKey(MOD_NMODE);
+			strcpy_s(szHex,_countof(szHex),szEncryptedKey);
+
 			if(m_szParsedNMODEKey==szHex)
 			{
 				m_bNMODEModuleEnabled=true;
 			}
 		}
-		if(bCheckVGUARANTFeature)
+		else
 		{
-			CStringA szEncryptedVGUARANTYKey=getModel()->getDATAHANDLER()->encryptKey(MOD_VGUARANTY);
+			szEncryptedKey=getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_NMODE);
+			strcpy_s(szHex,_countof(szHex),szEncryptedKey);
 
-			char szHex[30];
-			//strcpy(szHex,szEncryptedVGUARANTYKey);
-			strcpy_s(szHex,_countof(szHex),szEncryptedVGUARANTYKey);
+			if(m_szParsedNMODEKey==szHex)
+			{
+				m_bNMODEModuleEnabled=true;
+			}
+		}
+		m_szEncryptedFormattedNMODEKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedKey);
+	}
+	if(bCheckVGUARANTFeature)
+	{
+		CStringA szEncryptedKey="";
+		char szHex[30];
 
-			m_szEncryptedFormattedVGUARANTYKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedVGUARANTYKey);
+		if(false==getModel()->getDATAHANDLER()->isVGUARANTDemoLicAvailable())
+		{
+			szEncryptedKey=getModel()->getDATAHANDLER()->encryptKey(MOD_VGUARANTY);
+			strcpy_s(szHex,_countof(szHex),szEncryptedKey);
 
-			//check master key
 			if(m_szParsedVGUARANTYKey==szHex)
 			{
 				m_bVGUARANTModuleEnabled=true;
 			}
 		}
-		if(bCheckVLIMITFeature)
+		else
 		{
-			CStringA szEncryptedVLIMITKey=getModel()->getDATAHANDLER()->encryptKey(MOD_VLIMIT);
+			szEncryptedKey=getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_VGUARANTY);
+			strcpy_s(szHex,_countof(szHex),szEncryptedKey);
 
-			char szHex[30];
-			//strcpy(szHex,szEncryptedVLIMITKey);
-			strcpy_s(szHex,_countof(szHex),szEncryptedVLIMITKey);
+			if(m_szParsedVGUARANTYKey==szHex)
+			{
+				m_bVGUARANTModuleEnabled=true;
+			}
+		}		
+		m_szEncryptedFormattedVGUARANTYKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedKey);
+	}
+	if(bCheckVLIMITFeature)
+	{
+		CStringA szEncryptedKey="";
+		char szHex[30];
 
-			m_szEncryptedFormattedVLIMITKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedVLIMITKey);
+		if(false==getModel()->getDATAHANDLER()->isVLIMITDemoLicAvailable())
+		{
+			szEncryptedKey=getModel()->getDATAHANDLER()->encryptKey(MOD_VLIMIT);
+			strcpy_s(szHex,_countof(szHex),szEncryptedKey);
 
-			//check master key
+			if(m_szParsedVLIMITKey==szHex)
+			{
+				m_bVLIMITModuleEnabled=true;
+			}
+
+		}
+		else
+		{
+			szEncryptedKey=getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_VLIMIT);
+			strcpy_s(szHex,_countof(szHex),szEncryptedKey);
+
 			if(m_szParsedVLIMITKey==szHex)
 			{
 				m_bVLIMITModuleEnabled=true;
 			}
 		}
-		if(bCheckLUNGRECFeature)
+		m_szEncryptedFormattedVLIMITKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedKey);
+	}
+	if(bCheckLUNGRECFeature)
+	{
+		CStringA szEncryptedKey="";
+		char szHex[30];
+
+		if(false==getModel()->getDATAHANDLER()->isLUNGRECDemoLicAvailable())
 		{
-			CStringA szEncryptedLUNGRECKey=getModel()->getDATAHANDLER()->encryptKey(MOD_LUNGREC);
+			szEncryptedKey=getModel()->getDATAHANDLER()->encryptKey(MOD_LUNGREC);
+			strcpy_s(szHex,_countof(szHex),szEncryptedKey);
 
-			char szHex[30];
-			//strcpy(szHex,szEncryptedVLIMITKey);
-			strcpy_s(szHex,_countof(szHex),szEncryptedLUNGRECKey);
-
-			m_szEncryptedFormattedLUNGRECKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedLUNGRECKey);
-
-			//check master key
 			if(m_szParsedLUNGRECKey==szHex)
 			{
 				m_bLUNGRECModuleEnabled=true;
 			}
 		}
-		if(bCheckTRENDSFeature)
+		else
 		{
-			CStringA szEncryptedTRENDSKey=getModel()->getDATAHANDLER()->encryptKey(MOD_TREND);
+			szEncryptedKey=getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_LUNGREC);
+			strcpy_s(szHex,_countof(szHex),szEncryptedKey);
 
-			char szHex[30];
-			strcpy_s(szHex,_countof(szHex),szEncryptedTRENDSKey);
+			if(m_szParsedLUNGRECKey==szHex)
+			{
+				m_bLUNGRECModuleEnabled=true;
+			}
+		}		
+		m_szEncryptedFormattedLUNGRECKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedKey);
+	}
+	if(bCheckTRENDSFeature)
+	{
+		CStringA szEncryptedKey="";
+		char szHex[30];
 
-			m_szEncryptedFormattedTRENDSKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedTRENDSKey);
+		if(false==getModel()->getDATAHANDLER()->isTRENDDemoLicAvailable())
+		{
+			szEncryptedKey=getModel()->getDATAHANDLER()->encryptKey(MOD_TREND);
+			strcpy_s(szHex,_countof(szHex),szEncryptedKey);
 
-			//check master key
 			if(m_szParsedTRENDSKey==szHex)
 			{
 				m_bTRENDSModuleEnabled=true;
 			}
 		}
-		if(bCheckTHERAPYFeature)
+		else
 		{
-			CStringA szEncryptedTHERAPYKey=getModel()->getDATAHANDLER()->encryptKey(MOD_THERAPY);
+			szEncryptedKey=getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_TREND);
+			strcpy_s(szHex,_countof(szHex),szEncryptedKey);
 
-			char szHex[30];
-			strcpy_s(szHex,_countof(szHex),szEncryptedTHERAPYKey);
+			if(m_szParsedTRENDSKey==szHex)
+			{
+				m_bTRENDSModuleEnabled=true;
+			}
+		}	
+		m_szEncryptedFormattedTRENDSKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedKey);
+	}
+	if(bCheckTHERAPYFeature)
+	{
+		CStringA szEncryptedKey="";
+		char szHex[30];
 
-			m_szEncryptedFormattedTHERAPYKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedTHERAPYKey);
+		if(false==getModel()->getDATAHANDLER()->isTHERAPYDemoLicAvailable())
+		{
+			szEncryptedKey=getModel()->getDATAHANDLER()->encryptKey(MOD_THERAPY);
+			strcpy_s(szHex,_countof(szHex),szEncryptedKey);
 
-			//check master key
 			if(m_szParsedTHERAPYKey==szHex)
 			{
 				m_bTHERAPYModuleEnabled=true;
 			}
 		}
-		if(bCheckPRICOFeature)
+		else
 		{
-			CStringA szEncryptedPRICOKey=getModel()->getDATAHANDLER()->encryptKey(MOD_PRICO);
+			szEncryptedKey=getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_THERAPY);
+			strcpy_s(szHex,_countof(szHex),szEncryptedKey);
 
-			char szHex[30];
-			strcpy_s(szHex,_countof(szHex),szEncryptedPRICOKey);
+			if(m_szParsedTHERAPYKey==szHex)
+			{
+				m_bTHERAPYModuleEnabled=true;
+			}
+		}		
+		m_szEncryptedFormattedTHERAPYKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedKey);
+	}
+	if(bCheckPRICOFeature)
+	{
+		CStringA szEncryptedKey="";
+		char szHex[30];
 
-			m_szEncryptedFormattedPRICOKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedPRICOKey);
+		if(false==getModel()->getDATAHANDLER()->isPRICODemoLicAvailable())
+		{
+			szEncryptedKey=getModel()->getDATAHANDLER()->encryptKey(MOD_PRICO);
+			strcpy_s(szHex,_countof(szHex),szEncryptedKey);
 
 			if(m_szParsedPRICOKey==szHex)
 			{
 				m_bPRICOModuleEnabled=true;
 			}
 		}
-		if(bCheckFOTFeature)
+		else
 		{
-			CStringA szEncryptedFOTKey=getModel()->getDATAHANDLER()->encryptKey(MOD_FOT);
+			szEncryptedKey=getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_PRICO);
+			strcpy_s(szHex,_countof(szHex),szEncryptedKey);
 
-			char szHex[30];
-			strcpy_s(szHex,_countof(szHex),szEncryptedFOTKey);
+			if(m_szParsedPRICOKey==szHex)
+			{
+				m_bPRICOModuleEnabled=true;
+			}
+		}		
+		m_szEncryptedFormattedPRICOKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedKey);
+	}
+	if(bCheckFOTFeature)
+	{
+		CStringA szEncryptedKey="";
+		char szHex[30];
 
-			m_szEncryptedFormattedFOTKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedFOTKey);
+		if(false==getModel()->getDATAHANDLER()->isFOTDemoLicAvailable())
+		{
+			szEncryptedKey=getModel()->getDATAHANDLER()->encryptKey(MOD_FOT);
+			strcpy_s(szHex,_countof(szHex),szEncryptedKey);
 
 			if(m_szParsedFOTKey==szHex)
 			{
 				m_bFOTModuleEnabled=true;
 			}
 		}
-	}
+		else
+		{
+			szEncryptedKey=getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_FOT);
+			strcpy_s(szHex,_countof(szHex),szEncryptedKey);
 
-	
+			if(m_szParsedFOTKey==szHex)
+			{
+				m_bFOTModuleEnabled=true;
+			}
+		}		
+		m_szEncryptedFormattedFOTKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedKey);
+	}
 
 	m_pcActivate_Up= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN160_LG_UP);
 	m_pcActivate_Dw= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN160_LG_DW);
@@ -901,36 +984,84 @@ void CWndServiceLicensing::Draw()
 
 	SelectObject(hdcMem,g_hf14AcuMed);
 
-	rc.left = 50;  
+	rc.left = 30;  
 	rc.top = 30;  
 	rc.right  = 280;  
 	rc.bottom = 500;
-	cs = _T("FOT");
+	cs = _T("FOT:");
+	if(getModel()->getDATAHANDLER()->isFOTDemoLicAvailable())
+	{
+		cs += _T("(demo)");
+	}
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 	
 	if(m_bFOTModuleEnabled)
 	{
 		m_pcActivateFOT->ShowWindow(SW_HIDE);
-		rc.left = 230;  
+		rc.left = 260;  
 		rc.top = 30;  
 		rc.right  = 760;  
 		rc.bottom = 500;
-		cs = _T("enabled");
+		cs = _T("ok");
 		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-		rc.left = 330;  
-		rc.top = 30;  
-		rc.right  = 760;  
-		rc.bottom = 500;
-		DrawText(hdcMem,m_szEncryptedFormattedFOTKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		if(getModel()->getDATAHANDLER()->isFOTDemoLicAvailable())
+		{
+			SYSTEMTIME stTime;
+			GetLocalTime(&stTime);
+			COleDateTime dtCurrentTime(stTime);
+			COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetFOTdemoTimestamp();
 
-		m_pcDelFOT->ShowWindow(SW_SHOW);
+			CStringW szDiff=_T("ERROR time stamp");;
+
+			if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
+			{
+				if(dtLicenseTimestamp.GetYear()==dtCurrentTime.GetYear())
+				{
+					COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+					int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+					szDiff.Format(_T("%d days left"), iDaysLeft);
+				}
+			}
+
+			rc.left = 330;  
+			rc.top = 30;  
+			rc.right  = 760;  
+			rc.bottom = 500;
+			DrawText(hdcMem,szDiff,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
+		else
+		{
+			rc.left = 330;  
+			rc.top = 30;  
+			rc.right  = 760;  
+			rc.bottom = 500;
+			DrawText(hdcMem,m_szEncryptedFormattedFOTKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
+		
+
+		if(getModel()->getFOTThread()->getFOTstate()==FOT_OFF)
+		{
+			m_pcDelFOT->ShowWindow(SW_SHOW);
+		}
+		else
+		{
+			m_pcDelFOT->ShowWindow(SW_HIDE);
+
+			rc.left = 600;  
+			rc.right  = 760;  
+			rc.top = 15;  
+			rc.bottom = 63;
+			cs = _T("- FOT active -");
+			DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
 	}
 	else
 	{
 		m_pcActivateFOT->ShowWindow(SW_SHOW);
-		rc.left = 230;  
+		rc.left = 260;  
 		rc.top = 30;  
 		rc.right  = 760;  
 		rc.bottom = 500;
@@ -940,35 +1071,82 @@ void CWndServiceLicensing::Draw()
 		m_pcDelFOT->ShowWindow(SW_HIDE);
 	}
 
-	rc.left = 50;  
+	rc.left = 30;  
 	rc.top = 80;  
 	rc.right  = 280;  
 	rc.bottom = 500;
 	cs = _T("HFO:");
+	if(getModel()->getDATAHANDLER()->isHFODemoLicAvailable())
+	{
+		cs += _T("(demo)");
+	}
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 	if(m_bHFOModuleEnabled)
 	{
 		m_pcActivateHFO->ShowWindow(SW_HIDE);
-		rc.left = 230;  
+		rc.left = 260;  
 		rc.top = 80;  
 		rc.right  = 760;  
 		rc.bottom = 500;
-		cs = _T("enabled");
+		cs = _T("ok");
 		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-		rc.left = 330;  
-		rc.top = 80;  
-		rc.right  = 760;  
-		rc.bottom = 500;
-		DrawText(hdcMem,m_szEncryptedFormattedHFOKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		if(getModel()->getDATAHANDLER()->isHFODemoLicAvailable())
+		{
+			SYSTEMTIME stTime;
+			GetLocalTime(&stTime);
+			COleDateTime dtCurrentTime(stTime);
+			COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetHFOdemoTimestamp();
 
-		m_pcDelHFO->ShowWindow(SW_SHOW);
+			CStringW szDiff=_T("ERROR time stamp");;
+
+			if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
+			{
+				if(dtLicenseTimestamp.GetYear()==dtCurrentTime.GetYear())
+				{
+					COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+					int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+					szDiff.Format(_T("%d days left"), iDaysLeft);
+				}
+			}
+
+			rc.left = 330;  
+			rc.top = 80;  
+			rc.right  = 760;  
+			rc.bottom = 500;
+			DrawText(hdcMem,szDiff,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
+		else
+		{
+			rc.left = 330;  
+			rc.top = 80;  
+			rc.right  = 760;  
+			rc.bottom = 500;
+			DrawText(hdcMem,m_szEncryptedFormattedHFOKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
+		
+		//if(getModel()->getCONFIG()->GetPrevMode()!=VM_HFO)
+		{
+			m_pcDelHFO->ShowWindow(SW_SHOW);
+		}
+		/*else
+		{
+			m_pcDelHFO->ShowWindow(SW_HIDE);
+
+			rc.left = 600;  
+			rc.right  = 760;  
+			rc.top = 65;  
+			rc.bottom = 113;
+			cs = _T("- HFO active -");
+			DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}*/
 	}
 	else
 	{
 		m_pcActivateHFO->ShowWindow(SW_SHOW);
-		rc.left = 230;  
+		rc.left = 260;  
 		rc.top = 80;  
 		rc.right  = 760;  
 		rc.bottom = 500;
@@ -981,35 +1159,83 @@ void CWndServiceLicensing::Draw()
 
 	
 
-	rc.left = 50;  
+	rc.left = 30;  
 	rc.top = 130;  
 	rc.right  = 280;  
 	rc.bottom = 500;
 	cs = _T("NMode:");
+	if(getModel()->getDATAHANDLER()->isNMODEDemoLicAvailable())
+	{
+		cs += _T("(demo)");
+	}
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 	if(m_bNMODEModuleEnabled)
 	{
 		m_pcActivateNMODE->ShowWindow(SW_HIDE);
-		rc.left = 230;  
+		rc.left = 260;  
 		rc.top = 130;  
 		rc.right  = 760;  
 		rc.bottom = 500;
-		cs = _T("enabled");
+		cs = _T("ok");
 		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-		rc.left = 330;  
-		rc.top = 130;  
-		rc.right  = 760;  
-		rc.bottom = 500;
-		DrawText(hdcMem,m_szEncryptedFormattedNMODEKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		if(getModel()->getDATAHANDLER()->isNMODEDemoLicAvailable())
+		{
+			SYSTEMTIME stTime;
+			GetLocalTime(&stTime);
+			COleDateTime dtCurrentTime(stTime);
+			COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetNMODEdemoTimestamp();
 
-		m_pcDelNMODE->ShowWindow(SW_SHOW);
+			CStringW szDiff=_T("ERROR time stamp");;
+
+			if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
+			{
+				if(dtLicenseTimestamp.GetYear()==dtCurrentTime.GetYear())
+				{
+					COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+					int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+					szDiff.Format(_T("%d days left"), iDaysLeft);
+				}
+			}
+
+			rc.left = 330;  
+			rc.top = 130;  
+			rc.right  = 760;  
+			rc.bottom = 500;
+			DrawText(hdcMem,szDiff,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
+		else
+		{
+			rc.left = 330;  
+			rc.top = 130;  
+			rc.right  = 760;  
+			rc.bottom = 500;
+			DrawText(hdcMem,m_szEncryptedFormattedNMODEKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
+		
+
+		//if(getModel()->getCONFIG()->GetPrevMode()!=VM_NCPAP && getModel()->getCONFIG()->GetPrevMode()!=VM_DUOPAP)
+		{
+			m_pcDelNMODE->ShowWindow(SW_SHOW);
+		}
+		/*else
+		{
+			m_pcDelNMODE->ShowWindow(SW_HIDE);
+
+			rc.left = 600;  
+			rc.right  = 760;  
+			rc.top = 115;  
+			rc.bottom = 163;
+			cs = _T("- NMODE active -");
+			DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}*/
 	}
 	else
 	{
 		m_pcActivateNMODE->ShowWindow(SW_SHOW);
-		rc.left = 230;  
+		rc.left = 260;  
 		rc.top = 130;  
 		rc.right  = 760;  
 		rc.bottom = 500;
@@ -1019,35 +1245,84 @@ void CWndServiceLicensing::Draw()
 		m_pcDelNMODE->ShowWindow(SW_HIDE);
 	}
 
-	rc.left = 50;  
+	rc.left = 30;  
 	rc.top = 180;  
 	rc.right  = 280;  
 	rc.bottom = 500;
 	cs = _T("Volume guaranty:");
+	if(getModel()->getDATAHANDLER()->isVGUARANTDemoLicAvailable())
+	{
+		cs += _T("(demo)");
+	}
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 	if(m_bVGUARANTModuleEnabled)
 	{
 		m_pcActivateVguaranty->ShowWindow(SW_HIDE);
-		rc.left = 230;  
+		rc.left = 260;  
 		rc.top = 180;  
 		rc.right  = 760;  
 		rc.bottom = 500;
-		cs = _T("enabled");
+		cs = _T("ok");
 		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-		rc.left = 330;  
-		rc.top = 180;  
-		rc.right  = 760;  
-		rc.bottom = 500;
-		DrawText(hdcMem,m_szEncryptedFormattedVGUARANTYKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		if(getModel()->getDATAHANDLER()->isVGUARANTDemoLicAvailable())
+		{
+			SYSTEMTIME stTime;
+			GetLocalTime(&stTime);
+			COleDateTime dtCurrentTime(stTime);
+			COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetVGUARANTYdemoTimestamp();
 
-		m_pcDelVguaranty->ShowWindow(SW_SHOW);
+			CStringW szDiff=_T("ERROR time stamp");;
+
+			if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
+			{
+				if(dtLicenseTimestamp.GetYear()==dtCurrentTime.GetYear())
+				{
+					COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+					int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+					szDiff.Format(_T("%d days left"), iDaysLeft);
+				}
+			}
+
+			rc.left = 330;  
+			rc.top = 180;  
+			rc.right  = 760;  
+			rc.bottom = 500;
+			DrawText(hdcMem,szDiff,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
+		else
+		{
+			rc.left = 330;  
+			rc.top = 180;  
+			rc.right  = 760;  
+			rc.bottom = 500;
+			DrawText(hdcMem,m_szEncryptedFormattedVGUARANTYKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
+		
+
+		if(false==getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
+		{
+			m_pcDelVguaranty->ShowWindow(SW_SHOW);
+		}
+		else
+		{
+			m_pcDelVguaranty->ShowWindow(SW_HIDE);
+
+			rc.left = 600;  
+			rc.right  = 760;  
+			rc.top = 165;  
+			rc.bottom = 213;
+			cs = _T("- VG active -");
+			DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
+
 	}
 	else
 	{
 		m_pcActivateVguaranty->ShowWindow(SW_SHOW);
-		rc.left = 230;  
+		rc.left = 260;  
 		rc.top = 180;  
 		rc.right  = 760;  
 		rc.bottom = 500;
@@ -1057,114 +1332,243 @@ void CWndServiceLicensing::Draw()
 		m_pcDelVguaranty->ShowWindow(SW_HIDE);
 	}
 
-	rc.left = 50;  
+	rc.left = 30;  
 	rc.top = 230;  
 	rc.right  = 280;  
 	rc.bottom = 500;
 	cs = _T("Volume limit:");
+	if(getModel()->getDATAHANDLER()->isVLIMITDemoLicAvailable())
+	{
+		cs += _T("(demo)");
+	}
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 	if(m_bVLIMITModuleEnabled)
 	{
 		m_pcActivateVlimit->ShowWindow(SW_HIDE);
-		rc.left = 230;  
+		rc.left = 260;  
 		rc.top = 230;  
 		rc.right  = 760;  
 		rc.bottom = 500;
-		cs = _T("enabled");
+		cs = _T("ok");
 		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-		rc.left = 330;  
-		rc.top = 230;  
-		rc.right  = 760;  
-		rc.bottom = 500;
-		DrawText(hdcMem,m_szEncryptedFormattedVLIMITKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		if(getModel()->getDATAHANDLER()->isVLIMITDemoLicAvailable())
+		{
+			SYSTEMTIME stTime;
+			GetLocalTime(&stTime);
+			COleDateTime dtCurrentTime(stTime);
+			COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetVLIMITdemoTimestamp();
+
+			CStringW szDiff=_T("ERROR time stamp");;
+
+			if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
+			{
+				if(dtLicenseTimestamp.GetYear()==dtCurrentTime.GetYear())
+				{
+					COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+					int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+					szDiff.Format(_T("%d days left"), iDaysLeft);
+				}
+			}
+
+			rc.left = 330;  
+			rc.top = 230;  
+			rc.right  = 760;  
+			rc.bottom = 500;
+			DrawText(hdcMem,szDiff,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
+		else
+		{
+			rc.left = 330;  
+			rc.top = 230;  
+			rc.right  = 760;  
+			rc.bottom = 500;
+			DrawText(hdcMem,m_szEncryptedFormattedVLIMITKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
 
 		m_pcDelVlimit->ShowWindow(SW_SHOW);
 	}
 	else
 	{
 		m_pcActivateVlimit->ShowWindow(SW_SHOW);
-		rc.left = 230;  
+		rc.left = 260;  
 		rc.top = 230;  
 		rc.right  = 760;  
 		rc.bottom = 500;
 		cs = _T("disabled");
 		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-		m_pcDelVlimit->ShowWindow(SW_HIDE);
+		if(false==getModel()->getDATAHANDLER()->IsActiveModeVLimitStateOn())
+		{
+			m_pcDelVlimit->ShowWindow(SW_SHOW);
+		}
+		else
+		{
+			m_pcDelVlimit->ShowWindow(SW_HIDE);
+
+			rc.left = 600;  
+			rc.right  = 760;  
+			rc.top = 215;  
+			rc.bottom = 263;
+			cs = _T("- VL active -");
+			DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
 	}
 
 
-	rc.left = 50;  
+	rc.left = 30;  
 	rc.top = 280;  
 	rc.right  = 280;  
 	rc.bottom = 500;
 	cs = _T("Lung recruitment:");
+	if(getModel()->getDATAHANDLER()->isLUNGRECDemoLicAvailable())
+	{
+		cs += _T("(demo)");
+	}
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 	if(m_bLUNGRECModuleEnabled)
 	{
 		m_pcActivateLungRec->ShowWindow(SW_HIDE);
-		rc.left = 230;  
+		rc.left = 260;  
 		rc.top = 280;  
 		rc.right  = 760;  
 		rc.bottom = 500;
-		cs = _T("enabled");
+		cs = _T("ok");
 		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-		rc.left = 330;  
-		rc.top = 280;  
-		rc.right  = 760;  
-		rc.bottom = 500;
-		DrawText(hdcMem,m_szEncryptedFormattedLUNGRECKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		if(getModel()->getDATAHANDLER()->isLUNGRECDemoLicAvailable())
+		{
+			SYSTEMTIME stTime;
+			GetLocalTime(&stTime);
+			COleDateTime dtCurrentTime(stTime);
+			COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetLUNGRECdemoTimestamp();
+
+			CStringW szDiff=_T("ERROR time stamp");;
+
+			if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
+			{
+				if(dtLicenseTimestamp.GetYear()==dtCurrentTime.GetYear())
+				{
+					COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+					int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+					szDiff.Format(_T("%d days left"), iDaysLeft);
+				}
+			}
+
+			rc.left = 330;  
+			rc.top = 280;  
+			rc.right  = 760;  
+			rc.bottom = 500;
+			DrawText(hdcMem,szDiff,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
+		else
+		{
+			rc.left = 330;  
+			rc.top = 280;  
+			rc.right  = 760;  
+			rc.bottom = 500;
+			DrawText(hdcMem,m_szEncryptedFormattedLUNGRECKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
+		
 
 		m_pcDelLungRec->ShowWindow(SW_SHOW);
 	}
 	else
 	{
 		m_pcActivateLungRec->ShowWindow(SW_SHOW);
-		rc.left = 230;  
+		rc.left = 260;  
 		rc.top = 280;  
 		rc.right  = 760;  
 		rc.bottom = 500;
 		cs = _T("disabled");
 		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-		m_pcDelLungRec->ShowWindow(SW_HIDE);
+		if(getModel()->getDATAHANDLER()->PARADATA()->GetFreqRecPara()==0)
+		{
+			m_pcDelLungRec->ShowWindow(SW_SHOW);
+		}
+		else
+		{
+			m_pcDelLungRec->ShowWindow(SW_HIDE);
+
+			rc.left = 600;  
+			rc.right  = 760;  
+			rc.top = 265;  
+			rc.bottom = 313;
+			cs = _T("- LungRec active -");
+			DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
 	}
 
 
 
-	rc.left = 50;  
+	rc.left = 30;  
 	rc.top = 330;  
 	rc.right  = 280;  
 	rc.bottom = 500;
 	cs = _T("Trend:");
+	if(getModel()->getDATAHANDLER()->isTRENDDemoLicAvailable())
+	{
+		cs += _T("(demo)");
+	}
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 	if(m_bTRENDSModuleEnabled)
 	{
 		m_pcActivateTrends->ShowWindow(SW_HIDE);
-		rc.left = 230;  
+		rc.left = 260;  
 		rc.top = 330;  
 		rc.right  = 760;  
 		rc.bottom = 500;
-		cs = _T("enabled");
+		cs = _T("ok");
 		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-		rc.left = 330;  
-		rc.top = 330;  
-		rc.right  = 760;  
-		rc.bottom = 500;
-		DrawText(hdcMem,m_szEncryptedFormattedTRENDSKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		if(getModel()->getDATAHANDLER()->isTRENDDemoLicAvailable())
+		{
+			SYSTEMTIME stTime;
+			GetLocalTime(&stTime);
+			COleDateTime dtCurrentTime(stTime);
+			COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetTRENDdemoTimestamp();
+
+			CStringW szDiff=_T("ERROR time stamp");;
+
+			if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
+			{
+				if(dtLicenseTimestamp.GetYear()==dtCurrentTime.GetYear())
+				{
+					COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+					int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+					szDiff.Format(_T("%d days left"), iDaysLeft);
+				}
+			}
+
+			rc.left = 330;  
+			rc.top = 330;  
+			rc.right  = 760;  
+			rc.bottom = 500;
+			DrawText(hdcMem,szDiff,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
+		else
+		{
+			rc.left = 330;  
+			rc.top = 330;  
+			rc.right  = 760;  
+			rc.bottom = 500;
+			DrawText(hdcMem,m_szEncryptedFormattedTRENDSKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
+		
 
 		m_pcDelTrends->ShowWindow(SW_SHOW);
 	}
 	else
 	{
 		m_pcActivateTrends->ShowWindow(SW_SHOW);
-		rc.left = 230;  
+		rc.left = 260;  
 		rc.top = 330;  
 		rc.right  = 760;  
 		rc.bottom = 500;
@@ -1175,35 +1579,83 @@ void CWndServiceLicensing::Draw()
 	}
 
 
-	rc.left = 50;  
+	rc.left = 30;  
 	rc.top = 380;  
 	rc.right  = 280;  
 	rc.bottom = 500;
 	cs = _T("O2 Therapy:");
+	if(getModel()->getDATAHANDLER()->isTHERAPYDemoLicAvailable())
+	{
+		cs += _T("(demo)");
+	}
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 	if(m_bTHERAPYModuleEnabled)
 	{
 		m_pcActivateTherapy->ShowWindow(SW_HIDE);
-		rc.left = 230;  
+		rc.left = 260;  
 		rc.top = 380;  
 		rc.right  = 760;  
 		rc.bottom = 500;
-		cs = _T("enabled");
+		cs = _T("ok");
 		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-		rc.left = 330;  
-		rc.top = 380;  
-		rc.right  = 760;  
-		rc.bottom = 500;
-		DrawText(hdcMem,m_szEncryptedFormattedTHERAPYKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		if(getModel()->getDATAHANDLER()->isTHERAPYDemoLicAvailable())
+		{
+			SYSTEMTIME stTime;
+			GetLocalTime(&stTime);
+			COleDateTime dtCurrentTime(stTime);
+			COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetTHERAPYdemoTimestamp();
 
-		m_pcDelTherapy->ShowWindow(SW_SHOW);
+			CStringW szDiff=_T("ERROR time stamp");;
+
+			if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
+			{
+				if(dtLicenseTimestamp.GetYear()==dtCurrentTime.GetYear())
+				{
+					COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+					int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+					szDiff.Format(_T("%d days left"), iDaysLeft);
+				}
+			}
+
+			rc.left = 330;  
+			rc.top = 380;  
+			rc.right  = 760;  
+			rc.bottom = 500;
+			DrawText(hdcMem,szDiff,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
+		else
+		{
+			rc.left = 330;  
+			rc.top = 380;  
+			rc.right  = 760;  
+			rc.bottom = 500;
+			DrawText(hdcMem,m_szEncryptedFormattedTHERAPYKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
+		
+
+		//if(getModel()->getCONFIG()->GetPrevMode()!=VM_THERAPIE)
+		{
+			m_pcDelTherapy->ShowWindow(SW_SHOW);
+		}
+		/*else
+		{
+			m_pcDelTherapy->ShowWindow(SW_HIDE);
+
+			rc.left = 600;  
+			rc.right  = 760;  
+			rc.top = 365;  
+			rc.bottom = 413;
+			cs = _T("- O2Therapy active -");
+			DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}*/
 	}
 	else
 	{
 		m_pcActivateTherapy->ShowWindow(SW_SHOW);
-		rc.left = 230;  
+		rc.left = 260;  
 		rc.top = 380;  
 		rc.right  = 760;  
 		rc.bottom = 500;
@@ -1214,35 +1666,83 @@ void CWndServiceLicensing::Draw()
 	}
 
 
-	rc.left = 50;  
+	rc.left = 30;  
 	rc.top = 430;  
 	rc.right  = 280;  
 	rc.bottom = 500;
 	cs = _T("PRICO:");
+	if(getModel()->getDATAHANDLER()->isPRICODemoLicAvailable())
+	{
+		cs += _T("(demo)");
+	}
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 	if(m_bPRICOModuleEnabled)
 	{
 		m_pcActivatePRICO->ShowWindow(SW_HIDE);
-		rc.left = 230;  
+		rc.left = 260;  
 		rc.top = 430;  
 		rc.right  = 760;  
 		rc.bottom = 500;
-		cs = _T("enabled");
+		cs = _T("ok");
 		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-		rc.left = 330;  
-		rc.top = 430;  
-		rc.right  = 760;  
-		rc.bottom = 500;
-		DrawText(hdcMem,m_szEncryptedFormattedPRICOKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		if(getModel()->getDATAHANDLER()->isPRICODemoLicAvailable())
+		{
+			SYSTEMTIME stTime;
+			GetLocalTime(&stTime);
+			COleDateTime dtCurrentTime(stTime);
+			COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetPRICOdemoTimestamp();
 
-		m_pcDelPRICO->ShowWindow(SW_SHOW);
+			CStringW szDiff=_T("ERROR time stamp");;
+
+			if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
+			{
+				if(dtLicenseTimestamp.GetYear()==dtCurrentTime.GetYear())
+				{
+					COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+					int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+					szDiff.Format(_T("%d days left"), iDaysLeft);
+				}
+			}
+
+			rc.left = 330;  
+			rc.top = 430;  
+			rc.right  = 760;  
+			rc.bottom = 500;
+			DrawText(hdcMem,szDiff,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
+		else
+		{
+			rc.left = 330;  
+			rc.top = 430;  
+			rc.right  = 760;  
+			rc.bottom = 500;
+			DrawText(hdcMem,m_szEncryptedFormattedPRICOKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
+		
+
+		if(false==getModel()->getPRICOThread()->isPRICOalgorithmRunning())
+		{
+			m_pcDelPRICO->ShowWindow(SW_SHOW);
+		}
+		else
+		{
+			m_pcDelPRICO->ShowWindow(SW_HIDE);
+
+			rc.left = 600;  
+			rc.right  = 760;  
+			rc.top = 415;  
+			rc.bottom = 463;
+			cs = _T("- PRICO active -");
+			DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		}
 	}
 	else
 	{
 		m_pcActivatePRICO->ShowWindow(SW_SHOW);
-		rc.left = 230;  
+		rc.left = 260;  
 		rc.top = 430;  
 		rc.right  = 760;  
 		rc.bottom = 500;
@@ -1268,118 +1768,6 @@ void CWndServiceLicensing::Draw()
 	DeleteDC(hdcMem);
 }
 
-//void CWndServiceLicensing::WriteLicenseFile()
-//{
-//	CTlsOStream_File os(m_szLicenseFile);
-//	CTlsXmlWriter xml(&os);
-//
-//	CStringW szEncryptedMasterKey=_T("");
-//	szEncryptedMasterKey+=m_szParsedMasterKey;
-//	CString szEncryptedHFOKey=_T("");
-//	szEncryptedHFOKey+=m_szParsedHFOKey;
-//	/*CString szEncryptedCO2Key=_T("0");
-//	szEncryptedCO2Key+=m_szParsedCO2Key;*/
-//	CString szEncryptedNMODEKey=_T("");
-//	szEncryptedNMODEKey+=m_szParsedNMODEKey;
-//	CString szEncryptedVGUARANTYKey=_T("");
-//	szEncryptedVGUARANTYKey+=m_szParsedVGUARANTYKey;
-//	CString szEncryptedVLIMITKey=_T("");
-//	szEncryptedVLIMITKey+=m_szParsedVLIMITKey;
-//	CString szEncryptedTRENDSKey=_T("");
-//	szEncryptedTRENDSKey+=m_szParsedTRENDSKey;
-//	CString szEncryptedLUNGRECKey=_T("");
-//	szEncryptedLUNGRECKey+=m_szParsedLUNGRECKey;
-//	CString szEncryptedTHERAPYKey=_T("");
-//	szEncryptedTHERAPYKey+=m_szParsedTHERAPYKey;
-//	CString szEncryptedPRICOKey=_T("");
-//	szEncryptedPRICOKey+=m_szParsedPRICOKey;
-//
-//	xml.OpenTag(_T("FabianHFO"), true);
-//
-//	int iSizeOfArray = 9;
-//	if(0 < iSizeOfArray)
-//	{
-//		for(int iIndex = 0; iIndex < iSizeOfArray; iIndex++)	
-//		{																
-//			xml.OpenTag(_T("License"), true);
-//
-//			switch(iIndex)
-//			{
-//			case 0:
-//				{
-//					xml.WriteTextTag(_T("MODULE"), _T("MASTER2"));
-//					//xml.WriteTextTag(_T("KEY"), _T("06DFA88151EB4629F80D"));
-//					xml.WriteTextTag(_T("KEY"), szEncryptedMasterKey);
-//				}
-//				break;
-//			case 1:
-//				{
-//					xml.WriteTextTag(_T("MODULE"), _T("HFO"));
-//					//xml.WriteTextTag(_T("KEY"), _T("0F8FA61401714C32BECE"));
-//					xml.WriteTextTag(_T("KEY"), szEncryptedHFOKey);
-//				}
-//				break;
-//			case 2:
-//				{
-//					xml.WriteTextTag(_T("MODULE"), _T("NMODE"));
-//					//xml.WriteTextTag(_T("KEY"), _T("00D9D41FBCF263CB1737"));
-//					xml.WriteTextTag(_T("KEY"), szEncryptedNMODEKey);
-//				}
-//				break;
-//			case 3:
-//				{
-//					xml.WriteTextTag(_T("MODULE"), _T("VGUARANTY"));
-//					//xml.WriteTextTag(_T("KEY"), _T("6607A0E9629CDD0DBD5B"));
-//					xml.WriteTextTag(_T("KEY"), szEncryptedVGUARANTYKey);
-//				}
-//				break;
-//			case 4:
-//				{
-//					xml.WriteTextTag(_T("MODULE"), _T("VLIMIT"));
-//					//xml.WriteTextTag(_T("KEY"), _T("4AD1BE6777DDE0D5E697"));
-//					xml.WriteTextTag(_T("KEY"), szEncryptedVLIMITKey);
-//				}
-//				break;
-//			case 5:
-//				{
-//					xml.WriteTextTag(_T("MODULE"), _T("LUNGREC"));
-//					//xml.WriteTextTag(_T("KEY"), _T("4AD1BE6777DDE0D5E697"));
-//					xml.WriteTextTag(_T("KEY"), szEncryptedLUNGRECKey);
-//				}
-//				break;
-//			case 6:
-//				{
-//					xml.WriteTextTag(_T("MODULE"), _T("TRENDS"));
-//					//xml.WriteTextTag(_T("KEY"), _T("4AD1BE6777DDE0D5E697"));
-//					xml.WriteTextTag(_T("KEY"), szEncryptedTRENDSKey);
-//				}
-//				break;
-//			case 7:
-//				{
-//					xml.WriteTextTag(_T("MODULE"), _T("THERAPY"));
-//					//xml.WriteTextTag(_T("KEY"), _T("4AD1BE6777DDE0D5E697"));
-//					xml.WriteTextTag(_T("KEY"), szEncryptedTHERAPYKey);
-//				}
-//				break;
-//			case 8:
-//				{
-//					xml.WriteTextTag(_T("MODULE"), _T("PRICO"));
-//					//xml.WriteTextTag(_T("KEY"), _T("4AD1BE6777DDE0D5E697"));
-//					xml.WriteTextTag(_T("KEY"), szEncryptedPRICOKey);
-//				}
-//				break;
-//			default:
-//				break;
-//			}
-//
-//			xml.CloseTag(_T("License"), true);
-//		}
-//	}
-//
-//	xml.CloseTag(_T("FabianHFO"), true);
-//
-//	os.Close();
-//}
 
 void CWndServiceLicensing::OnBnClickedDelFOT()
 {
@@ -1404,6 +1792,7 @@ void CWndServiceLicensing::OnBnClickedDelFOT()
 		m_szEncryptedFormattedFOTKey=_T("");
 
 		getModel()->getDATAHANDLER()->disableFOTLicense();
+		getModel()->getDATAHANDLER()->delDemoLicense(MOD_FOT,false);
 
 		getModel()->getDATAHANDLER()->WriteLicenseFile();
 	}
@@ -1433,12 +1822,15 @@ void CWndServiceLicensing::OnBnClickedDelHFO()
 		m_szEncryptedFormattedHFOKey=_T("");
 		
 		getModel()->getDATAHANDLER()->disableHFOLicense();
+		getModel()->getDATAHANDLER()->delDemoLicense(MOD_HFO,false);
+
 		if(getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable()==true)
 		{
 			m_szParsedLUNGRECKey=_T("0");
 			m_bLUNGRECModuleEnabled=false;
 			m_szEncryptedFormattedLUNGRECKey=_T("");
 			getModel()->getDATAHANDLER()->disableLUNGRECLicense();
+			getModel()->getDATAHANDLER()->delDemoLicense(MOD_HFO,false);
 		}
 		getModel()->getDATAHANDLER()->WriteLicenseFile();
 	}
@@ -1470,6 +1862,8 @@ void CWndServiceLicensing::OnBnClickedDelNMODE()
 		m_szEncryptedFormattedNMODEKey=_T("");
 
 		getModel()->getDATAHANDLER()->disableNMODELicense();
+		getModel()->getDATAHANDLER()->delDemoLicense(MOD_NMODE,false);
+
 		getModel()->getDATAHANDLER()->WriteLicenseFile();
 	}
 
@@ -1498,6 +1892,8 @@ void CWndServiceLicensing::OnBnClickedDelVGUARANTY()
 		m_szEncryptedFormattedVGUARANTYKey=_T("");
 
 		getModel()->getDATAHANDLER()->disableVGUARANTLicense();
+		getModel()->getDATAHANDLER()->delDemoLicense(MOD_VGUARANTY,false);
+
 		getModel()->getDATAHANDLER()->WriteLicenseFile();
 	}
 	UpdateWindow();
@@ -1525,6 +1921,8 @@ void CWndServiceLicensing::OnBnClickedDelVLIMIT()
 		m_szEncryptedFormattedVLIMITKey=_T("");
 
 		getModel()->getDATAHANDLER()->disableVLIMITLicense();
+		getModel()->getDATAHANDLER()->delDemoLicense(MOD_VLIMIT,false);
+
 		getModel()->getDATAHANDLER()->WriteLicenseFile();
 	}
 
@@ -1555,6 +1953,8 @@ void CWndServiceLicensing::OnBnClickedDelTRENDS()
 		m_szEncryptedFormattedTRENDSKey=_T("");
 
 		getModel()->getDATAHANDLER()->disableTRENDLicense();
+		getModel()->getDATAHANDLER()->delDemoLicense(MOD_TREND,false);
+
 		getModel()->getDATAHANDLER()->WriteLicenseFile();
 
 		if(AfxGetApp())
@@ -1587,6 +1987,8 @@ void CWndServiceLicensing::OnBnClickedDelTHERAPY()
 		m_szEncryptedFormattedTHERAPYKey=_T("");
 
 		getModel()->getDATAHANDLER()->disableTHERAPYLicense();
+		getModel()->getDATAHANDLER()->delDemoLicense(MOD_THERAPY,false);
+
 		getModel()->getDATAHANDLER()->WriteLicenseFile();
 	}
 
@@ -1616,6 +2018,8 @@ void CWndServiceLicensing::OnBnClickedDelPRICO()
 		m_szEncryptedFormattedPRICOKey=_T("");
 
 		getModel()->getDATAHANDLER()->disablePRICOLicense();
+		getModel()->getDATAHANDLER()->delDemoLicense(MOD_PRICO,false);
+
 		getModel()->getDATAHANDLER()->WriteLicenseFile();
 	}
 
@@ -1646,6 +2050,8 @@ void CWndServiceLicensing::OnBnClickedDelLUNGREC()
 		
 		getModel()->getDATAHANDLER()->SetFreqRecParadata(0);
 		getModel()->getDATAHANDLER()->disableLUNGRECLicense();
+		getModel()->getDATAHANDLER()->delDemoLicense(MOD_LUNGREC,false);
+
 		getModel()->getDATAHANDLER()->WriteLicenseFile();
 	}
 
@@ -1670,7 +2076,6 @@ void CWndServiceLicensing::OnBnClickedActivateFOT()
 		m_bFOTModuleEnabled=true;
 
 		getModel()->getDATAHANDLER()->WriteLicenseFile();
-
 	}
 	
 	Invalidate();

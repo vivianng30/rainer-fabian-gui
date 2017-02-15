@@ -813,43 +813,6 @@ public:
 	CStringW GetLastCal60mbar();
 	void SetLastCal60mbar(CStringW szDateTime);
 
-	/*void SetSavedBreathMessureDataPmax(int iPmax);
-	void SetSavedBreathMessureDataPEEP(int iPEEP);
-	void SetSavedBreathMessureDataPmitt(int iPmitt);
-	void SetSavedBreathMessureDataCompliance(int iC);
-	void SetSavedBreathMessureDataC20C(int iC20C);
-	void SetSavedBreathMessureDataResistance(int iR);
-	void SetSavedBreathMessureDataMV(int iMV);
-	void SetSavedBreathMessureDataTVE(int iTVE);
-	void SetSavedBreathMessureDataTVEresp(int iTVEresp);
-	void SetSavedBreathMessureDataTVEpat(int iTVEpat);
-	void SetSavedBreathMessureDataBPM(int iBPM);
-	void SetSavedBreathMessureDataO2(int iO2);
-	void SetSavedBreathMessureDataLeak(int iLeak);
-	void SetSavedBreathMessureDataPercent(int iAnteil);
-	void SetSavedBreathMessureDataHFAmpl(int iHFAmpl);
-	void SetSavedBreathMessureDataHFFreq(int iHFFreq);
-	void SetSavedBreathMessureDataTVEHFO(int iTVEHFO);
-	void SetSavedBreathMessureDataDCO2(int iDCO2);
-
-	int GetSavedBreathMessureDataPmax();
-	int GetSavedBreathMessureDataPEEP();
-	int GetSavedBreathMessureDataPmitt();
-	int GetSavedBreathMessureDataCompliance();
-	int GetSavedBreathMessureDataC20C();
-	int GetSavedBreathMessureDataResistance();
-	int GetSavedBreathMessureDataMV();
-	int GetSavedBreathMessureDataTVE();
-	int GetSavedBreathMessureDataTVEresp();
-	int GetSavedBreathMessureDataTVEpat();
-	int GetSavedBreathMessureDataBPM();
-	int GetSavedBreathMessureDataO2();
-	int GetSavedBreathMessureDataLeak();
-	int GetSavedBreathMessureDataPercent();
-	int GetSavedBreathMessureDataHFAmpl();
-	int GetSavedBreathMessureDataHFFreq();
-	int GetSavedBreathMessureDataTVEHFO();
-	int GetSavedBreathMessureDataDCO2();*/
 
 	DWORD getOperatingMinutesDevice();
 	void setOperatingMinutesDevice(DWORD min, bool bFlushReg);
@@ -893,7 +856,40 @@ public:
 	BYTE getLastNumericTHERAPY();
 	void setLastNumericTHERAPY(BYTE num);
 
+	BYTE getLastNumericFLOWOFFCONV();
+	void setLastNumericFLOWOFFCONV(BYTE num);
+	BYTE getLastNumericFLOWOFFHFO();
+	void setLastNumericFLOWOFFHFO(BYTE num);
+
 	int getConfigVersion();
+
+	COleDateTime GetFOTdemoTimestamp();
+	void SetFOTdemoTimestamp(COleDateTime dateTime);
+
+	COleDateTime GetPRICOdemoTimestamp();
+	void SetPRICOdemoTimestamp(COleDateTime dateTime);
+
+	COleDateTime GetTHERAPYdemoTimestamp();
+	void SetTHERAPYdemoTimestamp(COleDateTime dateTime);
+
+	COleDateTime GetTRENDdemoTimestamp();
+	void SetTRENDdemoTimestamp(COleDateTime dateTime);
+
+	COleDateTime GetLUNGRECdemoTimestamp();
+	void SetLUNGRECdemoTimestamp(COleDateTime dateTime);
+
+	COleDateTime GetVLIMITdemoTimestamp();
+	void SetVLIMITdemoTimestamp(COleDateTime dateTime);
+
+	COleDateTime GetVGUARANTYdemoTimestamp();
+	void SetVGUARANTYdemoTimestamp(COleDateTime dateTime);
+
+	COleDateTime GetNMODEdemoTimestamp();
+	void SetNMODEdemoTimestamp(COleDateTime dateTime);
+
+	COleDateTime GetHFOdemoTimestamp();
+	void SetHFOdemoTimestamp(COleDateTime dateTime);
+
 private:
 //singleton
 	static CConfiguration* theConfig;
@@ -1193,6 +1189,8 @@ private:
 	BYTE	m_iCurNumericBlock_NCPAP;
 	BYTE	m_iCurNumericBlock_DUOPAP;
 	BYTE	m_iCurNumericBlock_THERAPY;
+	BYTE	m_iCurNumericBlock_FLOWOFFCONV;
+	BYTE	m_iCurNumericBlock_FLOWOFFHFO;
 
 	BYTE	m_iParaDataTriggerCONV;
 	BYTE	m_iParaDataTriggerNMODE;

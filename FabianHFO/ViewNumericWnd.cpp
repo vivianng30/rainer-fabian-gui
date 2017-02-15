@@ -36,26 +36,6 @@ CMVView(ViewID)
 	m_nwa.nCx=190;
 	m_nwa.nCy=559;
 
-	m_pcWndNumIPPVdefault=NULL;
-	m_pcWndNumIPPVdefaultmech=NULL;
-	m_pcWndNumSIPPVdefault=NULL;
-	m_pcWndNumSIPPVdefaultmech=NULL;
-	m_pcWndNumSIMVdefault=NULL;
-	m_pcWndNumSIMVdefaultmech=NULL;
-	m_pcWndNumCPAPdefault=NULL;
-	m_pcWndNumCPAPdefaultmech=NULL;
-	m_pcWndNumNCPAPdefault=NULL;
-	m_pcWndNumDUOPAPdefault=NULL;
-	m_pcWndNumTHERAPYdefault=NULL;
-	m_pcWndNumHFOdefault=NULL;
-	m_pcWndNumHFOdefaultmech=NULL;
-	m_pcWndNumFlowOff=NULL;
-	m_pcWndNumFlowOffHFO=NULL;
-	m_pcWndNumPSVdefault=NULL;
-	m_pcWndNumPSVdefaultmech=NULL;
-	m_pcWndNumSIMVPSVdefault=NULL;
-	m_pcWndNumSIMVPSVdefaultmech=NULL;
-
 	m_pcWndNumConfig=NULL;
 
 	m_pcMenuNumeric=NULL;
@@ -112,7 +92,6 @@ bool CViewNumericWnd::CreateView()
 	{
 		return false;
 	}
-
 	Initialize();
 
 	return true;
@@ -225,18 +204,6 @@ void CViewNumericWnd::Open()
  **************************************************************************************************/
 void CViewNumericWnd::Close()
 {
-	deleteWndNumIPPV();
-	deleteWndNumSIPPV();
-	deleteWndNumPSV();
-	deleteWndNumSIMV();
-	deleteWndNumSIMVPSV();
-	deleteWndNumCPAP();
-	deleteWndNumHFO();
-	deleteWndNumFlowOff();
-	deleteWndNumFlowOffHFO();
-	deleteWndNumTHERAPY();
-	deleteWndNumDUOPAP();
-	deleteWndNumNCPAP();
 	deleteWndNumConfig();
 }
 
@@ -266,724 +233,7 @@ void CViewNumericWnd::Hide()
 	HideNumWnd();
 }
 
-/**********************************************************************************************//**
- * @fn	bool CViewNumericWnd::CreateWndNumHFO_Default()
- *
- * @brief	Creates numeric window hfo default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	true if it succeeds, false if it fails.
- **************************************************************************************************/
-bool CViewNumericWnd::CreateWndNumHFO_Default()
-{
-	if(m_pcWndNumHFOdefault==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumHFOdefault = new CWndNumHFO_Av();
 
-		RECT rcLd={0,0,210,560};
-		if(m_pcWndNumHFOdefault->Create(this,rcLd,IDC_VIEW_NUM_HFO_DEFAULT))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_HFO_DEFAULT;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-
-			m_pcWndNumHFOdefault->DrawData(true,true,true,true,false);
-		}
-	}
-	return true;
-}
-
-/**********************************************************************************************//**
- * @fn	ool CViewNumericWnd::CreateWndNumHFO_DefaultMech()
- *
- * @brief	Creates numeric window hfo default mech.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	The new window number hfo default mech.
- *************************************************************************************************/
-bool CViewNumericWnd::CreateWndNumHFO_DefaultMech()
-{
-	if(m_pcWndNumHFOdefaultmech==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumHFOdefaultmech = new CWndNumHFO_Mech();
-
-		RECT rcLd={0,0,210,560};
-		if(m_pcWndNumHFOdefaultmech->Create(this,rcLd,IDC_VIEW_NUM_HFO_DEFAULTMECH))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_HFO_DEFAULTMECH;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-			m_pcWndNumHFOdefaultmech->DrawData(true,true,true,true,false);
-		}
-	}
-	return true;
-}
-
-/**********************************************************************************************//**
- * @fn	bool CViewNumericWnd::CreateWndNumCPAP_Default()
- *
- * @brief	Creates numeric window cpap default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	true if it succeeds, false if it fails.
- **************************************************************************************************/
-bool CViewNumericWnd::CreateWndNumCPAP_Default()
-{
-	if(m_pcWndNumCPAPdefault==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumCPAPdefault = new CWndNumCPAP_Av();
-		RECT rcLd={0,0,210,560};
-
-		if(m_pcWndNumCPAPdefault->Create(this,rcLd,IDC_VIEW_NUM_CPAP_DEFAULT))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_CPAP_DEFAULT;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-
-			m_pcWndNumCPAPdefault->DrawData(true,true,true,true,false);
-		}
-	}
-	return true;
-}
-
-/**********************************************************************************************//**
- * @fn	bool CViewNumericWnd::CreateWndNumCPAP_DefaultMech()
- *
- * @brief	Creates numeric window cpap default mech.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	true if it succeeds, false if it fails.
- **************************************************************************************************/
-bool CViewNumericWnd::CreateWndNumCPAP_DefaultMech()
-{
-	if(m_pcWndNumCPAPdefaultmech==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumCPAPdefaultmech = new CWndNumCPAP_Mech();
-		RECT rcLd={0,0,210,560};
-
-		if(m_pcWndNumCPAPdefaultmech->Create(this,rcLd,IDC_VIEW_NUM_CPAP_DEFAULTMECH))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_CPAP_DEFAULTMECH;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-			m_pcWndNumCPAPdefaultmech->DrawData(true,true,true,true,false);
-		}
-	}
-	return true;
-}
-
-/**********************************************************************************************//**
- * @fn	bool CViewNumericWnd::CreateWndNumDUOPAP_Default()
- *
- * @brief	Creates numeric window duopap default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	true if it succeeds, false if it fails.
- **************************************************************************************************/
-bool CViewNumericWnd::CreateWndNumDUOPAP_Default()
-{
-	if(m_pcWndNumDUOPAPdefault==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumDUOPAPdefault = new CWndNumAvDUOPAP();
-		RECT rcLd={0,0,210,560};
-
-		if(m_pcWndNumDUOPAPdefault->Create(this,rcLd,IDC_VIEW_NUM_DUOPAP))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_DUOPAP_DEFAULT;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-
-			m_pcWndNumDUOPAPdefault->DrawData(true,true,true,true,true);
-		}
-	}
-	return true;
-}
-
-/**********************************************************************************************//**
- * @fn	bool CViewNumericWnd::CreateWndNumFlowOff()
- *
- * @brief	Creates numeric window flow off.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	true if it succeeds, false if it fails.
- **************************************************************************************************/
-bool CViewNumericWnd::CreateWndNumFlowOff()
-{
-	if(m_pcWndNumFlowOff==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumFlowOff = new CWndNumFlowOff_Av();
-		RECT rcLd={0,0,210,560};
-
-		if(m_pcWndNumFlowOff->Create(this,rcLd,IDC_VIEW_NUM_FLOWOFF))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_FLOWOFF;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
-			}
-
-			m_pcWndNumFlowOff->DrawData(true,true,true,true,false);
-		}
-	}
-	return true;
-}
-
-/**********************************************************************************************//**
- * @fn	bool CViewNumericWnd::CreateWndNumFlowOffHFO()
- *
- * @brief	Creates numeric window flowoff hfo.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	true if it succeeds, false if it fails.
- **************************************************************************************************/
-bool CViewNumericWnd::CreateWndNumFlowOffHFO()
-{
-	if(m_pcWndNumFlowOffHFO==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumFlowOffHFO = new CWndNumFlowOffHFO_Av();
-		RECT rcLd={0,0,210,560};
-
-		if(m_pcWndNumFlowOffHFO->Create(this,rcLd,IDC_VIEW_NUM_FLOWOFF_HFO))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_FLOWOFF_HFO;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-
-			m_pcWndNumFlowOffHFO->DrawData(true,true,true,true,false);
-		}
-	}
-	return true;
-}
-
-/**********************************************************************************************//**
- * @fn	bool CViewNumericWnd::CreateWndNumNCPAP_Default()
- *
- * @brief	Creates numeric window ncpap default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	true if it succeeds, false if it fails.
- **************************************************************************************************/
-bool CViewNumericWnd::CreateWndNumNCPAP_Default()
-{
-	if(m_pcWndNumNCPAPdefault==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumNCPAPdefault = new CWndNumAvNCPAP();
-		RECT rcLd={0,0,210,560};
-
-		if(m_pcWndNumNCPAPdefault->Create(this,rcLd,IDC_VIEW_NUM_NCPAP))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_NCPAP_DEFAULT;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-
-			m_pcWndNumNCPAPdefault->DrawData(true,true,true,true,false);
-		}
-	}
-	return true;
-}
-
-/**********************************************************************************************//**
- * @fn	bool CViewNumericWnd::CreateWndNumTHERAPIE_Default()
- *
- * @brief	Creates numeric window therapie default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	true if it succeeds, false if it fails.
- **************************************************************************************************/
-bool CViewNumericWnd::CreateWndNumTHERAPY_Default()
-{
-	if(m_pcWndNumTHERAPYdefault==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumTHERAPYdefault = new CWndNumAvTHERAPIE();
-		RECT rcLd={0,0,210,560};
-
-		if(m_pcWndNumTHERAPYdefault->Create(this,rcLd,IDC_VIEW_NUM_THERAPY))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_THERAPY_DEFAULT;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-
-			m_pcWndNumTHERAPYdefault->DrawData(true,true,true,true,false);
-		}
-	}
-	return true;
-}
-
-/**********************************************************************************************//**
- * @fn	bool CViewNumericWnd::CreateWndNumIPPV_Default()
- *
- * @brief	Creates numeric window ippv default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	true if it succeeds, false if it fails.
- **************************************************************************************************/
-
-bool CViewNumericWnd::CreateWndNumIPPV_Default()
-{
-	if(m_pcWndNumIPPVdefault==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumIPPVdefault = new CWndNumIPPV_BtB();
-		RECT rcLd={0,0,210,560};
-
-		if(m_pcWndNumIPPVdefault->Create(this,rcLd,IDC_VIEW_NUM_IPPV_DEFAULT))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_IPPV_DEFAULT;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-			
-			m_pcWndNumIPPVdefault->DrawData(true,true,true,true,false);
-		}
-	}
-	return true;
-}
-
-/**********************************************************************************************//**
- * @fn	bool CViewNumericWnd::CreateWndNumIPPV_DefaultMech()
- *
- * @brief	Creates numeric window ippv default mech.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	true if it succeeds, false if it fails.
- **************************************************************************************************/
-bool CViewNumericWnd::CreateWndNumIPPV_DefaultMech()
-{
-	if(m_pcWndNumIPPVdefaultmech==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumIPPVdefaultmech = new CWndNumIPPV_Mech();
-
-		RECT rcLd={0,0,210,560};
-		if(m_pcWndNumIPPVdefaultmech->Create(this,rcLd,IDC_VIEW_NUM_IPPV_DEFAULTMECH))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_IPPV_DEFAULTMECH;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-
-			m_pcWndNumIPPVdefaultmech->DrawData(true,true,true,true,false);
-		}
-	}
-	return true;
-}
-
-/**********************************************************************************************//**
- * @fn	bool CViewNumericWnd::CreateWndNumSIPPV_Default()
- *
- * @brief	Creates numeric window sippv default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	true if it succeeds, false if it fails.
- **************************************************************************************************/
-bool CViewNumericWnd::CreateWndNumSIPPV_Default()
-{
-	if(m_pcWndNumSIPPVdefault==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumSIPPVdefault = new CWndNumSIPPV_Av();
-
-		RECT rcLd={0,0,210,560};
-		if(m_pcWndNumSIPPVdefault->Create(this,rcLd,IDC_VIEW_NUM_SIPPV_DEFAULT))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_SIPPV_DEFAULT;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-			
-			m_pcWndNumSIPPVdefault->DrawData(true,true,true,true,false);
-		}
-	}
-	return true;
-}
-
-/**********************************************************************************************//**
- * @fn	bool CViewNumericWnd::CreateWndNumSIPPV_DefaultMech()
- *
- * @brief	Creates numeric window sippv default mech.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	true if it succeeds, false if it fails.
- **************************************************************************************************/
-bool CViewNumericWnd::CreateWndNumSIPPV_DefaultMech()
-{
-	if(m_pcWndNumSIPPVdefaultmech==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumSIPPVdefaultmech = new CWndNumSIPPV_Mech();
-
-		RECT rcLd={0,0,210,560};
-		if(m_pcWndNumSIPPVdefaultmech->Create(this,rcLd,IDC_VIEW_NUM_SIPPV_DEFAULTMECH))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_SIPPV_DEFAULTMECH;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-
-			m_pcWndNumSIPPVdefaultmech->DrawData(true,true,true,true,false);
-		}
-	}
-	return true;
-}
-
-/**********************************************************************************************//**
- * @fn	bool CViewNumericWnd::CreateWndNumPSV_Default()
- *
- * @brief	Creates numeric window psv default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	true if it succeeds, false if it fails.
- **************************************************************************************************/
-bool CViewNumericWnd::CreateWndNumPSV_Default()
-{
-	if(m_pcWndNumPSVdefault==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumPSVdefault = new CWndNumPSV_Av();
-
-		RECT rcLd={0,0,210,560};
-		if(m_pcWndNumPSVdefault->Create(this,rcLd,IDC_VIEW_NUM_PSV_DEFAULT))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_PSV_DEFAULT;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-
-			m_pcWndNumPSVdefault->DrawData(true,true,true,true,false);
-		}
-	}
-	return true;
-}
-
-/**********************************************************************************************//**
- * @fn	bool CViewNumericWnd::CreateWndNumPSV_DefaultMech()
- *
- * @brief	Creates numeric window psv default mech.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	true if it succeeds, false if it fails.
- **************************************************************************************************/
-bool CViewNumericWnd::CreateWndNumPSV_DefaultMech()
-{
-	if(m_pcWndNumPSVdefaultmech==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumPSVdefaultmech = new CWndNumPSV_Mech();
-
-		RECT rcLd={0,0,210,560};
-		if(m_pcWndNumPSVdefaultmech->Create(this,rcLd,IDC_VIEW_NUM_PSV_DEFAULTMECH))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_PSV_DEFAULTMECH;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-
-			m_pcWndNumPSVdefaultmech->DrawData(true,true,true,true,false);
-		}
-	}
-	return true;
-}
-
-/**********************************************************************************************//**
- * @fn	bool CViewNumericWnd::CreateWndNumSIMV_Default()
- *
- * @brief	Creates numeric window simv default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	true if it succeeds, false if it fails.
- **************************************************************************************************/
-bool CViewNumericWnd::CreateWndNumSIMV_Default()
-{
-	if(m_pcWndNumSIMVdefault==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumSIMVdefault = new CWndNumSIMV_Av();
-
-		RECT rcLd={0,0,210,560};
-		if(m_pcWndNumSIMVdefault->Create(this,rcLd,IDC_VIEW_NUM_SIMV_DEFAULT))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_SIMV_DEFAULT;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-
-			m_pcWndNumSIMVdefault->DrawData(true,true,true,true,false);
-		}
-	}
-	return true;
-}
-
-/**********************************************************************************************//**
- * @fn	bool CViewNumericWnd::CreateWndNumSIMV_DefaultMech()
- *
- * @brief	Creates numeric window simv default mech.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	true if it succeeds, false if it fails.
- **************************************************************************************************/
-bool CViewNumericWnd::CreateWndNumSIMV_DefaultMech()
-{
-	if(m_pcWndNumSIMVdefaultmech==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumSIMVdefaultmech = new CWndNumSIMV_Mech();
-
-		RECT rcLd={0,0,210,560};
-		if(m_pcWndNumSIMVdefaultmech->Create(this,rcLd,IDC_VIEW_NUM_SIMV_DEFAULTMECH))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_SIMV_DEFAULTMECH;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-
-			m_pcWndNumSIMVdefaultmech->DrawData(true,true,true,true,false);
-		}
-	}
-	return true;
-}
-
-/**********************************************************************************************//**
- * @fn	bool CViewNumericWnd::CreateWndNumSIMVPSV_Default()
- *
- * @brief	Creates numeric window simvpsv default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	true if it succeeds, false if it fails.
- **************************************************************************************************/
-bool CViewNumericWnd::CreateWndNumSIMVPSV_Default()
-{
-	if(m_pcWndNumSIMVPSVdefault==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumSIMVPSVdefault = new CWndNumSIMVPSV_Av();
-
-		RECT rcLd={0,0,210,560};
-		if(m_pcWndNumSIMVPSVdefault->Create(this,rcLd,IDC_VIEW_NUM_SIMVPSV_DEFAULT))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_SIMVPSV_DEFAULT;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-
-			m_pcWndNumSIMVPSVdefault->DrawData(true,true,true,true,false);
-		}
-	}
-	return true;
-}
-
-/**********************************************************************************************//**
- * @fn	bool CViewNumericWnd::CreateWndNumSIMVPSV_DefaultMech()
- *
- * @brief	Creates numeric window simvpsv default mech.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- *
- * @return	true if it succeeds, false if it fails.
- **************************************************************************************************/
-bool CViewNumericWnd::CreateWndNumSIMVPSV_DefaultMech()
-{
-	if(m_pcWndNumSIMVPSVdefaultmech==NULL && m_nwa.nX>-1)
-	{
-		m_pcWndNumSIMVPSVdefaultmech = new CWndNumSIMVPSV_Mech();
-
-		RECT rcLd={0,0,210,560};
-		if(m_pcWndNumSIMVPSVdefaultmech->Create(this,rcLd,IDC_VIEW_NUM_SIMVPSV_DEFAULTMECH))
-		{
-			m_iCurrWnd=IDC_VIEW_NUM_SIMVPSV_DEFAULTMECH;
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
-			}
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-			}
-
-			m_pcWndNumSIMVPSVdefaultmech->DrawData(true,true,true,true,false);
-		}
-	}
-	return true;
-}
 
 /**********************************************************************************************//**
  * @fn	bool CViewNumericWnd::createWndNumConfig(UINT ID, NUMERICINI* pbufNumeric)
@@ -1030,386 +280,6 @@ bool CViewNumericWnd::createWndNumConfig(UINT ID, NUMERICINI* pbufNumeric)
 }
 
 /**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumHFO_Default()
- *
- * @brief	Deletes the window numeric hfo default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumHFO_Default()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumHFOdefault)
-	{
-		m_pcWndNumHFOdefault->DestroyWindow();
-		delete m_pcWndNumHFOdefault;
-		m_pcWndNumHFOdefault=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumHFO_DefaultMech()
- *
- * @brief	Deletes the window numeric hfo default mech.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumHFO_DefaultMech()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumHFOdefaultmech)
-	{
-		m_pcWndNumHFOdefaultmech->DestroyWindow();
-		delete m_pcWndNumHFOdefaultmech;
-		m_pcWndNumHFOdefaultmech=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumIPPV_Default()
- *
- * @brief	Deletes the window numeric ippv default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumIPPV_Default()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumIPPVdefault)
-	{
-		m_pcWndNumIPPVdefault->DestroyWindow();
-		delete m_pcWndNumIPPVdefault;
-		m_pcWndNumIPPVdefault=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumIPPV_DefaultMech()
- *
- * @brief	Deletes the window numeric ippv default mech.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumIPPV_DefaultMech()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumIPPVdefaultmech)
-	{
-		m_pcWndNumIPPVdefaultmech->DestroyWindow();
-		delete m_pcWndNumIPPVdefaultmech;
-		m_pcWndNumIPPVdefaultmech=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumSIPPV_Default()
- *
- * @brief	Deletes the window numeric sippv default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumSIPPV_Default()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumSIPPVdefault)
-	{
-		m_pcWndNumSIPPVdefault->DestroyWindow();
-		delete m_pcWndNumSIPPVdefault;
-		m_pcWndNumSIPPVdefault=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumSIPPV_DefaultMech()
- *
- * @brief	Deletes the window numeric sippv default mech.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumSIPPV_DefaultMech()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumSIPPVdefaultmech)
-	{
-		m_pcWndNumSIPPVdefaultmech->DestroyWindow();
-		delete m_pcWndNumSIPPVdefaultmech;
-		m_pcWndNumSIPPVdefaultmech=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumPSV_Default()
- *
- * @brief	Deletes the window numeric psv default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumPSV_Default()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumPSVdefault)
-	{
-		m_pcWndNumPSVdefault->DestroyWindow();
-		delete m_pcWndNumPSVdefault;
-		m_pcWndNumPSVdefault=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumPSV_DefaultMech()
- *
- * @brief	Deletes the window numeric psv default mech.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumPSV_DefaultMech()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumPSVdefaultmech)
-	{
-		m_pcWndNumPSVdefaultmech->DestroyWindow();
-		delete m_pcWndNumPSVdefaultmech;
-		m_pcWndNumPSVdefaultmech=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumSIMVPSV_Default()
- *
- * @brief	Deletes the window numeric simvpsv default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumSIMVPSV_Default()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumSIMVPSVdefault)
-	{
-		m_pcWndNumSIMVPSVdefault->DestroyWindow();
-		delete m_pcWndNumSIMVPSVdefault;
-		m_pcWndNumSIMVPSVdefault=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumSIMVPSV_DefaultMech()
- *
- * @brief	Deletes the window numeric simvpsv default mech.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumSIMVPSV_DefaultMech()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumSIMVPSVdefaultmech)
-	{
-		m_pcWndNumSIMVPSVdefaultmech->DestroyWindow();
-		delete m_pcWndNumSIMVPSVdefaultmech;
-		m_pcWndNumSIMVPSVdefaultmech=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumSIMV_Default()
- *
- * @brief	Deletes the window numeric simv default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumSIMV_Default()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumSIMVdefault)
-	{
-		m_pcWndNumSIMVdefault->DestroyWindow();
-		delete m_pcWndNumSIMVdefault;
-		m_pcWndNumSIMVdefault=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumSIMV_DefaultMech()
- *
- * @brief	Deletes the window numeric simv default mech.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumSIMV_DefaultMech()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumSIMVdefaultmech)
-	{
-		m_pcWndNumSIMVdefaultmech->DestroyWindow();
-		delete m_pcWndNumSIMVdefaultmech;
-		m_pcWndNumSIMVdefaultmech=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumCPAP_Default()
- *
- * @brief	Deletes the window numeric cpap default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumCPAP_Default()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumCPAPdefault)
-	{
-		m_pcWndNumCPAPdefault->DestroyWindow();
-		delete m_pcWndNumCPAPdefault;
-		m_pcWndNumCPAPdefault=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumCPAP_DefaultMech()
- *
- * @brief	Deletes the window numeric cpap default mech.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumCPAP_DefaultMech()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumCPAPdefaultmech)
-	{
-		m_pcWndNumCPAPdefaultmech->DestroyWindow();
-		delete m_pcWndNumCPAPdefaultmech;
-		m_pcWndNumCPAPdefaultmech=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumNCPAP_Default()
- *
- * @brief	Deletes the window numeric ncpap default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumNCPAP_Default()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumNCPAPdefault)
-	{
-		m_pcWndNumNCPAPdefault->DestroyWindow();
-		delete m_pcWndNumNCPAPdefault;
-		m_pcWndNumNCPAPdefault=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumTHERAPIE_Default()
- *
- * @brief	Deletes the window numeric therapie default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumTHERAPY_Default()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumTHERAPYdefault)
-	{
-		m_pcWndNumTHERAPYdefault->DestroyWindow();
-		delete m_pcWndNumTHERAPYdefault;
-		m_pcWndNumTHERAPYdefault=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumDUOPAP_Default()
- *
- * @brief	Deletes the window numeric duopap default.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumDUOPAP_Default()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumDUOPAPdefault)
-	{
-		m_pcWndNumDUOPAPdefault->DestroyWindow();
-		delete m_pcWndNumDUOPAPdefault;
-		m_pcWndNumDUOPAPdefault=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumFlowOff()
- *
- * @brief	Deletes the window numeric flow off.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumFlowOff()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumFlowOff)
-	{
-		m_pcWndNumFlowOff->DestroyWindow();
-		delete m_pcWndNumFlowOff;
-		m_pcWndNumFlowOff=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumFlowOffHFO()
- *
- * @brief	Deletes the window numeric flow off hfo.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumFlowOffHFO()
-{
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumFlowOffHFO)
-	{
-		m_pcWndNumFlowOffHFO->DestroyWindow();
-		delete m_pcWndNumFlowOffHFO;
-		m_pcWndNumFlowOffHFO=NULL;
-	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
  * @fn	void CViewNumericWnd::deleteWndNumConfig()
  *
  * @brief	Deletes the window numeric configuration.
@@ -1426,360 +296,6 @@ void CViewNumericWnd::deleteWndNumConfig()
 		delete m_pcWndNumConfig;
 		m_pcWndNumConfig=NULL;
 	}
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumIPPV()
- *
- * @brief	Deletes the window numeric ippv.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumIPPV()
-{
-	switch(m_iCurrWnd)
-	{
-	case IDC_VIEW_NUM_IPPV_DEFAULT:
-		{
-			deleteWndNumIPPV_Default();
-			m_iCurrWnd=0;
-		}
-		break;
-	case IDC_VIEW_NUM_IPPV_DEFAULTMECH:
-		{
-			deleteWndNumIPPV_DefaultMech();
-			m_iCurrWnd=0;
-		}
-		break;
-	case IDC_VIEW_NUM_IPPV:
-		{
-			deleteWndNumConfig();
-			m_iCurrWnd=0;
-		}
-		break;
-	}
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumSIPPV()
- *
- * @brief	Deletes the window numeric sippv.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumSIPPV()
-{
-	switch(m_iCurrWnd)
-	{
-	case IDC_VIEW_NUM_SIPPV_DEFAULT:
-		{
-			deleteWndNumSIPPV_Default();
-			m_iCurrWnd=0;
-		}
-		break;
-	case IDC_VIEW_NUM_SIPPV_DEFAULTMECH:
-		{
-			deleteWndNumSIPPV_DefaultMech();
-			m_iCurrWnd=0;
-		}
-		break;
-	case IDC_VIEW_NUM_SIPPV:
-		{
-			deleteWndNumConfig();
-			m_iCurrWnd=0;
-		}
-		break;
-	}
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumPSV()
- *
- * @brief	Deletes the window numeric psv.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumPSV()
-{
-	switch(m_iCurrWnd)
-	{
-	case IDC_VIEW_NUM_PSV_DEFAULT:
-		{
-			deleteWndNumPSV_Default();
-			m_iCurrWnd=0;
-		}
-		break;
-	case IDC_VIEW_NUM_PSV_DEFAULTMECH:
-		{
-			deleteWndNumPSV_DefaultMech();
-			m_iCurrWnd=0;
-		}
-		break;
-	case IDC_VIEW_NUM_PSV:
-		{
-			deleteWndNumConfig();
-			m_iCurrWnd=0;
-		}
-		break;
-	}
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumSIMV()
- *
- * @brief	Deletes the window numeric simv.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumSIMV()
-{
-	switch(m_iCurrWnd)
-	{
-	case IDC_VIEW_NUM_SIMV_DEFAULT:
-		{
-			deleteWndNumSIMV_Default();
-			m_iCurrWnd=0;
-		}
-		break;
-	case IDC_VIEW_NUM_SIMV_DEFAULTMECH:
-		{
-			deleteWndNumSIMV_DefaultMech();
-			m_iCurrWnd=0;
-		}
-		break;
-	case IDC_VIEW_NUM_SIMV:
-		{
-			deleteWndNumConfig();
-			m_iCurrWnd=0;
-		}
-		break;
-	}
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumSIMVPSV()
- *
- * @brief	Deletes the window numeric simvpsv.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumSIMVPSV()
-{
-	switch(m_iCurrWnd)
-	{
-	case IDC_VIEW_NUM_SIMVPSV_DEFAULT:
-		{
-			deleteWndNumSIMVPSV_Default();
-			m_iCurrWnd=0;
-		}
-		break;
-	case IDC_VIEW_NUM_SIMVPSV_DEFAULTMECH:
-		{
-			deleteWndNumSIMVPSV_DefaultMech();
-			m_iCurrWnd=0;
-		}
-		break;
-	case IDC_VIEW_NUM_SIMVPSV:
-		{
-			deleteWndNumConfig();
-			m_iCurrWnd=0;
-		}
-		break;
-	}
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumCPAP()
- *
- * @brief	Deletes the windownumeric cpap.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumCPAP()
-{
-	switch(m_iCurrWnd)
-	{
-	case IDC_VIEW_NUM_CPAP_DEFAULT:
-		{
-			deleteWndNumCPAP_Default();
-			m_iCurrWnd=0;
-		}
-		break;
-	case IDC_VIEW_NUM_CPAP_DEFAULTMECH:
-		{
-			deleteWndNumCPAP_DefaultMech();
-			m_iCurrWnd=0;
-		}
-		break;
-	case IDC_VIEW_NUM_CPAP:
-		{
-			deleteWndNumConfig();
-			m_iCurrWnd=0;
-		}
-		break;
-	}
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumHFO()
- *
- * @brief	Deletes the window numeric hfo.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumHFO()
-{
-	switch(m_iCurrWnd)
-	{
-	case IDC_VIEW_NUM_HFO_DEFAULT:
-		{
-			deleteWndNumHFO_Default();
-			m_iCurrWnd=0;
-		}
-		break;
-	case IDC_VIEW_NUM_HFO_DEFAULTMECH:
-		{
-			deleteWndNumHFO_DefaultMech();
-			m_iCurrWnd=0;
-		}
-		break;
-	case IDC_VIEW_NUM_HFO:
-		{
-			deleteWndNumConfig();
-			m_iCurrWnd=0;
-		}
-		break;
-	}
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumTHERAPIE()
- *
- * @brief	Deletes the window numeric therapie.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumTHERAPY()
-{
-	switch(m_iCurrWnd)
-	{
-	case IDC_VIEW_NUM_THERAPY_DEFAULT:
-		{
-			deleteWndNumTHERAPY_Default();
-			m_iCurrWnd=0;
-		}
-		break;
-	case IDC_VIEW_NUM_THERAPY:
-		{
-			deleteWndNumConfig();
-			m_iCurrWnd=0;
-		}
-		break;
-	}
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumDUOPAP()
- *
- * @brief	Deletes the window numeric duopap.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumDUOPAP()
-{
-	switch(m_iCurrWnd)
-	{
-	case IDC_VIEW_NUM_DUOPAP_DEFAULT:
-		{
-			deleteWndNumDUOPAP_Default();
-			m_iCurrWnd=0;
-		}
-		break;
-	case IDC_VIEW_NUM_DUOPAP:
-		{
-			deleteWndNumConfig();
-			m_iCurrWnd=0;
-		}
-		break;
-	}
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::deleteWndNumNCPAP()
- *
- * @brief	Deletes the window numeric ncpap.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::deleteWndNumNCPAP()
-{
-	switch(m_iCurrWnd)
-	{
-	case IDC_VIEW_NUM_DUOPAP_DEFAULT:
-		{
-			deleteWndNumNCPAP_Default();
-			m_iCurrWnd=0;
-		}
-		break;
-	case IDC_VIEW_NUM_NCPAP:
-		{
-			deleteWndNumConfig();
-			m_iCurrWnd=0;
-		}
-		break;
-	}
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::ShowWndNumFlowOff()
- *
- * @brief	Shows the window numeric flow off.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::ShowWndNumFlowOff()
-{
-	if(m_pcMenuNumeric)
-		m_pcMenuNumeric->ShowWindow(SW_HIDE);
-
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumFlowOff==NULL)
-		CreateWndNumFlowOff();
-	else
-		m_pcWndNumFlowOff->DrawData(true,true,true,true,false);
-	LeaveCriticalSection(&csNumWnd);
-}
-
-/**********************************************************************************************//**
- * @fn	void CViewNumericWnd::ShowWndNumFlowOffHFO()
- *
- * @brief	Shows the window numeric flow off hfo.
- *
- * @author	Rainer Kuehner
- * @date	07.02.2017
- **************************************************************************************************/
-void CViewNumericWnd::ShowWndNumFlowOffHFO()
-{
-	if(m_pcMenuNumeric)
-		m_pcMenuNumeric->ShowWindow(SW_HIDE);
-
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumFlowOffHFO==NULL)
-		CreateWndNumFlowOffHFO();
-	else
-		m_pcWndNumFlowOffHFO->DrawData(true,true,true,true,false);
 	LeaveCriticalSection(&csNumWnd);
 }
 
@@ -1825,20 +341,79 @@ void CViewNumericWnd::ShowWndNumHFO()
 				m_pcWndNumConfig->DrawData(true,true,true,true,false);
 		}
 		break;
-	case DEFAULTBLOCK:
+	}
+	LeaveCriticalSection(&csNumWnd);
+}
+
+void CViewNumericWnd::ShowWndNumFLOWOFFCONV()
+{
+	if(getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV()>1)
+	{
+		CString szText=_T("");
+		szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
+		m_pcMenuNumeric->RefreshText(szText);
+		if(m_pcMenuNumeric)
+			m_pcMenuNumeric->ShowWindow(SW_SHOW);
+	}
+	else
+	{
+		if(m_pcMenuNumeric)
+			m_pcMenuNumeric->ShowWindow(SW_HIDE);
+	}
+
+	BYTE byBlock=getModel()->getDATAHANDLER()->m_pbufNumericFLOWOFFCONV[m_iCurNumericBlock].SHOW;
+
+	EnterCriticalSection(&csNumWnd);
+	switch(byBlock)
+	{
+	case FALSE:
 		{
-			if(m_pcWndNumHFOdefault==NULL)
-				CreateWndNumHFO_Default();
-			else
-				m_pcWndNumHFOdefault->DrawData(true,true,true,true,false);
+
 		}
 		break;
-	case DEFAULTMECHANICBLOCK:
+	case TRUE:
 		{
-			if(m_pcWndNumHFOdefaultmech==NULL)
-				CreateWndNumHFO_DefaultMech();
+			if(m_pcWndNumConfig==NULL)
+				createWndNumConfig(IDC_VIEW_NUM_FLOWOFFCONV,&getModel()->getDATAHANDLER()->m_pbufNumericFLOWOFFCONV[m_iCurNumericBlock]);
 			else
-				m_pcWndNumHFOdefaultmech->DrawData(true,true,true,true,false);
+				m_pcWndNumConfig->DrawData(true,true,true,true,false);
+		}
+		break;
+	}
+	LeaveCriticalSection(&csNumWnd);
+}
+void CViewNumericWnd::ShowWndNumFLOWOFFHFO()
+{
+	if(getModel()->getDATAHANDLER()->getCountNumericFLOWOFFHFO()>1)
+	{
+		CString szText=_T("");
+		szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
+		m_pcMenuNumeric->RefreshText(szText);
+		if(m_pcMenuNumeric)
+			m_pcMenuNumeric->ShowWindow(SW_SHOW);
+	}
+	else
+	{
+		if(m_pcMenuNumeric)
+			m_pcMenuNumeric->ShowWindow(SW_HIDE);
+	}
+
+	BYTE byBlock=getModel()->getDATAHANDLER()->m_pbufNumericFLOWOFFHFO[m_iCurNumericBlock].SHOW;
+
+	EnterCriticalSection(&csNumWnd);
+	switch(byBlock)
+	{
+	case FALSE:
+		{
+
+		}
+		break;
+	case TRUE:
+		{
+			if(m_pcWndNumConfig==NULL)
+				createWndNumConfig(IDC_VIEW_NUM_FLOWOFFHFO,&getModel()->getDATAHANDLER()->m_pbufNumericFLOWOFFHFO[m_iCurNumericBlock]);
+			else
+				m_pcWndNumConfig->DrawData(true,true,true,true,false);
 		}
 		break;
 	}
@@ -1887,22 +462,6 @@ void CViewNumericWnd::ShowWndNumIPPV()
 				m_pcWndNumConfig->DrawData(true,true,true,true,false);
 		}
 		break;
-	case DEFAULTBLOCK:
-		{
-			if(m_pcWndNumIPPVdefault==NULL)
-				CreateWndNumIPPV_Default();
-			else
-				m_pcWndNumIPPVdefault->DrawData(true,true,true,true,false);
-		}
-		break;
-	case DEFAULTMECHANICBLOCK:
-		{
-			if(m_pcWndNumIPPVdefaultmech==NULL)
-				CreateWndNumIPPV_DefaultMech();
-			else
-				m_pcWndNumIPPVdefaultmech->DrawData(true,true,true,true,false);
-		}
-		break;
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
@@ -1947,22 +506,6 @@ void CViewNumericWnd::ShowWndNumSIPPV()
 				createWndNumConfig(IDC_VIEW_NUM_SIPPV,&getModel()->getDATAHANDLER()->m_pbufNumericSIPPV[m_iCurNumericBlock]);
 			else
 				m_pcWndNumConfig->DrawData(true,true,true,true,false);
-		}
-		break;
-	case DEFAULTBLOCK:
-		{
-			if(m_pcWndNumSIPPVdefault==NULL)
-				CreateWndNumSIPPV_Default();
-			else
-				m_pcWndNumSIPPVdefault->DrawData(true,true,true,true,false);
-		}
-		break;
-	case DEFAULTMECHANICBLOCK:
-		{
-			if(m_pcWndNumSIPPVdefaultmech==NULL)
-				CreateWndNumSIPPV_DefaultMech();
-			else
-				m_pcWndNumSIPPVdefaultmech->DrawData(true,true,true,true,false);
 		}
 		break;
 	}
@@ -2011,22 +554,6 @@ void CViewNumericWnd::ShowWndNumSIMV()
 				m_pcWndNumConfig->DrawData(true,true,true,true,false);
 		}
 		break;
-	case DEFAULTBLOCK:
-		{
-			if(m_pcWndNumSIMVdefault==NULL)
-				CreateWndNumSIMV_Default();
-			else
-				m_pcWndNumSIMVdefault->DrawData(true,true,true,true,false);
-		}
-		break;
-	case DEFAULTMECHANICBLOCK:
-		{
-			if(m_pcWndNumSIMVdefaultmech==NULL)
-				CreateWndNumSIMV_DefaultMech();
-			else
-				m_pcWndNumSIMVdefaultmech->DrawData(true,true,true,true,false);
-		}
-		break;
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
@@ -2073,22 +600,6 @@ void CViewNumericWnd::ShowWndNumSIMVPSV()
 				m_pcWndNumConfig->DrawData(true,true,true,true,false);
 		}
 		break;
-	case DEFAULTBLOCK:
-		{
-			if(m_pcWndNumSIMVPSVdefault==NULL)
-				CreateWndNumSIMVPSV_Default();
-			else
-				m_pcWndNumSIMVPSVdefault->DrawData(true,true,true,true,false);
-		}
-		break;
-	case DEFAULTMECHANICBLOCK:
-		{
-			if(m_pcWndNumSIMVPSVdefaultmech==NULL)
-				CreateWndNumSIMVPSV_DefaultMech();
-			else
-				m_pcWndNumSIMVPSVdefaultmech->DrawData(true,true,true,true,false);
-		}
-		break;
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
@@ -2127,22 +638,6 @@ void CViewNumericWnd::ShowWndNumPSV()
 				createWndNumConfig(IDC_VIEW_NUM_PSV,&getModel()->getDATAHANDLER()->m_pbufNumericPSV[m_iCurNumericBlock]);
 			else
 				m_pcWndNumConfig->DrawData(true,true,true,true,false);
-		}
-		break;
-	case DEFAULTBLOCK:
-		{
-			if(m_pcWndNumPSVdefault==NULL)
-				CreateWndNumPSV_Default();
-			else
-				m_pcWndNumPSVdefault->DrawData(true,true,true,true,false);
-		}
-		break;
-	case DEFAULTMECHANICBLOCK:
-		{
-			if(m_pcWndNumPSVdefaultmech==NULL)
-				CreateWndNumPSV_DefaultMech();
-			else
-				m_pcWndNumPSVdefaultmech->DrawData(true,true,true,true,false);
 		}
 		break;
 	}
@@ -2185,22 +680,6 @@ void CViewNumericWnd::ShowWndNumCPAP()
 				m_pcWndNumConfig->DrawData(true,true,true,true,false);
 		}
 		break;
-	case DEFAULTBLOCK:
-		{
-			if(m_pcWndNumCPAPdefault==NULL)
-				CreateWndNumCPAP_Default();
-			else
-				m_pcWndNumCPAPdefault->DrawData(true,true,true,true,false);
-		}
-		break;
-	case DEFAULTMECHANICBLOCK:
-		{
-			if(m_pcWndNumCPAPdefaultmech==NULL)
-				CreateWndNumCPAP_DefaultMech();
-			else
-				m_pcWndNumCPAPdefaultmech->DrawData(true,true,true,true,false);
-		}
-		break;
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
@@ -2209,17 +688,6 @@ void CViewNumericWnd::ShowWndNumCPAP()
 // **************************************************************************
 void CViewNumericWnd::ShowWndNumDUOPAP()
 {
-	/*if(m_pcMenuNumeric)
-		m_pcMenuNumeric->ShowWindow(SW_HIDE);
-
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumDUOPAPdefault==NULL)
-		CreateWndNumDUOPAP_Default();
-	else
-		m_pcWndNumDUOPAPdefault->DrawData(true,true,true,true,true);
-	LeaveCriticalSection(&csNumWnd);*/
-
-
 	if(getModel()->getDATAHANDLER()->getCountNumericDUOPAP()>1)
 	{
 		CString szText=_T("");
@@ -2252,14 +720,6 @@ void CViewNumericWnd::ShowWndNumDUOPAP()
 				m_pcWndNumConfig->DrawData(true,true,true,true,false);
 		}
 		break;
-	case DEFAULTBLOCK:
-		{
-			if(m_pcWndNumDUOPAPdefault==NULL)
-				CreateWndNumDUOPAP_Default();
-			else
-				m_pcWndNumDUOPAPdefault->DrawData(true,true,true,true,false);
-		}
-		break;
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
@@ -2268,16 +728,6 @@ void CViewNumericWnd::ShowWndNumDUOPAP()
 // **************************************************************************
 void CViewNumericWnd::ShowWndNumNCPAP()
 {
-	/*if(m_pcMenuNumeric)
-		m_pcMenuNumeric->ShowWindow(SW_HIDE);
-
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumNCPAPdefault==NULL)
-		CreateWndNumNCPAP_Default();
-	else
-		m_pcWndNumNCPAPdefault->DrawData(true,true,true,true,true);
-	LeaveCriticalSection(&csNumWnd);*/
-
 	if(getModel()->getDATAHANDLER()->getCountNumericNCPAP()>1)
 	{
 		CString szText=_T("");
@@ -2310,14 +760,6 @@ void CViewNumericWnd::ShowWndNumNCPAP()
 				m_pcWndNumConfig->DrawData(true,true,true,true,false);
 		}
 		break;
-	case DEFAULTBLOCK:
-		{
-			if(m_pcWndNumNCPAPdefault==NULL)
-				CreateWndNumNCPAP_Default();
-			else
-				m_pcWndNumNCPAPdefault->DrawData(true,true,true,true,false);
-		}
-		break;
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
@@ -2326,16 +768,6 @@ void CViewNumericWnd::ShowWndNumNCPAP()
 // **************************************************************************
 void CViewNumericWnd::ShowWndNumTHERAPY()
 {
-	/*if(m_pcMenuNumeric)
-		m_pcMenuNumeric->ShowWindow(SW_HIDE);
-	
-	EnterCriticalSection(&csNumWnd);
-	if(m_pcWndNumTHERAPIEdefault==NULL)
-		CreateWndNumTHERAPIE_Default();
-	else
-		m_pcWndNumTHERAPIEdefault->DrawData(true,true,true,true,true);
-	LeaveCriticalSection(&csNumWnd);*/
-
 	if(getModel()->getDATAHANDLER()->getCountNumericTHERAPY()>1)
 	{
 		CString szText=_T("");
@@ -2368,14 +800,6 @@ void CViewNumericWnd::ShowWndNumTHERAPY()
 				m_pcWndNumConfig->DrawData(true,true,true,true,false);
 		}
 		break;
-	case DEFAULTBLOCK:
-		{
-			if(m_pcWndNumTHERAPYdefault==NULL)
-				CreateWndNumTHERAPY_Default();
-			else
-				m_pcWndNumNCPAPdefault->DrawData(true,true,true,true,false);
-		}
-		break;
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
@@ -2386,88 +810,7 @@ void CViewNumericWnd::ShowWndNumTHERAPY()
 // **************************************************************************
 void CViewNumericWnd::HideNumWnd()
 {
-	switch(m_iCurrWnd)
-	{
-	case IDC_VIEW_NUM_FLOWOFF:
-		{
-			deleteWndNumFlowOff();
-		}
-		break;
-	case IDC_VIEW_NUM_FLOWOFF_HFO:
-		{
-			deleteWndNumFlowOffHFO();
-		}
-		break;
-	case IDC_VIEW_NUM_IPPV_DEFAULT:
-	case IDC_VIEW_NUM_IPPV_DEFAULTMECH:
-	case IDC_VIEW_NUM_IPPV:
-		{
-			deleteWndNumIPPV();
-		}
-		break;
-	case IDC_VIEW_NUM_SIPPV_DEFAULT:
-	case IDC_VIEW_NUM_SIPPV_DEFAULTMECH:
-	case IDC_VIEW_NUM_SIPPV:
-		{
-			deleteWndNumSIPPV();
-		}
-		break;
-	case IDC_VIEW_NUM_SIMV_DEFAULT:
-	case IDC_VIEW_NUM_SIMV_DEFAULTMECH:
-	case IDC_VIEW_NUM_SIMV:
-		{
-			deleteWndNumSIMV();
-		}
-		break;
-	case IDC_VIEW_NUM_SIMVPSV_DEFAULT:
-	case IDC_VIEW_NUM_SIMVPSV_DEFAULTMECH:
-	case IDC_VIEW_NUM_SIMVPSV:
-		{
-			deleteWndNumSIMVPSV();
-		}
-		break;
-	case IDC_VIEW_NUM_PSV_DEFAULT:
-	case IDC_VIEW_NUM_PSV_DEFAULTMECH:
-	case IDC_VIEW_NUM_PSV:
-		{
-			deleteWndNumPSV();
-		}
-		break;
-	case IDC_VIEW_NUM_CPAP_DEFAULT:
-	case IDC_VIEW_NUM_CPAP_DEFAULTMECH:
-	case IDC_VIEW_NUM_CPAP:
-		{
-			deleteWndNumCPAP();
-		}
-		break;
-	case IDC_VIEW_NUM_HFO_DEFAULT:
-	case IDC_VIEW_NUM_HFO_DEFAULTMECH:
-	case IDC_VIEW_NUM_HFO:
-		{
-			deleteWndNumHFO();
-		}
-		break;
-	case IDC_VIEW_NUM_DUOPAP_DEFAULT:
-	case IDC_VIEW_NUM_DUOPAP:
-		{
-			deleteWndNumDUOPAP();
-		}
-		break;
-	case IDC_VIEW_NUM_NCPAP_DEFAULT:
-	case IDC_VIEW_NUM_NCPAP:
-		{
-			deleteWndNumNCPAP();
-		}
-		break;
-	case IDC_VIEW_NUM_THERAPY_DEFAULT:
-	case IDC_VIEW_NUM_THERAPY:
-		{
-			deleteWndNumTHERAPY();
-		}
-		break;
-	default:
-		break;
-	}
+	deleteWndNumConfig();
 }
 #define DIV 1024
 // #define DIV 1
@@ -2487,16 +830,6 @@ void CViewNumericWnd::ShowNumWnd(eNumBlock eBlock,bool bChangeCurNumBlock)
 	m_eNumBlock=eBlock;
 	switch(eBlock)
 	{
-	case NUMB_FLOWOFF: 
-		{
-			ShowWndNumFlowOff();
-		}
-		break;
-	case NUMB_FLOWOFF_HFO: 
-		{
-			ShowWndNumFlowOffHFO();
-		}
-		break;
 	case NUMB_IPPV: 
 		{
 			ShowWndNumIPPV();
@@ -2547,6 +880,16 @@ void CViewNumericWnd::ShowNumWnd(eNumBlock eBlock,bool bChangeCurNumBlock)
 			ShowWndNumHFO();
 		}
 		break;
+	case NUMB_FLOWOFFCONV: 
+		{
+			ShowWndNumFLOWOFFCONV();
+		}
+		break;
+	case NUMB_FLOWOFFHFO: 
+		{
+			ShowWndNumFLOWOFFHFO();
+		}
+		break;
 	default:
 		{
 		}
@@ -2573,7 +916,19 @@ void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 	{
 	case VM_IPPV:
 		{
-			if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
+			if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
+			{
+				eBlock=NUMB_FLOWOFFCONV;
+				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCONV();
+				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV();
+
+				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+				{
+					m_iCurNumericBlock=0;
+					getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
+				}
+			}
+			else
 			{
 				eBlock=NUMB_IPPV;
 				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericIPPV();
@@ -2585,15 +940,24 @@ void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 					getModel()->getCONFIG()->setLastNumericIPPV(m_iCurNumericBlock);
 				}
 			}
-			else
-			{
-				eBlock=NUMB_FLOWOFF;
-			}
+			
 		}
 		break;
 	case VM_SIMV:
 		{
-			if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
+			if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
+			{
+				eBlock=NUMB_FLOWOFFCONV;
+				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCONV();
+				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV();
+
+				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+				{
+					m_iCurNumericBlock=0;
+					getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
+				}
+			}
+			else
 			{
 				eBlock=NUMB_SIMV;
 				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericSIMV();
@@ -2605,16 +969,24 @@ void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 					getModel()->getCONFIG()->setLastNumericSIMV(m_iCurNumericBlock);
 				}
 			}
-			else
-			{
-				eBlock=NUMB_FLOWOFF;
-			}
 			
 		}
 		break;
 	case VM_SIMVPSV:
 		{
-			if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
+			if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
+			{
+				eBlock=NUMB_FLOWOFFCONV;
+				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCONV();
+				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV();
+
+				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+				{
+					m_iCurNumericBlock=0;
+					getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
+				}
+			}
+			else
 			{
 				eBlock=NUMB_SIMVPSV;
 				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericSIMVPSV();
@@ -2626,16 +998,24 @@ void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 					getModel()->getCONFIG()->setLastNumericSIMVPSV(m_iCurNumericBlock);
 				}
 			}
-			else
-			{
-				eBlock=NUMB_FLOWOFF;
-			}
 			
 		}
 		break;
 	case VM_SIPPV:
 		{
-			if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
+			if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
+			{
+				eBlock=NUMB_FLOWOFFCONV;
+				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCONV();
+				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV();
+
+				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+				{
+					m_iCurNumericBlock=0;
+					getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
+				}
+			}
+			else
 			{
 				eBlock=NUMB_SIPPV;
 				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericSIPPV();
@@ -2647,15 +1027,24 @@ void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 					getModel()->getCONFIG()->setLastNumericSIPPV(m_iCurNumericBlock);
 				}
 			}
-			else
-			{
-				eBlock=NUMB_FLOWOFF;
-			}
+			
 		}
 		break;
 	case VM_PSV:
 		{
-			if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
+			if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
+			{
+				eBlock=NUMB_FLOWOFFCONV;
+				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCONV();
+				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV();
+
+				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+				{
+					m_iCurNumericBlock=0;
+					getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
+				}
+			}
+			else
 			{
 				eBlock=NUMB_PSV;
 				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericPSV();
@@ -2667,16 +1056,24 @@ void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 					getModel()->getCONFIG()->setLastNumericPSV(m_iCurNumericBlock);
 				}
 			}
-			else
-			{
-				eBlock=NUMB_FLOWOFF;
-			}
+			
 		}
-		
 		break;
 	case VM_CPAP:
 		{
-			if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
+			if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
+			{
+				eBlock=NUMB_FLOWOFFCONV;
+				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCONV();
+				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV();
+
+				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+				{
+					m_iCurNumericBlock=0;
+					getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
+				}
+			}
+			else
 			{
 				eBlock=NUMB_CPAP;
 				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericCPAP();
@@ -2688,15 +1085,23 @@ void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 					getModel()->getCONFIG()->setLastNumericCPAP(m_iCurNumericBlock);
 				}
 			}
-			else
-			{
-				eBlock=NUMB_FLOWOFF;
-			}
 		}
 		break;
 	case VM_HFO:
 		{
-			if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
+			if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
+			{
+				eBlock=NUMB_FLOWOFFHFO;
+				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFHFO();
+				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFHFO();
+
+				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+				{
+					m_iCurNumericBlock=0;
+					getModel()->getCONFIG()->setLastNumericFLOWOFFHFO(m_iCurNumericBlock);
+				}
+			}
+			else
 			{
 				eBlock=NUMB_HFO;
 				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericHFO();
@@ -2708,11 +1113,7 @@ void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 					getModel()->getCONFIG()->setLastNumericHFO(m_iCurNumericBlock);
 				}
 			}
-			else
-			{
-				eBlock=NUMB_FLOWOFF_HFO;
-			}
-
+			
 		}
 		break;
 	case VM_NCPAP:
@@ -2870,83 +1271,7 @@ void CViewNumericWnd::DrawGraphCursor(int iDiagrmm)
 	try
 	{
 		EnterCriticalSection(&csNumWnd);
-		if(m_pcWndNumHFOdefault)
-		{
-			m_pcWndNumHFOdefault->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumHFOdefaultmech)
-		{
-			m_pcWndNumHFOdefaultmech->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumDUOPAPdefault)
-		{
-			m_pcWndNumDUOPAPdefault->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumFlowOff)
-		{
-			m_pcWndNumFlowOff->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumFlowOffHFO)
-		{
-			m_pcWndNumFlowOffHFO->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumCPAPdefault)
-		{
-			m_pcWndNumCPAPdefault->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumCPAPdefaultmech)
-		{
-			m_pcWndNumCPAPdefaultmech->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumNCPAPdefault)
-		{
-			m_pcWndNumNCPAPdefault->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumIPPVdefault)
-		{
-			m_pcWndNumIPPVdefault->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumIPPVdefaultmech)
-		{
-			m_pcWndNumIPPVdefaultmech->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumSIMVPSVdefaultmech)
-		{
-			m_pcWndNumSIMVPSVdefaultmech->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumSIMVPSVdefault)
-		{
-			m_pcWndNumSIMVPSVdefault->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumPSVdefaultmech)
-		{
-			m_pcWndNumPSVdefaultmech->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumPSVdefault)
-		{
-			m_pcWndNumPSVdefault->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumSIPPVdefault)
-		{
-			m_pcWndNumSIPPVdefault->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumSIPPVdefaultmech)
-		{
-			m_pcWndNumSIPPVdefaultmech->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumSIMVdefault)
-		{
-			m_pcWndNumSIMVdefault->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumSIMVdefaultmech)
-		{
-			m_pcWndNumSIMVdefaultmech->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumTHERAPYdefault)
-		{
-			m_pcWndNumTHERAPYdefault->SetGraphCursor(true, bMoveXscale, bMoveYscale);
-		}
-		else if(m_pcWndNumConfig)
+		if(m_pcWndNumConfig)
 		{
 			m_pcWndNumConfig->SetGraphCursor(true, bMoveXscale, bMoveYscale);
 		}
@@ -2966,83 +1291,7 @@ void CViewNumericWnd::DeleteGraphCursor()
 	try
 	{
 		EnterCriticalSection(&csNumWnd);
-		if(m_pcWndNumHFOdefault)
-		{
-			m_pcWndNumHFOdefault->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumHFOdefaultmech)
-		{
-			m_pcWndNumHFOdefaultmech->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumDUOPAPdefault)
-		{
-			m_pcWndNumDUOPAPdefault->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumFlowOff)
-		{
-			m_pcWndNumFlowOff->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumFlowOffHFO)
-		{
-			m_pcWndNumFlowOffHFO->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumCPAPdefault)
-		{
-			m_pcWndNumCPAPdefault->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumCPAPdefaultmech)
-		{
-			m_pcWndNumCPAPdefaultmech->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumNCPAPdefault)
-		{
-			m_pcWndNumNCPAPdefault->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumIPPVdefault)
-		{
-			m_pcWndNumIPPVdefault->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumIPPVdefaultmech)
-		{
-			m_pcWndNumIPPVdefaultmech->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumPSVdefault)
-		{
-			m_pcWndNumPSVdefault->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumPSVdefaultmech)
-		{
-			m_pcWndNumPSVdefaultmech->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumSIMVPSVdefault)
-		{
-			m_pcWndNumSIMVPSVdefault->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumSIMVPSVdefaultmech)
-		{
-			m_pcWndNumSIMVPSVdefaultmech->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumSIPPVdefault)
-		{
-			m_pcWndNumSIPPVdefault->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumSIPPVdefaultmech)
-		{
-			m_pcWndNumSIPPVdefaultmech->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumSIMVdefault)
-		{
-			m_pcWndNumSIMVdefault->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumSIMVdefaultmech)
-		{
-			m_pcWndNumSIMVdefaultmech->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumTHERAPYdefault)
-		{
-			m_pcWndNumTHERAPYdefault->SetGraphCursor(false,false,false);
-		}
-		else if(m_pcWndNumConfig)
+		if(m_pcWndNumConfig)
 		{
 			m_pcWndNumConfig->SetGraphCursor(false,false,false);
 		}
@@ -3509,123 +1758,11 @@ void CViewNumericWnd::redrawNumerics(bool bData, bool bFrames, bool bText, bool 
 	case IDC_VIEW_NUM_SIMV:
 	case IDC_VIEW_NUM_SIPPV:
 	case IDC_VIEW_NUM_IPPV:
+	case IDC_VIEW_NUM_FLOWOFFCONV:
+	case IDC_VIEW_NUM_FLOWOFFHFO:
 		{
 			if(m_pcWndNumConfig)
 				m_pcWndNumConfig->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
-		}
-		break;
-	case IDC_VIEW_NUM_IPPV_DEFAULT:
-		{
-			if(m_pcWndNumIPPVdefault)
-				m_pcWndNumIPPVdefault->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
-		}
-		break;
-	case IDC_VIEW_NUM_IPPV_DEFAULTMECH:
-		{
-			if(m_pcWndNumIPPVdefaultmech)
-				m_pcWndNumIPPVdefaultmech->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
-		}
-		break;
-	case IDC_VIEW_NUM_SIPPV_DEFAULT:
-		{
-			if(m_pcWndNumSIPPVdefault)
-				m_pcWndNumSIPPVdefault->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
-		}
-		break;
-	case IDC_VIEW_NUM_SIPPV_DEFAULTMECH:
-		{
-			if(m_pcWndNumSIPPVdefaultmech)
-				m_pcWndNumSIPPVdefaultmech->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
-		}
-		break;
-	case IDC_VIEW_NUM_SIMV_DEFAULT:
-		{
-			if(m_pcWndNumSIMVdefault)
-				m_pcWndNumSIMVdefault->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
-		}
-		break;
-	case IDC_VIEW_NUM_SIMV_DEFAULTMECH:
-		{
-			if(m_pcWndNumSIMVdefaultmech)
-				m_pcWndNumSIMVdefaultmech->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
-		}
-		break;
-	case IDC_VIEW_NUM_SIMVPSV_DEFAULT:
-		{
-			if(m_pcWndNumSIMVPSVdefault)
-				m_pcWndNumSIMVPSVdefault->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
-		}
-		break;
-	case IDC_VIEW_NUM_SIMVPSV_DEFAULTMECH:
-		{
-			if(m_pcWndNumSIMVPSVdefaultmech)
-				m_pcWndNumSIMVPSVdefaultmech->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
-		}
-		break;
-	case IDC_VIEW_NUM_PSV_DEFAULT:
-		{
-			if(m_pcWndNumPSVdefault)
-				m_pcWndNumPSVdefault->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
-		}
-		break;
-	case IDC_VIEW_NUM_PSV_DEFAULTMECH:
-		{
-			if(m_pcWndNumPSVdefaultmech)
-				m_pcWndNumPSVdefaultmech->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
-		}
-		break;
-	case IDC_VIEW_NUM_CPAP_DEFAULT:
-		{
-			if(m_pcWndNumCPAPdefault)
-				m_pcWndNumCPAPdefault->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
-		}
-		break;
-	case IDC_VIEW_NUM_CPAP_DEFAULTMECH:
-		{
-			if(m_pcWndNumCPAPdefaultmech)
-				m_pcWndNumCPAPdefaultmech->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
-		}
-		break;
-	case IDC_VIEW_NUM_HFO_DEFAULT:
-		{
-			if(m_pcWndNumHFOdefault)
-				m_pcWndNumHFOdefault->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
-		}
-		break;
-	case IDC_VIEW_NUM_HFO_DEFAULTMECH:
-		{
-			if(m_pcWndNumHFOdefaultmech)
-				m_pcWndNumHFOdefaultmech->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
-		}
-		break;
-	case IDC_VIEW_NUM_NCPAP_DEFAULT:
-		{
-			if(m_pcWndNumNCPAPdefault)
-				m_pcWndNumNCPAPdefault->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
-		}
-		break;
-	case IDC_VIEW_NUM_DUOPAP_DEFAULT:
-		{
-			if(m_pcWndNumDUOPAPdefault)
-				m_pcWndNumDUOPAPdefault->DrawData(bData, bFrames, bText, bLimits, true);
-		}
-		break;
-	case IDC_VIEW_NUM_THERAPY_DEFAULT:
-		{
-			if(m_pcWndNumTHERAPYdefault)
-				m_pcWndNumTHERAPYdefault->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
-		}
-		break;
-	case IDC_VIEW_NUM_FLOWOFF:
-		{
-			if(m_pcWndNumFlowOff)
-				m_pcWndNumFlowOff->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
-		}
-		break;
-	case IDC_VIEW_NUM_FLOWOFF_HFO:
-		{
-			if(m_pcWndNumFlowOffHFO)
-				m_pcWndNumFlowOffHFO->DrawData(bData, bFrames, bText, bLimits, bFlowmeter);
 		}
 		break;
 	}
@@ -3646,86 +1783,7 @@ void CViewNumericWnd::OnDestroy()
 {
 	m_bExit=true;
 	
-	switch(m_iCurrWnd)
-	{
-	case IDC_VIEW_NUM_IPPV_DEFAULT:
-	case IDC_VIEW_NUM_IPPV_DEFAULTMECH:
-	case IDC_VIEW_NUM_IPPV:
-		{
-			deleteWndNumIPPV();
-		}
-		break;
-	case IDC_VIEW_NUM_SIPPV_DEFAULT:
-	case IDC_VIEW_NUM_SIPPV_DEFAULTMECH:
-	case IDC_VIEW_NUM_SIPPV:
-		{
-			deleteWndNumSIPPV();
-		}
-		break;
-	case IDC_VIEW_NUM_SIMV_DEFAULT:
-	case IDC_VIEW_NUM_SIMV_DEFAULTMECH:
-	case IDC_VIEW_NUM_SIMV:
-		{
-			deleteWndNumSIMV();
-		}
-		break;
-	case IDC_VIEW_NUM_SIMVPSV_DEFAULT:
-	case IDC_VIEW_NUM_SIMVPSV_DEFAULTMECH:
-	case IDC_VIEW_NUM_SIMVPSV:
-		{
-			deleteWndNumSIMVPSV();
-		}
-		break;
-	case IDC_VIEW_NUM_PSV_DEFAULT:
-	case IDC_VIEW_NUM_PSV_DEFAULTMECH:
-	case IDC_VIEW_NUM_PSV:
-		{
-			deleteWndNumPSV();
-		}
-		break;
-	case IDC_VIEW_NUM_CPAP_DEFAULT:
-	case IDC_VIEW_NUM_CPAP_DEFAULTMECH:
-	case IDC_VIEW_NUM_CPAP:
-		{
-			deleteWndNumCPAP();
-		}
-		break;
-	case IDC_VIEW_NUM_HFO_DEFAULT:
-	case IDC_VIEW_NUM_HFO_DEFAULTMECH:
-	case IDC_VIEW_NUM_HFO:
-		{
-			deleteWndNumHFO();
-		}
-		break;
-	case IDC_VIEW_NUM_NCPAP_DEFAULT:
-	case IDC_VIEW_NUM_NCPAP:
-		{
-			deleteWndNumNCPAP();
-		}
-		break;
-	case IDC_VIEW_NUM_DUOPAP_DEFAULT:
-	case IDC_VIEW_NUM_DUOPAP:
-		{
-			deleteWndNumDUOPAP();
-		}
-		break;
-	case IDC_VIEW_NUM_THERAPY_DEFAULT:
-	case IDC_VIEW_NUM_THERAPY:
-		{
-			deleteWndNumTHERAPY();
-		}
-		break;
-	case IDC_VIEW_NUM_FLOWOFF:
-		{
-			deleteWndNumFlowOff();
-		}
-		break;
-	case IDC_VIEW_NUM_FLOWOFF_HFO:
-		{
-			deleteWndNumFlowOffHFO();
-		}
-		break;
-	}
+	deleteWndNumConfig();
 
 	m_iCurrWnd=0;
 
@@ -3742,8 +1800,6 @@ void CViewNumericWnd::BnMenuNUMERIC()
 
 	switch(m_iCurrWnd)
 	{
-	case IDC_VIEW_NUM_IPPV_DEFAULT:
-	case IDC_VIEW_NUM_IPPV_DEFAULTMECH:
 	case IDC_VIEW_NUM_IPPV:
 		{
 			m_iCurNumericBlock++;
@@ -3757,8 +1813,6 @@ void CViewNumericWnd::BnMenuNUMERIC()
 			bChangeCurNumBlock=true;
 		}
 		break;
-	case IDC_VIEW_NUM_SIPPV_DEFAULT:
-	case IDC_VIEW_NUM_SIPPV_DEFAULTMECH:
 	case IDC_VIEW_NUM_SIPPV:
 		{
 			m_iCurNumericBlock++;
@@ -3772,8 +1826,6 @@ void CViewNumericWnd::BnMenuNUMERIC()
 			bChangeCurNumBlock=true;
 		}
 		break;
-	case IDC_VIEW_NUM_SIMV_DEFAULT:
-	case IDC_VIEW_NUM_SIMV_DEFAULTMECH:
 	case IDC_VIEW_NUM_SIMV:
 		{
 			m_iCurNumericBlock++;
@@ -3787,8 +1839,6 @@ void CViewNumericWnd::BnMenuNUMERIC()
 			bChangeCurNumBlock=true;
 		}
 		break;
-	case IDC_VIEW_NUM_SIMVPSV_DEFAULT:
-	case IDC_VIEW_NUM_SIMVPSV_DEFAULTMECH:
 	case IDC_VIEW_NUM_SIMVPSV:
 		{
 			m_iCurNumericBlock++;
@@ -3802,8 +1852,6 @@ void CViewNumericWnd::BnMenuNUMERIC()
 			bChangeCurNumBlock=true;
 		}
 		break;
-	case IDC_VIEW_NUM_PSV_DEFAULT:
-	case IDC_VIEW_NUM_PSV_DEFAULTMECH:
 	case IDC_VIEW_NUM_PSV:
 		{
 			m_iCurNumericBlock++;
@@ -3817,8 +1865,6 @@ void CViewNumericWnd::BnMenuNUMERIC()
 			bChangeCurNumBlock=true;
 		}
 		break;
-	case IDC_VIEW_NUM_CPAP_DEFAULT:
-	case IDC_VIEW_NUM_CPAP_DEFAULTMECH:
 	case IDC_VIEW_NUM_CPAP:
 		{
 			m_iCurNumericBlock++;
@@ -3832,8 +1878,6 @@ void CViewNumericWnd::BnMenuNUMERIC()
 			bChangeCurNumBlock=true;
 		}
 		break;
-	case IDC_VIEW_NUM_HFO_DEFAULT:
-	case IDC_VIEW_NUM_HFO_DEFAULTMECH:
 	case IDC_VIEW_NUM_HFO:
 		{
 			m_iCurNumericBlock++;
@@ -3847,7 +1891,6 @@ void CViewNumericWnd::BnMenuNUMERIC()
 			bChangeCurNumBlock=true;
 		}
 		break;
-	case IDC_VIEW_NUM_NCPAP_DEFAULT:
 	case IDC_VIEW_NUM_NCPAP:
 		{
 			m_iCurNumericBlock++;
@@ -3861,7 +1904,6 @@ void CViewNumericWnd::BnMenuNUMERIC()
 			bChangeCurNumBlock=true;
 		}
 		break;
-	case IDC_VIEW_NUM_DUOPAP_DEFAULT:
 	case IDC_VIEW_NUM_DUOPAP:
 		{
 			m_iCurNumericBlock++;
@@ -3875,7 +1917,6 @@ void CViewNumericWnd::BnMenuNUMERIC()
 			bChangeCurNumBlock=true;
 		}
 		break;
-	case IDC_VIEW_NUM_THERAPY_DEFAULT:
 	case IDC_VIEW_NUM_THERAPY:
 		{
 			m_iCurNumericBlock++;
@@ -3889,14 +1930,30 @@ void CViewNumericWnd::BnMenuNUMERIC()
 			bChangeCurNumBlock=true;
 		}
 		break;
-	case IDC_VIEW_NUM_FLOWOFF:
+	case IDC_VIEW_NUM_FLOWOFFCONV:
 		{
-			
+			m_iCurNumericBlock++;
+			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV())
+			{
+				m_iCurNumericBlock=0;
+			}
+			getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
+			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
+			m_pcMenuNumeric->RefreshText(szText);
+			bChangeCurNumBlock=true;
 		}
 		break;
-	case IDC_VIEW_NUM_FLOWOFF_HFO:
+	case IDC_VIEW_NUM_FLOWOFFHFO:
 		{
-			
+			m_iCurNumericBlock++;
+			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFHFO())
+			{
+				m_iCurNumericBlock=0;
+			}
+			getModel()->getCONFIG()->setLastNumericFLOWOFFHFO(m_iCurNumericBlock);
+			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
+			m_pcMenuNumeric->RefreshText(szText);
+			bChangeCurNumBlock=true;
 		}
 		break;
 	}

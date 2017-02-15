@@ -7,6 +7,14 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50114 Version 5.0.1.14
+ * @date 2017-02-09
+ * @verbatim
+	- new numerics implemented, default numerics deleted
+	- licenses can not be deleted if module is active
+	- demo licenses 3 months implemented
+ @endverbatim
+ *
  * @subsection ver50113 Version 5.0.1.13
  * @date 2017-02-03
  * @verbatim

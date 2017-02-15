@@ -39,6 +39,11 @@
 #include "NumericFieldVTESPONT.h"
 #include "NumericFieldVTI.h"
 #include "NumericFieldFICO2.h"
+#include "NumericFieldVTEKG.h"
+#include "NumericFieldINFOPATAL.h"
+#include "NumericFieldINFOTUBE.h"
+#include "NumericFieldSPACE.h"
+#include "NumericFieldINFOFLOWOFF.h"
 
 
 // CWndNumConfig
@@ -259,8 +264,9 @@ SHORT CWndNumConfig::getBottomNumPositionYaxes(eNumericSize numSize)
 	}
 	return iBottom;
 }
-void CWndNumConfig::createNewNumericField(CNumericField *pNumField, eNumericType numType, eNumericSize numSize)
+CNumericField* CWndNumConfig::createNewNumericField(eNumericType numType, eNumericSize numSize)
 {
+	CNumericField *pNumField=NULL;
 	EnterCriticalSection(&csDraw);
 	switch(numType)
 	{
@@ -441,16 +447,28 @@ void CWndNumConfig::createNewNumericField(CNumericField *pNumField, eNumericType
 		break;
 	case NUMT_INFO_PATAL:
 		{
-			pNumField= new CNumericFieldINFO_PATAL(numSize);
+			pNumField= new CNumericFieldINFOPATAL(numSize);
 		}
 		break;
 	case NUMT_INFO_TUBE:
 		{
-			pNumField= new CNumericFieldINFO_TUBE(numSize);
+			pNumField= new CNumericFieldINFOTUBE(numSize);
+		}
+		break;
+	case NUMT_SPACE:
+		{
+			pNumField= new CNumericFieldSPACE(numSize);
+		}
+		break;
+	case NUMT_INFO_FLOWOFF:
+		{
+			pNumField= new CNumericFieldINFOFLOWOFF(numSize);
 		}
 		break;
 	}
 	LeaveCriticalSection(&csDraw);
+
+	return pNumField;
 }
 
 void CWndNumConfig::createNumericField1()
@@ -481,7 +499,7 @@ void CWndNumConfig::createNumericField1()
 		bCursorField=true;
 	}
 
-	createNewNumericField(pNumField, numType, numSize);
+	pNumField=createNewNumericField(numType, numSize);
 	EnterCriticalSection(&csDraw);
 	if(pNumField!=NULL)
 	{
@@ -522,7 +540,7 @@ void CWndNumConfig::createNumericField2()
 		bCursorField=true;
 	}
 
-	createNewNumericField(pNumField, numType, numSize);
+	pNumField=createNewNumericField(numType, numSize);
 	EnterCriticalSection(&csDraw);
 	if(pNumField!=NULL)
 	{
@@ -563,7 +581,7 @@ void CWndNumConfig::createNumericField3()
 		bCursorField=true;
 	}
 
-	createNewNumericField(pNumField, numType, numSize);
+	pNumField=createNewNumericField(numType, numSize);
 	EnterCriticalSection(&csDraw);
 	if(pNumField!=NULL)
 	{
@@ -604,7 +622,7 @@ void CWndNumConfig::createNumericField4()
 		bCursorField=true;
 	}
 
-	createNewNumericField(pNumField, numType, numSize);
+	pNumField=createNewNumericField(numType, numSize);
 	EnterCriticalSection(&csDraw);
 	if(pNumField!=NULL)
 	{
@@ -645,7 +663,7 @@ void CWndNumConfig::createNumericField5()
 		bCursorField=true;
 	}
 
-	createNewNumericField(pNumField, numType, numSize);
+	pNumField=createNewNumericField(numType, numSize);
 	EnterCriticalSection(&csDraw);
 	if(pNumField!=NULL)
 	{
@@ -686,7 +704,7 @@ void CWndNumConfig::createNumericField6()
 		bCursorField=true;
 	}
 
-	createNewNumericField(pNumField, numType, numSize);
+	pNumField=createNewNumericField(numType, numSize);
 	EnterCriticalSection(&csDraw);
 	if(pNumField!=NULL)
 	{
@@ -727,7 +745,7 @@ void CWndNumConfig::createNumericField7()
 		bCursorField=true;
 	}
 
-	createNewNumericField(pNumField, numType, numSize);
+	pNumField=createNewNumericField(numType, numSize);
 	EnterCriticalSection(&csDraw);
 	if(pNumField!=NULL)
 	{
@@ -768,7 +786,7 @@ void CWndNumConfig::createNumericField8()
 		bCursorField=true;
 	}
 
-	createNewNumericField(pNumField, numType, numSize);
+	pNumField=createNewNumericField(numType, numSize);
 	EnterCriticalSection(&csDraw);
 	if(pNumField!=NULL)
 	{

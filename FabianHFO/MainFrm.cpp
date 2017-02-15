@@ -220,21 +220,21 @@ CMainFrame::CMainFrame()
 	m_iCountTimeUntilStop=0;//WEC2013
 	m_iCountTimeUntilOff=0;//WEC2013
 
-	m_pcwtThreadWatchdogThread=NULL;//rkuNEWFIX
+	//m_pcwtThreadWatchdogThread=NULL;//rkuNEWFIX
 	m_pcwtTimerThread=NULL;//WEC2013
 	m_pcwtOxyCalThread=NULL;//WEC2013
 	m_pcwtI2CWatchdogThread=NULL;//WEC2013
 	m_pcwtSaveTrendUSBThread=NULL;//WEC2013
 	m_pcwtDelTrendThread=NULL;//WEC2013
 
-	m_bDoThreadWatchdogThread=false;//rkuNEWFIX
+	//m_bDoThreadWatchdogThread=false;//rkuNEWFIX
 	m_bDoSaveTrendUSBThread=false;//WEC2013
 	m_bDoI2CWatchdogThread=false;//WEC2013
 	m_bDoOxyCalThread=false;//WEC2013
 	m_bDoDoTimerFunctionsThread=false;//WEC2013
 	m_bDoDelTrendThread=false;//WEC2013
 
-	m_hThreadThreadWatchdog=INVALID_HANDLE_VALUE;//rkuNEWFIX
+	//m_hThreadThreadWatchdog=INVALID_HANDLE_VALUE;//rkuNEWFIX
 	m_hThreadSaveTrendUSB=INVALID_HANDLE_VALUE;//WEC2013
 	m_hThreadI2CWatchdog=INVALID_HANDLE_VALUE;//WEC2013
 	m_hThreadOxyCal=INVALID_HANDLE_VALUE;//WEC2013
@@ -295,17 +295,17 @@ CMainFrame::CMainFrame()
 	m_hf33AcuBoldNum=NULL;
 	m_hf70BoldNum=NULL;
 
-	for(int i=0;i<MAXSIZE_THREADS;i++)
+	/*for(int i=0;i<MAXSIZE_THREADS;i++)
 	{
 		faThreadWatchdog[i]=0;
 		faPrevstateThreadWatchdog[i]=0;
-	}
-	InitializeCriticalSection(&csThreadWatchdog);
+	}*/
+	//InitializeCriticalSection(&csThreadWatchdog);
 }
 
 CMainFrame::~CMainFrame()
 {
-	DeleteCriticalSection(&csThreadWatchdog);
+	//DeleteCriticalSection(&csThreadWatchdog);
 }
 
 // **************************************************************************
@@ -419,9 +419,9 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	StartI2CWatchdogThread();
 
-#ifndef SIMULATION_ENTREK //rkuNEWFIX
-	StartThreadWatchdogThread();
-#endif
+//#ifndef SIMULATION_ENTREK //rkuNEWFIX
+//	StartThreadWatchdogThread();
+//#endif
 
 	getModel()->getALARMHANDLER()->setSystemSilent();
 
@@ -1231,9 +1231,9 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	}
 #endif
 
-	EnterCriticalSection(&csThreadWatchdog);//rkuNEWFIX
-	faThreadWatchdog[THR_MAIN]=faThreadWatchdog[THR_MAIN]+1;
-	LeaveCriticalSection(&csThreadWatchdog);
+	//EnterCriticalSection(&csThreadWatchdog);
+	//faThreadWatchdog[THR_MAIN]=faThreadWatchdog[THR_MAIN]+1;
+	//LeaveCriticalSection(&csThreadWatchdog);
 	
 	switch (message)
     {
@@ -4737,6 +4737,21 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 		break;
+	case WM_CHECK_DATE:
+		{
+			if(theApp.getLog()->CheckDate()) 
+			{
+				getModel()->isMaintenanceNeeded();
+			}
+			getModel()->getALARMHANDLER()->checkLogAlarmDate();
+			//getModel()->getDATAHANDLER()->checkDemoLicense();
+		}
+		break;
+	/*case WM_LICENSING_CHANGED:
+		{
+
+		}
+		break;*/
 	case WM_CHECK_LIMITS:
 		{
 			getModel()->getDATAHANDLER()->checkLimits();
@@ -5991,7 +6006,7 @@ void CMainFrame::OnDestroy()
 	StopI2CWatchdogThread();
 
 	//rkuNEWFIX
-	if(m_pcwtThreadWatchdogThread!=NULL)
+	/*if(m_pcwtThreadWatchdogThread!=NULL)
 	{
 		delete m_pcwtThreadWatchdogThread;
 		m_pcwtThreadWatchdogThread=NULL;
@@ -6001,7 +6016,7 @@ void CMainFrame::OnDestroy()
 			CloseHandle(m_hThreadThreadWatchdog);
 			m_hThreadThreadWatchdog=INVALID_HANDLE_VALUE;
 		}
-	}
+	}*/
 
 	if(m_pcwtSaveTrendUSBThread!=NULL)
 	{
@@ -7833,119 +7848,119 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 // **************************************************************************
 // //rkuNEWFIX
 // **************************************************************************
-void CMainFrame::StartThreadWatchdogThread( void )
-{
-	m_bDoThreadWatchdogThread=true;
-
-	if(m_pcwtThreadWatchdogThread!=NULL)
-	{
-		delete m_pcwtThreadWatchdogThread;
-		m_pcwtThreadWatchdogThread=NULL;
-
-		if(m_hThreadThreadWatchdog!=INVALID_HANDLE_VALUE)
-		{
-			CloseHandle(m_hThreadThreadWatchdog);
-			m_hThreadThreadWatchdog=INVALID_HANDLE_VALUE;
-		}
-	}
-
-	m_pcwtThreadWatchdogThread=AfxBeginThread(CThreadWatchdogThread,this,THREAD_PRIORITY_NORMAL,0,CREATE_SUSPENDED);
-	m_hThreadThreadWatchdog=m_pcwtThreadWatchdogThread->m_hThread;
-	m_pcwtThreadWatchdogThread->m_bAutoDelete = FALSE; 
-	m_pcwtThreadWatchdogThread->ResumeThread();
-}
-void CMainFrame::StopThreadWatchdogThread( void )
-{
-	if(m_bDoThreadWatchdogThread)
-	{
-		m_bDoThreadWatchdogThread=false;
-		eventThreadWatchdog.SetEvent();
-
-		if (WaitForSingleObject(m_pcwtThreadWatchdogThread->m_hThread,1000) == WAIT_TIMEOUT)
-		{
-			theApp.getLog()->WriteLine(_T("#THR:018a"));
-			if(!TerminateThread(m_pcwtThreadWatchdogThread,0))
-			{
-				theApp.getLog()->WriteLine(_T("#THR:018b"));
-			}
-		}
-	}
-}
-static UINT CThreadWatchdogThread( LPVOID pc )
-{
-	((CMainFrame*)pc)->ThreadWatchdog();
-	return true;
-}
-
-DWORD CMainFrame::ThreadWatchdog(void) 
-{
-	CeSetThreadPriority(m_pcwtThreadWatchdogThread->m_hThread,CE_THREAD_PRIO_256_ABOVE_NORMAL);//PRICO04
-
-	DWORD WAIT=4000;
-	DWORD dwWait=0;
-	DWORD dwDiff = 0;
-	DWORD dwStart=0;
-	DWORD dwEnd=0;
-	bool bPrintError=true;
-
-
-	do
-	{
-		dwEnd=GetTickCount();
-
-		if(dwEnd>=dwStart)//rkuTICKCOUNTCHECK
-			dwDiff=dwEnd-dwStart;
-		else
-			dwDiff=0;
-
-		if(dwDiff<WAIT)
-		{
-			dwWait=WAIT-dwDiff;
-		}
-		else
-		{
-			dwWait=1;
-		}
-
-		DWORD dw = ::WaitForSingleObject(eventThreadWatchdog, dwWait);
-
-		dwStart = GetTickCount();
-
-		switch(dw)
-		{
-		case WAIT_OBJECT_0:
-			break;
-		default:
-			{
-				EnterCriticalSection(&csThreadWatchdog);
-				for(int i=0;i<MAXSIZE_THREADS;i++)
-				{
-					if(faThreadWatchdog[i]!=0)
-					{
-						if(faThreadWatchdog[i]!=faPrevstateThreadWatchdog[i])
-						{
-							faPrevstateThreadWatchdog[i]=faThreadWatchdog[i];
-						}
-						else
-						{
-							//thread error
-							DEBUGMSG(TRUE, (TEXT("THREAD ERROR %d\r\n"),i));
-							CStringW sz=_T("");
-							sz.Format(_T("#HFO:0302 #%d"),i);
-							theApp.getLog()->WriteLine(sz);
-						}
-					}
-				}
-				LeaveCriticalSection(&csThreadWatchdog);
-			}
-			break;
-		}
-	}while(m_bDoThreadWatchdogThread);
-
-	theApp.getLog()->WriteLine(_T("#THR:1000"));
-
-	return 0;
-}
+//void CMainFrame::StartThreadWatchdogThread( void )
+//{
+//	m_bDoThreadWatchdogThread=true;
+//
+//	if(m_pcwtThreadWatchdogThread!=NULL)
+//	{
+//		delete m_pcwtThreadWatchdogThread;
+//		m_pcwtThreadWatchdogThread=NULL;
+//
+//		if(m_hThreadThreadWatchdog!=INVALID_HANDLE_VALUE)
+//		{
+//			CloseHandle(m_hThreadThreadWatchdog);
+//			m_hThreadThreadWatchdog=INVALID_HANDLE_VALUE;
+//		}
+//	}
+//
+//	m_pcwtThreadWatchdogThread=AfxBeginThread(CThreadWatchdogThread,this,THREAD_PRIORITY_NORMAL,0,CREATE_SUSPENDED);
+//	m_hThreadThreadWatchdog=m_pcwtThreadWatchdogThread->m_hThread;
+//	m_pcwtThreadWatchdogThread->m_bAutoDelete = FALSE; 
+//	m_pcwtThreadWatchdogThread->ResumeThread();
+//}
+//void CMainFrame::StopThreadWatchdogThread( void )
+//{
+//	if(m_bDoThreadWatchdogThread)
+//	{
+//		m_bDoThreadWatchdogThread=false;
+//		eventThreadWatchdog.SetEvent();
+//
+//		if (WaitForSingleObject(m_pcwtThreadWatchdogThread->m_hThread,1000) == WAIT_TIMEOUT)
+//		{
+//			theApp.getLog()->WriteLine(_T("#THR:018a"));
+//			if(!TerminateThread(m_pcwtThreadWatchdogThread,0))
+//			{
+//				theApp.getLog()->WriteLine(_T("#THR:018b"));
+//			}
+//		}
+//	}
+//}
+//static UINT CThreadWatchdogThread( LPVOID pc )
+//{
+//	((CMainFrame*)pc)->ThreadWatchdog();
+//	return true;
+//}
+//
+//DWORD CMainFrame::ThreadWatchdog(void) 
+//{
+//	CeSetThreadPriority(m_pcwtThreadWatchdogThread->m_hThread,CE_THREAD_PRIO_256_ABOVE_NORMAL);//PRICO04
+//
+//	DWORD WAIT=4000;
+//	DWORD dwWait=0;
+//	DWORD dwDiff = 0;
+//	DWORD dwStart=0;
+//	DWORD dwEnd=0;
+//	bool bPrintError=true;
+//
+//
+//	do
+//	{
+//		dwEnd=GetTickCount();
+//
+//		if(dwEnd>=dwStart)//rkuTICKCOUNTCHECK
+//			dwDiff=dwEnd-dwStart;
+//		else
+//			dwDiff=0;
+//
+//		if(dwDiff<WAIT)
+//		{
+//			dwWait=WAIT-dwDiff;
+//		}
+//		else
+//		{
+//			dwWait=1;
+//		}
+//
+//		DWORD dw = ::WaitForSingleObject(eventThreadWatchdog, dwWait);
+//
+//		dwStart = GetTickCount();
+//
+//		switch(dw)
+//		{
+//		case WAIT_OBJECT_0:
+//			break;
+//		default:
+//			{
+//				//EnterCriticalSection(&csThreadWatchdog);
+//				//for(int i=0;i<MAXSIZE_THREADS;i++)
+//				//{
+//				//	if(faThreadWatchdog[i]!=0)
+//				//	{
+//				//		if(faThreadWatchdog[i]!=faPrevstateThreadWatchdog[i])
+//				//		{
+//				//			faPrevstateThreadWatchdog[i]=faThreadWatchdog[i];
+//				//		}
+//				//		else
+//				//		{
+//				//			//thread error
+//				//			DEBUGMSG(TRUE, (TEXT("THREAD ERROR %d\r\n"),i));
+//				//			CStringW sz=_T("");
+//				//			sz.Format(_T("#HFO:0302 #%d"),i);
+//				//			theApp.getLog()->WriteLine(sz);
+//				//		}
+//				//	}
+//				//}
+//				//LeaveCriticalSection(&csThreadWatchdog);
+//			}
+//			break;
+//		}
+//	}while(m_bDoThreadWatchdogThread);
+//
+//	theApp.getLog()->WriteLine(_T("#THR:1000"));
+//
+//	return 0;
+//}
 
 // **************************************************************************
 // 
@@ -8844,11 +8859,7 @@ DWORD CMainFrame::DoTimerFunctions(void)
 										getModel()->getDATAHANDLER()->SaveTrendData();
 								}
 
-								if(theApp.getLog()->CheckDate()) 
-								{
-									getModel()->isMaintenanceNeeded();
-								}
-								getModel()->getALARMHANDLER()->checkLogAlarmDate();
+								PostMessage(WM_CHECK_DATE);
 
 								const char *divisor = "K";
 								MEMORYSTATUS stat;

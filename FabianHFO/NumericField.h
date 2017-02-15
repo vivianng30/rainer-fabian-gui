@@ -90,6 +90,9 @@ protected:
 
 	CRITICAL_SECTION csDraw;
 
+	CBmp* m_pcNumInfoTop;
+	CBmp* m_pcNumInfoBot;
+
 	CBmp* m_pcLimitHigh_Up;
 	CBmp* m_pcLimitLow_Up;
 

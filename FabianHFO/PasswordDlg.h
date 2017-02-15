@@ -27,6 +27,9 @@ protected:
 
 	virtual BOOL OnInitDialog();
 
+	CString encryptKey(eModule module);
+	CString encryptDemoKey(eModule module);
+
 	DECLARE_MESSAGE_MAP()
 protected:
 	eModule m_eModule;

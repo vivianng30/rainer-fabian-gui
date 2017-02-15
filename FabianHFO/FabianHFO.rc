@@ -222,8 +222,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 5,0,1,13
- PRODUCTVERSION 5,0,1,13
+ FILEVERSION 5,0,1,14
+ PRODUCTVERSION 5,0,1,14
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -240,12 +240,12 @@ BEGIN
         BEGIN
             VALUE "Comments", "Alle Rechte vorbehalten."
             VALUE "CompanyName", "Acutronic Medical Systems AG"
-            VALUE "FileVersion", "5, 0, 1, 13"
+            VALUE "FileVersion", "5, 0, 1, 14"
             VALUE "InternalName", "FabianHFO.exe"
             VALUE "LegalCopyright", "(c) Acutronic Medical Systems AG. "
             VALUE "OriginalFilename", "FabianHFO.exe"
             VALUE "ProductName", " FabianHFO"
-            VALUE "ProductVersion", "5, 0, 1, 13"
+            VALUE "ProductVersion", "5, 0, 1, 14"
         END
     END
     BLOCK "VarFileInfo"
@@ -1872,6 +1872,11 @@ BEGIN
     IDS_TXT_SAVEDEVICEINFO  "Save device info to USB:"
     IDS_TXT_SAVEINFO        "Do you want to save the device information to USB? Do not unplug the USB while saving!"
     IDS_TXT_FILEWRITTEN     "file saved"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PARA_VTEKG          "VT/kg BW"
 END
 
 #endif    // German (Germany) resources

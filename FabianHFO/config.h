@@ -24,6 +24,8 @@ enum eHFModuleRevision {
 	HFREV_2		= 1
 };
 
+#define DEMOLICENSE	90
+
 //#define MAINBOARD2_1			0x21
 //#define MAINBOARD3_0			0x30
 #define MAINBOARD_11			0x11
@@ -890,11 +892,12 @@ enum eLanguage {
 #define SERVICE_MONTH_8					0x0046
 #define SERVICE_YEAR_16					0x0047
 
-//pro, new - start
 #define ALTITUDE_16					0x0049
 #define FLOW_CORFACTOR_NEO_16		0x004B
 #define FLOW_CORFACTOR_PED_16		0x004D
-//pro, new - end
+
+#define NUMBLOCK_FLOWOFFCONV_8				0x004E
+#define NUMBLOCK_FLOWOFFHFO_8				0x004F
 
 //PARA DATA
 #define PARA_ITIME_IPPV_16				0x0060
@@ -1088,14 +1091,6 @@ enum eLanguage {
 //#define ALIMIT_STATE_FICO2MIN_HF_8		0x023D
 
 
-
-
-
-
-
-
-
-
 //LAST WRITTEN TREND FILE NUMBERS
 #define TRENDFILE_PINSP_8				0x0240
 #define TRENDFILE_PMEAN_8				0x0241
@@ -1205,6 +1200,41 @@ enum eLanguage {
 #define ALIMIT_STATE_FICO2MAX_HF_8		0x02FC
 #define ALIMIT_STATE_FICO2MIN_HF_8		0x02FD
 
+#define DEMO_FOT_DAY_8					0x02FE
+#define DEMO_FOT_MONTH_8				0x02FF
+#define DEMO_FOT_YEAR_16				0x0300
+
+#define DEMO_HFO_DAY_8					0x0302
+#define DEMO_HFO_MONTH_8				0x0303
+#define DEMO_HFO_YEAR_16				0x0304
+
+#define DEMO_NMODE_DAY_8				0x0306
+#define DEMO_NMODE_MONTH_8				0x0307
+#define DEMO_NMODE_YEAR_16				0x0308
+
+#define DEMO_VGUARANTY_DAY_8			0x030A
+#define DEMO_VGUARANTY_MONTH_8			0x030B
+#define DEMO_VGUARANTY_YEAR_16			0x030C
+
+#define DEMO_VLIMIT_DAY_8				0x030E
+#define DEMO_VLIMIT_MONTH_8				0x030F
+#define DEMO_VLIMIT_YEAR_16				0x0310
+
+#define DEMO_LUNGREC_DAY_8				0x0311
+#define DEMO_LUNGREC_MONTH_8			0x0312
+#define DEMO_LUNGREC_YEAR_16			0x0313
+
+#define DEMO_TREND_DAY_8				0x0315
+#define DEMO_TREND_MONTH_8				0x0316
+#define DEMO_TREND_YEAR_16				0x0317
+
+#define DEMO_THERAPY_DAY_8				0x0319
+#define DEMO_THERAPY_MONTH_8			0x031A
+#define DEMO_THERAPY_YEAR_16			0x031B
+
+#define DEMO_PRICO_DAY_8				0x031D
+#define DEMO_PRICO_MONTH_8				0x031E
+#define DEMO_PRICO_YEAR_16				0x031F
 
 //letzte Adresse für Configuration 0x1EFB !!!!!!!!!!!!!!!!!!!!!!!
 //ACHTUNG !!!!! wenn hier neue Daten eingefügt werden -> DefaultFactorySettings beachten!!!
