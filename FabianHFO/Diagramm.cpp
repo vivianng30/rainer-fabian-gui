@@ -75,10 +75,10 @@ CDiagramm::CDiagramm()
 	/*m_pcGraphXup=NULL;
 	m_pcGraphXdw=NULL;*/
 
-	m_hdcLevel1			= NULL;
+	/*m_hdcLevel1			= NULL;
 	m_hbmpLevel1		= NULL;
 	m_hdcLevel2			= NULL;
-	m_hbmpLevel2		= NULL;
+	m_hbmpLevel2		= NULL;*/
 	/*m_hdcLevel3			= NULL;
 	m_hbmpLevel3		= NULL;*/
 
@@ -253,23 +253,23 @@ BOOL CDiagramm::Create(CWnd* pParentWnd, const RECT &rc, UINT nID, CCreateContex
 		Rectangle(m_hdcStatic, 0, 0, m_iGraphWidth,m_iGraphHeight);
 
 
-		m_hdcLevel1 = CreateCompatibleDC(m_hDC);
-		m_hbmpLevel1 = CreateCompatibleBitmap(m_hDC, m_iGraphWidth,m_iGraphHeight);
-		SelectObject(m_hdcLevel1, m_hbmpLevel1);
+		//m_hdcLevel1 = CreateCompatibleDC(m_hDC);
+		//m_hbmpLevel1 = CreateCompatibleBitmap(m_hDC, m_iGraphWidth,m_iGraphHeight);
+		//SelectObject(m_hdcLevel1, m_hbmpLevel1);
 
-		//// delete background
-		HPEN hpenprev1=(HPEN)SelectObject(m_hdcLevel1, (HPEN)GetStockObject(NULL_PEN));	
-		HBRUSH hbrprev1=(HBRUSH)SelectObject(m_hdcLevel1,cbrBack); 
-		Rectangle(m_hdcLevel1, 0, 0, m_iGraphWidth,m_iGraphHeight);
+		////// delete background
+		//HPEN hpenprev1=(HPEN)SelectObject(m_hdcLevel1, (HPEN)GetStockObject(NULL_PEN));	
+		//HBRUSH hbrprev1=(HBRUSH)SelectObject(m_hdcLevel1,cbrBack); 
+		//Rectangle(m_hdcLevel1, 0, 0, m_iGraphWidth,m_iGraphHeight);
 
-		m_hdcLevel2 = CreateCompatibleDC(m_hDC);
-		m_hbmpLevel2 = CreateCompatibleBitmap(m_hDC, m_iGraphWidth,m_iGraphHeight);
-		SelectObject(m_hdcLevel2, m_hbmpLevel2);
+		//m_hdcLevel2 = CreateCompatibleDC(m_hDC);
+		//m_hbmpLevel2 = CreateCompatibleBitmap(m_hDC, m_iGraphWidth,m_iGraphHeight);
+		//SelectObject(m_hdcLevel2, m_hbmpLevel2);
 
-		//// delete background
-		HPEN hpenprev2=(HPEN)SelectObject(m_hdcLevel2, (HPEN)GetStockObject(NULL_PEN));	
-		HBRUSH hbrprev2=(HBRUSH)SelectObject(m_hdcLevel2,cbrBack); 
-		Rectangle(m_hdcLevel2, 0, 0, m_iGraphWidth,m_iGraphHeight);
+		////// delete background
+		//HPEN hpenprev2=(HPEN)SelectObject(m_hdcLevel2, (HPEN)GetStockObject(NULL_PEN));	
+		//HBRUSH hbrprev2=(HBRUSH)SelectObject(m_hdcLevel2,cbrBack); 
+		//Rectangle(m_hdcLevel2, 0, 0, m_iGraphWidth,m_iGraphHeight);
 
 		//m_hdcLevel3 = CreateCompatibleDC(m_hDC);
 		//m_hbmpLevel3 = CreateCompatibleBitmap(m_hDC, m_iGraphWidth,m_iGraphHeight);
@@ -336,10 +336,10 @@ BOOL CDiagramm::Create(CWnd* pParentWnd, const RECT &rc, UINT nID, CCreateContex
 		SelectObject(m_hdcGraph,hbrprevGraph); 
 		SelectObject(m_hdcStatic, hpenprevStat);	
 		SelectObject(m_hdcStatic,hbrprevStat); 
-		SelectObject(m_hdcLevel1, hpenprev1);	
+		/*SelectObject(m_hdcLevel1, hpenprev1);	
 		SelectObject(m_hdcLevel1,hbrprev1); 
 		SelectObject(m_hdcLevel2, hpenprev2);	
-		SelectObject(m_hdcLevel2,hbrprev2); 
+		SelectObject(m_hdcLevel2,hbrprev2); */
 
 		return 1;
 	}
@@ -424,7 +424,7 @@ void CDiagramm::OnDestroy()
 	if(m_hdcGraph)
 		DeleteDC(m_hdcGraph);
 
-	if(m_hdcLevel1)
+	/*if(m_hdcLevel1)
 		DeleteDC(m_hdcLevel1);
 
 	if(m_hbmpLevel1)
@@ -434,7 +434,7 @@ void CDiagramm::OnDestroy()
 		DeleteDC(m_hdcLevel2);
 
 	if(m_hbmpLevel2)
-		DeleteObject(m_hbmpLevel2);
+		DeleteObject(m_hbmpLevel2);*/
 
 	/*if(m_hdcLevel3)
 		DeleteDC(m_hdcLevel3);
@@ -1530,7 +1530,7 @@ void CDiagramm::PaintGraph()
 	Sleep(0);
 	BitBlt(m_hdcGraph, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcStatic, 0, 0, SRCCOPY);
 	
-	if(getModel()->getVMODEHANDLER()->activeModeIsHFO()==false)
+	/*if(getModel()->getVMODEHANDLER()->activeModeIsHFO()==false)
 	{
 		BitBlt(m_hdcLevel1, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcStatic, 0, 0, SRCCOPY);
 		BitBlt(m_hdcLevel2, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcStatic, 0, 0, SRCCOPY);
@@ -1539,7 +1539,7 @@ void CDiagramm::PaintGraph()
 	{
 		BitBlt(m_hdcLevel1, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcStatic, 0, 0, SRCCOPY);
 	}
-	Sleep(0);
+	Sleep(0);*/
 	
 	////Step 11
 	////draw Function
@@ -9273,7 +9273,7 @@ void CDiagramm::DrawConnectLoop(CPoint *pts, int iSize, bool levelPlot)
 
 	
 
-	if(getModel()->getVMODEHANDLER()->activeModeIsHFO()==false)
+	/*if(getModel()->getVMODEHANDLER()->activeModeIsHFO()==false)
 	{
 		CDC* pDCLevel1=CDC::FromHandle(m_hdcLevel1);
 		poldpen1=pDCLevel1->SelectObject(&penLevel1);
@@ -9307,7 +9307,7 @@ void CDiagramm::DrawConnectLoop(CPoint *pts, int iSize, bool levelPlot)
 
 		pDCLevel1->SelectObject(poldpen1);
 		pDCLevel1->SelectObject(poldbrush1);
-	}
+	}*/
 
 	dc.SelectObject(poldpenDC);
 	dc.SelectObject(poldbrushDC);
@@ -10096,12 +10096,8 @@ void CDiagramm::NextBreath()
 		return;
 
 	CClientDC dc(this);
-	//HFO
-	//BitBlt(dc.m_hDC, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcStatic, 0, 0, SRCCOPY);
-	//BitBlt(m_hdcLevel1, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcStatic, 0, 0, SRCCOPY);
-
 	//else
-	if(getModel()->getVMODEHANDLER()->activeModeIsHFO()==false)
+	/*if(getModel()->getVMODEHANDLER()->activeModeIsHFO()==false)
 	{
 		BitBlt(dc.m_hDC, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcLevel1, 0, 0, SRCCOPY);
 		BitBlt(m_hdcLevel1, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcLevel2, 0, 0, SRCCOPY);
@@ -10112,7 +10108,8 @@ void CDiagramm::NextBreath()
 	{
 		BitBlt(dc.m_hDC, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcLevel1, 0, 0, SRCCOPY);
 		BitBlt(m_hdcLevel1, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcStatic, 0, 0, SRCCOPY);
-	}
+	}*/
+	BitBlt(dc.m_hDC, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcStatic, 0, 0, SRCCOPY);
 	
 	if(m_bDrawCursor)
 		DrawCursor(m_bDrawCursor);

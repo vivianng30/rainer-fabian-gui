@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50115 Version 5.0.1.15
+ * @date 2017-02-16
+ * @verbatim
+	- only oner loop will be drawn
+ @endverbatim
+ *
  * @subsection ver50114 Version 5.0.1.14
  * @date 2017-02-09
  * @verbatim

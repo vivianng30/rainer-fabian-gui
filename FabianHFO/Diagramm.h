@@ -180,10 +180,10 @@ private:
 	HBITMAP m_hbmpStatic;
 	HBITMAP m_hbmpGraph;
 
-	HDC		m_hdcLevel1;
-	HBITMAP m_hbmpLevel1;
-	HDC		m_hdcLevel2;
-	HBITMAP m_hbmpLevel2;
+	/*HDC		m_hdcLevel1;
+	HBITMAP m_hbmpLevel1;*/
+	/*HDC		m_hdcLevel2;
+	HBITMAP m_hbmpLevel2;*/
 
 	int m_iDiagrammType;
 	int m_iCurColorScheme;
