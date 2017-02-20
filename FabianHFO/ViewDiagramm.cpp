@@ -12138,8 +12138,7 @@ void CViewDiagramm::NotifyParaBtnEvent(CMVEvent* pEvent)
 				break;
 			case CMVEventUI::EV_PARABN_FOT:
 				{
-					if(		getModel()->getCONFIG()->CurModeIsPresetMode()==false 
-						&&	getModel()->getCONFIG()->GraphIsAutoScale())
+					if(getModel()->getCONFIG()->CurModeIsPresetMode()==false)
 					{
 						if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 						{
