@@ -884,9 +884,9 @@ void CWndDataFOT::drawFOTmenubar()
 	else if(stepsComplete!=0)
 	{
 		if(		stepsComplete>3
-			&&	(stepsComplete/2)<(stepCurrent+1))
+			&&	((stepsComplete+1)/2)<(stepCurrent+1))
 		{
-			bDecrease=true;
+ 			bDecrease=true;
 		}
 	}
 
