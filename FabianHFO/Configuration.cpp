@@ -6662,6 +6662,8 @@ void CConfiguration::setLastSelectedFOTViewBtns(int btns)
 void CConfiguration::readinFOTventDelaytime()
 {
 	CTlsRegistry regLang(_T("HKCU\\Software\\FabianHFO\\WorkState\\FOT"),true);
+
+	//regLang.WriteDWORD(_T("FOTDELAY"), 10);
 	m_iFOTventDelaytime=(WORD)regLang.ReadDWORD(_T("FOTDELAY"), VENTDELAYTIME);
 
 	if(m_iFOTventDelaytime<VENTDELAYTIME_MIN || m_iFOTventDelaytime>VENTDELAYTIME_MAX)

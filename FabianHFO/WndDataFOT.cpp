@@ -208,28 +208,7 @@ BOOL CWndDataFOT::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 		
 		if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 		{
-			////Button------continue FOT steps---------------------------------
-			//btn.wID					= IDC_BTN_CONTINUE_FOT;
-			//btn.poPosition.x		= 98;
-			//btn.poPosition.y		= 125;//223;
-			//btn.pcBmpUp				= m_pcContinueFOTseq_Up;
-			//btn.pcBmpDown			= m_pcContinueFOTseq_Dw;
-			//btn.pcBmpFocus			= m_pcContinueFOTseq_Up;
-			//btn.pcBmpDisabled		= m_pcContinueFOTseq_Up;
-			//btn.dwFormat			= DT_VCENTER|DT_CENTER;
-
-			//m_pcContinueFOTseq=new CPushBtn(btn,COLOR_TXTBTNUP,true);
-			//m_pcContinueFOTseq->Create(this,g_hf9AcuBold,0);
-			//CString sz1=_T("continue");//todo FOTLANGUAGE
-			//CString sz2=_T("");
-			//if(getModel()->getFOTThread())
-			//	sz2.Format(_T("%d/%d"), getModel()->getFOTThread()->getCurFOTsequence()+1,getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara());
-			//m_pcContinueFOTseq->SetText(sz1,sz2);
-			////m_pcContinueFOTseq->SetText(getModel()->GetLanguageString(IDS_MENU_CAL1),getModel()->GetLanguageString(IDS_MENU_CAL2));
-			//m_pcContinueFOTseq->ShowWindow(SW_HIDE);
-
-
-
+			
 
 			//Parameter Button------FOT steps---------------------------------
 			btn.wID					= IDC_BTN_PARA_FOT_STEPS;	
@@ -415,29 +394,7 @@ BOOL CWndDataFOT::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 		else
 		{
 			
-			////Button------continue FOT steps---------------------------------
-			//btn.wID					= IDC_BTN_CONTINUE_FOT;
-			//btn.poPosition.x		= 98;
-			//btn.poPosition.y		= 125;//223;
-			//btn.pcBmpUp				= m_pcContinueFOTseq_Up;
-			//btn.pcBmpDown			= m_pcContinueFOTseq_Dw;
-			//btn.pcBmpFocus			= m_pcContinueFOTseq_Up;
-			//btn.pcBmpDisabled		= m_pcContinueFOTseq_Up;
-			//btn.dwFormat			= DT_VCENTER|DT_CENTER;
-
-			//m_pcContinueFOTseq=new CPushBtn(btn,COLOR_TXTBTNUP,true);
-			//m_pcContinueFOTseq->Create(this,g_hf9AcuBold,0);
-			//CString sz1=_T("continue");//todo FOTLANGUAGE
-			//CString sz2=_T("");
-			//if(getModel()->getFOTThread())
-			//	sz2.Format(_T("%d/%d"), getModel()->getFOTThread()->getCurFOTsequence()+1,getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara());
-			//m_pcContinueFOTseq->SetText(sz1,sz2);
-			////m_pcContinueFOTseq->SetText(getModel()->GetLanguageString(IDS_MENU_CAL1),getModel()->GetLanguageString(IDS_MENU_CAL2));
-			//m_pcContinueFOTseq->ShowWindow(SW_HIDE);
-
-
-
-
+			
 			//Parameter Button------FOT steps---------------------------------
 			btn.wID					= IDC_BTN_PARA_FOT_STEPS;	
 			btn.poPosition.x		= 7;
@@ -916,6 +873,23 @@ void CWndDataFOT::drawFOTmenubar()
 	m_pcBtnRepeatSeq->ShowWindow(SW_SHOW);
 	m_pcBtnDecreaseSeq->ShowWindow(SW_SHOW);
 
+	bool bDecrease=false;
+	BYTE stepsComplete=getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara();
+	BYTE stepCurrent=getModel()->getFOTThread()->getCurFOTsequence();
+
+	if(true==getModel()->getFOTThread()->isDecreasingSequence())
+	{
+		bDecrease=true;
+	}
+	else if(stepsComplete!=0)
+	{
+		if(		stepsComplete>3
+			&&	(stepsComplete/2)<(stepCurrent+1))
+		{
+			bDecrease=true;
+		}
+	}
+
 	if(getModel()->getFOTThread())
 	{
 		SequenceStatesFOT curSeq=getModel()->getFOTThread()->getFOTstate();
@@ -952,10 +926,14 @@ void CWndDataFOT::drawFOTmenubar()
 
 				m_pcBtnRunSeq->EnableWindow(FALSE);
 				m_pcBtnRepeatSeq->EnableWindow(TRUE);
-				if(		false==getModel()->getFOTThread()->isDecreasingSequence() 
+				if(bDecrease)
+				{
+					m_pcBtnDecreaseSeq->EnableWindow(FALSE);
+				}
+				else if(		false==getModel()->getFOTThread()->isDecreasingSequence() 
 					&& getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara()>3
 					&& getModel()->getFOTThread()->getCurFOTsequence()>1)
-					m_pcBtnDecreaseSeq->EnableWindow(TRUE);//????
+					m_pcBtnDecreaseSeq->EnableWindow(TRUE);
 				else
 					m_pcBtnDecreaseSeq->EnableWindow(FALSE);
 			}
@@ -967,7 +945,11 @@ void CWndDataFOT::drawFOTmenubar()
 
 				m_pcBtnRunSeq->EnableWindow(TRUE);
 				m_pcBtnRepeatSeq->EnableWindow(TRUE);
-				if(		false==getModel()->getFOTThread()->isDecreasingSequence() 
+				if(bDecrease)
+				{
+					m_pcBtnDecreaseSeq->EnableWindow(FALSE);
+				}
+				else if(		false==getModel()->getFOTThread()->isDecreasingSequence() 
 					&& getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara()>3)
 					m_pcBtnDecreaseSeq->EnableWindow(TRUE);
 				else
@@ -1463,6 +1445,7 @@ void CWndDataFOT::Draw(bool bStatic)
 				csText.Format(_T("%s"), szUnitPRESSURE);
 				DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_BOTTOM|DT_SINGLELINE);
 
+				SelectObject(hdcMem,g_hf8AcuBold);
 				rc.left = 143;  
 				rc.top = 210;
 				rc.right  = 279;
@@ -1648,6 +1631,7 @@ void CWndDataFOT::Draw(bool bStatic)
 							csText.Format(_T("%s"), szUnitPRESSURE);//todo FOTLANGUAGE
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_BOTTOM|DT_SINGLELINE);
 
+							SelectObject(hdcMem,g_hf8AcuBold);
 							rc.left = 143;  
 							rc.top = 210;
 							rc.right  = 279;
