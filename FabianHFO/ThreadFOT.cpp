@@ -200,6 +200,7 @@ CString CThreadFOT::getDateLastSequence()
 
 void CThreadFOT::setDateLastSequence()
 {
+	DEBUGMSG(TRUE, (TEXT("setDateLastSequence\r\n")));
 	SYSTEMTIME st;
 	GetLocalTime(&st);
 	COleDateTime dtTimeLast(st);
@@ -448,13 +449,14 @@ void CThreadFOT::calcParaFOTCONV()
 
 }
 
-void CThreadFOT::setDecreaseParaFOTCONV()
+void CThreadFOT::setDecreaseParaFOTCONV(bool bIncreaseSeq)
 {
-	resetFOTventdataBuffer();
+	//resetFOTventdataBuffer();
 
 	DEBUGMSG(TRUE, (TEXT("CThreadFOT::setDecreaseParaFOTCONV()\r\n")));
 	
-	increaseFOTsequence();
+	if(bIncreaseSeq)
+		increaseFOTsequence();
 	calcDecreaseParaFOTCONV();
 
 	getModel()->getDATAHANDLER()->SetPmaxVolGParadata_TRIGGER(m_icurFOTPIPMAXVG, true);
@@ -515,50 +517,33 @@ void CThreadFOT::calcDecreaseParaFOTCONV()
 		}
 		m_iFOTPEEPStep=(m_iFOTPEEPStep/5)*5;
 
-		BYTE iFOTsequence=getCurFOTsequence();
-
-		while(iFOTsequence<=(iSteps+1)/2)
-		{
-			iFOTsequence++;
-			
-			EnterCriticalSection(&csFOTsequence);
-			m_iFOTsequence++;
-			LeaveCriticalSection(&csFOTsequence);
-
-			m_icurFOTPEEP+=m_iFOTPEEPStep;
-			//DEBUGMSG(TRUE, (TEXT("calcDecreaseParaFOTCONV() m_icurFOTPEEP%d iFOTsequence%d\r\n"),m_icurFOTPEEP, iFOTsequence));
-		}
+		BYTE iprevFOTsequence=getCurFOTsequence();
 
 		
-		m_bDecreasing=true;
-		m_icurFOTPEEP-=m_iFOTPEEPStep;
-
-
-
-		/*if(iFOTsequence==1)
+		EnterCriticalSection(&csFOTsequence);
+		if(m_iFOTsequence<3)
 		{
-			m_bDecreasing=false;
-			m_icurFOTPEEP=iPEEPSTART;
-			DEBUGMSG(TRUE, (TEXT("setFOTCONVpara() m_icurFOTPEEP2 %d\r\n"),m_icurFOTPEEP));
-		}
-		else if(iFOTsequence==iSteps)
-		{
-			m_bDecreasing=true;
-			m_icurFOTPEEP=iPEEPSTART;
-			DEBUGMSG(TRUE, (TEXT("setFOTCONVpara() m_icurFOTPEEP3 %d\r\n"),m_icurFOTPEEP));
-		}
-		else if(iFOTsequence<=(iSteps+1)/2)
-		{
-			m_bDecreasing=false;
-			m_icurFOTPEEP+=m_iFOTPEEPStep;
-			DEBUGMSG(TRUE, (TEXT("setFOTCONVpara() m_icurFOTPEEP4 %d\r\n"),m_icurFOTPEEP));
+			m_iFOTsequence=iSteps;
 		}
 		else
 		{
-			m_bDecreasing=true;
-			m_icurFOTPEEP-=m_iFOTPEEPStep;
-			DEBUGMSG(TRUE, (TEXT("setFOTCONVpara() m_icurFOTPEEP5 %d\r\n"),m_icurFOTPEEP));
-		}*/
+			m_iFOTsequence=iSteps-m_iFOTsequence+3;
+		}
+		
+		if(m_iFOTsequence==iSteps)
+		{
+			m_icurFOTPEEP=iPEEPSTART;
+		}
+		else
+		{
+			//m_icurFOTPEEP=iPEEPSTART+(iprevFOTsequence*m_iFOTPEEPStep);
+			m_icurFOTPEEP=m_icurFOTPEEP-m_iFOTPEEPStep;
+		}
+		LeaveCriticalSection(&csFOTsequence);
+		
+		DEBUGMSG(TRUE, (TEXT("calcDecreaseParaFOTCONV() m_icurFOTPEEP%d iFOTsequence%d prevSequ %d\r\n"),m_icurFOTPEEP, m_iFOTsequence, iprevFOTsequence));
+		
+		m_bDecreasing=true;
 	}
 
 	m_icurFOTPSV=m_icurFOTPEEP+m_iFOToriginDiffPEEP_Ppsv;
@@ -587,7 +572,7 @@ void CThreadFOT::calcDecreaseParaFOTCONV()
 		m_icurFOTPIP=m_icurFOTPEEP+m_iFOToriginDiffPEEP_PINSP;
 		//DEBUGMSG(TRUE, (TEXT("setFOTCONVpara m_icurFOTPIP5 %d \r\n"),m_icurFOTPIP));
 	}
-	DEBUGMSG(TRUE, (TEXT("calcParaFOTCONV() m_iFOTsequence%d, m_iFOTdisplaySequence%d, m_icurFOTPEEP%d, m_iFOTPEEPStep%d, m_icurFOTPSV%d, m_icurFOTPIPMAXVG%d, m_icurFOTPIP%d\r\n"),m_iFOTsequence,m_iFOTdisplaySequence,m_icurFOTPEEP,m_iFOTPEEPStep,m_icurFOTPSV,m_icurFOTPIPMAXVG,m_icurFOTPIP));
+	DEBUGMSG(TRUE, (TEXT("calcDecreaseParaFOTCONV() m_iFOTsequence%d, m_iFOTdisplaySequence%d, m_icurFOTPEEP%d, m_iFOTPEEPStep%d, m_icurFOTPSV%d, m_icurFOTPIPMAXVG%d, m_icurFOTPIP%d\r\n"),m_iFOTsequence,m_iFOTdisplaySequence,m_icurFOTPEEP,m_iFOTPEEPStep,m_icurFOTPSV,m_icurFOTPIPMAXVG,m_icurFOTPIP));
 
 }
 
@@ -651,8 +636,9 @@ void CThreadFOT::calcDecreaseParaFOTHFO()
 	WORD iPmeanSTART=getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_PMEANSTARTPara();
 	WORD iSteps=getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara();
 
-	if(iSteps<=1)//should not occur
+	if(iSteps<=3)//should not occur
 	{
+		m_bDecreasing=true;
 		m_icurFOTHFPmean=iPmeanSTART;
 	}
 	else
@@ -667,40 +653,31 @@ void CThreadFOT::calcDecreaseParaFOTHFO()
 		}
 		m_iFOTHFPmeanStep=(m_iFOTHFPmeanStep/5)*5;
 
-		BYTE iFOTsequence=getCurFOTsequence();
+		BYTE iprevFOTsequence=getCurFOTsequence();
 
-		while(iFOTsequence<=(iSteps+1)/2)
+		EnterCriticalSection(&csFOTsequence);
+		if(m_iFOTsequence<3)
 		{
-			iFOTsequence++;
-
-			EnterCriticalSection(&csFOTsequence);
-			m_iFOTsequence++;
-			LeaveCriticalSection(&csFOTsequence);
-
-			m_icurFOTHFPmean+=m_iFOTHFPmeanStep;
-		}
-
-
-		m_bDecreasing=true;
-		m_icurFOTHFPmean-=m_iFOTHFPmeanStep;
-
-
-		/*if(iFOTsequence==1)
-		{
-			m_icurFOTHFPmean=iPmeanSTART;
-		}
-		else if(iFOTsequence==iSteps)
-		{
-			m_icurFOTHFPmean=iPmeanSTART;
-		}
-		else if(iFOTsequence<=(iSteps+1)/2)
-		{
-			m_icurFOTHFPmean+=m_iFOTHFPmeanStep;
+			m_iFOTsequence=iSteps;
 		}
 		else
 		{
-			m_icurFOTHFPmean-=m_iFOTHFPmeanStep;
-		}*/
+			m_iFOTsequence=iSteps-m_iFOTsequence+3;
+		}
+
+		if(m_iFOTsequence==iSteps)
+		{
+			m_icurFOTHFPmean=iPmeanSTART;
+		}
+		else
+		{
+			m_icurFOTHFPmean=m_icurFOTHFPmean-m_iFOTHFPmeanStep;
+		}
+		LeaveCriticalSection(&csFOTsequence);
+
+
+		m_bDecreasing=true;
+
 	}
 }
 void CThreadFOT::calcParaFOTHFO()
@@ -744,11 +721,12 @@ void CThreadFOT::calcParaFOTHFO()
 		}
 	}
 }
-void CThreadFOT::setDecreaseParaFOTHFO()
+void CThreadFOT::setDecreaseParaFOTHFO(bool bIncreaseSeq)
 {
 	resetFOTventdataBuffer();
 
-	increaseFOTsequence();
+	if(bIncreaseSeq)
+		increaseFOTsequence();
 	calcDecreaseParaFOTHFO();
 
 	getModel()->getDATAHANDLER()->SetHFPMeanParadata(m_icurFOTHFPmean, true);
@@ -870,15 +848,35 @@ void CThreadFOT::decreaseSequence()
 		if(m_bFOTconvRunning)
 		{
 			//setParaFOTCONV(false);
-			setDecreaseParaFOTCONV();
+			setDecreaseParaFOTCONV(true);
 		}
 		else
 		{
 			//setParaFOTHFO(false);
-			setDecreaseParaFOTHFO();
+			setDecreaseParaFOTHFO(true);
 		}
 		setFOTstate(FOT_VENTDELAY);
 		m_iCountFOTimer=getModel()->getCONFIG()->getFOTventDelaytime();
+
+		//DEBUGMSG(TRUE, (TEXT("CThreadFOT g_eventFOT.SetEvent()\r\n")));
+		g_eventFOT.SetEvent();
+	}
+	else if(getFOTstate()==FOT_VENTDELAY)
+	{
+		
+		//DEBUGMSG(TRUE, (TEXT("CThreadFOT::continueWithSequence()\r\n")));
+		if(m_bFOTconvRunning)
+		{
+			//setParaFOTCONV(false);
+			setDecreaseParaFOTCONV(false);
+		}
+		else
+		{
+			//setParaFOTHFO(false);
+			setDecreaseParaFOTHFO(false);
+		}
+		//setFOTstate(FOT_VENTDELAY);
+		m_iCountFOTimer=1;
 
 		//DEBUGMSG(TRUE, (TEXT("CThreadFOT g_eventFOT.SetEvent()\r\n")));
 		g_eventFOT.SetEvent();

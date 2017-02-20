@@ -2521,6 +2521,14 @@ void CMVViewHandler::drawFOTtime(BYTE iCountFOTimer)
 		m_vDiagramm->PostMessage(WM_DRAW_FOT_TIME,iCountFOTimer);
 	LeaveCriticalSection(&csViewDiagramm);
 }
+
+void CMVViewHandler::redrawFOTmenu()
+{
+	EnterCriticalSection(&csViewDiagramm);
+	if(m_vDiagramm)
+		m_vDiagramm->PostMessage(WM_CHECK_FOT_ALARMS);
+	LeaveCriticalSection(&csViewDiagramm);
+}
 //void CMVViewHandler::drawFOTCollectTime(BYTE iCountFOTimer)
 //{
 //	EnterCriticalSection(&csViewDiagramm);

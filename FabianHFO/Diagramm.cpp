@@ -5665,7 +5665,7 @@ void CDiagramm::CheckAutoScaleY()
 		}
 		else
 		{
-			if(isSafeTickCountDelayExpired(m_dwLastCheckAutoScaleY, TIMEAUTOSCALE))
+			//if(isSafeTickCountDelayExpired(m_dwLastCheckAutoScaleY, TIMEAUTOSCALE))
 			{
 				m_dwLastCheckAutoScaleY=GetTickCount();
 

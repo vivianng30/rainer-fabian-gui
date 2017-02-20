@@ -903,7 +903,7 @@ void CWndDataFOT::drawFOTmenubar()
 
 				m_pcBtnRunSeq->EnableWindow(TRUE);
 				m_pcBtnRepeatSeq->EnableWindow(FALSE);
-				m_pcBtnDecreaseSeq->EnableWindow(FALSE);
+				m_pcBtnDecreaseSeq->EnableWindow(TRUE);
 			}
 			break;
 		case FOT_STARTSTEP:
@@ -1675,7 +1675,7 @@ void CWndDataFOT::Draw(bool bStatic)
 	if(getModel()->getFOTThread())
 		csText+=getModel()->getFOTThread()->getDateLastSequence();
 
-	
+	SetTextColor(hdcMem,RGB(0,0,0));
 	SelectObject(hdcMem,g_hf7AcuNorm);
 	DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 	

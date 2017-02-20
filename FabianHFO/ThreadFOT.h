@@ -89,12 +89,12 @@ private:
 
 	void calcParaFOTCONV();
 	void setParaFOTCONV(bool bRetry);
-	void setDecreaseParaFOTCONV();
+	void setDecreaseParaFOTCONV(bool bIncreaseSeq);
 	void calcDecreaseParaFOTCONV();
 
 	void calcParaFOTHFO();
 	void setParaFOTHFO(bool bRetry);
-	void setDecreaseParaFOTHFO();
+	void setDecreaseParaFOTHFO(bool bIncreaseSeq);
 	void calcDecreaseParaFOTHFO();
 
 	

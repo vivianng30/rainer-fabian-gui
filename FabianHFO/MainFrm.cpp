@@ -2162,6 +2162,8 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			if(getModel()->getFOTThread())
 				getModel()->getFOTThread()->continueSequence();
+			
+			getModel()->getVIEWHANDLER()->redrawFOTmenu();
 			return 1;
 		}
 		break;
