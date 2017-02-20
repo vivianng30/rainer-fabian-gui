@@ -1705,7 +1705,7 @@ void CWndDataFOT::Draw(bool bStatic)
 
 void CWndDataFOT::drawPIPmax()
 {
-	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
+	/*if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 	{
 		if(getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara()==1)
 		{
@@ -1718,7 +1718,7 @@ void CWndDataFOT::drawPIPmax()
 		{
 			return;
 		}
-	}
+	}*/
 
 	RECT rcCl,rc;
 
@@ -3099,7 +3099,9 @@ void CWndDataFOT::OnBnClickedStartStop()
 	if(GetParent())
 		GetParent()->PostMessage(WM_GRAPH_REDRAW);
 
-	//drawFOTmenubar();
+
+	if(AfxGetApp())
+		AfxGetApp()->GetMainWnd()->SetFocus();
 }
 void CWndDataFOT::OnBnClickedDecrease()
 {
