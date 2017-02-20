@@ -7,6 +7,17 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50115 Version 5.0.1.16
+ * @date 2017-02-20
+ * @verbatim
+	- FOT improvements: 
+		PIPmax always visible
+		after middle step return button disabled
+		calculation return button fixed
+		repeat button during stabilization period disabled
+		return button during stabilization period active
+ @endverbatim
+ *
  * @subsection ver50115 Version 5.0.1.15
  * @date 2017-02-16
  * @verbatim
