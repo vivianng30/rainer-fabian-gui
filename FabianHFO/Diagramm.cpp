@@ -5652,9 +5652,9 @@ void CDiagramm::CheckAutoScaleY()
 			{
 				//rkuNEWFIX
 				DEBUGMSG(TRUE, (TEXT("DIAinc3 y%d\r\n"),m_iDiagrammType));
-				CStringW sz=_T("");
+				/*CStringW sz=_T("");
 				sz.Format(_T("#DIAinc3 y%d"),m_iDiagrammType);
-				theApp.getLog()->WriteLine(sz);
+				theApp.getLog()->WriteLine(sz);*/
 
 				IncreaseYScale(true);
 
@@ -5673,9 +5673,9 @@ void CDiagramm::CheckAutoScaleY()
 				{
 					//rkuNEWFIX
 					DEBUGMSG(TRUE, (TEXT("DIAdec2 y%d\r\n"),m_iDiagrammType));
-					CStringW sz=_T("");
+					/*CStringW sz=_T("");
 					sz.Format(_T("#DIAdec2 y%d"),m_iDiagrammType);
-					theApp.getLog()->WriteLine(sz);
+					theApp.getLog()->WriteLine(sz);*/
 
 					DecreaseYScaleToNextValue(true);
 				}
@@ -5692,9 +5692,9 @@ void CDiagramm::CheckAutoScaleY()
 			{
 				//rkuNEWFIX
 				DEBUGMSG(TRUE, (TEXT("DIAinc1 y%d\r\n"),m_iDiagrammType));
-				CStringW sz=_T("");
+				/*CStringW sz=_T("");
 				sz.Format(_T("#DIAinc1 y%d"),m_iDiagrammType);
-				theApp.getLog()->WriteLine(sz);
+				theApp.getLog()->WriteLine(sz);*/
 
 				IncreaseYScale(true);
 
@@ -5709,9 +5709,9 @@ void CDiagramm::CheckAutoScaleY()
 			{
 				//rkuNEWFIX
 				DEBUGMSG(TRUE, (TEXT("DIAinc2 y%d\r\n"),m_iDiagrammType));
-				CStringW sz=_T("");
+				/*CStringW sz=_T("");
 				sz.Format(_T("#DIAinc2 y%d"),m_iDiagrammType);
-				theApp.getLog()->WriteLine(sz);
+				theApp.getLog()->WriteLine(sz);*/
 
 				IncreaseYScale(true);
 
@@ -5730,9 +5730,9 @@ void CDiagramm::CheckAutoScaleY()
 				{
 					//rkuNEWFIX
 					DEBUGMSG(TRUE, (TEXT("DIAdec1 y%d\r\n"),m_iDiagrammType));
-					CStringW sz=_T("");
+					/*CStringW sz=_T("");
 					sz.Format(_T("#DIAdec1 y%d"),m_iDiagrammType);
-					theApp.getLog()->WriteLine(sz);
+					theApp.getLog()->WriteLine(sz);*/
 
 					DecreaseYScaleToNextValue(true);
 				}

@@ -2526,6 +2526,14 @@ void CMVViewHandler::redrawFOTmenu()
 {
 	EnterCriticalSection(&csViewDiagramm);
 	if(m_vDiagramm)
+		m_vDiagramm->PostMessage(WM_REDRAW_FOT_STATE);
+	LeaveCriticalSection(&csViewDiagramm);
+}
+
+void CMVViewHandler::checkFOTalarms()
+{
+	EnterCriticalSection(&csViewDiagramm);
+	if(m_vDiagramm)
 		m_vDiagramm->PostMessage(WM_CHECK_FOT_ALARMS);
 	LeaveCriticalSection(&csViewDiagramm);
 }

@@ -4498,6 +4498,16 @@ LRESULT CViewDiagramm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 			LeaveCriticalSection(&csDrawDataFOT);
 		}
 		break;
+	case WM_REDRAW_FOT_STATE:
+		{
+			EnterCriticalSection(&csDrawDataFOT);
+			if(m_pDataFOT && m_bDataFOTIsActive)
+			{
+				m_pDataFOT->PostMessage(WM_REDRAW_FOT_STATE);
+			}
+			LeaveCriticalSection(&csDrawDataFOT);
+		}
+		break;
 	case WM_GRAPH_FLOWSENSORSTATE:
 		{
 			if(m_pWndMenuGraphs)

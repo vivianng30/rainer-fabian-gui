@@ -2158,12 +2158,18 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 		break;
+	case WM_REDRAW_FOT_STATE:
+		{
+			getModel()->getVIEWHANDLER()->redrawFOTmenu();
+			return 1;
+		}
+		break;
 	case WM_NEXT_FOT_STEP:
 		{
 			if(getModel()->getFOTThread())
 				getModel()->getFOTThread()->continueSequence();
 			
-			getModel()->getVIEWHANDLER()->redrawFOTmenu();
+			//getModel()->getVIEWHANDLER()->redrawFOTmenu();
 			return 1;
 		}
 		break;

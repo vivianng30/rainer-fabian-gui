@@ -7,7 +7,13 @@
  *
  * @section ver Version history and changelog
  *
- * @subsection ver50115 Version 5.0.1.16
+ * @subsection ver50117 Version 5.0.1.17
+ * @date 2017-02-21
+ * @verbatim
+	- FOT values written to log 
+ @endverbatim
+ *
+ * @subsection ver50116 Version 5.0.1.16
  * @date 2017-02-20
  * @verbatim
 	- FOT improvements: 

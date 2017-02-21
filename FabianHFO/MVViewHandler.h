@@ -156,6 +156,7 @@ public:
 	void O2FlushChanged();
 
 	void redrawGraph();
+	void checkFOTalarms();
 	void redrawFOTmenu();
 	void drawFOTtime(BYTE iCountFOTimer);
 	void setFOTrunning(bool state);

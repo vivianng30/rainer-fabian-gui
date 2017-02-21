@@ -303,7 +303,24 @@ void CThreadFOT::restoreFOTHFOVentMode()
 void CThreadFOT::startFOTconventional()
 {
 	m_bFOTconvRunning=true;
+	CString szLog=_T("");
 	theApp.getLog()->WriteLine(_T("#FOT: start CONVENTIONAL"));
+	szLog.Format(_T("FOTsteps %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara());
+	theApp.getLog()->WriteLine(szLog);
+
+	szLog.Format(_T("PEEPlow %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_PEEPSTARTPara());
+	theApp.getLog()->WriteLine(szLog);
+
+	if(getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara()>1)
+	{
+		szLog.Format(_T("PEEPhigh %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_PEEPENDPara());
+		theApp.getLog()->WriteLine(szLog);
+	}
+	szLog.Format(_T("FOTamp %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_AMPLITUDEPara());
+	theApp.getLog()->WriteLine(szLog);
+
+	szLog.Format(_T("FOTfreq %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_FREQPara());
+	theApp.getLog()->WriteLine(szLog);
 	
 	m_iFOToriginPEEPPara_IPPV=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_TRIGGER();
 	m_iFOToriginPMAXVGPara_IPPV=getModel()->getDATAHANDLER()->PARADATA()->GetPmaxVolGPara_IPPV();
@@ -341,7 +358,26 @@ void CThreadFOT::stopFOTconventional()
 void CThreadFOT::startFOThfo()
 {
 	m_bFOThfoRunning=true;
+	CString szLog=_T("");
 	theApp.getLog()->WriteLine(_T("#FOT: start HFO"));
+	szLog.Format(_T("FOTsteps %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara());
+	theApp.getLog()->WriteLine(szLog);
+
+	szLog.Format(_T("PMEANlow %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_PMEANSTARTPara());
+	theApp.getLog()->WriteLine(szLog);
+
+	if(getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara()>1)
+	{
+		szLog.Format(_T("PMEANhigh %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_PMEANENDPara());
+		theApp.getLog()->WriteLine(szLog);
+	}
+
+	szLog.Format(_T("FOTamp %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_AMPLITUDEPara());
+	theApp.getLog()->WriteLine(szLog);
+
+	szLog.Format(_T("FOTfreq %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_FREQPara());
+	theApp.getLog()->WriteLine(szLog);
+	 
 
 	m_eFOToriginHFIERatioPara=getModel()->getDATAHANDLER()->PARADATA()->GetIERatioParaHFO();
 	m_iFOToriginHFFreqPara=getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara();
@@ -359,7 +395,7 @@ WORD CThreadFOT::getOriginHFAMPLPara()
 {
 	return m_iFOToriginHFAMPLPara;
 }
-void CThreadFOT::stopFOThfo(/*bool bRestoreOld*/)
+void CThreadFOT::stopFOThfo()
 {
 	theApp.getLog()->WriteLine(_T("#FOT: stop HFO"));
 
@@ -369,8 +405,6 @@ void CThreadFOT::stopFOThfo(/*bool bRestoreOld*/)
 
 	stopFOTThread();
 }
-
-
 
 void CThreadFOT::calcParaFOTCONV()
 {
@@ -586,10 +620,6 @@ void CThreadFOT::setParaFOTCONV(bool bRetry)
 		increaseFOTsequence();
 
 		calcParaFOTCONV();
-
-		//bool bPSV=getModel()->getVMODEHANDLER()->activeModeHasPSV();
-		//bool bVG=getModel()->getDATAHANDLER()->IsCurrentModeVGarantStateOn();
-		//bool bCPAP=getModel()->getVMODEHANDLER()->activeModeIsCPAP();
 
 		getModel()->getDATAHANDLER()->SetPmaxVolGParadata_TRIGGER(m_icurFOTPIPMAXVG, true);
 		getModel()->getDATAHANDLER()->SetPINSPParadata_IPPV(m_icurFOTPIP, true);
@@ -1022,6 +1052,9 @@ void CThreadFOT::setFOTstate(SequenceStatesFOT feState)
 	EnterCriticalSection(&csFOTstate);
 	feFOTstate=feState;
 	LeaveCriticalSection(&csFOTstate);
+
+	if(AfxGetApp())
+		AfxGetApp()->GetMainWnd()->PostMessage(WM_REDRAW_FOT_STATE);
 }
 SequenceStatesFOT CThreadFOT::getFOTstate()
 {
@@ -1226,23 +1259,14 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 		p_Out[i] = 0;
 
 
-	//TEST
-	CString csTemp=_T("");
-	//csTemp.Format(_T("fnCalcZ %0.21f"), CTlsFloat::Round((p_Out[i]), 1));
-	////wsprintf(psz,_T("%0.1f"),CTlsFloat::Round(((double)iPmitt)/10, 1));
-	//DEBUGMSG(TRUE, (csTemp));
-
-
 	double* p_TotalOut;
 	p_TotalOut = new double[4];
 	for(int i=0;i<4;i++)
 		p_TotalOut[i] = 0;
 
-	DWORD dwStart=GetTickCount();
+	//DWORD dwStart=GetTickCount();
 	
-	CStringW sz=_T("");
-
-	//DEBUGMSG(TRUE, (TEXT("calculateFOTCONVdata m_ibufCountFOTventilation %d\r\n"),m_ibufCountFOTventilation));
+	CStringW szLog=_T("");
 
 	EnterCriticalSection(&csFOTventBuffer);
 	int iTestCount=0;
@@ -1263,17 +1287,17 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 
 		for(int i=0;i<4;i++)
 		{
-			sz.Format(_T("Y1 %d %.2f\r\n"),i,p_Out[i]);
+			//sz.Format(_T("Y1 %d %.2f\r\n"),i,p_Out[i]);
 			p_TotalOut[i] += p_Out[i]; 
-			sz.Format(_T("Y2 %d %.2f\r\n"),i,p_TotalOut[i]);
+			//sz.Format(_T("Y2 %d %.2f\r\n"),i,p_TotalOut[i]);
 		}
 	}
 
 	for(int i=0;i<4;i++)
 	{
-		sz.Format(_T("X1 %d %.2f\r\n"),i,p_TotalOut[i]);
+		//sz.Format(_T("X1 %d %.2f\r\n"),i,p_TotalOut[i]);
 		p_TotalOut[i] = p_TotalOut[i]/(m_ibufCountFOTventilation-size);
-		sz.Format(_T("X2 %d %.2f\r\n"),i,p_TotalOut[i]);
+		//sz.Format(_T("X2 %d %.2f\r\n"),i,p_TotalOut[i]);
 	}
 	LeaveCriticalSection(&csFOTventBuffer);
 
@@ -1285,11 +1309,12 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 	m_iCountFOTdisplay++;
 	LeaveCriticalSection(&csFOTcalcBuffer);
 
-	sz.Format(_T("m_pbufFOTdisplay pressure %d iYValXRS %.2f, m_iCountFOTdisplay %d m_iFOTdisplaySequence %d\r\n"),curPressure,m_pbufFOTdisplay[m_iFOTdisplaySequence-1].iYValXRS, m_iCountFOTdisplay, m_iFOTdisplaySequence);
-	DEBUGMSG(TRUE, (sz));
+	szLog.Format(_T("#FOTcalc: pressure %d XRS%d %.2f"),curPressure, m_iFOTdisplaySequence,m_pbufFOTdisplay[m_iFOTdisplaySequence-1].iYValXRS);
+	DEBUGMSG(TRUE, (szLog));
+	theApp.getLog()->WriteLine(szLog);
 	
-	DWORD dwEnd=GetTickCount();
-	DEBUGMSG(TRUE, (TEXT("calculateFOTCONVdata END %d\r\n"),dwEnd-dwStart));
+	//DWORD dwEnd=GetTickCount();
+	//DEBUGMSG(TRUE, (TEXT("calculateFOTCONVdata END %d\r\n"),dwEnd-dwStart));
 
 	// clean up
 	for(int i=0;i<size;i++)
@@ -1298,14 +1323,12 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 
 	for(int i=0;i<size;i++)
 		delete [] pp_Pressure[i];
+
 	delete [] pp_Pressure;
-
 	delete [] p_Out;
-
 	delete [] p_TotalOut;
 
 	resetFOTventdataBuffer();
-
 	getModel()->getVIEWHANDLER()->drawFOTsteps();
 }
 

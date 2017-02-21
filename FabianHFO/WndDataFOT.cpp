@@ -873,20 +873,24 @@ void CWndDataFOT::drawFOTmenubar()
 	m_pcBtnRepeatSeq->ShowWindow(SW_SHOW);
 	m_pcBtnDecreaseSeq->ShowWindow(SW_SHOW);
 
-	bool bDecrease=false;
+	bool bDecrease=true;
 	BYTE stepsComplete=getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara();
 	BYTE stepCurrent=getModel()->getFOTThread()->getCurFOTsequence();
 
 	if(true==getModel()->getFOTThread()->isDecreasingSequence())
 	{
-		bDecrease=true;
+		bDecrease=false;
 	}
 	else if(stepsComplete!=0)
 	{
 		if(		stepsComplete>3
 			&&	((stepsComplete+1)/2)<(stepCurrent+1))
 		{
- 			bDecrease=true;
+ 			bDecrease=false;
+		}
+		else if(stepCurrent==1)
+		{
+			bDecrease=false;
 		}
 	}
 
@@ -903,7 +907,15 @@ void CWndDataFOT::drawFOTmenubar()
 
 				m_pcBtnRunSeq->EnableWindow(TRUE);
 				m_pcBtnRepeatSeq->EnableWindow(FALSE);
-				m_pcBtnDecreaseSeq->EnableWindow(TRUE);
+				if(!bDecrease)
+				{
+					m_pcBtnDecreaseSeq->EnableWindow(FALSE);
+				}
+				else if(		false==getModel()->getFOTThread()->isDecreasingSequence() 
+					&& getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara()>3)
+					m_pcBtnDecreaseSeq->EnableWindow(TRUE);
+				else
+					m_pcBtnDecreaseSeq->EnableWindow(FALSE);
 			}
 			break;
 		case FOT_STARTSTEP:
@@ -926,7 +938,7 @@ void CWndDataFOT::drawFOTmenubar()
 
 				m_pcBtnRunSeq->EnableWindow(FALSE);
 				m_pcBtnRepeatSeq->EnableWindow(TRUE);
-				if(bDecrease)
+				if(!bDecrease)
 				{
 					m_pcBtnDecreaseSeq->EnableWindow(FALSE);
 				}
@@ -945,7 +957,7 @@ void CWndDataFOT::drawFOTmenubar()
 
 				m_pcBtnRunSeq->EnableWindow(TRUE);
 				m_pcBtnRepeatSeq->EnableWindow(TRUE);
-				if(bDecrease)
+				if(!bDecrease)
 				{
 					m_pcBtnDecreaseSeq->EnableWindow(FALSE);
 				}
@@ -2596,25 +2608,7 @@ LRESULT CWndDataFOT::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 		break;
 	case WM_CHECK_FOT_ALARMS:
 		{
-			/*if(getModel()->getALARMHANDLER()->isFOTrelevantAlarmActive()==false)
-			{
-				m_pcBtnStartStopSeq->EnableWindow(TRUE);
-			}
-			else
-			{
-				m_pcBtnStartStopSeq->EnableWindow(FALSE);
-				
-				if(getModel()->getFOTThread())
-				{
-					if(getModel()->getFOTThread()->getFOTstate()!=FOT_OFF)
-					{
-						if(AfxGetApp() != NULL)
-							AfxGetApp()->GetMainWnd()->PostMessage(WM_STOP_FOT);
-						
-						m_pcBtnStartStopSeq->DrawDirectUp();
-					}
-				}
-			}*/
+			
 			if(getModel()->getALARMHANDLER()->isFOTrelevantAlarmActive()==true)
 			{
 				if(getModel()->getFOTThread())
@@ -2626,6 +2620,11 @@ LRESULT CWndDataFOT::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 					}
 				}
 			}
+			drawFOTmenubar();
+		}
+		break;
+	case WM_REDRAW_FOT_STATE:
+		{
 			drawFOTmenubar();
 		}
 		break;

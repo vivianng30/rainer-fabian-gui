@@ -208,7 +208,8 @@
 #define ALINK_MSMNT_SPO2_PR			29 //NUMT_SPO2_PR,		//29
 #define ALINK_MSMNT_RSBI			30 //NUMT_RSBI,		//30 rapid shallow breathing index
 #define ALINK_MSMNT_FICO2			31 //FiCO2 of CO2 modules
-//NUMT_MECHANIC ,	//32	
+#define ALINK_MSMNT_VTEKG			32 //Vte / kg [g]
+//NUMT_MECHANIC ,	//33	
 //NUMT_VTE2,		//33, VTEMAND + VTESPONT
 
 
