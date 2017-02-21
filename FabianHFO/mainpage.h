@@ -11,6 +11,7 @@
  * @date 2017-02-21
  * @verbatim
 	- FOT values written to log 
+	- FOT: VG will be used for PIPmax if VG==on
  @endverbatim
  *
  * @subsection ver50116 Version 5.0.1.16

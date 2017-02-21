@@ -90,9 +90,9 @@
 *	\def ALINK_ALARM_ARRAY 
 *		max size array of alarms
  **/
-#define ALINK_MSMNT_ARRAY			30	//max size array of measurements
+#define ALINK_MSMNT_ARRAY			40	//max size array of measurements
 #define ALINK_SETT_ARRAY			70	//max size array of settings
-#define ALINK_ALARM_ARRAY			70	//max size array of alarms
+#define ALINK_ALARM_ARRAY			80	//max size array of alarms
 
 //Arraygröße bei neuen Einträgen anpassen (tatsächlich benutzte Werte)
 /**
@@ -612,6 +612,24 @@
 #define ALINK_ALARM_CO2_CHECKSAMPLINGLINE			56
 #define ALINK_ALARM_CO2_CHECKAIRWAYADAPTER			57
 #define ALINK_ALARM_CO2_SENSORFAULTY				58
+//neu
+#define ALINK_ALARM_PRICO_FiO2max					59
+#define ALINK_ALARM_PRICO_FiO2min					60
+#define ALINK_ALARM_Sens_PRICO_FiO2outOfRange		61
+#define ALINK_ALARM_Sens_SPO2_MODULE_NOTCONNECTED	62
+#define ALINK_ALARM_Sens_SPO2_SENSORFAULTY			63
+#define ALINK_ALARM_Sens_SPO2_CHECKSENSOR			64
+#define ALINK_ALARM_PatAl_SPO2_SIQmin				65
+#define ALINK_ALARM_PatAl_SPO2max					66
+#define ALINK_ALARM_PatAl_SPO2min					67
+#define ALINK_ALARM_PatAl_SPO2_PImin				68
+#define ALINK_ALARM_PatAl_PIPmin					69
+#define ALINK_ALARM_PatAl_FICO2max					70
+#define ALINK_ALARM_PatAl_FICO2min					71
+#define ALINK_ALARM_PatAl_PulseRatemax				72
+#define ALINK_ALARM_PatAl_PulseRatemin				73
+#define ALINK_ALARM_PatAl_PMEANmax					74
+#define ALINK_ALARM_PatAl_PMEANmin					75
 
 
 typedef struct WAVE_RECORD_T
@@ -620,4 +638,5 @@ typedef struct WAVE_RECORD_T
 	short	fshPress;
 	short	fshFlow;
 	short	fshCO2;
+	short	fshSPO2;
 } WaveRecord;

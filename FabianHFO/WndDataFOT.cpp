@@ -1732,6 +1732,13 @@ void CWndDataFOT::drawPIPmax()
 		}
 	}*/
 
+	bool bVGon=false;
+	if(		true==getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn() 
+		||	true==getModel()->getALARMHANDLER()->isVgarantAutoTurnedOff_FOT())
+	{
+		bVGon=true;
+	}
+
 	RECT rcCl,rc;
 
 	rcCl.left = 197;  
@@ -1787,7 +1794,14 @@ void CWndDataFOT::drawPIPmax()
 		SHORT iMaxPIP=0;
 		if(iSteps==1)
 		{
-			iMaxPIP=iPMEANlow+(getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLPara()/2);
+			if(bVGon)
+			{
+				iMaxPIP=iPMEANlow+(getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLmaxPara()/2);
+			}
+			else
+			{
+				iMaxPIP=iPMEANlow+(getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLPara()/2);
+			}
 		}
 		else
 		{
@@ -1795,7 +1809,14 @@ void CWndDataFOT::drawPIPmax()
 				m_pcPara_FOT_PmeanHigh->GetValue(&fv);
 			WORD iPMEANEND=fv.iValue;
 
-			iMaxPIP=iPMEANEND+(getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLPara()/2);
+			if(bVGon)
+			{
+				iMaxPIP=iPMEANEND+(getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLmaxPara()/2);
+			}
+			else
+			{
+				iMaxPIP=iPMEANEND+(getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLPara()/2);
+			}
 		}
 
 		rc.top = 3;  
@@ -1830,7 +1851,14 @@ void CWndDataFOT::drawPIPmax()
 		SHORT iMaxPIP=0;
 		if(iSteps==1)
 		{
-			iMaxPIP=iPEEPlow+getModel()->getDATAHANDLER()->PARADATA()->GetPINSPPara_IPPV()-getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_IPPV();
+			if(bVGon)
+			{
+				iMaxPIP=iPEEPlow+getModel()->getDATAHANDLER()->PARADATA()->GetPmaxVolGPara_IPPV()-getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_IPPV();
+			}
+			else
+			{
+				iMaxPIP=iPEEPlow+getModel()->getDATAHANDLER()->PARADATA()->GetPINSPPara_IPPV()-getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_IPPV();
+			}
 		}
 		else
 		{
@@ -1838,7 +1866,14 @@ void CWndDataFOT::drawPIPmax()
 				m_pcPara_FOT_PEEPHigh->GetValue(&fv);
 			WORD iPEEPEND=fv.iValue;
 
-			iMaxPIP=iPEEPEND+getModel()->getDATAHANDLER()->PARADATA()->GetPINSPPara_IPPV()-getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_IPPV();
+			if(bVGon)
+			{
+				iMaxPIP=iPEEPEND+getModel()->getDATAHANDLER()->PARADATA()->GetPmaxVolGPara_IPPV()-getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_IPPV();
+			}
+			else
+			{
+				iMaxPIP=iPEEPEND+getModel()->getDATAHANDLER()->PARADATA()->GetPINSPPara_IPPV()-getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_IPPV();
+			}
 		}
 
 		rc.top = 3;  
