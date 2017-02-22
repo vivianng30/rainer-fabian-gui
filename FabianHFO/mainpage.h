@@ -10,6 +10,7 @@
  * @subsection ver50117 Version 5.0.1.17
  * @date 2017-02-21
  * @verbatim
+	//todo FOTLANGUAGE
 	- FOT values written to log 
 	- FOT: VG will be used for PIPmax if VG==on
  @endverbatim

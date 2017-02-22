@@ -35,6 +35,7 @@ extern HFONT g_hf43AcuBold;
 extern HFONT g_hf53AcuBold;
 extern HFONT g_hf70Bold;
 
+#define TIMECHANGE	600
 // CSubViewCalFlowSensor
 
 IMPLEMENT_DYNAMIC(CSubViewCalFlowSensor, CWnd)
@@ -66,7 +67,17 @@ CSubViewCalFlowSensor::CSubViewCalFlowSensor()
 	m_pcPediatric=NULL;
 
 	//m_bNeoPedConfirmed=false;
-	
+	m_pbtnBodyweight=NULL;
+	m_pcBodyweightUp=NULL;
+	m_pcBodyweightDwn=NULL;
+	m_pcUp_Up=NULL;
+	m_pcUp_Dw=NULL;
+	m_pcDw_Up=NULL;
+	m_pcDw_Dw=NULL;
+
+	m_pcStatic_Up=NULL;
+	m_pcStatic_Dw=NULL;
+	m_pcStatic_Fc=NULL;
 
 	m_pcNeonatal_Up=NULL;
 	m_pcNeonatal_Dw=NULL;
@@ -157,6 +168,9 @@ CSubViewCalFlowSensor::CSubViewCalFlowSensor()
 		m_bInfantFlow=false;
 	}
 
+	m_iBodyweight=0;
+	m_iCounter=0;
+	m_eTimeChanger=TC_OFF;
 	
 
 	/*if(m_bStartupFlag)
@@ -176,6 +190,31 @@ CSubViewCalFlowSensor::~CSubViewCalFlowSensor()
 			m_hThreadCheckFlow=INVALID_HANDLE_VALUE;
 		}
 	}
+
+	delete m_pbtnBodyweight;
+	m_pbtnBodyweight=NULL;
+
+	delete m_pcBodyweightUp;
+	m_pcBodyweightUp=NULL;
+	delete m_pcBodyweightDwn;
+	m_pcBodyweightDwn=NULL;
+
+	delete m_pcStatic_Up;
+	m_pcStatic_Up=NULL;
+	delete m_pcStatic_Dw;
+	m_pcStatic_Dw=NULL;
+	delete m_pcStatic_Fc;
+	m_pcStatic_Fc=NULL;
+
+	delete m_pcUp_Up;
+	delete m_pcUp_Dw;
+	delete m_pcDw_Up;
+	delete m_pcDw_Dw;
+
+	m_pcUp_Up=NULL;
+	m_pcUp_Dw=NULL;
+	m_pcDw_Up=NULL;
+	m_pcDw_Dw=NULL;
 
 	delete m_pcNeonatal;
 	m_pcNeonatal=NULL;
@@ -296,6 +335,7 @@ BEGIN_MESSAGE_MAP(CSubViewCalFlowSensor, CWnd)
 	ON_BN_CLICKED(IDC_BTNCAL_OXI, &CSubViewCalFlowSensor::OnBnClickedO2)
 	ON_BN_CLICKED(IDC_BTNCAL_CO2, &CSubViewCalFlowSensor::OnBnClickedCO2)
 	ON_BN_CLICKED(IDC_BTNCAL_SPO2, &CSubViewCalFlowSensor::OnBnClickedSPO2)
+	ON_BN_CLICKED(IDC_BTN_SETUP_BODYWEIGHT, &CSubViewCalFlowSensor::OnBnClickedBodyweight)
 END_MESSAGE_MAP()
 
 
@@ -342,6 +382,16 @@ BOOL CSubViewCalFlowSensor::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CC
 		m_pcRegionBotLeCorner		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_SETUP_LE_BOT_CORNER);
 		m_pcRegionBotRiCorner		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_SETUP_RI_BOT_CORNER);
 
+		m_pcUp_Up= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETUP_UPUP);
+		m_pcUp_Dw= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETUP_UPDW);
+		//m_pcUp_Fc= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETUP_UPFC);
+		m_pcDw_Up= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETUP_DWUP);
+		m_pcDw_Dw= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETUP_DWDW);
+		//m_pcDw_Fc= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETUP_DWFC);
+
+		m_pcStatic_Up= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_VALUE_UP);
+		m_pcStatic_Dw= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_VALUE_DW);
+		m_pcStatic_Fc= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_VALUE_FC);
 
 		m_pcNeonatal_Up= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETNEO_UP);
 		m_pcNeonatal_Dw= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETNEO_DW);
@@ -391,13 +441,13 @@ BOOL CSubViewCalFlowSensor::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CC
 
 		rcBot.left = 25; 
 		rcBot.right = 775; 
-		rcBot.top = 235; 
-		rcBot.bottom = 255; 
+		rcBot.top = 330; 
+		rcBot.bottom = 350; 
 
 		rcCl.left = 5; 
 		rcCl.right = 795; 
 		rcCl.top = 25; 
-		rcCl.bottom = 235; 
+		rcCl.bottom = 330; 
 
 		FillRect(m_hDC,&rcCl,cbrFill);
 		FillRect(m_hDC,&rcTop,cbrFill);
@@ -405,8 +455,8 @@ BOOL CSubViewCalFlowSensor::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CC
 
 		m_pcRegionTopLeCorner->Draw(m_hDC,5,5);
 		m_pcRegionTopRiCorner->Draw(m_hDC,775,5);
-		m_pcRegionBotLeCorner->Draw(m_hDC,5,235);
-		m_pcRegionBotRiCorner->Draw(m_hDC,775,235);
+		m_pcRegionBotLeCorner->Draw(m_hDC,5,330);
+		m_pcRegionBotRiCorner->Draw(m_hDC,775,330);
 
 		m_hdcTmp = CreateCompatibleDC(m_hDC);
 		m_hbmpTmp = CreateCompatibleBitmap(m_hDC,m_lX,m_lY);
@@ -426,8 +476,8 @@ BOOL CSubViewCalFlowSensor::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CC
 		FillRect(m_hdcTmp,&rcBot,cbrFill);
 		m_pcRegionTopLeCorner->Draw(m_hdcTmp,5,5);
 		m_pcRegionTopRiCorner->Draw(m_hdcTmp,775,5);
-		m_pcRegionBotLeCorner->Draw(m_hdcTmp,5,235);
-		m_pcRegionBotRiCorner->Draw(m_hdcTmp,775,235);
+		m_pcRegionBotLeCorner->Draw(m_hdcTmp,5,330);
+		m_pcRegionBotRiCorner->Draw(m_hdcTmp,775,330);
 
 		HPEN hpenprevStat=(HPEN)SelectObject(m_hdcStatic, (HPEN)GetStockObject(NULL_PEN));	
 		HBRUSH hbrprevStat=(HBRUSH)SelectObject(m_hdcStatic,cbrBack); 
@@ -439,8 +489,8 @@ BOOL CSubViewCalFlowSensor::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CC
 		FillRect(m_hdcStatic,&rcBot,cbrFill);
 		m_pcRegionTopLeCorner->Draw(m_hdcStatic,5,5);
 		m_pcRegionTopRiCorner->Draw(m_hdcStatic,775,5);
-		m_pcRegionBotLeCorner->Draw(m_hdcStatic,5,235);
-		m_pcRegionBotRiCorner->Draw(m_hdcStatic,775,235);
+		m_pcRegionBotLeCorner->Draw(m_hdcStatic,5,330);
+		m_pcRegionBotRiCorner->Draw(m_hdcStatic,775,330);
 
 		SelectObject(m_hdcTmp, hpenprevTmp);
 		SelectObject(m_hdcTmp,hbrprevTmp);
@@ -528,7 +578,7 @@ void CSubViewCalFlowSensor::Init()
 	/*****************************O2***************************/
 	btn.wID					= IDC_BTNCAL_OXI;	
 	btn.poPosition.x		= 128;
-	btn.poPosition.y		= 320;
+	btn.poPosition.y		= 370;//320;
 	btn.pcBmpUp				= m_pcMenuOxi_UP;
 	btn.pcBmpDown			= m_pcMenuOxi_DW;
 	btn.pcBmpFocus			= m_pcMenuOxi_FC;
@@ -543,7 +593,7 @@ void CSubViewCalFlowSensor::Init()
 	/*****************************CO2***************************/
 	btn.wID					= IDC_BTNCAL_CO2;	
 	btn.poPosition.x		= 328;
-	btn.poPosition.y		= 320;
+	btn.poPosition.y		= 370;//320;
 	btn.pcBmpUp				= m_pcMenuCO2_UP;
 	btn.pcBmpDown			= m_pcMenuCO2_DW;
 	btn.pcBmpFocus			= m_pcMenuCO2_FC;
@@ -566,7 +616,7 @@ void CSubViewCalFlowSensor::Init()
 	/*****************************SPO2***************************/
 	btn.wID					= IDC_BTNCAL_SPO2;	
 	btn.poPosition.x		= 528;
-	btn.poPosition.y		= 320;
+	btn.poPosition.y		= 370;//320;
 	btn.pcBmpUp				= m_pcMenuSPO2_UP;
 	btn.pcBmpDown			= m_pcMenuSPO2_DW;
 	btn.pcBmpFocus			= m_pcMenuSPO2_FC;
@@ -585,21 +635,7 @@ void CSubViewCalFlowSensor::Init()
 		m_plMenuBtn.AddTail(m_pcMenuSpO2);
 	}
 
-	//btn.wID					= IDC_BTN_CALFLOW_CALINT;	
-	//btn.poPosition.x		= 620;//151;
-	//btn.poPosition.y		= 85;//553;
-	//btn.pcBmpUp				= m_pcMenu_Up;
-	//btn.pcBmpDown			= m_pcMenu_Dw;
-	//btn.pcBmpFocus			= m_pcMenu_Up;
-	//btn.pcBmpDisabled		= m_pcMenu_Dis;
-	//btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	//m_pcFlowCalInt=new CPushBtn(btn,COLOR_TXTBTNUP,true);
-	//m_pcFlowCalInt->Create(this,g_hf11AcuBold,0);
-	//m_pcFlowCalInt->SetText(getModel()->GetLanguageString(IDS_MENU_FLOWCAL_INT_TOP),getModel()->GetLanguageString(IDS_MENU_FLOWCAL_INT_BOT));
-	//m_pcFlowCalInt->ShowWindow(SW_HIDE);
-
-
+	
 	//+++++++++++++++++Neo/Pediatric++++++++++++++++++++++++++++++
 	btn.wID					= IDC_BTN_NEO;	
 	btn.poPosition.x		= 22;
@@ -639,6 +675,60 @@ void CSubViewCalFlowSensor::Init()
 		m_pcPediatric->SetBtnState(CPresetMenuBtn::DOWN);
 		m_pcNeonatal->SetBtnState(CPresetMenuBtn::UP);
 	}
+
+	CStringW strBodyweight=_T("--");
+	m_iBodyweight=0;
+	if(m_iBodyweight>0)
+		strBodyweight.Format(_T("%0.3f"),CTlsFloat::Round(((double)m_iBodyweight)/1000, 0));
+
+	//*******************bodyweight*****************************
+	btn.wID					= IDC_BTN_SETUP_BODYWEIGHT;	
+	btn.poPosition.x		= 22;
+	btn.poPosition.y		= 234;
+	btn.pcBmpUp				= m_pcStatic_Up;
+	btn.pcBmpDown			= m_pcStatic_Dw;
+	btn.pcBmpFocus			= m_pcStatic_Fc;
+	btn.pcBmpDisabled		= m_pcStatic_Up;
+	btn.dwFormat			= DT_VCENTER|DT_CENTER;
+
+	m_pbtnBodyweight=new CSelectSetupBtn(btn,COLOR_TXTBTNUP);
+	m_pbtnBodyweight->Create(this,g_hf33AcuBold,0);
+	m_pbtnBodyweight->SetText(strBodyweight);
+	m_pbtnBodyweight->ShowWindow(SW_SHOW);
+
+	//+++++++++++++++++bodyweight up++++++++++++++++++++++++++++++
+	//m_pcBodyweightUp=NULL;
+	btn.wID					= IDC_BTN_SETUP_NEXTUP;	
+	btn.poPosition.x		= 123;
+	btn.poPosition.y		= 222;
+	btn.pcBmpUp				= m_pcUp_Up;
+	btn.pcBmpDown			= m_pcUp_Dw;
+	btn.pcBmpFocus			= m_pcUp_Up;
+	btn.pcBmpDisabled		= m_pcUp_Up;
+	btn.dwFormat			= DT_VCENTER|DT_CENTER;
+
+	m_pcBodyweightUp=new CDTUpDwnBtn(btn,COLOR_TXTBTNUP);
+	m_pcBodyweightUp->Create(this,g_hf21AcuBold,0);
+	m_pcBodyweightUp->SetText(_T(""));
+	m_pcBodyweightUp->ShowWindow(SW_SHOW);
+
+
+	//+++++++++++++++++bodyweight up++++++++++++++++++++++++++++++
+	//m_pcBodyweightDwn=NULL;
+	btn.wID					= IDC_BTN_SETUP_NEXTDW;	
+	btn.poPosition.x		= 123;
+	btn.poPosition.y		= 264;
+	btn.pcBmpUp				= m_pcDw_Up;
+	btn.pcBmpDown			= m_pcDw_Dw;
+	btn.pcBmpFocus			= m_pcDw_Up;
+	btn.pcBmpDisabled		= m_pcDw_Up;
+	btn.dwFormat			= DT_VCENTER|DT_CENTER;
+
+	m_pcBodyweightDwn=new CDTUpDwnBtn(btn,COLOR_TXTBTNUP);
+	m_pcBodyweightDwn->Create(this,g_hf21AcuBold,0);
+	m_pcBodyweightDwn->SetText(_T(""));
+	m_pcBodyweightDwn->ShowWindow(SW_SHOW);
+
 
 	//TESTtrigger
 	//m_pcPediatric->ShowWindow(SW_HIDE);
@@ -992,23 +1082,19 @@ void CSubViewCalFlowSensor::DrawFlowSensor(bool bStatic, bool bText)
 		}
 
 		if(m_pcWait)
-			m_pcWait->Draw(m_hdcTmp,220,78);
+			m_pcWait->Draw(m_hdcTmp,240,78);
 	}
 	else
 	{
 		if(m_eFlowCalState==FS_OK || m_eFlowCalState==FS_CALIBRATED)
 		{
-			/*if(m_pcOk)
-				m_pcOk->Draw(m_hdcTmp,28,71);*/
 			if(m_pcOk)
-				m_pcOk->Draw(m_hdcTmp,220,71);
+				m_pcOk->Draw(m_hdcTmp,240,71);
 		}
 		else
 		{
-			/*if(m_pcExclamation)
-				m_pcExclamation->Draw(m_hdcTmp,20,65);*/
 			if(m_pcExclamation)
-				m_pcExclamation->Draw(m_hdcTmp,220,65);
+				m_pcExclamation->Draw(m_hdcTmp,240,65);
 		}
 	}
 
@@ -1079,7 +1165,7 @@ void CSubViewCalFlowSensor::DrawStatic()
 	CBrush cbrRound(RGB(200,200,200));
 	HBRUSH hbrprev=(HBRUSH)SelectObject(m_hdcStatic,cbrRound);
 
-	RoundRect(m_hdcStatic, 15, 70, 200, 225,20,20);
+	RoundRect(m_hdcStatic, 15, 70, 210, 335,20,20);
 
 	rc.top = 80;
 	rc.bottom = m_lY;
@@ -1107,6 +1193,36 @@ void CSubViewCalFlowSensor::DrawStatic()
 
 	sz=_T("> 10kg");
 	pDCStatic->DrawText(sz,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
+
+
+
+
+	/*MoveToEx(m_hdcStatic, 22, 222, NULL);
+	LineTo(m_hdcStatic, 122, 222);
+
+	MoveToEx(m_hdcStatic, 22, 307, NULL);
+	LineTo(m_hdcStatic, 122, 307);*/
+
+	MoveToEx(m_hdcStatic, 22, 232, NULL);
+	LineTo(m_hdcStatic, 122, 232);
+
+	MoveToEx(m_hdcStatic, 22, 295, NULL);
+	LineTo(m_hdcStatic, 122, 295);
+
+	rc.left = 176;  
+	rc.top = 222;  
+	rc.right  = 210;  
+	rc.bottom = 307;
+	DrawText(m_hdcStatic,_T("kg"),-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
+
+
+	rc.left = 22;  
+	rc.top = 307;  
+	rc.right  = 122;  
+	rc.bottom = 330;
+	DrawText(m_hdcStatic,_T("bodyweight"),-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);//todo FOTLANGUAGE
+
+
 
 	SelectObject(m_hdcStatic,hbrprev);
 	SelectObject(m_hdcStatic,hpenprev);
@@ -1165,7 +1281,7 @@ void CSubViewCalFlowSensor::DrawCalText()
 	{
 		rc.top = 80;
 		rc.bottom = m_lY;
-		rc.left = 290; 
+		rc.left = 310; 
 		rc.right = m_lX;
 		pDCTemp->DrawText(m_szTextFlowSensorTop,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 	}
@@ -1173,13 +1289,13 @@ void CSubViewCalFlowSensor::DrawCalText()
 	{
 		rc.top = 65;
 		rc.bottom = m_lY;
-		rc.left = 290; 
+		rc.left = 310; 
 		rc.right = m_lX;
 		pDCTemp->DrawText(m_szTextFlowSensorTop,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 
 		rc.top = 95;
 		rc.bottom = m_lY;
-		rc.left = 290; 
+		rc.left = 310; 
 		rc.right = m_lX;
 		pDCTemp->DrawText(m_szTextFlowSensorBot,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 	}
@@ -1189,7 +1305,7 @@ void CSubViewCalFlowSensor::DrawCalText()
 
 	rc.top = 180;
 	rc.bottom = m_lY;
-	rc.left = 220; 
+	rc.left = 240; 
 	rc.right = m_lX;
 
 	CStringW sz=getModel()->GetLanguageString(IDS_TXT_LASTFLOWCAL);
@@ -1209,14 +1325,14 @@ void CSubViewCalFlowSensor::DrawCalText()
 	{
 		rc.top = 150;
 		rc.bottom = m_lY;
-		rc.left = 220;//50; 
+		rc.left = 240;//50; 
 		rc.right = m_lX;
 		pDCTemp->DrawText(sz,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 
 		sz=getModel()->GetLanguageString(IDS_TXT_CHECKFLOWSENSOR);
 
 		if(m_pcExclamation)
-			m_pcExclamation->Draw(m_hdcTmp,220,170);
+			m_pcExclamation->Draw(m_hdcTmp,240,170);
 
 		SelectObject(m_hdcTmp,g_hf19AcuMed);
 		pDCTemp->SetTextColor(RGB(255,0,0));
@@ -1224,7 +1340,7 @@ void CSubViewCalFlowSensor::DrawCalText()
 		//rc.top = 190;
 		rc.top = 185;
 		rc.bottom = m_lY;
-		rc.left = 290; 
+		rc.left = 310; 
 		//rc.right = m_lX;
 		rc.right = 580;
 		pDCTemp->DrawText(sz,&rc,DT_TOP|DT_WORDBREAK|DT_LEFT);
@@ -1524,6 +1640,106 @@ LRESULT CSubViewCalFlowSensor::WindowProc(UINT message, WPARAM wParam, LPARAM lP
 {
 	switch(message)
 	{
+	case WM_TIMEBTN_DOWN:
+		{
+			switch(wParam)
+			{
+			case IDC_BTN_SETUP_NEXTUP:
+				{
+					m_iCounter=0;
+					m_eTimeChanger=TC_EFLOW_UP;
+					SetTimer(CHANGETIMER,TIMECHANGE,NULL);
+					m_pbtnBodyweight->SetState(BS_DOWN);
+
+					if(GetParent())
+						GetParent()->PostMessage(WM_SET_SETUPTIMER);
+					return 1;
+				}
+				break;
+			case IDC_BTN_SETUP_NEXTDW:
+				{
+					m_iCounter=0;
+					m_eTimeChanger=TC_EFLOW_DW;
+					SetTimer(CHANGETIMER,TIMECHANGE,NULL);
+					m_pbtnBodyweight->SetState(BS_DOWN);
+
+					if(GetParent())
+						GetParent()->PostMessage(WM_SET_SETUPTIMER);
+					return 1;
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		break;
+	case WM_TIMEBTN_UP:
+		{
+			switch(wParam)
+			{
+			case IDC_BTN_SETUP_NEXTUP:
+				{
+					if(m_iCounter==0)
+					{
+						//if(m_iValue<m_iUpperLimit)
+						//{
+						//	m_iValue+=STEP_EFLOW;
+
+						//	CStringW strVal;
+
+						//	//strVal.Format(_T("%d"),m_iValue);
+						//	strVal.Format(_T("%0.0f"),CTlsFloat::Round(((double)m_iValue)/1000, 0));
+						//	m_pbtnBodyweight->RefreshText(strVal);
+						//}
+						//else
+						//{
+						//	if(AfxGetApp())
+						//		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_TIMETEXT_ENDRANGE);
+						//}
+					}
+					m_iCounter=0;
+					m_eTimeChanger=TC_OFF;
+					KillTimer(CHANGETIMER);
+
+					if(GetParent())
+						GetParent()->PostMessage(WM_SET_SETUPTIMER);
+					return 1;
+				}
+				break;
+			case IDC_BTN_SETUP_NEXTDW:
+				{
+					if(m_iCounter==0)
+					{
+						//if(m_iValue>m_iLowerLimit)
+						//{
+						//	m_iValue-=STEP_EFLOW;
+
+						//	CStringW strVal;
+
+						//	//strVal.Format(_T("%d"),m_iValue);
+						//	strVal.Format(_T("%0.0f"),CTlsFloat::Round(((double)m_iValue)/1000, 0));
+						//	m_pbtnBodyweight->RefreshText(strVal);
+						//}
+						//else
+						//{
+						//	if(AfxGetApp())
+						//		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_TIMETEXT_ENDRANGE);
+						//}
+					}
+					m_iCounter=0;
+					m_eTimeChanger=TC_OFF;
+					KillTimer(CHANGETIMER);
+
+					if(GetParent())
+						GetParent()->PostMessage(WM_SET_SETUPTIMER);
+					return 1;
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		break;
 	case WM_ALARMSTATE_CHANGED:
 		{
 			if(!m_bExit)
@@ -2180,4 +2396,114 @@ void CSubViewCalFlowSensor::OnBnClickedO2()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_MENU_O2);
+}
+
+void CSubViewCalFlowSensor::OnBnClickedBodyweight()
+{
+	if(m_pbtnBodyweight->GetState()==BS_UP)
+		m_pbtnBodyweight->SetState(BS_DOWN);
+	else if(m_pbtnBodyweight->GetState()==BS_FOCUSED)
+		m_pbtnBodyweight->SetState(BS_DOWN);
+	else if(m_pbtnBodyweight->GetState()==BS_DOWN)
+		m_pbtnBodyweight->SetState(BS_FOCUSED);
+}
+
+BOOL CSubViewCalFlowSensor::PreTranslateMessage(MSG* pMsg) 
+{
+	switch(pMsg->message)
+	{
+	case WM_KEYDOWN:
+		{
+			if(pMsg->wParam==VK_SPACE)
+			{
+				eBtnState eState = m_pbtnBodyweight->GetState();
+				
+				if(eState==BS_NONE)
+				{
+					m_pbtnBodyweight->SetState(BS_FOCUSED);
+				}
+				else if(eState==BS_UP)
+				{
+					m_pbtnBodyweight->SetState(BS_DOWN);
+				}
+				else if(eState==BS_FOCUSED)
+				{
+					m_pbtnBodyweight->SetState(BS_DOWN);
+				}
+				else if(eState==BS_DOWN)
+				{
+					m_pbtnBodyweight->SetState(BS_FOCUSED);
+				}
+
+				if(GetParent())
+				{
+					GetParent()->PostMessage(WM_SET_SETUPTIMER);
+				}
+				return 1;
+			}
+			else if(pMsg->wParam==VK_DOWN)
+			{
+				if(m_pbtnBodyweight->GetState()==BS_DOWN)
+				{
+					/*if(m_iValue>m_iLowerLimit)
+					{
+						m_iValue-=STEP_EFLOW;
+
+						CStringW strVal;
+
+						strVal.Format(_T("%0.0f"),CTlsFloat::Round(((double)m_iValue)/1000, 0));
+						m_pbtnBodyweight->RefreshText(strVal);
+					}
+					else
+					{
+						if(AfxGetApp())
+							AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_TIMETEXT_ENDRANGE);
+					}*/
+				}
+				/*if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
+				{
+					m_dwLastSetupTimer=GetTickCount();
+					if(GetParent())
+						GetParent()->PostMessage(WM_SET_SETUPTIMER);
+				}*/
+			}
+			else if(pMsg->wParam==VK_UP)
+			{
+				if(m_pbtnBodyweight->GetState()==BS_DOWN)
+				{
+					//if(m_iValue<m_iUpperLimit)
+					//{
+					//	m_iValue+=STEP_EFLOW;
+
+					//	CStringW strVal;
+
+					//	//strVal.Format(_T("%d"),m_iValue);
+					//	strVal.Format(_T("%0.0f"),CTlsFloat::Round(((double)m_iValue)/1000, 0));
+					//	m_pbtnBodyweight->RefreshText(strVal);
+					//}
+					//else
+					//{
+					//	if(AfxGetApp())
+					//		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_TIMETEXT_ENDRANGE);
+					//}
+				}
+				/*if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
+				{
+					m_dwLastSetupTimer=GetTickCount();
+					if(GetParent())
+						GetParent()->PostMessage(WM_SET_SETUPTIMER);
+				}*/
+			}
+			else
+			{
+				//handle focus change manual, draw next focused button and return true
+				//return 1;
+			}
+			break;
+		}
+		break;
+	default:
+		break;
+	}
+	return CWnd::PreTranslateMessage(pMsg);
 }

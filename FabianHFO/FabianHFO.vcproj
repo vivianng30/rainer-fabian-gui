@@ -2475,6 +2475,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SelectBtn_BODYWEIGHT.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SoundPlayer.cpp"
 				>
 			</File>
@@ -3698,6 +3702,10 @@
 			</File>
 			<File
 				RelativePath=".\Resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SelectBtn_BODYWEIGHT.h"
 				>
 			</File>
 			<File

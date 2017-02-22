@@ -5,6 +5,8 @@
 #include "MVModel.h"
 #include "MenuBtn.h"
 #include "PresetMenuBtn.h"
+#include "DTUpDwnBtn.h"
+#include "SelectSetupBtn.h"
 
 // CSubViewCalFlowSensor
 
@@ -19,6 +21,7 @@ public:
 	virtual BOOL Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext = NULL);
 	bool CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext = NULL);
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 
 	void SetOneButtonDepressed(int btnID);
 	void SetAllButtonUnpressed();
@@ -97,6 +100,19 @@ private:
 	CMenuBtn* m_pcMenuSpO2;
 	CMenuBtn* m_pcMenuOxi;
 
+	CDTUpDwnBtn* m_pcBodyweightUp;
+	CDTUpDwnBtn* m_pcBodyweightDwn;
+
+	CSelectSetupBtn* m_pbtnBodyweight;
+
+	CBmp* m_pcStatic_Up;
+	CBmp* m_pcStatic_Dw;
+	CBmp* m_pcStatic_Fc;
+	CBmp* m_pcUp_Up;
+	CBmp* m_pcUp_Dw;
+	CBmp* m_pcDw_Up;
+	CBmp* m_pcDw_Dw;
+
 	CBmp* m_pcMenuCO2_UP;
 	CBmp* m_pcMenuCO2_DW;
 	CBmp* m_pcMenuCO2_FC;
@@ -158,7 +174,9 @@ private:
 
 	CStringW m_szLastFlowCal;
 
-
+	int m_iBodyweight;
+	int m_iCounter;
+	eTimeChanger m_eTimeChanger;
 
 
 	bool m_bExit;
@@ -184,6 +202,7 @@ public:
 	afx_msg void OnBnClickedO2();
 	afx_msg void OnBnClickedCO2();
 	afx_msg void OnBnClickedSPO2();
+	afx_msg void OnBnClickedBodyweight();
 };
 
 

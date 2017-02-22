@@ -90,10 +90,6 @@ CMVModel *CSelectSetupBtn::getModel()
 BEGIN_MESSAGE_MAP(CSelectSetupBtn, CButton)
 	//{{AFX_MSG_MAP(CSelectSetupBtn)
 	ON_WM_LBUTTONDBLCLK()
-	/*ON_WM_LBUTTONDOWN()
-	ON_WM_LBUTTONUP()
-	ON_WM_KEYDOWN()*/
-	//ON_WM_KEYUP()
 	ON_WM_KILLFOCUS()
 	ON_WM_SETFOCUS()
 	//}}AFX_MSG_MAP
@@ -368,10 +364,6 @@ void CSelectSetupBtn::Draw(int nState/*,TCHAR* psz*/)
 
 			SetTextColor(m_hDC,RGB(0,0,130));
 			DrawText(m_hDC,m_pszValueText,-1,&rc,DT_VCENTER|DT_SINGLELINE|DT_RIGHT);
-			
-			
-
-			
 		}
 		else
 		{

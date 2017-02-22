@@ -21,6 +21,8 @@ public:
 	CSelectSetupBtn(BTN &btn,COLORREF cr=0x00000000, bool bValue = false);
 	virtual ~CSelectSetupBtn();
 
+	virtual void Draw(int nState/*, TCHAR* psz=NULL*/);
+
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 
 	inline void GetButtonColors(BTNCOLORS* pbtncr){memcpy(pbtncr,&m_btncr,sizeof(BTNCOLORS));};
@@ -62,7 +64,7 @@ public:
 
 protected:
 	//void WriteCurrentValue();
-	void Draw(int nState/*, TCHAR* psz=NULL*/);
+	
 	//void DrawRotatedText(CDC* pDC, const CStringW str, CRect rect, double angle, UINT nOptions = 0);
 
 	CMVModel *getModel();
