@@ -35,7 +35,7 @@ extern HFONT g_hf43AcuBold;
 extern HFONT g_hf53AcuBold;
 extern HFONT g_hf70Bold;
 
-#define TIMECHANGE	600
+#define TIMECHANGE	50
 // CSubViewCalFlowSensor
 
 IMPLEMENT_DYNAMIC(CSubViewCalFlowSensor, CWnd)
@@ -171,10 +171,6 @@ CSubViewCalFlowSensor::CSubViewCalFlowSensor()
 	m_iBodyweight=0;
 	m_iCounter=0;
 	m_eTimeChanger=TC_OFF;
-	
-
-	/*if(m_bStartupFlag)
-		getModel()->DeleteStartupFlag();*/
 }
 
 CSubViewCalFlowSensor::~CSubViewCalFlowSensor()
@@ -677,9 +673,23 @@ void CSubViewCalFlowSensor::Init()
 	}
 
 	CStringW strBodyweight=_T("--");
-	m_iBodyweight=0;
+	m_iBodyweight=getModel()->getDATAHANDLER()->GetBodyweight();
+
+	CString szUnit=_T("g");
+	if(m_iBodyweight>=BODYWEIGHTUNITSWITCH)
+	{
+		szUnit=_T("kg");
+	}
+
 	if(m_iBodyweight>0)
-		strBodyweight.Format(_T("%0.3f"),CTlsFloat::Round(((double)m_iBodyweight)/1000, 0));
+	{
+		if(m_iBodyweight>=BODYWEIGHTUNITSWITCH)
+			strBodyweight.Format(_T("%0.1f %s"),CTlsFloat::Round(((double)m_iBodyweight)/1000, 1),szUnit);
+		else
+			strBodyweight.Format(_T("%d %s"),m_iBodyweight,szUnit);
+	}
+
+	
 
 	//*******************bodyweight*****************************
 	btn.wID					= IDC_BTN_SETUP_BODYWEIGHT;	
@@ -692,7 +702,7 @@ void CSubViewCalFlowSensor::Init()
 	btn.dwFormat			= DT_VCENTER|DT_CENTER;
 
 	m_pbtnBodyweight=new CSelectSetupBtn(btn,COLOR_TXTBTNUP);
-	m_pbtnBodyweight->Create(this,g_hf33AcuBold,0);
+	m_pbtnBodyweight->Create(this,g_hf23AcuBold,0);
 	m_pbtnBodyweight->SetText(strBodyweight);
 	m_pbtnBodyweight->ShowWindow(SW_SHOW);
 
@@ -844,6 +854,7 @@ void CSubViewCalFlowSensor::OnDestroy()
 	StopFlowSensorCheckThread();
 	getModel()->getDATAHANDLER()->SetFlowSensorCalibrating(false);
 
+	KillTimer(CHANGETIMER);
 	KillTimer(FLOWSENS_VALUE);
 
 	if(m_pDlg)
@@ -1195,33 +1206,17 @@ void CSubViewCalFlowSensor::DrawStatic()
 	pDCStatic->DrawText(sz,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 
 
-
-
-	/*MoveToEx(m_hdcStatic, 22, 222, NULL);
-	LineTo(m_hdcStatic, 122, 222);
-
-	MoveToEx(m_hdcStatic, 22, 307, NULL);
-	LineTo(m_hdcStatic, 122, 307);*/
-
 	MoveToEx(m_hdcStatic, 22, 232, NULL);
 	LineTo(m_hdcStatic, 122, 232);
 
 	MoveToEx(m_hdcStatic, 22, 295, NULL);
 	LineTo(m_hdcStatic, 122, 295);
 
-	rc.left = 176;  
-	rc.top = 222;  
-	rc.right  = 210;  
-	rc.bottom = 307;
-	DrawText(m_hdcStatic,_T("kg"),-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
-
-
 	rc.left = 22;  
-	rc.top = 307;  
+	rc.top = 300;  
 	rc.right  = 122;  
-	rc.bottom = 330;
+	rc.bottom = 315;
 	DrawText(m_hdcStatic,_T("bodyweight"),-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);//todo FOTLANGUAGE
-
 
 
 	SelectObject(m_hdcStatic,hbrprev);
@@ -1610,7 +1605,6 @@ void CSubViewCalFlowSensor::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==FLOWSENS_VALUE)
 	{
-		
 		if(m_iWaitCount>0)
 		{
 			m_iWaitCount++;
@@ -1630,6 +1624,102 @@ void CSubViewCalFlowSensor::OnTimer(UINT_PTR nIDEvent)
 			DrawFlowSensor(false,true);
 		
 	}
+	else if(nIDEvent==CHANGETIMER)
+	{
+		switch(m_eTimeChanger)
+		{
+		case TC_BODYWEIGHT_UP:
+			{
+				if(m_iBodyweight<BODYWEIGHTMAXIMUM)
+				{
+					if(m_iBodyweight==0)
+					{
+						m_iBodyweight=BODYWEIGHTMINIMUM;
+					}
+					else if(m_iBodyweight>=BODYWEIGHTRANGE2)
+					{
+						m_iBodyweight+=STEP3_BODYWEIGHT;
+					}
+					else if(m_iBodyweight>=BODYWEIGHTRANGE1)
+					{
+						m_iBodyweight+=STEP2_BODYWEIGHT;
+					}
+					else
+					{
+						m_iBodyweight+=STEP1_BODYWEIGHT;
+					}
+
+					CStringW strBodyweight;
+					CString szUnit=_T("g");
+					if(m_iBodyweight>=BODYWEIGHTUNITSWITCH)
+					{
+						szUnit=_T("kg");
+					}
+
+					if(m_iBodyweight>=BODYWEIGHTUNITSWITCH)
+						strBodyweight.Format(_T("%0.1f %s"),CTlsFloat::Round(((double)m_iBodyweight)/1000, 1),szUnit);
+					else
+						strBodyweight.Format(_T("%d %s"),m_iBodyweight,szUnit);
+					m_pbtnBodyweight->RefreshText(strBodyweight);
+					getModel()->getDATAHANDLER()->SetBodyweight(m_iBodyweight);
+
+				}
+				else
+				{
+					if(AfxGetApp())
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_TIMETEXT_ENDRANGE);
+				}
+			}
+			break;
+		case TC_BODYWEIGHT_DW:
+			{
+				CStringW strBodyweight=_T("--");
+				if(m_iBodyweight>BODYWEIGHTMINIMUM)
+				{
+					if(m_iBodyweight<=BODYWEIGHTRANGE1)
+					{
+						m_iBodyweight-=STEP1_BODYWEIGHT;
+					}
+					else if(m_iBodyweight<=BODYWEIGHTRANGE2)
+					{
+						m_iBodyweight-=STEP2_BODYWEIGHT;
+					}
+					else
+					{
+						m_iBodyweight-=STEP3_BODYWEIGHT;
+					}
+
+					CString szUnit=_T("g");
+					if(m_iBodyweight>=BODYWEIGHTUNITSWITCH)
+					{
+						szUnit=_T("kg");
+					}
+
+					if(m_iBodyweight>=BODYWEIGHTUNITSWITCH)
+						strBodyweight.Format(_T("%0.1f %s"),CTlsFloat::Round(((double)m_iBodyweight)/1000, 1),szUnit);
+					else
+						strBodyweight.Format(_T("%d %s"),m_iBodyweight,szUnit);
+					m_pbtnBodyweight->RefreshText(strBodyweight);
+					getModel()->getDATAHANDLER()->SetBodyweight(m_iBodyweight);
+
+				}
+				else
+				{
+					m_iBodyweight=0;
+					m_pbtnBodyweight->RefreshText(strBodyweight);
+					getModel()->getDATAHANDLER()->SetBodyweight(m_iBodyweight);
+				}
+			}
+			break;
+		default:
+			{
+
+			}
+			break;
+		}
+
+		m_iCounter++;
+	}
 
 	CWnd::OnTimer(nIDEvent);
 }
@@ -1647,7 +1737,7 @@ LRESULT CSubViewCalFlowSensor::WindowProc(UINT message, WPARAM wParam, LPARAM lP
 			case IDC_BTN_SETUP_NEXTUP:
 				{
 					m_iCounter=0;
-					m_eTimeChanger=TC_EFLOW_UP;
+					m_eTimeChanger=TC_BODYWEIGHT_UP;
 					SetTimer(CHANGETIMER,TIMECHANGE,NULL);
 					m_pbtnBodyweight->SetState(BS_DOWN);
 
@@ -1659,7 +1749,7 @@ LRESULT CSubViewCalFlowSensor::WindowProc(UINT message, WPARAM wParam, LPARAM lP
 			case IDC_BTN_SETUP_NEXTDW:
 				{
 					m_iCounter=0;
-					m_eTimeChanger=TC_EFLOW_DW;
+					m_eTimeChanger=TC_BODYWEIGHT_DW;
 					SetTimer(CHANGETIMER,TIMECHANGE,NULL);
 					m_pbtnBodyweight->SetState(BS_DOWN);
 
@@ -1680,22 +1770,46 @@ LRESULT CSubViewCalFlowSensor::WindowProc(UINT message, WPARAM wParam, LPARAM lP
 			case IDC_BTN_SETUP_NEXTUP:
 				{
 					if(m_iCounter==0)
-					{
-						//if(m_iValue<m_iUpperLimit)
-						//{
-						//	m_iValue+=STEP_EFLOW;
+					{						
+						if(m_iBodyweight<BODYWEIGHTMAXIMUM)
+						{
+							if(m_iBodyweight==0)
+							{
+								m_iBodyweight=BODYWEIGHTMINIMUM;
+							}
+							else if(m_iBodyweight>=BODYWEIGHTRANGE2)
+							{
+								m_iBodyweight+=STEP3_BODYWEIGHT;
+							}
+							else if(m_iBodyweight>=BODYWEIGHTRANGE1)
+							{
+								m_iBodyweight+=STEP2_BODYWEIGHT;
+							}
+							else
+							{
+								m_iBodyweight+=STEP1_BODYWEIGHT;
+							}
+							
+							CStringW strBodyweight;
 
-						//	CStringW strVal;
+							CString szUnit=_T("g");
+							if(m_iBodyweight>=BODYWEIGHTUNITSWITCH)
+							{
+								szUnit=_T("kg");
+							}
 
-						//	//strVal.Format(_T("%d"),m_iValue);
-						//	strVal.Format(_T("%0.0f"),CTlsFloat::Round(((double)m_iValue)/1000, 0));
-						//	m_pbtnBodyweight->RefreshText(strVal);
-						//}
-						//else
-						//{
-						//	if(AfxGetApp())
-						//		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_TIMETEXT_ENDRANGE);
-						//}
+							if(m_iBodyweight>=BODYWEIGHTUNITSWITCH)
+								strBodyweight.Format(_T("%0.1f %s"),CTlsFloat::Round(((double)m_iBodyweight)/1000, 1),szUnit);
+							else
+								strBodyweight.Format(_T("%d %s"),m_iBodyweight,szUnit);
+							m_pbtnBodyweight->RefreshText(strBodyweight);
+							getModel()->getDATAHANDLER()->SetBodyweight(m_iBodyweight);
+						}
+						else
+						{
+							if(AfxGetApp())
+								AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_TIMETEXT_ENDRANGE);
+						}
 					}
 					m_iCounter=0;
 					m_eTimeChanger=TC_OFF;
@@ -1710,21 +1824,41 @@ LRESULT CSubViewCalFlowSensor::WindowProc(UINT message, WPARAM wParam, LPARAM lP
 				{
 					if(m_iCounter==0)
 					{
-						//if(m_iValue>m_iLowerLimit)
-						//{
-						//	m_iValue-=STEP_EFLOW;
+						CStringW strBodyweight=_T("--");
+						if(m_iBodyweight>BODYWEIGHTMINIMUM)
+						{
+							if(m_iBodyweight<=BODYWEIGHTRANGE1)
+							{
+								m_iBodyweight-=STEP1_BODYWEIGHT;
+							}
+							else if(m_iBodyweight<=BODYWEIGHTRANGE2)
+							{
+								m_iBodyweight-=STEP2_BODYWEIGHT;
+							}
+							else
+							{
+								m_iBodyweight-=STEP3_BODYWEIGHT;
+							}
 
-						//	CStringW strVal;
+							CString szUnit=_T("g");
+							if(m_iBodyweight>=BODYWEIGHTUNITSWITCH)
+							{
+								szUnit=_T("kg");
+							}
 
-						//	//strVal.Format(_T("%d"),m_iValue);
-						//	strVal.Format(_T("%0.0f"),CTlsFloat::Round(((double)m_iValue)/1000, 0));
-						//	m_pbtnBodyweight->RefreshText(strVal);
-						//}
-						//else
-						//{
-						//	if(AfxGetApp())
-						//		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_TIMETEXT_ENDRANGE);
-						//}
+							if(m_iBodyweight>=BODYWEIGHTUNITSWITCH)
+								strBodyweight.Format(_T("%0.1f %s"),CTlsFloat::Round(((double)m_iBodyweight)/1000, 1),szUnit);
+							else
+								strBodyweight.Format(_T("%d %s"),m_iBodyweight,szUnit);
+							m_pbtnBodyweight->RefreshText(strBodyweight);
+							getModel()->getDATAHANDLER()->SetBodyweight(m_iBodyweight);
+						}
+						else
+						{
+							m_iBodyweight=0;
+							m_pbtnBodyweight->RefreshText(strBodyweight);
+							getModel()->getDATAHANDLER()->SetBodyweight(m_iBodyweight);
+						}
 					}
 					m_iCounter=0;
 					m_eTimeChanger=TC_OFF;
@@ -2445,20 +2579,41 @@ BOOL CSubViewCalFlowSensor::PreTranslateMessage(MSG* pMsg)
 			{
 				if(m_pbtnBodyweight->GetState()==BS_DOWN)
 				{
-					/*if(m_iValue>m_iLowerLimit)
+					CStringW strBodyweight=_T("--");
+					if(m_iBodyweight>BODYWEIGHTMINIMUM)
 					{
-						m_iValue-=STEP_EFLOW;
+						if(m_iBodyweight<=BODYWEIGHTRANGE1)
+						{
+							m_iBodyweight-=STEP1_BODYWEIGHT;
+						}
+						else if(m_iBodyweight<=BODYWEIGHTRANGE2)
+						{
+							m_iBodyweight-=STEP2_BODYWEIGHT;
+						}
+						else
+						{
+							m_iBodyweight-=STEP3_BODYWEIGHT;
+						}
 
-						CStringW strVal;
+						CString szUnit=_T("g");
+						if(m_iBodyweight>=BODYWEIGHTUNITSWITCH)
+						{
+							szUnit=_T("kg");
+						}
 
-						strVal.Format(_T("%0.0f"),CTlsFloat::Round(((double)m_iValue)/1000, 0));
-						m_pbtnBodyweight->RefreshText(strVal);
+						if(m_iBodyweight>=BODYWEIGHTUNITSWITCH)
+							strBodyweight.Format(_T("%0.1f %s"),CTlsFloat::Round(((double)m_iBodyweight)/1000, 1),szUnit);
+						else
+							strBodyweight.Format(_T("%d %s"),m_iBodyweight,szUnit);
+						m_pbtnBodyweight->RefreshText(strBodyweight);
+						getModel()->getDATAHANDLER()->SetBodyweight(m_iBodyweight);
 					}
 					else
 					{
-						if(AfxGetApp())
-							AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_TIMETEXT_ENDRANGE);
-					}*/
+						m_iBodyweight=0;
+						m_pbtnBodyweight->RefreshText(strBodyweight);
+						getModel()->getDATAHANDLER()->SetBodyweight(m_iBodyweight);
+					}
 				}
 				/*if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
 				{
@@ -2471,21 +2626,45 @@ BOOL CSubViewCalFlowSensor::PreTranslateMessage(MSG* pMsg)
 			{
 				if(m_pbtnBodyweight->GetState()==BS_DOWN)
 				{
-					//if(m_iValue<m_iUpperLimit)
-					//{
-					//	m_iValue+=STEP_EFLOW;
+					if(m_iBodyweight<BODYWEIGHTMAXIMUM)
+					{
+						if(m_iBodyweight==0)
+						{
+							m_iBodyweight=BODYWEIGHTMINIMUM;
+						}
+						else if(m_iBodyweight>=BODYWEIGHTRANGE2)
+						{
+							m_iBodyweight+=STEP3_BODYWEIGHT;
+						}
+						else if(m_iBodyweight>=BODYWEIGHTRANGE1)
+						{
+							m_iBodyweight+=STEP2_BODYWEIGHT;
+						}
+						else
+						{
+							m_iBodyweight+=STEP1_BODYWEIGHT;
+						}
 
-					//	CStringW strVal;
+						CStringW strBodyweight;
 
-					//	//strVal.Format(_T("%d"),m_iValue);
-					//	strVal.Format(_T("%0.0f"),CTlsFloat::Round(((double)m_iValue)/1000, 0));
-					//	m_pbtnBodyweight->RefreshText(strVal);
-					//}
-					//else
-					//{
-					//	if(AfxGetApp())
-					//		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_TIMETEXT_ENDRANGE);
-					//}
+						CString szUnit=_T("g");
+						if(m_iBodyweight>=BODYWEIGHTUNITSWITCH)
+						{
+							szUnit=_T("kg");
+						}
+
+						if(m_iBodyweight>=BODYWEIGHTUNITSWITCH)
+							strBodyweight.Format(_T("%0.1f %s"),CTlsFloat::Round(((double)m_iBodyweight)/1000, 1),szUnit);
+						else
+							strBodyweight.Format(_T("%d %s"),m_iBodyweight,szUnit);
+						m_pbtnBodyweight->RefreshText(strBodyweight);
+						getModel()->getDATAHANDLER()->SetBodyweight(m_iBodyweight);
+					}
+					else
+					{
+						if(AfxGetApp())
+							AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_TIMETEXT_ENDRANGE);
+					}
 				}
 				/*if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
 				{

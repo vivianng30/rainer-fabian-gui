@@ -26,6 +26,7 @@ enum eHFModuleRevision {
 
 #define DEMOLICENSE	90
 
+
 //#define MAINBOARD2_1			0x21
 //#define MAINBOARD3_0			0x30
 #define MAINBOARD_11			0x11

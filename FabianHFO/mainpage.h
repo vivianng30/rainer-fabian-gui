@@ -8,11 +8,12 @@
  * @section ver Version history and changelog
  *
  * @subsection ver50117 Version 5.0.1.17
- * @date 2017-02-21
+ * @date 2017-02-24
  * @verbatim
 	//todo FOTLANGUAGE
 	- FOT values written to log 
 	- FOT: VG will be used for PIPmax if VG==on
+	- bodyweight included
  @endverbatim
  *
  * @subsection ver50116 Version 5.0.1.16

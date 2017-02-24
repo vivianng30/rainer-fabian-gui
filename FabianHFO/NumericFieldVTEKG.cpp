@@ -80,8 +80,11 @@ bool CNumericFieldVTEKG::drawData(bool bData, bool bFrames, bool bText, bool bLi
 	TCHAR psz[MAX_PATH];
 
 	//###########################################################################
-	//WORD iBW=getModel()->getDATAHANDLER()->getMessureDataTVE();
-	WORD iBW=0;
+	int iTVE=getModel()->getDATAHANDLER()->getMessureDataTVE()*100;
+	int iBW=getModel()->getDATAHANDLER()->GetBodyweight();
+	double iTVEKG=0;
+	if(iBW!=0)
+		iTVEKG=(double)iTVE/iBW;
 
 	if(m_eSize==NUMERICSIZE_1)
 	{
@@ -101,9 +104,12 @@ bool CNumericFieldVTEKG::drawData(bool bData, bool bFrames, bool bText, bool bLi
 	}
 
 	if(iBW==0)
-		wsprintf(psz,_T("%d"),0);
+		wsprintf(psz,_T("--"));
 	else
-		wsprintf(psz,_T("%0.1f"), CTlsFloat::Round(((double)iBW)/10, 1));
+	{
+		//wsprintf(psz,_T("%0.1f"), CTlsFloat::Round(((double)iTVEKG)/10, 1));
+		wsprintf(psz,_T("%0.1f"), CTlsFloat::Round(iTVEKG, 1));
+	}
 	DrawText(hdcMem,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 
 	BitBlt(m_hDC, 0, 0, m_lX, m_lY,hdcMem , 0, 0, SRCCOPY);

@@ -852,6 +852,9 @@ public:
 	void setFOToscillationState(bool bOsciRun);
 	bool getFOToscillationState();
 
+	void SetBodyweight(WORD weightGramm);
+	WORD GetBodyweight();
+
 private:
 	//singleton
 	static CDataHandler* theDataHandler;//!< singleton of data handler
@@ -1155,4 +1158,5 @@ private:
 	BYTE m_iPrevTRIGGERnmodePara;
 	bool m_bTriggerNMODEenabled;
 
+	WORD m_iBodyweightGramm;
 };

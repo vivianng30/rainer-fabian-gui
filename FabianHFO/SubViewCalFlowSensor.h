@@ -178,7 +178,6 @@ private:
 	int m_iCounter;
 	eTimeChanger m_eTimeChanger;
 
-
 	bool m_bExit;
 	bool m_bFlowsensor;
 	bool m_bInfantFlow;

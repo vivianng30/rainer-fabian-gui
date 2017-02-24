@@ -212,6 +212,7 @@ CDataHandler::CDataHandler(void)
 	m_bPRICODemoLicAvailable=false;
 	m_bFOTDemoLicAvailable=false;
 
+	m_iBodyweightGramm=0;
 
 	m_bFOToscillationState=false;
 
@@ -17233,7 +17234,16 @@ bool CDataHandler::getFOToscillationState()
 	return bState;
 }
 
-
+void CDataHandler::SetBodyweight(WORD weightGramm)
+{
+	if(weightGramm>BODYWEIGHTMAXIMUM)
+		weightGramm=BODYWEIGHTMAXIMUM;
+	m_iBodyweightGramm=weightGramm;
+}
+WORD CDataHandler::GetBodyweight()
+{
+	return m_iBodyweightGramm;
+}
 
 // **************************************************************************
 // 

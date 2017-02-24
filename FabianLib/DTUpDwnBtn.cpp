@@ -257,8 +257,7 @@ BOOL CDTUpDwnBtn::PreTranslateMessage(MSG* pMsg)
 				||	m_btn.wID == IDC_BTN_WAVE1_NEXTUP
 				||	m_btn.wID == IDC_BTN_WAVE1_NEXTDWN
 				||	m_btn.wID == IDC_BTN_WAVE2_NEXTUP
-				||	m_btn.wID == IDC_BTN_WAVE2_NEXTDWN
-				||	m_btn.wID == IDC_BTN_SETUP_BODYWEIGHT)
+				||	m_btn.wID == IDC_BTN_WAVE2_NEXTDWN)
 			{
 				if(GetParent())
 					GetParent()->PostMessage(WM_TIMEBTN_DOWN,m_btn.wID,0);
@@ -284,8 +283,7 @@ BOOL CDTUpDwnBtn::PreTranslateMessage(MSG* pMsg)
 				||	m_btn.wID == IDC_BTN_WAVE1_NEXTUP
 				||	m_btn.wID == IDC_BTN_WAVE1_NEXTDWN
 				||	m_btn.wID == IDC_BTN_WAVE2_NEXTUP
-				||	m_btn.wID == IDC_BTN_WAVE2_NEXTDWN
-				||	m_btn.wID == IDC_BTN_SETUP_BODYWEIGHT)
+				||	m_btn.wID == IDC_BTN_WAVE2_NEXTDWN)
 			{
 				if(GetParent())
 					GetParent()->PostMessage(WM_TIMEBTN_UP,m_btn.wID,0);
