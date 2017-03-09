@@ -315,7 +315,7 @@ void CWndSubSettingsVolTrigger::setTriggerType(UINT btn)
 		}
 		break;
 	}
-
+	getModel()->getDATAHANDLER()->SetPrevTriggerOptionCONV(TRIGGER_NONE);
 	getModel()->getDATAHANDLER()->setTriggerOptionCONV(m_eTriggerType);
 }
 

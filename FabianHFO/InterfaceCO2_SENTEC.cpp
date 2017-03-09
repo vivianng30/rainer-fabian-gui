@@ -104,6 +104,8 @@ int CInterfaceCO2_SENTEC::Deinit()
 	if (getModel()->getAcuLink()==NULL)
 	{
 		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_ETCO2,ALINK_NOTVALID);
+		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_FREQETCO2,ALINK_NOTVALID);//NEWACULINK
+		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_FICO2,ALINK_NOTVALID);//NEWACULINK
 	}
 	g_eventCO2Data.SetEvent();
 

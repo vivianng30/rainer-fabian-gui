@@ -2128,6 +2128,9 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			if(getModel()->getFOTThread())
 				getModel()->getFOTThread()->stopFOT();
+
+			/*if(AfxGetApp())
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_SETFOCUS_PIMARYVIEW);*/
 		}
 		break;
 	case WM_STOPANDRESET_FOT:
@@ -3651,7 +3654,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			getModel()->getALARMHANDLER()->setAlarm(AL_PRICO_FiO2max);
 
-			int iFiO2=CTlsFloat::Round(((double)getModel()->getDATAHANDLER()->getAppliedFiO2para())/10, 0);
+			int iFiO2=(int)CTlsFloat::Round(((double)getModel()->getDATAHANDLER()->getAppliedFiO2para())/10, 0);
 			CString sz=_T("");
 			sz.Format(_T("*** PRICO: FiO2 at max target: %d"), iFiO2);
 			theApp.getLog()->WriteLine(sz);
@@ -3662,7 +3665,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			getModel()->getALARMHANDLER()->setAlarm(AL_PRICO_FiO2min);
 
-			int iFiO2=CTlsFloat::Round(((double)getModel()->getDATAHANDLER()->getAppliedFiO2para())/10, 0);
+			int iFiO2=(int)CTlsFloat::Round(((double)getModel()->getDATAHANDLER()->getAppliedFiO2para())/10, 0);
 			CString sz=_T("");
 			sz.Format(_T("*** PRICO: Lower minimum FiO2 %d"), iFiO2);
 			theApp.getLog()->WriteLine(sz);
@@ -4477,7 +4480,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 			WORD iR=getModel()->getDATAHANDLER()->getAVGMessureDataResistance();
 			WORD iC=getModel()->getDATAHANDLER()->getAVGMessureDataCompliance();
-			double iTau=(((double)iC/10)*((double)iR/10))/1000;
+			double iTau=(((double)iC/100)*((double)iR/10))/1000;
 
 			CString szTAU=_T("");
 			szTAU.Format(_T("Tau: %0.2f"), CTlsFloat::Round(((double)iTau), 2));

@@ -890,6 +890,9 @@ public:
 	COleDateTime GetHFOdemoTimestamp();
 	void SetHFOdemoTimestamp(COleDateTime dateTime);
 
+	void readAmpCorFactor();
+	double getAmpCorFactor(BYTE iFreq);
+
 private:
 //singleton
 	static CConfiguration* theConfig;
@@ -935,6 +938,8 @@ private:
 	CStringW m_szNetDCUversion;
 
 	COleDateTime m_dtNextServiceDate;
+
+	double dbBufAmpCorFactor[16];
 
 	UINT m_iEthernetPort;
 	UINT m_iTypeTrend1;

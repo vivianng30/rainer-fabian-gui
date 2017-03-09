@@ -162,6 +162,8 @@ CDataHandler::CDataHandler(void)
 	InitializeCriticalSection(&csSavedBreath);
 	InitializeCriticalSection(&csFOTosciState);
 
+	m_ePrevConvTrigger=TRIGGER_NONE;
+
 	m_bLEDdisplay=true;
 
 	m_bPRICOrunning=false;
@@ -4667,6 +4669,7 @@ eTubeSet CDataHandler::GetTubeSet()
 }
 void CDataHandler::SetTubeSet(eTubeSet tube)
 {
+	DEBUGMSG(TRUE, (TEXT("SetTubeSet\r\n")));
 	getModel()->getCONFIG()->SetTubeSet(tube);
 
 	if(tube==TUBE_INFANTFLOW)
@@ -4992,12 +4995,23 @@ void CDataHandler::SetFlowSensorState(eFlowSensorState state)
 		}
 	}
 
+	//reset conventional trigger to previous
+	if(state==FLOWSENSOR_ON)
+	{
+		if(getPrevTriggerOptionCONV()!=TRIGGER_NONE)
+		{
+			setTriggerOptionCONV(getPrevTriggerOptionCONV());
+			SetPrevTriggerOptionCONV(TRIGGER_NONE);
+		}
+	}
+
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 }
 
 void CDataHandler::checkTriggerTubeDependency()
 {
+	DEBUGMSG(TRUE, (TEXT("checkTriggerTubeDependency\r\n")));
 	if(true==getModel()->getVMODEHANDLER()->activeModeIsNMODETrigger())
 	{
 		if(GetTubeSet()==TUBE_MEDIJET)//pressure trigger
@@ -5194,20 +5208,33 @@ void CDataHandler::checkTriggerTubeDependency()
 		if(		GetFlowSensorState()==FLOWSENSOR_MANOFF
 			&&	getTriggerOptionCONV()!=TRIGGER_PRESSURE)
 		{
+			SetPrevTriggerOptionCONV(getTriggerOptionCONV());
 			setTriggerOptionCONV(TRIGGER_PRESSURE);
 			getModel()->Send_MODE_OPTION1();
 
 			if(AfxGetApp() != NULL)
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 		}
-
-		/*if(PARADATA()->GetTriggerCONVPara()==0 && getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()!=AL_OFF)
+	}
+	else if(true==getModel()->getVMODEHANDLER()->activeModeIsSIPPV())
+	{
+		if(		GetFlowSensorState()==FLOWSENSOR_MANOFF
+			&&	getTriggerOptionCONV()!=TRIGGER_PRESSURE)
 		{
-			if(AfxGetApp() != NULL)
-				AfxGetApp()->GetMainWnd()->PostMessage(WM_TURNOFF_APNEA);
-		}*/
-
-		
+			SetPrevTriggerOptionCONV(getTriggerOptionCONV());
+			setTriggerOptionCONV(TRIGGER_PRESSURE);
+			getModel()->Send_MODE_OPTION1();
+		}
+	}
+	else if(true==getModel()->getVMODEHANDLER()->activeModeIsSIMV())
+	{
+		if(		GetFlowSensorState()==FLOWSENSOR_MANOFF
+			&&	getTriggerOptionCONV()!=TRIGGER_PRESSURE)
+		{
+			SetPrevTriggerOptionCONV(getTriggerOptionCONV());
+			setTriggerOptionCONV(TRIGGER_PRESSURE);
+			getModel()->Send_MODE_OPTION1();
+		}
 	}
 }
 void CDataHandler::SetTriggerNMODEenabled()
@@ -8769,7 +8796,14 @@ eTriggereType CDataHandler::getTriggerOptionCONV()
 {
 	return getModel()->getCONFIG()->getTriggerOptionCONV();
 }
-
+void CDataHandler::SetPrevTriggerOptionCONV(eTriggereType type)
+{
+	m_ePrevConvTrigger=type;
+}
+eTriggereType CDataHandler::getPrevTriggerOptionCONV()
+{
+	return m_ePrevConvTrigger;
+}
 void CDataHandler::setTriggerOptionNMODE(eTriggereType type)
 {
 	getModel()->getCONFIG()->setTriggerOptionNMODE(type);
@@ -17239,6 +17273,10 @@ void CDataHandler::SetBodyweight(WORD weightGramm)
 	if(weightGramm>BODYWEIGHTMAXIMUM)
 		weightGramm=BODYWEIGHTMAXIMUM;
 	m_iBodyweightGramm=weightGramm;
+
+	CStringW szBW=_T("");
+	szBW.Format(_T("### BODYWEIGHT %d"), m_iBodyweightGramm);
+	theApp.getLog()->WriteLine(szBW);
 }
 WORD CDataHandler::GetBodyweight()
 {
@@ -17353,4 +17391,9 @@ void CDataHandler::setRemainCO2PumpTime(DWORD time)
 DWORD CDataHandler::getRemainCO2PumpTime()
 {
 	return m_dwRemainCO2PumpTime;
+}
+
+double CDataHandler::getAmpCorFactor(BYTE iFreq)
+{
+	return getModel()->getCONFIG()->getAmpCorFactor(iFreq);
 }

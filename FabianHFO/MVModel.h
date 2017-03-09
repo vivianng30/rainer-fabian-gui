@@ -321,6 +321,7 @@ public:
 	void isMaintenanceNeeded();
 
 	void writeLEAKCOMPENSATIONToLog();
+	void writeALTITUDEToLog();
 
 protected:
 	void checkUniqueID();

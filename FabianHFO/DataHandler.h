@@ -523,6 +523,8 @@ public:
 	
 	void setTriggerOptionCONV(eTriggereType type);
 	eTriggereType getTriggerOptionCONV();
+	void SetPrevTriggerOptionCONV(eTriggereType type);
+	eTriggereType getPrevTriggerOptionCONV();
 
 	void setTriggerOptionNMODE(eTriggereType type);
 	eTriggereType getTriggerOptionNMODE();
@@ -855,6 +857,8 @@ public:
 	void SetBodyweight(WORD weightGramm);
 	WORD GetBodyweight();
 
+	double getAmpCorFactor(BYTE iFreq);
+
 private:
 	//singleton
 	static CDataHandler* theDataHandler;//!< singleton of data handler
@@ -1159,4 +1163,6 @@ private:
 	bool m_bTriggerNMODEenabled;
 
 	WORD m_iBodyweightGramm;
+
+	eTriggereType m_ePrevConvTrigger;
 };

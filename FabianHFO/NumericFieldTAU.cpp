@@ -97,7 +97,7 @@ bool CNumericFieldTAU::drawData(bool bData, bool bFrames, bool bText, bool bLimi
 	//###########################################################################
 	WORD iR=getModel()->getDATAHANDLER()->getAVGMessureDataResistance();
 	WORD iC=getModel()->getDATAHANDLER()->getAVGMessureDataCompliance();
-	double iTau=(((double)iC/10)*((double)iR/10))/1000;
+	double iTau=(((double)iC/100)*((double)iR/10))/1000;
 
 	//if(m_eSize==NUMERICSIZE_1)
 	{

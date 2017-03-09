@@ -1,17 +1,24 @@
 #include "StdAfx.h"
 #include "Configuration.h"
 #include "TlsRegistry.h"
+#include "TlsFile.h"
+#include "TlsIniFile.h"
 #include "MVModel.h"
 #include "acuLink.h"
 
 CConfiguration* CConfiguration::theConfig=0;
 
-
+#define AMPCORFACTORINI       _T("\\FFSDISK\\ampCorFactor.ini")
 
 CConfiguration::CConfiguration()
 {
 	InitializeCriticalSection(&csVentMode);
 	m_pModel=NULL;
+
+	for(int i=0;i<16;i++)
+	{
+		dbBufAmpCorFactor[i] = 0x0000;
+	}
 
 	m_iFOTventDelaytime=0;
 	m_bSpO2ConfigInProgress=false;
@@ -410,6 +417,11 @@ void CConfiguration::DestroyInstance()
 void CConfiguration::Init()
 {
 	m_pModel=NULL;
+
+	for(int i=0;i<16;i++)
+	{
+		dbBufAmpCorFactor[i] = 0x0000;
+	}
 
 	m_iConfigVersion=3005;
 	m_iParaDataHFFlow=0;
@@ -1913,9 +1925,6 @@ void CConfiguration::LoadSettings()
 	}
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
-	
-
-	
 	
 	m_iCO2BaroPressure=getModel()->getI2C()->ReadConfigWord(CO2BAROPRESSURE_16);
 	if(m_iCO2BaroPressure<MIN_BAROPRESSURE || m_iCO2BaroPressure>MAX_BAROPRESSURE)
@@ -3776,7 +3785,7 @@ void CConfiguration::LoadSettings()
 	WORD iAltitude=getModel()->getI2C()->ReadConfigWord(ALTITUDE_16);
 	if(iAltitude<0 || iAltitude>5000)
 	{
-		iAltitude=800;
+		iAltitude=300;
 		getModel()->getI2C()->WriteConfigWord(ALTITUDE_16,iAltitude);
 	}
 
@@ -3966,6 +3975,8 @@ void CConfiguration::LoadSettings()
 	m_bParaDataVLimitOn_IPPV=m_bParaDataVLimitOn_TRIGGER;
 	m_bParaDataVGarantOn_IPPV=m_bParaDataVGarantOn_TRIGGER;
 #endif
+
+	readAmpCorFactor();
 
 	m_wOldConfigVersion=m_iConfigVersion;
 }
@@ -6113,6 +6124,13 @@ void CConfiguration::SetSPO2module(BYTE mod, bool bReinit)
 		{
 			getModel()->getALARMHANDLER()->deleteAlarm(AL_PatAl_SPO2_PImin);
 		}
+
+		//NEWACULINK
+		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_SPO2,ALINK_NOTVALID);
+		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_SPO2_PI,ALINK_NOTVALID);
+		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_SPO2_PR,ALINK_NOTVALID);
+		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_SPO2_SIQ,ALINK_NOTVALID);
+
 	}
 	m_bSpO2ConfigInProgress=false;
 	//DEBUGMSG(TRUE, (TEXT("SetSPO2module end\r\n")));
@@ -6189,6 +6207,8 @@ void CConfiguration::SetCO2module(BYTE mod)//CO2RKU
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2, ALINK_NOTVALID);
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_BAROPRESSURE_CO2, ALINK_NOTVALID);
 		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_ETCO2, ALINK_NOTVALID);
+		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_FREQETCO2,ALINK_NOTVALID);//NEWACULINK
+		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_FICO2,ALINK_NOTVALID);//NEWACULINK
 	}
 
 
@@ -11076,4 +11096,42 @@ void CConfiguration::SetHFOdemoTimestamp(COleDateTime dateTime)
 		dateTime.GetMonth(),
 		dateTime.GetYear());
 	theApp.getLog()->WriteLine(szTxt);
+}
+
+void CConfiguration::readAmpCorFactor()
+{
+	if(CTlsFile::Exists(AMPCORFACTORINI))
+	{
+		//CStringW csTemp=_T("");
+		CString szFactor=_T("");
+		CStringW szFreq=_T("");
+		BYTE byFreq=5;
+		for(int i=0;i<16;i++)
+		{
+			szFreq.Format(_T("%d"),i+5);
+			szFactor=CTlsIniFile::ReadIniStr(_T("FACTOR"), szFreq, _T("1"), AMPCORFACTORINI);
+			UINT iTest= _wtoi(szFactor);
+
+			dbBufAmpCorFactor[i] = (double)(_wtoi(szFactor))/1000;
+
+			//csTemp.Format(_T("factor %s %d:%0.3f\r\n"), szFreq,i,dbBufAmpCorFactor[i]);
+			//DEBUGMSG(TRUE, (csTemp));
+		}
+	}
+	else
+	{
+		for(int i=0;i<16;i++)
+		{
+			dbBufAmpCorFactor[i] = 1;
+
+			theApp.getLog()->WriteLine(_T("### ERROR: AMPCORFACTORINI"));
+		}
+	}
+}
+double CConfiguration::getAmpCorFactor(BYTE iFreq)
+{
+	if(iFreq<5 || iFreq>20)
+		iFreq=5;
+	
+	return dbBufAmpCorFactor[iFreq-5];
 }

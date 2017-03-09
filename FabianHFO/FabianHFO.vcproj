@@ -2863,87 +2863,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\WndNumAvDUOPAP.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumAvNCPAP.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumAvTHERAPIE.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\WndNumConfig.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\WndNumCPAP_Av.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumCPAP_Mech.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\WndNumeric.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumFlowOff_Av.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumFlowOffHFO_Av.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumHFO_Av.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumHFO_Mech.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumIPPV_BtB.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumIPPV_Mech.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumPSV_Av.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumPSV_Mech.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumSIMV_Av.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumSIMV_Mech.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumSIMVPSV_Av.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumSIMVPSV_Mech.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumSIPPV_Av.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumSIPPV_Mech.cpp"
 				>
 			</File>
 			<File
@@ -3917,87 +3841,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\WndNumAvDUOPAP.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumAvNCPAP.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumAvTHERAPIE.h"
-				>
-			</File>
-			<File
 				RelativePath=".\WndNumConfig.h"
 				>
 			</File>
 			<File
-				RelativePath=".\WndNumCPAP_Av.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumCPAP_Mech.h"
-				>
-			</File>
-			<File
 				RelativePath=".\WndNumeric.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumFlowOff_Av.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumFlowOffHFO_Av.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumHFO_Av.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumHFO_Mech.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumIPPV_BtB.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumIPPV_Mech.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumPSV_Av.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumPSV_Mech.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumSIMV_Av.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumSIMV_Mech.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumSIMVPSV_Av.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumSIMVPSV_Mech.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumSIPPV_Av.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WndNumSIPPV_Mech.h"
 				>
 			</File>
 			<File
@@ -6839,6 +6687,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\ampCorFactor.ini"
+			>
+		</File>
 		<File
 			RelativePath=".\fabianhfo.doxygen"
 			>

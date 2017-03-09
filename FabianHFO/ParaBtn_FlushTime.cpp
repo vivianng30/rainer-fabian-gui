@@ -126,7 +126,7 @@ void CParaBtn_FlushTime::Draw(int nState)
 
 			if(m_bEndOfRange)
 				DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_ENDRANGE),-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
-			else
+			else if(m_v.iValue!=0)
 				DrawText(m_hDC,m_pszUnitText,-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
 
 			m_bEndOfRange=false;

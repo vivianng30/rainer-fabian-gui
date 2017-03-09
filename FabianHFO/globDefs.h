@@ -3257,7 +3257,8 @@ enum eTubeSet {
 enum eTriggereType {
 	TRIGGER_VOLUME,		// 0,
 	TRIGGER_FLOW,	// 1, 
-	TRIGGER_PRESSURE	// 2
+	TRIGGER_PRESSURE,	// 2
+	TRIGGER_NONE
 };
 
 enum eTubeConfig {

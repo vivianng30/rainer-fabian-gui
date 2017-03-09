@@ -1025,6 +1025,22 @@ bool CVentModeHandler::activeModeIsIPPV()
 		return false;
 }
 
+bool CVentModeHandler::activeModeIsSIPPV()
+{
+	if(getCurrentActiveMode()==VM_SIPPV)
+		return true;
+	else
+		return false;
+}
+
+bool CVentModeHandler::activeModeIsSIMV()
+{
+	if(getCurrentActiveMode()==VM_SIPPV)
+		return true;
+	else
+		return false;
+}
+
 bool CVentModeHandler::activeModeIsHFO()
 {
 	if(getCurrentActiveMode()==VM_HFO)

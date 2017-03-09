@@ -105,7 +105,7 @@ CMVModel::CMVModel(void)
 	m_szBuildVersion = _T("9.0.0.0");
 #else
 	m_szVersion = _T("5.0.1");
-	m_szBuildVersion = _T("5.0.1.17");
+	m_szBuildVersion = _T("5.0.1.18");
 #endif
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO"),true);
@@ -530,6 +530,7 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	writeConfigVersionToLog();
 	writeBIASFlowStateToLog();
 	writeLEAKCOMPENSATIONToLog();
+	writeALTITUDEToLog();
 
 	startThreads();
 
@@ -576,6 +577,13 @@ void CMVModel::writeVentRangeToLog()
 		theApp.getLog()->WriteLine(_T("### NEONATAL MODE"));
 	else
 		theApp.getLog()->WriteLine(_T("### PEDIATRIC MODE"));
+}
+void CMVModel::writeALTITUDEToLog()
+{
+	WORD iAltitude=getI2C()->ReadConfigWord(ALTITUDE_16);
+	CStringW szAlt=_T("");
+	szAlt.Format(_T("### ALTITUDE %d"), iAltitude);
+	theApp.getLog()->WriteLine(szAlt);
 }
 void CMVModel::writeLEAKCOMPENSATIONToLog()
 {
@@ -1888,17 +1896,17 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 				{
 					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
 					{
-						/*if(false==getVMODEHANDLER()->changeVentMode(VM_IPPV))
-							theApp.getLog()->WriteLine(_T("#HFO:0229"));*/
 						if(false==getVMODEHANDLER()->changeVentMode(VM_SIPPV))
 							theApp.getLog()->WriteLine(_T("#HFO:0230"));
 						else
 						{
-							if(getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
+							getDATAHANDLER()->checkTriggerTubeDependency();
+							/*if(getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
 							{
+								getDATAHANDLER()->SetPrevTriggerOptionCONV(getDATAHANDLER()->getTriggerOptionCONV());
 								getDATAHANDLER()->setTriggerOptionCONV(TRIGGER_PRESSURE);
 							}
-							Send_MODE_OPTION1();
+							Send_MODE_OPTION1();*/
 						}
 					}
 				}
@@ -1907,17 +1915,17 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 				{
 					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
 					{
-						/*if(false==getVMODEHANDLER()->changeVentMode(VM_IPPV))
-							theApp.getLog()->WriteLine(_T("#HFO:0230"));*/
 						if(false==getVMODEHANDLER()->changeVentMode(VM_SIMV))
 							theApp.getLog()->WriteLine(_T("#HFO:0230"));
 						else
 						{
-							if(getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
+							getDATAHANDLER()->checkTriggerTubeDependency();
+							/*if(getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
 							{
+								getDATAHANDLER()->SetPrevTriggerOptionCONV(getDATAHANDLER()->getTriggerOptionCONV());
 								getDATAHANDLER()->setTriggerOptionCONV(TRIGGER_PRESSURE);
 							}
-							Send_MODE_OPTION1();
+							Send_MODE_OPTION1();*/
 						}
 					}
 				}
@@ -1926,14 +1934,13 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 				{
 					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
 					{
-						/*if(false==getVMODEHANDLER()->changeVentMode(VM_IPPV))
-							theApp.getLog()->WriteLine(_T("#HFO:0231"));*/
-
-						if(getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
+						getDATAHANDLER()->checkTriggerTubeDependency();
+						/*if(getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
 						{
+							getDATAHANDLER()->SetPrevTriggerOptionCONV(getDATAHANDLER()->getTriggerOptionCONV());
 							getDATAHANDLER()->setTriggerOptionCONV(TRIGGER_PRESSURE);
 						}
-						Send_MODE_OPTION1();
+						Send_MODE_OPTION1();*/
 					}
 				}
 				break;
@@ -1941,14 +1948,13 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 				{
 					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
 					{
-						/*if(false==getVMODEHANDLER()->changeVentMode(VM_IPPV))
-							theApp.getLog()->WriteLine(_T("#HFO:0232"));*/
-
-						if(getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
+						getDATAHANDLER()->checkTriggerTubeDependency();
+						/*if(getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
 						{
+							getDATAHANDLER()->SetPrevTriggerOptionCONV(getDATAHANDLER()->getTriggerOptionCONV());
 							getDATAHANDLER()->setTriggerOptionCONV(TRIGGER_PRESSURE);
 						}
-						Send_MODE_OPTION1();
+						Send_MODE_OPTION1();*/
 					}
 				}
 				break;

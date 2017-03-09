@@ -92,7 +92,6 @@ int CInterfaceCO2_MASIMO::Deinit()
 	{
 		getModel()->getDATAHANDLER()->setMessureDataAVG(ALINK_MSMNT_FREQETCO2,0);
 		getModel()->getDATAHANDLER()->setMessureDataBTB(ALINK_MSMNT_FREQETCO2,0);
-
 	}
 	getModel()->getDATAHANDLER()->setMessureDataAVG(ALINK_MSMNT_ETCO2,m_iETCO2);
 	getModel()->getDATAHANDLER()->setMessureDataAVG(ALINK_MSMNT_FICO2,m_iFICO2);
@@ -103,6 +102,8 @@ int CInterfaceCO2_MASIMO::Deinit()
 	if (getModel()->getAcuLink()==NULL)
 	{
 		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_ETCO2,ALINK_NOTVALID);
+		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_FREQETCO2,ALINK_NOTVALID);//NEWACULINK
+		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_FICO2,ALINK_NOTVALID);//NEWACULINK
 	}
 	g_eventCO2Data.SetEvent();
 

@@ -171,6 +171,8 @@ void CWndTrendTimeaxis::OnDestroy()
 
 void CWndTrendTimeaxis::SetTimeRange(COleDateTime dtStartTime, COleDateTime dtEndTime,int iOffset, int iTimeSpan)
 {
+	DEBUGMSG(TRUE, (TEXT("CWndTrendTimeaxis::SetTimeRange\r\n")));
+
 	m_dtStartTime=dtStartTime;
 	m_dtEndTime=dtEndTime;
 

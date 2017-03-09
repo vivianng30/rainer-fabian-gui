@@ -1628,6 +1628,10 @@ DWORD CThreadFOT::FOTData(void)
 
 	theApp.getLog()->WriteLine(_T("#THR:FOT end"));
 	//DEBUGMSG(TRUE, (TEXT("CThreadFOT::FOTData end\r\n")));
+	
+
+	if(AfxGetApp())
+		AfxGetApp()->GetMainWnd()->PostMessage(WM_SETFOCUS_PIMARYVIEW);
 
 	return 0;
 }

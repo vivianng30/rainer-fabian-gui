@@ -1018,6 +1018,7 @@
 #define IDS_PARA_LEAKCOMP               10382
 #define IDS_PARA_FREQBACKUP             10383
 #define IDS_PARA_VTEKG                  10384
+#define IDS_PARA_VTEHFOKG               10385
 #define IDS_BTN_SELPRESSUREGRAPH        10400
 #define IDS_BTN_SELFLOWGRAPH            10401
 #define IDS_BTN_SELVOLUMEGRAPH          10402

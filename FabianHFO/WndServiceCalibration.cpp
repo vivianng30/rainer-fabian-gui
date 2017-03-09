@@ -1481,6 +1481,9 @@ LRESULT CWndServiceCalibration::WindowProc(UINT message, WPARAM wParam, LPARAM l
 					m_iAltitude=wParam*100;
 					double iCorrFactor=CalcCorrectionFactor(m_iAltitude);
 					getModel()->getI2C()->WriteConfigWord(ALTITUDE_16,m_iAltitude);
+					CStringW szAlt=_T("");
+					szAlt.Format(_T("### ALTITUDE %d"), m_iAltitude);
+					theApp.getLog()->WriteLine(szAlt);
 					getModel()->getSPI()->Send_FLOW_CORFACTOR_PED(iCorrFactor*m_iFCOR_PED);					
 					getModel()->getSPI()->Send_FLOW_CORFACTOR_NEO(iCorrFactor*m_iFCOR_NEO);
 					return 1;

@@ -7,6 +7,40 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50118 Version 5.0.1.18
+ * @date 2017-03-09
+ * @verbatim
+	//todo FOTLANGUAGE
+	- new acuLink parameters implemented //NEWACULINK
+		ALINK_MSMNT_TAU
+		ALINK_MSMNT_FREQETCO2
+		ALINK_MSMNT_FICO2
+		ALINK_MSMNT_SPO2
+		ALINK_MSMNT_SPO2_PI
+		ALINK_MSMNT_SPO2_PR
+		ALINK_MSMNT_SPO2_SIQ
+		ALINK_MSMNT_RSBI
+		ALINK_MSMNT_VTEKG
+	- Dynamic Compliance, Resolution for acuLink: 0.1 (0.0 – 500.0 ml/mbar), Resolution from PIC: 0.01 !!!
+	- AmplitudeCorrectionFactor implemented
+	- Altitude written to log file
+	- focus after FOT sequence fixed
+	- FOT licensing working correct now
+	- trend time update fixed (ITEM-2)
+	- altitude setting default changed to 300 (ITEM-3)
+	- O2field fixed (ITEM-5)
+	- bodyweight logge to file (ITEM-6)
+	- bodyweight setting deleted if range is changed(ITEM-7)
+	- FOT return button mirrored (ITEM-8)
+	- FS buttons displayed and greyed (ITEM-10)
+	- FS calibration dependent text not displayed in Therapy mode (ITEM-11)
+	- FS cal required suppressed when FS is off (ITEM-12)
+	- no trigger line in waves if pressure trigger is selected (ITEM-14)
+	- O2 flush off (ITEM-15)
+	- last conv trigger will be set after FS is enabled again (ITEM-17)
+	- amplitude correction factor implemented
+ @endverbatim
+ *
  * @subsection ver50117 Version 5.0.1.17
  * @date 2017-02-24
  * @verbatim

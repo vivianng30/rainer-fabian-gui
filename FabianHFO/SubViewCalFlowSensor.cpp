@@ -1988,6 +1988,8 @@ LRESULT CSubViewCalFlowSensor::WindowProc(UINT message, WPARAM wParam, LPARAM lP
 							m_bFlowCheckStarted=true;
 
 							if(m_pcFlowOnOff)
+								m_pcFlowOnOff->ShowWindow(SW_SHOW);
+							if(m_pcFlowOnOff)
 								m_pcFlowOnOff->EnableWindow(FALSE);
 
 							getModel()->getDATAHANDLER()->SetFlowSensorCalibrating(true);
@@ -2076,6 +2078,8 @@ void CSubViewCalFlowSensor::SetOneButtonDepressed_NeoPed(int btnID)
 		getModel()->getCONFIG()->SetVentRange(PEDIATRIC);
 	}
 
+	getModel()->getDATAHANDLER()->SetBodyweight(0);
+	m_pbtnBodyweight->RefreshText(_T("--"));
 	//m_bNeoPedConfirmed=false;
 }
 void CSubViewCalFlowSensor::SetOneButtonPreset_NeoPed(int btnID)
@@ -2102,9 +2106,14 @@ void CSubViewCalFlowSensor::ShowFlowBtns(bool disable)
 	if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_AUTOOFF)
 	{
 		if(m_pcFlowOnOff)
-			m_pcFlowOnOff->ShowWindow(SW_HIDE);
+			m_pcFlowOnOff->ShowWindow(SW_SHOW);
+		if(m_pcFlowOnOff)
+			m_pcFlowOnOff->EnableWindow(FALSE);
+
 		if(m_pcFlowCalExt)
-			m_pcFlowCalExt->ShowWindow(SW_HIDE);
+			m_pcFlowCalExt->ShowWindow(SW_SHOW);
+		if(m_pcFlowCalExt)
+			m_pcFlowCalExt->EnableWindow(FALSE);
 	}
 	else if(getModel()->getCONFIG()->GetCurMode()==VM_THERAPIE
 		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_THERAPIE
@@ -2114,10 +2123,14 @@ void CSubViewCalFlowSensor::ShowFlowBtns(bool disable)
 		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP*/)//rku,PRETRIGGER
 	{
 		if(m_pcFlowOnOff)
-			m_pcFlowOnOff->ShowWindow(SW_HIDE);
+			m_pcFlowOnOff->ShowWindow(SW_SHOW);
+		if(m_pcFlowOnOff)
+			m_pcFlowOnOff->EnableWindow(FALSE);
+
 		if(m_pcFlowCalExt)
-			m_pcFlowCalExt->ShowWindow(SW_HIDE);
-		//m_pcFlowCalInt->ShowWindow(SW_HIDE);
+			m_pcFlowCalExt->ShowWindow(SW_SHOW);
+		if(m_pcFlowCalExt)
+			m_pcFlowCalExt->EnableWindow(FALSE);
 	}
 	else if(	(getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
 				||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_NCPAP
@@ -2126,10 +2139,14 @@ void CSubViewCalFlowSensor::ShowFlowBtns(bool disable)
 				&& (getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET))//rku,PRETRIGGER
 	{
 		if(m_pcFlowOnOff)
-			m_pcFlowOnOff->ShowWindow(SW_HIDE);
+			m_pcFlowOnOff->ShowWindow(SW_SHOW);
+		if(m_pcFlowOnOff)
+			m_pcFlowOnOff->EnableWindow(FALSE);
+
 		if(m_pcFlowCalExt)
-			m_pcFlowCalExt->ShowWindow(SW_HIDE);
-		//m_pcFlowCalInt->ShowWindow(SW_HIDE);
+			m_pcFlowCalExt->ShowWindow(SW_SHOW);
+		if(m_pcFlowCalExt)
+			m_pcFlowCalExt->EnableWindow(FALSE);
 	}
 	else if(disable)
 	{
@@ -2142,9 +2159,6 @@ void CSubViewCalFlowSensor::ShowFlowBtns(bool disable)
 			m_pcFlowCalExt->ShowWindow(SW_SHOW);
 		if(m_pcFlowCalExt)
 			m_pcFlowCalExt->EnableWindow(FALSE);
-
-		//m_pcFlowCalInt->ShowWindow(SW_SHOW);
-		//m_pcFlowCalInt->EnableWindow(FALSE);
 	}
 	else
 	{
@@ -2169,9 +2183,6 @@ void CSubViewCalFlowSensor::ShowFlowBtns(bool disable)
 				m_pcFlowCalExt->ShowWindow(SW_SHOW);
 			if(m_pcFlowCalExt)
 				m_pcFlowCalExt->EnableWindow(TRUE);
-
-			//m_pcFlowCalInt->ShowWindow(SW_SHOW);
-			//m_pcFlowCalInt->EnableWindow(FALSE);
 		}
 		else
 		{
@@ -2184,9 +2195,6 @@ void CSubViewCalFlowSensor::ShowFlowBtns(bool disable)
 				m_pcFlowCalExt->ShowWindow(SW_SHOW);
 			if(m_pcFlowCalExt)
 				m_pcFlowCalExt->EnableWindow(FALSE);
-
-			//m_pcFlowCalInt->ShowWindow(SW_SHOW);
-			//m_pcFlowCalInt->EnableWindow(FALSE);
 		}
 	}
 }
@@ -2346,6 +2354,8 @@ DWORD CSubViewCalFlowSensor::CheckFlowSensor()
 			GetParent()->PostMessage(WM_SET_SETUPTIMER);
 		}
 
+		if(m_pcFlowOnOff)
+			m_pcFlowOnOff->ShowWindow(SW_SHOW);
 		if(m_pcFlowOnOff)
 			m_pcFlowOnOff->EnableWindow(TRUE);
 

@@ -220,6 +220,8 @@ int CInterfaceCO2_CAPNOSTAT::Deinit()
 	if (getModel()->getAcuLink()==NULL)
 	{
 		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_ETCO2,ALINK_NOTVALID);
+		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_FREQETCO2,ALINK_NOTVALID);//NEWACULINK
+		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_FICO2,ALINK_NOTVALID);//NEWACULINK
 	}
 	g_eventCO2Data.SetEvent();
 
@@ -249,6 +251,8 @@ void CInterfaceCO2_CAPNOSTAT::InitializeSequenz()
 	if (getModel()->getAcuLink()==NULL)
 	{
 		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_ETCO2,ALINK_NOTVALID);
+		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_FREQETCO2,ALINK_NOTVALID);//NEWACULINK
+		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_FICO2,ALINK_NOTVALID);//NEWACULINK
 	}
 	getModel()->getDATAHANDLER()->resetCO2MessureData();
 	getModel()->getSPI()->ResetCO2Value();

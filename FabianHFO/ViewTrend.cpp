@@ -365,7 +365,7 @@ void CViewTrend::loadTrendData(BYTE type, eTrend trend)
 {
 	Sleep(0);
 
-	DEBUGMSG(TRUE, (TEXT("loadTrendData\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("loadTrendData\r\n")));
 
 	UINT iFactor=1;
 	int nMax=0;
@@ -503,7 +503,7 @@ void CViewTrend::loadTrendData(BYTE type, eTrend trend)
 		break;
 	}
 
-	DEBUGMSG(TRUE, (TEXT("LoadTrendData %s\r\n"),szTrendFolder));
+	//DEBUGMSG(TRUE, (TEXT("LoadTrendData %s\r\n"),szTrendFolder));
 
 	try
 	{
@@ -511,7 +511,7 @@ void CViewTrend::loadTrendData(BYTE type, eTrend trend)
 		szFile.Format(_T("%s%d%s"),szTrendFolder,wFilenum, IDS_TRD_FILE_ID);
 		bFileExists=CTlsFile::Exists(szFile);
 
-		DEBUGMSG(TRUE, (TEXT("LoadTrendData1 %s\r\n"),szFile));
+		//DEBUGMSG(TRUE, (TEXT("LoadTrendData1 %s\r\n"),szFile));
 
 
 		while(		bFileExists 
@@ -547,7 +547,7 @@ void CViewTrend::loadTrendData(BYTE type, eTrend trend)
 				wFilenum=MAXTRENDFILES;
 			szFile.Format(_T("%s%d%s"),szTrendFolder,wFilenum, IDS_TRD_FILE_ID);
 			bFileExists=CTlsFile::Exists(szFile);
-			DEBUGMSG(TRUE, (TEXT("LoadTrendData2 %s\r\n"),szFile));
+			//DEBUGMSG(TRUE, (TEXT("LoadTrendData2 %s\r\n"),szFile));
 			nMax++;
 
 			Sleep(0);
@@ -793,7 +793,7 @@ CStringW CViewTrend::GetNameOfTrendType(UINT type)
 // **************************************************************************
 int CViewTrend::GetMaxScaleOfTrendType(UINT type)
 {
-	DEBUGMSG(TRUE, (TEXT("GetMaxScaleOfTrendType\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("GetMaxScaleOfTrendType\r\n")));
 	int iYscale=0;
 	switch(type)
 	{
@@ -1928,6 +1928,7 @@ LRESULT CViewTrend::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 		break;
 	case WM_TREND_DRAWDATA:
 		{
+			DEBUGMSG(TRUE, (TEXT("WM_TREND_DRAWDATA\r\n")));
 			EnterCriticalSection(&csTrends);
 			if(m_pcTrend1Diagram && m_pcTrend2Diagram && m_pcTrend3Diagram)
 			{
@@ -2101,6 +2102,7 @@ LRESULT CViewTrend::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 		break;
 	case WM_START_TREND:
 		{
+			DEBUGMSG(TRUE, (TEXT("WM_START_TREND\r\n")));
 			if(m_pcTrend1Diagram && m_pcTrend2Diagram && m_pcTrend3Diagram && !m_bExit)
 			{
 				EnterCriticalSection(&csTrends);
@@ -2135,6 +2137,15 @@ LRESULT CViewTrend::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 					m_pcTrend3Diagram->SetTrendCursorPos(0,0);
 				}
 				
+				if(m_pWndTrendTimeaxis!=NULL && m_pcTrend1Diagram!=NULL)
+				{
+					COleDateTime tmStartTime=m_pcTrend1Diagram->GetStartTime();
+					COleDateTimeSpan tsMax;
+					tsMax.SetDateTimeSpan(0, 0, TREND_5DAYS, 0);
+					COleDateTime tmEndTime=tmStartTime-tsMax;
+
+					m_pWndTrendTimeaxis->SetTimeRange(tmStartTime,tmEndTime,m_pcTrend1Diagram->GetOffsetMinutes(), m_pcTrend1Diagram->GetTrendSpan());
+				}
 
 				LeaveCriticalSection(&csTrends);
 			}
@@ -2143,7 +2154,7 @@ LRESULT CViewTrend::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 		break;
 	case WM_REDRAW_DIAGRAMM:
 		{
-			
+			DEBUGMSG(TRUE, (TEXT("WM_REDRAW_DIAGRAMM\r\n")));
 			EnterCriticalSection(&csTrends);
 
 			switch(wParam)
@@ -3333,7 +3344,7 @@ void CViewTrend::DrawTrend1()
 	int iValuesZumEinlesen=(m_iTrendSpan*VALUESPERMINUTE)+1;
 	int iStartPoint=m_pcTrend1Diagram->GetOffsetMinutes()*VALUESPERMINUTE;
 
-	DEBUGMSG(TRUE, (TEXT("DrawTrend1 %d %d\r\n"),iValuesZumEinlesen,iStartPoint));
+	//DEBUGMSG(TRUE, (TEXT("DrawTrend1 %d %d\r\n"),iValuesZumEinlesen,iStartPoint));
 
 	UINT numitems=iValuesZumEinlesen;
 	m_pPlotItemsTrend1=new G_PLOTITEMSSTRUCT_TD[numitems];
@@ -3490,7 +3501,7 @@ void CViewTrend::DrawTrend1()
 		m_pcTrend1Diagram->DoFunction(m_lpfsTrend1);
 	}
 
-	DEBUGMSG(TRUE, (TEXT("end DrawTrend1\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("end DrawTrend1\r\n")));
 }
 // **************************************************************************
 // 
@@ -3523,7 +3534,7 @@ void CViewTrend::DrawTrend2()
 	int iValuesZumEinlesen=(m_iTrendSpan*VALUESPERMINUTE)+1;
 	int iStartPoint=m_pcTrend2Diagram->GetOffsetMinutes()*VALUESPERMINUTE;
 
-	DEBUGMSG(TRUE, (TEXT("DrawTrend2 %d %d\r\n"),iValuesZumEinlesen,iStartPoint));
+	//DEBUGMSG(TRUE, (TEXT("DrawTrend2 %d %d\r\n"),iValuesZumEinlesen,iStartPoint));
 
 
 	UINT numitems=iValuesZumEinlesen;
@@ -3687,7 +3698,7 @@ void CViewTrend::DrawTrend2()
 		m_pcTrend2Diagram->DoFunction(m_lpfsTrend2);
 	}
 
-	DEBUGMSG(TRUE, (TEXT("end DrawTrend2\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("end DrawTrend2\r\n")));
 	
 }
 // **************************************************************************
@@ -3720,7 +3731,7 @@ void CViewTrend::DrawTrend3()
 	int iValuesZumEinlesen=(m_iTrendSpan*VALUESPERMINUTE)+1;
 	int iStartPoint=m_pcTrend3Diagram->GetOffsetMinutes()*VALUESPERMINUTE;
 
-	DEBUGMSG(TRUE, (TEXT("DrawTrend3 %d %d\r\n"),iValuesZumEinlesen,iStartPoint));
+	//DEBUGMSG(TRUE, (TEXT("DrawTrend3 %d %d\r\n"),iValuesZumEinlesen,iStartPoint));
 
 
 	UINT numitems=iValuesZumEinlesen;
@@ -3880,7 +3891,7 @@ void CViewTrend::DrawTrend3()
 		m_pcTrend3Diagram->DoFunction(m_lpfsTrend3);
 	}
 
-	DEBUGMSG(TRUE, (TEXT("end DrawTrend3\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("end DrawTrend3\r\n")));
 }
 
 

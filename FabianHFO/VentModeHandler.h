@@ -42,6 +42,8 @@ public:
 	bool activeModeIsDUOPAP();
 	bool activeModeIsTHERAPY();
 	bool activeModeIsIPPV();
+	bool activeModeIsSIPPV();
+	bool activeModeIsSIMV();
 	bool viewModeIsAnyNMODE();
 	bool curModeIsVolumeSupportMode();
 

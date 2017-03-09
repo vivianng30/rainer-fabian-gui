@@ -1811,9 +1811,13 @@ void CTrendDiagramm::DrawTrendCursor(bool bClear)
 		else
 			wsprintf(psz,_T("%0.1f"),CTlsFloat::Round(((double)iVal)/1000, 1));
 	}
-	else if(m_iTrendType==TREND_VTE || m_iTrendType==TREND_PMEAN || m_iTrendType==TREND_COMPLIANCE || m_iTrendType==TREND_RSBI)
+	else if(m_iTrendType==TREND_VTE || m_iTrendType==TREND_PMEAN || m_iTrendType==TREND_RSBI)
 	{
 		wsprintf(psz,_T("%0.1f"),CTlsFloat::Round(((double)iVal)/10, 1));
+	}
+	else if(m_iTrendType==TREND_COMPLIANCE)
+	{
+		wsprintf(psz,_T("%0.2f"),CTlsFloat::Round(((double)iVal)/100, 2));
 	}
 	else if(m_iTrendType==TREND_RESISTANCE || m_iTrendType==TREND_FIO2)//newtrend
 	{
@@ -1840,7 +1844,7 @@ void CTrendDiagramm::DrawTrendCursor(bool bClear)
 }
 void CTrendDiagramm::SetTrendCursorPos(int iCurTrendCursorPos, int iPosbufferX)
 {
-	DEBUGMSG(TRUE, (TEXT("SetTrendCursorPos %d %d\r\n"),iCurTrendCursorPos,iPosbufferX));
+	//DEBUGMSG(TRUE, (TEXT("SetTrendCursorPos %d %d\r\n"),iCurTrendCursorPos,iPosbufferX));
 
 	if(iCurTrendCursorPos==TREND_LEFTRANGE && iPosbufferX==0)
 	{
@@ -2888,11 +2892,11 @@ void CTrendDiagramm::DrawYAxisNumbers(CDC* pDC)
 		{
 			if(YAxisTickSpace*n<1.0)
 			{
-				astring.Format(_T("%.2g"),CTlsFloat::Round(((double)(YAxisTickSpace*n))/10, 1));
+				astring.Format(_T("%.2g"),CTlsFloat::Round(((double)(YAxisTickSpace*n))/100, 1));
 			}
 			else
 			{
-				astring.Format(_T("%.4g"),CTlsFloat::Round(((double)(YAxisTickSpace*n))/10, 1));
+				astring.Format(_T("%.4g"),CTlsFloat::Round(((double)(YAxisTickSpace*n))/100, 1));
 			}
 		}
 		else if(m_iTrendType==TREND_FIO2)//newtrend
@@ -2939,11 +2943,11 @@ void CTrendDiagramm::DrawYAxisNumbers(CDC* pDC)
 		{
 			if(YAxisTickSpace*n<1.0)
 			{
-				astring.Format(_T("%.2g"),CTlsFloat::Round(((double)(YAxisTickSpace*n*(-1)))/10, 1));
+				astring.Format(_T("%.2g"),CTlsFloat::Round(((double)(YAxisTickSpace*n*(-1)))/100, 1));
 			}
 			else
 			{
-				astring.Format(_T("%.4g"),CTlsFloat::Round(((double)(YAxisTickSpace*n*(-1)))/10, 1));
+				astring.Format(_T("%.4g"),CTlsFloat::Round(((double)(YAxisTickSpace*n*(-1)))/100, 1));
 			}
 		}
 		else if(m_iTrendType==TREND_FIO2)//newtrend
@@ -4732,17 +4736,17 @@ double CTrendDiagramm::GetHigherYAxisMax()
 
 			while (dValue>dHigherAxisMax)
 			{
-				if(dHigherAxisMax<10)
+				if(dHigherAxisMax<100)
 				{
-					dHigherAxisMax=10;
+					dHigherAxisMax=100;
 				}
-				else if(dHigherAxisMax<25)
+				else if(dHigherAxisMax<250)
 				{
-					dHigherAxisMax=25;
+					dHigherAxisMax=250;
 				}
 				else /*if(dHigherAxisMax<100)*/
 				{
-					dHigherAxisMax=dHigherAxisMax+25;
+					dHigherAxisMax=dHigherAxisMax+250;
 				}
 			}
 		}
@@ -5209,21 +5213,21 @@ double CTrendDiagramm::GetLowerYAxisMax()
 
 			while (dValue<dLowerAxisMax)
 			{
-				if(dLowerAxisMax>100)
+				if(dLowerAxisMax>1000)
 				{
-					dLowerAxisMax=dLowerAxisMax-20;
+					dLowerAxisMax=dLowerAxisMax-200;
 				}
-				else if(dLowerAxisMax>25)
+				else if(dLowerAxisMax>250)
 				{
-					dLowerAxisMax=dLowerAxisMax-25;
+					dLowerAxisMax=dLowerAxisMax-250;
 				}
-				else if(dLowerAxisMax>10)
+				else if(dLowerAxisMax>100)
 				{
-					dLowerAxisMax=10;
+					dLowerAxisMax=100;
 				}
 				else
 				{
-					dTemp=5;
+					dTemp=50;
 					if(dValue<dTemp)
 						dLowerAxisMax=dTemp;
 
@@ -5634,17 +5638,17 @@ double CTrendDiagramm::GetNextHigherYAxisMax()
 		break;
 	case TREND_COMPLIANCE:
 		{
-			if(m_dYAxisMax<10)
+			if(m_dYAxisMax<100)
 			{
-				dHigherAxisMax=10;
+				dHigherAxisMax=100;
 			}
-			else if(m_dYAxisMax<25)
+			else if(m_dYAxisMax<250)
 			{
-				dHigherAxisMax=25;
+				dHigherAxisMax=250;
 			}
-			else if(m_dYAxisMax<100)
+			else if(m_dYAxisMax<1000)
 			{
-				dHigherAxisMax=m_dYAxisMax+25;
+				dHigherAxisMax=m_dYAxisMax+250;
 			}
 		}
 		break;
@@ -5853,21 +5857,21 @@ bool CTrendDiagramm::CanDecreaseYScale()
 		break;
 	case TREND_COMPLIANCE:
 		{
-			if(m_dYAxisMax>100)
+			if(m_dYAxisMax>1000)
 			{
-				dLowerAxisMax=m_dYAxisMax-20;
+				dLowerAxisMax=m_dYAxisMax-200;
 			}
-			else if(m_dYAxisMax>25)
+			else if(m_dYAxisMax>250)
 			{
-				dLowerAxisMax=m_dYAxisMax-25;
+				dLowerAxisMax=m_dYAxisMax-250;
 			}
-			else if(m_dYAxisMax>10)
+			else if(m_dYAxisMax>100)
 			{
-				dLowerAxisMax=10;
+				dLowerAxisMax=100;
 			}
 			else
 			{
-				dLowerAxisMax=5;
+				dLowerAxisMax=50;
 			}
 
 		}
@@ -6088,21 +6092,21 @@ double CTrendDiagramm::GetNextLowerYAxisMax()
 		break;
 	case TREND_COMPLIANCE:
 		{
-			if(m_dYAxisMax>100)
+			if(m_dYAxisMax>1000)
 			{
-				dLowerAxisMax=m_dYAxisMax-20;
+				dLowerAxisMax=m_dYAxisMax-200;
 			}
-			else if(m_dYAxisMax>25)
+			else if(m_dYAxisMax>250)
 			{
-				dLowerAxisMax=m_dYAxisMax-25;
+				dLowerAxisMax=m_dYAxisMax-250;
 			}
-			else if(m_dYAxisMax>10)
+			else if(m_dYAxisMax>100)
 			{
-				dLowerAxisMax=10;
+				dLowerAxisMax=100;
 			}
 			else
 			{
-				dLowerAxisMax=5;
+				dLowerAxisMax=50;
 			}
 		}
 		break;

@@ -885,8 +885,16 @@ void CSubParaBtn::DrawSUBPARA_O2REAL(int nState)
 		if(		getModel()->getDATAHANDLER()->GetO2SensorState()==OXYSENS_OFF
 			||	getModel()->getDATAHANDLER()->GetOxySensorCalState()==OS_REPLACE)
 		{
-			if(m_pcWarning_Up)
-				m_pcWarning_Up->Draw(m_hDC,65,m_rcClient.top+5);
+			if(bPRICOrunning)
+			{
+				if(m_pcWarning_Dw)
+					m_pcWarning_Dw->Draw(m_hDC,65,m_rcClient.top+5);
+			}
+			else
+			{
+				if(m_pcWarning_Up)
+					m_pcWarning_Up->Draw(m_hDC,65,m_rcClient.top+5);
+			}
 		}
 
 
@@ -1005,9 +1013,11 @@ void CSubParaBtn::DrawSUBPARA_O2FLUSH(int nState)
 		DrawText(m_hDC,psz,-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);
 	}
 
-	SelectObject(m_hDC,g_hf7AcuNorm);
-
-	DrawText(m_hDC,m_pszUnitText,-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+	if(m_v.iValue!=0)
+	{
+		SelectObject(m_hDC,g_hf7AcuNorm);
+		DrawText(m_hDC,m_pszUnitText,-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+	}
 
 	SetTextColor(m_hDC,nPrevTxtColor);
 	SetBkMode(m_hDC,nBkMode);

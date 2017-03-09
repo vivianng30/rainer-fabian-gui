@@ -1042,20 +1042,27 @@ void CWndServiceLicensing::Draw()
 		}
 		
 
-		if(getModel()->getFOTThread()->getFOTstate()==FOT_OFF)
+		if(getModel()->getFOTThread())
 		{
-			m_pcDelFOT->ShowWindow(SW_SHOW);
+			if(getModel()->getFOTThread()->getFOTstate()==FOT_OFF)
+			{
+				m_pcDelFOT->ShowWindow(SW_SHOW);
+			}
+			else
+			{
+				m_pcDelFOT->ShowWindow(SW_HIDE);
+
+				rc.left = 600;  
+				rc.right  = 760;  
+				rc.top = 15;  
+				rc.bottom = 63;
+				cs = _T("- FOT active -");
+				DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+			}
 		}
 		else
 		{
-			m_pcDelFOT->ShowWindow(SW_HIDE);
-
-			rc.left = 600;  
-			rc.right  = 760;  
-			rc.top = 15;  
-			rc.bottom = 63;
-			cs = _T("- FOT active -");
-			DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+			m_pcDelFOT->ShowWindow(SW_SHOW);
 		}
 	}
 	else

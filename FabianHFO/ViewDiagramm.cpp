@@ -1601,7 +1601,7 @@ bool CViewDiagramm::CreateWndGraphFlow(int x, int y, int nWidth, int nHeight)
 			
 			m_pDiagrammFlow->SetXAxisTickSpace(GetXAxisTimeTickSpace());
 
-			if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_VOLUME && getModel()->getVMODEHANDLER()->activeModeIsCONVTrigger())
+			if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_FLOW && getModel()->getVMODEHANDLER()->activeModeIsCONVTrigger())
 			{
 				m_pDiagrammFlow->SetTriggerThreshold(m_iTrigThreshold);
 			}
@@ -4421,7 +4421,7 @@ LRESULT CViewDiagramm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 			{
 				if(getModel()->getVMODEHANDLER()->activeModeIsCONVTrigger()==true)
 				{
-					if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_VOLUME)
+					if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_FLOW)
 					{
 						int iTemp=getModel()->getDATAHANDLER()->getAVGMessureDataTrigger();
 						if(iTemp!=m_iTrigThreshold)
@@ -10174,7 +10174,7 @@ int CViewDiagramm::redrawFlowGraph()
 		{
 			if(getModel()->getVMODEHANDLER()->activeModeIsCONVTrigger()==true)
 			{
-				if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_VOLUME)
+				if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_FLOW)
 				{
 					m_iTrigThreshold=getModel()->getDATAHANDLER()->getAVGMessureDataTrigger();
 					m_pDiagrammFlow->SetTriggerThreshold(m_iTrigThreshold);

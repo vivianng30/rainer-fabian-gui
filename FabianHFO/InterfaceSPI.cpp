@@ -49,7 +49,7 @@
 #define	MesData_T_insp_PSV_Min	0
 #define	MesData_T_insp_PSV_Max	5000
 #define	MesData_Dyn_Compl_Min	0
-#define	MesData_Dyn_Compl_Max	5000
+#define	MesData_Dyn_Compl_Max	50000
 #define	MesData_C20C_Min		0
 #define	MesData_C20C_Max		999
 #define	MesData_Resistance_Min	0
@@ -1331,6 +1331,19 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 						byHiProx=byBuffer[i];
 						i++;
 						iRes=MAKEWORD(byLoProx,byHiProx);
+						
+						//AmplitudeCorrectionFactor
+						if(bHFOmode)
+						{
+							double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
+							//double iPmitt=getModel()->getDATAHANDLER()->getBTBMessureDataPmitt();
+							double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+							if(iAmpCorFactor==0)
+								iAmpCorFactor=1;
+							double iFactor = 1/iAmpCorFactor;
+
+							iRes=(SHORT)(((double)iRes-iPmitt)*iFactor)+iPmitt;
+						}
 						_pBufData.iValPressure=iRes;
 
 						iCountValues++;
@@ -1493,90 +1506,65 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 							}
 						}
 
-						/*if(bHFOmode)
+						if(_pBufData.bATZ==true)
 						{
-							if(_pBufData.bATZ==true && ullLastMonitorData+300<getTickCount64())
+							int iRes=0;
+							if(isSafeTickCountDelayExpired(dwLastGetMessureData, 200))
 							{
-								int iRes=GetMessureData();
-								if(iRes!=0)
-								{
-									m_bShowReadSPIDataError=false;
-								}
-								
-								bMonitorData=true;
-								ullLastMonitorData=getTickCount64();
-
-								if(getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
-								{
-									if(AfxGetApp())
-										AfxGetApp()->GetMainWnd()->PostMessage(WM_NEW_BREATH);
-								}
+								iRes=GetMessureData();
+								dwLastGetMessureData=GetTickCount();
 							}
-						}
-						else*/
-						{
-							if(_pBufData.bATZ==true)
+
+							if(iRes!=0 && m_bShowReadSPIDataError)
 							{
-								int iRes=0;
-								if(isSafeTickCountDelayExpired(dwLastGetMessureData, 200))
+								if(iRes==888)
 								{
-									iRes=GetMessureData();
-									//ullLastGetMessureData=getTickCount64();
-									dwLastGetMessureData=GetTickCount();
+									theApp.getLog()->WriteLine(_T("#ERROR: GetMessureDataError888"));
 								}
-
-								if(iRes!=0 && m_bShowReadSPIDataError)
+								else if(iRes==999)
 								{
-									if(iRes==888)
-									{
-										theApp.getLog()->WriteLine(_T("#ERROR: GetMessureDataError888"));
-									}
-									else if(iRes==999)
-									{
-										theApp.getLog()->WriteLine(_T("#ERROR: GetMessureDataError999"));
-									}
-									m_bShowReadSPIDataError=false;
+									theApp.getLog()->WriteLine(_T("#ERROR: GetMessureDataError999"));
 								}
-
-								if(isSafeTickCountDelayExpired(dwLastMonitorData, TIMEOUT_MONITORDATA))
-								{
-									bMonitorData=true;
-									dwLastMonitorData=GetTickCount();
-								}
-
-								if(getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
-								{
-									if(AfxGetApp())
-										AfxGetApp()->GetMainWnd()->PostMessage(WM_NEW_BREATH);
-								}
+								m_bShowReadSPIDataError=false;
 							}
-							else if(isSafeTickCountDelayExpired(dwLastGetMessureData, TIMEOUT_MONITORDATA))
+
+							if(isSafeTickCountDelayExpired(dwLastMonitorData, TIMEOUT_MONITORDATA))
 							{
-								//DEBUGMSG(TRUE, (TEXT("GetMessureData time\r\n")));
-								int iRes=0;
-								if(isSafeTickCountDelayExpired(dwLastGetMessureData, 200))
-								{
-									iRes=GetMessureData();
-									//ullLastGetMessureData=getTickCount64();
-									dwLastGetMessureData=GetTickCount();
-								}
-
-								if(iRes!=0 && m_bShowReadSPIDataError)
-								{
-									if(iRes==888)
-									{
-										theApp.getLog()->WriteLine(_T("#ERROR: GetMessureDataError888"));
-									}
-									else if(iRes==999)
-									{
-										theApp.getLog()->WriteLine(_T("#ERROR: GetMessureDataError999"));
-									}
-									m_bShowReadSPIDataError=false;
-								}
-
 								bMonitorData=true;
 								dwLastMonitorData=GetTickCount();
 							}
+
+							if(getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
+							{
+								if(AfxGetApp())
+									AfxGetApp()->GetMainWnd()->PostMessage(WM_NEW_BREATH);
+							}
+						}
+						else if(isSafeTickCountDelayExpired(dwLastGetMessureData, TIMEOUT_MONITORDATA))
+						{
+							//DEBUGMSG(TRUE, (TEXT("GetMessureData time\r\n")));
+							int iRes=0;
+							if(isSafeTickCountDelayExpired(dwLastGetMessureData, 200))
+							{
+								iRes=GetMessureData();
+								dwLastGetMessureData=GetTickCount();
+							}
+
+							if(iRes!=0 && m_bShowReadSPIDataError)
+							{
+								if(iRes==888)
+								{
+									theApp.getLog()->WriteLine(_T("#ERROR: GetMessureDataError888"));
+								}
+								else if(iRes==999)
+								{
+									theApp.getLog()->WriteLine(_T("#ERROR: GetMessureDataError999"));
+								}
+								m_bShowReadSPIDataError=false;
+							}
+
+							bMonitorData=true;
+							dwLastMonitorData=GetTickCount();
 						}
 
 						if(bMonitorData)
@@ -3203,6 +3191,14 @@ void CInterfaceSPI::Send_PARAVAL_EXH_TIME(int val)
 void CInterfaceSPI::Send_PARAVAL_HF_AMPL(int val)
 {
 #ifndef SIMULATION_NOSPI
+	//AmplitudeCorrectionFactor
+	double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
+	//double iPmitt=getModel()->getDATAHANDLER()->getBTBMessureDataPmitt();
+	double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+	if(iAmpCorFactor==0)
+		iAmpCorFactor=1;
+	val=(SHORT)(double)val*iAmpCorFactor;
+
 	SPISENDMESSAGE* pMessage = new SPISENDMESSAGE();
 	pMessage->byteSPICommand[0]=S_PARA_HF_AMPLITUDE;
 	pMessage->iValue=val;
@@ -3413,7 +3409,12 @@ int CInterfaceSPI::ReadSPIData()
 	BYTE byLo;
 	BYTE byHi;
 	CStringW szError=_T("");
-	//MESSURE_BLOCKDATA MessureDataAVG;
+	
+	bool bHFOmode=false;
+	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
+	{
+		bHFOmode=true;
+	}
 
 	BYTE byBuffer[BLOCKBUFSIZE];
 	if(ReadNSPIAVGblock(byBuffer,BLOCKBUFSIZE))
@@ -3424,6 +3425,19 @@ int CInterfaceSPI::ReadSPIData()
 		byHi=byBuffer[iBuf];
 		iBuf++;
 		iRes=MAKEWORD(byLo,byHi);
+
+		//AmplitudeCorrectionFactor
+		if(bHFOmode)
+		{
+			double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
+			//double iPmitt=getModel()->getDATAHANDLER()->getBTBMessureDataPmitt();
+			double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+			if(iAmpCorFactor==0)
+				iAmpCorFactor=1;
+			double iFactor = 1/iAmpCorFactor;
+
+			iRes=(SHORT)(((double)iRes-iPmitt)*iFactor)+iPmitt;
+		}
 		if(		(iRes<MesData_P_Peak_Min)
 			||	(iRes>MesData_P_Peak_Max))
 		{
@@ -3888,6 +3902,20 @@ int CInterfaceSPI::ReadSPIData()
 		byHi=byBuffer[iBuf];
 		iBuf++;
 		iRes=MAKEWORD(byLo,byHi);
+
+		//AmplitudeCorrectionFactor
+		//if(bHFOmode)
+		{
+			double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
+			//double iPmitt=getModel()->getDATAHANDLER()->getBTBMessureDataPmitt();
+			double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+			if(iAmpCorFactor==0)
+				iAmpCorFactor=1;
+			double iFactor = 1/iAmpCorFactor;
+
+			iRes=(SHORT)(((double)iRes-iPmitt)*iFactor)+iPmitt;
+		}
+
 		if(		(iRes<MesData_HFO_Amp_Min)
 			||	(iRes>MesData_HFO_Amp_Max))
 		{
@@ -4050,6 +4078,20 @@ int CInterfaceSPI::ReadSPIData()
 		byHi=byBuffer[iBuf];
 		iBuf++;
 		iRes=MAKEWORD(byLo,byHi);
+
+		//AmplitudeCorrectionFactor
+		if(bHFOmode)
+		{
+			double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
+			//double iPmitt=getModel()->getDATAHANDLER()->getBTBMessureDataPmitt();
+			double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+			if(iAmpCorFactor==0)
+				iAmpCorFactor=1;
+			double iFactor = 1/iAmpCorFactor;
+
+			iRes=(SHORT)(((double)iRes-iPmitt)*iFactor)+iPmitt;
+		}
+
 		if(		(iRes<MesData_P_Peak_Min)
 			||	(iRes>MesData_P_Peak_Max))
 		{
@@ -4524,6 +4566,20 @@ int CInterfaceSPI::ReadSPIData()
 		byHi=byBuffer[iBuf];
 		iBuf++;
 		iRes=MAKEWORD(byLo,byHi);
+
+		//AmplitudeCorrectionFactor
+		//if(bHFOmode)
+		{
+			double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
+			//double iPmitt=getModel()->getDATAHANDLER()->getBTBMessureDataPmitt();
+			double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+			if(iAmpCorFactor==0)
+				iAmpCorFactor=1;
+			double iFactor = 1/iAmpCorFactor;
+
+			iRes=(SHORT)(((double)iRes-iPmitt)*iFactor)+iPmitt;
+		}
+
 		if(		(iRes<MesData_HFO_Amp_Min)
 			||	(iRes>MesData_HFO_Amp_Max))
 		{

@@ -13,9 +13,17 @@ IMPLEMENT_DYNAMIC(CNumericFieldVTEKG, CWnd)
 CNumericFieldVTEKG::CNumericFieldVTEKG(eNumericSize size):
 CNumericField(size)
 {
-	m_szName=getModel()->GetLanguageString(IDS_PARA_VTEKG);
+	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
+	{
+		m_szName=getModel()->GetLanguageString(IDS_PARA_VTEHFOKG);
+	}
+	else
+	{
+		m_szName=getModel()->GetLanguageString(IDS_PARA_VTEKG);
+	}
+	
 	m_szNameNote=_T("");
-	m_szUnit=_T("");
+	m_szUnit=_T("[ml/kg]");
 }
 
 
@@ -80,7 +88,15 @@ bool CNumericFieldVTEKG::drawData(bool bData, bool bFrames, bool bText, bool bLi
 	TCHAR psz[MAX_PATH];
 
 	//###########################################################################
-	int iTVE=getModel()->getDATAHANDLER()->getMessureDataTVE()*100;
+	int iTVE=0;
+	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
+	{
+		iTVE=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE_HFO)*100;
+	}
+	else
+	{
+		iTVE=getModel()->getDATAHANDLER()->getMessureDataTVE()*100;
+	}
 	int iBW=getModel()->getDATAHANDLER()->GetBodyweight();
 	double iTVEKG=0;
 	if(iBW!=0)

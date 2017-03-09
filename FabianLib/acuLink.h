@@ -53,12 +53,13 @@
 // Default-Port auf dem im Ethernet gehört wird
 #define DEFAULT_PORT	5150
 
-
-#define MAX_WAVES		4
+//NEWACULINK
+#define MAX_WAVES		5
 #define WAVE_VOL		0
 #define WAVE_PRESS		1
 #define WAVE_FLOW		2
 #define WAVE_CO2		3
+#define WAVE_SPO2		3
 
 
 #define NUL_CHAR	(unsigned char)0x00
@@ -90,8 +91,9 @@
 *	\def ALINK_ALARM_ARRAY 
 *		max size array of alarms
  **/
+//NEWACULINK
 #define ALINK_MSMNT_ARRAY			40	//max size array of measurements
-#define ALINK_SETT_ARRAY			70	//max size array of settings
+#define ALINK_SETT_ARRAY			80	//max size array of settings
 #define ALINK_ALARM_ARRAY			80	//max size array of alarms
 
 //Arraygröße bei neuen Einträgen anpassen (tatsächlich benutzte Werte)
@@ -103,9 +105,10 @@
 *	\def ALINK_SIZE_MSMNTARRAY 
 *		actual size array of measurements
  **/
-#define ALINK_SIZE_ALARMARRAY		59	//actual size array of alarms
-#define ALINK_SIZE_SETTARRAY		64	//actual size array of settings
-#define ALINK_SIZE_MSMNTARRAY		25	//actual size array of measurements
+//NEWACULINK
+#define ALINK_SIZE_ALARMARRAY		76	//actual size array of alarms
+#define ALINK_SIZE_SETTARRAY		79	//actual size array of settings
+#define ALINK_SIZE_MSMNTARRAY		34	//actual size array of measurements
 
 /**
 *	\def ALINK_UNUSED 
@@ -173,19 +176,37 @@
 *		Inspiratory Flow, Resolution: 0.001 (0.0 - 20.0 l/min) DUOPAP 
 *	\def ALINK_MSMNT_EFLOW 
 *		Expiratory Flow, Resolution: 0.001 (0.0 - 20.0 l/min) NCPAP /DUOPAP / HFO
+*	\def ALINK_MSMNT_TAU
+*		Time Constant, Resolution: 0.01 (0.0 - 250.0 sec) IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
+*	\def ALINK_MSMNT_FREQETCO2
+*		Respiration Rate CO2 module, Resolution: 1 (0 – 150 bpm)
+*	\def ALINK_MSMNT_SPO2
+*		SpO2,  Resolution: 0.1 (0.0 - 100.0 %), only with enabled SpO2 module
+*	\def ALINK_MSMNT_SPO2_PI
+*		Perfusion Index (Signal Strength), Resolution: (0==no measurement, 0.02% to 20%)
+*	\def ALINK_MSMNT_SPO2_PR
+*		Pulse Rate, Resolution: (0 to 240 bpm)
+*	\def ALINK_MSMNT_SPO2_SIQ
+*		Pleth Variability Index (PVI), Resolution: 1, (0 to 100)
+*	\def ALINK_MSMNT_RSBI
+*		rapid shallow breathing index, Resolution: 0.1, (0 – 2500)
+*	\def ALINK_MSMNT_FICO2
+*		FiCO2 of CO2 modules, Resolution: 0,1mmHg (0–150.0 mmHg, 0–20.0 kPa, or 0–19.7%)
+*	\def ALINK_MSMNT_VTEKG
+*		Vte / kg, Resolution: 1 [0==off, 300-30000g]
  **/
 #define ALINK_MSMNT_P_PEAK			0	//Peak Pressure, Resolution: 0.1 (0 – 150 mbar bzw cmH2O) NV
 #define ALINK_MSMNT_P_MEAN			1	//Mean Pressure, Resolution: 0.1 (-50.0 – 150.0 mbar bzw cmH2O)	IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
 #define ALINK_MSMNT_PEEP			2	//PEEP, Resolution: 0.1 (-50.0 – 150.0 mbar bzw cmH2O)	IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
 #define ALINK_MSMNT_T_INSP_PSV		3	//Inspiratory Time PSV, Resolution: 0.001 (0.00 – 5.00 sec)				SIMV+PSV /PSV 
-#define ALINK_MSMNT_DYNCOMPL		4	//Dynamic Compliance, Resolution: 0.1 (0.0 – 500.0 ml/mbar)				IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
+#define ALINK_MSMNT_DYNCOMPL		4	//Dynamic Compliance, Resolution for acuLink: 0.1 (0.0 – 500.0 ml/mbar), Resolution from PIC: 0.01 !!!	IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
 #define ALINK_MSMNT_C20C			5	//Overextension Index C20/C , Resolution: 0.1 (0.0 – 50.0)						IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
 #define ALINK_MSMNT_RESISTANCE		6	//Ventilatory Resistance , Resolution: 0.1 (0.0 – 500.0 mbar/lps)			IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
 #define ALINK_MSMNT_MIN_VOL			7	//Minute Volume , Resolution: 0.001 (0.00 – 20.00 liter)			IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
 #define ALINK_MSMNT_ANTEIL_RESP		8	//Share Minute Volume Respira-tor , Resolution: 1 (0 – 100 %)							SIMV / SIMV+PSV 
 #define ALINK_MSMNT_TVE				9	//Expiratory Mandatory Tidal Volume , Resolution: 0.1 (0.0 – 600.0 ml)					IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-#define ALINK_MSMNT_TVE_RESP		10	//Expiratory Mandatory Tidal Volume Respirator , Resolution: 0.1 (0.0 – 600.0 ml)					SIMV/ SIMV+PSV 
-#define ALINK_MSMNT_TVE_PATIENT		11 	//Expiratory Mandatory Tidal Volume Patient , Resolution: 0.1 (0.0 – 600.0 ml)					SIMV/ SIMV+PSV 
+#define ALINK_MSMNT_TVE_RESP		10	//Expiratory Mandatory Tidal Volume Respirator , Resolution: 0.1 (0.0 – 600.0 ml)					SIMV/ SIMV+PSV  / PSV
+#define ALINK_MSMNT_TVE_PATIENT		11 	//Expiratory Mandatory Tidal Volume Patient , Resolution: 0.1 (0.0 – 600.0 ml)					SIMV/ SIMV+PSV  / PSV
 #define ALINK_MSMNT_LEAK			12	//Leakage, Resolution: 1 (0 – 100 %)							IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
 #define ALINK_MSMNT_FREQ			13	//Respiratory Rate , Resolution: 1 (0 – 250 bpm)						IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
 #define ALINK_MSMNT_TRIGGER			14	//Trigger Volume/Trigger Flow (see MODE OPTION2 Bit 7), Resolution: 0.1 (0.0 – 750.0 ml)					SIPPV /SIMV / SIMV+PSV / PSV 
@@ -199,18 +220,17 @@
 #define ALINK_MSMNT_DEMAND_FLOW		22	//Demand Flow, Resolution: 0.001 (4.0 - 20.0 l/min)				CPAP
 #define ALINK_MSMNT_IFLOW			23	//Inspiratory Flow, Resolution: 0.001 (0.0 - 20.0 l/min)				DUOPAP 
 #define ALINK_MSMNT_EFLOW			24	//Expiratory Flow, Resolution: 0.001 (0.0 - 20.0 l/min)				NCPAP /DUOPAP / HFO
+//NEWACULINK
+#define ALINK_MSMNT_TAU				25 //Time Constant, Resolution: 0.01, 0 – 250 (sec) IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO			
+#define ALINK_MSMNT_FREQETCO2		26 //Respiration Rate CO2 module, Resolution: 1 (0 – 150 bpm)	
+#define ALINK_MSMNT_SPO2			27 //SpO2, Resolution: 0.1 (0.0 - 100.0 %), only with enabled SpO2 module		
+#define ALINK_MSMNT_SPO2_PI			28 //Perfusion Index (Signal Strength), Resolution: 0.001, (0==no measurement, 0.02% to 20%)		
+#define ALINK_MSMNT_SPO2_PR			29 //Pulse Rate, Resolution: 1, (0 to 240 bpm)		
+#define ALINK_MSMNT_SPO2_SIQ		30 //Pleth Variability Index (PVI), Resolution: 1, (0 to 100)		
+#define ALINK_MSMNT_RSBI			31 //rapid shallow breathing index, Resolution: 0.1, (0 – 2500) SIMV/ SIMV+PSV / PSV
+#define ALINK_MSMNT_FICO2			32 //FiCO2 of CO2 modules, Resolution: 0,1mmHg (0–150.0 mmHg, 0–20.0 kPa, or 0–19.7%)
+#define ALINK_MSMNT_VTEKG			33 //Vte / kg [g], Resolution: 0.1 [0==off, 300-30000g]
 //!!!!!!!!!!!!!!! ACHTUNG - Verknüpfung zu den Meßwerten der Numerikblöcke !!!!!!
-// --- sind noch nicht in acuLink implementiert
-#define ALINK_MSMNT_TAU				25 //NUMT_TAU,			//25, RESISTANCE * COMPLIANCE
-#define ALINK_MSMNT_FREQETCO2		26 //NUMT_FREQETCO2,	//26
-#define ALINK_MSMNT_SPO2			27 //NUMT_SPO2,		//27
-#define ALINK_MSMNT_SPO2_PI			28 //NUMT_SPO2_PI,		//28
-#define ALINK_MSMNT_SPO2_PR			29 //NUMT_SPO2_PR,		//29
-#define ALINK_MSMNT_RSBI			30 //NUMT_RSBI,		//30 rapid shallow breathing index
-#define ALINK_MSMNT_FICO2			31 //FiCO2 of CO2 modules
-#define ALINK_MSMNT_VTEKG			32 //Vte / kg [g]
-//NUMT_MECHANIC ,	//33	
-//NUMT_VTE2,		//33, VTEMAND + VTESPONT
 
 
 
@@ -356,6 +376,38 @@
 *		FiO2 flush time, Resolution: 1sec
 *	\def ALINK_SETT_O2FLUSH 
 *		FiO2 flush, Resolution: 1%
+*	\def ALINK_SETT_PERSID
+*		PersID for identification
+*	\def ALINK_SETT_ALIMIT_PRICO_SPO2LOW
+*		SpO2 low limit range, Resolution: 1 (0 - 100)
+*	\def ALINK_SETT_ALIMIT_PRICO_SPO2HIGH
+*		SpO2 high limit range, Resolution: 1 (0 - 100)
+*	\def ALINK_SETT_ALIMIT_PRICO_FIO2LOW
+*		FiO2 low limit range, Resolution: 1 (0 - 100)
+*	\def ALINK_SETT_ALIMIT_PRICO_FIO2HIGH
+*		FiO2 low limit range, Resolution: 1 (0 - 100)
+*	\def ALINK_SETT_ALIMIT_SPO2SIQMIN
+*		Pleth Variability Index (PVI), Resolution: 1, (0 to 100)
+*	\def ALINK_SETT_ALIMIT_SPO2MAX
+*		Resolution: 0.1 (0.0 - 100.0 %)
+*	\def ALINK_SETT_ALIMIT_SPO2MIN	
+*		Resolution: 0.1 (0.0 - 100.0 %)
+*	\def ALINK_SETT_ALIMIT_SPO2PIMIN
+*		Perfusion Index, Resolution: 0.001, (0 to 20.000)
+*	\def ALINK_SETT_ALIMIT_PIPMIN
+*		Limit P peak low, Resolution: 0.1, (0.0- 150.0)
+*	\def ALINK_SETT_ALIMIT_FICO2MAX	
+*		Resolution: 0,1mmHg (0–150.0 mmHg, 0–20.0 kPa, or 0–19.7%)
+*	\def ALINK_SETT_ALIMIT_FICO2MIN	
+*		Resolution: 0,1mmHg (0–150.0 mmHg, 0–20.0 kPa, or 0–19.7%)
+*	\def ALINK_SETT_ALIMIT_PULSERATEMAX
+*		Resolution: 1, (0 to 240 bpm)
+*	\def ALINK_SETT_ALIMIT_PULSERATEMIN
+*		Resolution: 1, (0 to 240 bpm)
+*	\def ALINK_SETT_ALIMIT_PMEANMAX
+*		Resolution: 0.1, (0 to 100.0 bpm)
+*	\def ALINK_SETT_ALIMIT_PMEANMIN
+*		Resolution: 0.1, (0 to 100.0 bpm)
  **/
 #define ALINK_SETT_VENTRANGE			0	//Patient Range: 1 = NEONATAL, 2 = PEDIATRIC
 #define ALINK_SETT_VENT_MODE			1	//Ventilator Mode: NONE=0,IPPV=1,SIPPV=2,SIMV=3,SIMVPSV=4,PSV=5,CPAP=6,NCPAP= 7,DUOPAP=8,HFO=9,THERAPY=10, SERVICE=15,
@@ -426,14 +478,30 @@
 #define ALINK_SETT_VERSION_CTRLPIC_MAJOR	53	//version Controller PIC minor
 #define ALINK_SETT_VERSION_CTRLPIC_MINOR	54	//version Controller PIC major 
 #define ALINK_SETT_VERSION_CTRLPIC_PATCH	55	//version Controller PIC patch
-#define ALINK_SETT_VERSION_ACULINK		56	//version ACULINK
-#define ALINK_SETT_STATE_FLOWSENSOR		57	//state of flow sensor, 0=off,1=on
-#define ALINK_SETT_STATE_OXYSENSOR		58	//state of oxy sensor, 0=off,1=on
-#define ALINK_SETT_PMANUAL				59	//Pressure Manual Breath (CPAP/HFO), Resolution: 0.1mbar bzw 0.1cmH2O
-#define ALINK_SETT_PDUO					60	//Pressure Manual Breath (DUO-PAP/NCPAP), Resolution: 0.1mbar bzw 0.1cmH2O
-#define ALINK_SETT_FLUSHTIME			61	//FiO2 flush time, Resolution: 1sec
-#define ALINK_SETT_O2FLUSH				62	//FiO2 flush, Resolution: 1%
-#define ALINK_SETT_PERSID				63	//PersID for identification
+#define ALINK_SETT_VERSION_ACULINK			56	//version ACULINK
+#define ALINK_SETT_STATE_FLOWSENSOR			57	//state of flow sensor, 0=off,1=on
+#define ALINK_SETT_STATE_OXYSENSOR			58	//state of oxy sensor, 0=off,1=on
+#define ALINK_SETT_PMANUAL					59	//Pressure Manual Breath (CPAP/HFO), Resolution: 0.1mbar bzw 0.1cmH2O
+#define ALINK_SETT_PDUO						60	//Pressure Manual Breath (DUO-PAP/NCPAP), Resolution: 0.1mbar bzw 0.1cmH2O
+#define ALINK_SETT_FLUSHTIME				61	//FiO2 flush time, Resolution: 1sec
+#define ALINK_SETT_O2FLUSH					62	//FiO2 flush, Resolution: 1%
+#define ALINK_SETT_PERSID					63	//PersID for identification
+//NEWACULINK
+#define ALINK_SETT_ALIMIT_PRICO_SPO2LOW			64 //SpO2 low limit range, Resolution: 1 (0 - 100)
+#define ALINK_SETT_ALIMIT_PRICO_SPO2HIGH		65 //SpO2 high limit range, Resolution: 1 (0 - 100)
+#define ALINK_SETT_ALIMIT_PRICO_FIO2LOW			66 //FiO2 low limit range, Resolution: 1 (0 - 100)
+#define ALINK_SETT_ALIMIT_PRICO_FIO2HIGH 		67 //FiO2 low limit range, Resolution: 1 (0 - 100)
+#define ALINK_SETT_ALIMIT_SPO2SIQMIN			68 //Pleth Variability Index (PVI), Resolution: 1, (0 to 100)
+#define ALINK_SETT_ALIMIT_SPO2MAX				69 //SpO2 high limit, Resolution: 0.1 (0.0 - 100.0 %)
+#define ALINK_SETT_ALIMIT_SPO2MIN				70 //SpO2 low limit, Resolution: 0.1 (0.0 - 100.0 %)
+#define ALINK_SETT_ALIMIT_SPO2PIMIN				71 //Perfusion Index (Signal Strength), Resolution: 0.001, (0==no measurement, 0.02% to 20%)
+#define ALINK_SETT_ALIMIT_PIPMIN				72 //Limit P peak low, Resolution: 0.1, (0.0- 150.0)
+#define ALINK_SETT_ALIMIT_FICO2MAX				73 //FiCO2 high limit, , Resolution: 0,1mmHg (0–150.0 mmHg, 0–20.0 kPa, or 0–19.7%)
+#define ALINK_SETT_ALIMIT_FICO2MIN				74 //FiCO2 low limit, , Resolution: 0,1mmHg (0–150.0 mmHg, 0–20.0 kPa, or 0–19.7%)
+#define ALINK_SETT_ALIMIT_PULSERATEMAX			75 //Pulse Rate high limit, Resolution: 1, (0 to 240 bpm)
+#define ALINK_SETT_ALIMIT_PULSERATEMIN			76 //Pulse Rate low limit, Resolution: 1, (0 to 240 bpm)
+#define ALINK_SETT_ALIMIT_PMEANMAX				77 //Pmean high limit, Resolution: 1, (0 to 240 bpm)
+#define ALINK_SETT_ALIMIT_PMEANMIN				78 //Pmean low limit, Resolution: 1, (0 to 240 bpm)
 
 
 /**
@@ -551,6 +619,40 @@
 *		Alarm check CO2 airway adapter
 *	\def ALINK_ALARM_CO2_SENSORFAULTY 
 *		Alarm CO2 sensor faulty
+*	\def ALINK_ALARM_PRICO_FiO2max
+*		Alarm high FiO2 (PRICO)
+*	\def ALINK_ALARM_PRICO_FiO2min
+*		Alarm low FiO2 (PRICO)
+*	\def ALINK_ALARM_Sens_PRICO_FiO2outOfRange
+*		Alarm FiO2 out of range (PRICO)
+*	\def ALINK_ALARM_Sens_SPO2_MODULE_NOTCONNECTED
+*		Alarm SpO2 module not connected
+*	\def ALINK_ALARM_Sens_SPO2_SENSORFAULTY
+*		Alarm SpO2 sensor faulty
+*	\def ALINK_ALARM_Sens_SPO2_CHECKSENSOR
+*		Alarm SpO2 check sensor
+*	\def ALINK_ALARM_PatAl_SPO2_SIQmin
+*		SpO2 low SIQ
+*	\def ALINK_ALARM_PatAl_SPO2max
+*		Alarm high SpO2
+*	\def ALINK_ALARM_PatAl_SPO2min
+*		Alarm low SpO2
+*	\def ALINK_ALARM_PatAl_SPO2_PImin
+*		Alarm low SpO2 PI
+*	\def ALINK_ALARM_PatAl_PIPmin
+*		Alarm P peak low
+*	\def ALINK_ALARM_PatAl_FICO2max	
+*		Alarm FiCO2 high
+*	\def ALINK_ALARM_PatAl_FICO2min
+*		Alarm FiCO2 low
+*	\def ALINK_ALARM_PatAl_PulseRatemax
+*		Alarm Pulse Rate high
+*	\def ALINK_ALARM_PatAl_PulseRatemin
+*		Alarm Pulse Rate low
+*	\def ALINK_ALARM_PatAl_PMEANmax
+*		Alarm Pmean high
+*	\def ALINK_ALARM_PatAl_PMEANmin
+*		Alarm Pmean high
  **/
 #define ALINK_ALARM_ENABLED							0
 #define ALINK_ALARM_Accu_Empty						1  
@@ -612,7 +714,7 @@
 #define ALINK_ALARM_CO2_CHECKSAMPLINGLINE			56
 #define ALINK_ALARM_CO2_CHECKAIRWAYADAPTER			57
 #define ALINK_ALARM_CO2_SENSORFAULTY				58
-//neu
+//NEWACULINK
 #define ALINK_ALARM_PRICO_FiO2max					59
 #define ALINK_ALARM_PRICO_FiO2min					60
 #define ALINK_ALARM_Sens_PRICO_FiO2outOfRange		61
@@ -631,7 +733,7 @@
 #define ALINK_ALARM_PatAl_PMEANmax					74
 #define ALINK_ALARM_PatAl_PMEANmin					75
 
-
+//NEWACULINK
 typedef struct WAVE_RECORD_T
 {
 	short	fshVol;

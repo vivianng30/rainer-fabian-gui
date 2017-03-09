@@ -1,26 +1,7 @@
 #pragma once
 #include "MVView.h"
 //#include "WndNumAv.h"
-#include "WndNumCPAP_Av.h"
-#include "WndNumCPAP_Mech.h"
-#include "WndNumAvDUOPAP.h"
-#include "WndNumAvNCPAP.h"
-#include "WndNumPSV_Av.h"
-#include "WndNumPSV_Mech.h"
-#include "WndNumSIMVPSV_Av.h"
-#include "WndNumSIMVPSV_Mech.h"
-#include "WndNumFlowOff_Av.h"
-#include "WndNumHFO_Av.h"
-#include "WndNumHFO_Mech.h"
-//#include "WndNumSavedBreathMech.h"
-#include "WndNumIPPV_BtB.h"
-#include "WndNumIPPV_Mech.h"
-#include "WndNumSIPPV_Av.h"
-#include "WndNumSIPPV_Mech.h"
-#include "WndNumSIMV_Av.h"
-#include "WndNumSIMV_Mech.h"
-#include "WndNumFlowOffHFO_Av.h"
-#include "WndNumAvTHERAPIE.h"
+
 
 #include "WndNumConfig.h"
 

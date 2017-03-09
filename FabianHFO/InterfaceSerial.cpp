@@ -1875,6 +1875,12 @@ void CInterfaceSerial::Send_PARAVAL_EXH_TIME(int val)
 // **************************************************************************
 void CInterfaceSerial::Send_PARAVAL_HF_AMPL(int val)
 {
+	//AmplitudeCorrectionFactor
+	double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+	if(iAmpCorFactor==0)
+		iAmpCorFactor=1;
+	val=(SHORT)(double)val*iAmpCorFactor;
+
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("m%dq"),val);
 	if(0==sendSerialCommand(psz))
@@ -3466,10 +3472,22 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			if(getModel()->getDATAHANDLER()->PARADATA()->IsHFVGarantStateOn())
 			{
 				wHFAMPL=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLmaxPara();
+				//AmplitudeCorrectionFactor
+				double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+				if(iAmpCorFactor==0)
+					iAmpCorFactor=1;
+				wHFAMPL=(SHORT)(double)wHFAMPL*iAmpCorFactor;
 			}
 			else
 			{
 				wHFAMPL=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLPara();
+				//AmplitudeCorrectionFactor
+				double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
+				//double iPmitt=getModel()->getDATAHANDLER()->getBTBMessureDataPmitt();
+				double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+				if(iAmpCorFactor==0)
+					iAmpCorFactor=1;
+				wHFAMPL=(SHORT)(double)wHFAMPL*iAmpCorFactor;
 			}
 
 			if(wHFAMPL==iTemp)
