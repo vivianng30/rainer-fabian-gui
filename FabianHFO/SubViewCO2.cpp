@@ -143,8 +143,17 @@ CSubViewCO2::CSubViewCO2()
 		m_bServiceIsDue=false;
 	}
 	m_eCO2units=getModel()->getCONFIG()->GetCO2unit();
-	m_iBarometricP=getModel()->getCONFIG()->GetCO2BaroPressure();
 	
+	
+	if(m_byCO2Module==CO2MODULE_MICROPOD)
+	{
+		m_iBarometricP=getModel()->getCONFIG()->GetCO2BaroPressure();
+	}
+	else
+	{
+		WORD iAltitude=getModel()->getI2C()->ReadConfigWord(ALTITUDE_16);
+		m_iBarometricP=(double)1013*pow(((double)1-(double)0.000022558*iAltitude),(double)5.2561);
+	}
 
 	m_iAutoOnPump=getModel()->getCONFIG()->GetTimePumpAutoOn();
 }
@@ -396,15 +405,15 @@ BOOL CSubViewCO2::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 		btn.wID					= IDC_BTN_SETUP_BAROPRESSURE;	
 		btn.poPosition.x		= 221;
 		btn.poPosition.y		= 141;
-		if(m_byCO2Module==CO2MODULE_MICROPOD)
+		/*if(m_byCO2Module==CO2MODULE_MICROPOD)
 		{
 			btn.pcBmpUp				= m_pcSetupVent_Dis;
 		}
 		else
 		{
 			btn.pcBmpUp				= m_pcSetupVent_Up;
-		}
-		//btn.pcBmpUp				= m_pcSetupVent_Up;
+		}*/
+		btn.pcBmpUp				= m_pcSetupVent_Dis;
 		btn.pcBmpDown			= m_pcSetupVent_Dw;
 		btn.pcBmpFocus			= m_pcSetupVent_Fc;
 		btn.pcBmpDisabled		= m_pcSetupVent_Dis;
@@ -416,27 +425,6 @@ BOOL CSubViewCO2::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 
 		CStringW szUnit=getModel()->GetLanguageString(IDS_UNIT_MMHG);
 
-		/*eCO2unit unit=getModel()->getCONFIG()->GetCO2unit();
-		switch(unit)
-		{
-		case CO2_UNIT_KPA:
-			{
-				szUnit=getModel()->GetLanguageString(IDS_UNIT_KPA);
-			}
-			break;
-		case CO2_UNIT_PERCENT:
-			{
-				szUnit=getModel()->GetLanguageString(IDS_UNIT_VOLPERCENT);
-			}
-			break;
-		case CO2_UNIT_MMHG:
-		default:
-			{
-				szUnit=getModel()->GetLanguageString(IDS_UNIT_MMHG);
-			}
-			break;
-		}*/
-
 		sz.Format(_T("%d %s"),m_iBarometricP,szUnit);
 		m_pcBarometricP->SetValueText(sz);
 		
@@ -445,7 +433,8 @@ BOOL CSubViewCO2::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 		if(m_byCO2Module!=CO2MODULE_NONE)
 		{
 			m_pcBarometricP->ShowWindow(SW_SHOW);
-			if(m_byCO2Module==CO2MODULE_MICROPOD)
+			m_pcBarometricP->EnableWindow(FALSE);
+			/*if(m_byCO2Module==CO2MODULE_MICROPOD)
 			{
 				m_pcBarometricP->EnableWindow(FALSE);
 			}
@@ -453,7 +442,7 @@ BOOL CSubViewCO2::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 			{
 				m_pcBarometricP->EnableWindow(TRUE);
 				m_plBtn.AddTail(m_pcBarometricP);
-			}
+			}*/
 			
 		}
 		else

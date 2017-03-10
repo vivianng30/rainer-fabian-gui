@@ -2207,6 +2207,7 @@ double CTrendDiagramm::CalculateYAxisTickGridSpace()
 	case TREND_SPO2PR:
 	case TREND_SPO2PI:
 	case TREND_ETCO2:
+	case TREND_FREQUENCY:
 	default:
 		{
 			if(m_dYAxisMax<10)
@@ -2270,6 +2271,7 @@ double CTrendDiagramm::CalculateYAxisNumericSpace()
 	case TREND_SPO2PR:
 	case TREND_SPO2PI:
 	case TREND_ETCO2:
+	case TREND_FREQUENCY:
 	default:
 		{
 			if(m_dYAxisMax<10)
@@ -4664,6 +4666,11 @@ void CTrendDiagramm::IncreaseYScale()
 				getModel()->getCONFIG()->TrendSetETCO2Max((int)dHigherYAxisMax);
 			}
 			break;
+		case TREND_FREQUENCY:
+			{
+				getModel()->getCONFIG()->TrendSetFREQUENCYMax((int)dHigherYAxisMax);
+			}
+			break;
 		}
 	}
 }
@@ -4921,6 +4928,27 @@ double CTrendDiagramm::GetHigherYAxisMax()
 			}
 		}
 		break;
+	case TREND_FREQUENCY:
+		{
+			dHigherAxisMax=m_dYAxisMax;
+
+			while (dValue>dHigherAxisMax)
+			{
+				if(dHigherAxisMax<10)
+				{
+					dHigherAxisMax=10;
+				}
+				else if(dHigherAxisMax<20)
+				{
+					dHigherAxisMax=dHigherAxisMax+10;
+				}
+				else 
+				{
+					dHigherAxisMax=dHigherAxisMax+20;
+				}
+			}
+		}
+		break;
 	}
 
 	if(dHigherAxisMax>m_pFunctionParams->yMax || dHigherAxisMax==0)
@@ -5024,6 +5052,11 @@ bool CTrendDiagramm::IncreaseYScaleToNextValue()
 				getModel()->getCONFIG()->TrendSetETCO2Max((int)dHigherYAxisMax);
 			}
 			break;
+		case TREND_FREQUENCY:
+			{
+				getModel()->getCONFIG()->TrendSetFREQUENCYMax((int)dHigherYAxisMax);
+			}
+			break;
 		}
 	}
 	return bResult;
@@ -5120,6 +5153,11 @@ void CTrendDiagramm::DecreaseYScale()
 		case TREND_ETCO2:
 			{
 				getModel()->getCONFIG()->TrendSetETCO2Max((int)dHigherYAxisMax);
+			}
+			break;
+		case TREND_FREQUENCY:
+			{
+				getModel()->getCONFIG()->TrendSetFREQUENCYMax((int)dHigherYAxisMax);
 			}
 			break;
 		}
@@ -5472,6 +5510,31 @@ double CTrendDiagramm::GetLowerYAxisMax()
 			}
 		}
 		break;
+	case TREND_FREQUENCY:
+		{
+			dLowerAxisMax=m_dYAxisMax;
+
+			while (dValue<dLowerAxisMax)
+			{
+				if(dLowerAxisMax>20)
+				{
+					dLowerAxisMax=dLowerAxisMax-20;
+				}
+				else if(dLowerAxisMax>10)
+				{
+					dLowerAxisMax=dLowerAxisMax-10;
+				}
+				else
+				{
+					dTemp=10;
+					if(dValue<dTemp)
+						dLowerAxisMax=dTemp;
+
+					break;
+				}
+			}
+		}
+		break;
 	}
 
 	if(dLowerAxisMax>m_pFunctionParams->yMax || dLowerAxisMax==0)
@@ -5573,6 +5636,11 @@ bool CTrendDiagramm::DecreaseYScaleToNextValue()
 		case TREND_ETCO2:
 			{
 				getModel()->getCONFIG()->TrendSetETCO2Max((int)dHigherYAxisMax);
+			}
+			break;
+		case TREND_FREQUENCY:
+			{
+				getModel()->getCONFIG()->TrendSetFREQUENCYMax((int)dHigherYAxisMax);
 			}
 			break;
 		}
@@ -5784,6 +5852,22 @@ double CTrendDiagramm::GetNextHigherYAxisMax()
 			else
 			{
 				dHigherAxisMax=m_pFunctionParams->yMax;;
+			}
+		}
+		break;
+	case TREND_FREQUENCY:
+		{
+			if(m_dYAxisMax<10)
+			{
+				dHigherAxisMax=10;
+			}
+			else if(m_dYAxisMax<20)
+			{
+				dHigherAxisMax=m_dYAxisMax+10;
+			}
+			else
+			{
+				dHigherAxisMax=m_dYAxisMax+20;
 			}
 		}
 		break;
@@ -6022,6 +6106,18 @@ bool CTrendDiagramm::CanDecreaseYScale()
 			}
 		}
 		break;
+	case TREND_FREQUENCY:
+		{
+			if(m_dYAxisMax>20)
+			{
+				dLowerAxisMax=m_dYAxisMax-20;
+			}
+			else
+			{
+				dLowerAxisMax=10;
+			}
+		}
+		break;
 	}
 
 	if(		m_dMaxY<dLowerAxisMax
@@ -6214,6 +6310,18 @@ double CTrendDiagramm::GetNextLowerYAxisMax()
 		}
 		break;
 	case TREND_SHAREMVMAND:
+		{
+			if(m_dYAxisMax>20)
+			{
+				dLowerAxisMax=m_dYAxisMax-20;
+			}
+			else
+			{
+				dLowerAxisMax=10;
+			}
+		}
+		break;
+	case TREND_FREQUENCY:
 		{
 			if(m_dYAxisMax>20)
 			{

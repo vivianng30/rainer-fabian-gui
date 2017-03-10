@@ -724,6 +724,8 @@ public:
 	int TrendGetETCO2Max();
 	void TrendSetSPO2PRMax(int value);
 	int TrendGetSPO2PRMax();
+	void TrendSetFREQUENCYMax(int value);
+	int TrendGetFREQUENCYMax();
 
 	void GraphSetActualSpeedGraph(int value);
 	int GraphGetActualSpeedGraph();
@@ -1015,6 +1017,7 @@ private:
 	int m_iTrendSPO2PIMax;
 	int m_iTrendETCO2Max;
 	int m_iTrendSPO2PRMax;
+	int m_iTrendFREQUENCYMax;
 
 
 	int m_iFOTViewBtn;

@@ -945,6 +945,7 @@ private:
 	CTrend m_cTendSpO2PI;
 	CTrend m_cTendEtCO2;
 	CTrend m_cTendSpO2PR;
+	CTrend m_cTendFrequency;
 	
 	CStringW m_szCOMlastSendError;
 	CStringW m_szLicenseFile;
@@ -1021,6 +1022,7 @@ private:
 	BYTE m_chFilenumSPO2PI;
 	BYTE m_chFilenumEtCO2;
 	BYTE m_chFilenumSpO2PR;
+	BYTE m_chFilenumFrequency;
 	
 	bool m_bVGUARANTDemoLicAvailable;
 	bool m_bVLIMITDemoLicAvailable;
@@ -1104,6 +1106,7 @@ private:
 	double m_fTrendData_PI;
 	double m_fTrendData_etCO2;
 	double m_fTrendData_SpO2PR;
+	double m_fTrendData_Frequency;
 
 	BYTE m_iO2Difference;
 	int m_iPmeanDifference;

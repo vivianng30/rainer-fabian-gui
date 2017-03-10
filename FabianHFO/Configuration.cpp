@@ -184,6 +184,7 @@ CConfiguration::CConfiguration()
 	m_iTrendSPO2PIMax=0;
 	m_iTrendETCO2Max=0;
 	m_iTrendSPO2PRMax=0;
+	m_iTrendFREQUENCYMax=0;
 
 	m_iTypeTrend1=0;
 	m_iTypeTrend2=0;
@@ -584,6 +585,7 @@ void CConfiguration::Init()
 	m_iTrendSPO2PIMax=0;
 	m_iTrendETCO2Max=0;
 	m_iTrendSPO2PRMax=0;
+	m_iTrendFREQUENCYMax=0;
 
 	m_iTypeTrend1=0;
 	m_iTypeTrend2=0;
@@ -1595,21 +1597,21 @@ void CConfiguration::LoadSettings()
 	}
 
 	m_iTypeTrend1=getModel()->getI2C()->ReadConfigByte(TREND_TYPE1_8);
-	if(m_iTypeTrend1<TREND_PINSP || m_iTypeTrend1>TREND_ETCO2)
+	if(m_iTypeTrend1<TREND_PINSP || m_iTypeTrend1>TREND_FREQUENCY)
 	{
 		m_iTypeTrend1=TREND_PINSP;
 		getModel()->getI2C()->WriteConfigByte(TREND_TYPE1_8,TREND_PINSP);
 	}
 
 	m_iTypeTrend2=getModel()->getI2C()->ReadConfigByte(TREND_TYPE2_8);
-	if(m_iTypeTrend2<TREND_PINSP || m_iTypeTrend2>TREND_ETCO2)
+	if(m_iTypeTrend2<TREND_PINSP || m_iTypeTrend2>TREND_FREQUENCY)
 	{
 		m_iTypeTrend2=TREND_PMEAN;
 		getModel()->getI2C()->WriteConfigByte(TREND_TYPE2_8,TREND_PMEAN);
 	}
 
 	m_iTypeTrend3=getModel()->getI2C()->ReadConfigByte(TREND_TYPE3_8);
-	if(m_iTypeTrend3<TREND_PINSP || m_iTypeTrend3>TREND_ETCO2)
+	if(m_iTypeTrend3<TREND_PINSP || m_iTypeTrend3>TREND_FREQUENCY)
 	{
 		m_iTypeTrend3=TREND_FIO2;
 		getModel()->getI2C()->WriteConfigByte(TREND_TYPE3_8,TREND_FIO2);
@@ -1742,6 +1744,13 @@ void CConfiguration::LoadSettings()
 	{
 		m_iTrendSPO2PRMax=G_UPPER_MAXSCALE_SPO2PR;
 		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SPO2PR_16,m_iTrendSPO2PRMax);
+	}
+
+	m_iTrendFREQUENCYMax=getModel()->getI2C()->ReadConfigWord(TRENDSCALE_FREQUENCY_16);
+	if(m_iTrendFREQUENCYMax<G_LOWER_MAXSCALE_FREQUENCY || m_iTrendFREQUENCYMax>G_UPPER_MAXSCALE_FREQUENCY)
+	{
+		m_iTrendFREQUENCYMax=G_UPPER_MAXSCALE_FREQUENCY;
+		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_FREQUENCY_16,m_iTrendFREQUENCYMax);
 	}
 
 	m_iMAXSCALE_SPO2_GRAPH=getModel()->getI2C()->ReadConfigWord(MAXSCALE_SPO2_GRAPH_16);
@@ -5820,6 +5829,18 @@ int CConfiguration::TrendGetSPO2PRMax()
 // **************************************************************************
 // 
 // **************************************************************************
+void CConfiguration::TrendSetFREQUENCYMax(int value)
+{
+	m_iTrendFREQUENCYMax=value;
+	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_FREQUENCY_16, value);
+}
+int CConfiguration::TrendGetFREQUENCYMax()
+{
+	return m_iTrendFREQUENCYMax;
+}
+// **************************************************************************
+// 
+// **************************************************************************
 void CConfiguration::TrendSetSPO2PIMax(int value)
 {
 	m_iTrendSPO2PIMax=value;
@@ -8923,6 +8944,11 @@ void CConfiguration::SetLastWrittenTrendFile(UINT type, BYTE count)
 			getModel()->getI2C()->WriteConfigByte(TRENDFILE_ETCO2_8, count);
 		}
 		break;
+	case TREND_FREQUENCY:
+		{
+			getModel()->getI2C()->WriteConfigByte(TRENDFILE_FREQUENCY_8, count);
+		}
+		break;
 	}
 }
 
@@ -9010,6 +9036,11 @@ BYTE CConfiguration::GetLastWrittenTrendFile(UINT type)
 	case TREND_ETCO2:
 		{
 			byResult=getModel()->getI2C()->ReadConfigByte(TRENDFILE_ETCO2_8);
+		}
+		break;
+	case TREND_FREQUENCY:
+		{
+			byResult=getModel()->getI2C()->ReadConfigByte(TRENDFILE_FREQUENCY_8);
 		}
 		break;
 	}

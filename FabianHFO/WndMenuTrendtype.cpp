@@ -57,6 +57,7 @@ CWndMenuTrendtype::CWndMenuTrendtype(CMVView *parentView)
 	m_pcTrendSPO2PI=NULL;
 	m_pcTrendSPO2PR=NULL;
 	m_pcTrendETCO2=NULL;
+	m_pcTrendFREQUENCY=NULL;
 
 	m_pModel = NULL;
 }
@@ -97,6 +98,8 @@ CWndMenuTrendtype::~CWndMenuTrendtype()
 	m_pcTrendETCO2=NULL;
 	delete m_pcTrendSPO2PR;
 	m_pcTrendSPO2PR=NULL;
+	delete m_pcTrendFREQUENCY;
+	m_pcTrendFREQUENCY=NULL;
 
 	delete m_pcMenu_Up;
 	m_pcMenu_Up=NULL;
@@ -164,8 +167,8 @@ BOOL CWndMenuTrendtype::Create(CWnd* pParentWnd, const RECT rc, UINT nID, UINT b
 		pDC->MoveTo(0 , 0);
 		//pDC->LineTo(161,0);
 		//pDC->LineTo(161,440);
-		pDC->LineTo(311,0);
-		pDC->LineTo(311,440);
+		pDC->LineTo(462,0);
+		pDC->LineTo(462,440);
 		pDC->LineTo(0,440);
 
 		switch(m_iCurBtnSelTrend)
@@ -456,6 +459,20 @@ void CWndMenuTrendtype::Init()
 	m_pcTrendETCO2->SetText(_T("ETCO2"),_T("ETCO2"));
 	m_plMenuBtn.AddTail(m_pcTrendETCO2);
 	
+
+	btn.wID					= IDC_POPUP_TREND_FREQUENCY;	
+	btn.poPosition.x		= 311;
+	btn.poPosition.y		= 9;
+	btn.pcBmpUp				= m_pcMenu_Up;
+	btn.pcBmpDown			= m_pcMenu_Dw;
+	btn.pcBmpFocus			= m_pcMenu_Up;
+	btn.pcBmpDisabled		= m_pcMenu_Up;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	m_pcTrendFREQUENCY=new CMenuBtn(btn,COLOR_TXTBTNUP);
+	m_pcTrendFREQUENCY->Create(this,g_hf14AcuMed,0);
+	m_pcTrendFREQUENCY->SetText(_T("FREQ"),_T("FREQ"));
+	m_plMenuBtn.AddTail(m_pcTrendFREQUENCY);
 	//ShowMenuBtn();
 
 	//Draw();
@@ -617,6 +634,11 @@ void CWndMenuTrendtype::Show(BOOL bShow, UINT iTrendType, UINT bSelTrend)
 	case TREND_ETCO2:
 		{
 			SetOneButtonDepressed(IDC_POPUP_TREND_ETCO2);
+		}
+		break;
+	case TREND_FREQUENCY:
+		{
+			SetOneButtonDepressed(IDC_POPUP_TREND_FREQUENCY);
 		}
 		break;
 	}
@@ -838,6 +860,12 @@ LRESULT CWndMenuTrendtype::WindowProc(UINT message, WPARAM wParam, LPARAM lParam
 			case IDC_POPUP_TREND_ETCO2:
 				{
 					m_parentView->PostMessage(WM_TREND_POPUP_ETCO2);
+					return 1;
+				}
+				break;
+			case IDC_POPUP_TREND_FREQUENCY:
+				{
+					m_parentView->PostMessage(WM_TREND_POPUP_FREQUENCY);
 					return 1;
 				}
 				break;

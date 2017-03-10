@@ -11886,22 +11886,27 @@ void CViewParaBtn::setPmeanDiff(int iValPmean, bool bSend)//PMAN1
 	/** \brief The enter critical section. */
 	EnterCriticalSection(&csDraw);
 	int iTemp=iValPmean+getModel()->getDATAHANDLER()->getPmeanDifference();
-	fVALUE fv;
-
-	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMaxPara();
-
-	if(iTemp<=fv.iUpperLimit)
+	
+	if(getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable()==true)
 	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMinPara();
-		fv.iValue=iTemp;
+		fVALUE fv;
 
-		if(m_pcPara_PMEAN_REC)
-			m_pcPara_PMEAN_REC->SetValue(fv,true);
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMaxPara();
+
+		if(iTemp<=fv.iUpperLimit)
+		{
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMinPara();
+			fv.iValue=iTemp;
+
+			if(m_pcPara_PMEAN_REC)
+				m_pcPara_PMEAN_REC->SetValue(fv,true);
+		}
+		else
+		{
+			bSend=false;
+		}
 	}
-	else
-	{
-		bSend=false;
-	}
+	
 
 	if(getModel()->getCONFIG()->IsHFOManBreathEnabled())//PMAN2
 	{
@@ -11925,20 +11930,32 @@ void CViewParaBtn::setPmeanDiff(int iValPmean, bool bSend)//PMAN1
 			fvPman.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMinKey();
 			fvPman.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMaxPara();
 
+			if(fvPman.iValue>getModel()->getDATAHANDLER()->GetCurrentPManualMaxKey())
+			{
+				if(m_pcPara_PMANUAL)
+					m_pcPara_PMANUAL->SetWarning(true);
+			}
+			/*else
+			{
+				if(m_pcPara_PMANUAL)
+					m_pcPara_PMANUAL->SetWarning(false);
+			}*/
 			if(m_pcPara_PMANUAL)
 				m_pcPara_PMANUAL->SetValue(fvPman,true);
 
 			getModel()->getDATAHANDLER()->SetCurrentPManPara(fvPman.iValue);
 		}
-
-		
 	}
 	
 	/** \brief The leave critical section. */
 	LeaveCriticalSection(&csDraw);
 
-	if(bSend)
-		getModel()->getDATAHANDLER()->SetCurrentHFPMeanRecPara(fv.iValue);
+	if(getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable()==true)
+	{
+		if(bSend)
+			getModel()->getDATAHANDLER()->SetCurrentHFPMeanRecPara(iTemp);
+	}
+	
 }
 
 void CViewParaBtn::setPmeanRecDiff(int iValPmeanRec, bool bSend)//PMAN1

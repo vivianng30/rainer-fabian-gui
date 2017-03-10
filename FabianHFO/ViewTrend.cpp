@@ -501,6 +501,12 @@ void CViewTrend::loadTrendData(BYTE type, eTrend trend)
 			szTrendFolder+=IDS_TRD_FOLDER_ETCO2;
 		}
 		break;
+	case TREND_FREQUENCY:
+		{
+			iFactor=1;
+			szTrendFolder+=IDS_TRD_FOLDER_FREQUENCY;
+		}
+		break;
 	}
 
 	//DEBUGMSG(TRUE, (TEXT("LoadTrendData %s\r\n"),szTrendFolder));
@@ -783,6 +789,11 @@ CStringW CViewTrend::GetNameOfTrendType(UINT type)
 			return _T("ETCO2");
 		}
 		break;
+	case TREND_FREQUENCY:
+		{
+			return _T("FREQ");
+		}
+		break;
 	}
 
 	return _T("");
@@ -875,6 +886,11 @@ int CViewTrend::GetMaxScaleOfTrendType(UINT type)
 	case TREND_ETCO2:
 		{
 			iYscale=getModel()->getCONFIG()->TrendGetETCO2Max();
+		}
+		break;
+	case TREND_FREQUENCY:
+		{
+			iYscale=getModel()->getCONFIG()->TrendGetFREQUENCYMax();
 		}
 		break;
 	}
@@ -1031,6 +1047,11 @@ CStringW CViewTrend::GetUnitOfTrendType(UINT type)
 				}
 				break;
 			}
+		}
+		break;
+	case TREND_FREQUENCY:
+		{
+			szUnit=_T("[")+getModel()->GetLanguageString(IDS_UNIT_BPM)+_T("]");
 		}
 		break;
 	}
@@ -1209,7 +1230,8 @@ bool CViewTrend::CreateWndMenuTrendtype(UINT bSelTrend)
 	{
 		m_pWndMenuTrendtype = new CWndMenuTrendtype(this);
 		
-		RECT rcLd={38,49,350,490};
+		//RECT rcLd={38,49,350,490};
+		RECT rcLd={38,49,501,490};
 
 		if(m_pWndMenuTrendtype->Create(this,rcLd,IDC_POPUP_TRENDTYPE,bSelTrend))
 		{
@@ -2296,6 +2318,12 @@ LRESULT CViewTrend::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 			return 1;
 		}
 		break;
+	case WM_TREND_POPUP_FREQUENCY:
+		{
+			newTrendType(TREND_FREQUENCY);
+			return 1;
+		}
+		break;
 	case WM_TREND_SETCURSOR:
 		{
 			if(m_iCurFocusedWnd==wParam)
@@ -3254,6 +3282,11 @@ void CViewTrend::newTrendType(UINT type)
 			szText=_T("ETCO2");
 		}
 		break;
+	case TREND_FREQUENCY:
+		{
+			szText=_T("FREQ");
+		}
+		break;
 	}
 
 	DestroyWndMenuTrendtype();
@@ -3483,6 +3516,12 @@ void CViewTrend::DrawTrend1()
 			m_lpfsTrend1->yMin=G_LOWER_MAXSCALE_CO2;
 		}
 		break;
+	case TREND_FREQUENCY:
+		{
+			m_lpfsTrend1->yMax=G_UPPER_MAXSCALE_FREQUENCY;
+			m_lpfsTrend1->yMin=G_LOWER_MAXSCALE_FREQUENCY;
+		}
+		break;
 	}
 	m_lpfsTrend1->dYfactor=1;
 	m_lpfsTrend1->dXfactor=1;
@@ -3679,6 +3718,12 @@ void CViewTrend::DrawTrend2()
 			m_lpfsTrend2->yMin=G_LOWER_MAXSCALE_CO2;
 		}
 		break;
+	case TREND_FREQUENCY:
+		{
+			m_lpfsTrend2->yMax=G_UPPER_MAXSCALE_FREQUENCY;
+			m_lpfsTrend2->yMin=G_LOWER_MAXSCALE_FREQUENCY;
+		}
+		break;
 	}
 	m_lpfsTrend2->dYfactor=1;
 	m_lpfsTrend2->dXfactor=1;
@@ -3871,6 +3916,12 @@ void CViewTrend::DrawTrend3()
 		{
 			m_lpfsTrend3->yMax=G_UPPER_MAXSCALE_CO2;
 			m_lpfsTrend3->yMin=G_LOWER_MAXSCALE_CO2;
+		}
+		break;
+	case TREND_FREQUENCY:
+		{
+			m_lpfsTrend3->yMax=G_UPPER_MAXSCALE_FREQUENCY;
+			m_lpfsTrend3->yMin=G_LOWER_MAXSCALE_FREQUENCY;
 		}
 		break;
 	}

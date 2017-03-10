@@ -8331,7 +8331,8 @@ DWORD CMainFrame::SaveTrendUSB(void)
 					SaveTrendDataToUSB(TREND_ETCO2);
 					Sleep(0);
 					SaveTrendDataToUSB(TREND_SPO2PR);
-					//rkuNEWFIX
+					Sleep(0);
+					SaveTrendDataToUSB(TREND_FREQUENCY);
 					//LeaveCriticalSection(&getModel()->getDATAHANDLER()->csTrend);
 
 					getModel()->getDATAHANDLER()->SetSavingTrendToUSBinactiv();
@@ -9599,6 +9600,13 @@ bool CMainFrame::SaveTrendDataToUSB(UINT trendID)
 			szFolder+=IDS_TRD_FOLDER_ETCO2;
 			szTrendFileName=_T("ETCO2.csv");
 			szTrendName=_T("ETCO2");
+		}
+		break;
+	case TREND_FREQUENCY:
+		{
+			szFolder+=IDS_TRD_FOLDER_FREQUENCY;
+			szTrendFileName=_T("FREQ.csv");
+			szTrendName=_T("FREQ");
 		}
 		break;
 	default:

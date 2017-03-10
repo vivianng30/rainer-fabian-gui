@@ -64,6 +64,7 @@ private:
 	CMenuBtn* m_pcTrendSPO2PI;
 	CMenuBtn* m_pcTrendETCO2;
 	CMenuBtn* m_pcTrendSPO2PR;
+	CMenuBtn* m_pcTrendFREQUENCY;
 
 	//CNumBtn* m_pcMenu5;
 	CBmp* m_pcMenu_Up;

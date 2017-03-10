@@ -7,6 +7,14 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50119 Version 5.0.1.19
+ * @date 2017-03-10
+ * @verbatim
+	//todo FOTLANGUAGE
+	- HFO: warning drawn if Pmanual is above 25mbar and increased by Pmean (ITEM-1)
+	- etCO2 barometric pressure for Capnostat is calculated (ITEM-13)
+ @endverbatim
+ *
  * @subsection ver50118 Version 5.0.1.18
  * @date 2017-03-09
  * @verbatim
@@ -39,6 +47,7 @@
 	- O2 flush off (ITEM-15)
 	- last conv trigger will be set after FS is enabled again (ITEM-17)
 	- amplitude correction factor implemented
+	- frequency trend included (ITEM-16)
  @endverbatim
  *
  * @subsection ver50117 Version 5.0.1.17

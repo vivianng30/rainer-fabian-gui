@@ -806,6 +806,7 @@
 #define WM_TREND_POPUP_SPO2PI			WM_USER + 0x5526
 #define WM_TREND_POPUP_ETCO2			WM_USER + 0x5527
 #define WM_TREND_POPUP_SPO2PR			WM_USER + 0x5528
+#define WM_TREND_POPUP_FREQUENCY		WM_USER + 0x5529
 
 #define WM_SERIAL_DELALARM_TUBE_OCCLUSION			WM_USER + 0x5530
 
@@ -1507,6 +1508,7 @@
 #define IDC_POPUP_TREND_SPO2PI			723
 #define IDC_POPUP_TREND_SPO2PR			724
 #define IDC_POPUP_TREND_ETCO2			725
+#define IDC_POPUP_TREND_FREQUENCY		726
 
 
 #define IDC_BTN_REGINSTALLER			730
@@ -1876,6 +1878,7 @@ enum eCurveForm {
 #define TREND_SPO2PI		14
 #define TREND_SPO2PR		15
 #define TREND_ETCO2			16
+#define TREND_FREQUENCY		17
 
 //#define MAX_TREND_MINUTES 20160		//2 Wochen
 //#define MAX_TREND_MINUTES 28800		//20
@@ -3847,26 +3850,27 @@ typedef struct tagfVALUE
 #define IDS_TRD_FOLDER_SPO2PI _T("Trend\\SPO2PI\\")
 #define IDS_TRD_FOLDER_ETCO2 _T("Trend\\ETCO2\\")
 #define IDS_TRD_FOLDER_SPO2PR _T("Trend\\SPO2PR\\")
+#define IDS_TRD_FOLDER_FREQUENCY _T("Trend\\FREQ\\")
 
 
 #define IDS_OLDTRD_FOLDER _T("TrendOld\\")
-#define IDS_OLDTRD_FOLDER_PINSP _T("TrendOld\\PINSP\\")
-#define IDS_OLDTRD_FOLDER_PMEAN _T("TrendOld\\PMEAN\\")
-#define IDS_OLDTRD_FOLDER_FIO2 _T("TrendOld\\FIO2\\")
-#define IDS_OLDTRD_FOLDER_VTE _T("TrendOld\\VTE\\")
-#define IDS_OLDTRD_FOLDER_COMPLIANCE _T("TrendOld\\COMPLIANCE\\")
-#define IDS_OLDTRD_FOLDER_CO2HFO _T("TrendOld\\CO2HFO\\")
-#define IDS_OLDTRD_FOLDER_MV _T("TrendOld\\MV\\")
-#define IDS_OLDTRD_FOLDER_HFAMP _T("TrendOld\\HFAMP\\")
-#define IDS_OLDTRD_FOLDER_RSBI _T("TrendOld\\RSBI\\")
-#define IDS_OLDTRD_FOLDER_SHAREMVMAND _T("TrendOld\\SHAREMVMAND\\")
-#define IDS_OLDTRD_FOLDER_RESISTANCE _T("TrendOld\\RESISTANCE\\")
-#define IDS_OLDTRD_FOLDER_LEAK _T("TrendOld\\LEAK\\")
-#define IDS_OLDTRD_FOLDER_SPO2 _T("TrendOld\\SPO2\\")
-#define IDS_OLDTRD_FOLDER_SPO2PI _T("TrendOld\\SPO2PI\\")
-#define IDS_OLDTRD_FOLDER_ETCO2 _T("TrendOld\\ETCO2\\")
-#define IDS_OLDTRD_FOLDER_SPO2PR _T("TrendOld\\SPO2PR\\")
-
+//#define IDS_OLDTRD_FOLDER_PINSP _T("TrendOld\\PINSP\\")
+//#define IDS_OLDTRD_FOLDER_PMEAN _T("TrendOld\\PMEAN\\")
+//#define IDS_OLDTRD_FOLDER_FIO2 _T("TrendOld\\FIO2\\")
+//#define IDS_OLDTRD_FOLDER_VTE _T("TrendOld\\VTE\\")
+//#define IDS_OLDTRD_FOLDER_COMPLIANCE _T("TrendOld\\COMPLIANCE\\")
+//#define IDS_OLDTRD_FOLDER_CO2HFO _T("TrendOld\\CO2HFO\\")
+//#define IDS_OLDTRD_FOLDER_MV _T("TrendOld\\MV\\")
+//#define IDS_OLDTRD_FOLDER_HFAMP _T("TrendOld\\HFAMP\\")
+//#define IDS_OLDTRD_FOLDER_RSBI _T("TrendOld\\RSBI\\")
+//#define IDS_OLDTRD_FOLDER_SHAREMVMAND _T("TrendOld\\SHAREMVMAND\\")
+//#define IDS_OLDTRD_FOLDER_RESISTANCE _T("TrendOld\\RESISTANCE\\")
+//#define IDS_OLDTRD_FOLDER_LEAK _T("TrendOld\\LEAK\\")
+//#define IDS_OLDTRD_FOLDER_SPO2 _T("TrendOld\\SPO2\\")
+//#define IDS_OLDTRD_FOLDER_SPO2PI _T("TrendOld\\SPO2PI\\")
+//#define IDS_OLDTRD_FOLDER_ETCO2 _T("TrendOld\\ETCO2\\")
+//#define IDS_OLDTRD_FOLDER_SPO2PR _T("TrendOld\\SPO2PR\\")
+//#define IDS_OLDTRD_FOLDER_FREQUENCY _T("TrendOld\\FREQ\\")
 
 //Help IDs
 #define HLP_0001	1

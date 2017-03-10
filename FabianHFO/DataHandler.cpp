@@ -591,6 +591,7 @@ CDataHandler::CDataHandler(void)
 	m_fTrendData_PI=0;
 	m_fTrendData_etCO2=0;
 	m_fTrendData_SpO2PR=0;
+	m_fTrendData_Frequency=0;
 
 
 	m_chFilenumPINSP=1;
@@ -609,6 +610,7 @@ CDataHandler::CDataHandler(void)
 	m_chFilenumSPO2PI=1;
 	m_chFilenumEtCO2=1;
 	m_chFilenumSpO2PR=1;
+	m_chFilenumFrequency=1;
 	
 	m_iContrastParm=0;
 
@@ -1439,6 +1441,25 @@ void CDataHandler::initTrend()
 			}
 			else
 				m_chFilenumSpO2PR=1;
+		}
+		//##################################################################
+		if (!CTlsFile::Exists(szPath+IDS_TRD_FOLDER_FREQUENCY) && bRes)
+		{
+			bRes=CTlsFile::MkDir(szPath+IDS_TRD_FOLDER_FREQUENCY);
+			if(!bRes)
+			{
+				sFile+=_T("SPO2PR ");
+			}
+		}
+		if(bRes && bDeserialize)
+		{
+			m_chFilenumFrequency=getModel()->getCONFIG()->GetLastWrittenTrendFile(TREND_FREQUENCY);
+			if(m_chFilenumFrequency>0)
+			{
+				bDeserialize=DeserializeTrend(TREND_FREQUENCY, m_chFilenumFrequency);
+			}
+			else
+				m_chFilenumFrequency=1;
 		}
 		LeaveCriticalSection(&csTrend);//rkuNEWFIX
 
@@ -5612,6 +5633,7 @@ void CDataHandler::setMessureDataAVGasTrendData()
 		int iPI=getMessureDataAVG(ALINK_MSMNT_SPO2_PI);
 		int iEtCO2=getMessureDataAVG(ALINK_MSMNT_ETCO2);
 		int iSpO2PR=getMessureDataAVG(ALINK_MSMNT_SPO2_PR);
+		int iFreq=getMessureDataAVG(ALINK_MSMNT_FREQ);
 
 		EnterCriticalSection(&csTrendFileData);
 		m_fTrendData_HFAMP+=iHFAmpl;
@@ -5635,6 +5657,7 @@ void CDataHandler::setMessureDataAVGasTrendData()
 		m_fTrendData_PI+=iPI;
 		m_fTrendData_etCO2+=iEtCO2;
 		m_fTrendData_SpO2PR+=iSpO2PR;
+		m_fTrendData_Frequency+=iFreq;
 
 		m_iTrendCnt++;
 		LeaveCriticalSection(&csTrendFileData);
@@ -14699,94 +14722,100 @@ UINT CDataHandler::CheckLastTrendData()
 	COleDateTime dtTimeLastTrendSpO2PI = m_cTendSpO2PI.GetTimestamp();
 	COleDateTime dtTimeLastTrendEtCO2 = m_cTendEtCO2.GetTimestamp();
 	COleDateTime dtTimeLastTrendSpO2PR = m_cTendSpO2PR.GetTimestamp();
+	COleDateTime dtTimeLastTrendFrequency = m_cTendFrequency.GetTimestamp();
 
 
 	SYSTEMTIME st;
 	GetLocalTime(&st);
 	COleDateTime dtTime(st);
 
-	EnterCriticalSection(&csTrend);//rkuNEWFIX
+	EnterCriticalSection(&csTrend);
 	if(dtTimeLastTrendPINSP.GetStatus() != COleDateTime::null)
 	{
 		iRes=UpdateTrendData(TREND_PINSP, dtTime);
-		Sleep(0);//rkuNEWFIX
+		Sleep(0);
 	}
 	if(dtTimeLastTrendPMEAN.GetStatus() != COleDateTime::null && iRes>=0)
 	{
 		iRes=UpdateTrendData(TREND_PMEAN, dtTime);
-		Sleep(0);//rkuNEWFIX
+		Sleep(0);
 	}
 	if(dtTimeLastTrendFIO2.GetStatus() != COleDateTime::null && iRes>=0)
 	{
 		iRes=UpdateTrendData(TREND_FIO2, dtTime);
-		Sleep(0);//rkuNEWFIX
+		Sleep(0);
 	}
 	if(dtTimeLastTrendVTE.GetStatus() != COleDateTime::null && iRes>=0)
 	{
 		iRes=UpdateTrendData(TREND_VTE, dtTime);
-		Sleep(0);//rkuNEWFIX
+		Sleep(0);
 	}
 	if(dtTimeLastTrendCOMPLIANCE.GetStatus() != COleDateTime::null && iRes>=0)
 	{
 		iRes=UpdateTrendData(TREND_COMPLIANCE, dtTime);
-		Sleep(0);//rkuNEWFIX
+		Sleep(0);
 	}
 	if(dtTimeLastTrendCO2HFO.GetStatus() != COleDateTime::null && iRes>=0)
 	{
 		iRes=UpdateTrendData(TREND_CO2HFO, dtTime);
-		Sleep(0);//rkuNEWFIX
+		Sleep(0);
 	}
 	if(dtTimeLastTrendMV.GetStatus() != COleDateTime::null && iRes>=0)
 	{
 		iRes=UpdateTrendData(TREND_MV, dtTime);
-		Sleep(0);//rkuNEWFIX
+		Sleep(0);
 	}
 	if(dtTimeLastTrendHFAMP.GetStatus() != COleDateTime::null && iRes>=0)
 	{
 		iRes=UpdateTrendData(TREND_HFAMP, dtTime);
-		Sleep(0);//rkuNEWFIX
+		Sleep(0);
 	}
 	if(dtTimeLastTrendRSBI.GetStatus() != COleDateTime::null && iRes>=0)
 	{
 		iRes=UpdateTrendData(TREND_RSBI, dtTime);
-		Sleep(0);//rkuNEWFIX
+		Sleep(0);
 	}
 	if(dtTimeLastTrendShareMVmand.GetStatus() != COleDateTime::null && iRes>=0)
 	{
 		iRes=UpdateTrendData(TREND_SHAREMVMAND, dtTime);
-		Sleep(0);//rkuNEWFIX
+		Sleep(0);
 	}
 	if(dtTimeLastTrendResistance.GetStatus() != COleDateTime::null && iRes>=0)
 	{
 		iRes=UpdateTrendData(TREND_RESISTANCE, dtTime);
-		Sleep(0);//rkuNEWFIX
+		Sleep(0);
 	}
 	if(dtTimeLastTrendLeak.GetStatus() != COleDateTime::null && iRes>=0)
 	{
 		iRes=UpdateTrendData(TREND_LEAK, dtTime);
-		Sleep(0);//rkuNEWFIX
+		Sleep(0);
 	}
 	if(dtTimeLastTrendSpO2.GetStatus() != COleDateTime::null && iRes>=0)
 	{
 		iRes=UpdateTrendData(TREND_SPO2, dtTime);
-		Sleep(0);//rkuNEWFIX
+		Sleep(0);
 	}
 	if(dtTimeLastTrendSpO2PI.GetStatus() != COleDateTime::null && iRes>=0)
 	{
 		iRes=UpdateTrendData(TREND_SPO2PI, dtTime);
-		Sleep(0);//rkuNEWFIX
+		Sleep(0);
 	}
 	if(dtTimeLastTrendEtCO2.GetStatus() != COleDateTime::null && iRes>=0)
 	{
 		iRes=UpdateTrendData(TREND_ETCO2, dtTime);
-		Sleep(0);//rkuNEWFIX
+		Sleep(0);
 	}
 	if(dtTimeLastTrendSpO2PR.GetStatus() != COleDateTime::null && iRes>=0)
 	{
 		iRes=UpdateTrendData(TREND_SPO2PR, dtTime);
-		Sleep(0);//rkuNEWFIX
+		Sleep(0);
 	}
-	LeaveCriticalSection(&csTrend);//rkuNEWFIX
+	if(dtTimeLastTrendFrequency.GetStatus() != COleDateTime::null && iRes>=0)
+	{
+		iRes=UpdateTrendData(TREND_FREQUENCY, dtTime);
+		Sleep(0);
+	}
+	LeaveCriticalSection(&csTrend);
 
 	DWORD dwEnd=GetTickCount();
 	DEBUGMSG(TRUE, (TEXT("CheckLastTrendData time %d\r\n"),dwEnd-dwStart));
@@ -14892,6 +14921,11 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 	case TREND_ETCO2:
 		{
 			m_cpTend=&m_cTendEtCO2;
+		}
+		break;
+	case TREND_FREQUENCY:
+		{
+			m_cpTend=&m_cTendFrequency;
 		}
 		break;
 	}
@@ -15148,6 +15182,7 @@ void CDataHandler::SaveTrendData()
 	double fTrendData_PI=m_fTrendData_PI;
 	double fTrendData_etCO2=m_fTrendData_etCO2;
 	double fTrendData_SpO2PR=m_fTrendData_SpO2PR;
+	double fTrendData_Frequency=m_fTrendData_Frequency;
 
 	m_iTrendCnt=0;
 	m_fTrendData_Pmean=0;
@@ -15166,6 +15201,7 @@ void CDataHandler::SaveTrendData()
 	m_fTrendData_PI=0;
 	m_fTrendData_etCO2=0;
 	m_fTrendData_SpO2PR=0;
+	m_fTrendData_Frequency=0;
 
 	LeaveCriticalSection(&csTrendFileData);
 
@@ -15186,6 +15222,7 @@ void CDataHandler::SaveTrendData()
 	WORD wTrendData_PI=0;
 	WORD wTrendData_etCO2=0;
 	WORD wTrendData_SpO2PR=0;
+	WORD wTrendData_Frequency=0;
 
 	if(iTrendCnt>0)
 	{
@@ -15206,6 +15243,7 @@ void CDataHandler::SaveTrendData()
 		wTrendData_PI=fTrendData_PI/iTrendCnt;
 		wTrendData_etCO2=fTrendData_etCO2/iTrendCnt;
 		wTrendData_SpO2PR=fTrendData_SpO2PR/iTrendCnt;
+		wTrendData_Frequency=fTrendData_Frequency/iTrendCnt;
 	}
 
 	//test
@@ -15318,6 +15356,12 @@ void CDataHandler::SaveTrendData()
 		}
 
 		wBufCount = m_cTendSpO2PR.WriteBuffer(wTrendData_SpO2PR, dtTimestamp);
+		if(wBufCount>=SERIALZEBUFFER)
+		{
+			bSerialize=true;
+		}
+
+		wBufCount = m_cTendFrequency.WriteBuffer(wTrendData_Frequency, dtTimestamp);
 		if(wBufCount>=SERIALZEBUFFER)
 		{
 			bSerialize=true;
@@ -15459,6 +15503,13 @@ void CDataHandler::SerializeTrend(UINT type, bool bIncreaseFileNum)
 			szTrendFolder+=IDS_TRD_FOLDER_ETCO2;
 		}
 		break;
+	case TREND_FREQUENCY:
+		{
+			m_cpTend=&m_cTendFrequency;
+			chFilenum=m_chFilenumFrequency;
+			szTrendFolder+=IDS_TRD_FOLDER_FREQUENCY;
+		}
+		break;
 	}
 
 
@@ -15597,6 +15648,11 @@ void CDataHandler::SerializeTrend(UINT type, bool bIncreaseFileNum)
 			m_chFilenumEtCO2=chFilenum;
 		}
 		break;
+	case TREND_FREQUENCY:
+		{
+			m_chFilenumFrequency=chFilenum;
+		}
+		break;
 	}
 }
 
@@ -15623,6 +15679,7 @@ void CDataHandler::SerializeAllTrends(bool bIncreaseFileNum)//rkuNEWFIX
 	SerializeTrend(TREND_SPO2PI, bIncreaseFileNum);
 	SerializeTrend(TREND_ETCO2, bIncreaseFileNum);
 	SerializeTrend(TREND_SPO2PR, bIncreaseFileNum);
+	SerializeTrend(TREND_FREQUENCY, bIncreaseFileNum);
 	LeaveCriticalSection(&csTrend);
 }
 bool CDataHandler::DeserializeTrend(UINT type, BYTE fileNum)
@@ -15735,6 +15792,12 @@ bool CDataHandler::DeserializeTrend(UINT type, BYTE fileNum)
 		{
 			m_cpTend=&m_cTendEtCO2;
 			szTrendFolder+=IDS_TRD_FOLDER_ETCO2;
+		}
+		break;
+	case TREND_FREQUENCY:
+		{
+			m_cpTend=&m_cTendFrequency;
+			szTrendFolder+=IDS_TRD_FOLDER_FREQUENCY;
 		}
 		break;
 	}
@@ -15881,6 +15944,11 @@ bool CDataHandler::DeserializeTempTrend(UINT type, WORD fileNum)
 	case TREND_ETCO2:
 		{
 			szFile.Format(_T("%s%s%d%s"),szTrendFolder,IDS_TRD_FOLDER_ETCO2,fileNum, IDS_TRD_FILE_ID);
+		}
+		break;
+	case TREND_FREQUENCY:
+		{
+			szFile.Format(_T("%s%s%d%s"),szTrendFolder,IDS_TRD_FOLDER_FREQUENCY,fileNum, IDS_TRD_FILE_ID);
 		}
 		break;
 	default:
@@ -16137,6 +16205,15 @@ void CDataHandler::DeleteAllTrendData()
 						}
 					}
 
+					if (!CTlsFile::Exists(szPath+IDS_TRD_FOLDER_FREQUENCY) && bRes)
+					{
+						bRes=CTlsFile::MkDir(szPath+IDS_TRD_FOLDER_FREQUENCY);
+						if(!bRes)
+						{
+							sFileError+=_T("FREQ ");
+						}
+					}
+
 					if(sFileError!=_T(""))
 					{
 						theApp.getLog()->WriteLine(_T("#HFO:0096 ")+sFileError);
@@ -16165,6 +16242,7 @@ void CDataHandler::DeleteAllTrendData()
 	m_chFilenumSPO2PI=1;
 	m_chFilenumEtCO2=1;
 	m_chFilenumSpO2PR=1;
+	m_chFilenumFrequency=1;
 
 	getModel()->getCONFIG()->SetLastWrittenTrendFile(TREND_PINSP, 1);
 	getModel()->getCONFIG()->SetLastWrittenTrendFile(TREND_PMEAN, 1);
@@ -16182,6 +16260,7 @@ void CDataHandler::DeleteAllTrendData()
 	getModel()->getCONFIG()->SetLastWrittenTrendFile(TREND_SPO2PI, 1);
 	getModel()->getCONFIG()->SetLastWrittenTrendFile(TREND_ETCO2, 1);
 	getModel()->getCONFIG()->SetLastWrittenTrendFile(TREND_SPO2PR, 1);
+	getModel()->getCONFIG()->SetLastWrittenTrendFile(TREND_FREQUENCY, 1);
 
 	m_cTendPINSP.ResetBuffer();
 	m_cTendPMEAN.ResetBuffer();
@@ -16199,6 +16278,7 @@ void CDataHandler::DeleteAllTrendData()
 	m_cTendSpO2PI.ResetBuffer();
 	m_cTendEtCO2.ResetBuffer();
 	m_cTendSpO2PR.ResetBuffer();
+	m_cTendFrequency.ResetBuffer();
 	LeaveCriticalSection(&csTrend);//rkuNEWFIX
 
 	EnterCriticalSection(&csTrendFileData);//rkuNEWFIX
@@ -16219,6 +16299,7 @@ void CDataHandler::DeleteAllTrendData()
 	m_fTrendData_PI=0;
 	m_fTrendData_etCO2=0;
 	m_fTrendData_SpO2PR=0;
+	m_fTrendData_Frequency=0;
 	LeaveCriticalSection(&csTrendFileData);//rkuNEWFIX
 
 	if(AfxGetApp())

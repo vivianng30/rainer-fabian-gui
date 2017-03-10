@@ -362,7 +362,7 @@ void CParaBtn_PMITT::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 						m_bKeyBeep=FALSE;
 					}
 
-					if(getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable()==true)
+					//if(getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable()==true)
 						VIEWPARAPTN->setPmeanDiff(m_v.iValue,false);
 
 					////PMAN1
