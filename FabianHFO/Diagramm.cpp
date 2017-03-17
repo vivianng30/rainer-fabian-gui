@@ -657,11 +657,11 @@ void CDiagramm::SetDiagrammType(int iType)
 			//m_szYLegendText=_T("Xrs [cmH2O*s/L]");
 			if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
 			{
-				m_szYLegendText=_T("Xrs [")+getModel()->GetLanguageString(IDS_UNIT_MBAR)+_T("*s/L]");
+				m_szYLegendText=_T("Xrs [")+getModel()->GetLanguageString(IDS_UNIT_MBAR)+_T("/lps]");
 			}
 			else if (getModel()->getCONFIG()->GetPressureUnit()==PUNIT_CMH2O)
 			{
-				m_szYLegendText=_T("Xrs [")+getModel()->GetLanguageString(IDS_UNIT_CMH2O)+_T("*s/L]");
+				m_szYLegendText=_T("Xrs [")+getModel()->GetLanguageString(IDS_UNIT_CMH2O)+_T("/lps]");
 			}
 
 			if(getModel()->getVMODEHANDLER()->activeModeIsHFO() && getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)

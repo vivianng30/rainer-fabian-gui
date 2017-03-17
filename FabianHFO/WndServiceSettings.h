@@ -25,7 +25,7 @@ protected:
 
 private:
 	CBitmapSlider*	m_sliderEnableNurse;
-	CBitmapSlider*	m_sliderEnableBTBVte;
+	CBitmapSlider*	m_sliderEnableNeoPed;
 	CBitmapSlider*	m_sliderEnableFactory;
 	CBitmapSlider*	m_sliderEnableAutolimit;
 
@@ -57,7 +57,7 @@ private:
 	CKbrdBtn* m_pcHelpFactory;
 	CKbrdBtn* m_pcHelpAutoAL;
 
-	bool m_bUseTveBTB;
+	bool m_bUseNeoPed;
 	bool m_bNurscallActive;
 	bool m_bEnableFactory;
 	bool m_bEnableAutolimit;

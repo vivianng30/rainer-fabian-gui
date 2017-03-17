@@ -3144,6 +3144,9 @@ void CDataHandler::setPRICO_SPO2lowRange(BYTE SPO2low)
 			getModel()->getPRICOThread()->setLowSpO2PRICOlimit(getPRICO_SPO2lowRange());
 		}
 	}
+
+	if(getModel()->getAcuLink() != NULL)
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2LOW,SPO2low);
 }
 
 /**********************************************************************************************//**
@@ -3181,6 +3184,9 @@ void CDataHandler::setPRICO_SPO2highRange(BYTE SPO2high)
 			getModel()->getPRICOThread()->setHighSpO2PRICOlimit(getPRICO_SPO2highRange());
 		}
 	}
+
+	if(getModel()->getAcuLink() != NULL)
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2HIGH,SPO2high);
 }
 
 /**********************************************************************************************//**
@@ -3220,6 +3226,8 @@ void CDataHandler::setPRICO_FIO2lowRange(BYTE FIO2low)
 			getModel()->getPRICOThread()->setStartupOxyValue(FIO2low); //pro, change 3
 		}
 	}
+	if(getModel()->getAcuLink() != NULL)
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2LOW,FIO2low);
 }
 
 /**********************************************************************************************//**
@@ -3259,6 +3267,8 @@ void CDataHandler::setPRICO_FIO2highRange(BYTE FIO2high)
 			getModel()->getPRICOThread()->setStartupOxyValue(FIO2high); //pro, change 3
 		}
 	}
+	if(getModel()->getAcuLink() != NULL)
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2HIGH,FIO2high);
 	
 }
 

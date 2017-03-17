@@ -92,6 +92,7 @@ private:
 	CSelectSetupBtn* m_pcAutoOxyCal;
 	CSelectSetupBtn* m_pcPatientAlarmDelay;
 	CSelectSetupBtn* m_pcPPSVasDeltaPEEPValue;
+	CSelectSetupBtn* m_pcBreathToBreathVT;
 
 	DWORD m_dwLastSetupTimer;
 
@@ -110,6 +111,7 @@ private:
 	int m_iManBreathTime;
 	UINT m_iPatientAlarmDelay;
 	BOOL m_bPpsvAsDeltaPEEPValue;
+	bool m_bUseTveBTB;
 	eLeakCompensation m_eLeakComp;
 	//BYTE m_byFlushTime;
 	bool m_bHFOManBreathEnabled;
@@ -131,6 +133,7 @@ public:
 	afx_msg void OnBnClickedManBreathTime();
 	afx_msg void OnBnClickedPatAlarmDelay();
 	afx_msg void OnBnClickedPPSVasDeltaPEEPValue();
+	afx_msg void OnBnClickedBTBforVT();
 	afx_msg void OnBnClickedVolumeTrigger();
 	afx_msg void OnBnClickedTubeSet();
 	afx_msg void OnBnClickedPressureUnit();

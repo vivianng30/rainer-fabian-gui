@@ -95,6 +95,7 @@ private:
 	CBmp* m_pcPediatric_Up;
 	CBmp* m_pcPediatric_Dw;
 	CBmp* m_pcPediatric_Fc;
+	CBmp* m_pcPediatric_Dis;
 
 	CMenuBtn* m_pcMenuCO2;
 	CMenuBtn* m_pcMenuSpO2;

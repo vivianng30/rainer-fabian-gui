@@ -20,13 +20,13 @@ CWndServiceSettings::CWndServiceSettings():
 CWndService()
 {
 	m_sliderEnableNurse=NULL;
-	m_sliderEnableBTBVte=NULL;
+	m_sliderEnableNeoPed=NULL;
 	m_sliderEnableFactory=NULL;
 	m_sliderEnableAutolimit=NULL;
 	m_bNurscallActive=false;
 	m_bEnableFactory=false;
 	m_bEnableAutolimit=false;
-	m_bUseTveBTB=false;
+	m_bUseNeoPed=false;
 	m_pcNurse=NULL;
 	m_pcHelp_Up=NULL;
 	m_pcHelp_Dw=NULL;
@@ -95,9 +95,9 @@ CWndService()
 
 CWndServiceSettings::~CWndServiceSettings()
 {
-	if(m_sliderEnableBTBVte)
-		delete m_sliderEnableBTBVte;
-	m_sliderEnableBTBVte=NULL;
+	if(m_sliderEnableNeoPed)
+		delete m_sliderEnableNeoPed;
+	m_sliderEnableNeoPed=NULL;
 
 	if(m_sliderEnableNurse)
 		delete m_sliderEnableNurse;
@@ -230,26 +230,24 @@ void CWndServiceSettings::Init()
 	m_sliderEnableNurse->SetMargin( 5, 0, 6, 0 );
 	m_sliderEnableNurse->DrawFocusRect( FALSE );
 
-	m_bUseTveBTB=getModel()->getCONFIG()->useTveBTB();
+	m_bUseNeoPed=getModel()->getCONFIG()->useNeoPed();
 
-	m_sliderEnableBTBVte = new CBitmapSlider();
-	m_sliderEnableBTBVte->Create(_T(""),WS_CHILD|WS_VISIBLE|SS_BITMAP|SS_NOTIFY|BS_OWNERDRAW, CRect(590,35,739,80), 
-		this,IDC_SLD_USETVEBTB);
-	m_sliderEnableBTBVte->SetBitmapChannel( IDB_SLD_CHAN_GREY, NULL );
-	m_sliderEnableBTBVte->SetBitmapThumb( IDB_SLD_THUMB_GREY, IDB_SLD_THUMB_ACT_GREY);
-	m_sliderEnableBTBVte->SetRange( 0, 1 );
-	if(m_bUseTveBTB)
+	m_sliderEnableNeoPed = new CBitmapSlider();
+	m_sliderEnableNeoPed->Create(_T(""),WS_CHILD|WS_VISIBLE|SS_BITMAP|SS_NOTIFY|BS_OWNERDRAW, CRect(590,35,739,80), 
+		this,IDC_SLD_USENEOPED);
+	m_sliderEnableNeoPed->SetBitmapChannel( IDB_SLD_CHAN_GREY, NULL );
+	m_sliderEnableNeoPed->SetBitmapThumb( IDB_SLD_THUMB_GREY, IDB_SLD_THUMB_ACT_GREY);
+	m_sliderEnableNeoPed->SetRange( 0, 1 );
+	if(m_bUseNeoPed)
 	{
-		m_sliderEnableBTBVte->SetPos( 1 );
-		//m_pcTest->EnableWindow(TRUE);
+		m_sliderEnableNeoPed->SetPos( 1 );
 	}
 	else
 	{
-		m_sliderEnableBTBVte->SetPos( 0 );
-		//m_pcTest->EnableWindow(FALSE);
+		m_sliderEnableNeoPed->SetPos( 0 );
 	}
-	m_sliderEnableBTBVte->SetMargin( 5, 0, 6, 0 );
-	m_sliderEnableBTBVte->DrawFocusRect( FALSE );
+	m_sliderEnableNeoPed->SetMargin( 5, 0, 6, 0 );
+	m_sliderEnableNeoPed->DrawFocusRect( FALSE );
 
 
 	m_bEnableFactory=getModel()->getCONFIG()->IsEnableFactoryActive();
@@ -505,14 +503,7 @@ void CWndServiceSettings::Draw()
 		m_bUSBDataAvailable=false;
 	}
 
-	/*if(CTlsFile::Exists(_T("\\Hard Disk\\SETUP\\SetupFabian.exe")))xxx
-	{
-		m_bRegAvailable=true;
-	}
-	else
-	{
-		m_bRegAvailable=false;
-	}*/
+	
 
 	if(CTlsFile::Exists(_T("\\FFSDISK\\hospital.dat")))
 	{
@@ -597,14 +588,14 @@ void CWndServiceSettings::Draw()
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 
-	//############VTe as BTB#####################################
+	//############Neo and Ped#####################################
 	RoundRect(hdcMem, 405, 15, 770, 100,20,20);
 
 	rc.left = 425;  
 	rc.top = 35;  
 	rc.right  = 800;  
 	rc.bottom = 500;
-	cs = _T("Use BTB for VT:");
+	cs = _T("NEO+PED:");
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 	rc.left = 425;  
@@ -827,18 +818,18 @@ LRESULT CWndServiceSettings::OnMyMessage(WPARAM wParam, LPARAM lParam)
 			Draw();
 		}
 		break;
-	case IDC_SLD_USETVEBTB:
+	case IDC_SLD_USENEOPED:
 		{
 			if(lParam==1)
 			{
-				m_bUseTveBTB=true;
+				m_bUseNeoPed=true;
 			}
 			else
 			{
-				m_bUseTveBTB=false;
+				m_bUseNeoPed=false;
 			}
 
-			getModel()->getCONFIG()->setUseTveBTB(m_bUseTveBTB);
+			getModel()->getCONFIG()->setUseNeoPed(m_bUseNeoPed);
 
 			Draw();
 		}

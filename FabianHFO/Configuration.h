@@ -368,6 +368,9 @@ public:
 	bool useTveBTB();
 	void setUseTveBTB(bool state);
 
+	bool useNeoPed();
+	void setUseNeoPed(bool state);
+
 	bool getBTPS();
 	void setBTPS(bool state);
 
@@ -1244,6 +1247,7 @@ private:
 	bool m_bAutoScreenlockActive;
 	bool m_bFastSATon;
 	bool m_bUseTveBTB;
+	bool m_bUseNeoPed;
 	bool m_bBTPSenable;
 	bool m_bServicePasswordDisabled;
 	bool m_bNursecallActive;

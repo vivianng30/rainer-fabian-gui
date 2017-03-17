@@ -105,7 +105,7 @@ CMVModel::CMVModel(void)
 	m_szBuildVersion = _T("9.0.0.0");
 #else
 	m_szVersion = _T("5.0.1");
-	m_szBuildVersion = _T("5.0.1.18");
+	m_szBuildVersion = _T("5.0.1.20");
 #endif
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO"),true);
@@ -6308,6 +6308,33 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 		{
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX,ALINK_NOTVALID);
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MIN,ALINK_NOTVALID);
+		}
+
+		if(getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+		{
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2LOW, getDATAHANDLER()->getPRICO_SPO2lowRange());		
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2HIGH, getDATAHANDLER()->getPRICO_SPO2highRange());
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2LOW, getDATAHANDLER()->getPRICO_FIO2lowRange());
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2HIGH, getDATAHANDLER()->getPRICO_FIO2highRange());
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2SIQMIN, getALARMHANDLER()->getAlimitSPO2_SIQmin());
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MAX, getALARMHANDLER()->getAlimitSPO2max());
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MIN, getALARMHANDLER()->getAlimitSPO2min());
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2PIMIN, getALARMHANDLER()->getAlimitSPO2_PImin());
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX, getALARMHANDLER()->getAlimitPulseRatemax());
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN, getALARMHANDLER()->getAlimitPulseRatemin());
+		}
+		else
+		{
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2LOW, ALINK_NOTVALID);		
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2HIGH, ALINK_NOTVALID);
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2LOW, ALINK_NOTVALID);
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2HIGH, ALINK_NOTVALID);
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2SIQMIN, ALINK_NOTVALID);
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MAX, ALINK_NOTVALID);
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MIN, ALINK_NOTVALID);
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2PIMIN, ALINK_NOTVALID);
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX, ALINK_NOTVALID);
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN, ALINK_NOTVALID);
 		}
 	}
 

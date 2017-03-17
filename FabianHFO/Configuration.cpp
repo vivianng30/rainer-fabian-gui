@@ -72,6 +72,7 @@ CConfiguration::CConfiguration()
 	/*m_iPDMSwave1=0;
 	m_iPDMSwave2=0;*/
 
+	m_bUseNeoPed=true;
 	m_bUseTveBTB=true;
 	m_bBTPSenable=true;
 	m_iVentRange=0;
@@ -471,6 +472,7 @@ void CConfiguration::Init()
 	/*m_iPDMSwave1=0;
 	m_iPDMSwave2=0;*/
 
+	m_bUseNeoPed=true;
 	m_bUseTveBTB=true;
 	m_bBTPSenable=true;
 	m_iVentRange=0;
@@ -1080,7 +1082,18 @@ void CConfiguration::LoadSettings()
 	}
 	
 
-	
+	if(getModel()->getI2C()->ReadConfigByte(USENEOPED_8)==0)
+	{
+		m_bUseNeoPed=true;
+		theApp.getLog()->WriteLine(_T("*** Patient range NEO+PED ***"));
+	}
+	else
+	{
+		m_bUseNeoPed=false;
+		theApp.getLog()->WriteLine(_T("*** Patient range NEO ***"));
+
+		getModel()->getI2C()->WriteConfigByte(VENTRANGE_8, NEONATAL);
+	}
 	
 
 	m_iVentRange=getModel()->getI2C()->ReadConfigByte(VENTRANGE_8);
@@ -1481,6 +1494,9 @@ void CConfiguration::LoadSettings()
 			theApp.getLog()->WriteLine(_T("*** UseTveBTB==false ***"));
 		}
 	}
+
+
+	
 
 	
 
@@ -4424,6 +4440,35 @@ void CConfiguration::setUseTveBTB(bool state)
 // **************************************************************************
 // 
 // **************************************************************************
+bool CConfiguration::useNeoPed()
+{
+	return m_bUseNeoPed;
+}
+void CConfiguration::setUseNeoPed(bool state)
+{
+	m_bUseNeoPed=state;
+	if(m_bUseNeoPed)
+	{
+		theApp.getLog()->WriteLine(_T("*** Patient range NEO+PED ***"));
+		getModel()->getI2C()->WriteConfigByte(USENEOPED_8, 0);
+	}
+	else
+	{
+		theApp.getLog()->WriteLine(_T("*** Patient range NEO ***"));
+		getModel()->getI2C()->WriteConfigByte(USENEOPED_8, 1);
+
+		if(GetVentRange()==PEDIATRIC)
+		{
+			SetVentRange(NEONATAL);
+		}
+	}
+
+
+}
+
+// **************************************************************************
+// 
+// **************************************************************************
 bool CConfiguration::getBTPS()
 {
 	return m_bBTPSenable;
@@ -6093,6 +6138,20 @@ void CConfiguration::SetSPO2module(BYTE mod, bool bReinit)
 
 	if(m_iSPO2module!=SPO2MODULE_NONE)
 	{
+		if(getModel()->getAcuLink() != NULL)
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2LOW, getModel()->getDATAHANDLER()->getPRICO_SPO2lowRange());		
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2HIGH, getModel()->getDATAHANDLER()->getPRICO_SPO2highRange());
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2LOW, getModel()->getDATAHANDLER()->getPRICO_FIO2lowRange());
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2HIGH, getModel()->getDATAHANDLER()->getPRICO_FIO2highRange());
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2SIQMIN, getModel()->getALARMHANDLER()->getAlimitSPO2_SIQmin());
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MAX, getModel()->getALARMHANDLER()->getAlimitSPO2max());
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MIN, getModel()->getALARMHANDLER()->getAlimitSPO2min());
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2PIMIN, getModel()->getALARMHANDLER()->getAlimitSPO2_PImin());
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX, getModel()->getALARMHANDLER()->getAlimitPulseRatemax());
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN, getModel()->getALARMHANDLER()->getAlimitPulseRatemin());
+		}
+
 		//theApp.getLog()->WriteLine(_T("#SPO2module: MASIMO"));
 		//DEBUGMSG(TRUE, (TEXT("InitSPO2module\r\n")));
 		getModel()->initSPO2module(bReinit);
@@ -6147,10 +6206,24 @@ void CConfiguration::SetSPO2module(BYTE mod, bool bReinit)
 		}
 
 		//NEWACULINK
-		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_SPO2,ALINK_NOTVALID);
-		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_SPO2_PI,ALINK_NOTVALID);
-		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_SPO2_PR,ALINK_NOTVALID);
-		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_SPO2_SIQ,ALINK_NOTVALID);
+		if (getModel()->getAcuLink() != NULL)
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2LOW, ALINK_NOTVALID);		
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2HIGH, ALINK_NOTVALID);
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2LOW, ALINK_NOTVALID);
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2HIGH, ALINK_NOTVALID);
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2SIQMIN, ALINK_NOTVALID);
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MAX, ALINK_NOTVALID);
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MIN, ALINK_NOTVALID);
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2PIMIN, ALINK_NOTVALID);
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX, ALINK_NOTVALID);
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN, ALINK_NOTVALID);
+			getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_SPO2,ALINK_NOTVALID);
+			getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_SPO2_PI,ALINK_NOTVALID);
+			getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_SPO2_PR,ALINK_NOTVALID);
+			getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_SPO2_SIQ,ALINK_NOTVALID);
+		}
+		
 
 	}
 	m_bSpO2ConfigInProgress=false;
@@ -7730,8 +7803,8 @@ void CConfiguration::SetAlarmlimitSPO2max(int value)
 {
 	m_iAlarmlimitSPO2max=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MAX_16, value);
-	/*if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MAX,value);*/
+	if(getModel()->getAcuLink()!=NULL)
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MAX,value);
 }
 void CConfiguration::SetAlarmlimitStateSPO2max(eAlarmLimitState state)
 {
@@ -7754,8 +7827,8 @@ void CConfiguration::SetAlarmlimitSPO2min(int value)
 {
 	m_iAlarmlimitSPO2min=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MIN_16, value);
-	/*if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MIN,value);*/
+	if(getModel()->getAcuLink()!=NULL)
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MIN,value);
 }
 void CConfiguration::SetAlarmlimitStateSPO2min(eAlarmLimitState state)
 {
@@ -7779,8 +7852,8 @@ void CConfiguration::SetAlarmlimitPulseRatemax(int value)
 {
 	m_iAlarmlimitPulseRatemax=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMAX_16, value);
-	/*if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX,value);*/
+	if(getModel()->getAcuLink()!=NULL)
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX,value);
 }
 void CConfiguration::SetAlarmlimitStatePulseRatemax(eAlarmLimitState state)
 {
@@ -7803,8 +7876,8 @@ void CConfiguration::SetAlarmlimitPulseRatemin(int value)
 {
 	m_iAlarmlimitPulseRatemin=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMIN_16, value);
-	/*if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN,value);*/
+	if(getModel()->getAcuLink()!=NULL)
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN,value);
 }
 void CConfiguration::SetAlarmlimitStatePulseRatemin(eAlarmLimitState state)
 {
@@ -7828,8 +7901,8 @@ void CConfiguration::SetAlarmlimitSPO2_PImin(int value)
 {
 	m_iAlarmlimitSPO2_PImin=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_PIMIN_16, value);
-	/*if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2_PIMIN,value);*/
+	if(getModel()->getAcuLink()!=NULL)
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2PIMIN,value);
 }
 void CConfiguration::SetAlarmlimitStateSPO2_PImin(eAlarmLimitState state)
 {
@@ -7851,6 +7924,9 @@ void CConfiguration::SetAlarmlimitSPO2_SIQmin(int value)
 {
 	m_iAlarmlimitSPO2_SIQmin=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_SIQMIN_16, value);
+
+	if(getModel()->getAcuLink()!=NULL)
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2SIQMIN,value);
 }
 void CConfiguration::SetAlarmlimitStateSPO2_SIQmin(eAlarmLimitState state)
 {
@@ -9494,6 +9570,7 @@ void CConfiguration::Serialize(CArchive& ar)
 		ar<<m_iCurNumericBlock_THERAPY;
 		ar<<m_iCurNumericBlock_FLOWOFFCONV;
 		ar<<m_iCurNumericBlock_FLOWOFFHFO;
+		ar<<m_bUseNeoPed;
 	}
 	else
 	{
@@ -10151,6 +10228,9 @@ void CConfiguration::Serialize(CArchive& ar)
 
 			ar>>m_iCurNumericBlock_FLOWOFFHFO;
 			setLastNumericFLOWOFFHFO(m_iCurNumericBlock_FLOWOFFHFO);
+
+			ar>>m_bUseNeoPed;
+			setUseNeoPed(m_bUseNeoPed);
 		}
 	}
 }

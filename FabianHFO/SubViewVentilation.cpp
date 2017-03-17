@@ -92,6 +92,7 @@ CSubViewVentilation::CSubViewVentilation()
 	m_iPatientAlarmDelay=getModel()->getCONFIG()->getCurPatientAlarmDelay();
 	m_bPpsvAsDeltaPEEPValue=getModel()->getCONFIG()->isPpsvAsDeltaPEEPValue();
 	m_eLeakComp=getModel()->getCONFIG()->getLeakCompOff();
+	m_bUseTveBTB=getModel()->getCONFIG()->useTveBTB();
 
 	m_kUp					= VK_UP;//up dw revers
 	m_kDown					= VK_DOWN;
@@ -109,6 +110,7 @@ CSubViewVentilation::CSubViewVentilation()
 	m_pcAutoOxyCal=NULL;
 	m_pcHFOManBreath=NULL;
 	m_pcPPSVasDeltaPEEPValue=NULL;
+	m_pcBreathToBreathVT=NULL;
 
 	m_dwLastSetupTimer=0;
 }
@@ -198,6 +200,10 @@ CSubViewVentilation::~CSubViewVentilation()
 		delete m_pcPPSVasDeltaPEEPValue;
 	m_pcPPSVasDeltaPEEPValue=NULL;
 
+	if(m_pcBreathToBreathVT)
+		delete m_pcBreathToBreathVT;
+	m_pcBreathToBreathVT=NULL;
+
 	if(m_pcPatientAlarmDelay)
 		delete m_pcPatientAlarmDelay;
 	m_pcPatientAlarmDelay=NULL;
@@ -215,6 +221,7 @@ BEGIN_MESSAGE_MAP(CSubViewVentilation, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SETUP_MANBREATHTIME, &CSubViewVentilation::OnBnClickedManBreathTime)
 	ON_BN_CLICKED(IDC_BTN_SETUP_PATALARMDELAY, &CSubViewVentilation::OnBnClickedPatAlarmDelay)
 	ON_BN_CLICKED(IDC_BTN_SETUP_PPSVABSOLUTE, &CSubViewVentilation::OnBnClickedPPSVasDeltaPEEPValue)
+	ON_BN_CLICKED(IDC_BTN_SETUP_BTBVT, &CSubViewVentilation::OnBnClickedBTBforVT)
 	ON_BN_CLICKED(IDC_BTN_SETUP_VOLUMETRIG, &CSubViewVentilation::OnBnClickedVolumeTrigger)
 	ON_BN_CLICKED(IDC_BTN_SETUP_TUBESET, &CSubViewVentilation::OnBnClickedTubeSet)
 	ON_BN_CLICKED(IDC_BTN_SETUP_PRESSUREUNIT, &CSubViewVentilation::OnBnClickedPressureUnit)
@@ -422,7 +429,7 @@ BOOL CSubViewVentilation::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCre
 
 		m_pcTubeSet=new CSelectSetupBtn(btn,COLOR_TXTBTNUP,true);
 		m_pcTubeSet->Create(this,g_hf8AcuBold,0);
-		m_pcTubeSet->SetText(getModel()->GetLanguageString(IDS_TXT_TUBESET)+_T(":"));
+		m_pcTubeSet->SetText(getModel()->GetLanguageString(IDS_TXT_NIV)+_T(" ")+getModel()->GetLanguageString(IDS_TXT_TUBESET)+_T(":"));
 		if(m_eTubeSet==TUBE_MEDIJET)
 		{
 			m_pcTubeSet->SetValueText(getModel()->GetLanguageString(IDS_TXT_MEDIJET));
@@ -638,6 +645,29 @@ BOOL CSubViewVentilation::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCre
 		m_plBtn.AddTail(m_pcPPSVasDeltaPEEPValue);
 
 
+		//################################### BTBforVT ###########################
+		btn.wID					= IDC_BTN_SETUP_BTBVT;	
+		btn.poPosition.x		= 416;
+		btn.poPosition.y		= 286;
+		btn.pcBmpUp				= m_pcSetupVent_Up;
+		btn.pcBmpDown			= m_pcSetupVent_Dw;
+		btn.pcBmpFocus			= m_pcSetupVent_Fc;
+		btn.pcBmpDisabled		= m_pcSetupVent_Up;
+		btn.dwFormat			= DT_VCENTER|DT_CENTER;
+
+		m_pcBreathToBreathVT=new CSelectSetupBtn(btn,COLOR_TXTBTNUP,true);
+		m_pcBreathToBreathVT->Create(this,g_hf8AcuBold,0);
+		m_pcBreathToBreathVT->SetText(getModel()->GetLanguageString(IDS_TXT_VTASBTB)+_T(":"));
+		if(m_bUseTveBTB)
+		{
+			m_pcBreathToBreathVT->SetValueText(getModel()->GetLanguageString(IDS_TXT_ENABLED));
+		}
+		else
+		{
+			m_pcBreathToBreathVT->SetValueText(getModel()->GetLanguageString(IDS_TXT_DISABLED));
+		}
+		m_pcBreathToBreathVT->ShowWindow(SW_SHOW);
+		m_plBtn.AddTail(m_pcBreathToBreathVT);
 
 		//################################### 12. Button Reset Hospital###########################
 		btn.wID					= IDC_BTN_SETUP_HOSPITAL;	
@@ -862,6 +892,9 @@ void CSubViewVentilation::Draw()
 
 	//#############absolute PPSV
 	RoundRect(hdcMem,415,212,780,272,20,20);
+
+	//#############absolute BTB fof VT
+	RoundRect(hdcMem,415,276,780,336,20,20);
 
 
 
@@ -1135,6 +1168,10 @@ void CSubViewVentilation::OnBnClickedVolumeTrigger()
 void CSubViewVentilation::OnBnClickedPPSVasDeltaPEEPValue()
 {
 	SetButtonClicked(IDC_BTN_SETUP_PPSVABSOLUTE);
+}
+void CSubViewVentilation::OnBnClickedBTBforVT()
+{
+	SetButtonClicked(IDC_BTN_SETUP_BTBVT);
 }
 void CSubViewVentilation::OnBnClickedTubeSet()
 {

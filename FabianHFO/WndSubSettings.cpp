@@ -179,6 +179,7 @@ BOOL CWndSubSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateC
 		case IDC_BTN_SETUP_HFOMANBREATH:
 		case IDC_BTN_SETUP_LEAKCOMP:
 		case IDC_BTN_SETUP_PPSVABSOLUTE:
+		case IDC_BTN_SETUP_BTBVT:
 			{
 				m_szBack=getModel()->GetLanguageString(IDS_BTN_MNU_VENT);
 			}

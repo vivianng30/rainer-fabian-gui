@@ -34,6 +34,9 @@ CThreadFOT::CThreadFOT()
 	InitializeCriticalSection(&csFOTventBuffer);
 	InitializeCriticalSection(&csFOTdate);
 
+	m_eRetryError=RETRY_NONE;
+	//m_bTestRetry=true;
+
 	m_pModel = NULL;
 
 	m_bDecreasing=false;
@@ -915,6 +918,8 @@ void CThreadFOT::decreaseSequence()
 }
 void CThreadFOT::repeatSequence()
 {
+	resetRetryERROR();
+
 	if(getFOTstate()==FOT_RETRY)
 	{
 		DEBUGMSG(TRUE, (TEXT("CThreadFOT::continueWithSequence() RETRY\r\n")));
@@ -1043,7 +1048,30 @@ bool CThreadFOT::isAcquireFOTData()
 //	return bTemp;
 //}
 
+void CThreadFOT::setRetry(eRetryError error)
+{
+	EnterCriticalSection(&csFOTvalidData);
+	m_eRetryError=error;
+	LeaveCriticalSection(&csFOTvalidData);
+	
+	setFOTstate(FOT_RETRY);
+}
 
+eRetryError CThreadFOT::getRetryERROR()
+{
+	eRetryError error=RETRY_NONE;
+	EnterCriticalSection(&csFOTvalidData);
+	error=m_eRetryError;
+	LeaveCriticalSection(&csFOTvalidData);
+	return error;
+}
+
+void CThreadFOT::resetRetryERROR()
+{
+	EnterCriticalSection(&csFOTvalidData);
+	m_eRetryError=RETRY_NONE;
+	LeaveCriticalSection(&csFOTvalidData);
+}
 
 void CThreadFOT::setFOTstate(SequenceStatesFOT feState)
 {
@@ -1073,16 +1101,16 @@ bool CThreadFOT::isFOTDataValid()
 	LeaveCriticalSection(&csFOTvalidData);
 	return bTemp;
 }
-void CThreadFOT::setFOTDataValid(bool validData)
+void CThreadFOT::setFOTDataValid(bool validData, eRetryError error)
 {
 	EnterCriticalSection(&csFOTvalidData);
 	m_bFOTvalidData=validData;
+	m_eRetryError=error;
 	LeaveCriticalSection(&csFOTvalidData);
 }
 void CThreadFOT::checkFOTvalidMeasurementData()
 {
 	//DEBUGMSG(TRUE, (TEXT("checkFOTvalidMeasurementData\r\n")));
-	//bool bDataValid=false;
 
 	if(m_bFOThfoRunning)
 	{
@@ -1091,11 +1119,10 @@ void CThreadFOT::checkFOTvalidMeasurementData()
 		if(m_icurFOTHFPmean-10<=iPMEANmeasurement && iPMEANmeasurement<=m_icurFOTHFPmean+10)
 		{
 			setFOTDataValid(true);
-			//bDataValid=true;
 		}
 		else
 		{
-			setFOTDataValid(false);
+			setFOTDataValid(false,RETRY_PRESSURE);
 		}
 
 		//DEBUGMSG(TRUE, (TEXT("checkFOTvalidMeasurementData cur %d meas %d\r\n"),m_icurFOTHFPmean,iPMEANmeasurement));
@@ -1107,16 +1134,28 @@ void CThreadFOT::checkFOTvalidMeasurementData()
 		if(m_icurFOTPEEP-10<=iPEEPmeasurement && iPEEPmeasurement<=m_icurFOTPEEP+10)
 		{
 			setFOTDataValid(true);
-			//bDataValid=true;
 		}
 		else
 		{
-			setFOTDataValid(false);
+			setFOTDataValid(false,RETRY_PRESSURE);
 		}
 
 		//DEBUGMSG(TRUE, (TEXT("checkFOTvalidMeasurementData cur %d meas %d\r\n"),m_icurFOTPEEP,iPEEPmeasurement));
 	}
-	//return bDataValid;
+
+	if(isFOTDataValid())//check leak
+	{
+		BYTE iLEAKmeasurement=getModel()->getDATAHANDLER()->getAVGMessureDataLeak();
+
+		if(iLEAKmeasurement<20)
+		{
+			setFOTDataValid(true);
+		}
+		else
+		{
+			setFOTDataValid(false,RETRY_LEAK);
+		}
+	}
 }
 /**********************************************************************************************//**
  * @fn	void CThreadFOT::writeFOTventdataBuffer(int iPRESSURE, double iFlow)
@@ -1267,41 +1306,62 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 	//DWORD dwStart=GetTickCount();
 	
 	CStringW szLog=_T("");
+	bool bRetryFSI=false;
+	bool bRetryResistance=false;
+	bool bRetryReactance=false;
 
 	EnterCriticalSection(&csFOTventBuffer);
-	int iTestCount=0;
+	//int iTestCount=0;
 	for(int k=0;k<(m_ibufCountFOTventilation-size);k++)
 	{ 
 		for(int i=0;i<size;i++)
 		{
 			pp_Flow[i][0] = (double) m_pbufFOTventilation[i+k].iValFlow;
 			pp_Pressure[i][0] = (double) m_pbufFOTventilation[i+k].iValPressure;
-			//sz.Format(_T("flow %.2f, "), m_pbufFOTventilation[i+k].iValFlow);
-			//DEBUGMSG(TRUE, (sz));
 		}
 
 		fnCalcZ(pp_Fourier,pp_PseudoInverse,pp_Flow,pp_Pressure,i_osc_freq,i_sample_freq,p_Out);
 
-		iTestCount++;
+		if(p_Out[0]==0.0)
+		{
+			bRetryResistance=true;
+			break;
+		}
+		else if(p_Out[1]>=0.0 || p_Out[1]<-500.0)
+		{
+			bRetryReactance=true;
+			break;
+		}
+		else if(p_Out[2]>1.0)
+		{
+			bRetryFSI=true;
+			break;
+		}
+		//iTestCount++;
 		Sleep(0);
 
 		for(int i=0;i<4;i++)
 		{
-			//sz.Format(_T("Y1 %d %.2f\r\n"),i,p_Out[i]);
 			p_TotalOut[i] += p_Out[i]; 
-			//sz.Format(_T("Y2 %d %.2f\r\n"),i,p_TotalOut[i]);
 		}
 	}
 
+	/*pOut[0] = Resistance;
+	pOut[1] = Reactance;
+	pOut[2] = FSI;
+	pOut[3] = PSI;*/
+
 	for(int i=0;i<4;i++)
 	{
-		//sz.Format(_T("X1 %d %.2f\r\n"),i,p_TotalOut[i]);
 		p_TotalOut[i] = p_TotalOut[i]/(m_ibufCountFOTventilation-size);
-		//sz.Format(_T("X2 %d %.2f\r\n"),i,p_TotalOut[i]);
 	}
 	LeaveCriticalSection(&csFOTventBuffer);
 
-	double iTEST=p_TotalOut[1];
+	/*if(m_iFOTsequence==2 && m_bTestRetry)
+	{
+		m_bTestRetry=false;
+		bRetryReactance=true;
+	}*/
 
 	EnterCriticalSection(&csFOTcalcBuffer);
 	m_pbufFOTdisplay[m_iFOTdisplaySequence-1].iXValPmean=curPressure;
@@ -1328,8 +1388,27 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 	delete [] p_Out;
 	delete [] p_TotalOut;
 
-	resetFOTventdataBuffer();
-	getModel()->getVIEWHANDLER()->drawFOTsteps();
+	
+	if(bRetryFSI || bRetryResistance || bRetryReactance)
+	{
+		if(bRetryFSI)
+			setRetry(RETRY_FSI);
+		else if(bRetryResistance)
+			setRetry(RETRY_RESISTANCE);
+		else//bRetryReactance
+			setRetry(RETRY_REACTANCE);
+
+		resetFOTventdataBuffer();
+		resetLastDisplayBuf();
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_REDRAW_FOT_STATE);
+	}
+	else
+	{
+		resetFOTventdataBuffer();
+		getModel()->getVIEWHANDLER()->drawFOTsteps();
+	}
 }
 
 
@@ -1501,7 +1580,9 @@ DWORD CThreadFOT::FOTData(void)
 						}
 						else if(m_iCountFOTimer>15 && false==isFOTDataValid())
 						{
-							setFOTstate(FOT_RETRY);
+							//setFOTstate(FOT_RETRY);
+							setRetry(RETRY_PRESSURE);
+
 							m_iCountFOTimer=0;
 							getModel()->getVIEWHANDLER()->drawFOTtime(m_iCountFOTimer);
 							
@@ -1532,7 +1613,8 @@ DWORD CThreadFOT::FOTData(void)
 						}
 						else if(m_iCountFOTimer>0 && false==isFOTDataValid())
 						{
-							setFOTstate(FOT_RETRY);
+							//setFOTstate(FOT_RETRY);
+							setRetry(RETRY_PRESSURE);
 							m_iCountFOTimer=getModel()->getCONFIG()->getFOTventDelaytime();
 							getModel()->getVIEWHANDLER()->drawFOTtime(m_iCountFOTimer);
 

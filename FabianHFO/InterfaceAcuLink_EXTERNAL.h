@@ -41,7 +41,7 @@ public:
 	void setProducerStarted(bool bState);
 
 	UINT getAcuLinkError();
-	void setGraphData(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2);
+	void setGraphData(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2, SHORT iValSPO2);
 	int setLanguage(UINT uiLang);
 	int setNetPort(UINT uiPort);
 	int setLinkType(int iLinkType);

@@ -222,8 +222,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 5,0,1,18
- PRODUCTVERSION 5,0,1,18
+ FILEVERSION 5,0,1,20
+ PRODUCTVERSION 5,0,1,20
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -240,12 +240,12 @@ BEGIN
         BEGIN
             VALUE "Comments", "Alle Rechte vorbehalten."
             VALUE "CompanyName", "Acutronic Medical Systems AG"
-            VALUE "FileVersion", "5, 0, 1, 18"
+            VALUE "FileVersion", "5, 0, 1, 20"
             VALUE "InternalName", "FabianHFO.exe"
             VALUE "LegalCopyright", "(c) Acutronic Medical Systems AG. "
             VALUE "OriginalFilename", "FabianHFO.exe"
             VALUE "ProductName", " FabianHFO"
-            VALUE "ProductVersion", "5, 0, 1, 18"
+            VALUE "ProductVersion", "5, 0, 1, 20"
         END
     END
     BLOCK "VarFileInfo"
@@ -940,6 +940,7 @@ IDB_FOT_RUN_UP          BITMAP                  "res\\Btn\\fot_run_up.bmp"
 IDB_FOT_ONOFF_DIS       BITMAP                  "res\\Btn\\fot_start_dis.bmp"
 IDB_FOT_ONOFF_DW        BITMAP                  "res\\Btn\\fot_start_dw.bmp"
 IDB_FOT_ONOFF_UP        BITMAP                  "res\\Btn\\fot_start_up.bmp"
+IDB_BTN_SETPED_DIS      BITMAP                  "res\\Btn\\ped_dis.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1859,7 +1860,7 @@ BEGIN
     IDS_TXT_SPO_AVERAGING   "SpO2 averaging time"
     IDS_TXT_PRICOOFF        "PRICO off"
     IDS_TXT_PRETRIGGER      "Pressure Trigger"
-    IDS_TXT_LEAKCOMP        "Leak compensation"
+    IDS_TXT_LEAKCOMP        "NIV Leak compensation"
     IDS_TXT_SPO2_LOWRANGE   "limited by SpO2 low range"
     IDS_TXT_SPO2_LIMITTED   "limited by SpO2 alarm limit"
 END
@@ -1872,6 +1873,8 @@ BEGIN
     IDS_TXT_SAVEDEVICEINFO  "Save device info to USB:"
     IDS_TXT_SAVEINFO        "Do you want to save the device information to USB? Do not unplug the USB while saving!"
     IDS_TXT_FILEWRITTEN     "file saved"
+    IDS_TXT_NIV             "NIV"
+    IDS_TXT_VTASBTB         "Use BTB for Vt"
 END
 
 STRINGTABLE 

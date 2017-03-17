@@ -2971,6 +2971,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\WndSubSettingsBTBforVT.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\WndSubSettingsCO2Module.cpp"
 				>
 			</File>
@@ -3938,6 +3942,10 @@
 			</File>
 			<File
 				RelativePath=".\WndSubSettingsBaroPressure.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WndSubSettingsBTBforVT.h"
 				>
 			</File>
 			<File
@@ -6140,6 +6148,10 @@
 			</File>
 			<File
 				RelativePath=".\res\Pics\patientdata.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\Btn\ped_dis.bmp"
 				>
 			</File>
 			<File

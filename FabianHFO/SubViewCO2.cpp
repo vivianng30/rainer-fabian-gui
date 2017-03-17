@@ -152,7 +152,7 @@ CSubViewCO2::CSubViewCO2()
 	else
 	{
 		WORD iAltitude=getModel()->getI2C()->ReadConfigWord(ALTITUDE_16);
-		m_iBarometricP=(double)1013*pow(((double)1-(double)0.000022558*iAltitude),(double)5.2561);
+		m_iBarometricP=((double)1013*pow(((double)1-(double)0.000022558*iAltitude),(double)5.2561))*0.75;
 	}
 
 	m_iAutoOnPump=getModel()->getCONFIG()->GetTimePumpAutoOn();

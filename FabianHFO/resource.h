@@ -697,6 +697,8 @@
 #define IDB_BITMAP44                    1006
 #define IDB_FOT_ONOFF_UP                1006
 #define IDC_MENU2                       1007
+#define IDB_BITMAP33                    1007
+#define IDB_BTN_SETPED_DIS              1007
 #define IDC_MENU3                       1008
 #define IDC_MENU4                       1009
 #define IDC_MENU5                       1010
@@ -1431,6 +1433,8 @@
 #define IDS_TXT_SAVEDEVICEINFO          12115
 #define IDS_TXT_SAVEINFO                12116
 #define IDS_TXT_FILEWRITTEN             12117
+#define IDS_TXT_NIV                     12118
+#define IDS_TXT_VTASBTB                 12119
 #define IDS_NEW                         65000
 #define IDS_FILE                        65001
 #define IDS_HELP                        65002
@@ -1444,7 +1448,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        1007
+#define _APS_NEXT_RESOURCE_VALUE        1008
 #define _APS_NEXT_COMMAND_VALUE         32772
 #define _APS_NEXT_CONTROL_VALUE         1050
 #define _APS_NEXT_SYMED_VALUE           105

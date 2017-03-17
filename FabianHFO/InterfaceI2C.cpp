@@ -976,6 +976,7 @@ bool CInterfaceI2C::SetFRAMDefaultFactoryConfig()
 	WriteConfigByte(TUBESET_8,TUBE_INFANTFLOW);
 	//WriteConfigByte(ASKFORPATDATA_8,0);
 	WriteConfigByte(USETVEBTB_8,0);
+	WriteConfigByte(USENEOPED_8,0);
 	WriteConfigByte(BTPS_8,1);
 	WriteConfigByte(FRESHGASEXT_8, 0);
 	WriteConfigByte(TRIGGERTYPECONV_8,TRIGGER_FLOW);

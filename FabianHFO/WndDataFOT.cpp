@@ -1242,7 +1242,40 @@ void CWndDataFOT::Draw(bool bStatic)
 
 
 							SetTextColor(hdcMem,RGB(255,0,0));
-							csText=_T("target pressure not reached");//todo FOTLANGUAGE
+							switch(getModel()->getFOTThread()->getRetryERROR())
+							{
+							case RETRY_PRESSURE:
+								{
+									csText=_T("TARGET PRESSURE not reached");//todo FOTLANGUAGE
+								}
+								break;
+							case RETRY_LEAK:
+								{
+									csText=_T("LEAK high");//todo FOTLANGUAGE
+								}
+								break;
+							case RETRY_FSI:
+								{
+									csText=_T("FSI high");//todo FOTLANGUAGE
+								}
+								break;
+							case RETRY_RESISTANCE:
+								{
+									csText=_T("RESISTANCE low");//todo FOTLANGUAGE
+								}
+								break;
+							case RETRY_REACTANCE:
+								{
+									csText=_T("REACTANCE out of range");//todo FOTLANGUAGE
+								}
+								break;
+							default:
+								{
+									csText=_T(" ");
+								}
+								break;
+							}
+							
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 
 							rc.top = 220;//257;
@@ -1538,7 +1571,39 @@ void CWndDataFOT::Draw(bool bStatic)
 							
 
 							SetTextColor(hdcMem,RGB(255,0,0));
-							csText=_T("target pressure not reached");//todo FOTLANGUAGE
+							switch(getModel()->getFOTThread()->getRetryERROR())
+							{
+							case RETRY_PRESSURE:
+								{
+									csText=_T("TARGET PRESSURE not reached");//todo FOTLANGUAGE
+								}
+								break;
+							case RETRY_LEAK:
+								{
+									csText=_T("LEAK high");//todo FOTLANGUAGE
+								}
+								break;
+							case RETRY_FSI:
+								{
+									csText=_T("FSI high");//todo FOTLANGUAGE
+								}
+								break;
+							case RETRY_RESISTANCE:
+								{
+									csText=_T("RESISTANCE low");//todo FOTLANGUAGE
+								}
+								break;
+							case RETRY_REACTANCE:
+								{
+									csText=_T("REACTANCE out of range");//todo FOTLANGUAGE
+								}
+								break;
+							default:
+								{
+									csText=_T(" ");
+								}
+								break;
+							}
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 							
 							rc.top = 220;//257;
@@ -2660,6 +2725,7 @@ LRESULT CWndDataFOT::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 		break;
 	case WM_REDRAW_FOT_STATE:
 		{
+			Draw(false);
 			drawFOTmenubar();
 		}
 		break;

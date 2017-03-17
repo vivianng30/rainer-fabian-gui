@@ -26,6 +26,7 @@ CMVView(iViewID)
 	m_pcWndSubVolTrigger=NULL;
 	m_pcWndSubTubeset=NULL;
 	m_pcWndSubPpsvAbsolute=NULL;
+	m_pcWndSubBTBforVT=NULL;
 	m_pcWndSubEFlow=NULL;
 	m_pcWndSubAutoOxyCal=NULL;
 	m_pcWndSubHFOManBreath=NULL;
@@ -284,6 +285,11 @@ void CViewMenu::Show(bool bRedraw)
 			case IDC_BTN_SETUP_PPSVABSOLUTE:
 				{
 					ShowWndSubSettingPpsvAbsolute(true);
+				}
+				break;
+			case IDC_BTN_SETUP_BTBVT:
+				{
+					ShowWndSubSettingBTBforVT(true);
 				}
 				break;
 			case IDC_BTN_SETUP_TUBESET:
@@ -795,7 +801,7 @@ void CViewMenu::OnDestroy()
 	DestroyWndSubSettingSPO2sensitivity();
 	DestroyWndSubSettingSPO2averagingtime();
 	DestroyWndSubSettingSPO2alarmdelay();
-	//DestroyWndSubSettingSPO2siqlimit();
+	DestroyWndSubSettingBTBforVT();
 	
 
 	DestroySubViewFlowSensor();
@@ -956,6 +962,12 @@ void CViewMenu::SetViewFocus()
 			{
 				if(m_pcWndSubPpsvAbsolute)
 					m_pcWndSubPpsvAbsolute->SetFocus();
+			}
+			break;
+		case IDC_BTN_SETUP_BTBVT:
+			{
+				if(m_pcWndSubBTBforVT)
+					m_pcWndSubBTBforVT->SetFocus();
 			}
 			break;
 		case IDC_BTN_SETUP_TUBESET:
@@ -2124,6 +2136,14 @@ void CViewMenu::OpenSettingsView(UINT viewFlag)
 			PostMessage(WM_SET_SETUPTIMER);
 		}
 		break;
+	case IDC_BTN_SETUP_BTBVT:
+		{
+			DestroyWndSubSettingBTBforVT();
+			CreateWndSubSettingBTBforVT(viewFlag);
+			ShowWndSubSettingBTBforVT(true);
+			PostMessage(WM_SET_SETUPTIMER);
+		}
+		break;
 	case IDC_BTN_SETUP_TUBESET:
 		{
 			DestroyWndSubSettingTubeset();
@@ -2260,6 +2280,11 @@ void CViewMenu::CloseSettingsView(UINT viewFlag)
 			DestroyWndSubSettingPpsvAbsolute();
 		}
 		break;
+	case IDC_BTN_SETUP_BTBVT:
+		{
+			DestroyWndSubSettingBTBforVT();
+		}
+		break;
 	case IDC_BTN_SETUP_TUBESET:
 		{
 			DestroyWndSubSettingTubeset();
@@ -2378,6 +2403,11 @@ void CViewMenu::DestroySettingsView()
 	case IDC_BTN_SETUP_PPSVABSOLUTE:
 		{
 			DestroyWndSubSettingPpsvAbsolute();
+		}
+		break;
+	case IDC_BTN_SETUP_BTBVT:
+		{
+			DestroyWndSubSettingBTBforVT();
 		}
 		break;
 	case IDC_BTN_SETUP_TUBESET:
@@ -3425,7 +3455,43 @@ void CViewMenu::ShowWndSubSettingPpsvAbsolute(bool show)
 		m_pcWndSubPpsvAbsolute->SetFocus();
 	}
 }
+// **************************************************************************
+// 
+// **************************************************************************
+bool CViewMenu::DestroyWndSubSettingBTBforVT()
+{
+	if(m_pcWndSubBTBforVT)
+	{
+		m_pcWndSubBTBforVT->DestroyWindow();
+		delete m_pcWndSubBTBforVT;
+		m_pcWndSubBTBforVT=NULL;
+	}
+	return false;
+}
+bool CViewMenu::CreateWndSubSettingBTBforVT(UINT viewFlag)
+{
+	if(m_pcWndSubBTBforVT==NULL)
+	{
+		m_pcWndSubBTBforVT = new CWndSubSettingsBTBforVT(viewFlag);
+		//RECT rcLd={m_lX,m_lY,m_lX+m_lCx,m_lY+m_lCy};
 
+		RECT rcLd={0,0,800,510};
+		//RECT rcLd={0,0,565,485};
+		if(m_pcWndSubBTBforVT->CreateWnd(this,rcLd,IDC_VIEW_SETUP_BTBVT))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+void CViewMenu::ShowWndSubSettingBTBforVT(bool show)
+{
+	if(m_pcWndSubBTBforVT)
+	{
+		m_pcWndSubBTBforVT->Show(show);
+		m_pcWndSubBTBforVT->SetFocus();
+	}
+}
 // **************************************************************************
 // 
 // **************************************************************************

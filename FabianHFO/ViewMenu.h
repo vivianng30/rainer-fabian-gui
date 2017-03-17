@@ -39,6 +39,7 @@
 #include "WndSubSettingsAutoOnPump.h"
 #include "WndSubSettingsPatAlarmDelay.h"
 #include "WndSubSettingsEFlow.h"
+#include "WndSubSettingsBTBforVT.h"
 
 // CViewMenue
 
@@ -175,6 +176,10 @@ protected:
 	bool DestroyWndSubSettingPpsvAbsolute();
 	bool CreateWndSubSettingPpsvAbsolute(UINT viewFlag);
 	void ShowWndSubSettingPpsvAbsolute(bool show);
+
+	bool DestroyWndSubSettingBTBforVT();
+	bool CreateWndSubSettingBTBforVT(UINT viewFlag);
+	void ShowWndSubSettingBTBforVT(bool show);
 	
 
 	bool DestroyWndSubSettingTubeset();
@@ -262,6 +267,7 @@ protected:
 
 	CWndSubSettingsScreenlocktime *m_pcWndSubScreenlocktime;
 
+	CWndSubSettingsBTBforVT *m_pcWndSubBTBforVT;
 	CWndSubSettingsVentRange *m_pcWndSubVentRange;
 	CWndSubSettingsRatioItime *m_pcWndSubRatioItime;
 	CWndSubSettingsManbreathTime *m_pcWndSubManbreathTime;

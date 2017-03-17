@@ -86,6 +86,7 @@ CSubViewCalFlowSensor::CSubViewCalFlowSensor()
 	m_pcPediatric_Up=NULL;
 	m_pcPediatric_Dw=NULL;
 	m_pcPediatric_Fc=NULL;
+	m_pcPediatric_Dis=NULL;
 
 	m_iFlowHValue=0;
 	m_iFlowLValue=0;
@@ -230,6 +231,8 @@ CSubViewCalFlowSensor::~CSubViewCalFlowSensor()
 	m_pcPediatric_Dw=NULL;
 	delete m_pcPediatric_Fc;
 	m_pcPediatric_Fc=NULL;
+	delete m_pcPediatric_Dis;
+	m_pcPediatric_Dis=NULL;
 
 
 	if(m_pcExclamation)
@@ -396,6 +399,7 @@ BOOL CSubViewCalFlowSensor::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CC
 		m_pcPediatric_Up= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETPED_UP);
 		m_pcPediatric_Dw= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETPED_DW);
 		m_pcPediatric_Fc= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETPED_FC);
+		m_pcPediatric_Dis= new CBmp(theApp.m_hInstance,dc.m_hDC, IDB_BTN_SETPED_DIS);
 
 		m_pcMenuCO2_UP= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTNMNU_CO2_UP);
 		m_pcMenuCO2_DW= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTNMNU_CO2_DW);
@@ -654,22 +658,34 @@ void CSubViewCalFlowSensor::Init()
 	btn.pcBmpUp				= m_pcPediatric_Up;
 	btn.pcBmpDown			= m_pcPediatric_Dw;
 	btn.pcBmpFocus			= m_pcPediatric_Fc;
-	btn.pcBmpDisabled		= m_pcPediatric_Up;
+	btn.pcBmpDisabled		= m_pcPediatric_Dis;
 	btn.dwFormat			= DT_VCENTER|DT_CENTER;
 
 	m_pcPediatric=new CPresetMenuBtn(btn,COLOR_TXTBTNUP);
 	m_pcPediatric->Create(this,g_hf9AcuBold,0);
 	m_pcPediatric->SetText(_T(""));
-	
-	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
+
+	if(false==getModel()->getCONFIG()->useNeoPed())
 	{
 		m_pcPediatric->SetBtnState(CPresetMenuBtn::UP);
 		m_pcNeonatal->SetBtnState(CPresetMenuBtn::DOWN);
+
+		m_pcPediatric->EnableWindow(FALSE);
 	}
 	else
 	{
-		m_pcPediatric->SetBtnState(CPresetMenuBtn::DOWN);
-		m_pcNeonatal->SetBtnState(CPresetMenuBtn::UP);
+		m_pcPediatric->EnableWindow(TRUE);
+
+		if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
+		{
+			m_pcPediatric->SetBtnState(CPresetMenuBtn::UP);
+			m_pcNeonatal->SetBtnState(CPresetMenuBtn::DOWN);
+		}
+		else
+		{
+			m_pcPediatric->SetBtnState(CPresetMenuBtn::DOWN);
+			m_pcNeonatal->SetBtnState(CPresetMenuBtn::UP);
+		}
 	}
 
 	CStringW strBodyweight=_T("--");

@@ -7,6 +7,30 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50120 Version 5.0.1.20
+ * @date 2017-03-17
+ * @verbatim
+	//todo FOTLANGUAGE
+	- todo acuLink: wave SpO2 !!!!!
+	- new acuLink parameters implemented //NEWACULINK
+		ALINK_SETT_ALIMIT_PRICO_SPO2LOW		
+		ALINK_SETT_ALIMIT_PRICO_SPO2HIGH
+		ALINK_SETT_ALIMIT_PRICO_FIO2LOW
+		ALINK_SETT_ALIMIT_PRICO_FIO2HIGH
+		ALINK_SETT_ALIMIT_SPO2SIQMIN
+		ALINK_SETT_ALIMIT_SPO2MAX
+		ALINK_SETT_ALIMIT_SPO2MIN
+		ALINK_SETT_ALIMIT_SPO2PIMIN
+		ALINK_SETT_ALIMIT_PULSERATEMAX
+		ALINK_SETT_ALIMIT_PULSERATEMIN
+	- return button FOT changed (ITEM-18)
+	- barometric pressure in mmHg (ITEM-19)
+	- FOT acceptance criteria changed (ITEM-20)
+	- text "leak compensation" and "Tube set changed", NIV added (ITEM-24,25)
+	- Patient range selector implemented (ITEM-26)
+	- "UseBTB for Vt" switched to menu ((ITEM-27) 
+ @endverbatim
+ *
  * @subsection ver50119 Version 5.0.1.19
  * @date 2017-03-10
  * @verbatim

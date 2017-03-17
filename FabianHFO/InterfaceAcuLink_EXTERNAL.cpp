@@ -332,7 +332,7 @@ void CInterfaceAcuLink_EXTERNAL::setProducerStarted(bool bState)
 		((*pSetProducerStarted)(bState));
 }
 
-void CInterfaceAcuLink_EXTERNAL::setGraphData(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2)
+void CInterfaceAcuLink_EXTERNAL::setGraphData(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2, SHORT iValSPO2)
 {
 	//WaveRecord rWaveRecord
 	////in ring buffer von DLL schreiben

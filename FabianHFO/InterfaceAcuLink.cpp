@@ -1087,7 +1087,7 @@ int CInterfaceAcuLink::setLanguage(UINT uiLang)
 // **************************************************************************
 // 
 // **************************************************************************
-void CInterfaceAcuLink::setGraphData(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2)
+void CInterfaceAcuLink::setGraphData(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2, SHORT iValSPO2)
 {
 	//WaveRecord rWaveRecord
 	////in ring buffer von DLL schreiben

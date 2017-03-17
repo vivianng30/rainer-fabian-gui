@@ -77,6 +77,9 @@ public:
 	bool isDecreasingSequence();
 
 	SequenceStatesFOT getFOTstate();
+
+	eRetryError getRetryERROR();
+
 protected:
 	CThreadFOT();
 	virtual ~CThreadFOT();
@@ -103,9 +106,12 @@ private:
 	void startFOToscillation();
 	void setDateLastSequence();
 
+	void setRetry(eRetryError error);
+	void resetRetryERROR();
+
 	void setFOTstate(SequenceStatesFOT feState);
 	void checkFOTvalidMeasurementData();
-	void setFOTDataValid(bool validData);
+	void setFOTDataValid(bool validData, eRetryError error=RETRY_NONE);
 	//void setFOTsequenceRunning(bool state);
 	void increaseFOTsequence();
 	void resetFOTsequence();
@@ -147,6 +153,8 @@ private:
 
 	SequenceStatesFOT feFOTstate;
 
+	eRetryError m_eRetryError;
+
 	static PBUFFOTvent* m_pbufFOTventilation;
 	WORD m_ibufCountFOTventilation;
 	
@@ -182,6 +190,7 @@ private:
 	BYTE m_iFOTdisplaySequence;
 	WORD m_iCountFOTimer;
 	bool m_bDecreasing;
+	//bool m_bTestRetry;
 };
 
 

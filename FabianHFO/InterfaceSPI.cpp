@@ -1442,7 +1442,7 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 										tempFlow=16000;
 									else if(tempFlow<-16000)
 										tempFlow=-16000;
-									getModel()->getAcuLink()->setGraphData(_pBufData.iValVolume,_pBufData.iValPressure,tempFlow*ALINK_FACTOR_FLOW,_pBufData.iValCO2);
+									getModel()->getAcuLink()->setGraphData(_pBufData.iValVolume,_pBufData.iValPressure,tempFlow*ALINK_FACTOR_FLOW,_pBufData.iValCO2,_pBufData.iValSPO2);
 								}
 								iCntAcuLinkData++;
 							}
