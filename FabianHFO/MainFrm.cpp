@@ -2153,7 +2153,8 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		break;*/
 	case WM_TXT_STOP_FOT:
 		{
-			CStringW sData = _T("- FOT turned off -");//todo FOTLANGUAGE
+			//CStringW sData = _T("- FOT turned off -");
+			CStringW sData = getModel()->GetLanguageString(IDS_TXT_FOT_TURNEDOFF);
 			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 3500);
 			getModel()->triggerEvent(&event);
 
@@ -2181,7 +2182,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			if(getModel()->getFOTThread())
 				getModel()->getFOTThread()->decreaseSequence();
 
-			//CStringW sData = _T("- increase FOT stooped -");//todo FOTLANGUAGE
+			//CStringW sData = _T("- increase FOT stopped -");
 			//CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
 			//getModel()->triggerEvent(&event);
 
@@ -2194,7 +2195,8 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			if(getModel()->getFOTThread())
 				getModel()->getFOTThread()->runStep();
 
-			CStringW sData = _T("- FOT step started -");//todo FOTLANGUAGE
+			//CStringW sData = _T("- FOT step started -");
+			CStringW sData = getModel()->GetLanguageString(IDS_TXT_FOT_STEPSTARTED);
 			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
 			getModel()->triggerEvent(&event);
 
@@ -2207,7 +2209,8 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			if(getModel()->getFOTThread())
 				getModel()->getFOTThread()->repeatSequence();
 
-			CStringW sData = _T("- repeat FOT step -");//todo FOTLANGUAGE
+			//CStringW sData = _T("- repeat FOT step -");
+			CStringW sData = getModel()->GetLanguageString(IDS_TXT_FOT_STEPREPEAT);
 			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
 			getModel()->triggerEvent(&event);
 
@@ -4428,8 +4431,8 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			getModel()->getALARMHANDLER()->setAlimitState_ApnoeLimit(AL_OFF);
 			getModel()->getALARMHANDLER()->setAlimitApnoe(0);
 
-			//CStringW sData = getModel()->GetLanguageString(IDS_TXT_DISABLED); //todo FOTLANGUAGE
-			CStringW sData = _T("!apnea alarm disabled!"); //todo FOTLANGUAGE
+			CStringW sData = getModel()->GetLanguageString(IDS_TXT_TURNOFF_APNEA);
+			//CStringW sData = _T("!apnea alarm disabled!"); 
 			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 3000);
 			getModel()->triggerEvent(&event);
 			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);

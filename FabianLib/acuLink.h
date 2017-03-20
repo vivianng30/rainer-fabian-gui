@@ -500,8 +500,8 @@
 #define ALINK_SETT_ALIMIT_FICO2MIN				74 //FiCO2 low limit, , Resolution: 0,1mmHg (0–150.0 mmHg, 0–20.0 kPa, or 0–19.7%)
 #define ALINK_SETT_ALIMIT_PULSERATEMAX			75 //Pulse Rate high limit, Resolution: 1, (0 to 240 bpm)
 #define ALINK_SETT_ALIMIT_PULSERATEMIN			76 //Pulse Rate low limit, Resolution: 1, (0 to 240 bpm)
-#define ALINK_SETT_ALIMIT_PMEANMAX				77 //Pmean high limit, Resolution: 1, (0 to 240 bpm)
-#define ALINK_SETT_ALIMIT_PMEANMIN				78 //Pmean low limit, Resolution: 1, (0 to 240 bpm)
+#define ALINK_SETT_ALIMIT_PMEANMAX				77 //not implemented yet in Fabian!!!!! Pmean high limit, Resolution: 1, (0 to 240 bpm)
+#define ALINK_SETT_ALIMIT_PMEANMIN				78 //not implemented yet in Fabian!!!!! Pmean low limit, Resolution: 1, (0 to 240 bpm)
 
 
 /**
@@ -730,8 +730,8 @@
 #define ALINK_ALARM_PatAl_FICO2min					71
 #define ALINK_ALARM_PatAl_PulseRatemax				72
 #define ALINK_ALARM_PatAl_PulseRatemin				73
-#define ALINK_ALARM_PatAl_PMEANmax					74
-#define ALINK_ALARM_PatAl_PMEANmin					75
+#define ALINK_ALARM_PatAl_PMEANmax					74//not implemented yet in Fabian!!!!!
+#define ALINK_ALARM_PatAl_PMEANmin					75//not implemented yet in Fabian!!!!!
 
 //NEWACULINK
 typedef struct WAVE_RECORD_T

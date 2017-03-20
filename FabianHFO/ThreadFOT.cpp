@@ -1322,17 +1322,17 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 
 		fnCalcZ(pp_Fourier,pp_PseudoInverse,pp_Flow,pp_Pressure,i_osc_freq,i_sample_freq,p_Out);
 
-		if(p_Out[0]==0.0)
+		if(p_Out[0]==0.0)//check Resistance >0, else not valid
 		{
 			bRetryResistance=true;
 			break;
 		}
-		else if(p_Out[1]>=0.0 || p_Out[1]<-500.0)
+		else if(p_Out[1]>=0.0 || p_Out[1]<-500.0)//check Reactance/XRS 0>XRS>-500 cmH2O*s/L, else not valid
 		{
 			bRetryReactance=true;
 			break;
 		}
-		else if(p_Out[2]>1.0)
+		else if(p_Out[2]>1.0)//check FSI < 1%, else not valid
 		{
 			bRetryFSI=true;
 			break;

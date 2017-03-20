@@ -1140,8 +1140,8 @@ BEGIN
     IDS_ALARM_BACKUP_ACTIVE "Backup active"
     IDS_ALARM_MVMAX         "High minute volume"
     IDS_ALARM_MVMIN         "Low minute volume"
-    IDS_ALARM_PMAX          "PIP too high"
-    IDS_ALARM_PMIN          "PEEP low"
+    IDS_ALARM_PMAX          "High PIP"
+    IDS_ALARM_PMIN          "Low PEEP"
     IDS_ALARM_BPMMAX        "High breath rate"
 END
 
@@ -1151,8 +1151,8 @@ BEGIN
     IDS_ALARM_APNOE         "Apnea alarm"
     IDS_ALARM_O2SENSOR      "Oxygen sensor defect/used up"
     IDS_ALARM_INTERNALERROR "Internal error:"
-    IDS_ALARM_DCO2_HI       "High DCO2 value"
-    IDS_ALARM_DCO2_LO       "Low DCO2 value"
+    IDS_ALARM_DCO2_HI       "High DCO2"
+    IDS_ALARM_DCO2_LO       "Low DCO2"
     IDS_ALARM_AIR           "Air"
     IDS_ALARM_OXY           "Oxygen"
     IDS_ALARM_BLENDER       "Blender"
@@ -1466,9 +1466,9 @@ BEGIN
     IDS_ALARM_OUTOFMEMORY   "Low physical memory - please reboot!"
     IDS_ALARM_VGARANTY      "VTe not reached / check settings"
     IDS_ALARM_FAN           "Coolingfan defect"
-    IDS_ALARM_ETCO2_HI      "High ETCO2 value"
-    IDS_ALARM_ETCO2_LO      "Low ETCO2 value"
-    IDS_ALARM_PMIN_HIGH     "High PEEP value"
+    IDS_ALARM_ETCO2_HI      "High ETCO2"
+    IDS_ALARM_ETCO2_LO      "Low ETCO2"
+    IDS_ALARM_PMIN_HIGH     "High PEEP"
 END
 
 STRINGTABLE 
@@ -1660,7 +1660,7 @@ BEGIN
     IDS_ALARM_SPO2_MODULE_NOTCONNECTED "SpO2 module disconnected"
     IDS_ALARM_SPO2_SENSORFAULTY "SpO2 sensor failure"
     IDS_ALARM_SPO2_CHECKSENSOR "check SpO2 sensor"
-    IDS_ALARM_SPO2_HI       "High SpO2 alarm"
+    IDS_ALARM_SPO2_HI       "High SpO2"
 END
 
 STRINGTABLE 
@@ -1805,17 +1805,17 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_ALARM_SPO2_LO       "Low SpO2 alarm"
-    IDS_ALARM_PULSERATE_HI  "High Pulse Rate alarm"
-    IDS_ALARM_PULSERATE_LO  "Low Pulse Rate alarm"
-    IDS_ALARM_SPO2_PI_LO    "Low Perfusion Index alarm"
+    IDS_ALARM_SPO2_LO       "Low SpO2"
+    IDS_ALARM_PULSERATE_HI  "High Pulse Rate"
+    IDS_ALARM_PULSERATE_LO  "Low Pulse Rate"
+    IDS_ALARM_SPO2_PI_LO    "Low Perfusion Index"
     IDS_ALARM_PRESSURE_NOTREACH "Pressure not reached"
-    IDS_ALARM_FICO2_HI      "High FiCO2 alarm"
-    IDS_ALARM_FICO2_LO      "Low FiCO2 alarm"
+    IDS_ALARM_FICO2_HI      "High FiCO2"
+    IDS_ALARM_FICO2_LO      "Low FiCO2"
     IDS_ALARM_FIO2MAX       "FiO2 at max target"
     IDS_ALARM_FIO2MIN       "Lower minimum FiO2"
     IDS_ALARM_PRICOSIQ      "low SIQ"
-    IDS_ALARM_PIPMIN        "PIP too low"
+    IDS_ALARM_PIPMIN        "Low PIP"
 END
 
 STRINGTABLE 
@@ -1875,12 +1875,47 @@ BEGIN
     IDS_TXT_FILEWRITTEN     "file saved"
     IDS_TXT_NIV             "NIV"
     IDS_TXT_VTASBTB         "Use BTB for Vt"
+    IDS_TXT_FOT_TURNEDOFF   "FOT turned off"
+    IDS_TXT_FOT_STEPSTARTED "FOT step started"
+    IDS_TXT_FOT_STEPREPEAT  "repeat FOT step"
+    IDS_TXT_TURNOFF_APNEA   "apnea alarm disabled"
+    IDS_TXT_BODYWEIGHT      "bodyweight"
+    IDS_TXT_FOT_PIPNOW      "PIPnow"
+    IDS_TXT_FOT_STEP        "step"
+    IDS_TXT_FOT_NEXT        "next"
 END
 
 STRINGTABLE 
 BEGIN
     IDS_PARA_VTEKG          "VT/kg BW"
     IDS_PARA_VTEHFOKG       "VThfo/kg BW"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_FOT_PRESSURE    "TARGET PRESSURE not reached"
+    IDS_TXT_FOT_LEAK        "High LEAK"
+    IDS_TXT_FOT_FSI         "High FSI"
+    IDS_TXT_FOT_RESISTANCE  "Low RESISTANCE"
+    IDS_TXT_FOT_REACTANCE   "REACTANCE out of range"
+    IDS_TXT_FOT_RETRY       "retry step"
+    IDS_TXT_FOT_PMEANNEXT   "Pmean next"
+    IDS_TXT_FOT_PIPNEXT     "PIPnext"
+    IDS_TXT_FOT_PIPMAX      "PIPmax"
+    IDS_TXT_FOT_PEEPNEXT    "PEEPnext"
+    IDS_TXT_FOT_LASTCALC    "last calc."
+    IDS_TXT_FOT_STARTHFO    "This will start FOT - HFO."
+    IDS_TXT_FOT_VGOFF       "VG will be turned off during FOT!"
+    IDS_TXT_FOT_LUNGRECOFF  "Lung recruitment will be turned off!"
+    IDS_TXT_CONTINUE        "Continue"
+    IDS_TXT_FOTHFO          "FOT - HFO mode"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TXT_FOTCONV         "FOT - conventional mode"
+    IDS_TXT_FOT_STARTCONV   "This will start FOT - CONVENTIONAL. The ventilation mode will be changed to CPAP while FOT. Continue?"
+    IDS_TXT_FOT_STEPS       "steps"
 END
 
 #endif    // German (Germany) resources

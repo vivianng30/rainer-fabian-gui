@@ -1034,7 +1034,23 @@ void CInterfaceAcuLink::clearAlarmArray()
 	setAlarmData(ALINK_ALARM_Accu_15,0);
 	setAlarmData(ALINK_ALARM_Accu_Empty,0);
 	setAlarmData(ALINK_ALARM_Accu_Defect,0);
-
+	setAlarmData(ALINK_ALARM_PRICO_FiO2max,0);
+	setAlarmData(ALINK_ALARM_PRICO_FiO2min,0);
+	setAlarmData(ALINK_ALARM_Sens_PRICO_FiO2outOfRange,0);
+	setAlarmData(ALINK_ALARM_Sens_SPO2_MODULE_NOTCONNECTED,0);
+	setAlarmData(ALINK_ALARM_Sens_SPO2_SENSORFAULTY,0);
+	setAlarmData(ALINK_ALARM_Sens_SPO2_CHECKSENSOR,0);
+	setAlarmData(ALINK_ALARM_PatAl_SPO2_SIQmin,0);
+	setAlarmData(ALINK_ALARM_PatAl_SPO2max,0);
+	setAlarmData(ALINK_ALARM_PatAl_SPO2min,0);
+	setAlarmData(ALINK_ALARM_PatAl_SPO2_PImin,0);
+	setAlarmData(ALINK_ALARM_PatAl_PIPmin,0);
+	setAlarmData(ALINK_ALARM_PatAl_FICO2max,0);
+	setAlarmData(ALINK_ALARM_PatAl_FICO2min,0);
+	setAlarmData(ALINK_ALARM_PatAl_PulseRatemax,0);
+	setAlarmData(ALINK_ALARM_PatAl_PulseRatemin,0);
+	//setAlarmData(ALINK_ALARM_PatAl_PMEANmax,0);
+	//setAlarmData(ALINK_ALARM_PatAl_PMEANmin,0);
 	Sleep(0);
 
 }

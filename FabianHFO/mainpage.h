@@ -8,11 +8,10 @@
  * @section ver Version history and changelog
  *
  * @subsection ver50120 Version 5.0.1.20
- * @date 2017-03-17
+ * @date 2017-03-20
  * @verbatim
-	//todo FOTLANGUAGE
 	- todo acuLink: wave SpO2 !!!!!
-	- new acuLink parameters implemented //NEWACULINK
+	- new acuLink parameters/alarms implemented //NEWACULINK
 		ALINK_SETT_ALIMIT_PRICO_SPO2LOW		
 		ALINK_SETT_ALIMIT_PRICO_SPO2HIGH
 		ALINK_SETT_ALIMIT_PRICO_FIO2LOW
@@ -23,12 +22,29 @@
 		ALINK_SETT_ALIMIT_SPO2PIMIN
 		ALINK_SETT_ALIMIT_PULSERATEMAX
 		ALINK_SETT_ALIMIT_PULSERATEMIN
+		ALINK_ALARM_PRICO_FiO2max
+		ALINK_ALARM_PRICO_FiO2min
+		ALINK_ALARM_Sens_PRICO_FiO2outOfRange
+		ALINK_ALARM_Sens_SPO2_MODULE_NOTCONNECTED
+		ALINK_ALARM_Sens_SPO2_SENSORFAULTY
+		ALINK_ALARM_Sens_SPO2_CHECKSENSOR
+		ALINK_ALARM_PatAl_SPO2_SIQmin
+		ALINK_ALARM_PatAl_SPO2max
+		ALINK_ALARM_PatAl_SPO2min
+		ALINK_ALARM_PatAl_SPO2_PImin
+		ALINK_ALARM_PatAl_PIPmin
+		ALINK_ALARM_PatAl_FICO2max
+		ALINK_ALARM_PatAl_FICO2min
+		ALINK_ALARM_PatAl_PulseRatemax
+		ALINK_ALARM_PatAl_PulseRatemin
 	- return button FOT changed (ITEM-18)
 	- barometric pressure in mmHg (ITEM-19)
 	- FOT acceptance criteria changed (ITEM-20)
 	- text "leak compensation" and "Tube set changed", NIV added (ITEM-24,25)
 	- Patient range selector implemented (ITEM-26)
 	- "UseBTB for Vt" switched to menu ((ITEM-27) 
+	- new alarm texts (ITEM-21)
+	- new alarm priorities (ITEM-22)
  @endverbatim
  *
  * @subsection ver50119 Version 5.0.1.19

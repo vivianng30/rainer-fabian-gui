@@ -233,7 +233,7 @@ BOOL CWndDataFOT::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 			m_pcPara_FOT_Steps->Create(this,dwStyleNoTab,fv);
 			m_pcPara_FOT_Steps->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
 			m_pcPara_FOT_Steps->SetNameText(_T("FOT"));
-			m_pcPara_FOT_Steps->SetNameNoteText(_T("steps"));
+			m_pcPara_FOT_Steps->SetNameNoteText(getModel()->GetLanguageString(IDS_TXT_FOT_STEPS));
 			m_pcPara_FOT_Steps->SetUnitText(_T(""));
 			m_pcPara_FOT_Steps->ShowWindow(SW_SHOW);
 
@@ -600,10 +600,6 @@ BOOL CWndDataFOT::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 
 		m_pcBtnDecreaseSeq=new CPushBtn(btn,COLOR_TXTBTNUP,false);
 		m_pcBtnDecreaseSeq->Create(this,g_hf9AcuBold,0);
-		//CString sz1=_T("continue");//todo FOTLANGUAGE
-		//CString sz2=_T("");
-		//if(getModel()->getFOTThread())
-		//	sz2.Format(_T("%d/%d"), getModel()->getFOTThread()->getCurFOTsequence()+1,getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara());
 		m_pcBtnDecreaseSeq->SetText(_T(""));
 		m_pcBtnDecreaseSeq->ShowWindow(SW_HIDE);
 
@@ -639,10 +635,6 @@ BOOL CWndDataFOT::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 
 		m_pcBtnRepeatSeq=new CPushBtn(btn,COLOR_TXTBTNUP,false);
 		m_pcBtnRepeatSeq->Create(this,g_hf9AcuBold,0);
-		//CString sz1=_T("continue");//todo FOTLANGUAGE
-		//CString sz2=_T("");
-		//if(getModel()->getFOTThread())
-		//sz2.Format(_T("%d/%d"), getModel()->getFOTThread()->getCurFOTsequence()+1,getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara());
 		m_pcBtnRepeatSeq->SetText(_T(""));
 		m_pcBtnRepeatSeq->ShowWindow(SW_HIDE);
 
@@ -659,12 +651,7 @@ BOOL CWndDataFOT::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 
 		m_pcBtnRunSeq=new CPushBtn(btn,COLOR_TXTBTNUP,false);
 		m_pcBtnRunSeq->Create(this,g_hf9AcuBold,0);
-		//CString sz1=_T("continue");//todo FOTLANGUAGE
-		//CString sz2=_T("");
-		//if(getModel()->getFOTThread())
-		//sz2.Format(_T("%d/%d"), getModel()->getFOTThread()->getCurFOTsequence()+1,getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara());
 		m_pcBtnRunSeq->SetText(_T(""));
-		//m_pcContinueFOTseq->SetText(getModel()->GetLanguageString(IDS_MENU_CAL1),getModel()->GetLanguageString(IDS_MENU_CAL2));
 		m_pcBtnRunSeq->ShowWindow(SW_HIDE);
 
 		drawFOTmenubar();
@@ -1099,7 +1086,7 @@ void CWndDataFOT::Draw(bool bStatic)
 					rc.right  = 187;  
 					rc.bottom = 145;
 
-					csText.Format(_T("%d sec"), m_iCountFOTimer);//todo FOTLANGUAGE
+					csText.Format(_T("%d %s"), m_iCountFOTimer,getModel()->GetLanguageString(IDS_UNIT_SECONDS));
 				}
 				else if(feFOTstate==FOT_WAITVALIDDATA)
 				{
@@ -1125,7 +1112,7 @@ void CWndDataFOT::Draw(bool bStatic)
 					rc.right  = 187;  
 					rc.bottom = 145;
 
-					csText.Format(_T("%d sec"), m_iCountFOTimer);//todo FOTLANGUAGE
+					csText.Format(_T("%d %s"), m_iCountFOTimer,getModel()->GetLanguageString(IDS_UNIT_SECONDS));
 				}
 
 
@@ -1166,15 +1153,16 @@ void CWndDataFOT::Draw(bool bStatic)
 				rc.right  = 279;
 				rc.bottom = 275;
 
-				csText=_T("PIPnow");//todo FOTLANGUAGE
+				csText=getModel()->GetLanguageString(IDS_TXT_FOT_PIPNOW);
+				//csText=_T("PIPnow");
 				DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 
 				SelectObject(hdcMem,g_hf21AcuBold);
-				csText.Format(_T("%d"), iCurPIP/10);//todo FOTLANGUAGE
+				csText.Format(_T("%d"), iCurPIP/10);
 				DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 				 
 				SelectObject(hdcMem,g_hf7AcuNorm);
-				csText.Format(_T("%s"), szUnitPRESSURE);//todo FOTLANGUAGE
+				csText.Format(_T("%s"), szUnitPRESSURE);
 				DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_BOTTOM|DT_SINGLELINE);
 				
 				
@@ -1205,24 +1193,24 @@ void CWndDataFOT::Draw(bool bStatic)
 						CString sz1=_T("");
 						if(feFOTstate==FOT_RETRY)
 						{
-							sz1.Format(_T("step %d/%d"), getModel()->getFOTThread()->getCurFOTsequence(),getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara());//todo FOTLANGUAGE
+							sz1.Format(_T("%s %d/%d"), getModel()->GetLanguageString(IDS_TXT_FOT_STEP),getModel()->getFOTThread()->getCurFOTsequence(),getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara());
 							iFOTnextsequence=getModel()->getFOTThread()->getCurFOTsequence();
 						}
 						else
 						{
-							sz1.Format(_T("step %d/%d"), getModel()->getFOTThread()->getCurFOTsequence()+1,getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara());//todo FOTLANGUAGE
+							sz1.Format(_T("%s %d/%d"), getModel()->GetLanguageString(IDS_TXT_FOT_STEP),getModel()->getFOTThread()->getCurFOTsequence()+1,getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara());
 							iFOTnextsequence=getModel()->getFOTThread()->getCurFOTsequence()+1;
 						}
 						
-						//m_pcBtnRunSeq->ShowWindow(SW_SHOW);
-
+						
 						SetTextColor(hdcMem,RGB(0,0,0));
 						SelectObject(hdcMem,g_hf8AcuBold);
 						rc.left = 102;  
 						rc.top = 97+5;  
 						rc.right  = 187;  
 						rc.bottom = 145;
-						DrawText(hdcMem,_T("next"),-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);//todo FOTLANGUAGE
+						DrawText(hdcMem,getModel()->GetLanguageString(IDS_TXT_FOT_NEXT),-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
+						//DrawText(hdcMem,_T("next"),-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 						
 						SelectObject(hdcMem,g_hf11AcuBold);
 						rc.left = 102;  
@@ -1246,27 +1234,32 @@ void CWndDataFOT::Draw(bool bStatic)
 							{
 							case RETRY_PRESSURE:
 								{
-									csText=_T("TARGET PRESSURE not reached");//todo FOTLANGUAGE
+									//csText=_T("TARGET PRESSURE not reached");
+									csText=getModel()->GetLanguageString(IDS_TXT_FOT_PRESSURE);
 								}
 								break;
 							case RETRY_LEAK:
 								{
-									csText=_T("LEAK high");//todo FOTLANGUAGE
+									csText=getModel()->GetLanguageString(IDS_TXT_FOT_LEAK);
+									//csText=_T("LEAK high");
 								}
 								break;
 							case RETRY_FSI:
 								{
-									csText=_T("FSI high");//todo FOTLANGUAGE
+									csText=getModel()->GetLanguageString(IDS_TXT_FOT_FSI);
+									//csText=_T("FSI high");
 								}
 								break;
 							case RETRY_RESISTANCE:
 								{
-									csText=_T("RESISTANCE low");//todo FOTLANGUAGE
+									csText=getModel()->GetLanguageString(IDS_TXT_FOT_RESISTANCE);
+									//csText=_T("RESISTANCE low");
 								}
 								break;
 							case RETRY_REACTANCE:
 								{
-									csText=_T("REACTANCE out of range");//todo FOTLANGUAGE
+									csText=getModel()->GetLanguageString(IDS_TXT_FOT_REACTANCE);
+									//csText=_T("REACTANCE out of range");
 								}
 								break;
 							default:
@@ -1279,7 +1272,8 @@ void CWndDataFOT::Draw(bool bStatic)
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 
 							rc.top = 220;//257;
-							csText=_T("- retry step -");//todo FOTLANGUAGE
+							//csText=_T("- retry step -");
+							csText=getModel()->GetLanguageString(IDS_TXT_FOT_RETRY);
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_BOTTOM|DT_SINGLELINE);
 						}
 						else
@@ -1334,15 +1328,16 @@ void CWndDataFOT::Draw(bool bStatic)
 							rc.bottom = 275;
 
 							SelectObject(hdcMem,g_hf8AcuBold);
-							csText=_T("Pmean next");//todo FOTLANGUAGE
+							//csText=_T("Pmean next");
+							csText=getModel()->GetLanguageString(IDS_TXT_FOT_PMEANNEXT);
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 
 							SelectObject(hdcMem,g_hf21AcuBold);
-							csText.Format(_T("%0.1f"), CTlsFloat::Round(((double)curValue)/10, 1));//todo FOTLANGUAGE
+							csText.Format(_T("%0.1f"), CTlsFloat::Round(((double)curValue)/10, 1));
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 
 							SelectObject(hdcMem,g_hf7AcuNorm);
-							csText.Format(_T("%s"), szUnitPRESSURE);//todo FOTLANGUAGE
+							csText.Format(_T("%s"), szUnitPRESSURE);
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_BOTTOM|DT_SINGLELINE);
 
 							rc.left = 143;  
@@ -1351,15 +1346,16 @@ void CWndDataFOT::Draw(bool bStatic)
 							rc.bottom = 275;
 
 							SelectObject(hdcMem,g_hf8AcuBold);
-							csText=_T("PIPnext");//todo FOTLANGUAGE
+							//csText=_T("PIPnext");
+							csText=getModel()->GetLanguageString(IDS_TXT_FOT_PIPNEXT);
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 
 							SelectObject(hdcMem,g_hf21AcuBold);
-							csText.Format(_T("%d"), iNextPIP/10);//todo FOTLANGUAGE
+							csText.Format(_T("%d"), iNextPIP/10);
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 
 							SelectObject(hdcMem,g_hf7AcuNorm);
-							csText.Format(_T("%s"), szUnitPRESSURE);//todo FOTLANGUAGE
+							csText.Format(_T("%s"), szUnitPRESSURE);
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_BOTTOM|DT_SINGLELINE);
 
 						}
@@ -1432,7 +1428,7 @@ void CWndDataFOT::Draw(bool bStatic)
 					rc.right  = 187;  
 					rc.bottom = 145;
 
-					csText.Format(_T("%d sec"), m_iCountFOTimer);//todo FOTLANGUAGE
+					csText.Format(_T("%d %s"), m_iCountFOTimer, getModel()->GetLanguageString(IDS_UNIT_SECONDS));
 				}
 				else if(feFOTstate==FOT_WAITVALIDDATA)
 				{
@@ -1458,7 +1454,7 @@ void CWndDataFOT::Draw(bool bStatic)
 					rc.right  = 187;  
 					rc.bottom = 145;
 
-					csText.Format(_T("%d sec"), m_iCountFOTimer);//todo FOTLANGUAGE
+					csText.Format(_T("%d %s"), m_iCountFOTimer,getModel()->GetLanguageString(IDS_UNIT_SECONDS));//todo FOTLANGUAGE
 				}
 
 				SelectObject(hdcMem,(HPEN)GetStockObject(NULL_PEN));
@@ -1496,16 +1492,17 @@ void CWndDataFOT::Draw(bool bStatic)
 				rc.right  = 279;
 				rc.bottom = 275;
 
-				csText=_T("PIPnow");//todo FOTLANGUAGE
+				//csText=_T("PIPnow");
+				csText=getModel()->GetLanguageString(IDS_TXT_FOT_PIPNOW);
 				DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 
 				SelectObject(hdcMem,g_hf21AcuBold);
-				csText.Format(_T("%d"), curPIPValue/10);//todo FOTLANGUAGE
+				csText.Format(_T("%d"), curPIPValue/10);
 				//csText.Format(_T("%0.1f"), CTlsFloat::Round(((double)curPIPValue)/10, 1));
 				DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 
 				SelectObject(hdcMem,g_hf7AcuNorm);
-				csText.Format(_T("%s"), szUnitPRESSURE);//todo FOTLANGUAGE
+				csText.Format(_T("%s"), szUnitPRESSURE);
 				DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_BOTTOM|DT_SINGLELINE);
 			}
 			else
@@ -1534,12 +1531,12 @@ void CWndDataFOT::Draw(bool bStatic)
 						CString sz1=_T("");
 						if(feFOTstate==FOT_RETRY)
 						{
-							sz1.Format(_T("step %d/%d"), getModel()->getFOTThread()->getCurFOTsequence(),getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara());//todo FOTLANGUAGE
+							sz1.Format(_T("%s %d/%d"), getModel()->GetLanguageString(IDS_TXT_FOT_STEP),getModel()->getFOTThread()->getCurFOTsequence(),getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara());
 							iFOTnextsequence=getModel()->getFOTThread()->getCurFOTsequence();
 						}
 						else
 						{
-							sz1.Format(_T("step %d/%d"), getModel()->getFOTThread()->getCurFOTsequence()+1,getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara());//todo FOTLANGUAGE
+							sz1.Format(_T("%s %d/%d"), getModel()->GetLanguageString(IDS_TXT_FOT_STEP),getModel()->getFOTThread()->getCurFOTsequence()+1,getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara());
 							iFOTnextsequence=getModel()->getFOTThread()->getCurFOTsequence()+1;
 						}
 						
@@ -1551,7 +1548,7 @@ void CWndDataFOT::Draw(bool bStatic)
 						rc.top = 97+5;  
 						rc.right  = 187;  
 						rc.bottom = 145;
-						DrawText(hdcMem,_T("next"),-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);//todo FOTLANGUAGE
+						DrawText(hdcMem,getModel()->GetLanguageString(IDS_TXT_FOT_NEXT),-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);//todo FOTLANGUAGE
 						
 						SelectObject(hdcMem,g_hf11AcuBold);
 						rc.left = 102;  
@@ -1575,27 +1572,32 @@ void CWndDataFOT::Draw(bool bStatic)
 							{
 							case RETRY_PRESSURE:
 								{
-									csText=_T("TARGET PRESSURE not reached");//todo FOTLANGUAGE
+									csText=getModel()->GetLanguageString(IDS_TXT_FOT_PRESSURE);
+									//csText=_T("TARGET PRESSURE not reached");
 								}
 								break;
 							case RETRY_LEAK:
 								{
-									csText=_T("LEAK high");//todo FOTLANGUAGE
+									csText=getModel()->GetLanguageString(IDS_TXT_FOT_LEAK);
+									//csText=_T("LEAK high");
 								}
 								break;
 							case RETRY_FSI:
 								{
-									csText=_T("FSI high");//todo FOTLANGUAGE
+									csText=getModel()->GetLanguageString(IDS_TXT_FOT_FSI);
+									//csText=_T("FSI high");
 								}
 								break;
 							case RETRY_RESISTANCE:
 								{
-									csText=_T("RESISTANCE low");//todo FOTLANGUAGE
+									csText=getModel()->GetLanguageString(IDS_TXT_FOT_RESISTANCE);
+									//csText=_T("RESISTANCE low");
 								}
 								break;
 							case RETRY_REACTANCE:
 								{
-									csText=_T("REACTANCE out of range");//todo FOTLANGUAGE
+									csText=getModel()->GetLanguageString(IDS_TXT_FOT_REACTANCE);
+									//csText=_T("REACTANCE out of range");
 								}
 								break;
 							default:
@@ -1607,7 +1609,8 @@ void CWndDataFOT::Draw(bool bStatic)
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 							
 							rc.top = 220;//257;
-							csText=_T("- retry step -");//todo FOTLANGUAGE
+							//csText=_T("- retry step -");
+							csText=getModel()->GetLanguageString(IDS_TXT_FOT_RETRY);
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_BOTTOM|DT_SINGLELINE);
 						}
 						else
@@ -1697,15 +1700,16 @@ void CWndDataFOT::Draw(bool bStatic)
 							rc.bottom = 275;
 
 							SelectObject(hdcMem,g_hf8AcuBold);
-							csText=_T("PEEPnext");//todo FOTLANGUAGE
+							//csText=_T("PEEPnext");
+							csText=getModel()->GetLanguageString(IDS_TXT_FOT_PEEPNEXT);
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 
 							SelectObject(hdcMem,g_hf21AcuBold);
-							csText.Format(_T("%0.1f"), CTlsFloat::Round(((double)curPEEPValue)/10, 1));//todo FOTLANGUAGE
+							csText.Format(_T("%0.1f"), CTlsFloat::Round(((double)curPEEPValue)/10, 1));
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 
 							SelectObject(hdcMem,g_hf7AcuNorm);
-							csText.Format(_T("%s"), szUnitPRESSURE);//todo FOTLANGUAGE
+							csText.Format(_T("%s"), szUnitPRESSURE);
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_BOTTOM|DT_SINGLELINE);
 
 							SelectObject(hdcMem,g_hf8AcuBold);
@@ -1714,15 +1718,16 @@ void CWndDataFOT::Draw(bool bStatic)
 							rc.right  = 279;
 							rc.bottom = 275;
 
-							csText=_T("PIPnext");//todo FOTLANGUAGE
+							csText=getModel()->GetLanguageString(IDS_TXT_FOT_PIPNEXT);
+							//csText=_T("PIPnext");
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 							
 							SelectObject(hdcMem,g_hf21AcuBold);
-							csText.Format(_T("%d"), nextPIPValue/10);//todo FOTLANGUAGE
+							csText.Format(_T("%d"), nextPIPValue/10);
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 
 							SelectObject(hdcMem,g_hf7AcuNorm);
-							csText.Format(_T("%s"), szUnitPRESSURE);//todo FOTLANGUAGE
+							csText.Format(_T("%s"), szUnitPRESSURE);
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_BOTTOM|DT_SINGLELINE);
 						}
 						
@@ -1748,7 +1753,9 @@ void CWndDataFOT::Draw(bool bStatic)
 	rc.top = 283;  
 	rc.right  = 279;  
 	rc.bottom = 295;
-	csText=_T("last calc. ");//todo FOTLANGUAGE
+	//csText=_T("last calc. ");
+	csText=getModel()->GetLanguageString(IDS_TXT_FOT_LASTCALC);
+	csText+=_T(" ");
 	if(getModel()->getFOTThread())
 		csText+=getModel()->getFOTThread()->getDateLastSequence();
 
@@ -1887,15 +1894,16 @@ void CWndDataFOT::drawPIPmax()
 		rc.top = 3;  
 		rc.bottom = 50;
 
-		CString csText=_T("PIPmax");//todo FOTLANGUAGE
+		//CString csText=_T("PIPmax");
+		CString csText=getModel()->GetLanguageString(IDS_TXT_FOT_PIPMAX);
 		DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 
 		SelectObject(hdcMem,g_hf14AcuBold);
-		csText.Format(_T("%0.1f"),CTlsFloat::Round(((double)iMaxPIP)/10, 1));//todo FOTLANGUAGE
+		csText.Format(_T("%0.1f"),CTlsFloat::Round(((double)iMaxPIP)/10, 1));
 		DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 
 		SelectObject(hdcMem,g_hf7AcuNorm);
-		csText.Format(_T("%s"), szUnitPRESSURE);//todo FOTLANGUAGE
+		csText.Format(_T("%s"), szUnitPRESSURE);
 		DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_BOTTOM|DT_SINGLELINE);
 	}
 	else
@@ -1944,16 +1952,17 @@ void CWndDataFOT::drawPIPmax()
 		rc.top = 3;  
 		rc.bottom = 50;
 
-		CString csText=_T("PIPmax");//todo FOTLANGUAGE
+		//CString csText=_T("PIPmax");
+		CString csText=getModel()->GetLanguageString(IDS_TXT_FOT_PIPMAX);
 		DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 
 		SelectObject(hdcMem,g_hf14AcuBold);
-		csText.Format(_T("%d"), iMaxPIP/10);//todo FOTLANGUAGE
+		csText.Format(_T("%d"), iMaxPIP/10);
 		
 		DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 
 		SelectObject(hdcMem,g_hf7AcuNorm);
-		csText.Format(_T("%s"), szUnitPRESSURE);//todo FOTLANGUAGE
+		csText.Format(_T("%s"), szUnitPRESSURE);
 		DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_BOTTOM|DT_SINGLELINE);
 	}
 
@@ -2042,13 +2051,14 @@ void CWndDataFOT::drawMbarStep()
 		rc.top = 3;  
 		rc.bottom = 50;
 
-		CString csText=_T("step");//todo FOTLANGUAGE
+		//CString csText=_T("step");
+		CString csText=getModel()->GetLanguageString(IDS_TXT_FOT_STEP);
 		DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 
 		SelectObject(hdcMem,g_hf14AcuBold);
 		if(iSteps>1)
 		{
-			csText.Format(_T("%0.1f"), CTlsFloat::Round(((double)iFOTHFPmeanStep)/10, 1));//todo FOTLANGUAGE
+			csText.Format(_T("%0.1f"), CTlsFloat::Round(((double)iFOTHFPmeanStep)/10, 1));
 		}
 		else
 		{
@@ -2057,7 +2067,7 @@ void CWndDataFOT::drawMbarStep()
 		DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 
 		SelectObject(hdcMem,g_hf7AcuNorm);
-		csText.Format(_T("%s"), szUnitPRESSURE);//todo FOTLANGUAGE
+		csText.Format(_T("%s"), szUnitPRESSURE);
 		DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_BOTTOM|DT_SINGLELINE);
 	}
 	else
@@ -2087,13 +2097,14 @@ void CWndDataFOT::drawMbarStep()
 		rc.top = 3;  
 		rc.bottom = 50;
 
-		CString csText=_T("step");//todo FOTLANGUAGE
+		//CString csText=_T("step");
+		CString csText=getModel()->GetLanguageString(IDS_TXT_FOT_STEP);
 		DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 
 		SelectObject(hdcMem,g_hf14AcuBold);
 		if(iSteps>1)
 		{
-			csText.Format(_T("%0.1f"), CTlsFloat::Round(((double)iPEEPStep)/10, 1));//todo FOTLANGUAGE
+			csText.Format(_T("%0.1f"), CTlsFloat::Round(((double)iPEEPStep)/10, 1));
 		}
 		else
 		{
@@ -2102,7 +2113,7 @@ void CWndDataFOT::drawMbarStep()
 		DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 
 		SelectObject(hdcMem,g_hf7AcuNorm);
-		csText.Format(_T("%s"), szUnitPRESSURE);//todo FOTLANGUAGE
+		csText.Format(_T("%s"), szUnitPRESSURE);
 		DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_BOTTOM|DT_SINGLELINE);
 	}
 
@@ -2466,20 +2477,29 @@ void CWndDataFOT::showFOTMessage()
 
 	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 	{
-		CString szStart=_T("This will start FOT - HFO.");//todo FOTLANGUAGE
+		//CString szStart=_T("This will start FOT - HFO.");
+		CString szStart=getModel()->GetLanguageString(IDS_TXT_FOT_STARTHFO);
 		if(true==getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
 		{
-			szStart+=_T(" VG will be turned off during FOT!");//todo FOTLANGUAGE
+			szStart+=_T(" ");
+			szStart+=getModel()->GetLanguageString(IDS_TXT_FOT_VGOFF);
+			//szStart+=_T(" VG will be turned off during FOT!");
 		}
 
 		if(		getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable()==true 
 			&&	getModel()->getDATAHANDLER()->PARADATA()->GetFreqRecPara()!=0)
 		{
-			szStart+=_T(" Lung recruitment will be turned off!");//todo FOTLANGUAGE
+			szStart+=_T(" ");
+			szStart+=getModel()->GetLanguageString(IDS_TXT_FOT_LUNGRECOFF);
+			//szStart+=_T(" Lung recruitment will be turned off!");
 		}
-		szStart+=_T(" Continue?");//todo FOTLANGUAGE
+		//szStart+=_T(" Continue?");
+		szStart+=_T(" ");
+		szStart+=getModel()->GetLanguageString(IDS_TXT_CONTINUE);
+		szStart+=_T("?");
 
-		CDlgMessageBox box(this,_T("FOT - HFO mode"),szStart,MB_YESNO,IDB_MSG_STOP);//todo FOTLANGUAGE
+		CDlgMessageBox box(this,getModel()->GetLanguageString(IDS_TXT_FOTHFO),szStart,MB_YESNO,IDB_MSG_STOP);
+		//CDlgMessageBox box(this,_T("FOT - HFO mode"),szStart,MB_YESNO,IDB_MSG_STOP);//todo FOTLANGUAGE
 		m_pDlg = &box;
 		int iRes=box.DoModal();
 		m_pDlg = NULL;
@@ -2514,7 +2534,9 @@ void CWndDataFOT::showFOTMessage()
 	}
 	else
 	{
-		CDlgMessageBox box(this,_T("FOT - conventional mode"),_T("This will start FOT - CONVENTIONAL. The ventilation mode will be changed to CPAP while FOT. Continue?"),MB_YESNO,IDB_MSG_STOP);//todo FOTLANGUAGE
+		
+		//CDlgMessageBox box(this,_T("FOT - conventional mode"),_T("This will start FOT - CONVENTIONAL. The ventilation mode will be changed to CPAP while FOT. Continue?"),MB_YESNO,IDB_MSG_STOP);
+		CDlgMessageBox box(this,getModel()->GetLanguageString(IDS_TXT_FOTCONV),getModel()->GetLanguageString(IDS_TXT_FOT_STARTCONV),MB_YESNO,IDB_MSG_STOP);
 		m_pDlg = &box;
 		int iRes=box.DoModal();
 		m_pDlg = NULL;

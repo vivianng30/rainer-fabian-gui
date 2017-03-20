@@ -2391,21 +2391,14 @@ eAlarmPrio CAlarmMgmtHandler::getAlarmPrio(eAlarm alarm)
 		break;
 	case AL_SysFail_MIXER_AVCAL:
 	case AL_SysFail_RELAIS_DEFECT:				
-// 	case AL_SysFail_P_PROXIMAL:					
  	case AL_SysFail_P_IN_MIXER:					
-	//case AL_SysFail_OVERPRESSURE:				
 	case AL_SysFail_VOLTAGE:					
 	case AL_SysFail_OUTOFMEMORY:					
-	//case AL_Accu_POWER:
-	/*case AL_Accu_60:
-	case AL_Accu_30:*/
 	case AL_Accu_15:
 	case AL_Accu_Empty:
 	case AL_Accu_Defect:
 	case AL_SysAl_P_IN_O2:					
 	case AL_SysAl_P_IN_AIR:					
-	//case AL_SysAl_P_EXSPIRATIONTUBE:			
-	//case AL_SysAl_P_INSPIRATIONTUBE:			
 	case AL_SysAl_TUBE_OCCLUSION:			
 	case AL_SysFail_ChecksumConPIC:
 	case AL_SysFail_ChecksumMonPIC:
@@ -2415,18 +2408,13 @@ eAlarmPrio CAlarmMgmtHandler::getAlarmPrio(eAlarm alarm)
 		break;
 	/*case AL_Nebulizer_Disconnection:
 	case AL_Nebulizer_SysError:*/
-	case AL_DISCONNECTION: //new alarm prio 08.2016
+	case AL_DISCONNECTION:
+	case AL_TUBUSBLOCKED:
 		{
 			return AP_3;
 		}
 		break;
-	case AL_TUBUSBLOCKED:
-		{
-			return AP_4;
-		}
-		break;
-	//case AL_SysFail_P_PROXIMAL:
-	// new alarm prio 08.2016
+	//case AL_TUBUSBLOCKED:
 	case AL_Sens_FLOW_SENSOR_DEFECT:			
 	case AL_Sens_FLOW_SENSOR_CLEANING:		
 	case AL_Sens_FLOW_SENSOR_NOTCONNECTED:	
@@ -2435,6 +2423,28 @@ eAlarmPrio CAlarmMgmtHandler::getAlarmPrio(eAlarm alarm)
 	case AL_Sens_O2_VALUE_INCORRECT:	
 	case AL_Sens_O2_NOT_CALIBRATED:
 	case AL_Sens_PRICO_FiO2outOfRange:
+		{
+			return AP_4;
+		}
+		break;
+	//case AL_SysFail_P_PROXIMAL:
+	// new alarm prio 08.2016
+	/*case AL_Sens_FLOW_SENSOR_DEFECT:			
+	case AL_Sens_FLOW_SENSOR_CLEANING:		
+	case AL_Sens_FLOW_SENSOR_NOTCONNECTED:	
+	case AL_Sens_O2_SENSOR_DEFECT:			
+	case AL_Sens_O2_SENSOR_USED:				
+	case AL_Sens_O2_VALUE_INCORRECT:	
+	case AL_Sens_O2_NOT_CALIBRATED:
+	case AL_Sens_PRICO_FiO2outOfRange:*/
+	case AL_Sens_CO2_MODULE_NOTCONNECTED:
+	case AL_Sens_CO2_FILTERLINE_NOTCONNECTED:
+	case AL_Sens_CO2_CHECKSAMPLINGLINE:
+	case AL_Sens_CO2_CHECKAIRWAYADAPTER:
+	case AL_Sens_CO2_SENSORFAULTY:
+	case AL_Sens_SPO2_MODULE_NOTCONNECTED:
+	case AL_Sens_SPO2_SENSORFAULTY:
+	case AL_Sens_SPO2_CHECKSENSOR:
 		{
 			return AP_5;
 		}
@@ -2445,7 +2455,7 @@ eAlarmPrio CAlarmMgmtHandler::getAlarmPrio(eAlarm alarm)
 		}
 		break;	
 	//new alarm prio 08.2016
-	case AL_Sens_CO2_MODULE_NOTCONNECTED:
+	/*case AL_Sens_CO2_MODULE_NOTCONNECTED:
 	case AL_Sens_CO2_FILTERLINE_NOTCONNECTED:
 	case AL_Sens_CO2_CHECKSAMPLINGLINE:
 	case AL_Sens_CO2_CHECKAIRWAYADAPTER:
@@ -2456,7 +2466,7 @@ eAlarmPrio CAlarmMgmtHandler::getAlarmPrio(eAlarm alarm)
 		{
 			return AP_6;
 		}
-		break;
+		break;*/
 	case AL_PatAl_SPO2_SIQmin:
 	case AL_PRICO_FiO2max:
 	case AL_PRICO_FiO2min:
@@ -6541,16 +6551,6 @@ void CAlarmMgmtHandler::setAlarmStatePDMS(eAlarm eAlarmToSet, eStateOfAlarm stat
 				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_SysAl_P_IN_AIR,(int)state);
 			}
 			break;
-		/*case AL_SysAl_P_EXSPIRATIONTUBE:			
-			{
-				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_SysAl_P_EXSPIRATIONTUBE,(int)state);
-			}
-			break;
-		case AL_SysAl_P_INSPIRATIONTUBE:			
-			{
-				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_SysAl_P_INSPIRATIONTUBE,(int)state);
-			}
-			break;*/
 		case AL_Sens_O2_SENSOR_DEFECT:			
 			{
 				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_Sens_O2_SENSOR_DEFECT,(int)state);
@@ -6571,11 +6571,11 @@ void CAlarmMgmtHandler::setAlarmStatePDMS(eAlarm eAlarmToSet, eStateOfAlarm stat
 				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_Sens_O2_VALUE_INCORRECT,(int)state);
 			}
 			break;
-		/*case AL_Sens_PRICO_FiO2outOfRange: todo
+		case AL_Sens_PRICO_FiO2outOfRange:
 			{
-				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_Sens_O2_VALUE_INCORRECT,(int)state);
+				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_Sens_PRICO_FiO2outOfRange,(int)state);
 			}
-			break;*/
+			break;
 		case AL_SysFail_RELAIS_DEFECT:				
 			{
 				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_SysFail_RELAIS_DEFECT,(int)state);
@@ -6596,11 +6596,6 @@ void CAlarmMgmtHandler::setAlarmStatePDMS(eAlarm eAlarmToSet, eStateOfAlarm stat
 				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_SysFail_P_IN_MIXER,(int)state);
 			}
 			break;
-		/*case AL_SysFail_OVERPRESSURE:				
-			{
-				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_SysFail_OVERPRESSURE,(int)state);
-			}
-			break;*/
 		case AL_SysFail_VOLTAGE:					
 			{
 				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_SysFail_VOLTAGE,(int)state);
@@ -6668,17 +6663,17 @@ void CAlarmMgmtHandler::setAlarmStatePDMS(eAlarm eAlarmToSet, eStateOfAlarm stat
 			break;
 		case AL_PatAl_SPO2_SIQmin:
 			{
-				//getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_Pmax,(int)state);
+				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_SPO2_SIQmin,(int)state);
 			}
 			break;
 		case AL_PRICO_FiO2max:
 			{
-				//getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_Pmax,(int)state);
+				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PRICO_FiO2max,(int)state);
 			}
 			break;
 		case AL_PRICO_FiO2min:
 			{
-				//getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_Pmax,(int)state);
+				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PRICO_FiO2min,(int)state);
 			}
 			break;
 		case AL_PatAl_PIPmax:						
@@ -6688,7 +6683,7 @@ void CAlarmMgmtHandler::setAlarmStatePDMS(eAlarm eAlarmToSet, eStateOfAlarm stat
 			break;
 		case AL_PatAl_PIPmin:						
 			{
-				//getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_PIPmin,(int)state);
+				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_PIPmin,(int)state);
 			}
 			break;
 		case AL_PatAl_PEEPminLow:						
@@ -6733,37 +6728,37 @@ void CAlarmMgmtHandler::setAlarmStatePDMS(eAlarm eAlarmToSet, eStateOfAlarm stat
 			break;
 		case AL_PatAl_FICO2max:						
 			{
-				//getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_FICO2max,(int)state);
+				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_FICO2max,(int)state);
 			}
 			break;
 		case AL_PatAl_FICO2min:						
 			{
-				//getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_FICO2min,(int)state);
+				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_FICO2min,(int)state);
 			}
 			break;
 		case AL_PatAl_SPO2max:						
 			{
-				//getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_SPO2max,(int)state);
+				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_SPO2max,(int)state);
 			}
 			break;				
 		case AL_PatAl_SPO2min:						
 			{
-				//getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_SPO2min,(int)state);
+				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_SPO2min,(int)state);
 			}
 			break;			
 		case AL_PatAl_PulseRatemax:							
 			{
-				//getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_PulseRatemax,(int)state);
+				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_PulseRatemax,(int)state);
 			}
 			break;								
 		case AL_PatAl_PulseRatemin:						
 			{
-				//getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_PulseRatemin,(int)state);
+				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_PulseRatemin,(int)state);
 			}
 			break;			
 		case AL_PatAl_SPO2_PImin:						
 			{
-				//getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_SPO2_PImin,(int)state);
+				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_SPO2_PImin,(int)state);
 			}
 			break;			
 		/*case AL_Nebulizer_Disconnection:			
@@ -6778,17 +6773,17 @@ void CAlarmMgmtHandler::setAlarmStatePDMS(eAlarm eAlarmToSet, eStateOfAlarm stat
 			break;*/
 		case AL_Sens_SPO2_MODULE_NOTCONNECTED:
 			{
-				//getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_SPO2_MODULE_NOTCONNECTED,(int)state);
+				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_Sens_SPO2_MODULE_NOTCONNECTED,(int)state);
 			}
 			break;
 		case AL_Sens_SPO2_SENSORFAULTY:
 			{
-				//getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_SPO2_SENSORFAULTY,(int)state);
+				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_Sens_SPO2_SENSORFAULTY,(int)state);
 			}
 			break;
 		case AL_Sens_SPO2_CHECKSENSOR:
 			{
-				//getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_SPO2_CHECKSENSOR,(int)state);
+				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_Sens_SPO2_CHECKSENSOR,(int)state);
 			}
 			break;
 		case AL_Sens_CO2_MODULE_NOTCONNECTED:

@@ -1232,7 +1232,8 @@ void CSubViewCalFlowSensor::DrawStatic()
 	rc.top = 300;  
 	rc.right  = 122;  
 	rc.bottom = 315;
-	DrawText(m_hdcStatic,_T("bodyweight"),-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);//todo FOTLANGUAGE
+	//DrawText(m_hdcStatic,_T("bodyweight"),-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
+	DrawText(m_hdcStatic,getModel()->GetLanguageString(IDS_TXT_BODYWEIGHT),-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);//todo FOTLANGUAGE
 
 
 	SelectObject(m_hdcStatic,hbrprev);
