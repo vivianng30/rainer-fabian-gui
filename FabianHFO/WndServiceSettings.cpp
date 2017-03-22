@@ -598,12 +598,12 @@ void CWndServiceSettings::Draw()
 	cs = _T("NEO+PED:");
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-	rc.left = 425;  
+	/*rc.left = 425;  
 	rc.top = 55;  
 	rc.right  = 800;  
 	rc.bottom = 500;
 	cs = _T("(no average values)");
-	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);*/
 
 	//############USB hospital settings#####################################
 	RoundRect(hdcMem, 10, 110, 770, 300,20,20);

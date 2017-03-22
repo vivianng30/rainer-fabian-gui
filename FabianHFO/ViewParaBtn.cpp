@@ -11889,17 +11889,29 @@ void CViewParaBtn::setPmeanDiff(int iValPmean, bool bSend)//PMAN1
 	
 	if(getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable()==true)
 	{
-		fVALUE fv;
+		fVALUE fvPmeanRec;
 
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMaxPara();
+		fvPmeanRec.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMinPara ();
+		fvPmeanRec.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMaxPara();
 
-		if(iTemp<=fv.iUpperLimit)
+		if(iTemp<=fvPmeanRec.iUpperLimit)
 		{
-			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMinPara();
-			fv.iValue=iTemp;
+			fvPmeanRec.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMinPara();
+			fvPmeanRec.iValue=iTemp;
+
+			if(fvPmeanRec.iValue>getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMaxKey())
+			{
+				if(m_pcPara_PMEAN_REC)
+					m_pcPara_PMEAN_REC->SetWarning(true);
+			}
+			else if(fvPmeanRec.iValue<=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMaxKey())
+			{
+				if(m_pcPara_PMEAN_REC)
+					m_pcPara_PMEAN_REC->SetWarning(false);
+			}
 
 			if(m_pcPara_PMEAN_REC)
-				m_pcPara_PMEAN_REC->SetValue(fv,true);
+				m_pcPara_PMEAN_REC->SetValue(fvPmeanRec,true);
 		}
 		else
 		{
@@ -11927,7 +11939,7 @@ void CViewParaBtn::setPmeanDiff(int iValPmean, bool bSend)//PMAN1
 			{
 				fvPman.iValue=iValPmean+5;
 			}*/
-			fvPman.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMinKey();
+			fvPman.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMinPara();
 			fvPman.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMaxPara();
 
 			if(fvPman.iValue>getModel()->getDATAHANDLER()->GetCurrentPManualMaxKey())

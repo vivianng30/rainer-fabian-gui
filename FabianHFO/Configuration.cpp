@@ -3121,21 +3121,7 @@ void CConfiguration::LoadSettings()
 		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PIPMAX_8,m_iAlarmlimitStatePIPmax);
 	}
 
-	m_iAlarmlimitPIPmin=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_PIPMIN_16);
-	if(m_iAlarmlimitPIPmin<10 || m_iAlarmlimitPIPmin>900)
-	{
-		m_iAlarmlimitPIPmin=FACTORY_ALIMIT_VAL_PIPMIN;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PIPMIN_16,m_iAlarmlimitPIPmin);
-	}
-
-	m_iAlarmlimitStatePIPmin=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PIPMIN_8);
-	if(m_iAlarmlimitStatePIPmin==AL_OFF || m_iAlarmlimitStatePIPmin==AL_AUTO)
-		m_iAlarmlimitStatePIPmin=AL_ON;
-	if(m_iAlarmlimitStatePIPmin<AL_ON || m_iAlarmlimitStatePIPmin>AL_AUTO)
-	{
-		m_iAlarmlimitStatePIPmin=FACTORY_ALIMIT_STATE_PIPMIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PIPMIN_8,m_iAlarmlimitStatePIPmin);
-	}
+	
 
 
 
@@ -3145,7 +3131,6 @@ void CConfiguration::LoadSettings()
 		m_iAlarmlimitPEEPmin=FACTORY_ALIMIT_VAL_PEEP;
 		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_16,m_iAlarmlimitPEEPmin);
 	}
-
 	m_iAlarmlimitStatePEEPmin=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PEEP_8);
 	if(m_iAlarmlimitStatePEEPmin==AL_OFF)
 		m_iAlarmlimitStatePEEPmin=AL_ON;
@@ -3153,6 +3138,22 @@ void CConfiguration::LoadSettings()
 	{
 		m_iAlarmlimitStatePEEPmin=FACTORY_ALIMIT_STATE_PEEP;
 		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_8,m_iAlarmlimitStatePEEPmin);
+	}
+
+
+	m_iAlarmlimitPIPmin=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_PIPMIN_16);
+	if(m_iAlarmlimitPIPmin<m_iAlarmlimitPEEPmin || m_iAlarmlimitPIPmin>m_iAlarmlimitPIPmax-10)
+	{
+		m_iAlarmlimitPIPmin=FACTORY_ALIMIT_VAL_PIPMIN;
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PIPMIN_16,m_iAlarmlimitPIPmin);
+	}
+	m_iAlarmlimitStatePIPmin=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PIPMIN_8);
+	if(m_iAlarmlimitStatePIPmin==AL_OFF || m_iAlarmlimitStatePIPmin==AL_AUTO)
+		m_iAlarmlimitStatePIPmin=AL_ON;
+	if(m_iAlarmlimitStatePIPmin<AL_ON || m_iAlarmlimitStatePIPmin>AL_AUTO)
+	{
+		m_iAlarmlimitStatePIPmin=FACTORY_ALIMIT_STATE_PIPMIN;
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PIPMIN_8,m_iAlarmlimitStatePIPmin);
 	}
 
 	m_iAlarmlimitBPMmax=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_BPMMAX_16);

@@ -7,6 +7,14 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50121 Version 5.0.1.21
+ * @date 2017-03-22
+ * @verbatim
+	- NEO+PED: old text deleted (ITEM-28)
+	- HFO Pmean-rec warning triangle at MaxKey drawn correct (ITEM-30)
+	- range of PIPmin checked at startup to PEEP and PIPmax
+ @endverbatim
+ *
  * @subsection ver50120 Version 5.0.1.20
  * @date 2017-03-20
  * @verbatim
