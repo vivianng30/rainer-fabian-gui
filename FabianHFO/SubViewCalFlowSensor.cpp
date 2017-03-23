@@ -2617,9 +2617,13 @@ BOOL CSubViewCalFlowSensor::PreTranslateMessage(MSG* pMsg)
 						{
 							m_iBodyweight-=STEP2_BODYWEIGHT;
 						}
-						else
+						else if(m_iBodyweight<=BODYWEIGHTRANGE3)
 						{
 							m_iBodyweight-=STEP3_BODYWEIGHT;
+						}
+						else
+						{
+							m_iBodyweight-=STEP4_BODYWEIGHT;
 						}
 
 						CString szUnit=_T("g");
@@ -2658,6 +2662,10 @@ BOOL CSubViewCalFlowSensor::PreTranslateMessage(MSG* pMsg)
 						if(m_iBodyweight==0)
 						{
 							m_iBodyweight=BODYWEIGHTMINIMUM;
+						}
+						else if(m_iBodyweight>=BODYWEIGHTRANGE3)
+						{
+							m_iBodyweight+=STEP4_BODYWEIGHT;
 						}
 						else if(m_iBodyweight>=BODYWEIGHTRANGE2)
 						{
