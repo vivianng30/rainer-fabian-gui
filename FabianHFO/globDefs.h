@@ -2485,8 +2485,8 @@ enum eTimeChanger {
 	TC_EFLOW_DW,
 	TC_PROXCAL_UP,		// 19,
 	TC_PROXCAL_DW,
-	TC_BODYWEIGHT_UP,			// 21,
-	TC_BODYWEIGHT_DW,			// 22,
+	//TC_BODYWEIGHT_UP,			// 21,
+	//TC_BODYWEIGHT_DW,			// 22,
 	//TC_WAVE2_UP,			// 23,
 	//TC_WAVE2_DW				// 24
 };
@@ -3821,7 +3821,7 @@ typedef struct tagfVALUE
 #define BODYWEIGHTMAXIMUM				30000
 #define BODYWEIGHTUNITSWITCH			5000
 #define STEP1_BODYWEIGHT				50
-#define STEP2_BODYWEIGHT				200
+#define STEP2_BODYWEIGHT				100
 #define STEP3_BODYWEIGHT				500
 
 #define STEP_EFLOW						1000

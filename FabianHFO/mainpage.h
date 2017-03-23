@@ -13,6 +13,12 @@
 	- NEO+PED: old text deleted (ITEM-28)
 	- HFO Pmean-rec warning triangle at MaxKey drawn correct (ITEM-30)
 	- range of PIPmin checked at startup to PEEP and PIPmax
+	- Leak comp setting off with bigger font (ITEM-31)
+	- "EFLOW" numeric in O2 therapy without "CPAP" text (ITEM-32)
+	- "EFLOW" numeric in O2 therapy resolution of digits changed text (ITEM-33)
+	- "Freq etCO2" numeric displays "--" if Freq etCO2 has no valid value (ITEM-34)
+	- bodyweight without buttons
+	- bodyweight step size between 2000 and 10000g is 100 g now
  @endverbatim
  *
  * @subsection ver50120 Version 5.0.1.20

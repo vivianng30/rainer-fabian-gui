@@ -68,12 +68,12 @@ CSubViewCalFlowSensor::CSubViewCalFlowSensor()
 
 	//m_bNeoPedConfirmed=false;
 	m_pbtnBodyweight=NULL;
-	m_pcBodyweightUp=NULL;
-	m_pcBodyweightDwn=NULL;
-	m_pcUp_Up=NULL;
+	//m_pcBodyweightUp=NULL;
+	//m_pcBodyweightDwn=NULL;
+	/*m_pcUp_Up=NULL;
 	m_pcUp_Dw=NULL;
 	m_pcDw_Up=NULL;
-	m_pcDw_Dw=NULL;
+	m_pcDw_Dw=NULL;*/
 
 	m_pcStatic_Up=NULL;
 	m_pcStatic_Dw=NULL;
@@ -170,8 +170,8 @@ CSubViewCalFlowSensor::CSubViewCalFlowSensor()
 	}
 
 	m_iBodyweight=0;
-	m_iCounter=0;
-	m_eTimeChanger=TC_OFF;
+	//m_iCounter=0;
+	//m_eTimeChanger=TC_OFF;
 }
 
 CSubViewCalFlowSensor::~CSubViewCalFlowSensor()
@@ -191,10 +191,10 @@ CSubViewCalFlowSensor::~CSubViewCalFlowSensor()
 	delete m_pbtnBodyweight;
 	m_pbtnBodyweight=NULL;
 
-	delete m_pcBodyweightUp;
+	/*delete m_pcBodyweightUp;
 	m_pcBodyweightUp=NULL;
 	delete m_pcBodyweightDwn;
-	m_pcBodyweightDwn=NULL;
+	m_pcBodyweightDwn=NULL;*/
 
 	delete m_pcStatic_Up;
 	m_pcStatic_Up=NULL;
@@ -203,7 +203,7 @@ CSubViewCalFlowSensor::~CSubViewCalFlowSensor()
 	delete m_pcStatic_Fc;
 	m_pcStatic_Fc=NULL;
 
-	delete m_pcUp_Up;
+	/*delete m_pcUp_Up;
 	delete m_pcUp_Dw;
 	delete m_pcDw_Up;
 	delete m_pcDw_Dw;
@@ -211,7 +211,7 @@ CSubViewCalFlowSensor::~CSubViewCalFlowSensor()
 	m_pcUp_Up=NULL;
 	m_pcUp_Dw=NULL;
 	m_pcDw_Up=NULL;
-	m_pcDw_Dw=NULL;
+	m_pcDw_Dw=NULL;*/
 
 	delete m_pcNeonatal;
 	m_pcNeonatal=NULL;
@@ -381,11 +381,11 @@ BOOL CSubViewCalFlowSensor::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CC
 		m_pcRegionBotLeCorner		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_SETUP_LE_BOT_CORNER);
 		m_pcRegionBotRiCorner		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_SETUP_RI_BOT_CORNER);
 
-		m_pcUp_Up= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETUP_UPUP);
-		m_pcUp_Dw= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETUP_UPDW);
+		//m_pcUp_Up= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETUP_UPUP);
+		//m_pcUp_Dw= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETUP_UPDW);
 		//m_pcUp_Fc= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETUP_UPFC);
-		m_pcDw_Up= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETUP_DWUP);
-		m_pcDw_Dw= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETUP_DWDW);
+		//m_pcDw_Up= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETUP_DWUP);
+		//m_pcDw_Dw= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETUP_DWDW);
 		//m_pcDw_Fc= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETUP_DWFC);
 
 		m_pcStatic_Up= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_VALUE_UP);
@@ -709,7 +709,7 @@ void CSubViewCalFlowSensor::Init()
 
 	//*******************bodyweight*****************************
 	btn.wID					= IDC_BTN_SETUP_BODYWEIGHT;	
-	btn.poPosition.x		= 22;
+	btn.poPosition.x		= 62;
 	btn.poPosition.y		= 234;
 	btn.pcBmpUp				= m_pcStatic_Up;
 	btn.pcBmpDown			= m_pcStatic_Dw;
@@ -724,7 +724,7 @@ void CSubViewCalFlowSensor::Init()
 
 	//+++++++++++++++++bodyweight up++++++++++++++++++++++++++++++
 	//m_pcBodyweightUp=NULL;
-	btn.wID					= IDC_BTN_SETUP_NEXTUP;	
+	/*btn.wID					= IDC_BTN_SETUP_NEXTUP;	
 	btn.poPosition.x		= 123;
 	btn.poPosition.y		= 222;
 	btn.pcBmpUp				= m_pcUp_Up;
@@ -736,12 +736,12 @@ void CSubViewCalFlowSensor::Init()
 	m_pcBodyweightUp=new CDTUpDwnBtn(btn,COLOR_TXTBTNUP);
 	m_pcBodyweightUp->Create(this,g_hf21AcuBold,0);
 	m_pcBodyweightUp->SetText(_T(""));
-	m_pcBodyweightUp->ShowWindow(SW_SHOW);
+	m_pcBodyweightUp->ShowWindow(SW_SHOW);*/
 
 
 	//+++++++++++++++++bodyweight up++++++++++++++++++++++++++++++
 	//m_pcBodyweightDwn=NULL;
-	btn.wID					= IDC_BTN_SETUP_NEXTDW;	
+	/*btn.wID					= IDC_BTN_SETUP_NEXTDW;	
 	btn.poPosition.x		= 123;
 	btn.poPosition.y		= 264;
 	btn.pcBmpUp				= m_pcDw_Up;
@@ -753,7 +753,7 @@ void CSubViewCalFlowSensor::Init()
 	m_pcBodyweightDwn=new CDTUpDwnBtn(btn,COLOR_TXTBTNUP);
 	m_pcBodyweightDwn->Create(this,g_hf21AcuBold,0);
 	m_pcBodyweightDwn->SetText(_T(""));
-	m_pcBodyweightDwn->ShowWindow(SW_SHOW);
+	m_pcBodyweightDwn->ShowWindow(SW_SHOW);*/
 
 
 	//TESTtrigger
@@ -870,7 +870,7 @@ void CSubViewCalFlowSensor::OnDestroy()
 	StopFlowSensorCheckThread();
 	getModel()->getDATAHANDLER()->SetFlowSensorCalibrating(false);
 
-	KillTimer(CHANGETIMER);
+	//KillTimer(CHANGETIMER);
 	KillTimer(FLOWSENS_VALUE);
 
 	if(m_pDlg)
@@ -1222,15 +1222,15 @@ void CSubViewCalFlowSensor::DrawStatic()
 	pDCStatic->DrawText(sz,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 
 
-	MoveToEx(m_hdcStatic, 22, 232, NULL);
-	LineTo(m_hdcStatic, 122, 232);
+	MoveToEx(m_hdcStatic, 62, 232, NULL);
+	LineTo(m_hdcStatic, 162, 232);
 
-	MoveToEx(m_hdcStatic, 22, 295, NULL);
-	LineTo(m_hdcStatic, 122, 295);
+	MoveToEx(m_hdcStatic, 62, 295, NULL);
+	LineTo(m_hdcStatic, 162, 295);
 
-	rc.left = 22;  
+	rc.left = 62;  
 	rc.top = 300;  
-	rc.right  = 122;  
+	rc.right  = 162;  
 	rc.bottom = 315;
 	//DrawText(m_hdcStatic,_T("bodyweight"),-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 	DrawText(m_hdcStatic,getModel()->GetLanguageString(IDS_TXT_BODYWEIGHT),-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);//todo FOTLANGUAGE
@@ -1641,7 +1641,7 @@ void CSubViewCalFlowSensor::OnTimer(UINT_PTR nIDEvent)
 			DrawFlowSensor(false,true);
 		
 	}
-	else if(nIDEvent==CHANGETIMER)
+	/*else if(nIDEvent==CHANGETIMER)
 	{
 		switch(m_eTimeChanger)
 		{
@@ -1736,7 +1736,7 @@ void CSubViewCalFlowSensor::OnTimer(UINT_PTR nIDEvent)
 		}
 
 		m_iCounter++;
-	}
+	}*/
 
 	CWnd::OnTimer(nIDEvent);
 }
@@ -1747,7 +1747,7 @@ LRESULT CSubViewCalFlowSensor::WindowProc(UINT message, WPARAM wParam, LPARAM lP
 {
 	switch(message)
 	{
-	case WM_TIMEBTN_DOWN:
+	/*case WM_TIMEBTN_DOWN:
 		{
 			switch(wParam)
 			{
@@ -1890,7 +1890,7 @@ LRESULT CSubViewCalFlowSensor::WindowProc(UINT message, WPARAM wParam, LPARAM lP
 				break;
 			}
 		}
-		break;
+		break;*/
 	case WM_ALARMSTATE_CHANGED:
 		{
 			if(!m_bExit)

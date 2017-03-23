@@ -1349,6 +1349,7 @@ void CSubParaBtn::DrawSUBPARA_LEAKCOMP(int nState)
 	{
 	case LC_OFF:
 		{
+			SelectObject(m_hDC,g_hf14AcuBold);
 			wsprintf(psz,getModel()->GetLanguageString(IDS_TXT_OFF));
 			if(m_pcWarning_Up)
 				m_pcWarning_Up->Draw(m_hDC,65,m_rcClient.bottom-20);

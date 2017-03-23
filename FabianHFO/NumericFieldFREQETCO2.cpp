@@ -88,7 +88,23 @@ bool CNumericFieldFREQETCO2::drawData(bool bData, bool bFrames, bool bText, bool
 	TCHAR psz[MAX_PATH];
 
 	//###########################################################################
-	SHORT iBPM=getModel()->getDATAHANDLER()->getAVGMessureDataBPMco2();
+	SHORT iBPM=0;
+	bool bETCO2FREQValueValid=false;
+
+	if(getModel()->getETCO2()!=NULL)
+	{
+		iBPM=getModel()->getDATAHANDLER()->getAVGMessureDataBPMco2();
+		bETCO2FREQValueValid=getModel()->getETCO2()->isFreqValueValid();
+	}
+
+	if(bETCO2FREQValueValid)
+	{
+		wsprintf(psz,_T("%d"),iBPM );
+	}
+	else
+	{
+		wsprintf(psz,_T("%s"), _T("--"));
+	}
 
 	if(m_eSize==NUMERICSIZE_1)
 	{
@@ -107,7 +123,6 @@ bool CNumericFieldFREQETCO2::drawData(bool bData, bool bFrames, bool bText, bool
 		rc.right = 175;
 	}
 
-	wsprintf(psz,_T("%d"),iBPM );
 	DrawText(hdcMem,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 
 	BitBlt(m_hDC, 0, 0, m_lX, m_lY,hdcMem , 0, 0, SRCCOPY);

@@ -14,7 +14,10 @@ CNumericFieldEFLOW::CNumericFieldEFLOW(eNumericSize size):
 CNumericField(size)
 {
 	m_szName=getModel()->GetLanguageString(IDS_PARA_FLOW);
-	m_szNameNote=getModel()->GetLanguageString(IDS_PARA_EXPIRATION);
+	if(getModel()->getVMODEHANDLER()->activeModeIsTHERAPY())
+		m_szNameNote=_T("");
+	else
+		m_szNameNote=getModel()->GetLanguageString(IDS_PARA_EXPIRATION);
 	m_szUnit=_T("[")+getModel()->GetLanguageString(IDS_UNIT_LMIN)+_T("]");
 }
 
@@ -89,9 +92,6 @@ bool CNumericFieldEFLOW::drawData(bool bData, bool bFrames, bool bText, bool bLi
 
 	//###########################################################################
 	int iExpFlow2=getModel()->getDATAHANDLER()->GetExpFlowData();
-	int iTemp=iExpFlow2/100;
-	int iFactor=(int)CTlsFloat::Round(((double)iTemp)/5, 0);
-	iTemp=iFactor*5;
 
 	if(m_eSize==NUMERICSIZE_1)
 	{
@@ -110,7 +110,31 @@ bool CNumericFieldEFLOW::drawData(bool bData, bool bFrames, bool bText, bool bLi
 		rc.right = 175;
 	}
 
-	wsprintf(psz,_T("%0.1f"),CTlsFloat::Round(((double)iTemp)/10, 1));
+	if(getModel()->getVMODEHANDLER()->activeModeIsTHERAPY())
+	{
+		if(iExpFlow2>=5000)
+		{
+			int iTemp=iExpFlow2/100;
+			int iFactor=CTlsFloat::Round(((double)iTemp)/5, 0);
+			iTemp=iFactor*5;
+
+			wsprintf(psz,_T("%0.1f"),CTlsFloat::Round(((double)iTemp)/10, 1));
+		}
+		else
+		{
+			wsprintf(psz,_T("%0.1f"), CTlsFloat::Round(((double)iExpFlow2)/1000, 1));
+		}
+	}
+	else
+	{
+		int iTemp=iExpFlow2/100;
+		int iFactor=CTlsFloat::Round(((double)iTemp)/5, 0);
+		iTemp=iFactor*5;
+
+		wsprintf(psz,_T("%0.1f"),CTlsFloat::Round(((double)iTemp)/10, 1));
+	}
+	
+	//wsprintf(psz,_T("%0.1f"),CTlsFloat::Round(((double)iTemp)/10, 1));
 	DrawText(hdcMem,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 
 	BitBlt(m_hDC, 0, 0, m_lX, m_lY,hdcMem , 0, 0, SRCCOPY);
