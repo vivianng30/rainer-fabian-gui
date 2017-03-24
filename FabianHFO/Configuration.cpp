@@ -10183,14 +10183,17 @@ void CConfiguration::Serialize(CArchive& ar)
 			ar>>m_iFOThfo_STEPS;
 			getModel()->getI2C()->WriteConfigByte(PARA_FOT_HFO_STEPS_8,m_iFOThfo_STEPS);
 			
+			BYTE eTriggerTypeCONV=0;
+			ar>>eTriggerTypeCONV;
+			m_eTriggerTypeCONV=(eTriggereType)eTriggerTypeCONV;
+			setTriggerOptionCONV(m_eTriggerTypeCONV);
+
 			BYTE eTriggerTypeNMODE=0;
 			ar>>eTriggerTypeNMODE;
 			m_eTriggerTypeNMODE=(eTriggereType)eTriggerTypeNMODE;
 			setTriggerOptionNMODE(m_eTriggerTypeNMODE);
 
-			//if(m_eTriggerTypeNMODE!=TRIGGER_OFF)
-			{
-				if(m_eTubeSet==TUBE_INFANTFLOW)
+			if(m_eTubeSet==TUBE_INFANTFLOW)
 					m_eTriggerTypeNMODE=TRIGGER_FLOW;
 				else if(m_eTubeSet==TUBE_INFANTFLOW_LP)
 					m_eTriggerTypeNMODE=TRIGGER_FLOW;
@@ -10200,7 +10203,6 @@ void CConfiguration::Serialize(CArchive& ar)
 					m_eTriggerTypeNMODE=TRIGGER_OFF;*/
 
 				setTriggerOptionNMODE(m_eTriggerTypeNMODE);
-			}
 
 			ar>>m_iParaDataTriggerNMODE;
 			getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NMODE_16, m_iParaDataTriggerNMODE);

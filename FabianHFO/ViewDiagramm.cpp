@@ -6075,7 +6075,6 @@ void CViewDiagramm::NotifyEvent(CMVEvent* pEvent)
 						}
 						else//MANBREATH_SCALE
 						{
-							//int iPinsp=0;
 							if(getModel()->getVMODEHANDLER()->activeModeIsCPAP())
 							{
 								int iVal=getModel()->getDATAHANDLER()->PARADATA()->GetPManualCPAPPara();
@@ -6112,21 +6111,13 @@ void CViewDiagramm::NotifyEvent(CMVEvent* pEvent)
 								if(getModel()->getDATAHANDLER()->IsCurrentModeVGarantStateOn())
 								{
 									int iPmaxVG=getModel()->getDATAHANDLER()->GetActiveModePMAXVGPara();
-									int iPmanual=getModel()->getDATAHANDLER()->GetActiveModePINSPPara();
-
-									bool bRescale=false;
-									if(iPmanual>iPmaxVG)
-										bRescale=true;
-
-									if(bRescale)
+									
+									EnterCriticalSection(&csDiagrammPRESSURE);
+									if(m_pDiagrammPressure &&	m_bGraphPressureIsActive)
 									{
-										EnterCriticalSection(&csDiagrammPRESSURE);
-										if(m_pDiagrammPressure &&	m_bGraphPressureIsActive)
-										{
-											m_pDiagrammPressure->ScaleToNextPossibleYValue(iPmanual,0,true,true);
-										}
-										LeaveCriticalSection(&csDiagrammPRESSURE);
+										m_pDiagrammPressure->ScaleToNextPossibleYValue(iPmaxVG,0,true,true);
 									}
+									LeaveCriticalSection(&csDiagrammPRESSURE);
 								}
 							}
 						}
@@ -9583,9 +9574,6 @@ void CViewDiagramm::DrawLoops(int iNumItems)
 	EnterCriticalSection(&csSPIReadInBuffer);
 	for(n=0;n<iNum;n++)
 	{
-		/*if(false==doThread())
-			break;*/
-
 		if(iCountBufPointer<0)
 		{
 			//ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

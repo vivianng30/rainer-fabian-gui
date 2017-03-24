@@ -5342,9 +5342,9 @@ void CDiagramm::CheckAutoScaleXYdecrease()
 	}
 	else
 	{
-		if(isSafeTickCountDelayExpired(m_dwLastCheckAutoScaleX, 100))
+		if(isSafeTickCountDelayExpired(m_dwLastCheckAutoScaleX, TIMEAUTOSCALE))
 		{
-			IncreaseXScale(true);
+			DecreaseXScale(true,true);
 			bReset=true;
 			m_dwLastCheckAutoScaleX=GetTickCount();
 		}
@@ -5356,9 +5356,12 @@ void CDiagramm::CheckAutoScaleXYdecrease()
 	}
 	else
 	{
-		if(isSafeTickCountDelayExpired(m_dwLastCheckAutoScaleY, 100))
+		if(isSafeTickCountDelayExpired(m_dwLastCheckAutoScaleY, TIMEAUTOSCALE))
 		{
-			IncreaseYScale(true);
+			if(CanDecreaseYScale())
+			{
+				DecreaseYScaleToNextValue(true);
+			}
 			bReset=true;
 			m_dwLastCheckAutoScaleY=GetTickCount();
 		}
@@ -5686,7 +5689,7 @@ void CDiagramm::CheckAutoScaleY()
 	}
 	else
 	{
-		if(m_dMaxY>m_dYAxisMax && m_pFunctionParams->yMax>m_dYAxisMax)
+		if(m_dMaxY>m_dYAxisMax && m_pFunctionParams->yMax>m_dYAxisMax /*&& m_iDiagrammType!=PRESSURE_GRAPH && m_iDiagrammType!=PRESSURE_HF_GRAPH*/)
 		{
 			if(isSafeTickCountDelayExpired(m_dwLastCheckAutoScaleY, 100))
 			{
@@ -5703,7 +5706,7 @@ void CDiagramm::CheckAutoScaleY()
 				m_dMinY=0;
 			}
 		}
-		else if(m_pFunctionParams->yMax>(m_dYAxisMin*-1) && m_dMinY<m_dYAxisMin)
+		else if(m_pFunctionParams->yMax>(m_dYAxisMin*-1) && m_dMinY<m_dYAxisMin /*&& m_iDiagrammType!=PRESSURE_GRAPH && m_iDiagrammType!=PRESSURE_HF_GRAPH*/)
 		{
 			if(isSafeTickCountDelayExpired(m_dwLastCheckAutoScaleY, 100))
 			{

@@ -19,6 +19,7 @@
 	- "Freq etCO2" numeric displays "--" if Freq etCO2 has no valid value (ITEM-34)
 	- bodyweight without buttons
 	- bodyweight step size between 2000 and 10000g is 100 g now
+	- scaling of loops fixed
  @endverbatim
  *
  * @subsection ver50120 Version 5.0.1.20
