@@ -2095,7 +2095,7 @@ void CSubViewCalFlowSensor::SetOneButtonDepressed_NeoPed(int btnID)
 		getModel()->getCONFIG()->SetVentRange(PEDIATRIC);
 	}
 
-	getModel()->getDATAHANDLER()->SetBodyweight(0);
+	getModel()->getDATAHANDLER()->SetBodyweight(0,true);
 	m_pbtnBodyweight->RefreshText(_T("--"));
 	//m_bNeoPedConfirmed=false;
 }
@@ -2566,7 +2566,10 @@ void CSubViewCalFlowSensor::OnBnClickedBodyweight()
 	else if(m_pbtnBodyweight->GetState()==BS_FOCUSED)
 		m_pbtnBodyweight->SetState(BS_DOWN);
 	else if(m_pbtnBodyweight->GetState()==BS_DOWN)
+	{
 		m_pbtnBodyweight->SetState(BS_FOCUSED);
+		getModel()->getDATAHANDLER()->SetBodyweight(m_iBodyweight,true);
+	}
 }
 
 BOOL CSubViewCalFlowSensor::PreTranslateMessage(MSG* pMsg) 
@@ -2594,6 +2597,7 @@ BOOL CSubViewCalFlowSensor::PreTranslateMessage(MSG* pMsg)
 				else if(eState==BS_DOWN)
 				{
 					m_pbtnBodyweight->SetState(BS_FOCUSED);
+					getModel()->getDATAHANDLER()->SetBodyweight(m_iBodyweight,true);
 				}
 
 				if(GetParent())
@@ -2637,13 +2641,13 @@ BOOL CSubViewCalFlowSensor::PreTranslateMessage(MSG* pMsg)
 						else
 							strBodyweight.Format(_T("%d %s"),m_iBodyweight,szUnit);
 						m_pbtnBodyweight->RefreshText(strBodyweight);
-						getModel()->getDATAHANDLER()->SetBodyweight(m_iBodyweight);
+						getModel()->getDATAHANDLER()->SetBodyweight(m_iBodyweight,false);
 					}
 					else
 					{
 						m_iBodyweight=0;
 						m_pbtnBodyweight->RefreshText(strBodyweight);
-						getModel()->getDATAHANDLER()->SetBodyweight(m_iBodyweight);
+						getModel()->getDATAHANDLER()->SetBodyweight(m_iBodyweight,false);
 					}
 				}
 				/*if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
@@ -2693,7 +2697,7 @@ BOOL CSubViewCalFlowSensor::PreTranslateMessage(MSG* pMsg)
 						else
 							strBodyweight.Format(_T("%d %s"),m_iBodyweight,szUnit);
 						m_pbtnBodyweight->RefreshText(strBodyweight);
-						getModel()->getDATAHANDLER()->SetBodyweight(m_iBodyweight);
+						getModel()->getDATAHANDLER()->SetBodyweight(m_iBodyweight,false);
 					}
 					else
 					{

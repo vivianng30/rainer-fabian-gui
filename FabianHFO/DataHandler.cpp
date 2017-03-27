@@ -17359,15 +17359,19 @@ bool CDataHandler::getFOToscillationState()
 	return bState;
 }
 
-void CDataHandler::SetBodyweight(WORD weightGramm)
+void CDataHandler::SetBodyweight(WORD weightGramm, bool bLog)
 {
 	if(weightGramm>BODYWEIGHTMAXIMUM)
 		weightGramm=BODYWEIGHTMAXIMUM;
 	m_iBodyweightGramm=weightGramm;
 
-	CStringW szBW=_T("");
-	szBW.Format(_T("### BODYWEIGHT %d"), m_iBodyweightGramm);
-	theApp.getLog()->WriteLine(szBW);
+	if(bLog)
+	{
+		CStringW szBW=_T("");
+		szBW.Format(_T("### BODYWEIGHT %d"), m_iBodyweightGramm);
+		theApp.getLog()->WriteLine(szBW);
+	}
+	
 }
 WORD CDataHandler::GetBodyweight()
 {

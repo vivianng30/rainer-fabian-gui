@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50122 Version 5.0.1.22
+ * @date 2017-03-27
+ * @verbatim
+	- Bodyweight: only written to log if changed (ITEM-37)
+ @endverbatim
+ *
  * @subsection ver50121 Version 5.0.1.21
  * @date 2017-03-22
  * @verbatim

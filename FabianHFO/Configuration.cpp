@@ -10194,15 +10194,13 @@ void CConfiguration::Serialize(CArchive& ar)
 			setTriggerOptionNMODE(m_eTriggerTypeNMODE);
 
 			if(m_eTubeSet==TUBE_INFANTFLOW)
-					m_eTriggerTypeNMODE=TRIGGER_FLOW;
-				else if(m_eTubeSet==TUBE_INFANTFLOW_LP)
-					m_eTriggerTypeNMODE=TRIGGER_FLOW;
-				else if(m_eTubeSet==TUBE_MEDIJET)
-					m_eTriggerTypeNMODE=TRIGGER_PRESSURE;
-				/*else
-					m_eTriggerTypeNMODE=TRIGGER_OFF;*/
+				m_eTriggerTypeNMODE=TRIGGER_FLOW;
+			else if(m_eTubeSet==TUBE_INFANTFLOW_LP)
+				m_eTriggerTypeNMODE=TRIGGER_FLOW;
+			else if(m_eTubeSet==TUBE_MEDIJET)
+				m_eTriggerTypeNMODE=TRIGGER_PRESSURE;
 
-				setTriggerOptionNMODE(m_eTriggerTypeNMODE);
+			setTriggerOptionNMODE(m_eTriggerTypeNMODE);
 
 			ar>>m_iParaDataTriggerNMODE;
 			getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NMODE_16, m_iParaDataTriggerNMODE);
