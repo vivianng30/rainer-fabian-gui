@@ -182,8 +182,6 @@ CDataHandler::CDataHandler(void)
 	m_iNumericFLOWOFFCONVcount=0;
 	m_iNumericFLOWOFFHFOcount=0;
 
-	m_iOldOxyValue=0;
-
 	m_iSPO2waveData=0;
 	m_iSPO2_SIQ=0;
 
@@ -6376,24 +6374,6 @@ SHORT CDataHandler::getMessureDataO2()
 }
 void CDataHandler::setMessureDataO2(SHORT value)
 {
-	if(false==GetOxyCalRunning())
-		m_iOldOxyValue=value;
-
-	if(getModel()->getAcuLink()!=NULL)
-	{
-		if(value<0)
-		{
-			getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_OXY,0);
-		}
-		else
-		{
-			if(GetOxyCalRunning())
-				getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_OXY,m_iOldOxyValue);
-			else
-				getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_OXY,value);
-		}
-	}
-
 	EnterCriticalSection(&csMessureDataBTB);
 	m_pbufMessureBTB[ALINK_MSMNT_OXY]=value;
 	LeaveCriticalSection(&csMessureDataBTB);

@@ -295,6 +295,8 @@ CMainFrame::CMainFrame()
 	m_hf33AcuBoldNum=NULL;
 	m_hf70BoldNum=NULL;
 
+	m_iOldOxyValue=0;
+
 	/*for(int i=0;i<MAXSIZE_THREADS;i++)
 	{
 		faThreadWatchdog[i]=0;
@@ -3349,25 +3351,24 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_NEW_FIO2DATA:
 		{
 			SHORT iFiO2value=getModel()->getDATAHANDLER()->getMessureDataO2();
+			if(false==getModel()->getDATAHANDLER()->GetOxyCalRunning())
+				m_iOldOxyValue=iFiO2value;
+
 			if(getModel()->getAcuLink()!=NULL)
 			{
-				if(iFiO2value<0)
+				if(value<0)
 				{
 					getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_OXY,0);
 				}
 				else
 				{
-					getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_OXY,iFiO2value);
+					if(getModel()->getDATAHANDLER()->GetOxyCalRunning())
+						getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_OXY,m_iOldOxyValue);
+					else
+						getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_OXY,iFiO2value);
 				}
 			}
 
-			/*if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
-			{
-				if(getModel()->getPRICOThread()->isPRICOalgorithmRunning())
-				{
-					getModel()->getPRICOThread()->setMeasuredOxyValue(iFiO2value);
-				}
-			}*/
 			getModel()->getVIEWHANDLER()->drawMeasuredFiO2Value();
 			return 1;
 		}

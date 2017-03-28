@@ -266,6 +266,8 @@ protected:
 
 	CBmp* m_pcLogo;//WEC2013
 	
+	SHORT m_iOldOxyValue;
+
 	bool m_bStartTrend;//WEC2013
 	bool m_bDelayAutoOxyCal;//WEC2013
 	bool m_bWD0error;//WEC2013

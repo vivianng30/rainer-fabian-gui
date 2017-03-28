@@ -1128,11 +1128,13 @@ bool CMVModel::isCO2inprogress()
 //=============================================================================
 void CMVModel::initSPO2module(bool bReinit)
 {
+	
 	//DEBUGMSG(TRUE, (TEXT("CMVModel::InitSPO2module()\r\n")));
-	if(SPO2==NULL && getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+	if(getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
 	{
 		//DEBUGMSG(TRUE, (TEXT("CMVModel::InitSPO2module() 1\r\n")));
-		SPO2=CInterfaceSPO2::GetInstance(getCONFIG()->GetSPO2module());
+		if(SPO2==NULL)
+			SPO2=CInterfaceSPO2::GetInstance(getCONFIG()->GetSPO2module());
 
 		if(SPO2)
 		{
@@ -5279,7 +5281,6 @@ WORD CMVModel::Send_MODE_OPTION1(bool bSPI,bool bSerial)
 	{
 		wMode=setBitOfWord(wMode, MANBREAT15_BIT);
 	}
-
 
 	if(bSPI)
 		getSPI()->Send_MODE_OPTION1(wMode);

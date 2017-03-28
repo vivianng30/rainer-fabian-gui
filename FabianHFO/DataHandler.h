@@ -1137,7 +1137,7 @@ private:
 
 	SHORT m_Status2;
 
-	SHORT m_iOldOxyValue;
+	//SHORT m_iOldOxyValue;
 
 	BOOL m_bShowFlowAC;
 

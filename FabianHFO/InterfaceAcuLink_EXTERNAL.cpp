@@ -338,7 +338,7 @@ void CInterfaceAcuLink_EXTERNAL::setGraphData(SHORT iValVolume ,SHORT iValPressu
 	////in ring buffer von DLL schreiben
 	if(pSetWaveRecord)
 	{
-		int iRet=((*pSetWaveRecord)(iValVolume ,iValPressure ,iValFlow, iValCO2));
+		int iRet=((*pSetWaveRecord)(iValVolume ,iValPressure ,iValFlow, iValCO2, iValSPO2));
 		if(iRet!=0)
 		{
 			if(m_bShowAcuLinkError==true)

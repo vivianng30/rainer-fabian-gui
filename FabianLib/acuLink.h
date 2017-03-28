@@ -4,6 +4,7 @@
 * \brief Defines of acuLink protocol.
 * \author Rainer Kuehner
 * \date 2013-01-21 Creation of file
+* \date 2017-03-27 update, new values and SpO2
 *
 *  Notice:	- IVOI:es dürfen auch alles RED ALARMS sein. Sie dürfen allerdings nur 15 Zeichen lang sein 
 *			  (und nicht 16 Zeichen wie bei den YELLOWs).
@@ -59,7 +60,7 @@
 #define WAVE_PRESS		1
 #define WAVE_FLOW		2
 #define WAVE_CO2		3
-#define WAVE_SPO2		3
+#define WAVE_SPO2		4
 
 
 #define NUL_CHAR	(unsigned char)0x00
