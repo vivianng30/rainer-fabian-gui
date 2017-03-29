@@ -3356,7 +3356,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 			if(getModel()->getAcuLink()!=NULL)
 			{
-				if(value<0)
+				if(iFiO2value<0)
 				{
 					getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_OXY,0);
 				}
