@@ -6103,7 +6103,10 @@ void CViewParaBtn::show_DUOPAPmode()
 			m_pcPara_ETIME->ShowWindow(SW_SHOW);
 		if(m_pcSubPara_BPM)
 		{
-			m_pcSubPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_DUOFREQ));
+			if(getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEPara()>600)
+				m_pcSubPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_DUOFREQ));
+			else
+				m_pcSubPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_FREQBACKUP));
 			m_pcSubPara_BPM->ShowWindow(SW_SHOW);
 			m_pcSubPara_BPM->RefreshBtn();
 		}
@@ -6280,7 +6283,10 @@ void CViewParaBtn::show_PRE_DUOPAPmode()
 			m_pcPara_ETIME->ShowWindow(SW_SHOW);
 		if(m_pcSubPara_BPM)
 		{
-			m_pcSubPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_DUOFREQ));
+			if(getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEPara()>600)
+				m_pcSubPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_DUOFREQ));
+			else
+				m_pcSubPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_FREQBACKUP));
 			m_pcSubPara_BPM->ShowWindow(SW_SHOW);
 			m_pcSubPara_BPM->RefreshBtn();
 		}

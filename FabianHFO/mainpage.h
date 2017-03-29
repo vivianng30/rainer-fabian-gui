@@ -8,9 +8,10 @@
  * @section ver Version history and changelog
  *
  * @subsection ver50122 Version 5.0.1.22
- * @date 2017-03-27
+ * @date 2017-03-29
  * @verbatim
 	- Bodyweight: only written to log if changed (ITEM-37)
+	- DUOPAP: when I-time is less than or equal with 0.6 s the Freq button is renamed to "BackupRate" (ITEM-38)
  @endverbatim
  *
  * @subsection ver50121 Version 5.0.1.21
