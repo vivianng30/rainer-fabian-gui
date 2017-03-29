@@ -5534,6 +5534,14 @@ void CViewDiagramm::NotifyVentModeChanged()
 		{
 			bRedraw=true;
 		}
+		else if(getModel()->getCONFIG()->GetCurMode()==VM_THERAPIE && getModel()->getCONFIG()->GetPrevMode()!=VM_THERAPIE)//newVG
+		{
+			bRedraw=true;
+		}
+		else if(getModel()->getCONFIG()->GetCurMode()!=VM_THERAPIE && getModel()->getCONFIG()->GetPrevMode()==VM_THERAPIE)//newVG
+		{
+			bRedraw=true;
+		}
 
 		if(bVentmodeChangedToHFO)
 		{

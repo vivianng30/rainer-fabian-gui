@@ -2350,7 +2350,8 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 			getALARMHANDLER()->setAlimitsMinMaxRangePressure();
 			NotifyParaBtnEvent(pEvent);
 		}
-		break;case CMVEventUI::EV_PARABN_PMAXVOLG:
+		break;
+	case CMVEventUI::EV_PARABN_PMAXVOLG:
 	case CMVEventUI::EV_PARABN_PINSP:
 	case CMVEventUI::EV_PARABN_PPSV:
 		{
