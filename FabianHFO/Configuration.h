@@ -1128,11 +1128,11 @@ private:
 	int m_iAlarmlimitStatePEEPminCpap;
 
 	int m_iAlarmlimitPmaxDUOPAP;
-	int m_iAlarmlimitStatePmaxDUOPAP;
+	int m_iAlarmlimitStatePIPmaxDUOPAP;
 	int m_iAlarmlimitPEEPminDUOPAP;
 	int m_iAlarmlimitStatePEEPminDUOPAP;
 
-	int m_iAlarmlimitPmaxNCPAP;
+	int m_iAlarmlimitPIPmaxNCPAP;
 	int m_iAlarmlimitStatePmaxNCPAP;
 	int m_iAlarmlimitPEEPminNCPAP;
 	int m_iAlarmlimitStatePEEPminNCPAP;
