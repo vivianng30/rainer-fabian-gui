@@ -1368,6 +1368,11 @@ void CViewAlarmLimit::DrawFrames(CDC* pDC)
 				if(m_pcAlarmlimitPara1)
 					m_pcAlarmlimitPara1->Draw(hdc,0,376);	//Apnoe
 			}
+			else if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_PRESSURE)
+			{
+				if(m_pcAlarmlimitPara1)
+					m_pcAlarmlimitPara1->Draw(hdc,0,376);	//Apnoe
+			}
 		}
 		else if(m_eCurVentMode==VM_NCPAP)
 		{
@@ -1976,6 +1981,27 @@ void CViewAlarmLimit::drawLabel_VENTILATION(CDC* pDC)
 		if(		getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET
 			||	(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false
 				&& getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET))
+		{
+			SelectObject(hdc,g_hf10AcuBold);
+
+			//--------------------Apnoe-------------------------------------
+			rc.left = 10;
+			rc.right = 210;
+			rc.top = 376;
+			rc.bottom = 426;
+
+			nameText=getModel()->GetLanguageString(IDS_PARA_APNOE);
+			DrawText(hdc,nameText,-1,&rc,DT_VCENTER|DT_SINGLELINE|DT_LEFT);
+			CSize sz = pDC->GetTextExtent(nameText);
+
+			SelectObject(hdc,g_hf6AcuNorm);
+
+			rc.top = 376;
+			rc.bottom = 426;
+			rc.left = 15+sz.cx;
+			pDC->DrawText(_T("[")+getModel()->GetLanguageString(IDS_UNIT_SECONDS)+_T("]"),&rc,DT_VCENTER|DT_SINGLELINE|DT_LEFT);
+		}
+		else if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_PRESSURE)
 		{
 			SelectObject(hdc,g_hf10AcuBold);
 

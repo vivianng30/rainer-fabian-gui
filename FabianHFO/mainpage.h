@@ -13,6 +13,7 @@
 	- Bodyweight: only written to log if changed (ITEM-37)
 	- DUOPAP: when I-time is less than or equal with 0.6 s the Freq button is renamed to "BackupRate" (ITEM-38)
 	- autoscale fixed (Flow sensor OFF, so we have only PRESSURE graph, changing between O2 Therapy and conventional modes (IPPV, SIPPV, SIMV), (ITEM-40)
+	- CPAP: flow sensor off and Pressure trigger -> apnea drawn correct now (ITEM-41)
  @endverbatim
  *
  * @subsection ver50121 Version 5.0.1.21
