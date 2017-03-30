@@ -439,17 +439,45 @@
 											//Bit 1: Status Volumengarantie (an=1)
 											//Bit 2: Status Volumenlimit (an=1)
 											//Bit 3: Bereich: 0=NEONATAL, 1 = PEDIATRIC
-											//Bit 4: - internal use only-
-											//Bit 5: - internal use only-
-											//Bit 6: - internal use only-
+											//Bit 4: Flow sensor calibration running
+											//Bit 5: O2 compensation enabled
+											//Bit 6: Exhalation  valve calibration running
 											//Bit 7: Trigger-Modus (0=Volumetrigger, 1=Flowtrigger)
-											//Bit 8: - internal use only-
-											//Bit 9: - internal use only-
-											//Bit 10+11: Schlauchset für NCPAP/DUOPAP: 00=InfantFlow, 10=MediJet, Rest notdef
-											//Bit 12+13: I:E Ratio HFO: 00=1:3, 10=1:2, 01=1:1, Rest notdef
-											//Bit 14: - internal use -
-#define ALINK_SETT_MODE_OPTION2			26	//Bit 0+1:	Kurvenform: 00=I-Flow, 01=Dreiekck, 10=AutoIFlow (PFG), Rest notdef
-											//Bit 2:		HFO-Recruitment 1==on
+											//Bit 8: Calibration process 21% O2 running
+											//Bit 9: Calibration process 100% O2 running
+											//Bit 10+11: 	Tubeset for NCPAP/DUOPAP:
+											//				xxxx 00xx xxxx xxxx	= InfantFlow
+											//				xxxx 01xx xxxx xxxx	= MediJet
+											//				xxxx 10xx xxxx xxxx	=InfantFlowLP
+											//				others notdef
+											// Bit 12+13: 	I:E Ratio HFO:
+											//				xx00 xxxx xxxx xxxx	= 1:3
+											//				xx01 xxxx xxxx xxxx	= 1:2
+											//				xx10 xxxx xxxx xxxx	= 1:1
+											//				others notdef
+											// Bit 14: 	- internal use -
+											// Bit 15: manual breath running
+											//
+#define ALINK_SETT_MODE_OPTION2			26	//Bit 0+1:	Pressure rise control: 
+											//				xxxx xx00	= I-Flow
+											//				xxxx xx01	= 01=Ramp
+											//				xxxx xx10	= AutoIFlow
+											//				others notdef
+											//Bit 2:	HFO-Recruitment 1==on
+											//Bit 3:	HFO flow 1==on
+											//Bit 4: not used
+											//Bit 5: Bias flow, 0==internal, 1 == external
+											//Bit 6+7+8:  Trigger mode
+											//				xxx0 00xx xxxx	= volume trigger
+											//				xxx0 01xx xxxx	= flow trigger
+											//				xxx0 10xx xxxx	= pressure trigger
+											//				xxx0 xxxx xxxx	= for future setting
+											//Bit 9: FOT oscillation running
+											//Bit 10+11: Leak compensation
+											//				00xx xxxx xxxx	= off
+											//				01xx xxxx xxxx	= low
+											//				10xx xxxx xxxx	= middle
+											//				11xx xxxx xxxx	= high
 #define ALINK_SETT_POWERSTATE			27	//Powerstate, 0=Netz, 1=Battery
 #define ALINK_SETT_BATTERYSTATE_MINUTES	28	//Remaining Battery Time, Resolution: 1 Minute
 #define ALINK_SETT_BATTERYSTATE_PERCENT	29	//Remaining Battery Percent, Resolution: 1 Prozent

@@ -6084,7 +6084,7 @@ void CViewParaBtn::show_DUOPAPmode()
 	{
 		if(m_pcPara_BPM)
 			m_pcPara_BPM->ShowWindow(SW_SHOW);
-		if(getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF)
+		if(getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
 		{
 			m_pcPara_BPM->SetNameText(_T(""));
 			m_pcPara_BPM->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_FREQBACKUP),true);
@@ -6114,9 +6114,9 @@ void CViewParaBtn::show_DUOPAPmode()
 		if(m_pcSubPara_BPM)
 		{
 			if(getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
-				m_pcSubPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_DUOFREQ));
-			else
 				m_pcSubPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_FREQBACKUP));
+			else
+				m_pcSubPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_DUOFREQ));
 
 			m_pcSubPara_BPM->ShowWindow(SW_SHOW);
 			m_pcSubPara_BPM->RefreshBtn();
@@ -6275,7 +6275,7 @@ void CViewParaBtn::show_PRE_DUOPAPmode()
 	{
 		if(m_pcPara_BPM)
 			m_pcPara_BPM->ShowWindow(SW_SHOW);
-		if(getModel()->getDATAHANDLER()->PRESET()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF)
+		if(getModel()->getDATAHANDLER()->PRESET()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
 		{
 			m_pcPara_BPM->SetNameText(_T(""));
 			m_pcPara_BPM->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_FREQBACKUP),true);
@@ -6305,9 +6305,9 @@ void CViewParaBtn::show_PRE_DUOPAPmode()
 		if(m_pcSubPara_BPM)
 		{
 			if(getModel()->getDATAHANDLER()->PRESET()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
-				m_pcSubPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_DUOFREQ));
-			else
 				m_pcSubPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_FREQBACKUP));
+			else
+				m_pcSubPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_DUOFREQ));
 			m_pcSubPara_BPM->ShowWindow(SW_SHOW);
 			m_pcSubPara_BPM->RefreshBtn();
 		}
@@ -8215,6 +8215,19 @@ void CViewParaBtn::load_BPMpara(bool bTrigger,bool bPRESET)
 		{
 			m_pcPara_BPM->SetNameText(_T(""));
 			m_pcPara_BPM->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_FREQBACKUP));
+		}
+		else if(getModel()->getVMODEHANDLER()->activeModeIsDUOPAP())
+		{
+			if(getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
+			{
+				m_pcPara_BPM->SetNameText(_T(""));
+				m_pcPara_BPM->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_FREQBACKUP),true);
+			}
+			else
+			{
+				m_pcPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_FREQ));
+				m_pcPara_BPM->SetNameNoteText(_T(""),true);
+			}
 		}
 		else
 		{
