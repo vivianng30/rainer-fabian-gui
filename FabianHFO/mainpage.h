@@ -8,12 +8,14 @@
  * @section ver Version history and changelog
  *
  * @subsection ver50122 Version 5.0.1.22
- * @date 2017-03-29
+ * @date 2017-03-31
  * @verbatim
 	- Bodyweight: only written to log if changed (ITEM-37)
 	- DUOPAP: when I-time is less than or equal with 0.6 s the Freq button is renamed to "BackupRate" (ITEM-38)
 	- autoscale fixed (Flow sensor OFF, so we have only PRESSURE graph, changing between O2 Therapy and conventional modes (IPPV, SIPPV, SIMV), (ITEM-40)
 	- CPAP: flow sensor off and Pressure trigger -> apnea drawn correct now (ITEM-41)
+	- text VTe (HFO)BW changed
+	- HFO mode, when VG is displayed but not active, changing Amp_max value will not5 be send to PIC (ITEM-42)
  @endverbatim
  *
  * @subsection ver50121 Version 5.0.1.21

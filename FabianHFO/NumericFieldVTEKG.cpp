@@ -13,16 +13,16 @@ IMPLEMENT_DYNAMIC(CNumericFieldVTEKG, CWnd)
 CNumericFieldVTEKG::CNumericFieldVTEKG(eNumericSize size):
 CNumericField(size)
 {
-	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
+	/*if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 	{
 		m_szName=getModel()->GetLanguageString(IDS_PARA_VTEHFOKG);
 	}
 	else
 	{
 		m_szName=getModel()->GetLanguageString(IDS_PARA_VTEKG);
-	}
-	
-	m_szNameNote=_T("");
+	}*/
+	m_szName=getModel()->GetLanguageString(IDS_PARA_V);
+	m_szNameNote=getModel()->GetLanguageString(IDS_PARA_TE);
 	m_szUnit=_T("[ml/kg]");
 }
 
@@ -187,24 +187,41 @@ bool CNumericFieldVTEKG::drawStaticText(CDC* pDC)
 		rc.left = 15; 
 		rc.right = 190;
 
-		CSize sz1;
+		CSize sz1, szNote, szVTE, szBW;
 
 		pDC->DrawText(m_szName,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 		sz1 = pDC->GetTextExtent(m_szName);
 
 		SelectObject(hdc,g_hf7AcuBold);
 
-		CSize szNote;
-
 		rc.top = 13;
 		rc.left = 17+sz1.cx;
 		pDC->DrawText(m_szNameNote,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 		szNote = pDC->GetTextExtent(m_szNameNote);
 
+		
+
+		szVTE=sz1.cx+szNote.cx;
+		SelectObject(hdc,g_hf13AcuBold);
+
+		CString csBW=_T("");
+		rc.top = 9;
+		rc.left = 19+szVTE.cx;
+		if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
+		{
+			csBW=getModel()->GetLanguageString(IDS_PARA_VTEHFOKG);
+		}
+		else
+		{
+			csBW=getModel()->GetLanguageString(IDS_PARA_VTEKG);
+		}
+		pDC->DrawText(csBW,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
+		szBW = pDC->GetTextExtent(csBW);
+
 		SelectObject(hdc,g_hf7AcuNorm);
 
 		rc.top = 10;
-		rc.left = 25+sz1.cx+szNote.cx;
+		rc.left = 25+sz1.cx+szNote.cx+szBW.cx;
 		pDC->DrawText(m_szUnit,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 	}
 	else //if(m_eSize==NUMERICSIZE_2)
@@ -215,24 +232,41 @@ bool CNumericFieldVTEKG::drawStaticText(CDC* pDC)
 		rc.left = 15; 
 		rc.right = 190;
 
-		CSize sz1;
+		CSize sz1, szNote, szVTE, szBW;
 
 		pDC->DrawText(m_szName,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 		sz1 = pDC->GetTextExtent(m_szName);
 
 		SelectObject(hdc,g_hf8AcuBold);
 
-		CSize szNote;
-
 		rc.top = 17;
 		rc.left = 17+sz1.cx;
 		pDC->DrawText(m_szNameNote,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 		szNote = pDC->GetTextExtent(m_szNameNote);
 
-		SelectObject(hdc,g_hf15AcuMed);
+		
 
-		rc.top = 8;
-		rc.left = 25+sz1.cx+szNote.cx;
+		szVTE=sz1.cx+szNote.cx;
+		SelectObject(hdc,g_hf17AcuBold);
+
+		CString csBW=_T("");
+		rc.top = 9;
+		rc.left = 19+szVTE.cx;
+		if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
+		{
+			csBW=getModel()->GetLanguageString(IDS_PARA_VTEHFOKG);
+		}
+		else
+		{
+			csBW=getModel()->GetLanguageString(IDS_PARA_VTEKG);
+		}
+		pDC->DrawText(csBW,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
+		szBW = pDC->GetTextExtent(csBW);
+
+		SelectObject(hdc,g_hf8AcuNorm);
+
+		rc.top = 11;
+		rc.left = 25+sz1.cx+szNote.cx+szBW.cx;
 		pDC->DrawText(m_szUnit,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 	}
 

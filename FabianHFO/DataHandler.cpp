@@ -12595,7 +12595,7 @@ void CDataHandler::SetCurrentHFAMPLmaxPara(WORD val)
 			{
 				getModel()->getALARMHANDLER()->setAutoSilent();
 			}
-			SetHFAMPLmaxParadata(val,true);
+			SetHFAMPLmaxParadata(val,PARADATA()->IsHFVGarantStateOn());
 
 			if(AfxGetApp())
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_PARABN_HFAMPL);
