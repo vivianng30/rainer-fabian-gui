@@ -33,7 +33,8 @@ class CViewNumericWnd :public CMVView
 		NUMB_HFO			= 9,
 		NUMB_THERAPY		= 10,
 		NUMB_FLOWOFFCONV	= 11,
-		NUMB_FLOWOFFHFO		= 12
+		NUMB_FLOWOFFCPAP	= 12,
+		NUMB_FLOWOFFHFO		= 13
 	};
 public:
 	CViewNumericWnd(int ViewID = 0);
@@ -94,6 +95,7 @@ protected:
 	void ShowWndNumHFO();
 	void ShowWndNumTHERAPY();
 	void ShowWndNumFLOWOFFCONV();
+	void ShowWndNumFLOWOFFCPAP();
 	void ShowWndNumFLOWOFFHFO();
 
 	//void showWndNumConfig();

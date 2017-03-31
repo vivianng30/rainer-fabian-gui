@@ -826,6 +826,7 @@ public:
 	BYTE getCountNumericDUOPAP();
 	BYTE getCountNumericTHERAPY();
 	BYTE getCountNumericFLOWOFFCONV();
+	BYTE getCountNumericFLOWOFFCPAP();
 	BYTE getCountNumericFLOWOFFHFO();
 
 
@@ -907,6 +908,7 @@ public:
 	static LPNUMERICINI m_pbufNumericDUOPAP;
 	static LPNUMERICINI m_pbufNumericTHERAPY;
 	static LPNUMERICINI m_pbufNumericFLOWOFFCONV;
+	static LPNUMERICINI m_pbufNumericFLOWOFFCPAP;
 	static LPNUMERICINI m_pbufNumericFLOWOFFHFO;
 	
 	CTrend m_cTrendTemporary;
@@ -1004,6 +1006,7 @@ private:
 	BYTE m_iNumericTHERAPYcount;
 
 	BYTE m_iNumericFLOWOFFCONVcount;
+	BYTE m_iNumericFLOWOFFCPAPcount;
 	BYTE m_iNumericFLOWOFFHFOcount;
 
 	BYTE m_chFilenumPINSP;

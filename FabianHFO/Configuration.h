@@ -863,6 +863,8 @@ public:
 
 	BYTE getLastNumericFLOWOFFCONV();
 	void setLastNumericFLOWOFFCONV(BYTE num);
+	BYTE getLastNumericFLOWOFFCPAP();
+	void setLastNumericFLOWOFFCPAP(BYTE num);
 	BYTE getLastNumericFLOWOFFHFO();
 	void setLastNumericFLOWOFFHFO(BYTE num);
 
@@ -1201,6 +1203,7 @@ private:
 	BYTE	m_iCurNumericBlock_DUOPAP;
 	BYTE	m_iCurNumericBlock_THERAPY;
 	BYTE	m_iCurNumericBlock_FLOWOFFCONV;
+	BYTE	m_iCurNumericBlock_FLOWOFFCPAP;
 	BYTE	m_iCurNumericBlock_FLOWOFFHFO;
 
 	BYTE	m_iParaDataTriggerCONV;

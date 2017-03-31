@@ -119,6 +119,7 @@ LPNUMERICINI CDataHandler::m_pbufNumericNCPAP=NULL;
 LPNUMERICINI CDataHandler::m_pbufNumericDUOPAP=NULL;
 LPNUMERICINI CDataHandler::m_pbufNumericTHERAPY=NULL;
 LPNUMERICINI CDataHandler::m_pbufNumericFLOWOFFCONV=NULL;
+LPNUMERICINI CDataHandler::m_pbufNumericFLOWOFFCPAP=NULL;
 LPNUMERICINI CDataHandler::m_pbufNumericFLOWOFFHFO=NULL;
 
 INT* CDataHandler::m_pbufMessureAVG=NULL;
@@ -180,6 +181,7 @@ CDataHandler::CDataHandler(void)
 	m_iNumericDUOPAPcount=0;
 	m_iNumericTHERAPYcount=0;
 	m_iNumericFLOWOFFCONVcount=0;
+	m_iNumericFLOWOFFCPAPcount=0;
 	m_iNumericFLOWOFFHFOcount=0;
 
 	m_iSPO2waveData=0;
@@ -233,6 +235,7 @@ CDataHandler::CDataHandler(void)
 	m_pbufNumericDUOPAP = new NUMERICINI[MAX_NUMERICMODEBLOCK];
 	m_pbufNumericTHERAPY = new NUMERICINI[MAX_NUMERICMODEBLOCK];
 	m_pbufNumericFLOWOFFCONV = new NUMERICINI[MAX_NUMERICMODEBLOCK];
+	m_pbufNumericFLOWOFFCPAP = new NUMERICINI[MAX_NUMERICMODEBLOCK];
 	m_pbufNumericFLOWOFFHFO = new NUMERICINI[MAX_NUMERICMODEBLOCK];
 
 	for(int i=0;i<3;i++)
@@ -445,6 +448,25 @@ CDataHandler::CDataHandler(void)
 		m_pbufNumericFLOWOFFCONV[i].SIZE6=NUMERICSIZE_0;
 		m_pbufNumericFLOWOFFCONV[i].SIZE7=NUMERICSIZE_0;
 		m_pbufNumericFLOWOFFCONV[i].SIZE8=NUMERICSIZE_0;
+
+		m_pbufNumericFLOWOFFCPAP[i].eNumMode=NUMMODE_FLOWOFFCPAP;
+		m_pbufNumericFLOWOFFCPAP[i].SHOW=FALSE;
+		m_pbufNumericFLOWOFFCPAP[i].VAL1=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFCPAP[i].VAL2=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFCPAP[i].VAL3=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFCPAP[i].VAL4=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFCPAP[i].VAL5=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFCPAP[i].VAL6=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFCPAP[i].VAL7=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFCPAP[i].VAL8=NUMT_PPEAK;
+		m_pbufNumericFLOWOFFCPAP[i].SIZE1=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFCPAP[i].SIZE2=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFCPAP[i].SIZE3=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFCPAP[i].SIZE4=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFCPAP[i].SIZE5=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFCPAP[i].SIZE6=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFCPAP[i].SIZE7=NUMERICSIZE_0;
+		m_pbufNumericFLOWOFFCPAP[i].SIZE8=NUMERICSIZE_0;
 
 		m_pbufNumericFLOWOFFHFO[i].eNumMode=NUMMODE_FLOWOFFHFO;
 		m_pbufNumericFLOWOFFHFO[i].SHOW=FALSE;
@@ -799,6 +821,8 @@ void CDataHandler::setExit()
 		m_pbufNumericTHERAPY=NULL;
 		delete [] m_pbufNumericFLOWOFFCONV;
 		m_pbufNumericFLOWOFFCONV=NULL;
+		delete [] m_pbufNumericFLOWOFFCPAP;
+		m_pbufNumericFLOWOFFCPAP=NULL;
 		delete [] m_pbufNumericFLOWOFFHFO;
 		m_pbufNumericFLOWOFFHFO=NULL;
 
@@ -3759,6 +3783,12 @@ void CDataHandler::loadNumerics()
 				eMode=NUMMODE_FLOWOFFCONV;
 				break;
 			}
+		case NUMMODE_FLOWOFFCPAP:
+			{
+				szMode=_T("NUMERIC_FLOWOFFCPAP");
+				eMode=NUMMODE_FLOWOFFCPAP;
+				break;
+			}
 		case NUMMODE_FLOWOFFHFO:
 			{
 				szMode=_T("NUMERIC_FLOWOFFHFO");
@@ -3805,6 +3835,9 @@ void CDataHandler::loadNumerics()
 				break;
 			case NUMMODE_FLOWOFFCONV:
 				pbufNumeric=&m_pbufNumericFLOWOFFCONV[iBlock];
+				break;
+			case NUMMODE_FLOWOFFCPAP:
+				pbufNumeric=&m_pbufNumericFLOWOFFCPAP[iBlock];
 				break;
 			case NUMMODE_FLOWOFFHFO:
 				pbufNumeric=&m_pbufNumericFLOWOFFHFO[iBlock];
@@ -3860,6 +3893,9 @@ void CDataHandler::loadNumerics()
 				case NUMMODE_FLOWOFFCONV:
 					m_iNumericFLOWOFFCONVcount++;
 					break;
+				case NUMMODE_FLOWOFFCPAP:
+					m_iNumericFLOWOFFCPAPcount++;
+					break;
 				case NUMMODE_FLOWOFFHFO:
 					m_iNumericFLOWOFFHFOcount++;
 					break;
@@ -3901,7 +3937,7 @@ void CDataHandler::readNumericINIvalues(NUMERICINI* pbufNumeric,BYTE iBlock,BYTE
 				pbufNumeric->VAL1=NUMT_INFO_TUBE;
 				pbufNumeric->SIZE1=NUMERICSIZE_1;
 			}
-			else if(pbufNumeric->eNumMode==NUMMODE_FLOWOFFCONV || pbufNumeric->eNumMode==NUMMODE_FLOWOFFHFO)
+			else if(pbufNumeric->eNumMode==NUMMODE_FLOWOFFCONV || pbufNumeric->eNumMode==NUMMODE_FLOWOFFCPAP || pbufNumeric->eNumMode==NUMMODE_FLOWOFFHFO)
 			{
 				pbufNumeric->VAL1=NUMT_INFO_FLOWOFF;
 				pbufNumeric->SIZE1=NUMERICSIZE_1;
@@ -17373,6 +17409,10 @@ SHORT CDataHandler::getStatus2()
 BYTE CDataHandler::getCountNumericFLOWOFFCONV()
 {
 	return m_iNumericFLOWOFFCONVcount;
+}
+BYTE CDataHandler::getCountNumericFLOWOFFCPAP()
+{
+	return m_iNumericFLOWOFFCPAPcount;
 }
 BYTE CDataHandler::getCountNumericFLOWOFFHFO()
 {

@@ -62,9 +62,14 @@ CThreadFOT::CThreadFOT()
 	m_iFOToriginDiffPEEP_PMAXVG=0;
 	m_iFOToriginPIPlowPEEPAlimitDiff=0;
 
-	m_eFOToriginHFIERatioPara=RIE_1_1;
+	/*m_eFOToriginHFIERatioPara=RIE_1_1;
 	m_iFOToriginHFFreqPara=0;
-	m_iFOToriginHFAMPLPara=0;
+	m_iFOToriginHFAMPLPara=0;*/
+
+	m_eFOToriginHFIERatioPara=getModel()->getDATAHANDLER()->PARADATA()->GetIERatioParaHFO();
+	m_iFOToriginHFFreqPara=getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara();
+	m_iFOToriginHFAMPLPara=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLPara();
+
 	m_iFOTPEEPStep=0;
 	m_icurFOTPIPMAXVG=0;
 	m_icurFOTPIP=0;

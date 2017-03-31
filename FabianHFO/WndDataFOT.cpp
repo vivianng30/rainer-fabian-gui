@@ -2460,9 +2460,10 @@ void CWndDataFOT::SetSTARTSTOPUnpressed()
 {
 	//m_pcBtnStartStopSeq->DrawDirectUp();
 	
-	if(AfxGetApp() != NULL)
-		AfxGetApp()->GetMainWnd()->PostMessage(WM_STOP_FOT);
+	/*if(AfxGetApp() != NULL)
+		AfxGetApp()->GetMainWnd()->PostMessage(WM_STOP_FOT);*/
 	
+	PostMessage(WM_REDRAW_WND);
 	//Draw(false);
 
 }
@@ -2746,6 +2747,12 @@ LRESULT CWndDataFOT::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 		}
 		break;
 	case WM_REDRAW_FOT_STATE:
+		{
+			Draw(false);
+			drawFOTmenubar();
+		}
+		break;
+	case WM_REDRAW_WND:
 		{
 			Draw(false);
 			drawFOTmenubar();

@@ -7,6 +7,13 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50123 Version 5.0.1.23
+ * @date 2017-03-31
+ * @verbatim
+	- numeric for CPAP / flows sensor off implemented
+	- FOT: cancel does not send values to PICs
+ @endverbatim
+ *
  * @subsection ver50122 Version 5.0.1.22
  * @date 2017-03-31
  * @verbatim

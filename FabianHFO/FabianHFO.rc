@@ -222,8 +222,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 5,0,1,22
- PRODUCTVERSION 5,0,1,22
+ FILEVERSION 5,0,1,23
+ PRODUCTVERSION 5,0,1,23
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -240,12 +240,12 @@ BEGIN
         BEGIN
             VALUE "Comments", "Alle Rechte vorbehalten."
             VALUE "CompanyName", "Acutronic Medical Systems AG"
-            VALUE "FileVersion", "5, 0, 1, 22"
+            VALUE "FileVersion", "5, 0, 1, 23"
             VALUE "InternalName", "FabianHFO.exe"
             VALUE "LegalCopyright", "(c) Acutronic Medical Systems AG. "
             VALUE "OriginalFilename", "FabianHFO.exe"
             VALUE "ProductName", " FabianHFO"
-            VALUE "ProductVersion", "5, 0, 1, 22"
+            VALUE "ProductVersion", "5, 0, 1, 23"
         END
     END
     BLOCK "VarFileInfo"

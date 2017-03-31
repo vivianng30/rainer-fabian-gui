@@ -50,6 +50,7 @@ CConfiguration::CConfiguration()
 	m_iCurNumericBlock_DUOPAP=0;
 	m_iCurNumericBlock_THERAPY=0;
 	m_iCurNumericBlock_FLOWOFFCONV=0;
+	m_iCurNumericBlock_FLOWOFFCPAP=0;
 	m_iCurNumericBlock_FLOWOFFHFO=0;
 	
 	m_iEthernetPort=DEFAULT_PORT;
@@ -452,6 +453,7 @@ void CConfiguration::Init()
 	m_iCurNumericBlock_DUOPAP=0;
 	m_iCurNumericBlock_THERAPY=0;
 	m_iCurNumericBlock_FLOWOFFCONV=0;
+	m_iCurNumericBlock_FLOWOFFCPAP=0;
 	m_iCurNumericBlock_FLOWOFFHFO=0;
 	
 	m_iEthernetPort=DEFAULT_PORT;
@@ -3770,6 +3772,14 @@ void CConfiguration::LoadSettings()
 		m_iCurNumericBlock_FLOWOFFCONV=FACTORY_NUMBLOCK;
 		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_FLOWOFFCONV_8,m_iCurNumericBlock_FLOWOFFCONV);
 	}
+
+	m_iCurNumericBlock_FLOWOFFCPAP=getModel()->getI2C()->ReadConfigByte(NUMBLOCK_FLOWOFFCPAP_8);
+	if(m_iCurNumericBlock_FLOWOFFCPAP<0 || m_iCurNumericBlock_FLOWOFFCPAP>2)
+	{
+		m_iCurNumericBlock_FLOWOFFCPAP=FACTORY_NUMBLOCK;
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_FLOWOFFCPAP_8,m_iCurNumericBlock_FLOWOFFCPAP);
+	}
+
 	//m_iCurNumericBlock_FLOWOFFHFO=0;
 	m_iCurNumericBlock_FLOWOFFHFO=getModel()->getI2C()->ReadConfigByte(NUMBLOCK_FLOWOFFHFO_8);
 	if(m_iCurNumericBlock_FLOWOFFHFO<0 || m_iCurNumericBlock_FLOWOFFHFO>2)
@@ -9572,6 +9582,7 @@ void CConfiguration::Serialize(CArchive& ar)
 		ar<<m_iCurNumericBlock_FLOWOFFCONV;
 		ar<<m_iCurNumericBlock_FLOWOFFHFO;
 		ar<<m_bUseNeoPed;
+		ar<<m_iCurNumericBlock_FLOWOFFCPAP;
 	}
 	else
 	{
@@ -10232,6 +10243,9 @@ void CConfiguration::Serialize(CArchive& ar)
 
 			ar>>m_bUseNeoPed;
 			setUseNeoPed(m_bUseNeoPed);
+
+			ar>>m_iCurNumericBlock_FLOWOFFCPAP;
+			setLastNumericFLOWOFFCPAP(m_iCurNumericBlock_FLOWOFFCPAP);
 		}
 	}
 }
@@ -10618,6 +10632,8 @@ BYTE CConfiguration::getLastNumericFLOWOFFCONV()
 	return m_iCurNumericBlock_FLOWOFFCONV;
 }
 
+
+
 /**********************************************************************************************//**
  * @fn	void CConfiguration::setLastNumericFLOWOFFCONV(BYTE num)
  *
@@ -10633,6 +10649,38 @@ void CConfiguration::setLastNumericFLOWOFFCONV(BYTE num)
 	m_iCurNumericBlock_FLOWOFFCONV=num;
 
 	getModel()->getI2C()->WriteConfigByte(NUMBLOCK_FLOWOFFCONV_8, num);
+}
+
+/**********************************************************************************************//**
+ * @fn	BYTE CConfiguration::getLastNumericFLOWOFFCPAP()
+ *
+ * @brief	Gets the last numeric flowoffcpap.
+ *
+ * @author	Rainer Kuehner
+ * @date	31.03.2017
+ *
+ * @return	The last numeric flowoffcpap.
+ **************************************************************************************************/
+BYTE CConfiguration::getLastNumericFLOWOFFCPAP()
+{
+	return m_iCurNumericBlock_FLOWOFFCPAP;
+}
+
+/**********************************************************************************************//**
+ * @fn	void CConfiguration::setLastNumericFLOWOFFCPAP(BYTE num)
+ *
+ * @brief	Sets last numeric flowoffcpap.
+ *
+ * @author	Rainer Kuehner
+ * @date	31.03.2017
+ *
+ * @param	num	Number of.
+ **************************************************************************************************/
+void CConfiguration::setLastNumericFLOWOFFCPAP(BYTE num)
+{
+	m_iCurNumericBlock_FLOWOFFCPAP=num;
+
+	getModel()->getI2C()->WriteConfigByte(NUMBLOCK_FLOWOFFCPAP_8, num);
 }
 
 /**********************************************************************************************//**

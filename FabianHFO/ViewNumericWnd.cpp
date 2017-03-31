@@ -382,6 +382,43 @@ void CViewNumericWnd::ShowWndNumFLOWOFFCONV()
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
+void CViewNumericWnd::ShowWndNumFLOWOFFCPAP()
+{
+	if(getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCPAP()>1)
+	{
+		CString szText=_T("");
+		szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
+		m_pcMenuNumeric->RefreshText(szText);
+		if(m_pcMenuNumeric)
+			m_pcMenuNumeric->ShowWindow(SW_SHOW);
+	}
+	else
+	{
+		if(m_pcMenuNumeric)
+			m_pcMenuNumeric->ShowWindow(SW_HIDE);
+	}
+
+	BYTE byBlock=getModel()->getDATAHANDLER()->m_pbufNumericFLOWOFFCPAP[m_iCurNumericBlock].SHOW;
+
+	EnterCriticalSection(&csNumWnd);
+	switch(byBlock)
+	{
+	case FALSE:
+		{
+
+		}
+		break;
+	case TRUE:
+		{
+			if(m_pcWndNumConfig==NULL)
+				createWndNumConfig(IDC_VIEW_NUM_FLOWOFFCPAP,&getModel()->getDATAHANDLER()->m_pbufNumericFLOWOFFCPAP[m_iCurNumericBlock]);
+			else
+				m_pcWndNumConfig->DrawData(true,true,true,true,false);
+		}
+		break;
+	}
+	LeaveCriticalSection(&csNumWnd);
+}
 void CViewNumericWnd::ShowWndNumFLOWOFFHFO()
 {
 	if(getModel()->getDATAHANDLER()->getCountNumericFLOWOFFHFO()>1)
@@ -885,6 +922,11 @@ void CViewNumericWnd::ShowNumWnd(eNumBlock eBlock,bool bChangeCurNumBlock)
 			ShowWndNumFLOWOFFCONV();
 		}
 		break;
+	case NUMB_FLOWOFFCPAP: 
+		{
+			ShowWndNumFLOWOFFCPAP();
+		}
+		break;
 	case NUMB_FLOWOFFHFO: 
 		{
 			ShowWndNumFLOWOFFHFO();
@@ -1063,14 +1105,14 @@ void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 		{
 			if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
 			{
-				eBlock=NUMB_FLOWOFFCONV;
-				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCONV();
-				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV();
+				eBlock=NUMB_FLOWOFFCPAP;
+				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCPAP();
+				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCPAP();
 
 				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
 				{
 					m_iCurNumericBlock=0;
-					getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
+					getModel()->getCONFIG()->setLastNumericFLOWOFFCPAP(m_iCurNumericBlock);
 				}
 			}
 			else
@@ -1759,6 +1801,7 @@ void CViewNumericWnd::redrawNumerics(bool bData, bool bFrames, bool bText, bool 
 	case IDC_VIEW_NUM_SIPPV:
 	case IDC_VIEW_NUM_IPPV:
 	case IDC_VIEW_NUM_FLOWOFFCONV:
+	case IDC_VIEW_NUM_FLOWOFFCPAP:
 	case IDC_VIEW_NUM_FLOWOFFHFO:
 		{
 			if(m_pcWndNumConfig)
@@ -1938,6 +1981,19 @@ void CViewNumericWnd::BnMenuNUMERIC()
 				m_iCurNumericBlock=0;
 			}
 			getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
+			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
+			m_pcMenuNumeric->RefreshText(szText);
+			bChangeCurNumBlock=true;
+		}
+		break;
+	case IDC_VIEW_NUM_FLOWOFFCPAP:
+		{
+			m_iCurNumericBlock++;
+			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCPAP())
+			{
+				m_iCurNumericBlock=0;
+			}
+			getModel()->getCONFIG()->setLastNumericFLOWOFFCPAP(m_iCurNumericBlock);
 			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
 			m_pcMenuNumeric->RefreshText(szText);
 			bChangeCurNumBlock=true;
