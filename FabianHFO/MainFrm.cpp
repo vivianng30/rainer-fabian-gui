@@ -5791,24 +5791,6 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	return CFrameWnd::DefWindowProc(message, wParam, lParam);
 }
 
-// **************************************************************************
-//
-// DefWindowProc
-//
-// **************************************************************************
-//LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam )
-//{
-//	switch(message)
-//	{
-//	default:
-//		{
-//		}
-//		break;
-//	}
-//	return CFrameWnd::DefWindowProc(message, wParam, lParam);
-//}
-
-
 
 //void CMainFrame::SendScreenShot()
 //{
