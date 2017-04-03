@@ -7,6 +7,13 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50124 Version 5.0.1.24
+ * @date 2017-04-03
+ * @verbatim
+	- test version Basel: MAXRANGE_PEDIATRIC_NMODEMAX and MAXRANGE_NEONATAL_NMODEMAX changed to 30 mbar
+	- PSV criteria changed to 1 ... 85 %
+ @endverbatim
+ *
  * @subsection ver50123 Version 5.0.1.23
  * @date 2017-03-31
  * @verbatim

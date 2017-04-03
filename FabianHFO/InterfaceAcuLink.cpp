@@ -236,7 +236,7 @@ void CInterfaceAcuLink::fillMeasurementData()
 			setMeasurementData(ALINK_MSMNT_RSBI,ALINK_NOTVALID);
 			setMeasurementData(ALINK_MSMNT_TAU,((getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_DYNCOMPL)/100)*(getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_RESISTANCE)/10))/10);
 			
-			if(bCO2module
+			if(bCO2module)
 			{
 				if(getModel()->getETCO2()->isETCO2ValueValid())
 					setMeasurementData(ALINK_MSMNT_ETCO2,getModel()->getDATAHANDLER()->getAVGMessureDataETCO2());

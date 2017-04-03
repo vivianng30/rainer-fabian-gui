@@ -3812,8 +3812,8 @@ typedef struct tagfVALUE
 #define MIN_TIME_PMINDELAY				1//
 #define STEP_TIME_PMINDELAY				1//
 
-#define MAX_ABORTCRITERION_PSV			35//
-#define MIN_ABORTCRITERION_PSV			5//
+#define MAX_ABORTCRITERION_PSV			85//
+#define MIN_ABORTCRITERION_PSV			1//
 #define STEP_ABORTCRITERION_PSV			1//
 
 
