@@ -1422,6 +1422,7 @@ void CWndServiceLicensing::Draw()
 			cs = _T("- VL active -");
 			DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 		}
+		m_pcDelVlimit->ShowWindow(SW_HIDE);
 	}
 
 
@@ -1480,7 +1481,6 @@ void CWndServiceLicensing::Draw()
 			rc.bottom = 500;
 			DrawText(hdcMem,m_szEncryptedFormattedLUNGRECKey,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 		}
-		
 
 		m_pcDelLungRec->ShowWindow(SW_SHOW);
 	}
@@ -1509,6 +1509,7 @@ void CWndServiceLicensing::Draw()
 			cs = _T("- LungRec active -");
 			DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 		}
+		m_pcDelLungRec->ShowWindow(SW_HIDE);
 	}
 
 

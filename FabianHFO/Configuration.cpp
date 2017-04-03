@@ -9318,26 +9318,11 @@ void CConfiguration::setOperatingMinutesHFO(DWORD min, bool bFlushReg)
 }
 
 
-void CConfiguration::Serialize(CArchive& ar)
+void CConfiguration::SerializeFile(CArchive& ar)
 {
 	CObject::Serialize(ar);
 	if(ar.IsStoring())
 	{
-		/*WORD size = sizeof(m_dtTimestamp);
-		size += sizeof(m_wBufCount);
-		size += sizeof(m_wBuffer);*/
-
-		//ar<<m_dtTimestamp;
-		//ar<<m_wBufCount;
-		//
-		//for(int i=0;i<SERIALZEBUFFER;i++)
-		//{
-		//	ar<<m_wBuffer[i];
-		//	//m_wBuffer[i]=0;
-		//}
-
-		//m_wBufCount=0;
-
 		ar<<m_iConfigVersion;
 		ar<<m_iEthernetPort;
 		ar<<m_iPDMSProtocol;
@@ -9570,12 +9555,13 @@ void CConfiguration::Serialize(CArchive& ar)
 		ar<<m_iFOThfo_FREQ;
 		ar<<m_iFOThfo_STEPS;
 
-		ar<<(int)m_eTriggerTypeCONV;
-		ar<<(int)m_eTriggerTypeNMODE;
+		ar<<(BYTE)m_eTriggerTypeCONV;
+		ar<<(BYTE)m_eTriggerTypeNMODE;
 		ar<<m_iParaDataTriggerNMODE;
 
-		//##################### m_iConfigVersion 3005
-		ar<<(int)m_eLeakCompOff;
+		////##################### m_iConfigVersion 3005
+		int iTest=(BYTE)m_eLeakCompOff;
+		ar<<(BYTE)m_eLeakCompOff;
 		ar<<m_iCurNumericBlock_NCPAP;
 		ar<<m_iCurNumericBlock_DUOPAP;
 		ar<<m_iCurNumericBlock_THERAPY;
@@ -10175,7 +10161,6 @@ void CConfiguration::Serialize(CArchive& ar)
 			ar>>m_iAlarmlimitPIPmin;
 			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PIPMIN_16, m_iAlarmlimitPIPmin);
 
-
 			ar>>m_iFOTconv_PEEPSTART;
 			getModel()->getI2C()->WriteConfigWord(PARA_FOT_CONV_PEEPSTART_16,m_iFOTconv_PEEPSTART);
 			ar>>m_iFOTconv_PEEPEND;
@@ -10198,7 +10183,7 @@ void CConfiguration::Serialize(CArchive& ar)
 			ar>>eTriggerTypeCONV;
 			m_eTriggerTypeCONV=(eTriggereType)eTriggerTypeCONV;
 			setTriggerOptionCONV(m_eTriggerTypeCONV);
-
+			
 			BYTE eTriggerTypeNMODE=0;
 			ar>>eTriggerTypeNMODE;
 			m_eTriggerTypeNMODE=(eTriggereType)eTriggerTypeNMODE;
@@ -10215,7 +10200,6 @@ void CConfiguration::Serialize(CArchive& ar)
 
 			ar>>m_iParaDataTriggerNMODE;
 			getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NMODE_16, m_iParaDataTriggerNMODE);
-
 		}
 
 		//##################### m_iConfigVersion 3005
@@ -10249,6 +10233,7 @@ void CConfiguration::Serialize(CArchive& ar)
 		}
 	}
 }
+
 
 
 //UINT CConfiguration::getMAXRANGE_NEONATAL_HFAMPL_CYLSPRING()

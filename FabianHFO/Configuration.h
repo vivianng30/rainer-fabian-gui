@@ -9,7 +9,8 @@ class CMVModel;
 class CConfiguration: public CObject
 {
 public:
-	virtual void Serialize(CArchive& ar);
+	virtual void SerializeFile(CArchive& ar);
+	//virtual void SerializeFile2(CArchive& ar);
 
 	static CConfiguration* GetInstance();
 	static void DestroyInstance();

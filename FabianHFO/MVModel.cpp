@@ -6946,19 +6946,33 @@ bool CMVModel::SaveHospitalSettings()
 	//load from xml-file from ffsdiks to fram and reload ( config ...)
 	//config
 
-	CStringW szFile=_T("\\FFSDISK\\hospital.dat");
-	CFile archivDatei;
-	if(archivDatei.Open(szFile,CFile::modeCreate | CFile::modeWrite)!=0)
+	CStringW szFile1=_T("\\FFSDISK\\hospital.dat");
+	CFile archivDatei1;
+	if(archivDatei1.Open(szFile1,CFile::modeCreate | CFile::modeWrite)!=0)
 	{
-		CArchive objektArchiv(&archivDatei, CArchive::store);
+		CArchive objektArchiv(&archivDatei1, CArchive::store);
 
-		getCONFIG()->Serialize(objektArchiv);
+		getCONFIG()->SerializeFile(objektArchiv);
 
 		objektArchiv.Close();
-		archivDatei.Close();
+		archivDatei1.Close();
 	}
 	else
 		return false;
+
+	/*CStringW szFile2=_T("\\FFSDISK\\hospital2.dat");
+	CFile archivDatei2;
+	if(archivDatei2.Open(szFile2,CFile::modeCreate | CFile::modeWrite)!=0)
+	{
+		CArchive objektArchiv(&archivDatei2, CArchive::store);
+
+		getCONFIG()->SerializeFile2(objektArchiv);
+
+		objektArchiv.Close();
+		archivDatei2.Close();
+	}
+	else
+		return false;*/
 
 
 
@@ -6973,29 +6987,27 @@ bool CMVModel::LoadHospitalSettings()
 	//load from xml-file from ffsdiks to fram and reload ( config ...)
 	//config
 
-	CStringW szFile=_T("\\FFSDISK\\hospital.dat");
-	CFile archivDatei;
-	if(archivDatei.Open(szFile,CFile::modeRead)!=0)
+	CStringW szFile1=_T("\\FFSDISK\\hospital.dat");
+	CFile archivDatei1;
+	if(archivDatei1.Open(szFile1,CFile::modeRead)!=0)
 	{
-		CArchive objektArchiv(&archivDatei, CArchive::load);
+		CArchive objektArchiv(&archivDatei1, CArchive::load);
 
 		try
 		{
-			getCONFIG()->Serialize(objektArchiv);
+			getCONFIG()->SerializeFile(objektArchiv);
 
 			objektArchiv.Close();
-			archivDatei.Close();
+			archivDatei1.Close();
 		}
 		catch (...)
 		{
 			objektArchiv.Close();
-			archivDatei.Close();
-			//CFabianHFOApp::ReportException(_T("EXCEPTION: CInterfaceI2C::LoadHospitalSettings"));
-			//AfxMessageBox( _T("EXCEPTION: CMVModel::VentModeChanged()()") );
-
-			if(CTlsFile::Exists(szFile))
+			archivDatei1.Close();
+			
+			if(CTlsFile::Exists(szFile1))
 			{
-				CTlsFile::Delete(szFile);
+				CTlsFile::Delete(szFile1);
 			}
 
 			if(AfxGetApp() != NULL)
@@ -7003,11 +7015,46 @@ bool CMVModel::LoadHospitalSettings()
 
 		}
 
-
 		return true;
 	}
 	else
 		return false;
+
+	//CStringW szFile2=_T("\\FFSDISK\\hospital2.dat");
+	//CFile archivDatei2;
+	//if(archivDatei2.Open(szFile2,CFile::modeRead)!=0)
+	//{
+	//	CArchive objektArchiv(&archivDatei2, CArchive::load);
+
+	//	try
+	//	{
+	//		getCONFIG()->SerializeFile2(objektArchiv);
+
+	//		objektArchiv.Close();
+	//		archivDatei2.Close();
+	//	}
+	//	catch (...)
+	//	{
+	//		objektArchiv.Close();
+	//		archivDatei2.Close();
+	//		//CFabianHFOApp::ReportException(_T("EXCEPTION: CInterfaceI2C::LoadHospitalSettings"));
+	//		//AfxMessageBox( _T("EXCEPTION: CMVModel::VentModeChanged()()") );
+
+	//		if(CTlsFile::Exists(szFile2))
+	//		{
+	//			CTlsFile::Delete(szFile2);
+	//		}
+
+	//		if(AfxGetApp() != NULL)
+	//			AfxGetApp()->GetMainWnd()->PostMessage(WM_LOADHOSPITALSETTINGS_FAIL);
+
+	//	}
+
+
+	//	return true;
+	//}
+	//else
+	//	return false;
 }
 
 

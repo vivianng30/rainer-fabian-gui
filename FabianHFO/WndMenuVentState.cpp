@@ -310,8 +310,18 @@ void CWndMenuVentState::Init()
 	m_pcMenuHFO=new CPresetMenuBtn(btn,COLOR_TXTBTNUP);
 	m_pcMenuHFO->Create(this,g_hf14AcuMed,0);
 	m_pcMenuHFO->SetText(getModel()->GetLanguageString(IDS_HFO));
-	m_pcMenuHFO->ShowWindow(SW_HIDE);
-	m_plMenuBtn.AddTail(m_pcMenuHFO);
+
+	if(		false==getModel()->getCONFIG()->isBiasFlowActive()
+		&&	false==getModel()->getDATAHANDLER()->isHFOLicenseAvailable())
+	{
+		m_pcMenuHFO->ShowWindow(SW_HIDE);
+	}
+	else
+	{
+		m_pcMenuHFO->ShowWindow(SW_HIDE);
+		m_plMenuBtn.AddTail(m_pcMenuHFO);
+	}
+	
 
 	btn.wID					= IDC_BTN_MENU_THERAPIE;	
 	btn.poPosition.x		= 471;
@@ -412,7 +422,13 @@ void CWndMenuVentState::ShowMenuBtn()
 		m_pcMenuPSV->ShowWindow(SW_SHOW);
 
 	//HFO
-	if(true==getModel()->getDATAHANDLER()->isHFOLicenseAvailable())
+	if(		false==getModel()->getCONFIG()->isBiasFlowActive()
+		&&	false==getModel()->getDATAHANDLER()->isHFOLicenseAvailable())
+	{
+		if(m_pcMenuHFO)
+			m_pcMenuHFO->ShowWindow(SW_HIDE);
+	}
+	else if(true==getModel()->getDATAHANDLER()->isHFOLicenseAvailable())
 	{
 		if(m_pcMenuHFO)
 			m_pcMenuHFO->EnableWindow(TRUE);

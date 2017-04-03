@@ -5637,8 +5637,12 @@ void CDiagramm::CheckAutoScaleY()
 		return;
 	}
 
-	if(m_iDiagrammType==PRESSURE_GRAPH || m_iDiagrammType==PRESSURE_HF_GRAPH)
-		return;
+	if(false==getModel()->getVMODEHANDLER()->activeModeIsTHERAPY())
+	{
+		if(m_iDiagrammType==PRESSURE_GRAPH || m_iDiagrammType==PRESSURE_HF_GRAPH)
+			return;
+	}
+	
 
 	if(m_iDiagrammType==FOT_LOOP)
 	{

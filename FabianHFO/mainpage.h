@@ -12,6 +12,10 @@
  * @verbatim
 	- numeric for CPAP / flows sensor off implemented
 	- FOT: cancel does not send values to PICs
+	- HFO light: if no BisasFlow and no HFIlicense -> HFO button not displayed
+	- hospital settings work correct (ITEM-45)
+	- "delete" buttons of "volume limit" and "lung recruitment" licenses are hidden after deleting these licenses.
+	- autoscale in O2-Therapy works now (ITEM-47)
  @endverbatim
  *
  * @subsection ver50122 Version 5.0.1.22
