@@ -16,6 +16,7 @@
 	- hospital settings work correct (ITEM-45)
 	- "delete" buttons of "volume limit" and "lung recruitment" licenses are hidden after deleting these licenses.
 	- autoscale in O2-Therapy works now (ITEM-47)
+	- measurements acuLink checked regarding valid values
  @endverbatim
  *
  * @subsection ver50122 Version 5.0.1.22

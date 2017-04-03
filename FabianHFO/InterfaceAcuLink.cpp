@@ -130,14 +130,8 @@ void CInterfaceAcuLink::fillMeasurementData()
 			setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_MIN_VOL));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
 			setMeasurementData(ALINK_MSMNT_TVE,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_TVE));			//IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
 			setMeasurementData(ALINK_MSMNT_LEAK,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_LEAK));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
-			if(bCO2value)
-			{
-				setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FREQETCO2));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			}
-			else
-			{
-				setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FREQ));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			}
+			setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FREQ));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
+
 			if(bCO2module && getModel()->getETCO2()!=NULL)
 			{
 				if(getModel()->getETCO2()->isETCO2ValueValid())
@@ -215,14 +209,8 @@ void CInterfaceAcuLink::fillMeasurementData()
 			setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_MIN_VOL));		//IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
 			setMeasurementData(ALINK_MSMNT_TVE,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE));			//IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
 			setMeasurementData(ALINK_MSMNT_LEAK,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_LEAK));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
-			if(bCO2value)
-			{
-				setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQETCO2));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			}
-			else
-			{
-				setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQ));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			}
+			setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQ));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
+
 			if(bCO2module && getModel()->getETCO2()!=NULL)
 			{
 				if(getModel()->getETCO2()->isETCO2ValueValid())
@@ -304,14 +292,8 @@ void CInterfaceAcuLink::fillMeasurementData()
 			setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_MIN_VOL));		//IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
 			setMeasurementData(ALINK_MSMNT_TVE,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE));			//IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
 			setMeasurementData(ALINK_MSMNT_LEAK,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_LEAK));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
-			if(bCO2value)
-			{
-				setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQETCO2));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			}
-			else
-			{
-				setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQ));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			}
+			setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQ));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
+		
 			if(bCO2module && getModel()->getETCO2()!=NULL)
 			{
 				if(getModel()->getETCO2()->isETCO2ValueValid())
@@ -400,14 +382,8 @@ void CInterfaceAcuLink::fillMeasurementData()
 			setMeasurementData(ALINK_MSMNT_TVE_RESP,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE_RESP));	//SIMV/ SIMV+PSV 
 			setMeasurementData(ALINK_MSMNT_TVE_PATIENT,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE_PATIENT)); //SIMV/ SIMV+PSV 
 			setMeasurementData(ALINK_MSMNT_LEAK,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_LEAK));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
-			if(bCO2value)
-			{
-				setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQETCO2));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			}
-			else
-			{
-				setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQ));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			}
+			setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQ));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
+			
 			if(bCO2module && getModel()->getETCO2()!=NULL)
 			{
 				if(getModel()->getETCO2()->isETCO2ValueValid())
@@ -494,14 +470,8 @@ void CInterfaceAcuLink::fillMeasurementData()
 			setMeasurementData(ALINK_MSMNT_TVE_RESP,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE_RESP));	//SIMV/ SIMV+PSV 
 			setMeasurementData(ALINK_MSMNT_TVE_PATIENT,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE_PATIENT)); //SIMV/ SIMV+PSV 
 			setMeasurementData(ALINK_MSMNT_LEAK,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_LEAK));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
-			if(bCO2value)
-			{
-				setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQETCO2));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			}
-			else
-			{
-				setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQ));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			}
+			setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQ));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
+			
 			if(bCO2module && getModel()->getETCO2()!=NULL)
 			{
 				if(getModel()->getETCO2()->isETCO2ValueValid())
@@ -585,14 +555,9 @@ void CInterfaceAcuLink::fillMeasurementData()
 			setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_MIN_VOL));		//IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
 			setMeasurementData(ALINK_MSMNT_TVE,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE));			//IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
 			setMeasurementData(ALINK_MSMNT_LEAK,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_LEAK));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
-			if(bCO2value)
-			{
-				setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQETCO2));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			}
-			else
-			{
-				setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQ));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			}
+			setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQ));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
+			setMeasurementData(ALINK_MSMNT_DEMAND_FLOW,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_DEMAND_FLOW));
+
 			if(bCO2module && getModel()->getETCO2()!=NULL)
 			{
 				if(getModel()->getETCO2()->isETCO2ValueValid())
@@ -605,8 +570,6 @@ void CInterfaceAcuLink::fillMeasurementData()
 				setMeasurementData(ALINK_MSMNT_ETCO2,ALINK_NOTVALID);
 			}
 			setMeasurementData(ALINK_MSMNT_TVI,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVI));			//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
-
-			//setMeasurementData(ALINK_MSMNT_DEMAND_FLOW,xxx);
 
 			setMeasurementData(ALINK_MSMNT_HFO_AMP,ALINK_NOTVALID);		//HFO
 			setMeasurementData(ALINK_MSMNT_TVE_HFO,ALINK_NOTVALID);		//HFO
@@ -666,14 +629,10 @@ void CInterfaceAcuLink::fillMeasurementData()
 			setMeasurementData(ALINK_MSMNT_P_PEAK,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_P_PEAK));		//NUMT_PPEAK	//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
 			setMeasurementData(ALINK_MSMNT_P_MEAN,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_P_MEAN));		//IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
 			setMeasurementData(ALINK_MSMNT_PEEP,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_PEEP));		//IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			if(bCO2value)
-			{
-				setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQETCO2));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			}
-			else
-			{
-				setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQ));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			}
+			setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQ));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
+			setMeasurementData(ALINK_MSMNT_IFLOW,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_IFLOW));
+			setMeasurementData(ALINK_MSMNT_EFLOW,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_EFLOW));
+
 			if(bCO2module && getModel()->getETCO2()!=NULL)
 			{
 				if(getModel()->getETCO2()->isETCO2ValueValid())
@@ -685,7 +644,7 @@ void CInterfaceAcuLink::fillMeasurementData()
 			{
 				setMeasurementData(ALINK_MSMNT_ETCO2,ALINK_NOTVALID);
 			}
-			
+			setMeasurementData(ALINK_MSMNT_TRIGGER,ALINK_NOTVALID);		//SIPPV /SIMV / SIMV+PSV / PSV 
 			setMeasurementData(ALINK_MSMNT_DYNCOMPL,ALINK_NOTVALID);	//IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
 			setMeasurementData(ALINK_MSMNT_C20C,ALINK_NOTVALID);		//IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
 			setMeasurementData(ALINK_MSMNT_RESISTANCE,ALINK_NOTVALID);	//IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
@@ -697,7 +656,6 @@ void CInterfaceAcuLink::fillMeasurementData()
 			setMeasurementData(ALINK_MSMNT_TVE_HFO,ALINK_NOTVALID);		//HFO
 			setMeasurementData(ALINK_MSMNT_DCO2,ALINK_NOTVALID);		//HFO
 			setMeasurementData(ALINK_MSMNT_HFO_FREQ,ALINK_NOTVALID);	//HFO
-			setMeasurementData(ALINK_MSMNT_TRIGGER,ALINK_NOTVALID);		//SIPPV /SIMV / SIMV+PSV / PSV 
 			setMeasurementData(ALINK_MSMNT_TVE_RESP,ALINK_NOTVALID);	//SIMV/ SIMV+PSV 
 			setMeasurementData(ALINK_MSMNT_TVE_PATIENT,ALINK_NOTVALID); //SIMV/ SIMV+PSV 
 			setMeasurementData(ALINK_MSMNT_ANTEIL_RESP,ALINK_NOTVALID);	//SIMV / SIMV+PSV 
@@ -738,14 +696,10 @@ void CInterfaceAcuLink::fillMeasurementData()
 	case VM_NCPAP:
 		{
 			setMeasurementData(ALINK_MSMNT_P_MEAN,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_P_MEAN));		//IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
-			if(bCO2value)
-			{
-				setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQETCO2));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			}
-			else
-			{
-				setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQ));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			}
+			setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQ));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
+			setMeasurementData(ALINK_MSMNT_IFLOW,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_IFLOW));
+			setMeasurementData(ALINK_MSMNT_EFLOW,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_EFLOW));
+
 			if(bCO2module && getModel()->getETCO2()!=NULL)
 			{
 				if(getModel()->getETCO2()->isETCO2ValueValid())
@@ -812,14 +766,7 @@ void CInterfaceAcuLink::fillMeasurementData()
 	case VM_THERAPIE:
 		{
 			setMeasurementData(ALINK_MSMNT_P_MEAN,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_P_MEAN));		//IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
-			if(bCO2value)
-			{
-				setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQETCO2));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			}
-			else
-			{
-				setMeasurementData(ALINK_MSMNT_FREQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQ));		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-			}
+			
 			if(bCO2module && getModel()->getETCO2()!=NULL)
 			{
 				if(getModel()->getETCO2()->isETCO2ValueValid())
@@ -832,6 +779,7 @@ void CInterfaceAcuLink::fillMeasurementData()
 				setMeasurementData(ALINK_MSMNT_ETCO2,ALINK_NOTVALID);
 			}
 
+			setMeasurementData(ALINK_MSMNT_FREQ,ALINK_NOTVALID);
 			setMeasurementData(ALINK_MSMNT_P_PEAK,ALINK_NOTVALID);		//IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
 			setMeasurementData(ALINK_MSMNT_PEEP,ALINK_NOTVALID);		//IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
 			setMeasurementData(ALINK_MSMNT_DYNCOMPL,ALINK_NOTVALID);	//IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
