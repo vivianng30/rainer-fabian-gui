@@ -172,25 +172,48 @@ void CInterfaceSPO2::DestroyInstance()
 // **************************************************************************
 void CInterfaceSPO2::startSPO2initThread(void)
 {
-	//###########initialization thread####################
-	m_bDoSPO2InitThread=true;
-
-	if(m_pcwtSPO2InitThread!=NULL)
+	try
 	{
-		delete m_pcwtSPO2InitThread;
-		m_pcwtSPO2InitThread=NULL;
+		//###########initialization thread####################
+		m_bDoSPO2InitThread=true;
 
-		if(m_hThreadSPO2Init!=INVALID_HANDLE_VALUE)
+		if(m_pcwtSPO2InitThread!=NULL)
 		{
-			CloseHandle(m_hThreadSPO2Init);
-			m_hThreadSPO2Init=INVALID_HANDLE_VALUE;
-		}
-	}
+			delete m_pcwtSPO2InitThread;
+			m_pcwtSPO2InitThread=NULL;
 
-	m_pcwtSPO2InitThread=AfxBeginThread(CSPO2InitThread,this,THREAD_PRIORITY_NORMAL,0,CREATE_SUSPENDED);
-	m_hThreadSPO2Init=m_pcwtSPO2InitThread->m_hThread;
-	m_pcwtSPO2InitThread->m_bAutoDelete = FALSE; 
-	m_pcwtSPO2InitThread->ResumeThread();
+			if(m_hThreadSPO2Init!=INVALID_HANDLE_VALUE)
+			{
+				CloseHandle(m_hThreadSPO2Init);
+				m_hThreadSPO2Init=INVALID_HANDLE_VALUE;
+			}
+		}
+
+		m_pcwtSPO2InitThread=AfxBeginThread(CSPO2InitThread,this,THREAD_PRIORITY_NORMAL,0,CREATE_SUSPENDED);
+		m_hThreadSPO2Init=m_pcwtSPO2InitThread->m_hThread;
+		m_pcwtSPO2InitThread->m_bAutoDelete = FALSE; 
+		m_pcwtSPO2InitThread->ResumeThread();
+	}
+	catch (...)
+	{
+		theApp.getLog()->WriteLine(_T("#THR:SPO2 startSPO2initThread"));
+
+		if(m_pcwtSPO2InitThread!=NULL)
+		{
+			delete m_pcwtSPO2InitThread;
+			m_pcwtSPO2InitThread=NULL;
+
+			if(m_hThreadSPO2Init!=INVALID_HANDLE_VALUE)
+			{
+				CloseHandle(m_hThreadSPO2Init);
+				m_hThreadSPO2Init=INVALID_HANDLE_VALUE;
+			}
+		}
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_REINIT_SPO2_MODULE);
+	}
+	
 }
 
 // **************************************************************************

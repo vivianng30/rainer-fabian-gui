@@ -45,7 +45,19 @@ protected:
 	CInterfaceAcuLink(void);
 	virtual ~CInterfaceAcuLink(void);
 
+	bool isCO2active();
+	bool isSPO2active();
 	void fillMeasurementData();
+	void sendMeasurementDataIPPV();
+	void sendMeasurementDataSIPPV();
+	void sendMeasurementDataPSV();
+	void sendMeasurementDataSIMV();
+	void sendMeasurementDataSIMVPSV();
+	void sendMeasurementDataCPAP();
+	void sendMeasurementDataDUOPAP();
+	void sendMeasurementDataNCPAP();
+	void sendMeasurementDataTHERAPIE();
+	void sendMeasurementDataHFO();
 
 protected:
 
