@@ -6596,14 +6596,20 @@ void CConfiguration::SetCurPressureRiseCtrl(eCurveForm form)
 	{
 	case CURVE_IFLOW:
 		{
-			getModel()->getAcuLink()->setParaData(ALINK_SETT_INSP_FLOW,iIFlow);
+			if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_INSP_FLOW,iIFlow/10);
+			else
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_INSP_FLOW,iIFlow);
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_RISETIME,ALINK_NOTVALID);
 		}
 		break;
 	case CURVE_LINEAR:
 		{
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_INSP_FLOW,ALINK_NOTVALID);
-			getModel()->getAcuLink()->setParaData(ALINK_SETT_RISETIME,iRiseTime);
+			if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_RISETIME,iRiseTime/10);
+			else
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_RISETIME,iRiseTime);
 		}
 		break;
 	case CURVE_AUTOFLOW:

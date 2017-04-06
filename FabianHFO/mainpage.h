@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50125 Version 5.0.1.25
+ * @date 2017-04-05
+ * @verbatim
+	- CPAP and SIMV fixed regarding FS->off (ITEM-55)
+ @endverbatim
+ *
  * @subsection ver50124 Version 5.0.1.24
  * @date 2017-04-03
  * @verbatim

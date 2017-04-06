@@ -105,7 +105,7 @@ CMVModel::CMVModel(void)
 	m_szBuildVersion = _T("9.0.0.0");
 #else
 	m_szVersion = _T("5.0.1");
-	m_szBuildVersion = _T("5.0.1.24");
+	m_szBuildVersion = _T("5.0.1.25");
 #endif
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO"),true);
@@ -1922,12 +1922,6 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 						else
 						{
 							getDATAHANDLER()->checkTriggerTubeDependency();
-							/*if(getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
-							{
-								getDATAHANDLER()->SetPrevTriggerOptionCONV(getDATAHANDLER()->getTriggerOptionCONV());
-								getDATAHANDLER()->setTriggerOptionCONV(TRIGGER_PRESSURE);
-							}
-							Send_MODE_OPTION1();*/
 						}
 					}
 				}
@@ -1937,12 +1931,6 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
 					{
 						getDATAHANDLER()->checkTriggerTubeDependency();
-						/*if(getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
-						{
-							getDATAHANDLER()->SetPrevTriggerOptionCONV(getDATAHANDLER()->getTriggerOptionCONV());
-							getDATAHANDLER()->setTriggerOptionCONV(TRIGGER_PRESSURE);
-						}
-						Send_MODE_OPTION1();*/
 					}
 				}
 				break;
@@ -1951,12 +1939,14 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
 					{
 						getDATAHANDLER()->checkTriggerTubeDependency();
-						/*if(getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
-						{
-							getDATAHANDLER()->SetPrevTriggerOptionCONV(getDATAHANDLER()->getTriggerOptionCONV());
-							getDATAHANDLER()->setTriggerOptionCONV(TRIGGER_PRESSURE);
-						}
-						Send_MODE_OPTION1();*/
+					}
+				}
+				break;
+			case VM_CPAP:
+				{
+					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
+					{
+						getDATAHANDLER()->checkTriggerTubeDependency();
 					}
 				}
 				break;
@@ -6156,14 +6146,20 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 		{
 		case CURVE_IFLOW:
 			{
-				getAcuLink()->setParaData(ALINK_SETT_INSP_FLOW,iIFlow);
+				if(getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
+					getAcuLink()->setParaData(ALINK_SETT_INSP_FLOW,iIFlow/10);
+				else
+					getAcuLink()->setParaData(ALINK_SETT_INSP_FLOW,iIFlow);
 				getAcuLink()->setParaData(ALINK_SETT_RISETIME,ALINK_NOTVALID);
 			}
 			break;
 		case CURVE_LINEAR:
 			{
 				getAcuLink()->setParaData(ALINK_SETT_INSP_FLOW,ALINK_NOTVALID);
-				getAcuLink()->setParaData(ALINK_SETT_RISETIME,iRisetime);
+				if(getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
+					getAcuLink()->setParaData(ALINK_SETT_RISETIME,iRisetime/10);
+				else
+					getAcuLink()->setParaData(ALINK_SETT_RISETIME,iRisetime);
 			}
 			break;
 		case CURVE_AUTOFLOW:
@@ -6440,7 +6436,10 @@ void CMVModel::Send_PARA_RISETIME(int iVal, bool bSerial, bool bSPI)
 			break;
 		case CURVE_LINEAR:
 			{
-				getAcuLink()->setParaData(ALINK_SETT_RISETIME,iVal);
+				if(getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
+					getAcuLink()->setParaData(ALINK_SETT_RISETIME,iVal/10);
+				else
+					getAcuLink()->setParaData(ALINK_SETT_RISETIME,iVal);
 			}
 			break;
 		case CURVE_AUTOFLOW:
@@ -6578,7 +6577,10 @@ void CMVModel::Send_PARA_INSP_FLOW(int iVal, bool bSerial, bool bSPI)
 		{
 		case CURVE_IFLOW:
 			{
-				getAcuLink()->setParaData(ALINK_SETT_INSP_FLOW,iVal);
+				if(getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
+					getAcuLink()->setParaData(ALINK_SETT_INSP_FLOW,iVal/10);
+				else
+					getAcuLink()->setParaData(ALINK_SETT_INSP_FLOW,iVal);
 			}
 			break;
 		case CURVE_LINEAR:

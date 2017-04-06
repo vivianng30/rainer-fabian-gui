@@ -1035,7 +1035,7 @@ bool CVentModeHandler::activeModeIsSIPPV()
 
 bool CVentModeHandler::activeModeIsSIMV()
 {
-	if(getCurrentActiveMode()==VM_SIPPV)
+	if(getCurrentActiveMode()==VM_SIMV)
 		return true;
 	else
 		return false;

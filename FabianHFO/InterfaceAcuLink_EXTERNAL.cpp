@@ -379,7 +379,7 @@ int CInterfaceAcuLink_EXTERNAL::setLinkType(int iLinkType)
 
 int CInterfaceAcuLink_EXTERNAL::setMeasurementData(int idx, int iValue)
 {
-	DEBUGMSG(TRUE, (TEXT("%d|%d\r\n"),idx, iValue));
+	//DEBUGMSG(TRUE, (TEXT("%d|%d\r\n"),idx, iValue));
 	if(pSetMeasurementData)
 		((*pSetMeasurementData)(idx, iValue));
 

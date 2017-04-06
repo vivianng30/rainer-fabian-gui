@@ -197,38 +197,38 @@
 *		Vte / kg, Resolution: 1 [0==off, 300-30000g]
  **/
 #define ALINK_MSMNT_P_PEAK			0	//Peak Pressure, Resolution: 0.1 (0 – 150 mbar bzw cmH2O) NV
-#define ALINK_MSMNT_P_MEAN			1	//Mean Pressure, Resolution: 0.1 (-50.0 – 150.0 mbar bzw cmH2O)	IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
-#define ALINK_MSMNT_PEEP			2	//PEEP, Resolution: 0.1 (-50.0 – 150.0 mbar bzw cmH2O)	IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-#define ALINK_MSMNT_T_INSP_PSV		3	//Inspiratory Time PSV, Resolution: 0.001 (0.00 – 5.00 sec)				SIMV+PSV /PSV 
-#define ALINK_MSMNT_DYNCOMPL		4	//Dynamic Compliance, Resolution for acuLink: 0.1 (0.0 – 500.0 ml/mbar), Resolution from PIC: 0.01 !!!	IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
-#define ALINK_MSMNT_C20C			5	//Overextension Index C20/C , Resolution: 0.1 (0.0 – 50.0)						IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
-#define ALINK_MSMNT_RESISTANCE		6	//Ventilatory Resistance , Resolution: 0.1 (0.0 – 500.0 mbar/lps)			IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
-#define ALINK_MSMNT_MIN_VOL			7	//Minute Volume , Resolution: 0.001 (0.00 – 20.00 liter)			IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
-#define ALINK_MSMNT_ANTEIL_RESP		8	//Share Minute Volume Respira-tor , Resolution: 1 (0 – 100 %)							SIMV / SIMV+PSV 
-#define ALINK_MSMNT_TVE				9	//Expiratory Mandatory Tidal Volume , Resolution: 0.1 (0.0 – 600.0 ml)					IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-#define ALINK_MSMNT_TVE_RESP		10	//Expiratory Mandatory Tidal Volume Respirator , Resolution: 0.1 (0.0 – 600.0 ml)					SIMV/ SIMV+PSV  / CPAP
-#define ALINK_MSMNT_TVE_PATIENT		11 	//Expiratory Mandatory Tidal Volume Patient , Resolution: 0.1 (0.0 – 600.0 ml)					SIMV/ SIMV+PSV  / CPAP
-#define ALINK_MSMNT_LEAK			12	//Leakage, Resolution: 1 (0 – 100 %)							IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
-#define ALINK_MSMNT_FREQ			13	//Respiratory Rate , Resolution: 1 (0 – 250 bpm)						IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP 
-#define ALINK_MSMNT_TRIGGER			14	//Trigger Volume/Trigger Flow (see MODE OPTION2 Bit 7), Resolution: 0.1 (0.0 – 750.0 ml)					SIPPV /SIMV / SIMV+PSV / PSV 
-#define ALINK_MSMNT_TVI				15	//Inspiratory Mandatory Tidal Volume Resolution: 0.1 (0.0 – 600.0 ml)					IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
-#define ALINK_MSMNT_HFO_AMP			16	//HF Amplitude , Resolution: 0.1 (0 – 200 mbar bzw cmH2O)			HFO
-#define ALINK_MSMNT_TVE_HFO			17	//HF Expiratory Mandatory Tidal Volume, Resolution: 0.1 (0.0 – 200.0 ml)					HFO
-#define ALINK_MSMNT_DCO2			18	//Gas Transport Coefficient, Resolution: 1 (0 – 10000 ml^2/sec)				HFO
-#define ALINK_MSMNT_HFO_FREQ		19	//HF Rate, Resolution: 1 (0 – 20 hz)							HFO
-#define ALINK_MSMNT_OXY				20	//FiO2, Resolution: 0.1 (21.0 - 100.0 %)					IPPV / SIPPV / SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO
+#define ALINK_MSMNT_P_MEAN			1	//Mean Pressure, Resolution: 0.1 (-50.0 – 150.0 mbar bzw cmH2O)
+#define ALINK_MSMNT_PEEP			2	//PEEP, Resolution: 0.1 (-50.0 – 150.0 mbar bzw cmH2O)
+#define ALINK_MSMNT_T_INSP_PSV		3	//Inspiratory Time PSV, Resolution: 0.001 (0.00 – 5.00 sec)/Resolution for IVOI: 0.01
+#define ALINK_MSMNT_DYNCOMPL		4	//Dynamic Compliance, Resolution for acuLink: 0.1 (0.0 – 500.0 ml/mbar), Resolution from PIC: 0.01 !!!	
+#define ALINK_MSMNT_C20C			5	//Overextension Index C20/C , Resolution: 0.1 (0.0 – 50.0)
+#define ALINK_MSMNT_RESISTANCE		6	//Ventilatory Resistance , Resolution: 0.1 (0.0 – 500.0 mbar/lps)
+#define ALINK_MSMNT_MIN_VOL			7	//Minute Volume , Resolution: 0.001 (0.00 – 20.00 liter)
+#define ALINK_MSMNT_ANTEIL_RESP		8	//Share Minute Volume Respira-tor , Resolution: 1 (0 – 100 %)
+#define ALINK_MSMNT_TVE				9	//Expiratory Mandatory Tidal Volume , Resolution: 0.1 (0.0 – 600.0 ml)
+#define ALINK_MSMNT_TVE_RESP		10	//Expiratory Mandatory Tidal Volume Respirator , Resolution: 0.1 (0.0 – 600.0 ml)
+#define ALINK_MSMNT_TVE_PATIENT		11 	//Expiratory Mandatory Tidal Volume Patient , Resolution: 0.1 (0.0 – 600.0 ml)
+#define ALINK_MSMNT_LEAK			12	//Leakage, Resolution: 1 (0 – 100 %)
+#define ALINK_MSMNT_FREQ			13	//Respiratory Rate , Resolution: 1 (0 – 250 bpm)
+#define ALINK_MSMNT_TRIGGER			14	//Trigger Volume/Trigger Flow (see MODE OPTION2 Bit 7), Resolution: 0.1 (0.0 – 750.0 ml)
+#define ALINK_MSMNT_TVI				15	//Inspiratory Mandatory Tidal Volume Resolution: 0.1 (0.0 – 600.0 ml)
+#define ALINK_MSMNT_HFO_AMP			16	//HF Amplitude , Resolution: 0.1 (0 – 200 mbar bzw cmH2O)
+#define ALINK_MSMNT_TVE_HFO			17	//HF Expiratory Mandatory Tidal Volume, Resolution: 0.1 (0.0 – 200.0 ml)
+#define ALINK_MSMNT_DCO2			18	//Gas Transport Coefficient, Resolution: 1 (0 – 10000 ml^2/sec)
+#define ALINK_MSMNT_HFO_FREQ		19	//HF Rate, Resolution: 1 (0 – 20 hz)
+#define ALINK_MSMNT_OXY				20	//FiO2, Resolution: 0.1 (21.0 - 100.0 %)
 #define ALINK_MSMNT_ETCO2			21	//etCO2 (see ALINK_SETT_UNIT_CO2), Resolution: 0.1 (0 – 150.0 mmHg, 0 – 20.0 kPa, or 0 – 19.7 %) Modul
-#define ALINK_MSMNT_DEMAND_FLOW		22	//Demand Flow, Resolution: 0.001 (4.0 - 25.0 l/min)				CPAP
-#define ALINK_MSMNT_IFLOW			23	//Inspiratory Flow, Resolution: 0.001 (0.0 - 25.0 l/min)				DUOPAP 
-#define ALINK_MSMNT_EFLOW			24	//Expiratory Flow, Resolution: 0.001 (0.0 - 25.0 l/min)				NCPAP /DUOPAP / HFO
+#define ALINK_MSMNT_DEMAND_FLOW		22	//Demand Flow, Resolution: 0.001 (4.0 - 25.0 l/min)/Resolution for IVOI: 0.01
+#define ALINK_MSMNT_IFLOW			23	//Inspiratory Flow, Resolution: 0.001 (0.0 - 25.0 l/min)/Resolution for IVOI: 0.01
+#define ALINK_MSMNT_EFLOW			24	//Expiratory Flow, Resolution: 0.001 (0.0 - 25.0 l/min)	/Resolution for IVOI: 0.01
 //NEWACULINK
-#define ALINK_MSMNT_TAU				25 //Time Constant, Resolution: 0.01, 0 – 250 (sec) IPPV / SIPPV /SIMV / SIMV+PSV / PSV / CPAP /NCPAP /DUOPAP / HFO			
+#define ALINK_MSMNT_TAU				25 //Time Constant, Resolution: 0.01, 0 – 250 (sec)		
 #define ALINK_MSMNT_FREQETCO2		26 //Respiration Rate CO2 module, Resolution: 1 (0 – 150 bpm)	
 #define ALINK_MSMNT_SPO2			27 //SpO2, Resolution: 0.1 (0.0 - 100.0 %), only with enabled SpO2 module		
-#define ALINK_MSMNT_SPO2_PI			28 //Perfusion Index (Signal Strength), Resolution: 0.001, (0==no measurement, 0.02% to 20%)		
+#define ALINK_MSMNT_SPO2_PI			28 //Perfusion Index (Signal Strength), Resolution: 0.001, (0==no measurement, 0.02% to 20%)/Resolution for IVOI: 0.01		
 #define ALINK_MSMNT_SPO2_PR			29 //Pulse Rate, Resolution: 1, (0 to 240 bpm)		
 #define ALINK_MSMNT_SPO2_SIQ		30 //Pleth Variability Index (PVI), Resolution: 1, (0 to 100)		
-#define ALINK_MSMNT_RSBI			31 //rapid shallow breathing index, Resolution: 0.1, (0 – 250) SIMV/ SIMV+PSV / CPAP
+#define ALINK_MSMNT_RSBI			31 //rapid shallow breathing index, Resolution: 0.1, (0 – 250)
 #define ALINK_MSMNT_FICO2			32 //FiCO2 of CO2 modules, Resolution: 0,1mmHg (0–150.0 mmHg, 0–20.0 kPa, or 0–19.7%)
 #define ALINK_MSMNT_VTEKG			33 //Vte / kg [ml/kg], Resolution: 0.1 [0==off, 0 - 2000.0 ml/kg]
 //!!!!!!!!!!!!!!! ACHTUNG - Verknüpfung zu den Meßwerten der Numerikblöcke !!!!!!

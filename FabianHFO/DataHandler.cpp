@@ -8837,6 +8837,7 @@ int CDataHandler::GetCurrentEIRelation100()
 
 void CDataHandler::setTriggerOptionCONV(eTriggereType type)
 {
+	DEBUGMSG(TRUE, (TEXT("setTriggerOptionCONV %d\r\n"),(int)type));
 	getModel()->getCONFIG()->setTriggerOptionCONV(type);
 
 	getModel()->Send_MODE_OPTION1();
