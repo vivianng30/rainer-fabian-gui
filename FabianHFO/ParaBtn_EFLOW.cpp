@@ -38,6 +38,7 @@ void CParaBtn_EFLOW::Draw(int nState)
 	{
 		//if(g_hf31AcuBold )
 		{
+			bool bDisabled=false;
 			HFONT hPrevFont=(HFONT)SelectObject(m_hDC,g_hf31AcuBoldNum);
 			int nBkMode=SetBkMode(m_hDC,TRANSPARENT);
 			int nTxtColor;
@@ -65,6 +66,7 @@ void CParaBtn_EFLOW::Draw(int nState)
 				break;
 			case BTN_DW_DIS:
 			default:
+				bDisabled=true;
 				nTxtColor=m_btncr.crTxtDisabled;
 				nTxtColorDefault=m_btncr.crTxtDisabled;
 				//nTxtColorSubBtn=m_btncr.crTxtDisabled;
@@ -145,7 +147,38 @@ void CParaBtn_EFLOW::Draw(int nState)
 					DrawText(m_hDC,m_pszUnitText,-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
 				}
 
-				if(m_bDrawAlarmArrowDown && m_bHasFocus)
+				if(m_bDrawWarning && m_bHasFocus)
+				{
+					if(m_pcWarning_Fc)
+						m_pcWarning_Fc->Draw(m_hDC,65,65);
+				}
+				else if(m_bDrawWarning && m_bDepressed)
+				{
+					if(m_pcWarning_Dw)
+						m_pcWarning_Dw->Draw(m_hDC,65,65);
+				}
+				else if(m_bDrawWarning && m_bSignaled)
+				{
+					if(m_pcWarning_Red)
+						m_pcWarning_Red->Draw(m_hDC,65,65);
+				}
+				else if(m_bDrawWarning && bDisabled)
+				{
+					if(m_pcWarning_Dis)
+						m_pcWarning_Dis->Draw(m_hDC,65,65);
+				}
+				else if(m_bDrawWarning)
+				{
+					if(m_pcWarning_Up)
+						m_pcWarning_Up->Draw(m_hDC,65,65);
+				}
+
+				if(m_bDrawKey && m_bDepressed)
+				{
+					if(m_pcKey)
+						m_pcKey->Draw(m_hDC,10,65);
+				}
+				else if(m_bDrawAlarmArrowDown && m_bHasFocus)
 				{
 					pcArrow=m_pcAlarmArrowDw_FC;
 
@@ -194,7 +227,24 @@ void CParaBtn_EFLOW::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 			{
 				
 				if(m_v.iValue>m_v.iLowerLimit)
+				{
 					m_v.iValue=m_v.iValue-1000;
+
+					if(getModel()->getCONFIG()->GetVentRange()==NEONATAL && m_v.iValue<=getModel()->getDATAHANDLER()->GetCurrentEFlowMaxKey())
+					{
+						m_bKeyValueAccepted=false;
+						/*if(m_bDrawKey)
+						{
+							if(GetParent())
+								GetParent()->PostMessage(WM_PINSP_CLEARKEY);
+						}*/
+						m_bDrawKey=false;
+						m_bDrawWarning=false;
+					}
+
+					m_bWaitConfirm=false;
+					m_bKeyBeep=TRUE;
+				}
 				else if(m_bScrollOver)
 					m_v.iValue=m_v.iUpperLimit;
 				else
@@ -216,7 +266,31 @@ void CParaBtn_EFLOW::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 			if(m_bDepressed)
 			{
 				if(m_v.iValue<m_v.iUpperLimit)
-					m_v.iValue=m_v.iValue+1000;
+				{
+					//m_v.iValue=m_v.iValue+1000;
+					int dTemp=m_v.iValue+1000;
+
+					if(getModel()->getCONFIG()->GetVentRange()==NEONATAL && dTemp>getModel()->getDATAHANDLER()->GetCurrentEFlowMaxKey())
+					{
+						if(m_bKeyValueAccepted==false)
+						{
+							m_bWaitConfirm=true;
+							m_bDrawKey=true;
+							if(GetParent())
+								GetParent()->PostMessage(WM_EFLOW_SETKEY, m_bKeyBeep);
+							m_bKeyBeep=FALSE;
+						}
+						else
+						{
+							m_v.iValue=dTemp;
+						}
+						m_bDrawWarning=true;
+					}
+					else
+					{
+						m_v.iValue=dTemp;
+					}
+				}
 				else if(m_bScrollOver)
 					m_v.iValue=m_v.iLowerLimit;
 				else

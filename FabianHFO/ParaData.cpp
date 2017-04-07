@@ -359,6 +359,11 @@ CParaData::CParaData(void)
 	m_dataKeyMax_NEONATAL.m_iParaDataIERatio=RIE_1_1;
 	m_dataKeyMax_NEONATAL.m_iParaDataTherapieFlow=KEYMAX_NEONATAL_FLOWTHERAPIE;
 
+	m_dataKeyMax_NEONATAL.m_iParaDataIFlow_TRIGGER=KEYMAX_NEONATAL_IFlow;
+	m_dataKeyMax_NEONATAL.m_iParaDataIFlow_IPPV=KEYMAX_NEONATAL_IFlow;
+	m_dataKeyMax_NEONATAL.m_iParaDataEFlow_TRIGGER=KEYMAX_NEONATAL_EFlow;
+	m_dataKeyMax_NEONATAL.m_iParaDataEFlow_IPPV=KEYMAX_NEONATAL_EFlow;
+
 	m_dataKeyMax_NEONATAL.m_iParaDataFOTconv_AMPLITUDE=0;
 	m_dataKeyMax_NEONATAL.m_iParaDataFOTconv_FREQ=0;
 	m_dataKeyMax_NEONATAL.m_iParaDataFOTconv_STEPS=0;
@@ -398,6 +403,11 @@ CParaData::CParaData(void)
 	m_dataKeyMax_PEDIATRIC.m_iParaDataHFFreq=KEYMAX_PEDIATRIC_HFFreq;
 	m_dataKeyMax_PEDIATRIC.m_iParaDataIERatio=RIE_1_1;
 	m_dataKeyMax_PEDIATRIC.m_iParaDataTherapieFlow=KEYMAX_PEDIATRIC_FLOWTHERAPIE;
+
+	m_dataKeyMax_PEDIATRIC.m_iParaDataIFlow_TRIGGER=KEYMAX_PEDIATRIC_IFlow;
+	m_dataKeyMax_PEDIATRIC.m_iParaDataIFlow_IPPV=KEYMAX_PEDIATRIC_IFlow;
+	m_dataKeyMax_PEDIATRIC.m_iParaDataEFlow_TRIGGER=KEYMAX_PEDIATRIC_EFlow;
+	m_dataKeyMax_PEDIATRIC.m_iParaDataEFlow_IPPV=KEYMAX_PEDIATRIC_EFlow;
 
 	m_dataKeyMax_PEDIATRIC.m_iParaDataFOTconv_AMPLITUDE=0;
 	m_dataKeyMax_PEDIATRIC.m_iParaDataFOTconv_FREQ=0;
@@ -439,6 +449,11 @@ CParaData::CParaData(void)
 	m_dataKeyMin_NEONATAL.m_iParaDataVLimit_IPPV=0;
 	m_dataKeyMin_NEONATAL.m_iParaDataTherapieFlow=0;
 
+	m_dataKeyMin_NEONATAL.m_iParaDataIFlow_TRIGGER=0;
+	m_dataKeyMin_NEONATAL.m_iParaDataIFlow_IPPV=0;
+	m_dataKeyMin_NEONATAL.m_iParaDataEFlow_TRIGGER=0;
+	m_dataKeyMin_NEONATAL.m_iParaDataEFlow_IPPV=0;
+
 	m_dataKeyMin_NEONATAL.m_iParaDataFOTconv_AMPLITUDE=0;
 	m_dataKeyMin_NEONATAL.m_iParaDataFOTconv_FREQ=0;
 	m_dataKeyMin_NEONATAL.m_iParaDataFOTconv_STEPS=0;
@@ -478,6 +493,11 @@ CParaData::CParaData(void)
 	m_dataKeyMin_PEDIATRIC.m_iParaDataVLimit_TRIGGER=0;
 	m_dataKeyMin_PEDIATRIC.m_iParaDataVLimit_IPPV=0;
 	m_dataKeyMin_PEDIATRIC.m_iParaDataTherapieFlow=0;
+
+	m_dataKeyMin_PEDIATRIC.m_iParaDataIFlow_TRIGGER=0;
+	m_dataKeyMin_PEDIATRIC.m_iParaDataIFlow_IPPV=0;
+	m_dataKeyMin_PEDIATRIC.m_iParaDataEFlow_TRIGGER=0;
+	m_dataKeyMin_PEDIATRIC.m_iParaDataEFlow_IPPV=0;
 
 	m_dataKeyMin_PEDIATRIC.m_iParaDataFOTconv_AMPLITUDE=0;
 	m_dataKeyMin_PEDIATRIC.m_iParaDataFOTconv_FREQ=0;
@@ -1488,7 +1508,14 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			getModel()->getDATAHANDLER()->PARADATA()->SetPEEPPara_IPPV(getModel()->getDATAHANDLER()->PRESET()->GetPEEPPara_IPPV(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetRisetimePara_IPPV(getModel()->getDATAHANDLER()->PRESET()->GetRisetimePara_IPPV(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetIFlowPara_IPPV(getModel()->getDATAHANDLER()->PRESET()->GetIFlowPara_IPPV(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetEFLOWPara_IPPV(getModel()->getDATAHANDLER()->PRESET()->GetEFLOWPara_IPPV(),false,true);
+			if(getModel()->getCONFIG()->IsEFLOWequalILFOW() && false==getModel()->getDATAHANDLER()->GetExhalValvCalMode())
+			{
+				getModel()->getDATAHANDLER()->PARADATA()->SetEFLOWPara_IPPV(getModel()->getDATAHANDLER()->PRESET()->GetIFlowPara_IPPV(),false,true);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->PARADATA()->SetEFLOWPara_IPPV(getModel()->getDATAHANDLER()->PRESET()->GetEFLOWPara_IPPV(),false,true);
+			}
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 
@@ -1518,7 +1545,14 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			getModel()->getDATAHANDLER()->PARADATA()->SetPEEPPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetPEEPPara_TRIGGER(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetRisetimePara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetRisetimePara_TRIGGER(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetIFlowPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetIFlowPara_TRIGGER(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetEFLOWPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetEFLOWPara_TRIGGER(),false,true);
+			if(getModel()->getCONFIG()->IsEFLOWequalILFOW() && false==getModel()->getDATAHANDLER()->GetExhalValvCalMode())
+			{
+				getModel()->getDATAHANDLER()->PARADATA()->SetEFLOWPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetIFlowPara_TRIGGER(),false,true);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->PARADATA()->SetEFLOWPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetEFLOWPara_TRIGGER(),false,true);
+			}
 			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerCONVPara(getModel()->getDATAHANDLER()->PRESET()->GetTriggerCONVPara(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
@@ -1556,7 +1590,14 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			getModel()->getDATAHANDLER()->PARADATA()->SetPEEPPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetPEEPPara_TRIGGER(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetRisetimePara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetRisetimePara_TRIGGER(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetIFlowPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetIFlowPara_TRIGGER(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetEFLOWPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetEFLOWPara_TRIGGER(),false,true);
+			if(getModel()->getCONFIG()->IsEFLOWequalILFOW() && false==getModel()->getDATAHANDLER()->GetExhalValvCalMode())
+			{
+				getModel()->getDATAHANDLER()->PARADATA()->SetEFLOWPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetIFlowPara_TRIGGER(),false,true);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->PARADATA()->SetEFLOWPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetEFLOWPara_TRIGGER(),false,true);
+			}
 			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerCONVPara(getModel()->getDATAHANDLER()->PRESET()->GetTriggerCONVPara(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
@@ -4790,6 +4831,26 @@ SHORT CParaData::GetPInspMaxKey()
 		return m_dataKeyMax_NEONATAL.m_iParaDataPInsp_TRIGGER;
 	else
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataPInsp_TRIGGER;
+}
+// **************************************************************************
+// 
+// **************************************************************************
+SHORT CParaData::GetIFlowMaxKey()
+{
+	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
+		return m_dataKeyMax_NEONATAL.m_iParaDataIFlow_TRIGGER;
+	else
+		return m_dataKeyMax_PEDIATRIC.m_iParaDataIFlow_TRIGGER;
+}
+// **************************************************************************
+// 
+// **************************************************************************
+SHORT CParaData::GetEFlowMaxKey()
+{
+	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
+		return m_dataKeyMax_NEONATAL.m_iParaDataEFlow_TRIGGER;
+	else
+		return m_dataKeyMax_PEDIATRIC.m_iParaDataEFlow_TRIGGER;
 }
 // **************************************************************************
 // 

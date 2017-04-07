@@ -844,7 +844,7 @@ void CMVModel::Deinit()
 
 	if(FLOWSENSORTHR)
 		FLOWSENSORTHR->destroyInstance();
-	FLOWSENSORTHR>=NULL;
+	FLOWSENSORTHR=NULL;
 
 	if(VIEWHANDLER)
 		VIEWHANDLER->DestroyInstance();
@@ -1450,6 +1450,12 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			NotifyEvent(pEvent);
 		}
 		break;
+	case CMVEventControl::EV_CONTROL_SET_EFLOWEQUIFLOW:
+		{
+			getDATAHANDLER()->SetEFlowParadata_IPPV(getDATAHANDLER()->PARADATA()->GetIFlowPara_IPPV(),true);
+			getDATAHANDLER()->SetEFlowParadata_TRIGGER(getDATAHANDLER()->PARADATA()->GetIFlowPara_TRIGGER(),true);
+		}
+		break;
 	case CMVEventControl::EV_CONTROL_FLOWSENSOR_CALIBRATED:
 		{
 			NotifyEvent(pEvent);
@@ -1798,6 +1804,12 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			NotifyEvent(pEvent);
 
 			Send_MODE_OPTION1();
+
+			if(getCONFIG()->IsEFLOWequalILFOW())
+			{
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_SET_EFLOWEQUIFLOW);
+			}
 		}
 		break;
 	case CMVEventControl::EV_CONTROL_O2CALSTART:

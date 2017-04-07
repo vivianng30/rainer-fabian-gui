@@ -25,6 +25,8 @@ CWndSubSettings(viewFlag)
 	m_pcDw_Up=NULL;
 	m_pcDw_Dw=NULL;
 
+	m_pcEFLOWWarning=NULL;
+
 	m_pcStatic_Up=NULL;
 	m_pcStatic_Dw=NULL;
 	m_pcStatic_Fc=NULL;
@@ -42,6 +44,14 @@ CWndSubSettings(viewFlag)
 	m_iCounter=0;
 	m_eTimeChanger=TC_OFF;
 
+	m_bEFLOWequalILFOW=false;
+	m_slider=NULL;
+
+	m_bWaitConfirm=false;
+	m_bKeyBeep=TRUE;
+	m_bKeyValueAccepted=false;
+	m_bDrawKey=false;
+	m_bDrawWarning=false;
 	
 	if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
 	{
@@ -57,6 +67,13 @@ CWndSubSettings(viewFlag)
 
 CWndSubSettingsEFlow::~CWndSubSettingsEFlow()
 {
+	if(m_pcEFLOWWarning)
+		delete m_pcEFLOWWarning;
+	m_pcEFLOWWarning=NULL;
+
+	delete m_slider;
+	m_slider=NULL;
+
 	if(m_pcPara_Select)
 		delete m_pcPara_Select;
 	m_pcPara_Select=NULL;
@@ -98,6 +115,7 @@ CWndSubSettingsEFlow::~CWndSubSettingsEFlow()
 BEGIN_MESSAGE_MAP(CWndSubSettingsEFlow, CWnd)
 	ON_WM_DESTROY()
 	ON_WM_TIMER()
+	ON_MESSAGE(WM_BITMAPSLIDER_MOVING, OnMyMessage)
 	ON_BN_CLICKED(IDC_BTN_SETUP_YEAR, &CWndSubSettingsEFlow::OnBnClickedValue)
 END_MESSAGE_MAP()
 
@@ -111,6 +129,27 @@ void CWndSubSettingsEFlow::Initialize()
 {
 	CClientDC dc(this);
 
+	
+
+	m_bEFLOWequalILFOW=getModel()->getCONFIG()->IsEFLOWequalILFOW();
+
+	m_slider = new CBitmapSlider();
+	m_slider->Create(_T(""),WS_CHILD|WS_VISIBLE|SS_BITMAP|SS_NOTIFY|BS_OWNERDRAW, CRect(400,270,549,310), 
+		this,IDC_SLD_TRIGGERBEEP);
+	m_slider->SetBitmapChannel( IDB_SLD_CHAN_GREY, NULL );
+	m_slider->SetBitmapThumb( IDB_SLD_THUMB_GREY, IDB_SLD_THUMB_ACT_GREY);
+	m_slider->SetRange( 0, 1 );
+	if(m_bEFLOWequalILFOW)
+	{
+		m_slider->SetPos( 1 );
+	}
+	else
+	{
+		m_slider->SetPos( 0 );
+	}
+	m_slider->SetMargin( 5, 0, 6, 0 );
+	m_slider->DrawFocusRect( TRUE );
+
 	/*if(getModel()->getDATAHANDLER()->activeModeIsIPPV())
 	{
 		m_iValue=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWPara_IPPV();
@@ -119,9 +158,11 @@ void CWndSubSettingsEFlow::Initialize()
 	{
 		m_iValue=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWPara_TRIGGER();
 	}
-	CStringW strVal;
 
+	CStringW strVal;
 	strVal.Format(_T("%0.0f"),CTlsFloat::Round(((double)m_iValue)/1000, 0));
+
+	m_pcEFLOWWarning= new CBmp(theApp.m_hInstance,m_hDC,	IDB_PARA_WARN_UP);
 
 	m_pcUp_Up= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETUP_UPUP);
 	m_pcUp_Dw= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SETUP_UPDW);
@@ -143,7 +184,7 @@ void CWndSubSettingsEFlow::Initialize()
 	//*******************Days*****************************
 	btn.wID					= IDC_BTN_SETUP_YEAR;	
 	btn.poPosition.x		= 320;
-	btn.poPosition.y		= 155;
+	btn.poPosition.y		= 115;
 	btn.pcBmpUp				= m_pcStatic_Up;
 	btn.pcBmpDown			= m_pcStatic_Dw;
 	btn.pcBmpFocus			= m_pcStatic_Fc;
@@ -153,12 +194,26 @@ void CWndSubSettingsEFlow::Initialize()
 	m_pbtnValue=new CSelectSetupBtn(btn,COLOR_TXTBTNUP);
 	m_pbtnValue->Create(this,g_hf33AcuBold,0);
 	m_pbtnValue->SetText(strVal);
-	m_pbtnValue->ShowWindow(SW_SHOW);
 
+	if(getModel()->getCONFIG()->IsEFLOWequalILFOW())
+	{
+		m_pbtnValue->ShowWindow(SW_HIDE);
+	}
+	else
+	{
+		m_pbtnValue->ShowWindow(SW_SHOW);
+	}
+
+	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL && m_iValue>getModel()->getDATAHANDLER()->GetCurrentEFlowMaxKey())
+	{
+		m_bKeyValueAccepted=true;
+		m_bDrawWarning=true;
+		m_pbtnValue->DrawWarning(m_bDrawWarning);
+	}
 
 	btn.wID					= IDC_BTN_SETUP_NEXTUP;	
 	btn.poPosition.x		= 435;
-	btn.poPosition.y		= 143;
+	btn.poPosition.y		= 103;
 	btn.pcBmpUp				= m_pcUp_Up;
 	btn.pcBmpDown			= m_pcUp_Dw;
 	btn.pcBmpFocus			= m_pcUp_Up;
@@ -168,11 +223,14 @@ void CWndSubSettingsEFlow::Initialize()
 	m_pcNextUp=new CDTUpDwnBtn(btn,COLOR_TXTBTNUP);
 	m_pcNextUp->Create(this,g_hf21AcuBold,0);
 	m_pcNextUp->SetText(_T(""));
-	m_pcNextUp->ShowWindow(SW_SHOW);
+	if(getModel()->getCONFIG()->IsEFLOWequalILFOW())
+		m_pcNextUp->ShowWindow(SW_HIDE);
+	else
+		m_pcNextUp->ShowWindow(SW_SHOW);
 
 	btn.wID					= IDC_BTN_SETUP_NEXTDW;	
 	btn.poPosition.x		= 435;
-	btn.poPosition.y		= 185;
+	btn.poPosition.y		= 145;
 	btn.pcBmpUp				= m_pcDw_Up;
 	btn.pcBmpDown			= m_pcDw_Dw;
 	btn.pcBmpFocus			= m_pcDw_Up;
@@ -182,12 +240,15 @@ void CWndSubSettingsEFlow::Initialize()
 	m_pcNextDwn=new CDTUpDwnBtn(btn,COLOR_TXTBTNUP);
 	m_pcNextDwn->Create(this,g_hf21AcuBold,0);
 	m_pcNextDwn->SetText(_T(""));
-	m_pcNextDwn->ShowWindow(SW_SHOW);
+	if(getModel()->getCONFIG()->IsEFLOWequalILFOW())
+		m_pcNextDwn->ShowWindow(SW_HIDE);
+	else
+		m_pcNextDwn->ShowWindow(SW_SHOW);
 
 
 	btn.wID					= IDC_BTN_SELECT_EFLOW;	
-	btn.poPosition.x		= 230;
-	btn.poPosition.y		= 300;
+	btn.poPosition.x		= 240;
+	btn.poPosition.y		= 330;
 	btn.pcBmpUp				= m_pcPara_Select_no;
 	btn.pcBmpDown			= m_pcPara_Select_yes;
 	btn.pcBmpFocus			= m_pcPara_Select_no;
@@ -278,58 +339,124 @@ void CWndSubSettingsEFlow::Draw()
 	SelectObject(hdcMem,cbrRound);
 	RoundRect(hdcMem, 210, 70, 590, 400,20,20);
 
-	MoveToEx(hdcMem, 300, 143, NULL);
-	LineTo(hdcMem, 435, 143);
-
-	MoveToEx(hdcMem, 300, 225, NULL);
-	LineTo(hdcMem, 435, 225);
-
-	rc.left = 500;  
-	rc.top = 143;  
-	rc.right  = 600;  
-	rc.bottom = 225;
-	DrawText(hdcMem,getModel()->GetLanguageString(IDS_UNIT_LMIN),-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
-
-
-	rc.left = 210;  
-	rc.top = 240;//225;  
-	rc.right  = 590;  
-	rc.bottom = 300;
-
-	if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+	if(false==getModel()->getCONFIG()->IsEFLOWequalILFOW())
 	{
-		m_iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_IPPV();
-		m_iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_IPPV();
+		MoveToEx(hdcMem, 300, 103, NULL);
+		LineTo(hdcMem, 435, 103);
+
+		MoveToEx(hdcMem, 300, 185, NULL);
+		LineTo(hdcMem, 435, 185);
+
+		rc.left = 500;  
+		rc.top = 103;  
+		rc.right  = 600;  
+		rc.bottom = 185;
+		DrawText(hdcMem,getModel()->GetLanguageString(IDS_UNIT_LMIN),-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
+
+		rc.left = 210;  
+		rc.top = 200;//225;  
+		rc.right  = 590;  
+		rc.bottom = 260;
+
+		if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+		{
+			m_iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_IPPV();
+			m_iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_IPPV();
+		}
+		else
+		{
+			m_iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_TRIGGER();
+			m_iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_TRIGGER();
+		}
+
+		CStringW sz=_T("");
+		sz.Format(_T("%s: %0.0f - %0.0f %s"),
+			getModel()->GetLanguageString(IDS_TXT_RANGE),
+			CTlsFloat::Round(((double)m_iLowerLimit)/1000, 0),
+			CTlsFloat::Round(((double)m_iUpperLimit)/1000, 0),
+			getModel()->GetLanguageString(IDS_UNIT_LMIN));
+
+		DrawText(hdcMem,sz,-1,&rc,DT_TOP|DT_CENTER|DT_SINGLELINE);
+
+		SelectObject(hdcMem,g_hf10AcuBold);
+		rc.left = 210;  
+		rc.top = 223;//225;  
+		rc.right  = 590;  
+		rc.bottom = 260;
+		DrawText(hdcMem,_T("(default: 6 l/min)"),-1,&rc,DT_TOP|DT_CENTER|DT_SINGLELINE);
+
 	}
 	else
 	{
-		m_iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_TRIGGER();
-		m_iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_TRIGGER();
+		rc.left = 435;
+		rc.top = 103;  
+		rc.right  = 600;  
+		rc.bottom = 185;
+		DrawText(hdcMem,getModel()->GetLanguageString(IDS_UNIT_LMIN),-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
+
+		rc.left = 210;  
+		rc.top = 200;//225;  
+		rc.right  = 590;  
+		rc.bottom = 260;
+
+		if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+		{
+			m_iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_IPPV();
+			m_iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_IPPV();
+		}
+		else
+		{
+			m_iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_TRIGGER();
+			m_iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_TRIGGER();
+		}
+
+		CStringW sz=_T("");
+		sz.Format(_T("%s: %0.0f - %0.0f %s"),
+			getModel()->GetLanguageString(IDS_TXT_RANGE),
+			CTlsFloat::Round(((double)m_iLowerLimit)/1000, 0),
+			CTlsFloat::Round(((double)m_iUpperLimit)/1000, 0),
+			getModel()->GetLanguageString(IDS_UNIT_LMIN));
+
+		DrawText(hdcMem,sz,-1,&rc,DT_TOP|DT_CENTER|DT_SINGLELINE);
+
+		SelectObject(hdcMem,g_hf10AcuBold);
+		rc.left = 210;  
+		rc.top = 223;//225;  
+		rc.right  = 590;  
+		rc.bottom = 260;
+		DrawText(hdcMem,_T("(default: 6 l/min)"),-1,&rc,DT_TOP|DT_CENTER|DT_SINGLELINE);
+
+		SelectObject(hdcMem,g_hf33AcuBold);
+
+		m_iValue=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWPara_TRIGGER();
+		CStringW strVal;
+		strVal.Format(_T("%0.0f"),CTlsFloat::Round(((double)m_iValue)/1000, 0));
+		rc.left = 320;  
+		rc.top = 115;
+		rc.right  = 420;  
+		rc.bottom = 175;
+		DrawText(hdcMem,strVal,-1,&rc,DT_VCENTER|DT_CENTER|DT_SINGLELINE);
+
+		if(getModel()->getCONFIG()->GetVentRange()==NEONATAL && m_iValue>getModel()->getDATAHANDLER()->GetCurrentEFlowMaxKey())
+		{
+			if(m_pcEFLOWWarning)
+				m_pcEFLOWWarning->Draw(hdcMem,400,155);
+		}
 	}
 
-	CStringW sz=_T("");
-	sz.Format(_T("%s: %0.0f - %0.0f %s"),
-		getModel()->GetLanguageString(IDS_TXT_RANGE),
-		CTlsFloat::Round(((double)m_iLowerLimit)/1000, 0),
-		CTlsFloat::Round(((double)m_iUpperLimit)/1000, 0),
-		getModel()->GetLanguageString(IDS_UNIT_LMIN));
-	DrawText(hdcMem,sz,-1,&rc,DT_TOP|DT_CENTER|DT_SINGLELINE);
-
-
-	rc.left = 310;  
-	rc.top = 300;  
+	SelectObject(hdcMem,g_hf11AcuBold);
+	rc.left = 320;  
+	rc.top = 320;  
 	rc.right  = 590;  
-	rc.bottom = 350;
+	rc.bottom = 390;
 	//DrawText(hdcMem,_T("shortcut in settings menu"),-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
 	DrawText(hdcMem,getModel()->GetLanguageString(IDS_TXT_EFLOW_SHORTCUT),-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
 
-
-	SelectObject(hdcMem,g_hf10AcuBold);
-	rc.left = 210;  
-	rc.top = 263;//225;  
-	rc.right  = 590;  
-	rc.bottom = 300;
-	DrawText(hdcMem,_T("(default: 6 l/min)"),-1,&rc,DT_TOP|DT_CENTER|DT_SINGLELINE);
+	rc.left = 200;  
+	rc.top = 280;  
+	rc.right  = 380;  
+	rc.bottom = 380;
+	DrawText(hdcMem,_T("(E-Flow=I-Flow)"),-1,&rc,DT_TOP|DT_RIGHT|DT_SINGLELINE);
 
 
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,hdcMem,0,0,SRCCOPY);
@@ -361,13 +488,6 @@ BOOL CWndSubSettingsEFlow::PreTranslateMessage(MSG* pMsg)
 		{
 			if(pMsg->wParam==VK_SPACE)
 			{
-				/*int iID=0;
-				CWnd* pFocWnd=NULL;
-				pFocWnd = CWnd::GetFocus();
-				if(pFocWnd==NULL)
-					return 1;
-				iID=pFocWnd->GetDlgCtrlID();*/
-
 				eBtnState eState = m_pbtnValue->GetState();
 				
 				if(eState==BS_NONE)
@@ -384,12 +504,17 @@ BOOL CWndSubSettingsEFlow::PreTranslateMessage(MSG* pMsg)
 				}
 				else if(eState==BS_DOWN)
 				{
-					m_pbtnValue->SetState(BS_FOCUSED);
+					if(m_bDrawKey)
+					{
+						m_bKeyValueAccepted=true;
+						m_bDrawKey=false;
+						m_pbtnValue->DrawKey(m_bDrawKey);
+					}
+					else
+					{
+						m_pbtnValue->SetState(BS_FOCUSED);
+					}
 				}
-				/*else if(iID==IDC_BTN_SETTING_BACK)
-				{
-					PostMessage(WM_MENUBUTTONDOWN,IDC_BTN_SETTING_BACK);
-				}*/
 
 				if(GetParent())
 					GetParent()->PostMessage(WM_SET_SETUPTIMER);
@@ -402,6 +527,18 @@ BOOL CWndSubSettingsEFlow::PreTranslateMessage(MSG* pMsg)
 					if(m_iValue>m_iLowerLimit)
 					{
 						m_iValue-=STEP_EFLOW;
+
+						if(getModel()->getCONFIG()->GetVentRange()==NEONATAL && m_iValue<=getModel()->getDATAHANDLER()->GetCurrentEFlowMaxKey())
+						{
+							m_bKeyValueAccepted=false;
+							m_bDrawKey=false;
+							m_bDrawWarning=false;
+							m_pbtnValue->DrawKey(m_bDrawKey);
+							m_pbtnValue->DrawWarning(m_bDrawWarning);
+						}
+
+						m_bWaitConfirm=false;
+						m_bKeyBeep=TRUE;
 
 						CStringW strVal;
 
@@ -428,7 +565,36 @@ BOOL CWndSubSettingsEFlow::PreTranslateMessage(MSG* pMsg)
 				{
 					if(m_iValue<m_iUpperLimit)
 					{
-						m_iValue+=STEP_EFLOW;
+						int dTemp=m_iValue+STEP_EFLOW;
+						//m_iValue+=STEP_EFLOW;
+						if(getModel()->getCONFIG()->GetVentRange()==NEONATAL && dTemp>getModel()->getDATAHANDLER()->GetCurrentEFlowMaxKey())
+						{
+							if(m_bKeyValueAccepted==false)
+							{
+								m_bWaitConfirm=true;
+								m_bDrawKey=true;
+								m_pbtnValue->DrawKey(m_bDrawKey);
+								if(m_bKeyBeep)
+								{
+									if(AfxGetApp())
+										AfxGetApp()->GetMainWnd()->PostMessage(WM_PIF_SIGNAL);
+								}
+
+								if(AfxGetApp())
+									AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_TIMETEXT_CONFIRMRANGE);
+								m_bKeyBeep=FALSE;
+							}
+							else
+							{
+								m_iValue=dTemp;
+							}
+							m_bDrawWarning=true;
+							m_pbtnValue->DrawWarning(m_bDrawWarning);
+						}
+						else
+						{
+							m_iValue=dTemp;
+						}
 
 						CStringW strVal;
 
@@ -489,7 +655,18 @@ void CWndSubSettingsEFlow::OnBnClickedValue()
 	else if(m_pbtnValue->GetState()==BS_FOCUSED)
 		m_pbtnValue->SetState(BS_DOWN);
 	else if(m_pbtnValue->GetState()==BS_DOWN)
-		m_pbtnValue->SetState(BS_FOCUSED);
+	{
+		if(m_bDrawKey)
+		{
+			m_bKeyValueAccepted=true;
+			m_bDrawKey=false;
+			m_pbtnValue->DrawKey(m_bDrawKey);
+		}
+		else
+		{
+			m_pbtnValue->SetState(BS_FOCUSED);
+		}
+	}
 }
 
 // **************************************************************************
@@ -542,7 +719,47 @@ LRESULT CWndSubSettingsEFlow::WindowProc(UINT message, WPARAM wParam, LPARAM lPa
 					{
 						if(m_iValue<m_iUpperLimit)
 						{
-							m_iValue+=STEP_EFLOW;
+							int dTemp=m_iValue+STEP_EFLOW;
+							//m_iValue+=STEP_EFLOW;
+							if(getModel()->getCONFIG()->GetVentRange()==NEONATAL && dTemp>getModel()->getDATAHANDLER()->GetCurrentEFlowMaxKey())
+							{
+								if(m_bDrawKey)
+								{
+									m_bKeyValueAccepted=true;
+									m_bDrawKey=false;
+									m_pbtnValue->DrawKey(m_bDrawKey);
+								}
+								else
+								{
+									if(m_bKeyValueAccepted==false)
+									{
+										m_bWaitConfirm=true;
+										m_bDrawKey=true;
+										m_pbtnValue->DrawKey(m_bDrawKey);
+										if(m_bKeyBeep)
+										{
+											if(AfxGetApp())
+												AfxGetApp()->GetMainWnd()->PostMessage(WM_PIF_SIGNAL);
+										}
+
+										if(AfxGetApp())
+											AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_TIMETEXT_CONFIRMRANGE);
+										m_bKeyBeep=FALSE;
+									}
+									else
+									{
+										m_iValue=dTemp;
+									}
+								}
+
+								
+								m_bDrawWarning=true;
+								m_pbtnValue->DrawWarning(m_bDrawWarning);
+							}
+							else
+							{
+								m_iValue=dTemp;
+							}
 
 							CStringW strVal;
 
@@ -572,6 +789,18 @@ LRESULT CWndSubSettingsEFlow::WindowProc(UINT message, WPARAM wParam, LPARAM lPa
 						if(m_iValue>m_iLowerLimit)
 						{
 							m_iValue-=STEP_EFLOW;
+
+							if(getModel()->getCONFIG()->GetVentRange()==NEONATAL && m_iValue<=getModel()->getDATAHANDLER()->GetCurrentEFlowMaxKey())
+							{
+								m_bKeyValueAccepted=false;
+								m_bDrawKey=false;
+								m_bDrawWarning=false;
+								m_pbtnValue->DrawKey(m_bDrawKey);
+								m_pbtnValue->DrawWarning(m_bDrawWarning);
+							}
+
+							m_bWaitConfirm=false;
+							m_bKeyBeep=TRUE;
 
 							CStringW strVal;
 
@@ -641,7 +870,36 @@ void CWndSubSettingsEFlow::OnTimer(UINT_PTR nIDEvent)
 			{
 				if(m_iValue<m_iUpperLimit)
 				{
-					m_iValue+=STEP_EFLOW;
+					int dTemp=m_iValue+STEP_EFLOW;
+					//m_iValue+=STEP_EFLOW;
+					if(getModel()->getCONFIG()->GetVentRange()==NEONATAL && dTemp>getModel()->getDATAHANDLER()->GetCurrentEFlowMaxKey())
+					{
+						if(m_bKeyValueAccepted==false)
+						{
+							m_bWaitConfirm=true;
+							m_bDrawKey=true;
+							m_pbtnValue->DrawKey(m_bDrawKey);
+							if(m_bKeyBeep)
+							{
+								if(AfxGetApp())
+									AfxGetApp()->GetMainWnd()->PostMessage(WM_PIF_SIGNAL);
+							}
+							
+							if(AfxGetApp())
+								AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_TIMETEXT_CONFIRMRANGE);
+							m_bKeyBeep=FALSE;
+						}
+						else
+						{
+							m_iValue=dTemp;
+						}
+						m_bDrawWarning=true;
+						m_pbtnValue->DrawWarning(m_bDrawWarning);
+					}
+					else
+					{
+						m_iValue=dTemp;
+					}
 
 					CStringW strVal;
 
@@ -668,6 +926,18 @@ void CWndSubSettingsEFlow::OnTimer(UINT_PTR nIDEvent)
 				if(m_iValue>m_iLowerLimit)
 				{
 					m_iValue-=STEP_EFLOW;
+
+					if(getModel()->getCONFIG()->GetVentRange()==NEONATAL && m_iValue<=getModel()->getDATAHANDLER()->GetCurrentEFlowMaxKey())
+					{
+						m_bKeyValueAccepted=false;
+						m_bDrawKey=false;
+						m_bDrawWarning=false;
+						m_pbtnValue->DrawKey(m_bDrawKey);
+						m_pbtnValue->DrawWarning(m_bDrawWarning);
+					}
+
+					m_bWaitConfirm=false;
+					m_bKeyBeep=TRUE;
 
 					CStringW strVal;
 
@@ -701,4 +971,51 @@ void CWndSubSettingsEFlow::OnTimer(UINT_PTR nIDEvent)
 
 
 	CWnd::OnTimer(nIDEvent);
+}
+
+LRESULT CWndSubSettingsEFlow::OnMyMessage(WPARAM wParam, LPARAM lParam)
+{
+	switch(wParam)
+	{
+	case IDC_SLD_TRIGGERBEEP:
+		{
+			if(lParam==0)
+			{
+				m_bEFLOWequalILFOW=false;
+			}
+			else
+			{
+				m_bEFLOWequalILFOW=true;
+			}
+
+			getModel()->getCONFIG()->SetEFLOWequalILFOW(m_bEFLOWequalILFOW);
+
+			
+
+			if(m_bEFLOWequalILFOW)
+			{
+				m_pcNextUp->ShowWindow(SW_HIDE);
+				m_pcNextDwn->ShowWindow(SW_HIDE);
+				m_pbtnValue->ShowWindow(SW_HIDE);
+			}
+			else
+			{
+				m_pcNextUp->ShowWindow(SW_SHOW);
+				m_pcNextDwn->ShowWindow(SW_SHOW);
+				m_pbtnValue->ShowWindow(SW_SHOW);
+
+				m_iValue=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWPara_TRIGGER();
+
+				CStringW strVal;
+				strVal.Format(_T("%0.0f"),CTlsFloat::Round(((double)m_iValue)/1000, 0));
+				m_pbtnValue->RefreshText(strVal);
+			}
+			Draw();
+
+			if(GetParent())
+				GetParent()->PostMessage(WM_SET_SETUPTIMER);
+		}
+		break;
+	}
+	return 1;
 }

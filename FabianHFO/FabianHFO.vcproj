@@ -5983,6 +5983,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\res\Btn\para_btn_dis_top.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\res\Btn\para_btn_dw_bot.bmp"
 				>
 			</File>
@@ -6092,6 +6096,10 @@
 			</File>
 			<File
 				RelativePath=".\res\Pics\parakey_dw.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\Btn\paraset_btn_dis_bot.bmp"
 				>
 			</File>
 			<File

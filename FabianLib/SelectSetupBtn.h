@@ -46,6 +46,8 @@ public:
 	void SetState(eBtnState state);
 	eBtnState GetState();
 
+	void DrawKey(bool state);
+	void DrawWarning(bool state);
 	void DrawOK(bool state);
 	void LoadFlag(CStringW csFlag);
 
@@ -104,9 +106,19 @@ protected:
 	CBmp* m_pcOkUp;
 	CBmp* m_pcOkDw;
 
+	//CBmp* m_pcKeyFc;
+	//CBmp* m_pcKeyUp;
+	CBmp* m_pcKeyDw;
+
+	CBmp* m_pcWarningFc;
+	CBmp* m_pcWarningUp;
+	CBmp* m_pcWarningDw;
+
 	CBmp* m_pbmpFlag;
 
 	bool m_bDrawOK;
+	bool m_bDrawKey;
+	bool m_bDrawWarning;
 
 	CStringW m_szLanguageString;
 

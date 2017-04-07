@@ -127,7 +127,33 @@ void CParaBtn_IFLOW::Draw(int nState)
 			{
 				DrawText(m_hDC,m_pszUnitText,-1,&rcUnit,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
 
-				if(m_bDrawAlarmArrowUp && m_bHasFocus)
+				if(m_bDrawWarning && m_bHasFocus)
+				{
+					if(m_pcWarning_Fc)
+						m_pcWarning_Fc->Draw(m_hDC,65,65);
+				}
+				else if(m_bDrawWarning && m_bDepressed)
+				{
+					if(m_pcWarning_Dw)
+						m_pcWarning_Dw->Draw(m_hDC,65,65);
+				}
+				else if(m_bDrawWarning && m_bSignaled)
+				{
+					if(m_pcWarning_Red)
+						m_pcWarning_Red->Draw(m_hDC,65,65);
+				}
+				else if(m_bDrawWarning)
+				{
+					if(m_pcWarning_Up)
+						m_pcWarning_Up->Draw(m_hDC,65,65);
+				}
+
+				if(m_bDrawKey && m_bDepressed)
+				{
+					if(m_pcKey)
+						m_pcKey->Draw(m_hDC,10,65);
+				}
+				else if(m_bDrawAlarmArrowUp && m_bHasFocus)
 				{
 					pcArrow=m_pcAlarmArrowUp_FC;
 
@@ -228,6 +254,21 @@ void CParaBtn_IFLOW::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 					m_v.iValue=dTemp;
 
 					m_dwSpeedDelta=GetTickCount();
+
+					if(getModel()->getCONFIG()->GetVentRange()==NEONATAL && dTemp<=getModel()->getDATAHANDLER()->GetCurrentIFlowMaxKey())
+					{
+						m_bKeyValueAccepted=false;
+						/*if(m_bDrawKey)
+						{
+							if(GetParent())
+								GetParent()->PostMessage(WM_PINSP_CLEARKEY);
+						}*/
+						m_bDrawKey=false;
+						m_bDrawWarning=false;
+					}
+
+					m_bWaitConfirm=false;
+					m_bKeyBeep=TRUE;
 				}
 				else if(m_bScrollOver)
 					m_v.iValue=m_v.iUpperLimit;
@@ -282,7 +323,28 @@ void CParaBtn_IFLOW::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 						m_bEndOfRange = true;
 					}
 
-					m_v.iValue=dTemp;
+					if(getModel()->getCONFIG()->GetVentRange()==NEONATAL && dTemp>getModel()->getDATAHANDLER()->GetCurrentIFlowMaxKey())
+					{
+						if(m_bKeyValueAccepted==false)
+						{
+							m_bWaitConfirm=true;
+							m_bDrawKey=true;
+							if(GetParent())
+								GetParent()->PostMessage(WM_IFLOW_SETKEY, m_bKeyBeep);
+							m_bKeyBeep=FALSE;
+						}
+						else
+						{
+							m_v.iValue=dTemp;
+						}
+						m_bDrawWarning=true;
+					}
+					else
+					{
+						m_v.iValue=dTemp;
+					}
+
+					//m_v.iValue=dTemp;
 					m_dwSpeedDelta=GetTickCount();
 				}
 				else if(m_bScrollOver)

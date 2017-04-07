@@ -8953,6 +8953,14 @@ void CViewParaBtn::load_IFLOWpara(bool bTrigger,bool bPRESET)
 			fv.iValue=fv.iLowerLimit;
 			getModel()->getDATAHANDLER()->SetCurrentIFlowPara(fv.iValue);
 		}
+		if(fv.iValue>getModel()->getDATAHANDLER()->GetCurrentIFlowMaxKey())
+		{
+			m_pcPara_IFLOW->SetWarning();
+		}
+		else
+		{
+			m_pcPara_IFLOW->SetWarning(false);
+		}
 		m_pcPara_IFLOW->SetValue(fv, true);
 	}
 	/** \brief The leave critical section. */
@@ -10699,6 +10707,30 @@ LRESULT CViewParaBtn::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_TIMETEXT_CONFIRMRANGE);
 			}
+			return 1;
+		}
+		break;
+	case WM_EFLOW_SETKEY:
+		{
+			if(wParam==TRUE)
+			{
+				if(AfxGetApp())
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PIF_SIGNAL);
+			}
+			if(AfxGetApp())
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_TIMETEXT_CONFIRMRANGE);
+			return 1;
+		}
+		break;
+	case WM_IFLOW_SETKEY:
+		{
+			if(wParam==TRUE)
+			{
+				if(AfxGetApp())
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PIF_SIGNAL);
+			}
+			if(AfxGetApp())
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_TIMETEXT_CONFIRMRANGE);
 			return 1;
 		}
 		break;

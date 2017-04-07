@@ -30,6 +30,8 @@ protected:
 	CBmp* m_pcStatic_Dw;
 	CBmp* m_pcStatic_Fc;
 
+	CBmp* m_pcEFLOWWarning;
+
 	CSelectSetupBtn* m_pbtnValue;
 
 	CDTUpDwnBtn* m_pcNextUp;
@@ -39,6 +41,9 @@ protected:
 	CBmp* m_pcPara_Select_yes;
 	CBmp* m_pcPara_Select_no;
 
+	CBitmapSlider*	m_slider;
+	bool m_bEFLOWequalILFOW;
+
 	int m_iValue;
 	int m_iCounter;
 	eTimeChanger m_eTimeChanger;
@@ -46,12 +51,20 @@ protected:
 	int m_iLowerLimit;
 	int m_iUpperLimit;
 
+
+	bool m_bKeyValueAccepted;
+	bool m_bWaitConfirm;
+	bool m_bDrawKey;
+	bool m_bDrawWarning;
+	BOOL m_bKeyBeep;
+
 protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	//afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnDestroy();
 	afx_msg void OnBnClickedValue();
+	afx_msg LRESULT OnMyMessage(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };
 

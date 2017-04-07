@@ -97,6 +97,7 @@ private:
 	CBmp* m_pcPara_UpB;
 	CBmp* m_pcPara_FcB;
 	CBmp* m_pcPara_DwB;
+	CBmp* m_pcPara_DisB;
 
 	/*CUpDwnBtn* m_pcPara_OnOff;
 	CBmp* m_pcPara_OnOff_Up;

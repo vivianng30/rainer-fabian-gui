@@ -299,6 +299,11 @@ enum eLanguage {
 #define KEYMAX_NEONATAL_ITIME_REC			0
 #define KEYMAX_NEONATAL_FREQ_REC			0
 
+#define KEYMAX_NEONATAL_IFlow		20000
+#define KEYMAX_NEONATAL_EFlow		20000
+#define KEYMAX_PEDIATRIC_IFlow		40000//above max range
+#define KEYMAX_PEDIATRIC_EFlow		40000//above max range
+
 //pediatric
 #define KEYMAX_PEDIATRIC_HFAmplVolG		400
 #define KEYMAX_PEDIATRIC_PmaxVolG		250
@@ -862,7 +867,7 @@ enum eLanguage {
 #define TRIGGERTYPENMODE_8				0x0020
 #define PRESSURERISECTRL_8				0x0021
 #define NEBULIZERTIME_8					0x0022
-//#define USENEOPED_8						0x0023
+#define EFLOWEQUIFLOW_8					0x0023
 #define SPO2FASTSAT_8					0x0024
 #define FACTORYSETTINGS_8				0x0025
 #define AUTOALARMLIMIT_8				0x0026

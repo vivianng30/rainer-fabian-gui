@@ -7851,36 +7851,52 @@ void CViewDiagramm::StartGraphThread( void )
 //************************************
 void CViewDiagramm::StopGraphThread( void )
 {
-	EnterCriticalSection(&csDoThread);
-	bool bDoThread=m_bDoThread;
-	m_bDoThread=false;;
-	LeaveCriticalSection(&csDoThread);
-
-	if(bDoThread)
+	try
 	{
-		g_eventGraphData.SetEvent();
+		EnterCriticalSection(&csDoThread);
+		bool bDoThread=m_bDoThread;
+		m_bDoThread=false;;
+		LeaveCriticalSection(&csDoThread);
 
-		if (WaitForSingleObject(m_pcwtGraphThread->m_hThread,3000) == WAIT_TIMEOUT)
+		if(bDoThread)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:031a EXCEPTION"));
+			g_eventGraphData.SetEvent();
 
-			if(!TerminateThread(m_pcwtGraphThread,0))
+			if (WaitForSingleObject(m_pcwtGraphThread->m_hThread,3000) == WAIT_TIMEOUT)
 			{
-				theApp.getLog()->WriteLine(_T("#THR:031b EXCEPTION"));
+				theApp.getLog()->WriteLine(_T("#THR:031a EXCEPTION"));
+
+				if(!TerminateThread(m_pcwtGraphThread,0))
+				{
+					theApp.getLog()->WriteLine(_T("#THR:031b EXCEPTION"));
+				}
 			}
 		}
-	}
-	if(m_pcwtGraphThread!=NULL)
-	{
-		delete m_pcwtGraphThread;
-		m_pcwtGraphThread=NULL;
 
-		if(m_hThreadGraph!=INVALID_HANDLE_VALUE)
+		if(m_pcwtGraphThread!=NULL)
 		{
-			CloseHandle(m_hThreadGraph);
-			m_hThreadGraph=INVALID_HANDLE_VALUE;
+			delete m_pcwtGraphThread;
+			m_pcwtGraphThread=NULL;
+
+			if(m_hThreadGraph!=INVALID_HANDLE_VALUE)
+			{
+				CloseHandle(m_hThreadGraph);
+				m_hThreadGraph=INVALID_HANDLE_VALUE;
+			}
 		}
+		
 	}
+	catch (std::exception& e)
+	{
+		theApp.getLog()->WriteLine(_T("#EXCEPTION: CViewDiagramm::StopGraphThread"));
+
+		throw;
+
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CDataHandler::SerializeTrend: #%s"),e.what());
+		theApp.ReportException(szError);
+	}
+	
 }
 
 bool CViewDiagramm::doThread()

@@ -872,7 +872,7 @@ IDB_BTN_GROUP_UP_BOT    BITMAP                  "res\\Btn\\para_btn_group_up_bot
 IDB_BTN_GROUP_UP_TOP    BITMAP                  "res\\Btn\\para_btn_group_up_top.bmp"
 IDB_BTN_SELECT_YES      BITMAP                  "res\\Btn\\select_yes.bmp"
 IDB_BTN_SELECT_NO       BITMAP                  "res\\Btn\\select_no.bmp"
-IDB_BTN_PARA_DIS_TOP    BITMAP                  "res\\Btn\\paraset_btn_dis_top.bmp"
+IDB_BTN_PARA_DIS_TOP    BITMAP                  "res\\Btn\\para_btn_dis_top.bmp"
 IDB_PARA_WARN_DIS       BITMAP                  "res\\Pics\\parawarning_dis.bmp"
 IDB_ARROWUP_GREY        BITMAP                  "res\\Pics\\arrowup_grey.bmp"
 IDB_EXCLAMATION_LGHTGREY BITMAP                  "res\\Pics\\warning_lghtgrey.bmp"
@@ -941,6 +941,7 @@ IDB_FOT_ONOFF_DIS       BITMAP                  "res\\Btn\\fot_start_dis.bmp"
 IDB_FOT_ONOFF_DW        BITMAP                  "res\\Btn\\fot_start_dw.bmp"
 IDB_FOT_ONOFF_UP        BITMAP                  "res\\Btn\\fot_start_up.bmp"
 IDB_BTN_SETPED_DIS      BITMAP                  "res\\Btn\\ped_dis.bmp"
+IDB_BTN_PARASET_DIS_BOT BITMAP                  "res\\Btn\\paraset_btn_dis_bot.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //

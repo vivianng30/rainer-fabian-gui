@@ -117,14 +117,11 @@ public:
 	bool getShowEFlowInSettings();
 	void setShowEFlowInSettings(bool bState);
 
-	/*void SetPlayTriggerSound(bool state);
-	bool GetPlayTriggerSound();*/
-
 	void SetHFOManBreathEnabled(bool state);
 	bool IsHFOManBreathEnabled();
 
-	/*void SetBreathVolumeGaranty(int iVal);
-	int GetBreathVolumeGaranty();*/
+	void SetEFLOWequalILFOW(bool state);
+	bool IsEFLOWequalILFOW();
 
 	void SetPercentAbortCriterionPSV(int iVal);
 	int GetPercentAbortCriterionPSV();
@@ -1241,6 +1238,7 @@ private:
 
 	eLeakCompensation m_eLeakCompOff;
 
+	bool m_bEFLOWequalILFOW;
 	bool m_bGraphAutoScale;
 	bool m_bTrendAutoScale;
 	bool m_bFilledGraph;

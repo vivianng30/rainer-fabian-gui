@@ -20,6 +20,14 @@ CSelectSetupBtn::CSelectSetupBtn(BTN &btn,COLORREF cr,bool bValue)
 	m_pcOkUp=NULL;
 	m_pcOkDw=NULL;
 
+	//m_pcKeyFc=NULL;
+	//m_pcKeyUp=NULL;
+	m_pcKeyDw=NULL;
+
+	m_pcWarningFc=NULL;
+	m_pcWarningUp=NULL;
+	m_pcWarningDw=NULL;
+
 	m_btnState=BS_UP;
 
 	m_pbmpFlag=NULL;
@@ -54,6 +62,8 @@ CSelectSetupBtn::CSelectSetupBtn(BTN &btn,COLORREF cr,bool bValue)
 
 	m_bValue = bValue;
 	m_bDrawOK=false;
+	m_bDrawKey=false;
+	m_bDrawWarning=false;
 }
 
 CSelectSetupBtn::~CSelectSetupBtn()
@@ -66,6 +76,22 @@ CSelectSetupBtn::~CSelectSetupBtn()
 	m_pcOkUp=NULL;
 	delete m_pcOkDw;
 	m_pcOkDw=NULL;
+
+	//delete m_pcKeyFc;
+	//delete m_pcKeyUp;
+	delete m_pcKeyDw;
+
+	//m_pcKeyFc=NULL;
+	//m_pcKeyUp=NULL;
+	m_pcKeyDw=NULL;
+
+	delete m_pcWarningFc;
+	delete m_pcWarningUp;
+	delete m_pcWarningDw;
+
+	m_pcWarningFc=NULL;
+	m_pcWarningUp=NULL;
+	m_pcWarningDw=NULL;
 
 	if(m_hDC)
 	{
@@ -115,6 +141,14 @@ BOOL CSelectSetupBtn::Create(CWnd* pParentWnd, HFONT hFont, int nXOffset, DWORD	
 		m_pcOkFc= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_OK_FC);
 		m_pcOkUp= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_OK_UP);
 		m_pcOkDw= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_OK_DW);
+
+		//m_pcKeyFc=NULL;
+		//m_pcKeyUp=NULL;
+		m_pcKeyDw	= new CBmp(theApp.m_hInstance,m_hDC,	IDB_PARA_KEY_DW);
+
+		m_pcWarningFc= new CBmp(theApp.m_hInstance,m_hDC,	IDB_PARA_WARN_FC);
+		m_pcWarningUp= new CBmp(theApp.m_hInstance,m_hDC,	IDB_PARA_WARN_UP);
+		m_pcWarningDw= new CBmp(theApp.m_hInstance,m_hDC,	IDB_PARA_WARN_DW);
 
 		m_rcClient.left=m_rcClient.top=0;
 		m_rcClient.right=sz.cx;
@@ -183,6 +217,32 @@ void CSelectSetupBtn::DrawOK(bool state)
 		bRedraw = true;
 
 	m_bDrawOK=state;
+
+	if(bRedraw)
+		Redraw();
+}
+
+void CSelectSetupBtn::DrawKey(bool state)
+{
+	bool bRedraw=false;
+
+	if(state!=m_bDrawKey)
+		bRedraw = true;
+
+	m_bDrawKey=state;
+
+	if(bRedraw)
+		Redraw();
+}
+
+void CSelectSetupBtn::DrawWarning(bool state)
+{
+	bool bRedraw=false;
+
+	if(state!=m_bDrawWarning)
+		bRedraw = true;
+
+	m_bDrawWarning=state;
 
 	if(bRedraw)
 		Redraw();
@@ -286,6 +346,7 @@ void CSelectSetupBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	{
 		m_btn.pcBmpDisabled->Draw(m_hDC);
 		Draw(BTN_DW_UP);
+		//Draw(BTN_DW_DIS);
 		BitBlt(lpDrawItemStruct->hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);
 	}
 	else if(m_btnState==BS_UP)
@@ -410,6 +471,62 @@ void CSelectSetupBtn::Draw(int nState/*,TCHAR* psz*/)
 			if(pcOK)
 				pcOK->Draw(m_hDC,20,2);
 		}
+
+		if(m_bDrawKey)
+		{
+			CBmp* pcKey=NULL;
+
+			switch(GetState())
+			{
+			/*case BS_UP:
+				{
+					pcKey=m_pcKeyUp;
+				}
+				break;
+			case BS_FOCUSED:
+				{
+					pcKey=m_pcKeyFc;
+				}
+				break;*/
+			case BS_DOWN:
+				{
+					pcKey=m_pcKeyDw;
+				}
+				break;
+			}
+
+			if(pcKey)
+				pcKey->Draw(m_hDC,5,40);
+		}
+
+		if(m_bDrawWarning)
+		{
+			CBmp* pcWarning=NULL;
+
+			switch(GetState())
+			{
+			case BS_UP:
+				{
+					pcWarning=m_pcWarningUp;
+				}
+				break;
+			case BS_FOCUSED:
+				{
+					pcWarning=m_pcWarningFc;
+				}
+				break;
+			case BS_DOWN:
+				{
+					pcWarning=m_pcWarningDw;
+				}
+				break;
+			}
+
+			if(pcWarning)
+				pcWarning->Draw(m_hDC,80,40);
+		}
+
+
 
 		if(m_pbmpFlag!=NULL)
 		{

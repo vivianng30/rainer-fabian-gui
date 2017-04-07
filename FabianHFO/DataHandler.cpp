@@ -4719,6 +4719,12 @@ void CDataHandler::start()
 	else */
 	if(iPatientID!=0)
 		m_bPatientDataAvailable =true;
+
+	if(getModel()->getCONFIG()->IsEFLOWequalILFOW())
+	{
+		if(AfxGetApp() != NULL)
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_SET_EFLOWEQUIFLOW);
+	}
 }
 
 
@@ -9783,6 +9789,96 @@ SHORT CDataHandler::GetCurrentPInspMaxKey()
 //***************************************************************************
 //     
 //**************************************************************************
+SHORT CDataHandler::GetCurrentIFlowMaxKey()
+{
+	SHORT iValue=0;
+
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_IPPV:
+	case VM_PSV:
+	case VM_SIMV:
+	case VM_SIMVPSV:
+	case VM_SIPPV:
+	case VM_CPAP:
+	case VM_DUOPAP:
+	case VM_NCPAP:
+	case VM_HFO:
+	case VM_THERAPIE:
+		{
+			iValue=PARADATA()->GetIFlowMaxKey();
+		}
+		break;
+	case VM_PRE_IPPV:
+	case VM_PRE_PSV:
+	case VM_PRE_SIMV:
+	case VM_PRE_SIMVPSV:
+	case VM_PRE_SIPPV:
+	case VM_PRE_CPAP:
+	case VM_PRE_DUOPAP:
+	case VM_PRE_NCPAP:
+	case VM_PRE_HFO:
+	case VM_PRE_THERAPIE:
+		{
+			iValue=PRESET()->GetIFlowMaxKey();
+		}
+		break;
+	default:
+		{
+		}
+		break;
+	}
+
+	return iValue;
+}
+//***************************************************************************
+//     
+//**************************************************************************
+SHORT CDataHandler::GetCurrentEFlowMaxKey()
+{
+	SHORT iValue=0;
+
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_IPPV:
+	case VM_PSV:
+	case VM_SIMV:
+	case VM_SIMVPSV:
+	case VM_SIPPV:
+	case VM_CPAP:
+	case VM_DUOPAP:
+	case VM_NCPAP:
+	case VM_HFO:
+	case VM_THERAPIE:
+		{
+			iValue=PARADATA()->GetEFlowMaxKey();
+		}
+		break;
+	case VM_PRE_IPPV:
+	case VM_PRE_PSV:
+	case VM_PRE_SIMV:
+	case VM_PRE_SIMVPSV:
+	case VM_PRE_SIPPV:
+	case VM_PRE_CPAP:
+	case VM_PRE_DUOPAP:
+	case VM_PRE_NCPAP:
+	case VM_PRE_HFO:
+	case VM_PRE_THERAPIE:
+		{
+			iValue=PRESET()->GetEFlowMaxKey();
+		}
+		break;
+	default:
+		{
+		}
+		break;
+	}
+
+	return iValue;
+}
+//***************************************************************************
+//     
+//**************************************************************************
 WORD CDataHandler::GetCurrentVlimitMaxKey()
 {
 	WORD iValue=0;
@@ -11185,6 +11281,11 @@ void CDataHandler::SetCurrentIFlowPara(WORD val)
 				getModel()->getALARMHANDLER()->setAutoSilent();
 			}
 			SetIFlowParadata_IPPV(val,true);
+
+			if(getModel()->getCONFIG()->IsEFLOWequalILFOW() && false==GetExhalValvCalMode())
+			{
+				SetEFlowParadata_IPPV(val,true);
+			}
 		}
 		break;
 	case VM_SERVICE:
@@ -11198,11 +11299,21 @@ void CDataHandler::SetCurrentIFlowPara(WORD val)
 				getModel()->getALARMHANDLER()->setAutoSilent();
 			}
 			SetIFlowParadata_TRIGGER(val,true);
+
+			if(getModel()->getCONFIG()->IsEFLOWequalILFOW() && false==GetExhalValvCalMode())
+			{
+				SetEFlowParadata_TRIGGER(val,true);
+			}
 		}
 		break;
 	case VM_PRE_IPPV:
 		{
 			PRESET()->SetIFlowPara_IPPV(val,false,false);
+
+			if(getModel()->getCONFIG()->IsEFLOWequalILFOW() && false==GetExhalValvCalMode())
+			{
+				PRESET()->SetEFLOWPara_IPPV(val,false,false);
+			}
 		}
 		break;
 	case VM_PRE_PSV:
@@ -11211,6 +11322,11 @@ void CDataHandler::SetCurrentIFlowPara(WORD val)
 	case VM_PRE_SIPPV:
 		{
 			PRESET()->SetIFlowPara_TRIGGER(val,false,false);
+
+			if(getModel()->getCONFIG()->IsEFLOWequalILFOW() && false==GetExhalValvCalMode())
+			{
+				PRESET()->SetEFLOWPara_TRIGGER(val,false,false);
+			}
 		}
 		break;
 	default:

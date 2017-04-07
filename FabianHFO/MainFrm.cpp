@@ -3836,6 +3836,13 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 		break;
+	case WM_SET_EFLOWEQUIFLOW:
+		{
+			CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_SET_EFLOWEQUIFLOW);
+			getModel()->triggerEvent(&eventCtrl);
+			return 1;
+		}
+		break;
 	case WM_SET_CO2PUMPTIMER:
 		{
 			KillTimer(CO2PUMPTIMER);
@@ -8742,19 +8749,19 @@ DWORD CMainFrame::DoTimerFunctions(void)
 #endif
 
 								//TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-								//if(m_dwLastWatchdogMemoryCheck+10000<GetTickCount())
-								//{
-								//	m_dwLastWatchdogMemoryCheck=GetTickCount();
+								/*if(m_dwLastWatchdogMemoryCheck+10000<GetTickCount())
+								{
+									m_dwLastWatchdogMemoryCheck=GetTickCount();
 
-								//	GlobalMemoryStatus (&stat);
-								//	DWORD dwMem=stat.dwAvailPhys/1024;
+									GlobalMemoryStatus (&stat);
+									DWORD dwMem=stat.dwAvailPhys/1024;
 
-								//	CString szMem=_T("");
-								//	szMem.Format(L"MEMORY [%d]",dwMem);
-								//	//theApp.getLog()->WriteLine(szMem, true);
-								//	DEBUGMSG(TRUE, (szMem));
-								//	
-								//}
+									CString szMem=_T("");
+									szMem.Format(L"MEMORY [%d]",dwMem);
+									theApp.getLog()->WriteLine(szMem);
+									DEBUGMSG(TRUE, (szMem));
+									
+								}*/
 								
 								//TEST
 								/*CStringW sz=_T("!!!test !!!test !!!test !!!test !!!test !!!test !!!test !!!test !!!test !!!test !!!test !!!test !!! end");

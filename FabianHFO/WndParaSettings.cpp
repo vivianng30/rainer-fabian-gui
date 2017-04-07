@@ -80,6 +80,7 @@ CWndParaSettings::CWndParaSettings()
 	m_pcPara_UpB=NULL;
 	m_pcPara_FcB=NULL;
 	m_pcPara_DwB=NULL;
+	m_pcPara_DisB=NULL;
 
 	m_pcPara_PCurve=NULL;
 	m_pcPara_AbortPSV=NULL;
@@ -186,6 +187,8 @@ CWndParaSettings::~CWndParaSettings()
 	m_pcPara_FcB=NULL;
 	delete m_pcPara_DwB;
 	m_pcPara_DwB=NULL;
+	delete m_pcPara_DisB;
+	m_pcPara_DisB=NULL;
 }
 
 // **************************************************************************
@@ -267,6 +270,7 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		m_pcPara_UpB		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_PARASET_UP_BOT);
 		m_pcPara_FcB		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_PARASET_FC_BOT);
 		m_pcPara_DwB		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_PARASET_DW_BOT);
+		m_pcPara_DisB		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_PARASET_DIS_BOT);
 
 		m_pcExclamation = new CBmp(theApp.m_hInstance,dc.m_hDC,IDB_EXCLAMATION_LGHTGREY);
 		m_pcPara_Confirm_yes= new CBmp(theApp.m_hInstance,m_hDC,	IDB_BTN_SELECT_YES);
@@ -418,7 +422,7 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		btn.pcBmpUp				= m_pcPara_UpB;
 		btn.pcBmpDown			= m_pcPara_DwB;
 		btn.pcBmpFocus			= m_pcPara_FcB;
-		btn.pcBmpDisabled		= m_pcPara_UpB;
+		btn.pcBmpDisabled		= m_pcPara_DisB;
 		btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
 
 		if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
@@ -436,12 +440,20 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 			fv.iValue=fv.iUpperLimit;
 		else if(fv.iValue<fv.iLowerLimit)
 			fv.iValue=fv.iLowerLimit;
-		//fv.tText[0]=0;
+		
 		m_pcPara_EFLOW=new CParaBtn_EFLOW(btn,0,false);
 		m_pcPara_EFLOW->Create(this,dwStyleNoTab,fv);
 		m_pcPara_EFLOW->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
 		m_pcPara_EFLOW->SetNameText(getModel()->GetLanguageString(IDS_PARA_EFLOW));
 		m_pcPara_EFLOW->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_LMIN));
+		if(fv.iValue>getModel()->getDATAHANDLER()->GetCurrentEFlowMaxKey())
+		{
+			m_pcPara_EFLOW->SetWarning();
+		}
+		else
+		{
+			m_pcPara_EFLOW->SetWarning(false);
+		}
 
 		//Parameter Button------Pressure Curve---------------------------------
 		btn.wID					= IDC_BTN_PARA_PCURVE;	
@@ -748,7 +760,14 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 				/*&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW*/)
 		{
 			m_pcPara_EFLOW->ShowWindow(SW_SHOW);
-			//m_pcPara_EFLOW->EnableWindow(TRUE);
+			if(getModel()->getCONFIG()->IsEFLOWequalILFOW())
+			{
+				m_pcPara_EFLOW->EnableWindow(FALSE);
+			}
+			else
+			{
+				m_pcPara_EFLOW->EnableWindow(TRUE);
+			}
 		}
 		else
 		{
@@ -835,7 +854,14 @@ void CWndParaSettings::Show(bool bShow)
 					/*&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW*/)
 			{
 				m_pcPara_EFLOW->ShowWindow(SW_SHOW);
-				//m_pcPara_EFLOW->EnableWindow(TRUE);
+				if(getModel()->getCONFIG()->IsEFLOWequalILFOW())
+				{
+					m_pcPara_EFLOW->EnableWindow(FALSE);
+				}
+				else
+				{
+					m_pcPara_EFLOW->EnableWindow(TRUE);
+				}
 			}
 			else
 			{
@@ -1124,8 +1150,11 @@ void CWndParaSettings::SetViewFocus(int iBtn)
 		{
 			if(m_pcPara_EFLOW)
 			{
-				if(m_pcPara_EFLOW->IsWindowVisible())
-					m_pcPara_EFLOW->SetFocus();
+				if(false==getModel()->getCONFIG()->IsEFLOWequalILFOW())
+				{
+					if(m_pcPara_EFLOW->IsWindowVisible())
+						m_pcPara_EFLOW->SetFocus();
+				}
 			}
 		}
 		break;

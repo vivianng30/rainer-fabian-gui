@@ -114,6 +114,7 @@ CConfiguration::CConfiguration()
 	m_bPlayBackupSound=false;
 	m_bShowEFlowInSettings=false;
 	m_bHFOManBreathEnabled=false;
+	m_bEFLOWequalILFOW=false;
 	m_iPercentAbortCriterionPSV=0;
 	m_eAutoOxyCal=CAL_21;
 	m_eAutoScreenlocktime=ASL_30;
@@ -515,6 +516,7 @@ void CConfiguration::Init()
 	m_bPlayBackupSound=false;
 	m_bShowEFlowInSettings=false;
 	m_bHFOManBreathEnabled=false;
+	m_bEFLOWequalILFOW=false;
 	m_iPercentAbortCriterionPSV=0;
 	m_eAutoOxyCal=CAL_21;
 	m_eAutoScreenlocktime=ASL_30;
@@ -1511,6 +1513,11 @@ void CConfiguration::LoadSettings()
 		m_bHFOManBreathEnabled=true;
 	else
 		m_bHFOManBreathEnabled=false;
+
+	if(getModel()->getI2C()->ReadConfigByte(EFLOWEQUIFLOW_8)==1)
+		m_bEFLOWequalILFOW=true;
+	else
+		m_bEFLOWequalILFOW=false;
 	
 
 	/*m_iBreathVolGaranty=getModel()->getI2C()->ReadConfigByte(BREATHVOLGARANTY_8);
@@ -5148,6 +5155,27 @@ bool CConfiguration::IsHFOManBreathEnabled()
 // **************************************************************************
 // 
 // **************************************************************************
+void CConfiguration::SetEFLOWequalILFOW(bool state)
+{
+	m_bEFLOWequalILFOW=state;
+	if(state)
+		getModel()->getI2C()->WriteConfigByte(EFLOWEQUIFLOW_8, 1);
+	else
+		getModel()->getI2C()->WriteConfigByte(EFLOWEQUIFLOW_8, 0);
+
+	getModel()->getDATAHANDLER()->SetEFlowParadata_IPPV(getModel()->getDATAHANDLER()->PARADATA()->GetIFlowPara_IPPV(),true);
+	getModel()->getDATAHANDLER()->SetEFlowParadata_TRIGGER(getModel()->getDATAHANDLER()->PARADATA()->GetIFlowPara_TRIGGER(),true);
+	/*if(AfxGetApp() != NULL)
+		AfxGetApp()->GetMainWnd()->PostMessage(WM_SET_EFLOWEQUIFLOW);*/
+}
+bool CConfiguration::IsEFLOWequalILFOW()
+{
+	return m_bEFLOWequalILFOW;
+}
+
+// **************************************************************************
+// 
+// **************************************************************************
 bool CConfiguration::getShowEFlowInSettings()
 {
 	return m_bShowEFlowInSettings;
@@ -6610,12 +6638,16 @@ void CConfiguration::SetCurPressureRiseCtrl(eCurveForm form)
 				getModel()->getAcuLink()->setParaData(ALINK_SETT_RISETIME,iRiseTime/10);
 			else
 				getModel()->getAcuLink()->setParaData(ALINK_SETT_RISETIME,iRiseTime);
+
+			SetEFLOWequalILFOW(false);
 		}
 		break;
 	case CURVE_AUTOFLOW:
 		{
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_INSP_FLOW,ALINK_NOTVALID);
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_RISETIME,ALINK_NOTVALID);
+
+			SetEFLOWequalILFOW(false);
 		}
 		break;
 	}
@@ -9575,6 +9607,7 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		ar<<m_iCurNumericBlock_FLOWOFFHFO;
 		ar<<m_bUseNeoPed;
 		ar<<m_iCurNumericBlock_FLOWOFFCPAP;
+		ar<<m_bEFLOWequalILFOW;
 	}
 	else
 	{
@@ -10236,6 +10269,9 @@ void CConfiguration::SerializeFile(CArchive& ar)
 
 			ar>>m_iCurNumericBlock_FLOWOFFCPAP;
 			setLastNumericFLOWOFFCPAP(m_iCurNumericBlock_FLOWOFFCPAP);
+
+			ar>>m_bEFLOWequalILFOW;
+			SetEFLOWequalILFOW(m_bEFLOWequalILFOW);
 		}
 	}
 }

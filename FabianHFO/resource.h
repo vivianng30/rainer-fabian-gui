@@ -700,6 +700,8 @@
 #define IDB_BITMAP33                    1007
 #define IDB_BTN_SETPED_DIS              1007
 #define IDC_MENU3                       1008
+#define IDB_BITMAP34                    1008
+#define IDB_BTN_PARASET_DIS_BOT         1008
 #define IDC_MENU4                       1009
 #define IDC_MENU5                       1010
 #define IDC_MENU8                       1013
@@ -1475,7 +1477,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        1008
+#define _APS_NEXT_RESOURCE_VALUE        1009
 #define _APS_NEXT_COMMAND_VALUE         32772
 #define _APS_NEXT_CONTROL_VALUE         1050
 #define _APS_NEXT_SYMED_VALUE           105
