@@ -116,11 +116,6 @@ protected:
 	void ShowWndLoopPressureVolume(bool bShow);
 	void ShowWndLoopVolumeFlow(bool bShow);
 
-	/*void ShowGraphViewSelection(bool bState);
-	bool CreateWndGraphViewSelection();
-	void ShowWndGraphViewSelection();
-	void DestroyWndGraphViewSelection();*/
-
 	void drawView(bool bNextGraph=false);
 	void drawGraphview(bool bNextGraph=false);
 	void drawParaview();
@@ -207,16 +202,7 @@ protected:
 	void setCurrentXtimevalGraphs(int iVal);
 	int getCurrentXtimevalGraphs();
 	void resetCurrentXtimevalGraphs();
-	/*int IncreaseCurrentXtimevalGraphs();
-	int DecreaseCurrentXtimevalGraphs();*/
 
-	/*void SetCurrentXtimevalCLFIO2(int iVal);
-	int GetCurrentXtimevalCLFIO2();
-	void ResetCurrentXtimevalCLFIO2();
-	int IncreaseCurrentXtimevalCLFIO2();
-	int DecreaseCurrentXtimevalCLFIO2();*/
-
-	//void resetAllXtimeval();
 
 	void resetAllDiagramms();
 	void resetSPO2Diagramm();
@@ -254,10 +240,6 @@ protected:
 	void setValueVolGarantyLow(double val);
 	double getValueVolGarantyLow();
 	bool CalculateHFOVolGaranty();
-
-	/*void setResetCurrentXaxes();
-	void deleteResetCurrentXaxes();
-	bool getResetCurrentXaxes();*/
 
 	void deleteUpdateRingBufCopy();
 	bool getUpdateRingBufCopy();
@@ -325,6 +307,8 @@ protected:
 	static CRITICAL_SECTION	csDiagrammSPO2;
 	static CRITICAL_SECTION	csDiagrammCO2;
 	static CRITICAL_SECTION	csDiagrammFOT;
+	static CRITICAL_SECTION	csGraphButton;
+
 	CDiagramm *m_pLoopFOT;
 	CDiagramm *m_pDiagrammCO2;
 	CDiagramm *m_pDiagrammSPO2;

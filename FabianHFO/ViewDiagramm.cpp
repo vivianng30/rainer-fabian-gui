@@ -31,6 +31,7 @@ CRITICAL_SECTION CViewDiagramm::csDiagrammLOOP;
 CRITICAL_SECTION CViewDiagramm::csDiagrammSPO2;
 CRITICAL_SECTION CViewDiagramm::csDiagrammCO2;
 CRITICAL_SECTION CViewDiagramm::csDiagrammFOT;
+CRITICAL_SECTION CViewDiagramm::csGraphButton;
 
 extern CEvent g_eventGraphData;
 
@@ -95,6 +96,7 @@ CMVView(ViewID)
 	InitializeCriticalSection(&csDiagrammSPO2);
 	InitializeCriticalSection(&csDiagrammCO2);
 	InitializeCriticalSection(&csDiagrammFOT);
+	InitializeCriticalSection(&csGraphButton);
 
 	InitializeCriticalSection(&csExit);
 
@@ -464,10 +466,10 @@ CViewDiagramm::~CViewDiagramm()
 	}
 	m_lpfsVolumeFlow=NULL;
 
-
-
+	EnterCriticalSection(&csGraphButton);
 	delete m_pcGraph1;
 	m_pcGraph1=NULL;
+	LeaveCriticalSection(&csGraphButton);
 	
 	delete m_pcGraphArrow_Up;
 	m_pcGraphArrow_Up=NULL;
@@ -489,7 +491,7 @@ CViewDiagramm::~CViewDiagramm()
 	DeleteCriticalSection(&csVolGarant);
 	DeleteCriticalSection(&csThreadAccess);
 	DeleteCriticalSection(&csRedrawDiagram);
-
+	DeleteCriticalSection(&csGraphButton);
 	DeleteCriticalSection(&csDiagrammPRESSURE);
 	DeleteCriticalSection(&csDiagrammFLOW);
 	DeleteCriticalSection(&csDiagrammVOLUME);
@@ -2421,10 +2423,9 @@ void CViewDiagramm::drawView(bool bNextGraph)
 		return;
 	DrawCursor(0);
 
-	if(!m_bFreeze)//rku DIAG
+	if(!m_bFreeze)
 	{
-
-		if(m_pcwtGraphThread!=NULL)//rku APPERR
+		if(m_pcwtGraphThread!=NULL)
 			StopGraphThread();
 
 		getModel()->getDATAHANDLER()->updateCopyDataBuffer();
@@ -2452,20 +2453,22 @@ void CViewDiagramm::drawView(bool bNextGraph)
 	{
 	case VS_GRAPH:
 		{
-			drawGraphview(bNextGraph);//rku APPERR
+			drawGraphview(bNextGraph);
 		}
 		break;
 	case VS_ALARM_LIMIT:
 	case VS_PARA:
 		{
 
-			drawParaview();//rku APPERR
+			drawParaview();
 		}
 		break;
 	default:
 		{
+			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->ShowWindow(SW_HIDE);
+			LeaveCriticalSection(&csGraphButton);
 
 			DestroyWndMenuGraphs();
 		}
@@ -2480,7 +2483,7 @@ void CViewDiagramm::drawView(bool bNextGraph)
 		m_bFilledGraph=getModel()->getCONFIG()->GraphIsFilled();
 
 
-	if(!m_bFreeze)//rku DIAGR
+	if(!m_bFreeze)
 	{
 		StartGraphThread();
 	}
@@ -2514,8 +2517,10 @@ void CViewDiagramm::drawParaview()
 		m_iCurrentLineDiagramm=IDC_LINEDIAGRAM_PRESSURE;
 		getModel()->getCONFIG()->GraphSetPrimaryLineDiagramm(m_iCurrentLineDiagramm);
 
+		EnterCriticalSection(&csGraphButton);
 		if(m_pcGraph1)
 			m_pcGraph1->ShowWindow(SW_HIDE);
+		LeaveCriticalSection(&csGraphButton);
 
 		DestroyWndGraphPressure();
 		DestroyWndGraphVolume();
@@ -2544,8 +2549,10 @@ void CViewDiagramm::drawParaview()
 	{
 		MoveWindow(0,48,605,164);
 
+		EnterCriticalSection(&csGraphButton);
 		if(m_pcGraph1)
 			m_pcGraph1->ShowWindow(SW_SHOW);
+		LeaveCriticalSection(&csGraphButton);
 
 		DestroyWndGraphPressure();
 		DestroyWndGraphVolume();
@@ -2561,8 +2568,10 @@ void CViewDiagramm::drawParaview()
 
 		if(m_iCurrentLineDiagramm==IDC_LINEDIAGRAM_VOLUME)
 		{
+			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->RefreshText(getModel()->GetLanguageString(IDS_BTN_SELVOLUMEGRAPH));
+			LeaveCriticalSection(&csGraphButton);
 			
 			CreateWndGraphVolume(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 			ShowWndGraphVolume(true);
@@ -2571,8 +2580,10 @@ void CViewDiagramm::drawParaview()
 		}
 		else if(m_iCurrentLineDiagramm==IDC_LINEDIAGRAM_FLOW)
 		{
+			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->RefreshText(getModel()->GetLanguageString(IDS_BTN_SELFLOWGRAPH));
+			LeaveCriticalSection(&csGraphButton);
 			
 			CreateWndGraphFlow(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 			ShowWndGraphFlow(true);
@@ -2581,8 +2592,10 @@ void CViewDiagramm::drawParaview()
 		}
 		else
 		{
+			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->RefreshText(getModel()->GetLanguageString(IDS_BTN_SELPRESSUREGRAPH));
+			LeaveCriticalSection(&csGraphButton);
 			
 			CreateWndGraphPressure(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 			ShowWndGraphPressure(true);
@@ -2629,8 +2642,11 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 			
 			MoveWindow(0,48,605,488);
 
+			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->ShowWindow(SW_HIDE);
+			LeaveCriticalSection(&csGraphButton);
+			
 			//setTextGraph2(_T("FOT"));
 			drawGraphTXT(true, true, false,true);
 
@@ -2681,15 +2697,20 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 
 			MoveWindow(0,48,605,488);
 
+			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->ShowWindow(SW_SHOW);
+			LeaveCriticalSection(&csGraphButton);
+			
 			drawGraphTXT(false, false, false);
 		
 
 			if(m_iCurrentLineDiagramm==IDC_LINEDIAGRAM_VOLUME)
 			{
+				EnterCriticalSection(&csGraphButton);
 				if(m_pcGraph1)
 					m_pcGraph1->RefreshText(getModel()->GetLanguageString(IDS_BTN_SELVOLUMEGRAPH));
+				LeaveCriticalSection(&csGraphButton);
 				
 				CreateWndGraphVolume(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 				ShowWndGraphVolume(true);
@@ -2701,8 +2722,10 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 			}
 			else if(m_iCurrentLineDiagramm==IDC_LINEDIAGRAM_FLOW)
 			{
+				EnterCriticalSection(&csGraphButton);
 				if(m_pcGraph1)
 					m_pcGraph1->RefreshText(getModel()->GetLanguageString(IDS_BTN_SELFLOWGRAPH));
+				LeaveCriticalSection(&csGraphButton);
 				
 				CreateWndGraphFlow(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 				ShowWndGraphFlow(true);
@@ -2714,8 +2737,10 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 			}
 			else
 			{
+				EnterCriticalSection(&csGraphButton);
 				if(m_pcGraph1)
 					m_pcGraph1->RefreshText(getModel()->GetLanguageString(IDS_BTN_SELPRESSUREGRAPH));
+				LeaveCriticalSection(&csGraphButton);
 				
 				CreateWndGraphPressure(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 				ShowWndGraphPressure(true);
@@ -2766,8 +2791,11 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 
 			MoveWindow(0,48,605,488);
 
+			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->ShowWindow(SW_HIDE);
+			LeaveCriticalSection(&csGraphButton);
+			
 			setTextGraph2(_T("PLETH"));
 			drawGraphTXT(true, true, false,true);
 			
@@ -2809,8 +2837,11 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 			
 			MoveWindow(0,48,605,488);
 
+			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->ShowWindow(SW_SHOW);
+			LeaveCriticalSection(&csGraphButton);
+			
 			setTextGraph2(_T("PLETH"));
 			
 			if(!bNextGraph)
@@ -2819,36 +2850,42 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 
 			if(m_iCurrentLineDiagramm==IDC_LINEDIAGRAM_VOLUME)
 			{
+				EnterCriticalSection(&csGraphButton);
 				if(m_pcGraph1)
 					m_pcGraph1->RefreshText(getModel()->GetLanguageString(IDS_BTN_SELVOLUMEGRAPH));
+				LeaveCriticalSection(&csGraphButton);
 				
 				CreateWndGraphVolume(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 				ShowWndGraphVolume(true);
-				if(!m_bFreeze)//rku DIAG
+				if(!m_bFreeze)
 				{
 					setRedrawDiagram(REDRAW_GRAPHS);
 				}
 			}
 			else if(m_iCurrentLineDiagramm==IDC_LINEDIAGRAM_FLOW)
 			{
+				EnterCriticalSection(&csGraphButton);
 				if(m_pcGraph1)
 					m_pcGraph1->RefreshText(getModel()->GetLanguageString(IDS_BTN_SELFLOWGRAPH));
+				LeaveCriticalSection(&csGraphButton);
 				
 				CreateWndGraphFlow(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 				ShowWndGraphFlow(true);
-				if(!m_bFreeze)//rku DIAG
+				if(!m_bFreeze)
 				{
 					setRedrawDiagram(REDRAW_GRAPHS);
 				}
 			}
 			else
 			{
+				EnterCriticalSection(&csGraphButton);
 				if(m_pcGraph1)
 					m_pcGraph1->RefreshText(getModel()->GetLanguageString(IDS_BTN_SELPRESSUREGRAPH));
+				LeaveCriticalSection(&csGraphButton);
 				
 				CreateWndGraphPressure(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 				ShowWndGraphPressure(true);
-				if(!m_bFreeze)//rku DIAG
+				if(!m_bFreeze)
 				{
 					setRedrawDiagram(REDRAW_GRAPHS);
 				}
@@ -2888,8 +2925,11 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 			
 			MoveWindow(0,48,605,488);
 
+			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->ShowWindow(SW_HIDE);
+			LeaveCriticalSection(&csGraphButton);
+			
 			setTextGraph2(getModel()->GetLanguageString(IDS_MENU_CO2));
 			drawGraphTXT(true, true, false);
 
@@ -2899,7 +2939,7 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 			
 			CreateWndGraphPressure(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 			ShowWndGraphPressure(true);
-			if(!m_bFreeze)//rku DIAG
+			if(!m_bFreeze)
 			{
 				setRedrawDiagram(REDRAW_GRAPHS);
 			}
@@ -2926,47 +2966,55 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 				DestroyWndGraphFOT();
 				DestroyWndDataFOT();
 			}
-			
 		
 			MoveWindow(0,48,605,488);
 
+			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->ShowWindow(SW_SHOW);
+			LeaveCriticalSection(&csGraphButton);
+			
 			setTextGraph2(getModel()->GetLanguageString(IDS_MENU_CO2));
 			drawGraphTXT(false, true, false);
 			
 			if(m_iCurrentLineDiagramm==IDC_LINEDIAGRAM_VOLUME)
 			{
+				EnterCriticalSection(&csGraphButton);
 				if(m_pcGraph1)
 					m_pcGraph1->RefreshText(getModel()->GetLanguageString(IDS_BTN_SELVOLUMEGRAPH));
+				LeaveCriticalSection(&csGraphButton);
 				
 				CreateWndGraphVolume(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 				ShowWndGraphVolume(true);
-				if(!m_bFreeze)//rku DIAG
+				if(!m_bFreeze)
 				{
 					setRedrawDiagram(REDRAW_GRAPHS);
 				}
 			}
 			else if(m_iCurrentLineDiagramm==IDC_LINEDIAGRAM_FLOW)
 			{
+				EnterCriticalSection(&csGraphButton);
 				if(m_pcGraph1)
 					m_pcGraph1->RefreshText(getModel()->GetLanguageString(IDS_BTN_SELFLOWGRAPH));
+				LeaveCriticalSection(&csGraphButton);
 				
 				CreateWndGraphFlow(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 				ShowWndGraphFlow(true);
-				if(!m_bFreeze)//rku DIAG
+				if(!m_bFreeze)
 				{
 					setRedrawDiagram(REDRAW_GRAPHS);
 				}
 			}
 			else
 			{
+				EnterCriticalSection(&csGraphButton);
 				if(m_pcGraph1)
 					m_pcGraph1->RefreshText(getModel()->GetLanguageString(IDS_BTN_SELPRESSUREGRAPH));
+				LeaveCriticalSection(&csGraphButton);
 				
 				CreateWndGraphPressure(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 				ShowWndGraphPressure(true);
-				if(!m_bFreeze)//rku DIAG
+				if(!m_bFreeze)
 				{
 					setRedrawDiagram(REDRAW_GRAPHS);
 				}
@@ -3012,43 +3060,52 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 
 			MoveWindow(0,48,605,488);
 
+			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->ShowWindow(SW_SHOW);
+			LeaveCriticalSection(&csGraphButton);
+			
 			drawGraphTXT(false, false, false);
 			
 
 			if(m_iCurrentLineDiagramm==IDC_LINEDIAGRAM_VOLUME)
 			{
+				EnterCriticalSection(&csGraphButton);
 				if(m_pcGraph1)
 					m_pcGraph1->RefreshText(getModel()->GetLanguageString(IDS_BTN_SELVOLUMEGRAPH));
+				LeaveCriticalSection(&csGraphButton);
 				
 				CreateWndGraphVolume(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 				ShowWndGraphVolume(true);
-				if(!m_bFreeze)//rku DIAG
+				if(!m_bFreeze)
 				{
 					setRedrawDiagram(REDRAW_GRAPHS);
 				}
 			}
 			else if(m_iCurrentLineDiagramm==IDC_LINEDIAGRAM_FLOW)
 			{
+				EnterCriticalSection(&csGraphButton);
 				if(m_pcGraph1)
 					m_pcGraph1->RefreshText(getModel()->GetLanguageString(IDS_BTN_SELFLOWGRAPH));
+				LeaveCriticalSection(&csGraphButton);
 				
 				CreateWndGraphFlow(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 				ShowWndGraphFlow(true);
-				if(!m_bFreeze)//rku DIAG
+				if(!m_bFreeze)
 				{
 					setRedrawDiagram(REDRAW_GRAPHS);
 				}
 			}
 			else
 			{
+				EnterCriticalSection(&csGraphButton);
 				if(m_pcGraph1)
 					m_pcGraph1->RefreshText(getModel()->GetLanguageString(IDS_BTN_SELPRESSUREGRAPH));
+				LeaveCriticalSection(&csGraphButton);
 				
 				CreateWndGraphPressure(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 				ShowWndGraphPressure(true);
-				if(!m_bFreeze)//rku DIAG
+				if(!m_bFreeze)
 				{
 					setRedrawDiagram(REDRAW_GRAPHS);
 				}
@@ -3086,8 +3143,11 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 
 			MoveWindow(0,48,605,164);
 
+			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->ShowWindow(SW_HIDE);
+			LeaveCriticalSection(&csGraphButton);
+			
 			drawGraphTXT(true, false, false);
 		
 			m_iCurrentLineDiagramm=IDC_LINEDIAGRAM_PRESSURE;
@@ -3095,7 +3155,7 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 
 			CreateWndGraphPressure(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 			ShowWndGraphPressure(true);
-			if(!m_bFreeze)//rku DIAG
+			if(!m_bFreeze)
 			{
 				setRedrawDiagram(REDRAW_GRAPHS);
 			}
@@ -3119,42 +3179,51 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 
 			MoveWindow(0,48,605,164);
 
+			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->ShowWindow(SW_SHOW);
+			LeaveCriticalSection(&csGraphButton);
+			
 			drawGraphTXT(false, false, false);
 
 			if(m_iCurrentLineDiagramm==IDC_LINEDIAGRAM_VOLUME)
 			{
+				EnterCriticalSection(&csGraphButton);
 				if(m_pcGraph1)
 					m_pcGraph1->RefreshText(getModel()->GetLanguageString(IDS_BTN_SELVOLUMEGRAPH));
+				LeaveCriticalSection(&csGraphButton);
 				
 				CreateWndGraphVolume(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 				ShowWndGraphVolume(true);
-				if(!m_bFreeze)//rku DIAG
+				if(!m_bFreeze)
 				{
 					setRedrawDiagram(REDRAW_GRAPHS);
 				}
 			}
 			else if(m_iCurrentLineDiagramm==IDC_LINEDIAGRAM_FLOW)
 			{
+				EnterCriticalSection(&csGraphButton);
 				if(m_pcGraph1)
 					m_pcGraph1->RefreshText(getModel()->GetLanguageString(IDS_BTN_SELFLOWGRAPH));
+				LeaveCriticalSection(&csGraphButton);
 				
 				CreateWndGraphFlow(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 				ShowWndGraphFlow(true);
-				if(!m_bFreeze)//rku DIAG
+				if(!m_bFreeze)
 				{
 					setRedrawDiagram(REDRAW_GRAPHS);
 				}
 			}
 			else
 			{
+				EnterCriticalSection(&csGraphButton);
 				if(m_pcGraph1)
 					m_pcGraph1->RefreshText(getModel()->GetLanguageString(IDS_BTN_SELPRESSUREGRAPH));
+				LeaveCriticalSection(&csGraphButton);
 				
 				CreateWndGraphPressure(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 				ShowWndGraphPressure(true);
-				if(!m_bFreeze)//rku DIAG
+				if(!m_bFreeze)
 				{
 					setRedrawDiagram(REDRAW_GRAPHS);
 				}
@@ -3183,13 +3252,16 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 
 			MoveWindow(0,48,605,488);
 
+			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->ShowWindow(SW_HIDE);
+			LeaveCriticalSection(&csGraphButton);
+			
 			drawGraphTXT(true, false, false);
 			
 			CreateWndGraphPressure(40,7,DIAGRAMM_WIDTH,DIAGRAMM_HEIGHT);
 			ShowWndGraphPressure(true);
-			if(!m_bFreeze)//rku DIAG
+			if(!m_bFreeze)
 			{
 				setRedrawDiagram(REDRAW_GRAPHS);
 			}
@@ -3210,8 +3282,11 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 
 			MoveWindow(0,48,605,488);	
 
+			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->ShowWindow(SW_HIDE);
+			LeaveCriticalSection(&csGraphButton);
+
 			setTextGraph2(getModel()->GetLanguageString(IDS_BTN_SELFLOWGRAPH));
 			drawGraphTXT(true, true, true);
 			
@@ -3223,14 +3298,12 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 			ShowWndGraphFlow(true);
 			ShowWndGraphVolume(true);
 
-			if(!m_bFreeze)//rku DIAG
+			if(!m_bFreeze)
 			{
 				setRedrawDiagram(REDRAW_GRAPHS);
 			}
 		}
 	}
-	
-	
 
 	if(m_bFreeze)
 	{
@@ -3238,13 +3311,13 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 		{
 			setRedrawDiagram(REDRAW_ALL);
 		}
-		else//rku DIAG
+		else
 		{
 			setRedrawDiagram(REDRAW_GRAPHS);
 		}
 	}
 
-	UpdateWindow();//rku DIAG
+	UpdateWindow();
 }
 
 
@@ -3261,7 +3334,6 @@ void CViewDiagramm::resetSPO2Diagramm()
 	if(m_pDiagrammSPO2 && m_bGraphSPO2IsActive)
 	{
 		m_pDiagrammSPO2->SetFreeze(false);
-		//m_pDiagrammSPO2->PaintGraph();
 		m_pDiagrammSPO2->ClearFunction(true);
 
 	}
@@ -3285,7 +3357,6 @@ void CViewDiagramm::resetPressureDiagramm()
 	if(m_pDiagrammPressure && m_bGraphPressureIsActive)
 	{
 		m_pDiagrammPressure->SetFreeze(false);
-		//m_pDiagrammPressure->PaintGraph();
 		m_pDiagrammPressure->ClearFunction(true);
 	}
 	LeaveCriticalSection(&csDiagrammPRESSURE);
@@ -3296,7 +3367,6 @@ void CViewDiagramm::resetFlowDiagramm()
 	if(m_pDiagrammFlow && m_bGraphFlowIsActive)
 	{
 		m_pDiagrammFlow->SetFreeze(false);
-		//m_pDiagrammFlow->PaintGraph();
 		m_pDiagrammFlow->ClearFunction(true);
 
 	}
@@ -3309,7 +3379,6 @@ void CViewDiagramm::resetVolumeDiagramm()
 	if(m_pDiagrammVolume && m_bGraphVolumeIsActive)
 	{
 		m_pDiagrammVolume->SetFreeze(false);
-		//m_pDiagrammVolume->PaintGraph();
 		m_pDiagrammVolume->ClearFunction(true);
 	}
 	LeaveCriticalSection(&csDiagrammVOLUME);
@@ -3322,7 +3391,6 @@ void CViewDiagramm::resetAllDiagramms()
 	if(m_pDiagrammSPO2 && m_bGraphSPO2IsActive)
 	{
 		m_pDiagrammSPO2->SetFreeze(false);
-		//m_pDiagrammSPO2->PaintGraph();
 		m_pDiagrammSPO2->ClearFunction(true);
 	}
 	LeaveCriticalSection(&csDiagrammSPO2);
@@ -3331,7 +3399,6 @@ void CViewDiagramm::resetAllDiagramms()
 	if(m_pDiagrammCO2 && m_bGraphCO2IsActive)
 	{
 		m_pDiagrammCO2->SetFreeze(false);
-		//m_pDiagrammCO2->PaintGraph();
 		m_pDiagrammCO2->ClearFunction(true);
 	}
 	LeaveCriticalSection(&csDiagrammCO2);
@@ -3340,7 +3407,6 @@ void CViewDiagramm::resetAllDiagramms()
 	if(m_pDiagrammPressure && m_bGraphPressureIsActive)
 	{
 		m_pDiagrammPressure->SetFreeze(false);
-		//m_pDiagrammPressure->PaintGraph();
 		m_pDiagrammPressure->ClearFunction(true);
 	}
 	LeaveCriticalSection(&csDiagrammPRESSURE);
@@ -3349,7 +3415,6 @@ void CViewDiagramm::resetAllDiagramms()
 	if(m_pDiagrammVolume && m_bGraphVolumeIsActive)
 	{
 		m_pDiagrammVolume->SetFreeze(false);
-		//m_pDiagrammVolume->PaintGraph();
 		m_pDiagrammVolume->ClearFunction(true);
 	}
 	LeaveCriticalSection(&csDiagrammVOLUME);
@@ -3358,7 +3423,6 @@ void CViewDiagramm::resetAllDiagramms()
 	if(m_pDiagrammFlow && m_bGraphFlowIsActive)
 	{
 		m_pDiagrammFlow->SetFreeze(false);
-		//m_pDiagrammFlow->PaintGraph();
 		m_pDiagrammFlow->ClearFunction(true);
 	}
 	LeaveCriticalSection(&csDiagrammFLOW);
@@ -3378,22 +3442,6 @@ void CViewDiagramm::resetAllDiagramms()
 		m_pLoopVolumeFlow->ClearFunction(true);
 	}
 	LeaveCriticalSection(&csDiagrammLOOP);
-
-	//resetCurrentXtimevalGraphs();
-	
-	/*EnterCriticalSection(&getModel()->getDATAHANDLER()->csSPIDataBuffer);
-	getModel()->getDATAHANDLER()->m_rbufSPI.reset();
-	LeaveCriticalSection(&getModel()->getDATAHANDLER()->csSPIDataBuffer);
-	
-	EnterCriticalSection(&getModel()->getDATAHANDLER()->csCO2DataBuffer);
-	getModel()->getDATAHANDLER()->m_rbufCO2.reset();
-	LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCO2DataBuffer);
-
-	EnterCriticalSection(&getModel()->getDATAHANDLER()->csSPO2DataBuffer);
-	getModel()->getDATAHANDLER()->m_rbufSPO2.reset();
-	LeaveCriticalSection(&getModel()->getDATAHANDLER()->csSPO2DataBuffer);
-
-	setSizeReadInBufferSPI(0);*/
 }
 
 
@@ -3403,9 +3451,6 @@ void CViewDiagramm::resetAllDiagramms()
 // **************************************************************************
 bool CViewDiagramm::SetNextFocus()
 {
-	/*if(isExit())
-		return false;*/
-
 	if(getModel()->getVIEWHANDLER()->getViewState()==VS_GRAPH)
 	{
 		if(getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_FOTGRAPHS)
@@ -3587,9 +3632,6 @@ bool CViewDiagramm::SetNextFocus()
 // **************************************************************************
 bool CViewDiagramm::SetPrevFocus()
 {
-	/*if(isExit())
-		return false;*/
-
 	if(getModel()->getVIEWHANDLER()->getViewState()==VS_GRAPH)
 	{
 		if(getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_FOTGRAPHS)
@@ -3786,9 +3828,6 @@ bool CViewDiagramm::SetPrevFocus()
 // **************************************************************************
 void CViewDiagramm::SetViewFocus()
 {
-	/*if(isExit())
-		return;*/
-
 	if(getModel()->getVIEWHANDLER()->getViewState()==VS_GRAPH)
 	{
 		if(getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_FOTGRAPHS)
@@ -3931,7 +3970,6 @@ void CViewDiagramm::OnDestroy()
 
 	getModel()->getDATAHANDLER()->SetGraphFreezed(false);
 
-	//DestroyWndGraphViewSelection();
 	DestroyWndGraphPressure();
 	DestroyWndGraphVolume();
 	DestroyWndGraphFlow();
@@ -3992,39 +4030,6 @@ BOOL CViewDiagramm::PreTranslateMessage(MSG* pMsg)
 		{
 			if(pMsg->wParam==VK_SPACE)
 			{
-				//bool bFOT=false;
-				//bool bSPO2=false;
-				//CWnd* pFocWnd=CWnd::GetFocus();
-				//if(pFocWnd!=0)
-				//{
-				//	int iID=pFocWnd->GetDlgCtrlID();
-
-				//	if(		iID==IDC_BTN_LIMIT_SPO2LOW
-				//		||	iID==IDC_BTN_LIMIT_SPO2HIGH
-				//		||	iID==IDC_BTN_LIMIT_FIO2LOW
-				//		||	iID==IDC_BTN_LIMIT_FIO2HIGH)
-				//	{
-				//		bSPO2=true;
-				//		PostMessage(WM_SET_PARATIMER);
-				//	}
-				//	else if(iID==IDC_BTN_PARA_FOTSTEPS
-				//		||	iID==IDC_BTN_PARA_FOTPMEANSTART
-				//		||	iID==IDC_BTN_PARA_FOTAMP
-				//		||	iID==IDC_BTN_PARA_FOTFREQ
-				//		||	iID==IDC_BTN_PARA_FOTPMEANEND)
-				//	{
-				//		bFOT=true;
-				//		PostMessage(WM_SET_PARATIMER);
-				//	}
-				//}
-
-				//if(bSPO2 || bFOT)
-				//{
-				//	/*if(AfxGetApp())
-				//		AfxGetApp()->GetMainWnd()->PostMessage(WM_CURRENT_VIEWID,IDC_VIEW_GRAPH,0);*/
-				//	if(AfxGetApp())
-				//		AfxGetApp()->GetMainWnd()->SetFocus();
-				//}
 				PostMessage(WM_SET_PARATIMER);
 			}
 			else if(pMsg->wParam==VK_UP)
@@ -4062,7 +4067,6 @@ BOOL CViewDiagramm::PreTranslateMessage(MSG* pMsg)
 					IncreaseGraphSpeed();
 					return 1;
 				}
-				
 			}
 			else if(pMsg->wParam==VK_DOWN)
 			{
@@ -4107,65 +4111,6 @@ BOOL CViewDiagramm::PreTranslateMessage(MSG* pMsg)
 	}
 	return CWnd::PreTranslateMessage(pMsg);
 }
-
-// **************************************************************************
-// 
-// **************************************************************************
-//void CViewDiagramm::ShowGraphViewSelection(bool bState)
-//{
-//	if(m_bViewMenu!=bState)
-//	{
-//		if(bState)
-//		{
-//			m_bViewMenu=true;
-//			CreateWndGraphViewSelection();
-//			ShowWndGraphViewSelection();
-//
-//			if(m_pWndMenuGraphs)
-//				m_pWndMenuGraphs->PostMessage(WM_HIDE_VIEWMENUBTN);
-//		}
-//		else
-//		{
-//			m_bViewMenu=false;
-//			DestroyWndGraphViewSelection();
-//
-//			if(m_pWndMenuGraphs)
-//				m_pWndMenuGraphs->PostMessage(WM_SHOW_VIEWMENUBTN);
-//		}
-//	}
-//	
-//}
-
-//bool CViewDiagramm::CreateWndGraphViewSelection()
-//{
-//	if(m_pcWndGraphViewSelection==NULL)
-//	{
-//		m_pcWndGraphViewSelection = new CWndGraphViewSelection(this);
-//
-//		RECT rcLd={5,50,165,551};
-//		//RECT rcLd={0,20,590,250};
-//		if(m_pcWndGraphViewSelection->Create(this,rcLd,IDC_GARPHVIEW_SELECTION))
-//		{
-//			return true;
-//		}
-//	}
-//	return false;
-//}
-
-//void CViewDiagramm::ShowWndGraphViewSelection()
-//{
-//	if(m_pcWndGraphViewSelection)
-//		m_pcWndGraphViewSelection->Show(true);
-//}
-//void CViewDiagramm::DestroyWndGraphViewSelection()
-//{
-//	if(m_pcWndGraphViewSelection)
-//	{
-//		m_pcWndGraphViewSelection->DestroyWindow();
-//		delete m_pcWndGraphViewSelection;
-//		m_pcWndGraphViewSelection=NULL;
-//	}
-//}
 
 // **************************************************************************
 // 
@@ -11575,8 +11520,11 @@ void CViewDiagramm::DrawCursor(int iDiagramm)
 	{
 	case IDC_BTN_SELGRAPH_1:
 		{
+			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->SetFocus();
+			LeaveCriticalSection(&csGraphButton);
+			
 			m_bGraphSelected=false;
 		}
 		break;
