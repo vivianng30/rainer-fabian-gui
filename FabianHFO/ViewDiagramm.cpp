@@ -2445,7 +2445,7 @@ void CViewDiagramm::drawView(bool bNextGraph)
 		resetCurrentXtimevalGraphs();
 	}
 
-	Sleep(0);
+	//Sleep(0); //rku check1
 
 	eViewState curViewState = getModel()->getVIEWHANDLER()->getViewState();
 
@@ -2465,12 +2465,25 @@ void CViewDiagramm::drawView(bool bNextGraph)
 		break;
 	default:
 		{
+			//rku check1
+			theApp.getLog()->Write(_T("#ERROR: CViewDiagramm::drawView default"));
 			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->ShowWindow(SW_HIDE);
 			LeaveCriticalSection(&csGraphButton);
 
 			DestroyWndMenuGraphs();
+			DestroyWndGraphPressure();
+			DestroyWndGraphVolume();
+			DestroyWndGraphFlow();
+			DestroyWndLoopPressureVolume();
+			DestroyWndLoopVolumeFlow();
+			DestroyWndGraphCO2();
+			DestroyWndDataCO2();
+			DestroyWndGraphSPO2();
+			DestroyWndDataSPO2();
+			DestroyWndGraphFOT();
+			DestroyWndDataFOT();
 		}
 		break;
 	}
@@ -2482,8 +2495,8 @@ void CViewDiagramm::drawView(bool bNextGraph)
 	else
 		m_bFilledGraph=getModel()->getCONFIG()->GraphIsFilled();
 
-
-	if(!m_bFreeze)
+	//rku check1
+	if(!m_bFreeze && !isExit())
 	{
 		StartGraphThread();
 	}
@@ -3474,7 +3487,9 @@ bool CViewDiagramm::SetNextFocus()
 			}
 			if(bFOTfocus)
 			{
-				m_pDataFOT->SetNextFocus();
+				//rku check1
+				if(m_pDataFOT)
+					m_pDataFOT->SetNextFocus();
 			}
 			else
 			{
@@ -3592,11 +3607,11 @@ bool CViewDiagramm::SetNextFocus()
 			default:
 				break;
 			}
-		}
-		else if(	getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_SINGLE_LINEGRAPHS
+		}//rku check1
+		/*else if(	getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_SINGLE_LINEGRAPHS
 			||	getModel()->getVIEWHANDLER()->getViewSubState()==VSS_NONE)
 		{
-		}
+		}*/
 		else if(	getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_MULTI_LINEGRAPHS)
 		{
 			switch(m_iCurFocusedWnd)
@@ -3655,7 +3670,9 @@ bool CViewDiagramm::SetPrevFocus()
 			}
 			if(bFOTfocus)
 			{
-				m_pDataFOT->SetPrevFocus();
+				//rku check1
+				if(m_pDataFOT)
+					m_pDataFOT->SetPrevFocus();
 			}
 			else
 			{
@@ -3774,11 +3791,11 @@ bool CViewDiagramm::SetPrevFocus()
 			default:
 				break;
 			}
-		}
-		else if(	getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_SINGLE_LINEGRAPHS
+		}//rku check1
+		/*else if(	getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_SINGLE_LINEGRAPHS
 			||	getModel()->getVIEWHANDLER()->getViewSubState()==VSS_NONE)
 		{
-		}
+		}*/
 		else if(	getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_MULTI_LINEGRAPHS)
 		{
 			switch(m_iCurFocusedWnd)

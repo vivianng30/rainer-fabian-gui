@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50126 Version 5.0.1.26
+ * @date 2017-04-10
+ * @verbatim
+	- //rku check1
+ @endverbatim
+ *
  * @subsection ver50125 Version 5.0.1.25
  * @date 2017-04-07
  * @verbatim
