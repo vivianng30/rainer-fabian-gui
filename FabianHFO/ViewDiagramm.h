@@ -308,6 +308,7 @@ protected:
 	static CRITICAL_SECTION	csDiagrammCO2;
 	static CRITICAL_SECTION	csDiagrammFOT;
 	static CRITICAL_SECTION	csGraphButton;
+	static CRITICAL_SECTION	csMenuGraphs;
 
 	CDiagramm *m_pLoopFOT;
 	CDiagramm *m_pDiagrammCO2;

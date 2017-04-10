@@ -32,6 +32,7 @@ CRITICAL_SECTION CViewDiagramm::csDiagrammSPO2;
 CRITICAL_SECTION CViewDiagramm::csDiagrammCO2;
 CRITICAL_SECTION CViewDiagramm::csDiagrammFOT;
 CRITICAL_SECTION CViewDiagramm::csGraphButton;
+CRITICAL_SECTION CViewDiagramm::csMenuGraphs;
 
 extern CEvent g_eventGraphData;
 
@@ -97,6 +98,7 @@ CMVView(ViewID)
 	InitializeCriticalSection(&csDiagrammCO2);
 	InitializeCriticalSection(&csDiagrammFOT);
 	InitializeCriticalSection(&csGraphButton);
+	InitializeCriticalSection(&csMenuGraphs);
 
 	InitializeCriticalSection(&csExit);
 
@@ -480,6 +482,7 @@ CViewDiagramm::~CViewDiagramm()
 		delete m_pcBargraphSIQofSPO2;
 	m_pcBargraphSIQofSPO2=NULL;
 
+	DeleteCriticalSection(&csMenuGraphs);
 	DeleteCriticalSection(&csDrawDataFOT);
 	DeleteCriticalSection(&csDrawDataSPO2);
 	DeleteCriticalSection(&csDrawDataCO2);
@@ -2466,7 +2469,7 @@ void CViewDiagramm::drawView(bool bNextGraph)
 	default:
 		{
 			//rku check1
-			theApp.getLog()->Write(_T("#ERROR: CViewDiagramm::drawView default"));
+			theApp.getLog()->WriteLine(_T("#ERROR: CViewDiagramm::drawView default"));
 			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->ShowWindow(SW_HIDE);
@@ -4161,11 +4164,6 @@ LRESULT CViewDiagramm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 			setFOTtime((BYTE)wParam);
 		}
 		break;
-	/*case WM_COLLECTDATA_FOT_TIME:
-		{
-			setCollectdataFOTtime((BYTE)wParam);
-		}
-		break;*/
 	case WM_SETVIEWFOCUS:
 		{
 			SetViewFocus();
@@ -4250,25 +4248,6 @@ LRESULT CViewDiagramm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 			return 1;
 		}
 		break;
-	/*case WM_KILL_PARATIMER:
-		{
-			KillTimer(PARATIMER);
-			return 1;
-		}
-		break;*/
-	/*case WM_SELECT_VIEW:
-		{
-			if(!m_bViewMenu)
-			{
-				ShowGraphViewSelection(true);
-			}
-			else
-			{
-				DrawView(true,false);
-			}
-			return 1;
-		}
-		break;*/
 	case WM_ALIMIT_CHANGED:
 		{
 			EnterCriticalSection(&csDrawDataCO2);
@@ -4322,8 +4301,6 @@ LRESULT CViewDiagramm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 		{
 			if(AfxGetApp())
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_GRAPH_CONTINUE);
-
-			//setUpdateRingBufCopy();
 
 			m_bResetAllDiagramms=true;
 			m_bDrawSavedLoops=false;
@@ -4472,17 +4449,17 @@ LRESULT CViewDiagramm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 		break;
 	case WM_GRAPH_FLOWSENSORSTATE:
 		{
+			//rku check1
+			EnterCriticalSection(&csMenuGraphs);
 			if(m_pWndMenuGraphs)
 				m_pWndMenuGraphs->FlowSensorStateChanged();
-
-			/*if(m_pcWndGraphViewSelection && m_bViewMenu)
-				m_pcWndGraphViewSelection->Show(true);*/
+			LeaveCriticalSection(&csMenuGraphs);
+			
 
 			if(		getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF
 				||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF
 				||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_AUTOOFF)
 			{
-				//todoFOT ??????????????????
 				if(getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_SPO2GRAPHS)
 				{
 					if(AfxGetApp())
@@ -4700,11 +4677,11 @@ LRESULT CViewDiagramm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 							}
 							break;
 						}
-					}
-					else if(	getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_SINGLE_LINEGRAPHS
+					}//rku check1
+					/*else if(	getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_SINGLE_LINEGRAPHS
 						||	getModel()->getVIEWHANDLER()->getViewSubState()==VSS_NONE)
 					{
-					}
+					}*/
 					else if(	getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_MULTI_LINEGRAPHS)
 					{
 						switch(wParam)
@@ -4878,11 +4855,11 @@ LRESULT CViewDiagramm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 							}
 							break;
 						}
-					}
-					else if(	getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_SINGLE_LINEGRAPHS
+					}//rku check1
+					/*else if(	getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_SINGLE_LINEGRAPHS
 						||	getModel()->getVIEWHANDLER()->getViewSubState()==VSS_NONE)
 					{
-					}
+					}*/
 					else if(	getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_MULTI_LINEGRAPHS)
 					{
 						switch(m_iCurFocusedWnd)
@@ -4932,18 +4909,6 @@ LRESULT CViewDiagramm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 				{
 					switch(wParam)
 					{
-					/*case IDC_LOOP_FOT:
-						{
-							if(m_iCurFocusedWnd!=wParam)
-							{
-								DrawCursor(wParam);
-							}
-							else
-							{
-								DrawCursor(0);
-							}
-						}
-						break;*/
 					case IDC_LINEDIAGRAM_PRESSURE:
 					case IDC_LINEDIAGRAM_FLOW:
 					case IDC_LINEDIAGRAM_VOLUME:
@@ -5163,7 +5128,6 @@ LRESULT CViewDiagramm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 					}
 				}
 			}
-
 			if(AfxGetApp())
 				AfxGetApp()->GetMainWnd()->SetFocus();
 
@@ -5263,7 +5227,6 @@ void CViewDiagramm::RedrawDiagrammData(int iDiagrammID)
 	case IDC_LOOP_FOT:
 		{
 			PostMessage(WM_DRAW_FOT_STEP);
-			//setRedrawDiagram(REDRAW_FOT);
 		}
 		break;
 	default:
@@ -5279,12 +5242,16 @@ void CViewDiagramm::RedrawDiagrammData(int iDiagrammID)
 // **************************************************************************
 bool CViewDiagramm::DestroyWndMenuGraphs()
 {
+	//rku check1
+	EnterCriticalSection(&csMenuGraphs);
 	if(m_pWndMenuGraphs)
 	{
 		m_pWndMenuGraphs->DestroyWindow();
 		delete m_pWndMenuGraphs;
 		m_pWndMenuGraphs=NULL;
 	}
+	LeaveCriticalSection(&csMenuGraphs);
+	
 	return true;
 }
 
@@ -5296,6 +5263,8 @@ bool CViewDiagramm::CreateWndMenuGraphs()
 	if(isExit())
 		return false;
 
+	//rku check1
+	EnterCriticalSection(&csMenuGraphs);
 	if(m_pWndMenuGraphs==NULL && m_lX>-1)
 	{
 		m_pWndMenuGraphs = new CWndMenuGraphs(this);
@@ -5304,10 +5273,12 @@ bool CViewDiagramm::CreateWndMenuGraphs()
 		if(m_pWndMenuGraphs->Create(AfxGetApp()->GetMainWnd(),rcLd,IDC_VIEW_GRAPHMENU))
 		{
 			m_pWndMenuGraphs->Init();
-
+			LeaveCriticalSection(&csMenuGraphs);
 			return true;
 		}
 	}
+	LeaveCriticalSection(&csMenuGraphs);
+	
 	return false;
 }
 
@@ -5319,10 +5290,13 @@ void CViewDiagramm::ShowWndMenuGraphs(bool bShow)
 	if(isExit())
 		return;
 
+	//rku check1
+	EnterCriticalSection(&csMenuGraphs);
 	if(m_pWndMenuGraphs)
 	{
 		m_pWndMenuGraphs->Show(bShow);
 	}
+	LeaveCriticalSection(&csMenuGraphs);
 }
 
 // **************************************************************************
@@ -5395,12 +5369,11 @@ void CViewDiagramm::NotifyVentModeChanged()
 		}
 	}
 
-
 	bool bPrevDrawVolumeLimit=getDrawVolLimit();
 	double dbPrevVolumeLimit=getValueVolLimit();
 
 	setDrawVolLimit(IsVLimitStateOn());
-	setValueVolLimit((getModel()->getDATAHANDLER()->GetCurrentVLimitPara())/*/10*/);
+	setValueVolLimit((getModel()->getDATAHANDLER()->GetCurrentVLimitPara()));
 
 	EnterCriticalSection(&csDiagrammVOLUME);
 	if(m_pDiagrammVolume && m_bGraphVolumeIsActive)
