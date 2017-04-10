@@ -1467,40 +1467,7 @@ void CMVViewHandler::setPEEPvalue(int iValPEEP,bool bSend)
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//SHORT CMVViewHandler::getPpsvDisplayedValue()
-//{
-//	SHORT retVal=0;
-//	//rku cs1
-//	EnterCriticalSection(&csViewParaBtn);
-//	if(m_vParaBtn)
-//		retVal=m_vParaBtn->getPpsvDisplayedValue();
-//	LeaveCriticalSection(&csViewParaBtn);
-//
-//	return retVal;
-//}
-//
-//SHORT CMVViewHandler::getPEEPdisplayedValue()
-//{
-//	SHORT retVal=0;
-//	//rku cs1
-//	EnterCriticalSection(&csViewParaBtn);
-//	if(m_vParaBtn)
-//		retVal=m_vParaBtn->getPEEPdisplayedValue();
-//	LeaveCriticalSection(&csViewParaBtn);
-//
-//	return retVal;
-//}
-// **************************************************************************
-// 
-// **************************************************************************
-//void CMVViewHandler::setPmeanHFO(int iValPmean, bool bSendPmeanDif, bool bSendPmanual)//PMAN1
-//{
-//	if(m_vParaBtn)
-//		m_vParaBtn->setPmeanHFO(iValPmean,bSendPmeanDif,bSendPmanual);
-//}
+
 void CMVViewHandler::setPmeanDifference(int iValPmean,bool bSend)//PMAN1
 {
 	//rku cs1
@@ -1518,42 +1485,6 @@ void CMVViewHandler::setPmeanRecDifference(int iValPmeanRec,bool bSend)//PMAN1
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//void CMVViewHandler::setOxyDiffParaBTN(int iValOxy)//PRICO03
-//{
-//	//rku cs1
-//	EnterCriticalSection(&csViewParaBtn);
-//	if(m_vParaBtn)
-//		m_vParaBtn->setOxyDiffParaBTN(iValOxy);
-//	LeaveCriticalSection(&csViewParaBtn);
-//}
-
-//void CMVViewHandler::setOxyPPRICO(int iValOxy)//PRICO04
-//{
-//	if(m_vParaBtn)
-//		m_vParaBtn->setOxyPPRICO(iValOxy);
-//}
-// **************************************************************************
-// 
-// **************************************************************************
-//void CMVViewHandler::setPMAXVG(SHORT iValPMAXVG)//newVG
-//{
-//	if(m_vParaBtn)
-//		m_vParaBtn->setPMAXVG(iValPMAXVG);
-//}
-// **************************************************************************
-// 
-// **************************************************************************
-//void CMVViewHandler::RedrawDiagrammData(int iDiagrammID)
-//{
-//	//rku cs1
-//	EnterCriticalSection(&csViewDiagramm);
-//	if(m_vDiagramm)
-//		m_vDiagramm->RedrawDiagrammData(iDiagrammID);
-//	LeaveCriticalSection(&csViewDiagramm);
-//}
 
 // **************************************************************************
 // 
@@ -2161,7 +2092,6 @@ void CMVViewHandler::SetFocusToPrevView()
 
 			if(iT==IDC_VIEW_PARABTN)
 			{
-				//rku cs1
 				EnterCriticalSection(&csViewDiagramm);
 				if(m_vDiagramm)
 				{
@@ -2172,7 +2102,6 @@ void CMVViewHandler::SetFocusToPrevView()
 			}
 			else if(iT==IDC_VIEW_GRAPH)
 			{
-				//rku cs1
 				EnterCriticalSection(&csViewParaBtn);
 				if(m_vParaBtn)
 				{
@@ -2195,7 +2124,6 @@ void CMVViewHandler::SetFocusToPrevView()
 // **************************************************************************
 void CMVViewHandler::SetOxyHourglass(bool state)
 {
-	//rku cs1
 	if(state)
 	{
 		EnterCriticalSection(&csViewParaBtn);
@@ -2219,7 +2147,6 @@ void CMVViewHandler::SetOxyHourglass(bool state)
 // **************************************************************************
 void CMVViewHandler::StopDiagramm()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewDiagramm);
 	if(m_vDiagramm)
 		m_vDiagramm->StopDiagramm();
@@ -2231,7 +2158,6 @@ void CMVViewHandler::StopDiagramm()
 // **************************************************************************
 void CMVViewHandler::SetALIMITTIMER()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewAlarmLimits);
 	if(m_vAlarmLimits)
 		m_vAlarmLimits->PostMessage(WM_SET_ALIMITTIMER);
@@ -2245,7 +2171,6 @@ void CMVViewHandler::SetALIMITTIMER()
 // **************************************************************************
 void CMVViewHandler::SetCPAPBackup(bool bState)
 {
-	//rku cs1
 	if(bState)
 	{
 		EnterCriticalSection(&csViewDTBField);
@@ -2266,7 +2191,6 @@ void CMVViewHandler::SetCPAPBackup(bool bState)
 // **************************************************************************
 void CMVViewHandler::setPSVapnoe(bool bState)
 {
-	//rku cs1
 	if(bState)
 	{
 		EnterCriticalSection(&csViewParaBtn);
@@ -2295,7 +2219,6 @@ void CMVViewHandler::setPSVapnoe(bool bState)
 
 void CMVViewHandler::setMaintenanceFlag(bool bState)
 {
-	//rku cs1
 	EnterCriticalSection(&csViewDTBField);
 	if(bState)
 	{
@@ -2315,7 +2238,6 @@ void CMVViewHandler::setMaintenanceFlag(bool bState)
 // **************************************************************************
 void CMVViewHandler::SetTriggeredBreath()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewParaBtn);
 	if(m_vParaBtn)
 		m_vParaBtn->PostMessage(WM_SETTRIGGEREDBREATH);
@@ -2333,36 +2255,30 @@ void CMVViewHandler::setPRICOrunning(bool state)
 		if(m_vDiagramm)
 			m_vDiagramm->PostMessage(WM_SETPRICO_TRUE);
 		LeaveCriticalSection(&csViewDiagramm);
-		//rku cs1
 		EnterCriticalSection(&csViewDTBField);
 		if(m_vDTBField)
 			m_vDTBField->PostMessage(WM_SETPRICO_TRUE);
 		LeaveCriticalSection(&csViewDTBField);
-		//rku cs1
 		EnterCriticalSection(&csViewParaBtn);
 		if(m_vParaBtn)
 			m_vParaBtn->PostMessage(WM_SETPRICO_TRUE);
 		LeaveCriticalSection(&csViewParaBtn);
-		//rku cs1
 	}		
 	else
 	{
-		//rku cs1
 		EnterCriticalSection(&csViewDiagramm);
 		if(m_vDiagramm)
 			m_vDiagramm->PostMessage(WM_SETPRICO_FALSE);
 		LeaveCriticalSection(&csViewDiagramm);
-		//rku cs1
 		EnterCriticalSection(&csViewDTBField);
 		if(m_vDTBField)
 			m_vDTBField->PostMessage(WM_SETPRICO_FALSE);
 		LeaveCriticalSection(&csViewDTBField);
-		//rku cs1
 		EnterCriticalSection(&csViewParaBtn);
 		if(m_vParaBtn)
 			m_vParaBtn->PostMessage(WM_SETPRICO_FALSE);
 		LeaveCriticalSection(&csViewParaBtn);
-			}
+	}
 }
 
 // **************************************************************************
@@ -2370,7 +2286,6 @@ void CMVViewHandler::setPRICOrunning(bool state)
 // **************************************************************************
 void CMVViewHandler::setSIQdata()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewDiagramm);
 	if(m_vDiagramm)
 		m_vDiagramm->PostMessage(WM_DRAW_SIQSPO2);
@@ -2382,7 +2297,6 @@ void CMVViewHandler::setSIQdata()
 // **************************************************************************
 void CMVViewHandler::drawMeasuredFiO2Value()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewDiagramm);
 	if(m_vDiagramm)
 		m_vDiagramm->PostMessage(WM_DRAW_FIO2VALUE);
@@ -2394,7 +2308,6 @@ void CMVViewHandler::drawMeasuredFiO2Value()
 // **************************************************************************
 void CMVViewHandler::drawFOTsteps()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewDiagramm);
 	if(m_vDiagramm)
 		m_vDiagramm->PostMessage(WM_DRAW_FOT_STEP);
@@ -2407,7 +2320,6 @@ void CMVViewHandler::drawFOTsteps()
 // **************************************************************************
 void CMVViewHandler::UpdateLimitData()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewDiagramm);
 	if(m_vDiagramm)
 		m_vDiagramm->PostMessage(WM_UPDATELIMITDATA);
@@ -2416,7 +2328,6 @@ void CMVViewHandler::UpdateLimitData()
 
 void CMVViewHandler::O2FlushChanged()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewParaBtn);
 	if(m_vParaBtn)
 		m_vParaBtn->PostMessage(WM_O2FLUSH_CHANGED);
@@ -2425,7 +2336,6 @@ void CMVViewHandler::O2FlushChanged()
 
 void CMVViewHandler::HFPMEANRECFlushChanged(int iVal)
 {
-	//rku cs1
 	EnterCriticalSection(&csViewParaBtn);
 	if(m_vParaBtn)
 		m_vParaBtn->PostMessage(WM_PMEANREC_CHANGED);
@@ -2435,7 +2345,6 @@ void CMVViewHandler::HFPMEANRECFlushChanged(int iVal)
 
 void CMVViewHandler::paraDataChanged()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewParaBtn);
 	if(m_vParaBtn)
 		m_vParaBtn->PostMessage(WM_SHOWPARABTN);
@@ -2453,7 +2362,6 @@ void CMVViewHandler::lungRecStateChanged()
 
 void CMVViewHandler::ITIMEChanged()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewParaBtn);
 	if(m_vParaBtn)
 		m_vParaBtn->PostMessage(WM_ITIME_CHANGED);
@@ -2461,7 +2369,6 @@ void CMVViewHandler::ITIMEChanged()
 }
 void CMVViewHandler::ETIMEChanged()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewParaBtn);
 	if(m_vParaBtn)
 		m_vParaBtn->PostMessage(WM_ETIME_CHANGED);
@@ -2469,7 +2376,6 @@ void CMVViewHandler::ETIMEChanged()
 }
 void CMVViewHandler::BPMChanged()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewParaBtn);
 	if(m_vParaBtn)
 		m_vParaBtn->PostMessage(WM_BPM_CHANGED);
@@ -2481,7 +2387,6 @@ void CMVViewHandler::BPMChanged()
 // **************************************************************************
 void CMVViewHandler::refreshO2Flush()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewParaBtn);
 	if(m_vParaBtn)
 		m_vParaBtn->PostMessage(WM_REFRESHOXIFLUSH);
@@ -2537,13 +2442,6 @@ void CMVViewHandler::checkFOTalarms()
 		m_vDiagramm->PostMessage(WM_CHECK_FOT_ALARMS);
 	LeaveCriticalSection(&csViewDiagramm);
 }
-//void CMVViewHandler::drawFOTCollectTime(BYTE iCountFOTimer)
-//{
-//	EnterCriticalSection(&csViewDiagramm);
-//	if(m_vDiagramm)
-//		m_vDiagramm->PostMessage(WM_COLLECTDATA_FOT_TIME,iCountFOTimer);
-//	LeaveCriticalSection(&csViewDiagramm);
-//}
 
 // **************************************************************************
 // 
@@ -2610,7 +2508,6 @@ void CMVViewHandler::DrawO2FlushTime(int iO2FlushTime)
 		{
 			if(iO2FlushTime==getModel()->getDATAHANDLER()->GetCurO2FlushTime())
 			{
-				//rku cs1
 				EnterCriticalSection(&csViewDTBField);
 				if(m_vDTBField)
 					m_vDTBField->PostMessage(WM_STOPOXIFLUSH);
@@ -2620,7 +2517,6 @@ void CMVViewHandler::DrawO2FlushTime(int iO2FlushTime)
 			{
 				CStringW sz;
 				sz.Format(_T("%s %d %s"),getModel()->GetLanguageString(IDS_TXT_FLUSHTIME), iO2FlushTime, getModel()->GetLanguageString(IDS_UNIT_SECONDS));
-				//rku cs1
 				EnterCriticalSection(&csViewDTBField);
 				if(m_vDTBField)
 					m_vDTBField->SetTimeO2Flush(sz);
@@ -2630,7 +2526,6 @@ void CMVViewHandler::DrawO2FlushTime(int iO2FlushTime)
 		}
 		else
 		{
-			//rku cs1
 			EnterCriticalSection(&csViewDTBField);
 			if(m_vDTBField)
 				m_vDTBField->PostMessage(WM_STOPOXIFLUSH);
@@ -2645,7 +2540,6 @@ void CMVViewHandler::DrawO2FlushTime(int iO2FlushTime)
 // **************************************************************************
 void CMVViewHandler::DrawCountDownStartTime(int iCountDown)
 {
-	//rku cs1
 	EnterCriticalSection(&csViewDTBField);
 	if(m_vDTBField)
 		m_vDTBField->SetTimeUntilStartVent(iCountDown);
@@ -2654,7 +2548,6 @@ void CMVViewHandler::DrawCountDownStartTime(int iCountDown)
 }
 void CMVViewHandler::StopCountDownStartTime()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewDTBField);
 	if(m_vDTBField)
 		m_vDTBField->PostMessage(WM_STOPTIMEUNTILSTARTVENT);
@@ -2666,7 +2559,6 @@ void CMVViewHandler::StopCountDownStartTime()
 // **************************************************************************
 void CMVViewHandler::DrawCountDownAlarmSilent(int iCountDown)
 {
-	//rku cs1
 	EnterCriticalSection(&csViewDTBField);
 	if(m_vDTBField)
 		m_vDTBField->SetTimeAlarmSilent(iCountDown);
@@ -2674,7 +2566,6 @@ void CMVViewHandler::DrawCountDownAlarmSilent(int iCountDown)
 }
 void CMVViewHandler::StopCountDownAlarmSilent()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewDTBField);
 	if(m_vDTBField)
 		m_vDTBField->PostMessage(WM_STOPALARMSILENT);
@@ -2686,7 +2577,6 @@ void CMVViewHandler::StopCountDownAlarmSilent()
 // **************************************************************************
 void CMVViewHandler::DrawCountTimeUntilStop(int iCountDown)
 {
-	//rku cs1
 	EnterCriticalSection(&csViewDTBField);
 	if(m_vDTBField)
 		m_vDTBField->SetTimeUntilStopVent(iCountDown);
@@ -2694,7 +2584,6 @@ void CMVViewHandler::DrawCountTimeUntilStop(int iCountDown)
 }
 void CMVViewHandler::StopCountTimeUntilStop()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewDTBField);
 	if(m_vDTBField)
 		m_vDTBField->PostMessage(WM_STOPTIMEUNTILSTOPVENT);
@@ -2705,7 +2594,6 @@ void CMVViewHandler::StopCountTimeUntilStop()
 // **************************************************************************
 void CMVViewHandler::DrawCountTimeUntilOff(int iCountDown)
 {
-	//rku cs1
 	EnterCriticalSection(&csViewDTBField);
 	if(m_vDTBField)
 		m_vDTBField->SetTimeUntilTurnOff(iCountDown);
@@ -2713,7 +2601,6 @@ void CMVViewHandler::DrawCountTimeUntilOff(int iCountDown)
 }
 void CMVViewHandler::StopCountTimeUntilOff()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewDTBField);
 	if(m_vDTBField)
 		m_vDTBField->PostMessage(WM_STOPTIMEUNTILTURNOFF);
@@ -2725,7 +2612,6 @@ void CMVViewHandler::StopCountTimeUntilOff()
 // **************************************************************************
 void CMVViewHandler::StopVideo()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewMenu);
 	if(m_vMenu)
 		m_vMenu->PostMessage(WM_DEACTIVATE_VIDEO);
@@ -2749,7 +2635,6 @@ void CMVViewHandler::RedrawCurViews()
 eViewState CMVViewHandler::getViewState()
 {
 	eViewState state=VS_NONE;
-	//rku cs1
 	EnterCriticalSection(&csViewState);
 	state=m_eViewState;
 	LeaveCriticalSection(&csViewState);
@@ -2761,7 +2646,6 @@ void CMVViewHandler::setViewState(eViewState state,eViewSubState substate)
 {
 	setPrevViewState(state,substate);
 
-	//rku cs1
 	EnterCriticalSection(&csViewState);
 	m_eViewState = state;
 	//DEBUGMSG(TRUE, (TEXT("SetViewState m_eViewState %d\r\n"),(int)m_eViewState));
@@ -2777,7 +2661,6 @@ void CMVViewHandler::setViewState(eViewState state,eViewSubState substate)
 eViewSubState CMVViewHandler::getViewSubState()
 {
 	eViewSubState state=VSS_NONE;
-	//rku cs1
 	EnterCriticalSection(&csViewState);
 	state=m_eViewSubState;
 	LeaveCriticalSection(&csViewState);
@@ -2788,7 +2671,6 @@ eViewSubState CMVViewHandler::getViewSubState()
 eViewState CMVViewHandler::getPrevViewState()
 {
 	eViewState state=VS_NONE;
-	//rku cs1
 	EnterCriticalSection(&csViewState);
 	state=m_ePrevViewState;
 	LeaveCriticalSection(&csViewState);
@@ -2798,7 +2680,6 @@ eViewState CMVViewHandler::getPrevViewState()
 
 void CMVViewHandler::setPrevViewState(eViewState state,eViewSubState substate)
 {
-	//rku cs1
 	EnterCriticalSection(&csViewState);
 	if(state!=m_eViewState)
 	{
@@ -2816,7 +2697,6 @@ void CMVViewHandler::setPrevViewState(eViewState state,eViewSubState substate)
 eViewSubState CMVViewHandler::getPrevViewSubState()
 {
 	eViewSubState state=VSS_NONE;
-	//rku cs1
 	EnterCriticalSection(&csViewState);
 	state=m_ePrevViewSubState;
 	LeaveCriticalSection(&csViewState);
@@ -2827,7 +2707,6 @@ eViewSubState CMVViewHandler::getPrevViewSubState()
 eViewState CMVViewHandler::getPrevGraphState()
 {
 	eViewState state=VS_NONE;
-	//rku cs1
 	EnterCriticalSection(&csViewState);
 	state=m_ePrevGraphState;
 	LeaveCriticalSection(&csViewState);
@@ -2837,7 +2716,6 @@ eViewState CMVViewHandler::getPrevGraphState()
 
 void CMVViewHandler::setPrevGraphState()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewState);
 	m_ePrevGraphState = m_eViewState;
 	m_ePrevGraphSubState = m_eViewSubState;
@@ -2847,7 +2725,6 @@ void CMVViewHandler::setPrevGraphState()
 eViewSubState CMVViewHandler::getPrevGraphSubState()
 {
 	eViewSubState state=VSS_NONE;
-	//rku cs1
 	EnterCriticalSection(&csViewState);
 	state=m_ePrevGraphSubState;
 	LeaveCriticalSection(&csViewState);
@@ -2877,7 +2754,6 @@ void CMVViewHandler::changeToPrevViewState()
 {
 	eViewState ePrevGraphState=VS_NONE;
 	eViewSubState ePrevGraphSubState=VSS_NONE;
-	//rku cs1
 	EnterCriticalSection(&csViewState);
 	ePrevGraphState=m_ePrevGraphState;
 	ePrevGraphSubState=m_ePrevGraphSubState;
@@ -2907,7 +2783,6 @@ void CMVViewHandler::changeToPrevViewState()
 	}
 	else
 	{
-		//rku cs1
 		EnterCriticalSection(&csViewState);
 		ePrevGraphState=m_ePrevGraphState;
 		ePrevGraphSubState=m_ePrevGraphSubState;

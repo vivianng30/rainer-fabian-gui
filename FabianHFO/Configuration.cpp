@@ -6267,6 +6267,9 @@ void CConfiguration::SetSPO2module(BYTE mod, bool bReinit)
 	}
 	m_bSpO2ConfigInProgress=false;
 	//DEBUGMSG(TRUE, (TEXT("SetSPO2module end\r\n")));
+	
+	if(!bReinit)
+		getModel()->logSPO2module();
 }
 
 bool CConfiguration::isSpO2ConfigInProgress()
@@ -6300,30 +6303,6 @@ void CConfiguration::SetCO2module(BYTE mod)//CO2RKU
 
 	m_iCO2module = mod;
 	m_byCO2ModuleTemp = m_iCO2module;
-
-	switch (m_iCO2module)
-	{
-	case CO2MODULE_NONE:
-		{
-			theApp.getLog()->WriteLine(_T("#CO2module: NONE"));
-		}
-		break;
-	case CO2MODULE_CAPNOSTAT:
-		{
-			theApp.getLog()->WriteLine(_T("#CO2module: CAPNOSTAT"));
-		}
-		break;
-	case CO2MODULE_MICROPOD:
-		{
-			theApp.getLog()->WriteLine(_T("#CO2module: MICROPOD"));
-		}
-		break;
-	case CO2MODULE_SENTEC:
-		{
-			theApp.getLog()->WriteLine(_T("#CO2module: SENTEC"));
-		}
-		break;
-	}
 
 	getModel()->getI2C()->WriteConfigByte(CO2CONFIG, m_iCO2module);
 
@@ -6409,6 +6388,7 @@ void CConfiguration::SetCO2module(BYTE mod)//CO2RKU
 	}
 
 	getModel()->setCO2inprogress(false);
+	getModel()->logCO2module();
 }
 
 // **************************************************************************
