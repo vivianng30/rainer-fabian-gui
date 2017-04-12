@@ -265,6 +265,7 @@ public:
 
 	void UpdateCO2InfoData(bool resetAvailable);
 protected:
+	static CRITICAL_SECTION	csLPFS_FUNCTIONSTRUCT;
 	static CRITICAL_SECTION	csSPIReadInBuffer;
 	static CRITICAL_SECTION	csCurrentBreath;
 	static CRITICAL_SECTION	csSpeed;

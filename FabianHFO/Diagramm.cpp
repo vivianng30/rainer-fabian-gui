@@ -3661,7 +3661,7 @@ void CDiagramm::DoPlotSavedLoopPoints()
 		   //if(m_bAutofit && (m_bIgnoreAutofit==false))
 		   {
 			   CheckAutoScaleY();
-			   Sleep(0);
+			   //Sleep(0);
 		   }
 		   break;
 	   }
@@ -3812,7 +3812,7 @@ void CDiagramm::DoPlotXYPoints()
 				//if x is off scale - don't bother
 				if ( (x < m_dXAxisMin) || (x > m_dXAxisMax))
 				{
-					Sleep(0);
+					//Sleep(0);
 					continue; //NEXT !!!!!!
 				}
 
@@ -4403,7 +4403,7 @@ void CDiagramm::RefreshLineChart()
 	{
 		if(count>=G_MAXPOINTS)
 		{
-			Sleep(0);
+			//Sleep(0);
 			break;
 		}
 

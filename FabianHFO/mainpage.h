@@ -11,6 +11,8 @@
  * @date 2017-04-10
  * @verbatim
 	- //rku check1
+	- CRITICAL_SECTION csLPFS_FUNCTIONSTRUCT implemented
+	- CRITICAL_SECTION csMenuGraphs implemented
  @endverbatim
  *
  * @subsection ver50125 Version 5.0.1.25

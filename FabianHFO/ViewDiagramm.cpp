@@ -33,6 +33,7 @@ CRITICAL_SECTION CViewDiagramm::csDiagrammCO2;
 CRITICAL_SECTION CViewDiagramm::csDiagrammFOT;
 CRITICAL_SECTION CViewDiagramm::csGraphButton;
 CRITICAL_SECTION CViewDiagramm::csMenuGraphs;
+CRITICAL_SECTION CViewDiagramm::csLPFS_FUNCTIONSTRUCT;
 
 extern CEvent g_eventGraphData;
 
@@ -89,7 +90,6 @@ CMVView(ViewID)
 	InitializeCriticalSection(&csVolGarant);
 	InitializeCriticalSection(&csThreadAccess);
 	InitializeCriticalSection(&csRedrawDiagram);
-
 	InitializeCriticalSection(&csDiagrammPRESSURE);
 	InitializeCriticalSection(&csDiagrammFLOW);
 	InitializeCriticalSection(&csDiagrammVOLUME);
@@ -99,6 +99,7 @@ CMVView(ViewID)
 	InitializeCriticalSection(&csDiagrammFOT);
 	InitializeCriticalSection(&csGraphButton);
 	InitializeCriticalSection(&csMenuGraphs);
+	InitializeCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 	InitializeCriticalSection(&csExit);
 
@@ -387,23 +388,19 @@ CViewDiagramm::~CViewDiagramm()
 	LeaveCriticalSection(&csCurrentBreath);
 
 
-
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	if(m_pPlotItems !=NULL)
 	{
 		delete []m_pPlotItems;
 	}
 	m_pPlotItems=NULL;
 
-	
-
-
 	if(m_lpfsSPO2 !=NULL)
 	{
 		delete m_lpfsSPO2;
 	}
 	m_lpfsSPO2=NULL;
-
-	
 
 	if(m_lpfsCO2 !=NULL)
 	{
@@ -467,6 +464,8 @@ CViewDiagramm::~CViewDiagramm()
 		delete m_lpfsVolumeFlow;
 	}
 	m_lpfsVolumeFlow=NULL;
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 	EnterCriticalSection(&csGraphButton);
 	delete m_pcGraph1;
@@ -482,6 +481,7 @@ CViewDiagramm::~CViewDiagramm()
 		delete m_pcBargraphSIQofSPO2;
 	m_pcBargraphSIQofSPO2=NULL;
 
+	DeleteCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	DeleteCriticalSection(&csMenuGraphs);
 	DeleteCriticalSection(&csDrawDataFOT);
 	DeleteCriticalSection(&csDrawDataSPO2);
@@ -690,6 +690,8 @@ bool CViewDiagramm::CreateWndGraphCO2(int x, int y, int nWidth, int nHeight)
 
 			if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 			{
+				/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+				EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				m_lpfsCO2->FuncType=G_PLOTYPOINTS;
 				m_lpfsCO2->xMax=0;
 				m_lpfsCO2->xMin=0;
@@ -700,6 +702,8 @@ bool CViewDiagramm::CreateWndGraphCO2(int x, int y, int nWidth, int nHeight)
 				m_lpfsCO2->pItems=m_pPlotItems;
 				m_lpfsCO2->num_PlotXYItems=0;
 				m_lpfsCO2->ChartType=G_LINECHART;
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 				m_pDiagrammCO2->SetDiagrammType(CO2_HF_GRAPH);
 
@@ -717,6 +721,8 @@ bool CViewDiagramm::CreateWndGraphCO2(int x, int y, int nWidth, int nHeight)
 			}
 			else
 			{
+				/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+				EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				m_lpfsCO2->FuncType=G_PLOTYPOINTS;
 				m_lpfsCO2->xMax=0;
 				m_lpfsCO2->xMin=0;
@@ -734,7 +740,8 @@ bool CViewDiagramm::CreateWndGraphCO2(int x, int y, int nWidth, int nHeight)
 				{
 					m_lpfsCO2->ChartType=G_LINECHART;
 				}
-
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 				m_pDiagrammCO2->SetDiagrammType(CO2_GRAPH);
 
@@ -765,6 +772,8 @@ bool CViewDiagramm::CreateWndGraphCO2(int x, int y, int nWidth, int nHeight)
 
 		if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 		{
+			/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+			EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			m_lpfsCO2->FuncType=G_PLOTYPOINTS;
 			m_lpfsCO2->xMax=0;
 			m_lpfsCO2->xMin=0;
@@ -775,6 +784,8 @@ bool CViewDiagramm::CreateWndGraphCO2(int x, int y, int nWidth, int nHeight)
 			m_lpfsCO2->pItems=m_pPlotItems;
 			m_lpfsCO2->num_PlotXYItems=0;
 			m_lpfsCO2->ChartType=G_LINECHART;
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 			m_pDiagrammCO2->SetDiagrammType(CO2_HF_GRAPH);
 
@@ -792,6 +803,8 @@ bool CViewDiagramm::CreateWndGraphCO2(int x, int y, int nWidth, int nHeight)
 		}
 		else
 		{
+			/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+			EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			m_lpfsCO2->FuncType=G_PLOTYPOINTS;
 			m_lpfsCO2->xMax=0;
 			m_lpfsCO2->xMin=0;
@@ -809,6 +822,8 @@ bool CViewDiagramm::CreateWndGraphCO2(int x, int y, int nWidth, int nHeight)
 			{
 				m_lpfsCO2->ChartType=G_LINECHART;
 			}
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 			m_pDiagrammCO2->SetDiagrammType(CO2_GRAPH);
 
@@ -889,14 +904,12 @@ bool CViewDiagramm::CreateWndGraphFOT(int x, int y, int nWidth, int nHeight)
 		if(m_pLoopFOT->Create(this,rcLd,IDC_LOOP_FOT))
 		{
 			result=true;
-			
-			m_lpfsFOT->FuncType=G_PLOTSAVEDLOOPPOINTS;//G_PLOTXYLOOPPOINTS;
-			//m_lpfsFOT->xMax=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanMaxPara();
-			//m_lpfsFOT->xMin=G_LOWER_MAXSCALE_PMEAN_FOT;
 
+			/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+			EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
+			m_lpfsFOT->FuncType=G_PLOTSAVEDLOOPPOINTS;//G_PLOTXYLOOPPOINTS;
 			m_lpfsFOT->xMax=G_UPPER_MAXSCALE_PRESSURE;
 			m_lpfsFOT->xMin=G_LOWER_MAXSCALE_PRESSURE;
-
 			m_lpfsFOT->yMax=G_UPPER_MINSCALE_XRS_FOT;
 			m_lpfsFOT->yMin=G_LOWER_MINSCALE_XRS_FOT;
 			m_lpfsFOT->dXfactor=G_FACTOR_FOTxrs;
@@ -904,6 +917,8 @@ bool CViewDiagramm::CreateWndGraphFOT(int x, int y, int nWidth, int nHeight)
 			m_lpfsFOT->pItems=m_pPlotItemsFOTloop;
 			m_lpfsFOT->num_PlotXYItems=0;
 			m_lpfsFOT->ChartType=G_FOTLOOP;
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 			m_pLoopFOT->SetDiagrammType(FOT_LOOP);
 			m_pLoopFOT->SetColorScheme(G_FOT_LOOPD,RGB(0,0,255));
@@ -919,13 +934,11 @@ bool CViewDiagramm::CreateWndGraphFOT(int x, int y, int nWidth, int nHeight)
 	{
 		m_pLoopFOT->MoveWindow(x,y,nWidth,nHeight);
 
-		m_lpfsFOT->FuncType=G_PLOTSAVEDLOOPPOINTS;//G_PLOTXYLOOPPOINTS;
-		
+		/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+		EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
+		m_lpfsFOT->FuncType=G_PLOTSAVEDLOOPPOINTS;
 		m_lpfsFOT->xMax=G_UPPER_MAXSCALE_PRESSURE;
 		m_lpfsFOT->xMin=G_LOWER_MAXSCALE_PRESSURE;
-
-		//m_lpfsFOT->xMax=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanMaxPara();
-		//m_lpfsFOT->xMin=G_LOWER_MAXSCALE_PMEAN_FOT;
 		m_lpfsFOT->yMax=G_UPPER_MINSCALE_XRS_FOT;
 		m_lpfsFOT->yMin=G_LOWER_MINSCALE_XRS_FOT;
 		m_lpfsFOT->dXfactor=G_FACTOR_FOTxrs;
@@ -933,6 +946,8 @@ bool CViewDiagramm::CreateWndGraphFOT(int x, int y, int nWidth, int nHeight)
 		m_lpfsFOT->pItems=m_pPlotItemsFOTloop;
 		m_lpfsFOT->num_PlotXYItems=0;
 		m_lpfsFOT->ChartType=G_FOTLOOP;
+		/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+		LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 		m_pLoopFOT->SetDiagrammType(FOT_LOOP);
 		m_pLoopFOT->SetColorScheme(G_FOT_LOOPD,RGB(0,0,255));
@@ -1007,6 +1022,8 @@ bool CViewDiagramm::CreateWndGraphSPO2(int x, int y, int nWidth, int nHeight)
 			double dYAxisMax=0;
 			double dYAxisMin=0;
 
+			/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+			EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			m_lpfsSPO2->FuncType=G_PLOTYPOINTS;
 			m_lpfsSPO2->xMax=0;
 			m_lpfsSPO2->xMin=0;
@@ -1017,7 +1034,9 @@ bool CViewDiagramm::CreateWndGraphSPO2(int x, int y, int nWidth, int nHeight)
 			m_lpfsSPO2->pItems=m_pPlotItems;
 			m_lpfsSPO2->num_PlotXYItems=0;
 			m_lpfsSPO2->ChartType=G_LINECHART;
-
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
+			
 			m_pDiagrammSPO2->SetDiagrammType(SPO2_GRAPH);
 
 			dYAxisMax=getModel()->getCONFIG()->GetMAXSCALE_SPO2_GRAPH();
@@ -1036,6 +1055,8 @@ bool CViewDiagramm::CreateWndGraphSPO2(int x, int y, int nWidth, int nHeight)
 		
 		m_pDiagrammSPO2->MoveWindow(x,y,nWidth,nHeight);
 
+		/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+		EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 		m_lpfsSPO2->FuncType=G_PLOTYPOINTS;
 		m_lpfsSPO2->xMax=0;
 		m_lpfsSPO2->xMin=0;
@@ -1046,7 +1067,9 @@ bool CViewDiagramm::CreateWndGraphSPO2(int x, int y, int nWidth, int nHeight)
 		m_lpfsSPO2->pItems=m_pPlotItems;
 		m_lpfsSPO2->num_PlotXYItems=0;
 		m_lpfsSPO2->ChartType=G_LINECHART;
-
+		/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+		LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
+		
 		m_pDiagrammSPO2->SetDiagrammType(SPO2_GRAPH);
 
 		dYAxisMin=(-1)*getModel()->getCONFIG()->GetMAXSCALE_SPO2_GRAPH();
@@ -1093,6 +1116,8 @@ bool CViewDiagramm::CreateWndGraphPressure(int x, int y, int nWidth, int nHeight
 
 			if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 			{
+				/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+				EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				m_lpfsPressure->FuncType=G_PLOTYPOINTS;
 				m_lpfsPressure->xMax=0;
 				m_lpfsPressure->xMin=0;
@@ -1103,6 +1128,8 @@ bool CViewDiagramm::CreateWndGraphPressure(int x, int y, int nWidth, int nHeight
 				m_lpfsPressure->pItems=m_pPlotItems;
 				m_lpfsPressure->num_PlotXYItems=0;
 				m_lpfsPressure->ChartType=G_LINECHART;
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 				m_pDiagrammPressure->SetDiagrammType(PRESSURE_HF_GRAPH);
 
@@ -1143,6 +1170,8 @@ bool CViewDiagramm::CreateWndGraphPressure(int x, int y, int nWidth, int nHeight
 			}
 			else
 			{
+				/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+				EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				m_lpfsPressure->FuncType=G_PLOTYPOINTS;
 				m_lpfsPressure->xMax=0;
 				m_lpfsPressure->xMin=0;
@@ -1167,6 +1196,8 @@ bool CViewDiagramm::CreateWndGraphPressure(int x, int y, int nWidth, int nHeight
 				{
 					m_lpfsPressure->ChartType=G_LINECHART;
 				}
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 				m_pDiagrammPressure->SetDiagrammType(PRESSURE_GRAPH);
 
@@ -1218,6 +1249,8 @@ bool CViewDiagramm::CreateWndGraphPressure(int x, int y, int nWidth, int nHeight
 
 		if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 		{
+			/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+			EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			m_lpfsPressure->FuncType=G_PLOTYPOINTS;
 			m_lpfsPressure->xMax=0;
 			m_lpfsPressure->xMin=0;
@@ -1228,7 +1261,9 @@ bool CViewDiagramm::CreateWndGraphPressure(int x, int y, int nWidth, int nHeight
 			m_lpfsPressure->pItems=m_pPlotItems;
 			m_lpfsPressure->num_PlotXYItems=0;
 			m_lpfsPressure->ChartType=G_LINECHART;
-
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
+			
 			m_pDiagrammPressure->SetDiagrammType(PRESSURE_HF_GRAPH);
 
 			if(	getModel()->getCONFIG()->GraphIsAutoScale()
@@ -1267,6 +1302,8 @@ bool CViewDiagramm::CreateWndGraphPressure(int x, int y, int nWidth, int nHeight
 		}
 		else
 		{
+			/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+			EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			m_lpfsPressure->FuncType=G_PLOTYPOINTS;
 			m_lpfsPressure->xMax=0;
 			m_lpfsPressure->xMin=0;
@@ -1291,6 +1328,9 @@ bool CViewDiagramm::CreateWndGraphPressure(int x, int y, int nWidth, int nHeight
 			{
 				m_lpfsPressure->ChartType=G_LINECHART;
 			}
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
+			
 
 			m_pDiagrammPressure->SetDiagrammType(PRESSURE_GRAPH);
 
@@ -1365,6 +1405,8 @@ bool CViewDiagramm::CreateWndGraphVolume(int x, int y, int nWidth, int nHeight)
 
 			if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 			{
+				/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+				EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				m_lpfsVolume->FuncType=G_PLOTYPOINTS;
 				m_lpfsVolume->xMax=0;
 				m_lpfsVolume->xMin=0;
@@ -1375,7 +1417,9 @@ bool CViewDiagramm::CreateWndGraphVolume(int x, int y, int nWidth, int nHeight)
 				m_lpfsVolume->pItems=m_pPlotItems;
 				m_lpfsVolume->num_PlotXYItems=0;
 				m_lpfsVolume->ChartType=G_LINECHART;
-
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
+				
 				m_pDiagrammVolume->SetDiagrammType(VOLUME_HF_GRAPH);
 				if(	getModel()->getCONFIG()->GraphIsAutoScale())
 				{
@@ -1397,6 +1441,8 @@ bool CViewDiagramm::CreateWndGraphVolume(int x, int y, int nWidth, int nHeight)
 				else
 					iUPPER_MAXSCALE_VOLUME=G_UPPER_MAXSCALE_VOLUME_PED;
 
+				/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+				EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				m_lpfsVolume->FuncType=G_PLOTYPOINTS;
 				m_lpfsVolume->xMax=0;
 				m_lpfsVolume->xMin=0;
@@ -1414,6 +1460,9 @@ bool CViewDiagramm::CreateWndGraphVolume(int x, int y, int nWidth, int nHeight)
 				{
 					m_lpfsVolume->ChartType=G_LINECHART;
 				}
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
+				
 
 				m_pDiagrammVolume->SetDiagrammType(VOLUME_GRAPH);
 				if(	getModel()->getCONFIG()->GraphIsAutoScale())
@@ -1450,6 +1499,8 @@ bool CViewDiagramm::CreateWndGraphVolume(int x, int y, int nWidth, int nHeight)
 
 		if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 		{
+			/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+			EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			m_lpfsVolume->FuncType=G_PLOTYPOINTS;
 			m_lpfsVolume->xMax=0;
 			m_lpfsVolume->xMin=0;
@@ -1460,6 +1511,8 @@ bool CViewDiagramm::CreateWndGraphVolume(int x, int y, int nWidth, int nHeight)
 			m_lpfsVolume->pItems=m_pPlotItems;
 			m_lpfsVolume->num_PlotXYItems=0;
 			m_lpfsVolume->ChartType=G_LINECHART;
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 			m_pDiagrammVolume->SetDiagrammType(VOLUME_HF_GRAPH);
 			if(	getModel()->getCONFIG()->GraphIsAutoScale())
@@ -1482,6 +1535,8 @@ bool CViewDiagramm::CreateWndGraphVolume(int x, int y, int nWidth, int nHeight)
 			else
 				iUPPER_MAXSCALE_VOLUME=G_UPPER_MAXSCALE_VOLUME_PED;
 
+			/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+			EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			m_lpfsVolume->FuncType=G_PLOTYPOINTS;
 			m_lpfsVolume->xMax=0;
 			m_lpfsVolume->xMin=0;
@@ -1499,7 +1554,9 @@ bool CViewDiagramm::CreateWndGraphVolume(int x, int y, int nWidth, int nHeight)
 			{
 				m_lpfsVolume->ChartType=G_LINECHART;
 			}
-
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
+			
 			m_pDiagrammVolume->SetDiagrammType(VOLUME_GRAPH);
 			dYAxisMax=getModel()->getCONFIG()->GetMAXSCALE_VOLUME_GRAPH();
 			
@@ -1542,6 +1599,8 @@ bool CViewDiagramm::CreateWndGraphFlow(int x, int y, int nWidth, int nHeight)
 
 			if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 			{
+				/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+				EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				m_lpfsFlow->FuncType=G_PLOTYPOINTS;
 				m_lpfsFlow->xMax=0;
 				m_lpfsFlow->xMin=0;
@@ -1552,6 +1611,8 @@ bool CViewDiagramm::CreateWndGraphFlow(int x, int y, int nWidth, int nHeight)
 				m_lpfsFlow->pItems=m_pPlotItems;
 				m_lpfsFlow->num_PlotXYItems=0;
 				m_lpfsFlow->ChartType=G_LINECHART;
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 				m_pDiagrammFlow->SetDiagrammType(FLOW_HF_GRAPH);
 
@@ -1570,6 +1631,8 @@ bool CViewDiagramm::CreateWndGraphFlow(int x, int y, int nWidth, int nHeight)
 			}
 			else
 			{
+				/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+				EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				m_lpfsFlow->FuncType=G_PLOTYPOINTS;
 				m_lpfsFlow->xMax=0;
 				m_lpfsFlow->xMin=0;
@@ -1587,7 +1650,9 @@ bool CViewDiagramm::CreateWndGraphFlow(int x, int y, int nWidth, int nHeight)
 				{
 					m_lpfsFlow->ChartType=G_LINECHART;
 				}
-
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
+				
 				m_pDiagrammFlow->SetDiagrammType(FLOW_GRAPH);
 
 				if(	getModel()->getCONFIG()->GraphIsAutoScale())
@@ -1621,6 +1686,8 @@ bool CViewDiagramm::CreateWndGraphFlow(int x, int y, int nWidth, int nHeight)
 	{
 		if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 		{
+			/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+			EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			m_lpfsFlow->FuncType=G_PLOTYPOINTS;
 			m_lpfsFlow->xMax=0;
 			m_lpfsFlow->xMin=0;
@@ -1631,6 +1698,8 @@ bool CViewDiagramm::CreateWndGraphFlow(int x, int y, int nWidth, int nHeight)
 			m_lpfsFlow->pItems=m_pPlotItems;
 			m_lpfsFlow->num_PlotXYItems=0;
 			m_lpfsFlow->ChartType=G_LINECHART;
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 			m_pDiagrammFlow->SetDiagrammType(FLOW_HF_GRAPH);
 			if(	getModel()->getCONFIG()->GraphIsAutoScale())
@@ -1648,6 +1717,8 @@ bool CViewDiagramm::CreateWndGraphFlow(int x, int y, int nWidth, int nHeight)
 		}
 		else
 		{
+			/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+			EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			m_lpfsFlow->FuncType=G_PLOTYPOINTS;
 			m_lpfsFlow->xMax=0;
 			m_lpfsFlow->xMin=0;
@@ -1665,6 +1736,8 @@ bool CViewDiagramm::CreateWndGraphFlow(int x, int y, int nWidth, int nHeight)
 			{
 				m_lpfsFlow->ChartType=G_LINECHART;
 			}
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 			m_pDiagrammFlow->SetDiagrammType(FLOW_GRAPH);
 			
@@ -1699,6 +1772,8 @@ bool CViewDiagramm::CreateWndLoopPressureVolume(int x, int y, int nWidth, int nH
 
 			if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 			{
+				/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+				EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				m_lpfsPressureVolume->FuncType=G_PLOTXYLOOPPOINTS;
 				m_lpfsPressureVolume->xMax=G_UPPER_MAXSCALE_PRESSUREHF;
 				m_lpfsPressureVolume->xMin=G_LOWER_MAXSCALE_PRESSUREHF;
@@ -1709,7 +1784,9 @@ bool CViewDiagramm::CreateWndLoopPressureVolume(int x, int y, int nWidth, int nH
 				m_lpfsPressureVolume->ChartType=G_LOOPCHART;
 				m_lpfsPressureVolume->pItems=m_pPlotItemsPVloop;
 				m_lpfsPressureVolume->num_PlotXYItems=0;
-
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
+				
 				m_pLoopPressureVolume->SetDiagrammType(PRESSURE_VOLUME_HF_LOOP);
 
 				if(	getModel()->getCONFIG()->GraphIsAutoScale()
@@ -1788,6 +1865,8 @@ bool CViewDiagramm::CreateWndLoopPressureVolume(int x, int y, int nWidth, int nH
 				else
 					iUPPER_MAXSCALE_VOLUME=G_UPPER_MAXSCALE_VOLUME_PED;
 
+				/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+				EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				m_lpfsPressureVolume->FuncType=G_PLOTXYLOOPPOINTS;
 				m_lpfsPressureVolume->xMax=G_UPPER_MAXSCALE_PRESSURE;
 				m_lpfsPressureVolume->xMin=G_LOWER_MAXSCALE_PRESSURE;
@@ -1798,6 +1877,8 @@ bool CViewDiagramm::CreateWndLoopPressureVolume(int x, int y, int nWidth, int nH
 				m_lpfsPressureVolume->ChartType=G_LOOPCHART;
 				m_lpfsPressureVolume->pItems=m_pPlotItemsPVloop;
 				m_lpfsPressureVolume->num_PlotXYItems=0;
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 				m_pLoopPressureVolume->SetDiagrammType(PRESSURE_VOLUME_LOOP);
 
@@ -1853,6 +1934,8 @@ bool CViewDiagramm::CreateWndLoopVolumeFlow(int x, int y, int nWidth, int nHeigh
 
 			if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 			{
+				/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+				EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				m_lpfsVolumeFlow->FuncType=G_PLOTXYLOOPPOINTS;
 				m_lpfsVolumeFlow->xMax=G_UPPER_MAXSCALE_VOLUME_HF;
 				m_lpfsVolumeFlow->xMin=G_LOWER_MAXSCALE_VOLUME_HF;
@@ -1863,6 +1946,8 @@ bool CViewDiagramm::CreateWndLoopVolumeFlow(int x, int y, int nWidth, int nHeigh
 				m_lpfsVolumeFlow->ChartType=G_LOOPCHART;
 				m_lpfsVolumeFlow->pItems=m_pPlotItemsVFloop;
 				m_lpfsVolumeFlow->num_PlotXYItems=0;
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 				m_pLoopVolumeFlow->SetDiagrammType(VOLUME_FLOW_HF_LOOP);
 
@@ -1894,6 +1979,8 @@ bool CViewDiagramm::CreateWndLoopVolumeFlow(int x, int y, int nWidth, int nHeigh
 				else
 					iUPPER_MAXSCALE_VOLUME=G_UPPER_MAXSCALE_VOLUME_PED;
 
+				/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+				EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				m_lpfsVolumeFlow->FuncType=G_PLOTXYLOOPPOINTS;
 				m_lpfsVolumeFlow->xMax=iUPPER_MAXSCALE_VOLUME;
 				m_lpfsVolumeFlow->xMin=G_LOWER_MAXSCALE_VOLUME;
@@ -1904,6 +1991,8 @@ bool CViewDiagramm::CreateWndLoopVolumeFlow(int x, int y, int nWidth, int nHeigh
 				m_lpfsVolumeFlow->ChartType=G_LOOPCHART;
 				m_lpfsVolumeFlow->pItems=m_pPlotItemsVFloop;
 				m_lpfsVolumeFlow->num_PlotXYItems=0;
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 				m_pLoopVolumeFlow->SetDiagrammType(VOLUME_FLOW_LOOP);
 
@@ -7927,7 +8016,7 @@ UINT CViewDiagramm::DrawDiagramm()
 				{
 					deleteUpdateRingBufCopy();
 					getModel()->getDATAHANDLER()->updateCopyDataBuffer();
-					Sleep(0);
+					//Sleep(0);
 				}
 
 				if(doThread()==false)
@@ -7959,13 +8048,13 @@ UINT CViewDiagramm::DrawDiagramm()
 							m_bRefreshLastBreathOfLoops=false;
 
 							redrawPressureVolumeLoop();
-							Sleep(0);
+							//Sleep(0);
 							redrawVolumeFlowLoop();
-							Sleep(0);
+							//Sleep(0);
 							refreshLastBreathOfPressureVolumeLoop();
-							Sleep(0);
+							//Sleep(0);
 							refreshLastBreathOfVolumeFlowLoop();
-							Sleep(0);
+							//Sleep(0);
 						}
 						else if(m_bDrawSavedLoops)
 						{
@@ -7974,13 +8063,13 @@ UINT CViewDiagramm::DrawDiagramm()
 							if(getModel()->getDATAHANDLER()->getSizeSavedBreath()>0)
 							{
 								drawSavedPressureVolumeLoop();
-								Sleep(0);
+								//Sleep(0);
 								drawSavedVolumeFlowLoop();
-								Sleep(0);
+								//Sleep(0);
 								refreshLastBreathOfPressureVolumeLoop();
-								Sleep(0);
+								//Sleep(0);
 								refreshLastBreathOfVolumeFlowLoop();
-								Sleep(0);
+								//Sleep(0);
 							}
 						}
 					}
@@ -8039,6 +8128,16 @@ UINT CViewDiagramm::DrawDiagramm()
 				}
 				if(doThread()==false)
 				{
+					/*try
+					{
+						LPG_FUNCTIONSTRUCT_LD m_lpfsTest=NULL;
+						m_lpfsTest->ChartType=G_FILLEDCHART;
+
+					}
+					catch (CException* e)
+					{
+						return 0;
+					}*/
 					return 0;//rku APPERR
 				}
 			}
@@ -8051,7 +8150,6 @@ UINT CViewDiagramm::DrawDiagramm()
 		
 
 	}//while(m_bDoGraphThread)
-
 
 	return 0;//rku APPERR
 }
@@ -8536,6 +8634,8 @@ int CViewDiagramm::drawPressureGraph(int iNumItems)
 {
 	int iCurrentXtimeval=getCurrentXtimevalGraphs();
 
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	if(m_pPlotItems !=NULL && m_lpfsPressure !=NULL)
 	{
 		int iCountBufPointer=0;
@@ -8552,6 +8652,8 @@ int CViewDiagramm::drawPressureGraph(int iNumItems)
 		if(iNumItems*VECTOR_SIZE>MAXSIZE_SPIREADIN_BUFFER)
 		{
 			//ERROR
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			return 0;
 		}
 
@@ -8593,18 +8695,6 @@ int CViewDiagramm::drawPressureGraph(int iNumItems)
 
 			if(minY!=maxY)
 			{
-				//LONG average=(minY+maxY)/2;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.y=average;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
-				//m_pPlotItems[iCountNumItems].bTrig=bTrigger;
-				//m_pPlotItems[iCountNumItems].bNewATZ=bNewBreath;
-				//iCountNumItems++;
-				//if(iCountNumItems>G_MAXPOINTS-1)
-				//{
-				//	//ERROR
-				//	iCountNumItems=G_MAXPOINTS-1;
-				//}
-				
 				m_pPlotItems[iCountNumItems].pPlotXYItems.y=(*locationMin);
 				m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
 				m_pPlotItems[iCountNumItems].bTrig=bTrigger;
@@ -8687,8 +8777,6 @@ int CViewDiagramm::drawPressureGraph(int iNumItems)
 		}
 		LeaveCriticalSection(&csSPIReadInBuffer);
 
-		Sleep(0);
-
 		m_lpfsPressure->num_PlotXYItems=iCountNumItems;
 
 		if(m_bFilledGraph)
@@ -8729,6 +8817,8 @@ int CViewDiagramm::drawPressureGraph(int iNumItems)
 		}
 		LeaveCriticalSection(&csDiagrammPRESSURE);
 	}
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	return iCurrentXtimeval;
 }
 
@@ -8740,6 +8830,8 @@ int CViewDiagramm::drawFlowGraph(int iNumItems)
 {
 	int iCurrentXtimeval=getCurrentXtimevalGraphs();
 
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	if(m_pPlotItems !=NULL && m_lpfsFlow !=NULL)
 	{
 		int iCountBufPointer=0;
@@ -8758,6 +8850,8 @@ int CViewDiagramm::drawFlowGraph(int iNumItems)
 		if(iNumItems*VECTOR_SIZE>MAXSIZE_SPIREADIN_BUFFER)
 		{
 			//ERROR
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			return 0;
 		}
 
@@ -8797,18 +8891,6 @@ int CViewDiagramm::drawFlowGraph(int iNumItems)
 
 			if(minY!=maxY)
 			{
-				//LONG average=(minY+maxY)/2;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.y=average;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
-				//m_pPlotItems[iCountNumItems].bTrig=bTrigger;
-				//m_pPlotItems[iCountNumItems].bNewATZ=bNewBreath;
-				//iCountNumItems++;
-				//if(iCountNumItems>G_MAXPOINTS-1)
-				//{
-				//	//ERROR
-				//	iCountNumItems=G_MAXPOINTS-1;
-				//}
-				
 				m_pPlotItems[iCountNumItems].pPlotXYItems.y=(*locationMin);
 				m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
 				m_pPlotItems[iCountNumItems].bTrig=bTrigger;
@@ -8830,7 +8912,6 @@ int CViewDiagramm::drawFlowGraph(int iNumItems)
 					//ERROR
 					iCountNumItems=G_MAXPOINTS-1;
 				}
-
 			}
 			else
 			{
@@ -8895,8 +8976,6 @@ int CViewDiagramm::drawFlowGraph(int iNumItems)
 		}
 		LeaveCriticalSection(&csSPIReadInBuffer);
 
-		Sleep(0);
-
 		m_lpfsFlow->num_PlotXYItems=iCountNumItems;
 
 		if(m_bFilledGraph)
@@ -8915,6 +8994,8 @@ int CViewDiagramm::drawFlowGraph(int iNumItems)
 		}
 		LeaveCriticalSection(&csDiagrammFLOW);
 	}
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 	return iCurrentXtimeval;
 }
@@ -8926,6 +9007,8 @@ int CViewDiagramm::drawVolumeGraph(int iNumItems)
 {
 	int iCurrentXtimeval=getCurrentXtimevalGraphs();
 
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	if(m_pPlotItems !=NULL && m_lpfsVolume !=NULL)
 	{
 		int iCountBufPointer=0;
@@ -8944,6 +9027,8 @@ int CViewDiagramm::drawVolumeGraph(int iNumItems)
 		if(iNumItems*VECTOR_SIZE>MAXSIZE_SPIREADIN_BUFFER)
 		{
 			//ERROR
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			return 0;
 		}
 
@@ -8984,18 +9069,6 @@ int CViewDiagramm::drawVolumeGraph(int iNumItems)
 
 			if(minY!=maxY)
 			{
-				//LONG average=(minY+maxY)/2;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.y=average;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
-				//m_pPlotItems[iCountNumItems].bTrig=bTrigger;
-				//m_pPlotItems[iCountNumItems].bNewATZ=bNewBreath;
-				//iCountNumItems++;
-				//if(iCountNumItems>G_MAXPOINTS-1)
-				//{
-				//	//ERROR
-				//	iCountNumItems=G_MAXPOINTS-1;
-				//}
-
 				m_pPlotItems[iCountNumItems].pPlotXYItems.y=(*locationMin);
 				m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
 				m_pPlotItems[iCountNumItems].bTrig=bTrigger;
@@ -9123,7 +9196,8 @@ int CViewDiagramm::drawVolumeGraph(int iNumItems)
 		}
 		LeaveCriticalSection(&csDiagrammVOLUME);
 	}
-
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	return iCurrentXtimeval;
 }
 
@@ -9135,6 +9209,8 @@ int CViewDiagramm::drawCO2Graph(int iNumItems)
 {
 	int iCurrentXtimeval=getCurrentXtimevalGraphs();
 
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	if(m_pPlotItems !=NULL && m_lpfsCO2 !=NULL)
 	{
 		int iCountBufPointer=0;
@@ -9152,6 +9228,8 @@ int CViewDiagramm::drawCO2Graph(int iNumItems)
 		if(iNumItems*VECTOR_SIZE>MAXSIZE_SPIREADIN_BUFFER)
 		{
 			//ERROR
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			return 0;
 		}
 
@@ -9191,18 +9269,6 @@ int CViewDiagramm::drawCO2Graph(int iNumItems)
 
 			if(minY!=maxY)
 			{
-				//LONG average=(minY+maxY)/2;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.y=average;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
-				//m_pPlotItems[iCountNumItems].bTrig=bTrigger;
-				//m_pPlotItems[iCountNumItems].bNewATZ=bNewBreath;
-				//iCountNumItems++;
-				//if(iCountNumItems>G_MAXPOINTS-1)
-				//{
-				//	//ERROR
-				//	iCountNumItems=G_MAXPOINTS-1;
-				//}
-
 				m_pPlotItems[iCountNumItems].pPlotXYItems.y=(*locationMin);
 				m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
 				m_pPlotItems[iCountNumItems].bTrig=bTrigger;
@@ -9288,8 +9354,6 @@ int CViewDiagramm::drawCO2Graph(int iNumItems)
 		}
 		LeaveCriticalSection(&csSPIReadInBuffer);
 
-		Sleep(0);
-
 		m_lpfsCO2->num_PlotXYItems=iCountNumItems;
 
 		if(m_bFilledGraph)
@@ -9308,7 +9372,8 @@ int CViewDiagramm::drawCO2Graph(int iNumItems)
 		}
 		LeaveCriticalSection(&csDiagrammCO2);
 	}
-
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	return iCurrentXtimeval;
 }
 
@@ -9322,6 +9387,8 @@ int CViewDiagramm::drawSPO2Graph(int iNumItems)
 {
 	int iCurrentXtimeval=getCurrentXtimevalGraphs();
 
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	if(m_pPlotItems !=NULL && m_lpfsSPO2 !=NULL)
 	{
 		int iCountBufPointer=0;
@@ -9338,6 +9405,8 @@ int CViewDiagramm::drawSPO2Graph(int iNumItems)
 		if(iNumItems*VECTOR_SIZE>MAXSIZE_SPIREADIN_BUFFER)
 		{
 			//ERROR
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			return 0;
 		}
 
@@ -9374,18 +9443,6 @@ int CViewDiagramm::drawSPO2Graph(int iNumItems)
 
 			if(minY!=maxY)
 			{
-				//LONG average=(minY+maxY)/2;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.y=average;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
-				//m_pPlotItems[iCountNumItems].bTrig=false;
-				//m_pPlotItems[iCountNumItems].bNewATZ=bNewBreath;
-				//iCountNumItems++;
-				//if(iCountNumItems>G_MAXPOINTS-1)
-				//{
-				//	//ERROR
-				//	iCountNumItems=G_MAXPOINTS-1;
-				//}
-
 				m_pPlotItems[iCountNumItems].pPlotXYItems.y=(*locationMin);
 				m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
 				m_pPlotItems[iCountNumItems].bTrig=false;
@@ -9471,8 +9528,6 @@ int CViewDiagramm::drawSPO2Graph(int iNumItems)
 		}
 		LeaveCriticalSection(&csSPIReadInBuffer);
 
-		Sleep(0);
-
 		m_lpfsSPO2->num_PlotXYItems=iCountNumItems;
 
 		m_lpfsSPO2->ChartType=G_LINECHART;
@@ -9484,7 +9539,8 @@ int CViewDiagramm::drawSPO2Graph(int iNumItems)
 		}
 		LeaveCriticalSection(&csDiagrammSPO2);
 	}
-
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	return iCurrentXtimeval;
 }
 
@@ -9493,6 +9549,9 @@ void CViewDiagramm::DrawLoops(int iNumItems)
 {
 	bool loopPV=false;
 	bool loopVF=false;
+
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 
 	EnterCriticalSection(&csDiagrammLOOP);
 	if(m_pLoopPressureVolume && m_bLoopPressureVolumeIsActive && m_pPlotItemsPVloop !=NULL && m_lpfsPressureVolume !=NULL)
@@ -9523,10 +9582,8 @@ void CViewDiagramm::DrawLoops(int iNumItems)
 		m_lpfsVolumeFlow->FuncType=G_PLOTXYLOOPPOINTS;
 	}
 
-
 	int n=0;
 	int iCountItems=0;
-	//NEWLOOP
 	eViewSubState subState=getModel()->getVIEWHANDLER()->getViewSubState();
 
 	int iSizeCurrentBreath=getSizeCurrentBreath();
@@ -9589,7 +9646,6 @@ void CViewDiagramm::DrawLoops(int iNumItems)
 				break;
 			}
 		}
-
 		EnterCriticalSection(&csCurrentBreath);
 
 		if(_pBufRead.bATZ)
@@ -9680,7 +9736,7 @@ void CViewDiagramm::DrawLoops(int iNumItems)
 
 		}
 		LeaveCriticalSection(&csDiagrammLOOP);
-		Sleep(0);
+		//Sleep(0);
 		EnterCriticalSection(&csDiagrammLOOP);
 		if(m_pLoopVolumeFlow && loopVF)
 		{
@@ -9688,6 +9744,8 @@ void CViewDiagramm::DrawLoops(int iNumItems)
 		}
 		LeaveCriticalSection(&csDiagrammLOOP);
 	}
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 }
 
 
@@ -9698,6 +9756,8 @@ void CViewDiagramm::drawSavedPressureVolumeLoop()
 	if(iSizeSavedBreath==0 || iSizeSavedBreath>G_MAXPOINTS || false==doThread())
 		return;
 
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	if(m_pPlotItemsPVloop !=NULL && m_lpfsPressureVolume !=NULL)
 	{
 		m_lpfsPressureVolume->num_PlotXYItems=iSizeSavedBreath;
@@ -9730,8 +9790,10 @@ void CViewDiagramm::drawSavedPressureVolumeLoop()
 				m_pLoopPressureVolume->SetColorScheme(iPrevScheme, crPrevGraphPenColor);
 		}
 		LeaveCriticalSection(&csDiagrammLOOP);
-		Sleep(0);
+		//Sleep(0);
 	}
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 }
 void CViewDiagramm::drawSavedVolumeFlowLoop()
 {
@@ -9739,6 +9801,8 @@ void CViewDiagramm::drawSavedVolumeFlowLoop()
 	if(iSizeSavedBreath==0 || iSizeSavedBreath>G_MAXPOINTS || false==doThread())
 		return;
 
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	if(m_pPlotItemsVFloop !=NULL && m_lpfsVolumeFlow !=NULL)
 	{
 		m_lpfsVolumeFlow->num_PlotXYItems=iSizeSavedBreath;
@@ -9771,8 +9835,10 @@ void CViewDiagramm::drawSavedVolumeFlowLoop()
 				m_pLoopVolumeFlow->SetColorScheme(iPrevScheme,crPrevGraphPenColor);
 		}
 		LeaveCriticalSection(&csDiagrammLOOP);
-		Sleep(0);
+		//Sleep(0);
 	}
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 }
 
 
@@ -9800,6 +9866,8 @@ int CViewDiagramm::redrawPressureGraph()
 
 	int iNumItems=DIAGRAMM_DATAAREA;
 
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	if(m_pPlotItems !=NULL && m_lpfsPressure !=NULL)
 	{
 		bool bTrigger=false;
@@ -9818,6 +9886,8 @@ int CViewDiagramm::redrawPressureGraph()
 		{
 			//ERROR
 			//rkuNEWFIX
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 			return 0;
 		}
@@ -9849,6 +9919,8 @@ int CViewDiagramm::redrawPressureGraph()
 
 			if(!doThread())//rkuNEWFIX
 			{
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 				return 0;
 			}
@@ -9856,7 +9928,7 @@ int CViewDiagramm::redrawPressureGraph()
 			start = PressureNumbers.begin() ;   // location of first
 			end = PressureNumbers.end() ;       // one past the location
 
-			Sleep(0);
+			//Sleep(0);
 
 			locationMin = min_element(start, end, less<int>());
 			minY=(*locationMin);
@@ -9866,18 +9938,6 @@ int CViewDiagramm::redrawPressureGraph()
 
 			if(minY!=maxY)
 			{
-				//LONG average=(minY+maxY)/2;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.y=average;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
-				//m_pPlotItems[iCountNumItems].bTrig=bTrigger;
-				//m_pPlotItems[iCountNumItems].bNewATZ=bNewBreath;
-				//iCountNumItems++;
-				//if(iCountNumItems>MAXSIZE_RING_BUFFER-1)
-				//{
-				//	//ERROR
-				//	iCountNumItems=MAXSIZE_RING_BUFFER-1;
-				//}
-				
 				m_pPlotItems[iCountNumItems].pPlotXYItems.y=(*locationMin);
 				m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
 				m_pPlotItems[iCountNumItems].bTrig=bTrigger;
@@ -9926,7 +9986,7 @@ int CViewDiagramm::redrawPressureGraph()
 			bNewBreath=false;
 		}
 
-		Sleep(0);
+		//Sleep(0);
 
 		m_lpfsPressure->num_PlotXYItems=iCountNumItems;
 
@@ -9952,6 +10012,8 @@ int CViewDiagramm::redrawPressureGraph()
 		}
 		LeaveCriticalSection(&csDiagrammPRESSURE);
 	}
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 
 	return iCurrentXtimeval;
@@ -9979,6 +10041,8 @@ int CViewDiagramm::redrawFlowGraph()
 
 	int iNumItems=DIAGRAMM_DATAAREA;
 
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	if(m_pPlotItems !=NULL && m_lpfsFlow !=NULL)
 	{
 		bool bTrigger=false;
@@ -9996,6 +10060,8 @@ int CViewDiagramm::redrawFlowGraph()
 		if(iNumItems*VECTOR_SIZE>MAXSIZE_RING_BUFFER)//size copy buffer
 		{
 			//ERROR
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);//rkuNEWFIX
 			return 0;
 		}
@@ -10027,6 +10093,8 @@ int CViewDiagramm::redrawFlowGraph()
 
 			if(!doThread())//rkuNEWFIX
 			{
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 				return 0;
 			}
@@ -10034,7 +10102,7 @@ int CViewDiagramm::redrawFlowGraph()
 			start = FlowNumbers.begin() ;   // location of first
 			end = FlowNumbers.end() ;       // one past the location
 
-			Sleep(0);
+			//Sleep(0);
 
 			locationMin = min_element(start, end, less<int>());
 			minY=(*locationMin);
@@ -10044,18 +10112,6 @@ int CViewDiagramm::redrawFlowGraph()
 
 			if(minY!=maxY)
 			{
-				//LONG average=(minY+maxY)/2;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.y=average;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
-				//m_pPlotItems[iCountNumItems].bTrig=bTrigger;
-				//m_pPlotItems[iCountNumItems].bNewATZ=bNewBreath;
-				//iCountNumItems++;
-				//if(iCountNumItems>MAXSIZE_RING_BUFFER-1)
-				//{
-				//	//ERROR
-				//	iCountNumItems=MAXSIZE_RING_BUFFER-1;
-				//}
-				
 				m_pPlotItems[iCountNumItems].pPlotXYItems.y=(*locationMin);
 				m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
 				m_pPlotItems[iCountNumItems].bTrig=bTrigger;
@@ -10103,7 +10159,7 @@ int CViewDiagramm::redrawFlowGraph()
 			bNewBreath=false;
 		}
 
-		Sleep(0);
+		//Sleep(0);
 
 		m_lpfsFlow->num_PlotXYItems=iCountNumItems;
 
@@ -10138,6 +10194,8 @@ int CViewDiagramm::redrawFlowGraph()
 		}
 		LeaveCriticalSection(&csDiagrammFLOW);
 	}
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 
 	return iCurrentXtimeval;
@@ -10165,6 +10223,8 @@ int CViewDiagramm::redrawVolumeGraph()
 
 	int iNumItems=DIAGRAMM_DATAAREA;
 
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	if(m_pPlotItems !=NULL && m_lpfsVolume !=NULL)
 	{
 		bool bTrigger=false;
@@ -10183,6 +10243,8 @@ int CViewDiagramm::redrawVolumeGraph()
 		{
 			//ERROR
 			//rkuNEWFIX
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 			return 0;
 		}
@@ -10214,6 +10276,8 @@ int CViewDiagramm::redrawVolumeGraph()
 
 			if(!doThread())//rkuNEWFIX
 			{
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 				return 0;
 			}
@@ -10221,7 +10285,7 @@ int CViewDiagramm::redrawVolumeGraph()
 			start = VolumeNumbers.begin() ;   // location of first
 			end = VolumeNumbers.end() ;       // one past the location
 
-			Sleep(0);
+			//Sleep(0);
 
 			locationMin = min_element(start, end, less<int>());
 			minY=(*locationMin);
@@ -10231,18 +10295,6 @@ int CViewDiagramm::redrawVolumeGraph()
 
 			if(minY!=maxY)
 			{
-				//LONG average=(minY+maxY)/2;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.y=average;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
-				//m_pPlotItems[iCountNumItems].bTrig=bTrigger;
-				//m_pPlotItems[iCountNumItems].bNewATZ=bNewBreath;
-				//iCountNumItems++;
-				//if(iCountNumItems>MAXSIZE_RING_BUFFER-1)
-				//{
-				//	//ERROR
-				//	iCountNumItems=MAXSIZE_RING_BUFFER-1;
-				//}
-
 				m_pPlotItems[iCountNumItems].pPlotXYItems.y=(*locationMin);
 				m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
 				m_pPlotItems[iCountNumItems].bTrig=bTrigger;
@@ -10291,7 +10343,7 @@ int CViewDiagramm::redrawVolumeGraph()
 			bNewBreath=false;
 		}
 
-		Sleep(0);
+		//Sleep(0);
 
 		m_lpfsVolume->num_PlotXYItems=iCountNumItems;
 
@@ -10328,6 +10380,8 @@ int CViewDiagramm::redrawVolumeGraph()
 		}
 		LeaveCriticalSection(&csDiagrammVOLUME);
 	}
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 
 	return iCurrentXtimeval;
@@ -10349,6 +10403,8 @@ int CViewDiagramm::redrawCO2Graph()
 
 	int iNumItems=DIAGRAMM_DATAAREA;
 
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	if(m_pPlotItems !=NULL && m_lpfsCO2 !=NULL)
 	{
 		bool bTrigger=false;
@@ -10366,6 +10422,8 @@ int CViewDiagramm::redrawCO2Graph()
 		if(iNumItems*VECTOR_SIZE>MAXSIZE_RING_BUFFER)//size copy buffer
 		{
 			//ERROR
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 			return 0;
 		}
@@ -10396,6 +10454,8 @@ int CViewDiagramm::redrawCO2Graph()
 
 			if(!doThread())//rkuNEWFIX
 			{
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 				return 0;
 			}
@@ -10403,7 +10463,7 @@ int CViewDiagramm::redrawCO2Graph()
 			start = CO2Numbers.begin() ;   // location of first
 			end = CO2Numbers.end() ;       // one past the location
 
-			Sleep(0);
+			//Sleep(0);
 
 			locationMin = min_element(start, end, less<int>());
 			minY=(*locationMin);
@@ -10413,18 +10473,6 @@ int CViewDiagramm::redrawCO2Graph()
 
 			if(minY!=maxY)
 			{
-				//LONG average=(minY+maxY)/2;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.y=average;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
-				//m_pPlotItems[iCountNumItems].bTrig=bTrigger;
-				//m_pPlotItems[iCountNumItems].bNewATZ=bNewBreath;
-				//iCountNumItems++;
-				//if(iCountNumItems>MAXSIZE_RING_BUFFER-1)
-				//{
-				//	//ERROR
-				//	iCountNumItems=MAXSIZE_RING_BUFFER-1;
-				//}
-
 				m_pPlotItems[iCountNumItems].pPlotXYItems.y=(*locationMin);
 				m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
 				m_pPlotItems[iCountNumItems].bTrig=bTrigger;
@@ -10472,7 +10520,7 @@ int CViewDiagramm::redrawCO2Graph()
 			bNewBreath=false;
 		}
 
-		Sleep(0);
+		//Sleep(0);
 
 		m_lpfsCO2->num_PlotXYItems=iCountNumItems;
 
@@ -10495,6 +10543,8 @@ int CViewDiagramm::redrawCO2Graph()
 		}
 		LeaveCriticalSection(&csDiagrammCO2);
 	}
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 
 	return iCurrentXtimeval;
@@ -10524,6 +10574,8 @@ int CViewDiagramm::redrawSPO2Graph()
 
 	int iNumItems=DIAGRAMM_DATAAREA;
 
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	if(m_pPlotItems !=NULL && m_lpfsSPO2 !=NULL)
 	{
 		bool bTrigger=false;
@@ -10541,6 +10593,8 @@ int CViewDiagramm::redrawSPO2Graph()
 		if(iNumItems*VECTOR_SIZE>MAXSIZE_RING_BUFFER)//size copy buffer
 		{
 			//ERROR
+			/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+			LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 			LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 			return 0;
 		}
@@ -10567,6 +10621,8 @@ int CViewDiagramm::redrawSPO2Graph()
 
 			if(!doThread())//rkuNEWFIX
 			{
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 				return 0;
 			}
@@ -10574,7 +10630,7 @@ int CViewDiagramm::redrawSPO2Graph()
 			start = SPO2Numbers.begin() ;   // location of first
 			end = SPO2Numbers.end() ;       // one past the location
 
-			Sleep(0);
+			//Sleep(0);
 
 			locationMin = min_element(start, end, less<int>());
 			minY=(*locationMin);
@@ -10584,18 +10640,6 @@ int CViewDiagramm::redrawSPO2Graph()
 
 			if(minY!=maxY)
 			{
-				//LONG average=(minY+maxY)/2;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.y=average;
-				//m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
-				//m_pPlotItems[iCountNumItems].bTrig=bTrigger;
-				//m_pPlotItems[iCountNumItems].bNewATZ=bNewBreath;
-				//iCountNumItems++;
-				//if(iCountNumItems>MAXSIZE_RING_BUFFER-1)
-				//{
-				//	//ERROR
-				//	iCountNumItems=MAXSIZE_RING_BUFFER-1;
-				//}
-
 				m_pPlotItems[iCountNumItems].pPlotXYItems.y=(*locationMin);
 				m_pPlotItems[iCountNumItems].pPlotXYItems.x=iCurrentXtimeval;
 				m_pPlotItems[iCountNumItems].bTrig=bTrigger;
@@ -10641,7 +10685,7 @@ int CViewDiagramm::redrawSPO2Graph()
 			bNewBreath=false;
 		}
 
-		Sleep(0);
+		//Sleep(0);
 
 		m_lpfsSPO2->num_PlotXYItems=iCountNumItems;
 
@@ -10656,6 +10700,8 @@ int CViewDiagramm::redrawSPO2Graph()
 		}
 		LeaveCriticalSection(&csDiagrammSPO2);
 	}
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 
 	return iCurrentXtimeval;
@@ -10676,6 +10722,8 @@ void CViewDiagramm::refreshLastBreathOfPressureVolumeLoop()
 		return;
 	}
 
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	if(m_pPlotItemsPVloop !=NULL && m_lpfsPressureVolume !=NULL)
 	{
 		EnterCriticalSection(&csCurrentBreath);
@@ -10689,6 +10737,8 @@ void CViewDiagramm::refreshLastBreathOfPressureVolumeLoop()
 			if(false==doThread())
 			{
 				LeaveCriticalSection(&csCurrentBreath);
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				return;//rkuNEWFIX
 			}
 			m_pPlotItemsPVloop[iSav].bTrig=m_pbufCurrentBreath[iSav].bTrig;
@@ -10706,6 +10756,8 @@ void CViewDiagramm::refreshLastBreathOfPressureVolumeLoop()
 		}
 		LeaveCriticalSection(&csDiagrammLOOP);
 	}
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 }
 void CViewDiagramm::refreshLastBreathOfVolumeFlowLoop()
 {
@@ -10719,6 +10771,8 @@ void CViewDiagramm::refreshLastBreathOfVolumeFlowLoop()
 		return;
 	}
 
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	if(m_pPlotItemsVFloop !=NULL && m_lpfsVolumeFlow !=NULL)
 	{
 		EnterCriticalSection(&csCurrentBreath);
@@ -10733,6 +10787,8 @@ void CViewDiagramm::refreshLastBreathOfVolumeFlowLoop()
 			if(false==doThread())
 			{
 				LeaveCriticalSection(&csCurrentBreath);
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				return;//rkuNEWFIX
 			}
 
@@ -10751,6 +10807,8 @@ void CViewDiagramm::refreshLastBreathOfVolumeFlowLoop()
 		}
 		LeaveCriticalSection(&csDiagrammLOOP);
 	}
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 }
 // **************************************************************************
 // 
@@ -10773,6 +10831,8 @@ void CViewDiagramm::redrawPressureVolumeLoop()
 		return;
 	}
 
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	if(m_pPlotItemsPVloop !=NULL && m_lpfsPressureVolume !=NULL)
 	{
 		UINT iBreathCnt=0;
@@ -10790,14 +10850,15 @@ void CViewDiagramm::redrawPressureVolumeLoop()
 				if(getModel()->getDATAHANDLER()->m_rbufCopy[iBufCnt].bATZ)
 				{
 					iBreathCnt++;
-					Sleep(0);
+					//Sleep(0);
 				}
 
 				iBufCnt++;
 
 				if(iBufCnt>((iBreathCnt+1)*G_MAXPOINTS))//per ATZ max G_MAXLOOPPOINTS data points
 				{
-					DEBUGMSG(TRUE, (TEXT("G_MAXLOOPPOINTS 1\r\n")));
+					/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+					LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 					LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 					theApp.getLog()->WriteLine(_T("#G_MAXLOOPPOINTS 1"));
 					return;
@@ -10851,14 +10912,15 @@ void CViewDiagramm::redrawPressureVolumeLoop()
 					if(iNumItems>G_MAXPOINTS-1)
 					{
 						//ERROR
-						DEBUGMSG(TRUE, (TEXT("G_MAXLOOPPOINTS 3\r\n")));
+						/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+						LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 						LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 						theApp.getLog()->WriteLine(_T("#G_MAXLOOPPOINTS 3"));
 						return;
 					}
 				}
 			}
-			Sleep(0);
+			//Sleep(0);
 
 			m_lpfsPressureVolume->num_PlotXYItems=iNumItems;
 
@@ -10882,10 +10944,12 @@ void CViewDiagramm::redrawPressureVolumeLoop()
 			}
 			LeaveCriticalSection(&csDiagrammLOOP);
 
-			Sleep(0);
+			//Sleep(0);
 			iBreathCnt--;
 		}
 	}
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 }
 // **************************************************************************
@@ -10909,6 +10973,8 @@ void CViewDiagramm::redrawVolumeFlowLoop()
 		return;
 	}
 
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	if(m_pPlotItemsVFloop !=NULL && m_lpfsVolumeFlow !=NULL)
 	{
 		UINT iBreathCnt=0;
@@ -10926,14 +10992,15 @@ void CViewDiagramm::redrawVolumeFlowLoop()
 				if(getModel()->getDATAHANDLER()->m_rbufCopy[iBufCnt].bATZ)
 				{
 					iBreathCnt++;
-					Sleep(0);
+					//Sleep(0);
 				}
 
 				iBufCnt++;
 
 				if(iBufCnt>((iBreathCnt+1)*G_MAXPOINTS))//per ATZ max G_MAXLOOPPOINTS data points
 				{
-					DEBUGMSG(TRUE, (TEXT("G_MAXLOOPPOINTS 1\r\n")));
+					/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+					LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 					LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 					theApp.getLog()->WriteLine(_T("#G_MAXLOOPPOINTS 1"));
 					return;
@@ -10988,14 +11055,15 @@ void CViewDiagramm::redrawVolumeFlowLoop()
 					{
 						//ERROR
 						//iNumItems=G_MAXLOOPPOINTS-1;
-						DEBUGMSG(TRUE, (TEXT("G_MAXLOOPPOINTS 3\r\n")));
+						/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+						LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 						LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 						theApp.getLog()->WriteLine(_T("#G_MAXLOOPPOINTS 3"));
 						return;
 					}
 				}
 			}
-			Sleep(0);
+			//Sleep(0);
 
 			m_lpfsVolumeFlow->num_PlotXYItems=iNumItems;
 
@@ -11019,11 +11087,12 @@ void CViewDiagramm::redrawVolumeFlowLoop()
 			}
 			LeaveCriticalSection(&csDiagrammLOOP);
 
-			Sleep(0);
+			//Sleep(0);
 			iBreathCnt--;
 		}
 	}
-
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 }
 
@@ -11047,10 +11116,10 @@ void CViewDiagramm::drawFOTsteps()
 		return;
 	}
 	
+	/** \brief The enter critical section csLPFS_FUNCTIONSTRUCT. */
+	EnterCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	if(m_pPlotItemsFOTloop !=NULL && m_lpfsFOT !=NULL)
 	{
-		
-
 		m_lpfsFOT->FuncType=G_PLOTSAVEDLOOPPOINTS;
 
 		int iNumItems=0;
@@ -11064,18 +11133,18 @@ void CViewDiagramm::drawFOTsteps()
 				m_pPlotItemsFOTloop[iNumItems].pPlotXYItems.x=getModel()->getFOTThread()->m_pbufFOTdisplay[iNumItems].iXValPmean;
 				m_pPlotItemsFOTloop[iNumItems].pPlotXYItems.y=getModel()->getFOTThread()->m_pbufFOTdisplay[iNumItems].iYValXRS;
 			}
-			
 
 			if(iNumItems>=MAXSIZE_FOT_STEPS)
 			{
 				//ERROR
-				DEBUGMSG(TRUE, (TEXT("MAXSIZE_FOT_STEPS\r\n")));
+				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				theApp.getLog()->WriteLine(_T("#MAXSIZE_FOT_STEPS"));
 				return;
 			}
 		}
 
-		Sleep(0);
+		//Sleep(0);
 
 		m_lpfsFOT->num_PlotXYItems=iNumItems;
 
@@ -11086,12 +11155,10 @@ void CViewDiagramm::drawFOTsteps()
 		}
 		LeaveCriticalSection(&csDrawDataFOT);
 
-		Sleep(0);
-
-		
+		//Sleep(0);
 	}
-
-	////LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
+	/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
+	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 }
 // **************************************************************************
 // 
@@ -11373,7 +11440,7 @@ void CViewDiagramm::UpdateTimeAxis(bool bRedraw)
 	if(m_pDiagrammSPO2 && m_bGraphSPO2IsActive)
 	{
 		m_pDiagrammSPO2->SetXAxisScale(iXmin, iXmax,true,false);
-		Sleep(0);
+		//Sleep(0);
 	}
 	LeaveCriticalSection(&csDiagrammSPO2);
 
@@ -11381,7 +11448,7 @@ void CViewDiagramm::UpdateTimeAxis(bool bRedraw)
 	if(m_pDiagrammCO2 && m_bGraphCO2IsActive)
 	{
 		m_pDiagrammCO2->SetXAxisScale(iXmin, iXmax,true,false);
-		Sleep(0);
+		//Sleep(0);
 	}
 	LeaveCriticalSection(&csDiagrammCO2);
 
@@ -11389,7 +11456,7 @@ void CViewDiagramm::UpdateTimeAxis(bool bRedraw)
 	if(m_pDiagrammPressure && m_bGraphPressureIsActive)
 	{
 		m_pDiagrammPressure->SetXAxisScale(iXmin, iXmax,true,false);
-		Sleep(0);
+		//Sleep(0);
 	}
 	LeaveCriticalSection(&csDiagrammPRESSURE);
 
@@ -11397,7 +11464,7 @@ void CViewDiagramm::UpdateTimeAxis(bool bRedraw)
 	if(m_pDiagrammVolume && m_bGraphVolumeIsActive)
 	{
 		m_pDiagrammVolume->SetXAxisScale(iXmin, iXmax,true,false);
-		Sleep(0);
+		//Sleep(0);
 	}
 	LeaveCriticalSection(&csDiagrammVOLUME);
 
@@ -11405,7 +11472,7 @@ void CViewDiagramm::UpdateTimeAxis(bool bRedraw)
 	if(m_pDiagrammFlow && m_bGraphFlowIsActive)
 	{
 		m_pDiagrammFlow->SetXAxisScale(iXmin, iXmax,true,false);
-		Sleep(0);
+		//Sleep(0);
 	}
 	LeaveCriticalSection(&csDiagrammFLOW);
 
