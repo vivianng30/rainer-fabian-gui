@@ -1428,7 +1428,7 @@ void CDiagramm::PaintGraph()
 	////step 3: Draw Grid if required
 	if(m_iDiagrammType != FOT_LOOP)
 		DrawGrid(pDCStatic);
-	Sleep(0);
+	//Sleep(0);
 
 
 	////step 4: Draw Axies
@@ -1478,7 +1478,7 @@ void CDiagramm::PaintGraph()
 		}
 	}
 
-	Sleep(0);
+	//Sleep(0);
 
 	////step 5: draw ticks if required
 	if(m_iDiagrammType != SPO2_GRAPH)
@@ -1486,7 +1486,7 @@ void CDiagramm::PaintGraph()
 		DrawTicks(pDCStatic);
 	}
 	
-	Sleep(0);
+	//Sleep(0);
 
 	////step 6: Write Graph title
 	//DrawGraphTitle();
@@ -1496,7 +1496,7 @@ void CDiagramm::PaintGraph()
 
 	////step 8: Write x-legend
 	DrawXLegend(pDCStatic);
-	Sleep(0);
+	//Sleep(0);
 
 	////step 9: Write y legend
 	////doing this is very similar to doing the graph title or the
@@ -1507,7 +1507,7 @@ void CDiagramm::PaintGraph()
 		DrawYLegend(pDCStatic);
 	}
 	
-	Sleep(0);
+	//Sleep(0);
 
 	////step 10: write the x & y axes values
 	DrawXAxisNumbers(pDCStatic);
@@ -1516,18 +1516,18 @@ void CDiagramm::PaintGraph()
 		DrawYAxisNumbers(pDCStatic);
 	}
 	
-	Sleep(0);
+	//Sleep(0);
 
 	if(m_bAutofit /*&& m_iDiagrammType!=FOT_LOOP*/)
 	{
 		DrawAutoscaleState(pDCStatic);
-		Sleep(0);
+		//Sleep(0);
 	}
 
 	BitBlt(m_hDC, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcStatic, 0, 0, SRCCOPY);
 	BitBlt(dc.m_hDC, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcStatic, 0, 0, SRCCOPY);
 
-	Sleep(0);
+	//Sleep(0);
 	BitBlt(m_hdcGraph, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcStatic, 0, 0, SRCCOPY);
 	
 	/*if(getModel()->getVMODEHANDLER()->activeModeIsHFO()==false)
@@ -1539,7 +1539,7 @@ void CDiagramm::PaintGraph()
 	{
 		BitBlt(m_hdcLevel1, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcStatic, 0, 0, SRCCOPY);
 	}
-	Sleep(0);*/
+	//Sleep(0);*/
 	
 	////Step 11
 	////draw Function
