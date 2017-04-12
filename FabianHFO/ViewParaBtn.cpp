@@ -1756,7 +1756,6 @@ void CViewParaBtn::Open()
 	m_bViewPraBtnShown=true;
 
 	SetOxyHourglass(getModel()->getDATAHANDLER()->GetOxyCalRunning());
-
 }
 
 void CViewParaBtn::Close()
