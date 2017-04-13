@@ -649,38 +649,3 @@ void CWndMenuMenu::Draw()
 
 }
 
-//void CWndMenuMenu::NotifyLanguageChanged()
-//{
-//	try
-//	{
-//		if(m_bMenuView==false)
-//		{
-//			if(m_pcMenu)
-//			{
-//				m_pcMenu->RefreshText(getModel()->GetLanguageString(IDS_MENU_OPEN_TOP),getModel()->GetLanguageString(IDS_MENU_OPEN_BOT));
-//			/*	m_pcMenu->Invalidate();
-//				m_pcMenu->UpdateWindow();*/
-//			}
-//			Invalidate();
-//			UpdateWindow();
-//		}
-//		else
-//		{
-//			if(m_pcMenu)
-//			{
-//				m_pcMenu->RefreshText(getModel()->GetLanguageString(IDS_MENU_CLOSE_TOP),getModel()->GetLanguageString(IDS_MENU_CLOSE_BOT));
-//				/*m_pcMenu->Invalidate();
-//				m_pcMenu->UpdateWindow();*/
-//			}
-//			Invalidate();
-//			UpdateWindow();
-//		}
-//	}
-//	catch (...)
-//	{
-//		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndMenuMenu::NotifyLanguageChanged()"));
-//		//AfxMessageBox( _T("EXCEPTION: CWndMenuMenu::NotifyLanguageChanged()") );
-//		
-//	}
-//	
-//}

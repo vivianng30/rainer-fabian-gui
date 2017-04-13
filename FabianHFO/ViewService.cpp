@@ -150,18 +150,9 @@ void CViewService::ShowWndServiceMenu(bool bShow)
 
 bool CViewService::DestroyWndServiceMenu()
 {
-	try
+	if(m_pWndServiceMenu)
 	{
-		if(m_pWndServiceMenu)
-		{
-			m_pWndServiceMenu->DestroyWindow();
-		}
-	}
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: m_pWndServiceMenu"));
-		delete m_pWndServiceMenu;
-		throw;
+		m_pWndServiceMenu->DestroyWindow();
 	}
 	
 	delete m_pWndServiceMenu;
@@ -230,18 +221,9 @@ bool CViewService::CreateWndSystem()
 }
 bool CViewService::DestroyWndSystem()
 {
-	try
+	if(m_pcWndSystem)
 	{
-		if(m_pcWndSystem)
-		{
-			m_pcWndSystem->DestroyWindow();
-		}
-	}
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: m_pcWndSystem"));
-		delete m_pcWndSystem;
-		throw;
+		m_pcWndSystem->DestroyWindow();
 	}
 	
 	delete m_pcWndSystem;
@@ -281,18 +263,9 @@ bool CViewService::CreateWndDisplay()
 }
 bool CViewService::DestroyWndDisplay()
 {
-	try
+	if(m_pcWndDisplay)
 	{
-		if(m_pcWndDisplay)
-		{
-			m_pcWndDisplay->DestroyWindow();
-		}
-	}
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: m_pcWndDisplay"));
-		delete m_pcWndDisplay;
-		throw;
+		m_pcWndDisplay->DestroyWindow();
 	}
 	
 	delete m_pcWndDisplay;
@@ -331,18 +304,9 @@ bool CViewService::CreateWndSettings()
 }
 bool CViewService::DestroyWndSettings()
 {
-	try
+	if(m_pcWndSettings)
 	{
-		if(m_pcWndSettings)
-		{
-			m_pcWndSettings->DestroyWindow();
-		}
-	}
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: m_pcWndSettings"));
-		delete m_pcWndSettings;
-		throw;
+		m_pcWndSettings->DestroyWindow();
 	}
 	
 	delete m_pcWndSettings;
@@ -381,18 +345,9 @@ bool CViewService::CreateWndCalibration()
 }
 bool CViewService::DestroyWndCalibration()
 {
-	try
+	if(m_pcWndCalibration)
 	{
-		if(m_pcWndCalibration)
-		{
-			m_pcWndCalibration->DestroyWindow();
-		}
-	}
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: m_pcWndCalibration"));
-		delete m_pcWndCalibration;
-		throw;
+		m_pcWndCalibration->DestroyWindow();
 	}
 	
 	delete m_pcWndCalibration;
@@ -431,18 +386,9 @@ bool CViewService::CreateWndFlowboard()
 }
 bool CViewService::DestroyWndFlowboard()
 {
-	try
+	if(m_pcWndFlowboard)
 	{
-		if(m_pcWndFlowboard)
-		{
-			m_pcWndFlowboard->DestroyWindow();
-		}
-	}
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: m_pcWndFlowboard"));
-		delete m_pcWndFlowboard;
-		throw;
+		m_pcWndFlowboard->DestroyWindow();
 	}
 	
 	delete m_pcWndFlowboard;
@@ -481,18 +427,9 @@ bool CViewService::CreateWndAccuboard()
 }
 bool CViewService::DestroyWndAccuboard()
 {
-	try
+	if(m_pcWndAccuboard)
 	{
-		if(m_pcWndAccuboard)
-		{
-			m_pcWndAccuboard->DestroyWindow();
-		}
-	}
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: m_pcWndAccuboard"));
-		delete m_pcWndAccuboard;
-		throw;
+		m_pcWndAccuboard->DestroyWindow();
 	}
 	
 	delete m_pcWndAccuboard;
@@ -531,18 +468,9 @@ bool CViewService::CreateWndInterfaces()
 }
 bool CViewService::DestroyWndInterfaces()
 {
-	try
+	if(m_pcWndInterfaces)
 	{
-		if(m_pcWndInterfaces)
-		{
-			m_pcWndInterfaces->DestroyWindow();
-		}
-	}
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: m_pcWndInterfaces"));
-		delete m_pcWndInterfaces;
-		throw;
+		m_pcWndInterfaces->DestroyWindow();
 	}
 	
 	delete m_pcWndInterfaces;
@@ -581,18 +509,9 @@ bool CViewService::CreateWndNetwork()
 }
 bool CViewService::DestroyWndNetwork()
 {
-	try
+	if(m_pcWndNetwork)
 	{
-		if(m_pcWndNetwork)
-		{
-			m_pcWndNetwork->DestroyWindow();
-		}
-	}
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: m_pcWndNetwork"));
-		delete m_pcWndNetwork;
-		throw;
+		m_pcWndNetwork->DestroyWindow();
 	}
 	
 	delete m_pcWndNetwork;
@@ -682,18 +601,9 @@ bool CViewService::CreateWndValves()
 }
 bool CViewService::DestroyWndValves()
 {
-	try
+	if(m_pcWndValves)
 	{
-		if(m_pcWndValves)
-		{
-			m_pcWndValves->DestroyWindow();
-		}
-	}
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: m_pcWndValves"));
-		delete m_pcWndValves;
-		throw;
+		m_pcWndValves->DestroyWindow();
 	}
 	
 	delete m_pcWndValves;
@@ -732,18 +642,9 @@ bool CViewService::CreateWndMonitorPIC()
 }
 bool CViewService::DestroyWndMonitorPIC()
 {
-	try
+	if(m_pcWndMonitorPIC)
 	{
-		if(m_pcWndMonitorPIC)
-		{
-			m_pcWndMonitorPIC->DestroyWindow();
-		}
-	}
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: m_pcWndMonitorPIC"));
-		delete m_pcWndMonitorPIC;
-		throw;
+		m_pcWndMonitorPIC->DestroyWindow();
 	}
 	
 	delete m_pcWndMonitorPIC;
@@ -997,326 +898,197 @@ void CViewService::NotifyEvent(CMVEvent* pEvent)
 			{
 			case CMVEventUI::EV_BN_SERVICE_SYSTEM:
 				{
-					try
-					{
-						DestroyWndServiceMenu();
+					DestroyWndServiceMenu();
 
-						UpdateWindow();
-						Invalidate();
+					UpdateWindow();
+					Invalidate();
 
-						CreateWndSystem();
-						ShowWndSystem(true);
-						m_pcWndSystem->SetFocus();
+					CreateWndSystem();
+					ShowWndSystem(true);
+					m_pcWndSystem->SetFocus();
 
-						PostMessage(WM_BN_SERVICE_SYSTEM);
-					}
-					catch (...)
-					{
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_SYSTEM"));
-						//AfxMessageBox( _T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_SYSTEM") );
-						
-					}
-					
+					PostMessage(WM_BN_SERVICE_SYSTEM);
 				}
 				break;
 			case CMVEventUI::EV_BN_SERVICE_DISPLAY:
 				{
-					try
-					{
-						DestroyWndServiceMenu();
+					DestroyWndServiceMenu();
 
-						UpdateWindow();
-						Invalidate();
+					UpdateWindow();
+					Invalidate();
 
-						CreateWndDisplay();
-						ShowWndDisplay(true);
-						m_pcWndDisplay->SetFocus();
+					CreateWndDisplay();
+					ShowWndDisplay(true);
+					m_pcWndDisplay->SetFocus();
 
-						PostMessage(WM_BN_SERVICE_DISPLAY);
-					}
-					catch (...)
-					{
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_DISPLAY"));
-						//AfxMessageBox( _T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_DISPLAY") );
-						
-					}
-					
+					PostMessage(WM_BN_SERVICE_DISPLAY);
 				}
 				break;
 			case CMVEventUI::EV_BN_SERVICE_SETTINGS:
 				{
-					try
-					{
-						DestroyWndServiceMenu();
+					DestroyWndServiceMenu();
 
-						UpdateWindow();
-						Invalidate();
+					UpdateWindow();
+					Invalidate();
 
-						CreateWndSettings();
-						ShowWndSettings(true);
-						m_pcWndSettings->SetFocus();
+					CreateWndSettings();
+					ShowWndSettings(true);
+					m_pcWndSettings->SetFocus();
 
-						PostMessage(WM_BN_SERVICE_SETTINGS);
-					}
-					catch (...)
-					{
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_SETTINGS"));
-						//AfxMessageBox( _T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_SETTINGS") );
-						
-					}
-					
+					PostMessage(WM_BN_SERVICE_SETTINGS);
 				}
 				break;
 			case CMVEventUI::EV_BN_SERVICE_CALIBR:
 				{
-					try
-					{
-						DestroyWndServiceMenu();
+					DestroyWndServiceMenu();
 
-						UpdateWindow();
-						Invalidate();
+					UpdateWindow();
+					Invalidate();
 
-						CreateWndCalibration();
-						ShowWndCalibration(true);
-						m_pcWndCalibration->SetFocus();
+					CreateWndCalibration();
+					ShowWndCalibration(true);
+					m_pcWndCalibration->SetFocus();
 
-						PostMessage(WM_BN_SERVICE_CALIBR);
-					}
-					catch (...)
-					{
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_CALIBR"));
-						//AfxMessageBox( _T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_CALIBR") );
-						
-					}
-					
+					PostMessage(WM_BN_SERVICE_CALIBR);
 				}
 				break;
 			case CMVEventUI::EV_BN_SERVICE_FLOW:
 				{
-					try
-					{
-						DestroyWndServiceMenu();
+					DestroyWndServiceMenu();
 
-						UpdateWindow();
-						Invalidate();
+					UpdateWindow();
+					Invalidate();
 
-						CreateWndFlowboard();
-						ShowWndFlowboard(true);
-						m_pcWndFlowboard->SetFocus();
+					CreateWndFlowboard();
+					ShowWndFlowboard(true);
+					m_pcWndFlowboard->SetFocus();
 
-						PostMessage(WM_BN_SERVICE_FLOW);
-					}
-					catch (...)
-					{
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_FLOW"));
-						//AfxMessageBox( _T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_FLOW") );
-						
-					}
-					
+					PostMessage(WM_BN_SERVICE_FLOW);
 				}
 				break;
 			case CMVEventUI::EV_BN_SERVICE_ACCU:
 				{
-					try
-					{
-						DestroyWndServiceMenu();
+					DestroyWndServiceMenu();
 
-						UpdateWindow();
-						Invalidate();
+					UpdateWindow();
+					Invalidate();
 
-						CreateWndAccuboard();
-						ShowWndAccuboard(true);
-						m_pcWndAccuboard->SetFocus();
+					CreateWndAccuboard();
+					ShowWndAccuboard(true);
+					m_pcWndAccuboard->SetFocus();
 
-						PostMessage(WM_BN_SERVICE_ACCU);
-					}
-					catch (...)
-					{
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_ACCU"));
-						//AfxMessageBox( _T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_ACCU") );
-						
-					}
-					
-					
+					PostMessage(WM_BN_SERVICE_ACCU);
 				}
 				break;
 			case CMVEventUI::EV_BN_SERVICE_VALVES:
 				{
-					try
-					{
-						DestroyWndServiceMenu();
+					DestroyWndServiceMenu();
 
-						UpdateWindow();
-						Invalidate();
+					UpdateWindow();
+					Invalidate();
 
-						CreateWndValves();
-						ShowWndValves(true);
-						m_pcWndValves->SetFocus();
+					CreateWndValves();
+					ShowWndValves(true);
+					m_pcWndValves->SetFocus();
 
-						PostMessage(WM_BN_SERVICE_VALVES);
-					}
-					catch (...)
-					{
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_VALVES"));
-						//AfxMessageBox( _T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_VALVES") );
-						
-					}
-					
+					PostMessage(WM_BN_SERVICE_VALVES);
 				}
 				break;
 			case CMVEventUI::EV_BN_SERVICE_MONITOR:
 				{
-					try
-					{
-						DestroyWndServiceMenu();
+					DestroyWndServiceMenu();
 
-						UpdateWindow();
-						Invalidate();
+					UpdateWindow();
+					Invalidate();
 
-						CreateWndMonitorPIC();
-						ShowWndMonitorPIC(true);
-						m_pcWndMonitorPIC->SetFocus();
+					CreateWndMonitorPIC();
+					ShowWndMonitorPIC(true);
+					m_pcWndMonitorPIC->SetFocus();
 
-						PostMessage(WM_BN_SERVICE_MONITOR);
-					}
-					catch (...)
-					{
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_MONITOR"));
-						//AfxMessageBox( _T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_MONITOR") );
-						
-					}
-					
+					PostMessage(WM_BN_SERVICE_MONITOR);
 				}
 				break;
 			case CMVEventUI::EV_BN_SERVICE_IF:
 				{
-					try
-					{
-						DestroyWndServiceMenu();
+					DestroyWndServiceMenu();
 
-						UpdateWindow();
-						Invalidate();
+					UpdateWindow();
+					Invalidate();
 
-						CreateWndInterfaces();
-						ShowWndInterfaces(true);
-						m_pcWndInterfaces->SetFocus();
+					CreateWndInterfaces();
+					ShowWndInterfaces(true);
+					m_pcWndInterfaces->SetFocus();
 
-						PostMessage(WM_BN_SERVICE_IF);
-					}
-					catch (...)
-					{
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_IF"));
-						//AfxMessageBox( _T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_IF") );
-						
-					}
-					
+					PostMessage(WM_BN_SERVICE_IF);
 				}
 				break;
 			case CMVEventUI::EV_BN_SERVICE_LICENSING:
 				{
-					try
-					{
-						DestroyWndServiceMenu();
+					DestroyWndServiceMenu();
 
-						UpdateWindow();
-						Invalidate();
+					UpdateWindow();
+					Invalidate();
 
-						CreateWndLicensing();
-						ShowWndLicensing(true);
-						m_pcWndLicensing->SetFocus();
+					CreateWndLicensing();
+					ShowWndLicensing(true);
+					m_pcWndLicensing->SetFocus();
 
-						PostMessage(WM_BN_SERVICE_LICENSING);
-					}
-					catch (...)
-					{
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_LICENSING"));
-						//AfxMessageBox( _T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_NETWORK") );
-
-					}
-
+					PostMessage(WM_BN_SERVICE_LICENSING);
 				}
 				break;
 			case CMVEventUI::EV_BN_SERVICE_MAINTENANCE: 
 				{
-					try
-					{
-						DestroyWndServiceMenu();
+					DestroyWndServiceMenu();
 
-						UpdateWindow();
-						Invalidate();
+					UpdateWindow();
+					Invalidate();
 
-						CreateWndMaintenance();
-						ShowWndMaintenance(true);
-						if(m_pcWndMaintenance)
-							m_pcWndMaintenance->SetFocus();
+					CreateWndMaintenance();
+					ShowWndMaintenance(true);
+					if(m_pcWndMaintenance)
+						m_pcWndMaintenance->SetFocus();
 
-						PostMessage(WM_BN_SERVICE_MAINTENANCE);
-					}
-					catch (...)
-					{
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_MAINTENANCE"));
-					}
-
+					PostMessage(WM_BN_SERVICE_MAINTENANCE);
 				}
 				break;
 			case CMVEventUI::EV_BN_SERVICE_NETWORK:
 				{
-					try
-					{
-						DestroyWndServiceMenu();
+					DestroyWndServiceMenu();
 
-						UpdateWindow();
-						Invalidate();
+					UpdateWindow();
+					Invalidate();
 
-						CreateWndNetwork();
-						ShowWndNetwork(true);
-						m_pcWndNetwork->SetFocus();
+					CreateWndNetwork();
+					ShowWndNetwork(true);
+					m_pcWndNetwork->SetFocus();
 
-						PostMessage(WM_BN_SERVICE_NETWORK);
-					}
-					catch (...)
-					{
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_NETWORK"));
-						//AfxMessageBox( _T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_NETWORK") );
-						
-					}
-					
+					PostMessage(WM_BN_SERVICE_NETWORK);
 				}
 				break;
 			case CMVEventUI::EV_BN_SERVICE_BACK:
 				{
-					try
-					{
-						DestroyWndSystem();
-						DestroyWndDisplay();
-						DestroyWndSettings();
-						DestroyWndCalibration();
-						DestroyWndFlowboard();
-						DestroyWndAccuboard();
-						DestroyWndValves();
-						DestroyWndMonitorPIC();
-						DestroyWndInterfaces();
-						DestroyWndNetwork();
-						DestroyWndLicensing();
-						DestroyWndMaintenance();
+					DestroyWndSystem();
+					DestroyWndDisplay();
+					DestroyWndSettings();
+					DestroyWndCalibration();
+					DestroyWndFlowboard();
+					DestroyWndAccuboard();
+					DestroyWndValves();
+					DestroyWndMonitorPIC();
+					DestroyWndInterfaces();
+					DestroyWndNetwork();
+					DestroyWndLicensing();
+					DestroyWndMaintenance();
 
-						UpdateWindow();
-						Invalidate();
+					UpdateWindow();
+					Invalidate();
 
-						CreateWndServiceMenu();
-						ShowWndServiceMenu(true);
-						m_pWndServiceMenu->SetFocus();
+					CreateWndServiceMenu();
+					ShowWndServiceMenu(true);
+					m_pWndServiceMenu->SetFocus();
 
-						if(AfxGetApp())
-							AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_CLEAR_TEXT);
-					}
-					catch (...)
-					{
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_BACK"));
-						//AfxMessageBox( _T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_BN_SERVICE_BACK") );
-						
-					}
-					
+					if(AfxGetApp())
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_CLEAR_TEXT);
 				}
 				break;
 			default:

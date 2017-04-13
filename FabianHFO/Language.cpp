@@ -191,24 +191,10 @@ CLanguage::CLanguage(void)
 
 CLanguage::~CLanguage(void)
 {
-	try
-	{
-		m_pcsLangFiles->RemoveAll();
-	}
-	catch (...)
-	{
-		throw;
-	}
-	
+	m_pcsLangFiles->RemoveAll();
 	delete m_pcsLangFiles;
 	//memory leak!!!! delete funktioniert nicht
-	try
-	{
-		m_pcLangAdmin.Close();
-	}
-	catch (...)
-	{
-	}
+	m_pcLangAdmin.Close();
 }
 
 // **************************************************************************

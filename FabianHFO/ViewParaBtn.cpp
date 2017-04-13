@@ -2451,7 +2451,10 @@ void CViewParaBtn::DestroyWndParaSettings()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: m_pcWndParaSettings"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewParaBtn::DestroyWndParaSettings error: #%d"),GetLastError());
+		theApp.ReportException(szError);
+
 		delete m_pcWndParaSettings;
 		throw;
 	}
@@ -9104,9 +9107,12 @@ void CViewParaBtn::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewParaBtn::SetOneButtonDepressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
+
 		/** \brief The leave critical section. */
 		LeaveCriticalSection(&csDraw);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewParaBtn::SetOneButtonDepressed"));
 	}
 }
 
@@ -9136,10 +9142,12 @@ void CViewParaBtn::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewParaBtn::SetAllButtonUnpressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
+
 		/** \brief The leave critical section. */
 		LeaveCriticalSection(&csDraw);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewParaBtn::SetAllButtonUnpressed"));
-
 	}
 }
 
@@ -11370,7 +11378,9 @@ void CViewParaBtn::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_CONTROL_FLOWSENSORSTATE"));
+						CString szError=_T("");
+						szError.Format(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_CONTROL_FLOWSENSORSTATE error: #%d"),GetLastError());
+						theApp.ReportException(szError);
 					}
 					
 				}
@@ -11474,9 +11484,12 @@ void CViewParaBtn::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
+						CString szError=_T("");
+						szError.Format(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_CONTROL_POWERSTATE_CHANGED error: #%d"),GetLastError());
+						theApp.ReportException(szError);
+
 						/** \brief The leave critical section. */
 						LeaveCriticalSection(&csDraw);
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_CONTROL_POWERSTATE_CHANGED"));
 					}
 				}
 				break;
@@ -11856,14 +11869,7 @@ void CViewParaBtn::SetOxyHourglass(bool state)
 // **************************************************************************
 void CViewParaBtn::NotifyDataChanged()
 {
-	try
-	{
-		PostMessage(WM_DATA_CHANGED);
-	}
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewParaBtn::NotifyDataChanged()"));
-	}
+	PostMessage(WM_DATA_CHANGED);
 }
 
 // **************************************************************************

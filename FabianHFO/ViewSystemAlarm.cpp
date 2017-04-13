@@ -1500,9 +1500,9 @@ void CViewSystemAlarm::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewSystemAlarm::NotifyEvent() EV_ALARMSTATE_CHANGED"));
-						//AfxMessageBox( _T("EXCEPTION: CViewSystemAlarm::NotifyEvent() EV_ALARMSTATE_CHANGED") );
-						
+						CString szError=_T("");
+						szError.Format(_T("EXCEPTION:  CViewSystemAlarm::NotifyEvent EV_ALARMSTATE_CHANGED error: #%d"),GetLastError());
+						theApp.ReportException(szError);
 					}
 					
 

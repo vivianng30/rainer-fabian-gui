@@ -2022,7 +2022,9 @@ bool CWndDataSPO2::isLimitBtnDepressed()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndDataSPO2::SetAllButtonUnpressed"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CWndDataSPO2::isLimitBtnDepressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	return bDepressed;
 }
@@ -2044,7 +2046,9 @@ void CWndDataSPO2::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndDataSPO2::SetAllButtonUnpressed"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CWndDataSPO2::SetAllButtonUnpressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 }
 

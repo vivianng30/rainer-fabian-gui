@@ -722,7 +722,9 @@ void CWndSubSettings::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndSubSettings::SetOneButtonDepressed"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CWndSubSettings::SetOneButtonDepressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
@@ -765,7 +767,9 @@ void CWndSubSettings::SetOneButtonFocused(int btnID)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndSubSettings::SetOneButtonFocused"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CWndSubSettings::SetOneButtonFocused error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))

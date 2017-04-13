@@ -376,9 +376,9 @@ void CWndGraphViewSelection::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndGraphViewSelection::SetOneButtonDepressed"));
-		//AfxMessageBox( _T("EXCEPTION: CMVModel::VentModeChanged()()") );
-
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CWndGraphViewSelection::SetOneButtonDepressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 }
@@ -404,7 +404,9 @@ void CWndGraphViewSelection::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndGraphViewSelection::SetAllButtonUnpressed"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CWndGraphViewSelection::SetAllButtonUnpressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 }
 

@@ -7337,7 +7337,9 @@ void CViewDiagramm::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewDiagramm::NotifyEvent() EV_BN_GRAPH_SAVE"));
+						CString szError=_T("");
+						szError.Format(_T("EXCEPTION: CViewDiagramm::NotifyEvent() EV_BN_GRAPH_SAVE error: #%d"),GetLastError());
+						theApp.ReportException(szError);
 					}
 				}
 				break;
@@ -7910,15 +7912,13 @@ void CViewDiagramm::StopGraphThread( void )
 		}
 		
 	}
-	catch (std::exception& e)
+	catch (...)
 	{
-		theApp.getLog()->WriteLine(_T("#EXCEPTION: CViewDiagramm::StopGraphThread"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewDiagramm::StopGraphThread error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 
 		throw;
-
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CDataHandler::SerializeTrend: #%s"),e.what());
-		theApp.ReportException(szError);
 	}
 	
 }
@@ -8009,6 +8009,19 @@ UINT CViewDiagramm::DrawDiagramm()
 			{
 				if(doThread()==false)
 				{
+					try
+					{
+						LPG_FUNCTIONSTRUCT_LD m_lpfsTest=NULL;
+						m_lpfsTest->ChartType=G_FILLEDCHART;
+					}
+					catch (...)
+					{
+						CString szError=_T("");
+						szError.Format(_T("EXCEPTION: CViewDiagramm error: #%d"),GetLastError());
+						theApp.ReportException(szError);
+
+						throw;
+					}
 					return 0;//rku APPERR
 				}
 
@@ -8021,6 +8034,19 @@ UINT CViewDiagramm::DrawDiagramm()
 
 				if(doThread()==false)
 				{
+					try
+					{
+						LPG_FUNCTIONSTRUCT_LD m_lpfsTest=NULL;
+						m_lpfsTest->ChartType=G_FILLEDCHART;
+					}
+					catch (...)
+					{
+						CString szError=_T("");
+						szError.Format(_T("EXCEPTION: CViewDiagramm error: #%d"),GetLastError());
+						theApp.ReportException(szError);
+
+						throw;
+					}
 					return 0;//rku APPERR
 				}
 
@@ -8029,6 +8055,19 @@ UINT CViewDiagramm::DrawDiagramm()
 
 				if(doThread()==false)
 				{
+					try
+					{
+						LPG_FUNCTIONSTRUCT_LD m_lpfsTest=NULL;
+						m_lpfsTest->ChartType=G_FILLEDCHART;
+					}
+					catch (...)
+					{
+						CString szError=_T("");
+						szError.Format(_T("EXCEPTION: CViewDiagramm error: #%d"),GetLastError());
+						theApp.ReportException(szError);
+
+						throw;
+					}
 					return 0;//rku APPERR
 				}
 
@@ -8036,6 +8075,19 @@ UINT CViewDiagramm::DrawDiagramm()
 
 				if(doThread()==false)
 				{
+					try
+					{
+						LPG_FUNCTIONSTRUCT_LD m_lpfsTest=NULL;
+						m_lpfsTest->ChartType=G_FILLEDCHART;
+					}
+					catch (...)
+					{
+						CString szError=_T("");
+						szError.Format(_T("EXCEPTION: CViewDiagramm error: #%d"),GetLastError());
+						theApp.ReportException(szError);
+
+						throw;
+					}
 					return 0;//rku APPERR
 				}
 
@@ -8128,16 +8180,19 @@ UINT CViewDiagramm::DrawDiagramm()
 				}
 				if(doThread()==false)
 				{
-					/*try
+					try
 					{
 						LPG_FUNCTIONSTRUCT_LD m_lpfsTest=NULL;
 						m_lpfsTest->ChartType=G_FILLEDCHART;
-
 					}
-					catch (CException* e)
+					catch (...)
 					{
-						return 0;
-					}*/
+						CString szError=_T("");
+						szError.Format(_T("EXCEPTION: CViewDiagramm error: #%d"),GetLastError());
+						theApp.ReportException(szError);
+
+						throw;
+					}
 					return 0;//rku APPERR
 				}
 			}
@@ -8614,8 +8669,11 @@ void CViewDiagramm::CopyCurBreathToSavedBreath()
 		}
 		catch (...)
 		{
+			CString szError=_T("");
+			szError.Format(_T("EXCEPTION: CViewDiagramm::CopyCurBreathToSavedBreath error: #%d"),GetLastError());
+			theApp.ReportException(szError);
+
 			LeaveCriticalSection(&getModel()->getDATAHANDLER()->csSavedBreath);
-			CFabianHFOApp::ReportException(_T("EXCEPTION: CViewDiagramm::CopyCurBreathToSavedBreath"));
 		}
 		Sleep(0);
 	}

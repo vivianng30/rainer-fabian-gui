@@ -724,9 +724,9 @@ void CSubViewMenuSelect::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CSubViewMenuSelect::SetOneButtonDepressed"));
-		//AfxMessageBox( _T("EXCEPTION: CMVModel::VentModeChanged()()") );
-
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CSubViewMenuSelect::SetOneButtonDepressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 

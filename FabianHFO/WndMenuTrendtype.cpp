@@ -507,9 +507,9 @@ void CWndMenuTrendtype::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndMenuTrendtype::SetOneButtonDepressed"));
-		//AfxMessageBox( _T("EXCEPTION: CMVModel::VentModeChanged()()") );
-
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CWndMenuTrendtype::SetOneButtonDepressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 }
@@ -535,9 +535,9 @@ void CWndMenuTrendtype::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndMenuTrendtype::SetAllButtonUnpressed"));
-		//AfxMessageBox( _T("EXCEPTION: CMVModel::VentModeChanged()()") );
-
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CWndMenuTrendtype::SetAllButtonUnpressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 }

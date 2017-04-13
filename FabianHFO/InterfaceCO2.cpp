@@ -138,8 +138,14 @@ CInterfaceCO2::~CInterfaceCO2()
 	}
 	catch (...)
 	{
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CInterfaceCO2::~CInterfaceCO2() error: #%d"),GetLastError());
+		theApp.ReportException(szError);
+
 		CSerialEx::StopListener(0);
 		CSerialEx::Close();
+
+		//throw;
 	}
 	
 

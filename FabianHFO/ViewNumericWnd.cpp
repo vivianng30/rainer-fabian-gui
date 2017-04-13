@@ -1232,7 +1232,9 @@ void CViewNumericWnd::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewNumericWnd::NotifyEvent()"));
+						CString szError=_T("");
+						szError.Format(_T("EXCEPTION: CViewNumericWnd::NotifyEvent error: #%d"),GetLastError());
+						theApp.ReportException(szError);
 					}
 				}
 				break;
@@ -1321,7 +1323,9 @@ void CViewNumericWnd::DrawGraphCursor(int iDiagrmm)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewNumericWnd::NotifyEvent() EV_GRAPH_SETCURSOR"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewNumericWnd::DrawGraphCursor error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 }
 
@@ -1341,7 +1345,9 @@ void CViewNumericWnd::DeleteGraphCursor()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewNumericWnd::NotifyEvent() EV_GRAPH_DELCURSOR"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewNumericWnd::DeleteGraphCursor error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 }
 
@@ -1536,28 +1542,11 @@ void CViewNumericWnd::NotifyViewStateChanged()
 			{
 				m_bBackState=false;
 			}
-
-			//try
-			//{
-			//	//SetNumericBlock();
-			//}
-			//catch (...)
-			//{
-			//	CFabianHFOApp::ReportException(_T("EXCEPTION: CViewNumericWnd::NotifyViewStateChanged() VS_PARA"));
-			//}
 		}
 		break;
 	case VS_GRAPH:
 	case VS_TREND:
 		{
-			//try
-			//{
-			//	//SetNumericBlock();
-			//}
-			//catch (...)
-			//{
-			//	CFabianHFOApp::ReportException(_T("EXCEPTION: CViewNumericWnd::NotifyViewStateChanged() VS_GRAPH"));
-			//}
 			
 		}
 		break;
@@ -1597,7 +1586,9 @@ void CViewNumericWnd::NotifyVentModeChanged()
 				}
 				catch (...)
 				{
-					CFabianHFOApp::ReportException(_T("EXCEPTION: CViewNumericWnd::NotifyVentModeChanged()"));
+					CString szError=_T("");
+					szError.Format(_T("EXCEPTION: CViewNumericWnd::NotifyVentModeChanged error: #%d"),GetLastError());
+					theApp.ReportException(szError);
 				}
 			}
 		}
@@ -1628,14 +1619,7 @@ void CViewNumericWnd::NotifyCalculateAlarmLimit()
 	if(m_bExit)
 		return;
 
-	try
-	{
-		PostMessage(WM_CALCULATE_ALARMLIMIT);
-	}
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewNumericWnd::NotifyCalculateAlarmLimit()"));
-	}
+	PostMessage(WM_CALCULATE_ALARMLIMIT);
 }
 
 // **************************************************************************
@@ -1657,14 +1641,7 @@ void CViewNumericWnd::NotifyAlarmLimitChanged()
 	if(m_bExit)
 		return;
 	
-	try
-	{
-		PostMessage(WM_ALIMIT_CHANGED);
-	}
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewNumericWnd::NotifyAlarmLimitChanged()"));
-	}
+	PostMessage(WM_ALIMIT_CHANGED);
 }
 
 // **************************************************************************
@@ -1675,14 +1652,7 @@ void CViewNumericWnd::NotifyDataChanged()
 	if(m_bExit)
 		return;
 	
-	try
-	{
-		PostMessage(WM_DATA_CHANGED);
-	}
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewNumericWnd::NotifyDataChanged()"));
-	}
+	PostMessage(WM_DATA_CHANGED);
 }
 
 // **************************************************************************
@@ -1693,14 +1663,7 @@ void CViewNumericWnd::NotifyExspirationDataChanged()
 	if(m_bExit)
 		return;
 
-	try
-	{
-		PostMessage(WM_EXSPIRATION);
-	}
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewAlarmLimit::NotifyExspirationDataChanged()"));
-	}
+	PostMessage(WM_EXSPIRATION);
 }
 
 // **************************************************************************

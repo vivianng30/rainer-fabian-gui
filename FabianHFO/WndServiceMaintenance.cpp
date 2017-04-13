@@ -1877,7 +1877,9 @@ void CWndServiceMaintenance::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndServiceMaintenance::SetOneButtonDepressed"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CWndServiceMaintenance::SetOneButtonDepressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
@@ -1911,7 +1913,9 @@ void CWndServiceMaintenance::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndServiceMaintenance::SetAllButtonUnpressed"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CWndServiceMaintenance::SetAllButtonUnpressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 	m_iCurrentField=0;
@@ -1955,7 +1959,9 @@ void CWndServiceMaintenance::SetOneButtonFocused(int btnID)
 		}
 		catch (...)
 		{
-			CFabianHFOApp::ReportException(_T("EXCEPTION: CWndServiceMaintenance::SetOneButtonFocused"));
+			CString szError=_T("");
+			szError.Format(_T("EXCEPTION: CWndServiceMaintenance::SetOneButtonFocused error: #%d"),GetLastError());
+			theApp.ReportException(szError);
 		}
 
 

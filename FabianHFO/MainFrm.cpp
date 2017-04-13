@@ -9722,8 +9722,9 @@ bool CMainFrame::SaveTrendDataToUSB(UINT trendID)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CMainFrame::SaveTrendDataToUSB()"));
-		//AfxMessageBox( _T("EXCEPTION: CViewTrend::LoadAllTrendData()") );
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMainFrame::SaveTrendDataToUSB error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 
 		if (stream != NULL)
 		{

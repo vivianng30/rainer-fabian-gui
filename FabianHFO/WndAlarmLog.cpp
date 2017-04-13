@@ -72,7 +72,9 @@ CWndAlarmLog::~CWndAlarmLog()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: m_pListBox"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CWndAlarmLog::~CWndAlarmLog error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 		delete m_pListBox;
 		throw;
 	}

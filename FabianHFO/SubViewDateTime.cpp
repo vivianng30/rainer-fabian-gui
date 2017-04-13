@@ -928,7 +928,9 @@ void CSubViewDateTime::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CSubViewDateTime::SetOneButtonDepressed"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CSubViewDateTime::SetOneButtonDepressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
@@ -960,7 +962,9 @@ void CSubViewDateTime::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CSubViewDateTime::SetAllButtonUnpressed"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CSubViewDateTime::SetAllButtonUnpressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 	m_iCurrentField=0;
@@ -1002,8 +1006,9 @@ void CSubViewDateTime::SetOneButtonFocused(int btnID)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CSubViewDateTime::SetOneButtonFocused"));
-
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CSubViewDateTime::SetOneButtonFocused error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))

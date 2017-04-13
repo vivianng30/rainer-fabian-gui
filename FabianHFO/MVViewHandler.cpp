@@ -189,10 +189,13 @@ bool CMVViewHandler::CloseTrendView()
 	}
 	catch (...)
 	{
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseTrendView error: #%d"),GetLastError());
+		theApp.ReportException(szError);
+
 		delete m_vTrend;
 		m_vTrend=NULL;
 		LeaveCriticalSection(&csViewTrend);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CloseTrendView"));
 		throw;
 	}
 	delete m_vTrend;
@@ -240,10 +243,13 @@ bool CMVViewHandler::ClosePatDataView()
 	}
 	catch (...)
 	{
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVViewHandler::ClosePatDataView error: #%d"),GetLastError());
+		theApp.ReportException(szError);
+
 		delete m_vPatData;
 		m_vPatData=NULL;
 		LeaveCriticalSection(&csViewPatData);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: ClosePatDataView"));
 		throw;
 	}
 	delete m_vPatData;
@@ -287,10 +293,13 @@ bool CMVViewHandler::CloseFullscreenMsgView()
 	}
 	catch (...)
 	{
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseFullscreenMsgView error: #%d"),GetLastError());
+		theApp.ReportException(szError);
+
 		delete m_vFullscreenMsg;
 		m_vFullscreenMsg=NULL;
 		LeaveCriticalSection(&csViewFullscreenMsg);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CloseFullscreenMsgView"));
 		throw;
 	}
 	delete m_vFullscreenMsg;
@@ -301,48 +310,6 @@ bool CMVViewHandler::CloseFullscreenMsgView()
 }
 
 
-// **************************************************************************
-// 
-// **************************************************************************
-//bool CMVViewHandler::OpenSelectNumericView()
-//{
-//	bool result = false;
-//
-//	if(m_vSelectNumeric)
-//	{
-//		m_vSelectNumeric->Show();
-//		return false;
-//	}
-//	m_vSelectNumeric = new CViewSelectNum(IDC_VIEW_SELECTNUM);
-//
-//	result = m_vSelectNumeric->CreateView();
-//
-//	m_vSelectNumeric->Show();
-//
-//	return result;
-//}
-//bool CMVViewHandler::CloseSelectNumericView()
-//{
-//	
-//
-//	try
-//	{
-//		if(m_vSelectNumeric)
-//		{
-//			m_vSelectNumeric->DestroyWindow();
-//		}
-//	}
-//	catch (...)
-//	{
-//		CFabianHFOApp::ReportException(_T("EXCEPTION: CloseSelectNumericView"));
-//		delete m_vSelectNumeric;
-//		throw;
-//	}
-//	delete m_vSelectNumeric;
-//	m_vSelectNumeric=NULL;
-//
-//	return true;
-//}
 
 // **************************************************************************
 // 
@@ -376,9 +343,12 @@ bool CMVViewHandler::CloseStartupView()
 	}
 	catch (...)
 	{
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseStartupView error: #%d"),GetLastError());
+		theApp.ReportException(szError);
+
 		delete m_vStartup;
 		m_vStartup=NULL;
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CloseStartupView"));
 		throw;
 	}
 	delete m_vStartup;
@@ -420,9 +390,12 @@ bool CMVViewHandler::CloseShutdownView()
 	}
 	catch (...)
 	{
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseShutdownView error: #%d"),GetLastError());
+		theApp.ReportException(szError);
+
 		delete m_vShutdown;
 		m_vShutdown=NULL;
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CloseShutdownView"));
 		throw;
 	}
 	delete m_vShutdown;
@@ -517,10 +490,14 @@ bool CMVViewHandler::CloseSystemAlarmView()
 	}
 	catch (...)
 	{
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseSystemAlarmView error: #%d"),GetLastError());
+		theApp.ReportException(szError);
+
+
 		delete m_vSystemAlarm;
 		m_vSystemAlarm=NULL;
 		LeaveCriticalSection(&csViewSystemAlarm);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CloseSystemAlarmView"));
 		throw;
 	}
 	delete m_vSystemAlarm;
@@ -599,10 +576,13 @@ bool CMVViewHandler::CloseMenuView()
 	}
 	catch (...)
 	{
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseMenuView error: #%d"),GetLastError());
+		theApp.ReportException(szError);
+
 		delete m_vMenu;
 		m_vMenu=NULL;
 		LeaveCriticalSection(&csViewMenu);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CloseMenuView"));
 		throw;
 	}
 	delete m_vMenu;
@@ -650,10 +630,13 @@ bool CMVViewHandler::CloseServiceView()
 	}
 	catch (...)
 	{
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseServiceView error: #%d"),GetLastError());
+		theApp.ReportException(szError);
+
 		delete m_vService;
 		m_vService=NULL;
 		LeaveCriticalSection(&csViewService);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CloseServiceView"));
 		throw;
 	}
 	delete m_vService;
@@ -733,10 +716,13 @@ bool CMVViewHandler::CloseLogView()
 	}
 	catch (...)
 	{
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseLogView error: #%d"),GetLastError());
+		theApp.ReportException(szError);
+
 		delete m_vLog;
 		m_vLog=NULL;
 		LeaveCriticalSection(&csViewLog);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CloseLogView"));
 		throw;
 	}
 	delete m_vLog;
@@ -782,10 +768,13 @@ bool CMVViewHandler::CloseNumericView()
 	}
 	catch (...)
 	{
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseNumericView error: #%d"),GetLastError());
+		theApp.ReportException(szError);
+
 		delete m_vNumericWnd;
 		m_vNumericWnd=NULL;
 		LeaveCriticalSection(&csViewNumeric);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CloseNumericView"));
 		throw;
 	}
 
@@ -831,10 +820,13 @@ bool CMVViewHandler::CloseParaBtnView()
 	}
 	catch (...)
 	{
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseParaBtnView error: #%d"),GetLastError());
+		theApp.ReportException(szError);
+
 		delete m_vParaBtn;
 		m_vParaBtn=NULL;
 		LeaveCriticalSection(&csViewParaBtn);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CloseParaBtnView"));
 		throw;
 	}
 
@@ -879,10 +871,13 @@ bool CMVViewHandler::CloseDiagrammView()
 	}
 	catch (...)
 	{
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseDiagrammView error: #%d"),GetLastError());
+		theApp.ReportException(szError);
+
 		delete m_vDiagramm;
 		m_vDiagramm=NULL;
 		LeaveCriticalSection(&csViewDiagramm);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CloseDiagrammView"));
 		throw;
 	}
 
@@ -928,10 +923,13 @@ bool CMVViewHandler::CloseDTBFieldView()
 	}
 	catch (...)
 	{
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseDTBFieldView error: #%d"),GetLastError());
+		theApp.ReportException(szError);
+
 		delete m_vDTBField;
 		m_vDTBField=NULL;
 		LeaveCriticalSection(&csViewDTBField);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CloseDTBFieldView"));
 		throw;
 	}
 
@@ -979,10 +977,13 @@ bool CMVViewHandler::CloseAlarmLimitsView()
 	}
 	catch (...)
 	{
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseAlarmLimitsView error: #%d"),GetLastError());
+		theApp.ReportException(szError);
+
 		delete m_vAlarmLimits;
 		m_vAlarmLimits=NULL;
 		LeaveCriticalSection(&csViewAlarmLimits);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CloseAlarmLimitsView"));
 		throw;
 	}
 

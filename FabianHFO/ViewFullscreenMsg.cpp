@@ -716,11 +716,10 @@ void CViewFullscreenMsg::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
-						CFabianHFOApp::ReportException(_T("EXCEPTION: CViewFullscreenMsg::NotifyEvent()"));
-						//AfxMessageBox( _T("EXCEPTION: CViewFullscreenMsg::NotifyEvent()") );
-						
+						CString szError=_T("");
+						szError.Format(_T("EXCEPTION: CViewFullscreenMsg::NotifyEvent error: #%d"),GetLastError());
+						theApp.ReportException(szError);
 					}
-					
 				}
 				break;
 			default:

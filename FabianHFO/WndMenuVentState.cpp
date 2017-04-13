@@ -761,9 +761,9 @@ void CWndMenuVentState::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndMenuVentState::SetOneButtonDepressed"));
-		//AfxMessageBox( _T("EXCEPTION: CMVModel::VentModeChanged()()") );
-
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CWndMenuTrendtype::SetOneButtonDepressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 }
@@ -796,9 +796,9 @@ void CWndMenuVentState::SetOneButtonPreset(int btnID)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndMenuVentState::SetOneButtonPreset"));
-		//AfxMessageBox( _T("EXCEPTION: CMVModel::VentModeChanged()()") );
-
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CWndMenuTrendtype::SetOneButtonPreset error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 }
@@ -826,9 +826,9 @@ void CWndMenuVentState::ResetButtonPresetstate()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndMenuVentState::ResetButtonPresetstate"));
-		//AfxMessageBox( _T("EXCEPTION: CMVModel::VentModeChanged()()") );
-
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CWndMenuTrendtype::ResetButtonPresetstate error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 }
@@ -895,9 +895,9 @@ void CWndMenuVentState::SetButtonState(int btnID, CPresetMenuBtn::eBtnState stat
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndMenuVentState::SetButtonState"));
-		//AfxMessageBox( _T("EXCEPTION: CMVModel::VentModeChanged()()") );
-
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CWndMenuTrendtype::SetButtonState error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 }
@@ -923,9 +923,9 @@ void CWndMenuVentState::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndMenuVentState::SetAllButtonUnpressed"));
-		//AfxMessageBox( _T("EXCEPTION: CMVModel::VentModeChanged()()") );
-
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CWndMenuTrendtype::SetAllButtonUnpressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 }

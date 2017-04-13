@@ -102,9 +102,9 @@ DWORD CLangAdmin::EnumLang( DWORD dwLangFolderStringID )
 		}
 		catch (...)
 		{
-			CFabianHFOApp::ReportException(_T("EXCEPTION: CLangAdmin::EnumLang()"));
-			//AfxMessageBox( _T("EXCEPTION: CViewAlarmLimit::NotifyVentModeChanged()") );
-
+			CString szError=_T("");
+			szError.Format(_T("EXCEPTION: CLangAdmin::EnumLang error: #%d"),GetLastError());
+			theApp.ReportException(szError);
 		}
 		
 

@@ -1539,7 +1539,9 @@ void CSubViewLanguage::NotifyLanguageChanged()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndMenuMain::NotifyLanguageChanged()"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CSubViewLanguage::NotifyLanguageChanged error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 
 }

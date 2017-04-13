@@ -105,7 +105,7 @@ CMVModel::CMVModel(void)
 	m_szBuildVersion = _T("9.0.0.0");
 #else
 	m_szVersion = _T("5.0.1");
-	m_szBuildVersion = _T("5.0.1.26");
+	m_szBuildVersion = _T("5.0.1.27");
 #endif
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO"),true);
@@ -1370,7 +1370,9 @@ void CMVModel::DetachObserver(CModelObserver* pObserver)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CMVModel::DetachObserver"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVModel::DetachObserver error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	LeaveCriticalSection(&m_csObservers);
 }
@@ -3579,7 +3581,9 @@ void CMVModel::notifyViewStateChanged()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CMVModel::ChangeViewState() 2"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVModel::ChangeViewState error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 
 	LeaveCriticalSection(&m_csObservers);
@@ -3613,7 +3617,9 @@ void CMVModel::notifyVentModeChanged()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CMVModel::VentModeChanged()"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVModel::VentModeChanged error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 	LeaveCriticalSection(&m_csObservers);
@@ -3649,9 +3655,10 @@ void CMVModel::NotifyEvent(CMVEvent* pEvent)
 	catch (...)
 	{
 		LeaveCriticalSection(&m_csObservers);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CMVModel::NotifyEvent()"));
-		//AfxMessageBox( _T("EXCEPTION: CMVModel::NotifyEvent()") );
-		
+
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVModel::NotifyEvent error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 }
@@ -3682,7 +3689,9 @@ void CMVModel::NotifyParaBtnEvent(CMVEvent* pEvent)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CMVModel::NotifyParaBtnEvent()"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVModel::NotifyParaBtnEvent error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	LeaveCriticalSection(&m_csObservers);
 
@@ -3716,7 +3725,10 @@ void CMVModel::NotifyExspirationStart()
 	catch (...)
 	{
 		LeaveCriticalSection(&m_csObservers);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CMVModel::NotifyExspirationData()"));
+
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVModel::NotifyExspirationData error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 }
 
@@ -3748,7 +3760,10 @@ void CMVModel::NotifyMonitorData()
 	catch (...)
 	{
 		LeaveCriticalSection(&m_csObservers);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CMVModel::NotifyMonitorData()"));
+
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVModel::NotifyMonitorData error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 }
 
@@ -3781,7 +3796,10 @@ void CMVModel::NotifyNewAlarmlimitData()
 	catch (...)
 	{
 		LeaveCriticalSection(&m_csObservers);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CMVModel::NotifyNewAlarmlimitData()"));
+
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVModel::NotifyNewAlarmlimitData error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 }
 
@@ -3814,7 +3832,10 @@ void CMVModel::NotifyCalculateAlarmlimitData()
 	catch (...)
 	{
 		LeaveCriticalSection(&m_csObservers);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CMVModel::NotifyCalculateAlarmlimitData()"));
+
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVModel::NotifyCalculateAlarmlimitData error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 }
 
@@ -3864,7 +3885,10 @@ void CMVModel::NotifyViewFocusChanged(int iViewID)
 	catch (...)
 	{
 		LeaveCriticalSection(&m_csObservers);
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CMVModel::NotifyViewFocusChanged()"));
+
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CMVModel::NotifyViewFocusChanged error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 }
 
@@ -7016,6 +7040,10 @@ bool CMVModel::LoadHospitalSettings()
 		}
 		catch (...)
 		{
+			CString szError=_T("");
+			szError.Format(_T("EXCEPTION: CMVModel::LoadHospitalSettings error: #%d"),GetLastError());
+			theApp.ReportException(szError);
+
 			objektArchiv.Close();
 			archivDatei1.Close();
 			
@@ -7026,9 +7054,7 @@ bool CMVModel::LoadHospitalSettings()
 
 			if(AfxGetApp() != NULL)
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_LOADHOSPITALSETTINGS_FAIL);
-
 		}
-
 		return true;
 	}
 	else

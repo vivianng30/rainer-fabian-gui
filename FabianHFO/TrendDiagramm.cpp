@@ -6455,31 +6455,20 @@ void CTrendDiagramm::DrawConnectLine(UINT FromX, UINT FromY, UINT ToX, UINT ToY)
 {
 	//draws a connecting line between to pixels
 	//using the graphpen color
+	// 
+	CPen pen, *poldpen;
+	pen.CreatePen(PS_SOLID,m_iGraphPenSize,m_crGraphPenColor);
+	CClientDC dc(this);
+	poldpen=dc.SelectObject(&pen);
 
-	try 
-	{ 
-		CPen pen, *poldpen;
-		pen.CreatePen(PS_SOLID,m_iGraphPenSize,m_crGraphPenColor);
-		CClientDC dc(this);
-		poldpen=dc.SelectObject(&pen);
+	//BitBlt(dc.m_hDC, ToX, 0, 2,m_iGraphHeight, m_hdcStatic,  ToX, 0, SRCCOPY);
 
-		//BitBlt(dc.m_hDC, ToX, 0, 2,m_iGraphHeight, m_hdcStatic,  ToX, 0, SRCCOPY);
+	dc.MoveTo(FromX,FromY);
+	dc.LineTo(ToX,ToY);
 
-		dc.MoveTo(FromX,FromY);
-		dc.LineTo(ToX,ToY);
+	dc.SelectObject(poldpen);
 
-		dc.SelectObject(poldpen);
-
-		pen.DeleteObject();
-	} 
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CTrendDiagramm::DrawConnectLine"));
-		//AfxMessageBox( _T("EXCEPTION: CTrendDiagramm::DrawConnectLine") );
-		
-	}
-	
-
+	pen.DeleteObject();
 }
 
 // **************************************************************************
@@ -6488,36 +6477,26 @@ void CTrendDiagramm::DrawConnectLine(UINT FromX, UINT FromY, UINT ToX, UINT ToY)
 // **************************************************************************
 void CTrendDiagramm::DrawConnectLine(CPoint *pts, int iSize)
 {
-	try 
-	{ 
-		CClientDC dc(this);
-		CDC* pDCGraph=CDC::FromHandle(m_hdcGraph);
-		CPen pen, *poldpen;
-		pen.CreatePen(PS_SOLID,2,m_crGraphPenColor);
-		//pen.CreatePen(PS_SOLID,m_iGraphPenSize,m_crGraphPenColor);
-		HBRUSH holdbrush;
+	CClientDC dc(this);
+	CDC* pDCGraph=CDC::FromHandle(m_hdcGraph);
+	CPen pen, *poldpen;
+	pen.CreatePen(PS_SOLID,2,m_crGraphPenColor);
+	//pen.CreatePen(PS_SOLID,m_iGraphPenSize,m_crGraphPenColor);
+	HBRUSH holdbrush;
 
-		poldpen=pDCGraph->SelectObject(&pen);
-		holdbrush=(HBRUSH)pDCGraph->SelectObject((HBRUSH)GetStockObject(NULL_BRUSH));
+	poldpen=pDCGraph->SelectObject(&pen);
+	holdbrush=(HBRUSH)pDCGraph->SelectObject((HBRUSH)GetStockObject(NULL_BRUSH));
 
-		BitBlt(m_hdcGraph, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcStatic, 0, 0, SRCCOPY);
+	BitBlt(m_hdcGraph, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcStatic, 0, 0, SRCCOPY);
 
-		pDCGraph->Polyline(pts, iSize);
+	pDCGraph->Polyline(pts, iSize);
 
-		BitBlt(dc.m_hDC, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcGraph, 0, 0, SRCCOPY);
+	BitBlt(dc.m_hDC, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcGraph, 0, 0, SRCCOPY);
 
-		pDCGraph->SelectObject(poldpen);
-		pDCGraph->SelectObject(holdbrush);
+	pDCGraph->SelectObject(poldpen);
+	pDCGraph->SelectObject(holdbrush);
 
-		pen.DeleteObject();
-	} 
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CTrendDiagramm::DrawConnectLine"));
-		//AfxMessageBox( _T("EXCEPTION: CTrendDiagramm::DrawConnectLine") );
-		
-	}
-	
+	pen.DeleteObject();
 }
 
 // **************************************************************************
@@ -6526,40 +6505,29 @@ void CTrendDiagramm::DrawConnectLine(CPoint *pts, int iSize)
 // **************************************************************************
 void CTrendDiagramm::DrawFilledLine(CPoint *pts, int iSize)
 {
-	try 
-	{ 
-		CPen pen, *poldpen;
-		pen.CreatePen(PS_SOLID,m_iGraphPenSize,m_crGraphPenColor);
+	CPen pen, *poldpen;
+	pen.CreatePen(PS_SOLID,m_iGraphPenSize,m_crGraphPenColor);
 
-		CBrush brush, *poldbrush;
-		brush.CreateSolidBrush(m_crGraphPenColor);
+	CBrush brush, *poldbrush;
+	brush.CreateSolidBrush(m_crGraphPenColor);
 
-		CClientDC dc(this);
-		CDC* pDCGraph=CDC::FromHandle(m_hdcGraph);
+	CClientDC dc(this);
+	CDC* pDCGraph=CDC::FromHandle(m_hdcGraph);
 
-		poldbrush=pDCGraph->SelectObject(&brush);
+	poldbrush=pDCGraph->SelectObject(&brush);
 
-		BitBlt(m_hdcGraph, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcStatic, 0, 0, SRCCOPY);
+	BitBlt(m_hdcGraph, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcStatic, 0, 0, SRCCOPY);
 
-		poldpen=pDCGraph->SelectObject(&pen);
+	poldpen=pDCGraph->SelectObject(&pen);
 
-		pDCGraph->Polygon(pts, iSize);
+	pDCGraph->Polygon(pts, iSize);
 
-		BitBlt(dc.m_hDC, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcGraph, 0, 0, SRCCOPY);
+	BitBlt(dc.m_hDC, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcGraph, 0, 0, SRCCOPY);
 
-		pDCGraph->SelectObject(poldpen);
-		pDCGraph->SelectObject(poldbrush);
+	pDCGraph->SelectObject(poldpen);
+	pDCGraph->SelectObject(poldbrush);
 
-		pen.DeleteObject();
-		//DeleteObject((HBRUSH)brush);
-	} 
-	catch (...)
-	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CTrendDiagramm::DrawFilledLine"));
-		//AfxMessageBox( _T("EXCEPTION: CTrendDiagramm::DrawFilledLine") );
-		
-	}
-	
+	pen.DeleteObject();
 }
 
 
@@ -6991,13 +6959,10 @@ int CTrendDiagramm::GetMoveSpan()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CTrendDiagramm::GetMoveSpan"));
-		//AfxMessageBox( _T("EXCEPTION: CTrendDiagramm::GetMoveSpan") );
-		
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CTrendDiagramm::GetMoveSpan error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
-	
-
-	
 	return iRes;
 }
 

@@ -1396,9 +1396,9 @@ void CSubViewCO2::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CSubViewCO2::SetOneButtonDepressed"));
-		//AfxMessageBox( _T("EXCEPTION: CMVModel::VentModeChanged()()") );
-
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CSubViewCO2::SetOneButtonDepressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 
 	if(GetParent())
@@ -1437,7 +1437,9 @@ void CSubViewCO2::SetOneButtonFocused(int btnID)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CSubViewCO2::SetOneButtonFocused"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CSubViewCO2::SetOneButtonFocused error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))

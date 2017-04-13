@@ -1419,9 +1419,9 @@ void CViewMenu::OpenMenuSelect()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewMenu::OpenMenuSelect()"));
-		//AfxMessageBox( _T("EXCEPTION: CViewMenu::NotifyEvent() EV_BN_MENUBUTTON_OPEN") );
-
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewMenu::OpenMenuSelect error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 
 	Sleep(0);
@@ -1564,9 +1564,9 @@ void CViewMenu::LanguageChanged()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewMenu::NotifyLanguageChanged()"));
-		//AfxMessageBox( _T("EXCEPTION: CViewMenu::NotifyLanguageChanged()") );
-
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewMenu::NotifyLanguageChanged error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	Invalidate();
 	UpdateWindow();

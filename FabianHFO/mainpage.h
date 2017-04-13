@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50127 Version 5.0.1.27
+ * @date 2017-04-13
+ * @verbatim
+	- try/catch blocks replaced
+ @endverbatim
+ *
  * @subsection ver50126 Version 5.0.1.26
  * @date 2017-04-10
  * @verbatim

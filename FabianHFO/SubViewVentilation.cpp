@@ -1245,20 +1245,15 @@ void CSubViewVentilation::SetOneButtonDepressed(int btnID)
 				pBtn->SetState(BS_DOWN);
 				m_iCurPara=btnID;
 				getModel()->getCONFIG()->SetLastSelectedSVSettingBtns(m_iCurPara);
-
-
 			}
 		}
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CSubViewVentilation::SetOneButtonDepressed"));
-		//AfxMessageBox( _T("EXCEPTION: CMVModel::VentModeChanged()()") );
-
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CSubViewVentilation::SetOneButtonDepressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
-	
-
-	//DrawNextValueBtn(true);
 
 	if(GetParent())
 		GetParent()->PostMessage(WM_SET_SETUPTIMER);
@@ -1296,9 +1291,10 @@ void CSubViewVentilation::SetOneButtonFocused(int btnID)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CSubViewVentilation::SetOneButtonFocused"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CSubViewVentilation::SetOneButtonFocused error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
-	
 
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
 	{

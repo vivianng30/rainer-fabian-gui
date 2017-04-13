@@ -561,7 +561,9 @@ void CViewTrend::loadTrendData(BYTE type, eTrend trend)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewTrend::LoadTrendData()"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION:  CViewTrend::LoadTrendData error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 }
 
@@ -1215,7 +1217,9 @@ bool CViewTrend::DestroyWndMenuTrendtype()
 		}
 		catch (...)
 		{
-			CFabianHFOApp::ReportException(_T("EXCEPTION: CViewTrend::DestroyWndMenuTrendtype()"));
+			CString szError=_T("");
+			szError.Format(_T("EXCEPTION:  CViewTrend::DestroyWndMenuTrendtype error: #%d"),GetLastError());
+			theApp.ReportException(szError);
 		}
 	}
 
@@ -1374,28 +1378,20 @@ void CViewTrend::NotifyEvent(CMVEvent* pEvent)
 						case IDC_TREND1_DIAGRAM:
 							{
 								EnterCriticalSection(&csTrends);
-								try
+								if(m_pcTrend1Diagram)
 								{
-									if(m_pcTrend1Diagram)
+									if(m_pcTrend1Diagram->DecreaseYScaleToNextValue())
 									{
-										if(m_pcTrend1Diagram->DecreaseYScaleToNextValue())
-										{
-											int iOldCursorPos=m_pcTrend1Diagram->GetTrendCursorPos();
-											int iOldBufferPos=m_pcTrend1Diagram->GetTrendBufferXPos();
-											DrawTrend1();
-											m_pcTrend1Diagram->SetTrendCursorPos(iOldCursorPos,iOldBufferPos);
-										}
-										else
-										{
-											if(AfxGetApp())
-												AfxGetApp()->GetMainWnd()->PostMessage(WM_SCALE_LIMIT);
-										}
+										int iOldCursorPos=m_pcTrend1Diagram->GetTrendCursorPos();
+										int iOldBufferPos=m_pcTrend1Diagram->GetTrendBufferXPos();
+										DrawTrend1();
+										m_pcTrend1Diagram->SetTrendCursorPos(iOldCursorPos,iOldBufferPos);
 									}
-								}
-								catch (...)
-								{
-									LeaveCriticalSection(&csTrends);
-									CFabianHFOApp::ReportException(_T("EXCEPTION: CViewTrend::NotifyEvent() EV_BN_MATRIX_CURSOR_UP"));
+									else
+									{
+										if(AfxGetApp())
+											AfxGetApp()->GetMainWnd()->PostMessage(WM_SCALE_LIMIT);
+									}
 								}
 								LeaveCriticalSection(&csTrends);
 
@@ -1404,28 +1400,20 @@ void CViewTrend::NotifyEvent(CMVEvent* pEvent)
 						case IDC_TREND2_DIAGRAM:
 							{
 								EnterCriticalSection(&csTrends);
-								try
+								if(m_pcTrend2Diagram)
 								{
-									if(m_pcTrend2Diagram)
+									if(m_pcTrend2Diagram->DecreaseYScaleToNextValue())
 									{
-										if(m_pcTrend2Diagram->DecreaseYScaleToNextValue())
-										{
-											int iOldCursorPos=m_pcTrend2Diagram->GetTrendCursorPos();
-											int iOldBufferPos=m_pcTrend2Diagram->GetTrendBufferXPos();
-											DrawTrend2();
-											m_pcTrend2Diagram->SetTrendCursorPos(iOldCursorPos,iOldBufferPos);
-										}
-										else
-										{
-											if(AfxGetApp())
-												AfxGetApp()->GetMainWnd()->PostMessage(WM_SCALE_LIMIT);
-										}
+										int iOldCursorPos=m_pcTrend2Diagram->GetTrendCursorPos();
+										int iOldBufferPos=m_pcTrend2Diagram->GetTrendBufferXPos();
+										DrawTrend2();
+										m_pcTrend2Diagram->SetTrendCursorPos(iOldCursorPos,iOldBufferPos);
 									}
-								}
-								catch (...)
-								{
-									LeaveCriticalSection(&csTrends);
-									CFabianHFOApp::ReportException(_T("EXCEPTION: CViewTrend::NotifyEvent() IDC_TREND2_DIAGRAM"));
+									else
+									{
+										if(AfxGetApp())
+											AfxGetApp()->GetMainWnd()->PostMessage(WM_SCALE_LIMIT);
+									}
 								}
 								LeaveCriticalSection(&csTrends);
 							}
@@ -1433,29 +1421,20 @@ void CViewTrend::NotifyEvent(CMVEvent* pEvent)
 						case IDC_TREND3_DIAGRAM:
 							{
 								EnterCriticalSection(&csTrends);
-								try
+								if(m_pcTrend3Diagram)
 								{
-									if(m_pcTrend3Diagram)
+									if(m_pcTrend3Diagram->DecreaseYScaleToNextValue())
 									{
-										if(m_pcTrend3Diagram->DecreaseYScaleToNextValue())
-										{
-											int iOldCursorPos=m_pcTrend3Diagram->GetTrendCursorPos();
-											int iOldBufferPos=m_pcTrend3Diagram->GetTrendBufferXPos();
-											DrawTrend3();
-											m_pcTrend3Diagram->SetTrendCursorPos(iOldCursorPos,iOldBufferPos);
-										}
-										else
-										{
-											if(AfxGetApp())
-												AfxGetApp()->GetMainWnd()->PostMessage(WM_SCALE_LIMIT);
-										}
+										int iOldCursorPos=m_pcTrend3Diagram->GetTrendCursorPos();
+										int iOldBufferPos=m_pcTrend3Diagram->GetTrendBufferXPos();
+										DrawTrend3();
+										m_pcTrend3Diagram->SetTrendCursorPos(iOldCursorPos,iOldBufferPos);
 									}
-									
-								}
-								catch (...)
-								{
-									LeaveCriticalSection(&csTrends);
-									CFabianHFOApp::ReportException(_T("EXCEPTION: CViewTrend::NotifyEvent() IDC_TREND3_DIAGRAM"));
+									else
+									{
+										if(AfxGetApp())
+											AfxGetApp()->GetMainWnd()->PostMessage(WM_SCALE_LIMIT);
+									}
 								}
 								LeaveCriticalSection(&csTrends);
 							}
@@ -1478,28 +1457,20 @@ void CViewTrend::NotifyEvent(CMVEvent* pEvent)
 						case IDC_TREND1_DIAGRAM:
 							{
 								EnterCriticalSection(&csTrends);
-								try
+								if(m_pcTrend1Diagram)
 								{
-									if(m_pcTrend1Diagram)
+									if(m_pcTrend1Diagram->IncreaseYScaleToNextValue())
 									{
-										if(m_pcTrend1Diagram->IncreaseYScaleToNextValue())
-										{
-											int iOldCursorPos=m_pcTrend1Diagram->GetTrendCursorPos();
-											int iOldBufferPos=m_pcTrend1Diagram->GetTrendBufferXPos();
-											DrawTrend1();
-											m_pcTrend1Diagram->SetTrendCursorPos(iOldCursorPos,iOldBufferPos);
-										}
-										else
-										{
-											if(AfxGetApp())
-												AfxGetApp()->GetMainWnd()->PostMessage(WM_SCALE_LIMIT);
-										}
+										int iOldCursorPos=m_pcTrend1Diagram->GetTrendCursorPos();
+										int iOldBufferPos=m_pcTrend1Diagram->GetTrendBufferXPos();
+										DrawTrend1();
+										m_pcTrend1Diagram->SetTrendCursorPos(iOldCursorPos,iOldBufferPos);
 									}
-								}
-								catch (...)
-								{
-									LeaveCriticalSection(&csTrends);
-									CFabianHFOApp::ReportException(_T("EXCEPTION: CViewTrend::NotifyEvent() EV_BN_MATRIX_CURSOR_DOWN"));
+									else
+									{
+										if(AfxGetApp())
+											AfxGetApp()->GetMainWnd()->PostMessage(WM_SCALE_LIMIT);
+									}
 								}
 								LeaveCriticalSection(&csTrends);
 
@@ -1508,28 +1479,20 @@ void CViewTrend::NotifyEvent(CMVEvent* pEvent)
 						case IDC_TREND2_DIAGRAM:
 							{
 								EnterCriticalSection(&csTrends);
-								try
+								if(m_pcTrend2Diagram)
 								{
-									if(m_pcTrend2Diagram)
+									if(m_pcTrend2Diagram->IncreaseYScaleToNextValue())
 									{
-										if(m_pcTrend2Diagram->IncreaseYScaleToNextValue())
-										{
-											int iOldCursorPos=m_pcTrend2Diagram->GetTrendCursorPos();
-											int iOldBufferPos=m_pcTrend2Diagram->GetTrendBufferXPos();
-											DrawTrend2();
-											m_pcTrend2Diagram->SetTrendCursorPos(iOldCursorPos,iOldBufferPos);
-										}
-										else
-										{
-											if(AfxGetApp())
-												AfxGetApp()->GetMainWnd()->PostMessage(WM_SCALE_LIMIT);
-										}
+										int iOldCursorPos=m_pcTrend2Diagram->GetTrendCursorPos();
+										int iOldBufferPos=m_pcTrend2Diagram->GetTrendBufferXPos();
+										DrawTrend2();
+										m_pcTrend2Diagram->SetTrendCursorPos(iOldCursorPos,iOldBufferPos);
 									}
-								}
-								catch (...)
-								{
-									LeaveCriticalSection(&csTrends);
-									CFabianHFOApp::ReportException(_T("EXCEPTION: CViewTrend::NotifyEvent() EV_BN_MATRIX_CURSOR_DOWN"));
+									else
+									{
+										if(AfxGetApp())
+											AfxGetApp()->GetMainWnd()->PostMessage(WM_SCALE_LIMIT);
+									}
 								}
 								LeaveCriticalSection(&csTrends);
 								
@@ -1538,28 +1501,20 @@ void CViewTrend::NotifyEvent(CMVEvent* pEvent)
 						case IDC_TREND3_DIAGRAM:
 							{
 								EnterCriticalSection(&csTrends);
-								try
+								if(m_pcTrend3Diagram)
 								{
-									if(m_pcTrend3Diagram)
+									if(m_pcTrend3Diagram->IncreaseYScaleToNextValue())
 									{
-										if(m_pcTrend3Diagram->IncreaseYScaleToNextValue())
-										{
-											int iOldCursorPos=m_pcTrend3Diagram->GetTrendCursorPos();
-											int iOldBufferPos=m_pcTrend3Diagram->GetTrendBufferXPos();
-											DrawTrend3();
-											m_pcTrend3Diagram->SetTrendCursorPos(iOldCursorPos,iOldBufferPos);
-										}
-										else
-										{
-											if(AfxGetApp())
-												AfxGetApp()->GetMainWnd()->PostMessage(WM_SCALE_LIMIT);
-										}
+										int iOldCursorPos=m_pcTrend3Diagram->GetTrendCursorPos();
+										int iOldBufferPos=m_pcTrend3Diagram->GetTrendBufferXPos();
+										DrawTrend3();
+										m_pcTrend3Diagram->SetTrendCursorPos(iOldCursorPos,iOldBufferPos);
 									}
-								}
-								catch (...)
-								{
-									LeaveCriticalSection(&csTrends);
-									CFabianHFOApp::ReportException(_T("EXCEPTION: CViewTrend::NotifyEvent() EV_BN_MATRIX_CURSOR_DOWN"));
+									else
+									{
+										if(AfxGetApp())
+											AfxGetApp()->GetMainWnd()->PostMessage(WM_SCALE_LIMIT);
+									}
 								}
 								LeaveCriticalSection(&csTrends);
 							}
@@ -3411,7 +3366,9 @@ void CViewTrend::DrawTrend1()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewTrend::DrawTrend1b()"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewTrend::DrawTrend1b error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 
 	m_lpfsTrend1 =new G_FUNCTIONSTRUCT_TD;
@@ -3607,8 +3564,9 @@ void CViewTrend::DrawTrend2()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewTrend::DrawTrend2b()"));
-		//AfxMessageBox( _T("EXCEPTION: CViewTrend::Load(void)") );
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewTrend::DrawTrend2b error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 
 
@@ -3810,7 +3768,9 @@ void CViewTrend::DrawTrend3()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewTrend::DrawTrend3b()"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewTrend::DrawTrend3b error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 
 	//change the graph width + height
@@ -4032,7 +3992,9 @@ void CViewTrend::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewTrend::SetOneButtonDepressed"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewTrend::SetOneButtonDepressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 	if(GetParent())
@@ -4065,7 +4027,9 @@ void CViewTrend::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewTrend::SetAllButtonUnpressed"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewTrend::SetAllButtonUnpressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 
 	if(GetParent())

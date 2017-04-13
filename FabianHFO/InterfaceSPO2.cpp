@@ -196,7 +196,9 @@ void CInterfaceSPO2::startSPO2initThread(void)
 	}
 	catch (...)
 	{
-		theApp.getLog()->WriteLine(_T("#THR:SPO2 startSPO2initThread"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: THR:SPO2 startSPO2initThread error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 
 		if(m_pcwtSPO2InitThread!=NULL)
 		{
@@ -212,6 +214,8 @@ void CInterfaceSPO2::startSPO2initThread(void)
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_REINIT_SPO2_MODULE);
+
+		//throw;
 	}
 	
 }

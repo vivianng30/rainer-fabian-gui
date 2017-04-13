@@ -3692,7 +3692,9 @@ void CViewAlarmLimit::NotifyEvent(CMVEvent* pEvent)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewAlarmLimit::NotifyEvent()"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewAlarmLimit::NotifyEvent error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 }
 void CViewAlarmLimit::NotifyVentModeChanged()
@@ -3716,7 +3718,9 @@ void CViewAlarmLimit::NotifyVentModeChanged()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewAlarmLimit::NotifyVentModeChanged()"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewAlarmLimit::NotifyVentModeChanged error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 }
 
@@ -4323,7 +4327,9 @@ void CViewAlarmLimit::NotifyParaBtnEvent(CMVEvent* pEvent)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewAlarmLimit::NotifyParaBtnEvent()"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewAlarmLimit::NotifyParaBtnEvent error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 
@@ -5400,7 +5406,9 @@ void CViewAlarmLimit::NotifyExspirationDataChanged()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewAlarmLimit::NotifyExspirationDataChanged()"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewAlarmLimit::NotifyExspirationDataChanged error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 }
 
@@ -5415,7 +5423,9 @@ void CViewAlarmLimit::NotifyDataChanged()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewAlarmLimit::NotifyDataChanged()"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewAlarmLimit::NotifyDataChanged error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 }
 
@@ -5553,7 +5563,9 @@ void CViewAlarmLimit::NotifyAlarmLimitChanged()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewAlarmLimit::NotifyAlarmLimitChanged()"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewAlarmLimit::NotifyAlarmLimitChanged error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 }
 
@@ -5684,7 +5696,9 @@ void CViewAlarmLimit::NotifyCalculateAlarmLimit()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CViewAlarmLimit::NotifyCalculateAlarmLimit()"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CViewAlarmLimit::NotifyCalculateAlarmLimit error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 }
 

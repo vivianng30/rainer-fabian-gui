@@ -764,81 +764,70 @@ void CDataHandler::setExit()
 {
 	m_bExit=true;
 
-	try
-	{
-		saveOpTime();
+	saveOpTime();
 
-		m_PARADATA->DestroyInstance();
-		m_PRESET->DestroyInstance();
+	m_PARADATA->DestroyInstance();
+	m_PRESET->DestroyInstance();
 
-		EnterCriticalSection(&csSavedBreath);
-		if (m_pbufSavedBreath != NULL) {
-			delete [] m_pbufSavedBreath;
-		}
-		m_pbufSavedBreath=NULL;
-		LeaveCriticalSection(&csSavedBreath);
-
-		EnterCriticalSection(&csVentDataBuffer);
-		m_rbufVent.~CircularBuffer();
-		LeaveCriticalSection(&csVentDataBuffer);
-
-
-		EnterCriticalSection(&csCopyDataBuffer);
-		m_rbufCopy.~CircularBuffer();
-		LeaveCriticalSection(&csCopyDataBuffer);
-
-		EnterCriticalSection(&csSPIDataBuffer);
-		m_rbufSPI.~CircularBuffer();
-		LeaveCriticalSection(&csSPIDataBuffer);
-
-		EnterCriticalSection(&csSPO2DataBuffer);
-		m_rbufSPO2.~CircularBuffer();
-		LeaveCriticalSection(&csSPO2DataBuffer);
-
-		EnterCriticalSection(&csCO2DataBuffer);
-		m_rbufCO2.~CircularBuffer();
-		LeaveCriticalSection(&csCO2DataBuffer);
-
-		delete [] m_pbufNumericIPPV;
-		m_pbufNumericIPPV=NULL;
-		delete [] m_pbufNumericSIPPV;
-		m_pbufNumericSIPPV=NULL;
-		delete [] m_pbufNumericSIMV;
-		m_pbufNumericSIMV=NULL;
-		delete [] m_pbufNumericSIMVPSV;
-		m_pbufNumericSIMVPSV=NULL;
-		delete [] m_pbufNumericPSV;
-		m_pbufNumericPSV=NULL;
-		delete [] m_pbufNumericCPAP;
-		m_pbufNumericCPAP=NULL;
-		delete [] m_pbufNumericHFO;
-		m_pbufNumericHFO=NULL;
-		delete [] m_pbufNumericNCPAP;
-		m_pbufNumericNCPAP=NULL;
-		delete [] m_pbufNumericDUOPAP;
-		m_pbufNumericDUOPAP=NULL;
-		delete [] m_pbufNumericTHERAPY;
-		m_pbufNumericTHERAPY=NULL;
-		delete [] m_pbufNumericFLOWOFFCONV;
-		m_pbufNumericFLOWOFFCONV=NULL;
-		delete [] m_pbufNumericFLOWOFFCPAP;
-		m_pbufNumericFLOWOFFCPAP=NULL;
-		delete [] m_pbufNumericFLOWOFFHFO;
-		m_pbufNumericFLOWOFFHFO=NULL;
-
-		delete [] m_pbufMessureAVG;
-		m_pbufMessureAVG=NULL;
-		delete [] m_pbufMessureBTB;
-		m_pbufMessureBTB=NULL;
+	EnterCriticalSection(&csSavedBreath);
+	if (m_pbufSavedBreath != NULL) {
+		delete [] m_pbufSavedBreath;
 	}
-	catch (std::exception& e)
-	{
-		throw;
+	m_pbufSavedBreath=NULL;
+	LeaveCriticalSection(&csSavedBreath);
 
-		CString szError=_T("");
-		szError.Format(_T("CDataHandler::setExit(): #%s"),e.what());
-		theApp.ReportException(szError);
-	}
+	EnterCriticalSection(&csVentDataBuffer);
+	m_rbufVent.~CircularBuffer();
+	LeaveCriticalSection(&csVentDataBuffer);
+
+
+	EnterCriticalSection(&csCopyDataBuffer);
+	m_rbufCopy.~CircularBuffer();
+	LeaveCriticalSection(&csCopyDataBuffer);
+
+	EnterCriticalSection(&csSPIDataBuffer);
+	m_rbufSPI.~CircularBuffer();
+	LeaveCriticalSection(&csSPIDataBuffer);
+
+	EnterCriticalSection(&csSPO2DataBuffer);
+	m_rbufSPO2.~CircularBuffer();
+	LeaveCriticalSection(&csSPO2DataBuffer);
+
+	EnterCriticalSection(&csCO2DataBuffer);
+	m_rbufCO2.~CircularBuffer();
+	LeaveCriticalSection(&csCO2DataBuffer);
+
+	delete [] m_pbufNumericIPPV;
+	m_pbufNumericIPPV=NULL;
+	delete [] m_pbufNumericSIPPV;
+	m_pbufNumericSIPPV=NULL;
+	delete [] m_pbufNumericSIMV;
+	m_pbufNumericSIMV=NULL;
+	delete [] m_pbufNumericSIMVPSV;
+	m_pbufNumericSIMVPSV=NULL;
+	delete [] m_pbufNumericPSV;
+	m_pbufNumericPSV=NULL;
+	delete [] m_pbufNumericCPAP;
+	m_pbufNumericCPAP=NULL;
+	delete [] m_pbufNumericHFO;
+	m_pbufNumericHFO=NULL;
+	delete [] m_pbufNumericNCPAP;
+	m_pbufNumericNCPAP=NULL;
+	delete [] m_pbufNumericDUOPAP;
+	m_pbufNumericDUOPAP=NULL;
+	delete [] m_pbufNumericTHERAPY;
+	m_pbufNumericTHERAPY=NULL;
+	delete [] m_pbufNumericFLOWOFFCONV;
+	m_pbufNumericFLOWOFFCONV=NULL;
+	delete [] m_pbufNumericFLOWOFFCPAP;
+	m_pbufNumericFLOWOFFCPAP=NULL;
+	delete [] m_pbufNumericFLOWOFFHFO;
+	m_pbufNumericFLOWOFFHFO=NULL;
+
+	delete [] m_pbufMessureAVG;
+	m_pbufMessureAVG=NULL;
+	delete [] m_pbufMessureBTB;
+	m_pbufMessureBTB=NULL;
 
 	DeleteCriticalSection(&csOpTime);
 	DeleteCriticalSection(&csSPIDataBuffer);
@@ -15136,15 +15125,13 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 							}
 						}
 					}
-					catch (std::exception& e)
+					catch (...)
 					{
-						throw;
-
-						//LeaveCriticalSection(&csTrend); //rkuNEWFIX
-
 						CString szError=_T("");
-						szError.Format(_T("EXCEPTION: CDataHandler::UpdateTrendData1: #%s"),e.what());
+						szError.Format(_T("EXCEPTION: CDataHandler::UpdateTrendData1: #%d"),GetLastError());
 						theApp.ReportException(szError);
+
+						throw;
 					}
 				}
 				else
@@ -15171,15 +15158,13 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 								}
 							}
 						}
-						catch (std::exception& e)
+						catch (...)
 						{
-							throw;
-
-							//LeaveCriticalSection(&csTrend); //rkuNEWFIX
-
 							CString szError=_T("");
-							szError.Format(_T("EXCEPTION: CDataHandler::UpdateTrendData2: #%s"),e.what());
+							szError.Format(_T("EXCEPTION: CDataHandler::UpdateTrendData2: #%d"),GetLastError());
 							theApp.ReportException(szError);
+
+							throw;
 						}
 					}
 
@@ -15207,15 +15192,13 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 								SerializeTrend(type,true);
 							}
 						}
-						catch (std::exception& e)
+						catch (...)
 						{
-							throw;
-
-							//LeaveCriticalSection(&csTrend); //rkuNEWFIX
-
 							CString szError=_T("");
-							szError.Format(_T("EXCEPTION: CDataHandler::UpdateTrendData3: #%s"),e.what());
+							szError.Format(_T("EXCEPTION: CDataHandler::UpdateTrendData3: #%d"),GetLastError());
 							theApp.ReportException(szError);
+
+							throw;
 						}
 					}
 
@@ -15234,15 +15217,13 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 							}
 						}
 					}
-					catch (std::exception& e)
+					catch (...)
 					{
-						throw;
-
-						//LeaveCriticalSection(&csTrend); //rkuNEWFIX
-
 						CString szError=_T("");
-						szError.Format(_T("EXCEPTION: CDataHandler::UpdateTrendData4: #%s"),e.what());
+						szError.Format(_T("EXCEPTION: CDataHandler::UpdateTrendData4: #%d"),GetLastError());
 						theApp.ReportException(szError);
+
+						throw;
 					}
 				}
 			}
@@ -15698,15 +15679,15 @@ void CDataHandler::SerializeTrend(UINT type, bool bIncreaseFileNum)
 			theApp.getLog()->WriteLine(strFormatted);
 		}
 	}
-	catch (std::exception& e)
+	catch (...)
 	{
-		throw;
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CDataHandler::SerializeTrend: #%d"),GetLastError());
+		theApp.ReportException(szError);
 
 		archivDatei.Close();
 
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CDataHandler::SerializeTrend: #%s"),e.what());
-		theApp.ReportException(szError);
+		throw;
 	}
 
 	switch(type)
@@ -15978,15 +15959,15 @@ bool CDataHandler::DeserializeTrend(UINT type, BYTE fileNum)
 			bRes=false;
 		}
 	}
-	catch (std::exception& e)
+	catch (...)
 	{
-		throw;
-
 		archivDatei.Close();
 
 		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CDataHandler::DeserializeTrend: #%s"),e.what());
+		szError.Format(_T("EXCEPTION: CDataHandler::DeserializeTrend: #%d"),GetLastError());
 		theApp.ReportException(szError);
+		
+		throw;
 	}
 
 

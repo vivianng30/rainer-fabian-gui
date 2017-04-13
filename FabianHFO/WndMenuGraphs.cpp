@@ -1155,7 +1155,9 @@ void CWndMenuGraphs::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndMenuGraphs::SetOneButtonDepressed"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CWndMenuGraphs::SetOneButtonDepressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 }
 
@@ -1180,7 +1182,9 @@ void CWndMenuGraphs::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndMenuGraphs::SetAllButtonUnpressed"));
+		CString szError=_T("");
+		szError.Format(_T("EXCEPTION: CWndMenuGraphs::SetAllButtonUnpressed error: #%d"),GetLastError());
+		theApp.ReportException(szError);
 	}
 	
 }
