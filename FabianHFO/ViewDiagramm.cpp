@@ -8009,7 +8009,7 @@ UINT CViewDiagramm::DrawDiagramm()
 			{
 				if(doThread()==false)
 				{
-					try
+					/*try
 					{
 						LPG_FUNCTIONSTRUCT_LD m_lpfsTest=NULL;
 						m_lpfsTest->ChartType=G_FILLEDCHART;
@@ -8021,7 +8021,7 @@ UINT CViewDiagramm::DrawDiagramm()
 						theApp.ReportException(szError);
 
 						throw;
-					}
+					}*/
 					return 0;//rku APPERR
 				}
 
@@ -8034,7 +8034,7 @@ UINT CViewDiagramm::DrawDiagramm()
 
 				if(doThread()==false)
 				{
-					try
+					/*try
 					{
 						LPG_FUNCTIONSTRUCT_LD m_lpfsTest=NULL;
 						m_lpfsTest->ChartType=G_FILLEDCHART;
@@ -8046,7 +8046,7 @@ UINT CViewDiagramm::DrawDiagramm()
 						theApp.ReportException(szError);
 
 						throw;
-					}
+					}*/
 					return 0;//rku APPERR
 				}
 
@@ -8055,7 +8055,7 @@ UINT CViewDiagramm::DrawDiagramm()
 
 				if(doThread()==false)
 				{
-					try
+					/*try
 					{
 						LPG_FUNCTIONSTRUCT_LD m_lpfsTest=NULL;
 						m_lpfsTest->ChartType=G_FILLEDCHART;
@@ -8067,7 +8067,7 @@ UINT CViewDiagramm::DrawDiagramm()
 						theApp.ReportException(szError);
 
 						throw;
-					}
+					}*/
 					return 0;//rku APPERR
 				}
 
@@ -8075,7 +8075,7 @@ UINT CViewDiagramm::DrawDiagramm()
 
 				if(doThread()==false)
 				{
-					try
+					/*try
 					{
 						LPG_FUNCTIONSTRUCT_LD m_lpfsTest=NULL;
 						m_lpfsTest->ChartType=G_FILLEDCHART;
@@ -8087,7 +8087,7 @@ UINT CViewDiagramm::DrawDiagramm()
 						theApp.ReportException(szError);
 
 						throw;
-					}
+					}*/
 					return 0;//rku APPERR
 				}
 
@@ -8180,7 +8180,7 @@ UINT CViewDiagramm::DrawDiagramm()
 				}
 				if(doThread()==false)
 				{
-					try
+					/*try
 					{
 						LPG_FUNCTIONSTRUCT_LD m_lpfsTest=NULL;
 						m_lpfsTest->ChartType=G_FILLEDCHART;
@@ -8192,7 +8192,7 @@ UINT CViewDiagramm::DrawDiagramm()
 						theApp.ReportException(szError);
 
 						throw;
-					}
+					}*/
 					return 0;//rku APPERR
 				}
 			}
