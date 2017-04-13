@@ -107,8 +107,15 @@ bool CNumericFieldFREQ::drawData(bool bData, bool bFrames, bool bText, bool bLim
 		rc.right = 175;
 	}
 
-	wsprintf(psz,_T("%d"),iBPM );
-	DrawText(hdcMem,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
+	if(getModel()->getVMODEHANDLER()->activeModeIsNCPAP() && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF)
+	{
+		DrawText(hdcMem,_T("--"),-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
+	}
+	else
+	{
+		wsprintf(psz,_T("%d"),iBPM );
+		DrawText(hdcMem,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
+	}
 
 	BitBlt(m_hDC, 0, 0, m_lX, m_lY,hdcMem , 0, 0, SRCCOPY);
 	BitBlt(dc.m_hDC, 0, 0, m_lX, m_lY, hdcMem, 0, 0, SRCCOPY);

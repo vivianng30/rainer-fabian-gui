@@ -11,6 +11,7 @@
  * @date 2017-04-13
  * @verbatim
 	- try/catch blocks replaced
+	- NCPAP mode when the sensitivity of Apnea detection is OFF we show "--" at the Frequency numeric parameter (ITEM-III)
  @endverbatim
  *
  * @subsection ver50126 Version 5.0.1.26
