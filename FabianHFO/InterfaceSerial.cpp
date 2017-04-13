@@ -1876,10 +1876,22 @@ void CInterfaceSerial::Send_PARAVAL_EXH_TIME(int val)
 void CInterfaceSerial::Send_PARAVAL_HF_AMPL(int val)
 {
 	//AmplitudeCorrectionFactor
+	/*double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+	if(iAmpCorFactor==0)
+		iAmpCorFactor=1;
+	val=(SHORT)(double)val*iAmpCorFactor;*/
+
 	double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
 	if(iAmpCorFactor==0)
 		iAmpCorFactor=1;
-	val=(SHORT)(double)val*iAmpCorFactor;
+	val=(SHORT)(double)val/iAmpCorFactor;
+
+	/*double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
+	double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+	if(iAmpCorFactor==0)
+		iAmpCorFactor=1;
+	double iFactor = 1/iAmpCorFactor;
+	val=(SHORT)(((double)val-iPmitt)*iFactor)+iPmitt;*/
 
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("m%dq"),val);
@@ -3473,21 +3485,45 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			{
 				wHFAMPL=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLmaxPara();
 				//AmplitudeCorrectionFactor
+				/*double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+				if(iAmpCorFactor==0)
+					iAmpCorFactor=1;
+				wHFAMPL=(SHORT)(double)wHFAMPL*iAmpCorFactor;*/
+
 				double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
 				if(iAmpCorFactor==0)
 					iAmpCorFactor=1;
-				wHFAMPL=(SHORT)(double)wHFAMPL*iAmpCorFactor;
+				wHFAMPL=(SHORT)(double)wHFAMPL/iAmpCorFactor;
+
+				/*double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLmaxPara();
+				double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+				if(iAmpCorFactor==0)
+					iAmpCorFactor=1;
+				double iFactor = 1/iAmpCorFactor;
+				wHFAMPL=(SHORT)(((double)wHFAMPL-iPmitt)*iFactor)+iPmitt;*/
 			}
 			else
 			{
 				wHFAMPL=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLPara();
 				//AmplitudeCorrectionFactor
-				double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
-				//double iPmitt=getModel()->getDATAHANDLER()->getBTBMessureDataPmitt();
+				/*double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
 				double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
 				if(iAmpCorFactor==0)
 					iAmpCorFactor=1;
-				wHFAMPL=(SHORT)(double)wHFAMPL*iAmpCorFactor;
+				wHFAMPL=(SHORT)(double)wHFAMPL*iAmpCorFactor;*/
+
+				double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
+				double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+				if(iAmpCorFactor==0)
+					iAmpCorFactor=1;
+				wHFAMPL=(SHORT)(double)wHFAMPL/iAmpCorFactor;
+
+				/*double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
+				double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+				if(iAmpCorFactor==0)
+					iAmpCorFactor=1;
+				double iFactor = 1/iAmpCorFactor;
+				wHFAMPL=(SHORT)(((double)wHFAMPL-iPmitt)*iFactor)+iPmitt;*/
 			}
 
 			if(wHFAMPL==iTemp)
