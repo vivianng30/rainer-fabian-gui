@@ -799,7 +799,14 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 										tempFlow=16000;
 									else if(tempFlow<-16000)
 										tempFlow=-16000;
-									getModel()->getAcuLink()->setGraphData(_pBufData.iValVolume,_pBufData.iValPressure,tempFlow*ALINK_FACTOR_FLOW,_pBufData.iValCO2);
+									if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
+									{
+										getModel()->getAcuLink()->setGraphDataV3(_pBufData.iValVolume,_pBufData.iValPressure,tempFlow*ALINK_FACTOR_FLOW,_pBufData.iValCO2);
+									}
+									else
+									{
+										getModel()->getAcuLink()->setGraphDataV4(_pBufData.iValVolume,_pBufData.iValPressure,tempFlow*ALINK_FACTOR_FLOW,_pBufData.iValCO2,_pBufData.iValSPO2);
+									}	
 								}
 								iCntAcuLinkData++;
 							}
@@ -1335,18 +1342,21 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 						//AmplitudeCorrectionFactor
 						if(bHFOmode)
 						{
-							/*double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
+							double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
 							double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
 							if(iAmpCorFactor==0)
 								iAmpCorFactor=1;
-							double iFactor = 1/iAmpCorFactor;
+							//double iFactor = 1/iAmpCorFactor;
 
-							iRes=(SHORT)(((double)iRes-iPmitt)*iFactor)+iPmitt;*/
+							//iRes=(SHORT)(((double)iRes-iPmitt)*iFactor)+iPmitt;
+							iRes=(SHORT)(((double)iRes-iPmitt)*iAmpCorFactor)+iPmitt;
 
-							double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+
+
+							/*double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
 							if(iAmpCorFactor==0)
 								iAmpCorFactor=1;
-							iRes=(SHORT)(double)iRes*iAmpCorFactor;
+							iRes=(SHORT)(double)iRes*iAmpCorFactor;*/
 						}
 						_pBufData.iValPressure=iRes;
 
@@ -1446,7 +1456,14 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 										tempFlow=16000;
 									else if(tempFlow<-16000)
 										tempFlow=-16000;
-									getModel()->getAcuLink()->setGraphData(_pBufData.iValVolume,_pBufData.iValPressure,tempFlow*ALINK_FACTOR_FLOW,_pBufData.iValCO2,_pBufData.iValSPO2);
+									if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
+									{
+										getModel()->getAcuLink()->setGraphDataV3(_pBufData.iValVolume,_pBufData.iValPressure,tempFlow*ALINK_FACTOR_FLOW,_pBufData.iValCO2);
+									}
+									else
+									{
+										getModel()->getAcuLink()->setGraphDataV4(_pBufData.iValVolume,_pBufData.iValPressure,tempFlow*ALINK_FACTOR_FLOW,_pBufData.iValCO2,_pBufData.iValSPO2);
+									}	
 								}
 								iCntAcuLinkData++;
 							}

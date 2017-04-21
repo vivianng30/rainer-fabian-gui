@@ -53,56 +53,21 @@ END_MESSAGE_MAP()
 void CWndServiceNetwork::Init()
 {
 	CClientDC dc(this);
-
-	//m_pcTest_Up= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN160_LG_UP);
-	//m_pcTest_Dw= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN160_LG_DW);
-	//m_pcTest_Dis= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN160_LG_DIS);
-
-	//m_pcNurse		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_PIC_NURSE32);
-
-	//BTN btn;
-
-	//btn.wID					= IDC_BTN_SERVICE_TESTNURSECALL;	
-	//btn.poPosition.x		= 200;//;586
-	//btn.poPosition.y		= 110;
-	//btn.pcBmpUp				= m_pcTest_Up;
-	//btn.pcBmpDown			= m_pcTest_Dw;
-	//btn.pcBmpFocus			= m_pcTest_Up;
-	//btn.pcBmpDisabled		= m_pcTest_Up;
-	//btn.dwFormat			= DT_VCENTER|DT_CENTER;
-	//m_pcTest=new CKbrdBtn(btn,COLOR_TXTBTNUP);
-	//m_pcTest->Create(this,g_hf15AcuMed,0);
-	//m_pcTest->SetText(_T("activate alarm"));
-	//m_pcTest->ShowWindow(SW_SHOW);
-
-
-
-	//m_bNurscallActive=getModel()->getCONFIG()->IsNursecallActive();
-
-	//m_sliderEnable = new CBitmapSlider();
-	//m_sliderEnable->Create(_T(""),WS_CHILD|WS_VISIBLE|SS_BITMAP|SS_NOTIFY|BS_OWNERDRAW, CRect(200,55,349,100), 
-	//	this,IDC_SLD_NURSECALL);
-	//m_sliderEnable->SetBitmapChannel( IDB_SLD_CHAN_GREY, NULL );
-	//m_sliderEnable->SetBitmapThumb( IDB_SLD_THUMB_GREY, IDB_SLD_THUMB_ACT_GREY);
-	//m_sliderEnable->SetRange( 0, 1 );
-	//if(m_bNurscallActive)
-	//{
-	//	m_sliderEnable->SetPos( 1 );
-	//	m_pcTest->EnableWindow(TRUE);
-	//}
-	//else
-	//{
-	//	m_sliderEnable->SetPos( 0 );
-	//	m_pcTest->EnableWindow(FALSE);
-	//}
-	//m_sliderEnable->SetMargin( 5, 0, 6, 0 );
-	//m_sliderEnable->DrawFocusRect( FALSE );
 	 
 	CStringW szLicenseFile=_T("ML");
 	szLicenseFile+=getModel()->GetUniqueID();
 	szLicenseFile+=_T(".mlic");
 
-	CStringW szFile=_T("\\FFSDISK\\")+szLicenseFile;
+	CStringW szFile=_T("");
+
+	if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
+	{
+		szFile=_T("\\FFSDISK\\ACULINK\\V3\\")+szLicenseFile;
+	}
+	else
+	{
+		szFile=_T("\\FFSDISK\\ACULINK\\V4\\")+szLicenseFile;
+	}
 
 	if(CTlsFile::Exists(szFile))
 	{
@@ -239,23 +204,19 @@ void CWndServiceNetwork::Draw()
 	
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-
-	/*rc.left = 350;  
+	rc.left = 400;  
 	rc.top = 100;  
-	rc.right  = 500;  
+	rc.right  = 700;  
 	rc.bottom = 500;
-	cs = _T("License: ");
-	if(m_bAcuLinkLicense)
+
+	if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
 	{
-		cs+=_T("ok");
+		DrawText(hdcMem,_T("Version 3.x"),-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 	}
 	else
 	{
-		cs+=_T("fail");
+		DrawText(hdcMem,_T("Version 4.x"),-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 	}
-	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);*/
-
-
 
 
 	rc.left = 60;  
@@ -369,26 +330,54 @@ void CWndServiceNetwork::Draw()
 	
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-	if(false==CTlsFile::Exists(_T("\\FFSDISK\\AcuLink.exe")))
+	if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
 	{
-		cs = _T("Installation: #001");
-	}
-	else if(false==CTlsFile::Exists(_T("\\FFSDISK\\AcuLink_DLL.dll")))
-	{
-		cs = _T("Installation: #002");
-	}
-	else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_NOPDMS)
-	{
-		cs = _T("Installation: #003");
-	}
-	else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL)
-	{
-		cs = _T("Installation: #004");
+		if(false==CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink.exe")))
+		{
+			cs = _T("Installation: #001");
+		}
+		else if(false==CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink_DLL.dll")))
+		{
+			cs = _T("Installation: #002");
+		}
+		else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_NOPDMS)
+		{
+			cs = _T("Installation: #003");
+		}
+		else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL)
+		{
+			cs = _T("Installation: #004");
+		}
+		else
+		{
+			cs = _T("Installation: ok");
+		}
 	}
 	else
 	{
-		cs = _T("Installation: ok");
+		if(false==CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V4\\AcuLink.exe")))
+		{
+			cs = _T("Installation: #001");
+		}
+		else if(false==CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V4\\AcuLinkV4_DLL.dll")))
+		{
+			cs = _T("Installation: #002");
+		}
+		else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_NOPDMS)
+		{
+			cs = _T("Installation: #003");
+		}
+		else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL)
+		{
+			cs = _T("Installation: #004");
+		}
+		else
+		{
+			cs = _T("Installation: ok");
+		}
 	}
+
+	
 
 	rc.left = 350;  
 	rc.top = 240;  

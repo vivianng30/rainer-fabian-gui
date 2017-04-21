@@ -482,6 +482,98 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		FindClose(hSearch);
 	}
 
+	hSearch = ::FindFirstFile(_T("\\FFSDISK\\ACULINK\\V3\\*.dl_"), &FileData);
+	if(hSearch != INVALID_HANDLE_VALUE)
+	{
+		do
+		{
+			CString sFile = _T("\\FFSDISK\\");
+			sFile += FileData.cFileName;
+
+			if(CTlsFile::Exists(sFile))
+			{
+				if (CTlsFile::Delete(sFile)==false)
+				{
+					CString csDel=_T("");
+					csDel.Format(_T("#HFO:0216 %s"), sFile);
+					theApp.getLog()->WriteLine(csDel);
+				}
+			}
+
+		} while(::FindNextFile(hSearch, &FileData));
+
+		FindClose(hSearch);
+	}
+
+	hSearch = ::FindFirstFile(_T("\\FFSDISK\\ACULINK\\V3\\*.ex_"), &FileData);
+	if(hSearch != INVALID_HANDLE_VALUE)
+	{
+		do
+		{
+			CString sFile = _T("\\FFSDISK\\");
+			sFile += FileData.cFileName;
+
+			if(CTlsFile::Exists(sFile))
+			{
+				if (CTlsFile::Delete(sFile)==false)
+				{
+					CString csDel=_T("");
+					csDel.Format(_T("#HFO:0216 %s"), sFile);
+					theApp.getLog()->WriteLine(csDel);
+				}
+			}
+
+		} while(::FindNextFile(hSearch, &FileData));
+
+		FindClose(hSearch);
+	}
+
+	hSearch = ::FindFirstFile(_T("\\FFSDISK\\ACULINK\\V4\\*.dl_"), &FileData);
+	if(hSearch != INVALID_HANDLE_VALUE)
+	{
+		do
+		{
+			CString sFile = _T("\\FFSDISK\\");
+			sFile += FileData.cFileName;
+
+			if(CTlsFile::Exists(sFile))
+			{
+				if (CTlsFile::Delete(sFile)==false)
+				{
+					CString csDel=_T("");
+					csDel.Format(_T("#HFO:0216 %s"), sFile);
+					theApp.getLog()->WriteLine(csDel);
+				}
+			}
+
+		} while(::FindNextFile(hSearch, &FileData));
+
+		FindClose(hSearch);
+	}
+
+	hSearch = ::FindFirstFile(_T("\\FFSDISK\\ACULINK\\V4\\*.ex_"), &FileData);
+	if(hSearch != INVALID_HANDLE_VALUE)
+	{
+		do
+		{
+			CString sFile = _T("\\FFSDISK\\");
+			sFile += FileData.cFileName;
+
+			if(CTlsFile::Exists(sFile))
+			{
+				if (CTlsFile::Delete(sFile)==false)
+				{
+					CString csDel=_T("");
+					csDel.Format(_T("#HFO:0216 %s"), sFile);
+					theApp.getLog()->WriteLine(csDel);
+				}
+			}
+
+		} while(::FindNextFile(hSearch, &FileData));
+
+		FindClose(hSearch);
+	}
+
 	if(CTlsFile::Exists(_T("\\Hard Disk\\netdcu11\\AutoStart.ex_")))
 	{
 		if (CTlsFile::Delete(_T("\\Hard Disk\\netdcu11\\AutoStart.ex_"))==false)
@@ -9961,10 +10053,12 @@ void CMainFrame::startAcuLink()
 		if(uiPort)
 			getModel()->getAcuLink()->setNetPort(uiPort);
 
-		//getModel()->getAcuLink()->SetLanguage(m_wLanguageID);
-
 		PROCESS_INFORMATION pi;
-		CreateProcess(_T("\\FFSDISK\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
+
+		if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
+			CreateProcess(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
+		else
+			CreateProcess(_T("\\FFSDISK\\ACULINK\\V4\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
 
 		theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_ETHERNET"));
 	}
@@ -9977,16 +10071,33 @@ void CMainFrame::startAcuLink()
 		getModel()->getAcuLink()->setLanguage(m_wLanguageID);
 
 		PROCESS_INFORMATION pi;
-		if(getModel()->getCONFIG()->GetMainBoardVersion()>=MAINBOARD_30)
+		if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
 		{
-			CreateProcess(_T("\\FFSDISK\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
-			theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_IVOI COM2"));
+			if(getModel()->getCONFIG()->GetMainBoardVersion()>=MAINBOARD_30)
+			{
+				CreateProcess(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
+				theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_IVOI COM2"));
+			}
+			else	//MAINBOARD2_1
+			{
+				CreateProcess(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink.exe"), L"COM1", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
+				theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_IVOI COM1"));
+			}
 		}
-		else	//MAINBOARD2_1
+		else
 		{
-			CreateProcess(_T("\\FFSDISK\\AcuLink.exe"), L"COM1", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
-			theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_IVOI COM1"));
+			if(getModel()->getCONFIG()->GetMainBoardVersion()>=MAINBOARD_30)
+			{
+				CreateProcess(_T("\\FFSDISK\\ACULINK\\V4\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
+				theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_IVOI COM2"));
+			}
+			else	//MAINBOARD2_1
+			{
+				CreateProcess(_T("\\FFSDISK\\ACULINK\\V4\\AcuLink.exe"), L"COM1", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
+				theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_IVOI COM1"));
+			}
 		}
+		
 	}
 	else if(		getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_ASCII
 		&&	getModel()->getAcuLink()!=NULL)
@@ -9999,16 +10110,34 @@ void CMainFrame::startAcuLink()
 		getModel()->getAcuLink()->setShutdown(0);
 
 		PROCESS_INFORMATION pi;
-		if(getModel()->getCONFIG()->GetMainBoardVersion()>=MAINBOARD_30)
+
+		if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
 		{
-			CreateProcess(_T("\\FFSDISK\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
-			theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_ASCII COM2"));
+			if(getModel()->getCONFIG()->GetMainBoardVersion()>=MAINBOARD_30)
+			{
+				CreateProcess(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
+				theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_ASCII COM2"));
+			}
+			else	//MAINBOARD2_1
+			{
+				CreateProcess(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink.exe"), L"COM1", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
+				theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_ASCII COM1"));
+			}
 		}
-		else	//MAINBOARD2_1
+		else
 		{
-			CreateProcess(_T("\\FFSDISK\\AcuLink.exe"), L"COM1", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
-			theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_ASCII COM1"));
+			if(getModel()->getCONFIG()->GetMainBoardVersion()>=MAINBOARD_30)
+			{
+				CreateProcess(_T("\\FFSDISK\\ACULINK\\V4\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
+				theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_ASCII COM2"));
+			}
+			else	//MAINBOARD2_1
+			{
+				CreateProcess(_T("\\FFSDISK\\ACULINK\\V4\\AcuLink.exe"), L"COM1", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
+				theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_ASCII COM1"));
+			}
 		}
+		
 #endif
 
 	}
@@ -10025,16 +10154,33 @@ void CMainFrame::startAcuLink()
 		//getModel()->getAcuLink()->SetLanguage(m_wLanguageID);
 
 		PROCESS_INFORMATION pi;
-		if(getModel()->getCONFIG()->GetMainBoardVersion()>=MAINBOARD_30)
+		if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
 		{
-			CreateProcess(_T("\\FFSDISK\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
-			theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_WAVE COM2"));
+			if(getModel()->getCONFIG()->GetMainBoardVersion()>=MAINBOARD_30)
+			{
+				CreateProcess(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
+				theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_WAVE COM2"));
+			}
+			else	//MAINBOARD2_1
+			{
+				CreateProcess(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink.exe"), L"COM1", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
+				theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_WAVE COM1"));
+			}
 		}
-		else	//MAINBOARD2_1
+		else
 		{
-			CreateProcess(_T("\\FFSDISK\\AcuLink.exe"), L"COM1", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
-			theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_WAVE COM1"));
+			if(getModel()->getCONFIG()->GetMainBoardVersion()>=MAINBOARD_30)
+			{
+				CreateProcess(_T("\\FFSDISK\\ACULINK\\V4\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
+				theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_WAVE COM2"));
+			}
+			else	//MAINBOARD2_1
+			{
+				CreateProcess(_T("\\FFSDISK\\ACULINK\\V4\\AcuLink.exe"), L"COM1", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
+				theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_WAVE COM1"));
+			}
 		}
+		
 #endif
 	}
 	else if(		getModel()->getCONFIG()->GetPDMSprotocol()==ACL_ETHERNET_WAVE
@@ -10050,9 +10196,25 @@ void CMainFrame::startAcuLink()
 		//getModel()->getAcuLink()->SetLanguage(m_wLanguageID);
 
 		PROCESS_INFORMATION pi;
-		CreateProcess(_T("\\FFSDISK\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
-
+		if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
+		{
+			CreateProcess(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
+		}
+		else
+		{
+			CreateProcess(_T("\\FFSDISK\\ACULINK\\V4\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
+		}
+		
 		theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_ETHERNET_WAVE"));
+	}
+
+	if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
+	{
+		theApp.getLog()->WriteLine(_T("***ACULINK: version 3.x"));
+	}
+	else
+	{
+		theApp.getLog()->WriteLine(_T("***ACULINK: version 4.x"));
 	}
 
 	/*Sleep(1000);

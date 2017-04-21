@@ -3,6 +3,11 @@
 //wenn die Datei geändert wird unbedingt auch config.h von Projekt "FabianInstaller" und "Fabian" nachziehen
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+enum eAcuLinkVersion {
+	ALINKVERS_3		= 0,
+	ALINKVERS_4		= 1
+};
+
 enum eDevType {
 	DEV_EVO		= 0,
 	DEV_THERAPY	= 1,
@@ -1264,8 +1269,8 @@ enum eLanguage {
 #define FLOWSENSORCONF				0x1F08
 #define AVREVISION					0x1F09
 #define HFREVISION					0x1F0A
-//#define next						0x1F0B
-
+#define ACULINKVERSION				0x1F0B
+//#define next						0x1F0C
 // 
 // Adressbereich 0x1EFF bis 0x1FFF ist für Hardware-Konfiguration reserviert, nicht löschen!!!!!
 //

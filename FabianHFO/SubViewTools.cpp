@@ -1086,7 +1086,16 @@ void CSubViewTools::OnBnClickedDevInfoToUSB()
 		szLicenseFile+=getModel()->GetUniqueID();
 		szLicenseFile+=_T(".mlic");
 
-		CStringW szFile=_T("\\FFSDISK\\")+szLicenseFile;
+		CStringW szFile=_T("");
+
+		if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
+		{
+			szFile=_T("\\FFSDISK\\ACULINK\\V3\\")+szLicenseFile;
+		}
+		else
+		{
+			szFile=_T("\\FFSDISK\\ACULINK\\V4\\")+szLicenseFile;
+		}
 
 		bool bAcuLinkLicense=false;
 		if(CTlsFile::Exists(szFile))
@@ -1098,6 +1107,15 @@ void CSubViewTools::OnBnClickedDevInfoToUSB()
 			lfDeviceInfoFile->WriteLine(_T("- AcuLink: yes"),false);
 		else
 			lfDeviceInfoFile->WriteLine(_T("- AcuLink: no"),false);
+
+		if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
+		{
+			lfDeviceInfoFile->WriteLine(_T("- AcuLink: version 3.x"),false);
+		}
+		else
+		{
+			lfDeviceInfoFile->WriteLine(_T("- AcuLink: version 4.x"),false);
+		}
 
 		//- HFO: Yes/No
 		if(getModel()->getDATAHANDLER()->isHFOLicenseAvailable())

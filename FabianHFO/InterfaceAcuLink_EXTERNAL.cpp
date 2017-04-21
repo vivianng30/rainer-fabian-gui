@@ -25,7 +25,8 @@ LP_GET_ARRAY_DATA_DLLFUNC CInterfaceAcuLink_EXTERNAL::pGetAlarmData=0;
 
 LP_SET_ARRAY_DATA_DLLFUNC CInterfaceAcuLink_EXTERNAL::pSayHelloStr=0;
 
-LP_SET_WAVE_RECORD_DLLFUNC CInterfaceAcuLink_EXTERNAL::pSetWaveRecord=0;
+LP_SET_WAVE_RECORD_V3_DLLFUNC CInterfaceAcuLink_EXTERNAL::pSetWaveRecordV3=0;
+LP_SET_WAVE_RECORD_V4_DLLFUNC CInterfaceAcuLink_EXTERNAL::pSetWaveRecordV4=0;
 
 LP_SET_BOOL_DLLFUNC CInterfaceAcuLink_EXTERNAL::pSetProducerStarted=0;
 
@@ -71,18 +72,36 @@ bool CInterfaceAcuLink_EXTERNAL::init()
 	CStringW szLicenseFile=_T("ML");
 	szLicenseFile+=CInterface::getModel()->GetUniqueID();
 	szLicenseFile+=_T(".mlic");
-	m_szFileAcuLink=_T("\\FFSDISK\\")+szLicenseFile;
+	
 
 	bool bRes=false;
 
-
-	if(		CTlsFile::Exists(_T("\\FFSDISK\\AcuLink.exe"))
-		&&	CTlsFile::Exists(_T("\\FFSDISK\\AcuLink_DLL.dll"))
-		&&	CTlsFile::Exists(m_szFileAcuLink))
+	if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
 	{
-		if(_hAcuLink == NULL)
-			_hAcuLink = ::LoadLibrary(_T("AcuLink_DLL.dll"));	
+		m_szFileAcuLink=_T("\\FFSDISK\\ACULINK\\V3\\")+szLicenseFile;
+
+		if(		CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink.exe"))
+			&&	CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink_DLL.dll"))
+			&&	CTlsFile::Exists(m_szFileAcuLink))
+		{
+			if(_hAcuLink == NULL)
+				_hAcuLink = ::LoadLibrary(_T("AcuLink_DLL.dll"));	
+		}
 	}
+	else
+	{
+		m_szFileAcuLink=_T("\\FFSDISK\\ACULINK\\V4\\")+szLicenseFile;
+
+		if(		CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V4\\AcuLink.exe"))
+			&&	CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V4\\AcuLinkV4_DLL.dll")) 
+			&&	CTlsFile::Exists(m_szFileAcuLink))
+		{
+			if(_hAcuLink == NULL)
+				_hAcuLink = ::LoadLibrary(_T("AcuLinkV4_DLL.dll"));	
+		}
+	}
+
+	
 
 	if(_hAcuLink !=NULL)
 	{
@@ -103,7 +122,15 @@ bool CInterfaceAcuLink_EXTERNAL::init()
 
 		pSayHelloStr = (LP_SET_ARRAY_DATA_DLLFUNC)::GetProcAddress(_hAcuLink, L"SayHelloStr");
 
-		pSetWaveRecord = (LP_SET_WAVE_RECORD_DLLFUNC)::GetProcAddress(_hAcuLink, L"SetWaveRecord");
+		if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
+		{
+			pSetWaveRecordV3 = (LP_SET_WAVE_RECORD_V3_DLLFUNC)::GetProcAddress(_hAcuLink, L"SetWaveRecord");
+		}
+		else
+		{
+			pSetWaveRecordV4 = (LP_SET_WAVE_RECORD_V4_DLLFUNC)::GetProcAddress(_hAcuLink, L"SetWaveRecord");
+		}
+		
 
 		pSetProducerStarted= (LP_SET_BOOL_DLLFUNC)::GetProcAddress(_hAcuLink, L"SetProducerStarted");
 
@@ -197,13 +224,27 @@ bool CInterfaceAcuLink_EXTERNAL::init()
 
 			_hAcuLink=NULL;
 		}
-		if(pSetWaveRecord==0)
+		if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
 		{
-			//ERROR todo logfile
-			::FreeLibrary(_hAcuLink);
+			if(pSetWaveRecordV3==0)
+			{
+				//ERROR todo logfile
+				::FreeLibrary(_hAcuLink);
 
-			_hAcuLink=NULL;
+				_hAcuLink=NULL;
+			}
 		}
+		else
+		{
+			if(pSetWaveRecordV4==0)
+			{
+				//ERROR todo logfile
+				::FreeLibrary(_hAcuLink);
+
+				_hAcuLink=NULL;
+			}
+		}
+		
 		if(pSetProducerStarted==0)
 		{
 			//ERROR todo logfile
@@ -262,7 +303,8 @@ bool CInterfaceAcuLink_EXTERNAL::init()
 
 			pSayHelloStr=0;
 
-			pSetWaveRecord=0;
+			pSetWaveRecordV3=0;
+			pSetWaveRecordV4=0;
 
 			pSetProducerStarted=0;
 		}
@@ -332,13 +374,13 @@ void CInterfaceAcuLink_EXTERNAL::setProducerStarted(bool bState)
 		((*pSetProducerStarted)(bState));
 }
 
-void CInterfaceAcuLink_EXTERNAL::setGraphData(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2, SHORT iValSPO2)
+void CInterfaceAcuLink_EXTERNAL::setGraphDataV3(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2)
 {
 	//WaveRecord rWaveRecord
 	////in ring buffer von DLL schreiben
-	if(pSetWaveRecord)
+	if(pSetWaveRecordV3)
 	{
-		int iRet=((*pSetWaveRecord)(iValVolume ,iValPressure ,iValFlow, iValCO2, iValSPO2));
+		int iRet=((*pSetWaveRecordV3)(iValVolume ,iValPressure ,iValFlow, iValCO2));
 		if(iRet!=0)
 		{
 			if(m_bShowAcuLinkError==true)
@@ -351,7 +393,25 @@ void CInterfaceAcuLink_EXTERNAL::setGraphData(SHORT iValVolume ,SHORT iValPressu
 		}
 	}
 }
-
+void CInterfaceAcuLink_EXTERNAL::setGraphDataV4(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2, SHORT iValSPO2)
+{
+	//WaveRecord rWaveRecord
+	////in ring buffer von DLL schreiben
+	if(pSetWaveRecordV4)
+	{
+		int iRet=((*pSetWaveRecordV4)(iValVolume ,iValPressure ,iValFlow, iValCO2, iValSPO2));
+		if(iRet!=0)
+		{
+			if(m_bShowAcuLinkError==true)
+			{
+				m_bShowAcuLinkError=false;
+				/*CStringW sz=_T("");
+				sz.Format(_T("ERROR acuLink SetGraphData: %d"), iRet);
+				theApp.getLog()->WriteLine(sz);*/
+			}
+		}
+	}
+}
 int CInterfaceAcuLink_EXTERNAL::setLanguage(UINT uiLang)
 {
 	if(pSetLanguageFunc)

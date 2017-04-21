@@ -11,7 +11,8 @@ typedef INT (CALLBACK* LPGETINTDLLFUNC)();
 typedef INT (CALLBACK* LP_SET_ARRAY_DATA_DLLFUNC)(INT, INT);
 typedef INT (CALLBACK* LP_GET_ARRAY_DATA_DLLFUNC)(INT);
 
-typedef INT (CALLBACK* LP_SET_WAVE_RECORD_DLLFUNC)(SHORT,SHORT,SHORT,SHORT,SHORT);
+typedef INT (CALLBACK* LP_SET_WAVE_RECORD_V3_DLLFUNC)(SHORT,SHORT,SHORT,SHORT);
+typedef INT (CALLBACK* LP_SET_WAVE_RECORD_V4_DLLFUNC)(SHORT,SHORT,SHORT,SHORT,SHORT);
 
 typedef VOID (CALLBACK* LP_SET_BOOL_DLLFUNC)(BOOL);
 
@@ -41,7 +42,8 @@ public:
 	void setProducerStarted(bool bState);
 
 	UINT getAcuLinkError();
-	void setGraphData(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2, SHORT iValSPO2);
+	void setGraphDataV3(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2);
+	void setGraphDataV4(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2, SHORT iValSPO2);
 	int setLanguage(UINT uiLang);
 	int setNetPort(UINT uiPort);
 	int setLinkType(int iLinkType);
@@ -68,7 +70,8 @@ protected:
 
 	static LP_SET_ARRAY_DATA_DLLFUNC pSayHelloStr;
 
-	static LP_SET_WAVE_RECORD_DLLFUNC pSetWaveRecord;
+	static LP_SET_WAVE_RECORD_V3_DLLFUNC pSetWaveRecordV3;
+	static LP_SET_WAVE_RECORD_V4_DLLFUNC pSetWaveRecordV4;
 
 	static LP_SET_BOOL_DLLFUNC pSetProducerStarted;
 

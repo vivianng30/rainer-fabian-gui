@@ -22,7 +22,8 @@ public:
 	virtual void setParaData(UINT index, int val)=0;
 	virtual void setAlarmData(UINT index, int val)=0;
 
-	virtual void setGraphData(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2, SHORT iValSPO2);
+	virtual void setGraphDataV3(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2);
+	virtual void setGraphDataV4(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2, SHORT iValSPO2);
 	virtual int setLanguage(UINT uiLang);
 	virtual int setNetPort(UINT uiPort);
 	

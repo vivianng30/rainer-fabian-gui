@@ -46,6 +46,9 @@ public:
 	void SetSPO2module(BYTE mod, bool bReinit=false);
 	bool isSpO2ConfigInProgress();
 
+	eAcuLinkVersion GetAcuLinkVersion();
+	void SetAcuLinkVersion(eAcuLinkVersion vers);
+
 	//FABIANHFO CONFIGURATION
 	int GetVentRange();
 	void SetVentRange(int range);
@@ -935,6 +938,7 @@ private:
 	eALimitNumeric m_eLastALimitNumeric;
 	eCurveForm m_eCurveForm;
 	eAlarmLoudness m_eAlarmVolume;
+	eAcuLinkVersion m_eAcuLinkVersion;
 
 	CStringW m_szLanguageID;
 	CStringW m_szKernel;

@@ -55,6 +55,7 @@ CConfiguration::CConfiguration()
 	
 	m_iEthernetPort=DEFAULT_PORT;
 	m_iPDMSProtocol=ACL_NOPDMS;
+	m_eAcuLinkVersion=ALINKVERS_3;
 	m_iSPO2module=SPO2MODULE_NONE;
 	m_bySPO2ModuleTemp=m_iSPO2module;
 	m_iCO2module=CO2MODULE_NONE;
@@ -459,6 +460,7 @@ void CConfiguration::Init()
 	
 	m_iEthernetPort=DEFAULT_PORT;
 	m_iPDMSProtocol=ACL_NOPDMS;
+	m_eAcuLinkVersion=ALINKVERS_3;
 	m_iSPO2module=SPO2MODULE_NONE;
 	m_bySPO2ModuleTemp=m_iSPO2module;
 	m_iCO2module=CO2MODULE_NONE;
@@ -1039,6 +1041,13 @@ void CConfiguration::LoadSettings()
 	#ifdef SIMULATION_VERSION
 		m_iPDMSProtocol=ACL_RS232_ASCII;
 	#endif
+
+	m_eAcuLinkVersion=(eAcuLinkVersion)getModel()->getI2C()->ReadConfigByte(ACULINKVERSION);
+	if(m_eAcuLinkVersion>ALINKVERS_4)
+	{
+		getModel()->getI2C()->WriteConfigByte(ACULINKVERSION,ALINKVERS_3);
+		m_eAcuLinkVersion=ALINKVERS_3;
+	}
 	
 	//TEST
 	/*getModel()->getI2C()->WriteConfigByte(PDMSCONFIG,VUELINK);
@@ -6420,6 +6429,15 @@ void CConfiguration::SetPDMSprotocol(BYTE prot)
 	getModel()->getI2C()->WriteConfigByte(PDMSCONFIG,m_iPDMSProtocol);
 }
 
+eAcuLinkVersion CConfiguration::GetAcuLinkVersion()
+{
+	return m_eAcuLinkVersion;
+}
+void CConfiguration::SetAcuLinkVersion(eAcuLinkVersion vers)
+{
+	m_eAcuLinkVersion=vers;
+}
+
 // **************************************************************************
 // 
 // **************************************************************************
@@ -9578,7 +9596,6 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		ar<<m_iParaDataTriggerNMODE;
 
 		////##################### m_iConfigVersion 3005
-		int iTest=(BYTE)m_eLeakCompOff;
 		ar<<(BYTE)m_eLeakCompOff;
 		ar<<m_iCurNumericBlock_NCPAP;
 		ar<<m_iCurNumericBlock_DUOPAP;
@@ -9588,6 +9605,7 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		ar<<m_bUseNeoPed;
 		ar<<m_iCurNumericBlock_FLOWOFFCPAP;
 		ar<<m_bEFLOWequalILFOW;
+		ar<<(BYTE)m_eAcuLinkVersion;
 	}
 	else
 	{
@@ -10252,6 +10270,11 @@ void CConfiguration::SerializeFile(CArchive& ar)
 
 			ar>>m_bEFLOWequalILFOW;
 			SetEFLOWequalILFOW(m_bEFLOWequalILFOW);
+
+			BYTE byVersion=0;
+			ar>>byVersion;
+			m_eAcuLinkVersion=(eAcuLinkVersion)byVersion;
+			SetAcuLinkVersion(m_eAcuLinkVersion);
 		}
 	}
 }

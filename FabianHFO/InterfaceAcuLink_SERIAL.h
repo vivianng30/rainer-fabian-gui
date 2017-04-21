@@ -19,7 +19,8 @@ public:
 	int setMeasurementData(int idx, int iValue);
 	void setParaData(UINT index, int val);
 	void setAlarmData(UINT index, int val);
-	void setGraphData(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2, SHORT iValSPO2);
+	void setGraphDataV3(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2);
+	void setGraphDataV4(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2, SHORT iValSPO2);
 
 protected:
 	int getParaData(int idx);

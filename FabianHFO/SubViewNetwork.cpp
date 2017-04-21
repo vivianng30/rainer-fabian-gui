@@ -443,8 +443,6 @@ void CSubViewNetwork::Draw()
 	HBITMAP hBmpMem=CreateCompatibleBitmap(dc.m_hDC,m_lX,m_lY);
 	HBITMAP hBmpMemPrev=(HBITMAP)SelectObject(hdcMem,hBmpMem);
 
-
-
 	CBrush cbrBack(BACKGND);
 	HBRUSH hbrprev=(HBRUSH)SelectObject(hdcMem,cbrBack);
 	HPEN hpenprev=(HPEN)SelectObject(hdcMem, (HPEN)GetStockObject(NULL_PEN));	
@@ -478,7 +476,7 @@ void CSubViewNetwork::Draw()
 	CBrush cbrDarkRound(RGB(140,140,140));
 	
 	SelectObject(hdcMem,cbrRound);
-	RoundRect(hdcMem, 110, 20, 670, 300,20,20);
+	RoundRect(hdcMem, 110, 20, 670, 350,20,20);
 	SelectObject(hdcMem,cbrDarkRound);
 	RoundRect(hdcMem, 110, 20, 670, 50,20,20);
 
@@ -519,12 +517,34 @@ void CSubViewNetwork::Draw()
 	rc.top = 75;  
 	rc.right  = 420;  
 	rc.bottom = 500;
+	cs = getModel()->GetLanguageString(IDS_TXT_PDMS_VERSION);
+	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+
+	rc.left = 300;  
+	rc.top = 75;  
+	rc.right  = 660;  
+	rc.bottom = 500; 
+
+	if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
+	{
+		DrawText(hdcMem,_T("3.x"),-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+	}
+	else
+	{
+		DrawText(hdcMem,_T("4.x"),-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+	}
+
+
+	rc.left = 130;  
+	rc.top = 100;  
+	rc.right  = 420;  
+	rc.bottom = 500;
 	cs = getModel()->GetLanguageString(IDS_TXT_PDMS_PROTOCOL);
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 
 	rc.left = 300;  
-	rc.top = 75;  
+	rc.top = 100;  
 	rc.right  = 660;  
 	rc.bottom = 500; 
 
@@ -568,17 +588,20 @@ void CSubViewNetwork::Draw()
 		cs=_T("-none-");
 		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 	}
+
+	
 	
 	/**************version*******************/
 	rc.left = 130;  
-	rc.top = 100;  
+	rc.top = 125;  
 	rc.right  = 420;  
 	rc.bottom = 500;
-	cs = getModel()->GetLanguageString(IDS_TXT_PDMS_VERSION);
+	cs = getModel()->GetLanguageString(IDS_TXT_SOFTVERS);
+	cs += _T(":");
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 	rc.left = 300;  
-	rc.top = 100;  
+	rc.top = 125;  
 	rc.right  = 660;  
 	rc.bottom = 500; 
 
@@ -593,7 +616,7 @@ void CSubViewNetwork::Draw()
 	{
 		/**********************interface*********************/
 		rc.left = 130;  
-		rc.top = 125;  
+		rc.top = 150;  
 		rc.right  = 420;  
 		rc.bottom = 500;
 		cs = getModel()->GetLanguageString(IDS_TXT_PDMS_INTERFACE);
@@ -601,7 +624,7 @@ void CSubViewNetwork::Draw()
 
 
 		rc.left = 300;  
-		rc.top = 125;  
+		rc.top = 150;  
 		rc.right  = 660;  
 		rc.bottom = 500; 
 
@@ -612,7 +635,7 @@ void CSubViewNetwork::Draw()
 	{
 		/**********************interface*********************/
 		rc.left = 130;  
-		rc.top = 125;  
+		rc.top = 150;  
 		rc.right  = 420;  
 		rc.bottom = 500;
 		cs = getModel()->GetLanguageString(IDS_TXT_PDMS_INTERFACE);
@@ -620,7 +643,7 @@ void CSubViewNetwork::Draw()
 
 
 		rc.left = 300;  
-		rc.top = 125;  
+		rc.top = 150;  
 		rc.right  = 660;  
 		rc.bottom = 500; 
 
@@ -632,7 +655,7 @@ void CSubViewNetwork::Draw()
 	//{xxxxxxxxxxxxxxxxxxxxxxxx
 	//	/**********************interface*********************/
 	//	rc.left = 130;  
-	//	rc.top = 125;  
+	//	rc.top = 150;  
 	//	rc.right  = 420;  
 	//	rc.bottom = 500;
 	//	cs = getModel()->GetLanguageString(IDS_TXT_PDMS_INTERFACE);
@@ -640,7 +663,7 @@ void CSubViewNetwork::Draw()
 
 
 	//	rc.left = 300;  
-	//	rc.top = 125;  
+	//	rc.top = 150;  
 	//	rc.right  = 660;  
 	//	rc.bottom = 500; 
 
@@ -652,7 +675,7 @@ void CSubViewNetwork::Draw()
 	{
 		/**********************interface*********************/
 		rc.left = 130;  
-		rc.top = 125;  
+		rc.top = 150;  
 		rc.right  = 420;  
 		rc.bottom = 500;
 		cs = getModel()->GetLanguageString(IDS_TXT_PDMS_INTERFACE);
@@ -660,7 +683,7 @@ void CSubViewNetwork::Draw()
 
 
 		rc.left = 300;  
-		rc.top = 125;  
+		rc.top = 150;  
 		rc.right  = 660;  
 		rc.bottom = 500; 
 
@@ -669,7 +692,7 @@ void CSubViewNetwork::Draw()
 
 		/**********************IP config******************************/
 		rc.left = 130;  
-		rc.top = 150;  
+		rc.top = 175;  
 		rc.right  = 420;  
 		rc.bottom = 500;
 		cs = getModel()->GetLanguageString(IDS_TXT_PDMS_IP);
@@ -677,14 +700,14 @@ void CSubViewNetwork::Draw()
 
 
 		rc.left = 300;  
-		rc.top = 150;  
+		rc.top = 175;  
 		rc.right  = 660;  
 		rc.bottom = 500; 
 		DrawText(hdcMem,m_szIP,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 
 		rc.left = 130;  
-		rc.top = 175;  
+		rc.top = 200;  
 		rc.right  = 420;  
 		rc.bottom = 500;
 		cs = getModel()->GetLanguageString(IDS_TXT_PDMS_DEFAULTGATEW);
@@ -692,13 +715,13 @@ void CSubViewNetwork::Draw()
 
 
 		rc.left = 300;  
-		rc.top = 175;  
+		rc.top = 200;  
 		rc.right  = 660;  
 		rc.bottom = 500; 
 		DrawText(hdcMem,m_szGateway,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 		rc.left = 130;  
-		rc.top = 200;  
+		rc.top = 225;  
 		rc.right  = 420;  
 		rc.bottom = 500;
 		cs = getModel()->GetLanguageString(IDS_TXT_PDMS_SUBNETMASK);
@@ -706,13 +729,13 @@ void CSubViewNetwork::Draw()
 
 
 		rc.left = 300;  
-		rc.top = 200;  
+		rc.top = 225;  
 		rc.right  = 660;  
 		rc.bottom = 500; 
 		DrawText(hdcMem,m_szSubnet,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 		rc.left = 130;  
-		rc.top = 225;  
+		rc.top = 250;  
 		rc.right  = 420;  
 		rc.bottom = 500;
 		cs = getModel()->GetLanguageString(IDS_TXT_PDMS_DHCP);
@@ -720,7 +743,7 @@ void CSubViewNetwork::Draw()
 
 
 		rc.left = 300;  
-		rc.top = 225;  
+		rc.top = 250;  
 		rc.right  = 660;  
 		rc.bottom = 500; 
 		if(m_bDHCP)
@@ -732,7 +755,7 @@ void CSubViewNetwork::Draw()
 
 		//m_uiPort
 		rc.left = 130;  
-		rc.top = 250;  
+		rc.top = 275;  
 		rc.right  = 420;  
 		rc.bottom = 500;
 		cs = _T("Port:");
@@ -741,7 +764,7 @@ void CSubViewNetwork::Draw()
 
 
 		rc.left = 300;  
-		rc.top = 250;  
+		rc.top = 275;  
 		rc.right  = 660;  
 		rc.bottom = 500; 
 		cs.Format(_T("%d"), m_uiPort);
@@ -751,7 +774,7 @@ void CSubViewNetwork::Draw()
 	{
 		/**********************interface*********************/
 		rc.left = 130;  
-		rc.top = 125;  
+		rc.top = 150;  
 		rc.right  = 420;  
 		rc.bottom = 500;
 		cs = getModel()->GetLanguageString(IDS_TXT_PDMS_INTERFACE);
@@ -759,7 +782,7 @@ void CSubViewNetwork::Draw()
 
 
 		rc.left = 300;  
-		rc.top = 125;  
+		rc.top = 150;  
 		rc.right  = 660;  
 		rc.bottom = 500; 
 

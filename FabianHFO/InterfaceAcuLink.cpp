@@ -1067,7 +1067,26 @@ int CInterfaceAcuLink::setLanguage(UINT uiLang)
 // **************************************************************************
 // 
 // **************************************************************************
-void CInterfaceAcuLink::setGraphData(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2, SHORT iValSPO2)
+void CInterfaceAcuLink::setGraphDataV3(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2)
+{
+	//WaveRecord rWaveRecord
+	////in ring buffer von DLL schreiben
+	//if(pSetWaveRecord)
+	//{
+	//	int iRet=((*pSetWaveRecord)(iValVolume ,iValPressure ,iValFlow, iValCO2));
+	//	if(iRet!=0)
+	//	{
+	//		if(m_bShowAcuLinkError==true)
+	//		{
+	//			m_bShowAcuLinkError=false;
+	//			/*CStringW sz=_T("");
+	//			sz.Format(_T("ERROR acuLink SetGraphData: %d"), iRet);
+	//			theApp.getLog()->WriteLine(sz);*/
+	//		}
+	//	}
+	//}
+}
+void CInterfaceAcuLink::setGraphDataV4(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2, SHORT iValSPO2)
 {
 	//WaveRecord rWaveRecord
 	////in ring buffer von DLL schreiben

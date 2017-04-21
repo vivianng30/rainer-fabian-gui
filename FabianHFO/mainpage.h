@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50128 Version 5.0.1.28
+ * @date 2017-04-21
+ * @verbatim
+	- new acuLink protocol implemented -> acuLink version 4.x !
+ @endverbatim
+ *
  * @subsection ver50127 Version 5.0.1.27
  * @date 2017-04-13
  * @verbatim
