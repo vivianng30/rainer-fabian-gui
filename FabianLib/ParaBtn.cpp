@@ -1600,9 +1600,9 @@ void CParaBtn::OnLButtonUp(UINT nFlags, CPoint point)
 						m_bDrawWarning=false;
 					}
 				}
-				else if(m_btn.wID==IDC_BTN_PARA_FOT_PMEANHIGH)
+				else if(m_btn.wID==IDC_BTN_PARA_FOT_PEEPHIGH)
 				{
-					if(m_v.iValue>getModel()->getDATAHANDLER()->GetCurrentPManualMaxKey())
+					if(m_v.iValue>getModel()->getDATAHANDLER()->GetCurrentPeepMaxKey())
 					{
 						//m_bKeyValueAccepted=true;
 						/*if(GetParent())
@@ -1617,9 +1617,9 @@ void CParaBtn::OnLButtonUp(UINT nFlags, CPoint point)
 						m_bDrawWarning=false;
 					}
 				}
-				else if(m_btn.wID==IDC_BTN_PARA_FOT_PMEANLOW)
+				else if(m_btn.wID==IDC_BTN_PARA_FOT_PEEPLOW)
 				{
-					if(m_v.iValue>getModel()->getDATAHANDLER()->GetCurrentPManualMaxKey())
+					if(m_v.iValue>getModel()->getDATAHANDLER()->GetCurrentPeepMaxKey())
 					{
 						//m_bKeyValueAccepted=true;
 						/*if(GetParent())
@@ -2080,7 +2080,7 @@ void CParaBtn::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 					}
 					else if(m_btn.wID==IDC_BTN_PARA_FOT_PEEPHIGH)
 					{
-						if(m_v.iValue>getModel()->getDATAHANDLER()->GetCurrentPManualMaxKey())
+						if(m_v.iValue>getModel()->getDATAHANDLER()->GetCurrentPeepMaxKey())
 						{
 							m_bKeyValueAccepted=true;
 							/*if(GetParent())
@@ -2097,7 +2097,7 @@ void CParaBtn::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 					}
 					else if(m_btn.wID==IDC_BTN_PARA_FOT_PEEPLOW)
 					{
-						if(m_v.iValue>getModel()->getDATAHANDLER()->GetCurrentPManualMaxKey())
+						if(m_v.iValue>getModel()->getDATAHANDLER()->GetCurrentPeepMaxKey())
 						{
 							m_bKeyValueAccepted=true;
 							/*if(GetParent())

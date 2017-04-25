@@ -2040,46 +2040,55 @@ void CDataHandler::checkDemoLicense(eModule module)
 	{
 	case MOD_HFO:
 		{
+			DEBUGMSG(TRUE, (TEXT("checkDemoLicense MOD_HFO\r\n")));
 			checkDemoLicense_HFO();
 		}
 		break;
 	case MOD_NMODE:
 		{
+			DEBUGMSG(TRUE, (TEXT("checkDemoLicense MOD_NMODE\r\n")));
 			checkDemoLicense_NMODE();
 		}
 		break;
 	case MOD_VGUARANTY:
 		{
+			DEBUGMSG(TRUE, (TEXT("checkDemoLicense MOD_VGUARANTY\r\n")));
 			checkDemoLicense_VGUARANTY();
 		}
 		break;
 	case MOD_VLIMIT:
 		{
+			DEBUGMSG(TRUE, (TEXT("checkDemoLicense MOD_VLIMIT\r\n")));
 			checkDemoLicense_VLIMIT();
 		}
 		break;
 	case MOD_LUNGREC:
 		{
+			DEBUGMSG(TRUE, (TEXT("checkDemoLicense MOD_LUNGREC\r\n")));
 			checkDemoLicense_LUNGREC();
 		}
 		break;
 	case MOD_TREND:
 		{
+			DEBUGMSG(TRUE, (TEXT("checkDemoLicense MOD_TREND\r\n")));
 			checkDemoLicense_TREND();
 		}
 		break;
 	case MOD_THERAPY:
 		{
+			DEBUGMSG(TRUE, (TEXT("checkDemoLicense MOD_THERAPY\r\n")));
 			checkDemoLicense_THERAPY();
 		}
 		break;
 	case MOD_PRICO:
 		{
+			DEBUGMSG(TRUE, (TEXT("checkDemoLicense MOD_PRICO\r\n")));
 			checkDemoLicense_PRICO();
 		}
 		break;
 	case MOD_FOT:
 		{
+			DEBUGMSG(TRUE, (TEXT("checkDemoLicense MOD_FOT\r\n")));
 			checkDemoLicense_FOT();
 		}
 		break;
@@ -2389,46 +2398,55 @@ void CDataHandler::setDemoLicense(eModule module)
 	case MOD_HFO:
 		{
 			getModel()->getCONFIG()->SetHFOdemoTimestamp(dtCurrentTime);
+			DEBUGMSG(TRUE, (TEXT("setDemoLicense MOD_HFO\r\n")));
 		}
 		break;
 	case MOD_NMODE:
 		{
 			getModel()->getCONFIG()->SetNMODEdemoTimestamp(dtCurrentTime);
+			DEBUGMSG(TRUE, (TEXT("setDemoLicense MOD_NMODE\r\n")));
 		}
 		break;
 	case MOD_VGUARANTY:
 		{
 			getModel()->getCONFIG()->SetVGUARANTYdemoTimestamp(dtCurrentTime);
+			DEBUGMSG(TRUE, (TEXT("setDemoLicense MOD_VGUARANTY\r\n")));
 		}
 		break;
 	case MOD_VLIMIT:
 		{
 			getModel()->getCONFIG()->SetVLIMITdemoTimestamp(dtCurrentTime);
+			DEBUGMSG(TRUE, (TEXT("setDemoLicense MOD_VLIMIT\r\n")));
 		}
 		break;
 	case MOD_LUNGREC:
 		{
 			getModel()->getCONFIG()->SetLUNGRECdemoTimestamp(dtCurrentTime);
+			DEBUGMSG(TRUE, (TEXT("setDemoLicense MOD_LUNGREC\r\n")));
 		}
 		break;
 	case MOD_TREND:
 		{
 			getModel()->getCONFIG()->SetTRENDdemoTimestamp(dtCurrentTime);
+			DEBUGMSG(TRUE, (TEXT("setDemoLicense MOD_TREND\r\n")));
 		}
 		break;
 	case MOD_THERAPY:
 		{
 			getModel()->getCONFIG()->SetTHERAPYdemoTimestamp(dtCurrentTime);
+			DEBUGMSG(TRUE, (TEXT("setDemoLicense MOD_THERAPY\r\n")));
 		}
 		break;
 	case MOD_PRICO:
 		{
 			getModel()->getCONFIG()->SetPRICOdemoTimestamp(dtCurrentTime);
+			DEBUGMSG(TRUE, (TEXT("setDemoLicense MOD_PRICO\r\n")));
 		}
 		break;
 	case MOD_FOT:
 		{
 			getModel()->getCONFIG()->SetFOTdemoTimestamp(dtCurrentTime);
+			DEBUGMSG(TRUE, (TEXT("setDemoLicense MOD_FOT\r\n")));
 		}
 		break;
 	default:
@@ -2454,6 +2472,7 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			if(bReset)
 			{
 				getModel()->getCONFIG()->SetHFOdemoTimestamp(dtLicenseTimestamp);
+				DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_HFO\r\n")));
 			}
 		}
 		break;
@@ -2463,6 +2482,7 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			if(bReset)
 			{
 				getModel()->getCONFIG()->SetNMODEdemoTimestamp(dtLicenseTimestamp);
+				DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_NMODE\r\n")));
 			}
 		}
 		break;
@@ -2472,6 +2492,7 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			if(bReset)
 			{
 				getModel()->getCONFIG()->SetVGUARANTYdemoTimestamp(dtLicenseTimestamp);
+				DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_VGUARANTY\r\n")));
 			}
 		}
 		break;
@@ -2481,6 +2502,7 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			if(bReset)
 			{
 				getModel()->getCONFIG()->SetVLIMITdemoTimestamp(dtLicenseTimestamp);
+				DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_VLIMIT\r\n")));
 			}
 		}
 		break;
@@ -2490,6 +2512,7 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			if(bReset)
 			{
 				getModel()->getCONFIG()->SetLUNGRECdemoTimestamp(dtLicenseTimestamp);
+				DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_LUNGREC\r\n")));
 			}
 		}
 		break;
@@ -2499,6 +2522,7 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			if(bReset)
 			{
 				getModel()->getCONFIG()->SetTRENDdemoTimestamp(dtLicenseTimestamp);
+				DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_TREND\r\n")));
 			}
 		}
 		break;
@@ -2508,6 +2532,7 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			if(bReset)
 			{
 				getModel()->getCONFIG()->SetTHERAPYdemoTimestamp(dtLicenseTimestamp);
+				DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_THERAPY\r\n")));
 			}
 		}
 		break;
@@ -2517,6 +2542,7 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			if(bReset)
 			{
 				getModel()->getCONFIG()->SetPRICOdemoTimestamp(dtLicenseTimestamp);
+				DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_PRICO\r\n")));
 			}
 		}
 		break;
@@ -2526,6 +2552,7 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			if(bReset)
 			{
 				getModel()->getCONFIG()->SetFOTdemoTimestamp(dtLicenseTimestamp);
+				DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_FOT\r\n")));
 			}
 		}
 		break;
@@ -3518,6 +3545,8 @@ void CDataHandler::enableFOTLicense()
 {
 	m_bFOTLicenseAvailable=true;
 	theApp.getLog()->WriteLine(_T("-enableFOTmodule"));
+
+	getModel()->initFOTthread();
 }
 void CDataHandler::disableFOTLicense()
 {
@@ -3525,6 +3554,8 @@ void CDataHandler::disableFOTLicense()
 	theApp.getLog()->WriteLine(_T("-disableFOTmodule"));
 
 	delDemoLicense(MOD_FOT,false);
+
+	getModel()->deinitFOTthread();
 }
 
 bool CDataHandler::isFOTDemoLicAvailable()
@@ -3577,6 +3608,8 @@ void CDataHandler::enablePRICOLicense()
 	m_bPRICOLicenseAvailable=true;
 	theApp.getLog()->WriteLine(_T("-enablePRICOmodule"));
 
+	getModel()->initPRICOthread();
+
 }
 void CDataHandler::disablePRICOLicense()
 {
@@ -3584,6 +3617,8 @@ void CDataHandler::disablePRICOLicense()
 	theApp.getLog()->WriteLine(_T("-disablePRICOmodule"));
 
 	delDemoLicense(MOD_PRICO,false);
+
+	getModel()->deinitPRICOthread();
 
 }
 bool CDataHandler::isPRICODemoLicAvailable()
@@ -17606,7 +17641,7 @@ DWORD CDataHandler::getRemainCO2PumpTime()
 	return m_dwRemainCO2PumpTime;
 }
 
-double CDataHandler::getAmpCorFactor(BYTE iFreq)
-{
-	return getModel()->getCONFIG()->getAmpCorFactor(iFreq);
-}
+//double CDataHandler::getAmpCorFactor(BYTE iFreq)
+//{
+//	return getModel()->getCONFIG()->getAmpCorFactor(iFreq);
+//}

@@ -499,11 +499,11 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 
 	if(getDATAHANDLER()->isPRICOLicenseAvailable()==true)
 	{
-		PRICOTHR=CThreadPRICO::getInstance();
+		initPRICOthread();
 	}
 	if(getDATAHANDLER()->isFOTLicenseAvailable()==true)
 	{
-		FOTTHR=CThreadFOT::getInstance();
+		initFOTthread();
 	}
 	if(getDATAHANDLER()->isLUNGRECLicenseAvailable()==false && getCONFIG()->GetParaDataFREQ_REC()!=0)
 	{
@@ -541,6 +541,45 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_STARTUP);
 }
 
+void CMVModel::initPRICOthread()
+{
+	PRICOTHR=CThreadPRICO::getInstance();
+}
+void CMVModel::deinitPRICOthread()
+{
+	bool bPRICOrunning=false;
+	if(getPRICOThread())
+	{
+		if(getPRICOThread()->isPRICOalgorithmRunning())
+		{
+			bPRICOrunning=true;
+		}
+	}
+	if(bPRICOrunning )
+	{
+		getDATAHANDLER()->setPRICOoff();
+	}
+	Sleep(200);
+
+	if(PRICOTHR)
+	{
+		PRICOTHR->destroyInstance();
+		PRICOTHR=NULL;
+	}
+}
+
+void CMVModel::initFOTthread()
+{
+	FOTTHR=CThreadFOT::getInstance();
+}
+void CMVModel::deinitFOTthread()
+{
+	if(FOTTHR)
+	{
+		FOTTHR->destroyInstance();
+		FOTTHR=NULL;
+	}
+}
 void CMVModel::initSerialController()
 {
 	EnterCriticalSection(&m_csSerial);

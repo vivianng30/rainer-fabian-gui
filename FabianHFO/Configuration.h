@@ -898,8 +898,8 @@ public:
 	COleDateTime GetHFOdemoTimestamp();
 	void SetHFOdemoTimestamp(COleDateTime dateTime);
 
-	void readAmpCorFactor();
-	double getAmpCorFactor(BYTE iFreq);
+	/*void readAmpCorFactor();
+	double getAmpCorFactor(BYTE iFreq);*/
 
 private:
 //singleton

@@ -323,6 +323,12 @@ public:
 	void writeLEAKCOMPENSATIONToLog();
 	void writeALTITUDEToLog();
 
+	void initFOTthread();
+	void deinitFOTthread();
+
+	void initPRICOthread();
+	void deinitPRICOthread();
+
 protected:
 	void checkUniqueID();
 	void setNetworkAddressAsUniqueID();

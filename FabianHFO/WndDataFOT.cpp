@@ -483,7 +483,7 @@ BOOL CWndDataFOT::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 			}
 			m_pcPara_FOT_PEEPLow->ShowWindow(SW_SHOW);
 
-			if(fv.iValue>getModel()->getDATAHANDLER()->GetCurrentPManualMaxKey())
+			if(fv.iValue>getModel()->getDATAHANDLER()->GetCurrentPeepMaxKey())
 			{
 				m_pcPara_FOT_PEEPLow->SetWarning();
 			}
@@ -546,7 +546,7 @@ BOOL CWndDataFOT::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 				m_pcPara_FOT_PEEPHigh->ShowWindow(SW_HIDE);
 			}
 
-			if(fv.iValue>getModel()->getDATAHANDLER()->GetCurrentPManualMaxKey())
+			if(fv.iValue>getModel()->getDATAHANDLER()->GetCurrentPeepMaxKey())
 			{
 				m_pcPara_FOT_PEEPHigh->SetWarning();
 			}
@@ -1246,19 +1246,22 @@ void CWndDataFOT::Draw(bool bStatic)
 								break;
 							case RETRY_FSI:
 								{
-									csText=getModel()->GetLanguageString(IDS_TXT_FOT_FSI);
+									csText=getModel()->GetLanguageString(IDS_TXT_FOT_POORQUALITY);
+									//csText=getModel()->GetLanguageString(IDS_TXT_FOT_FSI);
 									//csText=_T("FSI high");
 								}
 								break;
 							case RETRY_RESISTANCE:
 								{
-									csText=getModel()->GetLanguageString(IDS_TXT_FOT_RESISTANCE);
+									csText=getModel()->GetLanguageString(IDS_TXT_FOT_POORQUALITY);
+									//csText=getModel()->GetLanguageString(IDS_TXT_FOT_RESISTANCE);
 									//csText=_T("RESISTANCE low");
 								}
 								break;
 							case RETRY_REACTANCE:
 								{
-									csText=getModel()->GetLanguageString(IDS_TXT_FOT_REACTANCE);
+									csText=getModel()->GetLanguageString(IDS_TXT_FOT_POORQUALITY);
+									//csText=getModel()->GetLanguageString(IDS_TXT_FOT_REACTANCE);
 									//csText=_T("REACTANCE out of range");
 								}
 								break;
@@ -1584,19 +1587,22 @@ void CWndDataFOT::Draw(bool bStatic)
 								break;
 							case RETRY_FSI:
 								{
-									csText=getModel()->GetLanguageString(IDS_TXT_FOT_FSI);
+									csText=getModel()->GetLanguageString(IDS_TXT_FOT_POORQUALITY);
+									//csText=getModel()->GetLanguageString(IDS_TXT_FOT_FSI);
 									//csText=_T("FSI high");
 								}
 								break;
 							case RETRY_RESISTANCE:
 								{
-									csText=getModel()->GetLanguageString(IDS_TXT_FOT_RESISTANCE);
+									csText=getModel()->GetLanguageString(IDS_TXT_FOT_POORQUALITY);
+									//csText=getModel()->GetLanguageString(IDS_TXT_FOT_RESISTANCE);
 									//csText=_T("RESISTANCE low");
 								}
 								break;
 							case RETRY_REACTANCE:
 								{
-									csText=getModel()->GetLanguageString(IDS_TXT_FOT_REACTANCE);
+									csText=getModel()->GetLanguageString(IDS_TXT_FOT_POORQUALITY);
+									//csText=getModel()->GetLanguageString(IDS_TXT_FOT_REACTANCE);
 									//csText=_T("REACTANCE out of range");
 								}
 								break;
@@ -1862,18 +1868,21 @@ void CWndDataFOT::drawPIPmax()
 			m_pcPara_FOT_PmeanHigh->GetValue(&fv);
 		WORD iPMEANhigh=fv.iValue;
 
+		WORD iHFAMPL=0;
+		if(bVGon)
+		{
+			iHFAMPL=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLmaxPara()/2;
+		}
+		else
+		{
+			iHFAMPL=getModel()->getFOTThread()->getOriginHFAMPLPara()/2;
+		}
+
 		//calculate max PIP
 		SHORT iMaxPIP=0;
 		if(iSteps==1)
 		{
-			if(bVGon)
-			{
-				iMaxPIP=iPMEANlow+(getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLmaxPara()/2);
-			}
-			else
-			{
-				iMaxPIP=iPMEANlow+(getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLPara()/2);
-			}
+			iMaxPIP=iPMEANlow+iHFAMPL;
 		}
 		else
 		{
@@ -1881,14 +1890,7 @@ void CWndDataFOT::drawPIPmax()
 				m_pcPara_FOT_PmeanHigh->GetValue(&fv);
 			WORD iPMEANEND=fv.iValue;
 
-			if(bVGon)
-			{
-				iMaxPIP=iPMEANEND+(getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLmaxPara()/2);
-			}
-			else
-			{
-				iMaxPIP=iPMEANEND+(getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLPara()/2);
-			}
+			iMaxPIP=iPMEANEND+iHFAMPL;
 		}
 
 		rc.top = 3;  

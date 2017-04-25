@@ -885,12 +885,10 @@ void CThreadFOT::decreaseSequence()
 		//DEBUGMSG(TRUE, (TEXT("CThreadFOT::continueWithSequence()\r\n")));
 		if(m_bFOTconvRunning)
 		{
-			//setParaFOTCONV(false);
 			setDecreaseParaFOTCONV(true);
 		}
 		else
 		{
-			//setParaFOTHFO(false);
 			setDecreaseParaFOTHFO(true);
 		}
 		setFOTstate(FOT_VENTDELAY);
@@ -901,20 +899,17 @@ void CThreadFOT::decreaseSequence()
 	}
 	else if(getFOTstate()==FOT_VENTDELAY)
 	{
-		
 		//DEBUGMSG(TRUE, (TEXT("CThreadFOT::continueWithSequence()\r\n")));
 		if(m_bFOTconvRunning)
 		{
-			//setParaFOTCONV(false);
 			setDecreaseParaFOTCONV(false);
 		}
 		else
 		{
-			//setParaFOTHFO(false);
 			setDecreaseParaFOTHFO(false);
 		}
-		//setFOTstate(FOT_VENTDELAY);
-		m_iCountFOTimer=1;
+		//m_iCountFOTimer=1;
+		m_iCountFOTimer=getModel()->getCONFIG()->getFOTventDelaytime();
 
 		//DEBUGMSG(TRUE, (TEXT("CThreadFOT g_eventFOT.SetEvent()\r\n")));
 		g_eventFOT.SetEvent();

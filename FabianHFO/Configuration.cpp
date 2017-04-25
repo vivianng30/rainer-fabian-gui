@@ -4028,7 +4028,7 @@ void CConfiguration::LoadSettings()
 	m_bParaDataVGarantOn_IPPV=m_bParaDataVGarantOn_TRIGGER;
 #endif
 
-	readAmpCorFactor();
+	//readAmpCorFactor();
 
 	m_wOldConfigVersion=m_iConfigVersion;
 }
@@ -6649,6 +6649,9 @@ void CConfiguration::SetCurPressureRiseCtrl(eCurveForm form)
 		}
 		break;
 	}
+
+	if(AfxGetApp() != NULL)
+		AfxGetApp()->GetMainWnd()->PostMessage(WM_SYSTEMSTATE_CHANGED);
 }
 eCurveForm CConfiguration::GetCurPressureRiseCtrl()
 {
@@ -11288,40 +11291,40 @@ void CConfiguration::SetHFOdemoTimestamp(COleDateTime dateTime)
 	theApp.getLog()->WriteLine(szTxt);
 }
 
-void CConfiguration::readAmpCorFactor()
-{
-	if(CTlsFile::Exists(AMPCORFACTORINI))
-	{
-		//CStringW csTemp=_T("");
-		CString szFactor=_T("");
-		CStringW szFreq=_T("");
-		BYTE byFreq=5;
-		for(int i=0;i<16;i++)
-		{
-			szFreq.Format(_T("%d"),i+5);
-			szFactor=CTlsIniFile::ReadIniStr(_T("FACTOR"), szFreq, _T("1"), AMPCORFACTORINI);
-			UINT iTest= _wtoi(szFactor);
-
-			dbBufAmpCorFactor[i] = (double)(_wtoi(szFactor))/1000;
-
-			//csTemp.Format(_T("factor %s %d:%0.3f\r\n"), szFreq,i,dbBufAmpCorFactor[i]);
-			//DEBUGMSG(TRUE, (csTemp));
-		}
-	}
-	else
-	{
-		for(int i=0;i<16;i++)
-		{
-			dbBufAmpCorFactor[i] = 1;
-
-			theApp.getLog()->WriteLine(_T("### ERROR: AMPCORFACTORINI"));
-		}
-	}
-}
-double CConfiguration::getAmpCorFactor(BYTE iFreq)
-{
-	if(iFreq<5 || iFreq>20)
-		iFreq=5;
-	
-	return dbBufAmpCorFactor[iFreq-5];
-}
+//void CConfiguration::readAmpCorFactor()
+//{
+//	if(CTlsFile::Exists(AMPCORFACTORINI))
+//	{
+//		//CStringW csTemp=_T("");
+//		CString szFactor=_T("");
+//		CStringW szFreq=_T("");
+//		BYTE byFreq=5;
+//		for(int i=0;i<16;i++)
+//		{
+//			szFreq.Format(_T("%d"),i+5);
+//			szFactor=CTlsIniFile::ReadIniStr(_T("FACTOR"), szFreq, _T("1"), AMPCORFACTORINI);
+//			UINT iTest= _wtoi(szFactor);
+//
+//			dbBufAmpCorFactor[i] = (double)(_wtoi(szFactor))/1000;
+//
+//			//csTemp.Format(_T("factor %s %d:%0.3f\r\n"), szFreq,i,dbBufAmpCorFactor[i]);
+//			//DEBUGMSG(TRUE, (csTemp));
+//		}
+//	}
+//	else
+//	{
+//		for(int i=0;i<16;i++)
+//		{
+//			dbBufAmpCorFactor[i] = 1;
+//
+//			theApp.getLog()->WriteLine(_T("### ERROR: AMPCORFACTORINI"));
+//		}
+//	}
+//}
+//double CConfiguration::getAmpCorFactor(BYTE iFreq)
+//{
+//	if(iFreq<5 || iFreq>20)
+//		iFreq=5;
+//	
+//	return dbBufAmpCorFactor[iFreq-5];
+//}

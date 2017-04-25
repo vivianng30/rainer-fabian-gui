@@ -65,6 +65,8 @@ public:
 	virtual bool SetNextFocus();
 	virtual bool SetPrevFocus();
 
+	void SetViewFocusWndParaSettings();
+
 	void ShowParaSettings(bool bState);
 	void ShowParaBtn(bool bVentModeChanged=false);
 	void HideParaBtn();

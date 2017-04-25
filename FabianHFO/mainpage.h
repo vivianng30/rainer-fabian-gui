@@ -11,6 +11,16 @@
  * @date 2017-04-21
  * @verbatim
 	- new acuLink protocol implemented -> acuLink version 4.x !
+	- AmplitudeCorrectionFactor excluded
+	- Version AcuInstall.ini increased (ITEM-57)
+	- text E-Flow = I-Flow changed (ITEM-58)
+	- enabling FOT and PRICO license works now (ITEM-59)
+	- PIPmax in FOT displayed correct (ITEM-60)
+	- stabilisation period starts always when return is initiated (ITEM-61)
+	- FOT text chganged (ITEM-63)
+	- keylock FOT Peep parameters changed (ITEM-67)
+	- E-Flow=I-Flow text and slider hidden when RISETIME is selected (ITEM-66)
+	- changing I-Flow / Risetime updates the E-Flow parameter button in quick setrtings (ITEM-65)
  @endverbatim
  *
  * @subsection ver50127 Version 5.0.1.27

@@ -221,7 +221,7 @@ void CParaBtn_FOTPEEPSTART::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 				{
 					m_v.iValue=dTemp;
 
-					if(dTemp<=getModel()->getDATAHANDLER()->GetCurrentPManualMaxKey())
+					if(dTemp<=getModel()->getDATAHANDLER()->GetCurrentPeepMaxKey())
 					{
 						m_bKeyValueAccepted=false;
 						/*if(m_bDrawKey)
@@ -274,7 +274,8 @@ void CParaBtn_FOTPEEPSTART::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 						}
 						else
 						{
-							if(dTemp>getModel()->getDATAHANDLER()->GetCurrentPManualMaxKey())
+							//if(dTemp>getModel()->getDATAHANDLER()->GetCurrentPManualMaxKey())
+							if(dTemp>getModel()->getDATAHANDLER()->GetCurrentPeepMaxKey())
 							{
 								if(m_bKeyValueAccepted==false)
 								{
@@ -309,7 +310,7 @@ void CParaBtn_FOTPEEPSTART::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 						}
 						else
 						{
-							if(dTemp>getModel()->getDATAHANDLER()->GetCurrentPManualMaxKey())
+							if(dTemp>getModel()->getDATAHANDLER()->GetCurrentPeepMaxKey())
 							{
 								if(m_bKeyValueAccepted==false)
 								{

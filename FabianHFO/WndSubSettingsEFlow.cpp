@@ -150,6 +150,11 @@ void CWndSubSettingsEFlow::Initialize()
 	m_slider->SetMargin( 5, 0, 6, 0 );
 	m_slider->DrawFocusRect( TRUE );
 
+	if(getModel()->getCONFIG()->GetCurPressureRiseCtrl()!=CURVE_IFLOW)
+	{
+		m_slider->ShowWindow(SW_HIDE);
+	}
+
 	/*if(getModel()->getDATAHANDLER()->activeModeIsIPPV())
 	{
 		m_iValue=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWPara_IPPV();
@@ -339,54 +344,7 @@ void CWndSubSettingsEFlow::Draw()
 	SelectObject(hdcMem,cbrRound);
 	RoundRect(hdcMem, 210, 70, 590, 400,20,20);
 
-	if(false==getModel()->getCONFIG()->IsEFLOWequalILFOW())
-	{
-		MoveToEx(hdcMem, 300, 103, NULL);
-		LineTo(hdcMem, 435, 103);
-
-		MoveToEx(hdcMem, 300, 185, NULL);
-		LineTo(hdcMem, 435, 185);
-
-		rc.left = 500;  
-		rc.top = 103;  
-		rc.right  = 600;  
-		rc.bottom = 185;
-		DrawText(hdcMem,getModel()->GetLanguageString(IDS_UNIT_LMIN),-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
-
-		rc.left = 210;  
-		rc.top = 200;//225;  
-		rc.right  = 590;  
-		rc.bottom = 260;
-
-		if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-		{
-			m_iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_IPPV();
-			m_iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_IPPV();
-		}
-		else
-		{
-			m_iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_TRIGGER();
-			m_iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_TRIGGER();
-		}
-
-		CStringW sz=_T("");
-		sz.Format(_T("%s: %0.0f - %0.0f %s"),
-			getModel()->GetLanguageString(IDS_TXT_RANGE),
-			CTlsFloat::Round(((double)m_iLowerLimit)/1000, 0),
-			CTlsFloat::Round(((double)m_iUpperLimit)/1000, 0),
-			getModel()->GetLanguageString(IDS_UNIT_LMIN));
-
-		DrawText(hdcMem,sz,-1,&rc,DT_TOP|DT_CENTER|DT_SINGLELINE);
-
-		SelectObject(hdcMem,g_hf10AcuBold);
-		rc.left = 210;  
-		rc.top = 223;//225;  
-		rc.right  = 590;  
-		rc.bottom = 260;
-		DrawText(hdcMem,_T("(default: 6 l/min)"),-1,&rc,DT_TOP|DT_CENTER|DT_SINGLELINE);
-
-	}
-	else
+	if(true==getModel()->getCONFIG()->IsEFLOWequalILFOW() && getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
 	{
 		rc.left = 435;
 		rc.top = 103;  
@@ -443,6 +401,52 @@ void CWndSubSettingsEFlow::Draw()
 				m_pcEFLOWWarning->Draw(hdcMem,400,155);
 		}
 	}
+	else
+	{
+		MoveToEx(hdcMem, 300, 103, NULL);
+		LineTo(hdcMem, 435, 103);
+
+		MoveToEx(hdcMem, 300, 185, NULL);
+		LineTo(hdcMem, 435, 185);
+
+		rc.left = 500;  
+		rc.top = 103;  
+		rc.right  = 600;  
+		rc.bottom = 185;
+		DrawText(hdcMem,getModel()->GetLanguageString(IDS_UNIT_LMIN),-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
+
+		rc.left = 210;  
+		rc.top = 200;//225;  
+		rc.right  = 590;  
+		rc.bottom = 260;
+
+		if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+		{
+			m_iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_IPPV();
+			m_iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_IPPV();
+		}
+		else
+		{
+			m_iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_TRIGGER();
+			m_iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_TRIGGER();
+		}
+
+		CStringW sz=_T("");
+		sz.Format(_T("%s: %0.0f - %0.0f %s"),
+			getModel()->GetLanguageString(IDS_TXT_RANGE),
+			CTlsFloat::Round(((double)m_iLowerLimit)/1000, 0),
+			CTlsFloat::Round(((double)m_iUpperLimit)/1000, 0),
+			getModel()->GetLanguageString(IDS_UNIT_LMIN));
+
+		DrawText(hdcMem,sz,-1,&rc,DT_TOP|DT_CENTER|DT_SINGLELINE);
+
+		SelectObject(hdcMem,g_hf10AcuBold);
+		rc.left = 210;  
+		rc.top = 223;//225;  
+		rc.right  = 590;  
+		rc.bottom = 260;
+		DrawText(hdcMem,_T("(default: 6 l/min)"),-1,&rc,DT_TOP|DT_CENTER|DT_SINGLELINE);
+	}
 
 	SelectObject(hdcMem,g_hf11AcuBold);
 	rc.left = 320;  
@@ -452,12 +456,14 @@ void CWndSubSettingsEFlow::Draw()
 	//DrawText(hdcMem,_T("shortcut in settings menu"),-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
 	DrawText(hdcMem,getModel()->GetLanguageString(IDS_TXT_EFLOW_SHORTCUT),-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
 
-	rc.left = 200;  
-	rc.top = 280;  
-	rc.right  = 380;  
-	rc.bottom = 380;
-	DrawText(hdcMem,_T("(E-Flow=I-Flow)"),-1,&rc,DT_TOP|DT_RIGHT|DT_SINGLELINE);
-
+	if(getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
+	{
+		rc.left = 200;  
+		rc.top = 280;  
+		rc.right  = 380;  
+		rc.bottom = 380;
+		DrawText(hdcMem,_T("E-Flow = I-Flow"),-1,&rc,DT_TOP|DT_RIGHT|DT_SINGLELINE);
+	}
 
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,hdcMem,0,0,SRCCOPY);
 

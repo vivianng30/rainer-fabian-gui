@@ -1236,21 +1236,21 @@ enum eLanguage {
 #define DEMO_VLIMIT_MONTH_8				0x030F
 #define DEMO_VLIMIT_YEAR_16				0x0310
 
-#define DEMO_LUNGREC_DAY_8				0x0311
-#define DEMO_LUNGREC_MONTH_8			0x0312
-#define DEMO_LUNGREC_YEAR_16			0x0313
+#define DEMO_LUNGREC_DAY_8				0x0312
+#define DEMO_LUNGREC_MONTH_8			0x0313
+#define DEMO_LUNGREC_YEAR_16			0x0314
 
-#define DEMO_TREND_DAY_8				0x0315
-#define DEMO_TREND_MONTH_8				0x0316
-#define DEMO_TREND_YEAR_16				0x0317
+#define DEMO_TREND_DAY_8				0x0316
+#define DEMO_TREND_MONTH_8				0x0317
+#define DEMO_TREND_YEAR_16				0x0318
 
-#define DEMO_THERAPY_DAY_8				0x0319
-#define DEMO_THERAPY_MONTH_8			0x031A
-#define DEMO_THERAPY_YEAR_16			0x031B
+#define DEMO_THERAPY_DAY_8				0x031A
+#define DEMO_THERAPY_MONTH_8			0x031B
+#define DEMO_THERAPY_YEAR_16			0x031C
 
-#define DEMO_PRICO_DAY_8				0x031D
-#define DEMO_PRICO_MONTH_8				0x031E
-#define DEMO_PRICO_YEAR_16				0x031F
+#define DEMO_PRICO_DAY_8				0x031E
+#define DEMO_PRICO_MONTH_8				0x031F
+#define DEMO_PRICO_YEAR_16				0x0320
 
 //letzte Adresse für Configuration 0x1EFB !!!!!!!!!!!!!!!!!!!!!!!
 //ACHTUNG !!!!! wenn hier neue Daten eingefügt werden -> DefaultFactorySettings beachten!!!

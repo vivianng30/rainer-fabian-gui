@@ -1798,8 +1798,9 @@ void CViewParaBtn::Show()
 			break;
 		}
 
-		if(AfxGetApp())
-			AfxGetApp()->GetMainWnd()->SetFocus();
+		SetViewFocus();
+		/*if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->SetFocus();*/
 	}
 	else
 	{
@@ -1992,6 +1993,54 @@ bool CViewParaBtn::SetPrevFocus()
 	return true;
 }
 
+void CViewParaBtn::SetViewFocusWndParaSettings()
+{
+	switch(getModel()->getCONFIG()->GetLastSelectedParaViewBtns())
+	{
+	case IDC_BTN_PARA_MANBREATH:
+		{
+			if(m_pcWndParaSettings)
+				m_pcWndParaSettings->SetViewFocus(IDC_BTN_PARA_MANBREATH);
+		}
+		break;
+	case IDC_BTN_PARA_FLUSHTIME:
+		{
+			if(m_pcWndParaSettings)
+				m_pcWndParaSettings->SetViewFocus(IDC_BTN_PARA_FLUSHTIME);
+		}
+		break;
+	case IDC_BTN_PARA_BPM_REC:
+		{
+			if(m_pcWndParaSettings)
+				m_pcWndParaSettings->SetViewFocus(IDC_BTN_PARA_BPM_REC);
+		}
+		break;
+	case IDC_BTN_PARA_ABORTPSV:
+		{
+			if(m_pcWndParaSettings)
+				m_pcWndParaSettings->SetViewFocus(IDC_BTN_PARA_ABORTPSV);
+		}
+		break;
+	case IDC_BTN_PARA_EFLOW:
+		{
+			if(m_pcWndParaSettings)
+				m_pcWndParaSettings->SetViewFocus(IDC_BTN_PARA_EFLOW);
+		}
+		break;
+	case IDC_BTN_PARA_PCURVE:
+		{
+			if(m_pcWndParaSettings)
+				m_pcWndParaSettings->SetViewFocus(IDC_BTN_PARA_PCURVE);
+		}
+		break;
+	default:
+		{
+			if(m_pcWndParaSettings)
+				m_pcWndParaSettings->SetViewFocus(IDC_BTN_PARA_MANBREATH);
+		}
+		break;
+	}
+}
 /**=================================================================================================
  * \fn void CViewParaBtn::SetViewFocus()
  *
@@ -2004,51 +2053,7 @@ void CViewParaBtn::SetViewFocus()
 {
 	if(m_bSettingsActive)
 	{
-		switch(getModel()->getCONFIG()->GetLastSelectedParaViewBtns())
-		{
-		case IDC_BTN_PARA_MANBREATH:
-			{
-				if(m_pcWndParaSettings)
-					m_pcWndParaSettings->SetViewFocus(IDC_BTN_PARA_MANBREATH);
-			}
-			break;
-		case IDC_BTN_PARA_FLUSHTIME:
-			{
-				if(m_pcWndParaSettings)
-					m_pcWndParaSettings->SetViewFocus(IDC_BTN_PARA_FLUSHTIME);
-			}
-			break;
-		case IDC_BTN_PARA_BPM_REC:
-			{
-				if(m_pcWndParaSettings)
-					m_pcWndParaSettings->SetViewFocus(IDC_BTN_PARA_BPM_REC);
-			}
-			break;
-		case IDC_BTN_PARA_ABORTPSV:
-			{
-				if(m_pcWndParaSettings)
-					m_pcWndParaSettings->SetViewFocus(IDC_BTN_PARA_ABORTPSV);
-			}
-			break;
-		case IDC_BTN_PARA_EFLOW:
-			{
-				if(m_pcWndParaSettings)
-					m_pcWndParaSettings->SetViewFocus(IDC_BTN_PARA_EFLOW);
-			}
-			break;
-		case IDC_BTN_PARA_PCURVE:
-			{
-				if(m_pcWndParaSettings)
-					m_pcWndParaSettings->SetViewFocus(IDC_BTN_PARA_PCURVE);
-			}
-			break;
-		default:
-			{
-				if(m_pcWndParaSettings)
-					m_pcWndParaSettings->SetViewFocus(IDC_BTN_PARA_MANBREATH);
-			}
-			break;
-		}
+		SetViewFocusWndParaSettings();
 		return;
 	}
 
@@ -11367,8 +11372,21 @@ void CViewParaBtn::NotifyEvent(CMVEvent* pEvent)
 			CMVEventControl* pCtrlEvent = (CMVEventControl*)pEvent;
 			switch(pCtrlEvent->GetEventType())
 			{
+			case CMVEventControl::EV_CONTROL_SYSTEMSTATE_CHANGED:
+				{
+					try
+					{
+						Show();
+					}
+					catch (...)
+					{
+						CString szError=_T("");
+						szError.Format(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_CONTROL_SYSTEMSTATE_CHANGED error: #%d"),GetLastError());
+						theApp.ReportException(szError);
+					}
+				}
+				break;
 			case CMVEventControl::EV_CONTROL_FLOWSENSORSTATE:
-			case CMVEventControl::EV_CONTROL_O2SENSORSTATE:
 				{
 					try
 					{
@@ -11382,7 +11400,22 @@ void CViewParaBtn::NotifyEvent(CMVEvent* pEvent)
 						szError.Format(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_CONTROL_FLOWSENSORSTATE error: #%d"),GetLastError());
 						theApp.ReportException(szError);
 					}
-					
+				}
+				break;
+			case CMVEventControl::EV_CONTROL_O2SENSORSTATE:
+				{
+					try
+					{
+						m_bViewPraBtnShown=false;
+						ShowParaBtn(false);
+						m_bViewPraBtnShown=true;
+					}
+					catch (...)
+					{
+						CString szError=_T("");
+						szError.Format(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_CONTROL_O2SENSORSTATE error: #%d"),GetLastError());
+						theApp.ReportException(szError);
+					}
 				}
 				break;
 			case CMVEventControl::EV_CONTROL_POWERSTATE_CHANGED:
