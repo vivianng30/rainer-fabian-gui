@@ -82,7 +82,7 @@
 #define US_CHAR		(unsigned char)0x1F
 
 //acuLink Arrays
-//#define WM_ACULINK_SHUTDOWN		WM_USER + 0x4000	//!< window message for shutdown acuLink
+#define WM_ACULINK_SHUTDOWN		WM_USER + 0x4000	//!< window message for shutdown acuLink
 
 /**
 *	\def ALINK_MSMNT_ARRAY 

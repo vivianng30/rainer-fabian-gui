@@ -60,14 +60,7 @@ void CWndServiceNetwork::Init()
 
 	CStringW szFile=_T("");
 
-	if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
-	{
-		szFile=_T("\\FFSDISK\\ACULINK\\V3\\")+szLicenseFile;
-	}
-	else
-	{
-		szFile=_T("\\FFSDISK\\ACULINK\\V4\\")+szLicenseFile;
-	}
+	szFile=_T("\\FFSDISK\\")+szLicenseFile;
 
 	if(CTlsFile::Exists(szFile))
 	{
@@ -330,51 +323,25 @@ void CWndServiceNetwork::Draw()
 	
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-	if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
+	if(false==CTlsFile::Exists(_T("\\FFSDISK\\AcuLink.exe")))
 	{
-		if(false==CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink.exe")))
-		{
-			cs = _T("Installation: #001");
-		}
-		else if(false==CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink_DLL.dll")))
-		{
-			cs = _T("Installation: #002");
-		}
-		else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_NOPDMS)
-		{
-			cs = _T("Installation: #003");
-		}
-		else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL)
-		{
-			cs = _T("Installation: #004");
-		}
-		else
-		{
-			cs = _T("Installation: ok");
-		}
+		cs = _T("Installation: #001");
+	}
+	else if(false==CTlsFile::Exists(_T("\\FFSDISK\\AcuLink_DLL.dll")))
+	{
+		cs = _T("Installation: #002");
+	}
+	else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_NOPDMS)
+	{
+		cs = _T("Installation: #003");
+	}
+	else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL)
+	{
+		cs = _T("Installation: #004");
 	}
 	else
 	{
-		if(false==CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V4\\AcuLink.exe")))
-		{
-			cs = _T("Installation: #001");
-		}
-		else if(false==CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V4\\AcuLinkV4_DLL.dll")))
-		{
-			cs = _T("Installation: #002");
-		}
-		else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_NOPDMS)
-		{
-			cs = _T("Installation: #003");
-		}
-		else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL)
-		{
-			cs = _T("Installation: #004");
-		}
-		else
-		{
-			cs = _T("Installation: ok");
-		}
+		cs = _T("Installation: ok");
 	}
 
 	

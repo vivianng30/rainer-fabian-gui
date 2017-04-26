@@ -702,24 +702,13 @@ void CMVModel::writeMainboardVersionToLog()
 }
 bool CMVModel::initAcuLink()
 {
-	if(getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
-	{
-		return initAcuLink_V3();
-	}
-	else
-	{
-		return initAcuLink_V4();
-	}
-}
-bool CMVModel::initAcuLink_V3()
-{
 	CStringW szLicenseFile=_T("ML");
 	szLicenseFile+=GetUniqueID();
 	szLicenseFile+=_T(".mlic");
-	CStringW szFileAcuLink=_T("\\FFSDISK\\ACULINK\\V3\\")+szLicenseFile;
+	CStringW szFileAcuLink=_T("\\FFSDISK\\")+szLicenseFile;
 
-	if(		CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink.exe"))
-		&&	CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink_DLL.dll"))
+	if(		CTlsFile::Exists(_T("\\FFSDISK\\AcuLink.exe"))
+		&&	CTlsFile::Exists(_T("\\FFSDISK\\AcuLink_DLL.dll"))
 		&&	CTlsFile::Exists(szFileAcuLink)
 		&&  getCONFIG()->GetPDMSprotocol()!=ACL_NOPDMS
 		&&  getCONFIG()->GetPDMSprotocol()!=ACL_TERMINAL)
@@ -741,11 +730,11 @@ bool CMVModel::initAcuLink_V3()
 		theApp.getLog()->WriteLine(_T("***NO ACULINK***"));
 		SetAcuLinkAvailability(FALSE);
 
-		if(false==CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink.exe")))
+		if(false==CTlsFile::Exists(_T("\\FFSDISK\\AcuLink.exe")))
 		{
 			theApp.getLog()->WriteLine(_T("***ACULINK=no EXE***"));
 		}
-		else if(false==CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink_DLL.dll")))
+		else if(false==CTlsFile::Exists(_T("\\FFSDISK\\AcuLink_DLL.dll")))
 		{
 			theApp.getLog()->WriteLine(_T("***ACULINK=no DLL***"));
 		}
@@ -765,60 +754,7 @@ bool CMVModel::initAcuLink_V3()
 		return false;
 	}
 }
-bool CMVModel::initAcuLink_V4()
-{
-	CStringW szLicenseFile=_T("ML");
-	szLicenseFile+=GetUniqueID();
-	szLicenseFile+=_T(".mlic");
-	CStringW szFileAcuLink=_T("\\FFSDISK\\ACULINK\\V4\\")+szLicenseFile;
 
-	if(		CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V4\\AcuLink.exe"))
-		&&	CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V4\\AcuLink_DLL.dll"))
-		&&	CTlsFile::Exists(szFileAcuLink)
-		&&  getCONFIG()->GetPDMSprotocol()!=ACL_NOPDMS
-		&&  getCONFIG()->GetPDMSprotocol()!=ACL_TERMINAL)
-	{
-		ACULINK=CInterfaceAcuLink::getInstance(getCONFIG()->GetPDMSprotocol());
-
-		if(ACULINK->init())
-		{
-			SetAcuLinkAvailability(TRUE);
-		}
-		else
-		{
-			SetAcuLinkAvailability(FALSE);
-		}
-		return true;
-	}
-	else
-	{
-		theApp.getLog()->WriteLine(_T("***NO ACULINK***"));
-		SetAcuLinkAvailability(FALSE);
-
-		if(false==CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V4\\AcuLink.exe")))
-		{
-			theApp.getLog()->WriteLine(_T("***ACULINK=no EXE***"));
-		}
-		else if(false==CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V4\\AcuLinkV4_DLL.dll")))
-		{
-			theApp.getLog()->WriteLine(_T("***ACULINK=no DLL***"));
-		}
-		else if(false==CTlsFile::Exists(szFileAcuLink))
-		{
-			theApp.getLog()->WriteLine(_T("***ACULINK=no license***"));
-		}
-		else if(getCONFIG()->GetPDMSprotocol()==ACL_NOPDMS)
-		{
-			theApp.getLog()->WriteLine(_T("***ACULINK=ACL_NOPDMS***"));
-		}
-		else if(getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL)
-		{
-			theApp.getLog()->WriteLine(_T("***ACULINK=ACL_TERMINAL***"));
-		}
-
-		return false;
-	}
-}
 void CMVModel::checkUniqueID()
 {
 	bool bFalseID=false;

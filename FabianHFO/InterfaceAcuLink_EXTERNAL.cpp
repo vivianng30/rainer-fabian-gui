@@ -76,32 +76,15 @@ bool CInterfaceAcuLink_EXTERNAL::init()
 
 	bool bRes=false;
 
-	if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
+	m_szFileAcuLink=_T("\\FFSDISK\\")+szLicenseFile;
+
+	if(		CTlsFile::Exists(_T("\\FFSDISK\\AcuLink.exe"))
+		&&	CTlsFile::Exists(_T("\\FFSDISK\\AcuLink_DLL.dll"))
+		&&	CTlsFile::Exists(m_szFileAcuLink))
 	{
-		m_szFileAcuLink=_T("\\FFSDISK\\ACULINK\\V3\\")+szLicenseFile;
-
-		if(		CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink.exe"))
-			&&	CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V3\\AcuLink_DLL.dll"))
-			&&	CTlsFile::Exists(m_szFileAcuLink))
-		{
-			if(_hAcuLink == NULL)
-				_hAcuLink = ::LoadLibrary(_T("AcuLink_DLL.dll"));	
-		}
+		if(_hAcuLink == NULL)
+			_hAcuLink = ::LoadLibrary(_T("AcuLink_DLL.dll"));	
 	}
-	else
-	{
-		m_szFileAcuLink=_T("\\FFSDISK\\ACULINK\\V4\\")+szLicenseFile;
-
-		if(		CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V4\\AcuLink.exe"))
-			&&	CTlsFile::Exists(_T("\\FFSDISK\\ACULINK\\V4\\AcuLinkV4_DLL.dll")) 
-			&&	CTlsFile::Exists(m_szFileAcuLink))
-		{
-			if(_hAcuLink == NULL)
-				_hAcuLink = ::LoadLibrary(_T("AcuLinkV4_DLL.dll"));	
-		}
-	}
-
-	
 
 	if(_hAcuLink !=NULL)
 	{

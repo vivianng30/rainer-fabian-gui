@@ -334,8 +334,8 @@ protected:
 	void setNetworkAddressAsUniqueID();
 	void writeUniqueIDtoLog();
 	bool initAcuLink();
-	bool initAcuLink_V3();
-	bool initAcuLink_V4();
+	//bool initAcuLink_V3();
+	//bool initAcuLink_V4();
 	void initSerialController();
 	void startThreads();
 

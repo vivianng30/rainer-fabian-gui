@@ -1088,14 +1088,8 @@ void CSubViewTools::OnBnClickedDevInfoToUSB()
 
 		CStringW szFile=_T("");
 
-		if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
-		{
-			szFile=_T("\\FFSDISK\\ACULINK\\V3\\")+szLicenseFile;
-		}
-		else
-		{
-			szFile=_T("\\FFSDISK\\ACULINK\\V4\\")+szLicenseFile;
-		}
+		szFile=_T("\\FFSDISK\\")+szLicenseFile;
+		
 
 		bool bAcuLinkLicense=false;
 		if(CTlsFile::Exists(szFile))
