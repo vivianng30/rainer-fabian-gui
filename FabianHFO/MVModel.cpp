@@ -5669,6 +5669,7 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 
 			//spi
 			getSPI()->Send_PARAVAL_INSP_FLOW(iIFlow);
+			getSPI()->Send_PARAVAL_RISETIME(iRisetime);
 			getSPI()->Send_PARAVAL_EXH_FLOW(iEFlow);
 			getSPI()->Send_PARAVAL_PEEP(iPEEP);
 			getSPI()->Send_PARAVAL_PINSP(iPinsp);//newVG
@@ -5723,6 +5724,7 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 			getSPI()->Send_PARAVAL_TRIG_SCHWELLE(iTrigger);
 			getSPI()->Send_PARAVAL_INSP_FLOW(iIFlow);
 			getSPI()->Send_PARAVAL_EXH_FLOW(iEFlow);
+			getSPI()->Send_PARAVAL_RISETIME(iRisetime);
 			getSPI()->Send_PARAVAL_PEEP(iPEEP);
 			getSPI()->Send_PARAVAL_PINSP(iPinsp);//newVG
 			getSPI()->Send_PARAVAL_PMAXVG(iPmax);//newVG
@@ -5775,6 +5777,7 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 			getSPI()->Send_PARAVAL_TRIG_SCHWELLE(iTrigger);
 			getSPI()->Send_PARAVAL_INSP_FLOW(iIFlow);
 			getSPI()->Send_PARAVAL_EXH_FLOW(iEFlow);
+			getSPI()->Send_PARAVAL_RISETIME(iRisetime);
 			getSPI()->Send_PARAVAL_PEEP(iPEEP);
 			getSPI()->Send_PARAVAL_PINSP(iPinsp);//newVG
 			getSPI()->Send_PARAVAL_PMAXVG(iPmax);//newVG
@@ -5827,6 +5830,7 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 			getSPI()->Send_PARAVAL_TRIG_SCHWELLE(iTrigger);
 			getSPI()->Send_PARAVAL_INSP_FLOW(iIFlow);
 			getSPI()->Send_PARAVAL_EXH_FLOW(iEFlow);
+			getSPI()->Send_PARAVAL_RISETIME(iRisetime);
 			getSPI()->Send_PARAVAL_PEEP(iPEEP);
 			getSPI()->Send_PARAVAL_PINSP(iPinsp);//newVG
 			getSPI()->Send_PARAVAL_PMAXVG(iPmax);//newVG
@@ -5879,6 +5883,7 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 			getSPI()->Send_PARAVAL_TRIG_SCHWELLE(iTrigger);
 			getSPI()->Send_PARAVAL_INSP_FLOW(iIFlow);
 			getSPI()->Send_PARAVAL_EXH_FLOW(iEFlow);
+			getSPI()->Send_PARAVAL_RISETIME(iRisetime);
 			getSPI()->Send_PARAVAL_PEEP(iPEEP);
 			getSPI()->Send_PARAVAL_PINSP(iPinsp);//newVG
 			getSPI()->Send_PARAVAL_PMAXVG(iPmax);//newVG
@@ -6495,7 +6500,7 @@ void CMVModel::Send_PARA_RISETIME(int iVal, bool bSerial, bool bSPI)
 
 	if(bSPI)
 	{
-		
+		getSPI()->Send_PARAVAL_RISETIME(iVal);
 	}
 
 	if(getAcuLink()!=NULL)

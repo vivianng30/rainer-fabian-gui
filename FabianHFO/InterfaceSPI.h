@@ -91,6 +91,7 @@ public:
 	void Send_PARAVAL_TRIG_SCHWELLE(int val);
 	void Send_FLOW_CORFACTOR_NEO(int val);
 	void Send_FLOW_CORFACTOR_PED(int val);
+	void Send_PARAVAL_RISETIME(int val);
 	
 	int GetMessureData();
 	int ReadSPIData();

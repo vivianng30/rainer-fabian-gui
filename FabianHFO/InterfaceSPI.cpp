@@ -639,7 +639,7 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 							bBackup=true;
 
 							if(		m_bMechanicalATZ==false
-								&&	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_ON)
+								/*&&	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_ON*/)
 							{
 								if(	getModel()->getCONFIG()->GetCurMode()==VM_CPAP
 									||
@@ -1274,7 +1274,7 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 							bBackup=true;
 
 							if(		m_bMechanicalATZ==false
-								&&	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_ON)
+								/*&&	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_ON*/)
 							{
 								if(	getModel()->getCONFIG()->GetCurMode()==VM_CPAP
 									||
@@ -3039,6 +3039,23 @@ void CInterfaceSPI::Send_PARAVAL_TRIG_SCHWELLE(int val)
 #ifndef SIMULATION_NOSPI
 	SPISENDMESSAGE* pMessage = new SPISENDMESSAGE();
 	pMessage->byteSPICommand[0]=S_PARA_TRIG_SCHWELLE;
+	pMessage->iValue=val;
+
+	SendSPICommand(pMessage);
+
+	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_TRIG_SCHWELLE %d\r\n"),val));
+#endif
+
+}
+
+// **************************************************************************
+// 
+// **************************************************************************
+void CInterfaceSPI::Send_PARAVAL_RISETIME(int val)
+{
+#ifndef SIMULATION_NOSPI
+	SPISENDMESSAGE* pMessage = new SPISENDMESSAGE();
+	pMessage->byteSPICommand[0]=S_PARA_RISETIME;
 	pMessage->iValue=val;
 
 	SendSPICommand(pMessage);

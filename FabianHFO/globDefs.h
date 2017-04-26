@@ -2362,8 +2362,9 @@ enum eCurveForm {
 
 //#define M_STATE_VOLGARANTY		108	//Pediatric / Neonatal
 //#define S_STATE_VOLGARANTY		109	//Pediatric / Neonatal
-//#define M_x110						110	// //newVG
-//#define S_x110						111	// //newVG
+#define M_PARA_RISETIME				110	// //newVG
+#define S_PARA_RISETIME				111	// //newVG
+
 #define M_ABORTCRITERION_PSV		112	//Abbruchkriterium PSV in % vom inspirat. Spitzenfluﬂ
 #define S_ABORTCRITERION_PSV		113	//Abbruchkriterium PSV in % vom inspirat. Spitzenfluﬂ
 //#define M_RESISTANCE				114	//Resistance

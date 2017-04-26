@@ -4723,7 +4723,6 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_NEW_MECHATZ:
 		{
-			
 			if(	getModel()->getCONFIG()->GetCurMode()==VM_CPAP
 				||
 				(getModel()->getCONFIG()->CurModeIsPresetMode() && getModel()->getCONFIG()->GetPrevMode()==VM_CPAP))
@@ -4739,9 +4738,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					if(getModel()->getCONFIG()->GetPlayBackupSound())
 						getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
 				}
-				
 			}
-			
 			return 1;
 		}
 		break;

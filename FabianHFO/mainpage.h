@@ -7,6 +7,13 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50128 Version 5.0.1.29
+ * @date 2017-04-26
+ * @verbatim
+	- parameter Risetime will be send also to Monitor PIC now
+	- Backup active message at CPAP is also signaled when FS off.
+ @endverbatim
+ *
  * @subsection ver50128 Version 5.0.1.28
  * @date 2017-04-21
  * @verbatim
