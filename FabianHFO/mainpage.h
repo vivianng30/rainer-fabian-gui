@@ -7,6 +7,13 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50128 Version 5.0.1.30
+ * @date 2017-04-27
+ * @verbatim
+	- EFlowMaxKey / IFlowMaxKey declared as WORD now
+	- IFlow == EFlow function: EFlow will be send only if function will be enabled
+ @endverbatim
+ *
  * @subsection ver50128 Version 5.0.1.29
  * @date 2017-04-26
  * @verbatim

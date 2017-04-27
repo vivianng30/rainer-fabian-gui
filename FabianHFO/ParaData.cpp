@@ -2770,7 +2770,7 @@ void CParaData::SetRisetimePara_TRIGGER(WORD value, bool bSend, bool bConfig)
 
 		if(bSend)
 		{
-			getModel()->Send_PARA_RISETIME(value,true,false);
+			getModel()->Send_PARA_RISETIME(value,true,true);
 		}
 	}
 }
@@ -2795,7 +2795,7 @@ void CParaData::SetRisetimePara_IPPV(WORD value, bool bSend, bool bConfig)
 
 		if(bSend)
 		{
-			getModel()->Send_PARA_RISETIME(value,true,false);
+			getModel()->Send_PARA_RISETIME(value,true,true);
 		}
 	}
 #else
@@ -2807,7 +2807,7 @@ void CParaData::SetRisetimePara_IPPV(WORD value, bool bSend, bool bConfig)
 
 		if(bSend)
 		{
-			getModel()->Send_PARA_RISETIME(value,true,false);
+			getModel()->Send_PARA_RISETIME(value,true,true);
 		}
 	}
 #endif
@@ -4835,7 +4835,7 @@ SHORT CParaData::GetPInspMaxKey()
 // **************************************************************************
 // 
 // **************************************************************************
-SHORT CParaData::GetIFlowMaxKey()
+WORD CParaData::GetIFlowMaxKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
 		return m_dataKeyMax_NEONATAL.m_iParaDataIFlow_TRIGGER;
@@ -4845,7 +4845,7 @@ SHORT CParaData::GetIFlowMaxKey()
 // **************************************************************************
 // 
 // **************************************************************************
-SHORT CParaData::GetEFlowMaxKey()
+WORD CParaData::GetEFlowMaxKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
 		return m_dataKeyMax_NEONATAL.m_iParaDataEFlow_TRIGGER;

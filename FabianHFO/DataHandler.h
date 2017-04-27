@@ -552,8 +552,8 @@ public:
 	SHORT GetCurrentPeepMinKey();
 	WORD GetCurrentVgarantMaxKey();
 	WORD GetCurrentVlimitMaxKey();
-	SHORT GetCurrentIFlowMaxKey();
-	SHORT GetCurrentEFlowMaxKey();
+	WORD GetCurrentIFlowMaxKey();
+	WORD GetCurrentEFlowMaxKey();
 
 	CStringW GetCurrentModeString();
 	CStringW GetPrevModeString();

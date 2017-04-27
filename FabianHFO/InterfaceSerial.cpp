@@ -1844,7 +1844,7 @@ void CInterfaceSerial::Send_PARAVAL_EXH_FLOW(int val)
 	if(0==sendSerialCommand(psz))
 		theApp.getLog()->WriteLine(psz);
 
-	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_EXH_FLOW %d\r\n"),val));
+	DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_EXH_FLOW %d\r\n"),val));
 }
 
 // **************************************************************************

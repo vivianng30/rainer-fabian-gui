@@ -9813,9 +9813,9 @@ SHORT CDataHandler::GetCurrentPInspMaxKey()
 //***************************************************************************
 //     
 //**************************************************************************
-SHORT CDataHandler::GetCurrentIFlowMaxKey()
+WORD CDataHandler::GetCurrentIFlowMaxKey()
 {
-	SHORT iValue=0;
+	WORD iValue=0;
 
 	switch(getModel()->getCONFIG()->GetCurMode())
 	{
@@ -9858,9 +9858,9 @@ SHORT CDataHandler::GetCurrentIFlowMaxKey()
 //***************************************************************************
 //     
 //**************************************************************************
-SHORT CDataHandler::GetCurrentEFlowMaxKey()
+WORD CDataHandler::GetCurrentEFlowMaxKey()
 {
-	SHORT iValue=0;
+	WORD iValue=0;
 
 	switch(getModel()->getCONFIG()->GetCurMode())
 	{

@@ -5168,14 +5168,19 @@ void CConfiguration::SetEFLOWequalILFOW(bool state)
 {
 	m_bEFLOWequalILFOW=state;
 	if(state)
+	{
 		getModel()->getI2C()->WriteConfigByte(EFLOWEQUIFLOW_8, 1);
+		getModel()->getDATAHANDLER()->SetEFlowParadata_IPPV(getModel()->getDATAHANDLER()->PARADATA()->GetIFlowPara_IPPV(),true);
+		getModel()->getDATAHANDLER()->SetEFlowParadata_TRIGGER(getModel()->getDATAHANDLER()->PARADATA()->GetIFlowPara_TRIGGER(),true);
+	}
 	else
+	{
 		getModel()->getI2C()->WriteConfigByte(EFLOWEQUIFLOW_8, 0);
+		//getModel()->getDATAHANDLER()->SetEFlowParadata_IPPV(getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWPara_IPPV(),true);
+		//getModel()->getDATAHANDLER()->SetEFlowParadata_TRIGGER(getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWPara_TRIGGER(),true);
+	}
 
-	getModel()->getDATAHANDLER()->SetEFlowParadata_IPPV(getModel()->getDATAHANDLER()->PARADATA()->GetIFlowPara_IPPV(),true);
-	getModel()->getDATAHANDLER()->SetEFlowParadata_TRIGGER(getModel()->getDATAHANDLER()->PARADATA()->GetIFlowPara_TRIGGER(),true);
-	/*if(AfxGetApp() != NULL)
-		AfxGetApp()->GetMainWnd()->PostMessage(WM_SET_EFLOWEQUIFLOW);*/
+	
 }
 bool CConfiguration::IsEFLOWequalILFOW()
 {

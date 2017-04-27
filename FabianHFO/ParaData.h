@@ -336,8 +336,8 @@ public:
 	SHORT GetCPAPMaxKey();
 	SHORT GetCPAPNMODEMaxKey();
 	SHORT GetPInspMaxKey();
-	SHORT GetIFlowMaxKey();
-	SHORT GetEFlowMaxKey();
+	WORD GetIFlowMaxKey();
+	WORD GetEFlowMaxKey();
 	SHORT GetPpsvMaxKey();
 	SHORT GetPEEPMaxKey();
 	WORD GetHFPMeanMaxKey();
