@@ -163,6 +163,8 @@ public:
 	void updateFOTPmeanPara();
 	void updateFOTPEEPPara();
 
+	void redrawINFO();
+
 	void HFPMEANRECFlushChanged(int iVal);
 
 	void paraDataChanged();

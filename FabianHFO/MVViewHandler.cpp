@@ -2420,6 +2420,13 @@ void CMVViewHandler::setFOTrunning(bool state)
 // **************************************************************************
 // 
 // **************************************************************************
+void CMVViewHandler::redrawINFO()
+{
+	EnterCriticalSection(&csViewDiagramm);
+	if(m_vDTBField)
+		m_vDTBField->PostMessage(WM_DTB_REFRESH_INFO);
+	LeaveCriticalSection(&csViewDiagramm);
+}
 void CMVViewHandler::drawFOTtime(BYTE iCountFOTimer)
 {
 	EnterCriticalSection(&csViewDiagramm);
@@ -2427,7 +2434,6 @@ void CMVViewHandler::drawFOTtime(BYTE iCountFOTimer)
 		m_vDiagramm->PostMessage(WM_DRAW_FOT_TIME,iCountFOTimer);
 	LeaveCriticalSection(&csViewDiagramm);
 }
-
 void CMVViewHandler::redrawFOTmenu()
 {
 	EnterCriticalSection(&csViewDiagramm);

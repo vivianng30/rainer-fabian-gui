@@ -1918,6 +1918,8 @@ BEGIN
     IDS_TXT_FOT_STARTCONV   "This will start FOT - CONVENTIONAL. The ventilation mode will be changed to CPAP while FOT. Continue?"
     IDS_TXT_FOT_STEPS       "steps"
     IDS_TXT_FOT_POORQUALITY "Poor measurement quality"
+    IDS_TXT_IEFLOW_VALIDITY "(valid for I-Flow pressure rise control)"
+    IDS_TXT_FOT_STOPFOT     "This will stop FOT. Continue?"
 END
 
 #endif    // German (Germany) resources

@@ -2124,6 +2124,8 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			if(getModel()->getFOTThread())
 				getModel()->getFOTThread()->startFOT();
+			
+			getModel()->getVIEWHANDLER()->redrawINFO();
 		}
 		break;
 	case WM_STOP_FOT:
@@ -2131,8 +2133,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			if(getModel()->getFOTThread())
 				getModel()->getFOTThread()->stopFOT();
 
-			/*if(AfxGetApp())
-				AfxGetApp()->GetMainWnd()->PostMessage(WM_SETFOCUS_PIMARYVIEW);*/
+			//getModel()->getVIEWHANDLER()->redrawINFO();
 		}
 		break;
 	case WM_STOPANDRESET_FOT:
@@ -2148,11 +2149,6 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			}
 		}
 		break;
-	/*case WM_RESET_FOT_BUFFER:
-		{
-			getModel()->getThreadFOT()->resetFOTdisplayBuffer();
-		}
-		break;*/
 	case WM_TXT_STOP_FOT:
 		{
 			//CStringW sData = _T("- FOT turned off -");
@@ -2174,8 +2170,6 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			if(getModel()->getFOTThread())
 				getModel()->getFOTThread()->continueSequence();
-			
-			//getModel()->getVIEWHANDLER()->redrawFOTmenu();
 			return 1;
 		}
 		break;
@@ -2240,200 +2234,16 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 		break;
-	/*case WM_START_FOT_CONVENTIONAL:
-		{
-			Sleep(100);
-			getModel()->getThreadFOT()->startFOTconventional();
-		}
-		break;*/
-	//case WM_FOT_COLLECT_DATA:
-	//	{
-	//		m_iCountCollectFOTTimer=3;//sec
-	//		getModel()->getVIEWHANDLER()->drawFOTCollectTime(m_iCountCollectFOTTimer);
-	//		SetTimer(FOT_COLLECT_TIMER,1000,NULL);
-	//	}
-	//	break;
-	//################# FOT - CONVENTIONAL ###################################################
-	//case WM_START_FOT_CONVENTIONAL_TIMER:
-	//	{
-	//		int iRes=getModel()->getDATAHANDLER()->PARADATA()->getByteFOTconv_FREQPara()+getModel()->getDATAHANDLER()->PARADATA()->getByteFOTconv_AMPLITUDEPara();
-	//		getModel()->getSERIAL()->Send_FOTconv_AMP_FREQ(iRes);
-
-	//		m_iCountFOTimer=15;//sec
-	//		SetTimer(FOT_CONV_TIMER,1000,NULL);
-
-	//		getModel()->getVIEWHANDLER()->drawFOTtime(m_iCountFOTimer);
-	//	}
-	//	break;
-	//case WM_EV_CONTROL_START_FOT_CONVENTIONAL:
-	//	{
-	//		DEBUGMSG(TRUE, (TEXT("WM_EV_CONTROL_START_FOT_CONVENTIONAL\r\n")));
-
-	//		getModel()->getDATAHANDLER()->saveOldCONVsettingsForFOT();//save old data and reset everything
-
-	//		getModel()->getDATAHANDLER()->startFOTsequency();
-	//		//getModel()->getVIEWHANDLER()->setFOTrunning(true); ?????????????
-	//		getModel()->getDATAHANDLER()->setFOTCONVpara();//setting the data for mode change to CPAP
-	//		CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_FOT_CONVENTIONAL);
-	//		getModel()->triggerEvent(&eventCtrl);
-	//		getModel()->getDATAHANDLER()->startFOTCONVpara();
-	//		m_iCountFOTimer=0;//sec
-	//		getModel()->getVIEWHANDLER()->drawFOTtime(m_iCountFOTimer);
-	//		SetTimer(FOT_CONV_TIMER,1000,NULL);
-
-	//		return 1;
-	//	}
-	//	break;
-	/*case WM_EV_CONTROL_STOP_FOT_CONVENTIONAL:
-		{
-			DEBUGMSG(TRUE, (TEXT("WM_EV_CONTROL_STOP_FOT_CONVENTIONAL\r\n")));
-
-			getModel()->getDATAHANDLER()->stopFOTsequency();
-			KillTimer(FOT_CONV_TIMER);
-			m_iCountFOTimer=0;
-			getModel()->getVIEWHANDLER()->drawFOTtime(m_iCountFOTimer);
-			getModel()->getDATAHANDLER()->setFOTstate(false);
-			if(AfxGetApp() != NULL)
-				AfxGetApp()->GetMainWnd()->PostMessage(WM_TXT_STOP_FOT);
-
-			CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STOP_FOT_CONVENTIONAL);
-			getModel()->triggerEvent(&eventCtrl);
-			return 1;
-		}
-		break;*/
 	case WM_FOT_UPDATE_PEEP:
 		{
 			getModel()->getVIEWHANDLER()->updateFOTPEEPPara();
 		}
 		break;
-	//case WM_RUN_FOT_CONVSTEP:
-	//	{
-	//		//getModel()->getDATAHANDLER()->stopFOTsequency();
-
-	//		getModel()->getDATAHANDLER()->restoreOldConvsettingsForFOT();
-	//		getModel()->getDATAHANDLER()->calculateFOTdata(
-	//			getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_FREQPara(),
-	//			getModel()->getDATAHANDLER()->getCurrentFOTPEEP());
-	//		
-	//		if(getModel()->getDATAHANDLER()->getCurFOTsequence()>=getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara())
-	//		{
-	//			getModel()->getDATAHANDLER()->stopFOTconventional();
-	//		}
-	//		else
-	//		{
-	//			m_iCountFOTimer=0;
-	//			getModel()->getVIEWHANDLER()->drawFOTtime(m_iCountFOTimer);
-	//		}
-
-	//		return 1;
-	//	}
-	//	break;
-	//case WM_RETRY_FOT_CONVSTEP:
-	//	{
-	//		getModel()->getDATAHANDLER()->restoreOldConvsettingsForFOT();
-	//		getModel()->getDATAHANDLER()->decreseFOTsequency();
-	//		getModel()->getDATAHANDLER()->setRetryflagFOTstep();
-	//		
-	//		m_iCountFOTimer=0;
-	//		getModel()->getVIEWHANDLER()->drawFOTtime(m_iCountFOTimer);
-
-	//		return 1;
-	//	}
-	//	break;
-	//case WM_NEXT_FOT_CONVSTEP://old
-	//	{
-	//		getModel()->getThreadFOT()->resetFOTventdataBuffer();
-	//		getModel()->getDATAHANDLER()->startFOTsequency();
-	//		getModel()->getDATAHANDLER()->setFOTCONVpara();
-
-	//		CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_FOT_CONVENTIONAL);
-	//		getModel()->triggerEvent(&eventCtrl);
-	//		getModel()->getDATAHANDLER()->startFOTCONVpara();
-	//		getModel()->getVIEWHANDLER()->drawFOTsteps();
-
-	//		m_iCountFOTimer=0;//sec
-	//		getModel()->getVIEWHANDLER()->drawFOTtime(m_iCountFOTimer);
-	//		SetTimer(FOT_CONV_TIMER,1000,NULL);
-
-	//		return 1;
-	//	}
-	//	break;
-	//#################FOT - HFO ###################################################
-	//case WM_EV_CONTROL_START_FOT_HFO:
-	//	{
-	//		getModel()->getDATAHANDLER()->saveOldHFOsettingsForFOT();
-	//		getModel()->getDATAHANDLER()->startFOTsequency();
-	//		getModel()->getDATAHANDLER()->sendFOTHFOpara();
-	//		m_iCountFOTimer=0;//sec
-	//		getModel()->getVIEWHANDLER()->drawFOTtime(m_iCountFOTimer);
-	//		SetTimer(FOT_HFO_TIMER,1000,NULL);
-	//		return 1;
-	//	}
-	//	break;
-	//case WM_EV_CONTROL_STOP_FOT_HFO:
-	//	{
-	//		//getModel()->getDATAHANDLER()->stopFOTsequency();
-	//		KillTimer(FOT_HFO_TIMER);
-	//		m_iCountFOTimer=0;
-	//		//getModel()->getVIEWHANDLER()->drawFOTtime(m_iCountFOTimer);
-	//		getModel()->getDATAHANDLER()->restoreOldHFOsettingsForFOT();
-	//		//getModel()->getVIEWHANDLER()->drawFOTconventionalTime(m_iCountFOTimer);
-
-	//		//getModel()->getDATAHANDLER()->setFOTstate(false);
-	//		if(AfxGetApp() != NULL)
-	//			AfxGetApp()->GetMainWnd()->PostMessage(WM_TXT_STOP_FOT);
-	//		return 1;
-	//	}
-	//	break;
 	case WM_FOT_UPDATE_PMEAN:
 		{
 			getModel()->getVIEWHANDLER()->updateFOTPmeanPara();
 		}
 		break;
-	//case WM_RUN_FOT_HFOSTEP:
-	//	{
-	//		getModel()->getDATAHANDLER()->restoreOldHFOsettingsForFOT();
-	//		getModel()->getDATAHANDLER()->calculateFOTdata(
-	//			getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_FREQPara(),
-	//			getModel()->getDATAHANDLER()->getCurrentFOTHFPmean());
-	//		
-	//		if(getModel()->getDATAHANDLER()->getCurFOTsequence()>=getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara())
-	//		{
-	//			getModel()->getDATAHANDLER()->stopFOThfo(false);
-	//		}
-	//		else
-	//		{
-	//			m_iCountFOTimer=0;
-	//			getModel()->getVIEWHANDLER()->drawFOTtime(m_iCountFOTimer);
-	//		}
-	//		
-	//		return 1;
-	//	}
-	//	break;
-	//case WM_RETRY_FOT_HFOSTEP:
-	//	{
-	//		getModel()->getDATAHANDLER()->restoreOldHFOsettingsForFOT();
-	//		getModel()->getDATAHANDLER()->decreseFOTsequency();
-	//		getModel()->getDATAHANDLER()->setRetryflagFOTstep();
-
-	//		m_iCountFOTimer=0;
-	//		getModel()->getVIEWHANDLER()->drawFOTtime(m_iCountFOTimer);
-
-	//		return 1;
-	//	}
-	//	break;
-	//case WM_NEXT_FOT_HFOSTEP:
-	//	{
-	//		getModel()->getThreadFOT()->resetFOTventdataBuffer();
-	//		getModel()->getDATAHANDLER()->startFOTsequency();
-	//		getModel()->getDATAHANDLER()->sendFOTHFOpara();
-	//		getModel()->getVIEWHANDLER()->drawFOTsteps();
-	//		m_iCountFOTimer=0;//sec
-	//		getModel()->getVIEWHANDLER()->drawFOTtime(m_iCountFOTimer);
-	//		SetTimer(FOT_HFO_TIMER,1000,NULL);
-	//		return 1;
-	//	}
-	//	break;
 	case WM_EV_CONTROL_SET_MODE_EXHALVALVCAL:
 		{
 			CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_SET_MODE_EXHALVALVCAL);
