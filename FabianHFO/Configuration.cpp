@@ -5170,8 +5170,8 @@ void CConfiguration::SetEFLOWequalILFOW(bool state)
 	if(state)
 	{
 		getModel()->getI2C()->WriteConfigByte(EFLOWEQUIFLOW_8, 1);
-		getModel()->getDATAHANDLER()->SetEFlowParadata_IPPV(getModel()->getDATAHANDLER()->PARADATA()->GetIFlowPara_IPPV(),true);
-		getModel()->getDATAHANDLER()->SetEFlowParadata_TRIGGER(getModel()->getDATAHANDLER()->PARADATA()->GetIFlowPara_TRIGGER(),true);
+		//getModel()->getDATAHANDLER()->SetEFlowParadata_IPPV(getModel()->getDATAHANDLER()->PARADATA()->GetIFlowPara_IPPV(),true);
+		//getModel()->getDATAHANDLER()->SetEFlowParadata_TRIGGER(getModel()->getDATAHANDLER()->PARADATA()->GetIFlowPara_TRIGGER(),true);
 	}
 	else
 	{
@@ -6543,6 +6543,7 @@ void CConfiguration::checkVentRangeSettings()
 		iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_TRIGGER();
 		iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_TRIGGER();
 	}
+
 	WORD iValue=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWPara_TRIGGER();
 	if(iValue>iUpperLimit)
 	{
@@ -6632,6 +6633,12 @@ void CConfiguration::SetCurPressureRiseCtrl(eCurveForm form)
 			else
 				getModel()->getAcuLink()->setParaData(ALINK_SETT_INSP_FLOW,iIFlow);
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_RISETIME,ALINK_NOTVALID);
+
+			if(IsEFLOWequalILFOW())
+			{
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_SET_EFLOWEQUIFLOW);
+			}
 		}
 		break;
 	case CURVE_LINEAR:
@@ -6642,7 +6649,7 @@ void CConfiguration::SetCurPressureRiseCtrl(eCurveForm form)
 			else
 				getModel()->getAcuLink()->setParaData(ALINK_SETT_RISETIME,iRiseTime);
 
-			SetEFLOWequalILFOW(false);
+			//SetEFLOWequalILFOW(false);
 		}
 		break;
 	case CURVE_AUTOFLOW:
@@ -6650,7 +6657,7 @@ void CConfiguration::SetCurPressureRiseCtrl(eCurveForm form)
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_INSP_FLOW,ALINK_NOTVALID);
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_RISETIME,ALINK_NOTVALID);
 
-			SetEFLOWequalILFOW(false);
+			//SetEFLOWequalILFOW(false);
 		}
 		break;
 	}

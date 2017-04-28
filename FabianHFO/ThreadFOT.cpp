@@ -62,6 +62,8 @@ CThreadFOT::CThreadFOT()
 	m_iFOToriginDiffPEEP_PMAXVG=0;
 	m_iFOToriginPIPlowPEEPAlimitDiff=0;
 
+	m_iFOToriginVGstate=false;
+
 	/*m_eFOToriginHFIERatioPara=RIE_1_1;
 	m_iFOToriginHFFreqPara=0;
 	m_iFOToriginHFAMPLPara=0;*/
@@ -311,6 +313,7 @@ void CThreadFOT::restoreFOTHFOVentMode()
 void CThreadFOT::startFOTconventional()
 {
 	m_bFOTconvRunning=true;
+	DEBUGMSG(TRUE, (TEXT("yyyyyyyy\r\n")));
 	CString szLog=_T("");
 	theApp.getLog()->WriteLine(_T("#FOT: start CONVENTIONAL"));
 	szLog.Format(_T("FOTsteps %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara());
@@ -334,6 +337,8 @@ void CThreadFOT::startFOTconventional()
 	m_iFOToriginPMAXVGPara_IPPV=getModel()->getDATAHANDLER()->PARADATA()->GetPmaxVolGPara_IPPV();
 	m_iFOToriginPINSPPara_IPPV=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPPara_IPPV();
 	m_iFOToriginPpsvPara=getModel()->getDATAHANDLER()->PARADATA()->GetPpsvPara();
+
+	m_iFOToriginVGstate=getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn();
 
 	m_iFOToriginPIPlowPEEPAlimitDiff=getModel()->getALARMHANDLER()->getAlimitPIPmin()-getModel()->getALARMHANDLER()->getAlimitPEEPmin();
 
@@ -413,7 +418,15 @@ void CThreadFOT::stopFOThfo()
 
 	stopFOTThread();
 }
-
+bool CThreadFOT::isFOTrunning()
+{
+	if(m_bFOTconvRunning)
+		return true;
+	else if(m_bFOThfoRunning)
+		return true;
+	else
+		return false;
+}
 void CThreadFOT::calcParaFOTCONV()
 {
 	DEBUGMSG(TRUE, (TEXT("calcParaFOTCONV\r\n")));
@@ -816,9 +829,21 @@ SHORT CThreadFOT::getFOToriginPINSPPara_IPPV()
 {
 	return m_iFOToriginPINSPPara_IPPV;
 }
+SHORT CThreadFOT::getFOToriginPMAXVGPara_IPPV()
+{
+	return m_iFOToriginPMAXVGPara_IPPV;
+}
+bool CThreadFOT::isFOToriginVGstateOn()
+{
+	return m_iFOToriginVGstate;
+}
 SHORT CThreadFOT::getFOToriginDiffPEEP_PINSP()
 {
 	return m_iFOToriginDiffPEEP_PINSP;
+}
+SHORT CThreadFOT::getFOToriginDiffPEEP_PMAXVG()
+{
+	return m_iFOToriginDiffPEEP_PMAXVG;
 }
 void CThreadFOT::startCalculation()
 {

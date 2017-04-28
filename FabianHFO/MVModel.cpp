@@ -105,7 +105,7 @@ CMVModel::CMVModel(void)
 	m_szBuildVersion = _T("9.0.0.0");
 #else
 	m_szVersion = _T("5.0.1");
-	m_szBuildVersion = _T("5.0.1.30");
+	m_szBuildVersion = _T("5.0.1.31");
 #endif
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO"),true);
@@ -1493,7 +1493,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 		break;
 	case CMVEventControl::EV_CONTROL_SET_EFLOWEQUIFLOW:
 		{
-			getDATAHANDLER()->SetEFlowParadata_IPPV(getDATAHANDLER()->PARADATA()->GetIFlowPara_IPPV(),true);
+			//getDATAHANDLER()->SetEFlowParadata_IPPV(getDATAHANDLER()->PARADATA()->GetIFlowPara_IPPV(),true);
 			getDATAHANDLER()->SetEFlowParadata_TRIGGER(getDATAHANDLER()->PARADATA()->GetIFlowPara_TRIGGER(),true);
 		}
 		break;

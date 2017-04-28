@@ -1413,11 +1413,6 @@ void CWndDataFOT::Draw(bool bStatic)
 				&&	feFOTstate!=FOT_RETRY
 				&&	feFOTstate!=FOT_WAITCONTINUE)
 			{
-				
-
-				//hide button continue
-				//m_pcBtnRunSeq->ShowWindow(SW_SHOW);
-
 				if(feFOTstate==FOT_ACQUIREDATA)
 				{
 					SetTextColor(hdcMem,RGB(0,0,0));
@@ -1476,7 +1471,18 @@ void CWndDataFOT::Draw(bool bStatic)
 				WORD icurFOTPEEP=0;
 				if(getModel()->getFOTThread())
 					icurFOTPEEP=getModel()->getFOTThread()->getCurrentFOTPEEP();
-				WORD curPIPValue=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPPara_IPPV();
+				WORD curPIPValue=0;
+
+				if(true==getModel()->getFOTThread()->isFOToriginVGstateOn())
+				{
+					curPIPValue=getModel()->getDATAHANDLER()->PARADATA()->GetPmaxVolGPara_IPPV();
+					//DEBUGMSG(TRUE, (TEXT("PIPnow1() 1 %d\r\n"),curPIPValue));
+				}
+				else
+				{
+					curPIPValue=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPPara_IPPV();
+					//DEBUGMSG(TRUE, (TEXT("PIPnow1() 2 %d\r\n"),curPIPValue));
+				}
 				
 				csText=_T("PEEPnow");
 				DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
@@ -1494,6 +1500,8 @@ void CWndDataFOT::Draw(bool bStatic)
 				rc.top = 210;
 				rc.right  = 279;
 				rc.bottom = 275;
+
+				//DEBUGMSG(TRUE, (TEXT("PIPnow1() %d\r\n"),curPIPValue/10));
 
 				//csText=_T("PIPnow");
 				csText=getModel()->GetLanguageString(IDS_TXT_FOT_PIPNOW);
@@ -1621,13 +1629,22 @@ void CWndDataFOT::Draw(bool bStatic)
 						}
 						else
 						{
-							
-
 							//calculate next used values
 							WORD iPEEPSTART=getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_PEEPSTARTPara();
 							WORD iPEEPEND=getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_PEEPENDPara();
 							WORD iStepsPARA=getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara();
-							WORD nextPIPValue=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPPara_IPPV();
+							WORD nextPIPValue=0;
+							if(true==getModel()->getFOTThread()->isFOToriginVGstateOn())
+							{
+								nextPIPValue=getModel()->getDATAHANDLER()->PARADATA()->GetPmaxVolGPara_IPPV();
+								//DEBUGMSG(TRUE, (TEXT("PIPnext1() 1 %d\r\n"),nextPIPValue));
+							}
+							else
+							{
+								nextPIPValue=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPPara_IPPV();
+								//DEBUGMSG(TRUE, (TEXT("PIPnext1() 2 %d\r\n"),nextPIPValue));
+							}
+
 							WORD curPEEPValue=0;
 							WORD icurFOTPEEP=0;
 							WORD iFOTPEEPStep=0;
@@ -1636,7 +1653,16 @@ void CWndDataFOT::Draw(bool bStatic)
 							{
 								icurFOTPEEP=getModel()->getFOTThread()->getCurrentFOTPEEP();
 								iFOTPEEPStep=getModel()->getFOTThread()->getFOTPEEPStep();
-								iFOToriginDiffPEEP_PINSP=getModel()->getFOTThread()->getFOToriginDiffPEEP_PINSP();
+								if(true==getModel()->getFOTThread()->isFOToriginVGstateOn())
+								{
+									iFOToriginDiffPEEP_PINSP=getModel()->getFOTThread()->getFOToriginDiffPEEP_PMAXVG();
+									//DEBUGMSG(TRUE, (TEXT("PIPnext1() 3 %d\r\n"),iFOToriginDiffPEEP_PINSP));
+								}
+								else
+								{
+									iFOToriginDiffPEEP_PINSP=getModel()->getFOTThread()->getFOToriginDiffPEEP_PINSP();
+									//DEBUGMSG(TRUE, (TEXT("PIPnext1() 4 %d\r\n"),iFOToriginDiffPEEP_PINSP));
+								}
 							}
 							
 							if(iStepsPARA==1)
@@ -1650,13 +1676,35 @@ void CWndDataFOT::Draw(bool bStatic)
 								{
 									curPEEPValue=icurFOTPEEP;
 									if(getModel()->getFOTThread())
-										nextPIPValue=getModel()->getFOTThread()->getFOToriginPINSPPara_IPPV();
+									{
+										if(true==getModel()->getFOTThread()->isFOToriginVGstateOn())
+										{
+											nextPIPValue=getModel()->getFOTThread()->getFOToriginPMAXVGPara_IPPV();
+											//DEBUGMSG(TRUE, (TEXT("PIPnext1() 5 %d\r\n"),nextPIPValue));
+										}
+										else
+										{
+											nextPIPValue=getModel()->getFOTThread()->getFOToriginPINSPPara_IPPV();
+											//DEBUGMSG(TRUE, (TEXT("PIPnext1() 6 %d\r\n"),nextPIPValue));
+										}
+									}
 								}
 								else if(iFOTnextsequence==iStepsPARA)
 								{
 									curPEEPValue=iPEEPSTART;
 									if(getModel()->getFOTThread())
-										nextPIPValue=getModel()->getFOTThread()->getFOToriginPINSPPara_IPPV();
+									{
+										if(true==getModel()->getFOTThread()->isFOToriginVGstateOn())
+										{
+											nextPIPValue=getModel()->getFOTThread()->getFOToriginPMAXVGPara_IPPV();
+											//DEBUGMSG(TRUE, (TEXT("PIPnext1() 7 %d\r\n"),nextPIPValue));
+										}
+										else
+										{
+											nextPIPValue=getModel()->getFOTThread()->getFOToriginPINSPPara_IPPV();
+											//DEBUGMSG(TRUE, (TEXT("PIPnext1() 8 %d\r\n"),nextPIPValue));
+										}
+									}
 								}
 								else if(iFOTnextsequence<=(iStepsPARA+1)/2)
 								{
@@ -1664,18 +1712,22 @@ void CWndDataFOT::Draw(bool bStatic)
 									if(curPEEPValue%10!=0 && iFOToriginDiffPEEP_PINSP%10!=0)
 									{
 										nextPIPValue=curPEEPValue+iFOToriginDiffPEEP_PINSP;
+										//DEBUGMSG(TRUE, (TEXT("PIPnext1() 9 %d\r\n"),nextPIPValue));
 									}
 									else if(iFOToriginDiffPEEP_PINSP%10!=0)
 									{
 										nextPIPValue=curPEEPValue+5+iFOToriginDiffPEEP_PINSP;
+										//DEBUGMSG(TRUE, (TEXT("PIPnext1() 10 %d\r\n"),nextPIPValue));
 									}
 									else if(curPEEPValue%10!=0)
 									{
 										nextPIPValue=curPEEPValue+5+iFOToriginDiffPEEP_PINSP;
+										//DEBUGMSG(TRUE, (TEXT("PIPnext1() 11 %d\r\n"),nextPIPValue));
 									}
 									else
 									{
 										nextPIPValue=curPEEPValue+iFOToriginDiffPEEP_PINSP;
+										//DEBUGMSG(TRUE, (TEXT("PIPnext1() 12 %d\r\n"),nextPIPValue));
 									}
 								}
 								else
@@ -1684,18 +1736,22 @@ void CWndDataFOT::Draw(bool bStatic)
 									if(curPEEPValue%10!=0 && iFOToriginDiffPEEP_PINSP%10!=0)
 									{
 										nextPIPValue=curPEEPValue+iFOToriginDiffPEEP_PINSP;
+										//DEBUGMSG(TRUE, (TEXT("PIPnext1() 13 %d\r\n"),nextPIPValue));
 									}
 									else if(iFOToriginDiffPEEP_PINSP%10!=0)
 									{
 										nextPIPValue=curPEEPValue+5+iFOToriginDiffPEEP_PINSP;
+										//DEBUGMSG(TRUE, (TEXT("PIPnext1() 14 %d\r\n"),nextPIPValue));
 									}
 									else if(curPEEPValue%10!=0)
 									{
 										nextPIPValue=curPEEPValue+5+iFOToriginDiffPEEP_PINSP;
+										//DEBUGMSG(TRUE, (TEXT("PIPnext1() 15 %d\r\n"),nextPIPValue));
 									}
 									else
 									{
 										nextPIPValue=curPEEPValue+iFOToriginDiffPEEP_PINSP;
+										//DEBUGMSG(TRUE, (TEXT("PIPnext1() 16 %d\r\n"),nextPIPValue));
 									}
 								}
 							}
@@ -1724,6 +1780,8 @@ void CWndDataFOT::Draw(bool bStatic)
 							rc.right  = 279;
 							rc.bottom = 275;
 
+							//DEBUGMSG(TRUE, (TEXT("PIPnext1() %d\r\n"),nextPIPValue/10));
+
 							csText=getModel()->GetLanguageString(IDS_TXT_FOT_PIPNEXT);
 							//csText=_T("PIPnext");
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
@@ -1736,21 +1794,14 @@ void CWndDataFOT::Draw(bool bStatic)
 							csText.Format(_T("%s"), szUnitPRESSURE);
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_BOTTOM|DT_SINGLELINE);
 						}
-						
 					}
 					else
 					{
-						//m_pcBtnRunSeq->ShowWindow(SW_SHOW);
-						
 						szERROR.Format(_T("ERROR state %d CurFOTseq %d conv_STEPS %d\r\n"),(int)feFOTstate,getModel()->getFOTThread()->getCurFOTsequence(),getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara());
 						DEBUGMSG(TRUE, (szERROR));
 						theApp.getLog()->WriteLine(szERROR);
 					}
 				}
-				/*else
-				{
-					m_pcBtnRunSeq->ShowWindow(SW_SHOW);
-				}*/
 			}
 		}
 	}
@@ -1811,7 +1862,7 @@ void CWndDataFOT::drawPIPmax()
 	}*/
 
 	bool bVGon=false;
-	if(		true==getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn() 
+	if(		true==getModel()->getFOTThread()->isFOToriginVGstateOn() 
 		||	true==getModel()->getALARMHANDLER()->isVgarantAutoTurnedOff_FOT())
 	{
 		bVGon=true;
@@ -2476,8 +2527,6 @@ void CWndDataFOT::SetSTARTSTOPUnpressed()
 
 void CWndDataFOT::showFOTMessage()
 {
-	//SetSTARTSTOPPreset();
-
 	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 	{
 		//CString szStart=_T("This will start FOT - HFO.");
@@ -2556,9 +2605,6 @@ void CWndDataFOT::showFOTMessage()
 			SetSTARTSTOPUnpressed();
 		}
 	}
-
-	/*if(GetParent())
-		GetParent()->PostMessage(WM_GRAPH_REDRAW);*/
 }
 
 
@@ -3208,13 +3254,21 @@ void CWndDataFOT::OnBnClickedStartStop()
 		}
 		else 
 		{
-			////SetSTARTSTOPUnpressed();
-			//m_pcBtnStartStopSeq->DrawDirectUp();
+			CDlgMessageBox box(this,_T("FOT"),getModel()->GetLanguageString(IDS_TXT_FOT_STOPFOT),MB_YESNO,IDB_MSG_STOP);
+			m_pDlg = &box;
+			int iRes=box.DoModal();
+			m_pDlg = NULL;
 
-			if(AfxGetApp() != NULL)
-				AfxGetApp()->GetMainWnd()->PostMessage(WM_STOP_FOT);
-
-			//Draw(false);
+			if(iRes==IDYES)
+			{
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_STOP_FOT);
+			}
+			else
+			{
+				if(GetParent())
+					GetParent()->PostMessage(WM_GRAPH_REDRAW);
+			}
 		}
 	}
 	else

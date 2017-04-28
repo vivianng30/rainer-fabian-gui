@@ -435,7 +435,7 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_TRIGGER();
 			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_TRIGGER();
 		}
-		fv.iValue=getModel()->getDATAHANDLER()->GetEFlowParaData();
+		fv.iValue=getModel()->getDATAHANDLER()->GetCurrentEFlowPara();
 		if(fv.iValue>fv.iUpperLimit)
 			fv.iValue=fv.iUpperLimit;
 		else if(fv.iValue<fv.iLowerLimit)
@@ -760,7 +760,7 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 				/*&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW*/)
 		{
 			m_pcPara_EFLOW->ShowWindow(SW_SHOW);
-			if(getModel()->getCONFIG()->IsEFLOWequalILFOW())
+			if(getModel()->getCONFIG()->IsEFLOWequalILFOW()&&getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
 			{
 				m_pcPara_EFLOW->EnableWindow(FALSE);
 			}
@@ -854,8 +854,21 @@ void CWndParaSettings::Show(bool bShow)
 					/*&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW*/)
 			{
 				m_pcPara_EFLOW->ShowWindow(SW_SHOW);
-				if(getModel()->getCONFIG()->IsEFLOWequalILFOW())
+				if(getModel()->getCONFIG()->IsEFLOWequalILFOW()&&getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
 				{
+					fVALUE fv;
+					fv.iValue=getModel()->getDATAHANDLER()->GetCurrentEFlowPara();
+					if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+					{
+						fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_IPPV();
+						fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_IPPV();
+					}
+					else
+					{
+						fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_TRIGGER();
+						fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_TRIGGER();
+					}
+					m_pcPara_EFLOW->SetValue(fv);
 					m_pcPara_EFLOW->EnableWindow(FALSE);
 				}
 				else
@@ -1150,7 +1163,31 @@ void CWndParaSettings::SetViewFocus(int iBtn)
 		{
 			if(m_pcPara_EFLOW)
 			{
-				if(false==getModel()->getCONFIG()->IsEFLOWequalILFOW())
+				if(true==getModel()->getCONFIG()->IsEFLOWequalILFOW()&&getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
+				{
+					if(m_pcPara_ManBreath)
+					{
+						if(m_pcPara_ManBreath->IsWindowVisible())
+						{
+							m_pcPara_ManBreath->SetFocus();
+							getModel()->getCONFIG()->SetLastSelectedParaViewBtns(m_pcPara_ManBreath->GetDlgCtrlID());
+						}
+						else
+						{
+							int iID=0;
+
+							CWnd* pWnd = GetNextDlgTabItem(m_pcPara_ManBreath,FALSE);
+							if(pWnd==NULL)
+								return;
+
+							iID=pWnd->GetDlgCtrlID();
+
+							pWnd->SetFocus();
+							getModel()->getCONFIG()->SetLastSelectedParaViewBtns(iID);
+						}
+					}
+				}
+				else
 				{
 					if(m_pcPara_EFLOW->IsWindowVisible())
 						m_pcPara_EFLOW->SetFocus();

@@ -790,7 +790,7 @@ bool CInterfaceTerminal::PerformMsg()
 
 				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
 				{
-					getModel()->getDATAHANDLER()->SetEFlowParaData(iVal);
+					getModel()->getDATAHANDLER()->SetCurrentEFlowPara(iVal);
 					if(AfxGetApp() != NULL)
 						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
 

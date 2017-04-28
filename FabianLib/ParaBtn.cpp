@@ -2609,7 +2609,7 @@ void CParaBtn::WriteCurrentValue()
 		break;
 	case IDC_BTN_PARA_EFLOW:
 		{
-			getModel()->getDATAHANDLER()->SetEFlowParaData(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentEFlowPara(m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_THERAPYFLOW:

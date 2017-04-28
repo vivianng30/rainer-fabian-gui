@@ -41,7 +41,7 @@ public:
 	void startFOTconventional();
 	void stopFOTconventional();
 
-	//void calcParaFOT();
+	bool isFOTrunning();
 
 	void changeToFOTConvVentMode();
 	void restoreFOTConvVentMode();
@@ -72,7 +72,10 @@ public:
 	WORD getFOTHFPmeanStep();
 	WORD getFOTPEEPStep();
 	SHORT getFOToriginDiffPEEP_PINSP();
+	SHORT getFOToriginDiffPEEP_PMAXVG();
 	SHORT getFOToriginPINSPPara_IPPV();
+	SHORT getFOToriginPMAXVGPara_IPPV();
+	bool isFOToriginVGstateOn();
 	
 	bool isDecreasingSequence();
 
@@ -173,6 +176,7 @@ private:
 	SHORT m_iFOToriginDiffPEEP_Ppsv;
 	SHORT m_iFOToriginDiffPEEP_PMAXVG;
 	int m_iFOToriginPIPlowPEEPAlimitDiff;
+	bool m_iFOToriginVGstate;
 
 	eRatioIE m_eFOToriginHFIERatioPara;
 	BYTE m_iFOToriginHFFreqPara;

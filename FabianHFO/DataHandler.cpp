@@ -4744,7 +4744,7 @@ void CDataHandler::start()
 	if(iPatientID!=0)
 		m_bPatientDataAvailable =true;
 
-	if(getModel()->getCONFIG()->IsEFLOWequalILFOW())
+	if(getModel()->getCONFIG()->IsEFLOWequalILFOW() && getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
 	{
 		if(AfxGetApp() != NULL)
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_SET_EFLOWEQUIFLOW);
@@ -9330,12 +9330,18 @@ WORD CDataHandler::GetLastVLimitParam()
 bool CDataHandler::IsActiveModeVGarantStateOn()
 {
 	bool bResult=false;
+	//bool bTest=false;
 
 	switch(getModel()->getCONFIG()->GetCurMode())
 	{
 	case VM_IPPV:
 		{
 			bResult=PARADATA()->IsVGarantStateOn_IPPV();
+			/*if(bResult)
+				DEBUGMSG(TRUE, (TEXT("IsActiveModeVGarantStateOn true\r\n")));
+			else
+				DEBUGMSG(TRUE, (TEXT("IsActiveModeVGarantStateOn false\r\n")));
+			bTest=true;*/
 		}
 		break;
 	case VM_SERVICE:
@@ -9367,7 +9373,10 @@ bool CDataHandler::IsActiveModeVGarantStateOn()
 		}
 		break;
 	}
-
+	/*if(bTest==false)
+	{
+		DEBUGMSG(TRUE, (TEXT("IsActiveModeVGarantStateOn() %d\r\n"),(int)eMode));
+	}*/
 	return bResult;
 
 	
@@ -11306,7 +11315,9 @@ void CDataHandler::SetCurrentIFlowPara(WORD val)
 			}
 			SetIFlowParadata_IPPV(val,true);
 
-			if(getModel()->getCONFIG()->IsEFLOWequalILFOW() && false==GetExhalValvCalMode())
+			if(		getModel()->getCONFIG()->IsEFLOWequalILFOW() 
+				&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW
+				&&	false==GetExhalValvCalMode())
 			{
 				SetEFlowParadata_IPPV(val,true);
 			}
@@ -11324,7 +11335,9 @@ void CDataHandler::SetCurrentIFlowPara(WORD val)
 			}
 			SetIFlowParadata_TRIGGER(val,true);
 
-			if(getModel()->getCONFIG()->IsEFLOWequalILFOW() && false==GetExhalValvCalMode())
+			if(		getModel()->getCONFIG()->IsEFLOWequalILFOW() 
+				&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW
+				&&	false==GetExhalValvCalMode())
 			{
 				SetEFlowParadata_TRIGGER(val,true);
 			}
@@ -11334,7 +11347,9 @@ void CDataHandler::SetCurrentIFlowPara(WORD val)
 		{
 			PRESET()->SetIFlowPara_IPPV(val,false,false);
 
-			if(getModel()->getCONFIG()->IsEFLOWequalILFOW() && false==GetExhalValvCalMode())
+			if(		getModel()->getCONFIG()->IsEFLOWequalILFOW() 
+				&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW
+				&&	false==GetExhalValvCalMode())
 			{
 				PRESET()->SetEFLOWPara_IPPV(val,false,false);
 			}
@@ -11347,7 +11362,9 @@ void CDataHandler::SetCurrentIFlowPara(WORD val)
 		{
 			PRESET()->SetIFlowPara_TRIGGER(val,false,false);
 
-			if(getModel()->getCONFIG()->IsEFLOWequalILFOW() && false==GetExhalValvCalMode())
+			if(		getModel()->getCONFIG()->IsEFLOWequalILFOW() 
+				&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW
+				&&	false==GetExhalValvCalMode())
 			{
 				PRESET()->SetEFLOWPara_TRIGGER(val,false,false);
 			}
@@ -11405,7 +11422,7 @@ WORD CDataHandler::GetCurrentIFlowPara()
 // **************************************************************************
 // 
 // **************************************************************************
-void CDataHandler::SetEFlowParaData(WORD val)
+void CDataHandler::SetCurrentEFlowPara(WORD val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
 	{
@@ -11506,7 +11523,7 @@ void CDataHandler::SetFlowMinParadata(WORD val)
 	}
 }
 
-WORD CDataHandler::GetEFlowParaData()
+WORD CDataHandler::GetCurrentEFlowPara()
 {
 	WORD fValue=0;
 

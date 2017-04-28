@@ -150,10 +150,10 @@ void CWndSubSettingsEFlow::Initialize()
 	m_slider->SetMargin( 5, 0, 6, 0 );
 	m_slider->DrawFocusRect( TRUE );
 
-	if(getModel()->getCONFIG()->GetCurPressureRiseCtrl()!=CURVE_IFLOW)
+	/*if(getModel()->getCONFIG()->GetCurPressureRiseCtrl()!=CURVE_IFLOW)
 	{
 		m_slider->ShowWindow(SW_HIDE);
-	}
+	}*/
 
 	/*if(getModel()->getDATAHANDLER()->activeModeIsIPPV())
 	{
@@ -200,7 +200,15 @@ void CWndSubSettingsEFlow::Initialize()
 	m_pbtnValue->Create(this,g_hf33AcuBold,0);
 	m_pbtnValue->SetText(strVal);
 
-	if(getModel()->getCONFIG()->IsEFLOWequalILFOW())
+	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL && m_iValue>getModel()->getDATAHANDLER()->GetCurrentEFlowMaxKey())
+	{
+		m_bKeyValueAccepted=true;
+		m_bDrawWarning=true;
+		m_pbtnValue->DrawWarning(m_bDrawWarning);
+	}
+
+	if(		getModel()->getCONFIG()->IsEFLOWequalILFOW()
+		&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
 	{
 		m_pbtnValue->ShowWindow(SW_HIDE);
 	}
@@ -209,13 +217,7 @@ void CWndSubSettingsEFlow::Initialize()
 		m_pbtnValue->ShowWindow(SW_SHOW);
 	}
 
-	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL && m_iValue>getModel()->getDATAHANDLER()->GetCurrentEFlowMaxKey())
-	{
-		m_bKeyValueAccepted=true;
-		m_bDrawWarning=true;
-		m_pbtnValue->DrawWarning(m_bDrawWarning);
-	}
-
+	
 	btn.wID					= IDC_BTN_SETUP_NEXTUP;	
 	btn.poPosition.x		= 435;
 	btn.poPosition.y		= 103;
@@ -228,7 +230,8 @@ void CWndSubSettingsEFlow::Initialize()
 	m_pcNextUp=new CDTUpDwnBtn(btn,COLOR_TXTBTNUP);
 	m_pcNextUp->Create(this,g_hf21AcuBold,0);
 	m_pcNextUp->SetText(_T(""));
-	if(getModel()->getCONFIG()->IsEFLOWequalILFOW())
+	if(		getModel()->getCONFIG()->IsEFLOWequalILFOW()
+		&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
 		m_pcNextUp->ShowWindow(SW_HIDE);
 	else
 		m_pcNextUp->ShowWindow(SW_SHOW);
@@ -245,7 +248,8 @@ void CWndSubSettingsEFlow::Initialize()
 	m_pcNextDwn=new CDTUpDwnBtn(btn,COLOR_TXTBTNUP);
 	m_pcNextDwn->Create(this,g_hf21AcuBold,0);
 	m_pcNextDwn->SetText(_T(""));
-	if(getModel()->getCONFIG()->IsEFLOWequalILFOW())
+	if(		getModel()->getCONFIG()->IsEFLOWequalILFOW()
+		&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
 		m_pcNextDwn->ShowWindow(SW_HIDE);
 	else
 		m_pcNextDwn->ShowWindow(SW_SHOW);
@@ -253,7 +257,7 @@ void CWndSubSettingsEFlow::Initialize()
 
 	btn.wID					= IDC_BTN_SELECT_EFLOW;	
 	btn.poPosition.x		= 240;
-	btn.poPosition.y		= 330;
+	btn.poPosition.y		= 360;
 	btn.pcBmpUp				= m_pcPara_Select_no;
 	btn.pcBmpDown			= m_pcPara_Select_yes;
 	btn.pcBmpFocus			= m_pcPara_Select_no;
@@ -342,7 +346,7 @@ void CWndSubSettingsEFlow::Draw()
 	SelectObject(hdcMem,(HPEN)penLine);
 	CBrush cbrRound(RGB(200,200,200));
 	SelectObject(hdcMem,cbrRound);
-	RoundRect(hdcMem, 210, 70, 590, 400,20,20);
+	RoundRect(hdcMem, 210, 70, 590, 440,20,20);
 
 	if(true==getModel()->getCONFIG()->IsEFLOWequalILFOW() && getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
 	{
@@ -450,19 +454,28 @@ void CWndSubSettingsEFlow::Draw()
 
 	SelectObject(hdcMem,g_hf11AcuBold);
 	rc.left = 320;  
-	rc.top = 320;  
+	rc.top = 350;  
 	rc.right  = 590;  
-	rc.bottom = 390;
+	rc.bottom = 420;
 	//DrawText(hdcMem,_T("shortcut in settings menu"),-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
 	DrawText(hdcMem,getModel()->GetLanguageString(IDS_TXT_EFLOW_SHORTCUT),-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
 
-	if(getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
+	//if(getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
 	{
 		rc.left = 200;  
 		rc.top = 280;  
 		rc.right  = 380;  
 		rc.bottom = 380;
 		DrawText(hdcMem,_T("E-Flow = I-Flow"),-1,&rc,DT_TOP|DT_RIGHT|DT_SINGLELINE);
+
+		SelectObject(hdcMem,g_hf8AcuNorm);
+		rc.left = 220;  
+		rc.top = 315;  
+		rc.right  = 580;  
+		rc.bottom = 380;
+		//DrawText(hdcMem,_T("(valid for I-Flow pressure rise control)"),-1,&rc,DT_TOP|DT_CENTER|DT_SINGLELINE);
+		DrawText(hdcMem,getModel()->GetLanguageString(IDS_TXT_IEFLOW_VALIDITY),-1,&rc,DT_TOP|DT_CENTER|DT_SINGLELINE);
+
 	}
 
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,hdcMem,0,0,SRCCOPY);
@@ -647,7 +660,7 @@ BOOL CWndSubSettingsEFlow::PreTranslateMessage(MSG* pMsg)
 //************************************
 void CWndSubSettingsEFlow::OnDestroy()
 {
-	getModel()->getDATAHANDLER()->SetEFlowParaData(m_iValue);
+	getModel()->getDATAHANDLER()->SetCurrentEFlowPara(m_iValue);
 
 	KillTimer(CHANGETIMER);
 	CWndSubSettings::OnDestroy();
@@ -985,16 +998,27 @@ LRESULT CWndSubSettingsEFlow::OnMyMessage(WPARAM wParam, LPARAM lParam)
 	{
 	case IDC_SLD_TRIGGERBEEP:
 		{
+			bool bSend=false;
 			if(lParam==0)
 			{
 				m_bEFLOWequalILFOW=false;
 			}
 			else
 			{
-				m_bEFLOWequalILFOW=true;
+				if(false==m_bEFLOWequalILFOW)
+				{
+					m_bEFLOWequalILFOW=true;
+					bSend=true;
+				}
 			}
 
 			getModel()->getCONFIG()->SetEFLOWequalILFOW(m_bEFLOWequalILFOW);
+
+			if(bSend && getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
+			{
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_SET_EFLOWEQUIFLOW);
+			}
 
 			
 

@@ -7,6 +7,16 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50128 Version 5.0.1.31
+ * @date 2017-04-28
+ * @verbatim
+	- complete factory reset will save the demo license timestamp (ITEM-64)
+	- info line will be refreshed when FOT is started (ITEM-70)
+	- Message box for manual turn off FOT (ITEM-69)
+	- new view for E-Flow menu (ITEM-68)
+	- FOT values will be drawn correct regarding VG state (ITEM-71)
+ @endverbatim
+ *
  * @subsection ver50128 Version 5.0.1.30
  * @date 2017-04-27
  * @verbatim

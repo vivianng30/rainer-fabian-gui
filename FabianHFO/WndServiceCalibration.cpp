@@ -1426,7 +1426,7 @@ void CWndServiceCalibration::OnBnClickedExhCal()
 		
 			getModel()->getDATAHANDLER()->SetCurrentO2Para(21);
 			getModel()->getDATAHANDLER()->SetCurrentIFlowPara(10000);
-			getModel()->getDATAHANDLER()->SetEFlowParaData(5000);
+			getModel()->getDATAHANDLER()->SetCurrentEFlowPara(5000);
 			getModel()->getDATAHANDLER()->SetCurrentPEEPPara(50);
 			getModel()->getDATAHANDLER()->SetCurrentITimePara(1000);
 			getModel()->getDATAHANDLER()->SetCurrentBPMPara(30);

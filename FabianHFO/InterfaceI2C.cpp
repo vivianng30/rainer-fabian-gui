@@ -936,7 +936,30 @@ bool CInterfaceI2C::SetFRAMDefaultFactoryValues()
 bool CInterfaceI2C::SetFRAMDefaultFactoryConfig()
 {
 	bool bResult=true;
+
+	//save demo licneses and restore afterwards
+	COleDateTime dtFOTdemoTimestamp = getModel()->getCONFIG()->GetFOTdemoTimestamp();
+	COleDateTime dtPRICOdemoTimestamp = getModel()->getCONFIG()->GetPRICOdemoTimestamp();
+	COleDateTime dtTHERAPYdemoTimestamp = getModel()->getCONFIG()->GetTHERAPYdemoTimestamp();
+	COleDateTime dtTRENDdemoTimestamp = getModel()->getCONFIG()->GetTRENDdemoTimestamp();
+	COleDateTime dtLUNGRECdemoTimestamp = getModel()->getCONFIG()->GetLUNGRECdemoTimestamp();
+	COleDateTime dtVLIMITdemoTimestamp = getModel()->getCONFIG()->GetVLIMITdemoTimestamp();
+	COleDateTime dtVGUARANTYdemoTimestamp = getModel()->getCONFIG()->GetVGUARANTYdemoTimestamp();
+	COleDateTime dtNMODEdemoTimestamp = getModel()->getCONFIG()->GetNMODEdemoTimestamp();
+	COleDateTime dtHFOdemoTimestamp = getModel()->getCONFIG()->GetHFOdemoTimestamp();
+
 	Erase64FRAM();
+
+	//restore demo license timestamp
+	getModel()->getCONFIG()->SetFOTdemoTimestamp(dtFOTdemoTimestamp);
+	getModel()->getCONFIG()->SetPRICOdemoTimestamp(dtPRICOdemoTimestamp);
+	getModel()->getCONFIG()->SetTHERAPYdemoTimestamp(dtTHERAPYdemoTimestamp);
+	getModel()->getCONFIG()->SetTRENDdemoTimestamp(dtTRENDdemoTimestamp);
+	getModel()->getCONFIG()->SetLUNGRECdemoTimestamp(dtLUNGRECdemoTimestamp);
+	getModel()->getCONFIG()->SetVLIMITdemoTimestamp(dtVLIMITdemoTimestamp);
+	getModel()->getCONFIG()->SetVGUARANTYdemoTimestamp(dtVGUARANTYdemoTimestamp);
+	getModel()->getCONFIG()->SetNMODEdemoTimestamp(dtNMODEdemoTimestamp);
+	getModel()->getCONFIG()->SetHFOdemoTimestamp(dtHFOdemoTimestamp);
 
 	WriteConfigByte(SPO2FASTSAT_8, 1);
 	WriteConfigByte(SPO2SENSITIVITY_8, SPO2_SENSITIVITY_NORMAL);

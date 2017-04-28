@@ -1820,6 +1820,8 @@ void CInterfaceSerial::Send_PARAVAL_INSP_FLOW(int val)
 	wsprintf(psz,_T("u%dq"),val);
 	if(0==sendSerialCommand(psz))
 		theApp.getLog()->WriteLine(psz);
+
+	DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_INSP_FLOW %d\r\n"),val));
 }
 
 // **************************************************************************
@@ -1832,6 +1834,8 @@ void CInterfaceSerial::Send_PARAVAL_RISETIME(int val)
 	wsprintf(psz,_T("[%dq"),val);
 	if(0==sendSerialCommand(psz))
 		theApp.getLog()->WriteLine(psz);
+
+	DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_RISETIME %d\r\n"),val));
 }
 
 // **************************************************************************

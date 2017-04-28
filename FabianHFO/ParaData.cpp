@@ -1508,7 +1508,9 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			getModel()->getDATAHANDLER()->PARADATA()->SetPEEPPara_IPPV(getModel()->getDATAHANDLER()->PRESET()->GetPEEPPara_IPPV(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetRisetimePara_IPPV(getModel()->getDATAHANDLER()->PRESET()->GetRisetimePara_IPPV(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetIFlowPara_IPPV(getModel()->getDATAHANDLER()->PRESET()->GetIFlowPara_IPPV(),false,true);
-			if(getModel()->getCONFIG()->IsEFLOWequalILFOW() && false==getModel()->getDATAHANDLER()->GetExhalValvCalMode())
+			if(		getModel()->getCONFIG()->IsEFLOWequalILFOW()
+				&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW
+				&&	false==getModel()->getDATAHANDLER()->GetExhalValvCalMode())
 			{
 				getModel()->getDATAHANDLER()->PARADATA()->SetEFLOWPara_IPPV(getModel()->getDATAHANDLER()->PRESET()->GetIFlowPara_IPPV(),false,true);
 			}
@@ -1545,7 +1547,9 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			getModel()->getDATAHANDLER()->PARADATA()->SetPEEPPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetPEEPPara_TRIGGER(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetRisetimePara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetRisetimePara_TRIGGER(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetIFlowPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetIFlowPara_TRIGGER(),false,true);
-			if(getModel()->getCONFIG()->IsEFLOWequalILFOW() && false==getModel()->getDATAHANDLER()->GetExhalValvCalMode())
+			if(		getModel()->getCONFIG()->IsEFLOWequalILFOW()
+				&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW
+				&&	false==getModel()->getDATAHANDLER()->GetExhalValvCalMode())
 			{
 				getModel()->getDATAHANDLER()->PARADATA()->SetEFLOWPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetIFlowPara_TRIGGER(),false,true);
 			}
@@ -1590,7 +1594,9 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			getModel()->getDATAHANDLER()->PARADATA()->SetPEEPPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetPEEPPara_TRIGGER(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetRisetimePara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetRisetimePara_TRIGGER(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetIFlowPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetIFlowPara_TRIGGER(),false,true);
-			if(getModel()->getCONFIG()->IsEFLOWequalILFOW() && false==getModel()->getDATAHANDLER()->GetExhalValvCalMode())
+			if(		getModel()->getCONFIG()->IsEFLOWequalILFOW()
+				&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW
+				&&	false==getModel()->getDATAHANDLER()->GetExhalValvCalMode())
 			{
 				getModel()->getDATAHANDLER()->PARADATA()->SetEFLOWPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetIFlowPara_TRIGGER(),false,true);
 			}
@@ -2081,7 +2087,7 @@ WORD CParaData::GetEFLOWPara_TRIGGER()
 }
 void CParaData::SetEFLOWPara_TRIGGER(WORD value, bool bSend, bool bConfig)
 {
-	DEBUGMSG(TRUE, (TEXT("set SetEFLOWPara_TRIGGER %d\r\n"),value));
+	//DEBUGMSG(TRUE, (TEXT("set SetEFLOWPara_TRIGGER %d\r\n"),value));
 	m_data.m_iParaDataEFlow_TRIGGER=value;
 
 	if(bConfig)
@@ -2089,7 +2095,7 @@ void CParaData::SetEFLOWPara_TRIGGER(WORD value, bool bSend, bool bConfig)
 		getModel()->getCONFIG()->SetParaDataEFlow_TRIGGER(value);
 		if(bSend)
 		{
-			DEBUGMSG(TRUE, (TEXT("send SetEFLOWPara_TRIGGER %d\r\n"),value));
+			//DEBUGMSG(TRUE, (TEXT("send SetEFLOWPara_TRIGGER %d\r\n"),value));
 			getModel()->Send_PARA_EXH_FLOW(value,true,true);
 		}
 	}
@@ -2119,7 +2125,7 @@ void CParaData::SetEFLOWPara_IPPV(WORD value, bool bSend, bool bConfig)
 		}
 	}
 #else
-	DEBUGMSG(TRUE, (TEXT("set SetEFLOWPara_IPPV %d\r\n"),value));
+	//DEBUGMSG(TRUE, (TEXT("set SetEFLOWPara_IPPV %d\r\n"),value));
 	m_data.m_iParaDataEFlow_TRIGGER=value;
 
 	if(bConfig)
@@ -2127,7 +2133,7 @@ void CParaData::SetEFLOWPara_IPPV(WORD value, bool bSend, bool bConfig)
 		getModel()->getCONFIG()->SetParaDataEFlow_TRIGGER(value);
 		if(bSend)
 		{
-			DEBUGMSG(TRUE, (TEXT("send SetEFLOWPara_IPPV %d\r\n"),value));
+			//DEBUGMSG(TRUE, (TEXT("send SetEFLOWPara_IPPV %d\r\n"),value));
 			getModel()->Send_PARA_EXH_FLOW(value,true,true);
 		}
 	}

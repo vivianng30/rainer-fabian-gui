@@ -411,8 +411,8 @@ public:
 	WORD GetCurrentIFlowPara();
 
 	void SetFlowMinParadata(WORD val);
-	void SetEFlowParaData(WORD val);
-	WORD GetEFlowParaData();
+	void SetCurrentEFlowPara(WORD val);
+	WORD GetCurrentEFlowPara();
 	WORD GetFlowminParaData();
 
 	void SetCurrentTherapieFlowParaData(WORD val);
