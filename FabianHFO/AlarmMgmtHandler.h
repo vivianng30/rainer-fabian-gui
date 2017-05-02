@@ -327,7 +327,7 @@ public:
 	void CheckAlarmStateBytes();
 	void CheckFlowSensorState();
 
-	bool isActiveAlarmHigherPriority(eAlarmPrio prioAlarm);
+	bool isActiveAlarmHigherOrSamePriority(eAlarmPrio prioAlarm);
 
 	bool CanSetAlarm_ChecksumConPIC();
 	bool CanSetAlarm_DISCONNECTION();

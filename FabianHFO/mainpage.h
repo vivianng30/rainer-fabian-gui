@@ -7,24 +7,30 @@
  *
  * @section ver Version history and changelog
  *
- * @subsection ver50128 Version 5.0.1.31
- * @date 2017-04-28
+ * @subsection ver50132 Version 5.0.1.32
+ * @date 2017-05-02
  * @verbatim
-	- complete factory reset will save the demo license timestamp (ITEM-64)
-	- info line will be refreshed when FOT is started (ITEM-70)
-	- Message box for manual turn off FOT (ITEM-69)
-	- new view for E-Flow menu (ITEM-68)
-	- FOT values will be drawn correct regarding VG state (ITEM-71)
+	- alarm handling changed (ITEM-72)
  @endverbatim
  *
- * @subsection ver50128 Version 5.0.1.30
+ * @subsection ver50131 Version 5.0.1.31
+ * @date 2017-04-28
+ * @verbatim
+ - complete factory reset will save the demo license timestamp (ITEM-64)
+ - info line will be refreshed when FOT is started (ITEM-70)
+ - Message box for manual turn off FOT (ITEM-69)
+ - new view for E-Flow menu (ITEM-68)
+ - FOT values will be drawn correct regarding VG state (ITEM-71)
+ @endverbatim
+ *
+ * @subsection ver50130 Version 5.0.1.30
  * @date 2017-04-27
  * @verbatim
 	- EFlowMaxKey / IFlowMaxKey declared as WORD now
 	- IFlow == EFlow function: EFlow will be send only if function will be enabled
  @endverbatim
  *
- * @subsection ver50128 Version 5.0.1.29
+ * @subsection ver50129 Version 5.0.1.29
  * @date 2017-04-26
  * @verbatim
 	- parameter Risetime will be send also to Monitor PIC now

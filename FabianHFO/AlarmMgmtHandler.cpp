@@ -459,6 +459,14 @@ void CAlarmMgmtHandler::init()
  *===============================================================================================**/
 void CAlarmMgmtHandler::initAlarmList()
 {
+	ALARM_SysFail_IF_SPI = new CAlarm(AL_SysFail_IF_SPI,AT_SYSFAIL,AP_1,AS_NONE,0);
+	ALARM_SysFail_IF_DIO = new CAlarm(AL_SysFail_IF_DIO,AT_SYSFAIL,AP_1,AS_NONE,0);
+	ALARM_SysFail_IF_COM = new CAlarm(AL_SysFail_IF_COM,AT_SYSFAIL,AP_1,AS_NONE,0);
+	ALARM_SysFail_IF_I2C = new CAlarm(AL_SysFail_IF_I2C,AT_SYSFAIL,AP_1,AS_NONE,0);
+	ALARM_SysFail_IF_PIF = new CAlarm(AL_SysFail_IF_PIF,AT_SYSFAIL,AP_1,AS_NONE,0);
+	ALARM_SysFail_Fan = new CAlarm(AL_SysFail_Fan,AT_SYSFAIL,AP_1,AS_NONE,0);
+
+	ALARM_Accu_15 = new CAlarm(AL_Accu_15,AT_POWER,AP_2,AS_NONE,0);
 	ALARM_NONE = new CAlarm(AL_NONE,AT_NONE,AP_2,AS_NONE,0);
 	ALARM_Accu_Empty = new CAlarm(AL_Accu_Empty,AT_POWER,AP_2,AS_NONE,0);
 	ALARM_SysFail_ChecksumConPIC = new CAlarm(AL_SysFail_ChecksumConPIC,AT_SYSFAIL,AP_2,AS_NONE,0);
@@ -466,48 +474,48 @@ void CAlarmMgmtHandler::initAlarmList()
 	ALARM_SysFail_RELAIS_DEFECT = new CAlarm(AL_SysFail_RELAIS_DEFECT,AT_SYSFAIL,AP_2,AS_NONE,0);
 	ALARM_SysFail_P_IN_MIXER = new CAlarm(AL_SysFail_P_IN_MIXER,AT_SYSFAIL,AP_2,AS_NONE,0);
 	ALARM_SysFail_VOLTAGE = new CAlarm(AL_SysFail_VOLTAGE,AT_SYSFAIL,AP_2,AS_NONE,0);
-	ALARM_SysFail_IF_SPI = new CAlarm(AL_SysFail_IF_SPI,AT_SYSFAIL,AP_1,AS_NONE,0);
-	ALARM_SysFail_IF_DIO = new CAlarm(AL_SysFail_IF_DIO,AT_SYSFAIL,AP_1,AS_NONE,0);
-	ALARM_SysFail_IF_COM = new CAlarm(AL_SysFail_IF_COM,AT_SYSFAIL,AP_1,AS_NONE,0);
-	ALARM_SysFail_IF_I2C = new CAlarm(AL_SysFail_IF_I2C,AT_SYSFAIL,AP_1,AS_NONE,0);
-	ALARM_SysFail_IF_PIF = new CAlarm(AL_SysFail_IF_PIF,AT_SYSFAIL,AP_1,AS_NONE,0);
 	ALARM_SysFail_OUTOFMEMORY = new CAlarm(AL_SysFail_OUTOFMEMORY,AT_SYSFAIL,AP_2,AS_NONE,0);
-	ALARM_SysFail_Fan = new CAlarm(AL_SysFail_Fan,AT_SYSFAIL,AP_1,AS_NONE,0);
 	ALARM_SysFail_MIXER_AVCAL = new CAlarm(AL_SysFail_MIXER_AVCAL,AT_SYSALARM,AP_2,AS_NONE,0);
 	ALARM_Accu_Defect = new CAlarm(AL_Accu_Defect,AT_POWER,AP_2,AS_NONE,0);
 	ALARM_SysAl_P_IN_O2 = new CAlarm(AL_SysAl_P_IN_O2,AT_SYSALARM,AP_2,AS_NONE,0);
 	ALARM_SysAl_P_IN_AIR = new CAlarm(AL_SysAl_P_IN_AIR,AT_SYSALARM,AP_2,AS_NONE,0);
 	ALARM_SysAl_TUBE_OCCLUSION = new CAlarm(AL_SysAl_TUBE_OCCLUSION,AT_SYSALARM,AP_2,AS_NONE,0);
+
 	ALARM_DISCONNECTION = new CAlarm(AL_DISCONNECTION,AT_DISCON_TUBUS,AP_3,AS_NONE,0); //new alarm prio 08.2016
-	ALARM_TUBUSBLOCKED = new CAlarm(AL_TUBUSBLOCKED,AT_DISCON_TUBUS,AP_4,AS_NONE,0);
-	ALARM_Sens_FLOW_SENSOR_DEFECT = new CAlarm(AL_Sens_FLOW_SENSOR_DEFECT,AT_SENSOR,AP_5,AS_NONE,0); //new alarm prio 08.2016
-	ALARM_Sens_FLOW_SENSOR_CLEANING = new CAlarm(AL_Sens_FLOW_SENSOR_CLEANING,AT_SENSOR,AP_5,AS_NONE,0); //new alarm prio 08.2016
-	ALARM_Sens_FLOW_SENSOR_NOTCONNECTED = new CAlarm(AL_Sens_FLOW_SENSOR_NOTCONNECTED,AT_SENSOR,AP_5,AS_SIGNALED,0); //new alarm prio 08.2016
-	ALARM_Sens_O2_SENSOR_DEFECT = new CAlarm(AL_Sens_O2_SENSOR_DEFECT,AT_SENSOR,AP_5,AS_NONE,0); //new alarm prio 08.2016
-	ALARM_Sens_O2_SENSOR_USED = new CAlarm(AL_Sens_O2_SENSOR_USED,AT_SENSOR,AP_5,AS_NONE,0); //new alarm prio 08.2016
-	ALARM_Sens_O2_VALUE_INCORRECT = new CAlarm(AL_Sens_O2_VALUE_INCORRECT,AT_SENSOR,AP_5,AS_NONE,0); //new alarm prio 08.2016
-	ALARM_Sens_O2_NOT_CALIBRATED = new CAlarm(AL_Sens_O2_NOT_CALIBRATED,AT_SENSOR,AP_5,AS_NONE,0); //new alarm prio 08.2016
-	ALARM_Sens_PRICO_FiO2outOfRange = new CAlarm(AL_Sens_PRICO_FiO2outOfRange,AT_SENSOR,AP_5,AS_NONE,0); //new alarm prio 08.2016
-	ALARM_Sens_CO2_MODULE_NOTCONNECTED = new CAlarm(AL_Sens_CO2_MODULE_NOTCONNECTED,AT_CO2,AP_6,AS_NONE,0); //new alarm prio 08.2016
-	ALARM_Sens_CO2_FILTERLINE_NOTCONNECTED = new CAlarm(AL_Sens_CO2_FILTERLINE_NOTCONNECTED,AT_CO2,AP_6,AS_NONE,0); //new alarm prio 08.2016
-	ALARM_Sens_CO2_CHECKSAMPLINGLINE = new CAlarm(AL_Sens_CO2_CHECKSAMPLINGLINE,AT_CO2,AP_6,AS_NONE,0); //new alarm prio 08.2016
-	ALARM_Sens_CO2_CHECKAIRWAYADAPTER = new CAlarm(AL_Sens_CO2_CHECKAIRWAYADAPTER,AT_CO2,AP_6,AS_NONE,0); //new alarm prio 08.2016
-	ALARM_Sens_CO2_SENSORFAULTY = new CAlarm(AL_Sens_CO2_SENSORFAULTY,AT_CO2,AP_6,AS_NONE,0); //new alarm prio 08.2016
-	ALARM_Sens_SPO2_MODULE_NOTCONNECTED = new CAlarm(AL_Sens_SPO2_MODULE_NOTCONNECTED,AT_SPO2,AP_6,AS_NONE,0); //new alarm prio 08.2016
-	ALARM_Sens_SPO2_SENSORFAULTY = new CAlarm(AL_Sens_SPO2_SENSORFAULTY,AT_SPO2,AP_6,AS_NONE,0); //new alarm prio 08.2016
-	ALARM_Sens_SPO2_CHECKSENSOR = new CAlarm(AL_Sens_SPO2_CHECKSENSOR,AT_SPO2,AP_6,AS_NONE,0); //new alarm prio 08.2016
+	ALARM_TUBUSBLOCKED = new CAlarm(AL_TUBUSBLOCKED,AT_DISCON_TUBUS,AP_3,AS_NONE,0);
+
+	ALARM_Sens_FLOW_SENSOR_DEFECT = new CAlarm(AL_Sens_FLOW_SENSOR_DEFECT,AT_SENSOR,AP_4,AS_NONE,0); //new alarm prio 08.2016
+	ALARM_Sens_FLOW_SENSOR_CLEANING = new CAlarm(AL_Sens_FLOW_SENSOR_CLEANING,AT_SENSOR,AP_4,AS_NONE,0); //new alarm prio 08.2016
+	ALARM_Sens_FLOW_SENSOR_NOTCONNECTED = new CAlarm(AL_Sens_FLOW_SENSOR_NOTCONNECTED,AT_SENSOR,AP_4,AS_SIGNALED,0); //new alarm prio 08.2016
+	ALARM_Sens_O2_SENSOR_DEFECT = new CAlarm(AL_Sens_O2_SENSOR_DEFECT,AT_SENSOR,AP_4,AS_NONE,0); //new alarm prio 08.2016
+	ALARM_Sens_O2_SENSOR_USED = new CAlarm(AL_Sens_O2_SENSOR_USED,AT_SENSOR,AP_4,AS_NONE,0); //new alarm prio 08.2016
+	ALARM_Sens_O2_VALUE_INCORRECT = new CAlarm(AL_Sens_O2_VALUE_INCORRECT,AT_SENSOR,AP_4,AS_NONE,0); //new alarm prio 08.2016
+	ALARM_Sens_O2_NOT_CALIBRATED = new CAlarm(AL_Sens_O2_NOT_CALIBRATED,AT_SENSOR,AP_4,AS_NONE,0); //new alarm prio 08.2016
+	ALARM_Sens_PRICO_FiO2outOfRange = new CAlarm(AL_Sens_PRICO_FiO2outOfRange,AT_SENSOR,AP_4,AS_NONE,0); //new alarm prio 08.2016
+	
+	ALARM_Sens_CO2_MODULE_NOTCONNECTED = new CAlarm(AL_Sens_CO2_MODULE_NOTCONNECTED,AT_CO2,AP_5,AS_NONE,0); //new alarm prio 08.2016
+	ALARM_Sens_CO2_FILTERLINE_NOTCONNECTED = new CAlarm(AL_Sens_CO2_FILTERLINE_NOTCONNECTED,AT_CO2,AP_5,AS_NONE,0); //new alarm prio 08.2016
+	ALARM_Sens_CO2_CHECKSAMPLINGLINE = new CAlarm(AL_Sens_CO2_CHECKSAMPLINGLINE,AT_CO2,AP_5,AS_NONE,0); //new alarm prio 08.2016
+	ALARM_Sens_CO2_CHECKAIRWAYADAPTER = new CAlarm(AL_Sens_CO2_CHECKAIRWAYADAPTER,AT_CO2,AP_5,AS_NONE,0); //new alarm prio 08.2016
+	ALARM_Sens_CO2_SENSORFAULTY = new CAlarm(AL_Sens_CO2_SENSORFAULTY,AT_CO2,AP_5,AS_NONE,0); //new alarm prio 08.2016
+	ALARM_Sens_SPO2_MODULE_NOTCONNECTED = new CAlarm(AL_Sens_SPO2_MODULE_NOTCONNECTED,AT_SPO2,AP_5,AS_NONE,0); //new alarm prio 08.2016
+	ALARM_Sens_SPO2_SENSORFAULTY = new CAlarm(AL_Sens_SPO2_SENSORFAULTY,AT_SPO2,AP_5,AS_NONE,0); //new alarm prio 08.2016
+	ALARM_Sens_SPO2_CHECKSENSOR = new CAlarm(AL_Sens_SPO2_CHECKSENSOR,AT_SPO2,AP_5,AS_NONE,0); //new alarm prio 08.2016
+
+	ALARM_PatAl_Apnoe = new CAlarm(AL_PatAl_Apnoe,AT_PATIENT,AP_6,AS_NONE,0); //new alarm prio 08.2016
+	
 	ALARM_PatAl_SPO2_SIQmin = new CAlarm(AL_PatAl_SPO2_SIQmin,AT_PATIENT,AP_7,AS_NONE,0);
 	ALARM_PRICO_FiO2max = new CAlarm(AL_PRICO_FiO2max,AT_PATIENT,AP_7,AS_NONE,0);
 	ALARM_PRICO_FiO2min = new CAlarm(AL_PRICO_FiO2min,AT_PATIENT,AP_7,AS_NONE,0);
+	ALARM_PatAl_PIPmax = new CAlarm(AL_PatAl_PIPmax,AT_PATIENT,AP_7,AS_NONE,0);
+	ALARM_PatAl_PEEPminHigh = new CAlarm(AL_PatAl_PEEPminHigh,AT_PATIENT,AP_7,AS_NONE,0);
+
+	ALARM_PatAl_PIPmin = new CAlarm(AL_PatAl_PIPmin,AT_PATIENT,AP_8,AS_NONE,0);
 	ALARM_PatAl_MVmax = new CAlarm(AL_PatAl_MVmax,AT_PATIENT,AP_8,AS_NONE,0);
 	ALARM_PatAl_MVmin = new CAlarm(AL_PatAl_MVmin,AT_PATIENT,AP_8,AS_NONE,0);
-	ALARM_PatAl_PIPmax = new CAlarm(AL_PatAl_PIPmax,AT_PATIENT,AP_7,AS_NONE,0);
-	ALARM_PatAl_PIPmin = new CAlarm(AL_PatAl_PIPmin,AT_PATIENT,AP_7,AS_NONE,0);
 	ALARM_PatAl_PEEPminLow = new CAlarm(AL_PatAl_PEEPminLow,AT_PATIENT,AP_8,AS_NONE,0);
-	ALARM_PatAl_PEEPminHigh = new CAlarm(AL_PatAl_PEEPminHigh,AT_PATIENT,AP_7,AS_NONE,0);
 	ALARM_PatAl_BPMmax = new CAlarm(AL_PatAl_BPMmax,AT_PATIENT,AP_8,AS_NONE,0);
 	ALARM_PatAl_Leakmax = new CAlarm(AL_PatAl_Leakmax,AT_PATIENT,AP_8,AS_NONE,0);
-	ALARM_PatAl_Apnoe = new CAlarm(AL_PatAl_Apnoe,AT_PATIENT,AP_6,AS_NONE,0); //new alarm prio 08.2016
 	ALARM_PatAl_DCO2max = new CAlarm(AL_PatAl_DCO2max,AT_PATIENT,AP_8,AS_NONE,0);
 	ALARM_PatAl_DCO2min = new CAlarm(AL_PatAl_DCO2min,AT_PATIENT,AP_8,AS_NONE,0);
 	ALARM_PatAl_ETCO2max = new CAlarm(AL_PatAl_ETCO2max,AT_PATIENT,AP_8,AS_NONE,0);
@@ -519,13 +527,14 @@ void CAlarmMgmtHandler::initAlarmList()
 	ALARM_PatAl_PulseRatemax = new CAlarm(AL_PatAl_PulseRatemax,AT_PATIENT,AP_8,AS_NONE,0);
 	ALARM_PatAl_PulseRatemin = new CAlarm(AL_PatAl_PulseRatemin,AT_PATIENT,AP_8,AS_NONE,0);
 	ALARM_PatAl_SPO2_PImin = new CAlarm(AL_PatAl_SPO2_PImin,AT_PATIENT,AP_8,AS_NONE,0);
-	ALARM_SysLimit_Pinsp_NotReached = new CAlarm(AL_SysLimit_Pinsp_NotReached,AT_SYSLIMIT,AP_9,AS_NONE,0);
-	ALARM_SysLimit_Vlimitted = new CAlarm(AL_SysLimit_Vlimitted,AT_SYSLIMIT,AP_9,AS_NONE,0);
 	ALARM_SysLimit_Vgaranty = new CAlarm(AL_SysLimit_Vgaranty,AT_PATIENT,AP_8,AS_NONE,0);
-	ALARM_Accu_POWER = new CAlarm(AL_Accu_POWER,AT_POWER,AP_9,AS_NONE,0);
 	ALARM_Accu_60 = new CAlarm(AL_Accu_60,AT_POWER,AP_8,AS_NONE,0);
 	ALARM_Accu_30 = new CAlarm(AL_Accu_30,AT_POWER,AP_8,AS_NONE,0);
-	ALARM_Accu_15 = new CAlarm(AL_Accu_15,AT_POWER,AP_2,AS_NONE,0);
+
+	ALARM_SysLimit_Pinsp_NotReached = new CAlarm(AL_SysLimit_Pinsp_NotReached,AT_SYSLIMIT,AP_9,AS_NONE,0);
+	ALARM_SysLimit_Vlimitted = new CAlarm(AL_SysLimit_Vlimitted,AT_SYSLIMIT,AP_9,AS_NONE,0);
+	ALARM_Accu_POWER = new CAlarm(AL_Accu_POWER,AT_POWER,AP_9,AS_NONE,0);
+	
 
 	EnterCriticalSection(&csAlarmList);
 	m_pAlarmlist = new CAlarmList();
@@ -2673,6 +2682,8 @@ eAlarm CAlarmMgmtHandler::getSignaledAlarm()
 
 bool CAlarmMgmtHandler::setAlarm(eAlarm alarm, CStringW alarmTxt)
 {
+	DEBUGMSG(TRUE, (TEXT("setAlarm\r\n")));
+
 	bool bRes=false;
 	switch(alarm)
 	{
@@ -3050,13 +3061,13 @@ bool CAlarmMgmtHandler::setAlarm(eAlarm alarm, CStringW alarmTxt)
 	return bRes;
 }
 
-bool CAlarmMgmtHandler::isActiveAlarmHigherPriority(eAlarmPrio prioAlarm)
+bool CAlarmMgmtHandler::isActiveAlarmHigherOrSamePriority(eAlarmPrio prioAlarm)
 {
 	bool bRes=false;
 	if(AL_NONE!=getActiveAlarm())//active alarm
 	{
-		// alarm with higher priority active???
-		if(	getPrioActiveAlarm() < prioAlarm )	
+		// alarm with higher or same priority active???
+		if(	getPrioActiveAlarm() <= prioAlarm )	
 		{
 			bRes=true;
 		}
@@ -3076,7 +3087,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_ChecksumConPIC()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysFail_ChecksumConPIC)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysFail_ChecksumConPIC)))
 		return false;
 	return true;
 }
@@ -3109,7 +3120,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_ChecksumMonPIC()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysFail_ChecksumMonPIC)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysFail_ChecksumMonPIC)))
 		return false;
 	return true;
 }
@@ -3143,7 +3154,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_RELAIS_DEFECT()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysFail_RELAIS_DEFECT)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysFail_RELAIS_DEFECT)))
 		return false;
 	return true;
 }
@@ -3175,7 +3186,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_MIXER_AVCAL()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysFail_MIXER_AVCAL)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysFail_MIXER_AVCAL)))
 		return false;
 	return true;
 }
@@ -3209,7 +3220,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_P_IN_MIXER()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysFail_P_IN_MIXER)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysFail_P_IN_MIXER)))
 		return false;
 	return true;
 }
@@ -3243,7 +3254,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_VOLTAGE()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysFail_VOLTAGE)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysFail_VOLTAGE)))
 		return false;
 	return true;
 }
@@ -3281,7 +3292,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_IF_SPI()//newSPI
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysFail_IF_SPI)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysFail_IF_SPI)))
 		return false;
 	return true;
 }
@@ -3317,7 +3328,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_IF_DIO()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysFail_IF_DIO)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysFail_IF_DIO)))
 		return false;
 	return true;
 }
@@ -3350,7 +3361,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_IF_COM()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysFail_IF_COM)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysFail_IF_COM)))
 		return false;
 	return true;
 }
@@ -3383,7 +3394,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_IF_I2C()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysFail_IF_I2C)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysFail_IF_I2C)))
 		return false;
 	return true;
 }
@@ -3417,7 +3428,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_IF_PIF()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysFail_IF_PIF)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysFail_IF_PIF)))
 		return false;
 	return true;
 }
@@ -3451,7 +3462,7 @@ bool CAlarmMgmtHandler::SetAlarm_IF_PIF(CStringW alarmTxt)
 //		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 //		return false;
 //
-//	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysFail_IF_ACULINK)))
+//	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysFail_IF_ACULINK)))
 //		return false;
 //	return true;
 //}
@@ -3496,7 +3507,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_Fan()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysFail_Fan)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysFail_Fan)))
 		return false;
 	return true;
 }
@@ -3528,7 +3539,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_OUTOFMEMORY()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysFail_OUTOFMEMORY)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysFail_OUTOFMEMORY)))
 		return false;
 	return true;
 }
@@ -3561,7 +3572,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_P_IN_O2()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysAl_P_IN_O2)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysAl_P_IN_O2)))
 		return false;
 	return true;
 }
@@ -3592,7 +3603,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_P_IN_AIR()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysAl_P_IN_AIR)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysAl_P_IN_AIR)))
 		return false;
 	return true;
 }
@@ -3623,7 +3634,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_TUBE_OCCLUSION()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysAl_TUBE_OCCLUSION)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysAl_TUBE_OCCLUSION)))
 		return false;
 	return true;
 }
@@ -3661,7 +3672,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_DISCONNECTION()
 		||	getStartupSilent()==true)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_DISCONNECTION)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_DISCONNECTION)))
 		return false;
 	return true;
 }
@@ -3700,7 +3711,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_TUBUSBLOCKED()
 		||	getStartupSilent()==true)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_TUBUSBLOCKED)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_TUBUSBLOCKED)))
 		return false;
 	return true;
 }
@@ -3866,7 +3877,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_FLOW_SENSOR_DEFECT()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_Sens_FLOW_SENSOR_DEFECT)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_Sens_FLOW_SENSOR_DEFECT)))
 		return false;
 	return true;
 }
@@ -3906,7 +3917,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_FLOW_SENSOR_CLEANING()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_Sens_FLOW_SENSOR_CLEANING)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_Sens_FLOW_SENSOR_CLEANING)))
 		return false;
 	return true;
 }
@@ -3946,7 +3957,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_FLOW_SENSOR_NOTCONNECTED()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_Sens_FLOW_SENSOR_NOTCONNECTED)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_Sens_FLOW_SENSOR_NOTCONNECTED)))
 		return false;
 	return true;
 }
@@ -3986,7 +3997,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_O2_SENSOR_DEFECT()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_Sens_O2_SENSOR_DEFECT)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_Sens_O2_SENSOR_DEFECT)))
 		return false;
 	return true;
 }
@@ -4025,7 +4036,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_O2_SENSOR_USED()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_Sens_O2_SENSOR_USED)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_Sens_O2_SENSOR_USED)))
 		return false;
 	return true;
 }
@@ -4065,7 +4076,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_O2_VALUE_INCORRECT()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_Sens_O2_VALUE_INCORRECT)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_Sens_O2_VALUE_INCORRECT)))
 		return false;
 	return true;
 }
@@ -4105,7 +4116,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_O2_NOT_CALIBRATED()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_Sens_O2_NOT_CALIBRATED)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_Sens_O2_NOT_CALIBRATED)))
 		return false;
 	return true;
 }
@@ -4142,7 +4153,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_PRICO_FiO2outOfRange()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_Sens_PRICO_FiO2outOfRange)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_Sens_PRICO_FiO2outOfRange)))
 		return false;
 	return true;
 }
@@ -4176,7 +4187,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_SPO2_SENSORFAULTY()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_Sens_SPO2_SENSORFAULTY)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_Sens_SPO2_SENSORFAULTY)))
 		return false;
 	return true;
 }
@@ -4219,7 +4230,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_SPO2_CHECKSENSOR()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_Sens_SPO2_CHECKSENSOR)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_Sens_SPO2_CHECKSENSOR)))
 		return false;
 	return true;
 }
@@ -4251,7 +4262,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_SPO2_MODULE_NOTCONNECTED()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_Sens_SPO2_MODULE_NOTCONNECTED)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_Sens_SPO2_MODULE_NOTCONNECTED)))
 		return false;
 	return true;
 }
@@ -4292,7 +4303,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_CO2_MODULE_NOTCONNECTED()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_Sens_CO2_MODULE_NOTCONNECTED)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_Sens_CO2_MODULE_NOTCONNECTED)))
 		return false;
 	return true;
 }
@@ -4345,7 +4356,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_CO2_FILTERLINE_NOTCONNECTED()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_Sens_CO2_FILTERLINE_NOTCONNECTED)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_Sens_CO2_FILTERLINE_NOTCONNECTED)))
 		return false;
 	return true;
 }
@@ -4379,7 +4390,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_CO2_CHECKSAMPLINGLINE()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_Sens_CO2_CHECKSAMPLINGLINE)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_Sens_CO2_CHECKSAMPLINGLINE)))
 		return false;
 	return true;
 }
@@ -4414,7 +4425,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_CO2_CHECKAIRWAYADAPTER()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_Sens_CO2_CHECKAIRWAYADAPTER)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_Sens_CO2_CHECKAIRWAYADAPTER)))
 		return false;
 	return true;
 }
@@ -4450,7 +4461,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_CO2_SENSORFAULTY()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_Sens_CO2_SENSORFAULTY)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_Sens_CO2_SENSORFAULTY)))
 		return false;
 	return true;
 }
@@ -4484,7 +4495,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_MVmax()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_MVmax)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_MVmax)))
 		return false;
 	return true;
 }
@@ -4517,7 +4528,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_MVmin()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_MVmin)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_MVmin)))
 		return false;
 	return true;
 }
@@ -4552,7 +4563,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_PRICO_SIQvalue()
 		return false;
 	}
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_SPO2_SIQmin)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_SPO2_SIQmin)))
 	{
 		m_szPIPmaxAlarmText=_T("");
 		return false;
@@ -4600,7 +4611,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_PRICO_FiO2max()
 		return false;
 	}
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PRICO_FiO2max)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PRICO_FiO2max)))
 	{
 		m_szPIPmaxAlarmText=_T("");
 		return false;
@@ -4646,7 +4657,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_PRICO_FiO2min()
 		return false;
 	}
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PRICO_FiO2min)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PRICO_FiO2min)))
 	{
 		m_szPIPmaxAlarmText=_T("");
 		return false;
@@ -4697,7 +4708,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_PIPmax()
 		return false;
 	}
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_PIPmax)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_PIPmax)))
 	{
 		m_szPIPmaxAlarmText=_T("");
 		return false;
@@ -4749,7 +4760,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_PIPmin()
 		return false;
 	}
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_PIPmin)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_PIPmin)))
 	{
 		m_szPIPminAlarmText=_T("");
 		return false;
@@ -4816,7 +4827,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_PEEPminLow()
 		return false;
 	}
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_PEEPminLow)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_PEEPminLow)))
 	{
 		m_szPEEPminLowAlarmText=_T("");
 		m_iPEEPminLowAlarmValue=-999;
@@ -4883,7 +4894,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_PEEPminHigh()
 		return false;
 	}
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_PEEPminHigh)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_PEEPminHigh)))
 	{
 		m_szPEEPminHighAlarmText=_T("");
 		m_iPEEPminHighAlarmValue=-999;
@@ -4936,7 +4947,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_BPMmax()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_BPMmax)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_BPMmax)))
 		return false;
 	return true;
 }
@@ -4965,7 +4976,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_Leakmax()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_Leakmax)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_Leakmax)))
 		return false;
 	return true;
 }
@@ -5005,7 +5016,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_Apnoe()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_Apnoe)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_Apnoe)))
 		return false;
 	return true;
 }
@@ -5037,7 +5048,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_DCO2max()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_DCO2max)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_DCO2max)))
 		return false;
 	return true;
 }
@@ -5066,7 +5077,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_DCO2min()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_DCO2min)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_DCO2min)))
 		return false;
 	return true;
 }
@@ -5102,7 +5113,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_ETCO2max()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_ETCO2max)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_ETCO2max)))
 		return false;
 	return true;
 }
@@ -5138,7 +5149,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_ETCO2min()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_ETCO2min)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_ETCO2min)))
 		return false;
 	return true;
 }
@@ -5175,7 +5186,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_FICO2max()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_FICO2max)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_FICO2max)))
 		return false;
 	return true;
 }
@@ -5210,7 +5221,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_FICO2min()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_FICO2min)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_FICO2min)))
 		return false;
 	return true;
 }
@@ -5245,7 +5256,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_SPO2max()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_SPO2max)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_SPO2max)))
 		return false;
 	return true;
 }
@@ -5279,7 +5290,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_SPO2min()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_SPO2min)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_SPO2min)))
 		return false;
 	return true;
 }
@@ -5313,7 +5324,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_PulseRatemax()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_PulseRatemax)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_PulseRatemax)))
 		return false;
 	return true;
 }
@@ -5347,7 +5358,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_PulseRatemin()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_PulseRatemin)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_PulseRatemin)))
 		return false;
 	return true;
 }
@@ -5381,7 +5392,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_SPO2_PImin()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_PatAl_SPO2_PImin)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_SPO2_PImin)))
 		return false;
 	return true;
 }
@@ -5413,7 +5424,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_Pinsp_NotReached()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysLimit_Pinsp_NotReached)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysLimit_Pinsp_NotReached)))
 		return false;
 	return true;
 }
@@ -5445,7 +5456,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_Vlimitted()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysLimit_Vlimitted)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysLimit_Vlimitted)))
 		return false;
 	return true;
 }
@@ -5477,7 +5488,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_Vgaranty()
 		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		return false;
 
-	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysLimit_Vgaranty)))
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysLimit_Vgaranty)))
 		return false;
 	return true;
 }
