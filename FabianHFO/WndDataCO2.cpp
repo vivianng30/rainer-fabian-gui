@@ -1446,7 +1446,30 @@ void CWndDataCO2::stopThread()
 //************************************
 static UINT CCO2DataThread( LPVOID pc )
 {
-	((CWndDataCO2*)pc)->CO2Data();
+	try
+	{
+		((CWndDataCO2*)pc)->CO2Data();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CCO2DataThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CCO2DataThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CWndDataCO2*)pc)->CO2Data();
 	return TRUE;
 }
 

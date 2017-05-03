@@ -3692,9 +3692,7 @@ void CViewAlarmLimit::NotifyEvent(CMVEvent* pEvent)
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CViewAlarmLimit::NotifyEvent error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CViewAlarmLimit::NotifyEvent"));
 	}
 }
 void CViewAlarmLimit::NotifyVentModeChanged()
@@ -3718,9 +3716,7 @@ void CViewAlarmLimit::NotifyVentModeChanged()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CViewAlarmLimit::NotifyVentModeChanged error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CViewAlarmLimit::NotifyVentModeChanged"));
 	}
 }
 
@@ -4327,9 +4323,7 @@ void CViewAlarmLimit::NotifyParaBtnEvent(CMVEvent* pEvent)
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CViewAlarmLimit::NotifyParaBtnEvent error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CViewAlarmLimit::NotifyParaBtnEvent"));
 	}
 	
 
@@ -5406,9 +5400,7 @@ void CViewAlarmLimit::NotifyExspirationDataChanged()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CViewAlarmLimit::NotifyExspirationDataChanged error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CViewAlarmLimit::NotifyExspirationDataChanged"));
 	}
 }
 
@@ -5423,9 +5415,7 @@ void CViewAlarmLimit::NotifyDataChanged()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CViewAlarmLimit::NotifyDataChanged error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CViewAlarmLimit::NotifyDataChanged"));
 	}
 }
 
@@ -5563,9 +5553,7 @@ void CViewAlarmLimit::NotifyAlarmLimitChanged()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CViewAlarmLimit::NotifyAlarmLimitChanged error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CViewAlarmLimit::NotifyAlarmLimitChanged"));
 	}
 }
 
@@ -5696,9 +5684,7 @@ void CViewAlarmLimit::NotifyCalculateAlarmLimit()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CViewAlarmLimit::NotifyCalculateAlarmLimit error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CViewAlarmLimit::NotifyCalculateAlarmLimit"));
 	}
 }
 

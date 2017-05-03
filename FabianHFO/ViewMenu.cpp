@@ -1419,9 +1419,7 @@ void CViewMenu::OpenMenuSelect()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CViewMenu::OpenMenuSelect error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CViewMenu::OpenMenuSelect"));
 	}
 
 	Sleep(0);
@@ -1564,9 +1562,7 @@ void CViewMenu::LanguageChanged()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CViewMenu::NotifyLanguageChanged error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CViewMenu::NotifyLanguageChanged"));
 	}
 	Invalidate();
 	UpdateWindow();

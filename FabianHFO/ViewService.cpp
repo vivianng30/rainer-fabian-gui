@@ -559,7 +559,7 @@ bool CViewService::DestroyWndLicensing()
 	}
 	catch (...)
 	{
-		CFabianHFOApp::ReportException(_T("EXCEPTION: m_pcWndLicensing"));
+		CFabianHFOApp::ReportErrorException(_T("CViewService::DestroyWndLicensing"));
 		delete m_pcWndLicensing;
 		throw;
 	}

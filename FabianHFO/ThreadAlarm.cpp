@@ -152,7 +152,30 @@ void CThreadAlarm::stopAlarmThread( void )
 // **************************************************************************
 static UINT AlarmThread( LPVOID pc )
 {
-	((CThreadAlarm*)pc)->AlarmData();
+	try
+	{
+		((CThreadAlarm*)pc)->AlarmData();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("AlarmThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("AlarmThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CThreadAlarm*)pc)->AlarmData();
 	return TRUE;
 }
 // **************************************************************************

@@ -1500,9 +1500,7 @@ void CViewSystemAlarm::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
-						CString szError=_T("");
-						szError.Format(_T("EXCEPTION:  CViewSystemAlarm::NotifyEvent EV_ALARMSTATE_CHANGED error: #%d"),GetLastError());
-						theApp.ReportException(szError);
+						theApp.ReportErrorException(_T("CViewSystemAlarm::NotifyEvent EV_ALARMSTATE_CHANGED"));
 					}
 					
 

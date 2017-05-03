@@ -2456,12 +2456,10 @@ void CViewParaBtn::DestroyWndParaSettings()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CViewParaBtn::DestroyWndParaSettings error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CViewParaBtn::DestroyWndParaSettings"));
 
 		delete m_pcWndParaSettings;
-		throw;
+		m_pcWndParaSettings=NULL;
 	}
 
 	if(m_pcWndParaSettings)
@@ -9112,12 +9110,10 @@ void CViewParaBtn::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CViewParaBtn::SetOneButtonDepressed error: #%d"),GetLastError());
-		theApp.ReportException(szError);
-
 		/** \brief The leave critical section. */
 		LeaveCriticalSection(&csDraw);
+
+		theApp.ReportErrorException(_T("CViewParaBtn::SetOneButtonDepressed"));
 	}
 }
 
@@ -9147,12 +9143,10 @@ void CViewParaBtn::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CViewParaBtn::SetAllButtonUnpressed error: #%d"),GetLastError());
-		theApp.ReportException(szError);
-
 		/** \brief The leave critical section. */
 		LeaveCriticalSection(&csDraw);
+
+		theApp.ReportErrorException(_T("CViewParaBtn::SetAllButtonUnpressed"));
 	}
 }
 
@@ -11380,9 +11374,7 @@ void CViewParaBtn::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
-						CString szError=_T("");
-						szError.Format(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_CONTROL_SYSTEMSTATE_CHANGED error: #%d"),GetLastError());
-						theApp.ReportException(szError);
+						theApp.ReportErrorException(_T("CViewParaBtn::NotifyEvent EV_CONTROL_SYSTEMSTATE_CHANGED"));
 					}
 				}
 				break;
@@ -11396,9 +11388,7 @@ void CViewParaBtn::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
-						CString szError=_T("");
-						szError.Format(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_CONTROL_FLOWSENSORSTATE error: #%d"),GetLastError());
-						theApp.ReportException(szError);
+						theApp.ReportErrorException(_T("CViewParaBtn::NotifyEvent EV_CONTROL_FLOWSENSORSTATE"));
 					}
 				}
 				break;
@@ -11412,9 +11402,7 @@ void CViewParaBtn::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
-						CString szError=_T("");
-						szError.Format(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_CONTROL_O2SENSORSTATE error: #%d"),GetLastError());
-						theApp.ReportException(szError);
+						theApp.ReportErrorException(_T("CViewParaBtn::NotifyEvent EV_CONTROL_O2SENSORSTATE"));
 					}
 				}
 				break;
@@ -11517,12 +11505,10 @@ void CViewParaBtn::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
-						CString szError=_T("");
-						szError.Format(_T("EXCEPTION: CViewParaBtn::NotifyEvent() EV_CONTROL_POWERSTATE_CHANGED error: #%d"),GetLastError());
-						theApp.ReportException(szError);
-
 						/** \brief The leave critical section. */
 						LeaveCriticalSection(&csDraw);
+
+						theApp.ReportErrorException(_T("CViewParaBtn::NotifyEvent EV_CONTROL_POWERSTATE_CHANGED"));
 					}
 				}
 				break;

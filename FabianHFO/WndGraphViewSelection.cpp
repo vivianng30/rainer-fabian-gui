@@ -376,9 +376,7 @@ void CWndGraphViewSelection::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CWndGraphViewSelection::SetOneButtonDepressed error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CWndGraphViewSelection::SetOneButtonDepressed"));
 	}
 	
 }
@@ -404,9 +402,7 @@ void CWndGraphViewSelection::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CWndGraphViewSelection::SetAllButtonUnpressed error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CWndGraphViewSelection::SetAllButtonUnpressed"));
 	}
 }
 

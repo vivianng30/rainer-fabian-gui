@@ -203,24 +203,38 @@ int CFabianHFOApp::writeLogError (LONG lError, LPCTSTR lptszMessage)
 	
 	return 1;
 }
-
-void CFabianHFOApp::ReportException(CString message)
+void CFabianHFOApp::ReportErrorException(CString lpszFunction)
 {
-	try
+	// Retrieve the system error message for the last-error code
+
+	CString szError=_T("");
+	szError.Format(_T("EXCEPTION: %s failed with error #%d"),lpszFunction,GetLastError());
+
+	CFabianHFOApp *pApp = NULL;
+	(CFabianHFOApp *)pApp = (CFabianHFOApp *)AfxGetApp();
+	if (pApp != NULL && pApp->log!=NULL)
 	{
-		CFabianHFOApp *pApp = NULL;
-		(CFabianHFOApp *)pApp = (CFabianHFOApp *)AfxGetApp();
-		if (pApp != NULL && pApp->log!=NULL)
-		{
-			pApp->log->WriteLine(message);
-			//pApp->log->SaveLog();
-		}
-	}
-	catch (...)
-	{
-		throw;
+		pApp->log->WriteLine(szError);
 	}
 }
+
+//void CFabianHFOApp::ReportException(CString message)
+//{
+//	try
+//	{
+//		CFabianHFOApp *pApp = NULL;
+//		(CFabianHFOApp *)pApp = (CFabianHFOApp *)AfxGetApp();
+//		if (pApp != NULL && pApp->log!=NULL)
+//		{
+//			pApp->log->WriteLine(message);
+//			//pApp->log->SaveLog();
+//		}
+//	}
+//	catch (...)
+//	{
+//		throw;
+//	}
+//}
 
 void CFabianHFOApp::SetAutoScreenlockActive(bool state)
 {

@@ -761,9 +761,7 @@ void CWndMenuVentState::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CWndMenuTrendtype::SetOneButtonDepressed error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CWndMenuTrendtype::SetOneButtonDepressed"));
 	}
 	
 }
@@ -796,9 +794,7 @@ void CWndMenuVentState::SetOneButtonPreset(int btnID)
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CWndMenuTrendtype::SetOneButtonPreset error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CWndMenuTrendtype::SetOneButtonPreset"));
 	}
 	
 }
@@ -826,9 +822,7 @@ void CWndMenuVentState::ResetButtonPresetstate()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CWndMenuTrendtype::ResetButtonPresetstate error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CWndMenuTrendtype::ResetButtonPresetstate"));
 	}
 	
 }
@@ -895,9 +889,7 @@ void CWndMenuVentState::SetButtonState(int btnID, CPresetMenuBtn::eBtnState stat
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CWndMenuTrendtype::SetButtonState error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CWndMenuTrendtype::SetButtonState"));
 	}
 	
 }
@@ -923,9 +915,7 @@ void CWndMenuVentState::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CWndMenuTrendtype::SetAllButtonUnpressed error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CWndMenuTrendtype::SetAllButtonUnpressed"));
 	}
 	
 }

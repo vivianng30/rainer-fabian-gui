@@ -189,14 +189,11 @@ bool CMVViewHandler::CloseTrendView()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseTrendView error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVViewHandler::CloseTrendView"));
 
 		delete m_vTrend;
 		m_vTrend=NULL;
 		LeaveCriticalSection(&csViewTrend);
-		throw;
 	}
 	delete m_vTrend;
 	m_vTrend=NULL;
@@ -243,14 +240,11 @@ bool CMVViewHandler::ClosePatDataView()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVViewHandler::ClosePatDataView error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVViewHandler::ClosePatDataView"));
 
 		delete m_vPatData;
 		m_vPatData=NULL;
 		LeaveCriticalSection(&csViewPatData);
-		throw;
 	}
 	delete m_vPatData;
 	m_vPatData=NULL;
@@ -293,14 +287,11 @@ bool CMVViewHandler::CloseFullscreenMsgView()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseFullscreenMsgView error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVViewHandler::CloseFullscreenMsgView"));
 
 		delete m_vFullscreenMsg;
 		m_vFullscreenMsg=NULL;
 		LeaveCriticalSection(&csViewFullscreenMsg);
-		throw;
 	}
 	delete m_vFullscreenMsg;
 	m_vFullscreenMsg=NULL;
@@ -343,13 +334,10 @@ bool CMVViewHandler::CloseStartupView()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseStartupView error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVViewHandler::CloseStartupView"));
 
 		delete m_vStartup;
 		m_vStartup=NULL;
-		throw;
 	}
 	delete m_vStartup;
 	m_vStartup=NULL;
@@ -390,13 +378,10 @@ bool CMVViewHandler::CloseShutdownView()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseShutdownView error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVViewHandler::CloseShutdownView"));
 
 		delete m_vShutdown;
 		m_vShutdown=NULL;
-		throw;
 	}
 	delete m_vShutdown;
 	m_vShutdown=NULL;
@@ -490,15 +475,11 @@ bool CMVViewHandler::CloseSystemAlarmView()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseSystemAlarmView error: #%d"),GetLastError());
-		theApp.ReportException(szError);
-
+		theApp.ReportErrorException(_T("CMVViewHandler::CloseSystemAlarmView"));
 
 		delete m_vSystemAlarm;
 		m_vSystemAlarm=NULL;
 		LeaveCriticalSection(&csViewSystemAlarm);
-		throw;
 	}
 	delete m_vSystemAlarm;
 	m_vSystemAlarm=NULL;
@@ -576,14 +557,11 @@ bool CMVViewHandler::CloseMenuView()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseMenuView error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVViewHandler::CloseMenuView"));
 
 		delete m_vMenu;
 		m_vMenu=NULL;
 		LeaveCriticalSection(&csViewMenu);
-		throw;
 	}
 	delete m_vMenu;
 	m_vMenu=NULL;
@@ -630,14 +608,11 @@ bool CMVViewHandler::CloseServiceView()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseServiceView error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVViewHandler::CloseServiceView"));
 
 		delete m_vService;
 		m_vService=NULL;
 		LeaveCriticalSection(&csViewService);
-		throw;
 	}
 	delete m_vService;
 	m_vService=NULL;
@@ -716,14 +691,11 @@ bool CMVViewHandler::CloseLogView()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseLogView error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVViewHandler::CloseLogView"));
 
 		delete m_vLog;
 		m_vLog=NULL;
 		LeaveCriticalSection(&csViewLog);
-		throw;
 	}
 	delete m_vLog;
 	m_vLog=NULL;
@@ -768,14 +740,11 @@ bool CMVViewHandler::CloseNumericView()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseNumericView error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVViewHandler::CloseNumericView"));
 
 		delete m_vNumericWnd;
 		m_vNumericWnd=NULL;
 		LeaveCriticalSection(&csViewNumeric);
-		throw;
 	}
 
 	delete m_vNumericWnd;
@@ -820,14 +789,11 @@ bool CMVViewHandler::CloseParaBtnView()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseParaBtnView error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVViewHandler::CloseParaBtnView"));
 
 		delete m_vParaBtn;
 		m_vParaBtn=NULL;
 		LeaveCriticalSection(&csViewParaBtn);
-		throw;
 	}
 
 	delete m_vParaBtn;
@@ -871,14 +837,11 @@ bool CMVViewHandler::CloseDiagrammView()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseDiagrammView error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVViewHandler::CloseDiagrammView"));
 
 		delete m_vDiagramm;
 		m_vDiagramm=NULL;
 		LeaveCriticalSection(&csViewDiagramm);
-		throw;
 	}
 
 	delete m_vDiagramm;
@@ -923,14 +886,11 @@ bool CMVViewHandler::CloseDTBFieldView()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseDTBFieldView error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVViewHandler::CloseDTBFieldView"));
 
 		delete m_vDTBField;
 		m_vDTBField=NULL;
 		LeaveCriticalSection(&csViewDTBField);
-		throw;
 	}
 
 	delete m_vDTBField;
@@ -977,14 +937,11 @@ bool CMVViewHandler::CloseAlarmLimitsView()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVViewHandler::CloseAlarmLimitsView error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVViewHandler::CloseAlarmLimitsView"));
 
 		delete m_vAlarmLimits;
 		m_vAlarmLimits=NULL;
 		LeaveCriticalSection(&csViewAlarmLimits);
-		throw;
 	}
 
 	delete m_vAlarmLimits;

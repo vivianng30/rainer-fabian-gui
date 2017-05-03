@@ -599,7 +599,31 @@ void CInterfaceSerial::stopCheckThread()
 //************************************
 static UINT CSerialCheckThread( LPVOID pc )
 {
-	((CInterfaceSerial*)pc)->CheckSerialData();
+	try
+	{
+		((CInterfaceSerial*)pc)->CheckSerialData();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CSerialCheckThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CSerialCheckThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+
+	//((CInterfaceSerial*)pc)->CheckSerialData();
 	return TRUE;
 }
 
@@ -1381,7 +1405,31 @@ DWORD CInterfaceSerial::ReceiveSerialData(void)
 //************************************
 static UINT CSerialSendThread( LPVOID pc )
 {
-	((CInterfaceSerial*)pc)->SendSerialData();
+	try
+	{
+		((CInterfaceSerial*)pc)->SendSerialData();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CSerialSendThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CSerialSendThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+
+	//((CInterfaceSerial*)pc)->SendSerialData();
 	return TRUE;
 }
 

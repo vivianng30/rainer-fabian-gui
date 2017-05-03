@@ -1409,9 +1409,7 @@ void CMVModel::DetachObserver(CModelObserver* pObserver)
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVModel::DetachObserver error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVModel::DetachObserver"));
 	}
 	LeaveCriticalSection(&m_csObservers);
 }
@@ -3620,9 +3618,7 @@ void CMVModel::notifyViewStateChanged()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVModel::ChangeViewState error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVModel::ChangeViewState"));
 	}
 
 	LeaveCriticalSection(&m_csObservers);
@@ -3656,9 +3652,7 @@ void CMVModel::notifyVentModeChanged()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVModel::VentModeChanged error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVModel::VentModeChanged"));
 	}
 	
 	LeaveCriticalSection(&m_csObservers);
@@ -3695,9 +3689,7 @@ void CMVModel::NotifyEvent(CMVEvent* pEvent)
 	{
 		LeaveCriticalSection(&m_csObservers);
 
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVModel::NotifyEvent error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVModel::NotifyEvent"));
 	}
 	
 }
@@ -3728,9 +3720,7 @@ void CMVModel::NotifyParaBtnEvent(CMVEvent* pEvent)
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVModel::NotifyParaBtnEvent error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVModel::NotifyParaBtnEvent"));
 	}
 	LeaveCriticalSection(&m_csObservers);
 
@@ -3765,9 +3755,7 @@ void CMVModel::NotifyExspirationStart()
 	{
 		LeaveCriticalSection(&m_csObservers);
 
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVModel::NotifyExspirationData error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVModel::NotifyExspirationData"));
 	}
 }
 
@@ -3800,9 +3788,7 @@ void CMVModel::NotifyMonitorData()
 	{
 		LeaveCriticalSection(&m_csObservers);
 
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVModel::NotifyMonitorData error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVModel::NotifyMonitorData"));
 	}
 }
 
@@ -3836,9 +3822,7 @@ void CMVModel::NotifyNewAlarmlimitData()
 	{
 		LeaveCriticalSection(&m_csObservers);
 
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVModel::NotifyNewAlarmlimitData error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVModel::NotifyNewAlarmlimitData"));
 	}
 }
 
@@ -3872,9 +3856,7 @@ void CMVModel::NotifyCalculateAlarmlimitData()
 	{
 		LeaveCriticalSection(&m_csObservers);
 
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVModel::NotifyCalculateAlarmlimitData error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVModel::NotifyCalculateAlarmlimitData"));
 	}
 }
 
@@ -3925,9 +3907,7 @@ void CMVModel::NotifyViewFocusChanged(int iViewID)
 	{
 		LeaveCriticalSection(&m_csObservers);
 
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMVModel::NotifyViewFocusChanged error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMVModel::NotifyViewFocusChanged"));
 	}
 }
 
@@ -7084,9 +7064,7 @@ bool CMVModel::LoadHospitalSettings()
 		}
 		catch (...)
 		{
-			CString szError=_T("");
-			szError.Format(_T("EXCEPTION: CMVModel::LoadHospitalSettings error: #%d"),GetLastError());
-			theApp.ReportException(szError);
+			theApp.ReportErrorException(_T("CMVModel::LoadHospitalSettings"));
 
 			objektArchiv.Close();
 			archivDatei1.Close();

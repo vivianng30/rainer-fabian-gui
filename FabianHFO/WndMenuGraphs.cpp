@@ -1155,9 +1155,7 @@ void CWndMenuGraphs::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CWndMenuGraphs::SetOneButtonDepressed error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CWndMenuGraphs::SetOneButtonDepressed"));
 	}
 }
 
@@ -1182,9 +1180,7 @@ void CWndMenuGraphs::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CWndMenuGraphs::SetAllButtonUnpressed error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CWndMenuGraphs::SetAllButtonUnpressed"));
 	}
 	
 }

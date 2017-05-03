@@ -15179,11 +15179,7 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 					}
 					catch (...)
 					{
-						CString szError=_T("");
-						szError.Format(_T("EXCEPTION: CDataHandler::UpdateTrendData1: #%d"),GetLastError());
-						theApp.ReportException(szError);
-
-						throw;
+						theApp.ReportErrorException(_T("CDataHandler::UpdateTrendData1"));
 					}
 				}
 				else
@@ -15212,11 +15208,7 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 						}
 						catch (...)
 						{
-							CString szError=_T("");
-							szError.Format(_T("EXCEPTION: CDataHandler::UpdateTrendData2: #%d"),GetLastError());
-							theApp.ReportException(szError);
-
-							throw;
+							theApp.ReportErrorException(_T("CDataHandler::UpdateTrendData2"));
 						}
 					}
 
@@ -15246,11 +15238,7 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 						}
 						catch (...)
 						{
-							CString szError=_T("");
-							szError.Format(_T("EXCEPTION: CDataHandler::UpdateTrendData3: #%d"),GetLastError());
-							theApp.ReportException(szError);
-
-							throw;
+							theApp.ReportErrorException(_T("CDataHandler::UpdateTrendData3"));
 						}
 					}
 
@@ -15271,11 +15259,7 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 					}
 					catch (...)
 					{
-						CString szError=_T("");
-						szError.Format(_T("EXCEPTION: CDataHandler::UpdateTrendData4: #%d"),GetLastError());
-						theApp.ReportException(szError);
-
-						throw;
+						theApp.ReportErrorException(_T("CDataHandler::UpdateTrendData4"));
 					}
 				}
 			}
@@ -15733,13 +15717,9 @@ void CDataHandler::SerializeTrend(UINT type, bool bIncreaseFileNum)
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CDataHandler::SerializeTrend: #%d"),GetLastError());
-		theApp.ReportException(szError);
-
 		archivDatei.Close();
 
-		throw;
+		theApp.ReportErrorException(_T("CDataHandler::SerializeTrend"));
 	}
 
 	switch(type)
@@ -16015,11 +15995,7 @@ bool CDataHandler::DeserializeTrend(UINT type, BYTE fileNum)
 	{
 		archivDatei.Close();
 
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CDataHandler::DeserializeTrend: #%d"),GetLastError());
-		theApp.ReportException(szError);
-		
-		throw;
+		theApp.ReportErrorException(_T("CDataHandler::DeserializeTrend"));
 	}
 
 

@@ -430,9 +430,7 @@ void CWndServiceMenu::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CWndServiceMenu::SetOneButtonDepressed error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CWndServiceMenu::SetOneButtonDepressed"));
 	}
 	
 
@@ -461,9 +459,7 @@ void CWndServiceMenu::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CWndServiceMenu::SetAllButtonUnpressed error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CWndServiceMenu::SetAllButtonUnpressed"));
 	}
 	
 }

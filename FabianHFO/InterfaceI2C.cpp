@@ -1724,7 +1724,31 @@ void CInterfaceI2C::StopI2CThread( void )
 // **************************************************************************
 static UINT CI2CThread( LPVOID pc )
 {
-	((CInterfaceI2C*)pc)->I2CData();
+	try
+	{
+		((CInterfaceI2C*)pc)->I2CData();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CI2CThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CI2CThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+
+	//((CInterfaceI2C*)pc)->I2CData();
 	return TRUE;
 }
 

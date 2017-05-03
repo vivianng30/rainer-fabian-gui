@@ -224,7 +224,30 @@ void CThreadPRICO::stopThread()
 // **************************************************************************
 static UINT PRICOThread( LPVOID pc )
 {
-	((CThreadPRICO*)pc)->PRICOData();
+	try
+	{
+		((CThreadPRICO*)pc)->PRICOData();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("PRICOThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("PRICOThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CThreadPRICO*)pc)->PRICOData();
 	return TRUE;
 }
 // **************************************************************************

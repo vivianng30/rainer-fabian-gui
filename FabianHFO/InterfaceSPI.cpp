@@ -331,7 +331,31 @@ void CInterfaceSPI::StopSPIMonitorThread( void )
 // **************************************************************************
 static UINT CSPIMonitorThread( LPVOID pc )
 {
-	((CInterfaceSPI*)pc)->SPIMonitorData();
+	try
+	{
+		((CInterfaceSPI*)pc)->SPIMonitorData();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CSPIMonitorThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CSPIMonitorThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+
+	//((CInterfaceSPI*)pc)->SPIMonitorData();
 	return TRUE;
 }
 
@@ -1990,7 +2014,30 @@ void CInterfaceSPI::StopSPICommunicationThread( void )
 // **************************************************************************
 static UINT CSPICommunicationThread( LPVOID pc )
 {
-	((CInterfaceSPI*)pc)->SPICommunicationData();
+	try
+	{
+		((CInterfaceSPI*)pc)->SPICommunicationData();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CSPICommunicationThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CSPICommunicationThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CInterfaceSPI*)pc)->SPICommunicationData();
 	return TRUE;
 }
 

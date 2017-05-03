@@ -138,14 +138,10 @@ CInterfaceCO2::~CInterfaceCO2()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CInterfaceCO2::~CInterfaceCO2() error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CInterfaceCO2::~CInterfaceCO2()"));
 
 		CSerialEx::StopListener(0);
 		CSerialEx::Close();
-
-		//throw;
 	}
 	
 
@@ -534,7 +530,31 @@ void CInterfaceCO2::stopETCO2checkThread(void)
 //************************************
 static UINT CETCO2SendThread( LPVOID pc )
 {
-	((CInterfaceCO2*)pc)->SendETCO2Data();
+	try
+	{
+		((CInterfaceCO2*)pc)->SendETCO2Data();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CETCO2SendThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CETCO2SendThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+
+	//((CInterfaceCO2*)pc)->SendETCO2Data();
 	return TRUE;
 }
 
@@ -609,7 +629,31 @@ DWORD CInterfaceCO2::SendETCO2Data(void)
 //************************************
 static UINT CETCO2checkThread( LPVOID pc )
 {
-	((CInterfaceCO2*)pc)->ETCO2check();
+	try
+	{
+		((CInterfaceCO2*)pc)->ETCO2check();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CETCO2checkThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CETCO2checkThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+
+	//((CInterfaceCO2*)pc)->ETCO2check();
 	return TRUE;
 }
 
@@ -662,7 +706,31 @@ DWORD CInterfaceCO2::ETCO2check(void)
 //************************************
 static UINT CETCO2InitThread( LPVOID pc )
 {
-	((CInterfaceCO2*)pc)->ETCO2Init();
+	try
+	{
+		((CInterfaceCO2*)pc)->ETCO2Init();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CETCO2InitThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CETCO2InitThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+
+	//((CInterfaceCO2*)pc)->ETCO2Init();
 	return TRUE;
 }
 

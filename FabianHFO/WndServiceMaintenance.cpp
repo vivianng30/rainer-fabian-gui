@@ -1877,9 +1877,7 @@ void CWndServiceMaintenance::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CWndServiceMaintenance::SetOneButtonDepressed error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CWndServiceMaintenance::SetOneButtonDepressed"));
 	}
 	
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
@@ -1913,9 +1911,7 @@ void CWndServiceMaintenance::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CWndServiceMaintenance::SetAllButtonUnpressed error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CWndServiceMaintenance::SetAllButtonUnpressed"));
 	}
 	
 	m_iCurrentField=0;
@@ -1959,9 +1955,7 @@ void CWndServiceMaintenance::SetOneButtonFocused(int btnID)
 		}
 		catch (...)
 		{
-			CString szError=_T("");
-			szError.Format(_T("EXCEPTION: CWndServiceMaintenance::SetOneButtonFocused error: #%d"),GetLastError());
-			theApp.ReportException(szError);
+			theApp.ReportErrorException(_T("CWndServiceMaintenance::SetOneButtonFocused"));
 		}
 
 

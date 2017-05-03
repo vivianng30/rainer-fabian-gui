@@ -1559,6 +1559,17 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			}
 		}
 		break;
+	case WM_EXCEPTION:
+		{
+			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("! EXCEPTION: please restart ASAP !"), 5000);
+			getModel()->triggerEvent(&event);
+
+			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+			Sleep(300);
+			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+			return 1;
+		}
+		break;
 	case WM_VIDEO_STOP:
 		{
 			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("! video stopped !"), 3500);
@@ -8059,7 +8070,30 @@ void CMainFrame::StopSaveTrendUSBThread( void )
 //************************************
 static UINT CSaveTrendUSBThread( LPVOID pc )
 {
-	((CMainFrame*)pc)->SaveTrendUSB();
+	try
+	{
+		((CMainFrame*)pc)->SaveTrendUSB();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CSaveTrendUSBThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CSaveTrendUSBThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CMainFrame*)pc)->SaveTrendUSB();
 	return TRUE;
 }
 //************************************
@@ -8224,7 +8258,30 @@ void CMainFrame::StopTimerThread( void )
 //************************************
 static UINT CTimerThread( LPVOID pc )
 {
-	((CMainFrame*)pc)->DoTimerFunctions();
+	try
+	{
+		((CMainFrame*)pc)->DoTimerFunctions();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CTimerThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CTimerThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CMainFrame*)pc)->DoTimerFunctions();
 	return TRUE;
 }
 
@@ -8791,7 +8848,30 @@ void CMainFrame::StopOxyCalThread( void )
 //************************************
 static UINT COxyCalThread( LPVOID pc )
 {
-	((CMainFrame*)pc)->CheckOxyCal();
+	try
+	{
+		((CMainFrame*)pc)->CheckOxyCal();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("COxyCalThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("COxyCalThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CMainFrame*)pc)->CheckOxyCal();
 	return TRUE;
 }
 //************************************
@@ -9529,9 +9609,7 @@ bool CMainFrame::SaveTrendDataToUSB(UINT trendID)
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CMainFrame::SaveTrendDataToUSB error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CMainFrame::SaveTrendDataToUSB"));
 
 		if (stream != NULL)
 		{
@@ -9617,7 +9695,30 @@ void CMainFrame::StopDelTrendThread( void )
 //************************************
 static UINT CDelTrendThread( LPVOID pc )
 {
-	((CMainFrame*)pc)->DelTrendData();
+	try
+	{
+		((CMainFrame*)pc)->DelTrendData();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CDelTrendThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CDelTrendThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CMainFrame*)pc)->DelTrendData();
 	return TRUE;
 }
 //************************************

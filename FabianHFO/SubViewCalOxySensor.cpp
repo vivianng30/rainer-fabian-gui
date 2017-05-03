@@ -1619,7 +1619,30 @@ void CSubViewCalOxySensor::StopCheckOxyThread( void )
 // **************************************************************************
 static UINT CCheckOxyThread( LPVOID pc )
 {
-	((CSubViewCalOxySensor*)pc)->CheckOxySensor();
+	try
+	{
+		((CSubViewCalOxySensor*)pc)->CheckOxySensor();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CCheckOxyThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CCheckOxyThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CSubViewCalOxySensor*)pc)->CheckOxySensor();
 	return TRUE;
 }
 

@@ -283,7 +283,31 @@ void CInterfaceCOMport::stopCOMcheckThread(void)
 // **************************************************************************
 static UINT CCOMcheckThread( LPVOID pc )
 {
-	((CInterfaceCOMport*)pc)->COMcheck();
+	try
+	{
+		((CInterfaceCOMport*)pc)->COMcheck();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CCOMcheckThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CCOMcheckThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+
+	//((CInterfaceCOMport*)pc)->COMcheck();
 	return TRUE;
 }
 
@@ -330,7 +354,31 @@ DWORD CInterfaceCOMport::COMcheck(void)
 // **************************************************************************
 static UINT CCOMSendThread( LPVOID pc )
 {
-	((CInterfaceCOMport*)pc)->SendCOMData();
+	try
+	{
+		((CInterfaceCOMport*)pc)->SendCOMData();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CCOMSendThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CCOMSendThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+
+	//((CInterfaceCOMport*)pc)->SendCOMData();
 	return TRUE;
 }
 
@@ -400,7 +448,31 @@ DWORD CInterfaceCOMport::SendCOMData(void)
 // **************************************************************************
 static UINT CCOMInitThread( LPVOID pc )
 {
-	((CInterfaceCOMport*)pc)->COMInit();
+	try
+	{
+		((CInterfaceCOMport*)pc)->COMInit();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CCOMInitThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CCOMInitThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+
+	//((CInterfaceCOMport*)pc)->COMInit();
 	return TRUE;
 }
 

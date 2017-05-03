@@ -1250,9 +1250,7 @@ void CSubViewVentilation::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CSubViewVentilation::SetOneButtonDepressed error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CSubViewVentilation::SetOneButtonDepressed"));
 	}
 
 	if(GetParent())
@@ -1291,9 +1289,7 @@ void CSubViewVentilation::SetOneButtonFocused(int btnID)
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CSubViewVentilation::SetOneButtonFocused error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CSubViewVentilation::SetOneButtonFocused"));
 	}
 
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))

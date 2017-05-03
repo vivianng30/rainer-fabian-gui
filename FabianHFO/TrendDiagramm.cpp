@@ -6959,9 +6959,7 @@ int CTrendDiagramm::GetMoveSpan()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CTrendDiagramm::GetMoveSpan error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CTrendDiagramm::GetMoveSpan"));
 	}
 	return iRes;
 }

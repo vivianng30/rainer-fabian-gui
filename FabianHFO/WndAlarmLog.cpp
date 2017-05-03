@@ -72,11 +72,10 @@ CWndAlarmLog::~CWndAlarmLog()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CWndAlarmLog::~CWndAlarmLog error: #%d"),GetLastError());
-		theApp.ReportException(szError);
 		delete m_pListBox;
-		throw;
+		m_pListBox=NULL;
+
+		theApp.ReportErrorException(_T("CWndAlarmLog::~CWndAlarmLog"));
 	}
 	
 	delete m_pListBox;

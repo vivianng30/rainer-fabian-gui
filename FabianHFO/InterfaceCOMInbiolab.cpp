@@ -245,7 +245,31 @@ void CInterfaceCOMInbiolab::StopInbiolabThread( void )
 // **************************************************************************
 static UINT CSerialReceiveThread( LPVOID pc )
 {
-	((CInterfaceCOMInbiolab*)pc)->ReceiveSerialData();
+	try
+	{
+		((CInterfaceCOMInbiolab*)pc)->ReceiveSerialData();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CSerialReceiveThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CSerialReceiveThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+
+	//((CInterfaceCOMInbiolab*)pc)->ReceiveSerialData();
 	return TRUE;
 }
 

@@ -154,7 +154,30 @@ void CThreadMonitor::stopMonitorThread( void )
 // **************************************************************************
 static UINT MonitorThread( LPVOID pc )
 {
-	((CThreadMonitor*)pc)->MonitorData();
+	try
+	{
+		((CThreadMonitor*)pc)->MonitorData();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("MonitorThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("MonitorThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CThreadMonitor*)pc)->MonitorData();
 	return TRUE;
 }
 // **************************************************************************

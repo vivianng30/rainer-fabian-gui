@@ -196,9 +196,7 @@ void CInterfaceSPO2::startSPO2initThread(void)
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: THR:SPO2 startSPO2initThread error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("THR:SPO2 startSPO2initThread"));
 
 		if(m_pcwtSPO2InitThread!=NULL)
 		{
@@ -214,8 +212,6 @@ void CInterfaceSPO2::startSPO2initThread(void)
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_REINIT_SPO2_MODULE);
-
-		//throw;
 	}
 	
 }
@@ -383,7 +379,30 @@ void CInterfaceSPO2::stopSPO2checkThread(void)
 // **************************************************************************
 static UINT CSPO2checkThread( LPVOID pc )
 {
-	((CInterfaceSPO2*)pc)->SPO2check();
+	try
+	{
+		((CInterfaceSPO2*)pc)->SPO2check();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CSPO2checkThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CSPO2checkThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CInterfaceSPO2*)pc)->SPO2check();
 	return TRUE;
 }
 
@@ -430,7 +449,30 @@ DWORD CInterfaceSPO2::SPO2check(void)
 // **************************************************************************
 static UINT CSPO2SendThread( LPVOID pc )
 {
-	((CInterfaceSPO2*)pc)->SendSPO2Data();
+	try
+	{
+		((CInterfaceSPO2*)pc)->SendSPO2Data();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CSPO2SendThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CSPO2SendThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CInterfaceSPO2*)pc)->SendSPO2Data();
 	return TRUE;
 }
 
@@ -506,7 +548,30 @@ DWORD CInterfaceSPO2::SendSPO2Data(void)
 // **************************************************************************
 static UINT CSPO2InitThread( LPVOID pc )
 {
-	((CInterfaceSPO2*)pc)->SPO2Init();
+	try
+	{
+		((CInterfaceSPO2*)pc)->SPO2Init();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CSPO2InitThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CSPO2InitThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CInterfaceSPO2*)pc)->SPO2Init();
 	return TRUE;
 }
 

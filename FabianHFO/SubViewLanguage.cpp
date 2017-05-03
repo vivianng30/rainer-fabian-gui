@@ -1397,7 +1397,30 @@ void CSubViewLanguage::StopLoadLanguageThread( void )
 // **************************************************************************
 static UINT CLoadLanguageThread( LPVOID pc )
 {
-	((CSubViewLanguage*)pc)->LoadLanguage();
+	try
+	{
+		((CSubViewLanguage*)pc)->LoadLanguage();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CLoadLanguageThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CLoadLanguageThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CSubViewLanguage*)pc)->LoadLanguage();
 	return TRUE;
 }
 // **************************************************************************
@@ -1539,9 +1562,7 @@ void CSubViewLanguage::NotifyLanguageChanged()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CSubViewLanguage::NotifyLanguageChanged error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CSubViewLanguage::NotifyLanguageChanged"));
 	}
 
 }

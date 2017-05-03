@@ -724,9 +724,7 @@ void CSubViewMenuSelect::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CSubViewMenuSelect::SetOneButtonDepressed error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CSubViewMenuSelect::SetOneButtonDepressed"));
 	}
 	
 

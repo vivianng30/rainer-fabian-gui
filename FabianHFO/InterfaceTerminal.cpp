@@ -2022,7 +2022,30 @@ void CInterfaceTerminal::sendModeOption2()
 //**************************************************************************/
 static UINT CTerminalSendThread( LPVOID pc )
 {
-	((CInterfaceTerminal*)pc)->SendTerminalData();
+	try
+	{
+		((CInterfaceTerminal*)pc)->SendTerminalData();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CTerminalSendThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CTerminalSendThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CInterfaceTerminal*)pc)->SendTerminalData();
 	return TRUE;
 }
 

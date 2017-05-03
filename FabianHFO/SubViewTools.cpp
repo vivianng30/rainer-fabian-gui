@@ -1363,7 +1363,30 @@ void CSubViewTools::StopWaitTrendUSBThread( void )
 //************************************
 static UINT CWaitTrendUSBThread( LPVOID pc )
 {
-	((CSubViewTools*)pc)->WaitTrendUSB();
+	try
+	{
+		((CSubViewTools*)pc)->WaitTrendUSB();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CWaitTrendUSBThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CWaitTrendUSBThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CSubViewTools*)pc)->WaitTrendUSB();
 	return TRUE;
 }
 //************************************

@@ -716,9 +716,7 @@ void CViewFullscreenMsg::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
-						CString szError=_T("");
-						szError.Format(_T("EXCEPTION: CViewFullscreenMsg::NotifyEvent error: #%d"),GetLastError());
-						theApp.ReportException(szError);
+						theApp.ReportErrorException(_T("CViewFullscreenMsg::NotifyEvent"));
 					}
 				}
 				break;

@@ -1506,7 +1506,30 @@ void CThreadFOT::stopThread()
 
 static UINT FOTThread( LPVOID pc )
 {
-	((CThreadFOT*)pc)->FOTData();
+	try
+	{
+		((CThreadFOT*)pc)->FOTData();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("FOTThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("FOTThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CThreadFOT*)pc)->FOTData();
 	return TRUE;
 }
 

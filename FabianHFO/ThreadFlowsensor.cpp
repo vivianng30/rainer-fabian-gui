@@ -152,7 +152,30 @@ void CThreadFlowsensor::stopFlowsensorThread( void )
 // **************************************************************************
 static UINT FlowsensorThread( LPVOID pc )
 {
-	((CThreadFlowsensor*)pc)->FlowsensorData();
+	try
+	{
+		((CThreadFlowsensor*)pc)->FlowsensorData();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("FlowsensorThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("FlowsensorThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CThreadFlowsensor*)pc)->FlowsensorData();
 	return TRUE;
 }
 // **************************************************************************

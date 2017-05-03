@@ -210,7 +210,30 @@ void CWndWaitHourglass::stopWaitThread()
 //************************************
 static UINT CWaitThread( LPVOID pc )
 {
-	((CWndWaitHourglass*)pc)->WaitHourglass();
+	try
+	{
+		((CWndWaitHourglass*)pc)->WaitHourglass();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("CWaitThread: %s"),szCause);
+
+		theApp.ReportErrorException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportErrorException(_T("CWaitThread"));
+
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+	}
+	//((CWndWaitHourglass*)pc)->WaitHourglass();
 	return TRUE;
 }
 

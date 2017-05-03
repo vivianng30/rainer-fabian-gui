@@ -1232,9 +1232,7 @@ void CViewNumericWnd::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
-						CString szError=_T("");
-						szError.Format(_T("EXCEPTION: CViewNumericWnd::NotifyEvent error: #%d"),GetLastError());
-						theApp.ReportException(szError);
+						theApp.ReportErrorException(_T("CViewNumericWnd::NotifyEvent"));
 					}
 				}
 				break;
@@ -1323,9 +1321,7 @@ void CViewNumericWnd::DrawGraphCursor(int iDiagrmm)
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CViewNumericWnd::DrawGraphCursor error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CViewNumericWnd::DrawGraphCursor"));
 	}
 }
 
@@ -1345,9 +1341,7 @@ void CViewNumericWnd::DeleteGraphCursor()
 	}
 	catch (...)
 	{
-		CString szError=_T("");
-		szError.Format(_T("EXCEPTION: CViewNumericWnd::DeleteGraphCursor error: #%d"),GetLastError());
-		theApp.ReportException(szError);
+		theApp.ReportErrorException(_T("CViewNumericWnd::DeleteGraphCursor"));
 	}
 }
 
@@ -1586,9 +1580,7 @@ void CViewNumericWnd::NotifyVentModeChanged()
 				}
 				catch (...)
 				{
-					CString szError=_T("");
-					szError.Format(_T("EXCEPTION: CViewNumericWnd::NotifyVentModeChanged error: #%d"),GetLastError());
-					theApp.ReportException(szError);
+					theApp.ReportErrorException(_T("CViewNumericWnd::NotifyVentModeChanged"));
 				}
 			}
 		}

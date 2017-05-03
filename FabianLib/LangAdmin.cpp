@@ -102,9 +102,7 @@ DWORD CLangAdmin::EnumLang( DWORD dwLangFolderStringID )
 		}
 		catch (...)
 		{
-			CString szError=_T("");
-			szError.Format(_T("EXCEPTION: CLangAdmin::EnumLang error: #%d"),GetLastError());
-			theApp.ReportException(szError);
+			theApp.ReportErrorException(_T("CLangAdmin::EnumLang"));
 		}
 		
 
