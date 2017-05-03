@@ -7,6 +7,13 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50134 Version 5.0.1.34
+ * @date 2017-05-03
+ * @verbatim
+	- in DUOPAP when trigger is active, S-DUOPAP is displayed in infoline (ITEM-75)
+	- EXCEPTION handling improved
+ @endverbatim
+ *
  * @subsection ver50133 Version 5.0.1.33
  * @date 2017-05-03
  * @verbatim

@@ -428,6 +428,11 @@ void CSubParaBtn::DrawSUBPARA_TRIGGER_DUOPAP(int nState)
 		{
 			bTriggerOff=true;
 		}
+		else if(		getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP
+			&&	getModel()->getDATAHANDLER()->PRESET()->GetITimeNMODEPara()>600)
+		{
+			bTriggerOff=true;
+		}
 
 		if(getModel()->getDATAHANDLER()->getTriggerOptionNMODE()==TRIGGER_PRESSURE && false==bTriggerOff)
 		{

@@ -5258,6 +5258,16 @@ void CDataHandler::checkTriggerTubeDependency()
 						if(AfxGetApp() != NULL)
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 					}
+					else if(		PRESET()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF 
+						&&	PRESET()->GetITimeNMODEPara()<=600
+						&&	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
+					{
+						SetTriggerNMODEParadata(GetPrevTRIGGERnmodePara(),true);
+						ResetNMODEtriggerAutoenableFlag();
+
+						if(AfxGetApp() != NULL)
+							AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
+					}
 				}
 				else if(PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF && getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()!=AL_OFF)
 				{
@@ -10200,7 +10210,15 @@ CStringW CDataHandler::GetCurrentModeString()
 		break;
 	case VM_DUOPAP:
 		{
-			sz = getModel()->GetLanguageString(IDS_DUOPAP);
+			if(getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
+			{
+				sz = _T("S-");
+				sz += getModel()->GetLanguageString(IDS_DUOPAP);
+			}
+			else
+			{
+				sz = getModel()->GetLanguageString(IDS_DUOPAP);
+			}
 		}
 		break;
 	case VM_PRE_IPPV:
@@ -10235,7 +10253,15 @@ CStringW CDataHandler::GetCurrentModeString()
 		break;
 	case VM_PRE_DUOPAP:
 		{
-			sz = getModel()->GetLanguageString(IDS_DUOPAP_PRE);
+			if(getModel()->getDATAHANDLER()->PRESET()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
+			{
+				sz = _T("S-");
+				sz += getModel()->GetLanguageString(IDS_DUOPAP_PRE);
+			}
+			else
+			{
+				sz = getModel()->GetLanguageString(IDS_DUOPAP_PRE);
+			}
 		}
 		break;
 	case VM_PRE_NCPAP:
@@ -10412,6 +10438,17 @@ void CDataHandler::SetCurrentTriggerPara(BYTE val)
 	case VM_PRE_DUOPAP:
 	case VM_PRE_NCPAP:
 		{
+			BYTE iOldVal=PRESET()->GetTriggerNMODEPara();
+			if(iOldVal==MAXRANGE_TRIGGER_NMODE_OFF && val !=MAXRANGE_TRIGGER_NMODE_OFF)//MAXRANGE_PED_TRIGGER_NMODE==0ff
+			{
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
+			}
+			else if(iOldVal!=MAXRANGE_TRIGGER_NMODE_OFF && val ==MAXRANGE_TRIGGER_NMODE_OFF)
+			{
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
+			}
 			PRESET()->SetTriggerNMODEPara(val,false,false);
 		}
 		break;
