@@ -7,6 +7,13 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50133 Version 5.0.1.33
+ * @date 2017-05-03
+ * @verbatim
+	- E-Flow setting view changed (ITEM-74)
+	- E-Flow value in ventilation menu will be send directly when value is changed and confirmed
+ @endverbatim
+ *
  * @subsection ver50132 Version 5.0.1.32
  * @date 2017-05-02
  * @verbatim

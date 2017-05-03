@@ -210,11 +210,11 @@ void CWndSubSettingsEFlow::Initialize()
 	if(		getModel()->getCONFIG()->IsEFLOWequalILFOW()
 		&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
 	{
-		m_pbtnValue->ShowWindow(SW_HIDE);
+		m_pbtnValue->EnableWindow(FALSE);
 	}
 	else
 	{
-		m_pbtnValue->ShowWindow(SW_SHOW);
+		m_pbtnValue->EnableWindow(TRUE);
 	}
 
 	
@@ -230,6 +230,7 @@ void CWndSubSettingsEFlow::Initialize()
 	m_pcNextUp=new CDTUpDwnBtn(btn,COLOR_TXTBTNUP);
 	m_pcNextUp->Create(this,g_hf21AcuBold,0);
 	m_pcNextUp->SetText(_T(""));
+
 	if(		getModel()->getCONFIG()->IsEFLOWequalILFOW()
 		&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
 		m_pcNextUp->ShowWindow(SW_HIDE);
@@ -248,6 +249,7 @@ void CWndSubSettingsEFlow::Initialize()
 	m_pcNextDwn=new CDTUpDwnBtn(btn,COLOR_TXTBTNUP);
 	m_pcNextDwn->Create(this,g_hf21AcuBold,0);
 	m_pcNextDwn->SetText(_T(""));
+
 	if(		getModel()->getCONFIG()->IsEFLOWequalILFOW()
 		&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
 		m_pcNextDwn->ShowWindow(SW_HIDE);
@@ -350,7 +352,22 @@ void CWndSubSettingsEFlow::Draw()
 
 	if(true==getModel()->getCONFIG()->IsEFLOWequalILFOW() && getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
 	{
-		rc.left = 435;
+		m_pcNextUp->ShowWindow(SW_HIDE);
+		m_pcNextDwn->ShowWindow(SW_HIDE);
+
+		/*rc.left = 435;
+		rc.top = 103;  
+		rc.right  = 600;  
+		rc.bottom = 185;
+		DrawText(hdcMem,getModel()->GetLanguageString(IDS_UNIT_LMIN),-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);*/
+
+		/*MoveToEx(hdcMem, 300, 103, NULL);
+		LineTo(hdcMem, 435, 103);
+
+		MoveToEx(hdcMem, 300, 185, NULL);
+		LineTo(hdcMem, 435, 185);*/
+
+		rc.left = 430;  
 		rc.top = 103;  
 		rc.right  = 600;  
 		rc.bottom = 185;
@@ -407,6 +424,9 @@ void CWndSubSettingsEFlow::Draw()
 	}
 	else
 	{
+		m_pcNextUp->ShowWindow(SW_SHOW);
+		m_pcNextDwn->ShowWindow(SW_SHOW);
+
 		MoveToEx(hdcMem, 300, 103, NULL);
 		LineTo(hdcMem, 435, 103);
 
@@ -507,6 +527,14 @@ BOOL CWndSubSettingsEFlow::PreTranslateMessage(MSG* pMsg)
 		{
 			if(pMsg->wParam==VK_SPACE)
 			{
+				//DEBUGMSG(TRUE, (TEXT("VK_SPACE\r\n")));
+
+				if(		getModel()->getCONFIG()->IsEFLOWequalILFOW()
+					&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
+				{
+					return 1;
+				}
+
 				eBtnState eState = m_pbtnValue->GetState();
 				
 				if(eState==BS_NONE)
@@ -532,6 +560,8 @@ BOOL CWndSubSettingsEFlow::PreTranslateMessage(MSG* pMsg)
 					else
 					{
 						m_pbtnValue->SetState(BS_FOCUSED);
+
+						getModel()->getDATAHANDLER()->SetCurrentEFlowPara(m_iValue);
 					}
 				}
 
@@ -541,6 +571,12 @@ BOOL CWndSubSettingsEFlow::PreTranslateMessage(MSG* pMsg)
 			}
 			else if(pMsg->wParam==VK_DOWN)
 			{
+				if(		getModel()->getCONFIG()->IsEFLOWequalILFOW()
+					&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
+				{
+					return 1;
+				}
+
 				if(m_pbtnValue->GetState()==BS_DOWN)
 				{
 					if(m_iValue>m_iLowerLimit)
@@ -580,6 +616,12 @@ BOOL CWndSubSettingsEFlow::PreTranslateMessage(MSG* pMsg)
 			}
 			else if(pMsg->wParam==VK_UP)
 			{
+				if(		getModel()->getCONFIG()->IsEFLOWequalILFOW()
+					&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
+				{
+					return 1;
+				}
+
 				if(m_pbtnValue->GetState()==BS_DOWN)
 				{
 					if(m_iValue<m_iUpperLimit)
@@ -684,6 +726,8 @@ void CWndSubSettingsEFlow::OnBnClickedValue()
 		else
 		{
 			m_pbtnValue->SetState(BS_FOCUSED);
+
+			getModel()->getDATAHANDLER()->SetCurrentEFlowPara(m_iValue);
 		}
 	}
 }
@@ -1020,19 +1064,30 @@ LRESULT CWndSubSettingsEFlow::OnMyMessage(WPARAM wParam, LPARAM lParam)
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SET_EFLOWEQUIFLOW);
 			}
 
-			
+			if(		getModel()->getCONFIG()->IsEFLOWequalILFOW()
+				&&	getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_IFLOW)
+			{
+				m_pbtnValue->EnableWindow(FALSE);
+			}
+			else
+			{
+				m_pbtnValue->EnableWindow(TRUE);
+			}
 
-			if(m_bEFLOWequalILFOW)
+			
+			/*if(m_bEFLOWequalILFOW)
 			{
 				m_pcNextUp->ShowWindow(SW_HIDE);
 				m_pcNextDwn->ShowWindow(SW_HIDE);
 				m_pbtnValue->ShowWindow(SW_HIDE);
 			}
-			else
+			else*/
 			{
-				m_pcNextUp->ShowWindow(SW_SHOW);
+				/*m_pcNextUp->ShowWindow(SW_SHOW);
 				m_pcNextDwn->ShowWindow(SW_SHOW);
-				m_pbtnValue->ShowWindow(SW_SHOW);
+				m_pbtnValue->ShowWindow(SW_SHOW);*/
+
+				m_pbtnValue->SetState(BS_UP);
 
 				m_iValue=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWPara_TRIGGER();
 
@@ -1040,6 +1095,8 @@ LRESULT CWndSubSettingsEFlow::OnMyMessage(WPARAM wParam, LPARAM lParam)
 				strVal.Format(_T("%0.0f"),CTlsFloat::Round(((double)m_iValue)/1000, 0));
 				m_pbtnValue->RefreshText(strVal);
 			}
+			/*if(GetParent())
+				GetParent()->SetFocus();*/
 			Draw();
 
 			if(GetParent())
