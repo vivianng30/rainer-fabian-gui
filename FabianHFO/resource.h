@@ -4,6 +4,7 @@
 //
 #define IDR_MAINFRAME                   128
 #define IDR_FabianHFOTYPE               129
+#define IDS_STRING129                   129
 #define IDB_DTB_NUMHEADER               131
 #define IDB_NUMPARA_1                   158
 #define IDB_NUMPARA_2                   160
@@ -938,6 +939,7 @@
 #define IDS_ALARM_FIO2MIN               10280
 #define IDS_ALARM_PRICOSIQ              10281
 #define IDS_ALARM_PIPMIN                10282
+#define IDS_ALARM_PMAX_CPAP             10283
 #define IDS_PARA_MV                     10300
 #define IDS_PARA_PMAX                   10301
 #define IDS_PARA_PEEP                   10302

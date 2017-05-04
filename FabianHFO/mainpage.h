@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50135 Version 5.0.1.35
+ * @date 2017-05-05
+ * @verbatim
+	- text changed of alarm "High PIP" in case of CPAP/NCPAP (ITEM-76)
+ @endverbatim
+ *
  * @subsection ver50134 Version 5.0.1.34
  * @date 2017-05-03
  * @verbatim

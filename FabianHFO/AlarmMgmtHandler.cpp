@@ -2148,7 +2148,10 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 		break;
 	case AL_PatAl_PIPmax:
 		{
-			sz=getModel()->GetLanguageString(IDS_ALARM_PMAX);
+			if(getModel()->getVMODEHANDLER()->activeModeIsCPAP() || getModel()->getVMODEHANDLER()->activeModeIsNCPAP())
+				sz=getModel()->GetLanguageString(IDS_ALARM_PMAX_CPAP);
+			else
+				sz=getModel()->GetLanguageString(IDS_ALARM_PMAX);
 		}
 		break;
 	case AL_PatAl_PIPmin:

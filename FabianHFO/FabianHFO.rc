@@ -222,8 +222,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 5,0,1,34
- PRODUCTVERSION 5,0,1,34
+ FILEVERSION 5,0,1,35
+ PRODUCTVERSION 5,0,1,35
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -240,12 +240,12 @@ BEGIN
         BEGIN
             VALUE "Comments", "Alle Rechte vorbehalten."
             VALUE "CompanyName", "Acutronic Medical Systems AG"
-            VALUE "FileVersion", "5, 0, 1, 34"
+            VALUE "FileVersion", "5, 0, 1, 35"
             VALUE "InternalName", "FabianHFO.exe"
             VALUE "LegalCopyright", "(c) Acutronic Medical Systems AG. "
             VALUE "OriginalFilename", "FabianHFO.exe"
             VALUE "ProductName", " FabianHFO"
-            VALUE "ProductVersion", "5, 0, 1, 34"
+            VALUE "ProductVersion", "5, 0, 1, 35"
         END
     END
     BLOCK "VarFileInfo"
@@ -1817,6 +1817,7 @@ BEGIN
     IDS_ALARM_FIO2MIN       "Lower minimum FiO2"
     IDS_ALARM_PRICOSIQ      "low SIQ"
     IDS_ALARM_PIPMIN        "Low PIP"
+    IDS_ALARM_PMAX_CPAP     "High pressure"
 END
 
 STRINGTABLE 
