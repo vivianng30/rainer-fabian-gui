@@ -761,7 +761,7 @@ void CWndMenuVentState::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CWndMenuTrendtype::SetOneButtonDepressed"));
+		theApp.ReportException(_T("CWndMenuTrendtype::SetOneButtonDepressed"));
 	}
 	
 }
@@ -794,7 +794,7 @@ void CWndMenuVentState::SetOneButtonPreset(int btnID)
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CWndMenuTrendtype::SetOneButtonPreset"));
+		theApp.ReportException(_T("CWndMenuTrendtype::SetOneButtonPreset"));
 	}
 	
 }
@@ -822,7 +822,7 @@ void CWndMenuVentState::ResetButtonPresetstate()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CWndMenuTrendtype::ResetButtonPresetstate"));
+		theApp.ReportException(_T("CWndMenuTrendtype::ResetButtonPresetstate"));
 	}
 	
 }
@@ -889,7 +889,7 @@ void CWndMenuVentState::SetButtonState(int btnID, CPresetMenuBtn::eBtnState stat
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CWndMenuTrendtype::SetButtonState"));
+		theApp.ReportException(_T("CWndMenuTrendtype::SetButtonState"));
 	}
 	
 }
@@ -915,7 +915,7 @@ void CWndMenuVentState::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CWndMenuTrendtype::SetAllButtonUnpressed"));
+		theApp.ReportException(_T("CWndMenuTrendtype::SetAllButtonUnpressed"));
 	}
 	
 }

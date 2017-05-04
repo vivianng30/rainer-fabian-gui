@@ -189,7 +189,7 @@ bool CMVViewHandler::CloseTrendView()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CMVViewHandler::CloseTrendView"));
+		theApp.ReportException(_T("CMVViewHandler::CloseTrendView"));
 
 		delete m_vTrend;
 		m_vTrend=NULL;
@@ -240,7 +240,7 @@ bool CMVViewHandler::ClosePatDataView()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CMVViewHandler::ClosePatDataView"));
+		theApp.ReportException(_T("CMVViewHandler::ClosePatDataView"));
 
 		delete m_vPatData;
 		m_vPatData=NULL;
@@ -287,7 +287,7 @@ bool CMVViewHandler::CloseFullscreenMsgView()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CMVViewHandler::CloseFullscreenMsgView"));
+		theApp.ReportException(_T("CMVViewHandler::CloseFullscreenMsgView"));
 
 		delete m_vFullscreenMsg;
 		m_vFullscreenMsg=NULL;
@@ -334,7 +334,7 @@ bool CMVViewHandler::CloseStartupView()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CMVViewHandler::CloseStartupView"));
+		theApp.ReportException(_T("CMVViewHandler::CloseStartupView"));
 
 		delete m_vStartup;
 		m_vStartup=NULL;
@@ -378,7 +378,7 @@ bool CMVViewHandler::CloseShutdownView()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CMVViewHandler::CloseShutdownView"));
+		theApp.ReportException(_T("CMVViewHandler::CloseShutdownView"));
 
 		delete m_vShutdown;
 		m_vShutdown=NULL;
@@ -475,7 +475,7 @@ bool CMVViewHandler::CloseSystemAlarmView()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CMVViewHandler::CloseSystemAlarmView"));
+		theApp.ReportException(_T("CMVViewHandler::CloseSystemAlarmView"));
 
 		delete m_vSystemAlarm;
 		m_vSystemAlarm=NULL;
@@ -557,7 +557,7 @@ bool CMVViewHandler::CloseMenuView()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CMVViewHandler::CloseMenuView"));
+		theApp.ReportException(_T("CMVViewHandler::CloseMenuView"));
 
 		delete m_vMenu;
 		m_vMenu=NULL;
@@ -608,7 +608,7 @@ bool CMVViewHandler::CloseServiceView()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CMVViewHandler::CloseServiceView"));
+		theApp.ReportException(_T("CMVViewHandler::CloseServiceView"));
 
 		delete m_vService;
 		m_vService=NULL;
@@ -691,7 +691,7 @@ bool CMVViewHandler::CloseLogView()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CMVViewHandler::CloseLogView"));
+		theApp.ReportException(_T("CMVViewHandler::CloseLogView"));
 
 		delete m_vLog;
 		m_vLog=NULL;
@@ -740,7 +740,7 @@ bool CMVViewHandler::CloseNumericView()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CMVViewHandler::CloseNumericView"));
+		theApp.ReportException(_T("CMVViewHandler::CloseNumericView"));
 
 		delete m_vNumericWnd;
 		m_vNumericWnd=NULL;
@@ -789,7 +789,7 @@ bool CMVViewHandler::CloseParaBtnView()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CMVViewHandler::CloseParaBtnView"));
+		theApp.ReportException(_T("CMVViewHandler::CloseParaBtnView"));
 
 		delete m_vParaBtn;
 		m_vParaBtn=NULL;
@@ -837,7 +837,7 @@ bool CMVViewHandler::CloseDiagrammView()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CMVViewHandler::CloseDiagrammView"));
+		theApp.ReportException(_T("CMVViewHandler::CloseDiagrammView"));
 
 		delete m_vDiagramm;
 		m_vDiagramm=NULL;
@@ -886,7 +886,7 @@ bool CMVViewHandler::CloseDTBFieldView()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CMVViewHandler::CloseDTBFieldView"));
+		theApp.ReportException(_T("CMVViewHandler::CloseDTBFieldView"));
 
 		delete m_vDTBField;
 		m_vDTBField=NULL;
@@ -937,7 +937,7 @@ bool CMVViewHandler::CloseAlarmLimitsView()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CMVViewHandler::CloseAlarmLimitsView"));
+		theApp.ReportException(_T("CMVViewHandler::CloseAlarmLimitsView"));
 
 		delete m_vAlarmLimits;
 		m_vAlarmLimits=NULL;

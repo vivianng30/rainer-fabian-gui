@@ -343,13 +343,13 @@ static UINT CSPIMonitorThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CSPIMonitorThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CSPIMonitorThread"));
+		theApp.ReportException(_T("CSPIMonitorThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
@@ -2026,13 +2026,13 @@ static UINT CSPICommunicationThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CSPICommunicationThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CSPICommunicationThread"));
+		theApp.ReportException(_T("CSPICommunicationThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);

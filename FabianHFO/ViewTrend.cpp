@@ -561,7 +561,7 @@ void CViewTrend::loadTrendData(BYTE type, eTrend trend)
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewTrend::LoadTrendData EV_ALARMSTATE_CHANGED"));
+		theApp.ReportException(_T("CViewTrend::LoadTrendData EV_ALARMSTATE_CHANGED"));
 	}
 }
 
@@ -1215,7 +1215,7 @@ bool CViewTrend::DestroyWndMenuTrendtype()
 		}
 		catch (...)
 		{
-			theApp.ReportErrorException(_T("CViewTrend::DestroyWndMenuTrendtype"));
+			theApp.ReportException(_T("CViewTrend::DestroyWndMenuTrendtype"));
 		}
 	}
 
@@ -3307,7 +3307,7 @@ void CViewTrend::DrawTrend1()
 
 	if(m_pBufferTrend1==NULL)
 	{
-		CFabianHFOApp::ReportErrorException(_T("CViewTrend::DrawTrend1() m_pBufferTrend1==NULL"));
+		CFabianHFOApp::ReportException(_T("CViewTrend::DrawTrend1() m_pBufferTrend1==NULL"));
 		return;
 	}
 
@@ -3346,7 +3346,7 @@ void CViewTrend::DrawTrend1()
 				{
 					CString error=_T("");
 					error.Format(_T("CViewTrend::DrawTrend1a() %d %d"), iValuesZumEinlesen,iStartPoint);
-					CFabianHFOApp::ReportErrorException(error);
+					CFabianHFOApp::ReportException(error);
 
 					bPrintEx=false;
 				}
@@ -3363,7 +3363,7 @@ void CViewTrend::DrawTrend1()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewTrend::DrawTrend1b"));
+		theApp.ReportException(_T("CViewTrend::DrawTrend1b"));
 	}
 
 	m_lpfsTrend1 =new G_FUNCTIONSTRUCT_TD;
@@ -3504,7 +3504,7 @@ void CViewTrend::DrawTrend2()
 
 	if(m_pBufferTrend2==NULL)
 	{
-		CFabianHFOApp::ReportErrorException(_T("CViewTrend::DrawTrend2() m_pBufferTrend2==NULL"));
+		CFabianHFOApp::ReportException(_T("CViewTrend::DrawTrend2() m_pBufferTrend2==NULL"));
 		return;
 	}
 
@@ -3543,7 +3543,7 @@ void CViewTrend::DrawTrend2()
 				{
 					CString error=_T("");
 					error.Format(_T("CViewTrend::DrawTrend2a() %d %d"), iValuesZumEinlesen,iStartPoint);
-					CFabianHFOApp::ReportErrorException(error);
+					CFabianHFOApp::ReportException(error);
 					bPrintEx=false;
 				}
 				numitems=i-1;
@@ -3559,7 +3559,7 @@ void CViewTrend::DrawTrend2()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewTrend::DrawTrend2b"));
+		theApp.ReportException(_T("CViewTrend::DrawTrend2b"));
 	}
 
 
@@ -3707,7 +3707,7 @@ void CViewTrend::DrawTrend3()
 
 	if(m_pBufferTrend3==NULL)
 	{
-		CFabianHFOApp::ReportErrorException(_T("CViewTrend::DrawTrend3() m_pBufferTrend3==NULL"));
+		CFabianHFOApp::ReportException(_T("CViewTrend::DrawTrend3() m_pBufferTrend3==NULL"));
 		return;
 	}
 
@@ -3745,7 +3745,7 @@ void CViewTrend::DrawTrend3()
 				{
 					CString error=_T("");
 					error.Format(_T("CViewTrend::DrawTrend3a() %d %d"), iValuesZumEinlesen,iStartPoint);
-					CFabianHFOApp::ReportErrorException(error);
+					CFabianHFOApp::ReportException(error);
 					bPrintEx=false;
 				}
 				numitems=i-1;
@@ -3761,7 +3761,7 @@ void CViewTrend::DrawTrend3()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewTrend::DrawTrend3b"));
+		theApp.ReportException(_T("CViewTrend::DrawTrend3b"));
 	}
 
 	//change the graph width + height
@@ -3983,7 +3983,7 @@ void CViewTrend::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewTrend::SetOneButtonDepressed"));
+		theApp.ReportException(_T("CViewTrend::SetOneButtonDepressed"));
 	}
 	
 	if(GetParent())
@@ -4016,7 +4016,7 @@ void CViewTrend::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewTrend::SetAllButtonUnpressed"));
+		theApp.ReportException(_T("CViewTrend::SetAllButtonUnpressed"));
 	}
 
 	if(GetParent())

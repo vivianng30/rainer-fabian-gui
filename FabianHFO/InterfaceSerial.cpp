@@ -611,13 +611,13 @@ static UINT CSerialCheckThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CSerialCheckThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CSerialCheckThread"));
+		theApp.ReportException(_T("CSerialCheckThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
@@ -1417,13 +1417,13 @@ static UINT CSerialSendThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CSerialSendThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CSerialSendThread"));
+		theApp.ReportException(_T("CSerialSendThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);

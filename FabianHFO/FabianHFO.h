@@ -25,7 +25,7 @@ public:
 	~CFabianHFOApp();
 
 	//static void ReportException(CString message);
-	static void ReportErrorException(CString lpszFunction);
+	static void ReportException(CString lpszFunction);
 	
 	
 	Logfile *getLog();

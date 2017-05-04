@@ -1419,7 +1419,7 @@ void CViewMenu::OpenMenuSelect()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewMenu::OpenMenuSelect"));
+		theApp.ReportException(_T("CViewMenu::OpenMenuSelect"));
 	}
 
 	Sleep(0);
@@ -1562,7 +1562,7 @@ void CViewMenu::LanguageChanged()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewMenu::NotifyLanguageChanged"));
+		theApp.ReportException(_T("CViewMenu::NotifyLanguageChanged"));
 	}
 	Invalidate();
 	UpdateWindow();

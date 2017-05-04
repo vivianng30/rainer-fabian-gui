@@ -1500,7 +1500,7 @@ void CViewSystemAlarm::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
-						theApp.ReportErrorException(_T("CViewSystemAlarm::NotifyEvent EV_ALARMSTATE_CHANGED"));
+						theApp.ReportException(_T("CViewSystemAlarm::NotifyEvent EV_ALARMSTATE_CHANGED"));
 					}
 					
 

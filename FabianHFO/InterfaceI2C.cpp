@@ -1736,13 +1736,13 @@ static UINT CI2CThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CI2CThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CI2CThread"));
+		theApp.ReportException(_T("CI2CThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);

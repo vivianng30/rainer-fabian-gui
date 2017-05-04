@@ -507,7 +507,7 @@ void CWndMenuTrendtype::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CWndMenuTrendtype::SetOneButtonDepressed"));
+		theApp.ReportException(_T("CWndMenuTrendtype::SetOneButtonDepressed"));
 	}
 	
 }
@@ -533,7 +533,7 @@ void CWndMenuTrendtype::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CWndMenuTrendtype::SetAllButtonUnpressed"));
+		theApp.ReportException(_T("CWndMenuTrendtype::SetAllButtonUnpressed"));
 	}
 	
 }

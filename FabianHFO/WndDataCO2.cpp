@@ -1458,13 +1458,13 @@ static UINT CCO2DataThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CCO2DataThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CCO2DataThread"));
+		theApp.ReportException(_T("CCO2DataThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);

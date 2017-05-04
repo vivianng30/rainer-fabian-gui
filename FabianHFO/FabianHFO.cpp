@@ -203,7 +203,7 @@ int CFabianHFOApp::writeLogError (LONG lError, LPCTSTR lptszMessage)
 	
 	return 1;
 }
-void CFabianHFOApp::ReportErrorException(CString lpszFunction)
+void CFabianHFOApp::ReportException(CString lpszFunction)
 {
 	// Retrieve the system error message for the last-error code
 

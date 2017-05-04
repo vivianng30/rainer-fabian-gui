@@ -1155,7 +1155,7 @@ void CWndMenuGraphs::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CWndMenuGraphs::SetOneButtonDepressed"));
+		theApp.ReportException(_T("CWndMenuGraphs::SetOneButtonDepressed"));
 	}
 }
 
@@ -1180,7 +1180,7 @@ void CWndMenuGraphs::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CWndMenuGraphs::SetAllButtonUnpressed"));
+		theApp.ReportException(_T("CWndMenuGraphs::SetAllButtonUnpressed"));
 	}
 	
 }

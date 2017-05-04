@@ -295,13 +295,13 @@ static UINT CCOMcheckThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CCOMcheckThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CCOMcheckThread"));
+		theApp.ReportException(_T("CCOMcheckThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
@@ -366,13 +366,13 @@ static UINT CCOMSendThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CCOMSendThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CCOMSendThread"));
+		theApp.ReportException(_T("CCOMSendThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
@@ -460,13 +460,13 @@ static UINT CCOMInitThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CCOMInitThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CCOMInitThread"));
+		theApp.ReportException(_T("CCOMInitThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);

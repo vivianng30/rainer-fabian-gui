@@ -1631,13 +1631,13 @@ static UINT CCheckOxyThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CCheckOxyThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CCheckOxyThread"));
+		theApp.ReportException(_T("CCheckOxyThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);

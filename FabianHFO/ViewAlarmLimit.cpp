@@ -3692,7 +3692,7 @@ void CViewAlarmLimit::NotifyEvent(CMVEvent* pEvent)
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewAlarmLimit::NotifyEvent"));
+		theApp.ReportException(_T("CViewAlarmLimit::NotifyEvent"));
 	}
 }
 void CViewAlarmLimit::NotifyVentModeChanged()
@@ -3716,7 +3716,7 @@ void CViewAlarmLimit::NotifyVentModeChanged()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewAlarmLimit::NotifyVentModeChanged"));
+		theApp.ReportException(_T("CViewAlarmLimit::NotifyVentModeChanged"));
 	}
 }
 
@@ -4323,7 +4323,7 @@ void CViewAlarmLimit::NotifyParaBtnEvent(CMVEvent* pEvent)
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewAlarmLimit::NotifyParaBtnEvent"));
+		theApp.ReportException(_T("CViewAlarmLimit::NotifyParaBtnEvent"));
 	}
 	
 
@@ -5400,7 +5400,7 @@ void CViewAlarmLimit::NotifyExspirationDataChanged()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewAlarmLimit::NotifyExspirationDataChanged"));
+		theApp.ReportException(_T("CViewAlarmLimit::NotifyExspirationDataChanged"));
 	}
 }
 
@@ -5415,7 +5415,7 @@ void CViewAlarmLimit::NotifyDataChanged()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewAlarmLimit::NotifyDataChanged"));
+		theApp.ReportException(_T("CViewAlarmLimit::NotifyDataChanged"));
 	}
 }
 
@@ -5553,7 +5553,7 @@ void CViewAlarmLimit::NotifyAlarmLimitChanged()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewAlarmLimit::NotifyAlarmLimitChanged"));
+		theApp.ReportException(_T("CViewAlarmLimit::NotifyAlarmLimitChanged"));
 	}
 }
 
@@ -5684,7 +5684,7 @@ void CViewAlarmLimit::NotifyCalculateAlarmLimit()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewAlarmLimit::NotifyCalculateAlarmLimit"));
+		theApp.ReportException(_T("CViewAlarmLimit::NotifyCalculateAlarmLimit"));
 	}
 }
 

@@ -75,7 +75,7 @@ CWndAlarmLog::~CWndAlarmLog()
 		delete m_pListBox;
 		m_pListBox=NULL;
 
-		theApp.ReportErrorException(_T("CWndAlarmLog::~CWndAlarmLog"));
+		theApp.ReportException(_T("CWndAlarmLog::~CWndAlarmLog"));
 	}
 	
 	delete m_pListBox;

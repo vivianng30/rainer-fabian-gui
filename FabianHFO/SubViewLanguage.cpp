@@ -1409,13 +1409,13 @@ static UINT CLoadLanguageThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CLoadLanguageThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CLoadLanguageThread"));
+		theApp.ReportException(_T("CLoadLanguageThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
@@ -1562,7 +1562,7 @@ void CSubViewLanguage::NotifyLanguageChanged()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CSubViewLanguage::NotifyLanguageChanged"));
+		theApp.ReportException(_T("CSubViewLanguage::NotifyLanguageChanged"));
 	}
 
 }

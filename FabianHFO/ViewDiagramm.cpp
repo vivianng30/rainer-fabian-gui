@@ -7337,7 +7337,7 @@ void CViewDiagramm::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
-						theApp.ReportErrorException(_T("CViewDiagramm::NotifyEvent() EV_BN_GRAPH_SAVE"));
+						theApp.ReportException(_T("CViewDiagramm::NotifyEvent() EV_BN_GRAPH_SAVE"));
 					}
 				}
 				break;
@@ -7912,7 +7912,7 @@ void CViewDiagramm::StopGraphThread( void )
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewDiagramm::StopGraphThread"));
+		theApp.ReportException(_T("CViewDiagramm::StopGraphThread"));
 
 		throw;
 	}
@@ -7978,13 +7978,13 @@ static UINT CGraphThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CGraphThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CGraphThread"));
+		theApp.ReportException(_T("CGraphThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
@@ -8043,13 +8043,13 @@ UINT CViewDiagramm::DrawDiagramm()
 						CString errorStr=_T("");
 						errorStr.Format(_T("CViewDiagramm1: exception %s"),szCause);
 						
-						theApp.ReportErrorException(errorStr);
+						theApp.ReportException(errorStr);
 
 						e->Delete();
 					}
 					catch(...)
 					{
-						theApp.ReportErrorException(_T("Unknown CViewDiagramm1"));
+						theApp.ReportException(_T("Unknown CViewDiagramm1"));
 					}*/
 					return 0;
 				}
@@ -8075,13 +8075,13 @@ UINT CViewDiagramm::DrawDiagramm()
 						CString errorStr=_T("");
 						errorStr.Format(_T("CViewDiagramm1: exception %s"),szCause);
 
-						theApp.ReportErrorException(errorStr);
+						theApp.ReportException(errorStr);
 
 						e->Delete();
 					}
 					catch(...)
 					{
-						theApp.ReportErrorException(_T("Unknown CViewDiagramm1"));
+						theApp.ReportException(_T("Unknown CViewDiagramm1"));
 					}*/
 					return 0;
 				}
@@ -8104,13 +8104,13 @@ UINT CViewDiagramm::DrawDiagramm()
 						CString errorStr=_T("");
 						errorStr.Format(_T("CViewDiagramm1: exception %s"),szCause);
 
-						theApp.ReportErrorException(errorStr);
+						theApp.ReportException(errorStr);
 
 						e->Delete();
 					}
 					catch(...)
 					{
-						theApp.ReportErrorException(_T("Unknown CViewDiagramm1"));
+						theApp.ReportException(_T("Unknown CViewDiagramm1"));
 					}*/
 					return 0;
 				}
@@ -8132,13 +8132,13 @@ UINT CViewDiagramm::DrawDiagramm()
 						CString errorStr=_T("");
 						errorStr.Format(_T("CViewDiagramm1: exception %s"),szCause);
 
-						theApp.ReportErrorException(errorStr);
+						theApp.ReportException(errorStr);
 
 						e->Delete();
 					}
 					catch(...)
 					{
-						theApp.ReportErrorException(_T("Unknown CViewDiagramm1"));
+						theApp.ReportException(_T("Unknown CViewDiagramm1"));
 					}*/
 					return 0;
 				}
@@ -8245,13 +8245,13 @@ UINT CViewDiagramm::DrawDiagramm()
 						CString errorStr=_T("");
 						errorStr.Format(_T("CViewDiagramm1: exception %s"),szCause);
 
-						theApp.ReportErrorException(errorStr);
+						theApp.ReportException(errorStr);
 
 						e->Delete();
 					}
 					catch(...)
 					{
-						theApp.ReportErrorException(_T("Unknown CViewDiagramm1"));
+						theApp.ReportException(_T("Unknown CViewDiagramm1"));
 					}*/
 					return 0;
 				}
@@ -8729,7 +8729,7 @@ void CViewDiagramm::CopyCurBreathToSavedBreath()
 		}
 		catch (...)
 		{
-			theApp.ReportErrorException(_T("CViewDiagramm::CopyCurBreathToSavedBreath"));
+			theApp.ReportException(_T("CViewDiagramm::CopyCurBreathToSavedBreath"));
 
 			LeaveCriticalSection(&getModel()->getDATAHANDLER()->csSavedBreath);
 		}

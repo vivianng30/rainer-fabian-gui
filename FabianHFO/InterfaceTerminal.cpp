@@ -2034,13 +2034,13 @@ static UINT CTerminalSendThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CTerminalSendThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CTerminalSendThread"));
+		theApp.ReportException(_T("CTerminalSendThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);

@@ -222,13 +222,13 @@ static UINT CWaitThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CWaitThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CWaitThread"));
+		theApp.ReportException(_T("CWaitThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);

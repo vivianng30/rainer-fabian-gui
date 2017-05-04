@@ -1375,13 +1375,13 @@ static UINT CWaitTrendUSBThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CWaitTrendUSBThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CWaitTrendUSBThread"));
+		theApp.ReportException(_T("CWaitTrendUSBThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);

@@ -196,7 +196,7 @@ void CInterfaceSPO2::startSPO2initThread(void)
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("THR:SPO2 startSPO2initThread"));
+		theApp.ReportException(_T("THR:SPO2 startSPO2initThread"));
 
 		if(m_pcwtSPO2InitThread!=NULL)
 		{
@@ -391,13 +391,13 @@ static UINT CSPO2checkThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CSPO2checkThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CSPO2checkThread"));
+		theApp.ReportException(_T("CSPO2checkThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
@@ -461,13 +461,13 @@ static UINT CSPO2SendThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CSPO2SendThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CSPO2SendThread"));
+		theApp.ReportException(_T("CSPO2SendThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
@@ -560,13 +560,13 @@ static UINT CSPO2InitThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CSPO2InitThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CSPO2InitThread"));
+		theApp.ReportException(_T("CSPO2InitThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);

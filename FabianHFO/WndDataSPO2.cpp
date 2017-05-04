@@ -1551,13 +1551,13 @@ static UINT CSPO2DataThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CSPO2DataThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CSPO2DataThread"));
+		theApp.ReportException(_T("CSPO2DataThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
@@ -2045,7 +2045,7 @@ bool CWndDataSPO2::isLimitBtnDepressed()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CWndDataSPO2::isLimitBtnDepressed"));
+		theApp.ReportException(_T("CWndDataSPO2::isLimitBtnDepressed"));
 	}
 	return bDepressed;
 }
@@ -2067,7 +2067,7 @@ void CWndDataSPO2::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CWndDataSPO2::SetAllButtonUnpressed"));
+		theApp.ReportException(_T("CWndDataSPO2::SetAllButtonUnpressed"));
 	}
 }
 

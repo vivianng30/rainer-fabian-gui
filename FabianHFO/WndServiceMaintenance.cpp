@@ -1877,7 +1877,7 @@ void CWndServiceMaintenance::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CWndServiceMaintenance::SetOneButtonDepressed"));
+		theApp.ReportException(_T("CWndServiceMaintenance::SetOneButtonDepressed"));
 	}
 	
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
@@ -1911,7 +1911,7 @@ void CWndServiceMaintenance::SetAllButtonUnpressed()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CWndServiceMaintenance::SetAllButtonUnpressed"));
+		theApp.ReportException(_T("CWndServiceMaintenance::SetAllButtonUnpressed"));
 	}
 	
 	m_iCurrentField=0;
@@ -1955,7 +1955,7 @@ void CWndServiceMaintenance::SetOneButtonFocused(int btnID)
 		}
 		catch (...)
 		{
-			theApp.ReportErrorException(_T("CWndServiceMaintenance::SetOneButtonFocused"));
+			theApp.ReportException(_T("CWndServiceMaintenance::SetOneButtonFocused"));
 		}
 
 

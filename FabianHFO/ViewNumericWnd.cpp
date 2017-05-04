@@ -1232,7 +1232,7 @@ void CViewNumericWnd::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
-						theApp.ReportErrorException(_T("CViewNumericWnd::NotifyEvent"));
+						theApp.ReportException(_T("CViewNumericWnd::NotifyEvent"));
 					}
 				}
 				break;
@@ -1321,7 +1321,7 @@ void CViewNumericWnd::DrawGraphCursor(int iDiagrmm)
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewNumericWnd::DrawGraphCursor"));
+		theApp.ReportException(_T("CViewNumericWnd::DrawGraphCursor"));
 	}
 }
 
@@ -1341,7 +1341,7 @@ void CViewNumericWnd::DeleteGraphCursor()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewNumericWnd::DeleteGraphCursor"));
+		theApp.ReportException(_T("CViewNumericWnd::DeleteGraphCursor"));
 	}
 }
 
@@ -1580,7 +1580,7 @@ void CViewNumericWnd::NotifyVentModeChanged()
 				}
 				catch (...)
 				{
-					theApp.ReportErrorException(_T("CViewNumericWnd::NotifyVentModeChanged"));
+					theApp.ReportException(_T("CViewNumericWnd::NotifyVentModeChanged"));
 				}
 			}
 		}

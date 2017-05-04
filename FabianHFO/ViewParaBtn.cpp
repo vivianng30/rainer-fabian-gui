@@ -2456,7 +2456,7 @@ void CViewParaBtn::DestroyWndParaSettings()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CViewParaBtn::DestroyWndParaSettings"));
+		theApp.ReportException(_T("CViewParaBtn::DestroyWndParaSettings"));
 
 		delete m_pcWndParaSettings;
 		m_pcWndParaSettings=NULL;
@@ -9113,7 +9113,7 @@ void CViewParaBtn::SetOneButtonDepressed(int btnID)
 		/** \brief The leave critical section. */
 		LeaveCriticalSection(&csDraw);
 
-		theApp.ReportErrorException(_T("CViewParaBtn::SetOneButtonDepressed"));
+		theApp.ReportException(_T("CViewParaBtn::SetOneButtonDepressed"));
 	}
 }
 
@@ -9146,7 +9146,7 @@ void CViewParaBtn::SetAllButtonUnpressed()
 		/** \brief The leave critical section. */
 		LeaveCriticalSection(&csDraw);
 
-		theApp.ReportErrorException(_T("CViewParaBtn::SetAllButtonUnpressed"));
+		theApp.ReportException(_T("CViewParaBtn::SetAllButtonUnpressed"));
 	}
 }
 
@@ -11374,7 +11374,7 @@ void CViewParaBtn::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
-						theApp.ReportErrorException(_T("CViewParaBtn::NotifyEvent EV_CONTROL_SYSTEMSTATE_CHANGED"));
+						theApp.ReportException(_T("CViewParaBtn::NotifyEvent EV_CONTROL_SYSTEMSTATE_CHANGED"));
 					}
 				}
 				break;
@@ -11388,7 +11388,7 @@ void CViewParaBtn::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
-						theApp.ReportErrorException(_T("CViewParaBtn::NotifyEvent EV_CONTROL_FLOWSENSORSTATE"));
+						theApp.ReportException(_T("CViewParaBtn::NotifyEvent EV_CONTROL_FLOWSENSORSTATE"));
 					}
 				}
 				break;
@@ -11402,7 +11402,7 @@ void CViewParaBtn::NotifyEvent(CMVEvent* pEvent)
 					}
 					catch (...)
 					{
-						theApp.ReportErrorException(_T("CViewParaBtn::NotifyEvent EV_CONTROL_O2SENSORSTATE"));
+						theApp.ReportException(_T("CViewParaBtn::NotifyEvent EV_CONTROL_O2SENSORSTATE"));
 					}
 				}
 				break;
@@ -11508,7 +11508,7 @@ void CViewParaBtn::NotifyEvent(CMVEvent* pEvent)
 						/** \brief The leave critical section. */
 						LeaveCriticalSection(&csDraw);
 
-						theApp.ReportErrorException(_T("CViewParaBtn::NotifyEvent EV_CONTROL_POWERSTATE_CHANGED"));
+						theApp.ReportException(_T("CViewParaBtn::NotifyEvent EV_CONTROL_POWERSTATE_CHANGED"));
 					}
 				}
 				break;

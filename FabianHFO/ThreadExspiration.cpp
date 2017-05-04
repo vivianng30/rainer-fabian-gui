@@ -164,13 +164,13 @@ static UINT ExspirationThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("ExspirationThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("ExspirationThread"));
+		theApp.ReportException(_T("ExspirationThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);

@@ -1237,2081 +1237,2101 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	//faThreadWatchdog[THR_MAIN]=faThreadWatchdog[THR_MAIN]+1;
 	//LeaveCriticalSection(&csThreadWatchdog);
 	
-	switch (message)
-    {
-	case WM_RETRYCO2:
+	try
+	{
+	
+		switch (message)
 		{
-			getModel()->DeinitCO2module();
-			Sleep(0);
-			getModel()->initCO2module();
-			return 1;
-		}
-	case WM_FABAIN_SHUTDOWN:
-		{
-			m_bExit=true;
-
-			theApp.getLog()->WriteLine(L"**** BROADCAST QuitVentilator ****");
-
-			getModel()->Quit();
-
-			m_bForceShutdown=true;
-			PostMessage(WM_CLOSE);
-
-			return 1;
-		}
-	case WM_CAL_DISPLAY:
-		{
-			//getModel()->SetMainthreadPending(true);
-			g_bMainWatchdogPending=true;
-#ifndef _DEBUG
-			KillTimer(WATCHDOGTIMER);
-
-			if(!StopWatchDogTimer(g_hWatchDog,0))
+		case WM_RETRYCO2:
 			{
-				// TODO:		
-				//DWORD dwError=GetLastError();
-				//return;
+				getModel()->DeinitCO2module();
+				Sleep(0);
+				getModel()->initCO2module();
+				return 1;
 			}
-			CloseHandle(g_hWatchDog);
-
-#endif
-
-			if(TouchCalibrate()==FALSE)
+		case WM_FABAIN_SHUTDOWN:
 			{
-				//int iSt=0;//Error
+				m_bExit=true;
+
+				theApp.getLog()->WriteLine(L"**** BROADCAST QuitVentilator ****");
+
+				getModel()->Quit();
+
+				m_bForceShutdown=true;
+				PostMessage(WM_CLOSE);
+
+				return 1;
 			}
-			else
-				RegFlushKey(HKEY_LOCAL_MACHINE);
-
-#ifndef _DEBUG
-			DWORD dwID;
-
-			//g_hWatchDog=CreateWatchDogTimer(WD_NAME,WD_PERIODE,WD_WAIT,WDOG_RESET_DEVICE,0,0);
-			//g_hWatchDog=CreateWatchDogTimer(WD_NAME,WD_PERIODE,WD_WAIT,WDOG_KILL_PROCESS,0,0);
-			g_hWatchDog=CreateWatchDogTimer(WD_NAME,WD_PERIODE,WD_WAIT,WDOG_NO_DFLT_ACTION,0,0);
-
-			g_hAction=CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)Action,NULL,NULL,&dwID);
-			// TODO: create thread failed
-
-			if(g_hWatchDog==NULL)
+		case WM_CAL_DISPLAY:
 			{
-				// TODO:
-				//DWORD dwError=GetLastError();
-				return 0;
-			}
-			if(!StartWatchDogTimer(g_hWatchDog,0))
-			{
-				// TODO:		
-				//DWORD dwError=GetLastError();
-				return 0;
-			}
+				//getModel()->SetMainthreadPending(true);
+				g_bMainWatchdogPending=true;
+	#ifndef _DEBUG
+				KillTimer(WATCHDOGTIMER);
 
-			//StartMainWatchdogThread();
-
-
-			if(!RefreshWatchDogTimer(g_hWatchDog,0))
-			{
-				theApp.writeLogError(GetLastError(), _T("WD: Unable to refresh#4"));
-			}
-#endif
-			SetTimer(WATCHDOGTIMER,5000,NULL);
-			g_bMainWatchdogPending=false;
-
-			getModel()->getVIEWHANDLER()->UpdateServiceView();
-
-			return 1;
-		}
-		break;
-	case WM_MENUBUTTONDOWN:
-		{
-			switch(wParam)
-			{
-			case IDC_BTN_MENU_IPPV:
+				if(!StopWatchDogTimer(g_hWatchDog,0))
 				{
-					theApp.getLog()->WriteLine(_T("$M20$"));
+					// TODO:		
+					//DWORD dwError=GetLastError();
+					//return;
+				}
+				CloseHandle(g_hWatchDog);
 
-					//test fmea
-					//getModel()->closeInterface();
+	#endif
 
-					//test deadlock
-					/*while(true)
+				if(TouchCalibrate()==FALSE)
+				{
+					//int iSt=0;//Error
+				}
+				else
+					RegFlushKey(HKEY_LOCAL_MACHINE);
+
+	#ifndef _DEBUG
+				DWORD dwID;
+
+				//g_hWatchDog=CreateWatchDogTimer(WD_NAME,WD_PERIODE,WD_WAIT,WDOG_RESET_DEVICE,0,0);
+				//g_hWatchDog=CreateWatchDogTimer(WD_NAME,WD_PERIODE,WD_WAIT,WDOG_KILL_PROCESS,0,0);
+				g_hWatchDog=CreateWatchDogTimer(WD_NAME,WD_PERIODE,WD_WAIT,WDOG_NO_DFLT_ACTION,0,0);
+
+				g_hAction=CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)Action,NULL,NULL,&dwID);
+				// TODO: create thread failed
+
+				if(g_hWatchDog==NULL)
+				{
+					// TODO:
+					//DWORD dwError=GetLastError();
+					return 0;
+				}
+				if(!StartWatchDogTimer(g_hWatchDog,0))
+				{
+					// TODO:		
+					//DWORD dwError=GetLastError();
+					return 0;
+				}
+
+				//StartMainWatchdogThread();
+
+
+				if(!RefreshWatchDogTimer(g_hWatchDog,0))
+				{
+					theApp.writeLogError(GetLastError(), _T("WD: Unable to refresh#4"));
+				}
+	#endif
+				SetTimer(WATCHDOGTIMER,5000,NULL);
+				g_bMainWatchdogPending=false;
+
+				getModel()->getVIEWHANDLER()->UpdateServiceView();
+
+				return 1;
+			}
+			break;
+		case WM_MENUBUTTONDOWN:
+			{
+				switch(wParam)
+				{
+				case IDC_BTN_MENU_IPPV:
 					{
-						int i=0;
-					}*/
+						theApp.getLog()->WriteLine(_T("$M20$"));
 
-					//test memory leak
-					/*m_pcTest=NULL;
-					CClientDC dc(this);
-					int iCount=0;
-					while(true)
-					{
-						m_pcTest= new CBmp(theApp.m_hInstance,dc.m_hDC,IDB_PIC_SYSALARM);
+						//test fmea
+						//getModel()->closeInterface();
 
-						Sleep(1000);
-						iCount++;
-
-						if(iCount>10)
+						//test deadlock
+						/*while(true)
 						{
-							iCount=0;
-							MEMORYSTATUS stat;
-							GlobalMemoryStatus (&stat);
-							DWORD dwMem=stat.dwAvailPhys/1024;
+							int i=0;
+						}*/
 
-							CString szTemp=_T("");
-							szTemp.Format(_T("%*ld free "),7, stat.dwAvailPhys/1024);
-							DEBUGMSG(TRUE, (szTemp));
-							DEBUGMSG(TRUE, (TEXT("\r\n")));
-						}
+						//test memory leak
+						/*m_pcTest=NULL;
+						CClientDC dc(this);
+						int iCount=0;
+						while(true)
+						{
+							m_pcTest= new CBmp(theApp.m_hInstance,dc.m_hDC,IDB_PIC_SYSALARM);
 
-					}*/
+							Sleep(1000);
+							iCount++;
 
-					//HANDLE hDriver;
+							if(iCount>10)
+							{
+								iCount=0;
+								MEMORYSTATUS stat;
+								GlobalMemoryStatus (&stat);
+								DWORD dwMem=stat.dwAvailPhys/1024;
 
-					//DeviceSearchType DeviceSearch = DeviceSearchByLegacyName;
-					//DEVMGR_DEVICE_INFORMATION DeviceInfo;
+								CString szTemp=_T("");
+								szTemp.Format(_T("%*ld free "),7, stat.dwAvailPhys/1024);
+								DEBUGMSG(TRUE, (szTemp));
+								DEBUGMSG(TRUE, (TEXT("\r\n")));
+							}
 
-					//DeviceInfo.dwSize = sizeof( DEVMGR_DEVICE_INFORMATION );
+						}*/
 
-					//hDriver = FindFirstDevice(DeviceSearch, L"*", &DeviceInfo);
+						//HANDLE hDriver;
 
-					//if( hDriver != INVALID_HANDLE_VALUE )
-					//{
-					//	//RETAILMSG( 1, (TEXT("Legacy\n")));
-					//	do
-					//	{
-					//		RETAILMSG( 1, (TEXT("%s\n"), 
-					//			DeviceInfo.szLegacyName ));
-					//		CString sz=DeviceInfo.szLegacyName;
-					//		if(sz==_T("PIF1:"))
-					//		{
-					//			BOOL bTest=DeactivateDevice(hDriver);
-					//			int iStop=0;
+						//DeviceSearchType DeviceSearch = DeviceSearchByLegacyName;
+						//DEVMGR_DEVICE_INFORMATION DeviceInfo;
 
-					//		}
-					//	} while( FindNextDevice( hDriver, &DeviceInfo ) );
-					//	FindClose( hDriver );
-					//}
+						//DeviceInfo.dwSize = sizeof( DEVMGR_DEVICE_INFORMATION );
+
+						//hDriver = FindFirstDevice(DeviceSearch, L"*", &DeviceInfo);
+
+						//if( hDriver != INVALID_HANDLE_VALUE )
+						//{
+						//	//RETAILMSG( 1, (TEXT("Legacy\n")));
+						//	do
+						//	{
+						//		RETAILMSG( 1, (TEXT("%s\n"), 
+						//			DeviceInfo.szLegacyName ));
+						//		CString sz=DeviceInfo.szLegacyName;
+						//		if(sz==_T("PIF1:"))
+						//		{
+						//			BOOL bTest=DeactivateDevice(hDriver);
+						//			int iStop=0;
+
+						//		}
+						//	} while( FindNextDevice( hDriver, &DeviceInfo ) );
+						//	FindClose( hDriver );
+						//}
 
 
-					CMVEventUI event(CMVEventUI::EV_BN_IPPV);
-					getModel()->triggerEvent(&event);
-					return 1;
+						CMVEventUI event(CMVEventUI::EV_BN_IPPV);
+						getModel()->triggerEvent(&event);
+						return 1;
+					}
+					break;
+				case IDC_BTN_MENU_SIPPV:
+					{
+						theApp.getLog()->WriteLine(_T("$M21$"));
+						CMVEventUI event(CMVEventUI::EV_BN_SIPPV);
+						getModel()->triggerEvent(&event);
+						return 1;
+					}
+					break;
+				case IDC_BTN_MENU_SIMV:
+					{
+						theApp.getLog()->WriteLine(_T("$M22$"));
+						CMVEventUI event(CMVEventUI::EV_BN_SIMV);
+						getModel()->triggerEvent(&event);
+						return 1;
+					}
+					break;
+				case IDC_BTN_MENU_SIMVPSV:
+					{
+						theApp.getLog()->WriteLine(_T("$M23$"));
+						CMVEventUI event(CMVEventUI::EV_BN_SIMVPSV);
+						getModel()->triggerEvent(&event);
+						return 1;
+					}
+					break;
+				case IDC_BTN_MENU_PSV:
+					{
+						theApp.getLog()->WriteLine(_T("$M24$"));
+						CMVEventUI event(CMVEventUI::EV_BN_PSV);
+						getModel()->triggerEvent(&event);
+						return 1;
+					}
+					break;
+				case IDC_BTN_MENU_HFO:
+					{
+						theApp.getLog()->WriteLine(_T("$M25$"));
+						CMVEventUI event(CMVEventUI::EV_BN_HFO);
+						getModel()->triggerEvent(&event);
+						return 1;
+					}
+					break;
+				case IDC_BTN_MENU_CPAP:
+					{
+						theApp.getLog()->WriteLine(_T("$M26$"));
+						CMVEventUI event(CMVEventUI::EV_BN_CPAP);
+						getModel()->triggerEvent(&event);
+						return 1;
+					}
+					break;
+				case IDC_BTN_MENU_NCPAP:
+					{
+						theApp.getLog()->WriteLine(_T("$M27$"));
+						CMVEventUI event(CMVEventUI::EV_BN_NCPAP);
+						getModel()->triggerEvent(&event);
+						return 1;
+					}
+					break;
+				case IDC_BTN_MENU_DUOPAP:
+					{
+						theApp.getLog()->WriteLine(_T("$M28$"));
+						CMVEventUI event(CMVEventUI::EV_BN_DUOPAP);
+						getModel()->triggerEvent(&event);
+						return 1;
+					}
+					break;
+				case IDC_BTN_MENU_THERAPIE:
+					{
+						theApp.getLog()->WriteLine(_T("$M29$"));
+						CMVEventUI event(CMVEventUI::EV_BN_THERAPIE);
+						getModel()->triggerEvent(&event);
+						return 1;
+					}
+					break;
 				}
-				break;
-			case IDC_BTN_MENU_SIPPV:
-				{
-					theApp.getLog()->WriteLine(_T("$M21$"));
-					CMVEventUI event(CMVEventUI::EV_BN_SIPPV);
-					getModel()->triggerEvent(&event);
-					return 1;
-				}
-				break;
-			case IDC_BTN_MENU_SIMV:
-				{
-					theApp.getLog()->WriteLine(_T("$M22$"));
-					CMVEventUI event(CMVEventUI::EV_BN_SIMV);
-					getModel()->triggerEvent(&event);
-					return 1;
-				}
-				break;
-			case IDC_BTN_MENU_SIMVPSV:
-				{
-					theApp.getLog()->WriteLine(_T("$M23$"));
-					CMVEventUI event(CMVEventUI::EV_BN_SIMVPSV);
-					getModel()->triggerEvent(&event);
-					return 1;
-				}
-				break;
-			case IDC_BTN_MENU_PSV:
-				{
-					theApp.getLog()->WriteLine(_T("$M24$"));
-					CMVEventUI event(CMVEventUI::EV_BN_PSV);
-					getModel()->triggerEvent(&event);
-					return 1;
-				}
-				break;
-			case IDC_BTN_MENU_HFO:
-				{
-					theApp.getLog()->WriteLine(_T("$M25$"));
-					CMVEventUI event(CMVEventUI::EV_BN_HFO);
-					getModel()->triggerEvent(&event);
-					return 1;
-				}
-				break;
-			case IDC_BTN_MENU_CPAP:
-				{
-					theApp.getLog()->WriteLine(_T("$M26$"));
-					CMVEventUI event(CMVEventUI::EV_BN_CPAP);
-					getModel()->triggerEvent(&event);
-					return 1;
-				}
-				break;
-			case IDC_BTN_MENU_NCPAP:
-				{
-					theApp.getLog()->WriteLine(_T("$M27$"));
-					CMVEventUI event(CMVEventUI::EV_BN_NCPAP);
-					getModel()->triggerEvent(&event);
-					return 1;
-				}
-				break;
-			case IDC_BTN_MENU_DUOPAP:
-				{
-					theApp.getLog()->WriteLine(_T("$M28$"));
-					CMVEventUI event(CMVEventUI::EV_BN_DUOPAP);
-					getModel()->triggerEvent(&event);
-					return 1;
-				}
-				break;
-			case IDC_BTN_MENU_THERAPIE:
-				{
-					theApp.getLog()->WriteLine(_T("$M29$"));
-					CMVEventUI event(CMVEventUI::EV_BN_THERAPIE);
-					getModel()->triggerEvent(&event);
-					return 1;
-				}
-				break;
 			}
-		}
-		break;
-	case WM_SAVETREND_TOUSB:
-		{
-			StartSaveTrendUSBThread();
-			eventSaveTrendUSBfinish.SetEvent();
-			return 1;
-		}
-		break;
-	//case WM_LOAD_LANGUAGE:
-	//	{
-	//		/*CreateWndHourglass();
-	//		ShowWndHourglass(true);
-
-	//		m_wLanguageToLoad=wParam;
-	//		StartLoadLanguageThread();
-	//		eventLoadLanguage.SetEvent();*/
-
-	//		if(getModel()->GetLanguageID()!=m_wLanguageID)
-	//		{
-	//			bool bChangeFace=false;
-	//			if(m_wLanguageID==LAN_CHINESE)
-	//			{
-	//				bChangeFace=true;
-	//			}
-	//			else if(getModel()->GetLanguageID()==LAN_CHINESE)
-	//			{
-	//				bChangeFace=true;
-	//			}
-
-	//			if(bChangeFace)
-	//			{
-	//				CreateAcuFonts(getModel()->GetLanguageID());
-	//				LoadGlobalAcuFonts(getModel()->GetLanguageID());
-	//				m_wLanguageID=getModel()->GetLanguageID();
-	//			}
-	//		}
-	//	}
-	//	break;
-	case WM_LANGUAGE_CHANGED:
-		{
-			if(getModel()->GetLanguageID()!=m_wLanguageID)
+			break;
+		case WM_SAVETREND_TOUSB:
 			{
-				bool bChangeFace=false;
-				if(m_wLanguageID==LAN_CHINESE &&  getModel()->GetLanguageID()!=LAN_JAPANESE)
-				{
-					bChangeFace=true;
-				}
-				else if(getModel()->GetLanguageID()==LAN_CHINESE && m_wLanguageID!=LAN_JAPANESE)
-				{
-					bChangeFace=true;
-				}
-				else if(m_wLanguageID==LAN_JAPANESE &&  getModel()->GetLanguageID()!=LAN_CHINESE)
-				{
-					bChangeFace=true;
-				}
-				else if(getModel()->GetLanguageID()==LAN_JAPANESE && m_wLanguageID!=LAN_CHINESE)
-				{
-					bChangeFace=true;
-				}
-
-				if(bChangeFace)
-				{
-					CreateAcuFonts(getModel()->GetLanguageID(),true);
-					LoadGlobalAcuFonts(getModel()->GetLanguageID());
-					m_wLanguageID=getModel()->GetLanguageID();
-
-					::SendMessage(HWND_BROADCAST,WM_FONTCHANGE,0,0);
-				}
-
+				StartSaveTrendUSBThread();
+				eventSaveTrendUSBfinish.SetEvent();
+				return 1;
 			}
+			break;
+		//case WM_LOAD_LANGUAGE:
+		//	{
+		//		/*CreateWndHourglass();
+		//		ShowWndHourglass(true);
 
-			
+		//		m_wLanguageToLoad=wParam;
+		//		StartLoadLanguageThread();
+		//		eventLoadLanguage.SetEvent();*/
 
-			/*CMVEventUI event(CMVEventUI::EV_LANGUAGE);
-			getModel()->Trigger(&event);*/
-			return 1;
-		}
-		break;
-	case WM_FONTCHANGE:
-		{
-			if(!m_bExit)
+		//		if(getModel()->GetLanguageID()!=m_wLanguageID)
+		//		{
+		//			bool bChangeFace=false;
+		//			if(m_wLanguageID==LAN_CHINESE)
+		//			{
+		//				bChangeFace=true;
+		//			}
+		//			else if(getModel()->GetLanguageID()==LAN_CHINESE)
+		//			{
+		//				bChangeFace=true;
+		//			}
+
+		//			if(bChangeFace)
+		//			{
+		//				CreateAcuFonts(getModel()->GetLanguageID());
+		//				LoadGlobalAcuFonts(getModel()->GetLanguageID());
+		//				m_wLanguageID=getModel()->GetLanguageID();
+		//			}
+		//		}
+		//	}
+		//	break;
+		case WM_LANGUAGE_CHANGED:
 			{
-				CMVEventUI event(CMVEventUI::EV_LANGUAGE);
+				if(getModel()->GetLanguageID()!=m_wLanguageID)
+				{
+					bool bChangeFace=false;
+					if(m_wLanguageID==LAN_CHINESE &&  getModel()->GetLanguageID()!=LAN_JAPANESE)
+					{
+						bChangeFace=true;
+					}
+					else if(getModel()->GetLanguageID()==LAN_CHINESE && m_wLanguageID!=LAN_JAPANESE)
+					{
+						bChangeFace=true;
+					}
+					else if(m_wLanguageID==LAN_JAPANESE &&  getModel()->GetLanguageID()!=LAN_CHINESE)
+					{
+						bChangeFace=true;
+					}
+					else if(getModel()->GetLanguageID()==LAN_JAPANESE && m_wLanguageID!=LAN_CHINESE)
+					{
+						bChangeFace=true;
+					}
+
+					if(bChangeFace)
+					{
+						CreateAcuFonts(getModel()->GetLanguageID(),true);
+						LoadGlobalAcuFonts(getModel()->GetLanguageID());
+						m_wLanguageID=getModel()->GetLanguageID();
+
+						::SendMessage(HWND_BROADCAST,WM_FONTCHANGE,0,0);
+					}
+
+				}
+
+				
+
+				/*CMVEventUI event(CMVEventUI::EV_LANGUAGE);
+				getModel()->Trigger(&event);*/
+				return 1;
+			}
+			break;
+		case WM_FONTCHANGE:
+			{
+				if(!m_bExit)
+				{
+					CMVEventUI event(CMVEventUI::EV_LANGUAGE);
+					getModel()->triggerEvent(&event);
+				}
+			}
+			break;
+		case WM_EXCEPTION:
+			{
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("! EXCEPTION: please restart ASAP !"), 5000);
 				getModel()->triggerEvent(&event);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				Sleep(300);
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				return 1;
 			}
-		}
-		break;
-	case WM_EXCEPTION:
-		{
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("! EXCEPTION: please restart ASAP !"), 5000);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			Sleep(300);
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			return 1;
-		}
-		break;
-	case WM_VIDEO_STOP:
-		{
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("! video stopped !"), 3500);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			Sleep(300);
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			return 1;
-		}
-		break;
-	case WM_PDMS_ACTIVE:
-		{
-			//CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("! NOT POSSIBLE, PDMS IS ACTIVE !"), 3500);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_PDMSACTIVE), 3500);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			Sleep(300);
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			return 1;
-		}
-		break;
-	case WM_NO_SDCARD:
-		{
-			//CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("!!! no SD card available !!!"), 3500);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_NOSDCARD), 3500);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			Sleep(300);
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			return 1;
-		}
-		break;
-	case WM_LOADHOSPITALSETTINGS_FAIL:
-		{
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_DIFF_CONFIGURATION), 3500);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			Sleep(300);
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			return 1;
-		}
-		break;
-	/*case WM_EV_TIMETEXT_3SECPUSH:
-		{
-			CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_3SECPUSH), 3500);
-			getModel()->triggerEvent(&event2);
-			return 1;
-		}
-		break;*/
-	case WM_EV_TIMETEXT_RELOADCONFIG:
-		{
-			CStringW sData = getModel()->GetLanguageString(IDS_TXT_CONFIGLOADED);
-			CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  sData, 3000);
-			getModel()->triggerEvent(&event2);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-
-			Sleep(2000);
-			AfxGetApp()->GetMainWnd()->PostMessage(WM_LANGUAGE_CHANGED);
-			return 1;
-		}
-		break;
-	case WM_SPO2HIGH_LIMITEDLOW:
-		{
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_SPO2_LOWRANGE), 3500); 
-			//CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("limitted by SpO2 low range"), 3500);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			Sleep(300);
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-		}
-		break;
-	case WM_SPO2HIGH_LIMITEDHIGH:
-	case WM_SPO2LOW_LIMITEDLOW:
-		{
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_SPO2_LIMITTED), 3500);
-			//CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("limitted by SpO2 alarm limit"), 3500);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			Sleep(300);
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-		}
-		break;
-	case WM_SPO2LOW_LIMITEDHIGH:
-		{
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_SPO2_HIGHRANGE), 3500);
-			//CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("limitted by SpO2 high range"), 3500);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			Sleep(300);
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-		}
-		break;
-	case WM_EV_TIMETEXT_ERR_DATE:
-		{
-			CStringW sData = getModel()->GetLanguageString(IDS_ERR_DATE);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_TIMETEXT_ERR_YEAR:
-		{
-			CStringW sData = getModel()->GetLanguageString(IDS_ERR_YEAR);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_TIMETEXT_ERR_PERSID:
-		{
-			CStringW sData = getModel()->GetLanguageString(IDS_ERR_PERSID);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_TIMETEXT_PATDATASAVE:
-		{
-			CStringW sData = getModel()->GetLanguageString(IDS_TXT_PATDATASAVE);
-
-			CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-			getModel()->triggerEvent(&event2);
-			return 1;
-		}
-		break;
-	case WM_EV_TIMETEXT_CONFIRMRANGE:
-		{
-			CStringW sData = getModel()->GetLanguageString(IDS_TXT_CONFIRMRANGE);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_TIMETEXT_CONFIRMLOWRANGE:
-		{
-			CStringW sData = getModel()->GetLanguageString(IDS_TXT_CONFIRMLOWRANGE);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_TIMETEXT_CONFIRMHIGHRANGE:
-		{
-			CStringW sData = getModel()->GetLanguageString(IDS_TXT_CONFIRMHIGHRANGE);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_TIMETEXT_NOTAVAILABLE:
-		{
-			CStringW sData = getModel()->GetLanguageString(IDS_TXT_NOTAVAILABLE);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			return 1;
-		}
-		break;
-	case WM_EV_TIMETEXT_SCALELIMIT:
-		{
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  getModel()->GetLanguageString(IDS_TXT_SCALELIMIT), 2000);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			return 1;
-		}
-		break;
-	case WM_EV_TIMETEXT_ENDRANGE:
-		{
-			CStringW sData = getModel()->GetLanguageString(IDS_TXT_ENDRANGE);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			return 1;
-		}
-		break;
-	case WM_EV_PATDATA_CHANGED:
-		{
-			CMVEventUI event(CMVEventUI::EV_PATDATA_CHANGED);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_NUMERIC:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_NUMERIC);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	//case WM_EV_ALIMIT_NUMERIC:
-	//	{
-	//		getModel()->getVIEWHANDLER()->xxx;
-	//		/*CMVEventUI event(CMVEventUI::EV_BN_NUMERIC);
-	//		getModel()->Trigger(&event);*/
-	//		return 1;
-	//	}
-	//	break;
-	case WM_EV_BN_GRAPH_FREEZED:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_GRAPH_FREEZED);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_GRAPH_CONTINUE:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_GRAPH_CONTINUE);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_GRAPH_WAVE:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_GRAPH_WAVE);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_TEXT_SAVINGTRENDS:
-		{
-			CStringW sz = getModel()->GetLanguageString(IDS_TREND_SAVEING);
-
-			CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_TEXT_SERVICE_SYSTEM:
-		{
-			CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
-			sz+=_T(" - System");
-
-			CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_TEXT_SERVICE_DISPLAY:
-		{
-			CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
-			sz+=_T(" - Display");
-
-			CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_TEXT_SERVICE_SETTINGS:
-		{
-			CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
-			sz+=_T(" - Settings");
-
-			CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_TEXT_SERVICE_CALIBRATION:
-		{
-			CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
-			sz+=_T(" - Calibration");
-
-			CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_TEXT_SERVICE_FLOWBOARD:
-		{
-			CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
-			sz+=_T(" - Blenderboard");
-
-			CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_TEXT_SERVICE_ACCUBOARD:
-		{
-			CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
-			sz+=_T(" - Accuboard");
-
-			CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_TEXT_SERVICE_VALVES:
-		{
-			CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
-			sz+=_T(" - Valves");
-
-			CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
-			getModel()->triggerEvent(&event);
-			return 1;
-
-		}
-		break;
-	case WM_EV_TEXT_SERVICE_MONITOR:
-		{
-			CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
-			sz+=_T(" - MonitorPIC");
-
-			CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_TEXT_SERVICE_INTERFACES:
-		{
-			CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
-			sz+=_T(" - Interfaces");
-
-			CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_TEXT_SERVICE_NETWORK:
-		{
-			CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
-			sz+=_T(" - Network");
-
-			CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_TEXT_SERVICE_LICENSING:
-		{
-			CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
-			sz+=_T(" - Licensing");
-
-			CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_TEXT_SERVICE_MAINTENANCE:
-		{
-			CStringW sz = _T("");
-			sz=getModel()->GetLanguageString(IDS_SERVICE);
-			sz+=_T(" - Maintenance");
-
-			CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_ALIMIT5:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_ALIMIT5);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_RESET_ALARMS:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_ALIMIT4);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_GRAPH_LOOP:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_GRAPH_LOOP);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_GRAPH_CO2:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_GRAPH_CO2);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_GRAPH_SPO2:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_GRAPH_SPO2);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_GRAPH_FOT:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_GRAPH_FOT);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	/*case WM_EV_BN_GRAPH_EMG:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_GRAPH_EMG);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_GRAPH_CLFIO2:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_GRAPH_CLFIO2);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;*/
-	case WM_EV_BN_GRAPH_TREND:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_GRAPH_TREND);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_GRAPH_SAVE:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_GRAPH_SAVE);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_MENUBUTTON_CLOSE:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_MENUBUTTON_CLOSE);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_MENUBUTTON_OPEN:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_MENUBUTTON_OPEN);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_MENU_MOVELEFT:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_MENU_MOVELEFT);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_MENU_MOVERIGHT:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_MENU_MOVERIGHT);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_TREND1:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_TREND1);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_TREND2:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_TREND2);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_TREND3:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_TREND3);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_TREND4:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_TREND4);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_TREND5:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_TREND5);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_CURSOR_UP:
-		{
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_CURSOR_UP);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_CURSOR_DOWN:
-		{
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_CURSOR_DOWN);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_CURSOR_LEFT:
-		{
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_CURSOR_LEFT);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_CURSOR_RIGHT:
-		{
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_CURSOR_RIGHT);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_CURSOR_MOVEXUP:
-		{
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_CURSOR_MOVEXUP);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_CURSOR_MOVEXDOWN:
-		{
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_CURSOR_MOVEXDOWN);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_CURSOR_MOVEYLEFT:
-		{
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_CURSOR_MOVEYLEFT);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_CURSOR_MOVEYRIGHT:
-		{
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_CURSOR_MOVEYRIGHT);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_SERVICE_BACK:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_SERVICE_BACK);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_GRAPH_REDRAW:
-		{
-			getModel()->getVIEWHANDLER()->redrawGraph();
-		}
-		break;
-	case WM_START_FOT:
-		{
-			if(getModel()->getFOTThread())
-				getModel()->getFOTThread()->startFOT();
-			
-			getModel()->getVIEWHANDLER()->redrawINFO();
-		}
-		break;
-	case WM_STOP_FOT:
-		{
-			if(getModel()->getFOTThread())
-				getModel()->getFOTThread()->stopFOT();
-
-			//getModel()->getVIEWHANDLER()->redrawINFO();
-		}
-		break;
-	case WM_STOPANDRESET_FOT:
-		{
-			if(getModel()->getFOTThread())
+			break;
+		case WM_VIDEO_STOP:
 			{
-				if(getModel()->getFOTThread()->getFOTstate()!=FOT_OFF)
-				{
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("! video stopped !"), 3500);
+				getModel()->triggerEvent(&event);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				Sleep(300);
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				return 1;
+			}
+			break;
+		case WM_PDMS_ACTIVE:
+			{
+				//CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("! NOT POSSIBLE, PDMS IS ACTIVE !"), 3500);
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_PDMSACTIVE), 3500);
+				getModel()->triggerEvent(&event);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				Sleep(300);
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				return 1;
+			}
+			break;
+		case WM_NO_SDCARD:
+			{
+				//CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("!!! no SD card available !!!"), 3500);
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_NOSDCARD), 3500);
+				getModel()->triggerEvent(&event);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				Sleep(300);
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				return 1;
+			}
+			break;
+		case WM_LOADHOSPITALSETTINGS_FAIL:
+			{
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_DIFF_CONFIGURATION), 3500);
+				getModel()->triggerEvent(&event);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				Sleep(300);
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				return 1;
+			}
+			break;
+		/*case WM_EV_TIMETEXT_3SECPUSH:
+			{
+				CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_3SECPUSH), 3500);
+				getModel()->triggerEvent(&event2);
+				return 1;
+			}
+			break;*/
+		case WM_EV_TIMETEXT_RELOADCONFIG:
+			{
+				CStringW sData = getModel()->GetLanguageString(IDS_TXT_CONFIGLOADED);
+				CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  sData, 3000);
+				getModel()->triggerEvent(&event2);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+
+				Sleep(2000);
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_LANGUAGE_CHANGED);
+				return 1;
+			}
+			break;
+		case WM_SPO2HIGH_LIMITEDLOW:
+			{
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_SPO2_LOWRANGE), 3500); 
+				//CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("limitted by SpO2 low range"), 3500);
+				getModel()->triggerEvent(&event);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				Sleep(300);
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+			}
+			break;
+		case WM_SPO2HIGH_LIMITEDHIGH:
+		case WM_SPO2LOW_LIMITEDLOW:
+			{
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_SPO2_LIMITTED), 3500);
+				//CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("limitted by SpO2 alarm limit"), 3500);
+				getModel()->triggerEvent(&event);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				Sleep(300);
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+			}
+			break;
+		case WM_SPO2LOW_LIMITEDHIGH:
+			{
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_SPO2_HIGHRANGE), 3500);
+				//CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("limitted by SpO2 high range"), 3500);
+				getModel()->triggerEvent(&event);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				Sleep(300);
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+			}
+			break;
+		case WM_EV_TIMETEXT_ERR_DATE:
+			{
+				CStringW sData = getModel()->GetLanguageString(IDS_ERR_DATE);
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_TIMETEXT_ERR_YEAR:
+			{
+				CStringW sData = getModel()->GetLanguageString(IDS_ERR_YEAR);
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_TIMETEXT_ERR_PERSID:
+			{
+				CStringW sData = getModel()->GetLanguageString(IDS_ERR_PERSID);
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_TIMETEXT_PATDATASAVE:
+			{
+				CStringW sData = getModel()->GetLanguageString(IDS_TXT_PATDATASAVE);
+
+				CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
+				getModel()->triggerEvent(&event2);
+				return 1;
+			}
+			break;
+		case WM_EV_TIMETEXT_CONFIRMRANGE:
+			{
+				CStringW sData = getModel()->GetLanguageString(IDS_TXT_CONFIRMRANGE);
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_TIMETEXT_CONFIRMLOWRANGE:
+			{
+				CStringW sData = getModel()->GetLanguageString(IDS_TXT_CONFIRMLOWRANGE);
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_TIMETEXT_CONFIRMHIGHRANGE:
+			{
+				CStringW sData = getModel()->GetLanguageString(IDS_TXT_CONFIRMHIGHRANGE);
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_TIMETEXT_NOTAVAILABLE:
+			{
+				CStringW sData = getModel()->GetLanguageString(IDS_TXT_NOTAVAILABLE);
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
+				getModel()->triggerEvent(&event);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				return 1;
+			}
+			break;
+		case WM_EV_TIMETEXT_SCALELIMIT:
+			{
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  getModel()->GetLanguageString(IDS_TXT_SCALELIMIT), 2000);
+				getModel()->triggerEvent(&event);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				return 1;
+			}
+			break;
+		case WM_EV_TIMETEXT_ENDRANGE:
+			{
+				CStringW sData = getModel()->GetLanguageString(IDS_TXT_ENDRANGE);
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
+				getModel()->triggerEvent(&event);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				return 1;
+			}
+			break;
+		case WM_EV_PATDATA_CHANGED:
+			{
+				CMVEventUI event(CMVEventUI::EV_PATDATA_CHANGED);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_NUMERIC:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_NUMERIC);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		//case WM_EV_ALIMIT_NUMERIC:
+		//	{
+		//		getModel()->getVIEWHANDLER()->xxx;
+		//		/*CMVEventUI event(CMVEventUI::EV_BN_NUMERIC);
+		//		getModel()->Trigger(&event);*/
+		//		return 1;
+		//	}
+		//	break;
+		case WM_EV_BN_GRAPH_FREEZED:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_GRAPH_FREEZED);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_GRAPH_CONTINUE:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_GRAPH_CONTINUE);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_GRAPH_WAVE:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_GRAPH_WAVE);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_TEXT_SAVINGTRENDS:
+			{
+				CStringW sz = getModel()->GetLanguageString(IDS_TREND_SAVEING);
+
+				CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_TEXT_SERVICE_SYSTEM:
+			{
+				CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
+				sz+=_T(" - System");
+
+				CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_TEXT_SERVICE_DISPLAY:
+			{
+				CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
+				sz+=_T(" - Display");
+
+				CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_TEXT_SERVICE_SETTINGS:
+			{
+				CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
+				sz+=_T(" - Settings");
+
+				CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_TEXT_SERVICE_CALIBRATION:
+			{
+				CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
+				sz+=_T(" - Calibration");
+
+				CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_TEXT_SERVICE_FLOWBOARD:
+			{
+				CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
+				sz+=_T(" - Blenderboard");
+
+				CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_TEXT_SERVICE_ACCUBOARD:
+			{
+				CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
+				sz+=_T(" - Accuboard");
+
+				CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_TEXT_SERVICE_VALVES:
+			{
+				CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
+				sz+=_T(" - Valves");
+
+				CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
+				getModel()->triggerEvent(&event);
+				return 1;
+
+			}
+			break;
+		case WM_EV_TEXT_SERVICE_MONITOR:
+			{
+				CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
+				sz+=_T(" - MonitorPIC");
+
+				CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_TEXT_SERVICE_INTERFACES:
+			{
+				CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
+				sz+=_T(" - Interfaces");
+
+				CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_TEXT_SERVICE_NETWORK:
+			{
+				CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
+				sz+=_T(" - Network");
+
+				CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_TEXT_SERVICE_LICENSING:
+			{
+				CStringW sz = getModel()->GetLanguageString(IDS_SERVICE);
+				sz+=_T(" - Licensing");
+
+				CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_TEXT_SERVICE_MAINTENANCE:
+			{
+				CStringW sz = _T("");
+				sz=getModel()->GetLanguageString(IDS_SERVICE);
+				sz+=_T(" - Maintenance");
+
+				CMVEventInfotext event(CMVEventInfotext::EV_TEXT,  sz, 0);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_ALIMIT5:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_ALIMIT5);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_RESET_ALARMS:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_ALIMIT4);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_GRAPH_LOOP:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_GRAPH_LOOP);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_GRAPH_CO2:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_GRAPH_CO2);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_GRAPH_SPO2:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_GRAPH_SPO2);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_GRAPH_FOT:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_GRAPH_FOT);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		/*case WM_EV_BN_GRAPH_EMG:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_GRAPH_EMG);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_GRAPH_CLFIO2:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_GRAPH_CLFIO2);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;*/
+		case WM_EV_BN_GRAPH_TREND:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_GRAPH_TREND);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_GRAPH_SAVE:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_GRAPH_SAVE);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_MENUBUTTON_CLOSE:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_MENUBUTTON_CLOSE);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_MENUBUTTON_OPEN:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_MENUBUTTON_OPEN);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_MENU_MOVELEFT:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_MENU_MOVELEFT);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_MENU_MOVERIGHT:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_MENU_MOVERIGHT);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_TREND1:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_TREND1);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_TREND2:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_TREND2);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_TREND3:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_TREND3);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_TREND4:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_TREND4);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_TREND5:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_TREND5);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_CURSOR_UP:
+			{
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_CURSOR_UP);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_CURSOR_DOWN:
+			{
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_CURSOR_DOWN);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_CURSOR_LEFT:
+			{
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_CURSOR_LEFT);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_CURSOR_RIGHT:
+			{
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_CURSOR_RIGHT);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_CURSOR_MOVEXUP:
+			{
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_CURSOR_MOVEXUP);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_CURSOR_MOVEXDOWN:
+			{
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_CURSOR_MOVEXDOWN);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_CURSOR_MOVEYLEFT:
+			{
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_CURSOR_MOVEYLEFT);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_CURSOR_MOVEYRIGHT:
+			{
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_CURSOR_MOVEYRIGHT);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_SERVICE_BACK:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_SERVICE_BACK);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_GRAPH_REDRAW:
+			{
+				getModel()->getVIEWHANDLER()->redrawGraph();
+			}
+			break;
+		case WM_START_FOT:
+			{
+				if(getModel()->getFOTThread())
+					getModel()->getFOTThread()->startFOT();
+				
+				getModel()->getVIEWHANDLER()->redrawINFO();
+			}
+			break;
+		case WM_STOP_FOT:
+			{
+				if(getModel()->getFOTThread())
 					getModel()->getFOTThread()->stopFOT();
-				}
 
-				getModel()->getFOTThread()->resetFOTdisplayBuffer();
+				//getModel()->getVIEWHANDLER()->redrawINFO();
 			}
-		}
-		break;
-	case WM_TXT_STOP_FOT:
-		{
-			//CStringW sData = _T("- FOT turned off -");
-			CStringW sData = getModel()->GetLanguageString(IDS_TXT_FOT_TURNEDOFF);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 3500);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			return 1;
-		}
-		break;
-	case WM_REDRAW_FOT_STATE:
-		{
-			getModel()->getVIEWHANDLER()->redrawFOTmenu();
-			return 1;
-		}
-		break;
-	case WM_NEXT_FOT_STEP:
-		{
-			if(getModel()->getFOTThread())
-				getModel()->getFOTThread()->continueSequence();
-			return 1;
-		}
-		break;
-	case WM_DECREASE_FOT_STEP:
-		{
-			if(getModel()->getFOTThread())
-				getModel()->getFOTThread()->decreaseSequence();
-
-			//CStringW sData = _T("- increase FOT stopped -");
-			//CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-			//getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			return 1;
-		}
-		break;
-	case WM_START_FOT_STEP:
-		{
-			if(getModel()->getFOTThread())
-				getModel()->getFOTThread()->runStep();
-
-			//CStringW sData = _T("- FOT step started -");
-			CStringW sData = getModel()->GetLanguageString(IDS_TXT_FOT_STEPSTARTED);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			return 1;
-		}
-		break;
-	case WM_REPEAT_FOT_STEP:
-		{
-			if(getModel()->getFOTThread())
-				getModel()->getFOTThread()->repeatSequence();
-
-			//CStringW sData = _T("- repeat FOT step -");
-			CStringW sData = getModel()->GetLanguageString(IDS_TXT_FOT_STEPREPEAT);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			return 1;
-		}
-		break;
-	case WM_EV_CONTROL_START_FOT_CONVENTIONAL:
-		{
-			//DEBUGMSG(TRUE, (TEXT("WM_EV_CONTROL_START_FOT_CONVENTIONAL\r\n")));
-
-			CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_FOT_CONVENTIONAL);
-			getModel()->triggerEvent(&eventCtrl);
-
-			return 1;
-		}
-		break;
-	case WM_EV_CONTROL_STOP_FOT_CONVENTIONAL:
-		{
-			//DEBUGMSG(TRUE, (TEXT("WM_EV_CONTROL_STOP_FOT_CONVENTIONAL\r\n")));
-
-			CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_RESTORE_FOT_CONVENTIONAL);
-			getModel()->triggerEvent(&eventCtrl);
-
-			return 1;
-		}
-		break;
-	case WM_FOT_UPDATE_PEEP:
-		{
-			getModel()->getVIEWHANDLER()->updateFOTPEEPPara();
-		}
-		break;
-	case WM_FOT_UPDATE_PMEAN:
-		{
-			getModel()->getVIEWHANDLER()->updateFOTPmeanPara();
-		}
-		break;
-	case WM_EV_CONTROL_SET_MODE_EXHALVALVCAL:
-		{
-			CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_SET_MODE_EXHALVALVCAL);
-			getModel()->triggerEvent(&eventCtrl);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_SERVICE_SYSTEM:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_SERVICE_SYSTEM);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_SERVICE_CALIBR:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_SERVICE_CALIBR);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_SERVICE_FLOW:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_SERVICE_FLOW);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_SERVICE_MONITOR:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_SERVICE_MONITOR);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_SERVICE_ACCU:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_SERVICE_ACCU);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_SERVICE_VALVES:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_SERVICE_VALVES);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_SERVICE_DISPLAY:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_SERVICE_DISPLAY);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_SERVICE_SETTINGS:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_SERVICE_SETTINGS);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_SERVICE_IF:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_SERVICE_IF);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_SERVICE_NETWORK:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_SERVICE_NETWORK);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_SERVICE_LICENSING:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_SERVICE_LICENSING);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_SERVICE_MAINTENANCE:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_SERVICE_MAINTENANCE);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_EV_BN_SYSALARM_SILENT:
-		{
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_SYSALARM_SILENT);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_DATA_ALARMLIMITS_CHANGED:
-		{
-			CMVEventData event(CMVEventData::EV_DATA_ALARMLIMITS_CHANGED);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_DATA_CALCULATE_ALARMLIMITS:
-		{
-			CMVEventData event(CMVEventData::EV_DATA_CALCULATE_ALARMLIMITS);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_REDRAW_VIEW:
-		{
-			getModel()->getVIEWHANDLER()->RedrawCurViews();
-			return 1;
-		}
-		break;
-	case WM_BN_MATRIX_NEBULIZER:
-		{
-			CStringW sData = _T("- OPTIONAL -");
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-
-			//getModel()->getVIEWHANDLER()->runNebulizer();
-			
-			return 1;
-		}
-		break;
-	case WM_BN_MATRIX_MENU:
-		{
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_MENU);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_BN_MATRIX_HOME:
-		{
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_HOME);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_BN_MATRIX_ALARMLIMITS:
-		{
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_ALARMLIMITS);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	/*case WM_EV_TIMETEXT_ACTIVEALARM:
-		{
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			Sleep(300);
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-
-			CStringW sData = getModel()->GetLanguageString(IDS_TXT_ACTIVEALARM);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-			getModel()->Trigger(&event);
-			return 1;
-		}
-		break;*/
-	case WM_CONTROL_MANBREATH_LUNGREC:
-		{
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			Sleep(300);
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-
-			CStringW sData = getModel()->GetLanguageString(IDS_TXT_MANBREATH_LUNGREC);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_CONTROL_MANBREATH_TXTDISABLED:
-		{
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			Sleep(300);
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-
-			CStringW sData = getModel()->GetLanguageString(IDS_TXT_HFOMANBREATH);
-			sData+=_T(": ")+getModel()->GetLanguageString(IDS_TXT_DISABLED);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_CONTROL_START_MANBREATH:
-		{
-			if(getModel()->getDATAHANDLER()->isPSVapnoe()==true)
+			break;
+		case WM_STOPANDRESET_FOT:
 			{
-				PostMessage(WM_PSV_APNOE_END);
-			}
-			if(getModel()->getFOTThread())
-			{
-				if(getModel()->getFOTThread()->getFOTstate()!=FOT_OFF)
+				if(getModel()->getFOTThread())
 				{
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_STOP_FOT);
-				}
-			}
-			CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_MANBREATH);
-			getModel()->triggerEvent(&eventCtrl);
-			return 1;
-		}
-		break;
-	case WM_BN_MATRIX_STARTSTOP_UP:
-		{
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_STARTSTOP_UP);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_BN_MATRIX_STARTSTOP_DOWN:
-		{
-			//getModel()->getVIEWHANDLER()->closeNebulizer();
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_STARTSTOP_DOWN);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_BN_MATRIX_ONOFF_UP:
-		{
-			//test entrek
-#ifndef SIMULATION_ENTREK
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_ONOFF_UP);
-			getModel()->triggerEvent(&event);
-			return 1;
-#endif
-			
-		}
-		break;
-	case WM_BN_MATRIX_ONOFF_DOWN:
-		{
-			//test turn off without power off
-			//getModel()->StartInstaller();
-			//getModel()->SetAccuTurnoff();
-			//PostMessage(WM_VENT_TURNOFF);
-
-			getModel()->getDATAHANDLER()->saveOpTime();//newOPtime
-
-			//test entrek
-#ifndef SIMULATION_ENTREK
-			//getModel()->getVIEWHANDLER()->closeNebulizer();
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_ONOFF_DOWN);
-			getModel()->triggerEvent(&event);
-#endif
-			
-			
-#ifdef SIMULATION_ENTREK
-			getModel()->StartInstaller();
-			getModel()->SetAccuTurnoff();
-			PostMessage(WM_VENT_TURNOFF);
-#endif		
-			
-			return 1;
-		}
-		break;
-	case WM_BN_MATRIX_GRAPHS:
-		{
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_GRAPHS);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_BN_MATRIX_ALARM_SILENT:
-		{
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_ALARM_SILENT);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_BN_SCREENLOCK:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_SCREENLOCK);
-			getModel()->triggerEvent(&event);
-
-			this->SetFocus();
-			return 1;
-		}
-		break;
-	case WM_FLOWCAL_FINNISHED:
-		{
-			if(getModel()->getALARMHANDLER()->isVgarantAutoTurnedOff_FlowSensor() 
-				&& getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
-			{
-				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-				{
-					if(getModel()->getDATAHANDLER()->PARADATA()->IsVLimitParamOn_IPPV())
+					if(getModel()->getFOTThread()->getFOTstate()!=FOT_OFF)
 					{
-						//PostMessage(WM_PARABUTTON_TURNEDOWN,IDC_BTN_PARA_VGARANT,0);
-						getModel()->getDATAHANDLER()->SetVLimitParamdata_IPPV(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_IPPV(),false,true);
+						getModel()->getFOTThread()->stopFOT();
+					}
+
+					getModel()->getFOTThread()->resetFOTdisplayBuffer();
+				}
+			}
+			break;
+		case WM_TXT_STOP_FOT:
+			{
+				//CStringW sData = _T("- FOT turned off -");
+				CStringW sData = getModel()->GetLanguageString(IDS_TXT_FOT_TURNEDOFF);
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 3500);
+				getModel()->triggerEvent(&event);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				return 1;
+			}
+			break;
+		case WM_REDRAW_FOT_STATE:
+			{
+				getModel()->getVIEWHANDLER()->redrawFOTmenu();
+				return 1;
+			}
+			break;
+		case WM_NEXT_FOT_STEP:
+			{
+				if(getModel()->getFOTThread())
+					getModel()->getFOTThread()->continueSequence();
+				return 1;
+			}
+			break;
+		case WM_DECREASE_FOT_STEP:
+			{
+				if(getModel()->getFOTThread())
+					getModel()->getFOTThread()->decreaseSequence();
+
+				//CStringW sData = _T("- increase FOT stopped -");
+				//CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
+				//getModel()->triggerEvent(&event);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				return 1;
+			}
+			break;
+		case WM_START_FOT_STEP:
+			{
+				if(getModel()->getFOTThread())
+					getModel()->getFOTThread()->runStep();
+
+				//CStringW sData = _T("- FOT step started -");
+				CStringW sData = getModel()->GetLanguageString(IDS_TXT_FOT_STEPSTARTED);
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
+				getModel()->triggerEvent(&event);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				return 1;
+			}
+			break;
+		case WM_REPEAT_FOT_STEP:
+			{
+				if(getModel()->getFOTThread())
+					getModel()->getFOTThread()->repeatSequence();
+
+				//CStringW sData = _T("- repeat FOT step -");
+				CStringW sData = getModel()->GetLanguageString(IDS_TXT_FOT_STEPREPEAT);
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
+				getModel()->triggerEvent(&event);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				return 1;
+			}
+			break;
+		case WM_EV_CONTROL_START_FOT_CONVENTIONAL:
+			{
+				//DEBUGMSG(TRUE, (TEXT("WM_EV_CONTROL_START_FOT_CONVENTIONAL\r\n")));
+
+				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_FOT_CONVENTIONAL);
+				getModel()->triggerEvent(&eventCtrl);
+
+				return 1;
+			}
+			break;
+		case WM_EV_CONTROL_STOP_FOT_CONVENTIONAL:
+			{
+				//DEBUGMSG(TRUE, (TEXT("WM_EV_CONTROL_STOP_FOT_CONVENTIONAL\r\n")));
+
+				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_RESTORE_FOT_CONVENTIONAL);
+				getModel()->triggerEvent(&eventCtrl);
+
+				return 1;
+			}
+			break;
+		case WM_FOT_UPDATE_PEEP:
+			{
+				getModel()->getVIEWHANDLER()->updateFOTPEEPPara();
+			}
+			break;
+		case WM_FOT_UPDATE_PMEAN:
+			{
+				getModel()->getVIEWHANDLER()->updateFOTPmeanPara();
+			}
+			break;
+		case WM_EV_CONTROL_SET_MODE_EXHALVALVCAL:
+			{
+				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_SET_MODE_EXHALVALVCAL);
+				getModel()->triggerEvent(&eventCtrl);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_SERVICE_SYSTEM:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_SERVICE_SYSTEM);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_SERVICE_CALIBR:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_SERVICE_CALIBR);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_SERVICE_FLOW:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_SERVICE_FLOW);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_SERVICE_MONITOR:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_SERVICE_MONITOR);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_SERVICE_ACCU:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_SERVICE_ACCU);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_SERVICE_VALVES:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_SERVICE_VALVES);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_SERVICE_DISPLAY:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_SERVICE_DISPLAY);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_SERVICE_SETTINGS:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_SERVICE_SETTINGS);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_SERVICE_IF:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_SERVICE_IF);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_SERVICE_NETWORK:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_SERVICE_NETWORK);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_SERVICE_LICENSING:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_SERVICE_LICENSING);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_SERVICE_MAINTENANCE:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_SERVICE_MAINTENANCE);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_EV_BN_SYSALARM_SILENT:
+			{
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_SYSALARM_SILENT);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_DATA_ALARMLIMITS_CHANGED:
+			{
+				CMVEventData event(CMVEventData::EV_DATA_ALARMLIMITS_CHANGED);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_DATA_CALCULATE_ALARMLIMITS:
+			{
+				CMVEventData event(CMVEventData::EV_DATA_CALCULATE_ALARMLIMITS);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_REDRAW_VIEW:
+			{
+				getModel()->getVIEWHANDLER()->RedrawCurViews();
+				return 1;
+			}
+			break;
+		case WM_BN_MATRIX_NEBULIZER:
+			{
+				CStringW sData = _T("- OPTIONAL -");
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
+				getModel()->triggerEvent(&event);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+
+				//getModel()->getVIEWHANDLER()->runNebulizer();
+				
+				return 1;
+			}
+			break;
+		case WM_BN_MATRIX_MENU:
+			{
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_MENU);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_BN_MATRIX_HOME:
+			{
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_HOME);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_BN_MATRIX_ALARMLIMITS:
+			{
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_ALARMLIMITS);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		/*case WM_EV_TIMETEXT_ACTIVEALARM:
+			{
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				Sleep(300);
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+
+				CStringW sData = getModel()->GetLanguageString(IDS_TXT_ACTIVEALARM);
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
+				getModel()->Trigger(&event);
+				return 1;
+			}
+			break;*/
+		case WM_CONTROL_MANBREATH_LUNGREC:
+			{
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				Sleep(300);
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+
+				CStringW sData = getModel()->GetLanguageString(IDS_TXT_MANBREATH_LUNGREC);
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_CONTROL_MANBREATH_TXTDISABLED:
+			{
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				Sleep(300);
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+
+				CStringW sData = getModel()->GetLanguageString(IDS_TXT_HFOMANBREATH);
+				sData+=_T(": ")+getModel()->GetLanguageString(IDS_TXT_DISABLED);
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_CONTROL_START_MANBREATH:
+			{
+				if(getModel()->getDATAHANDLER()->isPSVapnoe()==true)
+				{
+					PostMessage(WM_PSV_APNOE_END);
+				}
+				if(getModel()->getFOTThread())
+				{
+					if(getModel()->getFOTThread()->getFOTstate()!=FOT_OFF)
+					{
+						if(AfxGetApp() != NULL)
+							AfxGetApp()->GetMainWnd()->PostMessage(WM_STOP_FOT);
 					}
 				}
-				else
+				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_MANBREATH);
+				getModel()->triggerEvent(&eventCtrl);
+				return 1;
+			}
+			break;
+		case WM_BN_MATRIX_STARTSTOP_UP:
+			{
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_STARTSTOP_UP);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_BN_MATRIX_STARTSTOP_DOWN:
+			{
+				//getModel()->getVIEWHANDLER()->closeNebulizer();
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_STARTSTOP_DOWN);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_BN_MATRIX_ONOFF_UP:
+			{
+				//test entrek
+	#ifndef SIMULATION_ENTREK
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_ONOFF_UP);
+				getModel()->triggerEvent(&event);
+				return 1;
+	#endif
+				
+			}
+			break;
+		case WM_BN_MATRIX_ONOFF_DOWN:
+			{
+				//test turn off without power off
+				//getModel()->StartInstaller();
+				//getModel()->SetAccuTurnoff();
+				//PostMessage(WM_VENT_TURNOFF);
+
+				getModel()->getDATAHANDLER()->saveOpTime();//newOPtime
+
+				//test entrek
+	#ifndef SIMULATION_ENTREK
+				//getModel()->getVIEWHANDLER()->closeNebulizer();
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_ONOFF_DOWN);
+				getModel()->triggerEvent(&event);
+	#endif
+				
+				
+	#ifdef SIMULATION_ENTREK
+				getModel()->StartInstaller();
+				getModel()->SetAccuTurnoff();
+				PostMessage(WM_VENT_TURNOFF);
+	#endif		
+				
+				return 1;
+			}
+			break;
+		case WM_BN_MATRIX_GRAPHS:
+			{
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_GRAPHS);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_BN_MATRIX_ALARM_SILENT:
+			{
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_ALARM_SILENT);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_BN_SCREENLOCK:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_SCREENLOCK);
+				getModel()->triggerEvent(&event);
+
+				this->SetFocus();
+				return 1;
+			}
+			break;
+		case WM_FLOWCAL_FINNISHED:
+			{
+				if(getModel()->getALARMHANDLER()->isVgarantAutoTurnedOff_FlowSensor() 
+					&& getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
 				{
-					if(getModel()->getDATAHANDLER()->PARADATA()->IsVLimitParamOn_TRIGGER())
+					if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
 					{
-						//PostMessage(WM_PARABUTTON_TURNEDOWN,IDC_BTN_PARA_VGARANT,0);
-						getModel()->getDATAHANDLER()->SetVLimitParamdata_TRIGGER(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_TRIGGER(),false,true);
+						if(getModel()->getDATAHANDLER()->PARADATA()->IsVLimitParamOn_IPPV())
+						{
+							//PostMessage(WM_PARABUTTON_TURNEDOWN,IDC_BTN_PARA_VGARANT,0);
+							getModel()->getDATAHANDLER()->SetVLimitParamdata_IPPV(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_IPPV(),false,true);
+						}
 					}
+					else
+					{
+						if(getModel()->getDATAHANDLER()->PARADATA()->IsVLimitParamOn_TRIGGER())
+						{
+							//PostMessage(WM_PARABUTTON_TURNEDOWN,IDC_BTN_PARA_VGARANT,0);
+							getModel()->getDATAHANDLER()->SetVLimitParamdata_TRIGGER(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_TRIGGER(),false,true);
+						}
+					}
+					
+
+					theApp.getLog()->WriteLine(_T("VgarantAutoTurnedOn WM_FLOWCAL_FINNISHED"));
+					getModel()->getDATAHANDLER()->ChangeVgarantState(VOLUMEGAR_PARA_AUTOENABLED);
+				}
+				else if(getModel()->getALARMHANDLER()->isVlimitAutoTurnedOff_FlowSensor()
+					&& getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
+				{
+					
+					if(getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
+					{
+						getModel()->getDATAHANDLER()->ChangeVgarantState(VOLUMEGAR_OFF);
+					}
+
+					theApp.getLog()->WriteLine(_T("VlimitAutoTurnedOn WM_FLOWCAL_FINNISHED"));
+
+					if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+						getModel()->getDATAHANDLER()->SetVLimitParamdata_IPPV(getModel()->getDATAHANDLER()->GetLastVLimitParam(),true,true);
+					else
+						getModel()->getDATAHANDLER()->SetVLimitParamdata_TRIGGER(getModel()->getDATAHANDLER()->GetLastVLimitParam(),true,true);
+
+					PostMessage(WM_VLIMIT_PARA_AUTOENABLED);
+					DEBUGMSG(TRUE, (TEXT("WM_VLIMIT_PARA_AUTOENABLED 2 ###\r\n")));
 				}
 				
+				getModel()->getALARMHANDLER()->resetVgVlAutoTurnedOff_FlowSensor();
 
-				theApp.getLog()->WriteLine(_T("VgarantAutoTurnedOn WM_FLOWCAL_FINNISHED"));
-				getModel()->getDATAHANDLER()->ChangeVgarantState(VOLUMEGAR_PARA_AUTOENABLED);
+				return 1;
 			}
-			else if(getModel()->getALARMHANDLER()->isVlimitAutoTurnedOff_FlowSensor()
-				&& getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
+			break;
+		case WM_SERIAL_SETALARM_CHECKSUMCONPIC:
 			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_ChecksumConPIC);
+				//getModel()->getALARMHANDLER()->SetAlarm_ChecksumConPIC(_T(""));
+				return 1;
+			}
+			break;
+		case WM_SERIAL_DELALARM_CHECKSUMCONPIC:
+			{
+				getModel()->getDATAHANDLER()->SetConPICChecksumError(false);
+				theApp.getLog()->WriteLine(_T("Delete AL_SysFail_ChecksumConPIC"));
+				//getModel()->getALARMHANDLER()->deleteAlarm(AL_SysFail_ChecksumConPIC);
+				getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysFail_ChecksumConPIC,AS_SIGNALED);
+				return 1;
+			}
+			break;
+		case WM_SERIAL_SETALARM_DISCONNECTION:
+			{
+				//CClientDC dc(this);
+				//	try
+				//	{
+				//		m_pcTest->Draw(dc.m_hDC);
+				//		/*test[6]=0;
+
+				//		int iRes=test[6];*/
+				//		/*int iN=0;
+				//		int iRes= 500/iN;*/
+				//	}
+				//	__except (EXCEPTION_EXECUTE_HANDLER)
+				//	{
+				//		CFabianHFOApp::ReportException(_T("EXCEPTION: test !!!!!!!"), true);
+				//		//AfxMessageBox( _T("test !!!!!!!") );
+				//	}
+				/*if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
+				{
+					if(getModel()->getPRICOThread()->isPRICOrunning())
+					{
+						getModel()->getPRICOThread()->setAlarmDisabled();
+						getModel()->getDATAHANDLER()->setPRICOState(false);
+					}
+
+				}*/
+
+				getModel()->getALARMHANDLER()->setAlarm(AL_DISCONNECTION);
+
+				return 1;
+			}
+			break;
+		case WM_SERIAL_DELALARM_DISCONNECTION:
+			{
+				/*eVentSilentState eSilentState=getModel()->getALARMHANDLER()->getAlarmSilentState();
+				if(		(eSilentState==ASTATE_AUTOSILENT
+					||	eSilentState==ASTATE_ACTIVE)
+					&&(getModel()->getDATAHANDLER()->activeModeIsNMODE()==false))
+					getModel()->getALARMHANDLER()->setAutoSilent();*/
+				getModel()->getALARMHANDLER()->setStateOfAlarm(AL_DISCONNECTION,AS_SIGNALED);
+				return 1;
+			}
+			break;
+		//case WM_SERIAL_SETALARM_P_INSPIRATION:
+		//	{
+		//		getModel()->getALARMHANDLER()->setAlarm(AL_SysAl_P_INSPIRATIONTUBE);
+		//		//getModel()->getALARMHANDLER()->SetAlarm_P_INSPIRATIONTUBE(_T(""));
+		//		return 1;
+		//	}
+		//	break;
+		//case WM_SERIAL_DELALARM_P_INSPIRATION:
+		//	{
+		//		eVentSilentState eSilentState=getModel()->getALARMHANDLER()->getAlarmSilentState();
+		//		if(		eSilentState==ASTATE_AUTOSILENT
+		//			||	eSilentState==ASTATE_MANSILENT
+		//			||	eSilentState==ASTATE_ACTIVE)
+		//			getModel()->getALARMHANDLER()->setAutoSilent();
+		//		getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysAl_P_INSPIRATIONTUBE,AS_SIGNALED);
+		//		return 1;
+		//	}
+		//	break;
+		//case WM_SERIAL_SETALARM_P_EXSPIRATION:
+		//	{
+		//		getModel()->getALARMHANDLER()->setAlarm(AL_SysAl_P_EXSPIRATIONTUBE);
+		//		//getModel()->getALARMHANDLER()->SetAlarm_P_EXSPIRATIONTUBE(_T(""));
+		//		return 1;
+		//	}
+		//	break;
+		//case WM_SERIAL_DELALARM_P_EXSPIRATION:
+		//	{
+		//		eVentSilentState eSilentState=getModel()->getALARMHANDLER()->getAlarmSilentState();
+		//		if(		eSilentState==ASTATE_AUTOSILENT
+		//			||	eSilentState==ASTATE_MANSILENT
+		//			||	eSilentState==ASTATE_ACTIVE)
+		//			getModel()->getALARMHANDLER()->setAutoSilent();
+		//		getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysAl_P_EXSPIRATIONTUBE,AS_SIGNALED);
+		//		return 1;
+		//	}
+		//	break;
+		case WM_SERIAL_DELALARM_TUBE_OCCLUSION:
+			{
+				//eVentSilentState state=getModel()->getALARMHANDLER()->getAlarmSilentState();
+				//if(		state==ASTATE_AUTOSILENT
+				//	||	state==ASTATE_MANSILENT
+				//	//||	state==ASTATE_MANSILENT_SYSALARM
+				//	||	state==ASTATE_ACTIVE)
+				//	getModel()->getALARMHANDLER()->setAutoSilent(false,false,false);
+
+				getModel()->setActiveAlarmDelay(true);
+				PostMessage(WM_SET_ACTIVEALARM_DELAY);
+				getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysAl_TUBE_OCCLUSION,AS_SIGNALED);
+
+				return 1;
+			}
+			break;
+		case WM_SETALARM_AccuEmpty:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_Accu_Empty);
+				//getModel()->getALARMHANDLER()->SetAlarm_AccuEmpty(_T(""));
+				return 1;
+			}
+			break;
+		case WM_SETALARM_AccuDefect:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_Accu_Defect);
+				//getModel()->getALARMHANDLER()->SetAlarm_AccuDefect(_T(""));
+				return 1;
+			}
+			break;
+		case WM_SETALARM_ChecksumMonPIC:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_ChecksumMonPIC);
+				//getModel()->getALARMHANDLER()->SetAlarm_ChecksumMonPIC(_T(""));
+				return 1;
+			}
+			break;
+		case WM_SETALARM_RELAIS_DEFECT:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_RELAIS_DEFECT);
+				//getModel()->getALARMHANDLER()->SetAlarm_RELAIS_DEFECT(_T(""));
+				return 1;
+			}
+			break;
+		case WM_SERIAL_SETALARM_MIXER_AVCAL:
+			{
+				getModel()->getSERIAL()->GetBLENDER_StatusByte();
+				getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_MIXER_AVCAL);
+				return 1;
+			}
+			break;
+		case WM_SERIAL_DELALARM_MIXER_AVCAL:
+			{
+				eVentSilentState state=getModel()->getALARMHANDLER()->getAlarmSilentState();
+				if(		state==ASTATE_AUTOSILENT
+					||	state==ASTATE_MANSILENT
+					//||	state==ASTATE_MANSILENT_SYSALARM
+					||	state==ASTATE_ACTIVE)
+					getModel()->getALARMHANDLER()->setAutoSilent(false,false,false);
+
+				getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysFail_MIXER_AVCAL,AS_SIGNALED);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_TUBE_OCCLUSION:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_SysAl_TUBE_OCCLUSION);
+				//getModel()->getALARMHANDLER()->SetAlarm_P_PROXIMAL(_T(""));
+
 				
-				if(getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
-				{
-					getModel()->getDATAHANDLER()->ChangeVgarantState(VOLUMEGAR_OFF);
-				}
 
-				theApp.getLog()->WriteLine(_T("VlimitAutoTurnedOn WM_FLOWCAL_FINNISHED"));
-
-				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-					getModel()->getDATAHANDLER()->SetVLimitParamdata_IPPV(getModel()->getDATAHANDLER()->GetLastVLimitParam(),true,true);
-				else
-					getModel()->getDATAHANDLER()->SetVLimitParamdata_TRIGGER(getModel()->getDATAHANDLER()->GetLastVLimitParam(),true,true);
-
-				PostMessage(WM_VLIMIT_PARA_AUTOENABLED);
-				DEBUGMSG(TRUE, (TEXT("WM_VLIMIT_PARA_AUTOENABLED 2 ###\r\n")));
+				return 1;
 			}
-			
-			getModel()->getALARMHANDLER()->resetVgVlAutoTurnedOff_FlowSensor();
-
-			return 1;
-		}
-		break;
-	case WM_SERIAL_SETALARM_CHECKSUMCONPIC:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_ChecksumConPIC);
-			//getModel()->getALARMHANDLER()->SetAlarm_ChecksumConPIC(_T(""));
-			return 1;
-		}
-		break;
-	case WM_SERIAL_DELALARM_CHECKSUMCONPIC:
-		{
-			getModel()->getDATAHANDLER()->SetConPICChecksumError(false);
-			theApp.getLog()->WriteLine(_T("Delete AL_SysFail_ChecksumConPIC"));
-			//getModel()->getALARMHANDLER()->deleteAlarm(AL_SysFail_ChecksumConPIC);
-			getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysFail_ChecksumConPIC,AS_SIGNALED);
-			return 1;
-		}
-		break;
-	case WM_SERIAL_SETALARM_DISCONNECTION:
-		{
-			//CClientDC dc(this);
-			//	try
-			//	{
-			//		m_pcTest->Draw(dc.m_hDC);
-			//		/*test[6]=0;
-
-			//		int iRes=test[6];*/
-			//		/*int iN=0;
-			//		int iRes= 500/iN;*/
-			//	}
-			//	__except (EXCEPTION_EXECUTE_HANDLER)
-			//	{
-			//		CFabianHFOApp::ReportException(_T("EXCEPTION: test !!!!!!!"), true);
-			//		//AfxMessageBox( _T("test !!!!!!!") );
-			//	}
-			/*if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
+			break;
+		case WM_SETALARM_P_IN_MIXER:
 			{
-				if(getModel()->getPRICOThread()->isPRICOrunning())
-				{
-					getModel()->getPRICOThread()->setAlarmDisabled();
-					getModel()->getDATAHANDLER()->setPRICOState(false);
-				}
-
-			}*/
-
-			getModel()->getALARMHANDLER()->setAlarm(AL_DISCONNECTION);
-
-			return 1;
-		}
-		break;
-	case WM_SERIAL_DELALARM_DISCONNECTION:
-		{
-			/*eVentSilentState eSilentState=getModel()->getALARMHANDLER()->getAlarmSilentState();
-			if(		(eSilentState==ASTATE_AUTOSILENT
-				||	eSilentState==ASTATE_ACTIVE)
-				&&(getModel()->getDATAHANDLER()->activeModeIsNMODE()==false))
-				getModel()->getALARMHANDLER()->setAutoSilent();*/
-			getModel()->getALARMHANDLER()->setStateOfAlarm(AL_DISCONNECTION,AS_SIGNALED);
-			return 1;
-		}
-		break;
-	//case WM_SERIAL_SETALARM_P_INSPIRATION:
-	//	{
-	//		getModel()->getALARMHANDLER()->setAlarm(AL_SysAl_P_INSPIRATIONTUBE);
-	//		//getModel()->getALARMHANDLER()->SetAlarm_P_INSPIRATIONTUBE(_T(""));
-	//		return 1;
-	//	}
-	//	break;
-	//case WM_SERIAL_DELALARM_P_INSPIRATION:
-	//	{
-	//		eVentSilentState eSilentState=getModel()->getALARMHANDLER()->getAlarmSilentState();
-	//		if(		eSilentState==ASTATE_AUTOSILENT
-	//			||	eSilentState==ASTATE_MANSILENT
-	//			||	eSilentState==ASTATE_ACTIVE)
-	//			getModel()->getALARMHANDLER()->setAutoSilent();
-	//		getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysAl_P_INSPIRATIONTUBE,AS_SIGNALED);
-	//		return 1;
-	//	}
-	//	break;
-	//case WM_SERIAL_SETALARM_P_EXSPIRATION:
-	//	{
-	//		getModel()->getALARMHANDLER()->setAlarm(AL_SysAl_P_EXSPIRATIONTUBE);
-	//		//getModel()->getALARMHANDLER()->SetAlarm_P_EXSPIRATIONTUBE(_T(""));
-	//		return 1;
-	//	}
-	//	break;
-	//case WM_SERIAL_DELALARM_P_EXSPIRATION:
-	//	{
-	//		eVentSilentState eSilentState=getModel()->getALARMHANDLER()->getAlarmSilentState();
-	//		if(		eSilentState==ASTATE_AUTOSILENT
-	//			||	eSilentState==ASTATE_MANSILENT
-	//			||	eSilentState==ASTATE_ACTIVE)
-	//			getModel()->getALARMHANDLER()->setAutoSilent();
-	//		getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysAl_P_EXSPIRATIONTUBE,AS_SIGNALED);
-	//		return 1;
-	//	}
-	//	break;
-	case WM_SERIAL_DELALARM_TUBE_OCCLUSION:
-		{
-			//eVentSilentState state=getModel()->getALARMHANDLER()->getAlarmSilentState();
-			//if(		state==ASTATE_AUTOSILENT
-			//	||	state==ASTATE_MANSILENT
-			//	//||	state==ASTATE_MANSILENT_SYSALARM
-			//	||	state==ASTATE_ACTIVE)
-			//	getModel()->getALARMHANDLER()->setAutoSilent(false,false,false);
-
-			getModel()->setActiveAlarmDelay(true);
-			PostMessage(WM_SET_ACTIVEALARM_DELAY);
-			getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysAl_TUBE_OCCLUSION,AS_SIGNALED);
-
-			return 1;
-		}
-		break;
-	case WM_SETALARM_AccuEmpty:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_Accu_Empty);
-			//getModel()->getALARMHANDLER()->SetAlarm_AccuEmpty(_T(""));
-			return 1;
-		}
-		break;
-	case WM_SETALARM_AccuDefect:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_Accu_Defect);
-			//getModel()->getALARMHANDLER()->SetAlarm_AccuDefect(_T(""));
-			return 1;
-		}
-		break;
-	case WM_SETALARM_ChecksumMonPIC:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_ChecksumMonPIC);
-			//getModel()->getALARMHANDLER()->SetAlarm_ChecksumMonPIC(_T(""));
-			return 1;
-		}
-		break;
-	case WM_SETALARM_RELAIS_DEFECT:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_RELAIS_DEFECT);
-			//getModel()->getALARMHANDLER()->SetAlarm_RELAIS_DEFECT(_T(""));
-			return 1;
-		}
-		break;
-	case WM_SERIAL_SETALARM_MIXER_AVCAL:
-		{
-			getModel()->getSERIAL()->GetBLENDER_StatusByte();
-			getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_MIXER_AVCAL);
-			return 1;
-		}
-		break;
-	case WM_SERIAL_DELALARM_MIXER_AVCAL:
-		{
-			eVentSilentState state=getModel()->getALARMHANDLER()->getAlarmSilentState();
-			if(		state==ASTATE_AUTOSILENT
-				||	state==ASTATE_MANSILENT
-				//||	state==ASTATE_MANSILENT_SYSALARM
-				||	state==ASTATE_ACTIVE)
-				getModel()->getALARMHANDLER()->setAutoSilent(false,false,false);
-
-			getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysFail_MIXER_AVCAL,AS_SIGNALED);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_TUBE_OCCLUSION:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_SysAl_TUBE_OCCLUSION);
-			//getModel()->getALARMHANDLER()->SetAlarm_P_PROXIMAL(_T(""));
-
-			
-
-			return 1;
-		}
-		break;
-	case WM_SETALARM_P_IN_MIXER:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_P_IN_MIXER);
-			//getModel()->getALARMHANDLER()->SetAlarm_P_IN_MIXER(_T(""));
-			return 1;
-		}
-		break;
-	case WM_SETALARM_VOLTAGE:
-		{
-			getModel()->getDATAHANDLER()->ReadI2CWatchdogState();
-			getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_VOLTAGE);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_IF_SPI:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_SPI);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_IF_DIO:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_DIO);
-			//getModel()->getALARMHANDLER()->SetAlarm_IF_DIO(_T(""));
-			return 1;
-		}
-		break;
-	case WM_SETALARM_IF_COM://newVG
-		{
-			getModel()->setSERIALavailable(FALSE);
-			if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
-				getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_COM);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_IF_COM_REINIT:
-		{
-			bool bCom_ERROR=true;
-			bool bReinit=getModel()->reinitSERIAL();
-
-			Sleep(100);
-
-			if(bReinit)
+				getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_P_IN_MIXER);
+				//getModel()->getALARMHANDLER()->SetAlarm_P_IN_MIXER(_T(""));
+				return 1;
+			}
+			break;
+		case WM_SETALARM_VOLTAGE:
 			{
-				DEBUGMSG(TRUE, (TEXT("### ReinitSERIAL success ###\r\n")));
+				getModel()->getDATAHANDLER()->ReadI2CWatchdogState();
+				getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_VOLTAGE);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_IF_SPI:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_SPI);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_IF_DIO:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_DIO);
+				//getModel()->getALARMHANDLER()->SetAlarm_IF_DIO(_T(""));
+				return 1;
+			}
+			break;
+		case WM_SETALARM_IF_COM://newVG
+			{
+				getModel()->setSERIALavailable(FALSE);
+				if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
+					getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_COM);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_IF_COM_REINIT:
+			{
+				bool bCom_ERROR=true;
+				bool bReinit=getModel()->reinitSERIAL();
 
-				if(getModel()->getSERIAL()->GetM_CHECKSUM(true)>0)
+				Sleep(100);
+
+				if(bReinit)
 				{
-					bCom_ERROR=false;
-					theApp.getLog()->WriteLine(_T("#HFO:0217"));
+					DEBUGMSG(TRUE, (TEXT("### ReinitSERIAL success ###\r\n")));
+
+					if(getModel()->getSERIAL()->GetM_CHECKSUM(true)>0)
+					{
+						bCom_ERROR=false;
+						theApp.getLog()->WriteLine(_T("#HFO:0217"));
+					}
+					else
+					{
+						bCom_ERROR=true;
+						theApp.getLog()->WriteLine(_T("#HFO:0218"));
+					}
 				}
 				else
 				{
 					bCom_ERROR=true;
-					theApp.getLog()->WriteLine(_T("#HFO:0218"));
+					theApp.getLog()->WriteLine(_T("#HFO:0219"));
 				}
-			}
-			else
-			{
-				bCom_ERROR=true;
-				theApp.getLog()->WriteLine(_T("#HFO:0219"));
-			}
 
-			if(bCom_ERROR)
-			{
-				getModel()->setSERIALavailable(FALSE);
+				if(bCom_ERROR)
+				{
+					getModel()->setSERIALavailable(FALSE);
 
-				KillTimer(CHECKCOM_TIMER);
-				SetTimer(CHECKCOM_TIMER, 500, NULL);
-				DEBUGMSG(TRUE, (TEXT("#CHECKCOM_TIMER\r\n")));
-				//getModel()->SetReinitSERIALFlag(FALSE);
+					KillTimer(CHECKCOM_TIMER);
+					SetTimer(CHECKCOM_TIMER, 500, NULL);
+					DEBUGMSG(TRUE, (TEXT("#CHECKCOM_TIMER\r\n")));
+					//getModel()->SetReinitSERIALFlag(FALSE);
+
+					if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
+						getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_COM);
+				}
+				else
+				{
+					DEBUGMSG(TRUE, (TEXT("#COM ok\r\n")));
+
+					getModel()->getDATAHANDLER()->deleteCOMErrorCode(ERRC_COM_INIT); //newVG
+					getModel()->getDATAHANDLER()->deleteCOMErrorCode(ERRC_COM_CHECK_DATA); //newVG
+					getModel()->getDATAHANDLER()->deleteCOMErrorCode(ERRC_COM_READ_MSTATUS); //newVG
+					//getModel()->getDATAHANDLER()->deleteCOMError(); //newVG
+
+					getModel()->setSERIALavailable(TRUE);
+					if(getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()==AS_ACTIVE) //newVG
+					{
+						getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysFail_IF_COM, AS_SIGNALED);
+					}
+					if(getModel()->getCONFIG()->CurModeIsPresetMode())
+						getModel()->Send_VENT_MODE(getModel()->getCONFIG()->GetPrevMode());
+					else
+						getModel()->Send_VENT_MODE(getModel()->getCONFIG()->GetCurMode());
+				}
+				return 1;
+			}
+			break;
+		/*case WM_SETALARM_IF_COM_NOREINIT:
+			{
+				getModel()->SetReinitSERIALFlag(FALSE);
 
 				if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
 					getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_COM);
+				
+				return 1;
 			}
-			else
+			break;*/
+		//case WM_SETALARM_IF_CO2:
+		//	{
+		//		getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_CO2);
+		//		//getModel()->getALARMHANDLER()->SetAlarm_IF_CO2(_T(""));
+		//		return 1;
+		//	}
+		//	break;
+		case WM_SETALARM_IF_I2C:
 			{
-				DEBUGMSG(TRUE, (TEXT("#COM ok\r\n")));
-
-				getModel()->getDATAHANDLER()->deleteCOMErrorCode(ERRC_COM_INIT); //newVG
-				getModel()->getDATAHANDLER()->deleteCOMErrorCode(ERRC_COM_CHECK_DATA); //newVG
-				getModel()->getDATAHANDLER()->deleteCOMErrorCode(ERRC_COM_READ_MSTATUS); //newVG
-				//getModel()->getDATAHANDLER()->deleteCOMError(); //newVG
-
-				getModel()->setSERIALavailable(TRUE);
-				if(getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()==AS_ACTIVE) //newVG
+				if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_I2C())
 				{
-					getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysFail_IF_COM, AS_SIGNALED);
+					getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_I2C);
 				}
-				if(getModel()->getCONFIG()->CurModeIsPresetMode())
-					getModel()->Send_VENT_MODE(getModel()->getCONFIG()->GetPrevMode());
-				else
-					getModel()->Send_VENT_MODE(getModel()->getCONFIG()->GetCurMode());
+				return 1;
 			}
-			return 1;
-		}
-		break;
-	/*case WM_SETALARM_IF_COM_NOREINIT:
-		{
-			getModel()->SetReinitSERIALFlag(FALSE);
-
-			if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
-				getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_COM);
-			
-			return 1;
-		}
-		break;*/
-	//case WM_SETALARM_IF_CO2:
-	//	{
-	//		getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_CO2);
-	//		//getModel()->getALARMHANDLER()->SetAlarm_IF_CO2(_T(""));
-	//		return 1;
-	//	}
-	//	break;
-	case WM_SETALARM_IF_I2C:
-		{
-			if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_I2C())
+			break;
+		case WM_SETALARM_IF_PIF:
 			{
-				getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_I2C);
+				getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_PIF);
+				m_bWD0error=true;
+				return 1;
 			}
-			return 1;
-		}
-		break;
-	case WM_SETALARM_IF_PIF:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_PIF);
-			m_bWD0error=true;
-			return 1;
-		}
-		break;
-	//case WM_SETALARM_IF_ACULINK:
-	//	{
-	//		getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_ACULINK);
-	//		//getModel()->getALARMHANDLER()->SetAlarm_IF_ACULINK(_T(""));
-	//		return 1;
-	//	}
-	//	break;
-	case WM_SETALARM_Fan:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_Fan);
-			//getModel()->getALARMHANDLER()->SetAlarm_Fan(_T(""));
-			return 1;
-		}
-		break;
-	case WM_SETALARM_OUTOFMEMORY:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_OUTOFMEMORY);
-			//getModel()->getALARMHANDLER()->SetAlarm_OUTOFMEMORY(_T(""));
-			return 1;
-		}
-		break;
-	case WM_SETALARM_P_IN_O2:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_SysAl_P_IN_O2);
-			//getModel()->getALARMHANDLER()->SetAlarm_P_IN_O2(_T(""));
-			return 1;
-		}
-		break;
-	case WM_SETALARM_P_IN_AIR:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_SysAl_P_IN_AIR);
-			//getModel()->getALARMHANDLER()->SetAlarm_P_IN_AIR(_T(""));
-			return 1;
-		}
-		break;
-	//case WM_SETALARM_P_EXSPIRATIONTUBE:
-	//	{
-	//		getModel()->getALARMHANDLER()->setAlarm(AL_SysAl_P_EXSPIRATIONTUBE);
-	//		//getModel()->getALARMHANDLER()->SetAlarm_P_EXSPIRATIONTUBE(_T(""));
-	//		return 1;
-	//	}
-	//	break;
-	//case WM_SETALARM_P_INSPIRATIONTUBE:
-	//	{
-	//		getModel()->getALARMHANDLER()->setAlarm(AL_SysAl_P_INSPIRATIONTUBE);
-	//		//getModel()->getALARMHANDLER()->SetAlarm_P_INSPIRATIONTUBE(_T(""));
-	//		return 1;
-	//	}
-	//	break;
-	case WM_SETALARM_DISCONNECTION:
-		{
-			//CClientDC dc(this);
-			//	try
-			//	{
-			//		m_pcTest->Draw(dc.m_hDC);
-			//		/*test[6]=0;
-
-			//		int iRes=test[6];*/
-			//		/*int iN=0;
-			//		int iRes= 500/iN;*/
-			//	}
-			//	__except (EXCEPTION_EXECUTE_HANDLER)
-			//	{
-			//		CFabianHFOApp::ReportException(_T("EXCEPTION: test !!!!!!!"), true);
-			//		AfxMessageBox( _T("test !!!!!!!") );
-			//	}
-			/*if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
+			break;
+		//case WM_SETALARM_IF_ACULINK:
+		//	{
+		//		getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_ACULINK);
+		//		//getModel()->getALARMHANDLER()->SetAlarm_IF_ACULINK(_T(""));
+		//		return 1;
+		//	}
+		//	break;
+		case WM_SETALARM_Fan:
 			{
-				if(getModel()->getPRICOThread()->isPRICOrunning())
+				getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_Fan);
+				//getModel()->getALARMHANDLER()->SetAlarm_Fan(_T(""));
+				return 1;
+			}
+			break;
+		case WM_SETALARM_OUTOFMEMORY:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_OUTOFMEMORY);
+				//getModel()->getALARMHANDLER()->SetAlarm_OUTOFMEMORY(_T(""));
+				return 1;
+			}
+			break;
+		case WM_SETALARM_P_IN_O2:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_SysAl_P_IN_O2);
+				//getModel()->getALARMHANDLER()->SetAlarm_P_IN_O2(_T(""));
+				return 1;
+			}
+			break;
+		case WM_SETALARM_P_IN_AIR:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_SysAl_P_IN_AIR);
+				//getModel()->getALARMHANDLER()->SetAlarm_P_IN_AIR(_T(""));
+				return 1;
+			}
+			break;
+		//case WM_SETALARM_P_EXSPIRATIONTUBE:
+		//	{
+		//		getModel()->getALARMHANDLER()->setAlarm(AL_SysAl_P_EXSPIRATIONTUBE);
+		//		//getModel()->getALARMHANDLER()->SetAlarm_P_EXSPIRATIONTUBE(_T(""));
+		//		return 1;
+		//	}
+		//	break;
+		//case WM_SETALARM_P_INSPIRATIONTUBE:
+		//	{
+		//		getModel()->getALARMHANDLER()->setAlarm(AL_SysAl_P_INSPIRATIONTUBE);
+		//		//getModel()->getALARMHANDLER()->SetAlarm_P_INSPIRATIONTUBE(_T(""));
+		//		return 1;
+		//	}
+		//	break;
+		case WM_SETALARM_DISCONNECTION:
+			{
+				//CClientDC dc(this);
+				//	try
+				//	{
+				//		m_pcTest->Draw(dc.m_hDC);
+				//		/*test[6]=0;
+
+				//		int iRes=test[6];*/
+				//		/*int iN=0;
+				//		int iRes= 500/iN;*/
+				//	}
+				//	__except (EXCEPTION_EXECUTE_HANDLER)
+				//	{
+				//		CFabianHFOApp::ReportException(_T("EXCEPTION: test !!!!!!!"), true);
+				//		AfxMessageBox( _T("test !!!!!!!") );
+				//	}
+				/*if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
 				{
-					getModel()->getPRICOThread()->setAlarmDisabled();
-					getModel()->getDATAHANDLER()->setPRICOState(false);
+					if(getModel()->getPRICOThread()->isPRICOrunning())
+					{
+						getModel()->getPRICOThread()->setAlarmDisabled();
+						getModel()->getDATAHANDLER()->setPRICOState(false);
+					}
+
+				}*/
+				getModel()->getALARMHANDLER()->setAlarm(AL_DISCONNECTION);
+
+				return 1;
+			}
+			break;
+		case WM_SETALARM_TUBUSBLOCKED:
+			{
+				/*if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
+				{
+					if(getModel()->getPRICOThread()->isPRICOrunning())
+					{
+						getModel()->getPRICOThread()->setAlarmDisabled();
+						getModel()->getDATAHANDLER()->setPRICOState(false);
+					}
+
+				}*/
+				getModel()->getALARMHANDLER()->setAlarm(AL_TUBUSBLOCKED);
+
+				if(getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
+				{
+					getModel()->getALARMHANDLER()->setVgarantAutoTurnedOff_Tube();
+					getModel()->getALARMHANDLER()->resetVlimitAutoTurnedOff_Tube();
+
+					getModel()->getDATAHANDLER()->ChangeVgarantState(VOLUMEGAR_PARA_AUTODISABLED);
 				}
-
-			}*/
-			getModel()->getALARMHANDLER()->setAlarm(AL_DISCONNECTION);
-
-			return 1;
-		}
-		break;
-	case WM_SETALARM_TUBUSBLOCKED:
-		{
-			/*if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
-			{
-				if(getModel()->getPRICOThread()->isPRICOrunning())
+				else if(getModel()->getDATAHANDLER()->IsActiveModeVLimitStateOn())
 				{
-					getModel()->getPRICOThread()->setAlarmDisabled();
-					getModel()->getDATAHANDLER()->setPRICOState(false);
-				}
+					getModel()->getDATAHANDLER()->SaveLastVLimitParam();
+					getModel()->getDATAHANDLER()->PARADATA()->SetVLimitParam_IPPV(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_IPPV(),false,true,true);
+					getModel()->getDATAHANDLER()->PARADATA()->SetVLimitParam_TRIGGER(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_TRIGGER(),false,true,true);
+					getModel()->getALARMHANDLER()->setVlimitAutoTurnedOff_Tube();
+					getModel()->getALARMHANDLER()->resetVgarantAutoTurnedOff_Tube();
 
-			}*/
-			getModel()->getALARMHANDLER()->setAlarm(AL_TUBUSBLOCKED);
-
-			if(getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
-			{
-				getModel()->getALARMHANDLER()->setVgarantAutoTurnedOff_Tube();
-				getModel()->getALARMHANDLER()->resetVlimitAutoTurnedOff_Tube();
-
-				getModel()->getDATAHANDLER()->ChangeVgarantState(VOLUMEGAR_PARA_AUTODISABLED);
-			}
-			else if(getModel()->getDATAHANDLER()->IsActiveModeVLimitStateOn())
-			{
-				getModel()->getDATAHANDLER()->SaveLastVLimitParam();
-				getModel()->getDATAHANDLER()->PARADATA()->SetVLimitParam_IPPV(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_IPPV(),false,true,true);
-				getModel()->getDATAHANDLER()->PARADATA()->SetVLimitParam_TRIGGER(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_TRIGGER(),false,true,true);
-				getModel()->getALARMHANDLER()->setVlimitAutoTurnedOff_Tube();
-				getModel()->getALARMHANDLER()->resetVgarantAutoTurnedOff_Tube();
-
-				if(AfxGetMainWnd())
-					AfxGetMainWnd()->PostMessage(WM_VLIMIT_PARA_AUTODISABLED);
-				DEBUGMSG(TRUE, (TEXT("WM_VLIMIT_PARA_AUTODISABLED 1 ###\r\n")));
-			}
-			else
-			{
-				/*getModel()->getALARMHANDLER()->setVgarantAutoTurnedOff(false);
-				getModel()->getALARMHANDLER()->setVlimitAutoTurnedOff(false);*/
-			}
-
-			
-
-			return 1;
-		}
-		break;
-	case WM_FLOW_SENSOR_DEFECT:
-		{
-			if(getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
-			{
-				getModel()->getALARMHANDLER()->setVgarantAutoTurnedOff_FlowSensor();
-				getModel()->getALARMHANDLER()->resetVlimitAutoTurnedOff_FlowSensor();
-
-				getModel()->getDATAHANDLER()->ChangeVgarantState(VOLUMEGAR_PARA_AUTODISABLED);
-			}
-			else if(getModel()->getDATAHANDLER()->IsActiveModeVLimitStateOn())
-			{
-				getModel()->getDATAHANDLER()->SaveLastVLimitParam();
-				getModel()->getDATAHANDLER()->PARADATA()->SetVLimitParam_IPPV(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_IPPV(),false,true,true);
-				getModel()->getDATAHANDLER()->PARADATA()->SetVLimitParam_TRIGGER(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_TRIGGER(),false,true,true);
-				getModel()->getALARMHANDLER()->setVlimitAutoTurnedOff_FlowSensor();
-				getModel()->getALARMHANDLER()->resetVgarantAutoTurnedOff_FlowSensor();
-				getModel()->getALARMHANDLER()->resetVgAutoTurnedOff_FOT();
-
-				if(AfxGetMainWnd())
-					AfxGetMainWnd()->PostMessage(WM_VLIMIT_PARA_AUTODISABLED);
-				DEBUGMSG(TRUE, (TEXT("WM_VLIMIT_PARA_AUTODISABLED 2 ###\r\n")));
-			}
-
-			PostMessage(WM_SETALARM_FLOW_SENSOR_DEFECT);
-
-
-			return 1;
-		}
-		break;
-	case WM_SETALARM_FLOW_SENSOR_DEFECT:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_Sens_FLOW_SENSOR_DEFECT);
-			return 1;
-		}
-		break;
-	case WM_FLOW_SENSOR_CLEANING:
-		{
-			if(getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
-			{
-				getModel()->getALARMHANDLER()->setVgarantAutoTurnedOff_FlowSensor();
-				getModel()->getALARMHANDLER()->resetVlimitAutoTurnedOff_FlowSensor();
-
-				getModel()->getDATAHANDLER()->ChangeVgarantState(VOLUMEGAR_PARA_AUTODISABLED);
-			}
-			else if(getModel()->getDATAHANDLER()->IsActiveModeVLimitStateOn())
-			{
-				getModel()->getDATAHANDLER()->SaveLastVLimitParam();
-				getModel()->getDATAHANDLER()->PARADATA()->SetVLimitParam_IPPV(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_IPPV(),false,true,true);
-				getModel()->getDATAHANDLER()->PARADATA()->SetVLimitParam_TRIGGER(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_TRIGGER(),false,true,true);
-				getModel()->getALARMHANDLER()->setVlimitAutoTurnedOff_FlowSensor();
-				getModel()->getALARMHANDLER()->resetVgarantAutoTurnedOff_FlowSensor();
-				getModel()->getALARMHANDLER()->resetVgAutoTurnedOff_FOT();
-
-				if(AfxGetMainWnd())
-					AfxGetMainWnd()->PostMessage(WM_VLIMIT_PARA_AUTODISABLED);
-				DEBUGMSG(TRUE, (TEXT("WM_VLIMIT_PARA_AUTODISABLED 3 ###\r\n")));
-			}
-
-			PostMessage(WM_SETALARM_FLOW_SENSOR_CLEANING);
-
-			return 1;
-		}
-		break;
-	case WM_SETALARM_FLOW_SENSOR_CLEANING:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_Sens_FLOW_SENSOR_CLEANING);
-			return 1;
-		}
-		break;
-	case WM_FLOW_SENSOR_NOTCONNECTED:
-		{
-			if(getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
-			{
-				getModel()->getALARMHANDLER()->setVgarantAutoTurnedOff_FlowSensor();
-				getModel()->getALARMHANDLER()->resetVlimitAutoTurnedOff_FlowSensor();
-
-				getModel()->getDATAHANDLER()->ChangeVgarantState(VOLUMEGAR_PARA_AUTODISABLED);
-			}
-			else if(getModel()->getDATAHANDLER()->IsActiveModeVLimitStateOn())
-			{
-				getModel()->getDATAHANDLER()->SaveLastVLimitParam();
-				getModel()->getDATAHANDLER()->PARADATA()->SetVLimitParam_IPPV(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_IPPV(),false,true,true);
-				getModel()->getDATAHANDLER()->PARADATA()->SetVLimitParam_TRIGGER(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_TRIGGER(),false,true,true);
-				getModel()->getALARMHANDLER()->setVlimitAutoTurnedOff_FlowSensor();
-				getModel()->getALARMHANDLER()->resetVgarantAutoTurnedOff_FlowSensor();
-				getModel()->getALARMHANDLER()->resetVgAutoTurnedOff_FOT();
-
-				if(AfxGetMainWnd())
-					AfxGetMainWnd()->PostMessage(WM_VLIMIT_PARA_AUTODISABLED);
-				DEBUGMSG(TRUE, (TEXT("WM_VLIMIT_PARA_AUTODISABLED 4 ###\r\n")));
-			}
-			//else
-			//{
-			//	getModel()->getALARMHANDLER()->setVgarantAutoTurnedOff(false);
-			//	getModel()->getALARMHANDLER()->setVlimitAutoTurnedOff(false);
-			//}
-
-
-			PostMessage(WM_SETALARM_FLOW_SENSOR_NOTCONNECTED);
-
-			return 1;
-		}
-		break;
-	case WM_SETALARM_FLOW_SENSOR_NOTCONNECTED:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_Sens_FLOW_SENSOR_NOTCONNECTED);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_O2_SENSOR_DEFECT:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_Sens_O2_SENSOR_DEFECT);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_O2_SENSOR_USED:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_Sens_O2_SENSOR_USED);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_O2_VALUE_INCORRECT:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_Sens_O2_VALUE_INCORRECT);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_O2_NOT_CALIBRATED:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_Sens_O2_NOT_CALIBRATED);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_NEBULIZER_DISCON:
-		{
-			/*getModel()->getALARMHANDLER()->setAlarm(AL_Nebulizer_Disconnection);
-			PostMessage(WM_BN_MATRIX_NEBULIZER);*/
-			return 1;
-		}
-		break;
-	case WM_SETALARM_NEBULIZER_ERROR:
-		{
-			/*getModel()->getALARMHANDLER()->setAlarm(AL_Nebulizer_SysError);
-			PostMessage(WM_BN_MATRIX_NEBULIZER);*/
-			return 1;
-		}
-		break;
-	case WM_REINIT_SPO2_MODULE:
-		{
-			if(getModel()->isSPO2running() && false==getModel()->getCONFIG()->isSpO2ConfigInProgress())
-			{
-				//DEBUGMSG(TRUE, (TEXT("WM_REINIT_SPO2_MODULE\r\n")));
-				getModel()->getCONFIG()->SetSPO2module(getModel()->getCONFIG()->GetSPO2module(),true);
-			}
-			
-			return 1;
-		}
-		break;
-	case WM_NEW_FIO2DATA:
-		{
-			SHORT iFiO2value=getModel()->getDATAHANDLER()->getMessureDataO2();
-			if(false==getModel()->getDATAHANDLER()->GetOxyCalRunning())
-				m_iOldOxyValue=iFiO2value;
-
-			if(getModel()->getAcuLink()!=NULL)
-			{
-				if(iFiO2value<0)
-				{
-					getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_OXY,0);
+					if(AfxGetMainWnd())
+						AfxGetMainWnd()->PostMessage(WM_VLIMIT_PARA_AUTODISABLED);
+					DEBUGMSG(TRUE, (TEXT("WM_VLIMIT_PARA_AUTODISABLED 1 ###\r\n")));
 				}
 				else
 				{
-					if(getModel()->getDATAHANDLER()->GetOxyCalRunning())
-						getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_OXY,m_iOldOxyValue);
+					/*getModel()->getALARMHANDLER()->setVgarantAutoTurnedOff(false);
+					getModel()->getALARMHANDLER()->setVlimitAutoTurnedOff(false);*/
+				}
+
+				
+
+				return 1;
+			}
+			break;
+		case WM_FLOW_SENSOR_DEFECT:
+			{
+				if(getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
+				{
+					getModel()->getALARMHANDLER()->setVgarantAutoTurnedOff_FlowSensor();
+					getModel()->getALARMHANDLER()->resetVlimitAutoTurnedOff_FlowSensor();
+
+					getModel()->getDATAHANDLER()->ChangeVgarantState(VOLUMEGAR_PARA_AUTODISABLED);
+				}
+				else if(getModel()->getDATAHANDLER()->IsActiveModeVLimitStateOn())
+				{
+					getModel()->getDATAHANDLER()->SaveLastVLimitParam();
+					getModel()->getDATAHANDLER()->PARADATA()->SetVLimitParam_IPPV(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_IPPV(),false,true,true);
+					getModel()->getDATAHANDLER()->PARADATA()->SetVLimitParam_TRIGGER(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_TRIGGER(),false,true,true);
+					getModel()->getALARMHANDLER()->setVlimitAutoTurnedOff_FlowSensor();
+					getModel()->getALARMHANDLER()->resetVgarantAutoTurnedOff_FlowSensor();
+					getModel()->getALARMHANDLER()->resetVgAutoTurnedOff_FOT();
+
+					if(AfxGetMainWnd())
+						AfxGetMainWnd()->PostMessage(WM_VLIMIT_PARA_AUTODISABLED);
+					DEBUGMSG(TRUE, (TEXT("WM_VLIMIT_PARA_AUTODISABLED 2 ###\r\n")));
+				}
+
+				PostMessage(WM_SETALARM_FLOW_SENSOR_DEFECT);
+
+
+				return 1;
+			}
+			break;
+		case WM_SETALARM_FLOW_SENSOR_DEFECT:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_Sens_FLOW_SENSOR_DEFECT);
+				return 1;
+			}
+			break;
+		case WM_FLOW_SENSOR_CLEANING:
+			{
+				if(getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
+				{
+					getModel()->getALARMHANDLER()->setVgarantAutoTurnedOff_FlowSensor();
+					getModel()->getALARMHANDLER()->resetVlimitAutoTurnedOff_FlowSensor();
+
+					getModel()->getDATAHANDLER()->ChangeVgarantState(VOLUMEGAR_PARA_AUTODISABLED);
+				}
+				else if(getModel()->getDATAHANDLER()->IsActiveModeVLimitStateOn())
+				{
+					getModel()->getDATAHANDLER()->SaveLastVLimitParam();
+					getModel()->getDATAHANDLER()->PARADATA()->SetVLimitParam_IPPV(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_IPPV(),false,true,true);
+					getModel()->getDATAHANDLER()->PARADATA()->SetVLimitParam_TRIGGER(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_TRIGGER(),false,true,true);
+					getModel()->getALARMHANDLER()->setVlimitAutoTurnedOff_FlowSensor();
+					getModel()->getALARMHANDLER()->resetVgarantAutoTurnedOff_FlowSensor();
+					getModel()->getALARMHANDLER()->resetVgAutoTurnedOff_FOT();
+
+					if(AfxGetMainWnd())
+						AfxGetMainWnd()->PostMessage(WM_VLIMIT_PARA_AUTODISABLED);
+					DEBUGMSG(TRUE, (TEXT("WM_VLIMIT_PARA_AUTODISABLED 3 ###\r\n")));
+				}
+
+				PostMessage(WM_SETALARM_FLOW_SENSOR_CLEANING);
+
+				return 1;
+			}
+			break;
+		case WM_SETALARM_FLOW_SENSOR_CLEANING:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_Sens_FLOW_SENSOR_CLEANING);
+				return 1;
+			}
+			break;
+		case WM_FLOW_SENSOR_NOTCONNECTED:
+			{
+				if(getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
+				{
+					getModel()->getALARMHANDLER()->setVgarantAutoTurnedOff_FlowSensor();
+					getModel()->getALARMHANDLER()->resetVlimitAutoTurnedOff_FlowSensor();
+
+					getModel()->getDATAHANDLER()->ChangeVgarantState(VOLUMEGAR_PARA_AUTODISABLED);
+				}
+				else if(getModel()->getDATAHANDLER()->IsActiveModeVLimitStateOn())
+				{
+					getModel()->getDATAHANDLER()->SaveLastVLimitParam();
+					getModel()->getDATAHANDLER()->PARADATA()->SetVLimitParam_IPPV(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_IPPV(),false,true,true);
+					getModel()->getDATAHANDLER()->PARADATA()->SetVLimitParam_TRIGGER(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_TRIGGER(),false,true,true);
+					getModel()->getALARMHANDLER()->setVlimitAutoTurnedOff_FlowSensor();
+					getModel()->getALARMHANDLER()->resetVgarantAutoTurnedOff_FlowSensor();
+					getModel()->getALARMHANDLER()->resetVgAutoTurnedOff_FOT();
+
+					if(AfxGetMainWnd())
+						AfxGetMainWnd()->PostMessage(WM_VLIMIT_PARA_AUTODISABLED);
+					DEBUGMSG(TRUE, (TEXT("WM_VLIMIT_PARA_AUTODISABLED 4 ###\r\n")));
+				}
+				//else
+				//{
+				//	getModel()->getALARMHANDLER()->setVgarantAutoTurnedOff(false);
+				//	getModel()->getALARMHANDLER()->setVlimitAutoTurnedOff(false);
+				//}
+
+
+				PostMessage(WM_SETALARM_FLOW_SENSOR_NOTCONNECTED);
+
+				return 1;
+			}
+			break;
+		case WM_SETALARM_FLOW_SENSOR_NOTCONNECTED:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_Sens_FLOW_SENSOR_NOTCONNECTED);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_O2_SENSOR_DEFECT:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_Sens_O2_SENSOR_DEFECT);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_O2_SENSOR_USED:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_Sens_O2_SENSOR_USED);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_O2_VALUE_INCORRECT:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_Sens_O2_VALUE_INCORRECT);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_O2_NOT_CALIBRATED:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_Sens_O2_NOT_CALIBRATED);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_NEBULIZER_DISCON:
+			{
+				/*getModel()->getALARMHANDLER()->setAlarm(AL_Nebulizer_Disconnection);
+				PostMessage(WM_BN_MATRIX_NEBULIZER);*/
+				return 1;
+			}
+			break;
+		case WM_SETALARM_NEBULIZER_ERROR:
+			{
+				/*getModel()->getALARMHANDLER()->setAlarm(AL_Nebulizer_SysError);
+				PostMessage(WM_BN_MATRIX_NEBULIZER);*/
+				return 1;
+			}
+			break;
+		case WM_REINIT_SPO2_MODULE:
+			{
+				if(getModel()->isSPO2running() && false==getModel()->getCONFIG()->isSpO2ConfigInProgress())
+				{
+					//DEBUGMSG(TRUE, (TEXT("WM_REINIT_SPO2_MODULE\r\n")));
+					getModel()->getCONFIG()->SetSPO2module(getModel()->getCONFIG()->GetSPO2module(),true);
+				}
+				
+				return 1;
+			}
+			break;
+		case WM_NEW_FIO2DATA:
+			{
+				SHORT iFiO2value=getModel()->getDATAHANDLER()->getMessureDataO2();
+				if(false==getModel()->getDATAHANDLER()->GetOxyCalRunning())
+					m_iOldOxyValue=iFiO2value;
+
+				if(getModel()->getAcuLink()!=NULL)
+				{
+					if(iFiO2value<0)
+					{
+						getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_OXY,0);
+					}
 					else
-						getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_OXY,iFiO2value);
+					{
+						if(getModel()->getDATAHANDLER()->GetOxyCalRunning())
+							getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_OXY,m_iOldOxyValue);
+						else
+							getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_OXY,iFiO2value);
+					}
 				}
-			}
 
-			getModel()->getVIEWHANDLER()->drawMeasuredFiO2Value();
-			return 1;
-		}
-		break;
-	/*case WM_PRICO_FIO2_OUTOFRANGE:
-		{
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("! PRICO: calculated FiO2 not possible !"), 3500);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			Sleep(300);
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-		}
-		break;*/
-	case WM_SPO2_SIQDATA:
-		{
-			if(getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_SPO2GRAPHS)
-				getModel()->getVIEWHANDLER()->setSIQdata();
-		}
-		break;
-	case WM_TXT_PRICO_RUNNING:
-		{
-			CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  getModel()->GetLanguageString(IDS_TXT_PRICORUNS), 3000);
-			getModel()->triggerEvent(&event2);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-		}
-		break;
-	case WM_START_PRICO:
-		{
-			if(NULL==getModel()->getPRICOThread())
+				getModel()->getVIEWHANDLER()->drawMeasuredFiO2Value();
 				return 1;
-			theApp.getLog()->WriteLine(_T("*** PRICO started"));
-
-			//SHORT iMessureDataO2=getModel()->getDATAHANDLER()->PARADATA()->GetO2Para()*10;
-			BYTE iMessureDataO2=getModel()->getDATAHANDLER()->PARADATA()->GetO2Para();  //pro, change 3
-			BYTE byHighSpO2PRICOlimit=getModel()->getDATAHANDLER()->getPRICO_SPO2highRange();
-			BYTE byLowSpO2PRICOlimit=getModel()->getDATAHANDLER()->getPRICO_SPO2lowRange();
-
-			CString sz=_T("");
-			sz.Format(_T("#PRICO SpO2 low:%d, "), byLowSpO2PRICOlimit);
-			theApp.getLog()->WriteLine(sz);
-			sz.Format(_T("#PRICO SpO2 high:%d, "), byHighSpO2PRICOlimit);
-			theApp.getLog()->WriteLine(sz);
-
-			BYTE byPRICO_FIO2lowRange=getModel()->getDATAHANDLER()->getPRICO_FIO2lowRange();
-			sz.Format(_T("#PRICO FiO2 low:%d, "), byPRICO_FIO2lowRange);
-			theApp.getLog()->WriteLine(sz);
-
-			BYTE byPRICO_FIO2highRange=getModel()->getDATAHANDLER()->getPRICO_FIO2highRange();
-			sz.Format(_T("#PRICO FiO2 high:%d, "), byPRICO_FIO2highRange);
-			theApp.getLog()->WriteLine(sz);
-
-			sz.Format(_T("#PRICO FiO2 measured:%d, "), iMessureDataO2);
-			theApp.getLog()->WriteLine(sz);
-
-			//set the starting FiO2 to the range setting
-			//if(getModel()->getDATAHANDLER()->PARADATA()->GetO2Para()< byPRICO_FIO2lowRange)
-			if(iMessureDataO2 < byPRICO_FIO2lowRange) //pro, change 3
-			{
-				getModel()->Send_PARA_OXY_RATIO(byPRICO_FIO2lowRange,true,true);
-				//getModel()->getPRICOThread()->setStartupOxyValue(byPRICO_FIO2lowRange*10);
-				getModel()->getPRICOThread()->setStartupOxyValue(byPRICO_FIO2lowRange); //pro, change 3
 			}
-			//else if(getModel()->getDATAHANDLER()->PARADATA()->GetO2Para() > byPRICO_FIO2highRange)
-			else if(iMessureDataO2 > byPRICO_FIO2highRange) //pro, change 3
+			break;
+		/*case WM_PRICO_FIO2_OUTOFRANGE:
 			{
-				getModel()->Send_PARA_OXY_RATIO(byPRICO_FIO2highRange,true,true);
-				//getModel()->getPRICOThread()->setStartupOxyValue(byPRICO_FIO2highRange*10);
-				getModel()->getPRICOThread()->setStartupOxyValue(byPRICO_FIO2highRange); //pro, change 3
-			}
-			else
-			{
-				//getModel()->getPRICOThread()->setStartupOxyValue(iMessureDataO2*10);
-				getModel()->getPRICOThread()->setStartupOxyValue(iMessureDataO2); //pro, change 3
-			}
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("! PRICO: calculated FiO2 not possible !"), 3500);
+				getModel()->triggerEvent(&event);
 
-			//getModel()->getPRICOThread()->setMeasuredOxyValue(iMessureDataO2);
-			getModel()->getPRICOThread()->setHighSpO2PRICOlimit(byHighSpO2PRICOlimit);
-			getModel()->getPRICOThread()->setLowSpO2PRICOlimit(byLowSpO2PRICOlimit);
-			
-			getModel()->getPRICOThread()->startPRICOThread();
-			getModel()->getVIEWHANDLER()->setPRICOrunning(true);
-			return 1;
-		}
-		break;
-	case WM_STOP_PRICO:
-		{
-			if(NULL==getModel()->getPRICOThread())
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				Sleep(300);
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+			}
+			break;*/
+		case WM_SPO2_SIQDATA:
+			{
+				if(getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_SPO2GRAPHS)
+					getModel()->getVIEWHANDLER()->setSIQdata();
+			}
+			break;
+		case WM_TXT_PRICO_RUNNING:
+			{
+				CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  getModel()->GetLanguageString(IDS_TXT_PRICORUNS), 3000);
+				getModel()->triggerEvent(&event2);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+			}
+			break;
+		case WM_START_PRICO:
+			{
+				if(NULL==getModel()->getPRICOThread())
+					return 1;
+				theApp.getLog()->WriteLine(_T("*** PRICO started"));
+
+				//SHORT iMessureDataO2=getModel()->getDATAHANDLER()->PARADATA()->GetO2Para()*10;
+				BYTE iMessureDataO2=getModel()->getDATAHANDLER()->PARADATA()->GetO2Para();  //pro, change 3
+				BYTE byHighSpO2PRICOlimit=getModel()->getDATAHANDLER()->getPRICO_SPO2highRange();
+				BYTE byLowSpO2PRICOlimit=getModel()->getDATAHANDLER()->getPRICO_SPO2lowRange();
+
+				CString sz=_T("");
+				sz.Format(_T("#PRICO SpO2 low:%d, "), byLowSpO2PRICOlimit);
+				theApp.getLog()->WriteLine(sz);
+				sz.Format(_T("#PRICO SpO2 high:%d, "), byHighSpO2PRICOlimit);
+				theApp.getLog()->WriteLine(sz);
+
+				BYTE byPRICO_FIO2lowRange=getModel()->getDATAHANDLER()->getPRICO_FIO2lowRange();
+				sz.Format(_T("#PRICO FiO2 low:%d, "), byPRICO_FIO2lowRange);
+				theApp.getLog()->WriteLine(sz);
+
+				BYTE byPRICO_FIO2highRange=getModel()->getDATAHANDLER()->getPRICO_FIO2highRange();
+				sz.Format(_T("#PRICO FiO2 high:%d, "), byPRICO_FIO2highRange);
+				theApp.getLog()->WriteLine(sz);
+
+				sz.Format(_T("#PRICO FiO2 measured:%d, "), iMessureDataO2);
+				theApp.getLog()->WriteLine(sz);
+
+				//set the starting FiO2 to the range setting
+				//if(getModel()->getDATAHANDLER()->PARADATA()->GetO2Para()< byPRICO_FIO2lowRange)
+				if(iMessureDataO2 < byPRICO_FIO2lowRange) //pro, change 3
+				{
+					getModel()->Send_PARA_OXY_RATIO(byPRICO_FIO2lowRange,true,true);
+					//getModel()->getPRICOThread()->setStartupOxyValue(byPRICO_FIO2lowRange*10);
+					getModel()->getPRICOThread()->setStartupOxyValue(byPRICO_FIO2lowRange); //pro, change 3
+				}
+				//else if(getModel()->getDATAHANDLER()->PARADATA()->GetO2Para() > byPRICO_FIO2highRange)
+				else if(iMessureDataO2 > byPRICO_FIO2highRange) //pro, change 3
+				{
+					getModel()->Send_PARA_OXY_RATIO(byPRICO_FIO2highRange,true,true);
+					//getModel()->getPRICOThread()->setStartupOxyValue(byPRICO_FIO2highRange*10);
+					getModel()->getPRICOThread()->setStartupOxyValue(byPRICO_FIO2highRange); //pro, change 3
+				}
+				else
+				{
+					//getModel()->getPRICOThread()->setStartupOxyValue(iMessureDataO2*10);
+					getModel()->getPRICOThread()->setStartupOxyValue(iMessureDataO2); //pro, change 3
+				}
+
+				//getModel()->getPRICOThread()->setMeasuredOxyValue(iMessureDataO2);
+				getModel()->getPRICOThread()->setHighSpO2PRICOlimit(byHighSpO2PRICOlimit);
+				getModel()->getPRICOThread()->setLowSpO2PRICOlimit(byLowSpO2PRICOlimit);
+				
+				getModel()->getPRICOThread()->startPRICOThread();
+				getModel()->getVIEWHANDLER()->setPRICOrunning(true);
 				return 1;
-
-			getModel()->getVIEWHANDLER()->setPRICOrunning(false);
-
-			getModel()->getPRICOThread()->stopPRICOThread();
-			theApp.getLog()->WriteLine(_T("*** PRICO stopped"));
-
-			if(getModel()->isO2FlushActive()==false)//PRICO04
-			{
-				getModel()->getDATAHANDLER()->SetCurrentO2Para(getModel()->getDATAHANDLER()->PARADATA()->GetO2Para()); 
 			}
-			/*else
+			break;
+		case WM_STOP_PRICO:
 			{
-				getModel()->Send_PARA_OXY_RATIO(getModel()->getDATAHANDLER()->GetCurrentO2FlushPara(),true,true);
-			}*/
+				if(NULL==getModel()->getPRICOThread())
+					return 1;
 
-			if(getModel()->getALARMHANDLER()->ALARM_PRICO_FiO2max->getAlarmState()==AS_ACTIVE)
-			{
-				getModel()->getALARMHANDLER()->deleteAlarm(AL_PRICO_FiO2max);
-			}
+				getModel()->getVIEWHANDLER()->setPRICOrunning(false);
 
-			if(getModel()->getALARMHANDLER()->ALARM_PRICO_FiO2min->getAlarmState()==AS_ACTIVE)
-			{
-				getModel()->getALARMHANDLER()->deleteAlarm(AL_PRICO_FiO2min);
+				getModel()->getPRICOThread()->stopPRICOThread();
+				theApp.getLog()->WriteLine(_T("*** PRICO stopped"));
+
+				if(getModel()->isO2FlushActive()==false)//PRICO04
+				{
+					getModel()->getDATAHANDLER()->SetCurrentO2Para(getModel()->getDATAHANDLER()->PARADATA()->GetO2Para()); 
+				}
+				/*else
+				{
+					getModel()->Send_PARA_OXY_RATIO(getModel()->getDATAHANDLER()->GetCurrentO2FlushPara(),true,true);
+				}*/
+
+				if(getModel()->getALARMHANDLER()->ALARM_PRICO_FiO2max->getAlarmState()==AS_ACTIVE)
+				{
+					getModel()->getALARMHANDLER()->deleteAlarm(AL_PRICO_FiO2max);
+				}
+
+				if(getModel()->getALARMHANDLER()->ALARM_PRICO_FiO2min->getAlarmState()==AS_ACTIVE)
+				{
+					getModel()->getALARMHANDLER()->deleteAlarm(AL_PRICO_FiO2min);
+				}
+				
+				
+				return 1;
 			}
-			
-			
-			return 1;
-		}
-		break;
-	case WM_SETALARM_SPO2_MODULE_NOTCONNECTED:
-		{
-			if(getModel()->isSPO2running())
+			break;
+		case WM_SETALARM_SPO2_MODULE_NOTCONNECTED:
+			{
+				if(getModel()->isSPO2running())
+				{
+					/*if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
+					{
+						if(getModel()->getPRICOThread()->isPRICOrunning())
+						{
+							getModel()->getPRICOThread()->setAlarmDisabled();
+							getModel()->getDATAHANDLER()->setPRICOState(false);
+						}
+					}*/
+
+					getModel()->getALARMHANDLER()->setAlarm(AL_Sens_SPO2_MODULE_NOTCONNECTED);
+				}
+				
+				return 1;
+			}
+			break;
+		case WM_SETALARM_SPO2_SENSORFAULTY:
 			{
 				/*if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
 				{
@@ -3322,1376 +3342,636 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					}
 				}*/
 
-				getModel()->getALARMHANDLER()->setAlarm(AL_Sens_SPO2_MODULE_NOTCONNECTED);
+				getModel()->getALARMHANDLER()->setAlarm(AL_Sens_SPO2_SENSORFAULTY);
+				return 1;
 			}
-			
-			return 1;
-		}
-		break;
-	case WM_SETALARM_SPO2_SENSORFAULTY:
-		{
-			/*if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
+			break;
+		case WM_SETALARM_SPO2_CHECKSENSOR:
 			{
-				if(getModel()->getPRICOThread()->isPRICOrunning())
+				/*if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
 				{
-					getModel()->getPRICOThread()->setAlarmDisabled();
-					getModel()->getDATAHANDLER()->setPRICOState(false);
-				}
-			}*/
-
-			getModel()->getALARMHANDLER()->setAlarm(AL_Sens_SPO2_SENSORFAULTY);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_SPO2_CHECKSENSOR:
-		{
-			/*if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
-			{
-				if(getModel()->getPRICOThread()->isPRICOrunning())
-				{
-					getModel()->getPRICOThread()->setAlarmDisabled();
-					getModel()->getDATAHANDLER()->setPRICOState(false);
-				}
-			}*/
-
-			getModel()->getALARMHANDLER()->setAlarm(AL_Sens_SPO2_CHECKSENSOR);
-			return 1;
-		}
-		break;
-	/*case WM_CO2_STATE_CHANGED:
-		{
-			CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_CO2STATE_CHANGED);
-			getModel()->Trigger(&eventCtrl);
-		}
-		break;*/
-	case WM_SETALARM_CO2_MODULE_NOTCONNECTED:
-		{
-			KillTimer(CO2PUMPTIMER);
-			m_bShowCO2PumpOnMsg=true;
-			
-			if(getModel()->getDATAHANDLER()->getRemainCO2PumpTime()!=0)
-			{
-				getModel()->getDATAHANDLER()->setRemainCO2PumpTime(0);
-				getModel()->getVIEWHANDLER()->UpdateCO2InfoData(false);
-			}
-			//m_ullRemainCO2PumpTime=0;
-			getModel()->getALARMHANDLER()->setAlarm(AL_Sens_CO2_MODULE_NOTCONNECTED);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_CO2_FILTERLINE_NOTCONNECTED:
-		{
-			KillTimer(CO2PUMPTIMER);
-			m_bShowCO2PumpOnMsg=true;
-			
-			if(getModel()->getDATAHANDLER()->getRemainCO2PumpTime()!=0)
-			{
-				getModel()->getDATAHANDLER()->setRemainCO2PumpTime(0);
-				getModel()->getVIEWHANDLER()->UpdateCO2InfoData(false);
-			}
-			//m_ullRemainCO2PumpTime=0;
-			getModel()->getALARMHANDLER()->setAlarm(AL_Sens_CO2_FILTERLINE_NOTCONNECTED);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_CO2_CHECKSAMPLINGLINE:
-		{
-			KillTimer(CO2PUMPTIMER);
-			m_bShowCO2PumpOnMsg=true;
-			//m_ullRemainCO2PumpTime=0;
-			
-			getModel()->getDATAHANDLER()->setRemainCO2PumpTime(0);
-			getModel()->getVIEWHANDLER()->UpdateCO2InfoData(false);
-
-
-			getModel()->getALARMHANDLER()->setAlarm(AL_Sens_CO2_CHECKSAMPLINGLINE);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_CO2_CHECKAIRWAYADAPTER:
-		{
-			KillTimer(CO2PUMPTIMER);
-			m_bShowCO2PumpOnMsg=true;
-			//m_ullRemainCO2PumpTime=0;
-			
-			getModel()->getDATAHANDLER()->setRemainCO2PumpTime(0);
-			getModel()->getVIEWHANDLER()->UpdateCO2InfoData(false);
-
-			getModel()->getALARMHANDLER()->setAlarm(AL_Sens_CO2_CHECKAIRWAYADAPTER);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_CO2_SENSORFAULTY:
-		{
-			KillTimer(CO2PUMPTIMER);
-			m_bShowCO2PumpOnMsg=true;
-			//m_ullRemainCO2PumpTime=0;
-			
-			getModel()->getDATAHANDLER()->setRemainCO2PumpTime(0);
-			getModel()->getVIEWHANDLER()->UpdateCO2InfoData(false);
-
-			getModel()->getALARMHANDLER()->setAlarm(AL_Sens_CO2_SENSORFAULTY);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_MVmax:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_MVmax);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_MVmin:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_MVmin);
-			return 1;
-		}
-		break;
-	//case WM_SETALARM_PRICO_SIQ:
-	//	{
-	//		//if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
-	//		{
-	//			//if(getModel()->getPRICOThread()->isPRICOrunning())
-	//			{
-	//				getModel()->getPRICOThread()->setAlarmDisabled();
-	//				getModel()->getDATAHANDLER()->setPRICOState(false);
-
-	//				//getModel()->getALARMHANDLER()->setAlarm(AL_PRICO_SIQvalue);
-	//			}
-	//		}
-
-	//		
-	//		return 1;
-	//	}
-	//	break;
-	/*case WM_DELALARM_PRICO_SIQ:
-		{
-			getModel()->getALARMHANDLER()->setStateOfAlarm(AL_PRICO_SIQvalue,AS_NONE);
-			return 1;
-		}
-		break;*/
-	case WM_SETALARM_PRICO_FiO2outOfRange:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_Sens_PRICO_FiO2outOfRange);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_PRICO_FiO2max:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_PRICO_FiO2max);
-
-			int iFiO2=(int)CTlsFloat::Round(((double)getModel()->getDATAHANDLER()->getAppliedFiO2para())/10, 0);
-			CString sz=_T("");
-			sz.Format(_T("*** PRICO: FiO2 at max target: %d"), iFiO2);
-			theApp.getLog()->WriteLine(sz);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_PRICO_FiO2min:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_PRICO_FiO2min);
-
-			int iFiO2=(int)CTlsFloat::Round(((double)getModel()->getDATAHANDLER()->getAppliedFiO2para())/10, 0);
-			CString sz=_T("");
-			sz.Format(_T("*** PRICO: Lower minimum FiO2 %d"), iFiO2);
-			theApp.getLog()->WriteLine(sz);
-			return 1;
-		}
-		break;
-	case WM_EV_TIMETEXT_PRICO_LOWFIO2:
-		{
-			//MVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("Lower minimum FiO2"), 10000);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_FIO2_LOWMIN), 10000);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			Sleep(300);
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_PIPmax:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_PIPmax);
-			return 1;
-		}
-		break;
-	case WM_DELALARM_PIPmax:
-		{
-			getModel()->getALARMHANDLER()->deleteAlarm(AL_PatAl_PIPmax);
-			return 1;
-		}
-		break;
-	case WM_SetAlarm_PminLow:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_PEEPminLow);
-			return 1;
-		}
-		break;
-	case WM_SETSIGNALEDALARM_Pmin:
-		{
-			getModel()->getALARMHANDLER()->setStateOfAlarm(AL_PatAl_PEEPminLow,AS_SIGNALED);
-			return 1;
-		}
-		break;
-	case WM_SetAlarm_PminHigh:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_PEEPminHigh);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_BPMmax:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_BPMmax);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_Leakmax:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_Leakmax);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_Apnoe:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_Apnoe);
-
-			if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE && getModel()->getETCO2()!=NULL)
-			{
-				getModel()->getETCO2()->set_restartBreathAlgorithm();
-			}
-			return 1;
-		}
-		break;
-	case WM_SETALARM_DCO2max:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_DCO2max);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_DCO2min:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_DCO2min);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_Vlimitted:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_SysLimit_Vlimitted);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_Vgaranty:
-		{
-			getModel()->getDATAHANDLER()->setStatus2(getModel()->getSPI()->Read_STATUS_2());
-
-			getModel()->getALARMHANDLER()->setAlarm(AL_SysLimit_Vgaranty);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_Accu_POWER:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_Accu_POWER);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_Accu_60:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_Accu_60);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_Accu_30:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_Accu_30);
-			return 1;
-		}
-		break;
-	case WM_SETALARM_Accu_15:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_Accu_15);
-			//getModel()->getALARMHANDLER()->SetAlarm_Accu_15(_T(""));
-			return 1;
-		}
-		break;
-	//case WM_CHECK_SPI:
-	//	{
-	//		if(getModel()->getSPI()->Check_ALIVE_BYTE()==FALSE)
-	//		{
-	//			getModel()->SetSPIavailability(FALSE);
-	//			/*getModel()->getDATAHANDLER()->SetSPIErrorCode(ERRC_SPI_ALIVE);
-	//			getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_SPI);*/
-	//			//getModel()->getALARMHANDLER()->SetAlarm_IF_SPI(_T(""));
-
-	//			getModel()->SetCheckSPIavailability(TRUE);
-	//		}
-	//		//else
-	//		//{
-	//		//	getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_SPI);
-	//		//	//getModel()->getALARMHANDLER()->SetAlarm_IF_SPI(_T(""));
-	//		//}
-
-	//		return 1;
-	//	}
-	//	break;
-	case WM_SETALARM_PINSPNOTREACHED:
-		{
-			getModel()->getALARMHANDLER()->setAlarm(AL_SysLimit_Pinsp_NotReached);
-			return 1;
-		}
-		break;
-	case WM_FLOWSENSOR_CALIBRATED:
-		{
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-
-			getModel()->setVentilationRangeChanged(false);
-
-			CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_FLOWSENSOR_CALIBRATED);
-			getModel()->triggerEvent(&eventCtrl);
-			return 1;
-		}
-		break;
-	case WM_SYSTEMSTATE_CHANGED:
-		{
-			CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_SYSTEMSTATE_CHANGED);
-			getModel()->triggerEvent(&eventCtrl);
-			return 1;
-		}
-		break;
-	case WM_SET_EFLOWEQUIFLOW:
-		{
-			CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_SET_EFLOWEQUIFLOW);
-			getModel()->triggerEvent(&eventCtrl);
-			return 1;
-		}
-		break;
-	case WM_SET_CO2PUMPTIMER:
-		{
-			KillTimer(CO2PUMPTIMER);
-			if(getModel()->getCONFIG()->GetTimePumpAutoOn()>0)
-			{
-				getModel()->getDATAHANDLER()->setRemainCO2PumpTime(getModel()->getCONFIG()->GetTimePumpAutoOn()*60000);
-				getModel()->getVIEWHANDLER()->UpdateCO2InfoData(true);
-
-				m_bShowCO2PumpOnMsg=true;
-
-				SetTimer(CO2PUMPTIMER, 1000, NULL);
-			}
-			return 1;
-		}
-		break;
-	case WM_KILL_CO2PUMPTIMER:
-		{
-			KillTimer(CO2PUMPTIMER);
-			m_bShowCO2PumpOnMsg=true;
-			
-			getModel()->getDATAHANDLER()->setRemainCO2PumpTime(0);
-			getModel()->getVIEWHANDLER()->UpdateCO2InfoData(false);
-
-			return 1;
-		}
-		break;
-	case WM_DISABLE_PATALARM_O2:
-		{
-			getModel()->DisablePatAlarmO2dependend();
-			SetTimer(DISABLE_PATALARM_O2_TIMER, 1000, NULL);
-			return 1;
-		}
-		break;
-	case WM_CONTROL_O2CALSTART:
-		{
-			CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_O2CALSTART);
-			getModel()->triggerEvent(&eventCtrl);
-			return 1;
-		}
-		break;
-	case WM_CONTROL_O2CALSTOP:
-		{
-			CMVEventControl eventCtrl2(CMVEventControl::EV_CONTROL_O2CALSTOP);
-			getModel()->triggerEvent(&eventCtrl2);
-			return 1;
-		}
-		break;
-	case WM_PARABN_HFFREQREC:
-		{
-			CMVEventUI event(CMVEventUI::EV_PARABN_HFFREQREC);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_LUNGRECSTATE_CHANGED:
-		{
-			getModel()->getVIEWHANDLER()->lungRecStateChanged();
-			return 1;
-		}
-		break;
-	case WM_PARABN_HFAMPL:
-		{
-			CMVEventUI event(CMVEventUI::EV_PARABN_HFAMPL);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_PARABN_PINSP:
-		{
-			CMVEventUI event(CMVEventUI::EV_PARABN_PINSP);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_PARABN_PMAXVOLG:
-		{
-			CMVEventUI event(CMVEventUI::EV_PARABN_PMAXVOLG);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_PARABN_PEEP:
-		{
-			CMVEventUI event(CMVEventUI::EV_PARABN_PEEP);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_PARABN_PPSV:
-		{
-			CMVEventUI event(CMVEventUI::EV_PARABN_PPSV);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_PARABN_CPAP:
-		{
-			CMVEventUI event(CMVEventUI::EV_PARABN_CPAP);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_PARABN_PMAN:
-		{
-			CMVEventUI event(CMVEventUI::EV_PARABN_PMAN);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_PARABN_PDUO:
-		{
-			CMVEventUI event(CMVEventUI::EV_PARABN_PDUO);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_PARABN_PMITT:
-		{
-			CMVEventUI event(CMVEventUI::EV_PARABN_PMITT);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_PARABN_IERATIO:
-		{
-			CMVEventUI event(CMVEventUI::EV_PARABN_IERATIO);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_PARABN_HFFREQ:
-		{
-			CMVEventUI event(CMVEventUI::EV_PARABN_HFFREQ);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_PARABN_VGARANT:
-		{
-			CMVEventUI event(CMVEventUI::EV_PARABN_VGARANT);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_PARABN_VLIMIT:
-		{
-			CMVEventUI event(CMVEventUI::EV_PARABN_VLIMIT);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_PARABN_FOT:
-		{
-			CMVEventUI event(CMVEventUI::EV_PARABN_FOT);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_PARADATA_CHANGED:
-		{
-			getModel()->getVIEWHANDLER()->paraDataChanged();
-			return 1;
-		}
-		break;
-	case WM_ITIME_CHANGED:
-		{
-			getModel()->getVIEWHANDLER()->ITIMEChanged();
-			return 1;
-		}
-		break;
-	case WM_ETIME_CHANGED:
-		{
-			getModel()->getVIEWHANDLER()->ETIMEChanged();
-			return 1;
-		}
-		break;
-	case WM_BPM_CHANGED:
-		{
-			getModel()->getVIEWHANDLER()->BPMChanged();
-			return 1;
-		}
-		break;
-	case WM_OXICAL_CANCEL:
-		{
-			m_bCancelOxiCal=true;
-			return 1;
-		}
-		break;
-	case WM_OXICAL_START21:
-		{
-			m_bO2Sensor21manual=true;
-			eventOxyCal.SetEvent();
-			return 1;
-		}
-		break;
-	case WM_OXICAL_START100:
-		{
-			m_bO2Sensor100manual=true;
-			eventOxyCal.SetEvent();
-			return 1;
-		}
-		break;
-	case WM_DELETE_TRENDS:
-		{
-			
-			//TREND
-			if(getModel()->getDATAHANDLER()->isTRENDLicenseAvailable())
-				getModel()->getDATAHANDLER()->DeleteAllTrendData();
-			return 1;
-		}
-		break;
-	case WM_SET_AUTOSCREENLOG_TIMER:
-		{
-			if(		getModel()->getCONFIG()->IsAutoScreenlockActive()
-				&&	isSafeTickCountDelayExpired(m_dwLastAutoScreenTimer, 1000))
-			{
-				eAutoScreenlock time=getModel()->getCONFIG()->GetAutoScreenlockTime();
-				m_dwLastAutoScreenTimer=GetTickCount();
-
-				SetTimer(AUTOSCREENLOCKTIMER, (UINT)time*1000, NULL);
-			}
-			return 1;
-		}
-		break;
-	case WM_KILL_AUTOSCREENLOG_TIMER:
-		{
-			KillTimer(AUTOSCREENLOCKTIMER);
-			return 1;
-		}
-		break;
-	case WM_PIF_ALARM1:
-		{
-			getModel()->getSOUND()->SetPIFSound(PIF_ALARM1);
-			return 1;
-		}
-		break;
-	case WM_PIF_ALARM2:
-		{
-			getModel()->getSOUND()->SetPIFSound(PIF_ALARM2);
-			return 1;
-		}
-		break;
-	case WM_PIF_ALARM3:
-		{
-			getModel()->getSOUND()->SetPIFSound(PIF_ALARM3);
-			return 1;
-		}
-		break;
-	case WM_PIF_SIGNAL:
-		{
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			return 1;
-		}
-		break;
-	case WM_PIF_NONE:
-		{
-			getModel()->getSOUND()->SetPIFSound(PIF_NONE);
-			return 1;
-		}
-		break;
-	case WM_PIF_DOUBLESIGNAL:
-		{
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			Sleep(250);
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			return 1;
-		}
-		break;
-	case WM_SCREENFREE:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_SCREENFREE);
-			getModel()->triggerEvent(&event);
-
-			if(getModel()->getCONFIG()->IsAutoScreenlockActive())
-			{
-				PostMessage(WM_SET_AUTOSCREENLOG_TIMER);
-			}
-			else
-			{
-				PostMessage(WM_KILL_AUTOSCREENLOG_TIMER);
-			}
-
-			int iID=0;
-
-			CWnd* pFocWnd=CWnd::GetFocus();
-			if(pFocWnd==0)
-			{
-			}
-			else
-			{
-				iID=pFocWnd->GetDlgCtrlID();
-
-				if(iID==0)
-				{
-					getModel()->getVIEWHANDLER()->SetFocusToPrimaryView();
-				}
-			}
-			return 1;
-		}
-		break;
-	case WM_O2FLUSH_CHANGED:
-		{
-			getModel()->getVIEWHANDLER()->O2FlushChanged();
-
-			if(0==getModel()->getDATAHANDLER()->GetCurO2FlushTime() && true==getModel()->isO2FlushActive())
-			{
-				getModel()->deactivateO2Flush();
-				m_iO2FlushCount=getModel()->getDATAHANDLER()->GetCurO2FlushTime();
-				getModel()->getVIEWHANDLER()->DrawO2FlushTime(m_iO2FlushCount);
-
-				getModel()->Send_PARA_OXY_RATIO(getModel()->getDATAHANDLER()->GetCurrentO2Para(),true,true);
-			}
-			return 1;
-		}
-		break;
-	case WM_PMEANREC_CHANGED:
-		{
-			getModel()->getVIEWHANDLER()->HFPMEANRECFlushChanged(wParam);
-			return 1;
-		}
-		break;
-	/*case WM_PARABUTTON_TURNEDOWN:
-		{
-			getModel()->getVIEWHANDLER()->ParaButtonTurnDown(wParam, lParam);
-			return 1;
-		}
-		break;*/
-	case WM_STARTUP:
-		{
-			getModel()->getVIEWHANDLER()->Init();
-			return 1;
-		}
-		break;
-	case WM_RELOAD_CONFIG_ERROR:
-		{
-			CStringW sData = _T("ERROR: ");
-			sData += getModel()->GetLanguageString(IDS_TXT_CONFIGLOADED);
-			CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  sData, 3000);
-			getModel()->triggerEvent(&event2);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-
-			Sleep(2000);
-			AfxGetApp()->GetMainWnd()->PostMessage(WM_LANGUAGE_CHANGED);
-
-			return 1;
-		}
-		break;
-	case WM_RELOAD_CONFIG:
-		{
-			CMVEventUI event(CMVEventUI::EV_RELOAD_CONFIG);
-			getModel()->triggerEvent(&event);
-
-			/*CStringW sData = getModel()->GetLanguageString(IDS_TXT_CONFIGLOADED);
-			CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  sData, 3000);
-			getModel()->triggerEvent(&event2);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-
-			Sleep(2000);
-			AfxGetApp()->GetMainWnd()->PostMessage(WM_LANGUAGE_CHANGED);*/
-
-			return 1;
-		}
-		break;
-	case WM_VLIMIT_ENABLED:
-		{
-			CMVEventUI event(CMVEventUI::EV_PARABN_VLIMIT_ENABLED);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_VLIMIT_DISABLED:
-		{
-			CMVEventUI event(CMVEventUI::EV_PARABN_VLIMIT_DISABLED);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	/*case WM_CALC_AUTOALARMLIMITS_PIPLOW:
-		{
-			getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
-		}
-		break;*/
-	case WM_CALCULATE_AUTOALARMLIMITS:
-		{
-			if(getModel()->getALARMHANDLER()->getAlimitState_MVmaxLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitMVmax();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_MVminLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitMVmin();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_BPMmaxLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitBPMmax();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_LeakmaxLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitLeakmax();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitApnoe();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_DCO2maxLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitDCO2max();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_DCO2minLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitDCO2min();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_ETCO2maxLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitETCO2max();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_ETCO2minLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitETCO2min();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_FICO2maxLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitFICO2max();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_FICO2minLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitFICO2min();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_SPO2maxLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitSPO2max();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_SPO2minLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitSPO2min();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PulseRatemaxLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPulseRatemax();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PulseRateminLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPulseRatemin();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_SPO2_PIminLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitSPO2_PImin();
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_SPO2_SIQminLimit()==AL_AUTO)
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitSPO2_SIQmin();
-
-			PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
-			return 1;
-		}
-		break;
-	case WM_SCALE_LIMIT:
-		{
-			CStringW sData = getModel()->GetLanguageString(IDS_TXT_SCALELIMIT);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			return 1;
-		}
-		break;
-	//case WM_SCREENSHOT:
-	//	{
-	//		//SendScreenShot();
-	//		SaveScreenShot();
-	//		return 1;
-	//	}
-	//	break;
-	case WM_DELAY_AUTOOXYCAL:
-		{
-			m_bDelayAutoOxyCal=false;
-			return 1;
-		}
-		break;
-	case WM_START_AUTOOXYCAL:
-		{
-#ifndef SIMULATION_ENTREK //rkuNEWFIX
-			StartOxyCalThread();
-#endif
-			return 1;
-		}
-		break;
-	case WM_START_TRENDRECORD:
-		{
-			m_bStartTrend=true;
-			return 1;
-		}
-		break;
-	case WM_MENUMODE:
-		{
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_MENU);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_SERVICEMODE:
-		{
-			CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_SERVICE);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_SET_SERVICEMODE:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_SET_SERVICE_MODE);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_DEL_SERVICEMODE:
-		{
-			CMVEventUI event(CMVEventUI::EV_BN_DEL_SERVICE_MODE);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_SET_GRAPHCURSOR:
-		{
-			CMVEventUI event(CMVEventUI::EV_GRAPH_SETCURSOR,(int)wParam);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_DEL_GRAPHCURSOR:
-		{
-			CMVEventUI event(CMVEventUI::EV_GRAPH_DELCURSOR);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_STOPDEL_TRENDDATA:
-		{
-			if(m_bDoDelTrendThread)
-			{
-				StopDelTrendThread();
-			}
-			getModel()->getDATAHANDLER()->SetDelTrendThread(false);//rkuNEWFIX
-			return 1;
-		}
-		break;
-	case WM_DEL_TRENDDATA:
-		{
-			DEBUGMSG(TRUE, (TEXT("WM_DEL_TRENDDATA\r\n")));
-			CString sPathOld=_T("");
-			CString szPath=_T("\\sdcard\\");
-			if(CTlsFile::Exists(szPath)==false)
-			{
-				szPath=_T("\\FFSDISK\\");
-				sPathOld = szPath+IDS_OLDTRD_FOLDER;
-			}
-			else
-			{
-				sPathOld = szPath+IDS_OLDTRD_FOLDER;
-			}
-
-			if(CTlsFile::Exists(sPathOld)==true)
-			{
-				getModel()->getDATAHANDLER()->SetDelTrendThread(true);
-				StartDelTrendThread();
-				eventDelTrend.SetEvent();
-			}
-
-			return 1;
-		}
-		break;
-	case WM_STARTUP_ACULINK:
-		{
-			startAcuLink();
-			return 1;
-		}
-		break;
-	case WM_STARTUP_SUCCESS:
-		{
-			SetTimer(WATCHDOGTIMER,5000,NULL);
-
-			CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STARTUP_SUCCESS);
-			getModel()->triggerEvent(&eventCtrl);
-
-			getModel()->getDATAHANDLER()->CheckAkku(true);
-			return 1;
-		}
-		break;
-	case WM_ALARMSTATE_CHANGED:
-		{
-			//getModel()->getVIEWHANDLER()->checkAlarmState();
-
-			CMVEventAlarm event(CMVEventAlarm::EV_ALARMSTATE_CHANGED);
-			getModel()->triggerEvent(&event);
-			return 1;
-			
-		}
-		break;
-	case WM_TURNOFF_APNEA:
-		{
-			getModel()->getALARMHANDLER()->setAlimitState_ApnoeLimit(AL_OFF);
-			getModel()->getALARMHANDLER()->setAlimitApnoe(0);
-
-			CStringW sData = getModel()->GetLanguageString(IDS_TXT_TURNOFF_APNEA);
-			//CStringW sData = _T("!apnea alarm disabled!"); 
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 3000);
-			getModel()->triggerEvent(&event);
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-
-			if(AfxGetApp() != NULL)
-				AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
-			return 1;
-
-		}
-		break;
-	case WM_TURNOFF_TRIGGERNMODE:
-		{
-			getModel()->getDATAHANDLER()->SetTriggerNMODEParadata(MAXRANGE_TRIGGER_NMODE_OFF,true);
-			return 1;
-		}
-		break;
-	/*case WM_TURNOFF_TRIGGERNMODE_AUTOENABLE:
-		{
-			getModel()->getDATAHANDLER()->SetNMODEtriggerAutoenableFlag(true);
-			getModel()->getDATAHANDLER()->SetTriggerNMODEParadata(0,true);
-			return 1;
-		}
-		break;*/
-	case WM_POWERSTATE_CHANGED:
-		{
-			CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_POWERSTATE_CHANGED);
-			getModel()->triggerEvent(&eventCtrl);
-			return 1;
-		}
-		break;
-	case WM_EV_CLEAR_TEXT:
-		{
-			CMVEventInfotext event(CMVEventInfotext::EV_CLEAR_TEXT);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_CONTROL_DEL_MODE_EXHALVALVCAL:
-		{
-			CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_DEL_MODE_EXHALVALVCAL);
-			getModel()->triggerEvent(&eventCtrl);
-			return 1;
-		}
-		break;
-	case WM_VOLUMEGARANTY_ON:
-		{
-			theApp.getLog()->WriteLine(_T("***VOLUMEGARANTY_ON"));
-
-			WORD iR=getModel()->getDATAHANDLER()->getAVGMessureDataResistance();
-			WORD iC=getModel()->getDATAHANDLER()->getAVGMessureDataCompliance();
-			double iTau=(((double)iC/100)*((double)iR/10))/1000;
-
-			CString szTAU=_T("");
-			szTAU.Format(_T("Tau: %0.2f"), CTlsFloat::Round(((double)iTau), 2));
-			theApp.getLog()->WriteLine(szTAU);
-
-			bool bLimitChanged=false;
-			
-
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-				//PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
-				bLimitChanged=true;
-			}
-			else if(getModel()->getVMODEHANDLER()->getCurrentActiveMode()==VM_HFO)
-			{
-				//getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-				//PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
-				bLimitChanged=true;
-			}
-			//if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
-			//{
-			//	getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
-			//	//PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
-			//	bLimitChanged=true;
-			//}
-			if(bLimitChanged)
-			{
-				PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
-			}
-			getModel()->getALARMHANDLER()->setAutoSilent();
-
-			CMVEventUI event(CMVEventUI::EV_VOLUMEGARANT_ON);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_VOLUMEGARANTY_OFF:
-		{
-			theApp.getLog()->WriteLine(_T("***VOLUMEGARANTY_OFF"));
-			bool bLimitChanged=false;
-			if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-				bLimitChanged=true;
-			}
-			else if(getModel()->getVMODEHANDLER()->getCurrentActiveMode()==VM_HFO)
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-				bLimitChanged=true;
-			}
-			
-			if(bLimitChanged)
-			{
-				PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
-			}
-			getModel()->getALARMHANDLER()->setAutoSilent();
-
-			CMVEventUI event(CMVEventUI::EV_VOLUMEGARANT_OFF);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_VOLUMEGARANTY_PRESET_ON:
-		{
-			CMVEventUI event(CMVEventUI::EV_VOLUMEGARANT_PRESET_ON);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_VOLUMEGARANTY_PRESET_OFF:
-		{
-			CMVEventUI event(CMVEventUI::EV_VOLUMEGARANT_PRESET_OFF);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_VOLUMEGARANTY_PARA_ENABLED:
-		{
-			if(getModel()->getCONFIG()->CurModeIsPresetMode()==true)
-			{
-				CMVEventUI event(CMVEventUI::EV_PARABN_VOLUMEGARANT_PRESET_SELECTED_ON);
-				getModel()->triggerEvent(&event);
-			}
-			else
-			{
-				CMVEventUI event(CMVEventUI::EV_PARABN_VOLUMEGARANT_SELECTED_ON);
-				getModel()->triggerEvent(&event);
-			}
-			return 1;
-		}
-		break;
-	case WM_VOLUMEGARANTY_PARA_AUTODISABLED:
-		{
-			theApp.getLog()->WriteLine(_T("VGARANTY_AUTODISABLED"));
-			CMVEventUI event(CMVEventUI::EV_PARABN_VOLUMEGARANT_AUTO_OFF);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_VOLUMEGARANTY_PARA_AUTOENABLED:
-		{
-			theApp.getLog()->WriteLine(_T("VGARANTY_AUTOENABLED"));
-			CMVEventUI event(CMVEventUI::EV_PARABN_VOLUMEGARANT_AUTO_ON);
-			getModel()->triggerEvent(&event);
-
-			//getModel()->getVIEWHANDLER()->redrawNebulizer();
-			return 1;
-		}
-		break;
-	case WM_VLIMIT_PARA_AUTODISABLED:
-		{
-			theApp.getLog()->WriteLine(_T("VLIMIT_AUTODISABLED"));
-			CMVEventUI event(CMVEventUI::EV_PARABN_VLIMIT_AUTO_OFF);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_VLIMIT_PARA_AUTOENABLED:
-		{
-			theApp.getLog()->WriteLine(_T("VLIMIT_AUTOENABLED"));
-			CMVEventUI event(CMVEventUI::EV_PARABN_VLIMIT_AUTO_ON);
-			getModel()->triggerEvent(&event);
-
-			//getModel()->getVIEWHANDLER()->redrawNebulizer();
-			return 1;
-		}
-		break;
-	case WM_VOLUMEGARANTY_PARA_DISABLED:
-		{
-			DEBUGMSG(TRUE, (TEXT("WM_VOLUMEGARANTY_PARA_DISABLED\r\n")));
-			if(getModel()->getCONFIG()->CurModeIsPresetMode()==true)
-			{
-				CMVEventUI event(CMVEventUI::EV_PARABN_VOLUMEGARANT_PRESET_SELECTED_OFF);
-				getModel()->triggerEvent(&event);
-			}
-			else
-			{
-				CMVEventUI event(CMVEventUI::EV_PARABN_VOLUMEGARANT_SELECTED_OFF);
-				getModel()->triggerEvent(&event);
-			}
-			return 1;
-		}
-		break;
-	case WM_EXSPIRATION:
-		{
-			if(!m_bExit)
-				getModel()->NotifyExspirationStart();
-			return 1;
-		}
-		break;
-	case WM_NEWMONITORDATA:
-		{
-			/*if(getModel()->getDATAHANDLER()->getFOTseqRunning())
-			{
-				getModel()->getDATAHANDLER()->checkFOTvalidMeasurementData();
-			}*/
-			if(!m_bExit)
-				getModel()->NotifyMonitorData();
-
-			
-			if(getModel()->getAcuLink()!=NULL)
-			{
-				getModel()->getAcuLink()->sendMeasurementData();
-			}
-			
-			return 1;
-		}
-		break;
-	case WM_PSV_APNOE:
-		{
-			getModel()->setPSVapnoe(true);
-			return 1;
-		}
-		break;
-	case WM_PSV_APNOE_END:
-		{
-			getModel()->setPSVapnoe(false);
-			return 1;
-		}
-		break;
-	case WM_TRIGGERED_BREATH:
-		{
-			getModel()->getVIEWHANDLER()->SetTriggeredBreath();
-
-			if(getModel()->getDATAHANDLER()->isPSVapnoe()==true)
-			{
-				getModel()->setPSVapnoe(false);
-			}
-
-			return 1;
-		}
-		break;
-	case WM_NEW_BREATH:
-		{
-			if(getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
-			{
-				getModel()->getDATAHANDLER()->sendMessureDataVolumeCorrection();
-			}
-
-			return 1;
-		}
-		break;
-	case WM_CHECK_AUTOFLOW:
-		{
-			BYTE iVal=getModel()->getSPI()->Read_AUTOFLOW_CORR();
-			
-			if(iVal>255)
-				iVal=0;
-
-			//Wert an STEUER-PIC weiterleiten
-			getModel()->getSERIAL()->Send_AUTOFLOW_CORR(iVal);
-
-			return 1;
-		}
-		break;
-	case WM_DEL_BACKUP:
-		{
-			if(m_bBackup==true)
-			{
-				DEBUGMSG(TRUE, (TEXT("WM_DEL_BACKUP\r\n")));
-				m_bBackup=false;
-				getModel()->getVIEWHANDLER()->SetCPAPBackup(false);
-			}
-
-			return 1;
-		}
-		break;
-	case WM_NEW_MECHATZ:
-		{
-			if(	getModel()->getCONFIG()->GetCurMode()==VM_CPAP
-				||
-				(getModel()->getCONFIG()->CurModeIsPresetMode() && getModel()->getCONFIG()->GetPrevMode()==VM_CPAP))
-			{
-				if(getModel()->isMANBREATHrunning()==false && getModel()->getDATAHANDLER()->PARADATA()->GetBackupPara()!=0)
-				{
-					if(m_bBackup==false)
+					if(getModel()->getPRICOThread()->isPRICOrunning())
 					{
-						DEBUGMSG(TRUE, (TEXT("SetCPAPBackup\r\n")));
-						m_bBackup=true;
-						getModel()->getVIEWHANDLER()->SetCPAPBackup(true);
+						getModel()->getPRICOThread()->setAlarmDisabled();
+						getModel()->getDATAHANDLER()->setPRICOState(false);
 					}
-					if(getModel()->getCONFIG()->GetPlayBackupSound())
-						getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				}*/
+
+				getModel()->getALARMHANDLER()->setAlarm(AL_Sens_SPO2_CHECKSENSOR);
+				return 1;
+			}
+			break;
+		/*case WM_CO2_STATE_CHANGED:
+			{
+				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_CO2STATE_CHANGED);
+				getModel()->Trigger(&eventCtrl);
+			}
+			break;*/
+		case WM_SETALARM_CO2_MODULE_NOTCONNECTED:
+			{
+				KillTimer(CO2PUMPTIMER);
+				m_bShowCO2PumpOnMsg=true;
+				
+				if(getModel()->getDATAHANDLER()->getRemainCO2PumpTime()!=0)
+				{
+					getModel()->getDATAHANDLER()->setRemainCO2PumpTime(0);
+					getModel()->getVIEWHANDLER()->UpdateCO2InfoData(false);
 				}
+				//m_ullRemainCO2PumpTime=0;
+				getModel()->getALARMHANDLER()->setAlarm(AL_Sens_CO2_MODULE_NOTCONNECTED);
+				return 1;
 			}
-			return 1;
-		}
-		break;
-	case WM_GET_BLENDERVERSION:
-		{
-			getModel()->getDATAHANDLER()->SetBlenderPIC_Version(getModel()->getSERIAL()->GetBLENDER_VERSION());
-		}
-		break;
-	case WM_CHECK_ALARMS:
-		{
-			//checkhere
-			getModel()->getALARMHANDLER()->CheckPRICOalarms();//rku AUTOPRICO
-			getModel()->getALARMHANDLER()->CheckAlarmStateBytes();
-			getModel()->getALARMHANDLER()->CheckFlowSensorState();
-			return 1;
-		}
-		break;
-	case WM_CHECK_DATE:
-		{
-			if(theApp.getLog()->CheckDate()) 
+			break;
+		case WM_SETALARM_CO2_FILTERLINE_NOTCONNECTED:
 			{
-				getModel()->isMaintenanceNeeded();
+				KillTimer(CO2PUMPTIMER);
+				m_bShowCO2PumpOnMsg=true;
+				
+				if(getModel()->getDATAHANDLER()->getRemainCO2PumpTime()!=0)
+				{
+					getModel()->getDATAHANDLER()->setRemainCO2PumpTime(0);
+					getModel()->getVIEWHANDLER()->UpdateCO2InfoData(false);
+				}
+				//m_ullRemainCO2PumpTime=0;
+				getModel()->getALARMHANDLER()->setAlarm(AL_Sens_CO2_FILTERLINE_NOTCONNECTED);
+				return 1;
 			}
-			getModel()->getALARMHANDLER()->checkLogAlarmDate();
-			//getModel()->getDATAHANDLER()->checkDemoLicense();
-		}
-		break;
-	/*case WM_LICENSING_CHANGED:
-		{
-
-		}
-		break;*/
-	case WM_CHECK_LIMITS:
-		{
-			getModel()->getDATAHANDLER()->checkLimits();
-			return 1;
-		}
-		break;
-	case WM_CHECK_SERIAL:
-		{
-			checkSERIAL();
-		}
-		break;
-	case WM_AUTOLIMITTIMER:
-		{
-			eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
-
-			if(m_eVentModeCalcStarted!=eActiveVentMode)
+			break;
+		case WM_SETALARM_CO2_CHECKSAMPLINGLINE:
 			{
-				getModel()->getALARMHANDLER()->SetAlimitStateCalculated();
+				KillTimer(CO2PUMPTIMER);
+				m_bShowCO2PumpOnMsg=true;
+				//m_ullRemainCO2PumpTime=0;
+				
+				getModel()->getDATAHANDLER()->setRemainCO2PumpTime(0);
+				getModel()->getVIEWHANDLER()->UpdateCO2InfoData(false);
+
+
+				getModel()->getALARMHANDLER()->setAlarm(AL_Sens_CO2_CHECKSAMPLINGLINE);
+				return 1;
 			}
-			else
+			break;
+		case WM_SETALARM_CO2_CHECKAIRWAYADAPTER:
 			{
-				if(getModel()->getALARMHANDLER()->getAlimitState_MVmaxLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitMVmax();
+				KillTimer(CO2PUMPTIMER);
+				m_bShowCO2PumpOnMsg=true;
+				//m_ullRemainCO2PumpTime=0;
+				
+				getModel()->getDATAHANDLER()->setRemainCO2PumpTime(0);
+				getModel()->getVIEWHANDLER()->UpdateCO2InfoData(false);
 
-				if(getModel()->getALARMHANDLER()->getAlimitState_MVminLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitMVmin();
-
-				if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-
-				if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
-
-				if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
-
-				if(getModel()->getALARMHANDLER()->getAlimitState_BPMmaxLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitBPMmax();
-
-				if(getModel()->getALARMHANDLER()->getAlimitState_LeakmaxLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitLeakmax();
-
-				if(getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitApnoe();
-
-				if(getModel()->getALARMHANDLER()->getAlimitState_DCO2maxLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitDCO2max();
-
-				if(getModel()->getALARMHANDLER()->getAlimitState_DCO2minLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitDCO2min();
-
-				if(getModel()->getALARMHANDLER()->getAlimitState_ETCO2maxLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitETCO2max();
-
-				if(getModel()->getALARMHANDLER()->getAlimitState_ETCO2minLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitETCO2min();
-
-				if(getModel()->getALARMHANDLER()->getAlimitState_FICO2maxLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitFICO2max();
-
-				if(getModel()->getALARMHANDLER()->getAlimitState_FICO2minLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitFICO2min();
-
-				if(getModel()->getALARMHANDLER()->getAlimitState_SPO2maxLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitSPO2max();
-
-				if(getModel()->getALARMHANDLER()->getAlimitState_SPO2minLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitSPO2min();
-
-				if(getModel()->getALARMHANDLER()->getAlimitState_PulseRatemaxLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPulseRatemax();
-
-				if(getModel()->getALARMHANDLER()->getAlimitState_PulseRateminLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPulseRatemin();
-
-				if(getModel()->getALARMHANDLER()->getAlimitState_SPO2_PIminLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitSPO2_PImin();
-
-				if(getModel()->getALARMHANDLER()->getAlimitState_SPO2_SIQminLimit()==AL_CALC)
-					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitSPO2_SIQmin();
-
-				getModel()->getALARMHANDLER()->SetAlimitStateCalculated();
+				getModel()->getALARMHANDLER()->setAlarm(AL_Sens_CO2_CHECKAIRWAYADAPTER);
+				return 1;
 			}
-			PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
-
-			return 1;
-		}
-		break;
-	case WM_HOMETIMER:
-		{
-			CMVEventControl event(CMVEventControl::EV_CONTROL_SETLASTVENTMODE);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_O2FLUSH:
-		{
-			if(0==getModel()->getDATAHANDLER()->GetCurO2FlushTime())
+			break;
+		case WM_SETALARM_CO2_SENSORFAULTY:
 			{
-				if(true==getModel()->isO2FlushActive())
+				KillTimer(CO2PUMPTIMER);
+				m_bShowCO2PumpOnMsg=true;
+				//m_ullRemainCO2PumpTime=0;
+				
+				getModel()->getDATAHANDLER()->setRemainCO2PumpTime(0);
+				getModel()->getVIEWHANDLER()->UpdateCO2InfoData(false);
+
+				getModel()->getALARMHANDLER()->setAlarm(AL_Sens_CO2_SENSORFAULTY);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_MVmax:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_MVmax);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_MVmin:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_MVmin);
+				return 1;
+			}
+			break;
+		//case WM_SETALARM_PRICO_SIQ:
+		//	{
+		//		//if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
+		//		{
+		//			//if(getModel()->getPRICOThread()->isPRICOrunning())
+		//			{
+		//				getModel()->getPRICOThread()->setAlarmDisabled();
+		//				getModel()->getDATAHANDLER()->setPRICOState(false);
+
+		//				//getModel()->getALARMHANDLER()->setAlarm(AL_PRICO_SIQvalue);
+		//			}
+		//		}
+
+		//		
+		//		return 1;
+		//	}
+		//	break;
+		/*case WM_DELALARM_PRICO_SIQ:
+			{
+				getModel()->getALARMHANDLER()->setStateOfAlarm(AL_PRICO_SIQvalue,AS_NONE);
+				return 1;
+			}
+			break;*/
+		case WM_SETALARM_PRICO_FiO2outOfRange:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_Sens_PRICO_FiO2outOfRange);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_PRICO_FiO2max:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_PRICO_FiO2max);
+
+				int iFiO2=(int)CTlsFloat::Round(((double)getModel()->getDATAHANDLER()->getAppliedFiO2para())/10, 0);
+				CString sz=_T("");
+				sz.Format(_T("*** PRICO: FiO2 at max target: %d"), iFiO2);
+				theApp.getLog()->WriteLine(sz);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_PRICO_FiO2min:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_PRICO_FiO2min);
+
+				int iFiO2=(int)CTlsFloat::Round(((double)getModel()->getDATAHANDLER()->getAppliedFiO2para())/10, 0);
+				CString sz=_T("");
+				sz.Format(_T("*** PRICO: Lower minimum FiO2 %d"), iFiO2);
+				theApp.getLog()->WriteLine(sz);
+				return 1;
+			}
+			break;
+		case WM_EV_TIMETEXT_PRICO_LOWFIO2:
+			{
+				//MVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("Lower minimum FiO2"), 10000);
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_FIO2_LOWMIN), 10000);
+				getModel()->triggerEvent(&event);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				Sleep(300);
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_PIPmax:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_PIPmax);
+				return 1;
+			}
+			break;
+		case WM_DELALARM_PIPmax:
+			{
+				getModel()->getALARMHANDLER()->deleteAlarm(AL_PatAl_PIPmax);
+				return 1;
+			}
+			break;
+		case WM_SetAlarm_PminLow:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_PEEPminLow);
+				return 1;
+			}
+			break;
+		case WM_SETSIGNALEDALARM_Pmin:
+			{
+				getModel()->getALARMHANDLER()->setStateOfAlarm(AL_PatAl_PEEPminLow,AS_SIGNALED);
+				return 1;
+			}
+			break;
+		case WM_SetAlarm_PminHigh:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_PEEPminHigh);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_BPMmax:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_BPMmax);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_Leakmax:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_Leakmax);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_Apnoe:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_Apnoe);
+
+				if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE && getModel()->getETCO2()!=NULL)
+				{
+					getModel()->getETCO2()->set_restartBreathAlgorithm();
+				}
+				return 1;
+			}
+			break;
+		case WM_SETALARM_DCO2max:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_DCO2max);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_DCO2min:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_DCO2min);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_Vlimitted:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_SysLimit_Vlimitted);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_Vgaranty:
+			{
+				getModel()->getDATAHANDLER()->setStatus2(getModel()->getSPI()->Read_STATUS_2());
+
+				getModel()->getALARMHANDLER()->setAlarm(AL_SysLimit_Vgaranty);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_Accu_POWER:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_Accu_POWER);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_Accu_60:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_Accu_60);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_Accu_30:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_Accu_30);
+				return 1;
+			}
+			break;
+		case WM_SETALARM_Accu_15:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_Accu_15);
+				//getModel()->getALARMHANDLER()->SetAlarm_Accu_15(_T(""));
+				return 1;
+			}
+			break;
+		//case WM_CHECK_SPI:
+		//	{
+		//		if(getModel()->getSPI()->Check_ALIVE_BYTE()==FALSE)
+		//		{
+		//			getModel()->SetSPIavailability(FALSE);
+		//			/*getModel()->getDATAHANDLER()->SetSPIErrorCode(ERRC_SPI_ALIVE);
+		//			getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_SPI);*/
+		//			//getModel()->getALARMHANDLER()->SetAlarm_IF_SPI(_T(""));
+
+		//			getModel()->SetCheckSPIavailability(TRUE);
+		//		}
+		//		//else
+		//		//{
+		//		//	getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_SPI);
+		//		//	//getModel()->getALARMHANDLER()->SetAlarm_IF_SPI(_T(""));
+		//		//}
+
+		//		return 1;
+		//	}
+		//	break;
+		case WM_SETALARM_PINSPNOTREACHED:
+			{
+				getModel()->getALARMHANDLER()->setAlarm(AL_SysLimit_Pinsp_NotReached);
+				return 1;
+			}
+			break;
+		case WM_FLOWSENSOR_CALIBRATED:
+			{
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+
+				getModel()->setVentilationRangeChanged(false);
+
+				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_FLOWSENSOR_CALIBRATED);
+				getModel()->triggerEvent(&eventCtrl);
+				return 1;
+			}
+			break;
+		case WM_SYSTEMSTATE_CHANGED:
+			{
+				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_SYSTEMSTATE_CHANGED);
+				getModel()->triggerEvent(&eventCtrl);
+				return 1;
+			}
+			break;
+		case WM_SET_EFLOWEQUIFLOW:
+			{
+				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_SET_EFLOWEQUIFLOW);
+				getModel()->triggerEvent(&eventCtrl);
+				return 1;
+			}
+			break;
+		case WM_SET_CO2PUMPTIMER:
+			{
+				KillTimer(CO2PUMPTIMER);
+				if(getModel()->getCONFIG()->GetTimePumpAutoOn()>0)
+				{
+					getModel()->getDATAHANDLER()->setRemainCO2PumpTime(getModel()->getCONFIG()->GetTimePumpAutoOn()*60000);
+					getModel()->getVIEWHANDLER()->UpdateCO2InfoData(true);
+
+					m_bShowCO2PumpOnMsg=true;
+
+					SetTimer(CO2PUMPTIMER, 1000, NULL);
+				}
+				return 1;
+			}
+			break;
+		case WM_KILL_CO2PUMPTIMER:
+			{
+				KillTimer(CO2PUMPTIMER);
+				m_bShowCO2PumpOnMsg=true;
+				
+				getModel()->getDATAHANDLER()->setRemainCO2PumpTime(0);
+				getModel()->getVIEWHANDLER()->UpdateCO2InfoData(false);
+
+				return 1;
+			}
+			break;
+		case WM_DISABLE_PATALARM_O2:
+			{
+				getModel()->DisablePatAlarmO2dependend();
+				SetTimer(DISABLE_PATALARM_O2_TIMER, 1000, NULL);
+				return 1;
+			}
+			break;
+		case WM_CONTROL_O2CALSTART:
+			{
+				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_O2CALSTART);
+				getModel()->triggerEvent(&eventCtrl);
+				return 1;
+			}
+			break;
+		case WM_CONTROL_O2CALSTOP:
+			{
+				CMVEventControl eventCtrl2(CMVEventControl::EV_CONTROL_O2CALSTOP);
+				getModel()->triggerEvent(&eventCtrl2);
+				return 1;
+			}
+			break;
+		case WM_PARABN_HFFREQREC:
+			{
+				CMVEventUI event(CMVEventUI::EV_PARABN_HFFREQREC);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_LUNGRECSTATE_CHANGED:
+			{
+				getModel()->getVIEWHANDLER()->lungRecStateChanged();
+				return 1;
+			}
+			break;
+		case WM_PARABN_HFAMPL:
+			{
+				CMVEventUI event(CMVEventUI::EV_PARABN_HFAMPL);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_PARABN_PINSP:
+			{
+				CMVEventUI event(CMVEventUI::EV_PARABN_PINSP);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_PARABN_PMAXVOLG:
+			{
+				CMVEventUI event(CMVEventUI::EV_PARABN_PMAXVOLG);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_PARABN_PEEP:
+			{
+				CMVEventUI event(CMVEventUI::EV_PARABN_PEEP);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_PARABN_PPSV:
+			{
+				CMVEventUI event(CMVEventUI::EV_PARABN_PPSV);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_PARABN_CPAP:
+			{
+				CMVEventUI event(CMVEventUI::EV_PARABN_CPAP);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_PARABN_PMAN:
+			{
+				CMVEventUI event(CMVEventUI::EV_PARABN_PMAN);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_PARABN_PDUO:
+			{
+				CMVEventUI event(CMVEventUI::EV_PARABN_PDUO);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_PARABN_PMITT:
+			{
+				CMVEventUI event(CMVEventUI::EV_PARABN_PMITT);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_PARABN_IERATIO:
+			{
+				CMVEventUI event(CMVEventUI::EV_PARABN_IERATIO);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_PARABN_HFFREQ:
+			{
+				CMVEventUI event(CMVEventUI::EV_PARABN_HFFREQ);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_PARABN_VGARANT:
+			{
+				CMVEventUI event(CMVEventUI::EV_PARABN_VGARANT);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_PARABN_VLIMIT:
+			{
+				CMVEventUI event(CMVEventUI::EV_PARABN_VLIMIT);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_PARABN_FOT:
+			{
+				CMVEventUI event(CMVEventUI::EV_PARABN_FOT);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_PARADATA_CHANGED:
+			{
+				getModel()->getVIEWHANDLER()->paraDataChanged();
+				return 1;
+			}
+			break;
+		case WM_ITIME_CHANGED:
+			{
+				getModel()->getVIEWHANDLER()->ITIMEChanged();
+				return 1;
+			}
+			break;
+		case WM_ETIME_CHANGED:
+			{
+				getModel()->getVIEWHANDLER()->ETIMEChanged();
+				return 1;
+			}
+			break;
+		case WM_BPM_CHANGED:
+			{
+				getModel()->getVIEWHANDLER()->BPMChanged();
+				return 1;
+			}
+			break;
+		case WM_OXICAL_CANCEL:
+			{
+				m_bCancelOxiCal=true;
+				return 1;
+			}
+			break;
+		case WM_OXICAL_START21:
+			{
+				m_bO2Sensor21manual=true;
+				eventOxyCal.SetEvent();
+				return 1;
+			}
+			break;
+		case WM_OXICAL_START100:
+			{
+				m_bO2Sensor100manual=true;
+				eventOxyCal.SetEvent();
+				return 1;
+			}
+			break;
+		case WM_DELETE_TRENDS:
+			{
+				
+				//TREND
+				if(getModel()->getDATAHANDLER()->isTRENDLicenseAvailable())
+					getModel()->getDATAHANDLER()->DeleteAllTrendData();
+				return 1;
+			}
+			break;
+		case WM_SET_AUTOSCREENLOG_TIMER:
+			{
+				if(		getModel()->getCONFIG()->IsAutoScreenlockActive()
+					&&	isSafeTickCountDelayExpired(m_dwLastAutoScreenTimer, 1000))
+				{
+					eAutoScreenlock time=getModel()->getCONFIG()->GetAutoScreenlockTime();
+					m_dwLastAutoScreenTimer=GetTickCount();
+
+					SetTimer(AUTOSCREENLOCKTIMER, (UINT)time*1000, NULL);
+				}
+				return 1;
+			}
+			break;
+		case WM_KILL_AUTOSCREENLOG_TIMER:
+			{
+				KillTimer(AUTOSCREENLOCKTIMER);
+				return 1;
+			}
+			break;
+		case WM_PIF_ALARM1:
+			{
+				getModel()->getSOUND()->SetPIFSound(PIF_ALARM1);
+				return 1;
+			}
+			break;
+		case WM_PIF_ALARM2:
+			{
+				getModel()->getSOUND()->SetPIFSound(PIF_ALARM2);
+				return 1;
+			}
+			break;
+		case WM_PIF_ALARM3:
+			{
+				getModel()->getSOUND()->SetPIFSound(PIF_ALARM3);
+				return 1;
+			}
+			break;
+		case WM_PIF_SIGNAL:
+			{
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				return 1;
+			}
+			break;
+		case WM_PIF_NONE:
+			{
+				getModel()->getSOUND()->SetPIFSound(PIF_NONE);
+				return 1;
+			}
+			break;
+		case WM_PIF_DOUBLESIGNAL:
+			{
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				Sleep(250);
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				return 1;
+			}
+			break;
+		case WM_SCREENFREE:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_SCREENFREE);
+				getModel()->triggerEvent(&event);
+
+				if(getModel()->getCONFIG()->IsAutoScreenlockActive())
+				{
+					PostMessage(WM_SET_AUTOSCREENLOG_TIMER);
+				}
+				else
+				{
+					PostMessage(WM_KILL_AUTOSCREENLOG_TIMER);
+				}
+
+				int iID=0;
+
+				CWnd* pFocWnd=CWnd::GetFocus();
+				if(pFocWnd==0)
+				{
+				}
+				else
+				{
+					iID=pFocWnd->GetDlgCtrlID();
+
+					if(iID==0)
+					{
+						getModel()->getVIEWHANDLER()->SetFocusToPrimaryView();
+					}
+				}
+				return 1;
+			}
+			break;
+		case WM_O2FLUSH_CHANGED:
+			{
+				getModel()->getVIEWHANDLER()->O2FlushChanged();
+
+				if(0==getModel()->getDATAHANDLER()->GetCurO2FlushTime() && true==getModel()->isO2FlushActive())
 				{
 					getModel()->deactivateO2Flush();
 					m_iO2FlushCount=getModel()->getDATAHANDLER()->GetCurO2FlushTime();
@@ -4699,96 +3979,837 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 					getModel()->Send_PARA_OXY_RATIO(getModel()->getDATAHANDLER()->GetCurrentO2Para(),true,true);
 				}
+				return 1;
+			}
+			break;
+		case WM_PMEANREC_CHANGED:
+			{
+				getModel()->getVIEWHANDLER()->HFPMEANRECFlushChanged(wParam);
+				return 1;
+			}
+			break;
+		/*case WM_PARABUTTON_TURNEDOWN:
+			{
+				getModel()->getVIEWHANDLER()->ParaButtonTurnDown(wParam, lParam);
+				return 1;
+			}
+			break;*/
+		case WM_STARTUP:
+			{
+				getModel()->getVIEWHANDLER()->Init();
+				return 1;
+			}
+			break;
+		case WM_RELOAD_CONFIG_ERROR:
+			{
+				CStringW sData = _T("ERROR: ");
+				sData += getModel()->GetLanguageString(IDS_TXT_CONFIGLOADED);
+				CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  sData, 3000);
+				getModel()->triggerEvent(&event2);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+
+				Sleep(2000);
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_LANGUAGE_CHANGED);
+
+				return 1;
+			}
+			break;
+		case WM_RELOAD_CONFIG:
+			{
+				CMVEventUI event(CMVEventUI::EV_RELOAD_CONFIG);
+				getModel()->triggerEvent(&event);
+
+				/*CStringW sData = getModel()->GetLanguageString(IDS_TXT_CONFIGLOADED);
+				CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  sData, 3000);
+				getModel()->triggerEvent(&event2);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+
+				Sleep(2000);
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_LANGUAGE_CHANGED);*/
+
+				return 1;
+			}
+			break;
+		case WM_VLIMIT_ENABLED:
+			{
+				CMVEventUI event(CMVEventUI::EV_PARABN_VLIMIT_ENABLED);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_VLIMIT_DISABLED:
+			{
+				CMVEventUI event(CMVEventUI::EV_PARABN_VLIMIT_DISABLED);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		/*case WM_CALC_AUTOALARMLIMITS_PIPLOW:
+			{
+				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
+			}
+			break;*/
+		case WM_CALCULATE_AUTOALARMLIMITS:
+			{
+				if(getModel()->getALARMHANDLER()->getAlimitState_MVmaxLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitMVmax();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_MVminLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitMVmin();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_BPMmaxLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitBPMmax();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_LeakmaxLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitLeakmax();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitApnoe();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_DCO2maxLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitDCO2max();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_DCO2minLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitDCO2min();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_ETCO2maxLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitETCO2max();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_ETCO2minLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitETCO2min();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_FICO2maxLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitFICO2max();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_FICO2minLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitFICO2min();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_SPO2maxLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitSPO2max();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_SPO2minLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitSPO2min();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_PulseRatemaxLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPulseRatemax();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_PulseRateminLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPulseRatemin();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_SPO2_PIminLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitSPO2_PImin();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_SPO2_SIQminLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitSPO2_SIQmin();
+
+				PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
+				return 1;
+			}
+			break;
+		case WM_SCALE_LIMIT:
+			{
+				CStringW sData = getModel()->GetLanguageString(IDS_TXT_SCALELIMIT);
+				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
+				getModel()->triggerEvent(&event);
+
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				return 1;
+			}
+			break;
+		//case WM_SCREENSHOT:
+		//	{
+		//		//SendScreenShot();
+		//		SaveScreenShot();
+		//		return 1;
+		//	}
+		//	break;
+		case WM_DELAY_AUTOOXYCAL:
+			{
+				m_bDelayAutoOxyCal=false;
+				return 1;
+			}
+			break;
+		case WM_START_AUTOOXYCAL:
+			{
+	#ifndef SIMULATION_ENTREK //rkuNEWFIX
+				StartOxyCalThread();
+	#endif
+				return 1;
+			}
+			break;
+		case WM_START_TRENDRECORD:
+			{
+				m_bStartTrend=true;
+				return 1;
+			}
+			break;
+		case WM_MENUMODE:
+			{
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_MENU);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_SERVICEMODE:
+			{
+				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_SERVICE);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_SET_SERVICEMODE:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_SET_SERVICE_MODE);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_DEL_SERVICEMODE:
+			{
+				CMVEventUI event(CMVEventUI::EV_BN_DEL_SERVICE_MODE);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_SET_GRAPHCURSOR:
+			{
+				CMVEventUI event(CMVEventUI::EV_GRAPH_SETCURSOR,(int)wParam);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_DEL_GRAPHCURSOR:
+			{
+				CMVEventUI event(CMVEventUI::EV_GRAPH_DELCURSOR);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_STOPDEL_TRENDDATA:
+			{
+				if(m_bDoDelTrendThread)
+				{
+					StopDelTrendThread();
+				}
+				getModel()->getDATAHANDLER()->SetDelTrendThread(false);//rkuNEWFIX
+				return 1;
+			}
+			break;
+		case WM_DEL_TRENDDATA:
+			{
+				DEBUGMSG(TRUE, (TEXT("WM_DEL_TRENDDATA\r\n")));
+				CString sPathOld=_T("");
+				CString szPath=_T("\\sdcard\\");
+				if(CTlsFile::Exists(szPath)==false)
+				{
+					szPath=_T("\\FFSDISK\\");
+					sPathOld = szPath+IDS_OLDTRD_FOLDER;
+				}
+				else
+				{
+					sPathOld = szPath+IDS_OLDTRD_FOLDER;
+				}
+
+				if(CTlsFile::Exists(sPathOld)==true)
+				{
+					getModel()->getDATAHANDLER()->SetDelTrendThread(true);
+					StartDelTrendThread();
+					eventDelTrend.SetEvent();
+				}
+
+				return 1;
+			}
+			break;
+		case WM_STARTUP_ACULINK:
+			{
+				startAcuLink();
+				return 1;
+			}
+			break;
+		case WM_STARTUP_SUCCESS:
+			{
+				SetTimer(WATCHDOGTIMER,5000,NULL);
+
+				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STARTUP_SUCCESS);
+				getModel()->triggerEvent(&eventCtrl);
+
+				getModel()->getDATAHANDLER()->CheckAkku(true);
+				return 1;
+			}
+			break;
+		case WM_ALARMSTATE_CHANGED:
+			{
+				//getModel()->getVIEWHANDLER()->checkAlarmState();
+
+				CMVEventAlarm event(CMVEventAlarm::EV_ALARMSTATE_CHANGED);
+				getModel()->triggerEvent(&event);
+				return 1;
 				
-				CStringW sData = getModel()->GetLanguageString(IDS_TXT_DISABLED); //IDS_PARA_O2+IDS_PARA_FLUSH
+			}
+			break;
+		case WM_TURNOFF_APNEA:
+			{
+				getModel()->getALARMHANDLER()->setAlimitState_ApnoeLimit(AL_OFF);
+				getModel()->getALARMHANDLER()->setAlimitApnoe(0);
+
+				CStringW sData = getModel()->GetLanguageString(IDS_TXT_TURNOFF_APNEA);
+				//CStringW sData = _T("!apnea alarm disabled!"); 
 				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 3000);
 				getModel()->triggerEvent(&event);
 				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
 
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
+				return 1;
+
+			}
+			break;
+		case WM_TURNOFF_TRIGGERNMODE:
+			{
+				getModel()->getDATAHANDLER()->SetTriggerNMODEParadata(MAXRANGE_TRIGGER_NMODE_OFF,true);
 				return 1;
 			}
-
-			//if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)//PRICO04
-			//{
-			//	if(getModel()->getPRICOThread()->isPRICOalgorithmRunning())
-			//	{
-			//		CStringW sData = _T("not possible while PRICO is running");
-			//		CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 3000);
-			//		getModel()->triggerEvent(&event);
-
-			//		getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-			//		return 1;
-			//	}
-			//}
-
-
-			KillTimer(O2FLUSHTIMER);
-
-			getModel()->DisablePatAlarmO2dependend();
-			PostMessage(WM_DISABLE_PATALARM_O2);
-
-			if(!getModel()->isO2FlushActive())
+			break;
+		/*case WM_TURNOFF_TRIGGERNMODE_AUTOENABLE:
 			{
-				//stop PRICO //PRICO04
-				if(getModel()->getPRICOThread())
-				{
-					if(getModel()->getPRICOThread()->isPRICOalgorithmRunning())
-					{
-						CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  getModel()->GetLanguageString(IDS_TXT_PRICOOFF), 3000);
-						getModel()->triggerEvent(&event2);
-						getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-						getModel()->getDATAHANDLER()->setPRICOoff();
-					}
+				getModel()->getDATAHANDLER()->SetNMODEtriggerAutoenableFlag(true);
+				getModel()->getDATAHANDLER()->SetTriggerNMODEParadata(0,true);
+				return 1;
+			}
+			break;*/
+		case WM_POWERSTATE_CHANGED:
+			{
+				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_POWERSTATE_CHANGED);
+				getModel()->triggerEvent(&eventCtrl);
+				return 1;
+			}
+			break;
+		case WM_EV_CLEAR_TEXT:
+			{
+				CMVEventInfotext event(CMVEventInfotext::EV_CLEAR_TEXT);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_CONTROL_DEL_MODE_EXHALVALVCAL:
+			{
+				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_DEL_MODE_EXHALVALVCAL);
+				getModel()->triggerEvent(&eventCtrl);
+				return 1;
+			}
+			break;
+		case WM_VOLUMEGARANTY_ON:
+			{
+				theApp.getLog()->WriteLine(_T("***VOLUMEGARANTY_ON"));
 
-					if(getModel()->getALARMHANDLER()->isPRICOAutoTurnedOff())//rku AUTOPRICO
-					{
-						getModel()->getALARMHANDLER()->resetPRICOAutoTurnedOff();
-					}
+				WORD iR=getModel()->getDATAHANDLER()->getAVGMessureDataResistance();
+				WORD iC=getModel()->getDATAHANDLER()->getAVGMessureDataCompliance();
+				double iTau=(((double)iC/100)*((double)iR/10))/1000;
+
+				CString szTAU=_T("");
+				szTAU.Format(_T("Tau: %0.2f"), CTlsFloat::Round(((double)iTau), 2));
+				theApp.getLog()->WriteLine(szTAU);
+
+				bool bLimitChanged=false;
+				
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
+				{
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
+					//PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
+					bLimitChanged=true;
+				}
+				else if(getModel()->getVMODEHANDLER()->getCurrentActiveMode()==VM_HFO)
+				{
+					//getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
+					//PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
+					bLimitChanged=true;
+				}
+				//if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
+				//{
+				//	getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
+				//	//PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
+				//	bLimitChanged=true;
+				//}
+				if(bLimitChanged)
+				{
+					PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
+				}
+				getModel()->getALARMHANDLER()->setAutoSilent();
+
+				CMVEventUI event(CMVEventUI::EV_VOLUMEGARANT_ON);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_VOLUMEGARANTY_OFF:
+			{
+				theApp.getLog()->WriteLine(_T("***VOLUMEGARANTY_OFF"));
+				bool bLimitChanged=false;
+				if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
+				{
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
+					bLimitChanged=true;
+				}
+				else if(getModel()->getVMODEHANDLER()->getCurrentActiveMode()==VM_HFO)
+				{
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
+					bLimitChanged=true;
+				}
+				
+				if(bLimitChanged)
+				{
+					PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
+				}
+				getModel()->getALARMHANDLER()->setAutoSilent();
+
+				CMVEventUI event(CMVEventUI::EV_VOLUMEGARANT_OFF);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_VOLUMEGARANTY_PRESET_ON:
+			{
+				CMVEventUI event(CMVEventUI::EV_VOLUMEGARANT_PRESET_ON);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_VOLUMEGARANTY_PRESET_OFF:
+			{
+				CMVEventUI event(CMVEventUI::EV_VOLUMEGARANT_PRESET_OFF);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_VOLUMEGARANTY_PARA_ENABLED:
+			{
+				if(getModel()->getCONFIG()->CurModeIsPresetMode()==true)
+				{
+					CMVEventUI event(CMVEventUI::EV_PARABN_VOLUMEGARANT_PRESET_SELECTED_ON);
+					getModel()->triggerEvent(&event);
+				}
+				else
+				{
+					CMVEventUI event(CMVEventUI::EV_PARABN_VOLUMEGARANT_SELECTED_ON);
+					getModel()->triggerEvent(&event);
+				}
+				return 1;
+			}
+			break;
+		case WM_VOLUMEGARANTY_PARA_AUTODISABLED:
+			{
+				theApp.getLog()->WriteLine(_T("VGARANTY_AUTODISABLED"));
+				CMVEventUI event(CMVEventUI::EV_PARABN_VOLUMEGARANT_AUTO_OFF);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_VOLUMEGARANTY_PARA_AUTOENABLED:
+			{
+				theApp.getLog()->WriteLine(_T("VGARANTY_AUTOENABLED"));
+				CMVEventUI event(CMVEventUI::EV_PARABN_VOLUMEGARANT_AUTO_ON);
+				getModel()->triggerEvent(&event);
+
+				//getModel()->getVIEWHANDLER()->redrawNebulizer();
+				return 1;
+			}
+			break;
+		case WM_VLIMIT_PARA_AUTODISABLED:
+			{
+				theApp.getLog()->WriteLine(_T("VLIMIT_AUTODISABLED"));
+				CMVEventUI event(CMVEventUI::EV_PARABN_VLIMIT_AUTO_OFF);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_VLIMIT_PARA_AUTOENABLED:
+			{
+				theApp.getLog()->WriteLine(_T("VLIMIT_AUTOENABLED"));
+				CMVEventUI event(CMVEventUI::EV_PARABN_VLIMIT_AUTO_ON);
+				getModel()->triggerEvent(&event);
+
+				//getModel()->getVIEWHANDLER()->redrawNebulizer();
+				return 1;
+			}
+			break;
+		case WM_VOLUMEGARANTY_PARA_DISABLED:
+			{
+				DEBUGMSG(TRUE, (TEXT("WM_VOLUMEGARANTY_PARA_DISABLED\r\n")));
+				if(getModel()->getCONFIG()->CurModeIsPresetMode()==true)
+				{
+					CMVEventUI event(CMVEventUI::EV_PARABN_VOLUMEGARANT_PRESET_SELECTED_OFF);
+					getModel()->triggerEvent(&event);
+				}
+				else
+				{
+					CMVEventUI event(CMVEventUI::EV_PARABN_VOLUMEGARANT_SELECTED_OFF);
+					getModel()->triggerEvent(&event);
+				}
+				return 1;
+			}
+			break;
+		case WM_EXSPIRATION:
+			{
+				if(!m_bExit)
+					getModel()->NotifyExspirationStart();
+				return 1;
+			}
+			break;
+		case WM_NEWMONITORDATA:
+			{
+				/*if(getModel()->getDATAHANDLER()->getFOTseqRunning())
+				{
+					getModel()->getDATAHANDLER()->checkFOTvalidMeasurementData();
+				}*/
+				if(!m_bExit)
+					getModel()->NotifyMonitorData();
+
+				
+				if(getModel()->getAcuLink()!=NULL)
+				{
+					getModel()->getAcuLink()->sendMeasurementData();
+				}
+				
+				return 1;
+			}
+			break;
+		case WM_PSV_APNOE:
+			{
+				getModel()->setPSVapnoe(true);
+				return 1;
+			}
+			break;
+		case WM_PSV_APNOE_END:
+			{
+				getModel()->setPSVapnoe(false);
+				return 1;
+			}
+			break;
+		case WM_TRIGGERED_BREATH:
+			{
+				getModel()->getVIEWHANDLER()->SetTriggeredBreath();
+
+				if(getModel()->getDATAHANDLER()->isPSVapnoe()==true)
+				{
+					getModel()->setPSVapnoe(false);
 				}
 
-				getModel()->activateO2Flush();
-				m_iO2FlushCount=getModel()->getDATAHANDLER()->GetCurO2FlushTime();
-				SetTimer(O2FLUSHTIMER, 1000, NULL);
-
-				getModel()->Send_PARA_OXY_RATIO(getModel()->getDATAHANDLER()->GetCurrentO2FlushPara(),true,true);
+				return 1;
 			}
-			else
+			break;
+		case WM_NEW_BREATH:
 			{
-				getModel()->deactivateO2Flush();
-				m_iO2FlushCount=getModel()->getDATAHANDLER()->GetCurO2FlushTime();
-				getModel()->getVIEWHANDLER()->DrawO2FlushTime(m_iO2FlushCount);
-
-				//PRICO04
-				/*bool bPRICOrunning=false;
-				if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
+				if(getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
 				{
+					getModel()->getDATAHANDLER()->sendMessureDataVolumeCorrection();
+				}
+
+				return 1;
+			}
+			break;
+		case WM_CHECK_AUTOFLOW:
+			{
+				BYTE iVal=getModel()->getSPI()->Read_AUTOFLOW_CORR();
+				
+				if(iVal>255)
+					iVal=0;
+
+				//Wert an STEUER-PIC weiterleiten
+				getModel()->getSERIAL()->Send_AUTOFLOW_CORR(iVal);
+
+				return 1;
+			}
+			break;
+		case WM_DEL_BACKUP:
+			{
+				if(m_bBackup==true)
+				{
+					DEBUGMSG(TRUE, (TEXT("WM_DEL_BACKUP\r\n")));
+					m_bBackup=false;
+					getModel()->getVIEWHANDLER()->SetCPAPBackup(false);
+				}
+
+				return 1;
+			}
+			break;
+		case WM_NEW_MECHATZ:
+			{
+				if(	getModel()->getCONFIG()->GetCurMode()==VM_CPAP
+					||
+					(getModel()->getCONFIG()->CurModeIsPresetMode() && getModel()->getCONFIG()->GetPrevMode()==VM_CPAP))
+				{
+					if(getModel()->isMANBREATHrunning()==false && getModel()->getDATAHANDLER()->PARADATA()->GetBackupPara()!=0)
+					{
+						if(m_bBackup==false)
+						{
+							DEBUGMSG(TRUE, (TEXT("SetCPAPBackup\r\n")));
+							m_bBackup=true;
+							getModel()->getVIEWHANDLER()->SetCPAPBackup(true);
+						}
+						if(getModel()->getCONFIG()->GetPlayBackupSound())
+							getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+					}
+				}
+				return 1;
+			}
+			break;
+		case WM_GET_BLENDERVERSION:
+			{
+				getModel()->getDATAHANDLER()->SetBlenderPIC_Version(getModel()->getSERIAL()->GetBLENDER_VERSION());
+			}
+			break;
+		case WM_CHECK_ALARMS:
+			{
+				//checkhere
+				getModel()->getALARMHANDLER()->CheckPRICOalarms();//rku AUTOPRICO
+				getModel()->getALARMHANDLER()->CheckAlarmStateBytes();
+				getModel()->getALARMHANDLER()->CheckFlowSensorState();
+				return 1;
+			}
+			break;
+		case WM_CHECK_DATE:
+			{
+				if(theApp.getLog()->CheckDate()) 
+				{
+					getModel()->isMaintenanceNeeded();
+				}
+				getModel()->getALARMHANDLER()->checkLogAlarmDate();
+				//getModel()->getDATAHANDLER()->checkDemoLicense();
+			}
+			break;
+		/*case WM_LICENSING_CHANGED:
+			{
+
+			}
+			break;*/
+		case WM_CHECK_LIMITS:
+			{
+				getModel()->getDATAHANDLER()->checkLimits();
+				return 1;
+			}
+			break;
+		case WM_CHECK_SERIAL:
+			{
+				checkSERIAL();
+			}
+			break;
+		case WM_AUTOLIMITTIMER:
+			{
+				eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
+
+				if(m_eVentModeCalcStarted!=eActiveVentMode)
+				{
+					getModel()->getALARMHANDLER()->SetAlimitStateCalculated();
+				}
+				else
+				{
+					if(getModel()->getALARMHANDLER()->getAlimitState_MVmaxLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitMVmax();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_MVminLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitMVmin();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_BPMmaxLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitBPMmax();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_LeakmaxLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitLeakmax();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitApnoe();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_DCO2maxLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitDCO2max();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_DCO2minLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitDCO2min();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_ETCO2maxLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitETCO2max();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_ETCO2minLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitETCO2min();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_FICO2maxLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitFICO2max();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_FICO2minLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitFICO2min();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_SPO2maxLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitSPO2max();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_SPO2minLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitSPO2min();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_PulseRatemaxLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPulseRatemax();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_PulseRateminLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPulseRatemin();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_SPO2_PIminLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitSPO2_PImin();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_SPO2_SIQminLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitSPO2_SIQmin();
+
+					getModel()->getALARMHANDLER()->SetAlimitStateCalculated();
+				}
+				PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
+
+				return 1;
+			}
+			break;
+		case WM_HOMETIMER:
+			{
+				CMVEventControl event(CMVEventControl::EV_CONTROL_SETLASTVENTMODE);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_O2FLUSH:
+			{
+				if(0==getModel()->getDATAHANDLER()->GetCurO2FlushTime())
+				{
+					if(true==getModel()->isO2FlushActive())
+					{
+						getModel()->deactivateO2Flush();
+						m_iO2FlushCount=getModel()->getDATAHANDLER()->GetCurO2FlushTime();
+						getModel()->getVIEWHANDLER()->DrawO2FlushTime(m_iO2FlushCount);
+
+						getModel()->Send_PARA_OXY_RATIO(getModel()->getDATAHANDLER()->GetCurrentO2Para(),true,true);
+					}
 					
-					if(getModel()->getPRICOThread()->isPRICOalgorithmRunning())
+					CStringW sData = getModel()->GetLanguageString(IDS_TXT_DISABLED); //IDS_PARA_O2+IDS_PARA_FLUSH
+					CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 3000);
+					getModel()->triggerEvent(&event);
+					getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+
+					return 1;
+				}
+
+				//if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)//PRICO04
+				//{
+				//	if(getModel()->getPRICOThread()->isPRICOalgorithmRunning())
+				//	{
+				//		CStringW sData = _T("not possible while PRICO is running");
+				//		CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 3000);
+				//		getModel()->triggerEvent(&event);
+
+				//		getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				//		return 1;
+				//	}
+				//}
+
+
+				KillTimer(O2FLUSHTIMER);
+
+				getModel()->DisablePatAlarmO2dependend();
+				PostMessage(WM_DISABLE_PATALARM_O2);
+
+				if(!getModel()->isO2FlushActive())
+				{
+					//stop PRICO //PRICO04
+					if(getModel()->getPRICOThread())
 					{
-						bPRICOrunning=true;
+						if(getModel()->getPRICOThread()->isPRICOalgorithmRunning())
+						{
+							CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  getModel()->GetLanguageString(IDS_TXT_PRICOOFF), 3000);
+							getModel()->triggerEvent(&event2);
+							getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+							getModel()->getDATAHANDLER()->setPRICOoff();
+						}
+
+						if(getModel()->getALARMHANDLER()->isPRICOAutoTurnedOff())//rku AUTOPRICO
+						{
+							getModel()->getALARMHANDLER()->resetPRICOAutoTurnedOff();
+						}
+					}
+
+					getModel()->activateO2Flush();
+					m_iO2FlushCount=getModel()->getDATAHANDLER()->GetCurO2FlushTime();
+					SetTimer(O2FLUSHTIMER, 1000, NULL);
+
+					getModel()->Send_PARA_OXY_RATIO(getModel()->getDATAHANDLER()->GetCurrentO2FlushPara(),true,true);
+				}
+				else
+				{
+					getModel()->deactivateO2Flush();
+					m_iO2FlushCount=getModel()->getDATAHANDLER()->GetCurO2FlushTime();
+					getModel()->getVIEWHANDLER()->DrawO2FlushTime(m_iO2FlushCount);
+
+					//PRICO04
+					/*bool bPRICOrunning=false;
+					if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
+					{
+						
+						if(getModel()->getPRICOThread()->isPRICOalgorithmRunning())
+						{
+							bPRICOrunning=true;
+						}
+					}
+					if(bPRICOrunning)
+					{
+						getModel()->Send_PARA_OXY_RATIO(getModel()->getPRICOThread()->getCalculatedOxyValue(),true,true);
+					}
+					else*/
+					{
+						getModel()->Send_PARA_OXY_RATIO(getModel()->getDATAHANDLER()->GetCurrentO2Para(),true,true);
 					}
 				}
-				if(bPRICOrunning)
-				{
-					getModel()->Send_PARA_OXY_RATIO(getModel()->getPRICOThread()->getCalculatedOxyValue(),true,true);
-				}
-				else*/
-				{
-					getModel()->Send_PARA_OXY_RATIO(getModel()->getDATAHANDLER()->GetCurrentO2Para(),true,true);
-				}
+				return 1;
+				
 			}
-			return 1;
-			
-		}
-		break;
-	case WM_O2FLUSHTIMER:
-		{
-			if(m_iO2FlushCount>0)
+			break;
+		case WM_O2FLUSHTIMER:
 			{
-				m_iO2FlushCount--;
-				getModel()->getVIEWHANDLER()->DrawO2FlushTime(m_iO2FlushCount);
+				if(m_iO2FlushCount>0)
+				{
+					m_iO2FlushCount--;
+					getModel()->getVIEWHANDLER()->DrawO2FlushTime(m_iO2FlushCount);
+				}
+				else
+				{
+					getModel()->deactivateO2Flush();
+					KillTimer(O2FLUSHTIMER);
+					m_iO2FlushCount=getModel()->getDATAHANDLER()->GetCurO2FlushTime();
+					getModel()->getVIEWHANDLER()->DrawO2FlushTime(m_iO2FlushCount);
+
+					getModel()->Send_PARA_OXY_RATIO(getModel()->getDATAHANDLER()->GetCurrentO2Para(),true,true);
+
+					CStringW sData = getModel()->GetLanguageString(IDS_TXT_O2FLUSH_STOPPED);
+					CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
+					getModel()->triggerEvent(&event);
+
+					getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				}
+				return 1;
 			}
-			else
+			break;
+		case WM_STOP_O2FLUSH:
 			{
 				getModel()->deactivateO2Flush();
 				KillTimer(O2FLUSHTIMER);
@@ -4797,372 +4818,283 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 				getModel()->Send_PARA_OXY_RATIO(getModel()->getDATAHANDLER()->GetCurrentO2Para(),true,true);
 
-				CStringW sData = getModel()->GetLanguageString(IDS_TXT_O2FLUSH_STOPPED);
+				/*CStringW sData = getModel()->GetLanguageString(IDS_TXT_O2FLUSH_STOPPED);
 				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
 				getModel()->triggerEvent(&event);
 
-				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);*/
+				return 1;
 			}
-			return 1;
-		}
-		break;
-	case WM_STOP_O2FLUSH:
-		{
-			getModel()->deactivateO2Flush();
-			KillTimer(O2FLUSHTIMER);
-			m_iO2FlushCount=getModel()->getDATAHANDLER()->GetCurO2FlushTime();
-			getModel()->getVIEWHANDLER()->DrawO2FlushTime(m_iO2FlushCount);
-
-			getModel()->Send_PARA_OXY_RATIO(getModel()->getDATAHANDLER()->GetCurrentO2Para(),true,true);
-
-			/*CStringW sData = getModel()->GetLanguageString(IDS_TXT_O2FLUSH_STOPPED);
-			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT,  sData, 2000);
-			getModel()->triggerEvent(&event);
-
-			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);*/
-			return 1;
-		}
-		break;
-	case WM_COUNTERSTOPBREATHTIMER:
-		{
-			if(m_iCountDownStart>1)
+			break;
+		case WM_COUNTERSTOPBREATHTIMER:
 			{
-				m_iCountDownStart--;
-				getModel()->getVIEWHANDLER()->DrawCountDownStartTime(m_iCountDownStart);
-			}
-			else
-			{
-				KillTimer(COUNTSTOPBREATHTIMER);
-
-				getModel()->SetVentRunState(VENT_RUNNING);
-
-				getModel()->getVIEWHANDLER()->StopCountDownStartTime();
-				getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
-
-				m_iCountDownStart=0;
-				
-				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_VENTILATION);
-				getModel()->triggerEvent(&eventCtrl);
-			}
-			return 1;
-		}
-		break;
-	case WM_SERVICE_SILENT:
-		{
-			KillTimer(ALARMSILENTTIMER);
-
-			getModel()->StopCountDownAlarmSilent();
-			m_iCountDownAlarmSilent=0;
-			
-			CMVEventAlarm event(CMVEventAlarm::EV_ALARMSTATE_CHANGED);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_ALARMSILENTTIMER:
-		{
-			if(m_iCountDownAlarmSilent>0)
-			{
-				getModel()->DrawCountDownAlarmSilent(m_iCountDownAlarmSilent);
-				m_iCountDownAlarmSilent--;
-				getModel()->SetCountDownAlarmSilent(m_iCountDownAlarmSilent);
-			}
-			else
-			{
-				KillTimer(ALARMSILENTTIMER);
-
-				getModel()->StopCountDownAlarmSilent();
-				m_iCountDownAlarmSilent=0;
-				
-				getModel()->getALARMHANDLER()->setAlarmsilentActive();
-
-				CMVEventAlarm eventCtrl(CMVEventAlarm::EV_ALARM_REACTIVATED);
-				getModel()->triggerEvent(&eventCtrl);
-			}
-			return 1;
-		}
-		break;
-	/*case WM_ALARMSOUND:
-		{
-			SetTimer(ALARMSOUND,TIMEALARMSOUND,NULL);
-			return 1;
-		}
-		break;*/
-	case WM_MANUAL_ALARMSILENT_ON:
-		{
-			if(getModel()->GetVentRunState()==VENT_STOPPED)
-			{
-				KillTimer(ALARMSILENTTIMER);
-				getModel()->StopCountDownAlarmSilent();
-				m_iCountDownAlarmSilent=0;
-			}
-			else
-			{
-				KillTimer(ALARMSILENTTIMER);
-				m_iCountDownAlarmSilent=MANUALSILENT_TIME;
-				getModel()->SetCountDownAlarmSilent(m_iCountDownAlarmSilent);
-				PostMessage(WM_ALARMSILENTTIMER);
-				SetTimer(ALARMSILENTTIMER,TIMEALARMSILENT,NULL);
-			}
-			return 1;
-		}
-		break;
-	case WM_CALSILENT_ON:
-		{
-			if(getModel()->GetVentRunState()==VENT_STOPPED)
-			{
-				KillTimer(ALARMSILENTTIMER);
-				getModel()->StopCountDownAlarmSilent();
-				m_iCountDownAlarmSilent=0;
-			}
-			else
-			{
-				if(m_iCountDownAlarmSilent<STARTUPSILENT_TIME)
+				if(m_iCountDownStart>1)
 				{
-					m_iCountDownAlarmSilent=STARTUPSILENT_TIME;
+					m_iCountDownStart--;
+					getModel()->getVIEWHANDLER()->DrawCountDownStartTime(m_iCountDownStart);
+				}
+				else
+				{
+					KillTimer(COUNTSTOPBREATHTIMER);
+
+					getModel()->SetVentRunState(VENT_RUNNING);
+
+					getModel()->getVIEWHANDLER()->StopCountDownStartTime();
+					getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
+
+					m_iCountDownStart=0;
+					
+					CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_VENTILATION);
+					getModel()->triggerEvent(&eventCtrl);
+				}
+				return 1;
+			}
+			break;
+		case WM_SERVICE_SILENT:
+			{
+				KillTimer(ALARMSILENTTIMER);
+
+				getModel()->StopCountDownAlarmSilent();
+				m_iCountDownAlarmSilent=0;
+				
+				CMVEventAlarm event(CMVEventAlarm::EV_ALARMSTATE_CHANGED);
+				getModel()->triggerEvent(&event);
+				return 1;
+			}
+			break;
+		case WM_ALARMSILENTTIMER:
+			{
+				if(m_iCountDownAlarmSilent>0)
+				{
+					getModel()->DrawCountDownAlarmSilent(m_iCountDownAlarmSilent);
+					m_iCountDownAlarmSilent--;
+					getModel()->SetCountDownAlarmSilent(m_iCountDownAlarmSilent);
+				}
+				else
+				{
+					KillTimer(ALARMSILENTTIMER);
+
+					getModel()->StopCountDownAlarmSilent();
+					m_iCountDownAlarmSilent=0;
+					
+					getModel()->getALARMHANDLER()->setAlarmsilentActive();
+
+					CMVEventAlarm eventCtrl(CMVEventAlarm::EV_ALARM_REACTIVATED);
+					getModel()->triggerEvent(&eventCtrl);
+				}
+				return 1;
+			}
+			break;
+		/*case WM_ALARMSOUND:
+			{
+				SetTimer(ALARMSOUND,TIMEALARMSOUND,NULL);
+				return 1;
+			}
+			break;*/
+		case WM_MANUAL_ALARMSILENT_ON:
+			{
+				if(getModel()->GetVentRunState()==VENT_STOPPED)
+				{
+					KillTimer(ALARMSILENTTIMER);
+					getModel()->StopCountDownAlarmSilent();
+					m_iCountDownAlarmSilent=0;
+				}
+				else
+				{
+					KillTimer(ALARMSILENTTIMER);
+					m_iCountDownAlarmSilent=MANUALSILENT_TIME;
 					getModel()->SetCountDownAlarmSilent(m_iCountDownAlarmSilent);
 					PostMessage(WM_ALARMSILENTTIMER);
 					SetTimer(ALARMSILENTTIMER,TIMEALARMSILENT,NULL);
 				}
+				return 1;
 			}
-			return 1;
+			break;
+		case WM_CALSILENT_ON:
+			{
+				if(getModel()->GetVentRunState()==VENT_STOPPED)
+				{
+					KillTimer(ALARMSILENTTIMER);
+					getModel()->StopCountDownAlarmSilent();
+					m_iCountDownAlarmSilent=0;
+				}
+				else
+				{
+					if(m_iCountDownAlarmSilent<STARTUPSILENT_TIME)
+					{
+						m_iCountDownAlarmSilent=STARTUPSILENT_TIME;
+						getModel()->SetCountDownAlarmSilent(m_iCountDownAlarmSilent);
+						PostMessage(WM_ALARMSILENTTIMER);
+						SetTimer(ALARMSILENTTIMER,TIMEALARMSILENT,NULL);
+					}
+				}
+				return 1;
 
-		}
-		break;
-	case WM_SET_ACTIVEALARM_DELAY:
-		{
-			getModel()->setActiveAlarmDelay(true);
-			SetTimer(ACTIVEALARMTIMER,getModel()->getCONFIG()->getCurPatientAlarmDelay()*1000,NULL);
-			CString szTxt=_T("");
-			szTxt.Format(L"#ACTIVEALARMTIMER [%d]",getModel()->getCONFIG()->getCurPatientAlarmDelay());
-			theApp.getLog()->WriteLine(szTxt);
-			return 1;
-		}
-		break;
-	case WM_SET_STARTUPALARM_DELAY:
-		{
-			getModel()->setActiveAlarmDelay(true);
-			//SetTimer(ACTIVEALARMTIMER,10000,NULL);
-			SetTimer(ACTIVEALARMTIMER,120000,NULL);
-			return 1;
-		}
-		break;
-	case WM_MANUAL_ALARMSILENT_OFF:
-		{
-			KillTimer(ALARMSILENTTIMER);
-			getModel()->StopCountDownAlarmSilent();
-			m_iCountDownAlarmSilent=0;
-			return 1;
-		}
-		break;
-	case WM_AUTO_ALARMSILENT_ON:
-		{
-			if(getModel()->GetVentRunState()==VENT_STOPPED)
+			}
+			break;
+		case WM_SET_ACTIVEALARM_DELAY:
+			{
+				getModel()->setActiveAlarmDelay(true);
+				SetTimer(ACTIVEALARMTIMER,getModel()->getCONFIG()->getCurPatientAlarmDelay()*1000,NULL);
+				CString szTxt=_T("");
+				szTxt.Format(L"#ACTIVEALARMTIMER [%d]",getModel()->getCONFIG()->getCurPatientAlarmDelay());
+				theApp.getLog()->WriteLine(szTxt);
+				return 1;
+			}
+			break;
+		case WM_SET_STARTUPALARM_DELAY:
+			{
+				getModel()->setActiveAlarmDelay(true);
+				//SetTimer(ACTIVEALARMTIMER,10000,NULL);
+				SetTimer(ACTIVEALARMTIMER,120000,NULL);
+				return 1;
+			}
+			break;
+		case WM_MANUAL_ALARMSILENT_OFF:
 			{
 				KillTimer(ALARMSILENTTIMER);
 				getModel()->StopCountDownAlarmSilent();
 				m_iCountDownAlarmSilent=0;
+				return 1;
 			}
-			else
+			break;
+		case WM_AUTO_ALARMSILENT_ON:
 			{
-				m_iCountDownAlarmSilent=AUTOSILENT_TIME;
-				getModel()->SetCountDownAlarmSilent(m_iCountDownAlarmSilent);
-				PostMessage(WM_ALARMSILENTTIMER);
-				SetTimer(ALARMSILENTTIMER,TIMEALARMSILENT,NULL);
+				if(getModel()->GetVentRunState()==VENT_STOPPED)
+				{
+					KillTimer(ALARMSILENTTIMER);
+					getModel()->StopCountDownAlarmSilent();
+					m_iCountDownAlarmSilent=0;
+				}
+				else
+				{
+					m_iCountDownAlarmSilent=AUTOSILENT_TIME;
+					getModel()->SetCountDownAlarmSilent(m_iCountDownAlarmSilent);
+					PostMessage(WM_ALARMSILENTTIMER);
+					SetTimer(ALARMSILENTTIMER,TIMEALARMSILENT,NULL);
+				}
+				return 1;
 			}
-			return 1;
-		}
-		break;
-	/*case WM_AUTO_ALARMSILENT_OFF:
-		{
-			getModel()->getVIEWHANDLER()->StopCountDownAlarmSilent();
-			m_iCountDownAlarmSilent=0;
-			KillTimer(ALARMSILENTTIMER);
-
-			getModel()->getALARMHANDLER()->SetAlarmsilentActive();
-
-			CMVEventAlarm eventCtrl(CMVEventAlarm::EV_ALARM_REACTIVATED);
-			getModel()->Trigger(&eventCtrl);
-		}
-		break;*/
-	case WM_SYSALARM_OFF:
-		{
-			KillTimer(ALARMSILENTTIMER);
-
-			getModel()->StopCountDownAlarmSilent();
-			m_iCountDownAlarmSilent=0;
-			
-			CMVEventAlarm event(CMVEventAlarm::EV_ALARMSTATE_CHANGED);
-			getModel()->triggerEvent(&event);
-			return 1;
-		}
-		break;
-	case WM_VENT_STARTSTOP_DOWN:
-		{
-			if(		getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
-				||	getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
-				||	getModel()->getCONFIG()->GetCurMode()==VM_THERAPIE)
+			break;
+		/*case WM_AUTO_ALARMSILENT_OFF:
 			{
-				if(getModel()->GetVentRunState()==VENT_STANDBY)
-				{
-					m_iCountTimeUntilStop=0;
+				getModel()->getVIEWHANDLER()->StopCountDownAlarmSilent();
+				m_iCountDownAlarmSilent=0;
+				KillTimer(ALARMSILENTTIMER);
 
-					getModel()->SetVentRunState(VENT_RUNNING);
-					getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
+				getModel()->getALARMHANDLER()->SetAlarmsilentActive();
 
-					CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_VENTILATION);
-					getModel()->triggerEvent(&eventCtrl);
-				}
-				else if(getModel()->GetVentRunState()==VENT_RUNNING)
-				{
-					SetTimer(STARTSTOPTIMER,TIMESTARTSTOP,NULL);
-				}
-				else //VENT_STOPPED -> sollte nicht vorkommen
-				{
-					
-				}
+				CMVEventAlarm eventCtrl(CMVEventAlarm::EV_ALARM_REACTIVATED);
+				getModel()->Trigger(&eventCtrl);
 			}
-			else
+			break;*/
+		case WM_SYSALARM_OFF:
 			{
-				if(getModel()->GetVentRunState()==VENT_RUNNING)
-				{
-					SetTimer(STARTSTOPTIMER,TIMESTARTSTOP,NULL);
-				}
-				else if(getModel()->GetVentRunState()==VENT_STOPPED)
-				{
-					KillTimer(COUNTSTOPBREATHTIMER);
+				KillTimer(ALARMSILENTTIMER);
 
-					getModel()->SetVentRunState(VENT_RUNNING);
-					getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
-					
-					CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_VENTILATION);
-					getModel()->triggerEvent(&eventCtrl);
-				}
-				else  //VENT_STANDBY -> sollte nur nach Video-Modus vorkommen
-				{
-					KillTimer(COUNTSTOPBREATHTIMER);
-					
-					getModel()->SetVentRunState(VENT_RUNNING);
-					getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
-
-					CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_VENTILATION);
-					getModel()->triggerEvent(&eventCtrl);
-				}
+				getModel()->StopCountDownAlarmSilent();
+				m_iCountDownAlarmSilent=0;
+				
+				CMVEventAlarm event(CMVEventAlarm::EV_ALARMSTATE_CHANGED);
+				getModel()->triggerEvent(&event);
+				return 1;
 			}
-			return 1;
-		}
-		break;
-	case WM_VENT_STARTSTOP_UP:
-		{
-			KillTimer(STARTSTOPTIMER);
-			
-			if(m_iCountTimeUntilStop<6)
+			break;
+		case WM_VENT_STARTSTOP_DOWN:
 			{
-				getModel()->getVIEWHANDLER()->StopCountTimeUntilStop();
-
-				if(getModel()->getALARMHANDLER()->getAlarmSilentState()==ASTATE_SILENT)
+				if(		getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
+					||	getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
+					||	getModel()->getCONFIG()->GetCurMode()==VM_THERAPIE)
 				{
-					//getModel()->getALARMHANDLER()->SetAlarmsilentActive();
-					getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
+					if(getModel()->GetVentRunState()==VENT_STANDBY)
+					{
+						m_iCountTimeUntilStop=0;
+
+						getModel()->SetVentRunState(VENT_RUNNING);
+						getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
+
+						CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_VENTILATION);
+						getModel()->triggerEvent(&eventCtrl);
+					}
+					else if(getModel()->GetVentRunState()==VENT_RUNNING)
+					{
+						SetTimer(STARTSTOPTIMER,TIMESTARTSTOP,NULL);
+					}
+					else //VENT_STOPPED -> sollte nicht vorkommen
+					{
+						
+					}
 				}
+				else
+				{
+					if(getModel()->GetVentRunState()==VENT_RUNNING)
+					{
+						SetTimer(STARTSTOPTIMER,TIMESTARTSTOP,NULL);
+					}
+					else if(getModel()->GetVentRunState()==VENT_STOPPED)
+					{
+						KillTimer(COUNTSTOPBREATHTIMER);
+
+						getModel()->SetVentRunState(VENT_RUNNING);
+						getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
+						
+						CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_VENTILATION);
+						getModel()->triggerEvent(&eventCtrl);
+					}
+					else  //VENT_STANDBY -> sollte nur nach Video-Modus vorkommen
+					{
+						KillTimer(COUNTSTOPBREATHTIMER);
+						
+						getModel()->SetVentRunState(VENT_RUNNING);
+						getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
+
+						CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_VENTILATION);
+						getModel()->triggerEvent(&eventCtrl);
+					}
+				}
+				return 1;
 			}
-
-			m_iCountTimeUntilStop=0;
-			return 1;
-
-		}
-		break;
-	case WM_STARTSTOPTIMER:
-		{
-			if(getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_SILENT)
-			{
-				getModel()->getALARMHANDLER()->setAlarmSilent(false,true);
-			}
-
-			getModel()->getVIEWHANDLER()->DrawCountTimeUntilStop(m_iCountTimeUntilStop);
-			m_iCountTimeUntilStop++;
-
-			if(m_iCountTimeUntilStop>5)
+			break;
+		case WM_VENT_STARTSTOP_UP:
 			{
 				KillTimer(STARTSTOPTIMER);
-				getModel()->getVIEWHANDLER()->StopCountTimeUntilStop();
-				PostMessage(WM_VENTSTATE_STOP);
-			}
-			return 1;
-		}
-		break;
-	case WM_VENT_STANDBY:
-		{
-			if(getModel()->GetVentRunState()==VENT_RUNNING)
-			{
-				getModel()->SetVentRunState(VENT_STANDBY);
+				
+				if(m_iCountTimeUntilStop<6)
+				{
+					getModel()->getVIEWHANDLER()->StopCountTimeUntilStop();
 
-				if(		getModel()->getALARMHANDLER()->getAlarmSilentState()==ASTATE_AUTOSILENT
-					||	getModel()->getALARMHANDLER()->isManualSilentState()==true)
-				{
-					getModel()->StopCountDownAlarmSilent();
-					m_iCountDownAlarmSilent=0;
-				}
-				else if(getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_SYSTEM_SILENT)
-				{
-					m_iCountDownAlarmSilent=0;
-					getModel()->SetCountDownAlarmSilent(m_iCountDownAlarmSilent);
+					if(getModel()->getALARMHANDLER()->getAlarmSilentState()==ASTATE_SILENT)
+					{
+						//getModel()->getALARMHANDLER()->SetAlarmsilentActive();
+						getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
+					}
 				}
 
-				getModel()->getALARMHANDLER()->setAlarmSilent();
-
-
-				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STANDBY);
-				getModel()->triggerEvent(&eventCtrl);
-			}
-			else if(getModel()->GetVentRunState()==VENT_STOPPED)
-			{
-				KillTimer(COUNTSTOPBREATHTIMER);
-
-				getModel()->SetVentRunState(VENT_STANDBY);
-
-				if(		getModel()->getALARMHANDLER()->getAlarmSilentState()==ASTATE_AUTOSILENT
-					||	getModel()->getALARMHANDLER()->isManualSilentState()==true)
-				{
-					getModel()->StopCountDownAlarmSilent();
-					m_iCountDownAlarmSilent=0;
-				}
-				else if(getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_SYSTEM_SILENT)
-				{
-					m_iCountDownAlarmSilent=0;
-					getModel()->SetCountDownAlarmSilent(m_iCountDownAlarmSilent);
-				}
-
-				getModel()->getALARMHANDLER()->setAlarmSilent();
-
-
-				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STANDBY);
-				getModel()->triggerEvent(&eventCtrl);
-			}
-			
-			return 1;
-		}
-		break;
-	case WM_VENT_RUN:
-		{
-			if(getModel()->GetVentRunState()==VENT_STANDBY)
-			{
 				m_iCountTimeUntilStop=0;
+				return 1;
 
-				getModel()->SetVentRunState(VENT_RUNNING);
-				getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
-
-				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_VENTILATION);
-				getModel()->triggerEvent(&eventCtrl);
 			}
-			return 1;
-		}
-		break;
-	case WM_VENTSTATE_STOP:
-		{
-			if(		getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
-				||	getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
-				||	getModel()->getCONFIG()->GetCurMode()==VM_THERAPIE)
+			break;
+		case WM_STARTSTOPTIMER:
+			{
+				if(getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_SILENT)
+				{
+					getModel()->getALARMHANDLER()->setAlarmSilent(false,true);
+				}
+
+				getModel()->getVIEWHANDLER()->DrawCountTimeUntilStop(m_iCountTimeUntilStop);
+				m_iCountTimeUntilStop++;
+
+				if(m_iCountTimeUntilStop>5)
+				{
+					KillTimer(STARTSTOPTIMER);
+					getModel()->getVIEWHANDLER()->StopCountTimeUntilStop();
+					PostMessage(WM_VENTSTATE_STOP);
+				}
+				return 1;
+			}
+			break;
+		case WM_VENT_STANDBY:
 			{
 				if(getModel()->GetVentRunState()==VENT_RUNNING)
 				{
@@ -5186,37 +5118,11 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STANDBY);
 					getModel()->triggerEvent(&eventCtrl);
 				}
-				else if(getModel()->GetVentRunState()==VENT_STANDBY)
-				{
-					//ERROR
-					KillTimer(COUNTSTOPBREATHTIMER);
-
-					getModel()->SetVentRunState(VENT_RUNNING);
-					getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
-
-					
-					CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_VENTILATION);
-					getModel()->triggerEvent(&eventCtrl);
-				}
-				else //VENT_STOPPED -> sollte nicht vorkommen
+				else if(getModel()->GetVentRunState()==VENT_STOPPED)
 				{
 					KillTimer(COUNTSTOPBREATHTIMER);
 
-					getModel()->SetVentRunState(VENT_RUNNING);
-					getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
-					
-					CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_VENTILATION);
-					getModel()->triggerEvent(&eventCtrl);
-				}
-			}
-			else
-			{
-				if(getModel()->GetVentRunState()==VENT_RUNNING)
-				{
-					getModel()->getALARMHANDLER()->setAlarmSilent(false,true);
-
-					SetTimer(COUNTSTOPBREATHTIMER,COUNTTIMESTARTSTOP,NULL);
-					m_iCountDownStart=STANDBY;
+					getModel()->SetVentRunState(VENT_STANDBY);
 
 					if(		getModel()->getALARMHANDLER()->getAlarmSilentState()==ASTATE_AUTOSILENT
 						||	getModel()->getALARMHANDLER()->isManualSilentState()==true)
@@ -5229,108 +5135,216 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 						m_iCountDownAlarmSilent=0;
 						getModel()->SetCountDownAlarmSilent(m_iCountDownAlarmSilent);
 					}
-					
-					getModel()->SetVentRunState(VENT_STOPPED);
-					getModel()->getVIEWHANDLER()->DrawCountDownStartTime(m_iCountDownStart);
 
-					CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STOP_VENTILATION);
+					getModel()->getALARMHANDLER()->setAlarmSilent();
+
+
+					CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STANDBY);
 					getModel()->triggerEvent(&eventCtrl);
 				}
-				else if(getModel()->GetVentRunState()==VENT_STOPPED)
+				
+				return 1;
+			}
+			break;
+		case WM_VENT_RUN:
+			{
+				if(getModel()->GetVentRunState()==VENT_STANDBY)
 				{
-					//ERROR
-					KillTimer(COUNTSTOPBREATHTIMER);
+					m_iCountTimeUntilStop=0;
 
 					getModel()->SetVentRunState(VENT_RUNNING);
 					getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
-					
+
 					CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_VENTILATION);
 					getModel()->triggerEvent(&eventCtrl);
 				}
-				else  //VENT_STANDBY -> sollte nicht vorkommen
-				{
-					KillTimer(COUNTSTOPBREATHTIMER);
-
-					getModel()->SetVentRunState(VENT_RUNNING);
-					getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
-					
-					CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_VENTILATION);
-					getModel()->triggerEvent(&eventCtrl);
-				}
+				return 1;
 			}
-			//getModel()->getSERIAL()->Send_MODE_OPTION();
-			//getModel()->getSPI()->Send_MODE_OPTION();
-
-			return 1;
-		}
-		break;
-	case WM_VENT_OFF_DOWN:
-		{
-			SetTimer(OFFTIMER,TIMESTARTSTOP,NULL);
-			return 1;
-		}
-		break;
-	case WM_VENT_OFF_UP:
-		{
-			KillTimer(OFFTIMER);
-
-			if(m_iCountTimeUntilOff<6)
+			break;
+		case WM_VENTSTATE_STOP:
 			{
-				getModel()->getVIEWHANDLER()->StopCountTimeUntilOff();
-
-				if(getModel()->getALARMHANDLER()->getAlarmSilentState()==ASTATE_SILENT
-					&& getModel()->GetVentRunState()!=VENT_STANDBY)
+				if(		getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
+					||	getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
+					||	getModel()->getCONFIG()->GetCurMode()==VM_THERAPIE)
 				{
-					getModel()->getALARMHANDLER()->setAlarmsilentActive();
+					if(getModel()->GetVentRunState()==VENT_RUNNING)
+					{
+						getModel()->SetVentRunState(VENT_STANDBY);
+
+						if(		getModel()->getALARMHANDLER()->getAlarmSilentState()==ASTATE_AUTOSILENT
+							||	getModel()->getALARMHANDLER()->isManualSilentState()==true)
+						{
+							getModel()->StopCountDownAlarmSilent();
+							m_iCountDownAlarmSilent=0;
+						}
+						else if(getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_SYSTEM_SILENT)
+						{
+							m_iCountDownAlarmSilent=0;
+							getModel()->SetCountDownAlarmSilent(m_iCountDownAlarmSilent);
+						}
+
+						getModel()->getALARMHANDLER()->setAlarmSilent();
+
+
+						CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STANDBY);
+						getModel()->triggerEvent(&eventCtrl);
+					}
+					else if(getModel()->GetVentRunState()==VENT_STANDBY)
+					{
+						//ERROR
+						KillTimer(COUNTSTOPBREATHTIMER);
+
+						getModel()->SetVentRunState(VENT_RUNNING);
+						getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
+
+						
+						CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_VENTILATION);
+						getModel()->triggerEvent(&eventCtrl);
+					}
+					else //VENT_STOPPED -> sollte nicht vorkommen
+					{
+						KillTimer(COUNTSTOPBREATHTIMER);
+
+						getModel()->SetVentRunState(VENT_RUNNING);
+						getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
+						
+						CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_VENTILATION);
+						getModel()->triggerEvent(&eventCtrl);
+					}
 				}
-			}
+				else
+				{
+					if(getModel()->GetVentRunState()==VENT_RUNNING)
+					{
+						getModel()->getALARMHANDLER()->setAlarmSilent(false,true);
 
-			m_iCountTimeUntilOff=0;
-			return 1;
-		}
-		break;
-	case WM_OFFTIMER:
-		{
-			if(getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_SILENT)
+						SetTimer(COUNTSTOPBREATHTIMER,COUNTTIMESTARTSTOP,NULL);
+						m_iCountDownStart=STANDBY;
+
+						if(		getModel()->getALARMHANDLER()->getAlarmSilentState()==ASTATE_AUTOSILENT
+							||	getModel()->getALARMHANDLER()->isManualSilentState()==true)
+						{
+							getModel()->StopCountDownAlarmSilent();
+							m_iCountDownAlarmSilent=0;
+						}
+						else if(getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_SYSTEM_SILENT)
+						{
+							m_iCountDownAlarmSilent=0;
+							getModel()->SetCountDownAlarmSilent(m_iCountDownAlarmSilent);
+						}
+						
+						getModel()->SetVentRunState(VENT_STOPPED);
+						getModel()->getVIEWHANDLER()->DrawCountDownStartTime(m_iCountDownStart);
+
+						CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STOP_VENTILATION);
+						getModel()->triggerEvent(&eventCtrl);
+					}
+					else if(getModel()->GetVentRunState()==VENT_STOPPED)
+					{
+						//ERROR
+						KillTimer(COUNTSTOPBREATHTIMER);
+
+						getModel()->SetVentRunState(VENT_RUNNING);
+						getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
+						
+						CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_VENTILATION);
+						getModel()->triggerEvent(&eventCtrl);
+					}
+					else  //VENT_STANDBY -> sollte nicht vorkommen
+					{
+						KillTimer(COUNTSTOPBREATHTIMER);
+
+						getModel()->SetVentRunState(VENT_RUNNING);
+						getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
+						
+						CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_VENTILATION);
+						getModel()->triggerEvent(&eventCtrl);
+					}
+				}
+				//getModel()->getSERIAL()->Send_MODE_OPTION();
+				//getModel()->getSPI()->Send_MODE_OPTION();
+
+				return 1;
+			}
+			break;
+		case WM_VENT_OFF_DOWN:
 			{
-				getModel()->getALARMHANDLER()->setAlarmSilent();
+				SetTimer(OFFTIMER,TIMESTARTSTOP,NULL);
+				return 1;
 			}
-
-			getModel()->getVIEWHANDLER()->DrawCountTimeUntilOff(m_iCountTimeUntilOff);
-			m_iCountTimeUntilOff++;
-
-			if(m_iCountTimeUntilOff>5)
+			break;
+		case WM_VENT_OFF_UP:
 			{
 				KillTimer(OFFTIMER);
-				getModel()->getVIEWHANDLER()->StopCountTimeUntilOff();
-				PostMessage(WM_VENT_TURNOFF);
-			}
-			return 1;
-		}
-		break;
-	case WM_VENT_TURNOFF:
-		{
-			theApp.SetEXITState();
-			if(AfxGetApp())
-				AfxGetApp()->GetMainWnd()->PostMessage(WM_THR_STOP,THR_MAIN);//rkuNEWFIX
-			
-			m_iCountTimeUntilOff=0;
-			KillTimer(OFFTIMER);
-		
-			getModel()->getVIEWHANDLER()->changeViewState(VS_SHUTDOWN,VSS_NONE);
-			QuitVentilator();
-			return 1;
-		}
-		break;
-	case WM_OXYCAL_HOURGLASS_TIMER:
-		{
-			int iStateHourglass=getModel()->getSPI()->Read_STATUS_2();
 
-			if(!isSafeTickCountDelayExpired(m_dwHourglasstimeout, 80000))
-			{
-				if(iStateHourglass&BIT3)
+				if(m_iCountTimeUntilOff<6)
 				{
-					//do nothing
+					getModel()->getVIEWHANDLER()->StopCountTimeUntilOff();
+
+					if(getModel()->getALARMHANDLER()->getAlarmSilentState()==ASTATE_SILENT
+						&& getModel()->GetVentRunState()!=VENT_STANDBY)
+					{
+						getModel()->getALARMHANDLER()->setAlarmsilentActive();
+					}
+				}
+
+				m_iCountTimeUntilOff=0;
+				return 1;
+			}
+			break;
+		case WM_OFFTIMER:
+			{
+				if(getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_SILENT)
+				{
+					getModel()->getALARMHANDLER()->setAlarmSilent();
+				}
+
+				getModel()->getVIEWHANDLER()->DrawCountTimeUntilOff(m_iCountTimeUntilOff);
+				m_iCountTimeUntilOff++;
+
+				if(m_iCountTimeUntilOff>5)
+				{
+					KillTimer(OFFTIMER);
+					getModel()->getVIEWHANDLER()->StopCountTimeUntilOff();
+					PostMessage(WM_VENT_TURNOFF);
+				}
+				return 1;
+			}
+			break;
+		case WM_VENT_TURNOFF:
+			{
+				theApp.SetEXITState();
+				if(AfxGetApp())
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_THR_STOP,THR_MAIN);//rkuNEWFIX
+				
+				m_iCountTimeUntilOff=0;
+				KillTimer(OFFTIMER);
+			
+				getModel()->getVIEWHANDLER()->changeViewState(VS_SHUTDOWN,VSS_NONE);
+				QuitVentilator();
+				return 1;
+			}
+			break;
+		case WM_OXYCAL_HOURGLASS_TIMER:
+			{
+				int iStateHourglass=getModel()->getSPI()->Read_STATUS_2();
+
+				if(!isSafeTickCountDelayExpired(m_dwHourglasstimeout, 80000))
+				{
+					if(iStateHourglass&BIT3)
+					{
+						//do nothing
+					}
+					else
+					{
+						if(!m_bExit)
+						{
+							getModel()->getVIEWHANDLER()->SetOxyHourglass(false);
+							getModel()->getDATAHANDLER()->SetOxyHourglassRunning(false);
+						}
+
+						KillTimer(OXYCAL_HOURGLASS_TIMER);
+					}
 				}
 				else
 				{
@@ -5339,279 +5353,273 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 						getModel()->getVIEWHANDLER()->SetOxyHourglass(false);
 						getModel()->getDATAHANDLER()->SetOxyHourglassRunning(false);
 					}
-
 					KillTimer(OXYCAL_HOURGLASS_TIMER);
 				}
+
 			}
-			else
+			break;
+		case WM_CO2PUMPTIMER:
 			{
-				if(!m_bExit)
+				if(getModel()->getDATAHANDLER()->getRemainCO2PumpTime()<60000 && m_bShowCO2PumpOnMsg)
 				{
-					getModel()->getVIEWHANDLER()->SetOxyHourglass(false);
-					getModel()->getDATAHANDLER()->SetOxyHourglassRunning(false);
+					m_bShowCO2PumpOnMsg=false;
+					CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_CO2PUMPENABLED), 5000);
+					getModel()->triggerEvent(&event);
+					getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+					Sleep(300);
+					getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
 				}
-				KillTimer(OXYCAL_HOURGLASS_TIMER);
+				if(getModel()->getDATAHANDLER()->getRemainCO2PumpTime()<=0)
+				{
+					getModel()->getDATAHANDLER()->setRemainCO2PumpTime(0);
+					//m_ullRemainCO2PumpTime=0;
+					m_bShowCO2PumpOnMsg=true;
+					KillTimer(CO2PUMPTIMER);
+
+					if(getModel()->getETCO2()!=NULL)
+						getModel()->getETCO2()->set_PumpStateOn();
+
+					getModel()->getVIEWHANDLER()->UpdateCO2InfoData(false);
+
+					getModel()->getALARMHANDLER()->setAutoSilent();
+
+					CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_CO2PUMPON), 5000);
+					getModel()->triggerEvent(&event);
+					getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+					Sleep(300);
+					getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+
+				}
+				else
+				{
+					//getModel()->getVIEWHANDLER()->UpdateCO2InfoData(m_ullRemainCO2PumpTime/1000);
+					getModel()->getVIEWHANDLER()->UpdateCO2InfoData(true);
+				}
 			}
-
-		}
-		break;
-	case WM_CO2PUMPTIMER:
-		{
-			if(getModel()->getDATAHANDLER()->getRemainCO2PumpTime()<60000 && m_bShowCO2PumpOnMsg)
+			break;
+		case WM_TRIGGER_MANUALBREATH_STOP:
 			{
-				m_bShowCO2PumpOnMsg=false;
-				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_CO2PUMPENABLED), 5000);
-				getModel()->triggerEvent(&event);
-				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-				Sleep(300);
-				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
+				if(getModel()->isMANBREATHrunning())
+				{
+					KillTimer(MANBREATHTIMER);
+
+					
+					getModel()->getSERIAL()->Send_STOP_MAN_BREATH();
+					
+					CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STOP_MANBREATH);
+					getModel()->triggerEvent(&eventCtrl);
+
+					getModel()->deactivateMANBREATH();
+				}
+				return 1;
 			}
-			if(getModel()->getDATAHANDLER()->getRemainCO2PumpTime()<=0)
+			break;
+		case WM_TRIGGER_FLOWSENSORSTATE:
 			{
-				getModel()->getDATAHANDLER()->setRemainCO2PumpTime(0);
-				//m_ullRemainCO2PumpTime=0;
-				m_bShowCO2PumpOnMsg=true;
-				KillTimer(CO2PUMPTIMER);
-
-				if(getModel()->getETCO2()!=NULL)
-					getModel()->getETCO2()->set_PumpStateOn();
-
-				getModel()->getVIEWHANDLER()->UpdateCO2InfoData(false);
-
-				getModel()->getALARMHANDLER()->setAutoSilent();
-
-				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, getModel()->GetLanguageString(IDS_TXT_CO2PUMPON), 5000);
-				getModel()->triggerEvent(&event);
-				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-				Sleep(300);
-				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-
-			}
-			else
-			{
-				//getModel()->getVIEWHANDLER()->UpdateCO2InfoData(m_ullRemainCO2PumpTime/1000);
-				getModel()->getVIEWHANDLER()->UpdateCO2InfoData(true);
-			}
-		}
-		break;
-	case WM_TRIGGER_MANUALBREATH_STOP:
-		{
-			if(getModel()->isMANBREATHrunning())
-			{
-				KillTimer(MANBREATHTIMER);
-
-				
-				getModel()->getSERIAL()->Send_STOP_MAN_BREATH();
-				
-				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STOP_MANBREATH);
+				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_FLOWSENSORSTATE);
 				getModel()->triggerEvent(&eventCtrl);
-
-				getModel()->deactivateMANBREATH();
+				return 1;
 			}
-			return 1;
-		}
-		break;
-	case WM_TRIGGER_FLOWSENSORSTATE:
-		{
-			CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_FLOWSENSORSTATE);
-			getModel()->triggerEvent(&eventCtrl);
-			return 1;
-		}
-		break;
-	case WM_TRIGGER_O2SENSORSTATE:
-		{
-			CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_O2SENSORSTATE);
-			getModel()->triggerEvent(&eventCtrl);
-			return 1;
-		}
-		break;
-	case WM_VENTMODE_HOME:
-		{
-			SetTimer(HOMETIMER,TIMEMODECHANGE,NULL);
-			return 1;
-		}
-		break;
-	case WM_VENTMODE_CHANGED:
-		{
-			if(getModel()->getCONFIG()->CurModeIsPresetMode()==false)
+			break;
+		case WM_TRIGGER_O2SENSORSTATE:
 			{
-				eVentMode eActiveVentMode=getModel()->getCONFIG()->GetCurMode();
-
-				if(	m_eVentModeCalcStarted!=eActiveVentMode 
-					&&	getModel()->CalculateAlarmlimitRunning())
-				{
-					getModel()->getALARMHANDLER()->SetAlimitStateCalculated();
-
-					PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
-				}
+				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_O2SENSORSTATE);
+				getModel()->triggerEvent(&eventCtrl);
+				return 1;
 			}
-			
-
-			if((getModel()->getCONFIG()->CurModeIsPresetMode()==false) && m_bBackup==true)
+			break;
+		case WM_VENTMODE_HOME:
 			{
-				DEBUGMSG(TRUE, (TEXT("WM_VENTMODE_CHANGED delete backup\r\n")));
-				m_bBackup=false;
-				getModel()->getVIEWHANDLER()->SetCPAPBackup(false);
+				SetTimer(HOMETIMER,TIMEMODECHANGE,NULL);
+				return 1;
 			}
-
-			if(		(getModel()->getCONFIG()->CurModeIsPresetMode()==false)
-				&&	(getModel()->getCONFIG()->GetPrevMode()!=getModel()->getCONFIG()->GetCurMode()))
+			break;
+		case WM_VENTMODE_CHANGED:
 			{
-				eVentMode curMode=getModel()->getCONFIG()->GetCurMode();
-				switch(curMode)
+				if(getModel()->getCONFIG()->CurModeIsPresetMode()==false)
 				{
-				case VM_IPPV:
-					{
-						theApp.getLog()->WriteLine(_T("### Ventmode VM_IPPV"));
-					}
-					break;
-				case VM_SIPPV:
-					{
-						theApp.getLog()->WriteLine(_T("### Ventmode VM_SIPPV"));
-					}
-					break;
-				case VM_SIMV:
-					{
-						theApp.getLog()->WriteLine(_T("### Ventmode VM_SIMV"));
-					}
-					break;
-				case VM_SIMVPSV:
-					{
-						theApp.getLog()->WriteLine(_T("### Ventmode VM_SIMVPSV"));
-					}
-					break;
-				case VM_PSV:
-					{
-						theApp.getLog()->WriteLine(_T("### Ventmode VM_PSV"));
-					}
-					break;
-				case VM_CPAP:
-					{
-						theApp.getLog()->WriteLine(_T("### Ventmode VM_CPAP"));
-					}
-					break;
-				case VM_NCPAP:
-					{
-						theApp.getLog()->WriteLine(_T("### Ventmode VM_NCPAP"));
-					}
-					break;
-				case VM_DUOPAP:
-					{
-						theApp.getLog()->WriteLine(_T("### Ventmode VM_DUOPAP"));
-					}
-					break;
-				case VM_HFO:
-					{
-						theApp.getLog()->WriteLine(_T("### Ventmode VM_HFO"));
-					}
-					break;
-				case VM_THERAPIE:
-					{
-						theApp.getLog()->WriteLine(_T("### Ventmode VM_THERAPIE"));
-					}
-					break;
-				case VM_SERVICE:
-					{
-						theApp.getLog()->WriteLine(_T("### Ventmode VM_SERVICE"));
-					}
-					break;
-				}
+					eVentMode eActiveVentMode=getModel()->getCONFIG()->GetCurMode();
 
-				if(getModel()->GetVentRunState()==VENT_STANDBY)
-				{
-					if(		curMode==VM_IPPV
-						||	curMode==VM_SIPPV
-						||	curMode==VM_SIMV
-						||	curMode==VM_SIMVPSV
-						||	curMode==VM_PSV
-						||	curMode==VM_HFO
-						||	curMode==VM_CPAP)
+					if(	m_eVentModeCalcStarted!=eActiveVentMode 
+						&&	getModel()->CalculateAlarmlimitRunning())
 					{
-						getModel()->getALARMHANDLER()->setAlarmSilent();
+						getModel()->getALARMHANDLER()->SetAlimitStateCalculated();
 
-						SetTimer(COUNTSTOPBREATHTIMER,COUNTTIMESTARTSTOP,NULL);
-						m_iCountDownStart=STANDBY;//120;
-
-						if(		getModel()->getALARMHANDLER()->getAlarmSilentState()==ASTATE_AUTOSILENT
-							||	getModel()->getALARMHANDLER()->isManualSilentState()==true)
-						{
-							getModel()->StopCountDownAlarmSilent();
-							m_iCountDownAlarmSilent=0;
-						}
-						else if(getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_SYSTEM_SILENT)
-						{
-							m_iCountDownAlarmSilent=0;
-							getModel()->SetCountDownAlarmSilent(m_iCountDownAlarmSilent);
-						}
-
-						getModel()->SetVentRunState(VENT_STOPPED);
-						CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STOP_VENTILATION);
-						getModel()->triggerEvent(&eventCtrl);
+						PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
 					}
 				}
-				else if(getModel()->GetVentRunState()==VENT_STOPPED)
+				
+
+				if((getModel()->getCONFIG()->CurModeIsPresetMode()==false) && m_bBackup==true)
 				{
-					if(		curMode==VM_NCPAP
-						||	curMode==VM_DUOPAP
-						||	curMode==VM_THERAPIE)
+					DEBUGMSG(TRUE, (TEXT("WM_VENTMODE_CHANGED delete backup\r\n")));
+					m_bBackup=false;
+					getModel()->getVIEWHANDLER()->SetCPAPBackup(false);
+				}
+
+				if(		(getModel()->getCONFIG()->CurModeIsPresetMode()==false)
+					&&	(getModel()->getCONFIG()->GetPrevMode()!=getModel()->getCONFIG()->GetCurMode()))
+				{
+					eVentMode curMode=getModel()->getCONFIG()->GetCurMode();
+					switch(curMode)
 					{
-						KillTimer(COUNTSTOPBREATHTIMER);
-						getModel()->SetVentRunState(VENT_STANDBY);
-						getModel()->getVIEWHANDLER()->StopCountDownStartTime();
-
-
-						if(		getModel()->getALARMHANDLER()->getAlarmSilentState()==ASTATE_AUTOSILENT
-							||	getModel()->getALARMHANDLER()->isManualSilentState()==true)
+					case VM_IPPV:
 						{
-							getModel()->StopCountDownAlarmSilent();
-							m_iCountDownAlarmSilent=0;
+							theApp.getLog()->WriteLine(_T("### Ventmode VM_IPPV"));
 						}
-						else if(getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_SYSTEM_SILENT)
+						break;
+					case VM_SIPPV:
 						{
-							m_iCountDownAlarmSilent=0;
-							getModel()->SetCountDownAlarmSilent(m_iCountDownAlarmSilent);
+							theApp.getLog()->WriteLine(_T("### Ventmode VM_SIPPV"));
 						}
+						break;
+					case VM_SIMV:
+						{
+							theApp.getLog()->WriteLine(_T("### Ventmode VM_SIMV"));
+						}
+						break;
+					case VM_SIMVPSV:
+						{
+							theApp.getLog()->WriteLine(_T("### Ventmode VM_SIMVPSV"));
+						}
+						break;
+					case VM_PSV:
+						{
+							theApp.getLog()->WriteLine(_T("### Ventmode VM_PSV"));
+						}
+						break;
+					case VM_CPAP:
+						{
+							theApp.getLog()->WriteLine(_T("### Ventmode VM_CPAP"));
+						}
+						break;
+					case VM_NCPAP:
+						{
+							theApp.getLog()->WriteLine(_T("### Ventmode VM_NCPAP"));
+						}
+						break;
+					case VM_DUOPAP:
+						{
+							theApp.getLog()->WriteLine(_T("### Ventmode VM_DUOPAP"));
+						}
+						break;
+					case VM_HFO:
+						{
+							theApp.getLog()->WriteLine(_T("### Ventmode VM_HFO"));
+						}
+						break;
+					case VM_THERAPIE:
+						{
+							theApp.getLog()->WriteLine(_T("### Ventmode VM_THERAPIE"));
+						}
+						break;
+					case VM_SERVICE:
+						{
+							theApp.getLog()->WriteLine(_T("### Ventmode VM_SERVICE"));
+						}
+						break;
+					}
 
-						getModel()->getALARMHANDLER()->setAlarmSilent();
-						CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STANDBY);
-						getModel()->triggerEvent(&eventCtrl);
+					if(getModel()->GetVentRunState()==VENT_STANDBY)
+					{
+						if(		curMode==VM_IPPV
+							||	curMode==VM_SIPPV
+							||	curMode==VM_SIMV
+							||	curMode==VM_SIMVPSV
+							||	curMode==VM_PSV
+							||	curMode==VM_HFO
+							||	curMode==VM_CPAP)
+						{
+							getModel()->getALARMHANDLER()->setAlarmSilent();
+
+							SetTimer(COUNTSTOPBREATHTIMER,COUNTTIMESTARTSTOP,NULL);
+							m_iCountDownStart=STANDBY;//120;
+
+							if(		getModel()->getALARMHANDLER()->getAlarmSilentState()==ASTATE_AUTOSILENT
+								||	getModel()->getALARMHANDLER()->isManualSilentState()==true)
+							{
+								getModel()->StopCountDownAlarmSilent();
+								m_iCountDownAlarmSilent=0;
+							}
+							else if(getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_SYSTEM_SILENT)
+							{
+								m_iCountDownAlarmSilent=0;
+								getModel()->SetCountDownAlarmSilent(m_iCountDownAlarmSilent);
+							}
+
+							getModel()->SetVentRunState(VENT_STOPPED);
+							CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STOP_VENTILATION);
+							getModel()->triggerEvent(&eventCtrl);
+						}
+					}
+					else if(getModel()->GetVentRunState()==VENT_STOPPED)
+					{
+						if(		curMode==VM_NCPAP
+							||	curMode==VM_DUOPAP
+							||	curMode==VM_THERAPIE)
+						{
+							KillTimer(COUNTSTOPBREATHTIMER);
+							getModel()->SetVentRunState(VENT_STANDBY);
+							getModel()->getVIEWHANDLER()->StopCountDownStartTime();
+
+
+							if(		getModel()->getALARMHANDLER()->getAlarmSilentState()==ASTATE_AUTOSILENT
+								||	getModel()->getALARMHANDLER()->isManualSilentState()==true)
+							{
+								getModel()->StopCountDownAlarmSilent();
+								m_iCountDownAlarmSilent=0;
+							}
+							else if(getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_SYSTEM_SILENT)
+							{
+								m_iCountDownAlarmSilent=0;
+								getModel()->SetCountDownAlarmSilent(m_iCountDownAlarmSilent);
+							}
+
+							getModel()->getALARMHANDLER()->setAlarmSilent();
+							CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STANDBY);
+							getModel()->triggerEvent(&eventCtrl);
+						}
+					}
+
+					if(getModel()->isO2FlushActive())
+					{
+						PostMessage(WM_O2FLUSH);//ausschalten wenn aktiv
 					}
 				}
 
-				if(getModel()->isO2FlushActive())
-				{
-					PostMessage(WM_O2FLUSH);//ausschalten wenn aktiv
-				}
+				KillTimer(HOMETIMER);
+				return 1;
 			}
+			break;
+		case WM_CALCULATE_SINGLE_AUTOLIMIT:
+			{
+				CalculateSingleAutoLimit((eAlarmLimitPara)wParam);
 
-			KillTimer(HOMETIMER);
-			return 1;
-		}
-		break;
-	case WM_CALCULATE_SINGLE_AUTOLIMIT:
-		{
-			CalculateSingleAutoLimit((eAlarmLimitPara)wParam);
+				//getModel()->getALARMHANDLER()->setAutoSilent(false,false,false);
+				getModel()->getDATAHANDLER()->checkLimits();
+				return 1;
+			}
+			break;
+		/*case WM_CALCULATE_ALL_AUTOLIMIT:
+			{
+				CalculateAllAutoLimit();
 
-			//getModel()->getALARMHANDLER()->setAutoSilent(false,false,false);
-			getModel()->getDATAHANDLER()->checkLimits();
-			return 1;
+				getModel()->getALARMHANDLER()->setAutoSilent(false,false,false);
+				getModel()->getDATAHANDLER()->checkLimits();
+				return 1;
+			}
+			break;*/
+		default:
+			{
+				int iStop=0;
+			}
+			break;
 		}
-		break;
-	/*case WM_CALCULATE_ALL_AUTOLIMIT:
-		{
-			CalculateAllAutoLimit();
-
-			getModel()->getALARMHANDLER()->setAutoSilent(false,false,false);
-			getModel()->getDATAHANDLER()->checkLimits();
-			return 1;
-		}
-		break;*/
-	default:
-		{
-			int iStop=0;
-		}
-		break;
-    }
+	}
+	catch (...)
+	{
+		theApp.ReportException(_T("CMainFrame::DefWindowProc()"));
+	}
 
 	return CFrameWnd::DefWindowProc(message, wParam, lParam);
 }
@@ -8082,13 +8090,13 @@ static UINT CSaveTrendUSBThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CSaveTrendUSBThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CSaveTrendUSBThread"));
+		theApp.ReportException(_T("CSaveTrendUSBThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
@@ -8270,13 +8278,13 @@ static UINT CTimerThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CTimerThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CTimerThread"));
+		theApp.ReportException(_T("CTimerThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
@@ -8860,13 +8868,13 @@ static UINT COxyCalThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("COxyCalThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("COxyCalThread"));
+		theApp.ReportException(_T("COxyCalThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
@@ -9609,7 +9617,7 @@ bool CMainFrame::SaveTrendDataToUSB(UINT trendID)
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CMainFrame::SaveTrendDataToUSB"));
+		theApp.ReportException(_T("CMainFrame::SaveTrendDataToUSB"));
 
 		if (stream != NULL)
 		{
@@ -9707,13 +9715,13 @@ static UINT CDelTrendThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CDelTrendThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CDelTrendThread"));
+		theApp.ReportException(_T("CDelTrendThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);

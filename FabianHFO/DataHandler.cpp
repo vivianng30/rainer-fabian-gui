@@ -15216,7 +15216,7 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 					}
 					catch (...)
 					{
-						theApp.ReportErrorException(_T("CDataHandler::UpdateTrendData1"));
+						theApp.ReportException(_T("CDataHandler::UpdateTrendData1"));
 					}
 				}
 				else
@@ -15245,7 +15245,7 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 						}
 						catch (...)
 						{
-							theApp.ReportErrorException(_T("CDataHandler::UpdateTrendData2"));
+							theApp.ReportException(_T("CDataHandler::UpdateTrendData2"));
 						}
 					}
 
@@ -15275,7 +15275,7 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 						}
 						catch (...)
 						{
-							theApp.ReportErrorException(_T("CDataHandler::UpdateTrendData3"));
+							theApp.ReportException(_T("CDataHandler::UpdateTrendData3"));
 						}
 					}
 
@@ -15296,7 +15296,7 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 					}
 					catch (...)
 					{
-						theApp.ReportErrorException(_T("CDataHandler::UpdateTrendData4"));
+						theApp.ReportException(_T("CDataHandler::UpdateTrendData4"));
 					}
 				}
 			}
@@ -15756,7 +15756,7 @@ void CDataHandler::SerializeTrend(UINT type, bool bIncreaseFileNum)
 	{
 		archivDatei.Close();
 
-		theApp.ReportErrorException(_T("CDataHandler::SerializeTrend"));
+		theApp.ReportException(_T("CDataHandler::SerializeTrend"));
 	}
 
 	switch(type)
@@ -16032,7 +16032,7 @@ bool CDataHandler::DeserializeTrend(UINT type, BYTE fileNum)
 	{
 		archivDatei.Close();
 
-		theApp.ReportErrorException(_T("CDataHandler::DeserializeTrend"));
+		theApp.ReportException(_T("CDataHandler::DeserializeTrend"));
 	}
 
 

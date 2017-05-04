@@ -1124,7 +1124,7 @@ void CSubViewSPO2::SetOneButtonDepressed(int btnID)
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CSubViewSPO2::SetOneButtonDepressed"));
+		theApp.ReportException(_T("CSubViewSPO2::SetOneButtonDepressed"));
 	}
 
 	if(GetParent())
@@ -1163,7 +1163,7 @@ void CSubViewSPO2::SetOneButtonFocused(int btnID)
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CSubViewSPO2::SetOneButtonFocused"));
+		theApp.ReportException(_T("CSubViewSPO2::SetOneButtonFocused"));
 	}
 
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))

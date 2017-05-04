@@ -1518,13 +1518,13 @@ static UINT FOTThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("FOTThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("FOTThread"));
+		theApp.ReportException(_T("FOTThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);

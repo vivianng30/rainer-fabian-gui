@@ -164,13 +164,13 @@ static UINT AlarmThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("AlarmThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("AlarmThread"));
+		theApp.ReportException(_T("AlarmThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);

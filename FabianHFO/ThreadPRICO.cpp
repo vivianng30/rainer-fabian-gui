@@ -236,13 +236,13 @@ static UINT PRICOThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("PRICOThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("PRICOThread"));
+		theApp.ReportException(_T("PRICOThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);

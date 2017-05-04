@@ -138,7 +138,7 @@ CInterfaceCO2::~CInterfaceCO2()
 	}
 	catch (...)
 	{
-		theApp.ReportErrorException(_T("CInterfaceCO2::~CInterfaceCO2()"));
+		theApp.ReportException(_T("CInterfaceCO2::~CInterfaceCO2()"));
 
 		CSerialEx::StopListener(0);
 		CSerialEx::Close();
@@ -542,13 +542,13 @@ static UINT CETCO2SendThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CETCO2SendThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CETCO2SendThread"));
+		theApp.ReportException(_T("CETCO2SendThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
@@ -641,13 +641,13 @@ static UINT CETCO2checkThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CETCO2checkThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CETCO2checkThread"));
+		theApp.ReportException(_T("CETCO2checkThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
@@ -718,13 +718,13 @@ static UINT CETCO2InitThread( LPVOID pc )
 		CString errorStr=_T("");
 		errorStr.Format(_T("CETCO2InitThread: %s"),szCause);
 
-		theApp.ReportErrorException(errorStr);
+		theApp.ReportException(errorStr);
 
 		e->Delete();
 	}
 	catch(...)
 	{
-		theApp.ReportErrorException(_T("CETCO2InitThread"));
+		theApp.ReportException(_T("CETCO2InitThread"));
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);

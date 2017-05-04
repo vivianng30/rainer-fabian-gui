@@ -689,7 +689,7 @@ CTlsLoglist * CAlarmMgmtHandler::getAlarmLog()
 	}
 	else
 	{
-		theApp.ReportErrorException(_T("CAlarmingHandler::getAlarmLog()"));
+		theApp.ReportException(_T("CAlarmingHandler::getAlarmLog()"));
 
 		return 0;
 	}
