@@ -105,7 +105,7 @@ CMVModel::CMVModel(void)
 	m_szBuildVersion = _T("9.0.0.0");
 #else
 	m_szVersion = _T("5.0.1");
-	m_szBuildVersion = _T("5.0.1.36");
+	m_szBuildVersion = _T("5.0.1.37");
 #endif
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO"),true);
@@ -1508,37 +1508,37 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 		break;
 	case CMVEventControl::EV_CONTROL_STARTUP_SUCCESS:
 		{
-			if(AfxGetApp())
-				AfxGetApp()->GetMainWnd()->PostMessage(WM_STARTUP_ACULINK);
+			/*if(AfxGetApp())
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_STARTUP_ACULINK);*/
 
-			getDATAHANDLER()->SetFlowSensorState(getDATAHANDLER()->GetFlowSensorState());
+			//getDATAHANDLER()->SetFlowSensorState(getDATAHANDLER()->GetFlowSensorState());
 			/*if(getDATAHANDLER()->isNebulizerOn())
 			{
 				getDATAHANDLER()->stopNebulizer();
 				theApp.getLog()->WriteLine(_T("EV_CONTROL_STARTUP_SUCCESS isNebulizerOn"));
 			}*/
 
-			getALARMHANDLER()->ventModeChanged();
+			//getALARMHANDLER()->ventModeChanged();
+
+			getALARMHANDLER()->setStartupSilent(true);
 
 			getSPI()->StartSPIMonitorThread();
 
-			getALARMHANDLER()->setStartupSilent(true);
-		
-
-			//test entrek
-			if(		getCONFIG()->GetCurMode()==VM_NCPAP 
-				||	getCONFIG()->GetCurMode()==VM_DUOPAP
-				||	getCONFIG()->GetCurMode()==VM_THERAPIE)
-			{
-				getVIEWHANDLER()->changeViewState(VS_PARA,VSS_GRAPH_SINGLE_LINEGRAPHS);
-				DeleteO2calFlag();
-				//if(AfxGetApp())
-				//	AfxGetApp()->GetMainWnd()->PostMessage(WM_DELAY_AUTOOXYCAL);
-			}
-			else
-			{
-				getVIEWHANDLER()->changeViewState(VS_SETUP,VSS_NONE);
-			}
+			
+			////test entrek
+			//if(		getCONFIG()->GetCurMode()==VM_NCPAP 
+			//	||	getCONFIG()->GetCurMode()==VM_DUOPAP
+			//	||	getCONFIG()->GetCurMode()==VM_THERAPIE)
+			//{
+			//	getVIEWHANDLER()->changeViewState(VS_PARA,VSS_GRAPH_SINGLE_LINEGRAPHS);
+			//	DeleteO2calFlag();
+			//	//if(AfxGetApp())
+			//	//	AfxGetApp()->GetMainWnd()->PostMessage(WM_DELAY_AUTOOXYCAL);
+			//}
+			//else
+			//{
+			//	getVIEWHANDLER()->changeViewState(VS_SETUP,VSS_NONE);
+			//}
 
 			//check all Interfaces
 #ifndef SIMULATION_NOSERIAL
@@ -1580,7 +1580,25 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 #endif
 			
 			if(AfxGetApp())
-				AfxGetApp()->GetMainWnd()->PostMessage(WM_START_TRENDRECORD);
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_STARTUP_ACULINK);
+
+			//test entrek
+			if(		getCONFIG()->GetCurMode()==VM_NCPAP 
+				||	getCONFIG()->GetCurMode()==VM_DUOPAP
+				||	getCONFIG()->GetCurMode()==VM_THERAPIE)
+			{
+				getVIEWHANDLER()->changeViewState(VS_PARA,VSS_GRAPH_SINGLE_LINEGRAPHS);
+				DeleteO2calFlag();
+				//if(AfxGetApp())
+				//	AfxGetApp()->GetMainWnd()->PostMessage(WM_DELAY_AUTOOXYCAL);
+			}
+			else
+			{
+				getVIEWHANDLER()->changeViewState(VS_SETUP,VSS_NONE);
+			}
+
+			/*if(AfxGetApp())
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_START_TRENDRECORD);*/
 			
 			if(getDATAHANDLER()->IsCurrentModeVGarantStateOn()==true)
 			{
@@ -1594,9 +1612,14 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			}
 			getCONFIG()->DeaktivateVLimitState();
 
+			getALARMHANDLER()->ventModeChanged();
 			Send_VENT_MODE(getCONFIG()->GetCurMode());
+			
+			
+			if(AfxGetApp())
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_START_TRENDRECORD);
 
-			if(getAcuLink()!=NULL)
+			/*if(getAcuLink()!=NULL)
 			{
 				if(getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
 				{
@@ -1699,31 +1722,31 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 				
 				
 				getAcuLink()->setParaData(ALINK_SETT_PERSID,getCONFIG()->GetPatientID());
-			}
+			}*/
 			
 			isMaintenanceNeeded();
 			
-			if(getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
-			{
-				if(getAcuLink()!=NULL)
-				{
-					getAcuLink()->setParaData(ALINK_SETT_UNIT_CO2,(int)getCONFIG()->GetCO2unit());
-					//getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,getCONFIG()->GetO2Compensation());
-					if(isO2FlushActive())
-						getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,getDATAHANDLER()->PARADATA()->GetO2FlushPara());
-					else
-						getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,getDATAHANDLER()->PARADATA()->GetO2Para());
+			//if(getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+			//{
+			//	if(getAcuLink()!=NULL)
+			//	{
+			//		getAcuLink()->setParaData(ALINK_SETT_UNIT_CO2,(int)getCONFIG()->GetCO2unit());
+			//		//getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,getCONFIG()->GetO2Compensation());
+			//		if(isO2FlushActive())
+			//			getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,getDATAHANDLER()->PARADATA()->GetO2FlushPara());
+			//		else
+			//			getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,getDATAHANDLER()->PARADATA()->GetO2Para());
 
-					getAcuLink()->setParaData(ALINK_SETT_BAROPRESSURE_CO2,getCONFIG()->GetCO2BaroPressure());
+			//		getAcuLink()->setParaData(ALINK_SETT_BAROPRESSURE_CO2,getCONFIG()->GetCO2BaroPressure());
 
-				}
-			}
-			else if(getAcuLink()!=NULL)
-			{
-				getAcuLink()->setParaData(ALINK_SETT_UNIT_CO2,ALINK_NOTVALID);
-				getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,ALINK_NOTVALID);
-				getAcuLink()->setParaData(ALINK_SETT_BAROPRESSURE_CO2,ALINK_NOTVALID);
-			}
+			//	}
+			//}
+			//else if(getAcuLink()!=NULL)
+			//{
+			//	getAcuLink()->setParaData(ALINK_SETT_UNIT_CO2,ALINK_NOTVALID);
+			//	getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,ALINK_NOTVALID);
+			//	getAcuLink()->setParaData(ALINK_SETT_BAROPRESSURE_CO2,ALINK_NOTVALID);
+			//}
 
 			if(getCONFIG()->IsAutoScreenlockActive())
 			{
@@ -5476,12 +5499,12 @@ WORD CMVModel::Send_MODE_OPTION2(bool bSPI,bool bSerial)
 	if(true==getDATAHANDLER()->getFOToscillationState())
 	{
 		wMode=setBitOfWord(wMode, MODOPT2_FOTRUN_BIT);//BIT9
-		//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 FOTRUN_BIT true\r\n")));
+		DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 FOTRUN_BIT true\r\n")));
 	}
-	/*else
+	else
 	{
 		DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 FOTRUN_BIT false\r\n")));
-	}*/
+	}
 	
 
 	if(bSPI)
@@ -6401,6 +6424,7 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 
 	Send_MODE_OPTION1();
 
+	//theApp.getLog()->WriteLine(_T("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Send_VENT_MODE"));
 	//DEBUGMSG(TRUE, (TEXT("CMVModel::Send_VENT_MODE end\r\n")));
 
 	/*if(getAcuLink()!=NULL)

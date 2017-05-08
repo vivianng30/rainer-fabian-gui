@@ -1526,7 +1526,7 @@ void CAlarmMgmtHandler::setSystemSilent()
  *===============================================================================================**/
 void CAlarmMgmtHandler::setAlarmSilent(bool bDelSysSilent,bool bDelAllAlarms)
 {
-	//DEBUGMSG(TRUE, (TEXT("setAlarmSilent\r\n")));
+	DEBUGMSG(TRUE, (TEXT("setAlarmSilent\r\n")));
 	if(bDelSysSilent)
 	{
 		eVentSilentState eOldVentSilentState=getAlarmSilentState();
@@ -1588,7 +1588,7 @@ void CAlarmMgmtHandler::setAlarmSilent(bool bDelSysSilent,bool bDelAllAlarms)
  *===============================================================================================**/
 void CAlarmMgmtHandler::setAutoSilent(bool bDelSysSilent, bool bDelSilent, bool bDelManSilent)
 {
-	//DEBUGMSG(TRUE, (TEXT("setAutoSilent\r\n")));
+	DEBUGMSG(TRUE, (TEXT("setAutoSilent\r\n")));
 
 	if(getAlarmSilentState()==ASTATE_SYSTEM_SILENT)
 	{
@@ -1686,7 +1686,7 @@ void CAlarmMgmtHandler::setManualSilent(bool bRefreshTime)
 
 void CAlarmMgmtHandler::setCalibrationSilent()
 {
-	//DEBUGMSG(TRUE, (TEXT("setSystemSilent\r\n")));
+	DEBUGMSG(TRUE, (TEXT("setSystemSilent\r\n")));
 
 	if(		getAlarmSilentState()!=ASTATE_SYSTEM_SILENT
 		&&	getModel()->IsCalibrationViewActive()==true)

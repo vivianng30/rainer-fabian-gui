@@ -329,6 +329,8 @@ public:
 	void initPRICOthread();
 	void deinitPRICOthread();
 
+	int _httoi(const TCHAR *value);
+
 protected:
 	void checkUniqueID();
 	void setNetworkAddressAsUniqueID();
@@ -367,7 +369,7 @@ protected:
 
 	void ChangeLanguage();
 
-	int _httoi(const TCHAR *value);
+	
 
 private:
 	static CRITICAL_SECTION m_csObservers;

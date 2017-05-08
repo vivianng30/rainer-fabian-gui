@@ -9980,6 +9980,135 @@ void CMainFrame::startAcuLink()
 		theApp.getLog()->WriteLine(_T("***ACULINK: version 4.x"));
 	}
 
+	if(getModel()->getAcuLink()!=NULL)
+	{
+		if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_UNIT_PRESSURE,0);
+		}
+		else
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_UNIT_PRESSURE,1);
+		}
+
+		if(getModel()->getDATAHANDLER()->IsAccuSupply()==true)
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_POWERSTATE,1);
+		}
+		else
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_POWERSTATE,0);
+		}
+
+		int iVersion[4];
+
+		CString resToken;
+		int curPos=0;
+		int nIdx=0;
+
+		CStringW szBuildVersion=getModel()->GetBuildVersion();
+
+		resToken= szBuildVersion.Tokenize(_T("."),curPos);
+		while (resToken != _T(""))
+		{
+			iVersion[nIdx]=_ttoi(resToken);
+
+			resToken = szBuildVersion.Tokenize(_T("."), curPos);
+			nIdx++;
+		}; 
+
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_VERSION_MMI_MAJOR,iVersion[0]);
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_VERSION_MMI_MINOR,iVersion[1]);
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_VERSION_MMI_PATCH,iVersion[2]);
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_VERSION_MMI_BUILD,iVersion[3]);
+
+		CStringA szUnitID=getModel()->GetUniqueID();
+
+		CString szHex=_T("");
+		szHex+=szUnitID;
+
+		BYTE byAddress[6] = {'\0'};
+
+		int iCount=0;
+		for(int i=0;i<6;i++)
+		{
+			CString szTemp=szHex.Mid( iCount, 2 );
+			byAddress[i]=getModel()->_httoi(szTemp);
+			iCount+=2;
+		}
+
+		int iHigh=byAddress[0] << 16;
+		iHigh+=byAddress[1] << 8;
+		iHigh+=byAddress[2] ;
+
+		int iLow=byAddress[3] << 16;
+		iLow+=byAddress[4] << 8;
+		iLow+=byAddress[5] ;
+
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_DEVICEID_CATEGORY,iHigh);
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_DEVICEID_VARIANT,iLow);
+
+		MAINBOARD_DATA dataMainboard;
+		getModel()->getDATAHANDLER()->getMainboardData(&dataMainboard);
+
+		CString csConductor=dataMainboard.m_szConductorVersion;
+
+		curPos=0;
+		nIdx=0;
+
+		resToken= csConductor.Tokenize(_T("."),curPos);
+		while (resToken != _T(""))
+		{
+			iVersion[nIdx]=_ttoi(resToken);
+
+			resToken = csConductor.Tokenize(_T("."), curPos);
+			nIdx++;
+		}; 
+
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_VERSION_CTRLPIC_MAJOR,iVersion[0]);
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_VERSION_CTRLPIC_MINOR,iVersion[1]);
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_VERSION_CTRLPIC_PATCH,iVersion[2]);
+
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_VERSION_MONPIC_MAJOR,dataMainboard.m_iMonitorVersion_x);
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_VERSION_MONPIC_MINOR,dataMainboard.m_iMonitorVersion_y);
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_VERSION_MONPIC_PATCH,dataMainboard.m_iMonitorVersion_z);
+
+		eVentSilentState silentState = getModel()->getALARMHANDLER()->getAlarmSilentState();
+		if(silentState==ASTATE_ACTIVE)
+		{
+			getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_ENABLED,1);
+		}
+		else
+		{
+			getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_ENABLED,0);
+		}
+
+
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_PERSID,getModel()->getCONFIG()->GetPatientID());
+	}
+
+	if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+	{
+		if(getModel()->getAcuLink()!=NULL)
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_UNIT_CO2,(int)getModel()->getCONFIG()->GetCO2unit());
+			//getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,getCONFIG()->GetO2Compensation());
+			if(getModel()->isO2FlushActive())
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,getModel()->getDATAHANDLER()->PARADATA()->GetO2FlushPara());
+			else
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,getModel()->getDATAHANDLER()->PARADATA()->GetO2Para());
+
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_BAROPRESSURE_CO2,getModel()->getCONFIG()->GetCO2BaroPressure());
+
+		}
+	}
+	else if(getModel()->getAcuLink()!=NULL)
+	{
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_UNIT_CO2,ALINK_NOTVALID);
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,ALINK_NOTVALID);
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_BAROPRESSURE_CO2,ALINK_NOTVALID);
+	}
+
 	/*Sleep(1000);
 	getModel()->getDATAHANDLER()->setAcuLinkStarted();*/
 

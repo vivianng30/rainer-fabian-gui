@@ -211,7 +211,7 @@ void CInterfaceAcuLink::sendMeasurementDataIPPV()
 			setMeasurementData(ALINK_MSMNT_ETCO2,ALINK_NOTVALID);
 
 		setMeasurementData(ALINK_MSMNT_FREQETCO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FREQETCO2));	
-		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FICO2));
+		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FICO2));
 	}
 	else
 	{
@@ -222,7 +222,7 @@ void CInterfaceAcuLink::sendMeasurementDataIPPV()
 	setMeasurementData(ALINK_MSMNT_DEMAND_FLOW,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_IFLOW,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_EFLOW,ALINK_NOTVALID);
-	setMeasurementData(ALINK_MSMNT_TAU,((getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_DYNCOMPL)/100)*(getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_RESISTANCE)/10))/10);
+	setMeasurementData(ALINK_MSMNT_TAU,(int)CTlsFloat::Round(((double)(((double)getModel()->getDATAHANDLER()->getAVGMessureDataCompliance()/100)*((double)getModel()->getDATAHANDLER()->getAVGMessureDataResistance()/10))/10), 0));
 	if(isSPO2active())
 	{
 		setMeasurementData(ALINK_MSMNT_SPO2,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_SPO2));
@@ -231,7 +231,6 @@ void CInterfaceAcuLink::sendMeasurementDataIPPV()
 		else
 			setMeasurementData(ALINK_MSMNT_SPO2_PI,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_SPO2_PI));
 		setMeasurementData(ALINK_MSMNT_SPO2_PR,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_SPO2_PR));
-		int iTest=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_SPO2_SIQ);
 		setMeasurementData(ALINK_MSMNT_SPO2_SIQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_SPO2_SIQ));
 	}
 	else
@@ -287,7 +286,7 @@ void CInterfaceAcuLink::sendMeasurementDataSIPPV()
 			setMeasurementData(ALINK_MSMNT_ETCO2,ALINK_NOTVALID);
 
 		setMeasurementData(ALINK_MSMNT_FREQETCO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FREQETCO2));	
-		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FICO2));
+		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FICO2));
 	}
 	else
 	{
@@ -298,7 +297,7 @@ void CInterfaceAcuLink::sendMeasurementDataSIPPV()
 	setMeasurementData(ALINK_MSMNT_DEMAND_FLOW,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_IFLOW,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_EFLOW,ALINK_NOTVALID);
-	setMeasurementData(ALINK_MSMNT_TAU,((getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_DYNCOMPL)/100)*(getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_RESISTANCE)/10))/10);
+	setMeasurementData(ALINK_MSMNT_TAU,(int)CTlsFloat::Round(((double)(((double)getModel()->getDATAHANDLER()->getAVGMessureDataCompliance()/100)*((double)getModel()->getDATAHANDLER()->getAVGMessureDataResistance()/10))/10), 0));
 	if(isSPO2active())
 	{
 		setMeasurementData(ALINK_MSMNT_SPO2,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_SPO2));
@@ -366,7 +365,7 @@ void CInterfaceAcuLink::sendMeasurementDataPSV()
 			setMeasurementData(ALINK_MSMNT_ETCO2,ALINK_NOTVALID);
 
 		setMeasurementData(ALINK_MSMNT_FREQETCO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FREQETCO2));	
-		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FICO2));
+		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FICO2));
 	}
 	else
 	{
@@ -377,7 +376,7 @@ void CInterfaceAcuLink::sendMeasurementDataPSV()
 	setMeasurementData(ALINK_MSMNT_DEMAND_FLOW,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_IFLOW,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_EFLOW,ALINK_NOTVALID);
-	setMeasurementData(ALINK_MSMNT_TAU,((getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_DYNCOMPL)/100)*(getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_RESISTANCE)/10))/10);
+	setMeasurementData(ALINK_MSMNT_TAU,(int)CTlsFloat::Round(((double)(((double)getModel()->getDATAHANDLER()->getAVGMessureDataCompliance()/100)*((double)getModel()->getDATAHANDLER()->getAVGMessureDataResistance()/10))/10), 0));
 	if(isSPO2active())
 	{
 		setMeasurementData(ALINK_MSMNT_SPO2,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_SPO2));
@@ -441,7 +440,7 @@ void CInterfaceAcuLink::sendMeasurementDataSIMV()
 			setMeasurementData(ALINK_MSMNT_ETCO2,ALINK_NOTVALID);
 
 		setMeasurementData(ALINK_MSMNT_FREQETCO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FREQETCO2));	
-		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FICO2));
+		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FICO2));
 	}
 	else
 	{
@@ -452,7 +451,7 @@ void CInterfaceAcuLink::sendMeasurementDataSIMV()
 	setMeasurementData(ALINK_MSMNT_DEMAND_FLOW,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_IFLOW,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_EFLOW,ALINK_NOTVALID);
-	setMeasurementData(ALINK_MSMNT_TAU,((getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_DYNCOMPL)/100)*(getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_RESISTANCE)/10))/10);
+	setMeasurementData(ALINK_MSMNT_TAU,(int)CTlsFloat::Round(((double)(((double)getModel()->getDATAHANDLER()->getAVGMessureDataCompliance()/100)*((double)getModel()->getDATAHANDLER()->getAVGMessureDataResistance()/10))/10), 0));
 	if(isSPO2active())
 	{
 		setMeasurementData(ALINK_MSMNT_SPO2,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_SPO2));
@@ -526,7 +525,7 @@ void CInterfaceAcuLink::sendMeasurementDataSIMVPSV()
 			setMeasurementData(ALINK_MSMNT_ETCO2,ALINK_NOTVALID);
 
 		setMeasurementData(ALINK_MSMNT_FREQETCO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FREQETCO2));	
-		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FICO2));
+		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FICO2));
 	}
 	else
 	{
@@ -537,7 +536,7 @@ void CInterfaceAcuLink::sendMeasurementDataSIMVPSV()
 	setMeasurementData(ALINK_MSMNT_DEMAND_FLOW,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_IFLOW,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_EFLOW,ALINK_NOTVALID);
-	setMeasurementData(ALINK_MSMNT_TAU,((getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_DYNCOMPL)/100)*(getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_RESISTANCE)/10))/10);
+	setMeasurementData(ALINK_MSMNT_TAU,(int)CTlsFloat::Round(((double)(((double)getModel()->getDATAHANDLER()->getAVGMessureDataCompliance()/100)*((double)getModel()->getDATAHANDLER()->getAVGMessureDataResistance()/10))/10), 0));
 	if(isSPO2active())
 	{
 		setMeasurementData(ALINK_MSMNT_SPO2,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_SPO2));
@@ -608,7 +607,7 @@ void CInterfaceAcuLink::sendMeasurementDataCPAP()
 			setMeasurementData(ALINK_MSMNT_ETCO2,ALINK_NOTVALID);
 
 		setMeasurementData(ALINK_MSMNT_FREQETCO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FREQETCO2));	
-		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FICO2));
+		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FICO2));
 	}
 	else
 	{
@@ -622,7 +621,7 @@ void CInterfaceAcuLink::sendMeasurementDataCPAP()
 		setMeasurementData(ALINK_MSMNT_DEMAND_FLOW,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_DEMAND_FLOW));
 	setMeasurementData(ALINK_MSMNT_IFLOW,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_EFLOW,ALINK_NOTVALID);
-	setMeasurementData(ALINK_MSMNT_TAU,((getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_DYNCOMPL)/100)*(getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_RESISTANCE)/10))/10);
+	setMeasurementData(ALINK_MSMNT_TAU,(int)CTlsFloat::Round(((double)(((double)getModel()->getDATAHANDLER()->getAVGMessureDataCompliance()/100)*((double)getModel()->getDATAHANDLER()->getAVGMessureDataResistance()/10))/10), 0));
 	if(isSPO2active())
 	{
 		setMeasurementData(ALINK_MSMNT_SPO2,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_SPO2));
@@ -690,7 +689,7 @@ void CInterfaceAcuLink::sendMeasurementDataDUOPAP()
 			setMeasurementData(ALINK_MSMNT_ETCO2,ALINK_NOTVALID);
 
 		setMeasurementData(ALINK_MSMNT_FREQETCO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FREQETCO2));	
-		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FICO2));
+		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FICO2));
 	}
 	else
 	{
@@ -758,7 +757,7 @@ void CInterfaceAcuLink::sendMeasurementDataNCPAP()
 			setMeasurementData(ALINK_MSMNT_ETCO2,ALINK_NOTVALID);
 
 		setMeasurementData(ALINK_MSMNT_FREQETCO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FREQETCO2));	
-		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FICO2));
+		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FICO2));
 	}
 	else
 	{
@@ -826,7 +825,7 @@ void CInterfaceAcuLink::sendMeasurementDataTHERAPIE()
 			setMeasurementData(ALINK_MSMNT_ETCO2,ALINK_NOTVALID);
 
 		setMeasurementData(ALINK_MSMNT_FREQETCO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FREQETCO2));	
-		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FICO2));
+		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FICO2));
 	}
 	else
 	{
@@ -897,7 +896,7 @@ void CInterfaceAcuLink::sendMeasurementDataHFO()
 			setMeasurementData(ALINK_MSMNT_ETCO2,ALINK_NOTVALID);
 
 		setMeasurementData(ALINK_MSMNT_FREQETCO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FREQETCO2));	
-		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_FICO2));
+		setMeasurementData(ALINK_MSMNT_FICO2,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FICO2));
 	}
 	else
 	{
@@ -908,7 +907,7 @@ void CInterfaceAcuLink::sendMeasurementDataHFO()
 	setMeasurementData(ALINK_MSMNT_DEMAND_FLOW,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_IFLOW,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_EFLOW,ALINK_NOTVALID);
-	setMeasurementData(ALINK_MSMNT_TAU,((getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_DYNCOMPL)/100)*(getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_RESISTANCE)/10))/10);
+	setMeasurementData(ALINK_MSMNT_TAU,(int)CTlsFloat::Round(((double)(((double)getModel()->getDATAHANDLER()->getAVGMessureDataCompliance()/100)*((double)getModel()->getDATAHANDLER()->getAVGMessureDataResistance()/10))/10), 0));
 	if(isSPO2active())
 	{
 		setMeasurementData(ALINK_MSMNT_SPO2,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_SPO2));

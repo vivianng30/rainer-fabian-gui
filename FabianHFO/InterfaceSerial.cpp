@@ -640,7 +640,7 @@ static UINT CSerialCheckThread( LPVOID pc )
 DWORD CInterfaceSerial::CheckSerialData(void) 
 {
 	WORD iCnt=0;
-	while(iCnt<20 && doCheckThread())//newCOMCHECK
+	while(iCnt<40 && doCheckThread())
 	{
 		Sleep(500);
 		iCnt++;

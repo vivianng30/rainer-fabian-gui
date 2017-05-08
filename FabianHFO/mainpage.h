@@ -7,6 +7,14 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50137 Version 5.0.1.37
+ * @date 2017-05-08
+ * @verbatim
+	- ACULINK: TAU value rounded correct
+	- ACULINK: FiCO2 as average data
+	- sequence of startup changed
+ @endverbatim
+ *
  * @subsection ver50136 Version 5.0.1.36
  * @date 2017-05-08
  * @verbatim
