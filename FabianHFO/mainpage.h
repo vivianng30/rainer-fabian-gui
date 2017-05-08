@@ -7,6 +7,13 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50136 Version 5.0.1.36
+ * @date 2017-05-08
+ * @verbatim
+	- initialization of FOT fixed (ITEM-77)
+	- ACULINK: SIQ of SpO2 will be send correct
+ @endverbatim
+ *
  * @subsection ver50135 Version 5.0.1.35
  * @date 2017-05-05
  * @verbatim

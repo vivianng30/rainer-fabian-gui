@@ -105,7 +105,7 @@ CMVModel::CMVModel(void)
 	m_szBuildVersion = _T("9.0.0.0");
 #else
 	m_szVersion = _T("5.0.1");
-	m_szBuildVersion = _T("5.0.1.35");
+	m_szBuildVersion = _T("5.0.1.36");
 #endif
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO"),true);
@@ -503,7 +503,8 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	}
 	if(getDATAHANDLER()->isFOTLicenseAvailable()==true)
 	{
-		initFOTthread();
+		//initFOTthread();xxx
+		getFOTThread()->loadFOT();
 	}
 	if(getDATAHANDLER()->isLUNGRECLicenseAvailable()==false && getCONFIG()->GetParaDataFREQ_REC()!=0)
 	{

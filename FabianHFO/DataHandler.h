@@ -1147,7 +1147,7 @@ private:
 	BOOL m_bShowFlowAC;
 
 	SHORT m_iSPO2waveData;
-	SHORT m_iSPO2_SIQ;
+	//SHORT m_iSPO2_SIQ;
 	//SHORT m_iEMGwaveData;
 
 	COLORREF m_crGraphColor_PRESSURE;

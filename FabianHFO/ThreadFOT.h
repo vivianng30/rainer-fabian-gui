@@ -21,6 +21,8 @@ public:
 	static CThreadFOT* getInstance();	
 	static void destroyInstance();
 
+	void loadFOT();
+
 	/**
 	* @brief Start/Stop thread FOT
 	**/

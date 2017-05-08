@@ -197,6 +197,12 @@ CMVModel *CThreadFOT::getModel()
 //	return m_bFOTrunning;
 //}
  
+void CThreadFOT::loadFOT()
+{
+	m_eFOToriginHFIERatioPara=getModel()->getDATAHANDLER()->PARADATA()->GetIERatioParaHFO();
+	m_iFOToriginHFFreqPara=getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara();
+	m_iFOToriginHFAMPLPara=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLPara();
+}
 CString CThreadFOT::getDateLastSequence()
 {
 	CString szDate=_T("");

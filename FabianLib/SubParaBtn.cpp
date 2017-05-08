@@ -402,7 +402,7 @@ void CSubParaBtn::DrawSUBPARA_TRIGGER_DUOPAP(int nState)
 	rcSubBtn.left = m_rcClient.left;
 	rcSubBtn.right = m_rcClient.right;
 
-	TCHAR psz[MAX_PATH];
+	//TCHAR psz[MAX_PATH];
 
 	rcSubBtn.top = m_rcClient.top+5;
 	rcSubBtn.bottom = m_rcClient.bottom-5;
@@ -532,7 +532,7 @@ void CSubParaBtn::DrawSUBPARA_TRIGGER_NCPAP(int nState)
 	rcSubBtn.left = m_rcClient.left;
 	rcSubBtn.right = m_rcClient.right;
 
-	TCHAR psz[MAX_PATH];
+	//TCHAR psz[MAX_PATH];
 
 	rcSubBtn.top = m_rcClient.top+5;
 	rcSubBtn.bottom = m_rcClient.bottom-5;
@@ -614,7 +614,7 @@ void CSubParaBtn::DrawSUBPARA_TRIGGER_CPAP(int nState)
 	rcSubBtn.left = m_rcClient.left;
 	rcSubBtn.right = m_rcClient.right;
 
-	TCHAR psz[MAX_PATH];
+	//TCHAR psz[MAX_PATH];
 
 	rcSubBtn.top = m_rcClient.top+5;
 	rcSubBtn.bottom = m_rcClient.bottom-5;
@@ -1049,7 +1049,7 @@ void CSubParaBtn::DrawSUBPARA_BIASFLOW(int nState)
 	rcSubBtn.left = m_rcClient.left;
 	rcSubBtn.right = m_rcClient.right;
 
-	TCHAR psz[MAX_PATH];
+	//TCHAR psz[MAX_PATH];
 
 	SelectObject(m_hDC,g_hf7AcuBold);
 	if(getModel()->getCONFIG()->getFreshgasExt())
@@ -1407,11 +1407,7 @@ void CSubParaBtn::DrawDEFAULT(int nState)
 	rcSubBtn.left = m_rcClient.left;
 	rcSubBtn.right = m_rcClient.right;
 
-	TCHAR psz[MAX_PATH];
-
-
-	/*xxxxxxxxxxxxxxxxxxxxxxxxxx*/
-
+	//TCHAR psz[MAX_PATH];
 
 	SetTextColor(m_hDC,nPrevTxtColor);
 	SetBkMode(m_hDC,nBkMode);

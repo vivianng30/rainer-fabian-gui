@@ -231,6 +231,7 @@ void CInterfaceAcuLink::sendMeasurementDataIPPV()
 		else
 			setMeasurementData(ALINK_MSMNT_SPO2_PI,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_SPO2_PI));
 		setMeasurementData(ALINK_MSMNT_SPO2_PR,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_SPO2_PR));
+		int iTest=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_SPO2_SIQ);
 		setMeasurementData(ALINK_MSMNT_SPO2_SIQ,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_SPO2_SIQ));
 	}
 	else
