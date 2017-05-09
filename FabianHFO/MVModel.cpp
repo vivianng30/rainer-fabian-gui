@@ -6307,7 +6307,7 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 		getAcuLink()->setParaData(ALINK_SETT_HF_PMEANREC,iHFPMeanRec);
 		getAcuLink()->setParaData(ALINK_SETT_FILTER_VOLGARANTY,ALINK_NOTVALID);
 
-		if(mode!=VM_NCPAP && mode!=VM_DUOPAP && mode!=VM_THERAPIE && mode!=VM_HFO && getDATAHANDLER()->IsFlowSensorStateOff()==false)
+		if(mode!=VM_THERAPIE && mode!=VM_HFO && getDATAHANDLER()->IsFlowSensorStateOff()==false)
 		{
 			if(getALARMHANDLER()->getAlimitState_ApnoeLimit()!=AL_OFF)
 				getAcuLink()->setParaData(ALINK_SETT_APNOE_TIME,iApnoeLimit);
