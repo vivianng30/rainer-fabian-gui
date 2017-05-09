@@ -10109,10 +10109,18 @@ void CMainFrame::startAcuLink()
 		{
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_UNIT_CO2,(int)getModel()->getCONFIG()->GetCO2unit());
 			//getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,getCONFIG()->GetO2Compensation());
-			if(getModel()->isO2FlushActive())
-				getModel()->getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,getModel()->getDATAHANDLER()->PARADATA()->GetO2FlushPara());
+			if(getModel()->getCONFIG()->GetCO2module()==CO2MODULE_MICROPOD)
+			{
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2, ALINK_NOTVALID);
+			}
 			else
-				getModel()->getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,getModel()->getDATAHANDLER()->PARADATA()->GetO2Para());
+			{
+				if(getModel()->isO2FlushActive())
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,getModel()->getDATAHANDLER()->PARADATA()->GetO2FlushPara());
+				else
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,getModel()->getDATAHANDLER()->PARADATA()->GetO2Para());
+			}
+			
 
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_BAROPRESSURE_CO2,getModel()->getCONFIG()->GetCO2BaroPressure());
 
