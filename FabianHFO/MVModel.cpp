@@ -5499,12 +5499,12 @@ WORD CMVModel::Send_MODE_OPTION2(bool bSPI,bool bSerial)
 	if(true==getDATAHANDLER()->getFOToscillationState())
 	{
 		wMode=setBitOfWord(wMode, MODOPT2_FOTRUN_BIT);//BIT9
-		DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 FOTRUN_BIT true\r\n")));
+		//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 FOTRUN_BIT true\r\n")));
 	}
-	else
+	/*else
 	{
 		DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 FOTRUN_BIT false\r\n")));
-	}
+	}*/
 	
 
 	if(bSPI)
@@ -6028,7 +6028,6 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 			iHFPMeanRec=ALINK_NOTVALID;
 			iHFFlow=ALINK_NOTVALID;
 			iHFVGarant=ALINK_NOTVALID;
-			iApnoeLimit=ALINK_NOTVALID;
 		}
 		break;
 	case VM_NCPAP:
@@ -6074,7 +6073,6 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 			iHFPMeanRec=ALINK_NOTVALID;
 			iHFFlow=ALINK_NOTVALID;
 			iHFVGarant=ALINK_NOTVALID;
-			iApnoeLimit=ALINK_NOTVALID;
 		}
 		break;
 	case VM_THERAPIE:

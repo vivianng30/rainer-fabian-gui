@@ -2472,7 +2472,7 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			if(bReset)
 			{
 				getModel()->getCONFIG()->SetHFOdemoTimestamp(dtLicenseTimestamp);
-				DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_HFO\r\n")));
+				//DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_HFO\r\n")));
 			}
 		}
 		break;
@@ -2482,7 +2482,7 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			if(bReset)
 			{
 				getModel()->getCONFIG()->SetNMODEdemoTimestamp(dtLicenseTimestamp);
-				DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_NMODE\r\n")));
+				//DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_NMODE\r\n")));
 			}
 		}
 		break;
@@ -2492,7 +2492,7 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			if(bReset)
 			{
 				getModel()->getCONFIG()->SetVGUARANTYdemoTimestamp(dtLicenseTimestamp);
-				DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_VGUARANTY\r\n")));
+				//DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_VGUARANTY\r\n")));
 			}
 		}
 		break;
@@ -2502,7 +2502,7 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			if(bReset)
 			{
 				getModel()->getCONFIG()->SetVLIMITdemoTimestamp(dtLicenseTimestamp);
-				DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_VLIMIT\r\n")));
+				//DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_VLIMIT\r\n")));
 			}
 		}
 		break;
@@ -2512,7 +2512,7 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			if(bReset)
 			{
 				getModel()->getCONFIG()->SetLUNGRECdemoTimestamp(dtLicenseTimestamp);
-				DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_LUNGREC\r\n")));
+				//DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_LUNGREC\r\n")));
 			}
 		}
 		break;
@@ -2522,7 +2522,7 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			if(bReset)
 			{
 				getModel()->getCONFIG()->SetTRENDdemoTimestamp(dtLicenseTimestamp);
-				DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_TREND\r\n")));
+				//DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_TREND\r\n")));
 			}
 		}
 		break;
@@ -2532,7 +2532,7 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			if(bReset)
 			{
 				getModel()->getCONFIG()->SetTHERAPYdemoTimestamp(dtLicenseTimestamp);
-				DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_THERAPY\r\n")));
+				//DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_THERAPY\r\n")));
 			}
 		}
 		break;
@@ -2542,7 +2542,7 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			if(bReset)
 			{
 				getModel()->getCONFIG()->SetPRICOdemoTimestamp(dtLicenseTimestamp);
-				DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_PRICO\r\n")));
+				//DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_PRICO\r\n")));
 			}
 		}
 		break;
@@ -2552,7 +2552,7 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			if(bReset)
 			{
 				getModel()->getCONFIG()->SetFOTdemoTimestamp(dtLicenseTimestamp);
-				DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_FOT\r\n")));
+				//DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_FOT\r\n")));
 			}
 		}
 		break;
