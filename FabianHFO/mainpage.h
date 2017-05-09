@@ -13,6 +13,7 @@
 	- ACULINK: alarm limits state off fixed
 	- ACULINK: ALINK_SETT_O2COMPENSATION_CO2 only if module == CAPNOSTAT
 	- ACULINK: apnea time in NCPAP and DUOPAP valid
+	- ACULINK: PIPmin not valid in: CPAP, NCPAP, DUOPAP, THERAPY, HFO
  @endverbatim
  *
  * @subsection ver50137 Version 5.0.1.37
