@@ -431,10 +431,10 @@ int CInterfaceAcuLink_EXTERNAL::setMeasurementData(int idx, int iValue)
 
 void CInterfaceAcuLink_EXTERNAL::setParaData(UINT index, int val)
 {
-	/*if(index==ALINK_SETT_APNOE_TIME)
+	if(index==ALINK_SETT_ALIMIT_PIPMIN)
 	{
-		DEBUGMSG(TRUE, (TEXT("setParaData ALINK_SETT_APNOE_TIME %d\r\n"),val));
-	}*/
+		DEBUGMSG(TRUE, (TEXT("setParaData ALINK_SETT_ALIMIT_PIPMIN %d\r\n"),val));
+	}
 	if(pSetSettingData)
 		((*pSetSettingData)(index, val));
 	Sleep(0);

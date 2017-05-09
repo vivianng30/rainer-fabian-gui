@@ -733,6 +733,8 @@ bool CVentModeHandler::changeVentMode(eVentMode state, int iSetAlarmSilent, bool
 	eVentMode stateOld=getModel()->getCONFIG()->GetCurMode();
 	getModel()->getCONFIG()->SetCurMode(state);
 
+	getModel()->getALARMHANDLER()->ventModeChanged();
+
 	if(		state != VM_PRE_IPPV
 		&&	state != VM_PRE_PSV
 		&&	state != VM_PRE_SIMV
@@ -765,7 +767,7 @@ bool CVentModeHandler::changeVentMode(eVentMode state, int iSetAlarmSilent, bool
 		}
 	}
 
-	getModel()->getALARMHANDLER()->ventModeChanged();
+	//getModel()->getALARMHANDLER()->ventModeChanged();
 
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_VENTMODE_CHANGED,iSetAlarmSilent);

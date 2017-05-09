@@ -384,7 +384,7 @@ void CAlarmConditionHandler::setAlarmLimitValues_HFO()
 	ALIMIT_MVMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitMVmaxHF());
 	ALIMIT_MVMIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitMVminHF());
 	ALIMIT_PIPMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitPmaxHF());
-	ALIMIT_PIPMIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitPIPmin());
+	//ALIMIT_PIPMIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitPIPmin());
 	ALIMIT_PEEPMIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitPEEPminHF());
 	ALIMIT_FREQMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitBPMmaxHF());
 	ALIMIT_LEAKMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitLeakmaxHF());
