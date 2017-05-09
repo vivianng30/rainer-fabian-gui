@@ -14,7 +14,9 @@
 	- ACULINK: ALINK_SETT_O2COMPENSATION_CO2 only if module == CAPNOSTAT
 	- ACULINK: apnea time in NCPAP and DUOPAP valid
 	- ACULINK: PIPmin not valid in: CPAP, NCPAP, DUOPAP, THERAPY, HFO
-	- CVentModeHandler::changeVentMode: order changed - 1.getModel()->getALARMHANDLER()->ventModeChanged() - 2.getModel()->Send_VENT_MODE(state); 
+	- CVentModeHandler::changeVentMode: order changed - 1.getModel()->getALARMHANDLER()->ventModeChanged() - 2.getModel()->Send_VENT_MODE(state);
+	- ACULINK: THERAPY: IFLOW==INVALID
+	- ACULINK: HFO: RESISTANCE; COMPLIANCE AND C20C set to INVALID
  @endverbatim
  *
  * @subsection ver50137 Version 5.0.1.37

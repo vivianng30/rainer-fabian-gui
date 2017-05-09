@@ -15323,7 +15323,12 @@ void CDataHandler::SetInspFlowData(int valueInsp)
 	setMessureDataBTB(ALINK_MSMNT_IFLOW,valueInsp);
 
 	if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_IFLOW,valueInsp);
+	{
+		if(getModel()->getVMODEHANDLER()->activeModeIsTHERAPY())
+			getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_IFLOW,ALINK_NOTVALID);
+		else
+			getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_IFLOW,valueInsp);
+	}
 	
 }
 void CDataHandler::SetExpFlowData(int valueExp)
