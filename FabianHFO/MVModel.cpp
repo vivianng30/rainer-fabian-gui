@@ -6340,7 +6340,7 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 		
 		getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMAX,getALARMHANDLER()->getAlimitPIPmax());
 
-		if(mode=VM_NCPAP || mode=VM_DUOPAP || mode=VM_THERAPIE || mode==VM_HFO || mode==VM_CPAP)
+		if(mode==VM_NCPAP || mode==VM_DUOPAP || mode==VM_THERAPIE || mode==VM_HFO || mode==VM_CPAP)
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMIN,ALINK_NOTVALID);
 		else
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMIN,getALARMHANDLER()->getAlimitPIPmin());
