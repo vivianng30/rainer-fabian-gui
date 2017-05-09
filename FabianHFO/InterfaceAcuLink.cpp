@@ -908,7 +908,8 @@ void CInterfaceAcuLink::sendMeasurementDataHFO()
 	setMeasurementData(ALINK_MSMNT_DEMAND_FLOW,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_IFLOW,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_EFLOW,ALINK_NOTVALID);
-	setMeasurementData(ALINK_MSMNT_TAU,(int)CTlsFloat::Round(((double)(((double)getModel()->getDATAHANDLER()->getAVGMessureDataCompliance()/100)*((double)getModel()->getDATAHANDLER()->getAVGMessureDataResistance()/10))/10), 0));
+	//setMeasurementData(ALINK_MSMNT_TAU,(int)CTlsFloat::Round(((double)(((double)getModel()->getDATAHANDLER()->getAVGMessureDataCompliance()/100)*((double)getModel()->getDATAHANDLER()->getAVGMessureDataResistance()/10))/10), 0));
+	setMeasurementData(ALINK_MSMNT_TAU,ALINK_NOTVALID);
 	if(isSPO2active())
 	{
 		setMeasurementData(ALINK_MSMNT_SPO2,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_SPO2));

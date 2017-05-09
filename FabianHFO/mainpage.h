@@ -15,8 +15,9 @@
 	- ACULINK: apnea time in NCPAP and DUOPAP valid
 	- ACULINK: PIPmin not valid in: CPAP, NCPAP, DUOPAP, THERAPY, HFO
 	- CVentModeHandler::changeVentMode: order changed - 1.getModel()->getALARMHANDLER()->ventModeChanged() - 2.getModel()->Send_VENT_MODE(state);
-	- ACULINK: THERAPY: IFLOW==INVALID
-	- ACULINK: HFO: RESISTANCE; COMPLIANCE AND C20C set to INVALID
+	- ACULINK: THERAPY: IFLOW==NOTVALID
+	- ACULINK: HFO: RESISTANCE; COMPLIANCE AND C20C set to NOTVALID
+	- ACULINK: HFO: TAU==NOTVALID
  @endverbatim
  *
  * @subsection ver50137 Version 5.0.1.37
