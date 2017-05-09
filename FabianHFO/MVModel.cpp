@@ -105,7 +105,7 @@ CMVModel::CMVModel(void)
 	m_szBuildVersion = _T("9.0.0.0");
 #else
 	m_szVersion = _T("5.0.1");
-	m_szBuildVersion = _T("5.0.1.37");
+	m_szBuildVersion = _T("5.0.1.38");
 #endif
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO"),true);
@@ -6323,7 +6323,16 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 		if(mode!=VM_NCPAP && mode!=VM_DUOPAP && mode!=VM_THERAPIE && getDATAHANDLER()->IsFlowSensorStateOff()==false)
 		{
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MVMAX,getALARMHANDLER()->getAlimitMVmax());
-			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MVMIN,getALARMHANDLER()->getAlimitMVmin());
+			//getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MVMIN,getALARMHANDLER()->getAlimitMVmin());
+
+			if(getALARMHANDLER()->getAlimitState_MVminLimit()==AL_OFF)
+			{
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MVMIN,ALINK_OFF);
+			}
+			else
+			{
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MVMIN,getALARMHANDLER()->getAlimitMVmin());
+			}
 		}
 		else
 		{
@@ -6332,6 +6341,8 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 		}
 		
 		getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMAX,getALARMHANDLER()->getAlimitPIPmax());
+		getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMIN,getALARMHANDLER()->getAlimitPIPmin());
+		
 		if(mode!=VM_HFO)
 		{
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PEEPMIN,getALARMHANDLER()->getAlimitPEEPmin());
@@ -6340,6 +6351,7 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 		{
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PEEPMIN,ALINK_NOTVALID);
 		}
+
 		
 		if(mode!=VM_NCPAP && mode!=VM_DUOPAP && mode!=VM_THERAPIE && mode!=VM_HFO && getDATAHANDLER()->IsFlowSensorStateOff()==false)
 		{
@@ -6383,27 +6395,90 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 
 		if(getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
 		{
-			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX,getALARMHANDLER()->getAlimitETCO2max());
-			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MIN,getALARMHANDLER()->getAlimitETCO2min());
+			if(getALARMHANDLER()->getAlimitState_ETCO2maxLimit()==AL_OFF)
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX, ALINK_OFF);
+			else
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX,getALARMHANDLER()->getAlimitETCO2max());
+
+			if(getALARMHANDLER()->getAlimitState_ETCO2minLimit()==AL_OFF)
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MIN, ALINK_OFF);
+			else
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MIN,getALARMHANDLER()->getAlimitETCO2min());
+
+			if(getALARMHANDLER()->getAlimitState_FICO2maxLimit()==AL_OFF)
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MAX, ALINK_OFF);
+			else
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MAX,getALARMHANDLER()->getAlimitFICO2max());
+
+			if(getALARMHANDLER()->getAlimitState_FICO2minLimit()==AL_OFF)
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MIN, ALINK_OFF);
+			else
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MIN,getALARMHANDLER()->getAlimitFICO2min());
 		}
 		else
 		{
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX,ALINK_NOTVALID);
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MIN,ALINK_NOTVALID);
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MAX,ALINK_NOTVALID);
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MIN,ALINK_NOTVALID);
 		}
 
 		if(getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
 		{
-			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2LOW, getDATAHANDLER()->getPRICO_SPO2lowRange());		
-			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2HIGH, getDATAHANDLER()->getPRICO_SPO2highRange());
-			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2LOW, getDATAHANDLER()->getPRICO_FIO2lowRange());
-			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2HIGH, getDATAHANDLER()->getPRICO_FIO2highRange());
-			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2SIQMIN, getALARMHANDLER()->getAlimitSPO2_SIQmin());
-			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MAX, getALARMHANDLER()->getAlimitSPO2max());
-			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MIN, getALARMHANDLER()->getAlimitSPO2min());
-			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2PIMIN, getALARMHANDLER()->getAlimitSPO2_PImin());
-			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX, getALARMHANDLER()->getAlimitPulseRatemax());
-			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN, getALARMHANDLER()->getAlimitPulseRatemin());
+			if(getPRICOThread())
+			{
+				if(getPRICOThread()->isPRICOalgorithmRunning())
+				{
+					getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2LOW, getDATAHANDLER()->getPRICO_SPO2lowRange());		
+					getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2HIGH, getDATAHANDLER()->getPRICO_SPO2highRange());
+					getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2LOW, getDATAHANDLER()->getPRICO_FIO2lowRange());
+					getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2HIGH, getDATAHANDLER()->getPRICO_FIO2highRange());
+				}
+				else
+				{
+					getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2LOW, ALINK_NOTVALID);		
+					getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2HIGH, ALINK_NOTVALID);
+					getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2LOW, ALINK_NOTVALID);
+					getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2HIGH, ALINK_NOTVALID);
+				}
+			}
+			else
+			{
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2LOW, ALINK_NOTVALID);		
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2HIGH, ALINK_NOTVALID);
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2LOW, ALINK_NOTVALID);
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2HIGH, ALINK_NOTVALID);
+			}
+
+			if(getALARMHANDLER()->getAlimitState_SPO2_SIQminLimit()==AL_OFF)
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2SIQMIN, ALINK_OFF);
+			else
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2SIQMIN, getALARMHANDLER()->getAlimitSPO2_SIQmin());
+			
+			if(getALARMHANDLER()->getAlimitState_SPO2maxLimit()==AL_OFF)
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MAX, ALINK_OFF);
+			else
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MAX, getALARMHANDLER()->getAlimitSPO2max());
+
+			if(getALARMHANDLER()->getAlimitState_SPO2minLimit()==AL_OFF)
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MIN, ALINK_OFF);
+			else
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MIN, getALARMHANDLER()->getAlimitSPO2min());
+
+			if(getALARMHANDLER()->getAlimitState_SPO2_PIminLimit()==AL_OFF)
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2PIMIN, ALINK_OFF);
+			else
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2PIMIN, getALARMHANDLER()->getAlimitSPO2_PImin());
+
+			if(getALARMHANDLER()->getAlimitState_PulseRatemaxLimit()==AL_OFF)
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX, ALINK_OFF);
+			else
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX, getALARMHANDLER()->getAlimitPulseRatemax());
+
+			if(getALARMHANDLER()->getAlimitState_PulseRateminLimit()==AL_OFF)
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN, ALINK_OFF);
+			else
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN, getALARMHANDLER()->getAlimitPulseRatemin());
 		}
 		else
 		{
@@ -6411,6 +6486,7 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2HIGH, ALINK_NOTVALID);
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2LOW, ALINK_NOTVALID);
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2HIGH, ALINK_NOTVALID);
+
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2SIQMIN, ALINK_NOTVALID);
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MAX, ALINK_NOTVALID);
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MIN, ALINK_NOTVALID);

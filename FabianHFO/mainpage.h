@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50138 Version 5.0.1.38
+ * @date 2017-05-09
+ * @verbatim
+	- ACULINK: alarm limits state off fixed
+ @endverbatim
+ *
  * @subsection ver50137 Version 5.0.1.37
  * @date 2017-05-08
  * @verbatim

@@ -3276,6 +3276,15 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				
 				getModel()->getPRICOThread()->startPRICOThread();
 				getModel()->getVIEWHANDLER()->setPRICOrunning(true);
+
+				if(getModel()->getAcuLink() != NULL)
+				{
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2LOW, getModel()->getDATAHANDLER()->getPRICO_SPO2lowRange());		
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2HIGH, getModel()->getDATAHANDLER()->getPRICO_SPO2highRange());
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2LOW, getModel()->getDATAHANDLER()->getPRICO_FIO2lowRange());
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2HIGH, getModel()->getDATAHANDLER()->getPRICO_FIO2highRange());
+				}
+
 				return 1;
 			}
 			break;
@@ -3308,6 +3317,13 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					getModel()->getALARMHANDLER()->deleteAlarm(AL_PRICO_FiO2min);
 				}
 				
+				if(getModel()->getAcuLink() != NULL)
+				{
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2LOW, ALINK_NOTVALID);		
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2HIGH, ALINK_NOTVALID);
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2LOW, ALINK_NOTVALID);
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2HIGH, ALINK_NOTVALID);
+				}
 				
 				return 1;
 			}

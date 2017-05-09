@@ -5065,21 +5065,25 @@ void CAlarmConditionHandler::setAlimitState_MVminLimit(eAlarmLimitState state)
 	case AL_ON:
 		{
 			theApp.getLog()->WriteLine(_T("ALMVmin AL_ON"));
+			DEBUGMSG(TRUE, (TEXT("ALMVmin AL_ON\r\n")));
 		}
 		break;
 	case AL_OFF:
 		{
 			theApp.getLog()->WriteLine(_T("ALMVmin AL_OFF"));
+			DEBUGMSG(TRUE, (TEXT("ALMVmin AL_OFF\r\n")));
 		}
 		break;
 	case AL_AUTO:
 		{
 			theApp.getLog()->WriteLine(_T("ALMVmin AL_AUTO"));
+			DEBUGMSG(TRUE, (TEXT("ALMVmin AL_AUTO\r\n")));
 		}
 		break;
 	case AL_CALC:
 		{
 			theApp.getLog()->WriteLine(_T("ALMVmin AL_CALC"));
+			DEBUGMSG(TRUE, (TEXT("ALMVmin AL_CALC\r\n")));
 		}
 		break;
 	}

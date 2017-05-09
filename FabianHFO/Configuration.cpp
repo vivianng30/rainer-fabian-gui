@@ -6193,16 +6193,60 @@ void CConfiguration::SetSPO2module(BYTE mod, bool bReinit)
 	{
 		if(getModel()->getAcuLink() != NULL)
 		{
-			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2LOW, getModel()->getDATAHANDLER()->getPRICO_SPO2lowRange());		
-			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2HIGH, getModel()->getDATAHANDLER()->getPRICO_SPO2highRange());
-			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2LOW, getModel()->getDATAHANDLER()->getPRICO_FIO2lowRange());
-			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2HIGH, getModel()->getDATAHANDLER()->getPRICO_FIO2highRange());
-			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2SIQMIN, getModel()->getALARMHANDLER()->getAlimitSPO2_SIQmin());
-			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MAX, getModel()->getALARMHANDLER()->getAlimitSPO2max());
-			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MIN, getModel()->getALARMHANDLER()->getAlimitSPO2min());
-			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2PIMIN, getModel()->getALARMHANDLER()->getAlimitSPO2_PImin());
-			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX, getModel()->getALARMHANDLER()->getAlimitPulseRatemax());
-			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN, getModel()->getALARMHANDLER()->getAlimitPulseRatemin());
+			if(getModel()->getPRICOThread())
+			{
+				if(getModel()->getPRICOThread()->isPRICOalgorithmRunning())
+				{
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2LOW, getModel()->getDATAHANDLER()->getPRICO_SPO2lowRange());		
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2HIGH, getModel()->getDATAHANDLER()->getPRICO_SPO2highRange());
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2LOW, getModel()->getDATAHANDLER()->getPRICO_FIO2lowRange());
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2HIGH, getModel()->getDATAHANDLER()->getPRICO_FIO2highRange());
+				}
+				else
+				{
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2LOW, ALINK_NOTVALID);		
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2HIGH, ALINK_NOTVALID);
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2LOW, ALINK_NOTVALID);
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2HIGH, ALINK_NOTVALID);
+				}
+			}
+			else
+			{
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2LOW, ALINK_NOTVALID);		
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_SPO2HIGH, ALINK_NOTVALID);
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2LOW, ALINK_NOTVALID);
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PRICO_FIO2HIGH, ALINK_NOTVALID);
+			}
+			
+			if(GetAlarmlimitStateSPO2_SIQmin()==AL_OFF)
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2SIQMIN, ALINK_OFF);
+			else
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2SIQMIN, getModel()->getALARMHANDLER()->getAlimitSPO2_SIQmin());
+
+			if(GetAlarmlimitStateSPO2max()==AL_OFF)
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MAX, ALINK_OFF);
+			else
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MAX, getModel()->getALARMHANDLER()->getAlimitSPO2max());
+
+			if(GetAlarmlimitStateSPO2min()==AL_OFF)
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MIN, ALINK_OFF);
+			else
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MIN, getModel()->getALARMHANDLER()->getAlimitSPO2min());
+
+			if(GetAlarmlimitStateSPO2_PImin()==AL_OFF)
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2PIMIN, ALINK_OFF);
+			else
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2PIMIN, getModel()->getALARMHANDLER()->getAlimitSPO2_PImin());
+
+			if(GetAlarmlimitStatePulseRatemax()==AL_OFF)
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX, ALINK_OFF);
+			else
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX, getModel()->getALARMHANDLER()->getAlimitPulseRatemax());
+
+			if(GetAlarmlimitStatePulseRatemin()==AL_OFF)
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN, ALINK_OFF);
+			else
+				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN, getModel()->getALARMHANDLER()->getAlimitPulseRatemin());
 		}
 
 		//theApp.getLog()->WriteLine(_T("#SPO2module: MASIMO"));
@@ -6330,6 +6374,9 @@ void CConfiguration::SetCO2module(BYTE mod)//CO2RKU
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_UNIT_CO2, ALINK_NOTVALID);
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX, ALINK_NOTVALID);
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MIN, ALINK_NOTVALID);
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MAX, ALINK_NOTVALID);
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MIN, ALINK_NOTVALID);
+
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2, ALINK_NOTVALID);
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_BAROPRESSURE_CO2, ALINK_NOTVALID);
 		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_ETCO2, ALINK_NOTVALID);
@@ -6349,8 +6396,25 @@ void CConfiguration::SetCO2module(BYTE mod)//CO2RKU
 			if (getModel()->getAcuLink() != NULL)
 			{
 				getModel()->getAcuLink()->setParaData(ALINK_SETT_UNIT_CO2, (int)GetCO2unit());
-				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX, getModel()->getALARMHANDLER()->getAlimitETCO2max());
-				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MIN, getModel()->getALARMHANDLER()->getAlimitETCO2min());
+				if(GetAlarmlimitStateETCO2max())
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX, AL_OFF);
+				else
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX, getModel()->getALARMHANDLER()->getAlimitETCO2max());
+				
+				if(GetAlarmlimitStateETCO2min())
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MIN, AL_OFF);
+				else
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MIN, getModel()->getALARMHANDLER()->getAlimitETCO2min());
+
+				if(GetAlarmlimitStateFICO2max())
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MAX, AL_OFF);
+				else
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MAX, getModel()->getALARMHANDLER()->getAlimitETCO2max());
+				
+				if(GetAlarmlimitStateFICO2min())
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MIN, AL_OFF);
+				else
+					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MIN, getModel()->getALARMHANDLER()->getAlimitETCO2min());
 
 				if (getModel()->isO2FlushActive())
 					getModel()->getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2, getModel()->getDATAHANDLER()->PARADATA()->GetO2FlushPara());
@@ -7865,8 +7929,14 @@ void CConfiguration::SetAlarmlimitSPO2max(int value)
 {
 	m_iAlarmlimitSPO2max=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MAX_16, value);
+	
 	if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MAX,value);
+	{
+		if(GetAlarmlimitStateSPO2max()==AL_OFF)
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MAX, ALINK_OFF);
+		else
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MAX, value);
+	}
 }
 void CConfiguration::SetAlarmlimitStateSPO2max(eAlarmLimitState state)
 {
@@ -7889,8 +7959,14 @@ void CConfiguration::SetAlarmlimitSPO2min(int value)
 {
 	m_iAlarmlimitSPO2min=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MIN_16, value);
+	
 	if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MIN,value);
+	{
+		if(GetAlarmlimitStateSPO2min()==AL_OFF)
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MIN, ALINK_OFF);
+		else
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MIN, value);
+	}
 }
 void CConfiguration::SetAlarmlimitStateSPO2min(eAlarmLimitState state)
 {
@@ -7914,8 +7990,14 @@ void CConfiguration::SetAlarmlimitPulseRatemax(int value)
 {
 	m_iAlarmlimitPulseRatemax=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMAX_16, value);
+	
 	if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX,value);
+	{
+		if(GetAlarmlimitStatePulseRatemax()==AL_OFF)
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX, ALINK_OFF);
+		else
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX, value);
+	}
 }
 void CConfiguration::SetAlarmlimitStatePulseRatemax(eAlarmLimitState state)
 {
@@ -7938,8 +8020,14 @@ void CConfiguration::SetAlarmlimitPulseRatemin(int value)
 {
 	m_iAlarmlimitPulseRatemin=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMIN_16, value);
+	
 	if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN,value);
+	{
+		if(GetAlarmlimitStatePulseRatemin()==AL_OFF)
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN, ALINK_OFF);
+		else
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN, value);
+	}
 }
 void CConfiguration::SetAlarmlimitStatePulseRatemin(eAlarmLimitState state)
 {
@@ -7963,8 +8051,14 @@ void CConfiguration::SetAlarmlimitSPO2_PImin(int value)
 {
 	m_iAlarmlimitSPO2_PImin=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_PIMIN_16, value);
+	
 	if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2PIMIN,value);
+	{
+		if(GetAlarmlimitStateSPO2_PImin()==AL_OFF)
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2PIMIN, ALINK_OFF);
+		else
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2PIMIN, value);
+	}
 }
 void CConfiguration::SetAlarmlimitStateSPO2_PImin(eAlarmLimitState state)
 {
@@ -7988,7 +8082,12 @@ void CConfiguration::SetAlarmlimitSPO2_SIQmin(int value)
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_SIQMIN_16, value);
 
 	if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2SIQMIN,value);
+	{
+		if(GetAlarmlimitStateSPO2_SIQmin()==AL_OFF)
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2SIQMIN, ALINK_OFF);
+		else
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2SIQMIN, value);
+	}
 }
 void CConfiguration::SetAlarmlimitStateSPO2_SIQmin(eAlarmLimitState state)
 {
@@ -8010,8 +8109,14 @@ void CConfiguration::SetAlarmlimitETCO2max(int value)
 {
 	m_iAlarmlimitETCO2max=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_16, value);
+
 	if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX,value);
+	{
+		if(GetAlarmlimitStateETCO2max()==AL_OFF)
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX, ALINK_OFF);
+		else
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX, value);
+	}
 }
 void CConfiguration::SetAlarmlimitStateETCO2max(eAlarmLimitState state)
 {
@@ -8034,8 +8139,14 @@ void CConfiguration::SetAlarmlimitETCO2min(int value)
 {
 	m_iAlarmlimitETCO2min=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_16, value);
+
 	if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MIN,value);
+	{
+		if(getModel()->getALARMHANDLER()->getAlimitState_ETCO2minLimit()==AL_OFF)
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MIN, ALINK_OFF);
+		else
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MIN, value);
+	}
 }
 void CConfiguration::SetAlarmlimitStateETCO2min(eAlarmLimitState state)
 {
@@ -8059,8 +8170,14 @@ void CConfiguration::SetAlarmlimitFICO2max(int value)
 {
 	m_iAlarmlimitFICO2max=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_16, value);
-	/*if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MAX,value);*/
+
+	if(getModel()->getAcuLink()!=NULL)
+	{
+		if(getModel()->getALARMHANDLER()->getAlimitState_FICO2maxLimit()==AL_OFF)
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MAX, ALINK_OFF);
+		else
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MAX, value);
+	}
 }
 void CConfiguration::SetAlarmlimitStateFICO2max(eAlarmLimitState state)
 {
@@ -8083,8 +8200,14 @@ void CConfiguration::SetAlarmlimitFICO2min(int value)
 {
 	m_iAlarmlimitFICO2min=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_16, value);
-	/*if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MIN,value);*/
+
+	if(getModel()->getAcuLink()!=NULL)
+	{
+		if(getModel()->getALARMHANDLER()->getAlimitState_FICO2minLimit()==AL_OFF)
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MIN, ALINK_OFF);
+		else
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MIN, value);
+	}
 }
 void CConfiguration::SetAlarmlimitStateFICO2min(eAlarmLimitState state)
 {
@@ -8130,8 +8253,18 @@ void CConfiguration::SetAlarmlimitMVmin(int value)
 {
 	m_iAlarmlimitMVmin=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMIN_16, value);
+
 	if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MVMIN,value);
+	{
+		if(getModel()->getALARMHANDLER()->getAlimitState_MVminLimit()==AL_OFF)
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MVMIN,ALINK_OFF);
+		}
+		else
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MVMIN,value);
+		}
+	}	
 }
 void CConfiguration::SetAlarmlimitStateMVmin(eAlarmLimitState state)
 {
@@ -8178,8 +8311,8 @@ void CConfiguration::SetAlarmlimitPIPmin(int value)
 {
 	m_iAlarmlimitPIPmin=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PIPMIN_16, value);
-	/*if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMIN,value);*/
+	if(getModel()->getAcuLink()!=NULL)
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMIN,value);
 }
 void CConfiguration::SetAlarmlimitStatePIPmin(eAlarmLimitState state)
 {
@@ -8495,8 +8628,11 @@ void CConfiguration::SetAlarmlimitETCO2maxHF(int value)
 {
 	m_iAlarmlimitETCO2maxHF=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_HF_16, value);
-	if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX,value);
+
+	if(GetAlarmlimitStateETCO2maxHF()==AL_OFF)
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX, ALINK_OFF);
+	else
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX, value);
 }
 void CConfiguration::SetAlarmlimitStateETCO2maxHF(eAlarmLimitState state)
 {
@@ -8519,8 +8655,11 @@ void CConfiguration::SetAlarmlimitETCO2minHF(int value)
 {
 	m_iAlarmlimitETCO2minHF=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_HF_16, value);
-	if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MIN,value);
+
+	if(GetAlarmlimitStateETCO2minHF()==AL_OFF)
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MIN, ALINK_OFF);
+	else
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MIN, value);
 }
 void CConfiguration::SetAlarmlimitStateETCO2minHF(eAlarmLimitState state)
 {
@@ -8544,8 +8683,11 @@ void CConfiguration::SetAlarmlimitFICO2maxHF(int value)
 {
 	m_iAlarmlimitFICO2maxHF=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_HF_16, value);
-	/*if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MAX,value);*/
+
+	if(GetAlarmlimitStateFICO2maxHF()==AL_OFF)
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MAX, ALINK_OFF);
+	else
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MAX, value);
 }
 void CConfiguration::SetAlarmlimitStateFICO2maxHF(eAlarmLimitState state)
 {
@@ -8568,8 +8710,11 @@ void CConfiguration::SetAlarmlimitFICO2minHF(int value)
 {
 	m_iAlarmlimitFICO2minHF=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_HF_16, value);
-	/*if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MIN,value);*/
+
+	if(GetAlarmlimitStateFICO2minHF()==AL_OFF)
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MIN, ALINK_OFF);
+	else
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MIN, value);
 }
 void CConfiguration::SetAlarmlimitStateFICO2minHF(eAlarmLimitState state)
 {
@@ -8707,7 +8852,16 @@ void CConfiguration::SetAlarmlimitMVminHF(int value)
 	m_iAlarmlimitMVminHF=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMIN_HF_16, value);
 	if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MVMIN,value);
+	{
+		if(getModel()->getALARMHANDLER()->getAlimitState_MVminLimit()==AL_OFF)
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MVMIN,ALINK_OFF);
+		}
+		else
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MVMIN,value);
+		}
+	}
 }
 void CConfiguration::SetAlarmlimitStateMVminHF(eAlarmLimitState state)
 {
