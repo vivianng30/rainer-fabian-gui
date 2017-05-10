@@ -6261,10 +6261,10 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 		else
 			getAcuLink()->setParaData(ALINK_SETT_P_INSP,iPinsp);
 	
-		
 		getAcuLink()->setParaData(ALINK_SETT_INSP_TIME,iITime);
 		getAcuLink()->setParaData(ALINK_SETT_FREQ,iBPM);
 		getAcuLink()->setParaData(ALINK_SETT_EXH_TIME,iETime);
+
 		getAcuLink()->setParaData(ALINK_SETT_FLUSHTIME,getDATAHANDLER()->GetCurO2FlushTime());
 		getAcuLink()->setParaData(ALINK_SETT_O2FLUSH,getDATAHANDLER()->PARADATA()->GetO2FlushPara());
 
@@ -6362,6 +6362,14 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 			else
 				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FREQMAX,ALINK_OFF);
 			
+		}
+		else
+		{
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FREQMAX,ALINK_NOTVALID);
+		}
+
+		if(mode!=VM_NCPAP && mode!=VM_DUOPAP && mode!=VM_THERAPIE && getDATAHANDLER()->IsFlowSensorStateOff()==false)
+		{
 			if(getALARMHANDLER()->getAlimitState_LeakmaxLimit()!=AL_OFF)
 				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_LEAKMAX,getALARMHANDLER()->getAlimitLeakmax());
 			else
@@ -6369,7 +6377,6 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 		}
 		else
 		{
-			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FREQMAX,ALINK_NOTVALID);
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_LEAKMAX,ALINK_NOTVALID);
 		}
 		
