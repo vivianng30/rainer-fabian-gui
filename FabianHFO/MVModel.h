@@ -373,6 +373,7 @@ protected:
 
 private:
 	static CRITICAL_SECTION m_csObservers;
+	static CRITICAL_SECTION m_csI2C;
 	static CRITICAL_SECTION m_csSerial;
 	static CRITICAL_SECTION	m_csLangString;
 	static CRITICAL_SECTION	m_csTrigger;

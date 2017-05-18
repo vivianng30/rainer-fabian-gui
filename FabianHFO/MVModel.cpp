@@ -13,6 +13,7 @@
 
 CRITICAL_SECTION CMVModel::m_csO2Flush;
 CRITICAL_SECTION CMVModel::m_csSerial;
+CRITICAL_SECTION CMVModel::m_csI2C;
 CRITICAL_SECTION CMVModel::m_csObservers;
 CRITICAL_SECTION CMVModel::m_csLangString;
 CRITICAL_SECTION CMVModel::m_csTrigger;
@@ -67,6 +68,7 @@ CMVModel::CMVModel(void)
 	InitializeCriticalSection(&m_csLangString);
 	InitializeCriticalSection(&m_csTrigger);
 	InitializeCriticalSection(&m_csObservers);
+	InitializeCriticalSection(&m_csI2C);
 	InitializeCriticalSection(&m_csSerial);
 	InitializeCriticalSection(&m_csO2Flush);
 	InitializeCriticalSection(&m_csETCO2);
@@ -157,6 +159,7 @@ CMVModel::~CMVModel(void)
 	DeleteCriticalSection(&m_csLangString);
 	DeleteCriticalSection(&m_csTrigger);
 	DeleteCriticalSection(&m_csObservers);
+	DeleteCriticalSection(&m_csI2C);
 	DeleteCriticalSection(&m_csSerial);
 }
 
@@ -346,10 +349,12 @@ CInterfaceDIO *CMVModel::getDIO()
 }
 CInterfaceI2C *CMVModel::getI2C()
 { 
+	EnterCriticalSection(&m_csI2C);
 	if(I2C==NULL)
 	{
 		I2C=CInterfaceI2C::GetInstance();
 	}
+	LeaveCriticalSection(&m_csI2C);
 	return I2C;
 }
 CSoundPlayer *CMVModel::getSOUND()
@@ -1168,11 +1173,8 @@ bool CMVModel::isCO2inprogress()
 //=============================================================================
 void CMVModel::initSPO2module(bool bReinit)
 {
-	
-	//DEBUGMSG(TRUE, (TEXT("CMVModel::InitSPO2module()\r\n")));
 	if(getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
 	{
-		//DEBUGMSG(TRUE, (TEXT("CMVModel::InitSPO2module() 1\r\n")));
 		if(SPO2==NULL)
 			SPO2=CInterfaceSPO2::GetInstance(getCONFIG()->GetSPO2module());
 
@@ -1180,7 +1182,6 @@ void CMVModel::initSPO2module(bool bReinit)
 		{
 			if(SPO2->Init(9)==0)
 			{
-				//DEBUGMSG(TRUE, (TEXT("CMVModel::InitSPO2module() 2\r\n")));
 				m_bSPO2running=true;
 			}
 			else
@@ -1190,11 +1191,9 @@ void CMVModel::initSPO2module(bool bReinit)
 				getDATAHANDLER()->setCOMErrorCode(ERRC_USB_SPO2_INIT);
 			}
 		}
-		
 	}
 	else
 	{
-		//DEBUGMSG(TRUE, (TEXT("CMVModel::InitSPO2module() 3\r\n")));
 		SPO2=NULL;
 		m_bSPO2running=false;
 	}
@@ -1228,7 +1227,6 @@ void CMVModel::DeinitSPO2module(bool bReinit)
 		SPO2->DestroyInstance();
 		SPO2=NULL;
 	}
-	
 }
 
 bool CMVModel::isSPO2running()

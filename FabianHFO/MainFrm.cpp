@@ -3165,7 +3165,6 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				if(getModel()->isSPO2running() && false==getModel()->getCONFIG()->isSpO2ConfigInProgress())
 				{
-					//DEBUGMSG(TRUE, (TEXT("WM_REINIT_SPO2_MODULE\r\n")));
 					getModel()->getCONFIG()->SetSPO2module(getModel()->getCONFIG()->GetSPO2module(),true);
 				}
 				

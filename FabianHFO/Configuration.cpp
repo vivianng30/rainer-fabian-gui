@@ -6172,9 +6172,6 @@ BYTE CConfiguration::GetSPO2module()
 }
 void CConfiguration::SetSPO2module(BYTE mod, bool bReinit)
 {
-	//DEBUGMSG(TRUE, (TEXT("SetSPO2module start\r\n")));
-	/*if(m_iSPO2module==mod)
-		return;*/
 	m_bSpO2ConfigInProgress=true;
 
 	bool bModuleChanged=false;
@@ -6186,7 +6183,6 @@ void CConfiguration::SetSPO2module(BYTE mod, bool bReinit)
 
 	getModel()->getI2C()->WriteConfigByte(SPO2CONFIG,m_iSPO2module);
 
-	//DEBUGMSG(TRUE, (TEXT("DeinitSPO2module\r\n")));
 	getModel()->DeinitSPO2module(bReinit);
 
 	if(m_iSPO2module!=SPO2MODULE_NONE)
@@ -6249,8 +6245,6 @@ void CConfiguration::SetSPO2module(BYTE mod, bool bReinit)
 				getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN, getModel()->getALARMHANDLER()->getAlimitPulseRatemin());
 		}
 
-		//theApp.getLog()->WriteLine(_T("#SPO2module: MASIMO"));
-		//DEBUGMSG(TRUE, (TEXT("InitSPO2module\r\n")));
 		getModel()->initSPO2module(bReinit);
 
 		if(bModuleChanged)
@@ -6258,15 +6252,14 @@ void CConfiguration::SetSPO2module(BYTE mod, bool bReinit)
 	}
 	else
 	{
-		//theApp.getLog()->WriteLine(_T("#SPO2module: NONE"));
 		if(getModel()->getPRICOThread())
 		{
 			if(getModel()->getPRICOThread()->isPRICOalgorithmRunning())
 			{
-				getModel()->getDATAHANDLER()->setPRICOoff();//PRICO04
+				getModel()->getDATAHANDLER()->setPRICOoff();
 			}
 
-			if(getModel()->getALARMHANDLER()->isPRICOAutoTurnedOff())//rku AUTOPRICO
+			if(getModel()->getALARMHANDLER()->isPRICOAutoTurnedOff())
 			{
 				getModel()->getALARMHANDLER()->resetPRICOAutoTurnedOff();
 			}
@@ -6275,7 +6268,6 @@ void CConfiguration::SetSPO2module(BYTE mod, bool bReinit)
 		getModel()->DeinitSPO2module();
 		if(getModel()->getALARMHANDLER()->isAlarmType(AT_SPO2))
 		{
-			//DEBUGMSG(TRUE, (TEXT("deleteAlarmType(AT_SPO2)\r\n")));
 			getModel()->getALARMHANDLER()->deleteAlarmType(AT_SPO2);
 		}
 
@@ -6320,11 +6312,8 @@ void CConfiguration::SetSPO2module(BYTE mod, bool bReinit)
 			getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_SPO2_PR,ALINK_NOTVALID);
 			getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_SPO2_SIQ,ALINK_NOTVALID);
 		}
-		
-
 	}
 	m_bSpO2ConfigInProgress=false;
-	//DEBUGMSG(TRUE, (TEXT("SetSPO2module end\r\n")));
 	
 	if(!bReinit)
 		getModel()->logSPO2module();
