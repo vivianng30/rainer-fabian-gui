@@ -4061,11 +4061,6 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 			break;
-		/*case WM_CALC_AUTOALARMLIMITS_PIPLOW:
-			{
-				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
-			}
-			break;*/
 		case WM_CALCULATE_AUTOALARMLIMITS:
 			{
 				if(getModel()->getALARMHANDLER()->getAlimitState_MVmaxLimit()==AL_AUTO)
@@ -4337,27 +4332,18 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				theApp.getLog()->WriteLine(szTAU);
 
 				bool bLimitChanged=false;
-				
 
 				if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
 				{
 					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-					//PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
 					bLimitChanged=true;
 				}
 				else if(getModel()->getVMODEHANDLER()->getCurrentActiveMode()==VM_HFO)
 				{
-					//getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
 					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
-					//PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
 					bLimitChanged=true;
 				}
-				//if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
-				//{
-				//	getModel()->getDATAHANDLER()->calculateAutoAlarmlimitPIPLOW();
-				//	//PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
-				//	bLimitChanged=true;
-				//}
+				
 				if(bLimitChanged)
 				{
 					PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
@@ -7240,7 +7226,6 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 
 				getModel()->SetAlimitStateCalculating(true);
 			}
-			
 		}
 		break;
 	case AP_MVMIN:
@@ -7265,7 +7250,6 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 
 				getModel()->SetAlimitStateCalculating(true);
 			}
-			
 		}
 		break;
 	case AP_LEAK:
@@ -7290,7 +7274,6 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 
 				getModel()->SetAlimitStateCalculating(true);
 			}
-			
 		}
 		break;
 	case AP_BPM:
@@ -7315,7 +7298,6 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 
 				getModel()->SetAlimitStateCalculating(true);
 			}
-			
 		}
 		break;
 	case AP_APNOE:
@@ -7333,7 +7315,6 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 
 				PostMessage(WM_DATA_CALCULATE_ALARMLIMITS);
 			}
-			
 		}
 		break;
 	case AP_PIPMAX:
@@ -7384,7 +7365,6 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 
 				PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
 			}
-			
 		}
 		break;
 	case AP_DCO2MAX:
@@ -7410,7 +7390,6 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 
 				getModel()->SetAlimitStateCalculating(true);
 			}
-
 		}
 		break;
 	case AP_DCO2MIN:
@@ -7436,7 +7415,6 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 
 				getModel()->SetAlimitStateCalculating(true);
 			}
-
 		}
 		break;
 	case AP_ETCO2MAX:
@@ -7462,7 +7440,6 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 
 				getModel()->SetAlimitStateCalculating(true);
 			}
-
 		}
 		break;
 	case AP_ETCO2MIN:
@@ -7488,7 +7465,6 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 
 				getModel()->SetAlimitStateCalculating(true);
 			}
-
 		}
 		break;
 	case AP_FICO2MAX:
@@ -7514,7 +7490,6 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 
 				getModel()->SetAlimitStateCalculating(true);
 			}
-
 		}
 		break;
 	case AP_FICO2MIN:
@@ -7540,7 +7515,6 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 
 				getModel()->SetAlimitStateCalculating(true);
 			}
-
 		}
 		break;
 	case AP_SPO2MAX:

@@ -9482,7 +9482,6 @@ LRESULT CViewParaBtn::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 		break;
 	case WM_DATA_CHANGED:
 		{
-			//fVALUE fv;
 			int iValue;
 			
 			/** \brief The enter critical section. */
