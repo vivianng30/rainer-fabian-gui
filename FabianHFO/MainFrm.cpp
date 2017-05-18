@@ -7908,7 +7908,13 @@ DWORD CMainFrame::SetI2CWatchdog(void)
 		dwEnd=GetTickCount();
 
 		if(dwEnd>=dwStart)
+		{
 			dwDiff=dwEnd-dwStart;
+			/*if(dwDiff>1000)
+			{
+				DEBUGMSG(TRUE, (TEXT("I2CWatchdog %d\r\n"),dwDiff));
+			}*/
+		}
 		else
 			dwDiff=0;
 
