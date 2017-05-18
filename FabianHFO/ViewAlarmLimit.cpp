@@ -4083,19 +4083,10 @@ void CViewAlarmLimit::NotifyParaBtnEvent(CMVEvent* pEvent)
 
 						if(m_pcAlarmLimit_PIPmin)
 							m_pcAlarmLimit_PIPmin->SetAbsoluteLimits(getModel()->getALARMHANDLER()->getAlimitMinRangePIPmin(),
-							getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmin());
-
-
-						/*if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-						{
-							if(m_pcAlarmLimit_PEEP)
-								m_pcAlarmLimit_PEEP->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPEEPmin(),true);
-						}*/
+																	getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmin());
 
 						if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
 						{
-							/*if(m_pcAlarmLimit_PEEP)
-								m_pcAlarmLimit_PEEP->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPEEPmin(),true);*/
 							if(m_pcAlarmLimit_PEEP)
 								m_pcAlarmLimit_PEEP->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitPEEPmin(),true);
 							if(m_pcAlarmLimit_PIPmin)
@@ -4103,15 +4094,11 @@ void CViewAlarmLimit::NotifyParaBtnEvent(CMVEvent* pEvent)
 						}
 						if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
 						{
-							/*if(m_pcAlarmLimit_PIPmax)
-								m_pcAlarmLimit_PIPmax->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPIPHIGH(),true);*/
 							if(m_pcAlarmLimit_PIPmax)
 								m_pcAlarmLimit_PIPmax->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitPIPmax(),true);
 						}
 						if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
 						{
-							/*if(m_pcAlarmLimit_PIPmin)
-								m_pcAlarmLimit_PIPmin->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPIPLOW(),true);*/
 							if(m_pcAlarmLimit_PIPmin)
 								m_pcAlarmLimit_PIPmin->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitPIPmin(),true);
 						}
@@ -4134,8 +4121,6 @@ void CViewAlarmLimit::NotifyParaBtnEvent(CMVEvent* pEvent)
 
 						if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
 						{
-							/*if(m_pcAlarmLimit_PEEP)
-								m_pcAlarmLimit_PEEP->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPEEPmin(),true);*/
 							if(m_pcAlarmLimit_PEEP)
 								m_pcAlarmLimit_PEEP->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitPEEPmin(),true);
 							if(m_pcAlarmLimit_PIPmin)
@@ -4143,15 +4128,11 @@ void CViewAlarmLimit::NotifyParaBtnEvent(CMVEvent* pEvent)
 						}
 						if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
 						{
-							/*if(m_pcAlarmLimit_PIPmax)
-								m_pcAlarmLimit_PIPmax->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPIPHIGH(),true);*/
 							if(m_pcAlarmLimit_PIPmax)
 								m_pcAlarmLimit_PIPmax->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitPIPmax(),true);
 						}
 						if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
 						{
-							/*if(m_pcAlarmLimit_PIPmin)
-								m_pcAlarmLimit_PIPmin->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPIPLOW(),true);*/
 							if(m_pcAlarmLimit_PIPmin)
 								m_pcAlarmLimit_PIPmin->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitPIPmin(),true);
 						}
@@ -4176,20 +4157,15 @@ void CViewAlarmLimit::NotifyParaBtnEvent(CMVEvent* pEvent)
 
 						if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
 						{
-							/*if(m_pcAlarmLimit_PIPmax)
-								m_pcAlarmLimit_PIPmax->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPIPHIGH(),true);*/
 							if(m_pcAlarmLimit_PIPmax)
 								m_pcAlarmLimit_PIPmax->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitPIPmax(),true);
 						}
 						if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
 						{
-							/*if(m_pcAlarmLimit_PIPmin)
-								m_pcAlarmLimit_PIPmin->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPIPLOW(),true);*/
 							if(m_pcAlarmLimit_PIPmin)
 								m_pcAlarmLimit_PIPmin->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitPIPmin(),true);
 						}
 						bRefresh=true;
-
 					}
 					break;
 				case CMVEventUI::EV_PARABN_HFAMPL:
@@ -4205,23 +4181,12 @@ void CViewAlarmLimit::NotifyParaBtnEvent(CMVEvent* pEvent)
 							m_pcAlarmLimit_PIPmax->SetAbsoluteLimits(getModel()->getALARMHANDLER()->getAlimitMinRangePIPmax(),
 							getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmax());
 
-						/*if(m_pcAlarmLimit_PIPmin)
-							m_pcAlarmLimit_PIPmin->SetAbsoluteLimits(getModel()->getALARMHANDLER()->getAlimitMinRangePIPmin(),
-							getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmin());*/
-
 						if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
 						{
-							/*if(m_pcAlarmLimit_PIPmax)
-								m_pcAlarmLimit_PIPmax->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPIPHIGH(),true);*/
 							if(m_pcAlarmLimit_PIPmax)
 								m_pcAlarmLimit_PIPmax->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitPIPmax(),true);
 						}
 
-						/*if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
-						{
-							if(m_pcAlarmLimit_PIPmin)
-								m_pcAlarmLimit_PIPmin->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPINSP(),true);
-						}*/
 						bRefresh=true;
 					}
 					break;
@@ -4235,23 +4200,12 @@ void CViewAlarmLimit::NotifyParaBtnEvent(CMVEvent* pEvent)
 							m_pcAlarmLimit_PIPmax->SetAbsoluteLimits(getModel()->getALARMHANDLER()->getAlimitMinRangePIPmax(),
 							getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmax());
 
-						/*if(m_pcAlarmLimit_PIPmin)
-							m_pcAlarmLimit_PIPmin->SetAbsoluteLimits(getModel()->getALARMHANDLER()->getAlimitMinRangePIPmin(),
-							getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmin());*/
-
 						if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
 						{
-							/*if(m_pcAlarmLimit_PIPmax)
-								m_pcAlarmLimit_PIPmax->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPIPHIGH(),true);*/
 							if(m_pcAlarmLimit_PIPmax)
 								m_pcAlarmLimit_PIPmax->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitPIPmax(),true);
 						}
 
-						/*if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
-						{
-							if(m_pcAlarmLimit_PIPmin)
-								m_pcAlarmLimit_PIPmin->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPINSP(),true);
-						}*/
 						bRefresh=true;
 					}
 					break;
@@ -4259,17 +4213,10 @@ void CViewAlarmLimit::NotifyParaBtnEvent(CMVEvent* pEvent)
 					{
 						if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
 						{
-							/*if(m_pcAlarmLimit_PIPmax)
-								m_pcAlarmLimit_PIPmax->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPIPHIGH(),true);*/
 							if(m_pcAlarmLimit_PIPmax)
 								m_pcAlarmLimit_PIPmax->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitPIPmax(),true);
 						}
 
-						/*if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
-						{
-							if(m_pcAlarmLimit_PIPmin)
-								m_pcAlarmLimit_PIPmin->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPINSP(),true);
-						}*/
 						bRefresh=true;
 					}
 					break;
@@ -4289,8 +4236,6 @@ void CViewAlarmLimit::NotifyParaBtnEvent(CMVEvent* pEvent)
 
 						if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
 						{
-							/*if(m_pcAlarmLimit_PEEP)
-								m_pcAlarmLimit_PEEP->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPEEPmin(),true);*/
 							if(m_pcAlarmLimit_PEEP)
 								m_pcAlarmLimit_PEEP->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitPEEPmin(),true);
 							if(m_pcAlarmLimit_PIPmin)
@@ -4298,15 +4243,11 @@ void CViewAlarmLimit::NotifyParaBtnEvent(CMVEvent* pEvent)
 						}
 						if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
 						{
-							/*if(m_pcAlarmLimit_PIPmax)
-								m_pcAlarmLimit_PIPmax->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPIPHIGH(),true);*/
 							if(m_pcAlarmLimit_PIPmax)
 								m_pcAlarmLimit_PIPmax->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitPIPmax(),true);
 						}
 						if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
 						{
-							/*if(m_pcAlarmLimit_PIPmin)
-								m_pcAlarmLimit_PIPmin->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPIPLOW(),true);*/
 							if(m_pcAlarmLimit_PIPmin)
 								m_pcAlarmLimit_PIPmin->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitPIPmin(),true);
 						}
@@ -4318,19 +4259,15 @@ void CViewAlarmLimit::NotifyParaBtnEvent(CMVEvent* pEvent)
 					break;
 				}
 			}
-		
 		}
 	}
 	catch (...)
 	{
 		theApp.ReportException(_T("CViewAlarmLimit::NotifyParaBtnEvent"));
 	}
-	
 
 	if(bRefresh)
 		RefreshAlarmStates();
-
-	
 }
 
 bool CViewAlarmLimit::isActicePatientAlarmLimit()
