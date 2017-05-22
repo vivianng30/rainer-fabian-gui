@@ -897,41 +897,6 @@ void CALimitBtn::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 							m_bEndOfRange = true;
 							m_bAlarmLimitState=AL_OFF;
 						}
-
-
-
-
-						/*m_v.iCurrentLimit = (m_v.iCurrentLimit/10)*10;
-
-						if(m_v.iCurrentLimit<=m_v.iAbsoluteLowerLimit)
-						{
-							m_bEndOfRange = true;
-						}
-						else
-						{
-							if(m_bAlarmLimitState==AL_AUTO || m_bAlarmLimitState==AL_CALC)
-							{
-								getModel()->getALARMHANDLER()->setAlimitState_MVminLimit(AL_ON);
-								m_bAlarmLimitState=AL_ON;
-							}
-
-							if(m_v.iCurrentLimit<=260)
-							{
-								m_v.iCurrentLimit=m_v.iCurrentLimit-10;
-							}
-							else if(m_v.iCurrentLimit<=500)
-							{
-								m_v.iCurrentLimit=m_v.iCurrentLimit-20;
-							}
-							else if(m_v.iCurrentLimit<=1000)
-							{
-								m_v.iCurrentLimit=m_v.iCurrentLimit-50;
-							}
-							else
-							{
-								m_v.iCurrentLimit=m_v.iCurrentLimit-100;
-							}
-						}*/
 					}
 					break;
 				case IDC_BTN_ALARM_PIPMAX_HI:
@@ -1557,42 +1522,6 @@ void CALimitBtn::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 						}
 						else
 							m_bEndOfRange = true;
-
-
-
-
-
-						/*m_v.iCurrentLimit = (m_v.iCurrentLimit/10)*10;
-
-						if(m_v.iCurrentLimit>=dTemp)
-						{
-							m_bEndOfRange = true;
-						}
-						else
-						{
-							if(m_bAlarmLimitState==AL_AUTO || m_bAlarmLimitState==AL_CALC)
-							{
-								getModel()->getALARMHANDLER()->setAlimitState_MVminLimit(AL_ON);
-								m_bAlarmLimitState=AL_ON;
-							}
-
-							if(m_v.iCurrentLimit>=1000)
-							{
-								m_v.iCurrentLimit=m_v.iCurrentLimit+100;
-							}
-							else if(m_v.iCurrentLimit>=500)
-							{
-								m_v.iCurrentLimit=m_v.iCurrentLimit+50;
-							}
-							else if(m_v.iCurrentLimit>=260)
-							{
-								m_v.iCurrentLimit=m_v.iCurrentLimit+20;
-							}
-							else
-							{
-								m_v.iCurrentLimit=m_v.iCurrentLimit+10;
-							}
-						}*/
 					}
 					break;
 				case IDC_BTN_ALARM_PIPMAX_HI:

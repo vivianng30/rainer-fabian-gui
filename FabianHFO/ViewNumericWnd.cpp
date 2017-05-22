@@ -1414,7 +1414,6 @@ void CViewNumericWnd::NotifyParaBtnEvent(CMVEvent* pEvent)
 					bool bLimitChanged=false;
 					if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
 					{
-						//getModel()->GetDataHandler()->CalculateAutoAlarmlimitPEEPmin();xxxxxxxxxx
 						bLimitChanged=true;
 					}
 					if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
