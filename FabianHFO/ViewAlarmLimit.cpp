@@ -1239,19 +1239,14 @@ void CViewAlarmLimit::DrawFrames(CDC* pDC)
 		return;
 
 	HDC hdc = *pDC;
-
 	CBrush cbrBack(BACKGND);
 	HBRUSH hPrevBrush=(HBRUSH)SelectObject(hdc,cbrBack);
-
-	//HBRUSH hPrevBrush = (HBRUSH)SelectObject(hdc, (HBRUSH)GetStockObject(WHITE_BRUSH));	
 	HPEN hPrevPen = (HPEN)SelectObject(hdc, (HPEN)GetStockObject(WHITE_PEN));
-
 
 	RECT rcCl;
 	GetClientRect(&rcCl);
 
 	FillRect(hdc,&rcCl,cbrBack);
-	//m_pcNumHeader->Draw(hdc);
 
 	if(m_eCurALimitNumeric==ALIMITNUM_ETCO2)
 	{
