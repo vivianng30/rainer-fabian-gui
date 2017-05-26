@@ -4296,14 +4296,14 @@ void CDataHandler::loadConfig()
 					
 					theApp.getLog()->WriteLine(_T("#HFO:0061"));
 				}
-				else if(GetFlowSensorState()==FLOWSENSOR_OFF && GetPrevFlowSensorState()==FLOWSENSOR_ON)
+				/*else if(GetFlowSensorState()==FLOWSENSOR_OFF && GetPrevFlowSensorState()==FLOWSENSOR_ON)
 				{
 					EnterCriticalSection(&csFlowsensorState);
 					m_eFlowSensorState=FLOWSENSOR_ON;
 					LeaveCriticalSection(&csFlowsensorState);
 					//theApp.getLog()->WriteLine(_T("#HFO:0062"));
 				}
-				/*else if(GetFlowSensorState()!=FLOWSENSOR_OFF)
+				else if(GetFlowSensorState()!=FLOWSENSOR_OFF)
 				{
 					EnterCriticalSection(&csFlowsensorState);
 					m_eFlowSensorState=FLOWSENSOR_OFF;
@@ -4332,13 +4332,13 @@ void CDataHandler::loadConfig()
 
 					theApp.getLog()->WriteLine(_T("#HFO:0063"));
 				}
-				else if(GetFlowSensorState()==FLOWSENSOR_OFF && GetPrevFlowSensorState()==FLOWSENSOR_ON)
-				{
-					EnterCriticalSection(&csFlowsensorState);
-					m_eFlowSensorState=FLOWSENSOR_ON;
-					LeaveCriticalSection(&csFlowsensorState);
-					//theApp.getLog()->WriteLine(_T("#HFO:0062"));
-				}
+				//else if(GetFlowSensorState()==FLOWSENSOR_OFF && GetPrevFlowSensorState()==FLOWSENSOR_ON)
+				//{
+				//	EnterCriticalSection(&csFlowsensorState);
+				//	m_eFlowSensorState=FLOWSENSOR_ON;
+				//	LeaveCriticalSection(&csFlowsensorState);
+				//	//theApp.getLog()->WriteLine(_T("#HFO:0062"));
+				//}
 
 				//if(/*false==isNebulizerOn() &&*/ GetFlowSensorState()==FLOWSENSOR_AUTOOFF) rku,PRETRIGGER
 				//{
@@ -4752,6 +4752,8 @@ void CDataHandler::start()
 		if(AfxGetApp() != NULL)
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_SET_EFLOWEQUIFLOW);
 	}
+
+	
 }
 
 

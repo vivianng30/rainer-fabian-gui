@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50139 Version 5.0.1.39
+ * @date 2017-05-26
+ * @verbatim
+	- startup with DUOPAP and MEDIJET fixed: flowsensor should be off
+ @endverbatim
+ *
  * @subsection ver50138 Version 5.0.1.38
  * @date 2017-05-09
  * @verbatim
