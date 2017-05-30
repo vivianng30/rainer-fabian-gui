@@ -580,7 +580,8 @@ void CWndMenuGraphs::Show(BOOL bShow)
 			||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF
 			||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_AUTOOFF
 			||	getModel()->getVMODEHANDLER()->activeModeIsDUOPAP()
-			||	(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getVMODEHANDLER()->activeModeIsNCPAP()))
+			//||	(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getVMODEHANDLER()->activeModeIsNCPAP()))
+			||	getModel()->getVMODEHANDLER()->activeModeIsNCPAP())
 		{
 			if(m_pcMenuLoops)
 				m_pcMenuLoops->EnableWindow(FALSE);
@@ -1304,7 +1305,8 @@ void CWndMenuGraphs::FlowSensorStateChanged()
 		||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF
 		||	getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_AUTOOFF
 		||	getModel()->getVMODEHANDLER()->activeModeIsDUOPAP()
-		||	(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getVMODEHANDLER()->activeModeIsNCPAP()))
+		//||	(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getVMODEHANDLER()->activeModeIsNCPAP()))
+		||	getModel()->getVMODEHANDLER()->activeModeIsNCPAP())
 	{
 		if(m_pcMenuLoops)
 			m_pcMenuLoops->EnableWindow(FALSE);
