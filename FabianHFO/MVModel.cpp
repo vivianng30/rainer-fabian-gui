@@ -2015,6 +2015,14 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 					}
 				}
 				break;
+			case VM_IPPV:
+				{
+					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
+					{
+						getDATAHANDLER()->checkTriggerTubeDependency();
+					}
+				}
+				break;
 			case VM_CPAP:
 				{
 					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)

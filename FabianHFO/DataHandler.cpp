@@ -5346,6 +5346,16 @@ void CDataHandler::checkTriggerTubeDependency()
 			getModel()->Send_MODE_OPTION1();
 		}
 	}
+	else if(true==getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+	{
+		if(		GetFlowSensorState()==FLOWSENSOR_MANOFF
+			&&	getTriggerOptionCONV()!=TRIGGER_PRESSURE)
+		{
+			SetPrevTriggerOptionCONV(getTriggerOptionCONV());
+			setTriggerOptionCONV(TRIGGER_PRESSURE);
+			getModel()->Send_MODE_OPTION1();
+		}
+	}
 }
 void CDataHandler::SetTriggerNMODEenabled()
 {

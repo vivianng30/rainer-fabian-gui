@@ -8646,11 +8646,14 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 	bool bCheckBPMinNMODE=false;
 	if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false 
 		&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET 
-		&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
+		&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF
+		&&	bActiveModeIsNMODE)
 	{
 		bCheckBPMinNMODE=true;
 	}
-	else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
+	else if(	getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET 
+			&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF
+			&&	bActiveModeIsNMODE)
 	{
 		bCheckBPMinNMODE=true;
 	}
@@ -8715,6 +8718,17 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 				{
 					bDCO2min_Alarm=true;
 				}
+			}
+		}
+	}
+	else if((eActiveVentMode==VM_SIMV || eActiveVentMode==VM_SIPPV ||eActiveVentMode==VM_CPAP)
+			&& getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
+	{
+		if(stateBPMmax==AL_ON || stateBPMmax==AL_AUTO)
+		{
+			if(	MessureData.m_iBPM > getAlimitBPMmax())
+			{
+				bBPMmax_Alarm=true;
 			}
 		}
 	}

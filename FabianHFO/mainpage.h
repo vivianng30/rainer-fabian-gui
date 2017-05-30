@@ -12,6 +12,7 @@
  * @verbatim
 	- IPPV: flow sensor == off -> alarm limit freq hidden
 	- DUOPAP/NCPAP: loops general inactive
+	- alarm limit check changed regarding flow sensor state
  @endverbatim
  *
  * @subsection ver50139 Version 5.0.1.39

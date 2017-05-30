@@ -74,6 +74,10 @@ bool CNumericFieldFREQ::drawData(bool bData, bool bFrames, bool bText, bool bLim
 		drawStaticText(pDCStatic);
 	}
 
+	eVentMode eActiveVentMode=getModel()->getALARMHANDLER()->getSafeActiveVentMode();
+	if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true && eActiveVentMode==VM_IPPV)
+		bLimits=false;
+
 	if(bLimits)
 	{
 		drawLimits(pDCStatic);
