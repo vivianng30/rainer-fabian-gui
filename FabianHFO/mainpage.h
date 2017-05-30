@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50140 Version 5.0.1.40
+ * @date 2017-05-30
+ * @verbatim
+	- IPPV: flow sensor == off -> alarm limit freq hidden
+ @endverbatim
+ *
  * @subsection ver50139 Version 5.0.1.39
  * @date 2017-05-26
  * @verbatim

@@ -2683,7 +2683,7 @@ eAlarm CAlarmMgmtHandler::getSignaledAlarm()
 
 bool CAlarmMgmtHandler::setAlarm(eAlarm alarm, CStringW alarmTxt)
 {
-	DEBUGMSG(TRUE, (TEXT("setAlarm\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("setAlarm\r\n")));
 
 	bool bRes=false;
 	switch(alarm)

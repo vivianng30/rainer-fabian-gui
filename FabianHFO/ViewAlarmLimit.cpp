@@ -3964,7 +3964,11 @@ void CViewAlarmLimit::showALimitButtons()
 			}
 		}
 
-		if(m_eCurVentMode!=VM_THERAPIE && m_eCurVentMode!=VM_NCPAP && m_eCurVentMode!=VM_DUOPAP && m_eCurVentMode!=VM_HFO && getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
+		if(m_eCurVentMode==VM_IPPV && getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
+		{
+			//do not display
+		}
+		else if(m_eCurVentMode!=VM_THERAPIE && m_eCurVentMode!=VM_NCPAP && m_eCurVentMode!=VM_DUOPAP && m_eCurVentMode!=VM_HFO && getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
 		{
 			if(m_pcAlarmLimit_BPM)
 			{
