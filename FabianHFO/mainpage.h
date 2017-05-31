@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50141 Version 5.0.1.41
+ * @date 2017-05-31
+ * @verbatim
+	- MAINBOARD version 3.2 included
+ @endverbatim
+ *
  * @subsection ver50140 Version 5.0.1.40
  * @date 2017-05-30
  * @verbatim
