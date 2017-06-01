@@ -860,7 +860,8 @@ public:
 	void SetBodyweight(WORD weightGramm, bool bLog);
 	WORD GetBodyweight();
 
-	//double getAmpCorFactor(BYTE iFreq);
+	//AmplitudeCorrectionFactor
+	double getAmpCorFactor(BYTE iFreq);
 
 private:
 	//singleton

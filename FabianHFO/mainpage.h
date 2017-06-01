@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50142 Version 5.0.1.42
+ * @date 2017-06-01
+ * @verbatim
+	- AmplitudeCorrectionFactor included - only if FOT running
+ @endverbatim
+ *
  * @subsection ver50141 Version 5.0.1.41
  * @date 2017-05-31
  * @verbatim
