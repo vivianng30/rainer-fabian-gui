@@ -3529,7 +3529,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 				wHFAMPL=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLmaxPara();
 				
 				//AmplitudeCorrectionFactor
-				if(getModel()->getFOTThread()->isFOTrunning())
+				if(getModel()->getFOTThread()->isFOTrunning()) //PRO, invalid access
 				{
 					double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
 					if(iAmpCorFactor==0)
@@ -3542,7 +3542,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 				wHFAMPL=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLPara();
 				
 				//AmplitudeCorrectionFactor
-				if(getModel()->getFOTThread()->isFOTrunning())
+				if(getModel()->getFOTThread()->isFOTrunning()) //PRO, invalid access
 				{
 					double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
 					double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
