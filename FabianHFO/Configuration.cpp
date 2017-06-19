@@ -11484,16 +11484,16 @@ void CConfiguration::readAmpCorFactor()
 		}
 
 		szFactor=CTlsIniFile::ReadIniStr(_T("CONV_FACTOR"), _T("K"), _T("10000"), AMPCORFACTORINI);
-		dbAmpCorFactorCONV_K= (double)(_wtoi(szFactor))/1000;
+		dbAmpCorFactorCONV_K= (double)(_wtoi(szFactor))/10000;
 
 		szFactor=CTlsIniFile::ReadIniStr(_T("CONV_FACTOR"), _T("J"), _T("10000"), AMPCORFACTORINI);
-		dbAmpCorFactorCONV_J= (double)(_wtoi(szFactor))/1000;
+		dbAmpCorFactorCONV_J= (double)(_wtoi(szFactor))/10000;
 
 		szFactor=CTlsIniFile::ReadIniStr(_T("HFO_FACTOR"), _T("K"), _T("10000"), AMPCORFACTORINI);
-		dbAmpCorFactorHFO_K= (double)(_wtoi(szFactor))/1000;
+		dbAmpCorFactorHFO_K= (double)(_wtoi(szFactor))/10000;
 
 		szFactor=CTlsIniFile::ReadIniStr(_T("HFO_FACTOR"), _T("J"), _T("10000"), AMPCORFACTORINI);
-		dbAmpCorFactorHFO_J= (double)(_wtoi(szFactor))/1000;
+		dbAmpCorFactorHFO_J= (double)(_wtoi(szFactor))/10000;
 
 	}
 	else
