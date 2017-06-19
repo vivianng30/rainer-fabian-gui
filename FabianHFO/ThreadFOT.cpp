@@ -2014,17 +2014,30 @@ void CThreadFOT::fnCalcZ(double** pp_Fourier, double** pp_PseudoInverse,double**
 	fnMultiplication(pp_PseudoInverse,3,size,pp_Pressure,1,pp_CoefP);
 	fnMultiplication(pp_PseudoInverse,3,size,pp_Flow,1,pp_CoefF);
 
-	//CString csTemp=_T("");
-	double Resistance = 0;
-	double Reactance = 0;
+	double Resistance  = ((pp_CoefP[1][0]*pp_CoefF[1][0]) + (pp_CoefP[2][0]*pp_CoefF[2][0]))/(pp_CoefF[1][0]*pp_CoefF[1][0] + pp_CoefF[2][0]*pp_CoefF[2][0]);
+	double Reactance   = ((pp_CoefP[2][0]*pp_CoefF[1][0]) - (pp_CoefP[1][0]*pp_CoefF[2][0]))/(pp_CoefF[1][0]*pp_CoefF[1][0] + pp_CoefF[2][0]*pp_CoefF[2][0]);
 
-	Resistance  = ((pp_CoefP[1][0]*pp_CoefF[1][0]) + (pp_CoefP[2][0]*pp_CoefF[2][0]))/(pp_CoefF[1][0]*pp_CoefF[1][0] + pp_CoefF[2][0]*pp_CoefF[2][0]);
-	//csTemp.Format(_T("Resistance %0.1f"), CTlsFloat::Round((Resistance), 1));
-	//DEBUGMSG(TRUE, (csTemp));
-	
-	Reactance   = ((pp_CoefP[2][0]*pp_CoefF[1][0]) - (pp_CoefP[1][0]*pp_CoefF[2][0]))/(pp_CoefF[1][0]*pp_CoefF[1][0] + pp_CoefF[2][0]*pp_CoefF[2][0]);
-	//csTemp.Format(_T("Reactance %0.1f"), CTlsFloat::Round((Reactance), 1));
-	//DEBUGMSG(TRUE, (csTemp));
+	//NEW CORRECTION FACTORS
+	double factorK=  1;
+	double factorJ=  1;
+	if(m_bFOThfoRunning)
+	{
+		//a=1;
+		//b=1;
+		factorK=getModel()->getCONFIG()->getAmpCorFactorHFO_K();
+		factorJ=getModel()->getCONFIG()->getAmpCorFactorHFO_J();
+	}
+	else
+	{
+		//a=  1,39;
+		//b=  0,1507;
+		factorK=getModel()->getCONFIG()->getAmpCorFactorCONV_K();
+		factorJ=getModel()->getCONFIG()->getAmpCorFactorCONV_J();
+	}
+
+	double Resistance_corr = factorK*Resistance + factorJ*Reactance;    //value of Resistance corrected
+	double Reactance_corr = factorK*Reactance - factorJ*Resistance;     //value of Reactance corrected
+
 
 	//------------------------------------------------------------------------------------------------------------------------
 
@@ -2061,8 +2074,10 @@ void CThreadFOT::fnCalcZ(double** pp_Fourier, double** pp_PseudoInverse,double**
 
 	// 3) pOut is results of both computations
 	//------------------------------------------------------------------------------------------------------------------------
-	pOut[0] = Resistance;
-	pOut[1] = Reactance;
+	//pOut[0] = Resistance;
+	//pOut[1] = Reactance;
+	pOut[0] = Resistance_corr;
+	pOut[1] = Reactance_corr;
 	pOut[2] = FSI;
 	pOut[3] = PSI;
 	//------------------------------------------------------------------------------------------------------------------------

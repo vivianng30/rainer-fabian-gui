@@ -902,6 +902,11 @@ public:
 	void readAmpCorFactor();
 	double getAmpCorFactor(BYTE iFreq);
 
+	double getAmpCorFactorCONV_K();
+	double getAmpCorFactorCONV_J();
+	double getAmpCorFactorHFO_K();
+	double getAmpCorFactorHFO_J();
+
 private:
 //singleton
 	static CConfiguration* theConfig;
@@ -950,6 +955,10 @@ private:
 	COleDateTime m_dtNextServiceDate;
 
 	double dbBufAmpCorFactor[16];
+	double dbAmpCorFactorCONV_K;
+	double dbAmpCorFactorCONV_J;
+	double dbAmpCorFactorHFO_K;
+	double dbAmpCorFactorHFO_J;
 
 	UINT m_iEthernetPort;
 	UINT m_iTypeTrend1;

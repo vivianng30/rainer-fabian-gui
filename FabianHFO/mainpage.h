@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50144 Version 5.0.1.44
+ * @date 2017-06-19
+ * @verbatim
+	- FOT: correction factors for the magnitude and the phase of the impedance Zrs are read from ampCorFactor.ini file and used for calculation of RESISTANCE and REACTANCE
+ @endverbatim
+ *
  * @subsection ver50143 Version 5.0.1.43
  * @date 2017-06-19
  * @verbatim

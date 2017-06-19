@@ -20,6 +20,11 @@ CConfiguration::CConfiguration()
 		dbBufAmpCorFactor[i] = 0x0000;
 	}
 
+	dbAmpCorFactorCONV_K=10000;
+	dbAmpCorFactorCONV_J=10000;
+	dbAmpCorFactorHFO_K=10000;
+	dbAmpCorFactorHFO_J=10000;
+
 	m_iFOTventDelaytime=0;
 	m_bSpO2ConfigInProgress=false;
 
@@ -427,6 +432,10 @@ void CConfiguration::Init()
 	{
 		dbBufAmpCorFactor[i] = 0x0000;
 	}
+	dbAmpCorFactorCONV_K=10000;
+	dbAmpCorFactorCONV_J=10000;
+	dbAmpCorFactorHFO_K=10000;
+	dbAmpCorFactorHFO_J=10000;
 
 	m_iConfigVersion=3005;
 	m_iParaDataHFFlow=0;
@@ -11467,13 +11476,25 @@ void CConfiguration::readAmpCorFactor()
 		{
 			szFreq.Format(_T("%d"),i+5);
 			szFactor=CTlsIniFile::ReadIniStr(_T("FACTOR"), szFreq, _T("1"), AMPCORFACTORINI);
-			UINT iTest= _wtoi(szFactor);
-
+			
 			dbBufAmpCorFactor[i] = (double)(_wtoi(szFactor))/1000;
 
 			//csTemp.Format(_T("factor %s %d:%0.3f\r\n"), szFreq,i,dbBufAmpCorFactor[i]);
 			//DEBUGMSG(TRUE, (csTemp));
 		}
+
+		szFactor=CTlsIniFile::ReadIniStr(_T("CONV_FACTOR"), _T("K"), _T("10000"), AMPCORFACTORINI);
+		dbAmpCorFactorCONV_K= (double)(_wtoi(szFactor))/1000;
+
+		szFactor=CTlsIniFile::ReadIniStr(_T("CONV_FACTOR"), _T("J"), _T("10000"), AMPCORFACTORINI);
+		dbAmpCorFactorCONV_J= (double)(_wtoi(szFactor))/1000;
+
+		szFactor=CTlsIniFile::ReadIniStr(_T("HFO_FACTOR"), _T("K"), _T("10000"), AMPCORFACTORINI);
+		dbAmpCorFactorHFO_K= (double)(_wtoi(szFactor))/1000;
+
+		szFactor=CTlsIniFile::ReadIniStr(_T("HFO_FACTOR"), _T("J"), _T("10000"), AMPCORFACTORINI);
+		dbAmpCorFactorHFO_J= (double)(_wtoi(szFactor))/1000;
+
 	}
 	else
 	{
@@ -11492,4 +11513,21 @@ double CConfiguration::getAmpCorFactor(BYTE iFreq)
 		iFreq=5;
 	
 	return dbBufAmpCorFactor[iFreq-5];
+}
+
+double CConfiguration::getAmpCorFactorCONV_K()
+{
+	return dbAmpCorFactorCONV_K;
+}
+double CConfiguration::getAmpCorFactorCONV_J()
+{
+	return dbAmpCorFactorCONV_J;
+}
+double CConfiguration::getAmpCorFactorHFO_K()
+{
+	return dbAmpCorFactorHFO_K;
+}
+double CConfiguration::getAmpCorFactorHFO_J()
+{
+	return dbAmpCorFactorHFO_J;
 }
