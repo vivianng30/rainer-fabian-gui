@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50143 Version 5.0.1.43
+ * @date 2017-06-19
+ * @verbatim
+	- NULLPOINTER in case of HFO and no FOT license fixed
+ @endverbatim
+ *
  * @subsection ver50142 Version 5.0.1.42
  * @date 2017-06-01
  * @verbatim
