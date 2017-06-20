@@ -1469,6 +1469,7 @@
 #define IDS_TXT_FOT_POORQUALITY         12147
 #define IDS_TXT_IEFLOW_VALIDITY         12148
 #define IDS_TXT_FOT_STOPFOT             12149
+#define IDS_TXT_CONFIRMSERVICE          12150
 #define IDS_NEW                         65000
 #define IDS_FILE                        65001
 #define IDS_HELP                        65002

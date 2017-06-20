@@ -222,8 +222,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 5,0,1,45
- PRODUCTVERSION 5,0,1,45
+ FILEVERSION 5,0,1,46
+ PRODUCTVERSION 5,0,1,46
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -240,12 +240,12 @@ BEGIN
         BEGIN
             VALUE "Comments", "Alle Rechte vorbehalten."
             VALUE "CompanyName", "Acutronic Medical Systems AG"
-            VALUE "FileVersion", "5, 0, 1, 45"
+            VALUE "FileVersion", "5, 0, 1, 46"
             VALUE "InternalName", "FabianHFO.exe"
             VALUE "LegalCopyright", "(c) Acutronic Medical Systems AG. "
             VALUE "OriginalFilename", "FabianHFO.exe"
             VALUE "ProductName", " FabianHFO"
-            VALUE "ProductVersion", "5, 0, 1, 45"
+            VALUE "ProductVersion", "5, 0, 1, 46"
         END
     END
     BLOCK "VarFileInfo"
@@ -1921,6 +1921,7 @@ BEGIN
     IDS_TXT_FOT_POORQUALITY "Poor measurement quality"
     IDS_TXT_IEFLOW_VALIDITY "(valid for I-Flow pressure rise control)"
     IDS_TXT_FOT_STOPFOT     "This will stop FOT. Continue?"
+    IDS_TXT_CONFIRMSERVICE  "By stepping into service mode you confirm there is no patient being connected to the device!"
 END
 
 #endif    // German (Germany) resources

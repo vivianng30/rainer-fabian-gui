@@ -201,8 +201,6 @@ bool CSubViewService::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCrea
 // **************************************************************************
 BOOL CSubViewService::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
-
-
 	m_lX=rc.right-rc.left;
 	m_lY=rc.bottom-rc.top;
 
@@ -248,12 +246,9 @@ BOOL CSubViewService::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateC
 			CRect(280, 50, 505, 80), this, IDC_EDIT_PASSWORD);
 		m_pEditPwd->SetFont(CFont::FromHandle(g_hf17AcuBold));
 		m_pEditPwd->SetWindowText(_T(""));
-		//m_pEditPwd->ShowWindow(SW_HIDE);
 	
 
 		BTN btn;
-
-	
 
 		btn.wID					= IDC_BTN_SETUP_KBRD_DEL;	
 		btn.poPosition.x		= 415;
@@ -506,7 +501,7 @@ BOOL CSubViewService::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateC
 
 		btn.wID					= IDOK;	
 		btn.poPosition.x		= 320;//200;
-		btn.poPosition.y		= 390;
+		btn.poPosition.y		= 410;//390;
 		btn.pcBmpUp				= m_pc_Up;
 		btn.pcBmpDown			= m_pc_Dw;
 		btn.pcBmpFocus			= m_pc_Up;
@@ -865,6 +860,14 @@ void CSubViewService::Draw()
 	}
 
 	DrawText(hdcMem,m_szInfo,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
+
+	SetTextColor(hdcMem,RGB(200,0,0));
+	rc.left = 100;  
+	rc.top = 340;  
+	rc.right  = 700;  
+	rc.bottom = 400;
+	DrawText(hdcMem,getModel()->GetLanguageString(IDS_TXT_CONFIRMSERVICE),-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
+	//DrawText(hdcMem,_T("By stepping into service mode you confirm there is no patient being connected to the device!"),-1,&rc,DT_CENTER|DT_TOP|DT_WORDBREAK);
 
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,hdcMem,0,0,SRCCOPY);
 
