@@ -7,6 +7,13 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50145 Version 5.0.1.45
+ * @date 2017-06-20
+ * @verbatim
+	- HTTPD and TELNET service are disabled at startup
+	- REGISTRY folder included
+ @endverbatim
+ *
  * @subsection ver50144 Version 5.0.1.44
  * @date 2017-06-19
  * @verbatim

@@ -6,12 +6,31 @@
 ;
 ; (C) 2010 Acutronic - MedicalSystems AG
 ;
+;
+; Date 18.01.2014
+;
 ; HFO version >= 3.3.7.x
 ;
-; Date 06.04.2016: limits_accu1_20160406: MAXRANGE_ACCU_HFAMPL	abs. max range 1000
-; Date 18.01.2014: default MINRANGE_NEO_VGARANT_IPPV, MINRANGE_NEO_VGARANT_TRIGGER changed to 8ml
+; default MINRANGE_NEO_VGARANT_IPPV, MINRANGE_NEO_VGARANT_TRIGGER changed to 8ml
 ;
+; Date 03.04.2017
+; HFO version >= 5.0
 ;
+;  default
+;  MINRANGE_PED_IFLOW changed from 2 to 1 lpm
+;  MAXRANGE_NEO_IFLOW_IPPV changed from 20 to 32 lpm
+;  MAXRANGE_NEO_IFLOW_TRIGGER changed from 20 to 32 lpm
+;  MAXRANGE_PED_THERAPYFLOW changed from 19 to 30 lpm
+;  MAXRANGE_NEO_HFFLOW changed from 20 to 30 lpm
+;  MAXRANGE_PED_HFFLOW changed from 20 to 30 lpm
+;  MINRANGE_NEO_EFLOW_IPPV changed from 3 to 1
+;  MINRANGE_NEO_EFLOW_TRIGGER changed from 3 to 1
+;  MAXRANGE_NEO_EFLOW_IPPV changed from 8 to 32
+;  MAXRANGE_NEO_EFLOW_TRIGGER changed from 8 to 32
+;  MINRANGE_PED_EFLOW_IPPV changed from 4 to 1
+;  MINRANGE_PED_EFLOW_TRIGGER changed from 4 to 1
+;  MAXRANGE_PED_EFLOW_IPPV changed from 20 to 32
+;  MAXRANGE_PED_EFLOW_TRIGGER changed from 20 to 32
 ;
 [HKEY_CURRENT_USER\Software\FabianHFO\WorkState\Limits]
 ;##########################################
@@ -29,50 +48,50 @@
 ;#   MINRANGE_NEO_THERAPYFLOW	abs. min range 0
 ;#   MAXRANGE_NEO_THERAPYFLOW	abs. max range 19000 is 15000
 ;#   MINRANGE_PED_THERAPYFLOW	abs. min range 0
-;#   MAXRANGE_PED_THERAPYFLOW	abs. max range 19000
+;#   MAXRANGE_PED_THERAPYFLOW	abs. max range 19000 is 30000
 ;##########################################
 "MINRANGE_NEO_THERAPYFLOW"=dword:00000000
 "MAXRANGE_NEO_THERAPYFLOW"=dword:00003a98
 "MINRANGE_PED_THERAPYFLOW"=dword:00000000
-"MAXRANGE_PED_THERAPYFLOW"=dword:00004a38
+"MAXRANGE_PED_THERAPYFLOW"=dword:00007530
 ;
 ;##########################################
 ;#   MINRANGE_NEO_IFLOW_IPPV		abs. min range 500 is 1000
 ;#   MINRANGE_NEO_IFLOW_TRIGGER		abs. min range 500 is 1000
-;#   MAXRANGE_NEO_IFLOW_IPPV		abs. max range 25000 is 20000
-;#   MAXRANGE_NEO_IFLOW_TRIGGER		abs. max range 25000 is 20000
-;#   MINRANGE_PED_IFLOW_IPPV		abs. min range 1000 is 2000
-;#   MINRANGE_PED_IFLOW_TRIGGER		abs. min range 1000 is 2000
+;#   MAXRANGE_NEO_IFLOW_IPPV		abs. max range 25000 is 32000
+;#   MAXRANGE_NEO_IFLOW_TRIGGER		abs. max range 25000 is 32000
+;#   MINRANGE_PED_IFLOW_IPPV		abs. min range 1000 is 1000
+;#   MINRANGE_PED_IFLOW_TRIGGER		abs. min range 1000 is 1000
 ;#   MAXRANGE_PED_IFLOW_IPPV		abs. max range 32000
 ;#   MAXRANGE_PED_IFLOW_TRIGGER		abs. max range 32000
 ;##########################################
 "MINRANGE_NEO_IFLOW_IPPV"=dword:000003e8
 "MINRANGE_NEO_IFLOW_TRIGGER"=dword:000003e8
-"MAXRANGE_NEO_IFLOW_IPPV"=dword:00004e20
-"MAXRANGE_NEO_IFLOW_TRIGGER"=dword:00004e20
-"MINRANGE_PED_IFLOW_IPPV"=dword:000007d0
-"MINRANGE_PED_IFLOW_TRIGGER"=dword:000007d0
+"MAXRANGE_NEO_IFLOW_IPPV"=dword:00007d00
+"MAXRANGE_NEO_IFLOW_TRIGGER"=dword:00007d00
+"MINRANGE_PED_IFLOW_IPPV"=dword:000003e8
+"MINRANGE_PED_IFLOW_TRIGGER"=dword:000003e8
 "MAXRANGE_PED_IFLOW_IPPV"=dword:00007d00
 "MAXRANGE_PED_IFLOW_TRIGGER"=dword:00007d00
 ;
 ;##########################################
-;#   MINRANGE_NEO_EFLOW_IPPV		abs. min range 1000 is 3000
-;#   MINRANGE_NEO_EFLOW_TRIGGER		abs. min range 1000 is 3000
-;#   MAXRANGE_NEO_EFLOW_IPPV		abs. max range 25000 is 8000
-;#   MAXRANGE_NEO_EFLOW_TRIGGER		abs. max range 25000 is 8000
-;#   MINRANGE_PED_EFLOW_IPPV		abs. min range 2000 is 4000
-;#   MINRANGE_PED_EFLOW_TRIGGER		abs. min range 2000 is 4000
-;#   MAXRANGE_PED_EFLOW_IPPV		abs. max range 25000 is 20000
-;#   MAXRANGE_PED_EFLOW_TRIGGER		abs. max range 25000 is 20000
+;#   MINRANGE_NEO_EFLOW_IPPV		abs. min range 1000 is 1000
+;#   MINRANGE_NEO_EFLOW_TRIGGER		abs. min range 1000 is 1000
+;#   MAXRANGE_NEO_EFLOW_IPPV		abs. max range 25000 is 32000
+;#   MAXRANGE_NEO_EFLOW_TRIGGER		abs. max range 25000 is 32000
+;#   MINRANGE_PED_EFLOW_IPPV		abs. min range 2000 is 1000
+;#   MINRANGE_PED_EFLOW_TRIGGER		abs. min range 2000 is 1000
+;#   MAXRANGE_PED_EFLOW_IPPV		abs. max range 25000 is 32000
+;#   MAXRANGE_PED_EFLOW_TRIGGER		abs. max range 25000 is 32000
 ;##########################################
-"MINRANGE_NEO_EFLOW_IPPV"=dword:00000bb8
-"MINRANGE_NEO_EFLOW_TRIGGER"=dword:00000bb8
-"MAXRANGE_NEO_EFLOW_IPPV"=dword:00001f40
-"MAXRANGE_NEO_EFLOW_TRIGGER"=dword:00001f40
-"MINRANGE_PED_EFLOW_IPPV"=dword:00000fa0
-"MINRANGE_PED_EFLOW_TRIGGER"=dword:00000fa0
-"MAXRANGE_PED_EFLOW_IPPV"=dword:00004e20
-"MAXRANGE_PED_EFLOW_TRIGGER"=dword:00004e20
+"MINRANGE_NEO_EFLOW_IPPV"=dword:000003e8
+"MINRANGE_NEO_EFLOW_TRIGGER"=dword:000003e8
+"MAXRANGE_NEO_EFLOW_IPPV"=dword:00007d00
+"MAXRANGE_NEO_EFLOW_TRIGGER"=dword:00007d00
+"MINRANGE_PED_EFLOW_IPPV"=dword:000003e8
+"MINRANGE_PED_EFLOW_TRIGGER"=dword:000003e8
+"MAXRANGE_PED_EFLOW_IPPV"=dword:00007d00
+"MAXRANGE_PED_EFLOW_TRIGGER"=dword:00007d00
 ;
 ;##########################################
 ;#   MINRANGE_NEO_RISETIME_IPPV		abs. min range 100
@@ -304,26 +323,15 @@
 "MAXRANGE_PED_PMANUAL"=dword:00000320
 ;
 ;##########################################
-;#   MINRANGE_NEO_TRIGGER_CONV	abs. min range 10
-;#   MAXRANGE_NEO_TRIGGER_CONV	abs. max range 100
-;#   MINRANGE_PED_TRIGGER_CONV	abs. min range 10
-;#   MAXRANGE_PED_TRIGGER_CONV	abs. max range 100
+;#   MINRANGE_NEO_TRIGGER	abs. min range 10
+;#   MAXRANGE_NEO_TRIGGER	abs. max range 100
+;#   MINRANGE_PED_TRIGGER	abs. min range 10
+;#   MAXRANGE_PED_TRIGGER	abs. max range 100
 ;##########################################
-"MINRANGE_NEO_TRIGGER_CONV"=dword:0000000a
-"MAXRANGE_NEO_TRIGGER_CONV"=dword:00000064
-"MINRANGE_PED_TRIGGER_CONV"=dword:0000000a
-"MAXRANGE_PED_TRIGGER_CONV"=dword:00000064
-;
-;##########################################
-;#   MINRANGE_NEO_TRIGGER_NMODE	abs. min range 0
-;#   MAXRANGE_NEO_TRIGGER_NMODE	abs. max range 100
-;#   MINRANGE_PED_TRIGGER_NMODE	abs. min range 0
-;#   MAXRANGE_PED_TRIGGER_NMODE	abs. max range 100
-;##########################################
-"MINRANGE_NEO_TRIGGER_NMODE"=dword:00000000
-"MAXRANGE_NEO_TRIGGER_NMODE"=dword:00000064
-"MINRANGE_PED_TRIGGER_NMODE"=dword:00000000
-"MAXRANGE_PED_TRIGGER_NMODE"=dword:00000064
+"MINRANGE_NEO_TRIGGER"=dword:0000000a
+"MAXRANGE_NEO_TRIGGER"=dword:00000064
+"MINRANGE_PED_TRIGGER"=dword:0000000a
+"MAXRANGE_PED_TRIGGER"=dword:00000064
 ;
 ;##########################################
 ;#   MINRANGE_NEO_VGARANT_IPPV		abs. min range 1 is 8
@@ -412,14 +420,13 @@
 ;#   MAXRANGE_NEO_HFAMPL	abs. max range 1500 is 1000
 ;#   MINRANGE_PED_HFAMPL	abs. min range 30 is 50
 ;#   MAXRANGE_PED_HFAMPL	abs. max range 1500 is 1000
-;#   MAXRANGE_ACCU_HFAMPL	abs. max range 1000
+;#   MAXRANGE_ACCU_HFAMPL	abs. max range 600
 ;##########################################
 "MINRANGE_NEO_HFAMPL"=dword:00000032
 "MAXRANGE_NEO_HFAMPL"=dword:000003e8
 "MINRANGE_PED_HFAMPL"=dword:00000032
 "MAXRANGE_PED_HFAMPL"=dword:000003e8
-;"MAXRANGE_ACCU_HFAMPL"=dword:00000258
-"MAXRANGE_ACCU_HFAMPL"=dword:000003e8
+"MAXRANGE_ACCU_HFAMPL"=dword:00000258
 ;
 ;##########################################
 ;#   MINRANGE_NEO_HFAMPLVOLG	abs. min range 30 is 50
@@ -458,14 +465,14 @@
 ;
 ;##########################################
 ;#   MINRANGE_NEO_HFFLOW	abs. min range 4000 is 5000
-;#   MAXRANGE_NEO_HFFLOW	abs. max range 25000 is 20000
+;#   MAXRANGE_NEO_HFFLOW	abs. max range 25000 is 30000
 ;#   MINRANGE_PED_HFFLOW	abs. min range 4000 is 5000
-;#   MAXRANGE_PED_HFFLOW	abs. max range 25000 is 20000
+;#   MAXRANGE_PED_HFFLOW	abs. max range 25000 is 30000
 ;##########################################
 "MINRANGE_NEO_HFFLOW"=dword:00001388
-"MAXRANGE_NEO_HFFLOW"=dword:00004e20
+"MAXRANGE_NEO_HFFLOW"=dword:00007530
 "MINRANGE_PED_HFFLOW"=dword:00001388
-"MAXRANGE_PED_HFFLOW"=dword:00004e20
+"MAXRANGE_PED_HFFLOW"=dword:00007530
 ;
 ;##########################################
 ;#   MINRANGE_NEO_PMEAN_REC		abs. min range 30 is 50
@@ -510,4 +517,7 @@
 "MAXRANGE_NEO_ITIME_REC"=dword:0000ea60
 "MINRANGE_PED_ITIME_REC"=dword:000007d0
 "MAXRANGE_PED_ITIME_REC"=dword:0000ea60
+
+
+
 

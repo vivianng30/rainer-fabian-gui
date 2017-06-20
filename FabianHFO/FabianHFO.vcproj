@@ -6707,6 +6707,106 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="REGISTRY"
+			>
+			<File
+				RelativePath=".\REGISTRY\autostartFabianHFO.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\BiasFlow_enable.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\contrastLCD.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\contrastLED.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\delExplorer.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\disableHTTPD.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\disableTELNETD.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\disableUSBhost.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\ftdi_vcp_com9_ffsdisk.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\G104SN02_NDCU11_LED.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\i2cffsdisk.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\keybrdstate.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\limits_default20170405.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\LQ104S_NDCU11_LCD.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\matrix.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\matrixmap.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\NDCUCFG_COM4.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\nspi.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\parintf.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\platformV2.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\settingsFOT.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\SPO2_CO2_enable.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\touchV2.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\UDPRegisterDIO.reg"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\ampCorFactor.ini"
 			>
@@ -6724,10 +6824,6 @@
 			>
 		</File>
 		<File
-			RelativePath=".\limits.reg"
-			>
-		</File>
-		<File
 			RelativePath=".\numericConfig.ini"
 			>
 		</File>
@@ -6738,10 +6834,6 @@
 		</File>
 		<File
 			RelativePath=".\ReadMe.txt"
-			>
-		</File>
-		<File
-			RelativePath=".\settingsFOT.reg"
 			>
 		</File>
 		<File

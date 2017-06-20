@@ -406,13 +406,23 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
 
-	//TEST for service
-	HANDLE hService = GetServiceHandle(_T("HTP0"),NULL,NULL);
+	//SHUTDOWN services which listen on a port
+	HANDLE hServiceHTP = GetServiceHandle(_T("HTP0:"),NULL,NULL);
+	if(hServiceHTP!=INVALID_HANDLE_VALUE)
+	{
+		BOOL bSuccess=DeregisterService(hServiceHTP);
+		theApp.writeLogError(GetLastError(), _T("***SECURITY: disable HTP"));
+	}
+
+	HANDLE hServiceTEL = GetServiceHandle(_T("TEL0:"),NULL,NULL);
+	if(hServiceTEL!=INVALID_HANDLE_VALUE)
+	{
+		BOOL bSuccess=DeregisterService(hServiceTEL);
+		theApp.writeLogError(GetLastError(), _T("***SECURITY: disable HTP"));
+	}
 
 	CTlsRegistry regLang(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
 	m_wLanguageID=(WORD)regLang.ReadDWORD(_T("LanguageID"), 0);
-
-
 	
 	CreateAcuFonts(m_wLanguageID,false);
 	LoadGlobalAcuFonts(m_wLanguageID);
