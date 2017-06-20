@@ -9,6 +9,7 @@
 #include <afxwin.h>
 #include "TlsRegistry.h"
 #include "logfile.h"
+#include <service.h>
 #include <commctrl.h>
 
 extern "C" BOOL WINAPI TouchCalibrate( void );
@@ -406,7 +407,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
 	//TEST for service
-	HANDLE hService = GetServiceHandle(
+	HANDLE hService = GetServiceHandle(_T("HTP0"),NULL,NULL);
 
 	CTlsRegistry regLang(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
 	m_wLanguageID=(WORD)regLang.ReadDWORD(_T("LanguageID"), 0);
