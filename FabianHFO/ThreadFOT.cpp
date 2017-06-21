@@ -1342,7 +1342,7 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 	bool bRetryReactance=false;
 
 	EnterCriticalSection(&csFOTventBuffer);
-	//int iTestCount=0;
+
 	for(int k=0;k<(m_ibufCountFOTventilation-size);k++)
 	{ 
 		for(int i=0;i<size;i++)
@@ -1353,22 +1353,22 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 
 		fnCalcZ(pp_Fourier,pp_PseudoInverse,pp_Flow,pp_Pressure,i_osc_freq,i_sample_freq,p_Out);
 
-		if(p_Out[0]==0.0)//check Resistance >0, else not valid
+		if(p_Out[0]<=0.0)//check Resistance >0, else not valid
 		{
 			bRetryResistance=true;
 			break;
 		}
-		else if(p_Out[1]>=0.0 || p_Out[1]<-500.0)//check Reactance/XRS 0>XRS>-500 cmH2O*s/L, else not valid
+		else if(p_Out[1]>100.0 || p_Out[1]<-500.0)//check Reactance/XRS 100>XRS>-500 cmH2O*s/L, else not valid
 		{
 			bRetryReactance=true;
 			break;
 		}
-		else if(p_Out[2]>1.0)//check FSI < 1%, else not valid
+		else if(p_Out[2]>0.20)//check FSI <= 20%, else not valid
 		{
 			bRetryFSI=true;
 			break;
 		}
-		//iTestCount++;
+
 		Sleep(0);
 
 		for(int i=0;i<4;i++)

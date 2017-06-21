@@ -866,7 +866,7 @@ void CSubViewService::Draw()
 	rc.top = 340;  
 	rc.right  = 700;  
 	rc.bottom = 400;
-	DrawText(hdcMem,getModel()->GetLanguageString(IDS_TXT_CONFIRMSERVICE),-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
+	DrawText(hdcMem,getModel()->GetLanguageString(IDS_TXT_CONFIRMSERVICE),-1,&rc,DT_CENTER|DT_TOP|DT_WORDBREAK);
 	//DrawText(hdcMem,_T("By stepping into service mode you confirm there is no patient being connected to the device!"),-1,&rc,DT_CENTER|DT_TOP|DT_WORDBREAK);
 
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,hdcMem,0,0,SRCCOPY);

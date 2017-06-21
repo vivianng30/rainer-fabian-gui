@@ -7,7 +7,17 @@
  *
  * @section ver Version history and changelog
  *
- * @subsection ver501476 Version 5.0.1.47
+ * @subsection ver50148 Version 5.0.1.48
+ * @date 2017-06-21
+ * @verbatim
+	- conformation/textmessage in service password screen is two lines now
+	- FOT conditions changed:
+		- Resistance <= 0.0
+		- Reactance > 100.0 || Reactance < -500.0
+		- FSI > 0.20 that corresponds to 20% 
+ @endverbatim
+ *
+ * @subsection ver50147 Version 5.0.1.47
  * @date 2017-06-21
  * @verbatim
 	- NIV trigger can be disabled/enabled through registry key: disableNIVtrigger.reg/enableNIVtrigger.reg
