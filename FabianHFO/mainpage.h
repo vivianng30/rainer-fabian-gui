@@ -7,10 +7,16 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver501476 Version 5.0.1.47
+ * @date 2017-06-21
+ * @verbatim
+	- NIV trigger can be disabled/enabled through registry key: disableNIVtrigger.reg/enableNIVtrigger.reg
+ @endverbatim
+ *
  * @subsection ver50146 Version 5.0.1.46
  * @date 2017-06-20
  * @verbatim
-	- conformation/textmessage in service password screen included
+	- conformation/textmessage in service password screen included 
  @endverbatim
  *
  * @subsection ver50145 Version 5.0.1.45

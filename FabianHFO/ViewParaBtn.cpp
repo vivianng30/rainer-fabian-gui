@@ -5829,9 +5829,15 @@ void CViewParaBtn::show_NCPAPmode()
 		m_pcSubPara_PSVTIME->ShowWindow(SW_HIDE);
 	
 	if(m_pcSubPara_TrigThreshold)
-		m_pcSubPara_TrigThreshold->ShowWindow(SW_SHOW);
-	if(m_pcSubPara_TrigThreshold)
-		m_pcSubPara_TrigThreshold->RefreshBtn();
+	{
+		if(true==getModel()->getCONFIG()->isNIVTRIGGERREGISTRYenabled())
+		{
+			m_pcSubPara_TrigThreshold->ShowWindow(SW_SHOW);
+			m_pcSubPara_TrigThreshold->RefreshBtn();
+		}
+		else
+			m_pcSubPara_TrigThreshold->ShowWindow(SW_HIDE);
+	}
 	
 	if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true 
 		&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET)
@@ -5847,7 +5853,12 @@ void CViewParaBtn::show_NCPAPmode()
 		getModel()->getDATAHANDLER()->SetTriggerNMODEenabled();
 	}
 	if(m_pcPara_TRIGGERNMODE)
-		m_pcPara_TRIGGERNMODE->ShowWindow(SW_SHOW);
+	{
+		if(true==getModel()->getCONFIG()->isNIVTRIGGERREGISTRYenabled())
+			m_pcPara_TRIGGERNMODE->ShowWindow(SW_SHOW);
+		else
+			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
+	}
 	if(m_pcSubPara_O2Flush)
 		m_pcSubPara_O2Flush->ShowWindow(SW_SHOW);
 	if(m_pcSubPara_O2act)
@@ -5951,9 +5962,16 @@ void CViewParaBtn::show_PRE_NCPAPmode()
 		m_pcSubPara_PSVTIME->ShowWindow(SW_HIDE);
 
 	if(m_pcSubPara_TrigThreshold)
-		m_pcSubPara_TrigThreshold->ShowWindow(SW_SHOW);
-	if(m_pcSubPara_TrigThreshold)
-		m_pcSubPara_TrigThreshold->RefreshBtn();
+	{
+		if(true==getModel()->getCONFIG()->isNIVTRIGGERREGISTRYenabled())
+		{
+			m_pcSubPara_TrigThreshold->ShowWindow(SW_SHOW);
+			m_pcSubPara_TrigThreshold->RefreshBtn();
+		}
+		else
+			m_pcSubPara_TrigThreshold->ShowWindow(SW_HIDE);
+	}
+
 	if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true 
 		&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET)
 	{
@@ -5968,7 +5986,12 @@ void CViewParaBtn::show_PRE_NCPAPmode()
 		getModel()->getDATAHANDLER()->SetTriggerNMODEenabled();
 	}
 	if(m_pcPara_TRIGGERNMODE)
-		m_pcPara_TRIGGERNMODE->ShowWindow(SW_SHOW);
+	{
+		if(true==getModel()->getCONFIG()->isNIVTRIGGERREGISTRYenabled())
+			m_pcPara_TRIGGERNMODE->ShowWindow(SW_SHOW);
+		else
+			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
+	}
 	if(m_pcSubPara_LEAKCOMP) 
 		m_pcSubPara_LEAKCOMP->ShowWindow(SW_SHOW);
 	if(m_pcSubPara_O2Flush)
@@ -6054,9 +6077,15 @@ void CViewParaBtn::show_DUOPAPmode()
 		m_pcSubPara_BIASFLOW->ShowWindow(SW_HIDE);
 
 	if(m_pcSubPara_TrigThreshold)
-		m_pcSubPara_TrigThreshold->ShowWindow(SW_SHOW);
-	if(m_pcSubPara_TrigThreshold)
-		m_pcSubPara_TrigThreshold->RefreshBtn();
+	{
+		if(true==getModel()->getCONFIG()->isNIVTRIGGERREGISTRYenabled())
+		{
+			m_pcSubPara_TrigThreshold->ShowWindow(SW_SHOW);
+			m_pcSubPara_TrigThreshold->RefreshBtn();
+		}
+		else
+			m_pcSubPara_TrigThreshold->ShowWindow(SW_HIDE);
+	}
 
 	if(m_pcPara_TRIGGERCONV)
 		m_pcPara_TRIGGERCONV->ShowWindow(SW_HIDE);
@@ -6080,7 +6109,12 @@ void CViewParaBtn::show_DUOPAPmode()
 		getModel()->getDATAHANDLER()->SetTriggerNMODEenabled();
 	}
 	if(m_pcPara_TRIGGERNMODE)
-		m_pcPara_TRIGGERNMODE->ShowWindow(SW_SHOW);
+	{
+		if(true==getModel()->getCONFIG()->isNIVTRIGGERREGISTRYenabled())
+			m_pcPara_TRIGGERNMODE->ShowWindow(SW_SHOW);
+		else
+			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
+	}
 
 	if(m_pcPara_ITIME)
 		m_pcPara_ITIME->ShowWindow(SW_SHOW);
@@ -6266,12 +6300,23 @@ void CViewParaBtn::show_PRE_DUOPAPmode()
 		getModel()->getDATAHANDLER()->SetTriggerNMODEenabled();
 	}
 	if(m_pcPara_TRIGGERNMODE)
-		m_pcPara_TRIGGERNMODE->ShowWindow(SW_SHOW);
+	{
+		if(true==getModel()->getCONFIG()->isNIVTRIGGERREGISTRYenabled())
+			m_pcPara_TRIGGERNMODE->ShowWindow(SW_SHOW);
+		else
+			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
+	}
 
 	if(m_pcSubPara_TrigThreshold)
-		m_pcSubPara_TrigThreshold->ShowWindow(SW_SHOW);
-	if(m_pcSubPara_TrigThreshold)
-		m_pcSubPara_TrigThreshold->RefreshBtn();
+	{
+		if(true==getModel()->getCONFIG()->isNIVTRIGGERREGISTRYenabled())
+		{
+			m_pcSubPara_TrigThreshold->ShowWindow(SW_SHOW);
+			m_pcSubPara_TrigThreshold->RefreshBtn();
+		}
+		else
+			m_pcSubPara_TrigThreshold->ShowWindow(SW_HIDE);
+	}
 
 	if(m_pcPara_ITIME)
 		m_pcPara_ITIME->ShowWindow(SW_SHOW);

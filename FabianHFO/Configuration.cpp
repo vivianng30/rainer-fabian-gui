@@ -37,6 +37,7 @@ CConfiguration::CConfiguration()
 	m_bSPO2registry=true;
 	m_bCO2registry=true;
 	m_bRISETIMEregistry=true;
+	m_bNIVTRIGGERregistry=true;
 	//m_bPRICO=false;
 
 	m_iPRICO_SPO2lowRange=0;
@@ -445,6 +446,7 @@ void CConfiguration::Init()
 	m_bSPO2registry=true;
 	m_bCO2registry=true;
 	m_bRISETIMEregistry=true;
+	m_bNIVTRIGGERregistry=true;
 	//m_bPRICO=false;
 
 	m_iPRICO_SPO2lowRange=0;
@@ -969,6 +971,11 @@ void CConfiguration::LoadSettings()
 		m_bCO2registry=true;
 	else
 		m_bCO2registry=false;
+
+	if(regWorkstate.ReadDWORD(_T("NIVTRIGGER"), 0)==0)
+		m_bNIVTRIGGERregistry=true;
+	else
+		m_bNIVTRIGGERregistry=false;
 
 	readinFOTventDelaytime();
 
@@ -2678,10 +2685,14 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataTriggerNMODE<iMINRANGE_PED_TRIGGER_NMODE || m_iParaDataTriggerNMODE>iMAXRANGE_PED_TRIGGER_NMODE)
 	{
 		m_iParaDataTriggerNMODE=FACTORY_NMODE_TRIGGER;
-		
 		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NMODE_16,m_iParaDataTriggerNMODE);
 	}
 
+	if(false==m_bNIVTRIGGERregistry)
+	{
+		m_iParaDataTriggerNMODE=FACTORY_NMODE_TRIGGER;
+		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NMODE_16,m_iParaDataTriggerNMODE);
+	}
 
 	WORD iMAXRANGE_PED_BACKUP=(WORD)regLimit.ReadDWORD(_T("MAXRANGE_PED_BACKUP"), MAXRANGE_PED_BACKUP);
 	//m_iParaDataBackup;
@@ -4780,6 +4791,10 @@ bool CConfiguration::isSPO2REGISTRYenabled()
  {
 	 //return false;
 	 return m_bRISETIMEregistry;
+ }
+ bool CConfiguration::isNIVTRIGGERREGISTRYenabled()
+ {
+	return m_bNIVTRIGGERregistry;
  }
 //bool CConfiguration::isPRICOenabled()
 //{

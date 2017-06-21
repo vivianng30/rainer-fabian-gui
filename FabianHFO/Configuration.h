@@ -392,6 +392,7 @@ public:
 	bool isSPO2REGISTRYenabled();
 	bool isCO2REGISTRYenabled();
 	bool isRISETIMEREGISTRYenabled();
+	bool isNIVTRIGGERREGISTRYenabled();
 
 	BYTE getPRICO_SPO2lowRange();
 	void setPRICO_SPO2lowRange(BYTE SPO2low);
@@ -1281,6 +1282,7 @@ private:
 	bool m_bCO2registry;
 	bool m_bBiasFlow;
 	bool m_bSpO2ConfigInProgress;
+	bool m_bNIVTRIGGERregistry;
 	BOOL m_bPPSVasDeltaPEEPValue;
 	
 

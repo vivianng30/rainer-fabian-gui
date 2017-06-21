@@ -6735,11 +6735,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\REGISTRY\disableNIVtrigger.reg"
+				>
+			</File>
+			<File
 				RelativePath=".\REGISTRY\disableTELNETD.reg"
 				>
 			</File>
 			<File
 				RelativePath=".\REGISTRY\disableUSBhost.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\enableNIVtrigger.reg"
 				>
 			</File>
 			<File
