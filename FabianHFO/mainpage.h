@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50149 Version 5.0.1.49
+ * @date 2017-06-21
+ * @verbatim
+	- //rku, check FOTGRAPH
+ @endverbatim
+ *
  * @subsection ver50148 Version 5.0.1.48
  * @date 2017-06-21
  * @verbatim

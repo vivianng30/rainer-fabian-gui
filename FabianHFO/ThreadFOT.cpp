@@ -1388,11 +1388,6 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 	}
 	LeaveCriticalSection(&csFOTventBuffer);
 
-	/*if(m_iFOTsequence==2 && m_bTestRetry)
-	{
-		m_bTestRetry=false;
-		bRetryReactance=true;
-	}*/
 
 	EnterCriticalSection(&csFOTcalcBuffer);
 	m_pbufFOTdisplay[m_iFOTdisplaySequence-1].iXValPmean=curPressure;

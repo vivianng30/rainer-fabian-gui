@@ -923,7 +923,7 @@ bool CViewDiagramm::CreateWndGraphFOT(int x, int y, int nWidth, int nHeight)
 			m_pLoopFOT->SetDiagrammType(FOT_LOOP);
 			m_pLoopFOT->SetColorScheme(G_FOT_LOOPD,RGB(0,0,255));
 			m_pLoopFOT->SetXAxisScale(0, getModel()->getCONFIG()->GetMAXSCALE_FOT_PRESSURE());
-			m_pLoopFOT->SetYAxisScale( getModel()->getCONFIG()->GetMINSCALE_FOT_XRS(),0);
+			m_pLoopFOT->SetYAxisScale( getModel()->getCONFIG()->GetMINSCALE_FOT_XRS(),0);//rku, check FOTGRAPH
 			
 
 			m_pLoopFOT->PaintGraph();
