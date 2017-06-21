@@ -11,6 +11,7 @@
  * @date 2017-06-21
  * @verbatim
 	- conformation/textmessage in service password screen is two lines now
+	- factory setting changed: FACTORY_NMODE_TRIGGER   110
 	- FOT conditions changed:
 		- Resistance <= 0.0
 		- Reactance > 100.0 || Reactance < -500.0
