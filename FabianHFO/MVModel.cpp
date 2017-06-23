@@ -1611,7 +1611,6 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			}
 			getCONFIG()->DeaktivateVLimitState();
 
-			//getALARMHANDLER()->ventModeChanged();
 			Send_VENT_MODE(getCONFIG()->GetCurMode());
 			
 			
