@@ -256,7 +256,7 @@ bool CNumericFieldPPEAK::drawLimits(CDC* pDC)
 	if(m_eSize==NUMERICSIZE_1)
 	{
 		drawHighLimit(pDC);
-		if(eActiveVentMode!=VM_HFO)
+		if(eActiveVentMode!=VM_HFO && eActiveVentMode!=VM_DUOPAP)
 			drawLowLimit(pDC);
 
 		rc.top = 9;
@@ -291,7 +291,7 @@ bool CNumericFieldPPEAK::drawLimits(CDC* pDC)
 			wsprintf(psz,_T("%0.0f"), CTlsFloat::Round(((double)getModel()->getALARMHANDLER()->getAlimitPIPmax())/10, 0));
 		pDC->DrawText(psz,&rc,DT_TOP|DT_SINGLELINE|DT_RIGHT);
 
-		if(eActiveVentMode!=VM_HFO)
+		if(eActiveVentMode!=VM_HFO&& eActiveVentMode!=VM_DUOPAP)
 		{
 			if(getModel()->getALARMHANDLER()->getAlimitPIPmin()==0)
 				wsprintf(psz,_T("%d"), 0);

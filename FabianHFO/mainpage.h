@@ -11,6 +11,7 @@
  * @date 2017-06-21
  * @verbatim
 	- //rku, check FOTGRAPH
+	- DUOPAP: no PIP low limit in numeric
  @endverbatim
  *
  * @subsection ver50148 Version 5.0.1.48

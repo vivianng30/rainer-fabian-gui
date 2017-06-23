@@ -1516,7 +1516,8 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 				theApp.getLog()->WriteLine(_T("EV_CONTROL_STARTUP_SUCCESS isNebulizerOn"));
 			}*/
 
-			//getALARMHANDLER()->ventModeChanged();
+			//needs to be called here as first function!!!
+			getALARMHANDLER()->ventModeChanged();
 
 			getALARMHANDLER()->setStartupSilent(true);
 
@@ -1610,7 +1611,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			}
 			getCONFIG()->DeaktivateVLimitState();
 
-			getALARMHANDLER()->ventModeChanged();
+			//getALARMHANDLER()->ventModeChanged();
 			Send_VENT_MODE(getCONFIG()->GetCurMode());
 			
 			
