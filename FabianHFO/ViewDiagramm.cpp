@@ -339,7 +339,7 @@ CMVView(ViewID)
 	m_lpfsFOT->xMax=G_UPPER_MAXSCALE_PRESSURE;
 	m_lpfsFOT->xMin=G_LOWER_MAXSCALE_PRESSURE;
 	
-	m_lpfsFOT->yMax=G_UPPER_MINSCALE_XRS_FOT;
+	m_lpfsFOT->yMax=G_UPPER_MAXSCALE_XRS_FOT;//G_UPPER_MINSCALE_XRS_FOT; //rku, check FOTGRAPH
 	m_lpfsFOT->yMin=G_LOWER_MINSCALE_XRS_FOT;
 	m_lpfsFOT->dXfactor=G_FACTOR_FOTxrs;
 	m_lpfsFOT->dYfactor=1;
@@ -910,7 +910,7 @@ bool CViewDiagramm::CreateWndGraphFOT(int x, int y, int nWidth, int nHeight)
 			m_lpfsFOT->FuncType=G_PLOTSAVEDLOOPPOINTS;//G_PLOTXYLOOPPOINTS;
 			m_lpfsFOT->xMax=G_UPPER_MAXSCALE_PRESSURE;
 			m_lpfsFOT->xMin=G_LOWER_MAXSCALE_PRESSURE;
-			m_lpfsFOT->yMax=G_UPPER_MINSCALE_XRS_FOT;
+			m_lpfsFOT->yMax=G_UPPER_MAXSCALE_XRS_FOT;//G_UPPER_MINSCALE_XRS_FOT; //rku, check FOTGRAPH
 			m_lpfsFOT->yMin=G_LOWER_MINSCALE_XRS_FOT;
 			m_lpfsFOT->dXfactor=G_FACTOR_FOTxrs;
 			m_lpfsFOT->dYfactor=1;
@@ -939,7 +939,7 @@ bool CViewDiagramm::CreateWndGraphFOT(int x, int y, int nWidth, int nHeight)
 		m_lpfsFOT->FuncType=G_PLOTSAVEDLOOPPOINTS;
 		m_lpfsFOT->xMax=G_UPPER_MAXSCALE_PRESSURE;
 		m_lpfsFOT->xMin=G_LOWER_MAXSCALE_PRESSURE;
-		m_lpfsFOT->yMax=G_UPPER_MINSCALE_XRS_FOT;
+		m_lpfsFOT->yMax=G_UPPER_MAXSCALE_XRS_FOT;//G_UPPER_MINSCALE_XRS_FOT; //rku, check FOTGRAPH
 		m_lpfsFOT->yMin=G_LOWER_MINSCALE_XRS_FOT;
 		m_lpfsFOT->dXfactor=G_FACTOR_FOTxrs;
 		m_lpfsFOT->dYfactor=1;

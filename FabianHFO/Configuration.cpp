@@ -1962,12 +1962,14 @@ void CConfiguration::LoadSettings()
 		getModel()->getI2C()->WriteConfigWord(MAXSCALE_FOT_PRESSURE_16,m_iMAXSCALE_FOT_PRESSURE);
 	}
 
-	m_iMINSCALE_FOT_XRS=getModel()->getI2C()->ReadConfigWord(MINSCALE_FOT_XRS_16);
-	if(m_iMINSCALE_FOT_XRS> (G_LOWER_MINSCALE_XRS_FOT *(-1)) || m_iMINSCALE_FOT_XRS<G_UPPER_MINSCALE_XRS_FOT)
-	{
-		m_iMINSCALE_FOT_XRS=(G_LOWER_MINSCALE_XRS_FOT *(-1));
-		getModel()->getI2C()->WriteConfigWord(MINSCALE_FOT_XRS_16,m_iMINSCALE_FOT_XRS);
-	}
+	//m_iMINSCALE_FOT_XRS=getModel()->getI2C()->ReadConfigWord(MINSCALE_FOT_XRS_16);
+	//if(m_iMINSCALE_FOT_XRS> (G_LOWER_MINSCALE_XRS_FOT *(-1)) || m_iMINSCALE_FOT_XRS<G_UPPER_MINSCALE_XRS_FOT)//rku, check FOTGRAPH
+	//{
+	//	m_iMINSCALE_FOT_XRS=(G_LOWER_MINSCALE_XRS_FOT *(-1));
+	//	getModel()->getI2C()->WriteConfigWord(MINSCALE_FOT_XRS_16,m_iMINSCALE_FOT_XRS);
+	//}
+	m_iMINSCALE_FOT_XRS=(G_LOWER_MINSCALE_XRS_FOT *(-1));//rku, check FOTGRAPH
+	
 
 	m_eIERelationMode=(eIERelationMode)getModel()->getI2C()->ReadConfigByte(IERELATIONMODE_8);	//->WORKSTATE
 	if(m_eIERelationMode<RM_SET_ItoBPM || m_eIERelationMode>RM_SET_ItoE)
@@ -5776,7 +5778,7 @@ double CConfiguration::GetMINSCALE_FOT_XRS()
 void CConfiguration::SetMINSCALE_FOT_XRS(double value)
 {
 	m_iMINSCALE_FOT_XRS=value*(-1);
-	getModel()->getI2C()->WriteConfigWord(MINSCALE_FOT_XRS_16, value);
+	//getModel()->getI2C()->WriteConfigWord(MINSCALE_FOT_XRS_16, value); //rku, check FOTGRAPH
 }
 // **************************************************************************
 // 
@@ -6925,7 +6927,7 @@ void CConfiguration::readinFOTventDelaytime()
 {
 	CTlsRegistry regLang(_T("HKCU\\Software\\FabianHFO\\WorkState\\FOT"),true);
 
-	//regLang.WriteDWORD(_T("FOTDELAY"), 10);
+	//regLang.WriteDWORD(_T("FOTDELAY"), 15);
 	m_iFOTventDelaytime=(WORD)regLang.ReadDWORD(_T("FOTDELAY"), VENTDELAYTIME);
 
 	if(m_iFOTventDelaytime<VENTDELAYTIME_MIN || m_iFOTventDelaytime>VENTDELAYTIME_MAX)

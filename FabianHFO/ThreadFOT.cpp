@@ -319,7 +319,6 @@ void CThreadFOT::restoreFOTHFOVentMode()
 void CThreadFOT::startFOTconventional()
 {
 	m_bFOTconvRunning=true;
-	DEBUGMSG(TRUE, (TEXT("yyyyyyyy\r\n")));
 	CString szLog=_T("");
 	theApp.getLog()->WriteLine(_T("#FOT: start CONVENTIONAL"));
 	szLog.Format(_T("FOTsteps %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara());

@@ -154,7 +154,6 @@ void CInterfaceAcuLink::fillMeasurementData()
 		}
 		break;
 	}
-	//DEBUGMSG(TRUE, (TEXT("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\r\n")));
 }
 
 bool CInterfaceAcuLink::isCO2active()

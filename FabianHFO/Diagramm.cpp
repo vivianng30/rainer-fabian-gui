@@ -643,6 +643,7 @@ void CDiagramm::SetDiagrammType(int iType)
 			//m_dMinX=G_LOWER_MAXSCALE_PMEAN_FOT;
 			m_dMaxX=G_UPPER_MAXSCALE_PRESSURE;
 			m_dMinX=G_LOWER_MAXSCALE_PRESSURE_FOT;
+			//m_dMaxY=G_UPPER_MAXSCALE_XRS_FOT;//rku, check FOTGRAPH
 			m_dMaxY=0;
 			m_dMinY=G_LOWER_MINSCALE_XRS_FOT;
 
@@ -1264,9 +1265,10 @@ void CDiagramm::SetYAxisScale(double min, double max, BOOL bRedraw,bool bRedrawD
 			break;
 		case FOT_LOOP:
 			{
-				if(max!=0 || min<G_LOWER_MINSCALE_XRS_FOT)
+				//if(max!=0 || min<G_LOWER_MINSCALE_XRS_FOT)
+				if(max>G_UPPER_MAXSCALE_XRS_FOT || min<G_LOWER_MINSCALE_XRS_FOT)//rku, check FOTGRAPH
 				{
-					max=0;
+					max=G_UPPER_MAXSCALE_XRS_FOT;
 					min=G_LOWER_MINSCALE_XRS_FOT;
 				}
 			}
@@ -2214,7 +2216,7 @@ double CDiagramm::CalculateYAxisTickGridSpace()
 				result=100;
 		}
 		break;
-	case FOT_LOOP:
+	case FOT_LOOP://rku, check FOTGRAPH
 		{
 			if(m_dYAxisMin<=(-300))
 				result=50;
@@ -2442,7 +2444,7 @@ double CDiagramm::CalculateYAxisNumericSpace()
 				result=100;
 		}
 		break;
-	case FOT_LOOP:
+	case FOT_LOOP://rku, check FOTGRAPH
 		{
 			if(m_dYAxisMin<=(-300))
 				result=50;
@@ -3635,6 +3637,8 @@ void CDiagramm::DoPlotSavedLoopPoints()
 			   {
 				   m_dMaxY=y;
 			   }
+
+			   DEBUGMSG(TRUE, (TEXT("m_dMaxY %d\r\n"),(int)m_dMaxY));
 
 			   pixelx= (UINT)(xstart+(x-m_dXAxisMin)/xperpixel);
 
@@ -5246,6 +5250,7 @@ void CDiagramm::CheckAutoScaleXYincrease()
 				m_dMaxX=G_UPPER_MAXSCALE_PRESSURE;
 				m_dMinX=G_LOWER_MAXSCALE_PRESSURE_FOT;
 				m_dMaxY=0;
+				//m_dMaxY=G_UPPER_MAXSCALE_XRS_FOT;//rku, check FOTGRAPH
 				m_dMinY=G_LOWER_MINSCALE_XRS_FOT;
 			}
 			break;
@@ -5426,7 +5431,8 @@ void CDiagramm::CheckAutoScaleXYdecrease()
 			{
 				m_dMaxX=G_UPPER_MAXSCALE_PRESSURE;
 				m_dMinX=G_LOWER_MAXSCALE_PRESSURE_FOT;
-				m_dMaxY=0;
+				//m_dMaxY=0;
+				m_dMaxY=G_UPPER_MAXSCALE_XRS_FOT;//rku, check FOTGRAPH
 				m_dMinY=G_LOWER_MINSCALE_XRS_FOT;
 			}
 			break;
@@ -5653,16 +5659,10 @@ void CDiagramm::CheckAutoScaleY()
 			m_dMaxY=0;
 			m_dMinY=0;
 		}
-		else if(m_pFunctionParams->yMin<m_dYAxisMin && m_dMaxY+10<m_dYAxisMin)
+		else if(m_pFunctionParams->yMin<m_dYAxisMin && m_dMaxY+10<m_dYAxisMin)//rku, check FOTGRAPH, nothing to change here!
 		{
 			if(isSafeTickCountDelayExpired(m_dwLastCheckAutoScaleY, 100))
 			{
-				//rkuNEWFIX
-				//DEBUGMSG(TRUE, (TEXT("DIAinc3 y%d\r\n"),m_iDiagrammType));
-				/*CStringW sz=_T("");
-				sz.Format(_T("#DIAinc3 y%d"),m_iDiagrammType);
-				theApp.getLog()->WriteLine(sz);*/
-
 				IncreaseYScale(true);
 
 				m_dwLastCheckAutoScaleY=GetTickCount();
@@ -5676,14 +5676,8 @@ void CDiagramm::CheckAutoScaleY()
 			{
 				m_dwLastCheckAutoScaleY=GetTickCount();
 
-				if(CanDecreaseYScale())
+				if(CanDecreaseYScale()) //rku, check FOTGRAPH
 				{
-					//rkuNEWFIX
-					//DEBUGMSG(TRUE, (TEXT("DIAdec2 y%d\r\n"),m_iDiagrammType));
-					/*CStringW sz=_T("");
-					sz.Format(_T("#DIAdec2 y%d"),m_iDiagrammType);
-					theApp.getLog()->WriteLine(sz);*/
-
 					DecreaseYScaleToNextValue(true);
 				}
 				m_dMaxY=0;
@@ -5902,9 +5896,10 @@ void CDiagramm::IncreaseYScale(bool bRedrawDiagrammData)
 				getModel()->getCONFIG()->SetMAXSCALE_SPO2_GRAPH(dHigherYAxisMax);
 			}
 			break;
-		case FOT_LOOP: //dHigherYAxisMax is negative, 
+		case FOT_LOOP:
 			{
-				SetYAxisScale(dHigherYAxisMax, 0, TRUE, bRedrawDiagrammData);
+				//SetYAxisScale(dHigherYAxisMax, 0, TRUE, bRedrawDiagrammData);
+				SetYAxisScale(dHigherYAxisMax, G_UPPER_MAXSCALE_XRS_FOT, TRUE, bRedrawDiagrammData); //rku, check FOTGRAPH
 				getModel()->getCONFIG()->SetMINSCALE_FOT_XRS(dHigherYAxisMax);
 			}
 			break;
@@ -6817,7 +6812,7 @@ double CDiagramm::GetHigherYAxisMax()
 
 		}
 		break;
-	case FOT_LOOP://allways negative!
+	case FOT_LOOP:
 		{
 			//if(m_pFunctionParams->yMin<m_dYAxisMin && m_dMinY<m_dYAxisMin)
 			// 
@@ -7093,7 +7088,8 @@ bool CDiagramm::IncreaseYScaleToNextValue()
 			break;
 		case FOT_LOOP://allways negative
 			{
-				SetYAxisScale(dHigherYAxisMax, 0, TRUE);
+				//SetYAxisScale(dHigherYAxisMax, 0, TRUE);
+				SetYAxisScale(dHigherYAxisMax, G_UPPER_MAXSCALE_XRS_FOT, TRUE);//rku, check FOTGRAPH
 				getModel()->getCONFIG()->SetMINSCALE_FOT_XRS(dHigherYAxisMax);
 			}
 			break;
@@ -7598,9 +7594,10 @@ bool CDiagramm::DecreaseYScaleToNextValue(bool bRedrawDiagrammData)
 				getModel()->getCONFIG()->SetMAXSCALE_SPO2_GRAPH(dHigherYAxisMax);
 			}
 			break;
-		case FOT_LOOP://allways negative
+		case FOT_LOOP:
 			{
-				SetYAxisScale(dHigherYAxisMax, 0, TRUE, bRedrawDiagrammData);
+				//SetYAxisScale(dHigherYAxisMax, 0, TRUE, bRedrawDiagrammData);
+				SetYAxisScale(dHigherYAxisMax, G_UPPER_MAXSCALE_XRS_FOT, TRUE, bRedrawDiagrammData);//rku, check FOTGRAPH
 				getModel()->getCONFIG()->SetMINSCALE_FOT_XRS(dHigherYAxisMax);
 			}
 			break;
