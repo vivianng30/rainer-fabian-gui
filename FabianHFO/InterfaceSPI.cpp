@@ -3575,7 +3575,7 @@ int CInterfaceSPI::ReadSPIData()
 			iRes=0;
 		}
 		getModel()->getDATAHANDLER()->setMessureDataAVG(ALINK_MSMNT_P_MEAN,iRes);
-		DEBUGMSG(TRUE, (TEXT("P_MEAN %d\r\n"),iRes));
+		//DEBUGMSG(TRUE, (TEXT("P_MEAN %d\r\n"),iRes));
 
 		//3. Byte: M_AVG_PEEP
 		byLo=byBuffer[iBuf];

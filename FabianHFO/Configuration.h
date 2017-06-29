@@ -695,6 +695,8 @@ public:
 	void SetMAXSCALE_FOT_PRESSURE(double value);
 	double GetMINSCALE_FOT_XRS();
 	void SetMINSCALE_FOT_XRS(double value);
+	double GetMAXSCALE_FOT_XRS();
+	void SetMAXSCALE_FOT_XRS(double value);
 	
 	void TrendSetPInspMax(int value);
 	int TrendGetPInspMax();
@@ -1025,7 +1027,8 @@ private:
 	int m_iTrendHFAMPMax;
 
 	int m_iMAXSCALE_FOT_PRESSURE;
-	int m_iMINSCALE_FOT_XRS;
+	double m_iMINSCALE_FOT_XRS;
+	double m_iMAXSCALE_FOT_XRS;
 
 	int m_iTrendRSBIMax;
 	int m_iTrendSHAREMVMANDMax;

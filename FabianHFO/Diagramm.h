@@ -98,6 +98,7 @@ private:
 	double GetNextHigherYAxisMax();
 
 	double GetNextLowerYAxisMax();
+	double GetNextHigherYAxisMin();
 
 	bool CanDecreaseYScale();
 
@@ -147,7 +148,9 @@ private:
 	void IncreaseYScale(bool bRedrawDiagrammData/*=false*/);
 	
 	double GetHigherXAxisMax();
+
 	double GetHigherYAxisMax();
+	double GetHigherYAxisMin();
 	
 	void RefreshLineChart();
 	void RefreshFilledChart();

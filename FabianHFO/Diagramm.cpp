@@ -643,8 +643,8 @@ void CDiagramm::SetDiagrammType(int iType)
 			//m_dMinX=G_LOWER_MAXSCALE_PMEAN_FOT;
 			m_dMaxX=G_UPPER_MAXSCALE_PRESSURE;
 			m_dMinX=G_LOWER_MAXSCALE_PRESSURE_FOT;
-			//m_dMaxY=G_UPPER_MAXSCALE_XRS_FOT;//rku, check FOTGRAPH
-			m_dMaxY=0;
+			m_dMaxY=G_UPPER_MAXSCALE_XRS_FOT;//rku, check FOTGRAPH
+			//m_dMaxY=0;
 			m_dMinY=G_LOWER_MINSCALE_XRS_FOT;
 
 			m_rmargin=DIAGRAMM_RIGHTMARGIN_LOOP;
@@ -3633,12 +3633,25 @@ void CDiagramm::DoPlotSavedLoopPoints()
 			   {
 				   m_dMaxY=y;
 			   }*/
+			   
+			   
+			   //if(y<m_dMaxY)//rku, check FOTGRAPH
+			   //{
+				  // m_dMaxY=y;
+			   //}
+			   //neu
 			   if(y<m_dMaxY)
 			   {
 				   m_dMaxY=y;
 			   }
+			   if(y>m_dMinY)
+			   {
+				   m_dMinY=y;
+			   }
 
 			   DEBUGMSG(TRUE, (TEXT("m_dMaxY %d\r\n"),(int)m_dMaxY));
+			   DEBUGMSG(TRUE, (TEXT("m_dMinY %d\r\n"),(int)m_dMinY));
+			   DEBUGMSG(TRUE, (TEXT("Y %d\r\n"),(int)y));
 
 			   pixelx= (UINT)(xstart+(x-m_dXAxisMin)/xperpixel);
 
@@ -5249,8 +5262,8 @@ void CDiagramm::CheckAutoScaleXYincrease()
 			{
 				m_dMaxX=G_UPPER_MAXSCALE_PRESSURE;
 				m_dMinX=G_LOWER_MAXSCALE_PRESSURE_FOT;
-				m_dMaxY=0;
-				//m_dMaxY=G_UPPER_MAXSCALE_XRS_FOT;//rku, check FOTGRAPH
+				//m_dMaxY=0;
+				m_dMaxY=G_UPPER_MAXSCALE_XRS_FOT;//rku, check FOTGRAPH
 				m_dMinY=G_LOWER_MINSCALE_XRS_FOT;
 			}
 			break;
@@ -5652,12 +5665,16 @@ void CDiagramm::CheckAutoScaleY()
 
 	if(m_iDiagrammType==FOT_LOOP)
 	{
-		if(m_dMaxY>=0)
+		if(m_dMaxY>m_dYAxisMax && m_pFunctionParams->yMax>m_dYAxisMax)
 		{
-			//do nothing in this case
+			if(isSafeTickCountDelayExpired(m_dwLastCheckAutoScaleY, 100))
+			{
+				IncreaseYScale(true);
 
-			m_dMaxY=0;
-			m_dMinY=0;
+				m_dwLastCheckAutoScaleY=GetTickCount();
+				m_dMaxY=G_UPPER_MAXSCALE_XRS_FOT;
+				m_dMinY=G_LOWER_MINSCALE_XRS_FOT;
+			}
 		}
 		else if(m_pFunctionParams->yMin<m_dYAxisMin && m_dMaxY+10<m_dYAxisMin)//rku, check FOTGRAPH, nothing to change here!
 		{
@@ -5666,8 +5683,8 @@ void CDiagramm::CheckAutoScaleY()
 				IncreaseYScale(true);
 
 				m_dwLastCheckAutoScaleY=GetTickCount();
-				m_dMaxY=0;
-				m_dMinY=0;
+				m_dMaxY=G_UPPER_MAXSCALE_XRS_FOT;
+				m_dMinY=G_LOWER_MINSCALE_XRS_FOT;
 			}
 		}
 		else
@@ -5680,8 +5697,8 @@ void CDiagramm::CheckAutoScaleY()
 				{
 					DecreaseYScaleToNextValue(true);
 				}
-				m_dMaxY=0;
-				m_dMinY=0;
+				m_dMaxY=G_UPPER_MAXSCALE_XRS_FOT;
+				m_dMinY=G_LOWER_MINSCALE_XRS_FOT;
 			}
 		}
 	}
@@ -5858,100 +5875,155 @@ void CDiagramm::IncreaseYScale(bool bRedrawDiagrammData)
 {
 	if(m_bExit)
 		return;
-	double dHigherYAxisMax=GetHigherYAxisMax();
+	double dHigherYAxisMax=0;
+	double dHigherYAxisMin=0;
 
-	if(m_dYAxisMax!=dHigherYAxisMax)
+	switch(m_iDiagrammType)
 	{
-		switch(m_iDiagrammType)
+	case PRESSURE_GRAPH:
 		{
-		case PRESSURE_GRAPH:
+			dHigherYAxisMax=GetHigherYAxisMax();
+			if(m_dYAxisMax!=dHigherYAxisMax)
 			{
 				SetYAxisScale(GetNegativeYoffset(dHigherYAxisMax), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
 				getModel()->getCONFIG()->SetMAXSCALE_PRESSURE_GRAPH(dHigherYAxisMax);
 			}
-			break;
-		case PRESSURE_HF_GRAPH:
+		}
+		break;
+	case PRESSURE_HF_GRAPH:
+		{
+			dHigherYAxisMax=GetHigherYAxisMax();
+			if(m_dYAxisMax!=dHigherYAxisMax)
 			{
 				SetYAxisScale(m_dYAxisMin, dHigherYAxisMax, TRUE, bRedrawDiagrammData);
 				getModel()->getCONFIG()->SetMINSCALE_PRESSURE_HFGRAPH(m_dYAxisMin);
 				getModel()->getCONFIG()->SetMAXSCALE_PRESSURE_HFGRAPH(dHigherYAxisMax);
 			}
-			break;
-		case VOLUME_GRAPH:
+		}
+		break;
+	case VOLUME_GRAPH:
+		{
+			dHigherYAxisMax=GetHigherYAxisMax();
+			if(m_dYAxisMax!=dHigherYAxisMax)
 			{
 				SetYAxisScale(GetNegativeYoffset(dHigherYAxisMax), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
 				getModel()->getCONFIG()->SetMAXSCALE_VOLUME_GRAPH(dHigherYAxisMax);
 			}
-			break;
-		case VOLUME_HF_GRAPH:
+		}
+		break;
+	case VOLUME_HF_GRAPH:
+		{
+			dHigherYAxisMax=GetHigherYAxisMax();
+			if(m_dYAxisMax!=dHigherYAxisMax)
 			{
 				SetYAxisScale(GetNegativeYoffset(dHigherYAxisMax), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
 				getModel()->getCONFIG()->SetMAXSCALE_VOLUME_HFGRAPH(dHigherYAxisMax);
 			}
-			break;
-		case SPO2_GRAPH:
+		}
+		break;
+	case SPO2_GRAPH:
+		{
+			dHigherYAxisMax=GetHigherYAxisMax();
+			if(m_dYAxisMax!=dHigherYAxisMax)
 			{
 				SetYAxisScale(dHigherYAxisMax*(-1), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
 				//SetYAxisScale(GetNegativeYoffset(dHigherYAxisMax), dHigherYAxisMax, true, bRedrawDiagrammData);
 				getModel()->getCONFIG()->SetMAXSCALE_SPO2_GRAPH(dHigherYAxisMax);
 			}
-			break;
-		case FOT_LOOP:
+		}
+		break;
+	case FOT_LOOP:
+		{
+			dHigherYAxisMax=GetHigherYAxisMax();
+			dHigherYAxisMin=GetHigherYAxisMin();
+			if(m_dYAxisMax!=dHigherYAxisMax || m_dYAxisMin!=dHigherYAxisMin)
 			{
-				//SetYAxisScale(dHigherYAxisMax, 0, TRUE, bRedrawDiagrammData);
-				SetYAxisScale(dHigherYAxisMax, G_UPPER_MAXSCALE_XRS_FOT, TRUE, bRedrawDiagrammData); //rku, check FOTGRAPH
-				getModel()->getCONFIG()->SetMINSCALE_FOT_XRS(dHigherYAxisMax);
+				SetYAxisScale(dHigherYAxisMin, dHigherYAxisMax, TRUE, bRedrawDiagrammData); //rku, check FOTGRAPH
+				getModel()->getCONFIG()->SetMINSCALE_FOT_XRS(dHigherYAxisMin);
+				getModel()->getCONFIG()->SetMAXSCALE_FOT_XRS(dHigherYAxisMax);
 			}
-			break;
-		case CO2_GRAPH:
+		}
+		break;
+	case CO2_GRAPH:
+		{
+			dHigherYAxisMax=GetHigherYAxisMax();
+			if(m_dYAxisMax!=dHigherYAxisMax)
 			{
 				SetYAxisScale(GetNegativeYoffset(dHigherYAxisMax), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
 				getModel()->getCONFIG()->SetMAXSCALE_CO2_GRAPH(dHigherYAxisMax);
 			}
-			break;
-		case CO2_HF_GRAPH:
+		}
+		break;
+	case CO2_HF_GRAPH:
+		{
+			dHigherYAxisMax=GetHigherYAxisMax();
+			if(m_dYAxisMax!=dHigherYAxisMax)
 			{
 				SetYAxisScale(GetNegativeYoffset(dHigherYAxisMax), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
 				getModel()->getCONFIG()->SetMAXSCALE_CO2_HFGRAPH(dHigherYAxisMax);
 			}
-			break;
-		case FLOW_GRAPH:
+		}
+		break;
+	case FLOW_GRAPH:
+		{
+			dHigherYAxisMax=GetHigherYAxisMax();
+			if(m_dYAxisMax!=dHigherYAxisMax)
 			{
 				SetYAxisScale(dHigherYAxisMax*(-1), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
 				getModel()->getCONFIG()->SetMAXSCALE_FLOW_GRAPH(dHigherYAxisMax);
 			}
-			break;
-		case FLOW_HF_GRAPH:
+		}
+		break;
+	case FLOW_HF_GRAPH:
+		{
+			dHigherYAxisMax=GetHigherYAxisMax();
+			if(m_dYAxisMax!=dHigherYAxisMax)
 			{
 				SetYAxisScale(dHigherYAxisMax*(-1), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
 				getModel()->getCONFIG()->SetMAXSCALE_FLOW_HFGRAPH(dHigherYAxisMax);
 			}
-			break;
-		case PRESSURE_VOLUME_LOOP:
+		}
+		break;
+	case PRESSURE_VOLUME_LOOP:
+		{
+			dHigherYAxisMax=GetHigherYAxisMax();
+			if(m_dYAxisMax!=dHigherYAxisMax)
 			{
 				SetYAxisScale(GetNegativeYoffset(dHigherYAxisMax), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
 				getModel()->getCONFIG()->SetMAXSCALE_VOLUME_PVLOOP(dHigherYAxisMax);
 			}
-			break;
-		case PRESSURE_VOLUME_HF_LOOP:
+		}
+		break;
+	case PRESSURE_VOLUME_HF_LOOP:
+		{
+			dHigherYAxisMax=GetHigherYAxisMax();
+			if(m_dYAxisMax!=dHigherYAxisMax)
 			{
 				SetYAxisScale(GetNegativeYoffset(dHigherYAxisMax), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
 				getModel()->getCONFIG()->SetMAXSCALE_VOLUME_HFPVLOOP(dHigherYAxisMax);
 			}
-			break;
-		case VOLUME_FLOW_LOOP:
+		}
+		break;
+	case VOLUME_FLOW_LOOP:
+		{
+			dHigherYAxisMax=GetHigherYAxisMax();
+			if(m_dYAxisMax!=dHigherYAxisMax)
 			{
 				SetYAxisScale(dHigherYAxisMax*(-1), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
 				getModel()->getCONFIG()->SetMAXSCALE_FLOW_VFLOOP(dHigherYAxisMax);
 			}
-			break;
-		case VOLUME_FLOW_HF_LOOP:
+		}
+		break;
+	case VOLUME_FLOW_HF_LOOP:
+		{
+			dHigherYAxisMax=GetHigherYAxisMax();
+			if(m_dYAxisMax!=dHigherYAxisMax)
 			{
 				SetYAxisScale(dHigherYAxisMax*(-1), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
 				getModel()->getCONFIG()->SetMAXSCALE_FLOW_HFVFLOOP(dHigherYAxisMax);
 			}
-			break;
 		}
+		break;
 	}
 }
 
@@ -6564,11 +6636,10 @@ double CDiagramm::GetHigherYAxisMax()
 		return dHigherAxisMax;
 	}
 
-
 	double dValue=m_dMaxY;
 
-	if((m_dMinY *(-1))>m_dMaxY)
-		dValue=m_dMinY *(-1);
+	/*if((m_dMinY *(-1))>m_dMaxY)
+		dValue=m_dMinY *(-1);*/
 
 	switch(m_iDiagrammType)
 	{
@@ -6577,6 +6648,9 @@ double CDiagramm::GetHigherYAxisMax()
 	case FLOW_GRAPH:
 	case FLOW_HF_GRAPH:
 		{
+			if((m_dMinY *(-1))>m_dMaxY)
+				dValue=m_dMinY *(-1);
+
 			//FLOW
 			dHigherAxisMax=m_dYAxisMax;
 			
@@ -6627,12 +6701,14 @@ double CDiagramm::GetHigherYAxisMax()
 					break;
 				}
 			}
-
 		}
 		break;
 	case PRESSURE_VOLUME_LOOP:
 	case VOLUME_GRAPH:
 		{
+			if((m_dMinY *(-1))>m_dMaxY)
+				dValue=m_dMinY *(-1);
+
 			//VOLUME
 			dHigherAxisMax=m_dYAxisMax;
 
@@ -6701,6 +6777,9 @@ double CDiagramm::GetHigherYAxisMax()
 	case CO2_GRAPH:
 	case CO2_HF_GRAPH:
 		{
+			if((m_dMinY *(-1))>m_dMaxY)
+				dValue=m_dMinY *(-1);
+
 			//VOLUME
 			dHigherAxisMax=m_dYAxisMax;
 
@@ -6760,6 +6839,9 @@ double CDiagramm::GetHigherYAxisMax()
 		break;
 	case SPO2_GRAPH:
 		{
+			if((m_dMinY *(-1))>m_dMaxY)
+				dValue=m_dMinY *(-1);
+
 			dHigherAxisMax=m_dYAxisMax;
 
 			while (dValue>dHigherAxisMax)
@@ -6814,52 +6896,80 @@ double CDiagramm::GetHigherYAxisMax()
 		break;
 	case FOT_LOOP:
 		{
-			//if(m_pFunctionParams->yMin<m_dYAxisMin && m_dMinY<m_dYAxisMin)
-			// 
 			double dValue=m_dMaxY;
-			dHigherAxisMax=m_dYAxisMin;
+			dHigherAxisMax=m_dYAxisMax;
 
-			while (dValue<dHigherAxisMax)
+			while (dValue>dHigherAxisMax)
 			{
-				if(dHigherAxisMax>-10)
+				if(dHigherAxisMax>100)
 				{
-					dHigherAxisMax=-10;
+					dHigherAxisMax=100;
+					break;
+				}
+				else if(dHigherAxisMax>80)
+				{
+					dHigherAxisMax=100;
+				}
+				else if(dHigherAxisMax>60)
+				{
+					dHigherAxisMax=80;
+				}
+				else if(dHigherAxisMax>40)
+				{
+					dHigherAxisMax=60;
+				}
+				else if(dHigherAxisMax>20)
+				{
+					dHigherAxisMax=40;
+				}
+				else if(dHigherAxisMax>10)
+				{
+					dHigherAxisMax=20;
+				}
+				else if(dHigherAxisMax>0)
+				{
+					dHigherAxisMax=10;
+				}
+				else if(dHigherAxisMax>-10)
+				{
+					dHigherAxisMax=0;
 				}
 				else if(dHigherAxisMax>-20)
 				{
-					dHigherAxisMax=-20;
+					dHigherAxisMax=-10;
 				}
 				else if(dHigherAxisMax>-40)
 				{
-					dHigherAxisMax=-40;
+					dHigherAxisMax=-20;
 				}
 				else if(dHigherAxisMax>-60)
 				{
-					dHigherAxisMax=-60;
+					dHigherAxisMax=-40;
 				}
 				else if(dHigherAxisMax>-80)
 				{
-					dHigherAxisMax=-80;
+					dHigherAxisMax=-60;
 				}
 				else if(dHigherAxisMax>-100)
 				{
-					dHigherAxisMax=-100;
+					dHigherAxisMax=-80;
 				}
 				else if(dHigherAxisMax>-200)
 				{
-					dHigherAxisMax=-200;
+					dHigherAxisMax=-100;
 				}
 				else if(dHigherAxisMax>-300)
 				{
-					dHigherAxisMax=-300;
+					dHigherAxisMax=-200;
 				}
 				else if(dHigherAxisMax>-400)
 				{
-					dHigherAxisMax=-400;
+					dHigherAxisMax=-300;
 				}
 				else if(dHigherAxisMax>-500)
 				{
-					dHigherAxisMax=-500;
+					dHigherAxisMax=-400;
+					break;
 				}
 				else
 				{
@@ -6872,6 +6982,9 @@ double CDiagramm::GetHigherYAxisMax()
 	case PRESSURE_VOLUME_HF_LOOP:
 	case VOLUME_HF_GRAPH:
 		{
+			if((m_dMinY *(-1))>m_dMaxY)
+				dValue=m_dMinY *(-1);
+
 			//VOLUME
 			dHigherAxisMax=m_dYAxisMax;
 
@@ -6928,6 +7041,9 @@ double CDiagramm::GetHigherYAxisMax()
 	case PRESSURE_GRAPH:
 	case PRESSURE_HF_GRAPH:
 		{
+			if((m_dMinY *(-1))>m_dMaxY)
+				dValue=m_dMinY *(-1);
+
 			//PRESSURE
 			dHigherAxisMax=m_dYAxisMax;
 
@@ -6973,8 +7089,8 @@ double CDiagramm::GetHigherYAxisMax()
 
 	if(m_iDiagrammType==FOT_LOOP)
 	{
-		if(dHigherAxisMax>m_pFunctionParams->yMin || dHigherAxisMax==0)
-			dHigherAxisMax=m_pFunctionParams->yMin;
+		if(dHigherAxisMax>m_pFunctionParams->yMax || dHigherAxisMax<m_pFunctionParams->yMin)
+			dHigherAxisMax=m_pFunctionParams->yMax;
 	}
 	else
 	{
@@ -6984,6 +7100,119 @@ double CDiagramm::GetHigherYAxisMax()
 	
 
 	return dHigherAxisMax;
+
+}
+
+double CDiagramm::GetHigherYAxisMin()
+{
+	double dHigherAxisMin=0;
+
+	if(!m_pFunctionParams)
+	{
+		return dHigherAxisMin;
+	}
+
+	double dValue=m_dMinY;
+
+	/*if((m_dMinY *(-1))>m_dMaxY)
+		dValue=m_dMinY *(-1);*/
+
+	switch(m_iDiagrammType)
+	{
+	case FOT_LOOP:
+		{
+			double dValue=m_dMinY;
+			dHigherAxisMin=m_dYAxisMin;
+
+			while (dValue<dHigherAxisMin)
+			{
+				if(dHigherAxisMin>=100)
+				{
+					dHigherAxisMin=80;
+				}
+				else if(dHigherAxisMin>80)
+				{
+					dHigherAxisMin=80;
+				}
+				else if(dHigherAxisMin>60)
+				{
+					dHigherAxisMin=60;
+				}
+				else if(dHigherAxisMin>40)
+				{
+					dHigherAxisMin=40;
+				}
+				else if(dHigherAxisMin>20)
+				{
+					dHigherAxisMin=20;
+				}
+				else if(dHigherAxisMin>10)
+				{
+					dHigherAxisMin=10;
+				}
+				else if(dHigherAxisMin>0)
+				{
+					dHigherAxisMin=0;
+				}
+				else if(dHigherAxisMin>-10)
+				{
+					dHigherAxisMin=-10;
+				}
+				else if(dHigherAxisMin>-20)
+				{
+					dHigherAxisMin=-20;
+				}
+				else if(dHigherAxisMin>-40)
+				{
+					dHigherAxisMin=-40;
+				}
+				else if(dHigherAxisMin>-60)
+				{
+					dHigherAxisMin=-60;
+				}
+				else if(dHigherAxisMin>-80)
+				{
+					dHigherAxisMin=-80;
+				}
+				else if(dHigherAxisMin>-100)
+				{
+					dHigherAxisMin=-100;
+				}
+				else if(dHigherAxisMin>-200)
+				{
+					dHigherAxisMin=-200;
+				}
+				else if(dHigherAxisMin>-300)
+				{
+					dHigherAxisMin=-300;
+				}
+				else if(dHigherAxisMin>-400)
+				{
+					dHigherAxisMin=-400;
+				}
+				else
+				{
+					dHigherAxisMin=-500;
+					break;
+				}
+			}
+		}
+		break;
+	}
+
+	if(m_iDiagrammType==FOT_LOOP)
+	{
+		if(dHigherAxisMin<m_pFunctionParams->yMin || dHigherAxisMin>m_pFunctionParams->yMax)
+			dHigherAxisMin=m_pFunctionParams->yMin;
+	}
+	else
+	{
+		if(dHigherAxisMin<m_pFunctionParams->yMin || dHigherAxisMin>m_pFunctionParams->yMax)
+			dHigherAxisMin=m_pFunctionParams->yMin;
+	}
+
+
+	return dHigherAxisMin;
 
 }
 
@@ -7555,103 +7784,189 @@ bool CDiagramm::DecreaseYScaleToNextValue(bool bRedrawDiagrammData)
 	if(m_bExit)
 		return false;
 	bool bResult=false;
-	double dHigherYAxisMax=GetNextLowerYAxisMax();
+	
 
-	if(m_dYAxisMax!=dHigherYAxisMax)
+	switch(m_iDiagrammType)
 	{
-		bResult=true;
-		
-		switch(m_iDiagrammType)
+	case PRESSURE_GRAPH:
 		{
-		case PRESSURE_GRAPH:
+			double dLowerYAxisMax=GetNextLowerYAxisMax();
+
+			if(m_dYAxisMax!=dLowerYAxisMax)
 			{
-				SetYAxisScale(GetNegativeYoffset(dHigherYAxisMax), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
-				getModel()->getCONFIG()->SetMAXSCALE_PRESSURE_GRAPH(dHigherYAxisMax);
+				bResult=true;
+				SetYAxisScale(GetNegativeYoffset(dLowerYAxisMax), dLowerYAxisMax, TRUE, bRedrawDiagrammData);
+				getModel()->getCONFIG()->SetMAXSCALE_PRESSURE_GRAPH(dLowerYAxisMax);
 			}
-			break;
-		case PRESSURE_HF_GRAPH:
+		}
+		break;
+	case PRESSURE_HF_GRAPH:
+		{
+			double dLowerYAxisMax=GetNextLowerYAxisMax();
+
+			if(m_dYAxisMax!=dLowerYAxisMax)
 			{
-				SetYAxisScale(m_dYAxisMin, dHigherYAxisMax, TRUE, bRedrawDiagrammData);
+				bResult=true;
+				SetYAxisScale(m_dYAxisMin, dLowerYAxisMax, TRUE, bRedrawDiagrammData);
 				getModel()->getCONFIG()->SetMINSCALE_PRESSURE_HFGRAPH(m_dYAxisMin);
-				getModel()->getCONFIG()->SetMAXSCALE_PRESSURE_HFGRAPH(dHigherYAxisMax);
+				getModel()->getCONFIG()->SetMAXSCALE_PRESSURE_HFGRAPH(dLowerYAxisMax);
 			}
-			break;
-		case VOLUME_GRAPH:
+		}
+		break;
+	case VOLUME_GRAPH:
+		{
+			double dLowerYAxisMax=GetNextLowerYAxisMax();
+
+			if(m_dYAxisMax!=dLowerYAxisMax)
 			{
-				SetYAxisScale(GetNegativeYoffset(dHigherYAxisMax), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
-				getModel()->getCONFIG()->SetMAXSCALE_VOLUME_GRAPH(dHigherYAxisMax);
+				bResult=true;
+				SetYAxisScale(GetNegativeYoffset(dLowerYAxisMax), dLowerYAxisMax, TRUE, bRedrawDiagrammData);
+				getModel()->getCONFIG()->SetMAXSCALE_VOLUME_GRAPH(dLowerYAxisMax);
 			}
-			break;
-		case VOLUME_HF_GRAPH:
+		}
+		break;
+	case VOLUME_HF_GRAPH:
+		{
+			double dLowerYAxisMax=GetNextLowerYAxisMax();
+
+			if(m_dYAxisMax!=dLowerYAxisMax)
 			{
-				SetYAxisScale(GetNegativeYoffset(dHigherYAxisMax), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
-				getModel()->getCONFIG()->SetMAXSCALE_VOLUME_HFGRAPH(dHigherYAxisMax);
+				bResult=true;
+				SetYAxisScale(GetNegativeYoffset(dLowerYAxisMax), dLowerYAxisMax, TRUE, bRedrawDiagrammData);
+				getModel()->getCONFIG()->SetMAXSCALE_VOLUME_HFGRAPH(dLowerYAxisMax);
 			}
-			break;
-		case SPO2_GRAPH:
+		}
+		break;
+	case SPO2_GRAPH:
+		{
+			double dLowerYAxisMax=GetNextLowerYAxisMax();
+
+			if(m_dYAxisMax!=dLowerYAxisMax)
 			{
-				SetYAxisScale(dHigherYAxisMax*(-1), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
-				getModel()->getCONFIG()->SetMAXSCALE_SPO2_GRAPH(dHigherYAxisMax);
+				bResult=true;
+				SetYAxisScale(dLowerYAxisMax*(-1), dLowerYAxisMax, TRUE, bRedrawDiagrammData);
+				getModel()->getCONFIG()->SetMAXSCALE_SPO2_GRAPH(dLowerYAxisMax);
 			}
-			break;
-		case FOT_LOOP:
+		}
+		break;
+	case FOT_LOOP:
+		{
+			double dLowerYAxisMax=GetNextLowerYAxisMax();
+			double dHigherYAxisMin=GetNextHigherYAxisMin();
+
+			if(m_dYAxisMax!=dLowerYAxisMax || m_dYAxisMin!=dHigherYAxisMin)
 			{
-				//SetYAxisScale(dHigherYAxisMax, 0, TRUE, bRedrawDiagrammData);
-				SetYAxisScale(dHigherYAxisMax, G_UPPER_MAXSCALE_XRS_FOT, TRUE, bRedrawDiagrammData);//rku, check FOTGRAPH
-				getModel()->getCONFIG()->SetMINSCALE_FOT_XRS(dHigherYAxisMax);
+				bResult=true;
+
+				if(dHigherYAxisMin<0 && dLowerYAxisMax<0)
+					dLowerYAxisMax=0;
+				else if(dHigherYAxisMin>0 && dLowerYAxisMax>0)
+					dHigherYAxisMin=0;
+
+				SetYAxisScale(dHigherYAxisMin, dLowerYAxisMax, TRUE, bRedrawDiagrammData);//rku, check FOTGRAPH
+				getModel()->getCONFIG()->SetMINSCALE_FOT_XRS(dLowerYAxisMax);
+				getModel()->getCONFIG()->SetMAXSCALE_FOT_XRS(dHigherYAxisMin);
 			}
-			break;
-		case CO2_GRAPH:
+		}
+		break;
+	case CO2_GRAPH:
+		{
+			double dLowerYAxisMax=GetNextLowerYAxisMax();
+
+			if(m_dYAxisMax!=dLowerYAxisMax)
 			{
-				SetYAxisScale(GetNegativeYoffset(dHigherYAxisMax), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
-				getModel()->getCONFIG()->SetMAXSCALE_CO2_GRAPH(dHigherYAxisMax);
+				bResult=true;
+				SetYAxisScale(GetNegativeYoffset(dLowerYAxisMax), dLowerYAxisMax, TRUE, bRedrawDiagrammData);
+				getModel()->getCONFIG()->SetMAXSCALE_CO2_GRAPH(dLowerYAxisMax);
 			}
-			break;
-		case CO2_HF_GRAPH:
+		}
+		break;
+	case CO2_HF_GRAPH:
+		{
+			double dLowerYAxisMax=GetNextLowerYAxisMax();
+
+			if(m_dYAxisMax!=dLowerYAxisMax)
 			{
-				SetYAxisScale(GetNegativeYoffset(dHigherYAxisMax), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
-				getModel()->getCONFIG()->SetMAXSCALE_CO2_HFGRAPH(dHigherYAxisMax);
+				bResult=true;
+				SetYAxisScale(GetNegativeYoffset(dLowerYAxisMax), dLowerYAxisMax, TRUE, bRedrawDiagrammData);
+				getModel()->getCONFIG()->SetMAXSCALE_CO2_HFGRAPH(dLowerYAxisMax);
 			}
-			break;
-		case FLOW_GRAPH:
+		}
+		break;
+	case FLOW_GRAPH:
+		{
+			double dHigherYAxisMax=GetNextLowerYAxisMax();
+
+			if(m_dYAxisMax!=dHigherYAxisMax)
 			{
+				bResult=true;
 				SetYAxisScale(dHigherYAxisMax*(-1), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
 				getModel()->getCONFIG()->SetMAXSCALE_FLOW_GRAPH(dHigherYAxisMax);
 			}
-			break;
-		case FLOW_HF_GRAPH:
-			{
-				SetYAxisScale(dHigherYAxisMax*(-1), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
-				getModel()->getCONFIG()->SetMAXSCALE_FLOW_HFGRAPH(dHigherYAxisMax);
-			}
-			break;
-		case PRESSURE_VOLUME_LOOP:
-			{
-				SetYAxisScale(GetNegativeYoffset(dHigherYAxisMax), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
-				getModel()->getCONFIG()->SetMAXSCALE_VOLUME_PVLOOP(dHigherYAxisMax);
-			}
-			break;
-		case PRESSURE_VOLUME_HF_LOOP:
-			{
-				SetYAxisScale(GetNegativeYoffset(dHigherYAxisMax), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
-				getModel()->getCONFIG()->SetMAXSCALE_VOLUME_HFPVLOOP(dHigherYAxisMax);
-			}
-			break;
-		case VOLUME_FLOW_LOOP:
-			{
-				SetYAxisScale(dHigherYAxisMax*(-1), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
-				getModel()->getCONFIG()->SetMAXSCALE_FLOW_VFLOOP(dHigherYAxisMax);
-			}
-			break;
-		case VOLUME_FLOW_HF_LOOP:
-			{
-				SetYAxisScale(dHigherYAxisMax*(-1), dHigherYAxisMax, TRUE, bRedrawDiagrammData);
-				getModel()->getCONFIG()->SetMAXSCALE_FLOW_HFVFLOOP(dHigherYAxisMax);
-			}
-			break;
-		default:
-			break;
 		}
+		break;
+	case FLOW_HF_GRAPH:
+		{
+			double dLowerYAxisMax=GetNextLowerYAxisMax();
+
+			if(m_dYAxisMax!=dLowerYAxisMax)
+			{
+				bResult=true;
+				SetYAxisScale(dLowerYAxisMax*(-1), dLowerYAxisMax, TRUE, bRedrawDiagrammData);
+				getModel()->getCONFIG()->SetMAXSCALE_FLOW_HFGRAPH(dLowerYAxisMax);
+			}
+		}
+		break;
+	case PRESSURE_VOLUME_LOOP:
+		{
+			double dLowerYAxisMax=GetNextLowerYAxisMax();
+
+			if(m_dYAxisMax!=dLowerYAxisMax)
+			{
+				bResult=true;
+				SetYAxisScale(GetNegativeYoffset(dLowerYAxisMax), dLowerYAxisMax, TRUE, bRedrawDiagrammData);
+				getModel()->getCONFIG()->SetMAXSCALE_VOLUME_PVLOOP(dLowerYAxisMax);
+			}
+		}
+		break;
+	case PRESSURE_VOLUME_HF_LOOP:
+		{
+			double dLowerYAxisMax=GetNextLowerYAxisMax();
+
+			if(m_dYAxisMax!=dLowerYAxisMax)
+			{
+				bResult=true;
+				SetYAxisScale(GetNegativeYoffset(dLowerYAxisMax), dLowerYAxisMax, TRUE, bRedrawDiagrammData);
+				getModel()->getCONFIG()->SetMAXSCALE_VOLUME_HFPVLOOP(dLowerYAxisMax);
+			}
+		}
+		break;
+	case VOLUME_FLOW_LOOP:
+		{
+			double dLowerYAxisMax=GetNextLowerYAxisMax();
+
+			if(m_dYAxisMax!=dLowerYAxisMax)
+			{
+				bResult=true;
+				SetYAxisScale(dLowerYAxisMax*(-1), dLowerYAxisMax, TRUE, bRedrawDiagrammData);
+				getModel()->getCONFIG()->SetMAXSCALE_FLOW_VFLOOP(dLowerYAxisMax);
+			}
+		}
+		break;
+	case VOLUME_FLOW_HF_LOOP:
+		{
+			double dLowerYAxisMax=GetNextLowerYAxisMax();
+
+			if(m_dYAxisMax!=dLowerYAxisMax)
+			{
+				bResult=true;
+				SetYAxisScale(dLowerYAxisMax*(-1), dLowerYAxisMax, TRUE, bRedrawDiagrammData);
+				getModel()->getCONFIG()->SetMAXSCALE_FLOW_HFVFLOOP(dLowerYAxisMax);
+			}
+		}
+		break;
+	default:
+		break;
 	}
 	return bResult;
 }
@@ -8452,50 +8767,71 @@ double CDiagramm::GetNextLowerYAxisMax()
 		break;
 	case FOT_LOOP://allways negative! :GetNextLowerYAxisMax()
 		{
-			//if(m_pFunctionParams->yMin<m_dYAxisMin && m_dMinY<m_dYAxisMin)
-			// 
-			double dValue=m_dMaxY-10;
-			//dLowerAxisMax=m_dYAxisMin;
+			double iTempMaxY=m_dMaxY+10;
 
-			if(dValue>(-10))
-			{
-				dLowerAxisMax=(-10);
-			}
-			else if(dValue>(-20))
-			{
-				dLowerAxisMax=(-20);
-			}
-			else if(dValue>(-40))
-			{
-				dLowerAxisMax=(-40);
-			}
-			else if(dValue>(-60))
-			{
-				dLowerAxisMax=(-60);
-			}
-			else if(dValue>(-80))
-			{
-				dLowerAxisMax=(-80);
-			}
-			else if(dValue>(-100))
-			{
-				dLowerAxisMax=(-100);
-			}
-			else if(dValue>(-200))
-			{
-				dLowerAxisMax=(-200);
-			}
-			else if(dValue>(-300))
-			{
-				dLowerAxisMax=(-300);
-			}
-			else if(dValue>(-400))
+			if(iTempMaxY<=(-400))
 			{
 				dLowerAxisMax=(-400);
 			}
+			else if(iTempMaxY<=(-300))
+			{
+				dLowerAxisMax=(-300);
+			}
+			else if(iTempMaxY<=(-200))
+			{
+				dLowerAxisMax=(-200);
+			}
+			else if(iTempMaxY<=(-100))
+			{
+				dLowerAxisMax=(-100);
+			}
+			else if(iTempMaxY<=(-80))
+			{
+				dLowerAxisMax=(-80);
+			}
+			else if(iTempMaxY<=(-60))
+			{
+				dLowerAxisMax=(-60);
+			}
+			else if(iTempMaxY<=(-40))
+			{
+				dLowerAxisMax=(-40);
+			}
+			else if(iTempMaxY<=(-20))
+			{
+				dLowerAxisMax=(-20);
+			}
+			else if(iTempMaxY<=(-10))
+			{
+				dLowerAxisMax=(-10);
+			}
+			else if(iTempMaxY<=0)
+			{
+				dLowerAxisMax=0;
+			}
+			else if(iTempMaxY<=10)
+			{
+				dLowerAxisMax=10;
+			}
+			else if(iTempMaxY<=20)
+			{
+				dLowerAxisMax=20;
+			}
+			else if(iTempMaxY<=40)
+			{
+				dLowerAxisMax=40;
+			}
+			else if(iTempMaxY<=60)
+			{
+				dLowerAxisMax=60;
+			}
+			else if(iTempMaxY<=80)
+			{
+				dLowerAxisMax=80;
+			}
 			else 
 			{
-				dLowerAxisMax=(-500);
+				dLowerAxisMax=100;
 			}
 		}
 		break;
@@ -8596,8 +8932,8 @@ double CDiagramm::GetNextLowerYAxisMax()
 
 	if(m_iDiagrammType==FOT_LOOP)
 	{
-		if(dLowerAxisMax<m_pFunctionParams->yMin || dLowerAxisMax==0)
-			dLowerAxisMax=m_pFunctionParams->yMin;
+		if(dLowerAxisMax<m_pFunctionParams->yMin || dLowerAxisMax>m_pFunctionParams->yMax)
+			dLowerAxisMax=m_pFunctionParams->yMax;
 	}
 	else
 	{
@@ -8610,6 +8946,108 @@ double CDiagramm::GetNextLowerYAxisMax()
 
 }
 
+double CDiagramm::GetNextHigherYAxisMin()
+{
+	double dHigherAxisMin=0;
+
+	if(!m_pFunctionParams)
+	{
+		return 0;
+	}
+
+	switch(m_iDiagrammType)
+	{
+	case FOT_LOOP://allways negative! :GetNextLowerYAxisMax()
+		{
+			double iTempMinY=m_dMinY-10;
+
+			if(iTempMinY>=100)
+			{
+				dHigherAxisMin=100;
+			}
+			else if(iTempMinY>=80)
+			{
+				dHigherAxisMin=80;
+			}
+			else if(iTempMinY>=60)
+			{
+				dHigherAxisMin=60;
+			}
+			else if(iTempMinY>=40)
+			{
+				dHigherAxisMin=40;
+			}
+			else if(iTempMinY>=20)
+			{
+				dHigherAxisMin=20;
+			}
+			else if(iTempMinY>=10)
+			{
+				dHigherAxisMin=10;
+			}
+			else if(iTempMinY>=0)
+			{
+				dHigherAxisMin=0;
+			}
+			else if(iTempMinY>=(-10))
+			{
+				dHigherAxisMin=(-10);
+			}
+			else if(iTempMinY>=(-20))
+			{
+				dHigherAxisMin=(-20);
+			}
+			else if(iTempMinY>=(-40))
+			{
+				dHigherAxisMin=(-40);
+			}
+			else if(iTempMinY>=(-60))
+			{
+				dHigherAxisMin=(-60);
+			}
+			else if(iTempMinY>=(-80))
+			{
+				dHigherAxisMin=(-80);
+			}
+			else if(iTempMinY>=(-100))
+			{
+				dHigherAxisMin=(-100);
+			}
+			else if(iTempMinY>=(-200))
+			{
+				dHigherAxisMin=(-200);
+			}
+			else if(iTempMinY>=(-300))
+			{
+				dHigherAxisMin=(-300);
+			}
+			else if(iTempMinY>=(-400))
+			{
+				dHigherAxisMin=(-400);
+			}
+			else
+			{
+				dHigherAxisMin=(-500);
+			}
+		}
+		break;
+	}
+
+	if(m_iDiagrammType==FOT_LOOP)
+	{
+		if(dHigherAxisMin>m_pFunctionParams->yMax || dHigherAxisMin<m_pFunctionParams->yMin)
+			dHigherAxisMin=m_pFunctionParams->yMin;
+	}
+	else
+	{
+		if(dHigherAxisMin>m_pFunctionParams->yMax || dHigherAxisMin<m_pFunctionParams->yMin)
+			dHigherAxisMin=m_pFunctionParams->yMin;
+	}
+
+
+	return dHigherAxisMin;
+
+}
 // **************************************************************************
 // 
 // **************************************************************************
@@ -8731,9 +9169,6 @@ double CDiagramm::GetNextLowerYAxisMax()
 //	return bRes;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CDiagramm::CanDecreaseYScale()
 {
 	bool bRes=false;
@@ -8869,27 +9304,179 @@ bool CDiagramm::CanDecreaseYScale()
 		break;
 	case FOT_LOOP://:CanDecreaseYScale()
 		{
+			//double dLowerAxisMax=0;
+			//double dHigherAxisMin=0;
+
 			//m_dMaxY
-			iTempMaxY=m_dMaxY-10;
-			double dLowerAxisMin=0;
-			if(m_dYAxisMin<(-80))
+			if(m_dYAxisMax>=100)
 			{
-				dLowerAxisMin=m_dYAxisMin+100;
+				dLowerAxisMax=80;
 			}
-			else if(m_dYAxisMin<(-20))
+			else if(m_dYAxisMax>=80)
 			{
-				dLowerAxisMin=m_dYAxisMin+20;
+				dLowerAxisMax=60;
+			}
+			else if(m_dYAxisMax>=60)
+			{
+				dLowerAxisMax=40;
+			}
+			else if(m_dYAxisMax>=40)
+			{
+				dLowerAxisMax=20;
+			}
+			else if(m_dYAxisMax>=20)
+			{
+				dLowerAxisMax=10;
+			}
+			else if(m_dYAxisMax>=10)
+			{
+				dLowerAxisMax=0;
+			}
+			else if(m_dYAxisMax>=0)
+			{
+				dLowerAxisMax=(-10);
+			}
+			else if(m_dYAxisMax>=(-10))
+			{
+				dLowerAxisMax=(-20);
+			}
+			else if(m_dYAxisMax>=(-20))
+			{
+				dLowerAxisMax=(-40);
+			}
+			else if(m_dYAxisMax>=(-40))
+			{
+				dLowerAxisMax=(-60);
+			}
+			else if(m_dYAxisMax>=(-60))
+			{
+				dLowerAxisMax=(-80);
+			}
+			else if(m_dYAxisMax>=(-80))
+			{
+				dLowerAxisMax=(-100);
+			}
+			else if(m_dYAxisMax>=(-100))
+			{
+				dLowerAxisMax=(-200);
+			}
+			else if(m_dYAxisMax>=(-200))
+			{
+				dLowerAxisMax=(-300);
+			}
+			else //if(m_dYAxisMax>=(-300))
+			{
+				dLowerAxisMax=(-400);
+			}
+			
+			
+			if(m_dYAxisMin<=(-500))
+			{
+				dHigherAxisMin=(-400);
+			}
+			else if(m_dYAxisMin<=(-400))
+			{
+				dHigherAxisMin=(-300);
+			}
+			else if(m_dYAxisMin<=(-300))
+			{
+				dHigherAxisMin=(-200);
+			}
+			else if(m_dYAxisMin<=(-200))
+			{
+				dHigherAxisMin=(-100);
+			}
+			else if(m_dYAxisMin<=(-100))
+			{
+				dHigherAxisMin=(-80);
+			}
+			else if(m_dYAxisMin<=(-80))
+			{
+				dHigherAxisMin=(-60);
+			}
+			else if(m_dYAxisMin<=(-60))
+			{
+				dHigherAxisMin=(-40);
+			}
+			else if(m_dYAxisMin<=(-40))
+			{
+				dHigherAxisMin=(-20);
+			}
+			else if(m_dYAxisMin<=(-20))
+			{
+				dHigherAxisMin=(-10);
+			}
+			else if(m_dYAxisMin<=(-10))
+			{
+				dHigherAxisMin=0;
+			}
+			else if(m_dYAxisMin<=0)
+			{
+				dHigherAxisMin=10;
+			}
+			else if(m_dYAxisMin<=10)
+			{
+				dHigherAxisMin=20;
+			}
+			else if(m_dYAxisMin<=20)
+			{
+				dHigherAxisMin=40;
+			}
+			else if(m_dYAxisMin<=40)
+			{
+				dHigherAxisMin=60;
+			}
+			else if(m_dYAxisMin<=60)
+			{
+				dHigherAxisMin=80;
+			}
+			
+
+			iTempMaxY=m_dMaxY+10;
+			iTempMinY=m_dMinY-10;
+			
+			if(m_dMaxY<=0 && m_dMinY<0)
+			{
+				if(		iTempMaxY<dLowerAxisMax
+					&&	m_dYAxisMin<dLowerAxisMax
+					&&	m_dYAxisMax!=0)
+				{
+					bRes=true;
+				}
+				else if(	iTempMinY>dHigherAxisMin
+						&&	m_dYAxisMax>dHigherAxisMin)
+				{
+					bRes=true;
+				}
+			}
+			else if(m_dMaxY>0 && m_dMinY>=0)
+			{
+				if(		iTempMaxY<dLowerAxisMax
+					&&	m_dYAxisMin<dLowerAxisMax)
+				{
+					bRes=true;
+				}
+				else if(	iTempMinY>dHigherAxisMin
+					&&	m_dYAxisMax<dHigherAxisMin
+					&&	m_dYAxisMin!=0)
+				{
+					bRes=true;
+				}
 			}
 			else
 			{
-				dLowerAxisMin=-10;
+				if(		iTempMaxY<dLowerAxisMax
+					&&	m_dYAxisMin<dLowerAxisMax)
+				{
+					bRes=true;
+				}
+				else if(	iTempMinY>dHigherAxisMin
+						&&	m_dYAxisMax<dHigherAxisMin)
+				{
+					bRes=true;
+				}
 			}
 			
-			if(		iTempMaxY>dLowerAxisMin
-				&&	m_dYAxisMin<dLowerAxisMin)
-			{
-				bRes=true;
-			}
 		}
 		break;
 	case SPO2_GRAPH:
