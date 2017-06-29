@@ -1756,6 +1756,10 @@ void CWndDataFOT::Draw(bool bStatic)
 								}
 							}
 
+							//limit PIPnext to 80 mbar
+							if(nextPIPValue>800)
+								nextPIPValue=800;
+
 							rc.left = 7;  
 							rc.top = 210;
 							rc.right  = 143;
@@ -1863,7 +1867,8 @@ void CWndDataFOT::drawPIPmax()
 
 	bool bVGon=false;
 	if(		true==getModel()->getFOTThread()->isFOToriginVGstateOn() 
-		||	true==getModel()->getALARMHANDLER()->isVgarantAutoTurnedOff_FOT())
+		||	true==getModel()->getALARMHANDLER()->isVgarantAutoTurnedOff_FOT()
+		||	true==getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
 	{
 		bVGon=true;
 	}
@@ -2001,6 +2006,10 @@ void CWndDataFOT::drawPIPmax()
 				iMaxPIP=iPEEPEND+getModel()->getDATAHANDLER()->PARADATA()->GetPINSPPara_IPPV()-getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_IPPV();
 			}
 		}
+
+		//limit PIPmax at 80mbar
+		if(iMaxPIP>800)
+			iMaxPIP=800;
 
 		rc.top = 3;  
 		rc.bottom = 50;

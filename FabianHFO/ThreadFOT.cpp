@@ -505,6 +505,11 @@ void CThreadFOT::calcParaFOTCONV()
 		m_icurFOTPIP=m_icurFOTPEEP+m_iFOToriginDiffPEEP_PINSP;
 		//DEBUGMSG(TRUE, (TEXT("setFOTCONVpara m_icurFOTPIP5 %d \r\n"),m_icurFOTPIP));
 	}
+	//limit PIPmax to 80 mbar
+	if(m_icurFOTPIPMAXVG>800)
+		m_icurFOTPIPMAXVG=800;
+	if(m_icurFOTPIP>800)
+		m_icurFOTPIP=800;
 	DEBUGMSG(TRUE, (TEXT("calcParaFOTCONV() m_iFOTsequence%d, m_iFOTdisplaySequence%d, m_icurFOTPEEP%d, m_iFOTPEEPStep%d, m_icurFOTPSV%d, m_icurFOTPIPMAXVG%d, m_icurFOTPIP%d\r\n"),m_iFOTsequence,m_iFOTdisplaySequence,m_icurFOTPEEP,m_iFOTPEEPStep,m_icurFOTPSV,m_icurFOTPIPMAXVG,m_icurFOTPIP));
 
 }
