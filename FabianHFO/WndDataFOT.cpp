@@ -1265,6 +1265,11 @@ void CWndDataFOT::Draw(bool bStatic)
 									//csText=_T("REACTANCE out of range");
 								}
 								break;
+							case RETRY_QUALITY:
+								{
+									csText=getModel()->GetLanguageString(IDS_TXT_FOT_POORQUALITY);
+								}
+								break;
 							default:
 								{
 									csText=_T(" ");
@@ -1612,6 +1617,11 @@ void CWndDataFOT::Draw(bool bStatic)
 									csText=getModel()->GetLanguageString(IDS_TXT_FOT_POORQUALITY);
 									//csText=getModel()->GetLanguageString(IDS_TXT_FOT_REACTANCE);
 									//csText=_T("REACTANCE out of range");
+								}
+								break;
+								case RETRY_QUALITY:
+								{
+									csText=getModel()->GetLanguageString(IDS_TXT_FOT_POORQUALITY);
 								}
 								break;
 							default:

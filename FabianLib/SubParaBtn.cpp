@@ -624,6 +624,17 @@ void CSubParaBtn::DrawSUBPARA_TRIGGER_CPAP(int nState)
 	SelectObject(m_hDC,g_hf7AcuBold);
 
 	if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true
+		&& getModel()->getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE
+		&& getModel()->getCONFIG()->GetCurMode()==VM_PRE_CPAP)
+	{
+		rcSubBtn.top = m_rcClient.top+8;
+		rcSubBtn.bottom = m_rcClient.bottom-8;
+
+		DrawText(m_hDC,_T("Apnea"),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+		DrawText(m_hDC,_T("Detection"),-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+		DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_PRESSURE),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+	}
+	else if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true
 		&& getModel()->getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
 	{
 		rcSubBtn.top = m_rcClient.top+16;

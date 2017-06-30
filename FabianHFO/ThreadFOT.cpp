@@ -12,6 +12,8 @@
 
 extern CEvent g_eventFOT;
 
+#define MINIMUM_FOTMEASUREMENTS 250
+
 PBUFFOTvent* CThreadFOT::m_pbufFOTventilation=NULL;
 PBUFFOTcalc* CThreadFOT::m_pbufFOTdisplay=NULL;
 CThreadFOT* CThreadFOT::theThreadFOT=0;
@@ -1341,9 +1343,13 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 	//DWORD dwStart=GetTickCount();
 	
 	CStringW szLog=_T("");
-	bool bRetryFSI=false;
+	/*bool bRetryFSI=false;
 	bool bRetryResistance=false;
-	bool bRetryReactance=false;
+	bool bRetryReactance=false;*/
+	bool bValueAccpeted=true;
+
+	int iTestCountbufCountFOT=0;
+	int iCountAccepted=0;
 
 	EnterCriticalSection(&csFOTventBuffer);
 
@@ -1359,26 +1365,36 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 
 		if(p_Out[0]<=0.0)//check Resistance >0, else not valid
 		{
-			bRetryResistance=true;
-			break;
+			/*bRetryResistance=true;
+			break;*/
+			bValueAccpeted=false;
 		}
 		else if(p_Out[1]>100.0 || p_Out[1]<-500.0)//check Reactance/XRS 100>XRS>-500 cmH2O*s/L, else not valid
 		{
-			bRetryReactance=true;
-			break;
+			/*bRetryReactance=true;
+			break;*/
+			bValueAccpeted=false;
 		}
 		else if(p_Out[2]>0.20)//check FSI <= 20%, else not valid
 		{
-			bRetryFSI=true;
-			break;
+			/*bRetryFSI=true;
+			break;*/
+			bValueAccpeted=false;
 		}
 
 		Sleep(0);
 
-		for(int i=0;i<4;i++)
+		iTestCountbufCountFOT++;
+		if(bValueAccpeted)
 		{
-			p_TotalOut[i] += p_Out[i]; 
+			iCountAccepted++;
+			for(int n=0;n<4;n++)
+			{
+				p_TotalOut[n] += p_Out[n]; 
+			}
 		}
+		
+		bValueAccpeted=true;
 	}
 
 	/*pOut[0] = Resistance;
@@ -1388,7 +1404,8 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 
 	for(int i=0;i<4;i++)
 	{
-		p_TotalOut[i] = p_TotalOut[i]/(m_ibufCountFOTventilation-size);
+		//p_TotalOut[i] = p_TotalOut[i]/(m_ibufCountFOTventilation-size);
+		p_TotalOut[i] = p_TotalOut[i]/iCountAccepted;
 	}
 	LeaveCriticalSection(&csFOTventBuffer);
 
@@ -1419,14 +1436,17 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 	delete [] p_TotalOut;
 
 	
-	if(bRetryFSI || bRetryResistance || bRetryReactance)
+	//if(bRetryFSI || bRetryResistance || bRetryReactance)
+	if(iCountAccepted<MINIMUM_FOTMEASUREMENTS)
 	{
-		if(bRetryFSI)
-			setRetry(RETRY_FSI);
-		else if(bRetryResistance)
-			setRetry(RETRY_RESISTANCE);
-		else//bRetryReactance
-			setRetry(RETRY_REACTANCE);
+		//if(bRetryFSI)
+		//	setRetry(RETRY_FSI);
+		//else if(bRetryResistance)
+		//	setRetry(RETRY_RESISTANCE);
+		//else//bRetryReactance
+		//	setRetry(RETRY_REACTANCE);
+
+		setRetry(RETRY_QUALITY);
 
 		resetFOTventdataBuffer();
 		resetLastDisplayBuf();

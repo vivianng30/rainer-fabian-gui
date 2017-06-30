@@ -7,6 +7,16 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50150 Version 5.0.1.50
+ * @date 2017-06-30
+ * @verbatim
+	- ITEM-78 fixed: FOT+VG
+	- ITEM-79 fixed: FOT with big deltaP >80mbar
+	- ITEM-80 fixed: CPAP-Preset from NCPAP/DUOPAP with conventional trigger != pressure and flow sensor off
+	- FOT: scaling FOT graph changed to possible positive values 
+	- FOT: condition for minimal number of FOT measurements is 250
+ @endverbatim
+ *
  * @subsection ver50149 Version 5.0.1.49
  * @date 2017-06-21
  * @verbatim
