@@ -54,6 +54,8 @@ CThreadPRICO::CThreadPRICO()
 	//resetAlarmStates();
 
 	m_iCntDelay=0;
+
+	m_bSPO2checkFlag=FALSE;
 }
 
 //************************************
@@ -793,22 +795,48 @@ void CThreadPRICO::setMeasuredSpO2Value(SHORT iValue)
 	}
 	LeaveCriticalSection(&csPRICOactspo2);
 
-	decreaseDelay();
+	BOOL bSetFlag=FALSE;
+	if(FALSE==m_bSPO2checkFlag)
+	{
+		BYTE iSpO2high= getHighSpO2PRICOlimit();
+		BYTE iSpO2low= getLowSpO2PRICOlimit();
+
+		if(m_iCurSpO2val>iSpO2high)
+		{
+			zeroDelay();
+			bSetFlag=TRUE;
+		}
+		else if(m_iCurSpO2val<iSpO2low)
+		{
+			zeroDelay();
+			bSetFlag=TRUE;
+		}
+	}
+	
+	if(FALSE==bSetFlag)
+		decreaseDelay();
 
 	if(doThread() && getDelay()==0)
+	{
 		g_eventPRICO.SetEvent();
-	//else if(m_bDoPRICOThread)//check FiO2 against range //rku O2
-	//{
-	//	checkFiO2range();
-	//}
+		if(TRUE==m_bSPO2checkFlag)
+			m_bSPO2checkFlag=FALSE;
+	}
+	
+	if(TRUE==bSetFlag)
+		m_bSPO2checkFlag=TRUE;
 }
-
+void CThreadPRICO::zeroDelay()
+{
+	EnterCriticalSection(&csPRICOcntdown);
+	m_iCntDelay=0;
+	LeaveCriticalSection(&csPRICOcntdown);
+}
 void CThreadPRICO::decreaseDelay()
 {
 	EnterCriticalSection(&csPRICOcntdown);
 	if(m_iCntDelay>0)
 		m_iCntDelay--;
-
 	LeaveCriticalSection(&csPRICOcntdown);
 }
 void CThreadPRICO::resetDelay()

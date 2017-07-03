@@ -39,6 +39,7 @@ public:
 
 	//void checkFiO2range();
 
+	void zeroDelay();
 	void decreaseDelay();
 	void resetDelay();
 	BYTE getDelay();
@@ -124,6 +125,8 @@ private:
 	bool m_bTimeOut;
 
 	BYTE m_iCntDelay;
+
+	BOOL m_bSPO2checkFlag;
 
 	//bool m_bPRICOdisabledByAlarm;
 	

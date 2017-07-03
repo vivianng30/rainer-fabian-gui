@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50151 Version 5.0.1.51
+ * @date 2017-07-03
+ * @verbatim
+	- PRICO: checking of SpO2 range implemented into thread, starts the calculation if out of range
+ @endverbatim
+ *
  * @subsection ver50150 Version 5.0.1.50
  * @date 2017-06-30
  * @verbatim
