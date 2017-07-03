@@ -91,6 +91,8 @@ int CInterfaceMasimoSPO2::Init(BYTE com)
 	m_iSPO2alarmdelay=getModel()->getCONFIG()->getSPO2alarmdelay();
 	m_eSPO2averagingTime=getModel()->getCONFIG()->getSPO2averagingTime();
 
+	m_cfgSpO2AveragingTime=(BYTE)m_eSPO2averagingTime;
+
 	//m_iCOMport=com;
 
 	//LONG    lLastError = ERROR_SUCCESS;
@@ -1135,6 +1137,7 @@ void CInterfaceMasimoSPO2::setSpO2AveragingTime(BYTE byte)
 	m_cfgSpO2AveragingTime=byte;
 	SendSPO2Command(SPO2_MASIMO_HOSTCMD_SPO2AVERAGINGTIME, m_cfgSpO2AveragingTime);	//
 
+	DEBUGMSG(TRUE, (TEXT("xxxxxxxxxx SpO2AveragingTime %d\r\n"),m_cfgSpO2AveragingTime));
 	m_bCheck_SpO2AveragingTime=true;
 	
 }

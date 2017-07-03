@@ -11,6 +11,7 @@
  * @date 2017-07-03
  * @verbatim
 	- PRICO: checking of SpO2 range implemented into thread, starts the calculation if out of range
+	- SPO2 averaging time at startup will be send correct
  @endverbatim
  *
  * @subsection ver50150 Version 5.0.1.50
