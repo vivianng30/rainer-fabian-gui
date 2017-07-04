@@ -107,7 +107,17 @@ bool CNumericFieldLEAK::drawData(bool bData, bool bFrames, bool bText, bool bLim
 		rc.right = 175;
 	}
 
-	wsprintf(psz,_T("%d"),iLeak);
+	BYTE iBPM=getModel()->getDATAHANDLER()->getAVGMessureDataBPM();
+
+	if(iBPM==0)
+	{
+		wsprintf(psz,_T("%s"), _T("--"));
+	}
+	else
+	{
+		wsprintf(psz,_T("%d"),iLeak);
+	}
+	
 	DrawText(hdcMem,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 
 	BitBlt(m_hDC, 0, 0, m_lX, m_lY,hdcMem , 0, 0, SRCCOPY);

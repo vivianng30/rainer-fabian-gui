@@ -1183,7 +1183,6 @@ void CThreadFOT::checkFOTvalidMeasurementData()
 	if(isFOTDataValid())//check leak
 	{
 		BYTE iLEAKmeasurement=getModel()->getDATAHANDLER()->getAVGMessureDataLeak();
-
 		if(iLEAKmeasurement<20)
 		{
 			setFOTDataValid(true);

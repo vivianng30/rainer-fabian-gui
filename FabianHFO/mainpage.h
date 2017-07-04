@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50152 Version 5.0.1.52
+ * @date 2017-07-04
+ * @verbatim
+	- ITEM-81 implemented: If the BREATHING FREQUENCY measurement is 0, then we display "- -" at the numeric field and alarm limit setting of LEAK
+ @endverbatim
+ *
  * @subsection ver50151 Version 5.0.1.51
  * @date 2017-07-03
  * @verbatim

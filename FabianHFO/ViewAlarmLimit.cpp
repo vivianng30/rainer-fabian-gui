@@ -2710,7 +2710,16 @@ void CViewAlarmLimit::drawDataVentilation_HFO(HDC hdc)
 		rc.right = 210;
 		rc.top = 326;
 		rc.bottom = 370;
-		wsprintf(psz,_T("%d"),getModel()->getDATAHANDLER()->getAVGMessureDataLeak());
+
+		BYTE iBPM=getModel()->getDATAHANDLER()->getAVGMessureDataBPM();
+		if(iBPM==0)
+		{
+			wsprintf(psz,_T("%s"), _T("--"));
+		}
+		else
+		{
+			wsprintf(psz,_T("%d"),getModel()->getDATAHANDLER()->getAVGMessureDataLeak());
+		}
 		DrawText(hdc,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 	}
 
@@ -2770,7 +2779,16 @@ void CViewAlarmLimit::drawDataVentilation_CPAP(HDC hdc)
 		rc.right = 210;
 		rc.top = 326;
 		rc.bottom = 370;
-		wsprintf(psz,_T("%d"),getModel()->getDATAHANDLER()->getAVGMessureDataLeak());
+
+		BYTE iBPM=getModel()->getDATAHANDLER()->getAVGMessureDataBPM();
+		if(iBPM==0)
+		{
+			wsprintf(psz,_T("%s"), _T("--"));
+		}
+		else
+		{
+			wsprintf(psz,_T("%d"),getModel()->getDATAHANDLER()->getAVGMessureDataLeak());
+		}
 		DrawText(hdc,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 
 		//--------------------BPM-------------------------------------
@@ -3169,7 +3187,16 @@ void CViewAlarmLimit::drawDataVentilation_CONVENTIONAL(HDC hdc)
 		rc.right = 210;
 		rc.top = 326+55;
 		rc.bottom = 370+55;
-		wsprintf(psz,_T("%d"),getModel()->getDATAHANDLER()->getAVGMessureDataLeak());
+
+		BYTE iBPM=getModel()->getDATAHANDLER()->getAVGMessureDataBPM();
+		if(iBPM==0)
+		{
+			wsprintf(psz,_T("%s"), _T("--"));
+		}
+		else
+		{
+			wsprintf(psz,_T("%d"),getModel()->getDATAHANDLER()->getAVGMessureDataLeak());
+		}
 		DrawText(hdc,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 
 		//--------------------BPM-------------------------------------
