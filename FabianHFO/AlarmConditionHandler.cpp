@@ -24,14 +24,6 @@ CAlarmLimitPtr CAlarmConditionHandler::ALIMIT_PULSERATEMIN=NULL;
 CAlarmLimitPtr CAlarmConditionHandler::ALIMIT_SPO2PIMIN=NULL;
 CAlarmLimitPtr CAlarmConditionHandler::ALIMIT_SPO2SIQMIN=NULL;
 
-/**=================================================================================================
- * \fn CAlarmConditionHandler::CAlarmConditionHandler()
- *
- * \brief Initializes a new instance of the CAlarmConditionHandler class.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
 CAlarmConditionHandler::CAlarmConditionHandler()
 {
 	InitializeCriticalSection(&csAlarmLimitList);
@@ -41,18 +33,6 @@ CAlarmConditionHandler::CAlarmConditionHandler()
 	initAlarmLimitList();
 }
 
-/**=================================================================================================
- * \fn CAlarmConditionHandler::~CAlarmConditionHandler(void)
- *
- * \brief Finalizes an instance of the CAlarmConditionHandler class.
- *
- *		deleting alarm limit pointers
- *		deleting alarm limit list
- *		delete critical sections
- *		
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
 CAlarmConditionHandler::~CAlarmConditionHandler(void)
 {
 	if(ALIMIT_MVMAX)
@@ -126,16 +106,6 @@ CAlarmConditionHandler::~CAlarmConditionHandler(void)
 	DeleteCriticalSection(&csAlarmLimitList);
 }
 
-/**=================================================================================================
- * \fn CMVModel *CAlarmConditionHandler::getModel()
- *
- * \brief Gets the model. Singleton
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return null if it fails, else the model.
- *===============================================================================================**/
 CMVModel *CAlarmConditionHandler::getModel()
 {
 	if(m_pModel==NULL)
@@ -143,14 +113,6 @@ CMVModel *CAlarmConditionHandler::getModel()
 	return m_pModel;
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::initAlarmLimitList()
- *
- * \brief Initialises the alarm limit list.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
 void CAlarmConditionHandler::initAlarmLimitList()
 {
 	ALIMIT_MVMAX=new CAlarmLimit(LI_MVMAX,AL_OFF,0,0,0);
@@ -203,16 +165,6 @@ void CAlarmConditionHandler::initAlarmLimitList()
 	LeaveCriticalSection(&csAlarmLimitList);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::ventModeChanged()
- *
- * \brief Ventilation mode changed.
- * 
- *		set alarm limits
- *
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
 void CAlarmConditionHandler::ventModeChanged()
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -346,21 +298,6 @@ void CAlarmConditionHandler::setAlarmLimitValues_SPO2()
 	ALIMIT_PULSERATEMIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStatePulseRatemin());
 	ALIMIT_SPO2PIMIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateSPO2_PImin());
 	ALIMIT_SPO2SIQMIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateSPO2_SIQmin());
-
-
-	//HFO
-	// ALIMIT_SPO2MAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitSPO2maxHF());
-	//	ALIMIT_SPO2MIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitSPO2minHF());
-	//	ALIMIT_PULSERATEMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitPulseRatemaxHF());
-	//	ALIMIT_PULSERATEMIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitPulseRateminHF());
-	//	ALIMIT_SPO2PIMIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitSPO2_PIminHF());
-	//	ALIMIT_SPO2SIQMIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitSPO2_SIQminHF());
-	//ALIMIT_SPO2MAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateSPO2maxHF());
-	//	ALIMIT_SPO2MIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateSPO2minHF());
-	//	ALIMIT_PULSERATEMAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStatePulseRatemaxHF());
-	//	ALIMIT_PULSERATEMIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStatePulseRateminHF());
-	//	ALIMIT_SPO2PIMIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateSPO2_PIminHF());
-	//	ALIMIT_SPO2SIQMIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateSPO2_SIQminHF());
 }
 
 //void CAlarmConditionHandler::setAlarmLimitValues_ETCO2()
@@ -371,14 +308,7 @@ void CAlarmConditionHandler::setAlarmLimitValues_SPO2()
 //{
 //
 //}
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlarmLimitValues_HFO()
- *
- * \brief Sets alarm limit values hfo.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
+
 void CAlarmConditionHandler::setAlarmLimitValues_HFO()
 {
 	ALIMIT_MVMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitMVmaxHF());
@@ -425,14 +355,6 @@ void CAlarmConditionHandler::setAlarmLimitValues_HFO()
 	ALIMIT_SPO2SIQMIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateSPO2_SIQminHF());*/
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlarmLimitValues_DEFAULT()
- *
- * \brief Sets alarm limit values default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlarmLimitValues_DEFAULT()
 {
 	ALIMIT_MVMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitMVmax());
@@ -479,14 +401,6 @@ void CAlarmConditionHandler::setAlarmLimitValues_DEFAULT()
 	ALIMIT_SPO2SIQMIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateSPO2_SIQmin());*/
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlarmLimitValues_CPAP()
- *
- * \brief Sets alarm limit values cpap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlarmLimitValues_CPAP()
 {
 	ALIMIT_MVMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitMVmax());
@@ -521,14 +435,6 @@ void CAlarmConditionHandler::setAlarmLimitValues_CPAP()
 	ALIMIT_SPO2SIQMIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateSPO2_SIQmin());*/
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlarmLimitValues_NCPAP()
- *
- * \brief Sets alarm limit values ncpap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlarmLimitValues_NCPAP()
 {
 	ALIMIT_PIPMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitPmaxNCPAP());
@@ -557,14 +463,6 @@ void CAlarmConditionHandler::setAlarmLimitValues_NCPAP()
 	ALIMIT_SPO2SIQMIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateSPO2_SIQmin());*/
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlarmLimitValues_DUOPAP()
- *
- * \brief Sets alarm limit values duopap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlarmLimitValues_DUOPAP()
 {
 	ALIMIT_PIPMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitPmaxDUOPAP());
@@ -593,14 +491,6 @@ void CAlarmConditionHandler::setAlarmLimitValues_DUOPAP()
 	ALIMIT_SPO2SIQMIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateSPO2_SIQmin());*/
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlarmLimitRanges_DEFAULT()
- *
- * \brief Sets alarm limit ranges default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlarmLimitRanges_DEFAULT()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -763,14 +653,6 @@ void CAlarmConditionHandler::setAlarmLimitRanges_DEFAULT()
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlarmLimitRanges_HFO()
- *
- * \brief Sets alarm limit ranges hfo.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlarmLimitRanges_HFO()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -990,14 +872,6 @@ void CAlarmConditionHandler::setAlarmLimitRanges_HFO()
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlarmLimitRanges_CPAP()
- *
- * \brief Sets alarm limit ranges cpap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlarmLimitRanges_CPAP()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -1134,14 +1008,6 @@ void CAlarmConditionHandler::setAlarmLimitRanges_CPAP()
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlarmLimitRanges_NMODE()
- *
- * \brief Sets alarm limit ranges nmode.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlarmLimitRanges_NMODE()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -1182,14 +1048,6 @@ void CAlarmConditionHandler::setAlarmLimitRanges_NMODE()
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlarmLimitRanges_ETCO2()
- *
- * \brief Sets alarm limit ranges etco2.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlarmLimitRanges_ETCO2()
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -1328,14 +1186,6 @@ void CAlarmConditionHandler::setAlarmLimitRanges_ETCO2()
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlarmLimitRanges_SPO2()
- *
- * \brief Sets alarm limit ranges spo2.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlarmLimitRanges_SPO2()
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -1452,316 +1302,106 @@ void CAlarmConditionHandler::setAlarmLimitRanges_SPO2()
 	}
 }
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_MVmaxLimit()
- *
- * \brief Gets alimit state mvmax limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state mvmax limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_MVmaxLimit()
 {
 	return ALIMIT_MVMAX->getLimitState();
 }
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_MVminLimit()
- *
- * \brief Gets alimit state mvmin limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state mvmin limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_MVminLimit()
 {
 	return ALIMIT_MVMIN->getLimitState();
 }
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_PIPmaxLimit()
- *
- * \brief Gets alimit state pmax limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state pmax limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_PIPmaxLimit()
 {
 	return ALIMIT_PIPMAX->getLimitState();
 }
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_PIPminLimit()
- *
- * \brief Gets alimit state pmax limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state pmax limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_PIPminLimit()
 {
 	return ALIMIT_PIPMIN->getLimitState();
 }
 
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_PminLimit()
- *
- * \brief Gets alimit state pmin limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state pmin limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_PEEPminLimit()
 {
 	return ALIMIT_PEEPMIN->getLimitState();
 }
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_BPMmaxLimit()
- *
- * \brief Gets alimit state bp mmax limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state bp mmax limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_BPMmaxLimit()
 {
 	return ALIMIT_FREQMAX->getLimitState();
 }
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_LeakmaxLimit()
- *
- * \brief Gets alimit state leakmax limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state leakmax limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_LeakmaxLimit()
 {
 	return ALIMIT_LEAKMAX->getLimitState();
 }
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_ApnoeLimit()
- *
- * \brief Gets alimit state apnoe limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state apnoe limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_ApnoeLimit()
 {
 	return ALIMIT_APNOE->getLimitState();
 }
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_DCO2maxLimit()
- *
- * \brief Gets alimit state dco2max limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state dco2max limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_DCO2maxLimit()
 {
 	return ALIMIT_DCO2MAX->getLimitState();
 }
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_DCO2minLimit()
- *
- * \brief Gets alimit state dco2min limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state dco2min limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_DCO2minLimit()
 {
 	return ALIMIT_DCO2MIN->getLimitState();
 }
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_ETCO2maxLimit()
- *
- * \brief Gets alimit state etco2max limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state etco2max limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_ETCO2maxLimit()
 {
 	return ALIMIT_ETCO2MAX->getLimitState();
 }
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_ETCO2minLimit()
- *
- * \brief Gets alimit state etco2min limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state etco2min limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_ETCO2minLimit()
 {
 	return ALIMIT_ETCO2MIN->getLimitState();
 }
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_FICO2maxLimit()
- *
- * \brief Gets alimit state fico2max limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state fico2max limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_FICO2maxLimit()
 {
 	return ALIMIT_FICO2MAX->getLimitState();
 }
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_FICO2minLimit()
- *
- * \brief Gets alimit state fico2min limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state fico2min limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_FICO2minLimit()
 {
 	return ALIMIT_FICO2MIN->getLimitState();
 }
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_SPO2maxLimit()
- *
- * \brief Gets alimit state spo2max limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state spo2max limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_SPO2maxLimit()
 {
 	return ALIMIT_SPO2MAX->getLimitState();
 }
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_SPO2minLimit()
- *
- * \brief Gets alimit state spo2min limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state spo2min limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_SPO2minLimit()
 {
 	return ALIMIT_SPO2MIN->getLimitState();
 }
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_PulseRatemaxLimit()
- *
- * \brief Gets alimit state pulse ratemax limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state pulse ratemax limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_PulseRatemaxLimit()
 {
 	return ALIMIT_PULSERATEMAX->getLimitState();
 }
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_PulseRateminLimit()
- *
- * \brief Gets alimit state pulse ratemin limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state pulse ratemin limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_PulseRateminLimit()
 {
 	return ALIMIT_PULSERATEMIN->getLimitState();
 }
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_SPO2_PIminLimit()
- *
- * \brief Gets alimit state spo2 pimin limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state spo2 pimin limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_SPO2_PIminLimit()
 {
 	return ALIMIT_SPO2PIMIN->getLimitState();
 }
 
-/**=================================================================================================
- * \fn eAlarmLimitState CAlarmConditionHandler::getAlimitState_SPO2_SIQminLimit()
- *
- * \brief Gets alimit state spo2 SIqmin limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit state spo2 SIqmin limit.
- *===============================================================================================**/
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_SPO2_SIQminLimit()
 {
 	return ALIMIT_SPO2SIQMIN->getLimitState();
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitApnoe(int value)
- *
- * \brief Sets alimit apnoe.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitApnoe(int value)
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -1775,16 +1415,6 @@ void CAlarmConditionHandler::setAlimitApnoe(int value)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitApnoeHF(int value)
- *
- * \brief Sets alimit apnoe hf.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitApnoeHF(int value)
 {
 	ALIMIT_APNOE->setCurValue(value);
@@ -1796,16 +1426,6 @@ void CAlarmConditionHandler::setAlimitApnoeHF(int value)
 	getModel()->Send_PARA_APNOE_TIME(value,true,true);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitApnoeDefault(int value)
- *
- * \brief Sets alimit apnoe default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitApnoeDefault(int value)
 {
 	ALIMIT_APNOE->setCurValue(value);
@@ -1817,16 +1437,6 @@ void CAlarmConditionHandler::setAlimitApnoeDefault(int value)
 	getModel()->Send_PARA_APNOE_TIME(value,true,true);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitBPMmax(int value)
- *
- * \brief Sets alimit bp mmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitBPMmax(int value)
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -1840,16 +1450,6 @@ void CAlarmConditionHandler::setAlimitBPMmax(int value)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitBPMmaxHF(int value)
- *
- * \brief Sets alimit bp mmax hf.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitBPMmaxHF(int value)
 {
 	ALIMIT_FREQMAX->setCurValue(value);
@@ -1860,16 +1460,6 @@ void CAlarmConditionHandler::setAlimitBPMmaxHF(int value)
 	getModel()->getCONFIG()->SetAlarmlimitBPMmaxHF(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitBPMmaxDefault(int value)
- *
- * \brief Sets alimit bp mmax default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitBPMmaxDefault(int value)
 {
 	ALIMIT_FREQMAX->setCurValue(value);
@@ -1880,16 +1470,6 @@ void CAlarmConditionHandler::setAlimitBPMmaxDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitBPMmax(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitLeakmax(int value)
- *
- * \brief Sets alimit leakmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitLeakmax(int value)
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -1903,16 +1483,6 @@ void CAlarmConditionHandler::setAlimitLeakmax(int value)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitLeakmaxHF(int value)
- *
- * \brief Sets alimit leakmax hf.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitLeakmaxHF(int value)
 {
 	ALIMIT_LEAKMAX->setCurValue(value);
@@ -1923,16 +1493,6 @@ void CAlarmConditionHandler::setAlimitLeakmaxHF(int value)
 	getModel()->getCONFIG()->SetAlarmlimitLeakmaxHF(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitLeakmaxDefault(int value)
- *
- * \brief Sets alimit leakmax default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitLeakmaxDefault(int value)
 {
 	ALIMIT_LEAKMAX->setCurValue(value);
@@ -1943,16 +1503,6 @@ void CAlarmConditionHandler::setAlimitLeakmaxDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitLeakmax(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMVmax(int value)
- *
- * \brief Sets alimit mvmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMVmax(int value)
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -1966,16 +1516,6 @@ void CAlarmConditionHandler::setAlimitMVmax(int value)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMVmaxHF(int value)
- *
- * \brief Sets alimit mvmax hf.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMVmaxHF(int value)
 {
 	ALIMIT_MVMAX->setCurValue(value);
@@ -2004,16 +1544,6 @@ void CAlarmConditionHandler::setAlimitMVmaxHF(int value)
 	getModel()->getCONFIG()->SetAlarmlimitMVmaxHF(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMVmaxDefault(int value)
- *
- * \brief Sets alimit mvmax default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMVmaxDefault(int value)
 {
 	ALIMIT_MVMAX->setCurValue(value);
@@ -2042,16 +1572,6 @@ void CAlarmConditionHandler::setAlimitMVmaxDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitMVmax(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMVmin(int value)
- *
- * \brief Sets alimit mvmin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMVmin(int value)
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -2065,16 +1585,6 @@ void CAlarmConditionHandler::setAlimitMVmin(int value)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMVminHF(int value)
- *
- * \brief Sets alimit mvmin hf.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMVminHF(int value)
 {
 	ALIMIT_MVMIN->setCurValue(value);
@@ -2107,16 +1617,6 @@ void CAlarmConditionHandler::setAlimitMVminHF(int value)
 	getModel()->getCONFIG()->SetAlarmlimitMVminHF(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMVminDefault(int value)
- *
- * \brief Sets alimit mvmin default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMVminDefault(int value)
 {
 	ALIMIT_MVMIN->setCurValue(value);
@@ -2144,16 +1644,6 @@ void CAlarmConditionHandler::setAlimitMVminDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitMVmin(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitPEEPmin(int value)
- *
- * \brief Sets alimit pmin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitPEEPmin(int value)
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -2183,16 +1673,6 @@ void CAlarmConditionHandler::setAlimitPEEPmin(int value)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitPEEPminCpap(int value)
- *
- * \brief Sets alimit pmin cpap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitPEEPminCpap(int value)
 {
 	ALIMIT_PEEPMIN->setCurValue(value);
@@ -2204,16 +1684,6 @@ void CAlarmConditionHandler::setAlimitPEEPminCpap(int value)
 	getModel()->getCONFIG()->SetAlarmlimitPEEPminCpap(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitPEEPminNCPAP(int value)
- *
- * \brief Sets alimit pmin ncpap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitPEEPminNCPAP(int value)
 {
 	ALIMIT_PEEPMIN->setCurValue(value);
@@ -2225,16 +1695,6 @@ void CAlarmConditionHandler::setAlimitPEEPminNCPAP(int value)
 	getModel()->getCONFIG()->SetAlarmlimitPEEPminNCPAP(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitPEEPminDUOPAP(int value)
- *
- * \brief Sets alimit pmin duopap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitPEEPminDUOPAP(int value)
 {
 	ALIMIT_PEEPMIN->setCurValue(value);
@@ -2246,16 +1706,6 @@ void CAlarmConditionHandler::setAlimitPEEPminDUOPAP(int value)
 	getModel()->getCONFIG()->SetAlarmlimitPEEPminDUOPAP(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitPEEPminDefault(int value)
- *
- * \brief Sets alimit pmin default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitPEEPminDefault(int value)
 {
 	ALIMIT_PEEPMIN->setCurValue(value);
@@ -2277,16 +1727,6 @@ void CAlarmConditionHandler::setAlimitPEEPminDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitPEEPmin(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitPmax(int value)
- *
- * \brief Sets alimit pmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitPIPmax(int value)
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -2316,16 +1756,6 @@ void CAlarmConditionHandler::setAlimitPIPmax(int value)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitPIPmaxHF(int value)
- *
- * \brief Sets alimit pmax hf.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitPIPmaxHF(int value)
 {
 	ALIMIT_PIPMAX->setCurValue(value);
@@ -2337,16 +1767,6 @@ void CAlarmConditionHandler::setAlimitPIPmaxHF(int value)
 	getModel()->getCONFIG()->SetAlarmlimitPmaxHF(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitPIPmaxCpap(int value)
- *
- * \brief Sets alimit pmax cpap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitPIPmaxCpap(int value)
 {
 	ALIMIT_PIPMAX->setCurValue(value);
@@ -2358,16 +1778,6 @@ void CAlarmConditionHandler::setAlimitPIPmaxCpap(int value)
 	getModel()->getCONFIG()->SetAlarmlimitPmaxCpap(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitPIPmaxNCPAP(int value)
- *
- * \brief Sets alimit pmax ncpap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitPIPmaxNCPAP(int value)
 {
 	ALIMIT_PIPMAX->setCurValue(value);
@@ -2379,16 +1789,6 @@ void CAlarmConditionHandler::setAlimitPIPmaxNCPAP(int value)
 	getModel()->getCONFIG()->SetAlarmlimitPmaxNCPAP(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitPIPmaxDUOPAP(int value)
- *
- * \brief Sets alimit pmax duopap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitPIPmaxDUOPAP(int value)
 {
 	ALIMIT_PIPMAX->setCurValue(value);
@@ -2400,16 +1800,6 @@ void CAlarmConditionHandler::setAlimitPIPmaxDUOPAP(int value)
 	getModel()->getCONFIG()->SetAlarmlimitPmaxDUOPAP(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitPIPmaxDefault(int value)
- *
- * \brief Sets alimit pmax default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitPIPmaxDefault(int value)
 {
 	ALIMIT_PIPMAX->setCurValue(value);
@@ -2424,16 +1814,7 @@ void CAlarmConditionHandler::setAlimitPIPmaxDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitPIPmax(value);
 }
 
-/**********************************************************************************************//**
- * @fn	void CAlarmConditionHandler::setAlimitPIPmin(int value)
- *
- * @brief	Sets alimit pi pmin.
- *
- * @author	Rainer Kuehner
- * @date	22.09.2016
- *
- * @param	value	The value.
- **************************************************************************************************/
+
 void CAlarmConditionHandler::setAlimitPIPmin(int value)
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -2459,16 +1840,7 @@ void CAlarmConditionHandler::setAlimitPIPmin(int value)
 	}
 }
 
-/**********************************************************************************************//**
- * @fn	void CAlarmConditionHandler::setAlimitPIPminDefault(int value)
- *
- * @brief	Sets alimit pi pmin default.
- *
- * @author	Rainer Kuehner
- * @date	22.09.2016
- *
- * @param	value	The value.
- **************************************************************************************************/
+
 void CAlarmConditionHandler::setAlimitPIPminDefault(int value)
 {
 	ALIMIT_PIPMIN->setCurValue(value);
@@ -2483,16 +1855,6 @@ void CAlarmConditionHandler::setAlimitPIPminDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitPIPmin(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitDCO2max(int value)
- *
- * \brief Sets alimit dco 2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitDCO2max(int value)
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -2502,16 +1864,6 @@ void CAlarmConditionHandler::setAlimitDCO2max(int value)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitDCO2maxHF(int value)
- *
- * \brief Sets alimit dco2max hf.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitDCO2maxHF(int value)
 {
 	ALIMIT_DCO2MAX->setCurValue(value);
@@ -2539,16 +1891,6 @@ void CAlarmConditionHandler::setAlimitDCO2maxHF(int value)
 	getModel()->getCONFIG()->SetAlarmlimitDCO2maxHF(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitDCO2min(int value)
- *
- * \brief Sets alimit dco2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitDCO2min(int value)
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -2558,16 +1900,6 @@ void CAlarmConditionHandler::setAlimitDCO2min(int value)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitDCO2minHF(int value)
- *
- * \brief Sets alimit dco2min hf.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitDCO2minHF(int value)
 {
 	ALIMIT_DCO2MIN->setCurValue(value);
@@ -2595,16 +1927,6 @@ void CAlarmConditionHandler::setAlimitDCO2minHF(int value)
 	getModel()->getCONFIG()->SetAlarmlimitDCO2minHF(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitETCO2max(int value)
- *
- * \brief Sets alimit etco2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitETCO2max(int value)
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -2618,16 +1940,6 @@ void CAlarmConditionHandler::setAlimitETCO2max(int value)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitETCO2maxHF(int value)
- *
- * \brief Sets alimit etco2max hf.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitETCO2maxHF(int value)
 {
 	ALIMIT_ETCO2MAX->setCurValue(value);
@@ -2639,16 +1951,6 @@ void CAlarmConditionHandler::setAlimitETCO2maxHF(int value)
 	getModel()->getCONFIG()->SetAlarmlimitETCO2maxHF(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitETCO2maxDefault(int value)
- *
- * \brief Sets alimit etco2max default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitETCO2maxDefault(int value)
 {
 	ALIMIT_ETCO2MAX->setCurValue(value);
@@ -2660,16 +1962,6 @@ void CAlarmConditionHandler::setAlimitETCO2maxDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitETCO2max(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitETCO2min(int value)
- *
- * \brief Sets alimit etco2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitETCO2min(int value)
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -2683,16 +1975,6 @@ void CAlarmConditionHandler::setAlimitETCO2min(int value)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitETCO2minHF(int value)
- *
- * \brief Sets alimit etco2min hf.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitETCO2minHF(int value)
 {
 	ALIMIT_ETCO2MIN->setCurValue(value);
@@ -2704,16 +1986,6 @@ void CAlarmConditionHandler::setAlimitETCO2minHF(int value)
 	getModel()->getCONFIG()->SetAlarmlimitETCO2minHF(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitETCO2minDefault(int value)
- *
- * \brief Sets alimit etco2min default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitETCO2minDefault(int value)
 {
 	ALIMIT_ETCO2MIN->setCurValue(value);
@@ -2725,16 +1997,6 @@ void CAlarmConditionHandler::setAlimitETCO2minDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitETCO2min(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitFICO2max(int value)
- *
- * \brief Sets alimit fico2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitFICO2max(int value)
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -2748,16 +2010,6 @@ void CAlarmConditionHandler::setAlimitFICO2max(int value)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitFICO2maxHF(int value)
- *
- * \brief Sets alimit fico2max hf.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitFICO2maxHF(int value)
 {
 	ALIMIT_FICO2MAX->setCurValue(value);
@@ -2769,16 +2021,6 @@ void CAlarmConditionHandler::setAlimitFICO2maxHF(int value)
 	getModel()->getCONFIG()->SetAlarmlimitFICO2maxHF(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitFICO2maxDefault(int value)
- *
- * \brief Sets alimit fico2max default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitFICO2maxDefault(int value)
 {
 	ALIMIT_FICO2MAX->setCurValue(value);
@@ -2790,16 +2032,6 @@ void CAlarmConditionHandler::setAlimitFICO2maxDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitFICO2max(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitFICO2min(int value)
- *
- * \brief Sets alimit fico2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitFICO2min(int value)
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -2813,16 +2045,6 @@ void CAlarmConditionHandler::setAlimitFICO2min(int value)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitFICO2minHF(int value)
- *
- * \brief Sets alimit fico2min hf.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitFICO2minHF(int value)
 {
 	ALIMIT_FICO2MIN->setCurValue(value);
@@ -2834,16 +2056,6 @@ void CAlarmConditionHandler::setAlimitFICO2minHF(int value)
 	getModel()->getCONFIG()->SetAlarmlimitFICO2minHF(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitFICO2minDefault(int value)
- *
- * \brief Sets alimit fico2min default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitFICO2minDefault(int value)
 {
 	ALIMIT_FICO2MIN->setCurValue(value);
@@ -2855,31 +2067,11 @@ void CAlarmConditionHandler::setAlimitFICO2minDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitFICO2min(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitSPO2max(int value)
- *
- * \brief Sets alimit spo 2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitSPO2max(int value)
 {
 	setAlimitSPO2maxDefault(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitSPO2maxDefault(int value)
- *
- * \brief Sets alimit spo2max default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitSPO2maxDefault(int value)
 {
 	ALIMIT_SPO2MAX->setCurValue(value);
@@ -2891,31 +2083,11 @@ void CAlarmConditionHandler::setAlimitSPO2maxDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitSPO2max(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitSPO2min(int value)
- *
- * \brief Sets alimit spo2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitSPO2min(int value)
 {
 	setAlimitSPO2minDefault(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitSPO2minDefault(int value)
- *
- * \brief Sets alimit spo2min default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitSPO2minDefault(int value)
 {
 	ALIMIT_SPO2MIN->setCurValue(value);
@@ -2927,31 +2099,11 @@ void CAlarmConditionHandler::setAlimitSPO2minDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitSPO2min(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitPulseRatemax(int value)
- *
- * \brief Sets alimit pulse ratemax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitPulseRatemax(int value)
 {
 	setAlimitPulseRatemaxDefault(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitPulseRatemaxDefault(int value)
- *
- * \brief Sets alimit pulse ratemax default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitPulseRatemaxDefault(int value)
 {
 	//DEBUGMSG(TRUE, (TEXT("YYY setAlimitPulseRatemaxDefault %d\r\n"),value));
@@ -2965,31 +2117,11 @@ void CAlarmConditionHandler::setAlimitPulseRatemaxDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitPulseRatemax(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitPulseRatemin(int value)
- *
- * \brief Sets alimit pulse ratemin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitPulseRatemin(int value)
 {
 	setAlimitPulseRateminDefault(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitPulseRateminDefault(int value)
- *
- * \brief Sets alimit pulse ratemin default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitPulseRateminDefault(int value)
 {
 	//DEBUGMSG(TRUE, (TEXT("YYY setAlimitPulseRateminDefault %d\r\n"),value));
@@ -3002,31 +2134,11 @@ void CAlarmConditionHandler::setAlimitPulseRateminDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitPulseRatemin(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitSPO2_PImin(int value)
- *
- * \brief Sets alimit spo2 pimin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitSPO2_PImin(int value)
 {
 	setAlimitSPO2_PIminDefault(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitSPO2_PIminDefault(int value)
- *
- * \brief Sets alimit spo2 pimin default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitSPO2_PIminDefault(int value)
 {
 	ALIMIT_SPO2PIMIN->setCurValue(value);
@@ -3037,31 +2149,11 @@ void CAlarmConditionHandler::setAlimitSPO2_PIminDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitSPO2_PImin(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitSPO2_SIQmin(int value)
- *
- * \brief Sets alimit spo2 SIqmin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitSPO2_SIQmin(int value)
 {
 	setAlimitSPO2_SIQminDefault(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitSPO2_SIQminDefault(int value)
- *
- * \brief Sets alimit spo2 SIqmin default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param value The value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitSPO2_SIQminDefault(int value)
 {
 	ALIMIT_SPO2SIQMIN->setCurValue(value);
@@ -3072,14 +2164,6 @@ void CAlarmConditionHandler::setAlimitSPO2_SIQminDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitSPO2_SIQmin(value);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlarmlimitsCpap()
- *
- * \brief Sets alarmlimits cpap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitsMinMaxRangeCpap()
 {
 	int iLI_PIPMAX=ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT;
@@ -3089,14 +2173,6 @@ void CAlarmConditionHandler::setAlimitsMinMaxRangeCpap()
 	setAlimitMinRangePIPmax(iLI_PEEPMIN);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlarmlimitsNCPAP()
- *
- * \brief Sets alarmlimits ncpap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitsMinMaxRangeNCPAP()
 {
 	int iLI_PIPMAX=ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT;
@@ -3106,14 +2182,6 @@ void CAlarmConditionHandler::setAlimitsMinMaxRangeNCPAP()
 	setAlimitMinRangePIPmax(iLI_PEEPMIN);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlarmlimitsDUOPAP()
- *
- * \brief Sets alarmlimits duopap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitsMinMaxRangeDUOPAP()
 {
 	int iLI_PIPMAX=ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT;
@@ -3123,14 +2191,6 @@ void CAlarmConditionHandler::setAlimitsMinMaxRangeDUOPAP()
 	setAlimitMinRangePIPmax(iLI_PEEPMIN);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitsMinMaxRangePressure()
- *
- * \brief Sets alarmlimits pressure.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitsMinMaxRangePressure()
 {
 	//rku PMEANLIMITS ?????????????????
@@ -3150,31 +2210,11 @@ void CAlarmConditionHandler::setAlimitsMinMaxRangePressure()
 	setAlimitMaxRangePEEPmin(iLI_PIPMIN_LO);
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMVmin()
- *
- * \brief Gets alimit mvmin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit mvmin.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMVmin()
 {
 	return ALIMIT_MVMIN->getCurValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMVmax()
- *
- * \brief Gets alimit mvmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit mvmax.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMVmax()
 {
 	return ALIMIT_MVMAX->getCurValue();
@@ -3190,1192 +2230,398 @@ int CAlarmConditionHandler::getAlimitPIPmin()
 	return ALIMIT_PIPMIN->getCurValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitPEEmin()
- *
- * \brief Gets alimit pmin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit pmin.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitPEEPmin()
 {
 	return ALIMIT_PEEPMIN->getCurValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitLeakmax()
- *
- * \brief Gets alimit leakmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit leakmax.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitLeakmax()
 {
 	return ALIMIT_LEAKMAX->getCurValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitBPMmax()
- *
- * \brief Gets alimit bpm max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit bpm max.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitBPMmax()
 {
 	return ALIMIT_FREQMAX->getCurValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitApnoe()
- *
- * \brief Gets alimit apnoe.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit apnoe.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitApnoe()
 {
 	return ALIMIT_APNOE->getCurValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitDCO2min()
- *
- * \brief Gets alimit dco2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit dco2min.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitDCO2min()
 {
 	return ALIMIT_DCO2MIN->getCurValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitDCO2max()
- *
- * \brief Gets alimit dco2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit dco2max.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitDCO2max()
 {
 	return ALIMIT_DCO2MAX->getCurValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitETCO2min()
- *
- * \brief Gets alimit etco2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit etco2min.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitETCO2min()
 {
 	return ALIMIT_ETCO2MIN->getCurValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitETCO2max()
- *
- * \brief Gets alimit etco2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit etco2max.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitETCO2max()
 {
 	return ALIMIT_ETCO2MAX->getCurValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitFICO2min()
- *
- * \brief Gets alimit fico2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit fico2min.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitFICO2min()
 {
 	return ALIMIT_FICO2MIN->getCurValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitFICO2max()
- *
- * \brief Gets alimit fico2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit fico2max.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitFICO2max()
 {
 	return ALIMIT_FICO2MAX->getCurValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitSPO2max()
- *
- * \brief Gets alimit spo2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit spo2max.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitSPO2max()
 {
 	return ALIMIT_SPO2MAX->getCurValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitSPO2min()
- *
- * \brief Gets alimit spo2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit spo2min.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitSPO2min()
 {
 	return ALIMIT_SPO2MIN->getCurValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitPulseRatemax()
- *
- * \brief Gets alimit pulse ratemax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit pulse ratemax.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitPulseRatemax()
 {
 	return ALIMIT_PULSERATEMAX->getCurValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitPulseRatemin()
- *
- * \brief Gets alimit pulse ratemin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit pulse ratemin.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitPulseRatemin()
 {
 	return ALIMIT_PULSERATEMIN->getCurValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitSPO2_PImin()
- *
- * \brief Gets alimit spo2 pimin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit spo2 pimin.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitSPO2_PImin()
 {
 	return ALIMIT_SPO2PIMIN->getCurValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitSPO2_SIQmin()
- *
- * \brief Gets alimit spo2 SIqmin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit spo2 SIqmin.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitSPO2_SIQmin()
 {
 	return ALIMIT_SPO2SIQMIN->getCurValue();
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangePIPmax(int iRangeVal)
- *
- * \brief Sets alimit maximum range pmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangePIPmax(int iRangeVal)
 {
 	ALIMIT_PIPMAX->setMaxValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangePIPmax(int iRangeVal)
- *
- * \brief Sets alimit minimum range pmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangePIPmax(int iRangeVal)
 {
 	ALIMIT_PIPMAX->setMinValue(iRangeVal);
-
-	//DEBUGMSG(TRUE, (TEXT("MinRangePIPmax %d\r\n"),iRangeVal));
-	
 }
 
-/**********************************************************************************************//**
- * @fn	void CAlarmConditionHandler::setAlimitMaxRangePIPmin(int iRangeVal)
- *
- * @brief	Sets alimit maximum range pi pmin.
- *
- * @author	Rainer Kuehner
- * @date	23.09.2016
- *
- * @param	iRangeVal	Zero-based index of the range value.
- **************************************************************************************************/
+
 void CAlarmConditionHandler::setAlimitMaxRangePIPmin(int iRangeVal)
 {
 	ALIMIT_PIPMIN->setMaxValue(iRangeVal);
-	//DEBUGMSG(TRUE, (TEXT("MaxRangePIPmin %d\r\n"),iRangeVal));
-	
 }
 
-/**********************************************************************************************//**
- * @fn	void CAlarmConditionHandler::setAlimitMinRangePIPmin(int iRangeVal)
- *
- * @brief	Sets alimit minimum range pi pmin.
- *
- * @author	Rainer Kuehner
- * @date	23.09.2016
- *
- * @param	iRangeVal	Zero-based index of the range value.
- **************************************************************************************************/
+
 void CAlarmConditionHandler::setAlimitMinRangePIPmin(int iRangeVal)
 {
 	ALIMIT_PIPMIN->setMinValue(iRangeVal);
-	//DEBUGMSG(TRUE, (TEXT("MinRangePIPmin %d\r\n"),iRangeVal));
-	
 }
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangePEEPmin(int iRangeVal)
- *
- * \brief Sets alimit maximum range pmin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangePEEPmin(int iRangeVal)
 {
 	ALIMIT_PEEPMIN->setMaxValue(iRangeVal);
- 	//DEBUGMSG(TRUE, (TEXT("MaxRangePEEPmin %d\r\n"),iRangeVal));
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangePEEPmin(int iRangeVal)
- *
- * \brief Sets alimit minimum range pmin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangePEEPmin(int iRangeVal)
 {
 	ALIMIT_PEEPMIN->setMinValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangeMVmin(int iRangeVal)
- *
- * \brief Sets alimit maximum range mvmin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangeMVmin(int iRangeVal)
 {
 	ALIMIT_MVMIN->setMaxValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangeMVmin(int iRangeVal)
- *
- * \brief Sets alimit minimum range mvmin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangeMVmin(int iRangeVal)
 {
 	ALIMIT_MVMIN->setMinValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangeMVmax(int iRangeVal)
- *
- * \brief Sets alimit maximum range mvmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangeMVmax(int iRangeVal)
 {
 	ALIMIT_MVMAX->setMaxValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangeMVmax(int iRangeVal)
- *
- * \brief Sets alimit minimum range mvmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangeMVmax(int iRangeVal)
 {
 	ALIMIT_MVMAX->setMinValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangeLeakmax(int iRangeVal)
- *
- * \brief Sets alimit maximum range leakmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangeLeakmax(int iRangeVal)
 {
 	ALIMIT_LEAKMAX->setMaxValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangeLeakmax(int iRangeVal)
- *
- * \brief Sets alimit minimum range leakmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangeLeakmax(int iRangeVal)
 {
 	ALIMIT_LEAKMAX->setMinValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangeBPMmax(int iRangeVal)
- *
- * \brief Sets alimit maximum range bpmmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangeBPMmax(int iRangeVal)
 {
 	ALIMIT_FREQMAX->setMaxValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangeBPMmax(int iRangeVal)
- *
- * \brief Sets alimit minimum range bpmmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangeBPMmax(int iRangeVal)
 {
 	ALIMIT_FREQMAX->setMinValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangeApnoe(int iRangeVal)
- *
- * \brief Sets alimit maximum range apnoe.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangeApnoe(int iRangeVal)
 {
 	ALIMIT_APNOE->setMaxValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangeApnoe(int iRangeVal)
- *
- * \brief Sets alimit minimum range apnoe.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangeApnoe(int iRangeVal)
 {
 	ALIMIT_APNOE->setMinValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangeDCO2min(int iRangeVal)
- *
- * \brief Sets alimit maximum range dco2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangeDCO2min(int iRangeVal)
 {
 	ALIMIT_DCO2MIN->setMaxValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangeDCO2min(int iRangeVal)
- *
- * \brief Sets alimit minimum range dco2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangeDCO2min(int iRangeVal)
 {
 	ALIMIT_DCO2MIN->setMinValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangeDCO2max(int iRangeVal)
- *
- * \brief Sets alimit maximum range dco2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangeDCO2max(int iRangeVal)
 {
 	ALIMIT_DCO2MAX->setMaxValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangeDCO2max(int iRangeVal)
- *
- * \brief Sets alimit minimum range dco2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangeDCO2max(int iRangeVal)
 {
 	ALIMIT_DCO2MAX->setMinValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangeETCO2min(int iRangeVal)
- *
- * \brief Sets alimit maximum range etco2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangeETCO2min(int iRangeVal)
 {
 	ALIMIT_ETCO2MIN->setMaxValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangeETCO2min(int iRangeVal)
- *
- * \brief Sets alimit minimum range etco2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangeETCO2min(int iRangeVal)
 {
 	ALIMIT_ETCO2MIN->setMinValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangeETCO2max(int iRangeVal)
- *
- * \brief Sets alimit maximum range etco2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangeETCO2max(int iRangeVal)
 {
 	ALIMIT_ETCO2MAX->setMaxValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangeETCO2max(int iRangeVal)
- *
- * \brief Sets alimit minimum range etco2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangeETCO2max(int iRangeVal)
 {
 	ALIMIT_ETCO2MAX->setMinValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangeFICO2min(int iRangeVal)
- *
- * \brief Sets alimit maximum range fico2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangeFICO2min(int iRangeVal)
 {
 	ALIMIT_FICO2MIN->setMaxValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangeFICO2min(int iRangeVal)
- *
- * \brief Sets alimit minimum range fico2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangeFICO2min(int iRangeVal)
 {
 	ALIMIT_FICO2MIN->setMinValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangeFICO2max(int iRangeVal)
- *
- * \brief Sets alimit maximum range fico2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangeFICO2max(int iRangeVal)
 {
 	ALIMIT_FICO2MAX->setMaxValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangeFICO2max(int iRangeVal)
- *
- * \brief Sets alimit minimum range fico2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangeFICO2max(int iRangeVal)
 {
 	ALIMIT_FICO2MAX->setMinValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangeSPO2max(int iRangeVal)
- *
- * \brief Sets alimit maximum range spo2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangeSPO2max(int iRangeVal)
 {
 	ALIMIT_SPO2MAX->setMaxValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangeSPO2max(int iRangeVal)
- *
- * \brief Sets alimit minimum range spo2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangeSPO2max(int iRangeVal)
 {
 	ALIMIT_SPO2MAX->setMinValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangeSPO2min(int iRangeVal)
- *
- * \brief Sets alimit maximum range spo2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangeSPO2min(int iRangeVal)
 {
 	ALIMIT_SPO2MIN->setMaxValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangeSPO2min(int iRangeVal)
- *
- * \brief Sets alimit minimum range spo 2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangeSPO2min(int iRangeVal)
 {
 	ALIMIT_SPO2MIN->setMinValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangePulseRatemin(int iRangeVal)
- *
- * \brief Sets alimit maximum range pulse ratemin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangePulseRatemin(int iRangeVal)
 {
 	ALIMIT_PULSERATEMIN->setMaxValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangePulseRatemin(int iRangeVal)
- *
- * \brief Sets alimit minimum range pulse ratemin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangePulseRatemin(int iRangeVal)
 {
 	ALIMIT_PULSERATEMIN->setMinValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangePulseRatemax(int iRangeVal)
- *
- * \brief Sets alimit minimum range pulse ratemax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangePulseRatemax(int iRangeVal)
 {
 	ALIMIT_PULSERATEMAX->setMinValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangePulseRatemax(int iRangeVal)
- *
- * \brief Sets alimit maximum range pulse ratemax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangePulseRatemax(int iRangeVal)
 {
 	ALIMIT_PULSERATEMAX->setMaxValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangeSPO2_PImin(int iRangeVal)
- *
- * \brief Sets alimit maximum range spo2 pimin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangeSPO2_PImin(int iRangeVal)
 {
 	ALIMIT_SPO2PIMIN->setMaxValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangeSPO2_PImin(int iRangeVal)
- *
- * \brief Sets alimit minimum range spo2 pimin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangeSPO2_PImin(int iRangeVal)
 {
 	ALIMIT_SPO2PIMIN->setMinValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMaxRangeSPO2_SIQmin(int iRangeVal)
- *
- * \brief Sets alimit maximum range spo2 SIqmin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMaxRangeSPO2_SIQmin(int iRangeVal)
 {
 	ALIMIT_SPO2SIQMIN->setMaxValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitMinRangeSPO2_SIQmin(int iRangeVal)
- *
- * \brief Sets alimit minimum range spo2 SIqmin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param iRangeVal Zero-based index of the range value.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitMinRangeSPO2_SIQmin(int iRangeVal)
 {
 	ALIMIT_SPO2SIQMIN->setMinValue(iRangeVal);
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangePIPmax()
- *
- * \brief Gets alimit maximum range pmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range pmax.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangePIPmax()
 {
 	return ALIMIT_PIPMAX->getMaxValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangePIPmax()
- *
- * \brief Gets alimit minimum range pmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range pmax.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangePIPmax()
 {
 	return ALIMIT_PIPMAX->getMinValue();
 }
 
-/**********************************************************************************************//**
- * @fn	int CAlarmConditionHandler::getAlimitMaxRangePIPmin()
- *
- * @brief	Gets alimit maximum range pi pmin.
- *
- * @author	Rainer Kuehner
- * @date	22.09.2016
- *
- * @return	The alimit maximum range pi pmin.
- **************************************************************************************************/
+
 int CAlarmConditionHandler::getAlimitMaxRangePIPmin()
 {
 	return ALIMIT_PIPMIN->getMaxValue();
 }
 
-/**********************************************************************************************//**
- * @fn	int CAlarmConditionHandler::getAlimitMinRangePIPmin()
- *
- * @brief	Gets alimit minimum range pi pmin.
- *
- * @author	Rainer Kuehner
- * @date	22.09.2016
- *
- * @return	The alimit minimum range pi pmin.
- **************************************************************************************************/
+
 int CAlarmConditionHandler::getAlimitMinRangePIPmin()
 {
 	return ALIMIT_PIPMIN->getMinValue();
 }
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangePmin()
- *
- * \brief Gets alimit maximum range pmin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range pmin.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangePEEPmin()
 {
 	return ALIMIT_PEEPMIN->getMaxValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangePmin()
- *
- * \brief Gets alimit minimum range pmin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range pmin.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangePEEPmin()
 {
 	return ALIMIT_PEEPMIN->getMinValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangeMVmin()
- *
- * \brief Gets alimit maximum range mvmin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range mvmin.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangeMVmin()
 {
 	return ALIMIT_MVMIN->getMaxValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangeMVmin()
- *
- * \brief Gets alimit minimum range mvmin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range mvmin.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangeMVmin()
 {
 	return ALIMIT_MVMIN->getMinValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangeMVmax()
- *
- * \brief Gets alimit maximum range mvmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range mvmax.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangeMVmax()
 {
 	return ALIMIT_MVMAX->getMaxValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangeMVmax()
- *
- * \brief Gets alimit minimum range mvmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range mvmax.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangeMVmax()
 {
 	return ALIMIT_MVMAX->getMinValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangeLeakmax()
- *
- * \brief Gets alimit maximum range leakmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range leakmax.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangeLeakmax()
 {
 	return ALIMIT_LEAKMAX->getMaxValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangeLeakmax()
- *
- * \brief Gets alimit minimum range leakmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range leakmax.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangeLeakmax()
 {
 	return ALIMIT_LEAKMAX->getMinValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangeBPMmax()
- *
- * \brief Gets alimit maximum range bpmmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range bpmmax.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangeBPMmax()
 {
 	return ALIMIT_FREQMAX->getMaxValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangeBPMmax()
- *
- * \brief Gets alimit minimum range bpmmax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range bpmmax.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangeBPMmax()
 {
 	return ALIMIT_FREQMAX->getMinValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangeApnoe()
- *
- * \brief Gets alimit maximum range apnoe.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range apnoe.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangeApnoe()
 {
 	return ALIMIT_APNOE->getMaxValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangeApnoe()
- *
- * \brief Gets alimit minimum range apnoe.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range apnoe.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangeApnoe()
 {
 	return ALIMIT_APNOE->getMinValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangeDCO2min()
- *
- * \brief Gets alimit maximum range dco2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range dco2min.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangeDCO2min()
 {
 	return ALIMIT_DCO2MIN->getMaxValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangeDCO2min()
- *
- * \brief Gets alimit minimum range dco2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range dco2min.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangeDCO2min()
 {
 	return ALIMIT_DCO2MIN->getMinValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangeDCO2max()
- *
- * \brief Gets alimit maximum range dco2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range dco2max.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangeDCO2max()
 {
 	return ALIMIT_DCO2MAX->getMaxValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangeDCO2max()
- *
- * \brief Gets alimit minimum range dco2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range dco2max.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangeDCO2max()
 {
 	return ALIMIT_DCO2MAX->getMinValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangeETCO2min()
- *
- * \brief Gets alimit maximum range etco2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range etco2min.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangeETCO2min()
 {
 	return ALIMIT_ETCO2MIN->getMaxValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangeETCO2min()
- *
- * \brief Gets alimit minimum range etco2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range etco2min.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangeETCO2min()
 {
 	return ALIMIT_ETCO2MIN->getMinValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangeETCO2max()
- *
- * \brief Gets alimit maximum range etco2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range etco2max.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangeETCO2max()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4426,61 +2672,21 @@ int CAlarmConditionHandler::getAlimitMaxRangeETCO2max()
 	}
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangeETCO2max()
- *
- * \brief Gets alimit minimum range etco2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range etco2max.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangeETCO2max()
 {
 	return ALIMIT_ETCO2MAX->getMinValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangeFICO2min()
- *
- * \brief Gets alimit maximum range fico2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range fico2min.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangeFICO2min()
 {
 	return ALIMIT_FICO2MIN->getMaxValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangeFICO2min()
- *
- * \brief Gets alimit minimum range fico2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range fico2min.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangeFICO2min()
 {
 	return ALIMIT_FICO2MIN->getMinValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangeFICO2max()
- *
- * \brief Gets alimit maximum range fico2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range fico2max.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangeFICO2max()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4533,211 +2739,71 @@ int CAlarmConditionHandler::getAlimitMaxRangeFICO2max()
 	
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangeFICO2max()
- *
- * \brief Gets alimit minimum range fico2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range fico2max.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangeFICO2max()
 {
 	return ALIMIT_FICO2MAX->getMinValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangeSPO2max()
- *
- * \brief Gets alimit maximum range spo2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range spo2max.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangeSPO2max()
 {
 	return ALIMIT_SPO2MAX->getMaxValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangeSPO2max()
- *
- * \brief Gets alimit minimum range spo2max.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range spo2max.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangeSPO2max()
 {
 	return ALIMIT_SPO2MAX->getMinValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangeSPO2min()
- *
- * \brief Gets alimit maximum range spo2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range spo2min.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangeSPO2min()
 {
 	return ALIMIT_SPO2MIN->getMaxValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangeSPO2min()
- *
- * \brief Gets alimit minimum range spo2min.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range spo2min.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangeSPO2min()
 {
 	return ALIMIT_SPO2MIN->getMinValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangePulseRatemax()
- *
- * \brief Gets alimit minimum range pulse ratemax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range pulse ratemax.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangePulseRatemax()
 {
 	return ALIMIT_PULSERATEMAX->getMinValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangePulseRatemax()
- *
- * \brief Gets alimit maximum range pulse ratemax.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range pulse ratemax.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangePulseRatemax()
 {
 	return ALIMIT_PULSERATEMAX->getMaxValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangePulseRatemin()
- *
- * \brief Gets alimit minimum range pulse ratemin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range pulse ratemin.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangePulseRatemin()
 {
 	return ALIMIT_PULSERATEMIN->getMinValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangePulseRatemin()
- *
- * \brief Gets alimit maximum range pulse ratemin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range pulse ratemin.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangePulseRatemin()
 {
 	return ALIMIT_PULSERATEMIN->getMaxValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangeSPO2_PImin()
- *
- * \brief Gets alimit maximum range spo2 pimin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range spo2 pimin.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangeSPO2_PImin()
 {
 	return ALIMIT_SPO2PIMIN->getMaxValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangeSPO2_PImin()
- *
- * \brief Gets alimit minimum range spo2 pimin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range spo2 pimin.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangeSPO2_PImin()
 {
 	return ALIMIT_SPO2PIMIN->getMinValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMaxRangeSPO2_SIQmin()
- *
- * \brief Gets alimit maximum range spo2 SIqmin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit maximum range spo2 SIqmin.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMaxRangeSPO2_SIQmin()
 {
 	return ALIMIT_SPO2SIQMIN->getMaxValue();
 }
 
-/**=================================================================================================
- * \fn int CAlarmConditionHandler::getAlimitMinRangeSPO2_SIQmin()
- *
- * \brief Gets alimit minimum range spo2 SIqmin.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \return The alimit minimum range spo 2 SIqmin.
- *===============================================================================================**/
 int CAlarmConditionHandler::getAlimitMinRangeSPO2_SIQmin()
 {
 	return ALIMIT_SPO2SIQMIN->getMinValue();
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_ApnoeLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state apnoe limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_ApnoeLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -4774,16 +2840,6 @@ void CAlarmConditionHandler::setAlimitState_ApnoeLimit(eAlarmLimitState state)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateApnoeHF(eAlarmLimitState state)
- *
- * \brief Sets alimit state apnoe hf.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateApnoeHF(eAlarmLimitState state)
 {
 	ALIMIT_APNOE->setLimitState(state);
@@ -4791,16 +2847,6 @@ void CAlarmConditionHandler::setAlimitStateApnoeHF(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStateApnoeHF(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateApnoeDefault(eAlarmLimitState state)
- *
- * \brief Sets alimit state apnoe default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateApnoeDefault(eAlarmLimitState state)
 {
 	ALIMIT_APNOE->setLimitState(state);
@@ -4808,16 +2854,6 @@ void CAlarmConditionHandler::setAlimitStateApnoeDefault(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStateApnoe(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_BPMmaxLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state bp mmax limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_BPMmaxLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -4854,16 +2890,6 @@ void CAlarmConditionHandler::setAlimitState_BPMmaxLimit(eAlarmLimitState state)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateBPMmaxHF(eAlarmLimitState state)
- *
- * \brief Sets alimit state bp mmax hf.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateBPMmaxHF(eAlarmLimitState state)
 {
 	ALIMIT_FREQMAX->setLimitState(state);
@@ -4871,16 +2897,6 @@ void CAlarmConditionHandler::setAlimitStateBPMmaxHF(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStateBPMmaxHF(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateBPMmaxDefault(eAlarmLimitState state)
- *
- * \brief Sets alimit state bp mmax default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateBPMmaxDefault(eAlarmLimitState state)
 {
 	ALIMIT_FREQMAX->setLimitState(state);
@@ -4888,16 +2904,6 @@ void CAlarmConditionHandler::setAlimitStateBPMmaxDefault(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStateBPMmax(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_LeakmaxLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state leakmax limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_LeakmaxLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -4934,16 +2940,6 @@ void CAlarmConditionHandler::setAlimitState_LeakmaxLimit(eAlarmLimitState state)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateLeakmaxHF(eAlarmLimitState state)
- *
- * \brief Sets alimit state leakmax hf.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateLeakmaxHF(eAlarmLimitState state)
 {
 	ALIMIT_LEAKMAX->setLimitState(state);
@@ -4951,16 +2947,6 @@ void CAlarmConditionHandler::setAlimitStateLeakmaxHF(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStateLeakmaxHF(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateLeakmaxDefault(eAlarmLimitState state)
- *
- * \brief Sets alimit state leakmax default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateLeakmaxDefault(eAlarmLimitState state)
 {
 	ALIMIT_LEAKMAX->setLimitState(state);
@@ -4968,16 +2954,6 @@ void CAlarmConditionHandler::setAlimitStateLeakmaxDefault(eAlarmLimitState state
 		getModel()->getCONFIG()->SetAlarmlimitStateLeakmax(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_MVmaxLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state m vmax limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_MVmaxLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -5014,16 +2990,6 @@ void CAlarmConditionHandler::setAlimitState_MVmaxLimit(eAlarmLimitState state)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateMVmaxHF(eAlarmLimitState state)
- *
- * \brief Sets alimit state m vmax hf.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateMVmaxHF(eAlarmLimitState state)
 {
 	ALIMIT_MVMAX->setLimitState(state);
@@ -5031,16 +2997,6 @@ void CAlarmConditionHandler::setAlimitStateMVmaxHF(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStateMVmaxHF(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateMVmaxDefault(eAlarmLimitState state)
- *
- * \brief Sets alimit state m vmax default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateMVmaxDefault(eAlarmLimitState state)
 {
 	ALIMIT_MVMAX->setLimitState(state);
@@ -5048,16 +3004,6 @@ void CAlarmConditionHandler::setAlimitStateMVmaxDefault(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStateMVmax(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_MVminLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state m vmin limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_MVminLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -5098,16 +3044,6 @@ void CAlarmConditionHandler::setAlimitState_MVminLimit(eAlarmLimitState state)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateMVminHF(eAlarmLimitState state)
- *
- * \brief Sets alimit state m vmin hf.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateMVminHF(eAlarmLimitState state)
 {
 	ALIMIT_MVMIN->setLimitState(state);
@@ -5115,16 +3051,6 @@ void CAlarmConditionHandler::setAlimitStateMVminHF(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStateMVminHF(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateMVminDefault(eAlarmLimitState state)
- *
- * \brief Sets alimit state m vmin default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateMVminDefault(eAlarmLimitState state)
 {
 	ALIMIT_MVMIN->setLimitState(state);
@@ -5132,16 +3058,6 @@ void CAlarmConditionHandler::setAlimitStateMVminDefault(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStateMVmin(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_PEEPminLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state pmin limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_PEEPminLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -5194,16 +3110,6 @@ void CAlarmConditionHandler::setAlimitState_PEEPminLimit(eAlarmLimitState state)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStatePEEPminCpap(eAlarmLimitState state)
- *
- * \brief Sets alimit state pmin cpap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStatePEEPminCpap(eAlarmLimitState state)
 {
 	ALIMIT_PEEPMIN->setLimitState(state);
@@ -5211,16 +3117,6 @@ void CAlarmConditionHandler::setAlimitStatePEEPminCpap(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStatePEEPminCpap(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStatePEEPminNCPAP(eAlarmLimitState state)
- *
- * \brief Sets alimit state pmin ncpap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStatePEEPminNCPAP(eAlarmLimitState state)
 {
 	ALIMIT_PEEPMIN->setLimitState(state);
@@ -5228,16 +3124,6 @@ void CAlarmConditionHandler::setAlimitStatePEEPminNCPAP(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStatePEEPminNCPAP(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStatePEEPminDUOPAP(eAlarmLimitState state)
- *
- * \brief Sets alimit state pmin duopap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStatePEEPminDUOPAP(eAlarmLimitState state)
 {
 	ALIMIT_PEEPMIN->setLimitState(state);
@@ -5245,16 +3131,6 @@ void CAlarmConditionHandler::setAlimitStatePEEPminDUOPAP(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStatePEEPminDUOPAP(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStatePEEPminDefault(eAlarmLimitState state)
- *
- * \brief Sets alimit state pmin default.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStatePEEPminDefault(eAlarmLimitState state)
 {
 	ALIMIT_PEEPMIN->setLimitState(state);
@@ -5262,16 +3138,7 @@ void CAlarmConditionHandler::setAlimitStatePEEPminDefault(eAlarmLimitState state
 		getModel()->getCONFIG()->SetAlarmlimitStatePEEPmin(state);
 }
 
-/**********************************************************************************************//**
- * @fn	void CAlarmConditionHandler::setAlimitState_PIPminLimit(eAlarmLimitState state)
- *
- * @brief	Sets alimit state pi pmin limit.
- *
- * @author	Rainer Kuehner
- * @date	23.09.2016
- *
- * @param	state	The state.
- **************************************************************************************************/
+
 void CAlarmConditionHandler::setAlimitState_PIPminLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -5324,16 +3191,7 @@ void CAlarmConditionHandler::setAlimitState_PIPminLimit(eAlarmLimitState state)
 	}
 }
 
-/**********************************************************************************************//**
- * @fn	void CAlarmConditionHandler::setAlimitStatePIPminDefault(eAlarmLimitState state)
- *
- * @brief	Sets alimit state pi pmin default.
- *
- * @author	Rainer Kuehner
- * @date	23.09.2016
- *
- * @param	state	The state.
- **************************************************************************************************/
+
 void CAlarmConditionHandler::setAlimitStatePIPminDefault(eAlarmLimitState state)
 {
 	ALIMIT_PIPMIN->setLimitState(state);
@@ -5341,16 +3199,6 @@ void CAlarmConditionHandler::setAlimitStatePIPminDefault(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStatePIPmin(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_PIPmaxLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state pmax limit.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_PIPmaxLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -5403,16 +3251,6 @@ void CAlarmConditionHandler::setAlimitState_PIPmaxLimit(eAlarmLimitState state)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStatePIPmaxHF(eAlarmLimitState state)
- *
- * \brief Sets alimit state pmax hf.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStatePIPmaxHF(eAlarmLimitState state)
 {
 	ALIMIT_PIPMAX->setLimitState(state);
@@ -5420,16 +3258,6 @@ void CAlarmConditionHandler::setAlimitStatePIPmaxHF(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStatePmaxHF(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStatePIPmaxCpap(eAlarmLimitState state)
- *
- * \brief Sets alimit state pmax cpap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStatePIPmaxCpap(eAlarmLimitState state)
 {
 	ALIMIT_PIPMAX->setLimitState(state);
@@ -5437,16 +3265,6 @@ void CAlarmConditionHandler::setAlimitStatePIPmaxCpap(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStatePmaxCpap(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStatePIPmaxNCPAP(eAlarmLimitState state)
- *
- * \brief Sets alimit state pmax ncpap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStatePIPmaxNCPAP(eAlarmLimitState state)
 {
 	ALIMIT_PIPMAX->setLimitState(state);
@@ -5454,16 +3272,6 @@ void CAlarmConditionHandler::setAlimitStatePIPmaxNCPAP(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStatePmaxNCPAP(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStatePIPmaxDUOPAP(eAlarmLimitState state)
- *
- * \brief Sets alimit state pmax duopap.
- *
- * \author Rainer
- * \date 20 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStatePIPmaxDUOPAP(eAlarmLimitState state)
 {
 	ALIMIT_PIPMAX->setLimitState(state);
@@ -5471,16 +3279,6 @@ void CAlarmConditionHandler::setAlimitStatePIPmaxDUOPAP(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStatePmaxDUOPAP(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStatePIPmaxDefault(eAlarmLimitState state)
- *
- * \brief Sets alimit state pmax default.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStatePIPmaxDefault(eAlarmLimitState state)
 {
 	ALIMIT_PIPMAX->setLimitState(state);
@@ -5488,16 +3286,6 @@ void CAlarmConditionHandler::setAlimitStatePIPmaxDefault(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStatePIPmax(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_DCO2maxLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state dco2max limit.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_DCO2maxLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -5531,16 +3319,6 @@ void CAlarmConditionHandler::setAlimitState_DCO2maxLimit(eAlarmLimitState state)
 	
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateDCO2maxHF(eAlarmLimitState state)
- *
- * \brief Sets alimit state dco2max hf.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateDCO2maxHF(eAlarmLimitState state)
 {
 	ALIMIT_DCO2MAX->setLimitState(state);
@@ -5548,16 +3326,6 @@ void CAlarmConditionHandler::setAlimitStateDCO2maxHF(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStateDCO2maxHF(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_DCO2minLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state dco 2min limit.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_DCO2minLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -5591,16 +3359,6 @@ void CAlarmConditionHandler::setAlimitState_DCO2minLimit(eAlarmLimitState state)
 	
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateDCO2minHF(eAlarmLimitState state)
- *
- * \brief Sets alimit state dco2min hf.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateDCO2minHF(eAlarmLimitState state)
 {
 	ALIMIT_DCO2MIN->setLimitState(state);
@@ -5608,16 +3366,6 @@ void CAlarmConditionHandler::setAlimitStateDCO2minHF(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStateDCO2minHF(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_ETCO2maxLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state etco2max limit.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_ETCO2maxLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -5654,16 +3402,6 @@ void CAlarmConditionHandler::setAlimitState_ETCO2maxLimit(eAlarmLimitState state
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateETCO2maxHF(eAlarmLimitState state)
- *
- * \brief Sets alimit state etco2max hf.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateETCO2maxHF(eAlarmLimitState state)
 {
 	ALIMIT_ETCO2MAX->setLimitState(state);
@@ -5671,16 +3409,6 @@ void CAlarmConditionHandler::setAlimitStateETCO2maxHF(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStateETCO2maxHF(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateETCO2maxDefault(eAlarmLimitState state)
- *
- * \brief Sets alimit state etco2max default.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateETCO2maxDefault(eAlarmLimitState state)
 {
 	ALIMIT_ETCO2MAX->setLimitState(state);
@@ -5688,16 +3416,6 @@ void CAlarmConditionHandler::setAlimitStateETCO2maxDefault(eAlarmLimitState stat
 		getModel()->getCONFIG()->SetAlarmlimitStateETCO2max(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_ETCO2minLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state etco2min limit.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_ETCO2minLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -5734,16 +3452,6 @@ void CAlarmConditionHandler::setAlimitState_ETCO2minLimit(eAlarmLimitState state
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateETCO2minHF(eAlarmLimitState state)
- *
- * \brief Sets alimit state etco2min hf.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateETCO2minHF(eAlarmLimitState state)
 {
 	ALIMIT_ETCO2MIN->setLimitState(state);
@@ -5751,16 +3459,6 @@ void CAlarmConditionHandler::setAlimitStateETCO2minHF(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStateETCO2minHF(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateETCO2minDefault(eAlarmLimitState state)
- *
- * \brief Sets alimit state etco2min default.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateETCO2minDefault(eAlarmLimitState state)
 {
 	ALIMIT_ETCO2MIN->setLimitState(state);
@@ -5768,16 +3466,6 @@ void CAlarmConditionHandler::setAlimitStateETCO2minDefault(eAlarmLimitState stat
 		getModel()->getCONFIG()->SetAlarmlimitStateETCO2min(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_FICO2maxLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state fico2max limit.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_FICO2maxLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -5814,16 +3502,6 @@ void CAlarmConditionHandler::setAlimitState_FICO2maxLimit(eAlarmLimitState state
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateFICO2maxHF(eAlarmLimitState state)
- *
- * \brief Sets alimit state fico2max hf.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateFICO2maxHF(eAlarmLimitState state)
 {
 	ALIMIT_FICO2MAX->setLimitState(state);
@@ -5831,16 +3509,6 @@ void CAlarmConditionHandler::setAlimitStateFICO2maxHF(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStateFICO2maxHF(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateFICO2maxDefault(eAlarmLimitState state)
- *
- * \brief Sets alimit state fico2max default.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateFICO2maxDefault(eAlarmLimitState state)
 {
 	ALIMIT_FICO2MAX->setLimitState(state);
@@ -5848,16 +3516,6 @@ void CAlarmConditionHandler::setAlimitStateFICO2maxDefault(eAlarmLimitState stat
 		getModel()->getCONFIG()->SetAlarmlimitStateFICO2max(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_FICO2minLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state fico2min limit.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_FICO2minLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -5894,16 +3552,6 @@ void CAlarmConditionHandler::setAlimitState_FICO2minLimit(eAlarmLimitState state
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateFICO2minHF(eAlarmLimitState state)
- *
- * \brief Sets alimit state fico2min hf.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateFICO2minHF(eAlarmLimitState state)
 {
 	ALIMIT_FICO2MIN->setLimitState(state);
@@ -5911,16 +3559,6 @@ void CAlarmConditionHandler::setAlimitStateFICO2minHF(eAlarmLimitState state)
 		getModel()->getCONFIG()->SetAlarmlimitStateFICO2minHF(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateFICO2minDefault(eAlarmLimitState state)
- *
- * \brief Sets alimit state fico2min default.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateFICO2minDefault(eAlarmLimitState state)
 {
 	ALIMIT_FICO2MIN->setLimitState(state);
@@ -5928,16 +3566,6 @@ void CAlarmConditionHandler::setAlimitStateFICO2minDefault(eAlarmLimitState stat
 		getModel()->getCONFIG()->SetAlarmlimitStateFICO2min(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_SPO2maxLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state spo2max limit.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_SPO2maxLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -5966,16 +3594,6 @@ void CAlarmConditionHandler::setAlimitState_SPO2maxLimit(eAlarmLimitState state)
 	setAlimitStateSPO2maxDefault(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateSPO2maxDefault(eAlarmLimitState state)
- *
- * \brief Sets alimit state spo2max default.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateSPO2maxDefault(eAlarmLimitState state)
 {
 	ALIMIT_SPO2MAX->setLimitState(state);
@@ -5983,16 +3601,6 @@ void CAlarmConditionHandler::setAlimitStateSPO2maxDefault(eAlarmLimitState state
 		getModel()->getCONFIG()->SetAlarmlimitStateSPO2max(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_SPO2minLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state spo2min limit.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_SPO2minLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -6021,16 +3629,6 @@ void CAlarmConditionHandler::setAlimitState_SPO2minLimit(eAlarmLimitState state)
 	setAlimitStateSPO2minDefault(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateSPO2minDefault(eAlarmLimitState state)
- *
- * \brief Sets alimit state spo2min default.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateSPO2minDefault(eAlarmLimitState state)
 {
 	ALIMIT_SPO2MIN->setLimitState(state);
@@ -6038,16 +3636,6 @@ void CAlarmConditionHandler::setAlimitStateSPO2minDefault(eAlarmLimitState state
 		getModel()->getCONFIG()->SetAlarmlimitStateSPO2min(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_PulseRatemaxLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state pulse ratemax limit.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_PulseRatemaxLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -6076,16 +3664,6 @@ void CAlarmConditionHandler::setAlimitState_PulseRatemaxLimit(eAlarmLimitState s
 	setAlimitStatePulseRatemaxDefault(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStatePulseRatemaxDefault(eAlarmLimitState state)
- *
- * \brief Sets alimit state pulse ratemax default.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStatePulseRatemaxDefault(eAlarmLimitState state)
 {
 	ALIMIT_PULSERATEMAX->setLimitState(state);
@@ -6093,16 +3671,6 @@ void CAlarmConditionHandler::setAlimitStatePulseRatemaxDefault(eAlarmLimitState 
 		getModel()->getCONFIG()->SetAlarmlimitStatePulseRatemax(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_PulseRateminLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state pulse ratemin limit.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_PulseRateminLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -6131,16 +3699,6 @@ void CAlarmConditionHandler::setAlimitState_PulseRateminLimit(eAlarmLimitState s
 	setAlimitStatePulseRateminDefault(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStatePulseRateminDefault(eAlarmLimitState state)
- *
- * \brief Sets alimit state pulse ratemin default.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStatePulseRateminDefault(eAlarmLimitState state)
 {
 	ALIMIT_PULSERATEMIN->setLimitState(state);
@@ -6148,16 +3706,6 @@ void CAlarmConditionHandler::setAlimitStatePulseRateminDefault(eAlarmLimitState 
 		getModel()->getCONFIG()->SetAlarmlimitStatePulseRatemin(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_SPO2_PIminLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state spo2 pimin limit.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_SPO2_PIminLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -6186,16 +3734,6 @@ void CAlarmConditionHandler::setAlimitState_SPO2_PIminLimit(eAlarmLimitState sta
 	setAlimitStateSPO2_PIminDefault(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateSPO2_PIminDefault(eAlarmLimitState state)
- *
- * \brief Sets alimit state spo2 pimin default.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateSPO2_PIminDefault(eAlarmLimitState state)
 {
 	ALIMIT_SPO2PIMIN->setLimitState(state);
@@ -6203,16 +3741,6 @@ void CAlarmConditionHandler::setAlimitStateSPO2_PIminDefault(eAlarmLimitState st
 		getModel()->getCONFIG()->SetAlarmlimitStateSPO2_PImin(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitState_SPO2_SIQminLimit(eAlarmLimitState state)
- *
- * \brief Sets alimit state spo2 SIqmin limit.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitState_SPO2_SIQminLimit(eAlarmLimitState state)
 {
 	switch(state)
@@ -6241,16 +3769,6 @@ void CAlarmConditionHandler::setAlimitState_SPO2_SIQminLimit(eAlarmLimitState st
 	setAlimitStateSPO2_SIQminDefault(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::setAlimitStateSPO2_SIQminDefault(eAlarmLimitState state)
- *
- * \brief Sets alimit state spo2 SIqmin default.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
 void CAlarmConditionHandler::setAlimitStateSPO2_SIQminDefault(eAlarmLimitState state)
 {
 	ALIMIT_SPO2SIQMIN->setLimitState(state);
@@ -6258,14 +3776,6 @@ void CAlarmConditionHandler::setAlimitStateSPO2_SIQminDefault(eAlarmLimitState s
 		getModel()->getCONFIG()->SetAlarmlimitStateSPO2_SIQmin(state);
 }
 
-/**=================================================================================================
- * \fn void CAlarmConditionHandler::SetAlimitStateCalculated()
- *
- * \brief Sets alimit state calculated.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *===============================================================================================**/
 void CAlarmConditionHandler::SetAlimitStateCalculated()
 {
 	EnterCriticalSection(&csAlarmLimitList);

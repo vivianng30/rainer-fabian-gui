@@ -280,7 +280,7 @@ DWORD CThreadPRICO::PRICOData(void)
 				bool bRunPrico=false;
 
 				SHORT iLastFiO2=CTlsFloat::Round(((double)getModel()->getDATAHANDLER()->getAppliedFiO2para())/10, 0);
-				if(getModel()->getDATAHANDLER()->GetOxyCalRunning()==false)
+				if(getModel()->getDATAHANDLER()->GetOxyCalRunning()==false && m_bSPO2checkFlag==FALSE)
 				{
 					SHORT iMeasuredOxi=CTlsFloat::Round(((double)getModel()->getDATAHANDLER()->getMessureDataO2())/10, 0);
 					if(iMeasuredOxi<iLastFiO2-5 || iMeasuredOxi>iLastFiO2+5)
@@ -798,8 +798,8 @@ void CThreadPRICO::setMeasuredSpO2Value(SHORT iValue)
 	BOOL bSetFlag=FALSE;
 	if(FALSE==m_bSPO2checkFlag)
 	{
-		BYTE iSpO2high= getHighSpO2PRICOlimit();
-		BYTE iSpO2low= getLowSpO2PRICOlimit();
+		UINT iSpO2high= getHighSpO2PRICOlimit()*10;
+		UINT iSpO2low= getLowSpO2PRICOlimit()*10;
 
 		if(m_iCurSpO2val>iSpO2high)
 		{
