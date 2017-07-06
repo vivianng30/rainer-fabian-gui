@@ -915,7 +915,7 @@ CStringW CAlarmMgmtHandler::getLogTxtAlarm(eAlarm enAlarm)
 		break;*/
 	case AL_SysFail_Fan:
 		{
-			return _T("BLOWER_DEFECT");
+			return _T("FAN_DEFECT");
 		}
 		break;
 	case AL_SysFail_RELAIS_DEFECT:
