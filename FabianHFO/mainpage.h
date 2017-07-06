@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50153 Version 5.0.1.53
+ * @date 2017-07-06
+ * @verbatim
+	- If the BREATHING FREQUENCY measurement is 0, then we display "- -" at the numeric fields and alarm limits setting of C20/C, Compliance and Resistance
+ @endverbatim
+ *
  * @subsection ver50152 Version 5.0.1.52
  * @date 2017-07-04
  * @verbatim

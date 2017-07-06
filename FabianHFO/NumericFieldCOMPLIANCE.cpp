@@ -114,10 +114,17 @@ bool CNumericFieldCOMPLIANCE::drawData(bool bData, bool bFrames, bool bText, boo
 		rc.right = 175;
 	}
 
-	if(iC==0)
+	BYTE iBPM=getModel()->getDATAHANDLER()->getAVGMessureDataBPM();
+
+	if(iBPM==0)
+	{
+		wsprintf(psz,_T("%s"), _T("--"));
+	}
+	else if(iC==0)
 		wsprintf(psz,_T("%d"), 0);
 	else
 		wsprintf(psz,_T("%0.2f"), CTlsFloat::Round(((double)iC)/100, 2));
+	
 	DrawText(hdcMem,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 
 	BitBlt(m_hDC, 0, 0, m_lX, m_lY,hdcMem , 0, 0, SRCCOPY);

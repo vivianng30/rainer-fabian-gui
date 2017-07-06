@@ -140,10 +140,17 @@ bool CNumericFieldMECHANIC::drawData(bool bData, bool bFrames, bool bText, bool 
 	rc.left = 105; 
 	rc.right = 210;
 
-	if(iC==0)
+	BYTE iBPM=getModel()->getDATAHANDLER()->getAVGMessureDataBPM();
+
+	if(iBPM==0)
+	{
+		wsprintf(psz,_T("%s"), _T("--"));
+	}
+	else if(iC==0)
 		wsprintf(psz,_T("%d"), 0);
 	else
 		wsprintf(psz,_T("%0.2f"), CTlsFloat::Round(((double)iC)/100, 2));
+	
 	DrawText(hdcMem,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 
 	//###########################################################################
@@ -165,7 +172,12 @@ bool CNumericFieldMECHANIC::drawData(bool bData, bool bFrames, bool bText, bool 
 	rc.bottom = 121;
 	rc.left = 105; 
 	rc.right = 210;
-	if(iC20C==0)
+	
+	if(iBPM==0)
+	{
+		wsprintf(psz,_T("%s"), _T("--"));
+	}
+	else if(iC20C==0)
 		wsprintf(psz,_T("%d"), 0);
 	else
 		wsprintf(psz,_T("%0.1f"), CTlsFloat::Round(((double)iC20C)/10, 1));
@@ -191,7 +203,12 @@ bool CNumericFieldMECHANIC::drawData(bool bData, bool bFrames, bool bText, bool 
 	rc.bottom = 183;
 	rc.left = 105; 
 	rc.right = 210;
-	if(iR==0)
+	
+	if(iBPM==0)
+	{
+		wsprintf(psz,_T("%s"), _T("--"));
+	}
+	else if(iR==0)
 		wsprintf(psz,_T("%d"), 0);
 	else
 		wsprintf(psz,_T("%0.0f"), CTlsFloat::Round(((double)iR)/10, 0));
