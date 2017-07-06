@@ -1117,9 +1117,10 @@
 #define IDC_BTN_PARA_MANBREATH		352
 #define IDC_BTN_PARA_FLUSHTIME		353
 #define IDC_BTN_PARA_BPM_REC		354
-#define IDC_BTN_PARA_ABORTPSV		355
-#define IDC_BTN_PARA_EFLOW			356
-#define IDC_BTN_PARA_PCURVE			357
+#define IDC_BTN_PARA_LEAKCOMP		355
+#define IDC_BTN_PARA_ABORTPSV		356
+#define IDC_BTN_PARA_EFLOW			357
+#define IDC_BTN_PARA_PCURVE			358
 
 #define IDC_BTN_PARA_FOT_STEPS		360
 #define IDC_BTN_PARA_FOT_PMEANLOW	361
@@ -3233,7 +3234,7 @@ enum eSPO2averagingtime {
 //};
 
 enum eLeakCompensation {
-	LC_OFF,		// 0, 
+	//LC_OFF,		// 0, 
 	LC_LOW,		// 1
 	LC_MIDDLE,	//2
 	LC_HIGH		//3

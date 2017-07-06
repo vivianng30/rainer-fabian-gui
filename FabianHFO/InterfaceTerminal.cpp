@@ -1849,14 +1849,14 @@ void CInterfaceTerminal::sendModeOption2()
 		wMode=getModel()->setBitOfWord(wMode, MODOPT2_LEAKCOMPENSATION_BIT);
 	}*/
 
-	eLeakCompensation eLeakCompOff=getModel()->getCONFIG()->getLeakCompOff();
+	eLeakCompensation eLeakCompOff=getModel()->getCONFIG()->getLeakCompensation();
 	switch(eLeakCompOff)
 	{
-	case LC_OFF:
-		{
-			//
-		}
-		break;
+	//case LC_OFF:
+	//	{
+	//		//
+	//	}
+	//	break;
 	case LC_LOW:
 		{
 			wMode=getModel()->setBitOfWord(wMode, MODOPT2_LEAKCOMPENSATION1_BIT);

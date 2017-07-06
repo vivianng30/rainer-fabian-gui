@@ -10,6 +10,7 @@
 #include "ParaBtn_AbortPSV.h"
 #include "ParaBtn_FREQ_REC.h"
 #include "ParaBtn_EFLOW.h"
+#include "ParaBtn_LeakCompensation.h"
 
 // CWndParaSettings
 
@@ -115,6 +116,7 @@ private:
 	CParaBtn_ManBreath* m_pcPara_ManBreath;
 	CParaBtn_FlushTime* m_pcPara_FlushTime;
 	CParaBtn_EFLOW* m_pcPara_EFLOW;
+	CParaBtn_LeakCompensation* m_pcPara_LeakCompensation;
 
 	eParaSetWarning m_enumMessage;
 

@@ -2391,6 +2391,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ParaBtn_LeakCompensation.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ParaBtn_ManBreath.cpp"
 				>
 			</File>
@@ -3538,6 +3542,10 @@
 			</File>
 			<File
 				RelativePath=".\ParaBtn_ITIME_REC.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ParaBtn_LeakCompensation.h"
 				>
 			</File>
 			<File

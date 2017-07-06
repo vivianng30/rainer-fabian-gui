@@ -1360,17 +1360,17 @@ void CSubParaBtn::DrawSUBPARA_LEAKCOMP(int nState)
 
 	DrawText(m_hDC,szText,-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
 
-	eLeakCompensation eLeakCompOff=getModel()->getCONFIG()->getLeakCompOff();
+	eLeakCompensation eLeakCompOff=getModel()->getCONFIG()->getLeakCompensation();
 	switch(eLeakCompOff)
 	{
-	case LC_OFF:
+	/*case LC_OFF:
 		{
 			SelectObject(m_hDC,g_hf14AcuBold);
 			wsprintf(psz,getModel()->GetLanguageString(IDS_TXT_OFF));
 			if(m_pcWarning_Up)
 				m_pcWarning_Up->Draw(m_hDC,65,m_rcClient.bottom-20);
 		}
-		break;
+		break;*/
 	case LC_LOW:
 		{
 			wsprintf(psz,getModel()->GetLanguageString(IDS_TXT_SENS_LOW));

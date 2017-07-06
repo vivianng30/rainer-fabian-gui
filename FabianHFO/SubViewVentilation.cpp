@@ -91,7 +91,7 @@ CSubViewVentilation::CSubViewVentilation()
 	m_bHFOManBreathEnabled=getModel()->getCONFIG()->IsHFOManBreathEnabled();
 	m_iPatientAlarmDelay=getModel()->getCONFIG()->getCurPatientAlarmDelay();
 	m_bPpsvAsDeltaPEEPValue=getModel()->getCONFIG()->isPpsvAsDeltaPEEPValue();
-	m_eLeakComp=getModel()->getCONFIG()->getLeakCompOff();
+	m_eLeakComp=getModel()->getCONFIG()->getLeakCompensation();
 	m_bUseTveBTB=getModel()->getCONFIG()->useTveBTB();
 
 	m_kUp					= VK_UP;//up dw revers
@@ -358,11 +358,11 @@ BOOL CSubViewVentilation::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCre
 		}*/
 		switch(m_eLeakComp)
 		{
-		case LC_OFF:
+		/*case LC_OFF:
 			{
 				m_pcLeakComp->SetValueText(getModel()->GetLanguageString(IDS_TXT_OFF));
 			}
-			break;
+			break;*/
 		case LC_LOW:
 			{
 				m_pcLeakComp->SetValueText(getModel()->GetLanguageString(IDS_TXT_SENS_LOW));

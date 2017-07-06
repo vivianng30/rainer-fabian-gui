@@ -12,6 +12,8 @@
  * @verbatim
 	- FOT: font size changed (next step)
 	- FOT: scaling graph improved
+	- NIV leak compensation not possible to turn off
+	- NIV leak compensation in quick settings
  @endverbatim
  *
  * @subsection ver50153 Version 5.0.1.53

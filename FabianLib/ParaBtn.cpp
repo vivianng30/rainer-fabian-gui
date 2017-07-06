@@ -2564,6 +2564,12 @@ void CParaBtn::WriteCurrentValue()
 
 	switch(m_btn.wID)
 	{
+	case IDC_BTN_PARA_LEAKCOMP:
+		{
+			getModel()->getCONFIG()->setLeakCompensation((eLeakCompensation)m_v.iValue);
+			bStopFOT=false;
+		}
+		break;
 	case IDC_BTN_PARA_MANBREATH:
 		{
 			getModel()->getCONFIG()->SetManBreathTime(m_v.iValue);

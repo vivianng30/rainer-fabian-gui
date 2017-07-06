@@ -379,7 +379,7 @@ CConfiguration::CConfiguration()
 	m_iAlarmlimitPEEPminNCPAP=0;
 	m_iAlarmlimitStatePEEPminNCPAP=0;
 
-	m_eLeakCompOff=LC_MIDDLE;
+	m_eLeakCompensation=LC_MIDDLE;
 	
 	m_dtNextServiceDate.SetStatus(COleDateTime::null);
 }
@@ -790,7 +790,7 @@ void CConfiguration::Init()
 	m_iAlarmlimitPEEPminNCPAP=0;
 	m_iAlarmlimitStatePEEPminNCPAP=0;
 
-	m_eLeakCompOff=LC_MIDDLE;
+	m_eLeakCompensation=LC_MIDDLE;
 	
 	m_dtNextServiceDate.SetStatus(COleDateTime::null);
 
@@ -3829,11 +3829,11 @@ void CConfiguration::LoadSettings()
 		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_FLOWOFFHFO_8,m_iCurNumericBlock_FLOWOFFHFO);
 	}
 
-	m_eLeakCompOff=(eLeakCompensation)getModel()->getI2C()->ReadConfigByte(LEAKCOMPENSATIONOFF_8);
-	if(m_eLeakCompOff<LC_OFF || m_eLeakCompOff>LC_HIGH)
+	m_eLeakCompensation=(eLeakCompensation)getModel()->getI2C()->ReadConfigByte(LEAKCOMPENSATIONOFF_8);
+	if(m_eLeakCompensation<LC_LOW || m_eLeakCompensation>LC_HIGH)
 	{
-		m_eLeakCompOff=LC_MIDDLE;
-		getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8,(int)m_eLeakCompOff);
+		m_eLeakCompensation=LC_MIDDLE;
+		getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8,(int)m_eLeakCompensation);
 	}
 
 	WORD iServiceYear=getModel()->getI2C()->ReadConfigWord(SERVICE_YEAR_16);
@@ -6106,27 +6106,27 @@ BOOL CConfiguration::isPpsvAsDeltaPEEPValue()
 }
 
 /**********************************************************************************************//**
- * @fn	void CConfiguration::setLeakCompOff(BOOL bState)
+ * @fn	void CConfiguration::setLeakCompensation(BOOL bState)
  *
  * @brief	Sets leak component off.
- * 			If m_bLeakCompOff is TRUE, then LEAKCOMPENSATIONOFF_8 in FRAM set to 1
+ * 			If m_eLeakCompensation is TRUE, then LEAKCOMPENSATIONOFF_8 in FRAM set to 1
  *
  * @author	Rainer Kuehner
  * @date	16.03.2016
  *
  * @param	bState	true to state.
  **************************************************************************************************/
-void CConfiguration::setLeakCompOff(eLeakCompensation leakComp)
+void CConfiguration::setLeakCompensation(eLeakCompensation leakComp)
 {
-	m_eLeakCompOff=leakComp;
-	getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8, (int)m_eLeakCompOff);
+	m_eLeakCompensation=leakComp;
+	getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8, (int)m_eLeakCompensation);
 
 	getModel()->Send_MODE_OPTION2(true,true);
 	getModel()->writeLEAKCOMPENSATIONToLog();
 }
-eLeakCompensation CConfiguration::getLeakCompOff()
+eLeakCompensation CConfiguration::getLeakCompensation()
 {
-	return m_eLeakCompOff;
+	return m_eLeakCompensation;
 }
 // **************************************************************************
 // 
@@ -9802,7 +9802,7 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		ar<<m_iParaDataTriggerNMODE;
 
 		////##################### m_iConfigVersion 3005
-		ar<<(BYTE)m_eLeakCompOff;
+		ar<<(BYTE)m_eLeakCompensation;
 		ar<<m_iCurNumericBlock_NCPAP;
 		ar<<m_iCurNumericBlock_DUOPAP;
 		ar<<m_iCurNumericBlock_THERAPY;
@@ -10450,8 +10450,8 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		{
 			BYTE eLeakCompOff=0;
 			ar>>eLeakCompOff;
-			m_eLeakCompOff=(eLeakCompensation)eLeakCompOff;
-			getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8, (int)m_eLeakCompOff);
+			m_eLeakCompensation=(eLeakCompensation)eLeakCompOff;
+			getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8, (int)m_eLeakCompensation);
 
 			ar>>m_iCurNumericBlock_NCPAP;
 			setLastNumericNCPAP(m_iCurNumericBlock_NCPAP);

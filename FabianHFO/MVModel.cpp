@@ -632,14 +632,14 @@ void CMVModel::writeALTITUDEToLog()
 }
 void CMVModel::writeLEAKCOMPENSATIONToLog()
 {
-	eLeakCompensation eLeakCompOff=getCONFIG()->getLeakCompOff();
+	eLeakCompensation eLeakCompOff=getCONFIG()->getLeakCompensation();
 	switch(eLeakCompOff)
 	{
-	case LC_OFF:
+	/*case LC_OFF:
 		{
 			theApp.getLog()->WriteLine(_T("### LeakCompensatino disabled"));
 		}
-		break;
+		break;*/
 	case LC_LOW:
 		{
 			theApp.getLog()->WriteLine(_T("### LeakCompensation low"));
@@ -5424,14 +5424,14 @@ WORD CMVModel::Send_MODE_OPTION2(bool bSPI,bool bSerial)
 		
 	}*/
 
-	eLeakCompensation eLeakCompOff=getCONFIG()->getLeakCompOff();
+	eLeakCompensation eLeakCompOff=getCONFIG()->getLeakCompensation();
 	switch(eLeakCompOff)
 	{
-	case LC_OFF:
-		{
-			//
-		}
-		break;
+	//case LC_OFF:
+	//	{
+	//		//
+	//	}
+	//	break;
 	case LC_LOW:
 		{
 			wMode=setBitOfWord(wMode, MODOPT2_LEAKCOMPENSATION1_BIT);

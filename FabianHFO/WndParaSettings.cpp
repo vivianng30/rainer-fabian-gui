@@ -88,6 +88,7 @@ CWndParaSettings::CWndParaSettings()
 	m_pcPara_FlushTime=NULL;
 	m_pcPara_FREQ_REC=NULL;
 	m_pcPara_EFLOW=NULL;
+	m_pcPara_LeakCompensation=NULL;
 
 	m_pcSelSetting_Up=NULL;
 	m_pcSelSetting_Dw=NULL;
@@ -174,6 +175,9 @@ CWndParaSettings::~CWndParaSettings()
 
 	delete m_pcPara_FlushTime;
 	m_pcPara_FlushTime=NULL;
+
+	delete m_pcPara_LeakCompensation;
+	m_pcPara_LeakCompensation=NULL;
 
 	delete m_pcPara_UpT;
 	m_pcPara_UpT=NULL;
@@ -386,6 +390,31 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		else
 			m_pcPara_FREQ_REC->SetUnitText(_T("1/")+getModel()->GetLanguageString(IDS_UNIT_HRS));
 		
+
+		//Parameter Button------Leak Compensation---------------------------------
+		btn.wID					= IDC_BTN_PARA_LEAKCOMP;	
+		btn.poPosition.x		= 20;
+		btn.poPosition.y		= 120;
+		btn.pcBmpUp				= m_pcPara_UpB;
+		btn.pcBmpDown			= m_pcPara_DwB;
+		btn.pcBmpFocus			= m_pcPara_FcB;
+		btn.pcBmpDisabled		= m_pcPara_UpB;
+		btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+
+		fv.iLowerLimit=LC_LOW;
+		fv.iUpperLimit=LC_HIGH;
+
+		fv.iValue=getModel()->getCONFIG()->getLeakCompensation();
+		if(fv.iValue>fv.iUpperLimit)
+			fv.iValue=fv.iUpperLimit;
+		else if(fv.iValue<fv.iLowerLimit)
+			fv.iValue=fv.iLowerLimit;
+		m_pcPara_LeakCompensation=new CParaBtn_LeakCompensation(btn,0,false);
+		m_pcPara_LeakCompensation->Create(this,dwStyleNoTab,fv);
+		m_pcPara_LeakCompensation->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+		m_pcPara_LeakCompensation->SetNameText(_T(""));
+		m_pcPara_LeakCompensation->SetUnitText(_T(""));
 
 		//Parameter Button------Abortcrit. PSV---------------------------------
 		btn.wID					= IDC_BTN_PARA_ABORTPSV;	
@@ -663,10 +692,6 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		m_pcPara_Confirm->Create(this,g_hf21AcuBold,0);
 		m_pcPara_Confirm->SetText(_T(""),_T(""));
 		m_pcPara_Confirm->ShowWindow(SW_HIDE);
-
-		
-
-
 		
 		if(getModel()->getCONFIG()->isBiasFlowActive()==true)
 		{
@@ -681,7 +706,6 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 				m_pcFreshgasExt->SetBtnState(CPresetMenuBtn::UP);
 			}
 		}
-		
 
 		if(getModel()->getDATAHANDLER()->isVLIMITLicenseAvailable() 
 				&& getModel()->getDATAHANDLER()->isVGUARANTLicenseAvailable())
@@ -776,11 +800,21 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 			m_pcPara_EFLOW->ShowWindow(SW_HIDE);
 		}
 
+		if(getModel()->getCONFIG()->GetCurMode()==VM_PRE_NCPAP 
+			||	getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
+			||  getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP 
+			||	getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP)
+		{
+			m_pcPara_LeakCompensation->ShowWindow(SW_SHOW);
+		}
+		else
+		{
+			m_pcPara_LeakCompensation->ShowWindow(SW_HIDE);
+		}
+
 		SelectObject(m_hDC,hpenprev);
 		SelectObject(m_hDC,hbrprev);
-		//cbrBack.DeleteObject();//rkuNEWFIX
-		//cbrGrey.DeleteObject();//rkuNEWFIX
-		//pen.DeleteObject();
+		
 
 		return 1;
 	}
@@ -902,6 +936,18 @@ void CWndParaSettings::Show(bool bShow)
 			}
 			m_pcPara_Confirm->ShowWindow(SW_HIDE);
 
+			if(getModel()->getCONFIG()->GetCurMode()==VM_PRE_NCPAP 
+				||	getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
+				||  getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP 
+				||	getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP)
+			{
+				m_pcPara_LeakCompensation->ShowWindow(SW_SHOW);
+			}
+			else
+			{
+				m_pcPara_LeakCompensation->ShowWindow(SW_HIDE);
+			}
+
 		}
 		else
 		{
@@ -911,6 +957,7 @@ void CWndParaSettings::Show(bool bShow)
 			m_pcPara_FlushTime->ShowWindow(SW_HIDE);
 			m_pcPara_FREQ_REC->ShowWindow(SW_HIDE);
 			m_pcPara_EFLOW->ShowWindow(SW_HIDE);
+			m_pcPara_LeakCompensation->ShowWindow(SW_HIDE);
 
 			m_pcPara_Confirm->ShowWindow(SW_SHOW);
 		}
@@ -971,6 +1018,7 @@ void CWndParaSettings::Show(bool bShow)
 		m_pcPara_FlushTime->ShowWindow(SW_HIDE);
 		m_pcPara_FREQ_REC->ShowWindow(SW_HIDE);
 		m_pcPara_EFLOW->ShowWindow(SW_HIDE);
+		m_pcPara_LeakCompensation->ShowWindow(SW_HIDE);
 		this->ShowWindow(SW_HIDE);
 	}
 }
@@ -1139,6 +1187,15 @@ void CWndParaSettings::SetViewFocus(int iBtn)
 {
 	switch(iBtn)
 	{
+	case IDC_BTN_PARA_LEAKCOMP:
+		{
+			if(m_pcPara_LeakCompensation)
+			{
+				if(m_pcPara_LeakCompensation->IsWindowVisible())
+					m_pcPara_LeakCompensation->SetFocus();
+			}
+		}
+		break;
 	case IDC_BTN_PARA_MANBREATH:
 		{
 			if(m_pcPara_ManBreath)
@@ -1146,7 +1203,7 @@ void CWndParaSettings::SetViewFocus(int iBtn)
 				if(m_pcPara_ManBreath->IsWindowVisible())
 					m_pcPara_ManBreath->SetFocus();
 			}
-			
+
 		}
 		break;
 	case IDC_BTN_PARA_PCURVE:

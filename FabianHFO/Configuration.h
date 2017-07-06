@@ -751,8 +751,8 @@ public:
 	void setPpsvAsDeltaPEEPValue(BOOL bState);
 	BOOL isPpsvAsDeltaPEEPValue();
 
-	void setLeakCompOff(eLeakCompensation leakComp);
-	eLeakCompensation getLeakCompOff();
+	void setLeakCompensation(eLeakCompensation leakComp);
+	eLeakCompensation getLeakCompensation();
 
 	void setNextServiceDate(WORD year, WORD month, WORD day);
 	COleDateTime getNextServiceDate();
@@ -1254,7 +1254,7 @@ private:
 	eTriggereType m_eTriggerTypeCONV;
 	eTriggereType m_eTriggerTypeNMODE;
 
-	eLeakCompensation m_eLeakCompOff;
+	eLeakCompensation m_eLeakCompensation;
 
 	bool m_bEFLOWequalILFOW;
 	bool m_bGraphAutoScale;

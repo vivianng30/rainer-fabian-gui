@@ -1798,9 +1798,10 @@ void CViewParaBtn::Show()
 			break;
 		}
 
-		SetViewFocus();
-		/*if(AfxGetApp())
-			AfxGetApp()->GetMainWnd()->SetFocus();*/
+		
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->SetFocus();
+		//SetViewFocus();
 	}
 	else
 	{
@@ -2021,6 +2022,12 @@ void CViewParaBtn::SetViewFocusWndParaSettings()
 				m_pcWndParaSettings->SetViewFocus(IDC_BTN_PARA_ABORTPSV);
 		}
 		break;
+	case IDC_BTN_PARA_LEAKCOMP:
+		{
+			if(m_pcWndParaSettings)
+				m_pcWndParaSettings->SetViewFocus(IDC_BTN_PARA_LEAKCOMP);
+		}
+		break;
 	case IDC_BTN_PARA_EFLOW:
 		{
 			if(m_pcWndParaSettings)
@@ -2064,6 +2071,7 @@ void CViewParaBtn::SetViewFocus()
 	EnterCriticalSection(&csDraw);
 	switch(getModel()->getCONFIG()->GetLastSelectedParaViewBtns())
 	{
+	case IDC_BTN_PARA_LEAKCOMP:
 	case IDC_BTN_PARA_MANBREATH:
 	case IDC_BTN_PARA_FLUSHTIME:
 	case IDC_BTN_PARA_ABORTPSV:

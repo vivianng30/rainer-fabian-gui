@@ -11,7 +11,7 @@ IMPLEMENT_DYNAMIC(CWndSubSettingsLeakComp, CWnd)
 CWndSubSettingsLeakComp::CWndSubSettingsLeakComp(UINT viewFlag):
 CWndSubSettings(viewFlag)
 {
-	m_eLeakCompOff=LC_MIDDLE;
+	m_eLeakCompensation=LC_MIDDLE;
 }
 
 CWndSubSettingsLeakComp::~CWndSubSettingsLeakComp()
@@ -25,7 +25,7 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsLeakComp, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SETUP_1, &CWndSubSettingsLeakComp::OnBnClicked1)
 	ON_BN_CLICKED(IDC_BTN_SETUP_2, &CWndSubSettingsLeakComp::OnBnClicked2)
 	ON_BN_CLICKED(IDC_BTN_SETUP_3, &CWndSubSettingsLeakComp::OnBnClicked3)
-	ON_BN_CLICKED(IDC_BTN_SETUP_4, &CWndSubSettingsLeakComp::OnBnClicked4)
+	//ON_BN_CLICKED(IDC_BTN_SETUP_4, &CWndSubSettingsLeakComp::OnBnClicked4)
 	//ON_BN_CLICKED(IDC_BTN_SETUP_5, &CWndSubSettingsAutoOxyCal::OnBnClicked5)
 	//ON_BN_CLICKED(IDC_BTN_SETUP_6, &CWndSubSettingsAutoOxyCal::OnBnClicked6)
 	//ON_BN_CLICKED(IDC_BTN_SETUP_7, &CWndSubSettingsAutoOxyCal::OnBnClicked7)
@@ -41,48 +41,48 @@ void CWndSubSettingsLeakComp::Initialize()
 {
 	CClientDC dc(this);
 
-	m_eLeakCompOff=getModel()->getCONFIG()->getLeakCompOff();
+	m_eLeakCompensation=getModel()->getCONFIG()->getLeakCompensation();
 
 	m_szSetting = getModel()->GetLanguageString(IDS_TXT_LEAKCOMP);
-	m_iNumValues=4;
+	m_iNumValues=3;
+
+	//m_pbtn1->ShowWindow(SW_SHOW);
+	//m_pbtn1->RefreshText(getModel()->GetLanguageString(IDS_TXT_DISABLED));
 
 	m_pbtn1->ShowWindow(SW_SHOW);
-	m_pbtn1->RefreshText(getModel()->GetLanguageString(IDS_TXT_DISABLED));
-
-	m_pbtn2->ShowWindow(SW_SHOW);
-	m_pbtn2->RefreshText(getModel()->GetLanguageString(IDS_TXT_SENS_LOW));
+	m_pbtn1->RefreshText(getModel()->GetLanguageString(IDS_TXT_SENS_LOW));
 	
-	m_pbtn3->ShowWindow(SW_SHOW);
-	m_pbtn3->RefreshText(getModel()->GetLanguageString(IDS_TXT_SENS_MID));
+	m_pbtn2->ShowWindow(SW_SHOW);
+	m_pbtn2->RefreshText(getModel()->GetLanguageString(IDS_TXT_SENS_MID));
 
-	m_pbtn4->ShowWindow(SW_SHOW);
-	m_pbtn4->RefreshText(getModel()->GetLanguageString(IDS_TXT_SENS_HIGH));
+	m_pbtn3->ShowWindow(SW_SHOW);
+	m_pbtn3->RefreshText(getModel()->GetLanguageString(IDS_TXT_SENS_HIGH));
 
 	m_plBtn.AddTail(m_pbtn1);
 	m_plBtn.AddTail(m_pbtn2);
 	m_plBtn.AddTail(m_pbtn3);
-	m_plBtn.AddTail(m_pbtn4);
+	//m_plBtn.AddTail(m_pbtn4);
 
-	switch(m_eLeakCompOff)
+	switch(m_eLeakCompensation)
 	{
-	case LC_OFF:
+	/*case LC_OFF:
+		{
+			m_pbtn1->DrawOK(true);
+		}
+		break;*/
+	case LC_LOW:
 		{
 			m_pbtn1->DrawOK(true);
 		}
 		break;
-	case LC_LOW:
+	case LC_MIDDLE:
 		{
 			m_pbtn2->DrawOK(true);
 		}
 		break;
-	case LC_MIDDLE:
-		{
-			m_pbtn3->DrawOK(true);
-		}
-		break;
 	case LC_HIGH:
 		{
-			m_pbtn4->DrawOK(true);
+			m_pbtn3->DrawOK(true);
 		}
 		break;
 	}
@@ -146,7 +146,8 @@ void CWndSubSettingsLeakComp::Draw()
 	SelectObject(hdcMem,(HPEN)penLine);
 	CBrush cbrRound(RGB(200,200,200));
 	SelectObject(hdcMem,cbrRound);
-	RoundRect(hdcMem, 210, 70, 590, 272,20,20);
+	//RoundRect(hdcMem, 210, 70, 590, 272,20,20);
+	RoundRect(hdcMem, 210, 70, 590, 226,20,20);
 
 	MoveToEx(hdcMem, 210, 126, NULL);
 	LineTo(hdcMem, 590, 126);
@@ -154,8 +155,8 @@ void CWndSubSettingsLeakComp::Draw()
 	MoveToEx(hdcMem, 210, 172, NULL);
 	LineTo(hdcMem, 590, 172);
 
-	MoveToEx(hdcMem, 210, 218, NULL);
-	LineTo(hdcMem, 590, 218);
+	//MoveToEx(hdcMem, 210, 218, NULL);
+	//LineTo(hdcMem, 590, 218);
 
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,hdcMem,0,0,SRCCOPY);
 
@@ -250,29 +251,29 @@ void CWndSubSettingsLeakComp::setLeakCompOff(UINT btn)
 {
 	switch(btn)
 	{
+	/*case IDC_BTN_SETUP_1:
+		{
+			m_eLeakCompensation=LC_OFF;
+		}
+		break;*/
 	case IDC_BTN_SETUP_1:
 		{
-			m_eLeakCompOff=LC_OFF;
+			m_eLeakCompensation=LC_LOW;
 		}
 		break;
 	case IDC_BTN_SETUP_2:
 		{
-			m_eLeakCompOff=LC_LOW;
+			m_eLeakCompensation=LC_MIDDLE;
 		}
 		break;
 	case IDC_BTN_SETUP_3:
 		{
-			m_eLeakCompOff=LC_MIDDLE;
-		}
-		break;
-	case IDC_BTN_SETUP_4:
-		{
-			m_eLeakCompOff=LC_HIGH;
+			m_eLeakCompensation=LC_HIGH;
 		}
 		break;
 	}
 
-	getModel()->getCONFIG()->setLeakCompOff(m_eLeakCompOff);
+	getModel()->getCONFIG()->setLeakCompensation(m_eLeakCompensation);
 }
 
 // **************************************************************************
@@ -320,17 +321,17 @@ void CWndSubSettingsLeakComp::OnBnClicked3()
 // **************************************************************************
 // 
 // **************************************************************************
-void CWndSubSettingsLeakComp::OnBnClicked4()
-{
-	eBtnState eState = GetBtnState(IDC_BTN_SETUP_4);
-	if(eState==BS_DOWN)
-		SetOneButtonFocused(IDC_BTN_SETUP_4);
-	else
-	{
-		SetOneButtonDepressed(IDC_BTN_SETUP_4);
-		setLeakCompOff(IDC_BTN_SETUP_4);
-	}
-}
+//void CWndSubSettingsLeakComp::OnBnClicked4()
+//{
+//	eBtnState eState = GetBtnState(IDC_BTN_SETUP_4);
+//	if(eState==BS_DOWN)
+//		SetOneButtonFocused(IDC_BTN_SETUP_4);
+//	else
+//	{
+//		SetOneButtonDepressed(IDC_BTN_SETUP_4);
+//		setLeakCompOff(IDC_BTN_SETUP_4);
+//	}
+//}
 // **************************************************************************
 // 
 // **************************************************************************

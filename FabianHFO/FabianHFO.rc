@@ -1922,6 +1922,9 @@ BEGIN
     IDS_TXT_IEFLOW_VALIDITY "(valid for I-Flow pressure rise control)"
     IDS_TXT_FOT_STOPFOT     "This will stop FOT. Continue?"
     IDS_TXT_CONFIRMSERVICE  "By stepping into service mode you confirm there is no patient being connected to the device!"
+    IDS_TXT_LEAKCOMP_TOP    "NIV"
+    IDS_TXT_LEAKCOMP_MID    "leak"
+    IDS_TXT_LEAKCOMP_BOT    "compensation"
 END
 
 #endif    // German (Germany) resources
