@@ -7,6 +7,13 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50154 Version 5.0.1.54
+ * @date 2017-07-06
+ * @verbatim
+	- FOT: font size changed (next step)
+	- FOT: scaling graph improved
+ @endverbatim
+ *
  * @subsection ver50153 Version 5.0.1.53
  * @date 2017-07-06
  * @verbatim

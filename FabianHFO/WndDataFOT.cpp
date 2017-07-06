@@ -1212,7 +1212,7 @@ void CWndDataFOT::Draw(bool bStatic)
 						DrawText(hdcMem,getModel()->GetLanguageString(IDS_TXT_FOT_NEXT),-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 						//DrawText(hdcMem,_T("next"),-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 						
-						SelectObject(hdcMem,g_hf11AcuBold);
+						SelectObject(hdcMem,g_hf8AcuBold);
 						rc.left = 102;  
 						rc.top = 97;  
 						rc.right  = 187;  
@@ -1566,7 +1566,7 @@ void CWndDataFOT::Draw(bool bStatic)
 						rc.bottom = 145;
 						DrawText(hdcMem,getModel()->GetLanguageString(IDS_TXT_FOT_NEXT),-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);//todo FOTLANGUAGE
 						
-						SelectObject(hdcMem,g_hf11AcuBold);
+						SelectObject(hdcMem,g_hf8AcuBold);
 						rc.left = 102;  
 						rc.top = 97;  
 						rc.right  = 187;  

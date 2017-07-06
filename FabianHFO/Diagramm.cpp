@@ -643,9 +643,8 @@ void CDiagramm::SetDiagrammType(int iType)
 			//m_dMinX=G_LOWER_MAXSCALE_PMEAN_FOT;
 			m_dMaxX=G_UPPER_MAXSCALE_PRESSURE;
 			m_dMinX=G_LOWER_MAXSCALE_PRESSURE_FOT;
-			m_dMaxY=G_UPPER_MAXSCALE_XRS_FOT;//rku, check FOTGRAPH
-			//m_dMaxY=0;
-			m_dMinY=G_LOWER_MINSCALE_XRS_FOT;
+			m_dMaxY=G_LOWER_MINSCALE_XRS_FOT;//rku, check FOTGRAPH
+			m_dMinY=G_UPPER_MAXSCALE_XRS_FOT;
 
 			m_rmargin=DIAGRAMM_RIGHTMARGIN_LOOP;
 			m_lmargin=DIAGRAMM_LEFTMARGIN;
@@ -3640,11 +3639,11 @@ void CDiagramm::DoPlotSavedLoopPoints()
 				  // m_dMaxY=y;
 			   //}
 			   //neu
-			   if(y<m_dMaxY)
+			   if(y>m_dMaxY)
 			   {
 				   m_dMaxY=y;
 			   }
-			   if(y>m_dMinY)
+			   if(y<m_dMinY)
 			   {
 				   m_dMinY=y;
 			   }
@@ -5262,9 +5261,8 @@ void CDiagramm::CheckAutoScaleXYincrease()
 			{
 				m_dMaxX=G_UPPER_MAXSCALE_PRESSURE;
 				m_dMinX=G_LOWER_MAXSCALE_PRESSURE_FOT;
-				//m_dMaxY=0;
-				m_dMaxY=G_UPPER_MAXSCALE_XRS_FOT;//rku, check FOTGRAPH
-				m_dMinY=G_LOWER_MINSCALE_XRS_FOT;
+				m_dMaxY=G_LOWER_MINSCALE_XRS_FOT;//rku, check FOTGRAPH
+				m_dMinY=G_UPPER_MAXSCALE_XRS_FOT;
 			}
 			break;
 		case VOLUME_HF_GRAPH:
@@ -5444,9 +5442,8 @@ void CDiagramm::CheckAutoScaleXYdecrease()
 			{
 				m_dMaxX=G_UPPER_MAXSCALE_PRESSURE;
 				m_dMinX=G_LOWER_MAXSCALE_PRESSURE_FOT;
-				//m_dMaxY=0;
-				m_dMaxY=G_UPPER_MAXSCALE_XRS_FOT;//rku, check FOTGRAPH
-				m_dMinY=G_LOWER_MINSCALE_XRS_FOT;
+				m_dMaxY=G_LOWER_MINSCALE_XRS_FOT;//rku, check FOTGRAPH
+				m_dMinY=G_UPPER_MAXSCALE_XRS_FOT;
 			}
 			break;
 		case VOLUME_HF_GRAPH:
@@ -5665,6 +5662,12 @@ void CDiagramm::CheckAutoScaleY()
 
 	if(m_iDiagrammType==FOT_LOOP)
 	{
+		/*double dTempMaxY=0;
+		if(m_dMaxY>=0)
+			dTempMaxY=m_dMaxY+10;
+		else
+			dTempMaxY=m_dMaxY-10;*/
+
 		if(m_dMaxY>m_dYAxisMax && m_pFunctionParams->yMax>m_dYAxisMax)
 		{
 			if(isSafeTickCountDelayExpired(m_dwLastCheckAutoScaleY, 100))
@@ -5672,19 +5675,19 @@ void CDiagramm::CheckAutoScaleY()
 				IncreaseYScale(true);
 
 				m_dwLastCheckAutoScaleY=GetTickCount();
-				m_dMaxY=G_UPPER_MAXSCALE_XRS_FOT;
-				m_dMinY=G_LOWER_MINSCALE_XRS_FOT;
+				m_dMaxY=G_LOWER_MINSCALE_XRS_FOT;//rku, check FOTGRAPH
+				m_dMinY=G_UPPER_MAXSCALE_XRS_FOT;
 			}
 		}
-		else if(m_pFunctionParams->yMin<m_dYAxisMin && m_dMaxY+10<m_dYAxisMin)//rku, check FOTGRAPH, nothing to change here!
+		else if(m_pFunctionParams->yMin<m_dYAxisMin && m_dMinY<m_dYAxisMin)//rku, check FOTGRAPH, nothing to change here!
 		{
 			if(isSafeTickCountDelayExpired(m_dwLastCheckAutoScaleY, 100))
 			{
 				IncreaseYScale(true);
 
 				m_dwLastCheckAutoScaleY=GetTickCount();
-				m_dMaxY=G_UPPER_MAXSCALE_XRS_FOT;
-				m_dMinY=G_LOWER_MINSCALE_XRS_FOT;
+				m_dMaxY=G_LOWER_MINSCALE_XRS_FOT;//rku, check FOTGRAPH
+				m_dMinY=G_UPPER_MAXSCALE_XRS_FOT;
 			}
 		}
 		else
@@ -5697,8 +5700,8 @@ void CDiagramm::CheckAutoScaleY()
 				{
 					DecreaseYScaleToNextValue(true);
 				}
-				m_dMaxY=G_UPPER_MAXSCALE_XRS_FOT;
-				m_dMinY=G_LOWER_MINSCALE_XRS_FOT;
+				m_dMaxY=G_LOWER_MINSCALE_XRS_FOT;//rku, check FOTGRAPH
+				m_dMinY=G_UPPER_MAXSCALE_XRS_FOT;
 			}
 		}
 	}
@@ -8765,7 +8768,7 @@ double CDiagramm::GetNextLowerYAxisMax()
 			}
 		}
 		break;
-	case FOT_LOOP://allways negative! :GetNextLowerYAxisMax()
+	case FOT_LOOP:
 		{
 			double iTempMaxY=m_dMaxY+10;
 
@@ -9434,6 +9437,7 @@ bool CDiagramm::CanDecreaseYScale()
 
 			iTempMaxY=m_dMaxY+10;
 			iTempMinY=m_dMinY-10;
+
 			
 			if(m_dMaxY<=0 && m_dMinY<0)
 			{
