@@ -71,6 +71,7 @@ public:
 	void checkDemoLicense_THERAPY();
 	void checkDemoLicense_PRICO();
 	void checkDemoLicense_FOT();
+	void checkDemoLicense_NIVTRIGGER();
 	
 	CString getFormattedEncryptKey(CStringA szEncryptedKey);
 
@@ -140,6 +141,12 @@ public:
 	void enableFOTLicense();
 	void disableFOTLicense();
 	bool isFOTDemoLicAvailable();
+
+	bool isNIVTRIGGERAvailable();
+	bool isNIVTRIGGERLicenseAvailable();
+	void enableNIVTRIGGERLicense();
+	void disableNIVTRIGGERLicense();
+	bool isNIVTRIGGERDemoLicAvailable();
 
 	//bool isHFOManBreathAvailable();PMAN1
 
@@ -1039,6 +1046,7 @@ private:
 	bool m_bTHERAPYDemoLicAvailable;
 	bool m_bPRICODemoLicAvailable;
 	bool m_bFOTDemoLicAvailable;
+	bool m_bNIVTRIGGERDemoLicAvailable;
 
 	bool m_bVGUARANTLicenseAvailable;
 	bool m_bVLIMITLicenseAvailable;
@@ -1049,6 +1057,8 @@ private:
 	bool m_bTHERAPYLicenseAvailable;
 	bool m_bPRICOLicenseAvailable;
 	bool m_bFOTLicenseAvailable;
+	bool m_bNIVTRIGGERLicenseAvailable;
+
 	bool m_bPRICOrunning;
 	bool m_bAcuLinkStarted;
 	bool m_bDoDelTrendThread;
@@ -1073,25 +1083,6 @@ private:
 	bool m_bNurscallAlarm;
 	
 	eVgarantState m_eCurVgarantState;
-	//bool m_bResendPinsp;
-	
-	//bool m_bSendVolumeCorrection;
-
-
-	//*******Trends***********//
-	/*CTlsTrendFile *m_tfilePINSP_Byte;
-	CTlsTrendFile *m_tfilePMEAN_Byte;
-	CTlsTrendFile *m_tfileFIO2_Byte;
-	CTlsTrendFile *m_tfileVTE_Word;
-	CTlsTrendFile *m_tfileCOMPLIANCE_Word;
-	CTlsTrendFile *m_tfileCO2HFO_Word;*/
-	
-
-	//COleDateTime m_dtTimeLastTrend;
-	
-	/*CStringParser	m_strTrend1;
-	CStringParser	m_strTrend2;
-	CStringParser	m_strTrend3;*/
 
 	DWORD m_iContrastParm;
 
@@ -1122,8 +1113,6 @@ private:
 	bool m_bFreezedGraphs;
 	bool m_bSavingTrendToUSB;
 	bool m_bTrendsLoading;
-	//bool m_bFOTrunning;
-	//bool m_bFOTsequenceRunning;
 	
 	WORD m_iLastVGarantParam;
 	WORD m_iLastHFVGarantParam;
@@ -1143,13 +1132,9 @@ private:
 
 	SHORT m_Status2;
 
-	//SHORT m_iOldOxyValue;
-
 	BOOL m_bShowFlowAC;
 
 	SHORT m_iSPO2waveData;
-	//SHORT m_iSPO2_SIQ;
-	//SHORT m_iEMGwaveData;
 
 	COLORREF m_crGraphColor_PRESSURE;
 	COLORREF m_crGraphColor_FLOW;

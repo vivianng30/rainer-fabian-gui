@@ -5838,7 +5838,7 @@ void CViewParaBtn::show_NCPAPmode()
 	
 	if(m_pcSubPara_TrigThreshold)
 	{
-		if(true==getModel()->getCONFIG()->isNIVTRIGGERREGISTRYenabled())
+		if(true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
 		{
 			m_pcSubPara_TrigThreshold->ShowWindow(SW_SHOW);
 			m_pcSubPara_TrigThreshold->RefreshBtn();
@@ -5862,7 +5862,7 @@ void CViewParaBtn::show_NCPAPmode()
 	}
 	if(m_pcPara_TRIGGERNMODE)
 	{
-		if(true==getModel()->getCONFIG()->isNIVTRIGGERREGISTRYenabled())
+		if(true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
 			m_pcPara_TRIGGERNMODE->ShowWindow(SW_SHOW);
 		else
 			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
@@ -5971,7 +5971,7 @@ void CViewParaBtn::show_PRE_NCPAPmode()
 
 	if(m_pcSubPara_TrigThreshold)
 	{
-		if(true==getModel()->getCONFIG()->isNIVTRIGGERREGISTRYenabled())
+		if(true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
 		{
 			m_pcSubPara_TrigThreshold->ShowWindow(SW_SHOW);
 			m_pcSubPara_TrigThreshold->RefreshBtn();
@@ -5995,7 +5995,7 @@ void CViewParaBtn::show_PRE_NCPAPmode()
 	}
 	if(m_pcPara_TRIGGERNMODE)
 	{
-		if(true==getModel()->getCONFIG()->isNIVTRIGGERREGISTRYenabled())
+		if(true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
 			m_pcPara_TRIGGERNMODE->ShowWindow(SW_SHOW);
 		else
 			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
@@ -6086,7 +6086,7 @@ void CViewParaBtn::show_DUOPAPmode()
 
 	if(m_pcSubPara_TrigThreshold)
 	{
-		if(true==getModel()->getCONFIG()->isNIVTRIGGERREGISTRYenabled())
+		if(true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
 		{
 			m_pcSubPara_TrigThreshold->ShowWindow(SW_SHOW);
 			m_pcSubPara_TrigThreshold->RefreshBtn();
@@ -6118,7 +6118,7 @@ void CViewParaBtn::show_DUOPAPmode()
 	}
 	if(m_pcPara_TRIGGERNMODE)
 	{
-		if(true==getModel()->getCONFIG()->isNIVTRIGGERREGISTRYenabled())
+		if(true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
 			m_pcPara_TRIGGERNMODE->ShowWindow(SW_SHOW);
 		else
 			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
@@ -6309,7 +6309,7 @@ void CViewParaBtn::show_PRE_DUOPAPmode()
 	}
 	if(m_pcPara_TRIGGERNMODE)
 	{
-		if(true==getModel()->getCONFIG()->isNIVTRIGGERREGISTRYenabled())
+		if(true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
 			m_pcPara_TRIGGERNMODE->ShowWindow(SW_SHOW);
 		else
 			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
@@ -6317,7 +6317,7 @@ void CViewParaBtn::show_PRE_DUOPAPmode()
 
 	if(m_pcSubPara_TrigThreshold)
 	{
-		if(true==getModel()->getCONFIG()->isNIVTRIGGERREGISTRYenabled())
+		if(true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
 		{
 			m_pcSubPara_TrigThreshold->ShowWindow(SW_SHOW);
 			m_pcSubPara_TrigThreshold->RefreshBtn();

@@ -197,6 +197,11 @@ BOOL CPasswordDlg::OnInitDialog()
 			szMode=_T("FOT");
 		}
 		break;
+	case MOD_NIVTRIGGER:
+		{
+			szMode=_T("NIV trigger");
+		}
+		break;
 	default:
 		{
 			szMode=_T("- ERROR -");
@@ -683,6 +688,11 @@ CString CPasswordDlg::encryptKey(eModule module)
 			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_FOT));
 		}
 		break;
+	case MOD_NIVTRIGGER:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptKey(MOD_NIVTRIGGER));
+		}
+		break;
 	default:
 		{
 			m_InfoText.SetWindowText(_T("- ERROR: wrong mode -"));
@@ -739,6 +749,11 @@ CString CPasswordDlg::encryptDemoKey(eModule module)
 	case MOD_FOT:
 		{
 			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_FOT));
+		}
+		break;
+	case MOD_NIVTRIGGER:
+		{
+			szEncryptedFormattedKey=getModel()->getDATAHANDLER()->getFormattedEncryptKey(getModel()->getDATAHANDLER()->encryptDEMOKey(MOD_NIVTRIGGER));
 		}
 		break;
 	default:

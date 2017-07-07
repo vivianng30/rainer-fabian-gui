@@ -43,6 +43,7 @@ private:
 	CKbrdBtn* m_pcActivateLungRec;
 	CKbrdBtn* m_pcActivateTherapy;
 	CKbrdBtn* m_pcActivatePRICO;
+	CKbrdBtn* m_pcActivateNIVTRIGGER;
 
 	CKbrdBtn* m_pcDelFOT;
 	CKbrdBtn* m_pcDelHFO;
@@ -54,6 +55,7 @@ private:
 	CKbrdBtn* m_pcDelLungRec;
 	CKbrdBtn* m_pcDelTherapy;
 	CKbrdBtn* m_pcDelPRICO;
+	CKbrdBtn* m_pcDelNIVTRIGGER;
 
 	CStringW m_szLicenseFile;
 
@@ -68,6 +70,7 @@ private:
 	CStringA m_szParsedTHERAPYKey;
 	CStringA m_szParsedPRICOKey;
 	CStringA m_szParsedFOTKey;
+	CStringA m_szParsedNIVTRIGGERKey;
 
 	//bool m_bMasterModuleEnabled;
 	bool m_bHFOModuleEnabled;
@@ -80,6 +83,7 @@ private:
 	bool m_bTHERAPYModuleEnabled;
 	bool m_bPRICOModuleEnabled;
 	bool m_bFOTModuleEnabled;
+	bool m_bNIVTRIGGERModuleEnabled;
 	
 	//CString m_szEncryptedFormattedMasterKey;
 	CString m_szEncryptedFormattedHFOKey;
@@ -92,6 +96,7 @@ private:
 	CString m_szEncryptedFormattedTHERAPYKey;
 	CString m_szEncryptedFormattedPRICOKey;
 	CString m_szEncryptedFormattedFOTKey;
+	CString m_szEncryptedFormattedNIVTRIGGERKey;
 
 	/*CStringA m_szEncryptedMasterKey;
 	CStringA m_szEncryptedHFOKey;
@@ -107,6 +112,7 @@ protected:
 public:
 	afx_msg void OnDestroy();
 	/*afx_msg LRESULT OnMyMessage(WPARAM wParam, LPARAM lParam);*/
+	afx_msg void OnBnClickedActivateNIVTRIGGER();
 	afx_msg void OnBnClickedActivateFOT();
 	afx_msg void OnBnClickedActivateHFO();
 	//afx_msg void OnBnClickedActivateCO2();
@@ -117,6 +123,7 @@ public:
 	afx_msg void OnBnClickedActivateTRENDS();
 	afx_msg void OnBnClickedActivateTHERAPY();
 	afx_msg void OnBnClickedActivatePRICO();
+	afx_msg void OnBnClickedDelNIVTRIGGER();
 	afx_msg void OnBnClickedDelFOT();
 	afx_msg void OnBnClickedDelHFO();
 	//afx_msg void OnBnClickedDelCO2();

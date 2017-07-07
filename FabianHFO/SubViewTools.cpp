@@ -1219,6 +1219,18 @@ void CSubViewTools::OnBnClickedDevInfoToUSB()
 		else
 			lfDeviceInfoFile->WriteLine(_T("- FOT: no"),false);
 
+		//NIV trigger
+		if(getModel()->getDATAHANDLER()->isNIVTRIGGERLicenseAvailable())
+		{
+			szToFile=_T("- NIVTRIGGER: ");
+			CStringA szEncryptedNIVTRIGGERKey=getModel()->getDATAHANDLER()->encryptKey(MOD_NIVTRIGGER);
+			szToFile+=getModel()->getDATAHANDLER()->getFormattedEncryptKey(szEncryptedNIVTRIGGERKey);
+
+			lfDeviceInfoFile->WriteLine(szToFile,false);
+		}
+		else
+			lfDeviceInfoFile->WriteLine(_T("- NIVTRIGGER: no"),false);
+
 
 		//**************************Service Date********************************
 		lfDeviceInfoFile->WriteLine(_T(""),false);

@@ -37,7 +37,6 @@ CConfiguration::CConfiguration()
 	m_bSPO2registry=true;
 	m_bCO2registry=true;
 	m_bRISETIMEregistry=true;
-	m_bNIVTRIGGERregistry=true;
 	//m_bPRICO=false;
 
 	m_iPRICO_SPO2lowRange=0;
@@ -447,9 +446,7 @@ void CConfiguration::Init()
 	m_bSPO2registry=true;
 	m_bCO2registry=true;
 	m_bRISETIMEregistry=true;
-	m_bNIVTRIGGERregistry=true;
-	//m_bPRICO=false;
-
+	
 	m_iPRICO_SPO2lowRange=0;
 	m_iPRICO_SPO2highRange=0;
 	m_iPRICO_FIO2lowRange=0;
@@ -973,11 +970,6 @@ void CConfiguration::LoadSettings()
 		m_bCO2registry=true;
 	else
 		m_bCO2registry=false;
-
-	if(regWorkstate.ReadDWORD(_T("NIVTRIGGER"), 0)==0)
-		m_bNIVTRIGGERregistry=true;
-	else
-		m_bNIVTRIGGERregistry=false;
 
 	readinFOTventDelaytime();
 
@@ -2688,12 +2680,6 @@ void CConfiguration::LoadSettings()
 	//m_iParaDataTrigger;
 	m_iParaDataTriggerNMODE=(BYTE)getModel()->getI2C()->ReadConfigWord(PARA_TRIGGER_NMODE_16);
 	if(m_iParaDataTriggerNMODE<iMINRANGE_PED_TRIGGER_NMODE || m_iParaDataTriggerNMODE>iMAXRANGE_PED_TRIGGER_NMODE)
-	{
-		m_iParaDataTriggerNMODE=FACTORY_NMODE_TRIGGER;
-		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NMODE_16,m_iParaDataTriggerNMODE);
-	}
-
-	if(false==m_bNIVTRIGGERregistry)
 	{
 		m_iParaDataTriggerNMODE=FACTORY_NMODE_TRIGGER;
 		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NMODE_16,m_iParaDataTriggerNMODE);
@@ -4797,10 +4783,7 @@ bool CConfiguration::isSPO2REGISTRYenabled()
 	 //return false;
 	 return m_bRISETIMEregistry;
  }
- bool CConfiguration::isNIVTRIGGERREGISTRYenabled()
- {
-	return m_bNIVTRIGGERregistry;
- }
+
 //bool CConfiguration::isPRICOenabled()
 //{
 //	return m_bPRICO;
@@ -10949,6 +10932,99 @@ void CConfiguration::setLastNumericFLOWOFFHFO(BYTE num)
 	m_iCurNumericBlock_FLOWOFFHFO=num;
 
 	getModel()->getI2C()->WriteConfigByte(NUMBLOCK_FLOWOFFHFO_8, num);
+}
+
+/**********************************************************************************************//**
+ * Disables the nivtrigger and set trigger to off.
+ *
+ * \author	Rainer
+ * \date	07.07.2017
+ **************************************************************************************************/
+
+void CConfiguration::disableNIVTRIGGER()
+{
+	SetParaDataTriggerNMODE(FACTORY_NMODE_TRIGGER);
+
+	if(AfxGetApp() != NULL)
+		AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
+}
+
+/**********************************************************************************************//**
+ * Gets nivtrigger demo timestamp.
+ *
+ * \author	Rainer
+ * \date	07.07.2017
+ *
+ * \return	The nivtrigger demo timestamp.
+ **************************************************************************************************/
+
+COleDateTime CConfiguration::GetNIVTRIGGERdemoTimestamp()
+{
+	WORD iDemoYear=getModel()->getI2C()->ReadConfigWord(DEMO_NIVTRIGGER_YEAR_16);
+	WORD iDemoMonth=getModel()->getI2C()->ReadConfigByte(DEMO_NIVTRIGGER_MONTH_8);
+	WORD iDemoDay=getModel()->getI2C()->ReadConfigByte(DEMO_NIVTRIGGER_DAY_8);
+
+	COleDateTime dtdemoTimestamp;
+	if (iDemoYear<1899 || iDemoMonth>12 || iDemoMonth<1 || iDemoDay>31 || iDemoDay<1)
+	{
+		dtdemoTimestamp.SetStatus(COleDateTime::null);
+		iDemoYear=0;
+		iDemoMonth=0;
+		iDemoDay=0;
+		//theApp.getLog()->WriteLine(_T("*** NIVTRIGGERdemo license false ***"));
+		getModel()->getI2C()->WriteConfigWord(DEMO_NIVTRIGGER_YEAR_16, iDemoYear);
+		getModel()->getI2C()->WriteConfigByte(DEMO_NIVTRIGGER_MONTH_8, iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_NIVTRIGGER_DAY_8, iDemoDay);
+	}
+	else
+	{
+		dtdemoTimestamp.SetDateTime(iDemoYear, iDemoMonth, iDemoDay,0,0,0);
+	}
+
+	return dtdemoTimestamp;
+}
+
+/**********************************************************************************************//**
+ * Sets nivtrigger demo timestamp.
+ *
+ * \author	Rainer
+ * \date	07.07.2017
+ *
+ * \param	dateTime	The date time.
+ **************************************************************************************************/
+
+void CConfiguration::SetNIVTRIGGERdemoTimestamp(COleDateTime dateTime)
+{
+	WORD iDemoYear=0;
+	WORD iDemoMonth=0;
+	WORD iDemoDay=0;
+
+	if(dateTime.GetStatus()==COleDateTime::null)
+	{
+
+	}
+	else if(dateTime.GetStatus()!=COleDateTime::valid)
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	else
+	{
+		iDemoYear=dateTime.GetYear();
+		iDemoMonth=dateTime.GetMonth();
+		iDemoDay=dateTime.GetDay();
+	}
+	getModel()->getI2C()->WriteConfigWord(DEMO_NIVTRIGGER_YEAR_16, iDemoYear);
+	getModel()->getI2C()->WriteConfigByte(DEMO_NIVTRIGGER_MONTH_8, iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_NIVTRIGGER_DAY_8, iDemoDay);
+
+	CString szTxt=_T("");
+	szTxt.Format(_T("***Set NIVTRIGGERdemo license:%02d.%02d.%04d"),
+		dateTime.GetDay(),
+		dateTime.GetMonth(),
+		dateTime.GetYear());
+	theApp.getLog()->WriteLine(szTxt);
 }
 
 /**********************************************************************************************//**

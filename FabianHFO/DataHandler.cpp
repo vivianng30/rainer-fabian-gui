@@ -203,6 +203,7 @@ CDataHandler::CDataHandler(void)
 	m_bTHERAPYLicenseAvailable=false;
 	m_bPRICOLicenseAvailable=false;
 	m_bFOTLicenseAvailable=false;
+	m_bNIVTRIGGERLicenseAvailable=false;
 
 	m_bVGUARANTDemoLicAvailable=false;
 	m_bVLIMITDemoLicAvailable=false;
@@ -213,6 +214,7 @@ CDataHandler::CDataHandler(void)
 	m_bTHERAPYDemoLicAvailable=false;
 	m_bPRICODemoLicAvailable=false;
 	m_bFOTDemoLicAvailable=false;
+	m_bNIVTRIGGERDemoLicAvailable=false;
 
 	m_iBodyweightGramm=0;
 
@@ -1560,6 +1562,7 @@ bool CDataHandler::checkLicensing()
 	CStringA szParsedTHERAPYKey="";
 	CStringA szParsedPRICOKey="";
 	CStringA szParsedFOTKey="";
+	CStringA szParsedNIVTRIGGERKey="";
 
 	bool bCheckVGUARANTFeature=false;
 	bool bCheckVLIMITFeature=false;
@@ -1570,6 +1573,7 @@ bool CDataHandler::checkLicensing()
 	bool bCheckTHERAPYFeature=false;
 	bool bCheckPRICOFeature=false;
 	bool bCheckFOTFeature=false;
+	bool bCheckNIVTRIGGERFeature=false;
 
 	bool bOldMasterFeature=false;
 	bool bOldMasterKey=false;
@@ -1778,6 +1782,14 @@ bool CDataHandler::checkLicensing()
 										bCheckFOTFeature=true;
 									}
 								}
+								else if(sModuleName==_T("NIVTRIGGER"))
+								{
+									szParsedNIVTRIGGERKey=sModuleKey;
+									if(sModuleKey!=_T("0"))
+									{
+										bCheckNIVTRIGGERFeature=true;
+									}
+								}
 							}
 						}
 					}
@@ -1806,6 +1818,7 @@ bool CDataHandler::checkLicensing()
 		m_bTHERAPYLicenseAvailable=false;
 		m_bPRICOLicenseAvailable=false;
 		m_bFOTLicenseAvailable=false;
+		m_bNIVTRIGGERLicenseAvailable=false;
 
 		theApp.getLog()->WriteLine(_T("***allmodulesdisabled***"));
 	}
@@ -1838,6 +1851,7 @@ bool CDataHandler::checkLicensing()
 
 			disablePRICOLicense();
 			disableFOTLicense();
+			disableNIVTRIGGERLicense();
 		}
 	}
 	else
@@ -1959,6 +1973,23 @@ bool CDataHandler::checkLicensing()
 				checkDemoLicense(MOD_FOT);
 			}
 		}
+		if(bCheckNIVTRIGGERFeature)
+		{
+			//check key
+			if(szParsedNIVTRIGGERKey==encryptKey(MOD_NIVTRIGGER))
+			{
+				enableNIVTRIGGERLicense();
+				delDemoLicense(MOD_NIVTRIGGER,true);
+			}
+			else if(szParsedNIVTRIGGERKey==encryptDEMOKey(MOD_NIVTRIGGER))
+			{
+				checkDemoLicense(MOD_NIVTRIGGER);
+			}
+		}
+		else
+		{
+			getModel()->getCONFIG()->disableNIVTRIGGER();
+		}
 	}
 
 	if(bOldMasterFeature)
@@ -1967,13 +1998,6 @@ bool CDataHandler::checkLicensing()
 	return true;
 }
 
-//void CDataHandler::checkDemoLicense()
-//{
-//	for(int i=0; i<=MOD_FOT;i++)
-//	{
-//		checkDemoLicense((eModule)i);
-//	}
-//}
 
 COleDateTime CDataHandler::GetdemoTimestamp(eModule module)
 {
@@ -2022,6 +2046,11 @@ COleDateTime CDataHandler::GetdemoTimestamp(eModule module)
 	case MOD_FOT:
 		{
 			return getModel()->getCONFIG()->GetFOTdemoTimestamp();
+		}
+		break;
+	case MOD_NIVTRIGGER:
+		{
+			return getModel()->getCONFIG()->GetNIVTRIGGERdemoTimestamp();
 		}
 		break;
 	default:
@@ -2090,6 +2119,12 @@ void CDataHandler::checkDemoLicense(eModule module)
 		{
 			DEBUGMSG(TRUE, (TEXT("checkDemoLicense MOD_FOT\r\n")));
 			checkDemoLicense_FOT();
+		}
+		break;
+	case MOD_NIVTRIGGER:
+		{
+			DEBUGMSG(TRUE, (TEXT("checkDemoLicense MOD_NIVTRIGGER\r\n")));
+			checkDemoLicense_NIVTRIGGER();
 		}
 		break;
 	default:
@@ -2386,6 +2421,51 @@ void CDataHandler::checkDemoLicense_FOT()
 	}
 }
 
+void CDataHandler::checkDemoLicense_NIVTRIGGER()
+{
+	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetNIVTRIGGERdemoTimestamp();
+
+	if(dtLicenseTimestamp.GetStatus() != COleDateTime::valid)//license timestamp not yet set
+	{
+		enableNIVTRIGGERLicense();
+		setDemoLicense(MOD_NIVTRIGGER);
+	}
+	else//check elapsed time
+	{
+		SYSTEMTIME stTime;
+		GetLocalTime(&stTime);
+		COleDateTime dtCurrentTime(stTime);
+
+		//COleDateTimeSpan dtElapsePeriod;
+		//dtElapsePeriod.SetDateTimeSpan(90,0,0,0);//90 days ~ 3 month
+
+		COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
+
+		if(dtLicenseTimestamp.GetYear()==dtCurrentTime.GetYear())
+		{
+			int iLicMonth=dtLicenseTimestamp.GetMonth();
+			int iLicDay=dtLicenseTimestamp.GetDay();
+
+			int iCurMonth=dtLicenseTimestamp.GetMonth();
+			int iLCurDay=dtLicenseTimestamp.GetDay();
+
+			int iStop=0;
+		}
+		int iTest=dtElapsePeriod.GetTotalDays();
+		if(dtElapsePeriod.GetTotalDays()>DEMOLICENSE)
+			///if (dtCurrentTime >= dtLicenseTimestamp - dtElapsePeriod)
+		{
+			//license time elapsed
+			disableNIVTRIGGERLicense();
+			delDemoLicense(MOD_NIVTRIGGER,false);
+		} 
+		else
+		{
+			enableNIVTRIGGERLicense();
+			endableDemoLicense(MOD_NIVTRIGGER);
+		}
+	}
+}
 
 void CDataHandler::setDemoLicense(eModule module)
 {
@@ -2447,6 +2527,12 @@ void CDataHandler::setDemoLicense(eModule module)
 		{
 			getModel()->getCONFIG()->SetFOTdemoTimestamp(dtCurrentTime);
 			DEBUGMSG(TRUE, (TEXT("setDemoLicense MOD_FOT\r\n")));
+		}
+		break;
+	case MOD_NIVTRIGGER:
+		{
+			getModel()->getCONFIG()->SetNIVTRIGGERdemoTimestamp(dtCurrentTime);
+			DEBUGMSG(TRUE, (TEXT("setDemoLicense MOD_NIVTRIGGER\r\n")));
 		}
 		break;
 	default:
@@ -2556,6 +2642,16 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 			}
 		}
 		break;
+	case MOD_NIVTRIGGER:
+		{
+			m_bNIVTRIGGERDemoLicAvailable=false;
+			if(bReset)
+			{
+				getModel()->getCONFIG()->SetNIVTRIGGERdemoTimestamp(dtLicenseTimestamp);
+				//DEBUGMSG(TRUE, (TEXT("delDemoLicense MOD_NIVTRIGGER\r\n")));
+			}
+		}
+		break;
 	default:
 		{
 			
@@ -2616,6 +2712,11 @@ void CDataHandler::endableDemoLicense(eModule module)
 			m_bFOTDemoLicAvailable=true;
 		}
 		break;
+	case MOD_NIVTRIGGER:
+		{
+			m_bNIVTRIGGERDemoLicAvailable=true;
+		}
+		break;
 	default:
 		{
 
@@ -2654,6 +2755,7 @@ void CDataHandler::WriteLicenseFile()
 	CString szEncryptedTHERAPYKey=_T("");
 	CString szEncryptedPRICOKey=_T("");
 	CString szEncryptedFOTKey=_T("");
+	CString szEncryptedNIVTRIGGERKey=_T("");
 
 	if(isHFOLicenseAvailable())
 	{
@@ -2745,10 +2847,19 @@ void CDataHandler::WriteLicenseFile()
 	else
 		szEncryptedFOTKey=_T("0");
 	
+	if(isNIVTRIGGERLicenseAvailable())
+	{
+		if(isNIVTRIGGERDemoLicAvailable())
+			szEncryptedNIVTRIGGERKey+=encryptDEMOKey(MOD_NIVTRIGGER);
+		else
+			szEncryptedNIVTRIGGERKey+=encryptKey(MOD_NIVTRIGGER);
+	}
+	else
+		szEncryptedNIVTRIGGERKey=_T("0");
 
 	xml.OpenTag(_T("FabianHFO"), true);
 
-	int iSizeOfArray = 9;
+	int iSizeOfArray = 10;
 	if(0 < iSizeOfArray)
 	{
 		for(int iIndex = 0; iIndex < iSizeOfArray; iIndex++)	
@@ -2809,6 +2920,12 @@ void CDataHandler::WriteLicenseFile()
 				{
 					xml.WriteTextTag(_T("MODULE"), _T("FOT"));
 					xml.WriteTextTag(_T("KEY"), szEncryptedFOTKey);
+				}
+				break;
+			case 9:
+				{
+					xml.WriteTextTag(_T("MODULE"), _T("NIVTRIGGER"));
+					xml.WriteTextTag(_T("KEY"), szEncryptedNIVTRIGGERKey);
 				}
 				break;
 			default:
@@ -2947,6 +3064,11 @@ CStringA CDataHandler::encryptKey(eModule module)
 			oRijndael.MakeKey("AcutronicFOT0000", CRijndael::sm_chain0, 16, 16);
 		}
 		break;
+	case MOD_NIVTRIGGER:
+		{
+			oRijndael.MakeKey("AcutronicNIVTRIG", CRijndael::sm_chain0, 16, 16);
+		}
+		break;
 	default:
 		{
 			return "";
@@ -3049,6 +3171,11 @@ CStringA CDataHandler::encryptDEMOKey(eModule module)
 	case MOD_FOT:
 		{
 			oRijndael.MakeKey("AcutrDemoFOT0000", CRijndael::sm_chain0, 16, 16);
+		}
+		break;
+	case MOD_NIVTRIGGER:
+		{
+			oRijndael.MakeKey("AcutrDemoNIVTRIG", CRijndael::sm_chain0, 16, 16);
 		}
 		break;
 	default:
@@ -3529,6 +3656,47 @@ void CDataHandler::disableTRENDLicense()
 bool CDataHandler::isTRENDDemoLicAvailable()
 {
 	return m_bTRENDDemoLicAvailable;
+}
+
+/**********************************************************************************************//**
+ * Queries if the nivtrigger license is available.
+ *
+ * \author	Rainer
+ * \date	07.07.2017
+ *
+ * \return	True if the nivtrigger license is available, false if not.
+ **************************************************************************************************/
+
+bool CDataHandler::isNIVTRIGGERLicenseAvailable()
+{
+	return m_bNIVTRIGGERLicenseAvailable;
+}
+void CDataHandler::enableNIVTRIGGERLicense()
+{
+	m_bNIVTRIGGERLicenseAvailable=true;
+	theApp.getLog()->WriteLine(_T("-enableNIVTRIGGERmodule"));
+}
+void CDataHandler::disableNIVTRIGGERLicense()
+{
+	m_bNIVTRIGGERLicenseAvailable=false;
+	theApp.getLog()->WriteLine(_T("-disableNIVTRIGGERmodule"));
+
+	delDemoLicense(MOD_NIVTRIGGER,false);
+
+	getModel()->getCONFIG()->disableNIVTRIGGER();
+}
+
+bool CDataHandler::isNIVTRIGGERDemoLicAvailable()
+{
+	return m_bNIVTRIGGERDemoLicAvailable;
+}
+
+bool CDataHandler::isNIVTRIGGERAvailable()
+{
+	if(m_bNIVTRIGGERLicenseAvailable || m_bNIVTRIGGERDemoLicAvailable)
+		return true;
+	else
+		return false;
 }
 //=============================================================================
  /**

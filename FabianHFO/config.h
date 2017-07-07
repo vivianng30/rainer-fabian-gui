@@ -1254,6 +1254,9 @@ enum eLanguage {
 #define DEMO_PRICO_MONTH_8				0x031F
 #define DEMO_PRICO_YEAR_16				0x0320
 
+#define DEMO_NIVTRIGGER_DAY_8			0x0322
+#define DEMO_NIVTRIGGER_MONTH_8			0x0323
+#define DEMO_NIVTRIGGER_YEAR_16			0x0324
 //letzte Adresse für Configuration 0x1EFB !!!!!!!!!!!!!!!!!!!!!!!
 //ACHTUNG !!!!! wenn hier neue Daten eingefügt werden -> DefaultFactorySettings beachten!!!
 

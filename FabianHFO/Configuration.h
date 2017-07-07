@@ -392,7 +392,6 @@ public:
 	bool isSPO2REGISTRYenabled();
 	bool isCO2REGISTRYenabled();
 	bool isRISETIMEREGISTRYenabled();
-	bool isNIVTRIGGERREGISTRYenabled();
 
 	BYTE getPRICO_SPO2lowRange();
 	void setPRICO_SPO2lowRange(BYTE SPO2low);
@@ -874,6 +873,11 @@ public:
 
 	int getConfigVersion();
 
+	void disableNIVTRIGGER();
+
+	COleDateTime GetNIVTRIGGERdemoTimestamp();
+	void SetNIVTRIGGERdemoTimestamp(COleDateTime dateTime);
+
 	COleDateTime GetFOTdemoTimestamp();
 	void SetFOTdemoTimestamp(COleDateTime dateTime);
 
@@ -1285,7 +1289,6 @@ private:
 	bool m_bCO2registry;
 	bool m_bBiasFlow;
 	bool m_bSpO2ConfigInProgress;
-	bool m_bNIVTRIGGERregistry;
 	BOOL m_bPPSVasDeltaPEEPValue;
 	
 

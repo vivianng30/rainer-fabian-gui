@@ -14,6 +14,8 @@
 	- FOT: scaling graph improved
 	- NIV leak compensation not possible to turn off
 	- NIV leak compensation in quick settings
+	- If the BREATHING FREQUENCY measurement is 0, then we display "- -" at the numeric field of Tau
+	- LICENSING: NIV trigger included as license
  @endverbatim
  *
  * @subsection ver50153 Version 5.0.1.53

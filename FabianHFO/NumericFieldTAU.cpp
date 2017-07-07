@@ -116,11 +116,13 @@ bool CNumericFieldTAU::drawData(bool bData, bool bFrames, bool bText, bool bLimi
 	//	rc.right = 175;
 	//}
 
-	/*if(iTau>=1000)
+	BYTE iBPM=getModel()->getDATAHANDLER()->getAVGMessureDataBPM();
+
+	if(iBPM==0)
 	{
-		wsprintf(psz,_T("%d"), iTau);
+		wsprintf(psz,_T("%s"), _T("--"));
 	}
-	else*/
+	else
 	{
 		wsprintf(psz,_T("%0.2f"), CTlsFloat::Round(((double)iTau), 2));
 	}
