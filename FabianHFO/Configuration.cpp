@@ -136,10 +136,10 @@ CConfiguration::CConfiguration()
 	m_bHFOFeatureAvailable=false;
 	m_bNMODEFeatureAvailable=false;*/
 	//m_iSPO2_SIQlimit=FACTORY_SPO2_SIQLIMIT;
-	m_bFastSATon=true;
+	m_bFastSATon=false;
 	m_eSPO2SensitivityMode=SPO2_SENSITIVITY_NORMAL;
-	m_iSPO2alarmdelay=SPO2_ALARMDELAY_0;
-	m_eSPO2averagingTime=SPO2_AVERAGING_8;
+	m_iSPO2alarmdelay=SPO2_ALARMDELAY_10;
+	m_eSPO2averagingTime=SPO2_AVERAGING_10;
 
 	m_eFlowSensorState=FLOWSENSOR_ON;
 	m_bServicePasswordDisabled=false;
@@ -543,10 +543,10 @@ void CConfiguration::Init()
 	m_bHFOFeatureAvailable=false;
 	m_bNMODEFeatureAvailable=false;*/
 	//m_iSPO2_SIQlimit=FACTORY_SPO2_SIQLIMIT;
-	m_bFastSATon=true;
+	m_bFastSATon=false;
 	m_eSPO2SensitivityMode=SPO2_SENSITIVITY_NORMAL;
-	m_iSPO2alarmdelay=SPO2_ALARMDELAY_0;
-	m_eSPO2averagingTime=SPO2_AVERAGING_8;
+	m_iSPO2alarmdelay=SPO2_ALARMDELAY_10;
+	m_eSPO2averagingTime=SPO2_AVERAGING_10;
 
 	m_eFlowSensorState=FLOWSENSOR_ON;
 	m_bServicePasswordDisabled=false;
@@ -2025,14 +2025,14 @@ void CConfiguration::LoadSettings()
 	m_iSPO2alarmdelay=getModel()->getI2C()->ReadConfigByte(SPO2ALARMDELAY_8);
 	if(m_iSPO2alarmdelay>15)
 	{
-		m_iSPO2alarmdelay=0;
+		m_iSPO2alarmdelay=SPO2_ALARMDELAY_10;
 		getModel()->getI2C()->WriteConfigByte(SPO2ALARMDELAY_8,(BYTE)m_iSPO2alarmdelay);
 	}
 
 	m_eSPO2averagingTime=(eSPO2averagingtime)getModel()->getI2C()->ReadConfigByte(SPO2AVERAGINGTIME_8);
 	if(m_eSPO2averagingTime<SPO2_AVERAGING_2_4 || m_eSPO2averagingTime>SPO2_AVERAGING_16)
 	{
-		m_eSPO2averagingTime=SPO2_AVERAGING_8;
+		m_eSPO2averagingTime=SPO2_AVERAGING_10;
 		getModel()->getI2C()->WriteConfigByte(SPO2AVERAGINGTIME_8, (BYTE)m_eSPO2averagingTime);
 	}
 
