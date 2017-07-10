@@ -94,7 +94,7 @@ private:
 	//SHORT m_iSpO2SIQlimit;
 	bool m_bFastSATon;
 	eSPO2sensitivitymode m_eSensitivityMode;
-	UINT m_iSPO2alarmdelay;
+	eSPO2alarmdelay m_eSPO2alarmdelay;
 	eSPO2averagingtime m_eSPO2averagingTime;
 
 	CBitmapSlider*	m_sliderFastSAT;

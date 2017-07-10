@@ -360,8 +360,8 @@ public:
 	eSPO2sensitivitymode getSensitivityMode();
 	void setSensitivityMode(eSPO2sensitivitymode mode);
 
-	UINT getSPO2alarmdelay();
-	void setSPO2alarmdelay(UINT delay);
+	eSPO2alarmdelay getSPO2alarmDelay();
+	void setSPO2alarmDelay(eSPO2alarmdelay delay);
 
 	eSPO2averagingtime getSPO2averagingTime();
 	void setSPO2averagingTime(eSPO2averagingtime avtime);
@@ -973,7 +973,7 @@ private:
 	UINT m_iTypeTrend3;
 	UINT m_iTrendSpan;
 	UINT m_iPatientAlarmDelay;
-	UINT m_iSPO2alarmdelay;
+	eSPO2alarmdelay m_eSPO2alarmdelay;
 	
 	WORD m_iFOTconv_AMPLITUDE;
 	BYTE m_iFOTconv_FREQ;

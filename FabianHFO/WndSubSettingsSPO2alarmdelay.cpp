@@ -13,7 +13,7 @@ IMPLEMENT_DYNAMIC(CWndSubSettingsSPO2alarmdelay, CWnd)
 CWndSubSettingsSPO2alarmdelay::CWndSubSettingsSPO2alarmdelay(UINT viewFlag):
 CWndSubSettings(viewFlag)
 {
-	m_iSPO2alarmdelay=SPO2_ALARMDELAY_0;
+	m_eSPO2alarmdelay=SPO2_ADELAY_10;
 }
 
 CWndSubSettingsSPO2alarmdelay::~CWndSubSettingsSPO2alarmdelay()
@@ -44,7 +44,7 @@ void CWndSubSettingsSPO2alarmdelay::Initialize()
 {
 	CClientDC dc(this);
 
-	m_iSPO2alarmdelay=getModel()->getCONFIG()->getSPO2alarmdelay();
+	m_eSPO2alarmdelay=getModel()->getCONFIG()->getSPO2alarmDelay();
 
 	//m_szSetting = getModel()->GetLanguageString(IDS_TXT_FLUSHTIME);
 	m_szSetting = _T("Alarm delay:");
@@ -68,24 +68,24 @@ void CWndSubSettingsSPO2alarmdelay::Initialize()
 	m_plBtn.AddTail(m_pbtn3);
 	m_plBtn.AddTail(m_pbtn4);
 
-	switch(m_iSPO2alarmdelay)
+	switch(m_eSPO2alarmdelay)
 	{
-	case SPO2_ALARMDELAY_0:
+	case SPO2_ADELAY_0:
 		{
 			m_pbtn1->DrawOK(true);
 		}
 		break;
-	case SPO2_ALARMDELAY_5:
+	case SPO2_ADELAY_5:
 		{
 			m_pbtn2->DrawOK(true);
 		}
 		break;
-	case SPO2_ALARMDELAY_10:
+	case SPO2_ADELAY_10:
 		{
 			m_pbtn3->DrawOK(true);
 		}
 		break;
-	case SPO2_ALARMDELAY_15:
+	case SPO2_ADELAY_15:
 		{
 			m_pbtn4->DrawOK(true);
 		}
@@ -259,28 +259,28 @@ void CWndSubSettingsSPO2alarmdelay::SetAlarmDelay(UINT btn)
 	{
 	case IDC_BTN_SETUP_1:
 		{
-			m_iSPO2alarmdelay=SPO2_ALARMDELAY_0;
+			m_eSPO2alarmdelay=SPO2_ADELAY_0;
 		}
 		break;
 	case IDC_BTN_SETUP_2:
 		{
-			m_iSPO2alarmdelay=SPO2_ALARMDELAY_5;
+			m_eSPO2alarmdelay=SPO2_ADELAY_5;
 		}
 		break;
 	case IDC_BTN_SETUP_3:
 		{
-			m_iSPO2alarmdelay=SPO2_ALARMDELAY_10;
+			m_eSPO2alarmdelay=SPO2_ADELAY_10;
 		}
 		break;
 	case IDC_BTN_SETUP_4:
 		{
-			m_iSPO2alarmdelay=SPO2_ALARMDELAY_15;
+			m_eSPO2alarmdelay=SPO2_ADELAY_15;
 		}
 		break;
 	}
 
 	if(getModel()->getSPO2()!=NULL)
-		getModel()->getSPO2()->set_SPO2alarmdelay(m_iSPO2alarmdelay);
+		getModel()->getSPO2()->set_SPO2alarmDelay(m_eSPO2alarmdelay);
 }
 
 // **************************************************************************

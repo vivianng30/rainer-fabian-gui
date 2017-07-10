@@ -441,9 +441,9 @@ void CAlarmMgmtHandler::init()
 {
 	initAlarmList();
 
-	int iDelayTime=getModel()->getCONFIG()->getSPO2alarmdelay();
-	if(iDelayTime!=0)
-		setSPO2alarmDelay(iDelayTime);
+	eSPO2alarmdelay iDelayTime=getModel()->getCONFIG()->getSPO2alarmDelay();
+	
+	setSPO2alarmDelay(iDelayTime);
 
 	if(ALARMLIMITS==NULL)
 		ALARMLIMITS=new CAlarmConditionHandler();
@@ -644,8 +644,37 @@ void CAlarmMgmtHandler::deinit()
  *
  * \param iDelayTime The delay time.
  *===============================================================================================**/
-void CAlarmMgmtHandler::setSPO2alarmDelay(UINT iDelayTime)
+void CAlarmMgmtHandler::setSPO2alarmDelay(eSPO2alarmdelay delay)
 {
+	UINT iDelayTime=0;
+	switch(delay)
+	{
+	case SPO2_ADELAY_0:
+		{
+			iDelayTime=0;
+		}
+		break;
+	case SPO2_ADELAY_5:
+		{
+			iDelayTime=5;
+		}
+		break;
+	case SPO2_ADELAY_10:
+		{
+			iDelayTime=10;
+		}
+		break;
+	case SPO2_ADELAY_15:
+		{
+			iDelayTime=15;
+		}
+		break;
+	default:
+		{
+			iDelayTime=10;
+		}
+		break;
+	}
 	ALARM_PatAl_SPO2max->setAlarmDelayTimeSec(iDelayTime);
 	ALARM_PatAl_SPO2min->setAlarmDelayTimeSec(iDelayTime);
 	ALARM_PatAl_PulseRatemax->setAlarmDelayTimeSec(iDelayTime);
@@ -9218,7 +9247,36 @@ void CAlarmMgmtHandler::checkSpO2Limits()
 		iSPO2=CTlsFloat::Round(((double)getModel()->getDATAHANDLER()->getAVGMessureDataSPO2())/10, 0)*10;
 		iPulseRate=getModel()->getDATAHANDLER()->getAVGMessureDataSpO2PulseRate();
 		iPerfusionIndex=getModel()->getDATAHANDLER()->getAVGMessureDataSpO2PerfusionIndex();
-		int iDelayTime=getModel()->getCONFIG()->getSPO2alarmdelay();
+		eSPO2alarmdelay eDelayTime=getModel()->getCONFIG()->getSPO2alarmDelay();
+		UINT iDelayTime=0;
+		switch(eDelayTime)
+		{
+		case SPO2_ADELAY_0:
+			{
+				iDelayTime=0;
+			}
+			break;
+		case SPO2_ADELAY_5:
+			{
+				iDelayTime=5;
+			}
+			break;
+		case SPO2_ADELAY_10:
+			{
+				iDelayTime=10;
+			}
+			break;
+		case SPO2_ADELAY_15:
+			{
+				iDelayTime=15;
+			}
+			break;
+		default:
+			{
+				iDelayTime=10;
+			}
+			break;
+		}
 
 		if(stateSPO2max==AL_ON || stateSPO2max==AL_AUTO)
 		{

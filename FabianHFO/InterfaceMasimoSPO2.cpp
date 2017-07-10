@@ -36,7 +36,7 @@ CInterfaceMasimoSPO2::CInterfaceMasimoSPO2(void)
 	
 	m_bFastSATon=false;
 	m_eSPO2SensitivityMode=SPO2_SENSITIVITY_NORMAL;
-	m_iSPO2alarmdelay=0;
+	m_eSPO2alarmdelay=SPO2_ADELAY_10;
 	m_eSPO2averagingTime=SPO2_AVERAGING_8;
 
 	m_cfgBoardMode=0;						
@@ -88,7 +88,7 @@ int CInterfaceMasimoSPO2::Init(BYTE com)
 
 	m_bFastSATon=getModel()->getCONFIG()->isFastSATon();
 	m_eSPO2SensitivityMode=getModel()->getCONFIG()->getSensitivityMode();
-	m_iSPO2alarmdelay=getModel()->getCONFIG()->getSPO2alarmdelay();
+	m_eSPO2alarmdelay=getModel()->getCONFIG()->getSPO2alarmDelay();
 	m_eSPO2averagingTime=getModel()->getCONFIG()->getSPO2averagingTime();
 
 	m_cfgSpO2AveragingTime=(BYTE)m_eSPO2averagingTime;
@@ -284,9 +284,6 @@ void CInterfaceMasimoSPO2::InitializeSequenz()
 		}
 		break;
 	}
-
-	//m_iSPO2alarmdelay=SPO2_ALARMDELAY_0;
-	//m_eSPO2averagingTime=SPO2_AVERAGING_8;
 
 	setWaveformMode(SPO2_MASIMO_HOSTCMD_WAVEFORMMODE_RESPSIG_FILTEREDOUT);
 
@@ -1229,11 +1226,11 @@ void CInterfaceMasimoSPO2::set_SPO2averagingTime(eSPO2averagingtime avtime)
 	getModel()->getCONFIG()->setSPO2averagingTime(m_eSPO2averagingTime);
 }
 
-void CInterfaceMasimoSPO2::set_SPO2alarmdelay(UINT delay)
+void CInterfaceMasimoSPO2::set_SPO2alarmDelay(eSPO2alarmdelay delay)
 {
-	m_iSPO2alarmdelay=delay;
+	m_eSPO2alarmdelay=delay;
 
-	getModel()->getCONFIG()->setSPO2alarmdelay(m_iSPO2alarmdelay);
+	getModel()->getCONFIG()->setSPO2alarmDelay(m_eSPO2alarmdelay);
 }
 
 WORD CInterfaceMasimoSPO2::get_ProductID()

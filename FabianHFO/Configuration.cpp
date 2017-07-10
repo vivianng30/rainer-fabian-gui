@@ -138,7 +138,7 @@ CConfiguration::CConfiguration()
 	//m_iSPO2_SIQlimit=FACTORY_SPO2_SIQLIMIT;
 	m_bFastSATon=false;
 	m_eSPO2SensitivityMode=SPO2_SENSITIVITY_NORMAL;
-	m_iSPO2alarmdelay=SPO2_ALARMDELAY_10;
+	m_eSPO2alarmdelay=SPO2_ADELAY_10;
 	m_eSPO2averagingTime=SPO2_AVERAGING_10;
 
 	m_eFlowSensorState=FLOWSENSOR_ON;
@@ -545,7 +545,7 @@ void CConfiguration::Init()
 	//m_iSPO2_SIQlimit=FACTORY_SPO2_SIQLIMIT;
 	m_bFastSATon=false;
 	m_eSPO2SensitivityMode=SPO2_SENSITIVITY_NORMAL;
-	m_iSPO2alarmdelay=SPO2_ALARMDELAY_10;
+	m_eSPO2alarmdelay=SPO2_ADELAY_10;
 	m_eSPO2averagingTime=SPO2_AVERAGING_10;
 
 	m_eFlowSensorState=FLOWSENSOR_ON;
@@ -2022,11 +2022,11 @@ void CConfiguration::LoadSettings()
 		getModel()->getI2C()->WriteConfigByte(SPO2SENSITIVITY_8, (BYTE)m_eSPO2SensitivityMode);
 	}
 
-	m_iSPO2alarmdelay=getModel()->getI2C()->ReadConfigByte(SPO2ALARMDELAY_8);
-	if(m_iSPO2alarmdelay>15)
+	m_eSPO2alarmdelay=(eSPO2alarmdelay)getModel()->getI2C()->ReadConfigByte(SPO2ALARMDELAY_8);
+	if(m_eSPO2alarmdelay<SPO2_ADELAY_0 || m_eSPO2alarmdelay>SPO2_ADELAY_15)
 	{
-		m_iSPO2alarmdelay=SPO2_ALARMDELAY_10;
-		getModel()->getI2C()->WriteConfigByte(SPO2ALARMDELAY_8,(BYTE)m_iSPO2alarmdelay);
+		m_eSPO2alarmdelay=SPO2_ADELAY_10;
+		getModel()->getI2C()->WriteConfigByte(SPO2ALARMDELAY_8,(BYTE)m_eSPO2alarmdelay);
 	}
 
 	m_eSPO2averagingTime=(eSPO2averagingtime)getModel()->getI2C()->ReadConfigByte(SPO2AVERAGINGTIME_8);
@@ -4628,14 +4628,14 @@ void CConfiguration::setFastSATon(bool bFastSATon)
 // **************************************************************************
 // 
 // **************************************************************************
-UINT CConfiguration::getSPO2alarmdelay()
+eSPO2alarmdelay CConfiguration::getSPO2alarmDelay()
 {
-	return m_iSPO2alarmdelay;
+	return m_eSPO2alarmdelay;
 }
-void CConfiguration::setSPO2alarmdelay(UINT delay)
+void CConfiguration::setSPO2alarmDelay(eSPO2alarmdelay delay)
 {
-	m_iSPO2alarmdelay=delay;
-	getModel()->getI2C()->WriteConfigByte(SPO2ALARMDELAY_8,(BYTE)m_iSPO2alarmdelay);
+	m_eSPO2alarmdelay=delay;
+	getModel()->getI2C()->WriteConfigByte(SPO2ALARMDELAY_8,(BYTE)m_eSPO2alarmdelay);
 
 	getModel()->getALARMHANDLER()->setSPO2alarmDelay(delay);
 	/*if(getModel()->getAcuLink()!=NULL)
@@ -9701,7 +9701,7 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		ar<<m_iAlarmlimitStateSPO2_PIminHF;
 		ar<<m_bFastSATon;
 		ar<<(int)m_eSPO2SensitivityMode;
-		ar<<m_iSPO2alarmdelay;
+		ar<<(int)m_eSPO2alarmdelay;
 		ar<<(int)m_eSPO2averagingTime;
 
 		//##################### m_iConfigVersion 2009
@@ -10185,8 +10185,10 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		m_eSPO2SensitivityMode=(eSPO2sensitivitymode)iSPO2SensitivityMode;
 		getModel()->getI2C()->WriteConfigByte(SPO2SENSITIVITY_8, (BYTE)m_eSPO2SensitivityMode);
 
-		ar>>m_iSPO2alarmdelay;
-		getModel()->getI2C()->WriteConfigByte(SPO2ALARMDELAY_8,(BYTE)m_iSPO2alarmdelay);
+		int iSPO2delay=0;
+		ar>>iSPO2delay;
+		m_eSPO2alarmdelay=(eSPO2alarmdelay)iSPO2delay;
+		getModel()->getI2C()->WriteConfigByte(SPO2ALARMDELAY_8,(BYTE)m_eSPO2alarmdelay);
 
 		int iSPO2averagingTime=0;
 		ar>>iSPO2averagingTime;

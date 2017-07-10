@@ -18,7 +18,7 @@ protected:
 	void SetAlarmDelay(UINT btn);
 
 protected:
-	UINT m_iSPO2alarmdelay;
+	eSPO2alarmdelay m_eSPO2alarmdelay;
 
 protected:
 	DECLARE_MESSAGE_MAP()

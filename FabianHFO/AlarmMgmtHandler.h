@@ -400,7 +400,7 @@ public:
 	CTlsLoglist* getAlarmLog();
 	void setLogTxt(CStringW sz);
 
-	void setSPO2alarmDelay(UINT iDelayTime);
+	void setSPO2alarmDelay(eSPO2alarmdelay delay);
 
 	bool isSafeTickCountDelayExpired(DWORD oldTickCount, UINT delay=0);//used for (dwLastTickCount+DELAY<getTickCount64())
 

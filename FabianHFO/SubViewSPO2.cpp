@@ -83,7 +83,7 @@ CSubViewSPO2::CSubViewSPO2()
 	//m_iSpO2SIQlimit=30;
 	m_bFastSATon=false;
 	m_eSensitivityMode=SPO2_SENSITIVITY_NORMAL;
-	m_iSPO2alarmdelay=SPO2_ALARMDELAY_0;
+	m_eSPO2alarmdelay=SPO2_ADELAY_10;
 	m_eSPO2averagingTime=SPO2_AVERAGING_8;
 
 	m_iEXCEPTIONS2=0;
@@ -98,7 +98,7 @@ CSubViewSPO2::CSubViewSPO2()
 		//m_iSpO2SIQlimit = getModel()->getCONFIG()->getSpO2SIQlimit();
 		m_bFastSATon=getModel()->getCONFIG()->isFastSATon();
 		m_eSensitivityMode=getModel()->getCONFIG()->getSensitivityMode();
-		m_iSPO2alarmdelay=getModel()->getCONFIG()->getSPO2alarmdelay();
+		m_eSPO2alarmdelay=getModel()->getCONFIG()->getSPO2alarmDelay();
 		m_eSPO2averagingTime=getModel()->getCONFIG()->getSPO2averagingTime();
 		m_iEXCEPTIONS2=getModel()->getSPO2()->get_EXCEPTION2();
 
@@ -411,24 +411,24 @@ BOOL CSubViewSPO2::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateCont
 			m_pcAalarmdelay->ShowWindow(SW_SHOW);
 			m_plBtn.AddTail(m_pcAalarmdelay);
 
-			switch(m_iSPO2alarmdelay)
+			switch(m_eSPO2alarmdelay)
 			{
-			case SPO2_ALARMDELAY_0:
+			case SPO2_ADELAY_0:
 				{
 					sz=_T("0 ");
 				}
 				break;
-			case SPO2_ALARMDELAY_5:
+			case SPO2_ADELAY_5:
 				{
 					sz=_T("5 ");
 				}
 				break;
-			case SPO2_ALARMDELAY_10:
+			case SPO2_ADELAY_10:
 				{
 					sz=_T("10 ");
 				}
 				break;
-			case SPO2_ALARMDELAY_15:
+			case SPO2_ADELAY_15:
 				{
 					sz=_T("15 ");
 				}

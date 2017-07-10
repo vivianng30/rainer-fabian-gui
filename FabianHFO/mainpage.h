@@ -7,6 +7,17 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50155 Version 5.0.1.55
+ * @date 2017-07-10
+ * @verbatim
+	- SpO2: defaults changed to
+		Sensitivity: normal
+		Fast SAT: off
+		Alarm delay: 10 sec
+		SpO2 averaging time: 10 sec
+	- implementation Spo" alarm delay changed due to new defaults
+ @endverbatim
+ *
  * @subsection ver50154 Version 5.0.1.54
  * @date 2017-07-06
  * @verbatim

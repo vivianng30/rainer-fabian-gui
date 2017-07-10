@@ -150,7 +150,7 @@ void CInterfaceSPO2::set_SPO2averagingTime(eSPO2averagingtime avtime)
 {
 
 }
-void CInterfaceSPO2::set_SPO2alarmdelay(UINT delay)
+void CInterfaceSPO2::set_SPO2alarmDelay(eSPO2alarmdelay delay)
 {
 
 }

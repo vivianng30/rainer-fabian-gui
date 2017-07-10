@@ -3199,20 +3199,20 @@ enum eCO2unit {
 
 //SPO2 sensitivity mode
 enum eSPO2sensitivitymode {
-	SPO2_SENSITIVITY_NORMAL,	// 0, 
-	SPO2_SENSITIVITY_MAXIMUM,	// 1,
-	SPO2_SENSITIVITY_APOD		// 2
+	SPO2_SENSITIVITY_NORMAL		=10,	// 0, 
+	SPO2_SENSITIVITY_MAXIMUM	=11,	// 1,
+	SPO2_SENSITIVITY_APOD		=12// 2
 };
 
 //SPO2 averaging time
 enum eSPO2averagingtime {
-	SPO2_AVERAGING_2_4,	// 0, 
-	SPO2_AVERAGING_4_6,	// 1,
-	SPO2_AVERAGING_8,	// 2
-	SPO2_AVERAGING_10,	// 3
-	SPO2_AVERAGING_12,	// 4
-	SPO2_AVERAGING_14,	// 5
-	SPO2_AVERAGING_16	// 6
+	SPO2_AVERAGING_2_4		=10,	// 0, 
+	SPO2_AVERAGING_4_6		=11,	// 1,
+	SPO2_AVERAGING_8		=12,	// 2
+	SPO2_AVERAGING_10		=13,	// 3
+	SPO2_AVERAGING_12		=14,	// 4
+	SPO2_AVERAGING_14		=15,	// 5
+	SPO2_AVERAGING_16		=16,	// 6
 };
 
 //SPO2 alarm delay
@@ -3223,10 +3223,17 @@ enum eSPO2averagingtime {
 //	SPO2_ALARMDELAY_15	// 4
 //};
 
-#define	SPO2_ALARMDELAY_0	0
-#define	SPO2_ALARMDELAY_5	5
-#define	SPO2_ALARMDELAY_10	10
-#define	SPO2_ALARMDELAY_15	15
+enum eSPO2alarmdelay {
+	SPO2_ADELAY_0		=10,	// 0, 
+	SPO2_ADELAY_5		=11,	// 1,
+	SPO2_ADELAY_10		=12,	// 2
+	SPO2_ADELAY_15		=13
+};
+
+//#define	SPO2_ALARMDELAY_0	0
+//#define	SPO2_ALARMDELAY_5	5
+//#define	SPO2_ALARMDELAY_10	10
+//#define	SPO2_ALARMDELAY_15	15
 
 //Mode of I:E-Time
 //enum eETCO2avg {

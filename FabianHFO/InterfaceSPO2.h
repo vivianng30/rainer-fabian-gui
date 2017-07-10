@@ -42,7 +42,7 @@ public:
 	virtual void set_FastSATon(bool bFastSATon);
 	virtual void set_SensitivityMode(eSPO2sensitivitymode mode);
 	virtual void set_SPO2averagingTime(eSPO2averagingtime avtime);
-	virtual void set_SPO2alarmdelay(UINT delay);
+	virtual void set_SPO2alarmDelay(eSPO2alarmdelay delay);
 
 	
 	void send(LPSPO2MSG msg);

@@ -39,7 +39,7 @@ public:
 	void set_FastSATon(bool bFastSATon);
 	void set_SensitivityMode(eSPO2sensitivitymode mode);
 	void set_SPO2averagingTime(eSPO2averagingtime avtime);
-	void set_SPO2alarmdelay(UINT delay);
+	void set_SPO2alarmDelay(eSPO2alarmdelay delay);
 
 	WORD get_ProductID();
 	WORD get_VersionMCU();
@@ -118,6 +118,6 @@ protected:
 
 	bool m_bFastSATon;
 	eSPO2sensitivitymode m_eSPO2SensitivityMode;
-	UINT m_iSPO2alarmdelay;
+	eSPO2alarmdelay m_eSPO2alarmdelay;
 	eSPO2averagingtime m_eSPO2averagingTime;
 };
