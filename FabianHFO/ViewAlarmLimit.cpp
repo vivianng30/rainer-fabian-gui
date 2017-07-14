@@ -5307,8 +5307,6 @@ void CViewAlarmLimit::RefreshAlarmStates()
 		m_pcAlarmLimit_SPO2_SIQ->setAlarm(getModel()->getALARMHANDLER()->ALARM_PatAl_SPO2_SIQmin->getAlarmState(), true);
 	}
 
-	
-	
 	if(bPatientAlarmLimit)
 	{
 		bool bViewOwnsFocus=true;
