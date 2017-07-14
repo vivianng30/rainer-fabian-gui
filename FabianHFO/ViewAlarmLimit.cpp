@@ -5513,7 +5513,7 @@ void CViewAlarmLimit::RefreshAlarmStates()
 					if(!IsButtonDepressed() && !m_bAlarmSet)
 					{
 						if(bViewOwnsFocus)
-							m_pcAlarmLimit_DCO2lo->SetFocus();
+							m_pcAlarmLimit_MAPmin->SetFocus();
 						m_iCurPara=IDC_BTN_ALARM_MAP_LO;
 					}
 				}
