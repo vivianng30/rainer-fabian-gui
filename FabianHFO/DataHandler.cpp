@@ -3684,6 +3684,8 @@ void CDataHandler::disableNIVTRIGGERLicense()
 	delDemoLicense(MOD_NIVTRIGGER,false);
 
 	getModel()->getCONFIG()->disableNIVTRIGGER();
+
+	
 }
 
 bool CDataHandler::isNIVTRIGGERDemoLicAvailable()
@@ -4464,6 +4466,12 @@ void CDataHandler::loadConfig()
 					
 					theApp.getLog()->WriteLine(_T("#HFO:0061"));
 				}
+				else if(GetFlowSensorState()!=FLOWSENSOR_OFF && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF)
+				{
+					EnterCriticalSection(&csFlowsensorState);
+					m_eFlowSensorState=FLOWSENSOR_OFF;
+					LeaveCriticalSection(&csFlowsensorState);
+				}
 				/*else if(GetFlowSensorState()==FLOWSENSOR_OFF && GetPrevFlowSensorState()==FLOWSENSOR_ON)
 				{
 					EnterCriticalSection(&csFlowsensorState);
@@ -4499,6 +4507,14 @@ void CDataHandler::loadConfig()
 					LeaveCriticalSection(&csFlowsensorState);
 
 					theApp.getLog()->WriteLine(_T("#HFO:0063"));
+				}
+				else if(GetFlowSensorState()!=FLOWSENSOR_OFF && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()==MAXRANGE_TRIGGER_NMODE_OFF)
+				{
+					EnterCriticalSection(&csFlowsensorState);
+					m_eFlowSensorState=FLOWSENSOR_OFF;
+					LeaveCriticalSection(&csFlowsensorState);
+
+					getModel()->getCONFIG()->SetFlowSensorState(FLOWSENSOR_OFF);
 				}
 				//else if(GetFlowSensorState()==FLOWSENSOR_OFF && GetPrevFlowSensorState()==FLOWSENSOR_ON)
 				//{

@@ -1540,6 +1540,8 @@ void CWndServiceLicensing::OnBnClickedDelNIVTRIGGER()
 		getModel()->getDATAHANDLER()->delDemoLicense(MOD_NIVTRIGGER,false);
 
 		getModel()->getDATAHANDLER()->WriteLicenseFile();
+
+		getModel()->getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_OFF);
 	}
 
 	UpdateWindow();

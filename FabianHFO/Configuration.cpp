@@ -11092,7 +11092,7 @@ void CConfiguration::disableNIVTRIGGER()
 {
 	SetParaDataTriggerNMODE(FACTORY_NMODE_TRIGGER);
 
-	getModel()->getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_OFF);
+	//getModel()->getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_OFF);
 
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
