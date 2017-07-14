@@ -353,14 +353,14 @@ void CWndMenuAlarmLimits::Init()
 
 	bool bNumericChanged=false;
 	if(		eCurALimitNumeric==ALIMITNUM_ETCO2
-		&&	getModel()->getCONFIG()->GetCO2module()==CO2MODULE_NONE)
+		&&	getModel()->getCONFIG()->getCO2module()==CO2MODULE_NONE)
 	{
 		eCurALimitNumeric=ALIMITNUM_VENTILATION;
 		getModel()->getCONFIG()->setCurALimitNumeric(eCurALimitNumeric);
 		bNumericChanged=true;
 	}
 	else if(	eCurALimitNumeric==ALIMITNUM_SPO2
-			&&	getModel()->getCONFIG()->GetSPO2module()==SPO2MODULE_NONE)
+			&&	getModel()->getCONFIG()->getSPO2module()==SPO2MODULE_NONE)
 	{
 		eCurALimitNumeric=ALIMITNUM_VENTILATION;
 		getModel()->getCONFIG()->setCurALimitNumeric(eCurALimitNumeric);
@@ -370,7 +370,7 @@ void CWndMenuAlarmLimits::Init()
 	{
 	case ALIMITNUM_ETCO2:
 		{
-			if(getModel()->getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+			if(getModel()->getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 			{
 				CString szEmpty=_T("");
 				m_pcMenuNum->SetText(getModel()->GetLanguageString(IDS_MENU_ALIMIT_SPO2),szEmpty);
@@ -393,13 +393,13 @@ void CWndMenuAlarmLimits::Init()
 		break;
 	default:
 		{
-			if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+			if(getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE)
 			{	
 				CString szEmpty=_T("");
 				m_pcMenuNum->SetText(getModel()->GetLanguageString(IDS_MENU_ALIMIT_CO2),szEmpty);
 				//m_pcMenuNum->SetText(_T("show etCO2"),_T(""));
 			}
-			else if(getModel()->getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+			else if(getModel()->getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 			{
 				CString szEmpty=_T("");
 				m_pcMenuNum->SetText(getModel()->GetLanguageString(IDS_MENU_ALIMIT_SPO2),szEmpty);
@@ -489,8 +489,8 @@ void CWndMenuAlarmLimits::ShowMenuBtn()
 	if(m_pcMenu5)
 		m_pcMenu5->ShowWindow(SW_SHOW);
 
-	if(		getModel()->getCONFIG()->GetCO2module()==CO2MODULE_NONE
-		&&	getModel()->getCONFIG()->GetSPO2module()==SPO2MODULE_NONE)
+	if(		getModel()->getCONFIG()->getCO2module()==CO2MODULE_NONE
+		&&	getModel()->getCONFIG()->getSPO2module()==SPO2MODULE_NONE)
 	{
 		if(m_pcMenuNum)
 			m_pcMenuNum->ShowWindow(SW_HIDE);
@@ -634,13 +634,13 @@ void CWndMenuAlarmLimits::refreshCurALimitNumeric()
 	eALimitNumeric eCurALimitNumeric=getModel()->getCONFIG()->getCurALimitNumeric();
 
 	if(		eCurALimitNumeric==ALIMITNUM_ETCO2
-		&&	getModel()->getCONFIG()->GetCO2module()==CO2MODULE_NONE)
+		&&	getModel()->getCONFIG()->getCO2module()==CO2MODULE_NONE)
 	{
 		eCurALimitNumeric=ALIMITNUM_VENTILATION;
 		getModel()->getCONFIG()->setCurALimitNumeric(eCurALimitNumeric);
 	}
 	else if(	eCurALimitNumeric==ALIMITNUM_SPO2
-		&&	getModel()->getCONFIG()->GetSPO2module()==SPO2MODULE_NONE)
+		&&	getModel()->getCONFIG()->getSPO2module()==SPO2MODULE_NONE)
 	{
 		eCurALimitNumeric=ALIMITNUM_VENTILATION;
 		getModel()->getCONFIG()->setCurALimitNumeric(eCurALimitNumeric);
@@ -649,7 +649,7 @@ void CWndMenuAlarmLimits::refreshCurALimitNumeric()
 	{
 	case ALIMITNUM_ETCO2:
 		{
-			if(getModel()->getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+			if(getModel()->getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 			{
 				CString szEmpty=_T("");
 				m_pcMenuNum->SetText(getModel()->GetLanguageString(IDS_MENU_ALIMIT_SPO2),szEmpty);
@@ -672,13 +672,13 @@ void CWndMenuAlarmLimits::refreshCurALimitNumeric()
 		break;
 	default:
 		{
-			if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+			if(getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE)
 			{
 				CString szEmpty=_T("");
 				m_pcMenuNum->SetText(getModel()->GetLanguageString(IDS_MENU_ALIMIT_CO2),szEmpty);
 				//m_pcMenuNum->RefreshText(_T("show etCO2"),_T(""));
 			}
-			else if(getModel()->getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+			else if(getModel()->getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 			{
 				CString szEmpty=_T("");
 				m_pcMenuNum->SetText(getModel()->GetLanguageString(IDS_MENU_ALIMIT_SPO2),szEmpty);
@@ -749,7 +749,7 @@ void CWndMenuAlarmLimits::OnBnALimitNumeric()
 	{
 	case ALIMITNUM_ETCO2:
 		{
-			if(getModel()->getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+			if(getModel()->getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 			{
 				eCurALimitNumeric=ALIMITNUM_SPO2;
 				CString szEmpty=_T("");
@@ -767,7 +767,7 @@ void CWndMenuAlarmLimits::OnBnALimitNumeric()
 		break;
 	case ALIMITNUM_SPO2:
 		{
-			if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+			if(getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE)
 			{
 				eCurALimitNumeric=ALIMITNUM_VENTILATION;
 				CString szEmpty=_T("");
@@ -785,9 +785,9 @@ void CWndMenuAlarmLimits::OnBnALimitNumeric()
 		break;
 	default:
 		{
-			if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+			if(getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE)
 			{
-				if(getModel()->getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+				if(getModel()->getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 				{
 					CString szEmpty=_T("");
 					m_pcMenuNum->SetText(getModel()->GetLanguageString(IDS_MENU_ALIMIT_SPO2),szEmpty);
@@ -802,7 +802,7 @@ void CWndMenuAlarmLimits::OnBnALimitNumeric()
 				
 				eCurALimitNumeric=ALIMITNUM_ETCO2;
 			}
-			else if(getModel()->getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+			else if(getModel()->getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 			{
 				eCurALimitNumeric=ALIMITNUM_SPO2;
 				CString szEmpty=_T("");

@@ -2665,7 +2665,7 @@ void CInterfaceTerminal::sendMessurementData()
 	bool bCO2module=false;
 	bool bSPO2module=false;
 	
-	if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+	if(getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE)
 	{
 		bCO2module=true;
 	}
@@ -2675,7 +2675,7 @@ void CInterfaceTerminal::sendMessurementData()
 		bCO2value=true;
 	}
 
-	if(getModel()->getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+	if(getModel()->getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 	{
 		bSPO2module=true;
 	}

@@ -3180,7 +3180,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				if(getModel()->isSPO2running() && false==getModel()->getCONFIG()->isSpO2ConfigInProgress())
 				{
-					getModel()->getCONFIG()->SetSPO2module(getModel()->getCONFIG()->GetSPO2module(),true);
+					getModel()->getCONFIG()->setSPO2module(getModel()->getCONFIG()->getSPO2module(),true);
 				}
 				
 				return 1;
@@ -3588,7 +3588,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				getModel()->getALARMHANDLER()->setAlarm(AL_PatAl_Apnoe);
 
-				if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE && getModel()->getETCO2()!=NULL)
+				if(getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE && getModel()->getETCO2()!=NULL)
 				{
 					getModel()->getETCO2()->set_restartBreathAlgorithm();
 				}
@@ -4101,6 +4101,12 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 				if(getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()==AL_AUTO)
 					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitApnoe();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_MAPmaxLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitMAPmax();
+
+				if(getModel()->getALARMHANDLER()->getAlimitState_MAPminLimit()==AL_AUTO)
+					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitMAPmin();
 
 				if(getModel()->getALARMHANDLER()->getAlimitState_DCO2maxLimit()==AL_AUTO)
 					getModel()->getDATAHANDLER()->calculateAutoAlarmlimitDCO2max();
@@ -4655,6 +4661,12 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 					if(getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()==AL_CALC)
 						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitApnoe();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_MAPmaxLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitMAPmax();
+
+					if(getModel()->getALARMHANDLER()->getAlimitState_MAPminLimit()==AL_CALC)
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitMAPmin();
 
 					if(getModel()->getALARMHANDLER()->getAlimitState_DCO2maxLimit()==AL_CALC)
 						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitDCO2max();
@@ -7382,6 +7394,48 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 			}
 		}
 		break;
+	case AP_MAPMAX:
+		{
+			if(		getModel()->getALARMHANDLER()->getAlimitState_MAPmaxLimit()!=AL_OFF
+				&&	getModel()->getVMODEHANDLER()->activeModeIsHFO())
+			{
+				if(getModel()->getALARMHANDLER()->getAlimitState_MAPmaxLimit()!=AL_OFF)
+				{
+					{
+						getModel()->getALARMHANDLER()->setAlimitState_MAPmaxLimit(AL_AUTO);
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitMAPmax();
+
+						if(getModel()->getALARMHANDLER()->ALARM_PatAl_MAPmax->getAlarmState()!=AS_NONE)
+						{
+							getModel()->getALARMHANDLER()->deleteAlarm(AL_PatAl_MAPmax);
+						}
+						PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
+					}
+				}
+			}
+		}
+		break;
+	case AP_MAPMIN:
+		{
+			if(getModel()->getALARMHANDLER()->getAlimitState_MAPminLimit()!=AL_OFF
+				&&	getModel()->getVMODEHANDLER()->activeModeIsHFO())
+			{
+				if(getModel()->getALARMHANDLER()->getAlimitState_MAPminLimit()!=AL_OFF)
+				{
+					{
+						getModel()->getALARMHANDLER()->setAlimitState_MAPminLimit(AL_AUTO);
+						getModel()->getDATAHANDLER()->calculateAutoAlarmlimitMAPmin();
+
+						if(getModel()->getALARMHANDLER()->ALARM_PatAl_MAPmin->getAlarmState()!=AS_NONE)
+						{
+							getModel()->getALARMHANDLER()->deleteAlarm(AL_PatAl_MAPmin);
+						}
+						PostMessage(WM_DATA_ALARMLIMITS_CHANGED);
+					}
+				}
+			}
+		}
+		break;
 	case AP_DCO2MAX:
 		{
 			if(		getModel()->getALARMHANDLER()->getAlimitState_DCO2maxLimit()!=AL_OFF
@@ -7435,7 +7489,7 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 	case AP_ETCO2MAX:
 		{
 			if(		getModel()->getALARMHANDLER()->getAlimitState_ETCO2maxLimit()!=AL_OFF
-				&&	getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+				&&	getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE)
 			{
 				getModel()->getALARMHANDLER()->setAlimitState_ETCO2maxLimit(AL_CALC);
 				KillTimer(AUTOLIMITTIMER);
@@ -7460,7 +7514,7 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 	case AP_ETCO2MIN:
 		{
 			if(getModel()->getALARMHANDLER()->getAlimitState_ETCO2minLimit()!=AL_OFF
-				&&	getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+				&&	getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE)
 			{
 				getModel()->getALARMHANDLER()->setAlimitState_ETCO2minLimit(AL_CALC);
 				KillTimer(AUTOLIMITTIMER);
@@ -7485,7 +7539,7 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 	case AP_FICO2MAX:
 		{
 			if(		getModel()->getALARMHANDLER()->getAlimitState_FICO2maxLimit()!=AL_OFF
-				&&	getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+				&&	getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE)
 			{
 				getModel()->getALARMHANDLER()->setAlimitState_FICO2maxLimit(AL_CALC);
 				KillTimer(AUTOLIMITTIMER);
@@ -7510,7 +7564,7 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 	case AP_FICO2MIN:
 		{
 			if(getModel()->getALARMHANDLER()->getAlimitState_FICO2minLimit()!=AL_OFF
-				&&	getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+				&&	getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE)
 			{
 				getModel()->getALARMHANDLER()->setAlimitState_FICO2minLimit(AL_CALC);
 				KillTimer(AUTOLIMITTIMER);
@@ -7535,7 +7589,7 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 	case AP_SPO2MAX:
 		{
 			if(getModel()->getALARMHANDLER()->getAlimitState_SPO2maxLimit()!=AL_OFF
-				&&	getModel()->getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+				&&	getModel()->getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 			{
 				getModel()->getALARMHANDLER()->setAlimitState_SPO2maxLimit(AL_CALC);
 				KillTimer(AUTOLIMITTIMER);
@@ -7560,7 +7614,7 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 	case AP_SPO2MIN:
 		{
 			if(getModel()->getALARMHANDLER()->getAlimitState_SPO2minLimit()!=AL_OFF
-				&&	getModel()->getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+				&&	getModel()->getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 			{
 				getModel()->getALARMHANDLER()->setAlimitState_SPO2minLimit(AL_CALC);
 				KillTimer(AUTOLIMITTIMER);
@@ -7585,7 +7639,7 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 	case AP_PULSERATEMAX:
 		{
 			if(getModel()->getALARMHANDLER()->getAlimitState_PulseRatemaxLimit()!=AL_OFF
-				&&	getModel()->getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+				&&	getModel()->getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 			{
 				getModel()->getALARMHANDLER()->setAlimitState_PulseRatemaxLimit(AL_CALC);
 				KillTimer(AUTOLIMITTIMER);
@@ -7610,7 +7664,7 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 	case AP_PULSERATEMIN:
 		{
 			if(getModel()->getALARMHANDLER()->getAlimitState_PulseRateminLimit()!=AL_OFF
-				&&	getModel()->getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+				&&	getModel()->getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 			{
 				getModel()->getALARMHANDLER()->setAlimitState_PulseRateminLimit(AL_CALC);
 				KillTimer(AUTOLIMITTIMER);
@@ -7635,7 +7689,7 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 	case AP_SPO2_PIMIN:
 		{
 			if(getModel()->getALARMHANDLER()->getAlimitState_SPO2_PIminLimit()!=AL_OFF
-				&&	getModel()->getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+				&&	getModel()->getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 			{
 				getModel()->getALARMHANDLER()->setAlimitState_SPO2_PIminLimit(AL_CALC);
 				KillTimer(AUTOLIMITTIMER);
@@ -7660,7 +7714,7 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 	case AP_SPO2_SIQMIN:
 		{
 			if(getModel()->getALARMHANDLER()->getAlimitState_SPO2_SIQminLimit()!=AL_OFF
-				&&	getModel()->getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+				&&	getModel()->getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 			{
 				getModel()->getALARMHANDLER()->setAlimitState_SPO2_SIQminLimit(AL_ON);
 				getModel()->getDATAHANDLER()->calculateAutoAlarmlimitSPO2_SIQmin();
@@ -10097,13 +10151,13 @@ void CMainFrame::startAcuLink()
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_PERSID,getModel()->getCONFIG()->GetPatientID());
 	}
 
-	if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+	if(getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE)
 	{
 		if(getModel()->getAcuLink()!=NULL)
 		{
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_UNIT_CO2,(int)getModel()->getCONFIG()->GetCO2unit());
 			//getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,getCONFIG()->GetO2Compensation());
-			if(getModel()->getCONFIG()->GetCO2module()==CO2MODULE_MICROPOD)
+			if(getModel()->getCONFIG()->getCO2module()==CO2MODULE_MICROPOD)
 			{
 				getModel()->getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2, ALINK_NOTVALID);
 			}

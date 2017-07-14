@@ -81,10 +81,11 @@ bool CNumericFieldPMEAN::drawData(bool bData, bool bFrames, bool bText, bool bLi
 		drawStaticText(pDCStatic);
 	}
 
-	/*if(bLimits)
+	eVentMode eActiveVentMode=getModel()->getALARMHANDLER()->getSafeActiveVentMode();
+	if(bLimits && eActiveVentMode==VM_HFO)
 	{
 		drawLimits(pDCStatic);
-	}*/
+	}
 
 	BitBlt(hdcMem, 0, 0, m_lX, m_lY,m_hdcStatic , 0, 0, SRCCOPY);
 
@@ -244,7 +245,78 @@ bool CNumericFieldPMEAN::drawStaticText(CDC* pDC)
 // **************************************************************************
 bool CNumericFieldPMEAN::drawLimits(CDC* pDC)
 {
-	
+	HDC hdc = *pDC;
+	int nBkMode=SetBkMode(hdc,TRANSPARENT);
+	HFONT hPrevFont=(HFONT)SelectObject(hdc,g_hf11AcuBold);
+	int nPrevTxtColor=SetTextColor(hdc,RGB(200,0,0));
+	RECT rc;	
+	TCHAR psz[MAX_PATH];
+
+	//eVentMode eActiveVentMode=getModel()->getALARMHANDLER()->getSafeActiveVentMode();
+
+	if(m_eSize==NUMERICSIZE_1)
+	{
+		drawHighLimit(pDC);
+		drawLowLimit(pDC);
+
+		rc.top = 9;
+		rc.bottom = 59;
+		rc.left = 0;
+		rc.right = 187;
+	}
+	else //if(m_eSize==NUMERICSIZE_2)
+	{
+		rc.top = 58;
+		rc.bottom = 110;
+		rc.left = 0;
+		rc.right = 187;
+	}
+
+	if(getModel()->getALARMHANDLER()->getAlimitState_MAPmaxLimit() == AL_CALC)
+	{
+		SelectObject(hdc,g_hf9AcuBold);
+		pDC->DrawText(getModel()->GetLanguageString(IDS_TXT_AUTO),&rc,DT_TOP|DT_SINGLELINE|DT_RIGHT);
+	}
+	else if(getModel()->getALARMHANDLER()->getAlimitState_MAPmaxLimit() == AL_OFF)
+	{
+		SelectObject(hdc,g_hf9AcuBold);
+		pDC->DrawText(getModel()->GetLanguageString(IDS_TXT_OFF),&rc,DT_TOP|DT_SINGLELINE|DT_RIGHT);
+	}
+	else if(getModel()->getALARMHANDLER()->getAlimitState_MAPmaxLimit() != AL_OFF)
+	{
+		SelectObject(hdc,g_hf11AcuBoldNum);
+		if(getModel()->getALARMHANDLER()->getAlimitMAPmax()==0)
+			wsprintf(psz,_T("%d"), 0);
+		else
+			wsprintf(psz,_T("%0.1f"), CTlsFloat::Round(((double)getModel()->getALARMHANDLER()->getAlimitMAPmax())/10, 1));
+		pDC->DrawText(psz,&rc,DT_TOP|DT_SINGLELINE|DT_RIGHT);
+
+		if(getModel()->getALARMHANDLER()->getAlimitMAPmin()==0)
+			wsprintf(psz,_T("%d"), 0);
+		else
+			wsprintf(psz,_T("%0.1f"), CTlsFloat::Round(((double)getModel()->getALARMHANDLER()->getAlimitMAPmin())/10, 1));
+		pDC->DrawText(psz,&rc,DT_BOTTOM|DT_SINGLELINE|DT_RIGHT);
+
+
+		//if(getModel()->getALARMHANDLER()->getAlimitState_MAPmaxLimit() == AL_AUTO)
+		//{
+		//	if(m_eSize==NUMERICSIZE_1)
+		//	{
+		//		rc.bottom = 39;
+		//	}
+		//	else //if(m_eSize==NUMERICSIZE_2)
+		//	{
+		//		rc.bottom = 88;
+		//	}
+		//	SelectObject(hdc,g_hf9AcuBold);
+		//	pDC->DrawText(getModel()->GetLanguageString(IDS_TXT_AUTO),&rc,DT_BOTTOM|DT_SINGLELINE|DT_RIGHT);
+		//}
+	}
+
+
+	SetTextColor(hdc,nPrevTxtColor);
+	SetBkMode(hdc,nBkMode);
+	SelectObject(hdc,hPrevFont);
 	return true;
 }
 

@@ -248,7 +248,7 @@ void CALimitBtn::SetAlarmLimitState(eAlarmLimitState state)
 {
 	int iBtn = GetBtnId();
 
-	if(iBtn == IDC_BTN_ALARM_PEEP_LO || iBtn == IDC_BTN_ALARM_PIPMAX_HI || iBtn == IDC_BTN_ALARM_PIPMIN_LO)
+	if(iBtn == IDC_BTN_ALARM_PEEP_LO || iBtn == IDC_BTN_ALARM_PIPMAX_HI || iBtn == IDC_BTN_ALARM_PIPMIN_LO || iBtn == IDC_BTN_ALARM_MAP_HI || iBtn == IDC_BTN_ALARM_MAP_LO)
 	{
 		if(m_bAlarmLimitState!=state)
 		{
@@ -596,6 +596,15 @@ void CALimitBtn::Draw(int nState)
 	case IDC_BTN_ALARM_APNOE:
 		{
 			wsprintf(psz,_T("%d"),m_v.iCurrentLimit);
+		}
+		break;
+	case IDC_BTN_ALARM_MAP_HI:
+	case IDC_BTN_ALARM_MAP_LO:
+		{
+			if(m_v.iCurrentLimit!=0)
+				wsprintf(psz,_T("%0.1f"),CTlsFloat::Round(((double)m_v.iCurrentLimit)/10, 1));
+			else
+				wsprintf(psz,_T("%d"),0);
 		}
 		break;
 	case IDC_BTN_ALARM_DCO2_HI:
@@ -1042,6 +1051,45 @@ void CALimitBtn::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 						}
 						else if(m_v.iCurrentLimit>m_v.iAbsoluteLowerLimit)
 							m_v.iCurrentLimit--;
+						else
+							m_bEndOfRange = true;
+					}
+					break;
+				case IDC_BTN_ALARM_MAP_HI:
+					{
+						if(m_bAlarmLimitState==AL_AUTO || m_bAlarmLimitState==AL_CALC)
+						{
+							getModel()->getALARMHANDLER()->setAlimitState_MAPmaxLimit(AL_ON);
+							m_bAlarmLimitState=AL_ON;
+
+							if(GetParent())
+								GetParent()->PostMessage(WM_SETNOAUTOSTATE);
+						}
+
+						m_v.iCurrentLimit = (m_v.iCurrentLimit/5)*5;
+
+						if(m_v.iCurrentLimit>m_v.iAbsoluteLowerLimit)
+							m_v.iCurrentLimit=m_v.iCurrentLimit-5;
+						else
+							m_bEndOfRange = true;
+
+					}
+					break;
+				case IDC_BTN_ALARM_MAP_LO:
+					{
+						if(m_bAlarmLimitState==AL_AUTO || m_bAlarmLimitState==AL_CALC)
+						{
+							getModel()->getALARMHANDLER()->setAlimitState_MAPminLimit(AL_ON);
+							m_bAlarmLimitState=AL_ON;
+
+							if(GetParent())
+								GetParent()->PostMessage(WM_SETNOAUTOSTATE);
+						}
+
+						m_v.iCurrentLimit = (m_v.iCurrentLimit/5)*5;
+
+						if(m_v.iCurrentLimit>m_v.iAbsoluteLowerLimit)
+							m_v.iCurrentLimit=m_v.iCurrentLimit-5;
 						else
 							m_bEndOfRange = true;
 					}
@@ -1664,6 +1712,44 @@ void CALimitBtn::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 						}
 					}
 					break;
+				case IDC_BTN_ALARM_MAP_HI:
+					{
+						if(m_bAlarmLimitState==AL_AUTO || m_bAlarmLimitState==AL_CALC)
+						{
+							getModel()->getALARMHANDLER()->setAlimitState_MAPmaxLimit(AL_ON);
+							m_bAlarmLimitState=AL_ON;
+
+							if(GetParent())
+								GetParent()->PostMessage(WM_SETNOAUTOSTATE);
+						}
+
+						m_v.iCurrentLimit = (m_v.iCurrentLimit/5)*5;
+
+						if(m_v.iCurrentLimit<m_v.iAbsoluteUpperLimit)
+							m_v.iCurrentLimit=m_v.iCurrentLimit+5;
+						else
+							m_bEndOfRange = true;
+					}
+					break;
+				case IDC_BTN_ALARM_MAP_LO:
+					{
+						if(m_bAlarmLimitState==AL_AUTO || m_bAlarmLimitState==AL_CALC)
+						{
+							getModel()->getALARMHANDLER()->setAlimitState_MAPminLimit(AL_ON);
+							m_bAlarmLimitState=AL_ON;
+
+							if(GetParent())
+								GetParent()->PostMessage(WM_SETNOAUTOSTATE);
+						}
+
+						m_v.iCurrentLimit = (m_v.iCurrentLimit/5)*5;
+
+						if(m_v.iCurrentLimit<m_v.iAbsoluteUpperLimit)
+							m_v.iCurrentLimit=m_v.iCurrentLimit+5;
+						else
+							m_bEndOfRange = true;
+					}
+					break;
 				case IDC_BTN_ALARM_DCO2_HI:
 					{
 						if(m_bAlarmLimitState==AL_AUTO || m_bAlarmLimitState==AL_CALC)
@@ -2249,6 +2335,42 @@ void CALimitBtn::OnKillFocus(CWnd* pNewWnd)
 				getModel()->getALARMHANDLER()->setAlimitState_ApnoeLimit(m_bAlarmLimitState);
 			}
 			break;
+		case IDC_BTN_ALARM_MAP_HI:
+			{
+				if(getModel()->CalculateAlarmlimitRunning() && m_ePrevstate==AL_CALC)
+				{
+					m_bAlarmLimitState=m_ePrevstate;
+				}
+				else if(m_ePrevstate==AL_CALC)
+				{
+					m_bAlarmLimitState=AL_AUTO;
+				}
+				else
+				{
+					m_bAlarmLimitState=m_ePrevstate;
+				}
+				getModel()->getALARMHANDLER()->setAlimitState_MAPmaxLimit(m_bAlarmLimitState);
+				//getModel()->getALARMHANDLER()->setAlimitState_DCO2minLimit(m_bAlarmLimitState);
+			}
+			break;
+		case IDC_BTN_ALARM_MAP_LO:
+			{
+				if(getModel()->CalculateAlarmlimitRunning() && m_ePrevstate==AL_CALC)
+				{
+					m_bAlarmLimitState=m_ePrevstate;
+				}
+				else if(m_ePrevstate==AL_CALC)
+				{
+					m_bAlarmLimitState=AL_AUTO;
+				}
+				else
+				{
+					m_bAlarmLimitState=m_ePrevstate;
+				}
+				//getModel()->getALARMHANDLER()->setAlimitState_DCO2maxLimit(m_bAlarmLimitState);
+				getModel()->getALARMHANDLER()->setAlimitState_MAPminLimit(m_bAlarmLimitState);
+			}
+			break;
 		case IDC_BTN_ALARM_DCO2_HI:
 			{
 				if(getModel()->CalculateAlarmlimitRunning() && m_ePrevstate==AL_CALC)
@@ -2595,6 +2717,26 @@ void CALimitBtn::WriteCurrentValue()
 				getModel()->getALARMHANDLER()->deleteAlarm(AL_PatAl_Apnoe);
 
 			}
+		}
+		break;
+	case IDC_BTN_ALARM_MAP_HI:
+		{
+			getModel()->getALARMHANDLER()->setAlimitMAPmax(m_v.iCurrentLimit);
+
+			if(GetParent())
+				GetParent()->PostMessage(WM_ALIMIT_STATE_MAP_HI_CHANGED);
+
+			getModel()->getDATAHANDLER()->checkLimits();
+		}
+		break;
+	case IDC_BTN_ALARM_MAP_LO:
+		{
+			getModel()->getALARMHANDLER()->setAlimitMAPmin(m_v.iCurrentLimit);
+
+			if(GetParent())
+				GetParent()->PostMessage(WM_ALIMIT_STATE_MAP_LO_CHANGED);
+
+			getModel()->getDATAHANDLER()->checkLimits();
 		}
 		break;
 	case IDC_BTN_ALARM_DCO2_HI:

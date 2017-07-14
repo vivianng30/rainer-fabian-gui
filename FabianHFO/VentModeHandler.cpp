@@ -517,7 +517,11 @@ void CVentModeHandler::setNCPAP()
 
 			changeVentMode(VM_NCPAP);
 			
-			if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_ON)
+			if(false==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
+			{
+				getModel()->getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_OFF);
+			}
+			else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_ON)
 			{
 				getModel()->getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_OFF);
 			}
@@ -536,7 +540,11 @@ void CVentModeHandler::setNCPAP()
 		{
 			changeVentMode(VM_NCPAP,0);
 
-			if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_ON)
+			if(false==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
+			{
+				getModel()->getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_OFF);
+			}
+			else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_ON)
 			{
 				getModel()->getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_OFF);
 			}
@@ -585,7 +593,11 @@ void CVentModeHandler::setDUOPAP()
 
 			changeVentMode(VM_DUOPAP);
 
-			if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_ON)
+			if(false==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
+			{
+				getModel()->getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_OFF);
+			}
+			else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_ON)
 			{
 				getModel()->getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_OFF);
 			}
@@ -605,7 +617,11 @@ void CVentModeHandler::setDUOPAP()
 		{
 			changeVentMode(VM_DUOPAP,0);
 
-			if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_ON)
+			if(false==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
+			{
+				getModel()->getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_OFF);
+			}
+			else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_ON)
 			{
 				getModel()->getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_OFF);
 			}

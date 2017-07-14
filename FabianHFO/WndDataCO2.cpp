@@ -77,7 +77,7 @@ CWndDataCO2::CWndDataCO2()
 	m_iRESPRATE=0;
 	
 
-	m_byCO2Module=getModel()->getCONFIG()->GetCO2module();
+	m_byCO2Module=getModel()->getCONFIG()->getCO2module();
 
 	/*xxxxxxxxxxxx
 	für CO2MODULE_MICROPOD button pump off

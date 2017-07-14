@@ -39,7 +39,7 @@ void CWndSubSettingsSPO2Module::Initialize()
 {
 	CClientDC dc(this);
 
-	m_bySPO2Module=getModel()->getCONFIG()->GetSPO2module();
+	m_bySPO2Module=getModel()->getCONFIG()->getSPO2module();
 	getModel()->getCONFIG()->setTempSPO2module(m_bySPO2Module);
 
 	m_szSetting = getModel()->GetLanguageString(IDS_BTN_MNU_SPO2);
@@ -319,7 +319,7 @@ void CWndSubSettingsSPO2Module::OnDestroy()
 	if(false==getModel()->getCONFIG()->isSpO2ConfigInProgress())
 	{
 		getModel()->getCONFIG()->setTempSPO2module(m_bySPO2Module);
-		getModel()->getCONFIG()->SetSPO2module(m_bySPO2Module);
+		getModel()->getCONFIG()->setSPO2module(m_bySPO2Module);
 	}
 
 	CWndSubSettings::OnDestroy();

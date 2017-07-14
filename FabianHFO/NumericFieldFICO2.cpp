@@ -292,7 +292,7 @@ bool CNumericFieldFICO2::drawLimits(CDC* pDC)
 	
 	if(getModel()->getETCO2()!=NULL)
 	{
-		BYTE byCO2Module=getModel()->getCONFIG()->GetCO2module();
+		BYTE byCO2Module=getModel()->getCONFIG()->getCO2module();
 		if(byCO2Module==CO2MODULE_MICROPOD)
 		{
 			//################FICO2 Max + Min##################

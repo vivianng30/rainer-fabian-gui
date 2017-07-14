@@ -345,6 +345,11 @@ CConfiguration::CConfiguration()
 	m_iAlarmlimitFICO2minHF=0;
 	m_iAlarmlimitStateFICO2minHF=0;
 
+	m_iAlarmlimitMAPmaxHF=0;
+	m_iAlarmlimitStateMAPmaxHF=0;
+	m_iAlarmlimitMAPminHF=0;
+	m_iAlarmlimitStateMAPminHF=0;
+
 	m_iAlarmlimitDCO2maxHF=0;
 	m_iAlarmlimitStateDCO2maxHF=0;
 	m_iAlarmlimitDCO2minHF=0;
@@ -753,6 +758,11 @@ void CConfiguration::Init()
 	m_iAlarmlimitStateFICO2maxHF=0;
 	m_iAlarmlimitFICO2minHF=0;
 	m_iAlarmlimitStateFICO2minHF=0;
+
+	m_iAlarmlimitMAPmaxHF=0;
+	m_iAlarmlimitStateMAPmaxHF=0;
+	m_iAlarmlimitMAPminHF=0;
+	m_iAlarmlimitStateMAPminHF=0;
 
 	m_iAlarmlimitDCO2maxHF=0;
 	m_iAlarmlimitStateDCO2maxHF=0;
@@ -3505,6 +3515,34 @@ void CConfiguration::LoadSettings()
 		m_iAlarmlimitStateFICO2minHF=FACTORY_ALIMIT_STATE_FICO2MIN;
 		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MIN_HF_8,m_iAlarmlimitStateFICO2minHF);
 	}
+	//##############################################################
+	m_iAlarmlimitMAPmaxHF=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_MAPMAX_HF_16);
+	if(m_iAlarmlimitMAPmaxHF<50 || m_iAlarmlimitMAPmaxHF>10000)
+	{
+		m_iAlarmlimitMAPmaxHF=FACTORY_ALIMIT_VAL_MAPMAX;
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMAX_HF_16,m_iAlarmlimitMAPmaxHF);
+	}
+
+	m_iAlarmlimitStateMAPmaxHF=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_MAPMAX_HF_8);
+	if(m_iAlarmlimitStateMAPmaxHF<AL_ON || m_iAlarmlimitStateMAPmaxHF>AL_AUTO)
+	{
+		m_iAlarmlimitStateMAPmaxHF=FACTORY_ALIMIT_STATE_MAPMAX;
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMAX_HF_8,m_iAlarmlimitStateMAPmaxHF);
+	}
+
+	m_iAlarmlimitMAPminHF=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_MAPMIN_HF_16);
+	if(m_iAlarmlimitMAPminHF<0 || m_iAlarmlimitMAPminHF>10000)
+	{
+		m_iAlarmlimitMAPminHF=FACTORY_ALIMIT_VAL_MAPMIN;
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMIN_HF_16,m_iAlarmlimitMAPminHF);
+	}
+
+	m_iAlarmlimitStateMAPminHF=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_MAPMIN_HF_8);
+	if(m_iAlarmlimitStateMAPminHF<AL_ON || m_iAlarmlimitStateMAPminHF>AL_AUTO)
+	{
+		m_iAlarmlimitStateMAPminHF=FACTORY_ALIMIT_STATE_MAPMIN;
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMIN_HF_8,m_iAlarmlimitStateMAPminHF);
+	}
 	//#############################################################
 
 	m_iAlarmlimitDCO2maxHF=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_DCO2MAX_HF_16);
@@ -4620,8 +4658,8 @@ void CConfiguration::setFastSATon(bool bFastSATon)
 	else
 		getModel()->getI2C()->WriteConfigByte(SPO2FASTSAT_8, 0);
 
-	/*if(getModel()->GetSPO2module()!=NULL)
-		getModel()->GetSPO2module()->set_FastSATon(m_bFastSATon);*/
+	/*if(getModel()->getSPO2module()!=NULL)
+		getModel()->getSPO2module()->set_FastSATon(m_bFastSATon);*/
 
 }
 
@@ -6189,11 +6227,11 @@ BYTE CConfiguration::getTempSPO2module()
 {
 	return m_bySPO2ModuleTemp;
 }
-BYTE CConfiguration::GetSPO2module()
+BYTE CConfiguration::getSPO2module()
 {
 	return m_iSPO2module;
 }
-void CConfiguration::SetSPO2module(BYTE mod, bool bReinit)
+void CConfiguration::setSPO2module(BYTE mod, bool bReinit)
 {
 	m_bSpO2ConfigInProgress=true;
 
@@ -6357,12 +6395,12 @@ BYTE CConfiguration::getTempCO2module()
 {
 	return m_byCO2ModuleTemp;
 }
-BYTE CConfiguration::GetCO2module()
+BYTE CConfiguration::getCO2module()
 {
 	return m_iCO2module;
 }
 
-void CConfiguration::SetCO2module(BYTE mod)//CO2RKU
+void CConfiguration::setCO2module(BYTE mod)//CO2RKU
 {
 	if (m_iCO2module == mod)
 	{
@@ -6428,7 +6466,7 @@ void CConfiguration::SetCO2module(BYTE mod)//CO2RKU
 				else
 					getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MIN, getModel()->getALARMHANDLER()->getAlimitETCO2min());
 
-				if(GetCO2module()==CO2MODULE_MICROPOD)
+				if(getCO2module()==CO2MODULE_MICROPOD)
 				{
 					getModel()->getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2, ALINK_NOTVALID);
 				}
@@ -6566,7 +6604,7 @@ void CConfiguration::SetVentRange(int range)
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_VENTRANGE,range);
 
-	if(getModel()->getCONFIG()->GetCO2module()==CO2MODULE_MICROPOD && getModel()->getETCO2()!=NULL)
+	if(getModel()->getCONFIG()->getCO2module()==CO2MODULE_MICROPOD && getModel()->getETCO2()!=NULL)
 	{
 		if(range==NEONATAL)
 			getModel()->getETCO2()->set_PatientMode(2);
@@ -8741,6 +8779,100 @@ void CConfiguration::SetAlarmlimitStateFICO2minHF(eAlarmLimitState state)
 	m_iAlarmlimitStateFICO2minHF=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MIN_HF_8, state);
 }
+
+// **************************************************************************
+// 
+// **************************************************************************
+int CConfiguration::GetAlarmlimitMAPmaxHF()
+{
+	return m_iAlarmlimitMAPmaxHF;
+}
+eAlarmLimitState CConfiguration::GetAlarmlimitStateMAPmaxHF()
+{
+	return (eAlarmLimitState)m_iAlarmlimitStateMAPmaxHF;
+}
+void CConfiguration::SetAlarmlimitMAPmaxHF(int value)
+{
+	m_iAlarmlimitMAPmaxHF=value;
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMAX_HF_16, value);
+	if(getModel()->getAcuLink()!=NULL)
+	{
+		if(GetAlarmlimitStateMAPmaxHF()==AL_OFF)
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MAPMAX,ALINK_OFF);
+		}
+		else
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MAPMAX,getModel()->getALARMHANDLER()->getAlimitMAPmax());
+		}
+	}
+}
+void CConfiguration::SetAlarmlimitStateMAPmaxHF(eAlarmLimitState state)
+{
+	m_iAlarmlimitStateMAPmaxHF=(int)state;
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMAX_HF_8, state);
+
+	if(getModel()->getAcuLink()!=NULL)
+	{
+		if(state==AL_OFF)
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MAPMAX,ALINK_OFF);
+		}
+		else
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MAPMAX,getModel()->getALARMHANDLER()->getAlimitMAPmax());
+		}
+	}
+}
+
+// **************************************************************************
+// 
+// **************************************************************************
+int CConfiguration::GetAlarmlimitMAPminHF()
+{
+	return m_iAlarmlimitMAPminHF;
+}
+eAlarmLimitState CConfiguration::GetAlarmlimitStateMAPminHF()
+{
+	return (eAlarmLimitState)m_iAlarmlimitStateMAPminHF;
+}
+void CConfiguration::SetAlarmlimitMAPminHF(int value)
+{
+	m_iAlarmlimitMAPminHF=value;
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMIN_HF_16, value);
+	if(getModel()->getAcuLink()!=NULL)
+	{
+		if(GetAlarmlimitStateMAPminHF()==AL_OFF)
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MAPMIN,ALINK_OFF);
+		}
+		else
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MAPMIN,getModel()->getALARMHANDLER()->getAlimitMAPmin());
+		}
+	}
+}
+void CConfiguration::SetAlarmlimitStateMAPminHF(eAlarmLimitState state)
+{
+	m_iAlarmlimitStateMAPminHF=(int)state;
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMIN_HF_8, state);
+
+	if(getModel()->getAcuLink()!=NULL)
+	{
+		if(state==AL_OFF)
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MAPMIN,ALINK_OFF);
+		}
+		else
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MAPMIN,getModel()->getALARMHANDLER()->getAlimitMAPmin());
+		}
+	}
+
+}
+
+
+
 // **************************************************************************
 // 
 // **************************************************************************
@@ -9795,6 +9927,10 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		ar<<m_iCurNumericBlock_FLOWOFFCPAP;
 		ar<<m_bEFLOWequalILFOW;
 		ar<<(BYTE)m_eAcuLinkVersion;
+		ar<<m_iAlarmlimitMAPmaxHF;
+		ar<<m_iAlarmlimitStateMAPmaxHF;
+		ar<<m_iAlarmlimitMAPminHF;
+		ar<<m_iAlarmlimitStateMAPminHF;
 	}
 	else
 	{
@@ -9892,7 +10028,7 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		m_eCO2unit=(eCO2unit)iCO2unit;
 		if(unitOld!=m_eCO2unit)
 		{
-			if(GetCO2module()!=CO2MODULE_NONE && getModel()->getETCO2()!=NULL)
+			if(getCO2module()!=CO2MODULE_NONE && getModel()->getETCO2()!=NULL)
 			{
 				getModel()->getETCO2()->changeCO2Unit(m_eCO2unit,unitOld);
 			}
@@ -9902,7 +10038,7 @@ void CConfiguration::SerializeFile(CArchive& ar)
 
 		ar>>m_iCO2BaroPressure;
 		getModel()->getI2C()->WriteConfigWord(CO2BAROPRESSURE_16, m_iCO2BaroPressure);
-		if(GetCO2module()!=CO2MODULE_NONE && getModel()->getETCO2()!=NULL)
+		if(getCO2module()!=CO2MODULE_NONE && getModel()->getETCO2()!=NULL)
 		{
 			getModel()->getETCO2()->set_BaroPressure(m_iCO2BaroPressure);
 		}
@@ -10466,6 +10602,15 @@ void CConfiguration::SerializeFile(CArchive& ar)
 			ar>>byVersion;
 			m_eAcuLinkVersion=(eAcuLinkVersion)byVersion;
 			SetAcuLinkVersion(m_eAcuLinkVersion);
+
+			ar>>m_iAlarmlimitMAPmaxHF;
+			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMAX_HF_16, m_iAlarmlimitMAPmaxHF);
+			ar>>m_iAlarmlimitStateMAPmaxHF;
+			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMAX_HF_8, m_iAlarmlimitStateMAPmaxHF);
+			ar>>m_iAlarmlimitMAPminHF;
+			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMIN_HF_16, m_iAlarmlimitMAPminHF);
+			ar>>m_iAlarmlimitStateMAPminHF;
+			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMIN_HF_8, m_iAlarmlimitStateMAPminHF);
 		}
 	}
 }
@@ -10946,6 +11091,8 @@ void CConfiguration::setLastNumericFLOWOFFHFO(BYTE num)
 void CConfiguration::disableNIVTRIGGER()
 {
 	SetParaDataTriggerNMODE(FACTORY_NMODE_TRIGGER);
+
+	getModel()->getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_OFF);
 
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);

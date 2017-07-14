@@ -770,7 +770,7 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 						}
 						
 						
-						if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE)//MicroPod: 20hz == every 50ms, Capnostat: 100hz == every 10ms
+						if(getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE)//MicroPod: 20hz == every 50ms, Capnostat: 100hz == every 10ms
 						{
 							if(getModel()->getETCO2())
 							{
@@ -792,7 +792,7 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 							}
 						}
 
-						if(getModel()->getCONFIG()->GetSPO2module()==SPO2MODULE_MASIMO)	//62,5 hz = alle 16ms ein Wert
+						if(getModel()->getCONFIG()->getSPO2module()==SPO2MODULE_MASIMO)	//62,5 hz = alle 16ms ein Wert
 						{
 							if(getModel()->getSPO2())
 							{
@@ -1422,7 +1422,7 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 						}
 						
 						
-						if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE)//MicroPod: 20hz == every 50ms, Capnostat: 100hz == every 10ms
+						if(getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE)//MicroPod: 20hz == every 50ms, Capnostat: 100hz == every 10ms
 						{
 							if(getModel()->getETCO2())
 							{
@@ -1444,7 +1444,7 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 							}
 						}
 
-						if(getModel()->getCONFIG()->GetSPO2module()==SPO2MODULE_MASIMO)	//62,5 hz = alle 16ms ein Wert
+						if(getModel()->getCONFIG()->getSPO2module()==SPO2MODULE_MASIMO)	//62,5 hz = alle 16ms ein Wert
 						{
 							if(getModel()->getSPO2())
 							{

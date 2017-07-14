@@ -5280,7 +5280,8 @@ void CDataHandler::SetFlowSensorState(eFlowSensorState state)
 void CDataHandler::checkTriggerTubeDependency()
 {
 	DEBUGMSG(TRUE, (TEXT("checkTriggerTubeDependency\r\n")));
-	if(true==getModel()->getVMODEHANDLER()->activeModeIsNMODETrigger())
+	if(		true==getModel()->getVMODEHANDLER()->activeModeIsNMODETrigger()
+		&&	true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
 	{
 		if(GetTubeSet()==TUBE_MEDIJET)//pressure trigger
 		{
@@ -5966,8 +5967,6 @@ void CDataHandler::checkLimits()
 		&&	getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_SILENT
 		&&	getModel()->getVIEWHANDLER()->getViewState()!=VS_STARTUP)
 	{
-		
-
 		getModel()->getALARMHANDLER()->checkLimits();
 	}
 }
@@ -8584,6 +8583,73 @@ int CDataHandler::calculateAutoAlarmlimitApnoe()
 
 	return AUTOALARMLIMIT_APNOE;
 }
+
+
+
+int CDataHandler::calculateAutoAlarmlimitMAPmax()
+{
+	int iValue = 0;
+
+	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
+
+	if(eActiveVentMode==VM_THERAPIE)
+	{
+	}
+	else if(eActiveVentMode==VM_HFO)
+	{
+		iValue=PARADATA()->GetHFPMeanPara()+AUTOALARMLIMIT_MAPMAX;
+	}
+	else if(eActiveVentMode==VM_CPAP)
+	{
+	}
+	else if(eActiveVentMode==VM_NCPAP)
+	{
+	}
+	else if(eActiveVentMode==VM_DUOPAP)
+	{
+	}
+	else
+	{
+		
+	}
+
+	getModel()->getALARMHANDLER()->setAlimitMAPmax(iValue);
+
+	return iValue;
+}
+
+int CDataHandler::calculateAutoAlarmlimitMAPmin()
+{
+	int iValue = 0;
+
+	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
+
+	if(eActiveVentMode==VM_THERAPIE)
+	{
+	}
+	else if(eActiveVentMode==VM_HFO)
+	{
+		iValue=PARADATA()->GetHFPMeanPara()-AUTOALARMLIMIT_MAPMIN;
+	}
+	else if(eActiveVentMode==VM_CPAP)
+	{
+	}
+	else if(eActiveVentMode==VM_NCPAP)
+	{
+	}
+	else if(eActiveVentMode==VM_DUOPAP)
+	{
+	}
+	else
+	{
+
+	}
+
+	getModel()->getALARMHANDLER()->setAlimitMAPmin(iValue);
+
+	return iValue;
+}
+
 //***************************************************************************
 //     
 //**************************************************************************
@@ -8673,7 +8739,7 @@ int CDataHandler::calculateAutoAlarmlimitETCO2max()
 
 	if(getModel()->getETCO2())
 	{
-		if(		getModel()->getCONFIG()->GetCO2module()==CO2MODULE_NONE
+		if(		getModel()->getCONFIG()->getCO2module()==CO2MODULE_NONE
 			||	false==getModel()->getETCO2()->isStateOk()
 			||	getModel()->getALARMHANDLER()->ALARM_Sens_CO2_MODULE_NOTCONNECTED->getAlarmState()==AS_ACTIVE
 			||	iValue==0)
@@ -8710,7 +8776,7 @@ int CDataHandler::calculateAutoAlarmlimitETCO2min()
 
 	if(getModel()->getETCO2())
 	{
-		if(		getModel()->getCONFIG()->GetCO2module()==CO2MODULE_NONE
+		if(		getModel()->getCONFIG()->getCO2module()==CO2MODULE_NONE
 			||	false==getModel()->getETCO2()->isStateOk()
 			||	getModel()->getALARMHANDLER()->ALARM_Sens_CO2_MODULE_NOTCONNECTED->getAlarmState()==AS_ACTIVE
 			||	iValue==0)
@@ -8745,7 +8811,7 @@ int CDataHandler::calculateAutoAlarmlimitFICO2max()
 
 	if(getModel()->getETCO2())
 	{
-		if(		getModel()->getCONFIG()->GetCO2module()==CO2MODULE_NONE
+		if(		getModel()->getCONFIG()->getCO2module()==CO2MODULE_NONE
 			||	false==getModel()->getETCO2()->isStateOk()
 			||	getModel()->getALARMHANDLER()->ALARM_Sens_CO2_MODULE_NOTCONNECTED->getAlarmState()==AS_ACTIVE
 			||	iValue==0)
@@ -8782,7 +8848,7 @@ int CDataHandler::calculateAutoAlarmlimitFICO2min()
 
 	if(getModel()->getETCO2())
 	{
-		if(		getModel()->getCONFIG()->GetCO2module()==CO2MODULE_NONE
+		if(		getModel()->getCONFIG()->getCO2module()==CO2MODULE_NONE
 			||	false==getModel()->getETCO2()->isStateOk()
 			||	getModel()->getALARMHANDLER()->ALARM_Sens_CO2_MODULE_NOTCONNECTED->getAlarmState()==AS_ACTIVE
 			||	iValue==0)
@@ -8817,7 +8883,7 @@ int CDataHandler::calculateAutoAlarmlimitSPO2max()
 
 	if(getModel()->getSPO2())
 	{
-		if(		getModel()->getCONFIG()->GetSPO2module()==SPO2MODULE_NONE
+		if(		getModel()->getCONFIG()->getSPO2module()==SPO2MODULE_NONE
 			||	false==getModel()->getSPO2()->isStateOk())
 		{
 			iValue = FACTORY_ALIMIT_VAL_SPO2MAX;
@@ -8864,7 +8930,7 @@ int CDataHandler::calculateAutoAlarmlimitSPO2min()
 
 	if(getModel()->getSPO2())
 	{
-		if(		getModel()->getCONFIG()->GetSPO2module()==SPO2MODULE_NONE
+		if(		getModel()->getCONFIG()->getSPO2module()==SPO2MODULE_NONE
 			||	false==getModel()->getSPO2()->isStateOk())
 		{
 			iValue = FACTORY_ALIMIT_VAL_SPO2MIN;
@@ -8901,16 +8967,13 @@ int CDataHandler::calculateAutoAlarmlimitSPO2min()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
 int CDataHandler::calculateAutoAlarmlimitPulseRatemax()
 {
 	int iValue = getAVGMessureDataSpO2PulseRate();
 	
 	if(getModel()->getSPO2())
 	{
-		if(		getModel()->getCONFIG()->GetSPO2module()==SPO2MODULE_NONE
+		if(		getModel()->getCONFIG()->getSPO2module()==SPO2MODULE_NONE
 			||	false==getModel()->getSPO2()->isStateOk())
 		{
 			iValue = FACTORY_ALIMIT_VAL_PULSERATEMAX;
@@ -8938,16 +9001,13 @@ int CDataHandler::calculateAutoAlarmlimitPulseRatemax()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
 int CDataHandler::calculateAutoAlarmlimitPulseRatemin()
 {
 	int iValue = getAVGMessureDataSpO2PulseRate();
 
 	if(getModel()->getSPO2())
 	{
-		if(		getModel()->getCONFIG()->GetSPO2module()==SPO2MODULE_NONE
+		if(		getModel()->getCONFIG()->getSPO2module()==SPO2MODULE_NONE
 			||	false==getModel()->getSPO2()->isStateOk())
 		{
 			iValue = FACTORY_ALIMIT_VAL_PULSERATEMIN;
@@ -8975,16 +9035,13 @@ int CDataHandler::calculateAutoAlarmlimitPulseRatemin()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
 int CDataHandler::calculateAutoAlarmlimitSPO2_PImin()
 {
 	int iValue = getAVGMessureDataSpO2PerfusionIndex();
 
 	if(getModel()->getSPO2())
 	{
-		if(		getModel()->getCONFIG()->GetSPO2module()==SPO2MODULE_NONE
+		if(		getModel()->getCONFIG()->getSPO2module()==SPO2MODULE_NONE
 			||	false==getModel()->getSPO2()->isStateOk())
 		{
 			iValue=FACTORY_ALIMIT_VAL_SPO2_PIMIN;
@@ -9007,18 +9064,12 @@ int CDataHandler::calculateAutoAlarmlimitSPO2_PImin()
 	return iValue;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
 int CDataHandler::calculateAutoAlarmlimitSPO2_SIQmin()
 {
 	getModel()->getALARMHANDLER()->setAlimitSPO2_SIQmin(AUTOALARMLIMIT_SPO2_SIQMIN);
 	return AUTOALARMLIMIT_SPO2_SIQMIN;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
 int CDataHandler::GetCurrentIERelation100()
 {
 	double fValue=0;
@@ -9033,9 +9084,6 @@ int CDataHandler::GetCurrentIERelation100()
 	return (int)(fValue*100);
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
 int CDataHandler::GetCurrentEIRelation100()
 {
 	double fValue=0;
@@ -9052,12 +9100,6 @@ int CDataHandler::GetCurrentEIRelation100()
 
 
 
-//void CDataHandler::setTriggerType(eTriggereType type)
-//{
-//	getModel()->getCONFIG()->setTriggerType(type);
-//
-//	getModel()->Send_MODE_OPTION1();
-//}
 
 void CDataHandler::setTriggerOptionCONV(eTriggereType type)
 {
@@ -9089,9 +9131,6 @@ eTriggereType CDataHandler::getTriggerOptionNMODE()
 	return getModel()->getCONFIG()->getTriggerOptionNMODE();
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
 void CDataHandler::setPpsvAsDeltaPEEPValue(BOOL bPPSVasDeltaPEEPValue)
 {
 	getModel()->getCONFIG()->setPpsvAsDeltaPEEPValue(bPPSVasDeltaPEEPValue);
@@ -9102,9 +9141,6 @@ void CDataHandler::setPpsvAsDeltaPEEPValue(BOOL bPPSVasDeltaPEEPValue)
 		getModel()->Send_VENT_MODE(getModel()->getCONFIG()->GetCurMode());
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
 void CDataHandler::SetCurO2FlushTime(BYTE iTime)
 {
 	getModel()->getCONFIG()->SetFlushTime(iTime);
@@ -9116,18 +9152,12 @@ void CDataHandler::SetCurO2FlushTime(BYTE iTime)
 	}
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
 BYTE CDataHandler::GetCurO2FlushTime()
 {
 	return getModel()->getCONFIG()->GetFlushTime();
 }
 
 
-//***************************************************************************
-//     
-//**************************************************************************
 WORD CDataHandler::GetCurrentVGarantMinParaData()
 {
 	WORD iValue=0;
@@ -9218,9 +9248,6 @@ WORD CDataHandler::GetPreviousVGarantMinParaData()
 	return iVal;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
 WORD CDataHandler::GetCurrentVGarantParaData()
 {
 	WORD iValue=0;
@@ -9309,9 +9336,6 @@ WORD CDataHandler::GetPreviousVGarantParaData()
 
 
 
-//***************************************************************************
-//     
-//**************************************************************************
 WORD CDataHandler::GetVLimitMinPara()
 {
 	WORD iValue=0;
@@ -9399,11 +9423,15 @@ WORD CDataHandler::GetPrevVLimitMinPara()
 	return iVal;
 }
 
+/**********************************************************************************************//**
+ * Gets current v limit para.
+ *
+ * \author	Rainer
+ * \date	12.07.2017
+ *
+ * \return	The current v limit para.
+ **************************************************************************************************/
 
-
-//***************************************************************************
-//     
-//**************************************************************************
 WORD CDataHandler::GetCurrentVLimitPara()
 {
 	WORD iValue=0;

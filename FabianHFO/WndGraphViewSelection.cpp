@@ -471,7 +471,7 @@ void CWndGraphViewSelection::Show(BOOL bShow)
 				m_pcWaveView->EnableWindow(TRUE);
 			if(m_pcLoopView)
 				m_pcLoopView->EnableWindow(TRUE);
-			/*if(getModel()->getCONFIG()->GetCO2module()==CO2MODULE_NONE)
+			/*if(getModel()->getCONFIG()->getCO2module()==CO2MODULE_NONE)
 			{
 				if(m_pcCO2View)
 				{
@@ -486,7 +486,7 @@ void CWndGraphViewSelection::Show(BOOL bShow)
 				}
 			}
 			
-			if(getModel()->getCONFIG()->GetSPO2module()==SPO2MODULE_MASIMO)
+			if(getModel()->getCONFIG()->getSPO2module()==SPO2MODULE_MASIMO)
 			{
 				if(m_pcSPO2View)
 				{
@@ -518,7 +518,7 @@ void CWndGraphViewSelection::Show(BOOL bShow)
 			
 		}
 
-		if(getModel()->getCONFIG()->GetCO2module()==CO2MODULE_NONE)
+		if(getModel()->getCONFIG()->getCO2module()==CO2MODULE_NONE)
 		{
 			if(m_pcCO2View)
 			{
@@ -533,7 +533,7 @@ void CWndGraphViewSelection::Show(BOOL bShow)
 			}
 		}
 
-		if(getModel()->getCONFIG()->GetSPO2module()==SPO2MODULE_NONE)
+		if(getModel()->getCONFIG()->getSPO2module()==SPO2MODULE_NONE)
 		{
 			if(m_pcSPO2View)
 			{

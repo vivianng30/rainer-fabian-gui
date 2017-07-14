@@ -84,7 +84,7 @@ CSubViewCO2::CSubViewCO2()
 	//m_pcETCO2avg=NULL;
 
 
-	m_byCO2Module=getModel()->getCONFIG()->GetCO2module();
+	m_byCO2Module=getModel()->getCONFIG()->getCO2module();
 
 	if(	getModel()->getCONFIG()->GetMainBoardVersion()<MAINBOARD_30
 		&&
@@ -98,7 +98,7 @@ CSubViewCO2::CSubViewCO2()
 		{
 			m_byCO2Module=CO2MODULE_NONE;
 			getModel()->getCONFIG()->setTempCO2module(m_byCO2Module);
-			getModel()->getCONFIG()->SetCO2module(m_byCO2Module);
+			getModel()->getCONFIG()->setCO2module(m_byCO2Module);
 		}
 		
 

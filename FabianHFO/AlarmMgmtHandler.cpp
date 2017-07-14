@@ -67,6 +67,8 @@ CAlarmPtr CAlarmMgmtHandler::ALARM_PatAl_PEEPminHigh=NULL;
 CAlarmPtr CAlarmMgmtHandler::ALARM_PatAl_BPMmax=NULL;
 CAlarmPtr CAlarmMgmtHandler::ALARM_PatAl_Leakmax=NULL;
 CAlarmPtr CAlarmMgmtHandler::ALARM_PatAl_Apnoe=NULL;
+CAlarmPtr CAlarmMgmtHandler::ALARM_PatAl_MAPmax=NULL;
+CAlarmPtr CAlarmMgmtHandler::ALARM_PatAl_MAPmin=NULL;
 CAlarmPtr CAlarmMgmtHandler::ALARM_PatAl_DCO2max=NULL;
 CAlarmPtr CAlarmMgmtHandler::ALARM_PatAl_DCO2min=NULL;
 CAlarmPtr CAlarmMgmtHandler::ALARM_PatAl_ETCO2max=NULL;
@@ -309,6 +311,12 @@ CAlarmMgmtHandler::~CAlarmMgmtHandler()
 	if(ALARM_PatAl_Apnoe)
 		delete ALARM_PatAl_Apnoe;
 	ALARM_PatAl_Apnoe=NULL;
+	if(ALARM_PatAl_MAPmax)
+		delete ALARM_PatAl_MAPmax;
+	ALARM_PatAl_MAPmax=NULL;
+	if(ALARM_PatAl_MAPmin)
+		delete ALARM_PatAl_MAPmin;
+	ALARM_PatAl_MAPmin=NULL;
 	if(ALARM_PatAl_DCO2max)
 		delete ALARM_PatAl_DCO2max;
 	ALARM_PatAl_DCO2max=NULL;
@@ -527,13 +535,15 @@ void CAlarmMgmtHandler::initAlarmList()
 	ALARM_PatAl_PulseRatemax = new CAlarm(AL_PatAl_PulseRatemax,AT_PATIENT,AP_8,AS_NONE,0);
 	ALARM_PatAl_PulseRatemin = new CAlarm(AL_PatAl_PulseRatemin,AT_PATIENT,AP_8,AS_NONE,0);
 	ALARM_PatAl_SPO2_PImin = new CAlarm(AL_PatAl_SPO2_PImin,AT_PATIENT,AP_8,AS_NONE,0);
+	ALARM_PatAl_MAPmax = new CAlarm(AL_PatAl_MAPmax,AT_PATIENT,AP_8,AS_NONE,0);
+	ALARM_PatAl_MAPmin = new CAlarm(AL_PatAl_MAPmin,AT_PATIENT,AP_8,AS_NONE,0);
+	ALARM_SysLimit_Pinsp_NotReached = new CAlarm(AL_SysLimit_Pinsp_NotReached,AT_SYSLIMIT,AP_9,AS_NONE,0);
+	ALARM_SysLimit_Vlimitted = new CAlarm(AL_SysLimit_Vlimitted,AT_SYSLIMIT,AP_9,AS_NONE,0);
 	ALARM_SysLimit_Vgaranty = new CAlarm(AL_SysLimit_Vgaranty,AT_PATIENT,AP_8,AS_NONE,0);
+	ALARM_Accu_POWER = new CAlarm(AL_Accu_POWER,AT_POWER,AP_9,AS_NONE,0);
 	ALARM_Accu_60 = new CAlarm(AL_Accu_60,AT_POWER,AP_8,AS_NONE,0);
 	ALARM_Accu_30 = new CAlarm(AL_Accu_30,AT_POWER,AP_8,AS_NONE,0);
 
-	ALARM_SysLimit_Pinsp_NotReached = new CAlarm(AL_SysLimit_Pinsp_NotReached,AT_SYSLIMIT,AP_9,AS_NONE,0);
-	ALARM_SysLimit_Vlimitted = new CAlarm(AL_SysLimit_Vlimitted,AT_SYSLIMIT,AP_9,AS_NONE,0);
-	ALARM_Accu_POWER = new CAlarm(AL_Accu_POWER,AT_POWER,AP_9,AS_NONE,0);
 	
 
 	EnterCriticalSection(&csAlarmList);
@@ -601,6 +611,8 @@ void CAlarmMgmtHandler::initAlarmList()
 		m_pAlarmlist->appendAlarm(ALARM_PatAl_PulseRatemax);
 		m_pAlarmlist->appendAlarm(ALARM_PatAl_PulseRatemin);
 		m_pAlarmlist->appendAlarm(ALARM_PatAl_SPO2_PImin);
+		m_pAlarmlist->appendAlarm(ALARM_PatAl_MAPmax);
+		m_pAlarmlist->appendAlarm(ALARM_PatAl_MAPmin);
 		m_pAlarmlist->appendAlarm(ALARM_SysLimit_Pinsp_NotReached);
 		m_pAlarmlist->appendAlarm(ALARM_SysLimit_Vlimitted);
 		m_pAlarmlist->appendAlarm(ALARM_SysLimit_Vgaranty);
@@ -1063,6 +1075,16 @@ CStringW CAlarmMgmtHandler::getLogTxtAlarm(eAlarm enAlarm)
 			return _T("APNOE");
 		}
 		break;
+	case AL_PatAl_MAPmax:
+		{
+			return _T("MAP_HI");
+		}
+		break;
+	case AL_PatAl_MAPmin:
+		{
+			return _T("MAP_LO");
+		}
+		break;
 	case AL_PatAl_DCO2max:
 		{
 			return _T("DCO2_HI");
@@ -1216,7 +1238,7 @@ CStringW CAlarmMgmtHandler::getLogTxtAlarm(eAlarm enAlarm)
 		break;
 	case AL_Sens_CO2_CHECKAIRWAYADAPTER:
 		{
-			if(getModel()->getCONFIG()->GetCO2module()==CO2MODULE_CAPNOSTAT)
+			if(getModel()->getCONFIG()->getCO2module()==CO2MODULE_CAPNOSTAT)
 				return _T("CO2_CHECKAIRWAYADAPTER");
 			else
 				return _T("CO2_OCCLUSION");
@@ -2213,6 +2235,16 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 			sz=getModel()->GetLanguageString(IDS_ALARM_APNOE);
 		}
 		break;
+	case AL_PatAl_MAPmax:
+		{
+			sz=getModel()->GetLanguageString(IDS_ALARM_MAP_HI);
+		}
+		break;
+	case AL_PatAl_MAPmin:
+		{
+			sz=getModel()->GetLanguageString(IDS_ALARM_MAP_LO);
+		}
+		break;
 	case AL_PatAl_DCO2max:
 		{
 			sz=getModel()->GetLanguageString(IDS_ALARM_DCO2_HI);
@@ -2396,7 +2428,7 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 		break;
 	case AL_Sens_CO2_CHECKAIRWAYADAPTER:
 		{
-			if(getModel()->getCONFIG()->GetCO2module()==CO2MODULE_CAPNOSTAT)
+			if(getModel()->getCONFIG()->getCO2module()==CO2MODULE_CAPNOSTAT)
 				sz=getModel()->GetLanguageString(IDS_ALARM_CO2_CHECKAIRWAYADAPTER);
 			else
 				sz=getModel()->GetLanguageString(IDS_ALARM_CO2_OCCLUSION);
@@ -2511,6 +2543,8 @@ eAlarmPrio CAlarmMgmtHandler::getAlarmPrio(eAlarm alarm)
 	case AL_PRICO_FiO2min:
 	case AL_PatAl_PIPmax:	
 	case AL_PatAl_PEEPminHigh:
+	case AL_PatAl_MAPmax:						
+	case AL_PatAl_MAPmin:
 		{
 			return AP_7;
 		}
@@ -2636,6 +2670,8 @@ eAlarmType CAlarmMgmtHandler::getAlarmType(eAlarm alarm)
 	case AL_PatAl_BPMmax:
 	case AL_PatAl_Leakmax:
 	case AL_PatAl_Apnoe:
+	case AL_PatAl_MAPmax:						
+	case AL_PatAl_MAPmin:
 	case AL_PatAl_DCO2max:						
 	case AL_PatAl_DCO2min:
 	case AL_PatAl_ETCO2max:						
@@ -2997,6 +3033,16 @@ bool CAlarmMgmtHandler::setAlarm(eAlarm alarm, CStringW alarmTxt)
 	case AL_PatAl_Apnoe:
 		{
 			bRes=SetAlarm_Apnoe(alarmTxt);
+		}
+		break;
+	case AL_PatAl_MAPmax:
+		{
+			bRes=SetAlarm_MAPmax(alarmTxt);
+		}
+		break;
+	case AL_PatAl_MAPmin:
+		{
+			bRes=SetAlarm_MAPmin(alarmTxt);
 		}
 		break;
 	case AL_PatAl_DCO2max:
@@ -5064,6 +5110,66 @@ bool CAlarmMgmtHandler::SetAlarm_Apnoe(CStringW alarmTxt)
 
 	return true;
 }
+
+bool CAlarmMgmtHandler::CanSetAlarm_MAPmax()
+{
+	if(ALARM_PatAl_MAPmax->getAlarmState()==AS_ACTIVE)
+		return false;
+
+	eVentSilentState silentState=getAlarmSilentState();
+
+	//higher alarms silent or service mode????
+	if(		silentState==ASTATE_SYSTEM_SILENT
+		||	silentState==ASTATE_SILENT
+		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE
+		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
+		return false;
+
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_MAPmax)))
+		return false;
+	return true;
+}
+bool CAlarmMgmtHandler::SetAlarm_MAPmax(CStringW alarmTxt)
+{
+	if(CanSetAlarm_MAPmax()==false)
+		return false;
+
+	eAlarm alarm=AL_PatAl_MAPmax;
+
+	setActiveAlarm(alarm, alarmTxt);
+
+	return true;
+}
+bool CAlarmMgmtHandler::CanSetAlarm_MAPmin()
+{
+	if(ALARM_PatAl_MAPmin->getAlarmState()==AS_ACTIVE)
+		return false;
+
+	eVentSilentState silentState=getAlarmSilentState();
+
+	//higher alarms silent or service mode????
+	if(		silentState==ASTATE_SYSTEM_SILENT
+		||	silentState==ASTATE_SILENT
+		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE
+		||	getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
+		return false;
+
+	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_PatAl_MAPmin)))
+		return false;
+	return true;
+}
+bool CAlarmMgmtHandler::SetAlarm_MAPmin(CStringW alarmTxt)
+{
+	if(CanSetAlarm_MAPmin()==false)
+		return false;
+
+	eAlarm alarm=AL_PatAl_MAPmin;
+
+	setActiveAlarm(alarm, alarmTxt);
+
+	return true;
+}
+
 bool CAlarmMgmtHandler::CanSetAlarm_DCO2max()
 {
 	if(ALARM_PatAl_DCO2max->getAlarmState()==AS_ACTIVE)
@@ -5918,7 +6024,7 @@ void CAlarmMgmtHandler::CheckPRICOalarms()//rku AUTOPRICO
 				getModel()->getDATAHANDLER()->setPRICOoff();
 			}
 		}
-		else if(isPRICOAutoTurneOn()
+		else if(isPRICOAutoTurnedOn()
 			&&	(actAlarm == AL_Sens_SPO2_MODULE_NOTCONNECTED 
 			||	actAlarm == AL_Sens_SPO2_SENSORFAULTY
 			||	actAlarm == AL_Sens_O2_SENSOR_DEFECT
@@ -5967,7 +6073,7 @@ void CAlarmMgmtHandler::checkAutoEnablePRICO()//rku AUTOPRICO
 		if(curActive==AL_NONE)//no alarm active, check autoenable PRICO
 		{
 			//DEBUGMSG(TRUE, (TEXT("checkAutoEnablePRICO curActive==AL_NONE\r\n")));
-			if(isPRICOAutoTurneOn())
+			if(isPRICOAutoTurnedOn())
 				getModel()->getDATAHANDLER()->setPRICOon();
 			resetPRICOAutoTurnedOff();
 		}
@@ -5979,7 +6085,7 @@ void CAlarmMgmtHandler::checkAutoEnablePRICO()//rku AUTOPRICO
 		else //active alarm with lower priority than PRICO alarm, check autoenable PRICO
 		{
 			//DEBUGMSG(TRUE, (TEXT("checkAutoEnablePRICO else\r\n")));
-			if(isPRICOAutoTurneOn())
+			if(isPRICOAutoTurnedOn())
 				getModel()->getDATAHANDLER()->setPRICOon();
 			resetPRICOAutoTurnedOff();
 		}
@@ -6747,6 +6853,16 @@ void CAlarmMgmtHandler::setAlarmStatePDMS(eAlarm eAlarmToSet, eStateOfAlarm stat
 				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_Leakmax,(int)state);
 			}
 			break;
+		case AL_PatAl_MAPmax:						
+			{
+				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_PMEANmax,(int)state);
+			}
+			break;
+		case AL_PatAl_MAPmin:						
+			{
+				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_PMEANmin,(int)state);
+			}
+			break;
 		case AL_PatAl_DCO2max:						
 			{
 				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_DCO2max,(int)state);
@@ -7084,7 +7200,7 @@ bool CAlarmMgmtHandler::isPRICOAutoTurnedOff()
 	LeaveCriticalSection(&csPRICOautoOffState);
 	return bState;
 }
-bool CAlarmMgmtHandler::isPRICOAutoTurneOn()
+bool CAlarmMgmtHandler::isPRICOAutoTurnedOn()
 {
 	EnterCriticalSection(&csPRICOautoOffState);
 	bool bState=m_bPRICOAutoTurnOn;
@@ -7172,6 +7288,26 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_ApnoeLimit()
 	}
 	return state;
 }
+
+eAlarmLimitState CAlarmMgmtHandler::getAlimitState_MAPmaxLimit()
+{
+	eAlarmLimitState state=AL_OFF;
+	if(ALARMLIMITS)
+	{
+		state=ALARMLIMITS->getAlimitState_MAPmaxLimit();
+	}
+	return state;
+}
+eAlarmLimitState CAlarmMgmtHandler::getAlimitState_MAPminLimit()
+{
+	eAlarmLimitState state=AL_OFF;
+	if(ALARMLIMITS)
+	{
+		state=ALARMLIMITS->getAlimitState_MAPminLimit();
+	}
+	return state;
+}
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_DCO2maxLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7335,6 +7471,20 @@ void CAlarmMgmtHandler::setAlimitPIPmin(int value)
 	if(ALARMLIMITS)
 	{
 		ALARMLIMITS->setAlimitPIPmin(value);
+	}
+}
+void CAlarmMgmtHandler::setAlimitMAPmax(int value)
+{
+	if(ALARMLIMITS)
+	{
+		ALARMLIMITS->setAlimitMAPmax(value);
+	}
+}
+void CAlarmMgmtHandler::setAlimitMAPmin(int value)
+{
+	if(ALARMLIMITS)
+	{
+		ALARMLIMITS->setAlimitMAPmin(value);
 	}
 }
 void CAlarmMgmtHandler::setAlimitDCO2max(int value)
@@ -7569,6 +7719,27 @@ int CAlarmMgmtHandler::getAlimitApnoe()
 	}
 	return iLimit;
 }
+
+int CAlarmMgmtHandler::getAlimitMAPmax()
+{
+	int iLimit=0;
+	if(ALARMLIMITS)
+	{
+		iLimit=ALARMLIMITS->getAlimitMAPmax();
+	}
+	return iLimit;
+}
+
+int CAlarmMgmtHandler::getAlimitMAPmin()
+{
+	int iLimit=0;
+	if(ALARMLIMITS)
+	{
+		iLimit=ALARMLIMITS->getAlimitMAPmin();
+	}
+	return iLimit;
+}
+
 int CAlarmMgmtHandler::getAlimitDCO2min()
 {
 	int iLimit=0;
@@ -7792,6 +7963,36 @@ void CAlarmMgmtHandler::setAlimitMinRangeApnoe(int iRangeVal)
 		ALARMLIMITS->setAlimitMinRangeApnoe(iRangeVal);
 	}
 }
+
+void CAlarmMgmtHandler::setAlimitMaxRangeMAPmax(int iRangeVal)
+{
+	if(ALARMLIMITS)
+	{
+		ALARMLIMITS->setAlimitMaxRangeMAPmax(iRangeVal);
+	}
+}
+void CAlarmMgmtHandler::setAlimitMinRangeMAPmax(int iRangeVal)
+{
+	if(ALARMLIMITS)
+	{
+		ALARMLIMITS->setAlimitMinRangeMAPmax(iRangeVal);
+	}
+}
+void CAlarmMgmtHandler::setAlimitMaxRangeMAPmin(int iRangeVal)
+{
+	if(ALARMLIMITS)
+	{
+		ALARMLIMITS->setAlimitMaxRangeMAPmin(iRangeVal);
+	}
+}
+void CAlarmMgmtHandler::setAlimitMinRangeMAPmin(int iRangeVal)
+{
+	if(ALARMLIMITS)
+	{
+		ALARMLIMITS->setAlimitMinRangeMAPmin(iRangeVal);
+	}
+}
+
 void CAlarmMgmtHandler::setAlimitMaxRangeDCO2min(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8101,6 +8302,45 @@ int CAlarmMgmtHandler::getAlimitMinRangeApnoe()
 	}
 	return iRange;
 }
+
+int CAlarmMgmtHandler::getAlimitMaxRangeMAPmax()
+{
+	int iRange=0;
+	if(ALARMLIMITS)
+	{
+		iRange=ALARMLIMITS->getAlimitMaxRangeMAPmax();
+	}
+	return iRange;
+}
+int CAlarmMgmtHandler::getAlimitMinRangeMAPmax()
+{
+	int iRange=0;
+	if(ALARMLIMITS)
+	{
+		iRange=ALARMLIMITS->getAlimitMinRangeMAPmax();
+	}
+	return iRange;
+}
+int CAlarmMgmtHandler::getAlimitMaxRangeMAPmin()
+{
+	int iRange=0;
+	if(ALARMLIMITS)
+	{
+		iRange=ALARMLIMITS->getAlimitMaxRangeMAPmin();
+	}
+	return iRange;
+}
+int CAlarmMgmtHandler::getAlimitMinRangeMAPmin()
+{
+	int iRange=0;
+	if(ALARMLIMITS)
+	{
+		iRange=ALARMLIMITS->getAlimitMinRangeMAPmin();
+	}
+	return iRange;
+}
+
+
 int CAlarmMgmtHandler::getAlimitMaxRangeDCO2min()
 {
 	int iRange=0;
@@ -8377,6 +8617,22 @@ void CAlarmMgmtHandler::setAlimitState_PIPminLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_PIPminLimit(state);
 	}
 }
+
+void CAlarmMgmtHandler::setAlimitState_MAPmaxLimit(eAlarmLimitState state)
+{
+	if(ALARMLIMITS)
+	{
+		ALARMLIMITS->setAlimitState_MAPmaxLimit(state);
+	}
+}
+void CAlarmMgmtHandler::setAlimitState_MAPminLimit(eAlarmLimitState state)
+{
+	if(ALARMLIMITS)
+	{
+		ALARMLIMITS->setAlimitState_MAPminLimit(state);
+	}
+}
+
 void CAlarmMgmtHandler::setAlimitState_DCO2maxLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8509,12 +8765,12 @@ void CAlarmMgmtHandler::checkLimits()
 		checkVentilationLimits();
 	}
 	
-	if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+	if(getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE)
 	{
 		checkCO2Limits();
 	}
 
-	if(getModel()->getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+	if(getModel()->getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 	{
 		checkSpO2Limits();
 	}
@@ -8563,6 +8819,8 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 	bool bLeakmax_Alarm=false;	
 	bool bDCO2max_Alarm=false;
 	bool bDCO2min_Alarm=false;
+	bool bMAPmax_Alarm=false;
+	bool bMAPmin_Alarm=false;
 
 
 	eAlarmLimitState stateMVmax = getAlimitState_MVmaxLimit();
@@ -8574,6 +8832,8 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 	eAlarmLimitState stateBPMmax = getAlimitState_BPMmaxLimit();
 	eAlarmLimitState stateDCO2max = getAlimitState_DCO2maxLimit();
 	eAlarmLimitState stateDCO2min = getAlimitState_DCO2minLimit();
+	eAlarmLimitState stateMAPmax = getAlimitState_MAPmaxLimit();
+	eAlarmLimitState stateMAPmin = getAlimitState_MAPminLimit();
 
 
 
@@ -8733,6 +8993,22 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 				}
 			}
 
+			if(stateMAPmax==AL_ON || stateMAPmax==AL_AUTO)
+			{
+				if(	MessureData.m_iPmitt > getAlimitMAPmax())
+				{
+					bMAPmax_Alarm=true;
+				}
+			}
+
+			if(stateMAPmin==AL_ON || stateMAPmin==AL_AUTO)
+			{
+				if( MessureData.m_iPmitt < getAlimitMAPmin())
+				{
+					bMAPmin_Alarm=true;
+				}
+			}
+
 			if(stateDCO2max==AL_ON || stateDCO2max==AL_AUTO)
 			{
 				if(	MessureData.m_iDCO2 > getAlimitDCO2max())
@@ -8783,6 +9059,8 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 	eAlarmStates.eSoA_PEEPminHighLimit=m_pAlarmlist->getAlarm(AL_PatAl_PEEPminHigh)->getAlarmState();
 	eAlarmStates.eSoA_LeakmaxLimit=m_pAlarmlist->getAlarm(AL_PatAl_Leakmax)->getAlarmState();
 	eAlarmStates.eSoA_BPMmaxLimit=m_pAlarmlist->getAlarm(AL_PatAl_BPMmax)->getAlarmState();
+	eAlarmStates.eSoA_MAPmaxLimit=m_pAlarmlist->getAlarm(AL_PatAl_MAPmax)->getAlarmState();
+	eAlarmStates.eSoA_MAPminLimit=m_pAlarmlist->getAlarm(AL_PatAl_MAPmin)->getAlarmState();
 	eAlarmStates.eSoA_DCO2maxLimit=m_pAlarmlist->getAlarm(AL_PatAl_DCO2max)->getAlarmState();
 	eAlarmStates.eSoA_DCO2minLimit=m_pAlarmlist->getAlarm(AL_PatAl_DCO2min)->getAlarmState();
 	LeaveCriticalSection(&csAlarmList);
@@ -8929,6 +9207,34 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 
 	if(eActiveVentMode==VM_HFO)
 	{
+		if(		bMAPmax_Alarm 
+			&&	eAlarmStates.eSoA_MAPmaxLimit!=AS_ACTIVE 
+			&&	getAlarmSilentState()!=ASTATE_AUTOSILENT
+			&&	getModel()->isActiveAlarmDelay()==false)
+		{
+			sz.Format(_T(" [%0.1f]"),CTlsFloat::Round(((double)MessureData.m_iPmitt)/10, 1));
+			setAlarm(AL_PatAl_MAPmax,sz);
+		}
+		else if(!bMAPmax_Alarm && eAlarmStates.eSoA_MAPmaxLimit==AS_ACTIVE)
+		{
+			setStateOfAlarm(AL_PatAl_MAPmax,AS_SIGNALED);
+		}
+
+		if(		bMAPmin_Alarm 
+			&&	eAlarmStates.eSoA_MAPminLimit!=AS_ACTIVE 
+			&&	getAlarmSilentState()!=ASTATE_AUTOSILENT
+			&&	getModel()->isActiveAlarmDelay()==false)
+		{
+			sz.Format(_T(" [%0.1f]"),CTlsFloat::Round(((double)MessureData.m_iPmitt)/10, 1));
+			setAlarm(AL_PatAl_MAPmin,sz);
+		}
+		else if(!bMAPmin_Alarm && eAlarmStates.eSoA_MAPminLimit==AS_ACTIVE)
+		{
+			setStateOfAlarm(AL_PatAl_MAPmin,AS_SIGNALED);
+		}
+
+
+		/********************************************/
 		if(		bDCO2max_Alarm 
 			&&	eAlarmStates.eSoA_DCO2maxLimit!=AS_ACTIVE 
 			&&	getAlarmSilentState()!=ASTATE_AUTOSILENT
@@ -8959,7 +9265,7 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 
 void CAlarmMgmtHandler::checkCO2Limits()
 {
-	if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE && getModel()->getETCO2())
+	if(getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE && getModel()->getETCO2())
 	{
 		bool bETCO2state=getModel()->getETCO2()->isStateOk();
 		bool bCO2ValueValid=getModel()->getETCO2()->isCO2ValueValid();

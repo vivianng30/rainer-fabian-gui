@@ -8,14 +8,20 @@
  * @section ver Version history and changelog
  *
  * @subsection ver50155 Version 5.0.1.55
- * @date 2017-07-10
+ * @date 2017-07-14
  * @verbatim
 	- SpO2: defaults changed to
 		Sensitivity: normal
 		Fast SAT: off
 		Alarm delay: 10 sec
 		SpO2 averaging time: 10 sec
-	- implementation Spo" alarm delay changed due to new defaults
+	- implementation Spo2 alarm delay changed due to new defaults
+	- NUMERIC: PEEP limit displayed with 1 digit (0.5)
+	- HFO: MAP as alarm limit included
+	- NUMERIC: Pmean with limits in case of HFO
+	- When there's no NIV trigger license available, flow sensor will be disabled at all NIV mode
+	- When there's no NIV trigger license available, FS will be set to off if we switch from conventional mode to a NIV mode
+	- when NIV trigger license will be deleted, FS state OFF will be sent to PICs
  @endverbatim
  *
  * @subsection ver50154 Version 5.0.1.54

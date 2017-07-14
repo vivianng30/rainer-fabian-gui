@@ -270,7 +270,7 @@ bool CNumericFieldPEEP::drawLimits(CDC* pDC)
 		if(getModel()->getALARMHANDLER()->getAlimitPEEPmin()==0)
 			wsprintf(psz,_T("%d"), 0);
 		else
-			wsprintf(psz,_T("%1.0f"), CTlsFloat::Round(((double)getModel()->getALARMHANDLER()->getAlimitPEEPmin())/10, 1));
+			wsprintf(psz,_T("%0.1f"), CTlsFloat::Round(((double)getModel()->getALARMHANDLER()->getAlimitPEEPmin())/10, 1));
 		pDC->DrawText(psz,&rc,DT_BOTTOM|DT_SINGLELINE|DT_RIGHT);
 
 		if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit() == AL_AUTO)

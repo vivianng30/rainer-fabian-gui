@@ -23,6 +23,8 @@ CAlarmLimitPtr CAlarmConditionHandler::ALIMIT_PULSERATEMAX=NULL;
 CAlarmLimitPtr CAlarmConditionHandler::ALIMIT_PULSERATEMIN=NULL;
 CAlarmLimitPtr CAlarmConditionHandler::ALIMIT_SPO2PIMIN=NULL;
 CAlarmLimitPtr CAlarmConditionHandler::ALIMIT_SPO2SIQMIN=NULL;
+CAlarmLimitPtr CAlarmConditionHandler::ALIMIT_MAPMAX=NULL;
+CAlarmLimitPtr CAlarmConditionHandler::ALIMIT_MAPMIN=NULL;
 
 CAlarmConditionHandler::CAlarmConditionHandler()
 {
@@ -95,7 +97,12 @@ CAlarmConditionHandler::~CAlarmConditionHandler(void)
 	if(ALIMIT_SPO2SIQMIN)
 		delete ALIMIT_SPO2SIQMIN;
 	ALIMIT_SPO2SIQMIN=NULL;
-
+	if(ALIMIT_MAPMAX)
+		delete ALIMIT_MAPMAX;
+	ALIMIT_MAPMAX=NULL;
+	if(ALIMIT_MAPMIN)
+		delete ALIMIT_MAPMIN;
+	ALIMIT_MAPMIN=NULL;
 
 	if(m_pAlarmLimitlist)
 	{
@@ -135,6 +142,9 @@ void CAlarmConditionHandler::initAlarmLimitList()
 	ALIMIT_PULSERATEMIN=new CAlarmLimit(LI_PULSERATEMIN,AL_OFF,0,0,0);
 	ALIMIT_SPO2PIMIN=new CAlarmLimit(LI_SPO2PIMIN,AL_OFF,0,0,0);
 	ALIMIT_SPO2SIQMIN=new CAlarmLimit(LI_SPO2SIQMIN,AL_OFF,0,0,0);
+	ALIMIT_MAPMAX=new CAlarmLimit(LI_MAPMAX,AL_OFF,0,0,0);
+	ALIMIT_MAPMIN=new CAlarmLimit(LI_MAPMIN,AL_OFF,0,0,0);
+	
 
 	EnterCriticalSection(&csAlarmLimitList);
 	m_pAlarmLimitlist = new CAlarmLimitList();
@@ -161,6 +171,8 @@ void CAlarmConditionHandler::initAlarmLimitList()
 		m_pAlarmLimitlist->appendAlarmLimit(ALIMIT_PULSERATEMIN);
 		m_pAlarmLimitlist->appendAlarmLimit(ALIMIT_SPO2PIMIN);
 		m_pAlarmLimitlist->appendAlarmLimit(ALIMIT_SPO2SIQMIN);
+		m_pAlarmLimitlist->appendAlarmLimit(ALIMIT_MAPMAX);
+		m_pAlarmLimitlist->appendAlarmLimit(ALIMIT_MAPMIN);
 	}
 	LeaveCriticalSection(&csAlarmLimitList);
 }
@@ -270,13 +282,13 @@ void CAlarmConditionHandler::ventModeChanged()
 		setAlarmLimitRanges_DEFAULT();
 	}
 
-	if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+	if(getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE)
 	{
 		//setAlarmLimitValues_ETCO2();
 		setAlarmLimitRanges_ETCO2();
 	}
 
-	if(getModel()->getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+	if(getModel()->getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 	{
 		setAlarmLimitValues_SPO2();
 		setAlarmLimitRanges_SPO2();
@@ -313,7 +325,7 @@ void CAlarmConditionHandler::setAlarmLimitValues_HFO()
 {
 	ALIMIT_MVMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitMVmaxHF());
 	ALIMIT_MVMIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitMVminHF());
-	ALIMIT_PIPMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitPmaxHF());
+	//ALIMIT_PIPMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitPmaxHF());
 	//ALIMIT_PIPMIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitPIPmin());
 	ALIMIT_PEEPMIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitPEEPminHF());
 	ALIMIT_FREQMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitBPMmaxHF());
@@ -325,6 +337,9 @@ void CAlarmConditionHandler::setAlarmLimitValues_HFO()
 	ALIMIT_ETCO2MIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitETCO2minHF());
 	ALIMIT_FICO2MAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitFICO2maxHF());
 	ALIMIT_FICO2MIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitFICO2minHF());
+	ALIMIT_MAPMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitMAPmaxHF());
+	ALIMIT_MAPMIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitMAPminHF());
+
 	/*ALIMIT_SPO2MAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitSPO2maxHF());
 	ALIMIT_SPO2MIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitSPO2minHF());
 	ALIMIT_PULSERATEMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitPulseRatemaxHF());
@@ -335,7 +350,8 @@ void CAlarmConditionHandler::setAlarmLimitValues_HFO()
 
 	ALIMIT_MVMAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateMVmaxHF());
 	ALIMIT_MVMIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateMVminHF());
-	ALIMIT_PIPMAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStatePmaxHF());
+	//ALIMIT_PIPMAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStatePmaxHF());
+	ALIMIT_PIPMAX->setLimitState(AL_OFF);
 	ALIMIT_PIPMIN->setLimitState(AL_OFF);
 	ALIMIT_PEEPMIN->setLimitState(AL_OFF);
 	ALIMIT_FREQMAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateBPMmaxHF());
@@ -347,6 +363,9 @@ void CAlarmConditionHandler::setAlarmLimitValues_HFO()
 	ALIMIT_ETCO2MIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateETCO2minHF());
 	ALIMIT_FICO2MAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateFICO2maxHF());
 	ALIMIT_FICO2MIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateFICO2minHF());
+	ALIMIT_MAPMAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateMAPmaxHF());
+	ALIMIT_MAPMIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateMAPminHF());
+
 	/*ALIMIT_SPO2MAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateSPO2maxHF());
 	ALIMIT_SPO2MIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateSPO2minHF());
 	ALIMIT_PULSERATEMAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStatePulseRatemaxHF());
@@ -371,6 +390,9 @@ void CAlarmConditionHandler::setAlarmLimitValues_DEFAULT()
 	ALIMIT_ETCO2MIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitETCO2min());
 	ALIMIT_FICO2MAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitFICO2max());
 	ALIMIT_FICO2MIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitFICO2min());
+	ALIMIT_MAPMAX->setCurValue(0);
+	ALIMIT_MAPMIN->setCurValue(0);
+
 	/*ALIMIT_SPO2MAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitSPO2max());
 	ALIMIT_SPO2MIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitSPO2min());
 	ALIMIT_PULSERATEMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitPulseRatemax());
@@ -393,6 +415,8 @@ void CAlarmConditionHandler::setAlarmLimitValues_DEFAULT()
 	ALIMIT_ETCO2MIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateETCO2min());
 	ALIMIT_FICO2MAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateFICO2max());
 	ALIMIT_FICO2MIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateFICO2min());
+	ALIMIT_MAPMAX->setLimitState(AL_OFF);
+	ALIMIT_MAPMIN->setLimitState(AL_OFF);
 	/*ALIMIT_SPO2MAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateSPO2max());
 	ALIMIT_SPO2MIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateSPO2min());
 	ALIMIT_PULSERATEMAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStatePulseRatemax());
@@ -742,6 +766,18 @@ void CAlarmConditionHandler::setAlarmLimitRanges_HFO()
 			ALIMIT_DCO2MIN->setMaxValue(iDCO2max-100);
 		}
 
+
+		//MAPmax
+		ALIMIT_MAPMAX->setMaxValue(MAXRANGE_HF_NEONATAL_MAPMAX);
+		ALIMIT_MAPMAX->setMinValue(ALIMIT_MAPMIN->getCurValue()+DIFF_MAPMAX_MAPMIN_LIMIT);
+
+
+		//MAPmin
+		ALIMIT_MAPMIN->setMaxValue(ALIMIT_MAPMAX->getCurValue()-DIFF_MAPMAX_MAPMIN_LIMIT);
+		ALIMIT_MAPMIN->setMinValue(MINRANGE_HF_NEONATAL_MAPMIN);
+
+		
+
 		//Pmax
 		ALIMIT_PIPMAX->setMaxValue(MAXRANGE_HF_NEONATAL_PMAX);
 		ALIMIT_PIPMAX->setMinValue(ALIMIT_PEEPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT);
@@ -849,6 +885,16 @@ void CAlarmConditionHandler::setAlarmLimitRanges_HFO()
 		{
 			ALIMIT_DCO2MIN->setMaxValue(iDCO2max-100);
 		}
+
+		//MAPmax
+		ALIMIT_MAPMAX->setMaxValue(MAXRANGE_HF_PEDIATRIC_MAPMAX);
+		ALIMIT_MAPMAX->setMinValue(ALIMIT_MAPMIN->getCurValue()+DIFF_MAPMAX_MAPMIN_LIMIT);
+
+
+		//MAPmin
+		ALIMIT_MAPMIN->setMaxValue(ALIMIT_MAPMAX->getCurValue()-DIFF_MAPMAX_MAPMIN_LIMIT);
+		ALIMIT_MAPMIN->setMinValue(MINRANGE_HF_PEDIATRIC_MAPMIN);
+
 
 		//Pmax
 		ALIMIT_PIPMAX->setMaxValue(MAXRANGE_HF_PEDIATRIC_PMAX);
@@ -1340,6 +1386,16 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_LeakmaxLimit()
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_ApnoeLimit()
 {
 	return ALIMIT_APNOE->getLimitState();
+}
+
+eAlarmLimitState CAlarmConditionHandler::getAlimitState_MAPmaxLimit()
+{
+	return ALIMIT_MAPMAX->getLimitState();
+}
+
+eAlarmLimitState CAlarmConditionHandler::getAlimitState_MAPminLimit()
+{
+	return ALIMIT_MAPMIN->getLimitState();
 }
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_DCO2maxLimit()
@@ -1855,6 +1911,53 @@ void CAlarmConditionHandler::setAlimitPIPminDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitPIPmin(value);
 }
 
+void CAlarmConditionHandler::setAlimitMAPmax(int value)
+{
+	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
+	if(eActiveVentMode==VM_HFO)
+	{
+		setAlimitMAPmaxHF(value);
+	}
+}
+
+void CAlarmConditionHandler::setAlimitMAPmaxHF(int value)
+{
+	ALIMIT_MAPMAX->setCurValue(value);
+	DEBUGMSG(TRUE, (TEXT("ALIMIT_MAPMAX value %d\r\n"),value));
+
+	ALIMIT_MAPMIN->setMaxValue(value-DIFF_MAPMAX_MAPMIN_LIMIT);
+	DEBUGMSG(TRUE, (TEXT("ALIMIT_MAPMIN max value %d\r\n"),value-DIFF_MAPMAX_MAPMIN_LIMIT));
+
+
+	CStringW sz=_T("");
+	sz.Format(_T("ALMAPmaxHF%d,"), value);
+	theApp.getLog()->WriteLine(sz);
+	getModel()->getCONFIG()->SetAlarmlimitMAPmaxHF(value);
+}
+
+void CAlarmConditionHandler::setAlimitMAPmin(int value)
+{
+	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
+	if(eActiveVentMode==VM_HFO)
+	{
+		setAlimitMAPminHF(value);
+	}
+}
+
+void CAlarmConditionHandler::setAlimitMAPminHF(int value)
+{
+	ALIMIT_MAPMIN->setCurValue(value);
+	DEBUGMSG(TRUE, (TEXT("ALIMIT_MAPMIN value %d\r\n"),value));
+
+	ALIMIT_MAPMAX->setMinValue(value+DIFF_MAPMAX_MAPMIN_LIMIT);
+	DEBUGMSG(TRUE, (TEXT("ALIMIT_MAPMAX min value %d\r\n"),value-DIFF_MAPMAX_MAPMIN_LIMIT));
+
+	CStringW sz=_T("");
+	sz.Format(_T("ALMAPminHF%d,"), value);
+	theApp.getLog()->WriteLine(sz);
+	getModel()->getCONFIG()->SetAlarmlimitMAPminHF(value);
+}
+
 void CAlarmConditionHandler::setAlimitDCO2max(int value)
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -2208,6 +2311,12 @@ void CAlarmConditionHandler::setAlimitsMinMaxRangePressure()
 	setAlimitMaxRangePIPmin(iLI_PIPMAX);
 	setAlimitMinRangePIPmin(iLI_PEEPMIN);
 	setAlimitMaxRangePEEPmin(iLI_PIPMIN_LO);
+
+	int iLI_MAPMAX	=ALIMIT_MAPMAX->getCurValue()-DIFF_MAPMAX_MAPMIN_LIMIT;
+	int iLI_MAPMIN	=ALIMIT_MAPMIN->getCurValue()+DIFF_MAPMAX_MAPMIN_LIMIT;
+
+	//setAlimitMinRangeMAPmax(iLI_MAPMIN);
+	//setAlimitMaxRangeMAPmin(iLI_MAPMAX);
 }
 
 int CAlarmConditionHandler::getAlimitMVmin()
@@ -2248,6 +2357,16 @@ int CAlarmConditionHandler::getAlimitBPMmax()
 int CAlarmConditionHandler::getAlimitApnoe()
 {
 	return ALIMIT_APNOE->getCurValue();
+}
+
+int CAlarmConditionHandler::getAlimitMAPmax()
+{
+	return ALIMIT_MAPMAX->getCurValue();
+}
+
+int CAlarmConditionHandler::getAlimitMAPmin()
+{
+	return ALIMIT_MAPMIN->getCurValue();
 }
 
 int CAlarmConditionHandler::getAlimitDCO2min()
@@ -2390,6 +2509,26 @@ void CAlarmConditionHandler::setAlimitMinRangeApnoe(int iRangeVal)
 {
 	ALIMIT_APNOE->setMinValue(iRangeVal);
 }
+
+void CAlarmConditionHandler::setAlimitMaxRangeMAPmax(int iRangeVal)
+{
+	ALIMIT_MAPMAX->setMaxValue(iRangeVal);
+}
+void CAlarmConditionHandler::setAlimitMinRangeMAPmax(int iRangeVal)
+{
+	ALIMIT_MAPMAX->setMaxValue(iRangeVal);
+}
+void CAlarmConditionHandler::setAlimitMaxRangeMAPmin(int iRangeVal)
+{
+	ALIMIT_MAPMIN->setMaxValue(iRangeVal);
+}
+void CAlarmConditionHandler::setAlimitMinRangeMAPmin(int iRangeVal)
+{
+	ALIMIT_MAPMIN->setMaxValue(iRangeVal);
+}
+
+
+
 
 void CAlarmConditionHandler::setAlimitMaxRangeDCO2min(int iRangeVal)
 {
@@ -2590,6 +2729,26 @@ int CAlarmConditionHandler::getAlimitMaxRangeApnoe()
 int CAlarmConditionHandler::getAlimitMinRangeApnoe()
 {
 	return ALIMIT_APNOE->getMinValue();
+}
+
+int CAlarmConditionHandler::getAlimitMaxRangeMAPmax()
+{
+	return ALIMIT_MAPMAX->getMaxValue();
+}
+
+int CAlarmConditionHandler::getAlimitMinRangeMAPmax()
+{
+	return ALIMIT_MAPMAX->getMinValue();
+}
+
+int CAlarmConditionHandler::getAlimitMaxRangeMAPmin()
+{
+	return ALIMIT_MAPMIN->getMaxValue();
+}
+
+int CAlarmConditionHandler::getAlimitMinRangeMAPmin()
+{
+	return ALIMIT_MAPMIN->getMinValue();
 }
 
 int CAlarmConditionHandler::getAlimitMaxRangeDCO2min()
@@ -3285,6 +3444,91 @@ void CAlarmConditionHandler::setAlimitStatePIPmaxDefault(eAlarmLimitState state)
 	if(state==AL_OFF || state==AL_ON || state==AL_AUTO)
 		getModel()->getCONFIG()->SetAlarmlimitStatePIPmax(state);
 }
+
+
+
+
+
+void CAlarmConditionHandler::setAlimitState_MAPmaxLimit(eAlarmLimitState state)
+{
+	switch(state)
+	{
+	case AL_ON:
+		{
+			theApp.getLog()->WriteLine(_T("ALMAPmax AL_ON"));
+		}
+		break;
+	case AL_OFF:
+		{
+			theApp.getLog()->WriteLine(_T("ALMAPmax AL_OFF"));
+		}
+		break;
+	case AL_AUTO:
+		{
+			theApp.getLog()->WriteLine(_T("ALMAPmax AL_AUTO"));
+		}
+		break;
+	case AL_CALC:
+		{
+			theApp.getLog()->WriteLine(_T("ALMAPmax AL_CALC"));
+		}
+		break;
+	}
+	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
+	if(eActiveVentMode==VM_HFO)
+	{
+		setAlimitStateMAPmaxHF(state);
+	}
+
+}
+
+void CAlarmConditionHandler::setAlimitStateMAPmaxHF(eAlarmLimitState state)
+{
+	ALIMIT_MAPMAX->setLimitState(state);
+	if(state==AL_OFF || state==AL_ON || state==AL_AUTO)
+		getModel()->getCONFIG()->SetAlarmlimitStateMAPmaxHF(state);
+}
+
+void CAlarmConditionHandler::setAlimitState_MAPminLimit(eAlarmLimitState state)
+{
+	switch(state)
+	{
+	case AL_ON:
+		{
+			theApp.getLog()->WriteLine(_T("ALMAPmin AL_ON"));
+		}
+		break;
+	case AL_OFF:
+		{
+			theApp.getLog()->WriteLine(_T("ALMAPmin AL_OFF"));
+		}
+		break;
+	case AL_AUTO:
+		{
+			theApp.getLog()->WriteLine(_T("ALMAPmin AL_AUTO"));
+		}
+		break;
+	case AL_CALC:
+		{
+			theApp.getLog()->WriteLine(_T("ALMAPmin AL_CALC"));
+		}
+		break;
+	}
+	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
+	if(eActiveVentMode==VM_HFO)
+	{
+		setAlimitStateMAPminHF(state);
+	}
+
+}
+
+void CAlarmConditionHandler::setAlimitStateMAPminHF(eAlarmLimitState state)
+{
+	ALIMIT_MAPMIN->setLimitState(state);
+	if(state==AL_OFF || state==AL_ON || state==AL_AUTO)
+		getModel()->getCONFIG()->SetAlarmlimitStateMAPminHF(state);
+}
+
 
 void CAlarmConditionHandler::setAlimitState_DCO2maxLimit(eAlarmLimitState state)
 {

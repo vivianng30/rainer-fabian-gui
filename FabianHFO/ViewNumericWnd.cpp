@@ -1362,15 +1362,15 @@ void CViewNumericWnd::NotifyParaBtnEvent(CMVEvent* pEvent)
 			switch(pUIEvent->GetEventType())
 			{
 			case CMVEventUI::EV_PARABN_PMITT:
-			case CMVEventUI::EV_PARABN_IERATIO:
-			case CMVEventUI::EV_PARABN_HFFREQREC:
+			//case CMVEventUI::EV_PARABN_IERATIO:
+			//case CMVEventUI::EV_PARABN_HFFREQREC:
 				{
 					bool bChanged=false;
-					if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
+					if(getModel()->getALARMHANDLER()->getAlimitState_MAPminLimit()==AL_AUTO)
 					{
 						bChanged=true;
 					}
-					if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
+					if(getModel()->getALARMHANDLER()->getAlimitState_MAPmaxLimit()==AL_AUTO)
 					{
 						bChanged=true;
 					}
@@ -1383,18 +1383,18 @@ void CViewNumericWnd::NotifyParaBtnEvent(CMVEvent* pEvent)
 			case CMVEventUI::EV_PARABN_HFAMPL:
 				{
 					bool bChanged=false;
-					if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
+					/*if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
 					{
 						bChanged=true;
-					}
+					}*/
 					if(true==getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
 					{
 						bChanged=true;
 					}
-					else if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
+					/*else if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
 					{
 						bChanged=true;
-					}
+					}*/
 					if(bChanged)
 					{	
 						PostMessage(WM_ALIMIT_CHANGED);

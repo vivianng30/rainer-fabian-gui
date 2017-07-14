@@ -19,7 +19,7 @@ CWndSubSettings(viewFlag)
 
 CWndSubSettingsCO2Module::~CWndSubSettingsCO2Module()
 {
-	//getModel()->getCONFIG()->SetCO2module(m_byCO2Module);
+	//getModel()->getCONFIG()->setCO2module(m_byCO2Module);
 }
 
 
@@ -40,7 +40,7 @@ void CWndSubSettingsCO2Module::Initialize()
 {
 	CClientDC dc(this);
 
-	m_byCO2Module=getModel()->getCONFIG()->GetCO2module();
+	m_byCO2Module=getModel()->getCONFIG()->getCO2module();
 	getModel()->getCONFIG()->setTempCO2module(m_byCO2Module);
 
 	m_szSetting = getModel()->GetLanguageString(IDS_BTN_MNU_CO2);
@@ -75,7 +75,7 @@ void CWndSubSettingsCO2Module::Initialize()
 			{
 				m_byCO2Module=CO2MODULE_NONE;
 				getModel()->getCONFIG()->setTempCO2module(m_byCO2Module);
-				getModel()->getCONFIG()->SetCO2module(m_byCO2Module);
+				getModel()->getCONFIG()->setCO2module(m_byCO2Module);
 			}
 		}
 		else
@@ -335,7 +335,7 @@ void CWndSubSettingsCO2Module::SetModule(UINT btn)
 		break;
 	}
 	getModel()->getCONFIG()->setTempCO2module(m_byCO2Module);
-	//getModel()->getCONFIG()->SetCO2module(m_byCO2Module,false);
+	//getModel()->getCONFIG()->setCO2module(m_byCO2Module,false);
 }
 
 // **************************************************************************
@@ -389,7 +389,7 @@ void CWndSubSettingsCO2Module::OnBnClicked3()
 // **************************************************************************
 //void CWndSubSettingsCO2Module::writeData()
 //{
-//	getModel()->getCONFIG()->SetCO2module(m_byCO2Module,true);
+//	getModel()->getCONFIG()->setCO2module(m_byCO2Module,true);
 //}
 
 //************************************
@@ -404,7 +404,7 @@ void CWndSubSettingsCO2Module::OnBnClicked3()
 void CWndSubSettingsCO2Module::OnDestroy()
 {
 	getModel()->getCONFIG()->setTempCO2module(m_byCO2Module);
-	getModel()->getCONFIG()->SetCO2module(m_byCO2Module);
+	getModel()->getCONFIG()->setCO2module(m_byCO2Module);
 
 	CWndSubSettings::OnDestroy();
 }

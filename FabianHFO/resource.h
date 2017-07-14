@@ -940,6 +940,8 @@
 #define IDS_ALARM_PRICOSIQ              10281
 #define IDS_ALARM_PIPMIN                10282
 #define IDS_ALARM_PMAX_CPAP             10283
+#define IDS_ALARM_MAP_HI                10284
+#define IDS_ALARM_MAP_LO                10285
 #define IDS_PARA_MV                     10300
 #define IDS_PARA_PMAX                   10301
 #define IDS_PARA_PEEP                   10302

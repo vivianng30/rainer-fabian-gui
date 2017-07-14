@@ -1818,6 +1818,8 @@ BEGIN
     IDS_ALARM_PRICOSIQ      "low SIQ"
     IDS_ALARM_PIPMIN        "Low PIP"
     IDS_ALARM_PMAX_CPAP     "High pressure"
+    IDS_ALARM_MAP_HI        "High Pmean"
+    IDS_ALARM_MAP_LO        "Low Pmean"
 END
 
 STRINGTABLE 

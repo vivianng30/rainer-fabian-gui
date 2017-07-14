@@ -64,8 +64,23 @@ protected:
 	void drawLabel_ETCO2(CDC* pDC);
 	void drawLabel_SPO2(CDC* pDC);
 	void drawLabel_VENTILATION(CDC* pDC);
+	void drawLabel_HFO(CDC* pDC);
+	void drawLabel_CPAP(CDC* pDC);
+	void drawLabel_NCPAP(CDC* pDC);
+	void drawLabel_DUOPAP(CDC* pDC);
+	void drawLabel_CONVENTIONAL(CDC* pDC);
+
+
 	
 	void DrawFrames(CDC* pDC);
+	void drawFrameETCO2(CDC* pDC);
+	void drawFrameSPO2(CDC* pDC);
+	void drawFrameTHERAPIE(CDC* pDC);
+	void drawFrameHFO(CDC* pDC);
+	void drawFrameCPAP(CDC* pDC);
+	void drawFrameNCPAP(CDC* pDC);
+	void drawFrameDUOPAP(CDC* pDC);
+	void drawFrameCONVENTIONAL(CDC* pDC);
 
 	void DrawData_etCO2(HDC hdc);
 	void DrawData_SpO2(HDC hdc);
@@ -88,35 +103,27 @@ protected:
 	void RefreshAlarmStates();
 
 	void RedrawView();
-	void showALimitButtons();
 
-	/*void SetOneButtonDepressed(int btnID);
-	void SetOneButtonFocused(int btnID);
-	void SetAllButtonUnfocused();
-	void SetNextButtonFocused();
-	void SetPrevButtonFocused();
-	eBtnState GetCurrentBtnState();
-	eBtnState GetBtnState(int btnID);*/
+	void showALimitButtons();
+	void showALimitButtons_IPPV();
+	void showALimitButtons_SIPPV();
+	void showALimitButtons_SIMV();
+	void showALimitButtons_SIMVPSV();
+	void showALimitButtons_PSV();
+	void showALimitButtons_CPAP();
+	void showALimitButtons_NCPAP();
+	void showALimitButtons_DUOPAP();
+	void showALimitButtons_HFO();
+	void showALimitButtons_THERAPIE();
 
 protected:
-	
-	/*HDC			m_hDC;
-	HBITMAP		m_hBmp;
-	HBITMAP		m_hBmpPrev;*/
-
 	HDC		m_hdcStatic;
 	HBITMAP m_hbmpStatic;
 
-
 	eVentMode m_eCurVentMode;
-	/*LONG		m_lX;
-	LONG		m_lY;
-	LONG		m_lXo;
-	LONG		m_lYo;*/
 
 	eALimitNumeric m_eCurALimitNumeric;
 
-	//CBmp* m_pcNumHeader;
 	CBmp* m_pcNumInfoTop;
 	CBmp* m_pcNumInfoBot;
 
@@ -139,6 +146,8 @@ protected:
 	CALimitBtn* m_pcAlarmLimit_BPM;
 	CALimitBtn* m_pcAlarmLimit_Leak;
 	CALimitBtn* m_pcAlarmLimit_Apnoe;
+	CALimitBtn* m_pcAlarmLimit_MAPmax;
+	CALimitBtn* m_pcAlarmLimit_MAPmin;
 	CALimitBtn* m_pcAlarmLimit_DCO2hi;
 	CALimitBtn* m_pcAlarmLimit_DCO2lo;
 	CALimitBtn* m_pcAlarmLimit_ETCO2hi;

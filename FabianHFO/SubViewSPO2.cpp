@@ -92,7 +92,7 @@ CSubViewSPO2::CSubViewSPO2()
 	m_iVersionMCU=0;
 	m_szModuleVersion=_T("---");
 
-	m_bySPO2Module=getModel()->getCONFIG()->GetSPO2module();
+	m_bySPO2Module=getModel()->getCONFIG()->getSPO2module();
 	if(m_bySPO2Module!=SPO2MODULE_NONE && getModel()->getSPO2())
 	{
 		//m_iSpO2SIQlimit = getModel()->getCONFIG()->getSpO2SIQlimit();

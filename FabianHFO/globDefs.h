@@ -494,9 +494,9 @@
 #define WM_RELOAD_CONFIG_ERROR			WM_USER + 0x5223
 #define WM_RELOAD_CONFIG				WM_USER + 0x5224
 #define WM_VGARANT_SETKEY				WM_USER + 0x5225
-//#define WM_VGARANT_CLEARKEY				WM_USER + 0x5226
+#define WM_ALIMIT_STATE_MAP_HI_CHANGED	WM_USER + 0x5226
 #define WM_VLIMIT_SETKEY				WM_USER + 0x5227
-//#define WM_VLIMIT_CLEARKEY				WM_USER + 0x5228
+#define WM_ALIMIT_STATE_MAP_LO_CHANGED	WM_USER + 0x5228
 #define WM_STARTUP						WM_USER + 0x5229
 #define WM_DELAY_AUTOOXYCAL				WM_USER + 0x5230
 #define WM_PEEP_LO_CHANGED				WM_USER + 0x5231
@@ -1195,24 +1195,25 @@
 #define IDC_BTN_ALARM_MV_LO			436
 #define IDC_BTN_ALARM_PIPMAX_HI		437
 #define IDC_BTN_ALARM_PIPMIN_LO		438
-#define IDC_BTN_ALARM_DCO2_HI		439
-#define IDC_BTN_ALARM_DCO2_LO		440
-#define IDC_BTN_ALARM_PEEP_LO		441
-#define IDC_BTN_ALARM_ETCO2_HI		442
-#define IDC_BTN_ALARM_ETCO2_LO		443
-#define IDC_BTN_ALARM_FICO2_HI		444
-#define IDC_BTN_ALARM_FICO2_LO		445
-#define IDC_BTN_ALARM_BPM_HI		446
-#define IDC_BTN_ALARM_LEAK_HI		447
-#define IDC_BTN_ALARM_APNOE			448
-
-#define IDC_BTN_ALARM_SPO2_HI		449
-#define IDC_BTN_ALARM_SPO2_LO		450
-#define IDC_BTN_ALARM_PULSERATE_HI	451
-#define IDC_BTN_ALARM_PULSERATE_LO	452
-#define IDC_BTN_ALARM_SPO2_PI_LO	453
-#define IDC_BTN_ALARM_SPO2_SIQ		454
-#define IDC_BTN_ALIMIT_DELAY		455
+#define IDC_BTN_ALARM_MAP_HI		439
+#define IDC_BTN_ALARM_MAP_LO		440
+#define IDC_BTN_ALARM_DCO2_HI		441
+#define IDC_BTN_ALARM_DCO2_LO		442
+#define IDC_BTN_ALARM_PEEP_LO		443
+#define IDC_BTN_ALARM_ETCO2_HI		444
+#define IDC_BTN_ALARM_ETCO2_LO		445
+#define IDC_BTN_ALARM_FICO2_HI		446
+#define IDC_BTN_ALARM_FICO2_LO		447
+#define IDC_BTN_ALARM_BPM_HI		448
+#define IDC_BTN_ALARM_LEAK_HI		449
+#define IDC_BTN_ALARM_APNOE			450
+#define IDC_BTN_ALARM_SPO2_HI		451
+#define IDC_BTN_ALARM_SPO2_LO		452
+#define IDC_BTN_ALARM_PULSERATE_HI	453
+#define IDC_BTN_ALARM_PULSERATE_LO	454
+#define IDC_BTN_ALARM_SPO2_PI_LO	455
+#define IDC_BTN_ALARM_SPO2_SIQ		456
+#define IDC_BTN_ALIMIT_DELAY		457
 
 
 
@@ -2734,6 +2735,8 @@ typedef struct tagALARMSTATES
 	eStateOfAlarm eSoA_ApnoeLimit;
 	eStateOfAlarm eSoA_DCO2maxLimit;
 	eStateOfAlarm eSoA_DCO2minLimit;
+	eStateOfAlarm eSoA_MAPmaxLimit;
+	eStateOfAlarm eSoA_MAPminLimit;
 	eStateOfAlarm eSoA_ETCO2maxLimit;
 	eStateOfAlarm eSoA_ETCO2minLimit;
 	eStateOfAlarm eSoA_FICO2maxLimit;
@@ -2798,28 +2801,30 @@ typedef struct tagALARMSTATES
 /** 
 *	Structure for states of alarm limits.
 */
-typedef struct tagALARMSTATE_ALIMIT
-{
-	eStateOfAlarm eSoA_MVmaxLimit;
-	eStateOfAlarm eSoA_MVminLimit;
-	eStateOfAlarm eSoA_PmaxLimit;
-	eStateOfAlarm eSoA_PEEPminLowLimit;
-	eStateOfAlarm eSoA_PEEPminHighLimit;
-	eStateOfAlarm eSoA_BPMmaxLimit;
-	eStateOfAlarm eSoA_LeakmaxLimit;
-	eStateOfAlarm eSoA_ApnoeLimit;
-	eStateOfAlarm eSoA_DCO2maxLimit;
-	eStateOfAlarm eSoA_DCO2minLimit;
-	eStateOfAlarm eSoA_ETCO2maxLimit;
-	eStateOfAlarm eSoA_ETCO2minLimit;
-	eStateOfAlarm eSoA_FICO2maxLimit;
-	eStateOfAlarm eSoA_FICO2minLimit;
-	eStateOfAlarm eSoA_SPO2maxLimit;
-	eStateOfAlarm eSoA_SPO2minLimit;
-	eStateOfAlarm eSoA_PulseRatemaxLimit;
-	eStateOfAlarm eSoA_PulseRateminLimit;
-	eStateOfAlarm eSoA_SPO2_PIminLimit;
-}tALARMSTATE_ALIMIT;
+//typedef struct tagALARMSTATE_ALIMIT
+//{
+//	eStateOfAlarm eSoA_MVmaxLimit;
+//	eStateOfAlarm eSoA_MVminLimit;
+//	eStateOfAlarm eSoA_PmaxLimit;
+//	eStateOfAlarm eSoA_PEEPminLowLimit;
+//	eStateOfAlarm eSoA_PEEPminHighLimit;
+//	eStateOfAlarm eSoA_BPMmaxLimit;
+//	eStateOfAlarm eSoA_LeakmaxLimit;
+//	eStateOfAlarm eSoA_ApnoeLimit;
+//	eStateOfAlarm eSoA_MAPmaxLimit;
+//	eStateOfAlarm eSoA_MAPminLimit;
+//	eStateOfAlarm eSoA_DCO2maxLimit;
+//	eStateOfAlarm eSoA_DCO2minLimit;
+//	eStateOfAlarm eSoA_ETCO2maxLimit;
+//	eStateOfAlarm eSoA_ETCO2minLimit;
+//	eStateOfAlarm eSoA_FICO2maxLimit;
+//	eStateOfAlarm eSoA_FICO2minLimit;
+//	eStateOfAlarm eSoA_SPO2maxLimit;
+//	eStateOfAlarm eSoA_SPO2minLimit;
+//	eStateOfAlarm eSoA_PulseRatemaxLimit;
+//	eStateOfAlarm eSoA_PulseRateminLimit;
+//	eStateOfAlarm eSoA_SPO2_PIminLimit;
+//}tALARMSTATE_ALIMIT;
 
 /** 
 * \enum eAlarmLimitPara
@@ -2834,6 +2839,8 @@ enum eAlarmLimitPara {
 	AP_PIPMAX,		/*!< Alarm limit Pressure too high */
 	AP_PIPMIN,		/*!< Alarm limit Pressure too high */
 	AP_PEEP,		/*!< Alarm limit Pressure too low */
+	AP_MAPMAX,		/*!< Alarm limit High DCO2 alarm */
+	AP_MAPMIN,		/*!< Alarm limit Low DCO2 alarm */
 	AP_DCO2MAX,		/*!< Alarm limit High DCO2 alarm */
 	AP_DCO2MIN,		/*!< Alarm limit Low DCO2 alarm */
 	AP_ETCO2MAX,	/*!< Alarm limit High ETCO2 alarm */
@@ -2984,18 +2991,20 @@ enum eAlarm {
 	AL_PatAl_PulseRatemax = 57,/*!< Alarm High Pulse Rate alarm 55*/
 	AL_PatAl_PulseRatemin = 58,/*!< Alarm Low Pulse Rate alarm 56*/
 	AL_PatAl_SPO2_PImin = 59,/*!< Alarm Low SpO2 Perfusion Index alarm 57*/
+	AL_PatAl_MAPmax = 60,/*!< Alarm High MAP alarm */
+	AL_PatAl_MAPmin = 61,/*!< Alarm Low MAP alarm */
 	//SysLimit Alarms
-	AL_SysLimit_Pinsp_NotReached = 60,/*!< Alarm Inspiratory pressure not reached */
-	AL_SysLimit_Vlimitted = 61,/*!< Alarm Tidal Volume limited */
-	AL_SysLimit_Vgaranty = 62,/*!< Alarm Tidal Volume not reached */
+	AL_SysLimit_Pinsp_NotReached = 62,/*!< Alarm Inspiratory pressure not reached */
+	AL_SysLimit_Vlimitted = 63,/*!< Alarm Tidal Volume limited */
+	AL_SysLimit_Vgaranty = 64,/*!< Alarm Tidal Volume not reached */
 	//akku alarms
-	AL_Accu_POWER = 63,/*!< Alarm Power failure */
-	AL_Accu_60 = 64,/*!< Alarm Charge battery (<60min) */
-	AL_Accu_30 = 65,/*!< Alarm Charge battery (<30min) */
-	AL_Accu_15 = 66/*!< Alarm Charge battery (<15min) */
+	AL_Accu_POWER = 65,/*!< Alarm Power failure */
+	AL_Accu_60 = 66,/*!< Alarm Charge battery (<60min) */
+	AL_Accu_30 = 67,/*!< Alarm Charge battery (<30min) */
+	AL_Accu_15 = 68/*!< Alarm Charge battery (<15min) */
 };
 
-#define NUMALARMS	67//ACHTUNG, bei neuen ALarmen berücksichtigen
+#define NUMALARMS	69//ACHTUNG, bei neuen ALarmen berücksichtigen
 
 enum eAlarmLimits {
 	LI_MVMAX			=0,		/*!< MinuteVolume max */
@@ -3008,7 +3017,7 @@ enum eAlarmLimits {
 	LI_APNOE			=7,		/*!< Apnea time */ 
 	LI_DCO2MAX			=8,		/*!< DCO2 max HFO */ 
 	LI_DCO2MIN			=9,		/*!< DCO2 min HFO */
-	LI_ETCO2MAX			=10,		/*!< etCO2 max */
+	LI_ETCO2MAX			=10,	/*!< etCO2 max */
 	LI_ETCO2MIN			=11,	/*!< etCO2 min */
 	LI_FICO2MAX			=12,	/*!< FiCO2 max */
 	LI_FICO2MIN			=13,	/*!< FiCO2 min */
@@ -3017,9 +3026,11 @@ enum eAlarmLimits {
 	LI_PULSERATEMAX		=16,	/*!< SpO2 Pulserate max */ 
 	LI_PULSERATEMIN		=17,	/*!< SpO2 Pulserate min */ 
 	LI_SPO2PIMIN		=18,	/*!< SpO2 PI min */ 
-	LI_SPO2SIQMIN		=19		/*!< SpO2 SIQ min */ 
+	LI_SPO2SIQMIN		=19,	/*!< SpO2 SIQ min */ 
+	LI_MAPMAX			=20,	/*!< MAP max */ 
+	LI_MAPMIN			=21		/*!< MAP min */
 };
-#define NUMALARMLIMITS	20//ACHTUNG, bei neuen AlarmLimits berücksichtigen
+#define NUMALARMLIMITS	22//ACHTUNG, bei neuen AlarmLimits berücksichtigen
 
 
 

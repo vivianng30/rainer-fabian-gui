@@ -161,7 +161,7 @@ bool CInterfaceAcuLink::isCO2active()
 	bool bCO2module=false;
 	if(false==getModel()->isCO2inprogress())
 	{
-		if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE && getModel()->getETCO2()!=NULL)
+		if(getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE && getModel()->getETCO2()!=NULL)
 		{
 			bCO2module=true;
 		}
@@ -171,7 +171,7 @@ bool CInterfaceAcuLink::isCO2active()
 bool CInterfaceAcuLink::isSPO2active()
 {
 	bool bSPO2module=false;
-	if(getModel()->getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+	if(getModel()->getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 	{
 		bSPO2module=true;
 	}

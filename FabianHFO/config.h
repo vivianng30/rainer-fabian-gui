@@ -125,17 +125,21 @@ enum eLanguage {
 #define	AUTOALARMLIMIT_LEAKMIN		10		//!< maximum value off 8% tubus leak
 #define	AUTOALARMLIMIT_BPM			150		//!< BPM (max): 50% above measured frequency
 #define	AUTOALARMLIMIT_APNOE		10		//!< APNOE (max): 10sec
-#define	AUTOALARMLIMIT_PIPMAX		50		//!< Pmax: 5 mbar über eingestelltem Inspirationsdruck
+#define	AUTOALARMLIMIT_PIPMAX		50		//!< Pmax: 5 mbar above setting off PIP
 #define	AUTOALARMLIMIT_PIPMIN		20		//!< Pmax: 2 mbar über PEEP limit
 #define	AUTOALARMLIMIT_PMAXHFO		50		//!< Pmax: 5 mbar above measured Inspirationsdruck
 #define	AUTOALARMLIMIT_PEEP			30		//!< PEEP (Pmin): 3 mbar below setting off PEEP
 #define	AUTOALARMLIMIT_CPAP			50		//!< CPAP (Pmin): 5 mbar below/above setting off CPAP
 #define	AUTOALARMLIMIT_NCPAP		20		//!< NCPAP (Pmin): 2 mbar below setting off  CPAP
 #define	AUTOALARMLIMIT_DUOPAP		20		//!< NCPAP (Pmin): 2 mbar below setting off  CPAP
+#define AUTOALARMLIMIT_MAPMAX		50		//!< MAPmax: 5 mbar above setting off Pmean
+#define AUTOALARMLIMIT_MAPMIN		50		//!< MAPmin: 5 mbar below setting off Pmean
 
 //ALARMLIMITS
 #define DIFF_PMAX_PMIN_LIMIT			10
 #define DIFF_PMIN_PMAX_LIMIT			5
+
+#define DIFF_MAPMAX_MAPMIN_LIMIT		10
 
 #define MAXRANGE_NEONATAL_MVMAX			7000
 #define MINRANGE_NEONATAL_MVMIN			10//rku MVLOW
@@ -204,6 +208,9 @@ enum eLanguage {
 //#define MAXRANGE_HF_NEONATAL_PMAX_CYLSPRING		900
 #define MAXRANGE_HF_NEONATAL_PMAX	1400
 
+#define MAXRANGE_HF_NEONATAL_MAPMAX	550
+#define MINRANGE_HF_NEONATAL_MAPMIN	0
+
 #define MINRANGE_HF_NEONATAL_PEEPMIN	-100
 #define MAXRANGE_HF_NEONATAL_BPMMAX		220
 #define MINRANGE_HF_NEONATAL_BPMMIN		10
@@ -242,6 +249,9 @@ enum eLanguage {
 //#define MAXRANGE_HF_PEDIATRIC_PMAX		900
 //#define MAXRANGE_HF_PEDIATRIC_PMAX_CYLSPRING		900
 #define MAXRANGE_HF_PEDIATRIC_PMAX	1400
+
+#define MAXRANGE_HF_PEDIATRIC_MAPMAX	550
+#define MINRANGE_HF_PEDIATRIC_MAPMIN	0
 
 #define MINRANGE_HF_PEDIATRIC_PEEPMIN	-100
 #define MAXRANGE_HF_PEDIATRIC_BPMMAX	220
@@ -809,6 +819,12 @@ enum eLanguage {
 #define FACTORY_ALIMIT_VAL_DCO2MIN		100
 #define FACTORY_ALIMIT_STATE_DCO2MIN	AL_ON
 
+#define FACTORY_ALIMIT_VAL_MAPMAX		150
+#define FACTORY_ALIMIT_STATE_MAPMAX	AL_ON
+#define FACTORY_ALIMIT_VAL_MAPMIN		50
+#define FACTORY_ALIMIT_STATE_MAPMIN	AL_ON
+
+
 #define FACTORY_NUMBLOCK	0
 
 //#define FACTORY_ALIMIT_VAL_MVMAX			1500
@@ -1093,6 +1109,11 @@ enum eLanguage {
 #define ALIMIT_STATE_PEEP_CPAP_8		0x0233
 
 #define ALIMIT_VAL_SPO2_SIQMIN_HF_16	0x0234
+
+#define ALIMIT_STATE_MAPMAX_HF_8		0x0236
+#define ALIMIT_STATE_MAPMIN_HF_8		0x0237
+#define ALIMIT_VAL_MAPMAX_HF_16			0x0238
+#define ALIMIT_VAL_MAPMIN_HF_16			0x023A
 
 //#define ALIMIT_VAL_PMAX_NMODE_16		0x0234
 //#define ALIMIT_VAL_PEEP_NMODE_16		0x0236

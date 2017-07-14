@@ -2133,11 +2133,23 @@ void CSubViewCalFlowSensor::ShowFlowBtns(bool disable)
 			m_pcFlowCalExt->EnableWindow(FALSE);
 	}
 	else if(getModel()->getCONFIG()->GetCurMode()==VM_THERAPIE
-		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_THERAPIE
-		/*||	getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
-		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_NCPAP*/
-		/*||	getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
-		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP*/)//rku,PRETRIGGER
+		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_THERAPIE)
+	{
+		if(m_pcFlowOnOff)
+			m_pcFlowOnOff->ShowWindow(SW_SHOW);
+		if(m_pcFlowOnOff)
+			m_pcFlowOnOff->EnableWindow(FALSE);
+
+		if(m_pcFlowCalExt)
+			m_pcFlowCalExt->ShowWindow(SW_SHOW);
+		if(m_pcFlowCalExt)
+			m_pcFlowCalExt->EnableWindow(FALSE);
+	}
+	else if(	(getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
+		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_NCPAP
+		||	getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
+		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
+		&& (false==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable()))
 	{
 		if(m_pcFlowOnOff)
 			m_pcFlowOnOff->ShowWindow(SW_SHOW);
@@ -2153,7 +2165,7 @@ void CSubViewCalFlowSensor::ShowFlowBtns(bool disable)
 				||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_NCPAP
 				||	getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
 				||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
-				&& (getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET))//rku,PRETRIGGER
+				&& (getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET))
 	{
 		if(m_pcFlowOnOff)
 			m_pcFlowOnOff->ShowWindow(SW_SHOW);

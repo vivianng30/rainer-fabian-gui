@@ -144,6 +144,28 @@ public:
 	eAlarmLimitState getAlimitState_ApnoeLimit();
 
 	/**********************************************************************************************//**
+	 * Gets alimit state mapmax limit. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \return	The alimit state mapmax limit.
+	 **************************************************************************************************/
+
+	eAlarmLimitState getAlimitState_MAPmaxLimit();
+
+	/**********************************************************************************************//**
+	 * Gets alimit state mapmin limit. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \return	The alimit state mapmin limit.
+	 **************************************************************************************************/
+
+	eAlarmLimitState getAlimitState_MAPminLimit();
+
+	/**********************************************************************************************//**
 	 * Gets alimit state dco 2max limit.
 	 *
 	 * \author	Rainer
@@ -582,6 +604,50 @@ public:
 	 **************************************************************************************************/
 
 	void setAlimitStatePIPmaxDefault(eAlarmLimitState state);
+
+	/**********************************************************************************************//**
+	 * Sets alimit state mapmax limit. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \param	state	The state.
+	 **************************************************************************************************/
+
+	void setAlimitState_MAPmaxLimit(eAlarmLimitState state);
+
+	/**********************************************************************************************//**
+	 * Sets alimit state mapmax hf. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \param	state	The state.
+	 **************************************************************************************************/
+
+	void setAlimitStateMAPmaxHF(eAlarmLimitState state);
+
+	/**********************************************************************************************//**
+	 * Sets alimit state mapmin limit. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \param	state	The state.
+	 **************************************************************************************************/
+
+	void setAlimitState_MAPminLimit(eAlarmLimitState state);
+
+	/**********************************************************************************************//**
+	 * Sets alimit state mapmin hf. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \param	state	The state.
+	 **************************************************************************************************/
+
+	void setAlimitStateMAPminHF(eAlarmLimitState state);
 
 	/**********************************************************************************************//**
 	 * Sets alimit state dco 2max limit.
@@ -1200,6 +1266,50 @@ public:
 	void setAlimitPIPminDefault(int value);
 
 	/**********************************************************************************************//**
+	 * Sets alimit mapmax. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \param	value	The value.
+	 **************************************************************************************************/
+
+	void setAlimitMAPmax(int value);
+
+	/**********************************************************************************************//**
+	 * Sets alimit mapmax hf. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \param	value	The value.
+	 **************************************************************************************************/
+
+	void setAlimitMAPmaxHF(int value);
+
+	/**********************************************************************************************//**
+	 * Sets alimit mapmin. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \param	value	The value.
+	 **************************************************************************************************/
+
+	void setAlimitMAPmin(int value);
+
+	/**********************************************************************************************//**
+	 * Sets alimit mapmin hf. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \param	value	The value.
+	 **************************************************************************************************/
+
+	void setAlimitMAPminHF(int value);
+
+	/**********************************************************************************************//**
 	 * Sets alimit dco 2max.
 	 *
 	 * \author	Rainer
@@ -1632,6 +1742,28 @@ public:
 	int getAlimitApnoe();
 
 	/**********************************************************************************************//**
+	 * Gets alimit mapmax. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \return	The alimit mapmax.
+	 **************************************************************************************************/
+
+	int getAlimitMAPmax();
+
+	/**********************************************************************************************//**
+	 * Gets alimit mapmin. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \return	The alimit mapmin.
+	 **************************************************************************************************/
+
+	int getAlimitMAPmin();
+
+	/**********************************************************************************************//**
 	 * Gets alimit dco 2min.
 	 *
 	 * \author	Rainer
@@ -1940,7 +2072,51 @@ public:
 	void setAlimitMinRangeApnoe(int iRangeVal);
 
 	/**********************************************************************************************//**
-	 * Sets alimit maximum range dco 2min.
+	 * Sets alimit maximum range mapmax. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \param	iRangeVal	Zero-based index of the range value.
+	 **************************************************************************************************/
+
+	void setAlimitMaxRangeMAPmax(int iRangeVal);
+
+	/**********************************************************************************************//**
+	 * Sets alimit minimum range mapmax. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \param	iRangeVal	Zero-based index of the range value.
+	 **************************************************************************************************/
+
+	void setAlimitMinRangeMAPmax(int iRangeVal);
+
+	/**********************************************************************************************//**
+	 * Sets alimit maximum range mapmin. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \param	iRangeVal	Zero-based index of the range value.
+	 **************************************************************************************************/
+
+	void setAlimitMaxRangeMAPmin(int iRangeVal);
+
+	/**********************************************************************************************//**
+	 * Sets alimit minimum range mapmin. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \param	iRangeVal	Zero-based index of the range value.
+	 **************************************************************************************************/
+
+	void setAlimitMinRangeMAPmin(int iRangeVal);
+
+	/**********************************************************************************************//**
+	 * Sets alimit maximum range dco2min.
 	 *
 	 * \author	Rainer
 	 * \date	04.07.2017
@@ -1951,7 +2127,7 @@ public:
 	void setAlimitMaxRangeDCO2min(int iRangeVal);
 
 	/**********************************************************************************************//**
-	 * Sets alimit minimum range dco 2min.
+	 * Sets alimit minimum range dco2min.
 	 *
 	 * \author	Rainer
 	 * \date	04.07.2017
@@ -1962,7 +2138,7 @@ public:
 	void setAlimitMinRangeDCO2min(int iRangeVal);
 
 	/**********************************************************************************************//**
-	 * Sets alimit maximum range dco 2max.
+	 * Sets alimit maximum range dco2max.
 	 *
 	 * \author	Rainer
 	 * \date	04.07.2017
@@ -1973,7 +2149,7 @@ public:
 	void setAlimitMaxRangeDCO2max(int iRangeVal);
 
 	/**********************************************************************************************//**
-	 * Sets alimit minimum range dco 2max.
+	 * Sets alimit minimum range dco2max.
 	 *
 	 * \author	Rainer
 	 * \date	04.07.2017
@@ -2378,6 +2554,50 @@ public:
 	 **************************************************************************************************/
 
 	int getAlimitMinRangeApnoe();
+
+	/**********************************************************************************************//**
+	 * Gets alimit maximum range mapmax. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \return	The alimit maximum range mapmax.
+	 **************************************************************************************************/
+
+	int getAlimitMaxRangeMAPmax();
+
+	/**********************************************************************************************//**
+	 * Gets alimit minimum range mapmax. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \return	The alimit minimum range mapmax.
+	 **************************************************************************************************/
+
+	int getAlimitMinRangeMAPmax();
+
+	/**********************************************************************************************//**
+	 * Gets alimit maximum range mapmin. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \return	The alimit maximum range mapmin.
+	 **************************************************************************************************/
+
+	int getAlimitMaxRangeMAPmin();
+
+	/**********************************************************************************************//**
+	 * Gets alimit minimum range mapmin. (mean airway pressure)
+	 *
+	 * \author	Rainer
+	 * \date	10.07.2017
+	 *
+	 * \return	The alimit minimum range mapmin.
+	 **************************************************************************************************/
+
+	int getAlimitMinRangeMAPmin();
 
 	/**********************************************************************************************//**
 	 * Gets alimit maximum range dco 2min.
@@ -2801,5 +3021,6 @@ private:
 	static CAlarmLimitPtr ALIMIT_PULSERATEMIN;  ///< The alimit pulseratemin
 	static CAlarmLimitPtr ALIMIT_SPO2PIMIN; ///< The alimit spo 2 pimin
 	static CAlarmLimitPtr ALIMIT_SPO2SIQMIN;	///< The alimit spo 2 siqmin
-	
+	static CAlarmLimitPtr ALIMIT_MAPMAX;   ///< The alimit MAP maximum (mean airway pressure)
+	static CAlarmLimitPtr ALIMIT_MAPMIN;   ///< The alimit MAP minimum (mean airway pressure)
 };

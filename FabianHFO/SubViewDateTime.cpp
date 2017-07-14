@@ -1863,7 +1863,7 @@ void CSubViewDateTime::OnBnClickedSetDateTime()
 			theApp.getLog()->WriteLine(_T("HFO:0290"));
 		}
 
-		if(getModel()->getCONFIG()->GetCO2module()!=CO2MODULE_NONE && getModel()->getETCO2()!=NULL)
+		if(getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE && getModel()->getETCO2()!=NULL)
 		{
 			getModel()->getETCO2()->get_LastCalDate();
 		}

@@ -611,7 +611,7 @@ void CWndMenuGraphs::Show(BOOL bShow)
 		}
 		else
 		{
-			if(getModel()->getCONFIG()->GetCO2module()==CO2MODULE_NONE)
+			if(getModel()->getCONFIG()->getCO2module()==CO2MODULE_NONE)
 			{
 				if(m_pcMenuCO2)
 				{
@@ -636,7 +636,7 @@ void CWndMenuGraphs::Show(BOOL bShow)
 		}
 		else
 		{
-			if(getModel()->getCONFIG()->GetSPO2module()==SPO2MODULE_NONE)
+			if(getModel()->getCONFIG()->getSPO2module()==SPO2MODULE_NONE)
 			{
 				if(m_pcMenuSPO2)
 				{

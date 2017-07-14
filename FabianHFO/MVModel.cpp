@@ -292,9 +292,9 @@ CInterfaceAcuLink *CMVModel::getAcuLink()
 CInterfaceCO2 *CMVModel::getETCO2()
 { 
 	EnterCriticalSection(&m_csETCO2);
-	if(ETCO2==NULL && getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+	if(ETCO2==NULL && getCONFIG()->getCO2module()!=CO2MODULE_NONE)
 	{
-		ETCO2=CInterfaceCO2::GetInstance(getCONFIG()->GetCO2module());
+		ETCO2=CInterfaceCO2::GetInstance(getCONFIG()->getCO2module());
 	}
 	LeaveCriticalSection(&m_csETCO2);
 	
@@ -303,9 +303,9 @@ CInterfaceCO2 *CMVModel::getETCO2()
 CInterfaceSPO2 *CMVModel::getSPO2()
 { 
 	EnterCriticalSection(&m_csSPO2);
-	if(SPO2==NULL && getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+	if(SPO2==NULL && getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 	{
-		SPO2=CInterfaceSPO2::GetInstance(getCONFIG()->GetSPO2module());
+		SPO2=CInterfaceSPO2::GetInstance(getCONFIG()->getSPO2module());
 	}
 	LeaveCriticalSection(&m_csSPO2);
 	
@@ -1001,15 +1001,15 @@ void CMVModel::Deinit()
 //=============================================================================
 void CMVModel::initCO2module()
 {
-	if(getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+	if(getCONFIG()->getCO2module()!=CO2MODULE_NONE)
 	{
-		ETCO2=CInterfaceCO2::GetInstance(getCONFIG()->GetCO2module());
+		ETCO2=CInterfaceCO2::GetInstance(getCONFIG()->getCO2module());
 
 		if(ETCO2)
 		{
 			if(getCONFIG()->GetMainBoardVersion()>=MAINBOARD_30)
 			{
-				if(getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+				if(getCONFIG()->getCO2module()!=CO2MODULE_NONE)
 				{
 					if(ETCO2->Init(3)==0)
 					{
@@ -1024,7 +1024,7 @@ void CMVModel::initCO2module()
 			}
 			else
 			{
-				if(		getCONFIG()->GetCO2module()!=CO2MODULE_NONE 
+				if(		getCONFIG()->getCO2module()!=CO2MODULE_NONE 
 					&&  getCONFIG()->GetPDMSprotocol()!=ACL_SERIAL_ASCII
 					&&  getCONFIG()->GetPDMSprotocol()!=ACL_SERIAL_WAVE
 					&&	getCONFIG()->GetPDMSprotocol()!=ACL_SERIAL_IVOI
@@ -1041,13 +1041,13 @@ void CMVModel::initCO2module()
 					}
 
 				}
-				else if(	getCONFIG()->GetCO2module()!=CO2MODULE_NONE 
+				else if(	getCONFIG()->getCO2module()!=CO2MODULE_NONE 
 					&&  (getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_ASCII
 					||	getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_WAVE
 					||	getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI
 					||	getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL))
 				{
-					getCONFIG()->SetCO2module(CO2MODULE_NONE);
+					getCONFIG()->setCO2module(CO2MODULE_NONE);
 					ETCO2=NULL;
 				}
 			}
@@ -1058,7 +1058,7 @@ void CMVModel::initCO2module()
 }
 void CMVModel::logCO2module()
 {
-	switch(getCONFIG()->GetCO2module())
+	switch(getCONFIG()->getCO2module())
 	{
 	case CO2MODULE_NONE:
 		{
@@ -1122,7 +1122,7 @@ bool CMVModel::isCO2inprogress()
 //void CMVModel::InitInbiolabModule()
 //{
 //	//DEBUGMSG(TRUE, (TEXT("CMVModel::InitSPO2module()\r\n")));
-//	if(INBIOLAB==NULL /*&& getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE*/)
+//	if(INBIOLAB==NULL /*&& getCONFIG()->getSPO2module()!=SPO2MODULE_NONE*/)
 //	{
 //		//DEBUGMSG(TRUE, (TEXT("CMVModel::InitSPO2module() 1\r\n")));
 //		INBIOLAB=CInterfaceCOMport::GetInstance(COMMODULE_INBIOLAB);
@@ -1173,10 +1173,10 @@ bool CMVModel::isCO2inprogress()
 //=============================================================================
 void CMVModel::initSPO2module(bool bReinit)
 {
-	if(getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+	if(getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 	{
 		if(SPO2==NULL)
-			SPO2=CInterfaceSPO2::GetInstance(getCONFIG()->GetSPO2module());
+			SPO2=CInterfaceSPO2::GetInstance(getCONFIG()->getSPO2module());
 
 		if(SPO2)
 		{
@@ -1202,7 +1202,7 @@ void CMVModel::initSPO2module(bool bReinit)
 }
 void CMVModel::logSPO2module()
 {
-	switch(getCONFIG()->GetSPO2module())
+	switch(getCONFIG()->getSPO2module())
 	{
 	case SPO2MODULE_NONE:
 		{
@@ -1319,7 +1319,7 @@ void CMVModel::SetVentRunState(eRunState state)
 		{
 			bStopPRICO=true;
 			theApp.getLog()->WriteLine(L"***VENT_STOPPED***");
-			if(getCONFIG()->GetCO2module()!=CO2MODULE_NONE && getETCO2()!=NULL)
+			if(getCONFIG()->getCO2module()!=CO2MODULE_NONE && getETCO2()!=NULL)
 			{
 				getETCO2()->set_StandbyMode(true);
 			}
@@ -1335,7 +1335,7 @@ void CMVModel::SetVentRunState(eRunState state)
 	case VENT_RUNNING:
 		{
 			theApp.getLog()->WriteLine(L"***VENT_RUNNING***");
-			if(getCONFIG()->GetCO2module()!=CO2MODULE_NONE && getETCO2()!=NULL)
+			if(getCONFIG()->getCO2module()!=CO2MODULE_NONE && getETCO2()!=NULL)
 			{
 				getETCO2()->set_StandbyMode(false);
 			}
@@ -1345,7 +1345,7 @@ void CMVModel::SetVentRunState(eRunState state)
 		{
 			bStopPRICO=true;
 			theApp.getLog()->WriteLine(L"***VENT_STANDBY***");
-			if(getCONFIG()->GetCO2module()!=CO2MODULE_NONE && getETCO2()!=NULL)
+			if(getCONFIG()->getCO2module()!=CO2MODULE_NONE && getETCO2()!=NULL)
 			{
 				getETCO2()->set_StandbyMode(true);
 			}
@@ -1724,7 +1724,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			
 			isMaintenanceNeeded();
 			
-			//if(getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+			//if(getCONFIG()->getCO2module()!=CO2MODULE_NONE)
 			//{
 			//	if(getAcuLink()!=NULL)
 			//	{
@@ -2456,18 +2456,13 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 	case CMVEventUI::EV_PARABN_HFFREQREC:
 	case CMVEventUI::EV_PARABN_PMITT:
 		{
-			if(getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
+			if(getALARMHANDLER()->getAlimitState_MAPminLimit()==AL_AUTO)
 			{
-				getDATAHANDLER()->calculateAutoAlarmlimitPEEPmin();
+				getDATAHANDLER()->calculateAutoAlarmlimitMAPmin();
 			}
-			/*if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
+			if(getALARMHANDLER()->getAlimitState_MAPmaxLimit()==AL_AUTO)
 			{
-				getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitPIPLOW();
-				bChanged=true;
-			}*/
-			if(getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-			{
-				getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
+				getDATAHANDLER()->calculateAutoAlarmlimitMAPmax();
 			}
 			//rku PMEANLIMITS ?????????????????
 			getALARMHANDLER()->setAlimitsMinMaxRangePressure();
@@ -4726,7 +4721,7 @@ bool CMVModel::ParseAlarmStateBytes(int iAlarmState)
 					bRes=true;
 					getALARMHANDLER()->setStateOfAlarm(AL_PatAl_Apnoe,AS_SIGNALED);
 
-					if(getCONFIG()->GetCO2module()!=CO2MODULE_NONE && getETCO2()!=NULL)
+					if(getCONFIG()->getCO2module()!=CO2MODULE_NONE && getETCO2()!=NULL)
 					{
 						getETCO2()->set_restartBreathAlgorithm();
 					}
@@ -6401,14 +6396,19 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_DCO2MIN,getALARMHANDLER()->getAlimitDCO2min());
 			}
 			
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MAPMAX,getALARMHANDLER()->getAlimitMAPmax());
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MAPMIN,getALARMHANDLER()->getAlimitMAPmin());
 		}
 		else
 		{
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_DCO2MAX,ALINK_NOTVALID);
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_DCO2MIN,ALINK_NOTVALID);
+
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MAPMAX,ALINK_NOTVALID);
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MAPMIN,ALINK_NOTVALID);
 		}
 
-		if(getCONFIG()->GetCO2module()!=CO2MODULE_NONE)
+		if(getCONFIG()->getCO2module()!=CO2MODULE_NONE)
 		{
 			if(getALARMHANDLER()->getAlimitState_ETCO2maxLimit()==AL_OFF)
 				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX, ALINK_OFF);
@@ -6438,7 +6438,7 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MIN,ALINK_NOTVALID);
 		}
 
-		if(getCONFIG()->GetSPO2module()!=SPO2MODULE_NONE)
+		if(getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
 		{
 			if(getPRICOThread())
 			{
@@ -6706,7 +6706,7 @@ void CMVModel::Send_PARA_OXY_RATIO(SHORT iVal, bool bSerial, bool bSPI)
 	if(getAcuLink()!=NULL)
 		getAcuLink()->setParaData(ALINK_SETT_OXY,iVal);
 
-	if(getCONFIG()->GetCO2module()!=CO2MODULE_NONE && getETCO2()!=NULL)
+	if(getCONFIG()->getCO2module()!=CO2MODULE_NONE && getETCO2()!=NULL)
 	{
 		getETCO2()->set_GasCompensation(iVal);
 	}
