@@ -17755,7 +17755,7 @@ bool CDataHandler::getFOToscillationState()
 	return bState;
 }
 
-void CDataHandler::SetBodyweight(WORD weightGramm, bool bLog)
+void CDataHandler::setBodyweight(WORD weightGramm, bool bLog)
 {
 	if(weightGramm>BODYWEIGHTMAXIMUM)
 		weightGramm=BODYWEIGHTMAXIMUM;
@@ -17769,7 +17769,7 @@ void CDataHandler::SetBodyweight(WORD weightGramm, bool bLog)
 	}
 	
 }
-WORD CDataHandler::GetBodyweight()
+WORD CDataHandler::getBodyweight()
 {
 	return m_iBodyweightGramm;
 }

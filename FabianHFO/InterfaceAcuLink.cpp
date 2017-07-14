@@ -240,7 +240,7 @@ void CInterfaceAcuLink::sendMeasurementDataIPPV()
 		setMeasurementData(ALINK_MSMNT_SPO2_SIQ,ALINK_NOTVALID);
 	}
 	setMeasurementData(ALINK_MSMNT_RSBI,ALINK_NOTVALID);
-	int iBW=getModel()->getDATAHANDLER()->GetBodyweight();
+	int iBW=getModel()->getDATAHANDLER()->getBodyweight();
 	if(iBW!=0)
 	{
 		double iTVE=getModel()->getDATAHANDLER()->getMessureDataTVE()*100;
@@ -315,7 +315,7 @@ void CInterfaceAcuLink::sendMeasurementDataSIPPV()
 		setMeasurementData(ALINK_MSMNT_SPO2_SIQ,ALINK_NOTVALID);
 	}
 	setMeasurementData(ALINK_MSMNT_RSBI,ALINK_NOTVALID);
-	int iBW=getModel()->getDATAHANDLER()->GetBodyweight();
+	int iBW=getModel()->getDATAHANDLER()->getBodyweight();
 	if(iBW!=0)
 	{
 		double iTVE=getModel()->getDATAHANDLER()->getMessureDataTVE()*100;
@@ -394,7 +394,7 @@ void CInterfaceAcuLink::sendMeasurementDataPSV()
 		setMeasurementData(ALINK_MSMNT_SPO2_SIQ,ALINK_NOTVALID);
 	}
 	setMeasurementData(ALINK_MSMNT_RSBI,ALINK_NOTVALID);
-	int iBW=getModel()->getDATAHANDLER()->GetBodyweight();
+	int iBW=getModel()->getDATAHANDLER()->getBodyweight();
 	if(iBW!=0)
 	{
 		double iTVE=getModel()->getDATAHANDLER()->getMessureDataTVE()*100;
@@ -476,7 +476,7 @@ void CInterfaceAcuLink::sendMeasurementDataSIMV()
 		iRSBI=(int)CTlsFloat::Round((double)(iBPM/((double)iTVEpat/10))*10, 0);
 	}
 	setMeasurementData(ALINK_MSMNT_RSBI,iRSBI);
-	int iBW=getModel()->getDATAHANDLER()->GetBodyweight();
+	int iBW=getModel()->getDATAHANDLER()->getBodyweight();
 	if(iBW!=0)
 	{
 		double iTVE=getModel()->getDATAHANDLER()->getMessureDataTVE()*100;
@@ -561,7 +561,7 @@ void CInterfaceAcuLink::sendMeasurementDataSIMVPSV()
 		iRSBI=(int)CTlsFloat::Round((double)(iBPM/((double)iTVEpat/10))*10, 0);
 	}
 	setMeasurementData(ALINK_MSMNT_RSBI,iRSBI);
-	int iBW=getModel()->getDATAHANDLER()->GetBodyweight();
+	int iBW=getModel()->getDATAHANDLER()->getBodyweight();
 	if(iBW!=0)
 	{
 		double iTVE=getModel()->getDATAHANDLER()->getMessureDataTVE()*100;
@@ -646,7 +646,7 @@ void CInterfaceAcuLink::sendMeasurementDataCPAP()
 		iRSBI=(int)CTlsFloat::Round((double)(iBPM/((double)iTVEpat/10))*10, 0);
 	}
 	setMeasurementData(ALINK_MSMNT_RSBI,iRSBI);
-	int iBW=getModel()->getDATAHANDLER()->GetBodyweight();
+	int iBW=getModel()->getDATAHANDLER()->getBodyweight();
 	if(iBW!=0)
 	{
 		double iTVE=getModel()->getDATAHANDLER()->getMessureDataTVE()*100;
@@ -927,7 +927,7 @@ void CInterfaceAcuLink::sendMeasurementDataHFO()
 		setMeasurementData(ALINK_MSMNT_SPO2_SIQ,ALINK_NOTVALID);
 	}
 	setMeasurementData(ALINK_MSMNT_RSBI,ALINK_NOTVALID);
-	int iBW=getModel()->getDATAHANDLER()->GetBodyweight();
+	int iBW=getModel()->getDATAHANDLER()->getBodyweight();
 	if(iBW!=0)
 	{
 		double iTVE=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE_HFO)*100;

@@ -97,7 +97,7 @@ bool CNumericFieldVTEKG::drawData(bool bData, bool bFrames, bool bText, bool bLi
 	{
 		iTVE=getModel()->getDATAHANDLER()->getMessureDataTVE()*100;
 	}
-	int iBW=getModel()->getDATAHANDLER()->GetBodyweight();
+	int iBW=getModel()->getDATAHANDLER()->getBodyweight();
 	double iTVEKG=0;
 	if(iBW!=0)
 		iTVEKG=(double)iTVE/iBW;

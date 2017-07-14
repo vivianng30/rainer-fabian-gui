@@ -770,8 +770,8 @@ public:
 	void setFOToscillationState(bool bOsciRun);
 	bool getFOToscillationState();
 
-	void SetBodyweight(WORD weightGramm, bool bLog);
-	WORD GetBodyweight();
+	void setBodyweight(WORD weightGramm, bool bLog);
+	WORD getBodyweight();
 
 	double getAmpCorFactor(BYTE iFreq);
 
