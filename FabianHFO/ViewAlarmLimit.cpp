@@ -5748,26 +5748,22 @@ void CViewAlarmLimit::DrawAutoState()
 
 LRESULT CViewAlarmLimit::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
-	//int iID = 0;
 	switch(message)
 	{
 	case WM_SETVIEWFOCUS:
 		{
-			//rku cs1
 			SetViewFocus();
 			return 1;
 		}
 		break;
 	case WM_SETNEXTFOCUS:
 		{
-			//rku cs1
 			SetNextFocus();
 			return 1;
 		}
 		break;
 	case WM_SETPREVFOCUS:
 		{
-			//rku cs1
 			SetPrevFocus();
 			return 1;
 		}
@@ -5864,7 +5860,6 @@ LRESULT CViewAlarmLimit::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	case WM_ALARMBTN_SETFOCUS:
 		{
 			m_iCurPara=(int)wParam;
-			//DEBUGMSG(TRUE, (TEXT("WM_ALARMBTN_SETFOCUS %d\r\n"),m_iCurPara));
 			return 1;
 		}
 		break;
@@ -6183,106 +6178,6 @@ LRESULT CViewAlarmLimit::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 			return 1;
 		}
 		break;
-	//case WM_ALIMIT_STATE_ETCO2_HI_CHANGED:
-	//	{
-	//		if(!m_bExit)
-	//		{
-	//			if(m_pcAlarmLimit_DCO2lo)
-	//			{
-	//				m_pcAlarmLimit_DCO2lo->SetAlarmLimitState(getModel()->getALARMHANDLER()->getAlimitState_DCO2minLimit());
-	//				//m_pcAlarmLimit_DCO2lo->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitDCO2min(),true);
-	//				m_pcAlarmLimit_DCO2lo->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitDCO2min(),true);
-	//			}
-	//		}
-	//		return 1;
-	//	}
-	//	break;
-	//case WM_ALIMIT_STATE_ETCO2_LO_CHANGED:
-	//	{
-	//		if(!m_bExit)
-	//		{
-	//			//RedrawAlarmLimits();
-	//			if(m_pcAlarmLimit_DCO2hi)
-	//			{
-	//				m_pcAlarmLimit_DCO2hi->SetAlarmLimitState(getModel()->getALARMHANDLER()->getAlimitState_DCO2maxLimit());
-	//				//m_pcAlarmLimit_DCO2hi->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitDCO2max(),true);
-	//				m_pcAlarmLimit_DCO2hi->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitDCO2max(),true);
-	//			}
-	//		}
-	//		return 1;
-	//	}
-	//	break;
-	//case WM_ALIMIT_STATE_SPO2_HI_CHANGED:
-	//	{
-	//		if(!m_bExit)
-	//		{
-	//			if(m_pcAlarmLimit_DCO2lo)
-	//			{
-	//				m_pcAlarmLimit_DCO2lo->SetAlarmLimitState(getModel()->getALARMHANDLER()->getAlimitState_DCO2minLimit());
-	//				//m_pcAlarmLimit_DCO2lo->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitDCO2min(),true);
-	//				m_pcAlarmLimit_DCO2lo->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitDCO2min(),true);
-	//			}
-	//		}
-	//		return 1;
-	//	}
-	//	break;
-	//case WM_ALIMIT_STATE_SPO2_LO_CHANGED:
-	//	{
-	//		if(!m_bExit)
-	//		{
-	//			//RedrawAlarmLimits();
-	//			if(m_pcAlarmLimit_SPO2hi)
-	//			{
-	//				m_pcAlarmLimit_SPO2hi->SetAlarmLimitState(getModel()->getALARMHANDLER()->getAlimitState_DCO2maxLimit());
-	//				//m_pcAlarmLimit_DCO2hi->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitDCO2max(),true);
-	//				m_pcAlarmLimit_SPO2hi->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitDCO2max(),true);
-	//			}
-	//		}
-	//		return 1;
-	//	}
-	//	break;
-	//case WM_ALIMIT_STATE_PULSERATE_HI_CHANGED:
-	//	{
-	//		if(!m_bExit)
-	//		{
-	//			if(m_pcAlarmLimit_DCO2lo)
-	//			{
-	//				m_pcAlarmLimit_DCO2lo->SetAlarmLimitState(getModel()->getALARMHANDLER()->getAlimitState_DCO2minLimit());
-	//				//m_pcAlarmLimit_DCO2lo->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitDCO2min(),true);
-	//				m_pcAlarmLimit_DCO2lo->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitDCO2min(),true);
-	//			}
-	//		}
-	//		return 1;
-	//	}
-	//	break;
-	//case WM_ALIMIT_STATE_PULSERATE_LO_CHANGED:
-	//	{
-	//		if(!m_bExit)
-	//		{
-	//			//RedrawAlarmLimits();
-	//			if(m_pcAlarmLimit_DCO2hi)
-	//			{
-	//				m_pcAlarmLimit_DCO2hi->SetAlarmLimitState(getModel()->getALARMHANDLER()->getAlimitState_DCO2maxLimit());
-	//				//m_pcAlarmLimit_DCO2hi->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitDCO2max(),true);
-	//				m_pcAlarmLimit_DCO2hi->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitDCO2max(),true);
-	//			}
-	//		}
-	//		return 1;
-	//	}
-	//	break;
-	//case WM_ALIMIT_STATE_SPO2_PI_LO_CHANGED:
-	//	{
-	//		if(!m_bExit)
-	//		{
-	//			if(m_pcAlarmLimit_SPO2_PIlo)
-	//			{
-	//				m_pcAlarmLimit_SPO2_PIlo->SetAlarmLimitState(getModel()->getALARMHANDLER()->GetAlimitStateSPO2_PImax());
-	//				m_pcAlarmLimit_SPO2_PIlo->SetCurLimit(getModel()->getDATAHANDLER()->CalculateAutoAlarmlimitSPO2_PImax(),true);
-	//			}
-	//		}
-	//		return 1;
-	//	}
-	//	break;
 	}
 	return CWnd::WindowProc(message, wParam, lParam);
 }
@@ -6586,7 +6481,6 @@ void CViewAlarmLimit::CalculateAlarmLimit()
 		m_pcAlarmLimit_SPO2_SIQ->SetAlarmLimitState(getModel()->getALARMHANDLER()->getAlimitState_SPO2_SIQminLimit());
 		m_pcAlarmLimit_SPO2_SIQ->Redraw();
 	}
-
 }
 
 // **************************************************************************
@@ -6609,67 +6503,6 @@ void CViewAlarmLimit::NotifyCalculateAlarmLimit()
 
 
 
-//void CViewAlarmLimit::OnKillFocus(CWnd* pNewWnd)
-//{
-//	//int iTemp = pNewWnd->GetDlgCtrlID();
-//
-//	CWnd::OnKillFocus(pNewWnd);
-//}
-
-void CViewAlarmLimit::checkAlarmState()
-{
-	if(m_bExit)
-		return;
-
-	if(getModel()->getALARMHANDLER()->isActiveAlarm()==true && getModel()->getALARMHANDLER()->getAlarmSilentState()==ASTATE_ACTIVE)
-	{
-		if(	getModel()->getALARMHANDLER()->isActiveAlarmType(AT_PATIENT)==true)
-		{
-			eAlarm curAlarm=getModel()->getALARMHANDLER()->getActiveAlarm();
-
-			switch(curAlarm)
-			{
-			case AL_PatAl_MVmax:
-			case AL_PatAl_MVmin:
-			case AL_PatAl_PIPmax:
-			case AL_PatAl_PIPmin:
-			case AL_PatAl_PEEPminLow:
-			case AL_PatAl_PEEPminHigh:
-			case AL_PatAl_BPMmax:
-			case AL_PatAl_Leakmax:
-			case AL_PatAl_Apnoe:
-			case AL_PatAl_MAPmax:
-			case AL_PatAl_MAPmin:
-			case AL_PatAl_DCO2max:
-			case AL_PatAl_DCO2min:
-				{
-					m_eCurALimitNumeric=ALIMITNUM_VENTILATION;
-					getModel()->getCONFIG()->setCurALimitNumeric(ALIMITNUM_VENTILATION);
-				}
-				break;
-			case AL_PatAl_ETCO2max:  
-			case AL_PatAl_ETCO2min:
-			case AL_PatAl_FICO2max:  
-			case AL_PatAl_FICO2min:
-				{
-					m_eCurALimitNumeric=ALIMITNUM_ETCO2;
-					getModel()->getCONFIG()->setCurALimitNumeric(ALIMITNUM_ETCO2);
-				}
-				break;
-			case AL_PatAl_SPO2max:
-			case AL_PatAl_SPO2min:
-			case AL_PatAl_PulseRatemax:
-			case AL_PatAl_PulseRatemin:
-			case AL_PatAl_SPO2_PImin:
-				{
-					m_eCurALimitNumeric=ALIMITNUM_SPO2;
-					getModel()->getCONFIG()->setCurALimitNumeric(ALIMITNUM_SPO2);
-				}
-				break;
-			}
-		}
-	}
-}
 
 // **************************************************************************
 // 
@@ -6681,10 +6514,6 @@ void CViewAlarmLimit::SetViewFocus()
 
 	if(getModel()->getALARMHANDLER()->isActiveAlarm()==false || getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_ACTIVE)
 		m_iCurPara=getModel()->getCONFIG()->GetLastSelectedALBtns();
-	/*else
-		getModel()->getCONFIG()->SetLastSelectedALBtns(m_iCurPara);*/
-
-	//DEBUGMSG(TRUE, (TEXT("CViewAlarmLimit::SetViewFocus() %d\r\n"),m_iCurPara));
 
 	bool bFocusLost=false;
 	
@@ -7317,8 +7146,7 @@ void CViewAlarmLimit::SetViewFocus()
 		}
 		break;
 	default:
-		{
-			
+		{	
 			bFocusLost=true;
 		}
 		break;
@@ -7353,13 +7181,10 @@ void CViewAlarmLimit::SetViewFocus()
 	}
 
 	PostMessage(WM_SET_ALIMITTIMER);
-
 }
 
 bool CViewAlarmLimit::SetNextFocus()
 {
-	//DEBUGMSG(TRUE, (TEXT("CViewAlarmLimit::SetNextFocus()\r\n")));
-
 	if(m_bExit)
 		return false;
 
@@ -7383,8 +7208,6 @@ bool CViewAlarmLimit::SetNextFocus()
 }
 bool CViewAlarmLimit::SetPrevFocus()
 {
-	//DEBUGMSG(TRUE, (TEXT("CViewAlarmLimit::SetPrevFocus()\r\n")));
-
 	if(m_bExit)
 		return false;
 
@@ -7409,26 +7232,6 @@ bool CViewAlarmLimit::SetPrevFocus()
 	return true;
 }
 
-//void CViewAlarmLimit::OnSetFocus(CWnd* pOldWnd)
-//{
-//	CMVView::OnSetFocus(pOldWnd);
-//
-//	if(pOldWnd!=0)
-//	{
-//		int iID=pOldWnd->GetDlgCtrlID();
-//
-//		DEBUGMSG(TRUE, (TEXT("CViewAlarmLimit::OnSetFocus() %d\r\n"),iID));
-//	}
-//	//DEBUGMSG(TRUE, (TEXT("CViewAlarmLimit::OnSetFocus() \r\n")));
-//}
-
-//void CViewAlarmLimit::OnKillFocus(CWnd* pNewWnd)
-//{
-//	//int iTemp = pNewWnd->GetDlgCtrlID();
-//
-//	CWnd::OnKillFocus(pNewWnd);
-//}
-
 void CViewAlarmLimit::OnBnClickedValue()
 {
 	if(m_pbtnValueDelay->GetState()==BS_UP)
@@ -7439,5 +7242,60 @@ void CViewAlarmLimit::OnBnClickedValue()
 	{
 		m_pbtnValueDelay->SetState(BS_FOCUSED);
 		getModel()->getCONFIG()->SetCurPminAlarmDelay(m_iValueDelay);
+	}
+}
+
+void CViewAlarmLimit::checkAlarmState()
+{
+	if(m_bExit)
+		return;
+
+	if(getModel()->getALARMHANDLER()->isActiveAlarm()==true && getModel()->getALARMHANDLER()->getAlarmSilentState()==ASTATE_ACTIVE)
+	{
+		if(	getModel()->getALARMHANDLER()->isActiveAlarmType(AT_PATIENT)==true)
+		{
+			eAlarm curAlarm=getModel()->getALARMHANDLER()->getActiveAlarm();
+
+			switch(curAlarm)
+			{
+			case AL_PatAl_MVmax:
+			case AL_PatAl_MVmin:
+			case AL_PatAl_PIPmax:
+			case AL_PatAl_PIPmin:
+			case AL_PatAl_PEEPminLow:
+			case AL_PatAl_PEEPminHigh:
+			case AL_PatAl_BPMmax:
+			case AL_PatAl_Leakmax:
+			case AL_PatAl_Apnoe:
+			case AL_PatAl_MAPmax:
+			case AL_PatAl_MAPmin:
+			case AL_PatAl_DCO2max:
+			case AL_PatAl_DCO2min:
+				{
+					m_eCurALimitNumeric=ALIMITNUM_VENTILATION;
+					getModel()->getCONFIG()->setCurALimitNumeric(ALIMITNUM_VENTILATION);
+				}
+				break;
+			case AL_PatAl_ETCO2max:  
+			case AL_PatAl_ETCO2min:
+			case AL_PatAl_FICO2max:  
+			case AL_PatAl_FICO2min:
+				{
+					m_eCurALimitNumeric=ALIMITNUM_ETCO2;
+					getModel()->getCONFIG()->setCurALimitNumeric(ALIMITNUM_ETCO2);
+				}
+				break;
+			case AL_PatAl_SPO2max:
+			case AL_PatAl_SPO2min:
+			case AL_PatAl_PulseRatemax:
+			case AL_PatAl_PulseRatemin:
+			case AL_PatAl_SPO2_PImin:
+				{
+					m_eCurALimitNumeric=ALIMITNUM_SPO2;
+					getModel()->getCONFIG()->setCurALimitNumeric(ALIMITNUM_SPO2);
+				}
+				break;
+			}
+		}
 	}
 }
