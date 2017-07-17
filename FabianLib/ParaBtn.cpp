@@ -2408,6 +2408,7 @@ void CParaBtn::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	case VM_PRE_CPAP:
 	case VM_PRE_DUOPAP:
 	case VM_PRE_NCPAP:
+	case VM_PRE_THERAPIE:
 	case VM_PRE_HFO:
 		if(AfxGetApp() != NULL)
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_VENTMODE_HOME);
