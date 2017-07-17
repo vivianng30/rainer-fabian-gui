@@ -782,6 +782,7 @@ void CSubParaBtn::DrawSUBPARA_O2REAL(int nState)
 
 	SelectObject(m_hDC,g_hf7AcuBold);
 	CStringW szText=_T("");
+
 	if(bPRICOrunning && !m_bCalRunning)
 	{
 		CStringW szText=_T("PRICO");
@@ -810,12 +811,8 @@ void CSubParaBtn::DrawSUBPARA_O2REAL(int nState)
 		DrawText(m_hDC,szText,-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
 	}
 
-
-
-
 	rcSubBtn.left = m_rcClient.left;
 	rcSubBtn.right = m_rcClient.right;
-
 
 	if(m_bCalRunning)
 	{
@@ -912,7 +909,6 @@ void CSubParaBtn::DrawSUBPARA_O2REAL(int nState)
 					m_pcWarning_Up->Draw(m_hDC,65,m_rcClient.top+5);
 			}
 		}
-
 
 		SelectObject(m_hDC,g_hf14AcuBold);
 
