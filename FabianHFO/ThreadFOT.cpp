@@ -1415,7 +1415,7 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 	m_iCountFOTdisplay++;
 	LeaveCriticalSection(&csFOTcalcBuffer);
 
-	szLog.Format(_T("#FOTcalc: pressure %d XRS%d %.2f Resistance%.2f"),curPressure, m_iFOTdisplaySequence,m_pbufFOTdisplay[m_iFOTdisplaySequence-1].iYValXRS,p_TotalOut[0]);
+	szLog.Format(_T("#FOTcalc: pressure %d XRS%d %.2f Resistance %.2f"),curPressure, m_iFOTdisplaySequence,m_pbufFOTdisplay[m_iFOTdisplaySequence-1].iYValXRS,p_TotalOut[0]);
 	DEBUGMSG(TRUE, (szLog));
 	theApp.getLog()->WriteLine(szLog);
 	

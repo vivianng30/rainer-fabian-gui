@@ -116,7 +116,17 @@ bool CNumericFieldTAU::drawData(bool bData, bool bFrames, bool bText, bool bLimi
 	//	rc.right = 175;
 	//}
 
-	BYTE iBPM=getModel()->getDATAHANDLER()->getAVGMessureDataBPM();
+	BYTE iBPM=0;
+
+	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
+	{
+		getModel()->getDATAHANDLER()->getAVGMessureDataHFFreq();
+	}
+	else
+	{
+		iBPM=getModel()->getDATAHANDLER()->getAVGMessureDataBPM();
+
+	}
 
 	if(iBPM==0)
 	{

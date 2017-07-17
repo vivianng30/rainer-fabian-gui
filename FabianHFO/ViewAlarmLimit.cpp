@@ -2953,7 +2953,7 @@ void CViewAlarmLimit::drawDataVentilation_HFO(HDC hdc)
 		rc.top = 376;
 		rc.bottom = 420;
 
-		BYTE iBPM=getModel()->getDATAHANDLER()->getAVGMessureDataBPM();
+		BYTE iBPM=getModel()->getDATAHANDLER()->getAVGMessureDataHFFreq();
 		if(iBPM==0)
 		{
 			wsprintf(psz,_T("%s"), _T("--"));
