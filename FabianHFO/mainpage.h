@@ -22,7 +22,7 @@
 	- When there's no NIV trigger license available, flow sensor will be disabled at all NIV mode
 	- When there's no NIV trigger license available, FS will be set to off if we switch from conventional mode to a NIV mode
 	- when NIV trigger license will be deleted, FS state OFF will be sent to PICs
-	- AmplitudeCorrectionFactor: only if HFO mode and FOT oscillation is running
+	- AmplitudeCorrectionFactor: only if HFO mode and FOT oscillation is not running
  @endverbatim
  *
  * @subsection ver50154 Version 5.0.1.54
