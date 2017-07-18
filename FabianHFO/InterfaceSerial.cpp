@@ -1930,13 +1930,20 @@ void CInterfaceSerial::Send_PARAVAL_HF_AMPL(int val)
 	//AmplitudeCorrectionFactor
 	if(getModel()->getFOTThread())
 	{
-		if(getModel()->getFOTThread()->isFOTrunning())
+		if(false==getModel()->getFOTThread()->isFOTrunning())
 		{
 			double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
 			if(iAmpCorFactor==0)
 				iAmpCorFactor=1;
 			val=(SHORT)(double)val/iAmpCorFactor;
 		}
+	}
+	else
+	{
+		double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+		if(iAmpCorFactor==0)
+			iAmpCorFactor=1;
+		val=(SHORT)(double)val/iAmpCorFactor;
 	}
 	
 
@@ -3533,9 +3540,9 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 				wHFAMPL=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLmaxPara();
 				
 				//AmplitudeCorrectionFactor
-				if(getModel()->getFOTThread()) //PRO, invalid access
+				if(getModel()->getFOTThread())
 				{
-					if(getModel()->getFOTThread()->isFOTrunning()) //PRO, invalid access
+					if(false==getModel()->getFOTThread()->isFOTrunning()) //PRO, invalid access
 					{
 						double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
 						if(iAmpCorFactor==0)
@@ -3543,15 +3550,22 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						wHFAMPL=(SHORT)(double)wHFAMPL/iAmpCorFactor;
 					}
 				}
+				else
+				{
+					double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+					if(iAmpCorFactor==0)
+						iAmpCorFactor=1;
+					wHFAMPL=(SHORT)(double)wHFAMPL/iAmpCorFactor;
+				}
 			}
 			else
 			{
 				wHFAMPL=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLPara();
 				
 				//AmplitudeCorrectionFactor
-				if(getModel()->getFOTThread()) //PRO, invalid access
+				if(getModel()->getFOTThread())
 				{
-					if(getModel()->getFOTThread()->isFOTrunning()) //PRO, invalid access
+					if(false==getModel()->getFOTThread()->isFOTrunning())
 					{
 						double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
 						double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
@@ -3559,6 +3573,14 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 							iAmpCorFactor=1;
 						wHFAMPL=(SHORT)(double)wHFAMPL/iAmpCorFactor;
 					}
+				}
+				else
+				{
+					double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
+					double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+					if(iAmpCorFactor==0)
+						iAmpCorFactor=1;
+					wHFAMPL=(SHORT)(double)wHFAMPL/iAmpCorFactor;
 				}
 			}
 

@@ -825,15 +825,15 @@ void CConfiguration::LoadSettings()
 	CTlsRegistry regPlatform(_T("HKLM\\Platform"),true);
 	m_szKernel=regPlatform.ReadString(_T("KernelVersion"), _T("unknown"));
 	m_szKernelDate=regPlatform.ReadString(_T("KernelVersionDate"), _T("unknown"));
-	m_szAcuKernel=regPlatform.ReadString(_T("AcuVersion"), _T("V2.0"));
+	m_szAcuKernel=regPlatform.ReadString(_T("AcuVersion"), _T("V3.0"));
 	m_szNetDCUversion=regPlatform.ReadString(_T("BoardSubType"), _T("unknown"));
 
 	bool bReorganize=false;
 	if(m_szAcuKernel==_T("V1.0"))
 	{
 		bReorganize=true;
-		regPlatform.WriteString(_T("AcuVersion"), _T("V2.0"));
-		m_szAcuKernel=_T("V2.0");
+		regPlatform.WriteString(_T("AcuVersion"), _T("V3.0"));
+		m_szAcuKernel=_T("V3.0");
 	}
 
 	WORD wLanguageID=(WORD)regLang.ReadDWORD(_T("LanguageID"), 0);

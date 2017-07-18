@@ -1366,7 +1366,7 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 						//AmplitudeCorrectionFactor
 						if(getModel()->getFOTThread())
 						{
-							if(getModel()->getFOTThread()->isFOTrunning() && bHFOmode)
+							if(false==getModel()->getFOTThread()->isFOTrunning() && bHFOmode)
 							{
 								double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
 								double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
@@ -1375,6 +1375,15 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 
 								iRes=(SHORT)(((double)iRes-iPmitt)*iAmpCorFactor)+iPmitt;
 							}
+						}
+						else if(bHFOmode)
+						{
+							double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
+							double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+							if(iAmpCorFactor==0)
+								iAmpCorFactor=1;
+
+							iRes=(SHORT)(((double)iRes-iPmitt)*iAmpCorFactor)+iPmitt;
 						}
 						
 						_pBufData.iValPressure=iRes;
@@ -3274,13 +3283,20 @@ void CInterfaceSPI::Send_PARAVAL_HF_AMPL(int val)
 	//AmplitudeCorrectionFactor
 	if(getModel()->getFOTThread())
 	{
-		if(getModel()->getFOTThread()->isFOTrunning())
+		if(false==getModel()->getFOTThread()->isFOTrunning())
 		{
 			double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
 			if(iAmpCorFactor==0)
 				iAmpCorFactor=1;
 			val=(SHORT)(double)val/iAmpCorFactor;
 		}
+	}
+	else
+	{
+		double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+		if(iAmpCorFactor==0)
+			iAmpCorFactor=1;
+		val=(SHORT)(double)val/iAmpCorFactor;
 	}
 	
 
@@ -3514,7 +3530,7 @@ int CInterfaceSPI::ReadSPIData()
 		//AmplitudeCorrectionFactor
 		if(getModel()->getFOTThread())
 		{
-			if(getModel()->getFOTThread()->isFOTrunning() && bHFOmode)
+			if(false==getModel()->getFOTThread()->isFOTrunning() && bHFOmode)
 			{
 				double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
 				double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
@@ -3522,6 +3538,14 @@ int CInterfaceSPI::ReadSPIData()
 					iAmpCorFactor=1;
 				iRes=(SHORT)(((double)iRes-iPmitt)*iAmpCorFactor)+iPmitt;
 			}
+		}
+		else if(bHFOmode)
+		{
+			double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
+			double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+			if(iAmpCorFactor==0)
+				iAmpCorFactor=1;
+			iRes=(SHORT)(((double)iRes-iPmitt)*iAmpCorFactor)+iPmitt;
 		}
 		
 		if(		(iRes<MesData_P_Peak_Min)
@@ -3992,13 +4016,20 @@ int CInterfaceSPI::ReadSPIData()
 		//AmplitudeCorrectionFactor
 		if(getModel()->getFOTThread())
 		{
-			if(getModel()->getFOTThread()->isFOTrunning() && bHFOmode)
+			if(false==getModel()->getFOTThread()->isFOTrunning() && bHFOmode)
 			{
 				double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
 				if(iAmpCorFactor==0)
 					iAmpCorFactor=1;
 				iRes=(SHORT)(double)iRes*iAmpCorFactor;
 			}
+		}
+		else if(bHFOmode)
+		{
+			double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+			if(iAmpCorFactor==0)
+				iAmpCorFactor=1;
+			iRes=(SHORT)(double)iRes*iAmpCorFactor;
 		}
 		
 
@@ -4168,7 +4199,7 @@ int CInterfaceSPI::ReadSPIData()
 		//AmplitudeCorrectionFactor
 		if(getModel()->getFOTThread())
 		{
-			if(getModel()->getFOTThread()->isFOTrunning() && bHFOmode)
+			if(false==getModel()->getFOTThread()->isFOTrunning() && bHFOmode)
 			{
 				double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
 				double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
@@ -4176,6 +4207,14 @@ int CInterfaceSPI::ReadSPIData()
 					iAmpCorFactor=1;
 				iRes=(SHORT)(((double)iRes-iPmitt)*iAmpCorFactor)+iPmitt;
 			}
+		}
+		else if(bHFOmode)
+		{
+			double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
+			double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+			if(iAmpCorFactor==0)
+				iAmpCorFactor=1;
+			iRes=(SHORT)(((double)iRes-iPmitt)*iAmpCorFactor)+iPmitt;
 		}
 		
 
@@ -4657,13 +4696,20 @@ int CInterfaceSPI::ReadSPIData()
 		//AmplitudeCorrectionFactor
 		if(getModel()->getFOTThread())
 		{
-			if(getModel()->getFOTThread()->isFOTrunning() && bHFOmode)
+			if(false==getModel()->getFOTThread()->isFOTrunning() && bHFOmode)
 			{
 				double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
 				if(iAmpCorFactor==0)
 					iAmpCorFactor=1;
 				iRes=(SHORT)(double)iRes*iAmpCorFactor;
 			}
+		}
+		else if(bHFOmode)
+		{
+			double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+			if(iAmpCorFactor==0)
+				iAmpCorFactor=1;
+			iRes=(SHORT)(double)iRes*iAmpCorFactor;
 		}
 		
 
