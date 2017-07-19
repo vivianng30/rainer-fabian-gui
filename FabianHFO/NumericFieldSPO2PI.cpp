@@ -111,11 +111,11 @@ bool CNumericFieldSPO2PI::drawData(bool bData, bool bFrames, bool bText, bool bL
 	{
 		if(iPerfusionIndex>=100)
 		{
-			wsprintf(psz,_T("%0.0f"), CTlsFloat::Round(((double)iPerfusionIndex)/1000, 1));
+			wsprintf(psz,_T("%0.1f"), CTlsFloat::Round(((double)iPerfusionIndex)/1000, 1));
 		}
 		else
 		{
-			wsprintf(psz,_T("%0.0f"), CTlsFloat::Round(((double)iPerfusionIndex)/1000, 2));
+			wsprintf(psz,_T("%0.2f"), CTlsFloat::Round(((double)iPerfusionIndex)/1000, 2));
 		}
 	}
 	else

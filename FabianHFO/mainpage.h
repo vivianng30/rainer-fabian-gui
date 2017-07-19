@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50156 Version 5.0.1.56
+ * @date 2017-07-19
+ * @verbatim
+	- SpO2: PI numeric is displayed with one decimals in the right side numeric field
+ @endverbatim
+ *
  * @subsection ver50155 Version 5.0.1.55
  * @date 2017-07-14
  * @verbatim
