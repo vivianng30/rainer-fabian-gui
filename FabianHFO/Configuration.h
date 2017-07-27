@@ -86,11 +86,17 @@ public:
 	void TrendSetFilled(bool state);
 	bool TrendIsFilled();
 
-	void setTriggerOptionCONV(eTriggereType type);
-	eTriggereType getTriggerOptionCONV();
+	void setTriggerOption_CONV(eTriggereType type);
+	eTriggereType getTriggerOption_CONV();
 
-	void setTriggerOptionNMODE(eTriggereType type);
-	eTriggereType getTriggerOptionNMODE();
+	void setTriggerOption_CPAP(eTriggereType type);
+	eTriggereType getTriggerOption_CPAP();
+
+	void setTriggerOption_DUOPAP(eTriggereType type);
+	eTriggereType getTriggerOption_DUOPAP();
+
+	void setTriggerOption_NCPAP(eTriggereType type);
+	eTriggereType getTriggerOption_NCPAP();
 
 	void SetAutoOxyCal(eAutoOxyCal state);
 	eAutoOxyCal GetAutoOxyCal();
@@ -160,319 +166,255 @@ public:
 	BYTE getFOThfo_FREQ();
 
 	void setFOThfo_STEPS(BYTE steps);
-
 	BYTE getFOThfo_STEPS();
 
 	void setDiffPmeanFOT(WORD diff);
-
 	WORD getDiffPmeanFOT();
 
 	void setFOThfo_PMEANSTART(WORD pmean);
-
 	WORD getFOThfo_PMEANSTART();
 
 	void setFOThfo_PMEANEND(WORD pmean);
-
 	WORD getFOThfo_PMEANEND();
 
 	void SetNebulizerTime(int iTime);
-
 	int GetNebulizerTime();
 
 	int GetCurPminAlarmDelay();
-
 	void SetCurPminAlarmDelay(int iTime);
 
 	int getCurPatientAlarmDelay();
-
 	void setCurPatientAlarmDelay(int iTime);
 
 	eVentMode GetCurMode();
-
 	void SetCurMode(eVentMode state);
 
 	void SetCurPressureRiseCtrl(eCurveForm form);
-
 	eCurveForm GetCurPressureRiseCtrl();
 
 	bool CurModeIsPresetMode();
 
 	eVentMode GetPrevMode();
-
 	void SetPrevMode(eVentMode state);
 
 	WORD		GetParaDataITime_TRIGGER();
-
 	void		SetParaDataITime_TRIGGER(WORD iVal);
 
 	WORD		GetParaDataITime_IPPV();
-
 	void		SetParaDataITime_IPPV(WORD iVal);
 
 	WORD		GetParaDataITime_NMODE();
-
 	void		SetParaDataITime_NMODE(WORD iVal);
 
 	WORD		GetParaDataETIME_TRIGGER();
-
 	void		SetParaDataETIME_TRIGGER(WORD iVal);
 
 	WORD		GetParaDataETIME_IPPV();
-
 	void		SetParaDataETIME_IPPV(WORD iVal);
 
 	WORD		GetParaDataETIME_NMODE();
-
 	void		SetParaDataETIME_NMODE(WORD iVal);
 
 	WORD		GetParaDataBPM_TRIGGER();
-
 	void		SetParaDataBPM_TRIGGER(WORD iVal);
 
 	WORD		GetParaDataBPM_IPPV();
-
 	void		SetParaDataBPM_IPPV(WORD iVal);
 
 	WORD		GetParaDataBPM_NMODE();
-
 	void		SetParaDataBPM_NMODE(WORD iVal);
 
 	WORD		GetParaDataIFlow_TRIGGER();
-
 	void		SetParaDataIFlow_TRIGGER(WORD iVal);
 
 	WORD		GetParaDataIFlow_IPPV();
-
 	void		SetParaDataIFlow_IPPV(WORD iVal);
 
 	WORD		GetParaDataHFFlow();
-
 	void		SetParaDataHFFlow(WORD iVal);
 
 	WORD		GetParaDataRisetime_IPPV();
-
 	void		SetParaDataRisetime_IPPV(WORD iVal);
 
 	WORD		GetParaDataRisetime_TRIGGER();
-
 	void		SetParaDataRisetime_TRIGGER(WORD iVal);
 
 	WORD		GetParaDataTherapieFlow();
-
 	void		SetParaDataTherapieFlow(WORD iVal);
 
 	WORD		GetParaDataEFlow_IPPV();
-
 	void		SetParaDataEFlow_IPPV(WORD iVal);
 
 	WORD		GetParaDataEFlow_TRIGGER();
-
 	void		SetParaDataEFlow_TRIGGER(WORD iVal);
 
 	WORD		GetParaDataFlowMin();
-
 	void		SetParaDataFlowMin(WORD iVal);
 
 	SHORT		GetParaDataPEEP_IPPV();
-
 	void		SetParaDataPEEP_IPPV(SHORT iVal);
 
 	SHORT		GetParaDataPEEP_TRIGGER();
-
 	void		SetParaDataPEEP_TRIGGER(SHORT iVal);
 
 	void		SetParaDataCPAP(SHORT iVal);
 
 	SHORT		GetParaDataCPAP_NMODE();
-
 	void		SetParaDataCPAP_NMODE(SHORT iVal);
 
 	SHORT		GetParaDataPInsp_TRIGGER();
-
 	void		SetParaDataPInsp_TRIGGER(SHORT iVal);
 
 	SHORT		GetParaDataPInsp_IPPV();
-
 	void		SetParaDataPInsp_IPPV(SHORT iVal);
 
 	SHORT		GetParaDataPmaxVolG_TRIGGER();
-
 	void		SetParaDataPmaxVolG_TRIGGER(SHORT iVal);
 
 	SHORT		GetParaDataPmaxVolG_IPPV();
-
 	void		SetParaDataPmaxVolG_IPPV(SHORT iVal);
 
 	SHORT		GetParaDataPpsv();
-
 	void		SetParaDataPpsv(SHORT iVal);
 
 	SHORT		GetParaDataPManual_HFO();
-
 	void		SetParaDataPManual_HFO(SHORT iVal, bool bSendAcuLink=true);//PMAN1
 	
 	void		SetParaDataPManual_CPAP(SHORT iVal, bool bSendAcuLink=true);//PMAN1
 
 	SHORT		GetParaDataPManual_NMODE();
-
 	void		SetParaDataPManual_NMODE(SHORT iVal);
 
 	BYTE		GetParaDataO2();
-
 	void		SetParaDataO2(BYTE iVal);
 
 	BYTE		GetParaDataO2Flush();
-
 	void		SetParaDataO2Flush(BYTE iVal);
 
 	BYTE		GetO2Difference();
-
 	void		SetO2Difference(BYTE value);
 
 	int			GetPmeanDifference();
-
 	void		SetPmeanDifference(int value);
 
 	int			getPEEP_PpsvDifference();
-
 	void		setPEEP_PpsvDifference(int value);
 
 	WORD		GetParaDataVLimit_TRIGGER();
-
 	WORD		GetParaDataVLimit_IPPV();
 
 	void		SetParaDataVLimit_TRIGGER(WORD iVal);
-
 	void		SetParaDataVLimit_IPPV(WORD iVal);
 
 	bool		GetParaDataVLimitState_TRIGGER();
-
 	bool		GetParaDataVLimitState_IPPV();
 
 	void		SetParaDataVLimitState_TRIGGER(bool bState);
-
 	void		SetParaDataVLimitState_IPPV(bool bState);
 
 	WORD		GetParaDataVGarant_TRIGGER();
-
 	WORD		GetParaDataVGarant_IPPV();
 
 	void		SetParaDataVGarant_TRIGGER(WORD iVal);
-
 	void		SetParaDataVGarant_IPPV(WORD iVal);
 
 	bool		GetParaDataVGarantState_TRIGGER();
-
 	bool		GetParaDataVGarantState_IPPV();
 
 	void		SetParaDataVGarantState_TRIGGER(bool bState);
-
 	void		SetParaDataVGarantState_IPPV(bool bState);
 
-	BYTE		GetParaDataTriggerCONV();
+	/*BYTE		GetParaDataTriggerCONV();
+	void		SetParaDataTriggerCONV(BYTE iVal);*/
 
-	void		SetParaDataTriggerCONV(BYTE iVal);
+	/*BYTE		GetParaDataTriggerNMODE();
+	void		SetParaDataTriggerNMODE(BYTE iVal);*/
 
-	BYTE		GetParaDataTriggerNMODE();
+	BYTE		GetParaDataTrigger_CONV();
+	void		SetParaDataTrigger_CONV(BYTE iVal);
 
-	void		SetParaDataTriggerNMODE(BYTE iVal);
+	BYTE		GetParaDataTrigger_CPAP();
+	void		SetParaDataTrigger_CPAP(BYTE iVal);
+
+	BYTE		GetParaDataTrigger_NCPAP();
+	void		SetParaDataTrigger_NCPAP(BYTE iVal);
+
+	BYTE		GetParaDataTrigger_DUOPAP();
+	void		SetParaDataTrigger_DUOPAP(BYTE iVal);
+
+
 
 	BYTE		GetParaDataBackup();
-
 	void		SetParaDataBackup(BYTE iVal);
 
 	WORD		GetParaDataHFAmpl();
-
 	void		SetParaDataHFAmpl(WORD iVal);
 
 	WORD		GetParaDataHFAmplmax();
-
 	void		SetParaDataHFAmplmax(WORD iVal);
 
 	BYTE		GetParaDataHFFreq();
-
 	void		SetParaDataHFFreq(BYTE iVal);
 
 	WORD		GetParaDataHFPmean();
-
 	void		SetParaDataHFPmean(WORD iVal);
 
 	WORD		GetParaDataITimeRec();
-
 	void		SetParaDataITimeRec(WORD iVal);
 
 	WORD		GetParaDataFREQ_REC();
-
 	void		SetParaDataFREQ_REC(WORD iVal);
 
 	WORD		GetParaDataHFPMeanRec();
-
 	void		SetParaDataHFPMeanRec(WORD iVal);
 
 	WORD		GetParaDataHFVGarant();
-
 	void		SetParaDataHFVGarant(WORD iVal);
 
 	bool		GetParaDataHFVGarantState();
-
 	void		SetParaDataHFVGarantState(bool bState);
 
 	eRatioIE	GetParaDataHFIERatio();
-
 	void		SetParaDataHFIERatio(eRatioIE iVal);
 	
-
 	bool DeaktivateVGarantState();
 
 	bool DeaktivateVLimitState();
 	
-	
 	eCO2unit GetCO2unit();
-
 	void SetCO2unit(eCO2unit unit);
 
 	SHORT GetCO2BaroPressure();
-
 	void SetCO2BaroPressure(SHORT value);
 
 	bool isFastSATon();
-
 	void setFastSATon(bool bFastSATon);
 
 	eSPO2sensitivitymode getSensitivityMode();
-
 	void setSensitivityMode(eSPO2sensitivitymode mode);
 
 	eSPO2alarmdelay getSPO2alarmDelay();
-
 	void setSPO2alarmDelay(eSPO2alarmdelay delay);
 
 	eSPO2averagingtime getSPO2averagingTime();
-
 	void setSPO2averagingTime(eSPO2averagingtime avtime);
 
 	bool useTveBTB();
-
 	void setUseTveBTB(bool state);
 
 	bool useNeoPed();
-
 	void setUseNeoPed(bool state);
 
 	bool getBTPS();
-
 	void setBTPS(bool state);
 
 	eIERelationMode GetIERelationMode();
-
 	void SetIERelationMode(eIERelationMode mode);
 
 	eRefFlowSensor GetRefFlowSensor();
-
 	void SetRefFlowSensor(eRefFlowSensor mode);
 
 	eTubeConfig GetTubeConfig();
-
 	eTubeSet GetTubeSet();
 
 	void SetTubeSet(eTubeSet tube);
@@ -482,799 +424,545 @@ public:
 	bool getFreshgasExt();
 
 	bool isBiasFlowActive();
-
 	bool isSPO2REGISTRYenabled();
-
 	bool isCO2REGISTRYenabled();
-
 	bool isRISETIMEREGISTRYenabled();
 
 	BYTE getPRICO_SPO2lowRange();
-
 	void setPRICO_SPO2lowRange(BYTE SPO2low);
 
 	BYTE getPRICO_SPO2highRange();
-
 	void setPRICO_SPO2highRange(BYTE SPO2high);
 
 	BYTE getPRICO_FIO2lowRange();
-
 	void setPRICO_FIO2lowRange(BYTE FIO2low);
 
 	BYTE getPRICO_FIO2highRange();
-
 	void setPRICO_FIO2highRange(BYTE FIO2high);
 	
 	ePressureUnit GetPressureUnit();
-
 	void SetPressureUnit(ePressureUnit eUnit);
 
 	eVolumeControl GetVolumeControl();
-
 	void SetVolumeControl(eVolumeControl eCtrl);
 
 	eFlowSensorState GetFlowSensorState();
-
 	void SetFlowSensorState(eFlowSensorState state);
 
 	int GetAlarmlimitETCO2max();
-
 	eAlarmLimitState GetAlarmlimitStateETCO2max();
-
 	void SetAlarmlimitETCO2max(int value);
-
 	void SetAlarmlimitStateETCO2max(eAlarmLimitState state);
-
 	int GetAlarmlimitETCO2min();
-
 	eAlarmLimitState GetAlarmlimitStateETCO2min();
-
 	void SetAlarmlimitETCO2min(int value);
-
 	void SetAlarmlimitStateETCO2min(eAlarmLimitState state);
 
 	int GetAlarmlimitFICO2max();
-
 	eAlarmLimitState GetAlarmlimitStateFICO2max();
-
 	void SetAlarmlimitFICO2max(int value);
-
 	void SetAlarmlimitStateFICO2max(eAlarmLimitState state);
-
 	int GetAlarmlimitFICO2min();
-
 	eAlarmLimitState GetAlarmlimitStateFICO2min();
-
 	void SetAlarmlimitFICO2min(int value);
-
 	void SetAlarmlimitStateFICO2min(eAlarmLimitState state);
 
 	int GetAlarmlimitSPO2max();
-
 	eAlarmLimitState GetAlarmlimitStateSPO2max();
-
 	void SetAlarmlimitSPO2max(int value);
-
 	void SetAlarmlimitStateSPO2max(eAlarmLimitState state);
 
 	int GetAlarmlimitSPO2min();
-
 	eAlarmLimitState GetAlarmlimitStateSPO2min();
-
 	void SetAlarmlimitSPO2min(int value);
-
 	void SetAlarmlimitStateSPO2min(eAlarmLimitState state);
 
 	int GetAlarmlimitPulseRatemax();
-
 	eAlarmLimitState GetAlarmlimitStatePulseRatemax();
-
 	void SetAlarmlimitPulseRatemax(int value);
-
 	void SetAlarmlimitStatePulseRatemax(eAlarmLimitState state);
 
 	int GetAlarmlimitPulseRatemin();
-
 	eAlarmLimitState GetAlarmlimitStatePulseRatemin();
-
 	void SetAlarmlimitPulseRatemin(int value);
-
 	void SetAlarmlimitStatePulseRatemin(eAlarmLimitState state);
 
 	int GetAlarmlimitSPO2_PImin();
-
 	eAlarmLimitState GetAlarmlimitStateSPO2_PImin();
-
 	void SetAlarmlimitSPO2_PImin(int value);
-
 	void SetAlarmlimitStateSPO2_PImin(eAlarmLimitState state);
 
 	int GetAlarmlimitSPO2_SIQmin();
-
 	eAlarmLimitState GetAlarmlimitStateSPO2_SIQmin();
-
 	void SetAlarmlimitSPO2_SIQmin(int value);
-
 	void SetAlarmlimitStateSPO2_SIQmin(eAlarmLimitState state);
 
 	int GetAlarmlimitMVmax();
-
 	eAlarmLimitState GetAlarmlimitStateMVmax();
-
 	void SetAlarmlimitMVmax(int value);
-
 	void SetAlarmlimitStateMVmax(eAlarmLimitState state);
 
 	int GetAlarmlimitMVmin();
-
 	eAlarmLimitState GetAlarmlimitStateMVmin();
-
 	void SetAlarmlimitMVmin(int value);
-
 	void SetAlarmlimitStateMVmin(eAlarmLimitState state);
 
 	int GetAlarmlimitPIPmax();
-
 	eAlarmLimitState GetAlarmlimitStatePIPmax();
-
 	void SetAlarmlimitPIPmax(int value);
-
 	void SetAlarmlimitStatePIPmax(eAlarmLimitState state);
 
 	int GetAlarmlimitPIPmin();
-
 	eAlarmLimitState GetAlarmlimitStatePIPmin();
-
 	void SetAlarmlimitPIPmin(int value);
-
 	void SetAlarmlimitStatePIPmin(eAlarmLimitState state);
 
 	int GetAlarmlimitPEEPmin();
-
 	eAlarmLimitState GetAlarmlimitStatePEEPmin();
-
 	void SetAlarmlimitPEEPmin(int value);
-
 	void SetAlarmlimitStatePEEPmin(eAlarmLimitState state);
 
 	int GetAlarmlimitBPMmax();
-
 	eAlarmLimitState GetAlarmlimitStateBPMmax();
-
 	void SetAlarmlimitBPMmax(int value);
-
 	void SetAlarmlimitStateBPMmax(eAlarmLimitState state);
 
 	int getAlimitLeakmax();
-
 	eAlarmLimitState GetAlarmlimitStateLeakmax();
-
 	void SetAlarmlimitLeakmax(int value);
-
 	void SetAlarmlimitStateLeakmax(eAlarmLimitState state);
 
 	int GetAlarmlimitApnoe();
-
 	eAlarmLimitState GetAlarmlimitStateApnoe();
-
 	void setAlimitApnoe(int value);
-
 	void SetAlarmlimitStateApnoe(eAlarmLimitState state);
 
 	int GetAlarmlimitSPO2maxHF();
-
 	eAlarmLimitState GetAlarmlimitStateSPO2maxHF();
-
 	void SetAlarmlimitSPO2maxHF(int value);
-
 	void SetAlarmlimitStateSPO2maxHF(eAlarmLimitState state);
 
 	int GetAlarmlimitSPO2minHF();
-
 	eAlarmLimitState GetAlarmlimitStateSPO2minHF();
-
 	void SetAlarmlimitSPO2minHF(int value);
-
 	void SetAlarmlimitStateSPO2minHF(eAlarmLimitState state);
 
 	int GetAlarmlimitPulseRatemaxHF();
-
 	eAlarmLimitState GetAlarmlimitStatePulseRatemaxHF();
-
 	void SetAlarmlimitPulseRatemaxHF(int value);
-
 	void SetAlarmlimitStatePulseRatemaxHF(eAlarmLimitState state);
 
 	int GetAlarmlimitPulseRateminHF();
-
 	eAlarmLimitState GetAlarmlimitStatePulseRateminHF();
-
 	void SetAlarmlimitPulseRateminHF(int value);
-
 	void SetAlarmlimitStatePulseRateminHF(eAlarmLimitState state);
 
 	int GetAlarmlimitSPO2_PIminHF();
-
 	eAlarmLimitState GetAlarmlimitStateSPO2_PIminHF();
-
 	void SetAlarmlimitSPO2_PIminHF(int value);
-
 	void SetAlarmlimitStateSPO2_PIminHF(eAlarmLimitState state);
 
 	int GetAlarmlimitSPO2_SIQminHF();
-
 	eAlarmLimitState GetAlarmlimitStateSPO2_SIQminHF();
-
 	void SetAlarmlimitSPO2_SIQminHF(int value);
-
 	void SetAlarmlimitStateSPO2_SIQminHF(eAlarmLimitState state);
 
 	int GetAlarmlimitETCO2maxHF();
-
 	eAlarmLimitState GetAlarmlimitStateETCO2maxHF();
-
 	void SetAlarmlimitETCO2maxHF(int value);
-
 	void SetAlarmlimitStateETCO2maxHF(eAlarmLimitState state);
 
 	int GetAlarmlimitETCO2minHF();
-
 	eAlarmLimitState GetAlarmlimitStateETCO2minHF();
-
 	void SetAlarmlimitETCO2minHF(int value);
-
 	void SetAlarmlimitStateETCO2minHF(eAlarmLimitState state);
 
 	int GetAlarmlimitFICO2maxHF();
-
 	eAlarmLimitState GetAlarmlimitStateFICO2maxHF();
-
 	void SetAlarmlimitFICO2maxHF(int value);
-
 	void SetAlarmlimitStateFICO2maxHF(eAlarmLimitState state);
 
 	int GetAlarmlimitFICO2minHF();
-
 	eAlarmLimitState GetAlarmlimitStateFICO2minHF();
-
 	void SetAlarmlimitFICO2minHF(int value);
-
 	void SetAlarmlimitStateFICO2minHF(eAlarmLimitState state);
 
 	int GetAlarmlimitMAPmaxHF();
-
 	eAlarmLimitState GetAlarmlimitStateMAPmaxHF();
-
 	void SetAlarmlimitMAPmaxHF(int value);
-
 	void SetAlarmlimitStateMAPmaxHF(eAlarmLimitState state);
 
 	int GetAlarmlimitMAPminHF();
-
 	eAlarmLimitState GetAlarmlimitStateMAPminHF();
-
 	void SetAlarmlimitMAPminHF(int value);
-
 	void SetAlarmlimitStateMAPminHF(eAlarmLimitState state);
 
 	int GetAlarmlimitDCO2maxHF();
-
 	eAlarmLimitState GetAlarmlimitStateDCO2maxHF();
-
-	
 	void SetAlarmlimitDCO2maxHF(int value);
-
 	void SetAlarmlimitStateDCO2maxHF(eAlarmLimitState state);
 
 	int GetAlarmlimitDCO2minHF();
-
 	eAlarmLimitState GetAlarmlimitStateDCO2minHF();
-
 	void SetAlarmlimitDCO2minHF(int value);
-
 	void SetAlarmlimitStateDCO2minHF(eAlarmLimitState state);
 
 	int GetAlarmlimitMVmaxHF();
-
 	eAlarmLimitState GetAlarmlimitStateMVmaxHF();
-
 	void SetAlarmlimitMVmaxHF(int value);
-
 	void SetAlarmlimitStateMVmaxHF(eAlarmLimitState state);
 
 	int GetAlarmlimitMVminHF();
-
 	eAlarmLimitState GetAlarmlimitStateMVminHF();
-
 	void SetAlarmlimitMVminHF(int value);
-
 	void SetAlarmlimitStateMVminHF(eAlarmLimitState state);
 
 	
 	int GetAlarmlimitPmaxHF();
-
 	eAlarmLimitState GetAlarmlimitStatePmaxHF();
-
 	void SetAlarmlimitPmaxHF(int value);
-
 	void SetAlarmlimitStatePmaxHF(eAlarmLimitState state);
 
 	int GetAlarmlimitPEEPminHF();
-
 	eAlarmLimitState GetAlarmlimitStatePEEPminHF();
-
 	void SetAlarmlimitPEEPminHF(int value);
-
-	
 	void SetAlarmlimitStatePEEPminHF(eAlarmLimitState state);
 
 	int GetAlarmlimitBPMmaxHF();
-
 	eAlarmLimitState GetAlarmlimitStateBPMmaxHF();
-
 	void SetAlarmlimitBPMmaxHF(int value);
-
 	void SetAlarmlimitStateBPMmaxHF(eAlarmLimitState state);
 
 	int GetAlarmlimitLeakmaxHF();
-
-	
 	eAlarmLimitState GetAlarmlimitStateLeakmaxHF();
-
 	void SetAlarmlimitLeakmaxHF(int value);
-
 	void SetAlarmlimitStateLeakmaxHF(eAlarmLimitState state);
 
 	int GetAlarmlimitApnoeHF();
-
 	eAlarmLimitState GetAlarmlimitStateApnoeHF();
-
 	void SetAlarmlimitApnoeHF(int value);
-
-	
 	void SetAlarmlimitStateApnoeHF(eAlarmLimitState state);
 
 	int GetAlarmlimitPmaxCpap();
-
 	eAlarmLimitState GetAlarmlimitStatePmaxCpap();
-
 	void SetAlarmlimitPmaxCpap(int value);
-
 	void SetAlarmlimitStatePmaxCpap(eAlarmLimitState state);
 
 	int GetAlarmlimitPEEPminCpap();
-
 	eAlarmLimitState GetAlarmlimitStatePEEPminCpap();
-
 	void SetAlarmlimitPEEPminCpap(int value);
-
 	void SetAlarmlimitStatePEEPminCpap(eAlarmLimitState state);
 
 	int GetAlarmlimitPmaxDUOPAP();
-
 	eAlarmLimitState GetAlarmlimitStatePmaxDUOPAP();
-
 	void SetAlarmlimitPmaxDUOPAP(int value);
-
 	void SetAlarmlimitStatePmaxDUOPAP(eAlarmLimitState state);
 
 	int GetAlarmlimitPmaxNCPAP();
-
 	eAlarmLimitState GetAlarmlimitStatePmaxNCPAP();
-
 	void SetAlarmlimitPmaxNCPAP(int value);
-
 	void SetAlarmlimitStatePmaxNCPAP(eAlarmLimitState state);
 
 	int GetAlarmlimitPEEPminDUOPAP();
-
 	eAlarmLimitState GetAlarmlimitStatePEEPminDUOPAP();
-
 	void SetAlarmlimitPEEPminDUOPAP(int value);
-
 	void SetAlarmlimitStatePEEPminDUOPAP(eAlarmLimitState state);
 
 	int GetAlarmlimitPEEPminNCPAP();
-
 	eAlarmLimitState GetAlarmlimitStatePEEPminNCPAP();
-
 	void SetAlarmlimitPEEPminNCPAP(int value);
-
 	void SetAlarmlimitStatePEEPminNCPAP(eAlarmLimitState state);
 
 	double GetMAXSCALE_SPO2_GRAPH();
-
 	void SetMAXSCALE_SPO2_GRAPH(double value);
 
 	double GetMAXSCALE_CO2_GRAPH();
-
 	void SetMAXSCALE_CO2_GRAPH(double value);
 
 	double GetMAXSCALE_FLOW_GRAPH();
-
 	void SetMAXSCALE_FLOW_GRAPH(double value);
 
 	double GetMAXSCALE_PRESSURE_GRAPH();
-
 	void SetMAXSCALE_PRESSURE_GRAPH(double value);
 
 	double GetMAXSCALE_VOLUME_GRAPH();
-
 	void SetMAXSCALE_VOLUME_GRAPH(double value);
 
 	double GetMAXSCALE_SPO2_HFGRAPH();
-
 	void SetMAXSCALE_SPO2_HFGRAPH(double value);
 
 	double GetMAXSCALE_CO2_HFGRAPH();
-
 	void SetMAXSCALE_CO2_HFGRAPH(double value);
 
 	double GetMAXSCALE_FLOW_HFGRAPH();
-
 	void SetMAXSCALE_FLOW_HFGRAPH(double value);
 
 	double GetMAXSCALE_VOLUME_HFGRAPH();
-
 	void SetMAXSCALE_VOLUME_HFGRAPH(double value);
 
 	double GetMAXSCALE_PRESSURE_HFGRAPH();
-
 	void SetMAXSCALE_PRESSURE_HFGRAPH(double value);
 
 	double GetMINSCALE_PRESSURE_HFGRAPH();
-
 	void SetMINSCALE_PRESSURE_HFGRAPH(double value);
 
 	double GetMAXSCALE_PRESSURE_HFPVLOOP();
-
 	void SetMAXSCALE_PRESSURE_HFPVLOOP(double value);
 
 	double GetMINSCALE_PRESSURE_HFPVLOOP();
-
 	void SetMINSCALE_PRESSURE_HFPVLOOP(double value);
 
 	double GetMAXSCALE_VOLUME_HFPVLOOP();
-
 	void SetMAXSCALE_VOLUME_HFPVLOOP(double value);
 
 	double GetMAXSCALE_FLOW_HFVFLOOP();
-
 	void SetMAXSCALE_FLOW_HFVFLOOP(double value);
 
 	double GetMAXSCALE_VOLUME_HFVFLOOP();
-
 	void SetMAXSCALE_VOLUME_HFVFLOOP(double value);
 
 	double GetMAXSCALE_PRESSURE_PVLOOP();
-
 	void SetMAXSCALE_PRESSURE_PVLOOP(double value);
 
 	double GetMAXSCALE_VOLUME_PVLOOP();
-
 	void SetMAXSCALE_VOLUME_PVLOOP(double value);
 
 	double GetMAXSCALE_VOLUME_VFLOOP();
-
 	void SetMAXSCALE_VOLUME_VFLOOP(double value);
 
 	double GetMAXSCALE_FLOW_VFLOOP();
-
 	void SetMAXSCALE_FLOW_VFLOOP(double value);
 
 	double GetMAXSCALE_FOT_PRESSURE();
-
 	void SetMAXSCALE_FOT_PRESSURE(double value);
 
 	double GetMINSCALE_FOT_XRS();
-
 	void SetMINSCALE_FOT_XRS(double value);
 
 	double GetMAXSCALE_FOT_XRS();
-
 	void SetMAXSCALE_FOT_XRS(double value);
 
 	void TrendSetPInspMax(int value);
-
 	int TrendGetPInspMax();
 
 	void TrendSetPMeanMax(int value);
-
 	int TrendGetPMeanMax();
 
 	void TrendSetFIO2Max(int value);
-
 	int TrendGetFIO2Max();
 
 	void TrendSetVteMax(int value);
-
 	int TrendGetVteMax();
 
 	void TrendSetComplianceMax(int value);
-
 	int TrendGetComplianceMax();
 
-	
 	void TrendSetDCO2Max(int value);
-
 	int TrendGetDCO2Max();
 
 	void TrendSetMVMax(int value);
-
 	int TrendGetMVMax();
 
 	void TrendSetHFAMPMax(int value);
-
 	int TrendGetHFAMPMax();
 
 	void TrendSetRSBIMax(int value);
-
 	int TrendGetRSBIMax();
 
 	void TrendSetSHAREMVMANDMax(int value);
-
 	int TrendGetSHAREMVMANDMax();
 
 	void TrendSetRESISTANCEMax(int value);
-
 	int TrendGetRESISTANCEMax();
 
 	void TrendSetLEAKMax(int value);
-
 	int TrendGetLEAKMax();
 
 	void TrendSetSPO2Max(int value);
-
 	int TrendGetSPO2Max();
 
 	void TrendSetSPO2PIMax(int value);
-
 	int TrendGetSPO2PIMax();
 
 	void TrendSetETCO2Max(int value);
-
 	int TrendGetETCO2Max();
 
 	void TrendSetSPO2PRMax(int value);
-
 	int TrendGetSPO2PRMax();
 
 	void TrendSetFREQUENCYMax(int value);
-
 	int TrendGetFREQUENCYMax();
 
 	void GraphSetActualSpeedGraph(int value);
-
 	int GraphGetActualSpeedGraph();
 
 	void GraphSetActualSpeedCLFIO2(int value);
-
 	int GraphGetActualSpeedCLFIO2();
 
 	UINT GetTrendSpan();
-
 	void SetTrendSpan(UINT span);
 
 	UINT GetTrendType1();
-
 	void SetTrendType1(UINT type);
 
 	UINT GetTrendType2();
-
 	void SetTrendType2(UINT type);
 
 	UINT GetTrendType3();
-
 	void SetTrendType3(UINT type);
 
 	void setPpsvAsDeltaPEEPValue(BOOL bState);
-
 	BOOL isPpsvAsDeltaPEEPValue();
 
 	void setLeakCompensation(eLeakCompensation leakComp);
-
 	eLeakCompensation getLeakCompensation();
 
 	void setNextServiceDate(WORD year, WORD month, WORD day);
-
 	COleDateTime getNextServiceDate();
 
 	void GraphSetPrimaryLineDiagramm(int value);
-
 	int GraphGetPrimaryLineDiagramm();
 
 	eAlarmLoudness GetAlarmVolume();
-
 	void SetAlarmVolume(eAlarmLoudness state);
 
 	int GetLastSelectedSVSettingBtns();
-
 	void SetLastSelectedSVSettingBtns(int btns);
 
 	int GetLastSelectedSVCO2Btns();
-
 	void SetLastSelectedSVCO2Btns(int btns);
 
 	int GetLastSelectedSVSPO2Btns();
-
 	void SetLastSelectedSVSPO2Btns(int btns);
 
 	eALimitNumeric getCurALimitNumeric();
-
 	void setCurALimitNumeric(eALimitNumeric numeric);
 
 	int GetLastSelectedALBtns();
-
 	void SetLastSelectedALBtns(int btns);
 
 	int GetLastSelectedParaViewBtns();
-
 	void SetLastSelectedParaViewBtns(int btns);
 
 	int getLastSelectedFOTViewBtns();
-
 	void setLastSelectedFOTViewBtns(int btns);
 
 	void readinFOTventDelaytime();
-
 	WORD getFOTventDelaytime();
 
 	CStringW GetPatientName();
-
 	CStringW GetPatientFirstname();
 
 	int GetPatientID();
-
 	int GetPatientWeight();
-
 	CStringW GetPatientBirthday();
-
 	CStringW GetPatientRemark();
-
 	void SetPatientData(CStringW name, CStringW firstName, int persID, int weight, CStringW  szTime, CStringW  szRemark);
 
 	CStringW GetLastCalOxy21();
-
 	void SetLastCalOxy21(CStringW szDateTime);
 
 	CStringW GetLastCalOxy100();
-
 	void SetLastCalOxy100(CStringW szDateTime);
 
 	CStringW GetLastCalFlow();
-
 	void SetLastCalFlow(CStringW szDateTime);
 
 	CStringW GetLastCal0mbar();
-
 	void SetLastCal0mbar(CStringW szDateTime);
 
 	CStringW GetLastCal60mbar();
-
 	void SetLastCal60mbar(CStringW szDateTime);
 
 	DWORD getOperatingMinutesDevice();
-
 	void setOperatingMinutesDevice(DWORD min, bool bFlushReg);
 
 	DWORD getOperatingMinutesBattery();
-
 	void setOperatingMinutesBattery(DWORD min, bool bFlushReg);
 
 	DWORD getOperatingMinutesHFO();
-
 	void setOperatingMinutesHFO(DWORD min, bool bFlushReg);
 
 	void SetLastWrittenTrendFile(UINT type, BYTE count);
-
 	BYTE GetLastWrittenTrendFile(UINT type);
 
 	BYTE getLastNumericIPPV();
-
 	void setLastNumericIPPV(BYTE num);
 
 	BYTE getLastNumericSIPPV();
-
 	void setLastNumericSIPPV(BYTE num);
 
 	BYTE getLastNumericSIMV();
-
 	void setLastNumericSIMV(BYTE num);
 
 	BYTE getLastNumericSIMVPSV();
-
 	void setLastNumericSIMVPSV(BYTE num);
 
 	BYTE getLastNumericPSV();
-
 	void setLastNumericPSV(BYTE num);
 
 	BYTE getLastNumericCPAP();
-
 	void setLastNumericCPAP(BYTE num);
 
 	BYTE getLastNumericHFO();
-
 	void setLastNumericHFO(BYTE num);
 
 	BYTE getLastNumericNCPAP();
-
 	void setLastNumericNCPAP(BYTE num);
 
 	BYTE getLastNumericDUOPAP();
-
 	void setLastNumericDUOPAP(BYTE num);
 
 	BYTE getLastNumericTHERAPY();
-
 	void setLastNumericTHERAPY(BYTE num);
 
 	BYTE getLastNumericFLOWOFFCONV();
-
 	void setLastNumericFLOWOFFCONV(BYTE num);
 
 	BYTE getLastNumericFLOWOFFCPAP();
-
 	void setLastNumericFLOWOFFCPAP(BYTE num);
 
 	BYTE getLastNumericFLOWOFFHFO();
-
 	void setLastNumericFLOWOFFHFO(BYTE num);
 
 	int getConfigVersion();
 
 	void disableNIVTRIGGER();
-
 	COleDateTime GetNIVTRIGGERdemoTimestamp();
-
 	void SetNIVTRIGGERdemoTimestamp(COleDateTime dateTime);
 
 	COleDateTime GetFOTdemoTimestamp();
-
 	void SetFOTdemoTimestamp(COleDateTime dateTime);
 
 	COleDateTime GetPRICOdemoTimestamp();
-
 	void SetPRICOdemoTimestamp(COleDateTime dateTime);
 
 	COleDateTime GetTHERAPYdemoTimestamp();
-
 	void SetTHERAPYdemoTimestamp(COleDateTime dateTime);
 
 	COleDateTime GetTRENDdemoTimestamp();
-
 	void SetTRENDdemoTimestamp(COleDateTime dateTime);
 
 	COleDateTime GetLUNGRECdemoTimestamp();
-
 	void SetLUNGRECdemoTimestamp(COleDateTime dateTime);
 
 	COleDateTime GetVLIMITdemoTimestamp();
-
 	void SetVLIMITdemoTimestamp(COleDateTime dateTime);
 
 	COleDateTime GetVGUARANTYdemoTimestamp();
-
 	void SetVGUARANTYdemoTimestamp(COleDateTime dateTime);
 
 	COleDateTime GetNMODEdemoTimestamp();
-
 	void SetNMODEdemoTimestamp(COleDateTime dateTime);
 
 	COleDateTime GetHFOdemoTimestamp();
-
 	void SetHFOdemoTimestamp(COleDateTime dateTime);
 
 	void readAmpCorFactor();
-
 	double getAmpCorFactor(BYTE iFreq);
-
 	double getAmpCorFactorCONV_K();
-
 	double getAmpCorFactorCONV_J();
-
 	double getAmpCorFactorHFO_K();
-
 	double getAmpCorFactorHFO_J();
 
 private:
@@ -1594,8 +1282,13 @@ private:
 	BYTE	m_iCurNumericBlock_FLOWOFFCPAP; ///< The current numeric block flowoffcpap
 	BYTE	m_iCurNumericBlock_FLOWOFFHFO;  ///< The current numeric block flowoffhfo
 
-	BYTE	m_iParaDataTriggerCONV; ///< The para data trigger convert
-	BYTE	m_iParaDataTriggerNMODE;	///< The para data trigger nmode
+	//BYTE	m_iParaDataTriggerCONV; ///< The para data trigger convert
+	//BYTE	m_iParaDataTriggerNMODE;	///< The para data trigger nmode
+
+	BYTE	m_iParaDataTrigger_CONV;	///< The para data trigger conventional (sippv, simv, simv+psv, psv)
+	BYTE	m_iParaDataTrigger_CPAP;	///< The para data trigger cpap
+	BYTE	m_iParaDataTrigger_NCPAP;   ///< The para data trigger ncpap
+	BYTE	m_iParaDataTrigger_DUOPAP;  ///< The para data trigger duopap
 
 	BYTE	m_iParaDataBackup;  ///< The para data backup
 	BYTE	m_iPDMSProtocol;	///< The pdms protocol
@@ -1623,8 +1316,10 @@ private:
 	eAVRevision  m_eAVRevision; ///< a v revision
 	eHFModuleRevision m_eHFRevision;	///< The hf revision
 
-	eTriggereType m_eTriggerTypeCONV;   ///< The trigger type convert
-	eTriggereType m_eTriggerTypeNMODE;  ///< The trigger type nmode
+	eTriggereType m_eTriggerType_CONV;   ///< The trigger type convert
+	eTriggereType m_eTriggerType_CPAP;  ///< The trigger type nmode
+	eTriggereType m_eTriggerType_DUOPAP;
+	eTriggereType m_eTriggerType_NCPAP;
 
 	eLeakCompensation m_eLeakCompensation;  ///< The leak compensation
 

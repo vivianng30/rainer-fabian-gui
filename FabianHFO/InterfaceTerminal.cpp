@@ -1164,12 +1164,16 @@ bool CInterfaceTerminal::PerformMsg()
 				WORD iLowerLimit=0;
 				WORD iUpperLimit=0;
 				if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
-					||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP
-					||	getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
+					||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
+				{
+					iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerDUOPAPMinPara();
+					iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerDUOPAPMaxPara();
+				}
+				else if(getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
 					||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_NCPAP)
 				{
-					iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEMinPara();
-					iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEMaxPara();
+					iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNCPAPMinPara();
+					iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNCPAPMaxPara();
 				}
 				else
 				{
@@ -1683,12 +1687,20 @@ void CInterfaceTerminal::sendModeOption()
 		wMode=getModel()->setBitOfWord(wMode, TRIGGERMODE_BIT);*/
 	eTriggereType trigger = TRIGGER_FLOW;
 	if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
-		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP
-		||	getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
+		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
+	{
+		trigger=getModel()->getDATAHANDLER()->getTriggerOptionDUOPAP();
+	}
+	else if(	getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
 		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_NCPAP)
 	{
-		trigger=getModel()->getDATAHANDLER()->getTriggerOptionNMODE();
+		trigger=getModel()->getDATAHANDLER()->getTriggerOptionNCPAP();
 	}
+	/*else if(	getModel()->getCONFIG()->GetCurMode()==VM_CPAP
+		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_CPAP)
+	{
+		trigger=getModel()->getDATAHANDLER()->getTriggerOption_CPAP();
+	}*/
 	else
 	{
 		trigger=getModel()->getDATAHANDLER()->getTriggerOptionCONV();//&& getModel()->getVMODEHANDLER()->activeModeIsTriggerMode()

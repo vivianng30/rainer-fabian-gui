@@ -989,7 +989,7 @@ bool CViewParaBtn::Initialize()
 	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerCONVMinPara();
 	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerCONVMaxPara();
 
-	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerCONVPara();
+	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_CONV();
 	if(fv.iValue>fv.iUpperLimit)
 		fv.iValue=fv.iUpperLimit;
 	else if(fv.iValue<fv.iLowerLimit)
@@ -1014,10 +1014,22 @@ bool CViewParaBtn::Initialize()
 	btn.pcBmpDisabled		= m_pcPara_DisB;
 	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
 
-	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEMinPara();
-	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEMaxPara();
+	//if(getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP)
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerDUOPAPMinPara();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerDUOPAPMaxPara();
 
-	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara();
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP();
+	}
+	/*else
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNCPAPMinPara();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNCPAPMaxPara();
+
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_NCPAP();
+	}*/
+
+	
 	if(fv.iValue>fv.iUpperLimit)
 		fv.iValue=fv.iUpperLimit;
 	else if(fv.iValue<fv.iLowerLimit)
@@ -3642,7 +3654,7 @@ void CViewParaBtn::load_SIPPVmode()
 		load_VGUARANTpara(true,false);
 	}
 
-	load_TRIGGERCONVpara(false);
+	load_TRIGGERpara_CONV(false);
 	load_ETIMEpara(true,false);
 	load_BPMpara(true,false);
 	load_ITIMEpara(true,false);
@@ -3879,7 +3891,7 @@ void CViewParaBtn::load_PRE_SIPPVmode()
 		load_VGUARANTpara(true,true);
 	}
 
-	load_TRIGGERCONVpara(true);
+	load_TRIGGERpara_CONV(true);
 	load_ETIMEpara(true,true);
 	load_BPMpara(true,true);
 	load_ITIMEpara(true,true);
@@ -4115,7 +4127,7 @@ void CViewParaBtn::load_SIMVmode()
 		load_VGUARANTpara(true,false);
 	}
 
-	load_TRIGGERCONVpara(false);
+	load_TRIGGERpara_CONV(false);
 	load_ETIMEpara(true,false);
 	load_BPMpara(true,false);
 	load_ITIMEpara(true,false);
@@ -4351,7 +4363,7 @@ void CViewParaBtn::load_PRE_SIMVmode()
 		load_VGUARANTpara(true,true);
 	}
 
-	load_TRIGGERCONVpara(true);
+	load_TRIGGERpara_CONV(true);
 	load_ETIMEpara(true,true);
 	load_BPMpara(true,true);
 	load_ITIMEpara(true,true);
@@ -4582,7 +4594,7 @@ void CViewParaBtn::load_PSVmode()
 		load_VLIMITpara(true,false);
 	}
 
-	load_TRIGGERCONVpara(false);
+	load_TRIGGERpara_CONV(false);
 	load_ETIMEpara(true,false);
 	load_BPMpara(true,false);
 	load_ITIMEpara(true,false);
@@ -4817,7 +4829,7 @@ void CViewParaBtn::load_PRE_PSVmode()
 		load_VLIMITpara(true,true);
 	}
 
-	load_TRIGGERCONVpara(true);
+	load_TRIGGERpara_CONV(true);
 	load_ETIMEpara(true,true);
 	load_BPMpara(true,true);
 	load_ITIMEpara(true,true);
@@ -5052,7 +5064,7 @@ void CViewParaBtn::load_SIMVPSVmode()
 	}
 
 	load_ETIMEpara(true,false);
-	load_TRIGGERCONVpara(false);
+	load_TRIGGERpara_CONV(false);
 	load_BPMpara(true,false);
 	load_ITIMEpara(true,false);
 	load_FIO2para(false);
@@ -5286,7 +5298,7 @@ void CViewParaBtn::load_PRE_SIMVPSVmode()
 		load_VLIMITpara(true,true);
 	}
 
-	load_TRIGGERCONVpara(true);	
+	load_TRIGGERpara_CONV(true);	
 	load_ETIMEpara(true,true);
 	load_BPMpara(true,true);
 	load_ITIMEpara(true,true);
@@ -5502,7 +5514,7 @@ void CViewParaBtn::show_PRE_SIMVPSVmode()
 // **************************************************************************
 void CViewParaBtn::load_CPAPmode()
 {
-	load_TRIGGERCONVpara(false);
+	//load_TRIGGERpara_CPAP(false);
 	load_FLOWMINpara(false);	
 	load_CPAPpara(false);
 	load_PMANUALpara(false,false);
@@ -5517,7 +5529,7 @@ void CViewParaBtn::show_CPAPmode()
 {
 	/** \brief The enter critical section. */
 	EnterCriticalSection(&csDraw);
-	if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
+	/*if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
 	{
 		if(m_pcPara_BACKUP)
 			m_pcPara_BACKUP->ShowWindow(SW_SHOW);
@@ -5542,7 +5554,20 @@ void CViewParaBtn::show_CPAPmode()
 			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
 		if(m_pcSubPara_TrigThreshold)
 			m_pcSubPara_TrigThreshold->ShowWindow(SW_HIDE);
-	}
+	}*/
+
+	if(m_pcPara_BACKUP)
+		m_pcPara_BACKUP->ShowWindow(SW_SHOW);
+
+	if(m_pcPara_TRIGGERCONV)
+		m_pcPara_TRIGGERCONV->ShowWindow(SW_HIDE);
+	if(m_pcPara_TRIGGERNMODE)
+		m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
+
+	if(m_pcSubPara_TrigThreshold)
+		m_pcSubPara_TrigThreshold->ShowWindow(SW_SHOW);
+	if(m_pcSubPara_TrigThreshold)
+		m_pcSubPara_TrigThreshold->RefreshBtn();
 
 	if(m_pcPara_ITIME)
 		m_pcPara_ITIME->SetBitmaps(m_pcPara_UpB,m_pcPara_DwB,m_pcPara_UpB,m_pcPara_FcB,false,true);
@@ -5628,7 +5653,7 @@ void CViewParaBtn::show_CPAPmode()
 // **************************************************************************
 void CViewParaBtn::load_PRE_CPAPmode()
 {
-	load_TRIGGERCONVpara(true);
+	//load_TRIGGERpara_CPAP(true);
 	load_FLOWMINpara(true);	
 	load_CPAPpara(true);
 	load_PMANUALpara(false,true);
@@ -5643,7 +5668,7 @@ void CViewParaBtn::show_PRE_CPAPmode()
 {
 	/** \brief The enter critical section. */
 	EnterCriticalSection(&csDraw);
-	if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
+	/*if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
 	{
 		if(m_pcPara_BACKUP)
 			m_pcPara_BACKUP->ShowWindow(SW_SHOW);
@@ -5668,7 +5693,20 @@ void CViewParaBtn::show_PRE_CPAPmode()
 			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
 		if(m_pcSubPara_TrigThreshold)
 			m_pcSubPara_TrigThreshold->ShowWindow(SW_HIDE);
-	}
+	}*/
+
+	if(m_pcPara_BACKUP)
+		m_pcPara_BACKUP->ShowWindow(SW_SHOW);
+
+	if(m_pcPara_TRIGGERCONV)
+		m_pcPara_TRIGGERCONV->ShowWindow(SW_HIDE);
+	if(m_pcPara_TRIGGERNMODE)
+		m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
+
+	if(m_pcSubPara_TrigThreshold)
+		m_pcSubPara_TrigThreshold->ShowWindow(SW_SHOW);
+	if(m_pcSubPara_TrigThreshold)
+		m_pcSubPara_TrigThreshold->RefreshBtn();
 
 	if(m_pcPara_ITIME)
 		m_pcPara_ITIME->SetBitmaps(m_pcPara_UpB,m_pcPara_DwB,m_pcPara_UpB,m_pcPara_FcB,false,true);
@@ -5753,7 +5791,7 @@ void CViewParaBtn::show_PRE_CPAPmode()
 // **************************************************************************
 void CViewParaBtn::load_NCPAPmode()
 {
-	load_TRIGGERNMODEpara(false);
+	//load_TRIGGERpara_NCPAP(false);
 	load_NCPAP_CPAPpara(false);
 	load_PMANUALpara(true,false);
 	load_FIO2para(false);
@@ -5847,18 +5885,18 @@ void CViewParaBtn::show_NCPAPmode()
 			m_pcSubPara_TrigThreshold->ShowWindow(SW_HIDE);
 	}
 	
-	if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true 
+	/*if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true 
 		&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET)
 	{
 		if(m_pcPara_TRIGGERNMODE)
 			m_pcPara_TRIGGERNMODE->EnableWindow(FALSE);
-		getModel()->getDATAHANDLER()->SetTriggerNMODEdisabled();
+		getModel()->getDATAHANDLER()->SetTriggerNCPAPdisabled();
 	}
 	else
 	{
 		if(m_pcPara_TRIGGERNMODE)
 			m_pcPara_TRIGGERNMODE->EnableWindow(TRUE);
-		getModel()->getDATAHANDLER()->SetTriggerNMODEenabled();
+		getModel()->getDATAHANDLER()->SetTriggerNCPAPenabled();
 	}
 	if(m_pcPara_TRIGGERNMODE)
 	{
@@ -5866,6 +5904,10 @@ void CViewParaBtn::show_NCPAPmode()
 			m_pcPara_TRIGGERNMODE->ShowWindow(SW_SHOW);
 		else
 			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
+	}*/
+	if(m_pcPara_TRIGGERNMODE)
+	{
+		m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
 	}
 	if(m_pcSubPara_O2Flush)
 		m_pcSubPara_O2Flush->ShowWindow(SW_SHOW);
@@ -5887,7 +5929,7 @@ void CViewParaBtn::show_NCPAPmode()
 // **************************************************************************
 void CViewParaBtn::load_PRE_NCPAPmode()
 {
-	load_TRIGGERNMODEpara(true);
+	//load_TRIGGERpara_NCPAP(true);
 	load_NCPAP_CPAPpara(true);
 	load_PMANUALpara(true,true);
 	load_FIO2para(true);
@@ -5980,18 +6022,18 @@ void CViewParaBtn::show_PRE_NCPAPmode()
 			m_pcSubPara_TrigThreshold->ShowWindow(SW_HIDE);
 	}
 
-	if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true 
+	/*if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true 
 		&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET)
 	{
 		if(m_pcPara_TRIGGERNMODE)
 			m_pcPara_TRIGGERNMODE->EnableWindow(FALSE);
-		getModel()->getDATAHANDLER()->SetTriggerNMODEdisabled();
+		getModel()->getDATAHANDLER()->SetTriggerNCPAPdisabled();
 	}
 	else
 	{
 		if(m_pcPara_TRIGGERNMODE)
 			m_pcPara_TRIGGERNMODE->EnableWindow(TRUE);
-		getModel()->getDATAHANDLER()->SetTriggerNMODEenabled();
+		getModel()->getDATAHANDLER()->SetTriggerNCPAPenabled();
 	}
 	if(m_pcPara_TRIGGERNMODE)
 	{
@@ -5999,6 +6041,10 @@ void CViewParaBtn::show_PRE_NCPAPmode()
 			m_pcPara_TRIGGERNMODE->ShowWindow(SW_SHOW);
 		else
 			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
+	}*/
+	if(m_pcPara_TRIGGERNMODE)
+	{
+		m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
 	}
 	if(m_pcSubPara_LEAKCOMP) 
 		m_pcSubPara_LEAKCOMP->ShowWindow(SW_SHOW);
@@ -6020,7 +6066,7 @@ void CViewParaBtn::show_PRE_NCPAPmode()
 // **************************************************************************
 void CViewParaBtn::load_DUOPAPmode()
 {
-	load_TRIGGERNMODEpara(false);
+	load_TRIGGERpara_DUOPAP(false);
 	load_DUOPAP_CPAPpara(false);
 	load_PDUOpara(false);
 	load_ITIMENMODEpara(false);
@@ -6102,19 +6148,19 @@ void CViewParaBtn::show_DUOPAPmode()
 	{
 		if(m_pcPara_TRIGGERNMODE)
 			m_pcPara_TRIGGERNMODE->EnableWindow(FALSE);
-		getModel()->getDATAHANDLER()->SetTriggerNMODEdisabled();
+		getModel()->getDATAHANDLER()->SetTriggerDUOPAPdisabled();
 	}
 	else if(getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEPara()>600)
 	{
 		if(m_pcPara_TRIGGERNMODE)
 			m_pcPara_TRIGGERNMODE->EnableWindow(FALSE);
-		getModel()->getDATAHANDLER()->SetTriggerNMODEdisabled();
+		getModel()->getDATAHANDLER()->SetTriggerDUOPAPdisabled();
 	}
 	else
 	{
 		if(m_pcPara_TRIGGERNMODE)
 			m_pcPara_TRIGGERNMODE->EnableWindow(TRUE);
-		getModel()->getDATAHANDLER()->SetTriggerNMODEenabled();
+		getModel()->getDATAHANDLER()->SetTriggerDUOPAPenabled();
 	}
 	if(m_pcPara_TRIGGERNMODE)
 	{
@@ -6131,7 +6177,7 @@ void CViewParaBtn::show_DUOPAPmode()
 	{
 		if(m_pcPara_BPM)
 			m_pcPara_BPM->ShowWindow(SW_SHOW);
-		if(getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
+		if(getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP()!=MAXRANGE_TRIGGER_OFF)
 		{
 			m_pcPara_BPM->SetNameText(_T(""));
 			m_pcPara_BPM->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_FREQBACKUP),true);
@@ -6160,7 +6206,7 @@ void CViewParaBtn::show_DUOPAPmode()
 			m_pcPara_ETIME->ShowWindow(SW_SHOW);
 		if(m_pcSubPara_BPM)
 		{
-			if(getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
+			if(getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP()!=MAXRANGE_TRIGGER_OFF)
 				m_pcSubPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_FREQBACKUP));
 			else
 				m_pcSubPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_DUOFREQ));
@@ -6222,7 +6268,7 @@ void CViewParaBtn::show_DUOPAPmode()
 // **************************************************************************
 void CViewParaBtn::load_PRE_DUOPAPmode()
 {
-	load_TRIGGERNMODEpara(true);
+	load_TRIGGERpara_DUOPAP(true);
 	load_DUOPAP_CPAPpara(true);
 	load_PDUOpara(true);
 	load_ITIMENMODEpara(true);
@@ -6293,19 +6339,19 @@ void CViewParaBtn::show_PRE_DUOPAPmode()
 	{
 		if(m_pcPara_TRIGGERNMODE)
 			m_pcPara_TRIGGERNMODE->EnableWindow(FALSE);
-		getModel()->getDATAHANDLER()->SetTriggerNMODEdisabled();
+		getModel()->getDATAHANDLER()->SetTriggerDUOPAPdisabled();
 	}
 	else if(getModel()->getDATAHANDLER()->PRESET()->GetITimeNMODEPara()>600)
 	{
 		if(m_pcPara_TRIGGERNMODE)
 			m_pcPara_TRIGGERNMODE->EnableWindow(FALSE);
-		getModel()->getDATAHANDLER()->SetTriggerNMODEdisabled();
+		getModel()->getDATAHANDLER()->SetTriggerDUOPAPdisabled();
 	}
 	else
 	{
 		if(m_pcPara_TRIGGERNMODE)
 			m_pcPara_TRIGGERNMODE->EnableWindow(TRUE);
-		getModel()->getDATAHANDLER()->SetTriggerNMODEenabled();
+		getModel()->getDATAHANDLER()->SetTriggerDUOPAPenabled();
 	}
 	if(m_pcPara_TRIGGERNMODE)
 	{
@@ -6333,7 +6379,7 @@ void CViewParaBtn::show_PRE_DUOPAPmode()
 	{
 		if(m_pcPara_BPM)
 			m_pcPara_BPM->ShowWindow(SW_SHOW);
-		if(getModel()->getDATAHANDLER()->PRESET()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
+		if(getModel()->getDATAHANDLER()->PRESET()->GetTriggerPara_DUOPAP()!=MAXRANGE_TRIGGER_OFF)
 		{
 			m_pcPara_BPM->SetNameText(_T(""));
 			m_pcPara_BPM->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_FREQBACKUP),true);
@@ -6362,7 +6408,7 @@ void CViewParaBtn::show_PRE_DUOPAPmode()
 			m_pcPara_ETIME->ShowWindow(SW_SHOW);
 		if(m_pcSubPara_BPM)
 		{
-			if(getModel()->getDATAHANDLER()->PRESET()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
+			if(getModel()->getDATAHANDLER()->PRESET()->GetTriggerPara_DUOPAP()!=MAXRANGE_TRIGGER_OFF)
 				m_pcSubPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_FREQBACKUP));
 			else
 				m_pcSubPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_DUOFREQ));
@@ -8013,7 +8059,7 @@ void CViewParaBtn::load_ETIMENMODEpara(bool bPRESET)
 // **************************************************************************
 // 
 // **************************************************************************
-void CViewParaBtn::load_TRIGGERCONVpara(bool bPRESET)
+void CViewParaBtn::load_TRIGGERpara_CONV(bool bPRESET)
 {
 	fVALUE fv;
 	/** \brief The enter critical section. */
@@ -8024,13 +8070,49 @@ void CViewParaBtn::load_TRIGGERCONVpara(bool bPRESET)
 		{
 			fv.iLowerLimit=getModel()->getDATAHANDLER()->PRESET()->GetTriggerCONVMinPara();
 			fv.iUpperLimit=getModel()->getDATAHANDLER()->PRESET()->GetTriggerCONVMaxPara();
-			fv.iValue=getModel()->getDATAHANDLER()->PRESET()->GetTriggerCONVPara();
+			fv.iValue=getModel()->getDATAHANDLER()->PRESET()->GetTriggerPara_CONV();
 		}
 		else
 		{
 			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerCONVMinPara();
 			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerCONVMaxPara();
-			fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerCONVPara();
+			fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_CONV();
+		}
+		if(fv.iValue>fv.iUpperLimit)
+		{
+			fv.iValue=fv.iUpperLimit;
+			getModel()->getDATAHANDLER()->SetCurrentTriggerPara(fv.iValue);
+		}
+		else if(fv.iValue<fv.iLowerLimit)
+		{
+			fv.iValue=fv.iLowerLimit;
+			getModel()->getDATAHANDLER()->SetCurrentTriggerPara(fv.iValue);
+		}
+		m_pcPara_TRIGGERCONV->SetValue(fv, true);
+	}
+	/** \brief The leave critical section. */
+	LeaveCriticalSection(&csDraw);
+}
+
+
+void CViewParaBtn::load_TRIGGERpara_CPAP(bool bPRESET)
+{
+	fVALUE fv;
+	/** \brief The enter critical section. */
+	EnterCriticalSection(&csDraw);
+	if(m_pcPara_TRIGGERCONV)
+	{
+		if(bPRESET)
+		{
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PRESET()->GetTriggerCPAPMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PRESET()->GetTriggerCPAPMaxPara();
+			fv.iValue=getModel()->getDATAHANDLER()->PRESET()->GetTriggerPara_CPAP();
+		}
+		else
+		{
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerCPAPMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerCPAPMaxPara();
+			fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_CPAP();
 		}
 		if(fv.iValue>fv.iUpperLimit)
 		{
@@ -8050,7 +8132,7 @@ void CViewParaBtn::load_TRIGGERCONVpara(bool bPRESET)
 // **************************************************************************
 // 
 // **************************************************************************
-void CViewParaBtn::load_TRIGGERNMODEpara(bool bPRESET)
+void CViewParaBtn::load_TRIGGERpara_DUOPAP(bool bPRESET)
 {
 	fVALUE fv;
 	/** \brief The enter critical section. */
@@ -8059,15 +8141,15 @@ void CViewParaBtn::load_TRIGGERNMODEpara(bool bPRESET)
 	{
 		if(bPRESET)
 		{
-			fv.iLowerLimit=getModel()->getDATAHANDLER()->PRESET()->GetTriggerNMODEMinPara();
-			fv.iUpperLimit=getModel()->getDATAHANDLER()->PRESET()->GetTriggerNMODEMaxPara();
-			fv.iValue=getModel()->getDATAHANDLER()->PRESET()->GetTriggerNMODEPara();
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PRESET()->GetTriggerDUOPAPMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PRESET()->GetTriggerDUOPAPMaxPara();
+			fv.iValue=getModel()->getDATAHANDLER()->PRESET()->GetTriggerPara_DUOPAP();
 		}
 		else
 		{
-			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEMinPara();
-			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEMaxPara();
-			fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara();
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerDUOPAPMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerDUOPAPMaxPara();
+			fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP();
 		}
 		if(fv.iValue>fv.iUpperLimit)
 		{
@@ -8077,6 +8159,47 @@ void CViewParaBtn::load_TRIGGERNMODEpara(bool bPRESET)
 		else if(fv.iValue<fv.iLowerLimit)
 		{
 			fv.iValue=fv.iLowerLimit;
+			getModel()->getDATAHANDLER()->SetCurrentTriggerPara(fv.iValue);
+		}
+		m_pcPara_TRIGGERNMODE->SetValue(fv, true);
+	}
+	/** \brief The leave critical section. */
+	LeaveCriticalSection(&csDraw);
+}
+
+void CViewParaBtn::load_TRIGGERpara_NCPAP(bool bPRESET)
+{
+	fVALUE fv;
+	/** \brief The enter critical section. */
+	EnterCriticalSection(&csDraw);
+	if(m_pcPara_TRIGGERNMODE)
+	{
+		if(bPRESET)
+		{
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PRESET()->GetTriggerNCPAPMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PRESET()->GetTriggerNCPAPMaxPara();
+			fv.iValue=getModel()->getDATAHANDLER()->PRESET()->GetTriggerPara_NCPAP();
+		}
+		else
+		{
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNCPAPMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNCPAPMaxPara();
+			fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_NCPAP();
+		}
+		/*if(fv.iValue>fv.iUpperLimit)
+		{
+			fv.iValue=fv.iUpperLimit;
+			getModel()->getDATAHANDLER()->SetCurrentTriggerPara(fv.iValue);
+		}
+		else if(fv.iValue<fv.iLowerLimit)
+		{
+			fv.iValue=fv.iLowerLimit;
+			getModel()->getDATAHANDLER()->SetCurrentTriggerPara(fv.iValue);
+		}*/
+
+		if(fv.iValue!=TRIGGER_SENSITIVITY_AUTO)
+		{
+			fv.iValue=TRIGGER_SENSITIVITY_AUTO;
 			getModel()->getDATAHANDLER()->SetCurrentTriggerPara(fv.iValue);
 		}
 		m_pcPara_TRIGGERNMODE->SetValue(fv, true);
@@ -8276,7 +8399,7 @@ void CViewParaBtn::load_BPMpara(bool bTrigger,bool bPRESET)
 		}
 		else if(getModel()->getVMODEHANDLER()->activeModeIsDUOPAP())
 		{
-			if(getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF)
+			if(getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP()!=MAXRANGE_TRIGGER_OFF)
 			{
 				m_pcPara_BPM->SetNameText(_T(""));
 				m_pcPara_BPM->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_FREQBACKUP),true);
@@ -9578,10 +9701,10 @@ LRESULT CViewParaBtn::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 				}
 			}
 			else if(		m_pcSubPara_TrigThreshold 
-				&&	getModel()->getVMODEHANDLER()->activeModeIsNMODETrigger()
+				&&	getModel()->getVMODEHANDLER()->activeModeIsDUOPAP()
 				&&	m_bViewPraBtnShown)
 			{
-				if(getModel()->getDATAHANDLER()->getTriggerOptionNMODE()==TRIGGER_PRESSURE)
+				if(getModel()->getDATAHANDLER()->getTriggerOptionDUOPAP()==TRIGGER_PRESSURE)
 				{
 					m_pcSubPara_TrigThreshold->SetNameText(_T(""));
 					m_pcSubPara_TrigThreshold->SetUnitText(_T(""));
@@ -9590,12 +9713,40 @@ LRESULT CViewParaBtn::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 				}
 				else
 				{
-					if(getModel()->getDATAHANDLER()->getTriggerOptionNMODE()==TRIGGER_VOLUME)
+					if(getModel()->getDATAHANDLER()->getTriggerOptionDUOPAP()==TRIGGER_VOLUME)
 					{
 						m_pcSubPara_TrigThreshold->SetNameText(getModel()->GetLanguageString(IDS_PARA_TRIGVOL));
 						m_pcSubPara_TrigThreshold->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MILLILITER));
 					}
-					else if(getModel()->getDATAHANDLER()->getTriggerOptionNMODE()==TRIGGER_FLOW)
+					else if(getModel()->getDATAHANDLER()->getTriggerOptionDUOPAP()==TRIGGER_FLOW)
+					{
+						m_pcSubPara_TrigThreshold->SetNameText(getModel()->GetLanguageString(IDS_PARA_TRIGFLOW));
+						m_pcSubPara_TrigThreshold->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_LMIN));
+					}
+
+					iValue=getModel()->getDATAHANDLER()->getAVGMessureDataTrigger();
+					m_pcSubPara_TrigThreshold->SetParaValue(iValue);
+				}
+			}
+			else if(		m_pcSubPara_TrigThreshold 
+				&&	getModel()->getVMODEHANDLER()->activeModeIsNCPAP()
+				&&	m_bViewPraBtnShown)
+			{
+				if(getModel()->getDATAHANDLER()->getTriggerOptionNCPAP()==TRIGGER_PRESSURE)
+				{
+					m_pcSubPara_TrigThreshold->SetNameText(_T(""));
+					m_pcSubPara_TrigThreshold->SetUnitText(_T(""));
+
+					m_pcSubPara_TrigThreshold->SetParaValue(1);
+				}
+				else
+				{
+					if(getModel()->getDATAHANDLER()->getTriggerOptionNCPAP()==TRIGGER_VOLUME)
+					{
+						m_pcSubPara_TrigThreshold->SetNameText(getModel()->GetLanguageString(IDS_PARA_TRIGVOL));
+						m_pcSubPara_TrigThreshold->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MILLILITER));
+					}
+					else if(getModel()->getDATAHANDLER()->getTriggerOptionNCPAP()==TRIGGER_FLOW)
 					{
 						m_pcSubPara_TrigThreshold->SetNameText(getModel()->GetLanguageString(IDS_PARA_TRIGFLOW));
 						m_pcSubPara_TrigThreshold->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_LMIN));
@@ -11431,6 +11582,7 @@ void CViewParaBtn::NotifyEvent(CMVEvent* pEvent)
 				}
 				break;
 			case CMVEventControl::EV_CONTROL_FLOWSENSORSTATE:
+			case CMVEventControl::EV_CONTROL_TRIGGERSTATE:
 				{
 					try
 					{

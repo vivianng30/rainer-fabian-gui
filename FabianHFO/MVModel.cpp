@@ -107,7 +107,7 @@ CMVModel::CMVModel(void)
 	m_szBuildVersion = _T("9.0.0.0");
 #else
 	m_szVersion = _T("5.0.1");
-	m_szBuildVersion = _T("5.0.1.56");
+	m_szBuildVersion = _T("5.0.1.57");
 #endif
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO"),true);
@@ -214,7 +214,7 @@ CThreadPRICO *CMVModel::getPRICOThread()
 {
 	if(PRICOTHR==NULL)
 	{
-		DEBUGMSG(TRUE, (TEXT("#########CThreadFOT::getPRICOThread()\r\n")));
+		//DEBUGMSG(TRUE, (TEXT("#########CThreadFOT::getPRICOThread()\r\n")));
 		//theApp.getLog()->WriteLine(_T("#ERROR: PRICOTHR"));
 		//PRICOTHR=CThreadPRICO::getInstance();
 	}
@@ -1469,7 +1469,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			bool bVentStateChanged=false;
 			if(getCONFIG()->GetVentRange()==PEDIATRIC)
 			{
-				if(getVMODEHANDLER()->activeModeIsNMODETrigger())
+				if(getVMODEHANDLER()->activeModeIsNCPAP() || getVMODEHANDLER()->activeModeIsDUOPAP())
 				{
 					bVentStateChanged=true;
 
@@ -1506,16 +1506,6 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 		break;
 	case CMVEventControl::EV_CONTROL_STARTUP_SUCCESS:
 		{
-			/*if(AfxGetApp())
-				AfxGetApp()->GetMainWnd()->PostMessage(WM_STARTUP_ACULINK);*/
-
-			//getDATAHANDLER()->SetFlowSensorState(getDATAHANDLER()->GetFlowSensorState());
-			/*if(getDATAHANDLER()->isNebulizerOn())
-			{
-				getDATAHANDLER()->stopNebulizer();
-				theApp.getLog()->WriteLine(_T("EV_CONTROL_STARTUP_SUCCESS isNebulizerOn"));
-			}*/
-
 			//needs to be called here as first function!!!
 			getALARMHANDLER()->ventModeChanged();
 
@@ -1524,21 +1514,6 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			getSPI()->StartSPIMonitorThread();
 
 			
-			////test entrek
-			//if(		getCONFIG()->GetCurMode()==VM_NCPAP 
-			//	||	getCONFIG()->GetCurMode()==VM_DUOPAP
-			//	||	getCONFIG()->GetCurMode()==VM_THERAPIE)
-			//{
-			//	getVIEWHANDLER()->changeViewState(VS_PARA,VSS_GRAPH_SINGLE_LINEGRAPHS);
-			//	DeleteO2calFlag();
-			//	//if(AfxGetApp())
-			//	//	AfxGetApp()->GetMainWnd()->PostMessage(WM_DELAY_AUTOOXYCAL);
-			//}
-			//else
-			//{
-			//	getVIEWHANDLER()->changeViewState(VS_SETUP,VSS_NONE);
-			//}
-
 			//check all Interfaces
 #ifndef SIMULATION_NOSERIAL
 			if(isSERIALavailable()==FALSE)
@@ -1611,141 +1586,16 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			}
 			getCONFIG()->DeaktivateVLimitState();
 
+			getDATAHANDLER()->SetFlowSensorState(getDATAHANDLER()->GetFlowSensorState());
 			Send_VENT_MODE(getCONFIG()->GetCurMode());
+
 			
 			
 			if(AfxGetApp())
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_START_TRENDRECORD);
-
-			/*if(getAcuLink()!=NULL)
-			{
-				if(getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
-				{
-					getAcuLink()->setParaData(ALINK_SETT_UNIT_PRESSURE,0);
-				}
-				else
-				{
-					getAcuLink()->setParaData(ALINK_SETT_UNIT_PRESSURE,1);
-				}
-
-				if(getDATAHANDLER()->IsAccuSupply()==true)
-				{
-					getAcuLink()->setParaData(ALINK_SETT_POWERSTATE,1);
-				}
-				else
-				{
-					getAcuLink()->setParaData(ALINK_SETT_POWERSTATE,0);
-				}
-
-				int iVersion[4];
-
-				CString resToken;
-				int curPos=0;
-				int nIdx=0;
-
-				resToken= m_szBuildVersion.Tokenize(_T("."),curPos);
-				while (resToken != _T(""))
-				{
-					iVersion[nIdx]=_ttoi(resToken);
-					
-					resToken = m_szBuildVersion.Tokenize(_T("."), curPos);
-					nIdx++;
-				}; 
-
-				getAcuLink()->setParaData(ALINK_SETT_VERSION_MMI_MAJOR,iVersion[0]);
-				getAcuLink()->setParaData(ALINK_SETT_VERSION_MMI_MINOR,iVersion[1]);
-				getAcuLink()->setParaData(ALINK_SETT_VERSION_MMI_PATCH,iVersion[2]);
-				getAcuLink()->setParaData(ALINK_SETT_VERSION_MMI_BUILD,iVersion[3]);
-
-				CStringA szUnitID=GetUniqueID();
-
-				CString szHex=_T("");
-				szHex+=szUnitID;
-
-				BYTE byAddress[6] = {'\0'};
-
-				int iCount=0;
-				for(int i=0;i<6;i++)
-				{
-					CString szTemp=szHex.Mid( iCount, 2 );
-					byAddress[i]=_httoi(szTemp);
-					iCount+=2;
-				}
-
-				int iHigh=byAddress[0] << 16;
-				iHigh+=byAddress[1] << 8;
-				iHigh+=byAddress[2] ;
-
-				int iLow=byAddress[3] << 16;
-				iLow+=byAddress[4] << 8;
-				iLow+=byAddress[5] ;
-
-				getAcuLink()->setParaData(ALINK_SETT_DEVICEID_CATEGORY,iHigh);
-				getAcuLink()->setParaData(ALINK_SETT_DEVICEID_VARIANT,iLow);
-
-				MAINBOARD_DATA dataMainboard;
-				getDATAHANDLER()->getMainboardData(&dataMainboard);
-
-				CString csConductor=dataMainboard.m_szConductorVersion;
-
-				curPos=0;
-				nIdx=0;
-
-				resToken= csConductor.Tokenize(_T("."),curPos);
-				while (resToken != _T(""))
-				{
-					iVersion[nIdx]=_ttoi(resToken);
-
-					resToken = csConductor.Tokenize(_T("."), curPos);
-					nIdx++;
-				}; 
-
-				getAcuLink()->setParaData(ALINK_SETT_VERSION_CTRLPIC_MAJOR,iVersion[0]);
-				getAcuLink()->setParaData(ALINK_SETT_VERSION_CTRLPIC_MINOR,iVersion[1]);
-				getAcuLink()->setParaData(ALINK_SETT_VERSION_CTRLPIC_PATCH,iVersion[2]);
-				
-				getAcuLink()->setParaData(ALINK_SETT_VERSION_MONPIC_MAJOR,dataMainboard.m_iMonitorVersion_x);
-				getAcuLink()->setParaData(ALINK_SETT_VERSION_MONPIC_MINOR,dataMainboard.m_iMonitorVersion_y);
-				getAcuLink()->setParaData(ALINK_SETT_VERSION_MONPIC_PATCH,dataMainboard.m_iMonitorVersion_z);
-
-				eVentSilentState silentState = getALARMHANDLER()->getAlarmSilentState();
-				if(silentState==ASTATE_ACTIVE)
-				{
-					getAcuLink()->setAlarmData(ALINK_ALARM_ENABLED,1);
-				}
-				else
-				{
-					getAcuLink()->setAlarmData(ALINK_ALARM_ENABLED,0);
-				}
-				
-				
-				getAcuLink()->setParaData(ALINK_SETT_PERSID,getCONFIG()->GetPatientID());
-			}*/
 			
 			isMaintenanceNeeded();
 			
-			//if(getCONFIG()->getCO2module()!=CO2MODULE_NONE)
-			//{
-			//	if(getAcuLink()!=NULL)
-			//	{
-			//		getAcuLink()->setParaData(ALINK_SETT_UNIT_CO2,(int)getCONFIG()->GetCO2unit());
-			//		//getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,getCONFIG()->GetO2Compensation());
-			//		if(isO2FlushActive())
-			//			getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,getDATAHANDLER()->PARADATA()->GetO2FlushPara());
-			//		else
-			//			getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,getDATAHANDLER()->PARADATA()->GetO2Para());
-
-			//		getAcuLink()->setParaData(ALINK_SETT_BAROPRESSURE_CO2,getCONFIG()->GetCO2BaroPressure());
-
-			//	}
-			//}
-			//else if(getAcuLink()!=NULL)
-			//{
-			//	getAcuLink()->setParaData(ALINK_SETT_UNIT_CO2,ALINK_NOTVALID);
-			//	getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,ALINK_NOTVALID);
-			//	getAcuLink()->setParaData(ALINK_SETT_BAROPRESSURE_CO2,ALINK_NOTVALID);
-			//}
-
 			if(getCONFIG()->IsAutoScreenlockActive())
 			{
 				if(AfxGetApp())
@@ -1913,6 +1763,11 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			NotifyEvent(pEvent);
 		}
 		break;
+	case CMVEventControl::EV_CONTROL_TRIGGERSTATE:
+		{
+			NotifyEvent(pEvent);
+		}
+		break;
 	case CMVEventControl::EV_CONTROL_FLOWSENSORSTATE:
 		{
 			if(getAcuLink()!=NULL)
@@ -1953,20 +1808,32 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 				activeMode=getCONFIG()->GetCurMode();
 			switch(activeMode)
 			{
-			case VM_DUOPAP:
-			case VM_NCPAP:
-				{
-					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
-					{
-						if(getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET)//pressure trigger
-						{
-							getDATAHANDLER()->checkTriggerTubeDependency();
-						}
+			//case VM_DUOPAP:
+			//	{
+			//		if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
+			//		{
+			//			//if(getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET)//pressure trigger
+			//			{
+			//				getDATAHANDLER()->checkTriggerTubeDependency();
+			//			}
 
-						Send_VENT_MODE(activeMode);
-					}
-				}
-				break;
+			//			Send_VENT_MODE(activeMode);
+			//		}
+			//	}
+			//	break;
+			//case VM_NCPAP:
+			//	{
+			//		//if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
+			//		{
+			//			//if(getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET)//pressure trigger
+			//			{
+			//				getDATAHANDLER()->checkTriggerTubeDependency();
+			//			}
+
+			//			Send_VENT_MODE(activeMode);
+			//		}
+			//	}
+			//	break;
 			case VM_PSV:
 				{
 					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
@@ -1975,13 +1842,14 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 							theApp.getLog()->WriteLine(_T("#HFO:0230"));
 						else
 						{
-							getDATAHANDLER()->checkTriggerTubeDependency();
+							//getDATAHANDLER()->checkTriggerTubeDependency();
 							/*if(getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
 							{
 								getDATAHANDLER()->SetPrevTriggerOptionCONV(getDATAHANDLER()->getTriggerOptionCONV());
 								getDATAHANDLER()->setTriggerOptionCONV(TRIGGER_PRESSURE);
 							}
 							Send_MODE_OPTION1();*/
+							Send_VENT_MODE(activeMode);
 						}
 					}
 				}
@@ -1994,60 +1862,62 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 							theApp.getLog()->WriteLine(_T("#HFO:0230"));
 						else
 						{
-							getDATAHANDLER()->checkTriggerTubeDependency();
+							Send_VENT_MODE(activeMode);
+							//getDATAHANDLER()->checkTriggerTubeDependency();
 						}
 					}
 				}
 				break;
-			case VM_SIMV:
-				{
-					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
-					{
-						getDATAHANDLER()->checkTriggerTubeDependency();
-					}
-				}
-				break;
-			case VM_SIPPV:
-				{
-					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
-					{
-						getDATAHANDLER()->checkTriggerTubeDependency();
-					}
-				}
-				break;
-			case VM_IPPV:
-				{
-					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
-					{
-						getDATAHANDLER()->checkTriggerTubeDependency();
-					}
-				}
-				break;
-			case VM_CPAP:
-				{
-					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
-					{
-						getDATAHANDLER()->checkTriggerTubeDependency();
-					}
-				}
-				break;
-			case VM_HFO:
+			//case VM_SIMV:
+			//	{
+			//		/*if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
+			//		{
+			//			getDATAHANDLER()->checkTriggerTubeDependency();
+			//		}*/
+			//	}
+			//	break;
+			//case VM_SIPPV:
+			//	{
+			//		/*if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
+			//		{
+			//			getDATAHANDLER()->checkTriggerTubeDependency();
+			//		}*/
+			//	}
+			//	break;
+			//case VM_IPPV:
+			//	{
+			//		/*if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
+			//		{
+			//			getDATAHANDLER()->checkTriggerTubeDependency();
+			//		}*/
+			//	}
+			//	break;
+			//case VM_CPAP:
+			//	{
+			//		////if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
+			//		//{
+			//		//	getDATAHANDLER()->checkTriggerTubeDependency();
+			//		//}
+			//	}
+			//	break;
+			/*case VM_HFO:
 				{
 					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
 					{
 						Send_VENT_MODE(activeMode);
 					}
 				}
-				break;
+				break;*/
 			default:
 				{
-					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
+					//if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
 					{
 						Send_VENT_MODE(activeMode);
 					}
 				}
 				break;
 			}
+
 			if(		getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF
 				||	getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF
 				||	getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_AUTOOFF)
@@ -2229,6 +2099,9 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 			getCONFIG()->Init();
 			getDATAHANDLER()->loadConfig();
 			getALARMHANDLER()->loadConfig();
+
+			getDATAHANDLER()->checkTriggerTubeDependency();
+
 			Send_VENT_MODE(getCONFIG()->GetCurMode());
 			
 			NotifyEvent(pEvent);
@@ -5276,19 +5149,21 @@ WORD CMVModel::Send_MODE_OPTION1(bool bSPI,bool bSerial)
 	eTubeSet eTube=getDATAHANDLER()->GetTubeSet();
 	switch(eTube)
 	{
-	/*case TUBE_INFANTFLOW:
+	case TUBE_INFANTFLOW:
 		{
-			wMode=setBitOfWord(wMode, TUBESET11_BIT);
+			DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION1 TUBE_INFANTFLOW\r\n")));
 		}
-		break;*/
+		break;
 	case TUBE_MEDIJET:
 		{
 			wMode=setBitOfWord(wMode, TUBESET10_BIT);
+			DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION1 TUBE_MEDIJET\r\n")));
 		}
 		break;
 	case TUBE_INFANTFLOW_LP:
 		{
 			wMode=setBitOfWord(wMode, TUBESET11_BIT);
+			DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION1 TUBE_INFANTFLOW_LP\r\n")));
 		}
 		break;
 	}
@@ -5466,12 +5341,20 @@ WORD CMVModel::Send_MODE_OPTION2(bool bSPI,bool bSerial)
 		wMode=setBitOfWord(wMode, MODOPT2_TRIGGERFLOW_BIT);*/
 	eTriggereType trigger = TRIGGER_FLOW;
 	if(		getCONFIG()->GetCurMode()==VM_DUOPAP
-		||	getCONFIG()->GetCurMode()==VM_PRE_DUOPAP
-		||	getCONFIG()->GetCurMode()==VM_NCPAP
+		||	getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
+	{
+		trigger=getDATAHANDLER()->getTriggerOptionDUOPAP();
+	}
+	else if(	getCONFIG()->GetCurMode()==VM_NCPAP
 		||	getCONFIG()->GetCurMode()==VM_PRE_NCPAP)
 	{
-		trigger=getDATAHANDLER()->getTriggerOptionNMODE();
+		trigger=getDATAHANDLER()->getTriggerOptionNCPAP();
 	}
+	/*else if(	getCONFIG()->GetCurMode()==VM_CPAP
+		||	getCONFIG()->GetCurMode()==VM_PRE_CPAP)
+	{
+		trigger=getDATAHANDLER()->getTriggerOption_CPAP();
+	}*/
 	else
 	{
 		trigger=getDATAHANDLER()->getTriggerOptionCONV();
@@ -5480,19 +5363,19 @@ WORD CMVModel::Send_MODE_OPTION2(bool bSPI,bool bSerial)
 	{
 	case TRIGGER_VOLUME:
 		{
-			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 TRIGGER_VOLUME\r\n")));
+			DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 TRIGGER_VOLUME\r\n")));
 		}
 		break;
 	case TRIGGER_FLOW:
 		{
 			wMode=setBitOfWord(wMode, MODOPT2_TRIGGERFLOW_BIT);
-			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 TRIGGER_FLOW\r\n")));
+			DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 TRIGGER_FLOW\r\n")));
 		}
 		break;
 	case TRIGGER_PRESSURE:
 		{
 			wMode=setBitOfWord(wMode, MODOPT2_TRIGGERPRESSURE_BIT);
-			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 MODOPT2_TRIGGERPRESSURE_BIT\r\n")));
+			DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 TRIGGER_PRESSURE\r\n")));
 		}
 		break;
 	}
@@ -5608,13 +5491,21 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 	
 	int iPpsv=(int)getDATAHANDLER()->PARADATA()->GetPpsvPara();
 	int iTrigger=0;
-	if(getVMODEHANDLER()->activeModeIsNMODETrigger())
+	if(getVMODEHANDLER()->activeModeIsNCPAP())
 	{
-		iTrigger=(int)getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara(); 
+		iTrigger=(int)getDATAHANDLER()->PARADATA()->GetTriggerPara_NCPAP(); 
+	}
+	else if(getVMODEHANDLER()->activeModeIsDUOPAP())
+	{
+		iTrigger=(int)getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP(); 
+	}
+	else if(getVMODEHANDLER()->activeModeIsCPAP())
+	{
+		iTrigger=(int)getDATAHANDLER()->PARADATA()->GetTriggerPara_CPAP(); 
 	}
 	else
 	{
-		iTrigger=(int)getDATAHANDLER()->PARADATA()->GetTriggerCONVPara();
+		iTrigger=(int)getDATAHANDLER()->PARADATA()->GetTriggerPara_CONV();
 	}
 	int iAbortCriterionPSV=getCONFIG()->GetPercentAbortCriterionPSV();
 	int iFlowmin=(int)getDATAHANDLER()->PARADATA()->GetFlowminPara();
@@ -5942,14 +5833,7 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 			getSPI()->Send_PARAVAL_INSP_TIME(500);
 			getSPI()->Send_PARAVAL_EXH_TIME(500);
 
-			if(getDATAHANDLER()->IsFlowSensorStateOff()==true)
-			{
-				getSPI()->Send_PARAVAL_TRIG_SCHWELLE(iTrigger);
-			}
-			else
-			{
-				iTrigger=ALINK_NOTVALID;
-			}
+			getSPI()->Send_PARAVAL_TRIG_SCHWELLE(iTrigger);
 
 			if(false==bPRICOrunning)//PRICO04
 				Send_PARA_OXY_RATIO(iO2, true, true);
@@ -6042,6 +5926,7 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 			getSPI()->Send_PARAVAL_PINSP(iPManualnmode);
 			getSPI()->Send_PARAVAL_PEEP(iCPAPnmode);
 			getSPI()->Send_PARAVAL_APNOE_TIME(iApnoeLimit);
+			getSPI()->Send_PARAVAL_TRIG_SCHWELLE(iTrigger);
 
 			if(false==bPRICOrunning)//PRICO04
 				Send_PARA_OXY_RATIO(iO2, true, true);
@@ -6057,7 +5942,7 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 			iVLimit=ALINK_NOTVALID;
 			iVGarant=ALINK_NOTVALID;
 			iPpsv=ALINK_NOTVALID;
-			iTrigger=ALINK_NOTVALID;
+			//iTrigger=ALINK_NOTVALID;
 			iAbortCriterionPSV=ALINK_NOTVALID;
 			iFlowmin=ALINK_NOTVALID;
 			iPManual=ALINK_NOTVALID;

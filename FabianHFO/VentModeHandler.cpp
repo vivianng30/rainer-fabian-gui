@@ -643,6 +643,7 @@ void CVentModeHandler::setDUOPAP()
 			if(AfxGetApp())
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_VENTMODE_HOME);
 
+			getModel()->getDATAHANDLER()->checkPRESETTriggerTubeDependency();
 		}
 	}
 	else

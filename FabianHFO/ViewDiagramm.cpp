@@ -5487,7 +5487,7 @@ void CViewDiagramm::NotifyVentModeChanged()
 	EnterCriticalSection(&csDiagrammFLOW);
 	if(m_pDiagrammFlow && m_bGraphFlowIsActive)
 	{
-		if(getModel()->getCONFIG()->getTriggerOptionCONV()==TRIGGER_FLOW && getModel()->getVMODEHANDLER()->activeModeIsCONVTrigger())
+		if(getModel()->getCONFIG()->getTriggerOption_CONV()==TRIGGER_FLOW && getModel()->getVMODEHANDLER()->activeModeIsCONVTrigger())
 		{
 			m_pDiagrammFlow->SetTriggerThreshold(m_iTrigThreshold);
 		}
@@ -5899,6 +5899,7 @@ void CViewDiagramm::NotifyEvent(CMVEvent* pEvent)
 				}
 				break;
 			case CMVEventControl::EV_CONTROL_FLOWSENSORSTATE:
+			case CMVEventControl::EV_CONTROL_TRIGGERSTATE:
 				{
 					PostMessage( WM_GRAPH_FLOWSENSORSTATE, 0, 0);
 				}

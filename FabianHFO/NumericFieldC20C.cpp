@@ -117,7 +117,6 @@ bool CNumericFieldC20C::drawData(bool bData, bool bFrames, bool bText, bool bLim
 	else
 	{
 		iBPM=getModel()->getDATAHANDLER()->getAVGMessureDataBPM();
-
 	}
 
 	if(iBPM==0)

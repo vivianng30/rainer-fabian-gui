@@ -411,18 +411,10 @@ void CSubParaBtn::DrawSUBPARA_TRIGGER_DUOPAP(int nState)
 
 	SelectObject(m_hDC,g_hf7AcuBold);
 
-	if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true 
-		&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET)
-	{
-		rcSubBtn.top = m_rcClient.top+16;
-		rcSubBtn.bottom = m_rcClient.bottom-16;
-
-		DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_FLOWSENSOR),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-		DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_OFF),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-	}
-	else
+	if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET)//FS state always off -> check sensitivity state on/off
 	{
 		bool bTriggerOff=false;
+
 		if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
 			&&	getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEPara()>600)
 		{
@@ -434,71 +426,118 @@ void CSubParaBtn::DrawSUBPARA_TRIGGER_DUOPAP(int nState)
 			bTriggerOff=true;
 		}
 
-		if(getModel()->getDATAHANDLER()->getTriggerOptionNMODE()==TRIGGER_PRESSURE && false==bTriggerOff)
+		if(bTriggerOff)//Trigger dísabled T-high
+		{
+			rcSubBtn.top = m_rcClient.top+12;
+			rcSubBtn.bottom = m_rcClient.bottom-20;
+
+			DrawText(m_hDC,getModel()->GetLanguageString(IDS_PARA_TRIGGER),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
+			DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_NOTACTIVE),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+
+			rcSubBtn.top = m_rcClient.top+15;
+			rcSubBtn.bottom = m_rcClient.bottom-5;
+
+			SetTextColor(m_hDC,RGB(255,0,0));
+			DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_TRIGGER_THIGH),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER); 
+
+			if(m_pcWarning_Up)
+				m_pcWarning_Up->Draw(m_hDC,65,m_rcClient.bottom-20);
+
+			
+		}
+		else //if(getModel()->getDATAHANDLER()->getTriggerOptionDUOPAP()==TRIGGER_PRESSURE && false==bTriggerOff)
 		{
 			rcSubBtn.top = m_rcClient.top+16;
 			rcSubBtn.bottom = m_rcClient.bottom-16;
 
 			DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_PRESSURE),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
 			DrawText(m_hDC,getModel()->GetLanguageString(IDS_PARA_TRIGGER),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-
-			if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
-				&&	getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEPara()>600)
-			{
-				rcSubBtn.top = m_rcClient.top+15;
-				rcSubBtn.bottom = m_rcClient.bottom-3;
-
-				SetTextColor(m_hDC,RGB(255,0,0));
-				SelectObject(m_hDC,g_hf7AcuNorm);
-				DrawText(m_hDC,_T("T-high"),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-			}
-			else if(		getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP
-				&&	getModel()->getDATAHANDLER()->PRESET()->GetITimeNMODEPara()>600)
-			{
-				rcSubBtn.top = m_rcClient.top+15;
-				rcSubBtn.bottom = m_rcClient.bottom-3;
-
-				SetTextColor(m_hDC,RGB(255,0,0));
-				SelectObject(m_hDC,g_hf7AcuNorm);
-				DrawText(m_hDC,_T("T-high"),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-			}
 		}
-		else if(getModel()->getDATAHANDLER()->getTriggerOptionNMODE()==TRIGGER_FLOW && false==bTriggerOff)
+	}
+	else//TUBE_INFANTFLOW or TUBE_INFANTFLOW_LP
+	{
+		if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
 		{
 			rcSubBtn.top = m_rcClient.top+16;
 			rcSubBtn.bottom = m_rcClient.bottom-16;
 
-
-			DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_FLOW),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-			DrawText(m_hDC,getModel()->GetLanguageString(IDS_PARA_TRIGGER),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+			DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_FLOWSENSOR),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
+			DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_OFF),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
 		}
-		else//TRIGGER_OFF
+		else
 		{
-			rcSubBtn.top = m_rcClient.top+16;
-			rcSubBtn.bottom = m_rcClient.bottom-16;
-
-			if(bTriggerOff)
+			if(getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP)
 			{
-				rcSubBtn.top = m_rcClient.top+15;
-				rcSubBtn.bottom = m_rcClient.bottom-5;
+				if(getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEPara()>600)//sensitivity == MAXRANGE_TRIGGER_OFF of cause high I-Time
+				{
+					rcSubBtn.top = m_rcClient.top+12;
+					rcSubBtn.bottom = m_rcClient.bottom-20;
 
-				SetTextColor(m_hDC,RGB(255,0,0));
-				DrawText(m_hDC,_T("T-high"),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_PARA_TRIGGER),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_NOTACTIVE),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
 
-				if(m_pcWarning_Up)
-					m_pcWarning_Up->Draw(m_hDC,65,m_rcClient.bottom-20);
+					rcSubBtn.top = m_rcClient.top+15;
+					rcSubBtn.bottom = m_rcClient.bottom-5;
 
-				rcSubBtn.top = m_rcClient.top+12;
-				rcSubBtn.bottom = m_rcClient.bottom-20;
+					SetTextColor(m_hDC,RGB(255,0,0));
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_TRIGGER_THIGH),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+
+					if(m_pcWarning_Up)
+						m_pcWarning_Up->Draw(m_hDC,65,m_rcClient.bottom-20);
+				}
+				else if(getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP()==MAXRANGE_TRIGGER_OFF)//sensitivity == MAXRANGE_TRIGGER_OFF of cause manual setting to off
+				{
+					rcSubBtn.top = m_rcClient.top+16;
+					rcSubBtn.bottom = m_rcClient.bottom-16;
+
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_FLOW),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_PARA_TRIGGER),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+				}
+				else//FS on and sensitivity on
+				{
+					rcSubBtn.top = m_rcClient.top+16;
+					rcSubBtn.bottom = m_rcClient.bottom-16;
+
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_FLOW),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_PARA_TRIGGER),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+				}
 			}
-			else
+			else //if(getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
 			{
-				rcSubBtn.top = m_rcClient.top+16;
-				rcSubBtn.bottom = m_rcClient.bottom-16;
-			}
+				if(getModel()->getDATAHANDLER()->PRESET()->GetITimeNMODEPara()>600)//sensitivity == MAXRANGE_TRIGGER_OFF of cause preset high I-Time
+				{
+					rcSubBtn.top = m_rcClient.top+12;
+					rcSubBtn.bottom = m_rcClient.bottom-20;
 
-			DrawText(m_hDC,getModel()->GetLanguageString(IDS_PARA_TRIGGER),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-			DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_NOTACTIVE),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_PARA_TRIGGER),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_NOTACTIVE),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+
+					rcSubBtn.top = m_rcClient.top+15;
+					rcSubBtn.bottom = m_rcClient.bottom-5;
+
+					SetTextColor(m_hDC,RGB(255,0,0));
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_TRIGGER_THIGH),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+
+					if(m_pcWarning_Up)
+						m_pcWarning_Up->Draw(m_hDC,65,m_rcClient.bottom-20);
+				}
+				else if(getModel()->getDATAHANDLER()->PRESET()->GetTriggerPara_DUOPAP()==MAXRANGE_TRIGGER_OFF)//sensitivity == MAXRANGE_TRIGGER_OFF of cause manual setting to off
+				{
+					rcSubBtn.top = m_rcClient.top+16;
+					rcSubBtn.bottom = m_rcClient.bottom-16;
+
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_FLOW),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_PARA_TRIGGER),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+				}
+				else//FS on and preset sensitivity on
+				{
+					rcSubBtn.top = m_rcClient.top+16;
+					rcSubBtn.bottom = m_rcClient.bottom-16;
+
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_FLOW),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+					DrawText(m_hDC,getModel()->GetLanguageString(IDS_PARA_TRIGGER),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+				}
+			}
 		}
 	}
 
@@ -541,46 +580,33 @@ void CSubParaBtn::DrawSUBPARA_TRIGGER_NCPAP(int nState)
 
 	SelectObject(m_hDC,g_hf7AcuBold);
 
-	if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true 
-		&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET)
+	if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET)//FS state always off
 	{
-		rcSubBtn.top = m_rcClient.top+16;
-		rcSubBtn.bottom = m_rcClient.bottom-16;
+		rcSubBtn.top = m_rcClient.top+8;
+		rcSubBtn.bottom = m_rcClient.bottom-8;
 
-		DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_FLOWSENSOR),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
-		DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_OFF),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+		DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_TRIGGER_BREATH),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
+		DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_TRIGGER_DETECTION),-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);
+		DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_PRESSURE),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
 	}
-	else
+	else//TUBE_INFANTFLOW or TUBE_INFANTFLOW_LP
 	{
-		if(getModel()->getDATAHANDLER()->getTriggerOptionNMODE()==TRIGGER_PRESSURE)
+		if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
 		{
-			rcSubBtn.top = m_rcClient.top+8;
-			rcSubBtn.bottom = m_rcClient.bottom-8;
+			rcSubBtn.top = m_rcClient.top+16;
+			rcSubBtn.bottom = m_rcClient.bottom-16;
 
-			DrawText(m_hDC,_T("Apnea"),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-			DrawText(m_hDC,_T("Detection"),-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-			DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_PRESSURE),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
-
+			DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_FLOWSENSOR),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
+			DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_OFF),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
 		}
-		else if(getModel()->getDATAHANDLER()->getTriggerOptionNMODE()==TRIGGER_FLOW)
+		else//FS on
 		{
 			rcSubBtn.top = m_rcClient.top+8;
 			rcSubBtn.bottom = m_rcClient.bottom-8;
 
-			DrawText(m_hDC,_T("Apnea"),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-			DrawText(m_hDC,_T("Detection"),-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+			DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_TRIGGER_BREATH),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+			DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_TRIGGER_DETECTION),-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
 			DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_FLOW),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
-		}
-		else//TRIGGER_OFF
-		{
-			rcSubBtn.top = m_rcClient.top+16;
-			rcSubBtn.bottom = m_rcClient.bottom-16;
-
-			rcSubBtn.top = m_rcClient.top+16;
-			rcSubBtn.bottom = m_rcClient.bottom-16;
-
-			DrawText(m_hDC,getModel()->GetLanguageString(IDS_PARA_TRIGGER),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
-			DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_NOTACTIVE),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
 		}
 	}
 
@@ -623,59 +649,79 @@ void CSubParaBtn::DrawSUBPARA_TRIGGER_CPAP(int nState)
 
 	SelectObject(m_hDC,g_hf7AcuBold);
 
-	if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true
-		&& getModel()->getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE
-		&& getModel()->getCONFIG()->GetCurMode()==VM_PRE_CPAP)
+	if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
 	{
 		rcSubBtn.top = m_rcClient.top+8;
 		rcSubBtn.bottom = m_rcClient.bottom-8;
 
-		DrawText(m_hDC,_T("Apnea"),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-		DrawText(m_hDC,_T("Detection"),-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+		DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_TRIGGER_BREATH),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+		DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_TRIGGER_DETECTION),-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
 		DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_PRESSURE),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
-	}
-	else if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true
-		&& getModel()->getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
-	{
-		rcSubBtn.top = m_rcClient.top+16;
-		rcSubBtn.bottom = m_rcClient.bottom-16;
-
-		DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_FLOWSENSOR),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
-		DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_OFF),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
 	}
 	else
 	{
-		if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_PRESSURE)
-		{
-			rcSubBtn.top = m_rcClient.top+8;
-			rcSubBtn.bottom = m_rcClient.bottom-8;
+		rcSubBtn.top = m_rcClient.top+8;
+		rcSubBtn.bottom = m_rcClient.bottom-8;
 
-			DrawText(m_hDC,_T("Apnea"),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-			DrawText(m_hDC,_T("Detection"),-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-			DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_PRESSURE),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
-
-		}
-		else if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_FLOW)
-		{
-			rcSubBtn.top = m_rcClient.top+8;
-			rcSubBtn.bottom = m_rcClient.bottom-8;
-
-			DrawText(m_hDC,_T("Apnea"),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-			DrawText(m_hDC,_T("Detection"),-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-			DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_FLOW),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
-		}
-		else//TRIGGER_OFF
-		{
-			rcSubBtn.top = m_rcClient.top+16;
-			rcSubBtn.bottom = m_rcClient.bottom-16;
-
-			rcSubBtn.top = m_rcClient.top+16;
-			rcSubBtn.bottom = m_rcClient.bottom-16;
-
-			DrawText(m_hDC,getModel()->GetLanguageString(IDS_PARA_TRIGGER),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
-			DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_NOTACTIVE),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
-		}
+		DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_TRIGGER_BREATH),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+		DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_TRIGGER_DETECTION),-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+		DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_FLOW),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
 	}
+
+
+	//if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true
+	//	&& getModel()->getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE
+	//	&& getModel()->getCONFIG()->GetCurMode()==VM_PRE_CPAP)
+	//{
+	//	rcSubBtn.top = m_rcClient.top+8;
+	//	rcSubBtn.bottom = m_rcClient.bottom-8;
+
+	//	DrawText(m_hDC,_T("Breath"),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+	//	DrawText(m_hDC,_T("Detection"),-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+	//	DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_PRESSURE),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+	//}
+	//else if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true
+	//	&& getModel()->getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
+	//{
+	//	rcSubBtn.top = m_rcClient.top+16;
+	//	rcSubBtn.bottom = m_rcClient.bottom-16;
+
+	//	DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_FLOWSENSOR),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
+	//	DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_OFF),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+	//}
+	//else
+	//{
+	//	if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_PRESSURE)
+	//	{
+	//		rcSubBtn.top = m_rcClient.top+8;
+	//		rcSubBtn.bottom = m_rcClient.bottom-8;
+
+	//		DrawText(m_hDC,_T("Breath"),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+	//		DrawText(m_hDC,_T("Detection"),-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+	//		DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_PRESSURE),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+
+	//	}
+	//	else if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_FLOW)
+	//	{
+	//		rcSubBtn.top = m_rcClient.top+8;
+	//		rcSubBtn.bottom = m_rcClient.bottom-8;
+
+	//		DrawText(m_hDC,_T("Breath"),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+	//		DrawText(m_hDC,_T("Detection"),-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
+	//		DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_FLOW),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+	//	}
+	//	else//TRIGGER_OFF
+	//	{
+	//		rcSubBtn.top = m_rcClient.top+16;
+	//		rcSubBtn.bottom = m_rcClient.bottom-16;
+
+	//		rcSubBtn.top = m_rcClient.top+16;
+	//		rcSubBtn.bottom = m_rcClient.bottom-16;
+
+	//		DrawText(m_hDC,getModel()->GetLanguageString(IDS_PARA_TRIGGER),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
+	//		DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_NOTACTIVE),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+	//	}
+	//}
 
 	SetTextColor(m_hDC,nPrevTxtColor);
 	SetBkMode(m_hDC,nBkMode);

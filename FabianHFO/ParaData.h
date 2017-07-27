@@ -50,8 +50,10 @@ class CParaData
 		WORD		m_iParaDataVGarant_TRIGGER;
 		bool		m_bParaDataVGarantOn_IPPV;
 		bool		m_bParaDataVGarantOn_TRIGGER;
-		BYTE		m_iParaDataTriggerCONV;
-		BYTE		m_iParaDataTriggerNMODE;
+		BYTE		m_iParaDataTrigger_CONV;
+		BYTE		m_iParaDataTrigger_CPAP;
+		BYTE		m_iParaDataTrigger_DUOPAP;
+		BYTE		m_iParaDataTrigger_NCPAP;
 		BYTE		m_iParaDataBackup;
 		WORD		m_iParaDataHFAMPL;
 		WORD		m_iParaDataHFAMPLmax;
@@ -154,10 +156,15 @@ public:
 
 	BYTE GetO2Para();
 	void SetO2Para(BYTE value, bool bSend, bool bConfig);
-	BYTE GetTriggerCONVPara();
-	void SetTriggerCONVPara(BYTE value, bool bSend, bool bConfig);
-	BYTE GetTriggerNMODEPara();
-	void SetTriggerNMODEPara(BYTE value, bool bSend, bool bConfig);
+
+	BYTE GetTriggerPara_CONV();
+	void SetTriggerPara_CONV(BYTE value, bool bSend, bool bConfig);
+	BYTE GetTriggerPara_CPAP();
+	void SetTriggerPara_CPAP(BYTE value, bool bSend, bool bConfig);
+	BYTE GetTriggerPara_DUOPAP();
+	void SetTriggerPara_DUOPAP(BYTE value, bool bSend, bool bConfig);
+	BYTE GetTriggerPara_NCPAP();
+	void SetTriggerPara_NCPAP(BYTE value, bool bSend, bool bConfig);
 
 	WORD GetEFLOWPara_TRIGGER();
 	void SetEFLOWPara_TRIGGER(WORD value, bool bSend, bool bConfig);
@@ -215,8 +222,12 @@ public:
 	SHORT GetPManualNMODEMaxPara();
 	BYTE GetO2MaxPara();
 	BYTE GetO2FlushMaxPara();
+
 	BYTE GetTriggerCONVMaxPara();
-	BYTE GetTriggerNMODEMaxPara();
+	BYTE GetTriggerCPAPMaxPara();
+	BYTE GetTriggerDUOPAPMaxPara();
+	BYTE GetTriggerNCPAPMaxPara();
+
 	WORD GetEFLOWMaxPara_IPPV();
 	WORD GetEFLOWMaxPara_TRIGGER();
 	WORD GetTherapieFlowMaxPara();
@@ -285,8 +296,12 @@ public:
 	SHORT GetPManualNMODEMinPara();
 	BYTE GetO2MinPara();
 	BYTE GetO2FlushMinPara();
+
 	BYTE GetTriggerCONVMinPara();
-	BYTE GetTriggerNMODEMinPara();
+	BYTE GetTriggerCPAPMinPara();
+	BYTE GetTriggerDUOPAPMinPara();
+	BYTE GetTriggerNCPAPMinPara();
+
 	WORD GetEFLOWMinPara_IPPV();
 	WORD GetEFLOWMinPara_TRIGGER();
 	WORD GetTherapieFlowMinPara();

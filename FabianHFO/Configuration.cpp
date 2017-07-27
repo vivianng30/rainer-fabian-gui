@@ -87,8 +87,14 @@ CConfiguration::CConfiguration()
 	m_bTrendAutoScale=false;
 	m_bFilledGraph=false;
 	m_bFilledTrend=false;
-	m_eTriggerTypeCONV=TRIGGER_FLOW;
-	m_eTriggerTypeNMODE=TRIGGER_FLOW;
+	//m_eTriggerTypeCONV=TRIGGER_FLOW;
+	//m_eTriggerTypeNMODE=TRIGGER_FLOW;
+
+	m_eTriggerType_CONV=TRIGGER_FLOW;
+	m_eTriggerType_CPAP=TRIGGER_FLOW;
+	m_eTriggerType_DUOPAP=TRIGGER_FLOW;
+	m_eTriggerType_NCPAP=TRIGGER_FLOW;
+
 	m_eIERelationMode=RM_SET_ItoE;
 	m_eRefFlowSensor=RF_NTPD;
 	m_eTubeSet=TUBE_INFANTFLOW;
@@ -260,8 +266,12 @@ CConfiguration::CConfiguration()
 	m_iParaDataVGarant_TRIGGER=0;
 	m_bParaDataVGarantOn_IPPV=false;
 	m_bParaDataVGarantOn_TRIGGER=false;
-	m_iParaDataTriggerCONV=0;
-	m_iParaDataTriggerNMODE=0;
+	//m_iParaDataTriggerCONV=0;
+	//m_iParaDataTriggerNMODE=0;
+	m_iParaDataTrigger_CONV=0;
+	m_iParaDataTrigger_CPAP=0;
+	m_iParaDataTrigger_NCPAP=0;
+	m_iParaDataTrigger_DUOPAP=0;
 	m_iParaDataBackup=0;
 	m_iParaDataHFAmpl=0;
 	m_iParaDataHFAmplmax=0;
@@ -499,8 +509,14 @@ void CConfiguration::Init()
 	m_bTrendAutoScale=false;
 	m_bFilledGraph=false;
 	m_bFilledTrend=false;
-	m_eTriggerTypeCONV=TRIGGER_FLOW;
-	m_eTriggerTypeNMODE=TRIGGER_FLOW;
+	//m_eTriggerTypeCONV=TRIGGER_FLOW;
+	//m_eTriggerTypeNMODE=TRIGGER_FLOW;
+
+	m_eTriggerType_CONV=TRIGGER_FLOW;
+	m_eTriggerType_CPAP=TRIGGER_FLOW;
+	m_eTriggerType_DUOPAP=TRIGGER_FLOW;
+	m_eTriggerType_NCPAP=TRIGGER_FLOW;
+
 	m_eIERelationMode=RM_SET_ItoE;
 	m_eRefFlowSensor=RF_NTPD;
 	m_eTubeSet=TUBE_INFANTFLOW;
@@ -674,8 +690,12 @@ void CConfiguration::Init()
 	m_iParaDataVGarant_TRIGGER=0;
 	m_bParaDataVGarantOn_IPPV=false;
 	m_bParaDataVGarantOn_TRIGGER=false;
-	m_iParaDataTriggerCONV=0;
-	m_iParaDataTriggerNMODE=0;
+	//m_iParaDataTriggerCONV=0;
+	//m_iParaDataTriggerNMODE=0;
+	m_iParaDataTrigger_CONV=0;
+	m_iParaDataTrigger_CPAP=0;
+	m_iParaDataTrigger_NCPAP=0;
+	m_iParaDataTrigger_DUOPAP=0;
 	m_iParaDataBackup=0;
 	m_iParaDataHFAmpl=0;
 	m_iParaDataHFAmplmax=0;
@@ -1357,33 +1377,47 @@ void CConfiguration::LoadSettings()
 	else
 		m_bVolumeTrigger=false;*/
 
-	m_eTriggerTypeCONV=(eTriggereType)getModel()->getI2C()->ReadConfigByte(TRIGGERTYPECONV_8);
-	if(m_eTriggerTypeCONV<TRIGGER_VOLUME  || m_eTriggerTypeCONV>TRIGGER_PRESSURE) //pressure trigger check, allowed setting: VOLUME,FLOW, PRESSURE
+	m_eTriggerType_CONV=(eTriggereType)getModel()->getI2C()->ReadConfigByte(TRIGGERTYPECONV_8);
+	if(m_eTriggerType_CONV<TRIGGER_VOLUME  || m_eTriggerType_CONV>TRIGGER_PRESSURE) //pressure trigger check, allowed setting: VOLUME,FLOW, PRESSURE
 	{
-		m_eTriggerTypeCONV=TRIGGER_FLOW;
+		m_eTriggerType_CONV=TRIGGER_FLOW;
 		getModel()->getI2C()->WriteConfigByte(TRIGGERTYPECONV_8,TRIGGER_FLOW);
 	}
 
-	m_eTriggerTypeNMODE=(eTriggereType)getModel()->getI2C()->ReadConfigByte(TRIGGERTYPENMODE_8);
-	if(m_eTriggerTypeNMODE<TRIGGER_FLOW  || m_eTriggerTypeNMODE>TRIGGER_PRESSURE) //pressure trigger check, allowed setting: FLOW, PRESSURE, OFF
+	m_eTriggerType_CPAP=(eTriggereType)getModel()->getI2C()->ReadConfigByte(TRIGGERTYPECPAP_8);
+	if(m_eTriggerType_CPAP<TRIGGER_FLOW  || m_eTriggerType_CPAP>TRIGGER_PRESSURE) //pressure trigger check, allowed setting: FLOW, PRESSURE, OFF
 	{
-		m_eTriggerTypeNMODE=TRIGGER_FLOW;
-		getModel()->getI2C()->WriteConfigByte(TRIGGERTYPENMODE_8,TRIGGER_FLOW);
+		m_eTriggerType_CPAP=TRIGGER_FLOW;
+		getModel()->getI2C()->WriteConfigByte(m_eTriggerType_CPAP,TRIGGER_FLOW);
 	}
+
+	m_eTriggerType_NCPAP=(eTriggereType)getModel()->getI2C()->ReadConfigByte(TRIGGERTYPENCPAP_8);
+	if(m_eTriggerType_NCPAP<TRIGGER_FLOW  || m_eTriggerType_NCPAP>TRIGGER_PRESSURE) //pressure trigger check, allowed setting: FLOW, PRESSURE, OFF
+	{
+		m_eTriggerType_NCPAP=TRIGGER_FLOW;
+		getModel()->getI2C()->WriteConfigByte(TRIGGERTYPENCPAP_8,TRIGGER_FLOW);
+	}
+
+	//m_eTriggerTypeDUOPAP=(eTriggereType)getModel()->getI2C()->ReadConfigByte(TRIGGERTYPEDUOPAP_8);
+	//if(m_eTriggerTypeDUOPAP<TRIGGER_FLOW  || m_eTriggerTypeDUOPAP>TRIGGER_PRESSURE) //pressure trigger check, allowed setting: FLOW, PRESSURE, OFF
+	//{
+	//	m_eTriggerTypeDUOPAP=TRIGGER_FLOW;
+	//	getModel()->getI2C()->WriteConfigByte(TRIGGERTYPEDUOPAP_8,TRIGGER_FLOW);
+	//}
 
 	//DUOPAP trigger depends on tubeset
 	//if(m_eTriggerTypeNMODE!=TRIGGER_OFF)
 	{
 		if(m_eTubeSet==TUBE_INFANTFLOW)
-			m_eTriggerTypeNMODE=TRIGGER_FLOW;
+			m_eTriggerType_DUOPAP=TRIGGER_FLOW;
 		else if(m_eTubeSet==TUBE_INFANTFLOW_LP)
-			m_eTriggerTypeNMODE=TRIGGER_FLOW;
+			m_eTriggerType_DUOPAP=TRIGGER_FLOW;
 		else if(m_eTubeSet==TUBE_MEDIJET)
-			m_eTriggerTypeNMODE=TRIGGER_PRESSURE;
+			m_eTriggerType_DUOPAP=TRIGGER_PRESSURE;
 		/*else
 			m_eTriggerTypeNMODE=TRIGGER_OFF;*/
 
-		getModel()->getI2C()->WriteConfigByte(TRIGGERTYPENMODE_8,m_eTriggerTypeNMODE);
+		getModel()->getI2C()->WriteConfigByte(TRIGGERTYPEDUOPAP_8,m_eTriggerType_DUOPAP);
 	}
 
 	m_eAutoOxyCal=(eAutoOxyCal)getModel()->getI2C()->ReadConfigByte(AUTOOXYCAL_8);
@@ -2649,50 +2683,67 @@ void CConfiguration::LoadSettings()
 	WORD iMAXRANGE_PED_TRIGGER_CONV=(WORD)regLimit.ReadDWORD(_T("MAXRANGE_PED_TRIGGER_CONV"), MAXRANGE_PED_TRIGGER_CONV);
 	WORD iMINRANGE_PED_TRIGGER_CONV=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_TRIGGER_CONV"), MINRANGE_PED_TRIGGER_CONV);
 	//m_iParaDataTrigger;
-	m_iParaDataTriggerCONV=(BYTE)getModel()->getI2C()->ReadConfigWord(PARA_TRIGGER_CONV_16);
-	if(m_iParaDataTriggerCONV<iMINRANGE_PED_TRIGGER_CONV || m_iParaDataTriggerCONV>iMAXRANGE_PED_TRIGGER_CONV)
+	m_iParaDataTrigger_CONV=(BYTE)getModel()->getI2C()->ReadConfigWord(PARA_TRIGGER_CONVENT_16);
+	if(m_iParaDataTrigger_CONV<iMINRANGE_PED_TRIGGER_CONV || m_iParaDataTrigger_CONV>iMAXRANGE_PED_TRIGGER_CONV)
 	{
 		switch(GetCurMode())//newSPI
 		{
 		case VM_SIPPV:
 			{
-				m_iParaDataTriggerCONV=FACTORY_SIPPV_TRIGGER;
+				m_iParaDataTrigger_CONV=FACTORY_SIPPV_TRIGGER;
 			}
 			break;
 		case VM_SIMV:
 			{
-				m_iParaDataTriggerCONV=FACTORY_SIMV_TRIGGER;
+				m_iParaDataTrigger_CONV=FACTORY_SIMV_TRIGGER;
 			}
 			break;
 		case VM_SIMVPSV:
 			{
-				m_iParaDataTriggerCONV=FACTORY_SIMVPSV_TRIGGER;
+				m_iParaDataTrigger_CONV=FACTORY_SIMVPSV_TRIGGER;
 			}
 			break;
 		case VM_PSV:
 			{
-				m_iParaDataTriggerCONV=FACTORY_PSV_TRIGGER;
+				m_iParaDataTrigger_CONV=FACTORY_PSV_TRIGGER;
 			}
 			break;
 		default:
 			{
-				m_iParaDataTriggerCONV=FACTORY_SIPPV_BPM;
+				m_iParaDataTrigger_CONV=FACTORY_SIPPV_BPM;
 			}
 			break;
 		}
-		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CONV_16,m_iParaDataTriggerCONV);
+		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CONVENT_16,m_iParaDataTrigger_CONV);
 	}
 
+	
 
-
-	WORD iMAXRANGE_PED_TRIGGER_NMODE=(WORD)regLimit.ReadDWORD(_T("MAXRANGE_PED_TRIGGER_NMODE"), MAXRANGE_TRIGGER_NMODE_OFF);
-	WORD iMINRANGE_PED_TRIGGER_NMODE=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_TRIGGER_NMODE"), MINRANGE_TRIGGER_NMODE);
-	//m_iParaDataTrigger;
-	m_iParaDataTriggerNMODE=(BYTE)getModel()->getI2C()->ReadConfigWord(PARA_TRIGGER_NMODE_16);
-	if(m_iParaDataTriggerNMODE<iMINRANGE_PED_TRIGGER_NMODE || m_iParaDataTriggerNMODE>iMAXRANGE_PED_TRIGGER_NMODE)
+	WORD iMAXRANGE_PED_TRIGGER_CPAP=(WORD)regLimit.ReadDWORD(_T("MAXRANGE_PED_TRIGGER_CPAP"), MAXRANGE_PED_TRIGGER_CPAP);
+	WORD iMINRANGE_PED_TRIGGER_CPAP=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_TRIGGER_CPAP"), MINRANGE_PED_TRIGGER_CPAP);
+	m_iParaDataTrigger_CPAP=(BYTE)getModel()->getI2C()->ReadConfigWord(PARA_TRIGGER_CPAP_16);
+	if(m_iParaDataTrigger_CPAP<iMINRANGE_PED_TRIGGER_CPAP || m_iParaDataTrigger_CPAP>iMAXRANGE_PED_TRIGGER_CPAP)
 	{
-		m_iParaDataTriggerNMODE=FACTORY_NMODE_TRIGGER;
-		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NMODE_16,m_iParaDataTriggerNMODE);
+		m_iParaDataTrigger_CPAP=FACTORY_CPAP_TRIGGER;
+		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CPAP_16,m_iParaDataTrigger_CPAP);
+	}
+
+	WORD iMAXRANGE_PED_TRIGGER_DUOPAP=(WORD)regLimit.ReadDWORD(_T("MAXRANGE_PED_TRIGGER_DUOPAP"), MAXRANGE_TRIGGER_OFF);
+	WORD iMINRANGE_PED_TRIGGER_DUOPAP=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_TRIGGER_DUOPAP"), MINRANGE_PED_TRIGGER_DUOPAP);
+	m_iParaDataTrigger_DUOPAP=(BYTE)getModel()->getI2C()->ReadConfigWord(PARA_TRIGGER_DUOPAP_16);
+	if(m_iParaDataTrigger_DUOPAP<iMINRANGE_PED_TRIGGER_DUOPAP || m_iParaDataTrigger_DUOPAP>iMAXRANGE_PED_TRIGGER_DUOPAP)
+	{
+		m_iParaDataTrigger_DUOPAP=FACTORY_DUOPAP_TRIGGER;
+		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_DUOPAP_16,m_iParaDataTrigger_DUOPAP);
+	}
+
+	WORD iMAXRANGE_PED_TRIGGER_NCPAP=(WORD)regLimit.ReadDWORD(_T("MAXRANGE_PED_TRIGGER_NCPAP"), MAXRANGE_TRIGGER_OFF);
+	WORD iMINRANGE_PED_TRIGGER_NCPAP=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_TRIGGER_NCPAP"), MINRANGE_PED_TRIGGER_NCPAP);
+	m_iParaDataTrigger_NCPAP=(BYTE)getModel()->getI2C()->ReadConfigWord(PARA_TRIGGER_NCPAP_16);
+	if(m_iParaDataTrigger_NCPAP<iMINRANGE_PED_TRIGGER_NCPAP || m_iParaDataTrigger_NCPAP>iMAXRANGE_PED_TRIGGER_NCPAP)
+	{
+		m_iParaDataTrigger_NCPAP=FACTORY_NCPAP_TRIGGER;
+		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NCPAP_16,m_iParaDataTrigger_NCPAP);
 	}
 
 	WORD iMAXRANGE_PED_BACKUP=(WORD)regLimit.ReadDWORD(_T("MAXRANGE_PED_BACKUP"), MAXRANGE_PED_BACKUP);
@@ -4986,24 +5037,54 @@ bool CConfiguration::TrendIsFilled()
 //	return m_bVolumeTrigger;
 //}
 
-void CConfiguration::setTriggerOptionCONV(eTriggereType type)
+void CConfiguration::setTriggerOption_CONV(eTriggereType type)
 {
-	m_eTriggerTypeCONV=type;
+	m_eTriggerType_CONV=type;
 	getModel()->getI2C()->WriteConfigByte(TRIGGERTYPECONV_8, (BYTE)type);
+
+	DEBUGMSG(TRUE, (TEXT("setTriggerOption_CONV %d\r\n"),(int)type));
 }
-eTriggereType CConfiguration::getTriggerOptionCONV()
+eTriggereType CConfiguration::getTriggerOption_CONV()
 {
-	return m_eTriggerTypeCONV;
+	return m_eTriggerType_CONV;
 }
 
-void CConfiguration::setTriggerOptionNMODE(eTriggereType type)
+void CConfiguration::setTriggerOption_CPAP(eTriggereType type)
 {
-	m_eTriggerTypeNMODE=type;
-	getModel()->getI2C()->WriteConfigByte(TRIGGERTYPENMODE_8, (BYTE)type);
+	m_eTriggerType_CPAP=type;
+	getModel()->getI2C()->WriteConfigByte(TRIGGERTYPECPAP_8, (BYTE)type);
+
+	DEBUGMSG(TRUE, (TEXT("setTriggerOption_CPAP %d\r\n"),(int)type));
 }
-eTriggereType CConfiguration::getTriggerOptionNMODE()
+eTriggereType CConfiguration::getTriggerOption_CPAP()
 {
-	return m_eTriggerTypeNMODE;
+	return m_eTriggerType_CPAP;
+}
+
+
+void CConfiguration::setTriggerOption_DUOPAP(eTriggereType type)
+{
+	m_eTriggerType_DUOPAP=type;
+	getModel()->getI2C()->WriteConfigByte(TRIGGERTYPEDUOPAP_8, (BYTE)type);
+
+	DEBUGMSG(TRUE, (TEXT("setTriggerOption_DUOPAP %d\r\n"),(int)type));
+}
+eTriggereType CConfiguration::getTriggerOption_DUOPAP()
+{
+	return m_eTriggerType_DUOPAP;
+}
+
+
+void CConfiguration::setTriggerOption_NCPAP(eTriggereType type)
+{
+	m_eTriggerType_NCPAP=type;
+	getModel()->getI2C()->WriteConfigByte(TRIGGERTYPENCPAP_8, (BYTE)type);
+
+	DEBUGMSG(TRUE, (TEXT("setTriggerOption_NCPAP %d\r\n"),(int)type));
+}
+eTriggereType CConfiguration::getTriggerOption_NCPAP()
+{
+	return m_eTriggerType_NCPAP;
 }
 
 // **************************************************************************
@@ -7765,24 +7846,72 @@ void CConfiguration::SetParaDataVGarantState_IPPV(bool bState)
 // **************************************************************************
 // 
 // **************************************************************************
-BYTE CConfiguration::GetParaDataTriggerCONV()
+//BYTE CConfiguration::GetParaDataTriggerCONV()
+//{
+//	return m_iParaDataTriggerCONV;
+//}
+//void CConfiguration::SetParaDataTriggerCONV(BYTE iVal)
+//{
+//	m_iParaDataTriggerCONV=iVal;
+//	getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CONV_16, iVal);
+//}
+//
+//BYTE CConfiguration::GetParaDataTriggerNMODE()
+//{
+//	return m_iParaDataTriggerNMODE;
+//}
+//void CConfiguration::SetParaDataTriggerNMODE(BYTE iVal)
+//{
+//	m_iParaDataTriggerNMODE=iVal;
+//	getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NMODE_16, iVal);
+//}
+
+BYTE CConfiguration::GetParaDataTrigger_CONV()
 {
-	return m_iParaDataTriggerCONV;
+	return m_iParaDataTrigger_CONV;
 }
-void CConfiguration::SetParaDataTriggerCONV(BYTE iVal)
+void CConfiguration::SetParaDataTrigger_CONV(BYTE iVal)
 {
-	m_iParaDataTriggerCONV=iVal;
-	getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CONV_16, iVal);
+	m_iParaDataTrigger_CONV=iVal;
+	getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CONVENT_16, iVal);
+
+	DEBUGMSG(TRUE, (TEXT("SetParaDataTrigger_CONV %d\r\n"),(int)iVal));
 }
 
-BYTE CConfiguration::GetParaDataTriggerNMODE()
+BYTE CConfiguration::GetParaDataTrigger_CPAP()
 {
-	return m_iParaDataTriggerNMODE;
+	return m_iParaDataTrigger_CPAP;
 }
-void CConfiguration::SetParaDataTriggerNMODE(BYTE iVal)
+void CConfiguration::SetParaDataTrigger_CPAP(BYTE iVal)
 {
-	m_iParaDataTriggerNMODE=iVal;
-	getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NMODE_16, iVal);
+	m_iParaDataTrigger_CPAP=iVal;
+	getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CPAP_16, iVal);
+
+	DEBUGMSG(TRUE, (TEXT("SetParaDataTrigger_CPAP %d\r\n"),(int)iVal));
+}
+
+BYTE CConfiguration::GetParaDataTrigger_NCPAP()
+{
+	return m_iParaDataTrigger_NCPAP;
+}
+void CConfiguration::SetParaDataTrigger_NCPAP(BYTE iVal)
+{
+	m_iParaDataTrigger_NCPAP=iVal;
+	getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NCPAP_16, iVal);
+
+	DEBUGMSG(TRUE, (TEXT("SetParaDataTrigger_NCPAP %d\r\n"),(int)iVal));
+}
+
+BYTE CConfiguration::GetParaDataTrigger_DUOPAP()
+{
+	return m_iParaDataTrigger_DUOPAP;
+}
+void CConfiguration::SetParaDataTrigger_DUOPAP(BYTE iVal)
+{
+	m_iParaDataTrigger_DUOPAP=iVal;
+	getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_DUOPAP_16, iVal);
+
+	DEBUGMSG(TRUE, (TEXT("SetParaDataTrigger_DUOPAP %d\r\n"),(int)iVal));
 }
 // **************************************************************************
 // 
@@ -9752,7 +9881,7 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		ar<<m_bParaDataVLimitOn_IPPV;
 		ar<<m_iParaDataVGarant_IPPV;
 		ar<<m_bParaDataVGarantOn_IPPV;
-		ar<<m_iParaDataTriggerCONV;
+		ar<<m_iParaDataTrigger_CONV;
 		ar<<m_iParaDataBackup;
 		ar<<m_iParaDataHFAmpl;
 		ar<<m_iParaDataHFAmplmax;
@@ -9912,9 +10041,9 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		ar<<m_iFOThfo_FREQ;
 		ar<<m_iFOThfo_STEPS;
 
-		ar<<(BYTE)m_eTriggerTypeCONV;
-		ar<<(BYTE)m_eTriggerTypeNMODE;
-		ar<<m_iParaDataTriggerNMODE;
+		ar<<(BYTE)m_eTriggerType_CONV;
+		ar<<(BYTE)m_eTriggerType_NCPAP;
+		ar<<m_iParaDataTrigger_NCPAP;
 
 		////##################### m_iConfigVersion 3005
 		ar<<(BYTE)m_eLeakCompensation;
@@ -9931,6 +10060,12 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		ar<<m_iAlarmlimitStateMAPmaxHF;
 		ar<<m_iAlarmlimitMAPminHF;
 		ar<<m_iAlarmlimitStateMAPminHF;
+
+		ar<<(BYTE)m_eTriggerType_CPAP;
+		ar<<m_iParaDataTrigger_CPAP;
+
+		ar<<(BYTE)m_eTriggerType_DUOPAP;
+		ar<<m_iParaDataTrigger_DUOPAP;
 	}
 	else
 	{
@@ -10133,8 +10268,8 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		{
 			getModel()->getI2C()->WriteConfigByte(PARA_VGARANTSTATE_IPPV_8, 0);
 		}
-		ar>>m_iParaDataTriggerCONV;
-		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CONV_16, m_iParaDataTriggerCONV);
+		ar>>m_iParaDataTrigger_CONV;
+		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CONVENT_16, m_iParaDataTrigger_CONV);
 		ar>>m_iParaDataBackup;
 		getModel()->getI2C()->WriteConfigWord(PARA_BACKUP_16, m_iParaDataBackup);
 		ar>>m_iParaDataHFAmpl;
@@ -10545,25 +10680,27 @@ void CConfiguration::SerializeFile(CArchive& ar)
 			
 			BYTE eTriggerTypeCONV=0;
 			ar>>eTriggerTypeCONV;
-			m_eTriggerTypeCONV=(eTriggereType)eTriggerTypeCONV;
-			setTriggerOptionCONV(m_eTriggerTypeCONV);
+			m_eTriggerType_CONV=(eTriggereType)eTriggerTypeCONV;
+			setTriggerOption_CONV(m_eTriggerType_CONV);
 			
-			BYTE eTriggerTypeNMODE=0;
-			ar>>eTriggerTypeNMODE;
-			m_eTriggerTypeNMODE=(eTriggereType)eTriggerTypeNMODE;
-			setTriggerOptionNMODE(m_eTriggerTypeNMODE);
+			BYTE eTriggerTypeNCPAP=0;
+			ar>>eTriggerTypeNCPAP;
+			m_eTriggerType_NCPAP=(eTriggereType)eTriggerTypeNCPAP;
+			setTriggerOption_NCPAP(m_eTriggerType_NCPAP);
 
 			if(m_eTubeSet==TUBE_INFANTFLOW)
-				m_eTriggerTypeNMODE=TRIGGER_FLOW;
+				m_eTriggerType_NCPAP=TRIGGER_FLOW;
 			else if(m_eTubeSet==TUBE_INFANTFLOW_LP)
-				m_eTriggerTypeNMODE=TRIGGER_FLOW;
+				m_eTriggerType_NCPAP=TRIGGER_FLOW;
 			else if(m_eTubeSet==TUBE_MEDIJET)
-				m_eTriggerTypeNMODE=TRIGGER_PRESSURE;
+				m_eTriggerType_NCPAP=TRIGGER_PRESSURE;
 
-			setTriggerOptionNMODE(m_eTriggerTypeNMODE);
+			setTriggerOption_NCPAP(m_eTriggerType_NCPAP);
 
-			ar>>m_iParaDataTriggerNMODE;
-			getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NMODE_16, m_iParaDataTriggerNMODE);
+			ar>>m_iParaDataTrigger_NCPAP;
+			getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NCPAP_16, m_iParaDataTrigger_NCPAP);
+
+			
 		}
 
 		//##################### m_iConfigVersion 3005
@@ -10611,6 +10748,43 @@ void CConfiguration::SerializeFile(CArchive& ar)
 			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMIN_HF_16, m_iAlarmlimitMAPminHF);
 			ar>>m_iAlarmlimitStateMAPminHF;
 			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMIN_HF_8, m_iAlarmlimitStateMAPminHF);
+
+			//###########################
+
+			BYTE eTriggerTypeCPAP=0;
+			ar>>eTriggerTypeCPAP;
+			m_eTriggerType_CPAP=(eTriggereType)eTriggerTypeCPAP;
+			setTriggerOption_CPAP(m_eTriggerType_CPAP);
+
+			if(m_eTubeSet==TUBE_INFANTFLOW)
+				m_eTriggerType_CPAP=TRIGGER_FLOW;
+			else if(m_eTubeSet==TUBE_INFANTFLOW_LP)
+				m_eTriggerType_CPAP=TRIGGER_FLOW;
+			else if(m_eTubeSet==TUBE_MEDIJET)
+				m_eTriggerType_CPAP=TRIGGER_PRESSURE;
+
+			setTriggerOption_CPAP(m_eTriggerType_CPAP);
+
+			ar>>m_iParaDataTrigger_CPAP;
+			getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CPAP_16, m_iParaDataTrigger_CPAP);
+
+			//#############################
+			BYTE eTriggerTypeDUOPAP=0;
+			ar>>eTriggerTypeDUOPAP;
+			m_eTriggerType_DUOPAP=(eTriggereType)eTriggerTypeDUOPAP;
+			setTriggerOption_DUOPAP(m_eTriggerType_DUOPAP);
+
+			if(m_eTubeSet==TUBE_INFANTFLOW)
+				m_eTriggerType_DUOPAP=TRIGGER_FLOW;
+			else if(m_eTubeSet==TUBE_INFANTFLOW_LP)
+				m_eTriggerType_DUOPAP=TRIGGER_FLOW;
+			else if(m_eTubeSet==TUBE_MEDIJET)
+				m_eTriggerType_DUOPAP=TRIGGER_PRESSURE;
+
+			setTriggerOption_DUOPAP(m_eTriggerType_DUOPAP);
+
+			ar>>m_iParaDataTrigger_DUOPAP;
+			getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_DUOPAP_16, m_iParaDataTrigger_DUOPAP);
 		}
 	}
 }
@@ -11090,7 +11264,8 @@ void CConfiguration::setLastNumericFLOWOFFHFO(BYTE num)
 
 void CConfiguration::disableNIVTRIGGER()
 {
-	SetParaDataTriggerNMODE(FACTORY_NMODE_TRIGGER);
+	SetParaDataTrigger_NCPAP(FACTORY_NCPAP_TRIGGER);
+	SetParaDataTrigger_DUOPAP(FACTORY_DUOPAP_TRIGGER);
 
 	//getModel()->getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_OFF);
 

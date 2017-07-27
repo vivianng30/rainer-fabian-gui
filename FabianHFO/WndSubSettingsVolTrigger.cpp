@@ -46,7 +46,7 @@ void CWndSubSettingsVolTrigger::Initialize()
 {
 	CClientDC dc(this);
 
-	m_eTriggerType=getModel()->getCONFIG()->getTriggerOptionCONV();
+	m_eTriggerType=getModel()->getCONFIG()->getTriggerOption_CONV();
 
 	m_szSetting = getModel()->GetLanguageString(IDS_TXT_TRIGMODE);
 	m_iNumValues=3;

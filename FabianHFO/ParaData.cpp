@@ -52,8 +52,10 @@ CParaData::CParaData(void)
 	m_data.m_bParaDataVLimitOn_IPPV=false;
 	m_data.m_iParaDataVGarant_IPPV=0;
 	m_data.m_bParaDataVGarantOn_IPPV=false;
-	m_data.m_iParaDataTriggerCONV=0;
-	m_data.m_iParaDataTriggerNMODE=0;
+	m_data.m_iParaDataTrigger_CONV=0;
+	m_data.m_iParaDataTrigger_NCPAP=0;
+	m_data.m_iParaDataTrigger_DUOPAP=0;
+	m_data.m_iParaDataTrigger_CPAP=0;
 	m_data.m_iParaDataBackup=0;
 	m_data.m_iParaDataHFAMPL=0;
 	m_data.m_iParaDataHFAMPLmax=0;
@@ -117,8 +119,10 @@ CParaData::CParaData(void)
 	m_dataMaxRange_NEONATAL.m_iParaDataVGarant_TRIGGER=0;
 	m_dataMaxRange_NEONATAL.m_iParaDataVLimit_IPPV=0;
 	m_dataMaxRange_NEONATAL.m_iParaDataVGarant_IPPV=0;
-	m_dataMaxRange_NEONATAL.m_iParaDataTriggerCONV=0;
-	m_dataMaxRange_NEONATAL.m_iParaDataTriggerNMODE=0;
+	m_dataMaxRange_NEONATAL.m_iParaDataTrigger_CONV=0;
+	m_dataMaxRange_NEONATAL.m_iParaDataTrigger_NCPAP=0;
+	m_dataMaxRange_NEONATAL.m_iParaDataTrigger_DUOPAP=0;
+	m_dataMaxRange_NEONATAL.m_iParaDataTrigger_CPAP=0;
 	m_dataMaxRange_NEONATAL.m_iParaDataBackup=0;
 	m_dataMaxRange_NEONATAL.m_iParaDataHFAMPL=0;
 	m_dataMaxRange_NEONATAL.m_iParaDataHFAMPLmax=0;
@@ -180,8 +184,10 @@ CParaData::CParaData(void)
 	m_dataMinRange_NEONATAL.m_iParaDataVGarant_TRIGGER=0;
 	m_dataMinRange_NEONATAL.m_iParaDataVLimit_IPPV=0;
 	m_dataMinRange_NEONATAL.m_iParaDataVGarant_IPPV=0;
-	m_dataMinRange_NEONATAL.m_iParaDataTriggerCONV=0;
-	m_dataMinRange_NEONATAL.m_iParaDataTriggerNMODE=0;
+	m_dataMinRange_NEONATAL.m_iParaDataTrigger_CONV=0;
+	m_dataMinRange_NEONATAL.m_iParaDataTrigger_NCPAP=0;
+	m_dataMinRange_NEONATAL.m_iParaDataTrigger_DUOPAP=0;
+	m_dataMinRange_NEONATAL.m_iParaDataTrigger_CPAP=0;
 	m_dataMinRange_NEONATAL.m_iParaDataBackup=0;
 	m_dataMinRange_NEONATAL.m_iParaDataHFAMPL=0;
 	m_dataMinRange_NEONATAL.m_iParaDataHFAMPLmax=0;
@@ -243,8 +249,10 @@ CParaData::CParaData(void)
 	m_dataMaxRange_PEDIATRIC.m_iParaDataVGarant_TRIGGER=0;
 	m_dataMaxRange_PEDIATRIC.m_iParaDataVLimit_IPPV=0;
 	m_dataMaxRange_PEDIATRIC.m_iParaDataVGarant_IPPV=0;
-	m_dataMaxRange_PEDIATRIC.m_iParaDataTriggerCONV=0;
-	m_dataMaxRange_PEDIATRIC.m_iParaDataTriggerNMODE=0;
+	m_dataMaxRange_PEDIATRIC.m_iParaDataTrigger_CONV=0;
+	m_dataMaxRange_PEDIATRIC.m_iParaDataTrigger_NCPAP=0;
+	m_dataMaxRange_PEDIATRIC.m_iParaDataTrigger_DUOPAP=0;
+	m_dataMaxRange_PEDIATRIC.m_iParaDataTrigger_CPAP=0;
 	m_dataMaxRange_PEDIATRIC.m_iParaDataBackup=0;
 	m_dataMaxRange_PEDIATRIC.m_iParaDataHFAMPL=0;
 	m_dataMaxRange_PEDIATRIC.m_iParaDataHFAMPLmax=0;
@@ -306,8 +314,10 @@ CParaData::CParaData(void)
 	m_dataMinRange_PEDIATRIC.m_iParaDataVGarant_TRIGGER=0;
 	m_dataMinRange_PEDIATRIC.m_iParaDataVLimit_IPPV=0;
 	m_dataMinRange_PEDIATRIC.m_iParaDataVGarant_IPPV=0;
-	m_dataMinRange_PEDIATRIC.m_iParaDataTriggerCONV=0;
-	m_dataMinRange_PEDIATRIC.m_iParaDataTriggerNMODE=0;
+	m_dataMinRange_PEDIATRIC.m_iParaDataTrigger_CONV=0;
+	m_dataMinRange_PEDIATRIC.m_iParaDataTrigger_NCPAP=0;
+	m_dataMinRange_PEDIATRIC.m_iParaDataTrigger_DUOPAP=0;
+	m_dataMinRange_PEDIATRIC.m_iParaDataTrigger_CPAP=0;
 	m_dataMinRange_PEDIATRIC.m_iParaDataBackup=0;
 	m_dataMinRange_PEDIATRIC.m_iParaDataHFAMPL=0;
 	m_dataMinRange_PEDIATRIC.m_iParaDataHFAMPLmax=0;
@@ -594,8 +604,10 @@ void CParaData::Init()
 	m_data.m_bParaDataVLimitOn_TRIGGER=getModel()->getCONFIG()->GetParaDataVLimitState_TRIGGER();
 	m_data.m_iParaDataVLimit_IPPV=getModel()->getCONFIG()->GetParaDataVLimit_IPPV();
 	m_data.m_bParaDataVLimitOn_IPPV=getModel()->getCONFIG()->GetParaDataVLimitState_IPPV();
-	m_data.m_iParaDataTriggerCONV=getModel()->getCONFIG()->GetParaDataTriggerCONV();
-	m_data.m_iParaDataTriggerNMODE=getModel()->getCONFIG()->GetParaDataTriggerNMODE();
+	m_data.m_iParaDataTrigger_CONV=getModel()->getCONFIG()->GetParaDataTrigger_CONV();
+	m_data.m_iParaDataTrigger_CPAP=getModel()->getCONFIG()->GetParaDataTrigger_CPAP();
+	m_data.m_iParaDataTrigger_DUOPAP=getModel()->getCONFIG()->GetParaDataTrigger_DUOPAP();
+	m_data.m_iParaDataTrigger_NCPAP=getModel()->getCONFIG()->GetParaDataTrigger_NCPAP();
 
 	m_data.m_iParaDataBackup=getModel()->getCONFIG()->GetParaDataBackup();
 	m_data.m_iParaDataHFAMPL=getModel()->getCONFIG()->GetParaDataHFAmpl();
@@ -762,8 +774,14 @@ void CParaData::loadLimits()
 	m_dataMaxRange_NEONATAL.m_iParaDataVGarant_TRIGGER=(WORD)regLimit.ReadDWORD(_T("MAXRANGE_NEO_VGARANT_TRIGGER"), MAXRANGE_NEO_VGARANT_TRIGGER);
 	m_dataMaxRange_NEONATAL.m_iParaDataVGarant_IPPV=(WORD)regLimit.ReadDWORD(_T("MAXRANGE_NEO_VGARANT_IPPV"), MAXRANGE_NEO_VGARANT_IPPV);
 
-	m_dataMaxRange_NEONATAL.m_iParaDataTriggerCONV=(BYTE)regLimit.ReadDWORD(_T("MAXRANGE_NEO_TRIGGER_CONV"), MAXRANGE_NEO_TRIGGER_CONV);
-	m_dataMaxRange_NEONATAL.m_iParaDataTriggerNMODE=(BYTE)regLimit.ReadDWORD(_T("MAXRANGE_TRIGGER_NMODE_OFF"), MAXRANGE_TRIGGER_NMODE_OFF);
+	/*regLimit.WriteDWORD(_T("MAXRANGE_NEO_TRIGGER_CONV"), MAXRANGE_NEO_TRIGGER_CONV);
+	regLimit.WriteDWORD(_T("MAXRANGE_NEO_TRIGGER_CPAP"), MAXRANGE_NEO_TRIGGER_CPAP);
+	regLimit.WriteDWORD(_T("MAXRANGE_NEO_TRIGGER_DUOPAP"), MAXRANGE_TRIGGER_OFF);
+	regLimit.WriteDWORD(_T("MAXRANGE_NEO_TRIGGER_NCPAP"), MAXRANGE_TRIGGER_OFF);*/
+	m_dataMaxRange_NEONATAL.m_iParaDataTrigger_CONV=(BYTE)regLimit.ReadDWORD(_T("MAXRANGE_NEO_TRIGGER_CONV"), MAXRANGE_NEO_TRIGGER_CONV);
+	m_dataMaxRange_NEONATAL.m_iParaDataTrigger_CPAP=(BYTE)regLimit.ReadDWORD(_T("MAXRANGE_NEO_TRIGGER_CPAP"), MAXRANGE_NEO_TRIGGER_CPAP);
+	m_dataMaxRange_NEONATAL.m_iParaDataTrigger_DUOPAP=(BYTE)regLimit.ReadDWORD(_T("MAXRANGE_NEO_TRIGGER_DUOPAP"), MAXRANGE_TRIGGER_OFF);
+	m_dataMaxRange_NEONATAL.m_iParaDataTrigger_NCPAP=(BYTE)regLimit.ReadDWORD(_T("MAXRANGE_NEO_TRIGGER_NCPAP"), MAXRANGE_TRIGGER_OFF);
 
 	m_dataMaxRange_NEONATAL.m_iParaDataBackup=(BYTE)regLimit.ReadDWORD(_T("MAXRANGE_NEO_BACKUP"), MAXRANGE_NEO_BACKUP);
 	if(getModel()->getDATAHANDLER()->IsAccuSupply()==true)
@@ -836,9 +854,16 @@ void CParaData::loadLimits()
 	m_dataMinRange_NEONATAL.m_iParaDataVGarant_TRIGGER=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_VGARANT_TRIGGER"), MINRANGE_NEO_VGARANT_TRIGGER);
 	m_dataMinRange_NEONATAL.m_iParaDataVGarant_IPPV=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_VGARANT_IPPV"), MINRANGE_NEO_VGARANT_IPPV);
 
-	m_dataMinRange_NEONATAL.m_iParaDataTriggerCONV=(BYTE)regLimit.ReadDWORD(_T("MINRANGE_NEO_TRIGGER_CONV"), MINRANGE_NEO_TRIGGER_CONV);
-	m_dataMinRange_NEONATAL.m_iParaDataTriggerNMODE=(BYTE)regLimit.ReadDWORD(_T("MINRANGE_TRIGGER_NMODE"), MINRANGE_TRIGGER_NMODE);
+	/*regLimit.WriteDWORD(_T("MINRANGE_NEO_TRIGGER_CONV"), MINRANGE_NEO_TRIGGER_CONV);
+	regLimit.WriteDWORD(_T("MINRANGE_NEO_TRIGGER_CPAP"), MINRANGE_NEO_TRIGGER_CPAP);
+	regLimit.WriteDWORD(_T("MINRANGE_NEO_TRIGGER_DUOPAP"), MINRANGE_NEO_TRIGGER_DUOPAP);
+	regLimit.WriteDWORD(_T("MINRANGE_NEO_TRIGGER_NCPAP"), MINRANGE_NEO_TRIGGER_NCPAP);*/
+	m_dataMinRange_NEONATAL.m_iParaDataTrigger_CONV=(BYTE)regLimit.ReadDWORD(_T("MINRANGE_NEO_TRIGGER_CONV"), MINRANGE_NEO_TRIGGER_CONV);
+	m_dataMinRange_NEONATAL.m_iParaDataTrigger_CPAP=(BYTE)regLimit.ReadDWORD(_T("MINRANGE_NEO_TRIGGER_CPAP"), MINRANGE_NEO_TRIGGER_CPAP);
+	m_dataMinRange_NEONATAL.m_iParaDataTrigger_DUOPAP=(BYTE)regLimit.ReadDWORD(_T("MINRANGE_NEO_TRIGGER_DUOPAP"), MINRANGE_NEO_TRIGGER_DUOPAP);
+	m_dataMinRange_NEONATAL.m_iParaDataTrigger_NCPAP=(BYTE)regLimit.ReadDWORD(_T("MINRANGE_NEO_TRIGGER_NCPAP"), MINRANGE_NEO_TRIGGER_NCPAP);
 
+	
 	m_dataMinRange_NEONATAL.m_iParaDataBackup=(BYTE)regLimit.ReadDWORD(_T("MINRANGE_NEO_BACKUP"), MINRANGE_NEO_BACKUP);
 	m_dataMinRange_NEONATAL.m_iParaDataHFAMPL=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_HFAMPL"), MINRANGE_NEO_HFAMPL);
 	m_dataMinRange_NEONATAL.m_iParaDataHFAMPLmax=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_HFAMPLVOLG"), MINRANGE_NEO_HFAMPLVOLG);
@@ -901,8 +926,14 @@ void CParaData::loadLimits()
 	m_dataMaxRange_PEDIATRIC.m_iParaDataVGarant_TRIGGER=(WORD)regLimit.ReadDWORD(_T("MAXRANGE_PED_VGARANT_TRIGGER"), MAXRANGE_PED_VGARANT_TRIGGER);
 	m_dataMaxRange_PEDIATRIC.m_iParaDataVGarant_IPPV=(WORD)regLimit.ReadDWORD(_T("MAXRANGE_PED_VGARANT_IPPV"), MAXRANGE_PED_VGARANT_IPPV);
 	
-	m_dataMaxRange_PEDIATRIC.m_iParaDataTriggerCONV=(BYTE)regLimit.ReadDWORD(_T("MAXRANGE_PED_TRIGGER_CONV"), MAXRANGE_PED_TRIGGER_CONV);
-	m_dataMaxRange_PEDIATRIC.m_iParaDataTriggerNMODE=(BYTE)regLimit.ReadDWORD(_T("MAXRANGE_TRIGGER_NMODE_OFF"), MAXRANGE_TRIGGER_NMODE_OFF);
+	/*regLimit.WriteDWORD(_T("MAXRANGE_PED_TRIGGER_CONV"), MAXRANGE_PED_TRIGGER_CONV);
+	regLimit.WriteDWORD(_T("MAXRANGE_PED_TRIGGER_CPAP"), MAXRANGE_PED_TRIGGER_CPAP);
+	regLimit.WriteDWORD(_T("MAXRANGE_PED_TRIGGER_DUOPAP"), MAXRANGE_TRIGGER_OFF);
+	regLimit.WriteDWORD(_T("MAXRANGE_PED_TRIGGER_NCPAP"), MAXRANGE_TRIGGER_OFF);*/
+	m_dataMaxRange_PEDIATRIC.m_iParaDataTrigger_CONV=(BYTE)regLimit.ReadDWORD(_T("MAXRANGE_PED_TRIGGER_CONV"), MAXRANGE_PED_TRIGGER_CONV);
+	m_dataMaxRange_PEDIATRIC.m_iParaDataTrigger_CPAP=(BYTE)regLimit.ReadDWORD(_T("MAXRANGE_PED_TRIGGER_CPAP"), MAXRANGE_PED_TRIGGER_CPAP);
+	m_dataMaxRange_PEDIATRIC.m_iParaDataTrigger_DUOPAP=(BYTE)regLimit.ReadDWORD(_T("MAXRANGE_PED_TRIGGER_DUOPAP_OFF"), MAXRANGE_TRIGGER_OFF);
+	m_dataMaxRange_PEDIATRIC.m_iParaDataTrigger_NCPAP=(BYTE)regLimit.ReadDWORD(_T("MAXRANGE_PED_TRIGGER_NCPAP_OFF"), MAXRANGE_TRIGGER_OFF);
 	
 	m_dataMaxRange_PEDIATRIC.m_iParaDataBackup=(BYTE)regLimit.ReadDWORD(_T("MAXRANGE_PED_BACKUP"), MAXRANGE_PED_BACKUP);
 	m_dataMaxRange_PEDIATRIC.m_iParaDataHFFreq=(BYTE)regLimit.ReadDWORD(_T("MAXRANGE_PED_HFFREQ"), MAXRANGE_PED_HFFREQ);
@@ -976,8 +1007,14 @@ void CParaData::loadLimits()
 	m_dataMinRange_PEDIATRIC.m_iParaDataVGarant_TRIGGER=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_VGARANT_TRIGGER"), MINRANGE_PED_VGARANT_TRIGGER);
 	m_dataMinRange_PEDIATRIC.m_iParaDataVGarant_IPPV=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_VGARANT_IPPV"), MINRANGE_PED_VGARANT_IPPV);
 	
-	m_dataMinRange_PEDIATRIC.m_iParaDataTriggerCONV=(BYTE)regLimit.ReadDWORD(_T("MINRANGE_PED_TRIGGER_CONV"), MINRANGE_PED_TRIGGER_CONV);
-	m_dataMinRange_PEDIATRIC.m_iParaDataTriggerNMODE=(BYTE)regLimit.ReadDWORD(_T("MINRANGE_RIGGER_NMODE"), MINRANGE_TRIGGER_NMODE);
+	/*regLimit.WriteDWORD(_T("MINRANGE_PED_TRIGGER_CONV"), MINRANGE_PED_TRIGGER_CONV);
+	regLimit.WriteDWORD(_T("MINRANGE_PED_TRIGGER_CPAP"), MINRANGE_PED_TRIGGER_CPAP);
+	regLimit.WriteDWORD(_T("MINRANGE_PED_TRIGGER_DUOPAP"), MINRANGE_PED_TRIGGER_DUOPAP);
+	regLimit.WriteDWORD(_T("MINRANGE_PED_TRIGGER_NCPAP"), MINRANGE_PED_TRIGGER_NCPAP);*/
+	m_dataMinRange_PEDIATRIC.m_iParaDataTrigger_CONV=(BYTE)regLimit.ReadDWORD(_T("MINRANGE_PED_TRIGGER_CONV"), MINRANGE_PED_TRIGGER_CONV);
+	m_dataMinRange_PEDIATRIC.m_iParaDataTrigger_CPAP=(BYTE)regLimit.ReadDWORD(_T("MINRANGE_PED_TRIGGER_CPAP"), MINRANGE_PED_TRIGGER_CPAP);
+	m_dataMinRange_PEDIATRIC.m_iParaDataTrigger_DUOPAP=(BYTE)regLimit.ReadDWORD(_T("MINRANGE_PED_TRIGGER_DUOPAP"), MINRANGE_PED_TRIGGER_DUOPAP);
+	m_dataMinRange_PEDIATRIC.m_iParaDataTrigger_NCPAP=(BYTE)regLimit.ReadDWORD(_T("MINRANGE_PED_TRIGGER_NCPAP"), MINRANGE_PED_TRIGGER_NCPAP);
 	
 	m_dataMinRange_PEDIATRIC.m_iParaDataBackup=(BYTE)regLimit.ReadDWORD(_T("MINRANGE_PED_BACKUP"), MINRANGE_PED_BACKUP);
 	m_dataMinRange_PEDIATRIC.m_iParaDataHFAMPL=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_HFAMPL"), MINRANGE_PED_HFAMPL);
@@ -1557,7 +1594,7 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			{
 				getModel()->getDATAHANDLER()->PARADATA()->SetEFLOWPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetEFLOWPara_TRIGGER(),false,true);
 			}
-			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerCONVPara(getModel()->getDATAHANDLER()->PRESET()->GetTriggerCONVPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerPara_CONV(getModel()->getDATAHANDLER()->PRESET()->GetTriggerPara_CONV(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 
@@ -1604,7 +1641,7 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			{
 				getModel()->getDATAHANDLER()->PARADATA()->SetEFLOWPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetEFLOWPara_TRIGGER(),false,true);
 			}
-			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerCONVPara(getModel()->getDATAHANDLER()->PRESET()->GetTriggerCONVPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerPara_CONV(getModel()->getDATAHANDLER()->PRESET()->GetTriggerPara_CONV(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 			
@@ -1627,7 +1664,7 @@ void CParaData::SetDataFromMode(eVentMode mode)
 	case VM_PRE_CPAP:
 		{
 			getModel()->getDATAHANDLER()->PRESET()->GetParaData(&m_data);
-			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerCONVPara(getModel()->getDATAHANDLER()->PRESET()->GetTriggerCONVPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerPara_CPAP(TRIGGER_SENSITIVITY_AUTO,false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 		}
@@ -1635,7 +1672,7 @@ void CParaData::SetDataFromMode(eVentMode mode)
 	case VM_PRE_NCPAP:
 		{
 			getModel()->getDATAHANDLER()->PRESET()->GetParaData(&m_data);
-			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerNMODEPara(getModel()->getDATAHANDLER()->PRESET()->GetTriggerNMODEPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerPara_NCPAP(getModel()->getDATAHANDLER()->PRESET()->GetTriggerPara_NCPAP(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 		}
@@ -1650,7 +1687,7 @@ void CParaData::SetDataFromMode(eVentMode mode)
 	case VM_PRE_DUOPAP:
 		{
 			getModel()->getDATAHANDLER()->PRESET()->GetParaData(&m_data);
-			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerNMODEPara(getModel()->getDATAHANDLER()->PRESET()->GetTriggerNMODEPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerPara_DUOPAP(getModel()->getDATAHANDLER()->PRESET()->GetTriggerPara_DUOPAP(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 		}
@@ -2043,17 +2080,17 @@ void CParaData::SetO2FlushPara(BYTE value, bool bConfig)
 // **************************************************************************
 // 
 // **************************************************************************
-BYTE CParaData::GetTriggerCONVPara()
+BYTE CParaData::GetTriggerPara_CONV()
 {
-	return m_data.m_iParaDataTriggerCONV;
+	return m_data.m_iParaDataTrigger_CONV;
 }
-void CParaData::SetTriggerCONVPara(BYTE value, bool bSend, bool bConfig)
+void CParaData::SetTriggerPara_CONV(BYTE value, bool bSend, bool bConfig)
 {
-	m_data.m_iParaDataTriggerCONV=value;
+	m_data.m_iParaDataTrigger_CONV=value;
 
 	if(bConfig)
 	{
-		getModel()->getCONFIG()->SetParaDataTriggerCONV(value);
+		getModel()->getCONFIG()->SetParaDataTrigger_CONV(value);
 		if(bSend)
 		{
 			getModel()->Send_PARA_TRIG_SCHWELLE(value,false,true);
@@ -2061,17 +2098,55 @@ void CParaData::SetTriggerCONVPara(BYTE value, bool bSend, bool bConfig)
 	}
 }
 
-BYTE CParaData::GetTriggerNMODEPara()
+
+// **************************************************************************
+BYTE CParaData::GetTriggerPara_CPAP()
 {
-	return m_data.m_iParaDataTriggerNMODE;
+	return m_data.m_iParaDataTrigger_CPAP;
 }
-void CParaData::SetTriggerNMODEPara(BYTE value, bool bSend, bool bConfig)
+void CParaData::SetTriggerPara_CPAP(BYTE value, bool bSend, bool bConfig)
 {
-	m_data.m_iParaDataTriggerNMODE=value;
+	m_data.m_iParaDataTrigger_CPAP=value;
 
 	if(bConfig)
 	{
-		getModel()->getCONFIG()->SetParaDataTriggerNMODE(value);
+		getModel()->getCONFIG()->SetParaDataTrigger_CPAP(value);
+		if(bSend)
+		{
+			getModel()->Send_PARA_TRIG_SCHWELLE(value,false,true);
+		}
+	}
+}
+// **************************************************************************
+BYTE CParaData::GetTriggerPara_DUOPAP()
+{
+	return m_data.m_iParaDataTrigger_DUOPAP;
+}
+void CParaData::SetTriggerPara_DUOPAP(BYTE value, bool bSend, bool bConfig)
+{
+	m_data.m_iParaDataTrigger_DUOPAP=value;
+
+	if(bConfig)
+	{
+		getModel()->getCONFIG()->SetParaDataTrigger_DUOPAP(value);
+		if(bSend)
+		{
+			getModel()->Send_PARA_TRIG_SCHWELLE(value,false,true);
+		}
+	}
+}
+// **************************************************************************
+BYTE CParaData::GetTriggerPara_NCPAP()
+{
+	return m_data.m_iParaDataTrigger_NCPAP;
+}
+void CParaData::SetTriggerPara_NCPAP(BYTE value, bool bSend, bool bConfig)
+{
+	m_data.m_iParaDataTrigger_NCPAP=value;
+
+	if(bConfig)
+	{
+		getModel()->getCONFIG()->SetParaDataTrigger_NCPAP(value);
 		if(bSend)
 		{
 			getModel()->Send_PARA_TRIG_SCHWELLE(value,false,true);
@@ -3755,16 +3830,30 @@ BYTE CParaData::GetO2FlushMaxPara()
 BYTE CParaData::GetTriggerCONVMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
-		return m_dataMaxRange_NEONATAL.m_iParaDataTriggerCONV;
+		return m_dataMaxRange_NEONATAL.m_iParaDataTrigger_CONV;
 	else
-		return m_dataMaxRange_PEDIATRIC.m_iParaDataTriggerCONV;
+		return m_dataMaxRange_PEDIATRIC.m_iParaDataTrigger_CONV;
 }
-BYTE CParaData::GetTriggerNMODEMaxPara()
+BYTE CParaData::GetTriggerCPAPMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
-		return m_dataMaxRange_NEONATAL.m_iParaDataTriggerNMODE;
+		return m_dataMaxRange_NEONATAL.m_iParaDataTrigger_CPAP;
 	else
-		return m_dataMaxRange_PEDIATRIC.m_iParaDataTriggerNMODE;
+		return m_dataMaxRange_PEDIATRIC.m_iParaDataTrigger_CPAP;
+}
+BYTE CParaData::GetTriggerDUOPAPMaxPara()
+{
+	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
+		return m_dataMaxRange_NEONATAL.m_iParaDataTrigger_DUOPAP;
+	else
+		return m_dataMaxRange_PEDIATRIC.m_iParaDataTrigger_DUOPAP;
+}
+BYTE CParaData::GetTriggerNCPAPMaxPara()
+{
+	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
+		return m_dataMaxRange_NEONATAL.m_iParaDataTrigger_NCPAP;
+	else
+		return m_dataMaxRange_PEDIATRIC.m_iParaDataTrigger_NCPAP;
 }
 // **************************************************************************
 // 
@@ -4383,19 +4472,35 @@ BYTE CParaData::GetO2FlushMinPara()
 BYTE CParaData::GetTriggerCONVMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
-		return m_dataMinRange_NEONATAL.m_iParaDataTriggerCONV;
+		return m_dataMinRange_NEONATAL.m_iParaDataTrigger_CONV;
 	else
-		return m_dataMinRange_PEDIATRIC.m_iParaDataTriggerCONV;
+		return m_dataMinRange_PEDIATRIC.m_iParaDataTrigger_CONV;
+}
+
+BYTE CParaData::GetTriggerCPAPMinPara()
+{
+	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
+		return m_dataMinRange_NEONATAL.m_iParaDataTrigger_CPAP;
+	else
+		return m_dataMinRange_PEDIATRIC.m_iParaDataTrigger_CPAP;
 }
 // **************************************************************************
 // 
 // **************************************************************************
-BYTE CParaData::GetTriggerNMODEMinPara()
+BYTE CParaData::GetTriggerDUOPAPMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
-		return m_dataMinRange_NEONATAL.m_iParaDataTriggerNMODE;
+		return m_dataMinRange_NEONATAL.m_iParaDataTrigger_DUOPAP;
 	else
-		return m_dataMinRange_PEDIATRIC.m_iParaDataTriggerNMODE;
+		return m_dataMinRange_PEDIATRIC.m_iParaDataTrigger_DUOPAP;
+}
+
+BYTE CParaData::GetTriggerNCPAPMinPara()
+{
+	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
+		return m_dataMinRange_NEONATAL.m_iParaDataTrigger_NCPAP;
+	else
+		return m_dataMinRange_PEDIATRIC.m_iParaDataTrigger_NCPAP;
 }
 // **************************************************************************
 // 

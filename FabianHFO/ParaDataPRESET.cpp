@@ -84,8 +84,10 @@ void CParaDataPRESET::Init()
 	m_data.m_iParaDataVGarant_TRIGGER=0;
 	m_data.m_bParaDataVGarantOn_IPPV=false;
 	m_data.m_bParaDataVGarantOn_TRIGGER=false;
-	m_data.m_iParaDataTriggerCONV=0;
-	m_data.m_iParaDataTriggerNMODE=0;
+	m_data.m_iParaDataTrigger_CONV=0;
+	m_data.m_iParaDataTrigger_CPAP=0;
+	m_data.m_iParaDataTrigger_DUOPAP=0;
+	m_data.m_iParaDataTrigger_NCPAP=0;
 	m_data.m_iParaDataBackup=0;
 	m_data.m_iParaDataHFAMPL=0;
 	m_data.m_iParaDataHFAMPLmax=0;

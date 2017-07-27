@@ -350,13 +350,23 @@ public:
 	void SetCurrentTriggerPara(BYTE val);
 	BYTE GetCurrentTriggerPara();
 
-	void SetNMODEtriggerAutoenableFlag(BYTE iPrevTRIGGERnmodePara);
-	BOOL GetNMODEtriggerAutoenableFlag();
-	void ResetNMODEtriggerAutoenableFlag();
-	WORD GetPrevTRIGGERnmodePara();
-	void SetTriggerNMODEenabled();
-	void SetTriggerNMODEdisabled();
-	bool GetTriggerNMODEenabled();
+	void SetDUOPAPtriggerAutoenableFlag(BYTE iPrevTRIGGERDUOPAPPara);
+	BOOL GetDUOPAPtriggerAutoenableFlag();
+	void ResetDUOPAPtriggerAutoenableFlag();
+
+	WORD GetPrevTRIGGERDUOPAPPara();
+	void SetTriggerDUOPAPenabled();
+	void SetTriggerDUOPAPdisabled();
+	bool GetTriggerDUOPAPenabled();
+
+	//void SetNCPAPtriggerAutoenableFlag(BYTE iPrevTRIGGERNCPAPPara);
+	//BOOL GetNCPAPtriggerAutoenableFlag();
+	//void ResetNCPAPtriggerAutoenableFlag();
+
+	//WORD GetPrevTRIGGERNCPAPPara();
+	//void SetTriggerNCPAPenabled();
+	//void SetTriggerNCPAPdisabled();
+	//bool GetTriggerNCPAPenabled();
 
 	void SetCurrentITimePara(WORD val);
 	WORD GetCurrentITimePara();
@@ -442,8 +452,17 @@ public:
 	eTriggereType getTriggerOptionCONV();
 	void SetPrevTriggerOptionCONV(eTriggereType type);
 	eTriggereType getPrevTriggerOptionCONV();
-	void setTriggerOptionNMODE(eTriggereType type);
-	eTriggereType getTriggerOptionNMODE();
+
+	/*void setTriggerOption_CPAP(eTriggereType type);
+	eTriggereType getTriggerOption_CPAP();
+	void SetPrevTriggerOption_CPAP(eTriggereType type);
+	eTriggereType getPrevTriggerOption_CPAP();*/
+
+	void setTriggerOptionDUOPAP(eTriggereType type);
+	eTriggereType getTriggerOptionDUOPAP();
+
+	void setTriggerOptionNCPAP(eTriggereType type);
+	eTriggereType getTriggerOptionNCPAP();
 
 	BYTE GetCurO2FlushTime();
 	void SetCurO2FlushTime(BYTE iTime);
@@ -478,7 +497,14 @@ public:
 	eTubeSet GetTubeSet();
 	void SetTubeSet(eTubeSet tube);
 
+	void checkPRESETTriggerTubeDependency();
 	void checkTriggerTubeDependency();
+	void checkTriggerTubeDependency_DUOPAP();
+	void checkTriggerTubeDependency_NCPAP();
+	void checkTriggerTubeDependency_CPAP();
+	void checkTriggerTubeDependency_IPPV();
+	void checkTriggerTubeDependency_SIPPV();
+	void checkTriggerTubeDependency_SIMV();
 
 	bool IsFlowSensorStateOff();
 	eFlowSensorState GetFlowSensorState();
@@ -662,8 +688,10 @@ public:
 	void SetBPMParadata_IPPV(WORD value, bool bSend);
 	void SetBPMNMODEParadata(WORD value, bool bSend);
 
+	void SetTriggerCPAPParadata(BYTE value, bool bSend=true);
 	void SetTriggerCONVParadata(BYTE value, bool bSend=true);
-	void SetTriggerNMODEParadata(BYTE value, bool bSend=true);
+	void SetTriggerDUOPAPParadata(BYTE value, bool bSend=true);
+	void SetTriggerNCPAPParadata(BYTE value, bool bSend=true);
 
 	void SetITimeParadata_TRIGGER(WORD value, bool bSend=true);
 	void SetITimeParadata_IPPV(WORD value, bool bSend=true);
@@ -1056,11 +1084,16 @@ private:
 
 	bool m_bFOToscillationState;	///< True to fo toscillation state
 
-	bool m_bNMODEtriggerAutoEnable; ///< True if nmod etrigger automatic enable
-	BYTE m_iPrevTRIGGERnmodePara;   ///< The previous trigge rnmode para
-	bool m_bTriggerNMODEenabled;	///< True if trigger nmod eenabled
+	bool m_bDUOPAPtriggerAutoEnable; ///< True if nmod etrigger automatic enable
+	BYTE m_iPrevTRIGGERDUOPAPPara;   ///< The previous trigge rnmode para
+	bool m_bTriggerDUOPAPenabled;	///< True if trigger nmod eenabled
+
+	//bool m_bNCPAPtriggerAutoEnable; ///< True if nmod etrigger automatic enable
+	//BYTE m_iPrevTRIGGERNCPAPPara;   ///< The previous trigge rnmode para
+	//bool m_bTriggerNCPAPenabled;	///< True if trigger nmod eenabled
 
 	WORD m_iBodyweightGramm;	///< The bodyweight gramm
 
-	eTriggereType m_ePrevConvTrigger;   ///< The previous convert trigger
+	eTriggereType m_ePrevTrigger_CONV;   ///< The previous convert trigger
+	eTriggereType m_ePrevTrigger_CPAP;
 };

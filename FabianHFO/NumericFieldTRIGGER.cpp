@@ -17,12 +17,20 @@ CNumericField(size)
 	
 	eTriggereType trigger = TRIGGER_FLOW;
 	if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
-		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP
-		||	getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
+		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
+	{
+		trigger=getModel()->getDATAHANDLER()->getTriggerOptionDUOPAP();
+	}
+	else if(	getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
 		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_NCPAP)
 	{
-		trigger=getModel()->getDATAHANDLER()->getTriggerOptionNMODE();
+		trigger=getModel()->getDATAHANDLER()->getTriggerOptionNCPAP();
 	}
+	/*else if(	getModel()->getCONFIG()->GetCurMode()==VM_CPAP
+		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_CPAP)
+	{
+		trigger=getModel()->getDATAHANDLER()->getTriggerOption_CPAP();
+	}*/
 	else
 	{
 		trigger=getModel()->getDATAHANDLER()->getTriggerOptionCONV();
@@ -139,11 +147,27 @@ bool CNumericFieldTRIGGER::drawData(bool bData, bool bFrames, bool bText, bool b
 		rc.right = 175;
 	}
 
-	if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
-		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
+	if(		getModel()->getVMODEHANDLER()->activeModeIsDUOPAP())
 	{
 		wsprintf(psz,_T("--"));
 	}
+	//else if(	getModel()->getVMODEHANDLER()->activeModeIsCPAP())
+	//{
+	//	eTriggereType trigger = TRIGGER_FLOW;
+	//	trigger=getModel()->getDATAHANDLER()->getTriggerOption_CPAP();
+	//	if(trigger==TRIGGER_VOLUME)
+	//	{
+	//		wsprintf(psz,_T("%0.1f"),CTlsFloat::Round(((double)iTrigger)/10, 1));
+	//	}
+	//	else if(trigger==TRIGGER_FLOW)
+	//	{
+	//		wsprintf(psz,_T("%0.2f"),CTlsFloat::Round((((double)iTrigger)/10)*0.06, 2));
+	//	}
+	//	else //pressure trigger, no values available
+	//	{
+	//		wsprintf(psz,_T("--"));
+	//	}
+	//}
 	else
 	{
 		eTriggereType trigger = TRIGGER_FLOW;

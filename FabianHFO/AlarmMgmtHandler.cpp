@@ -1639,7 +1639,7 @@ void CAlarmMgmtHandler::setAlarmSilent(bool bDelSysSilent,bool bDelAllAlarms)
  *===============================================================================================**/
 void CAlarmMgmtHandler::setAutoSilent(bool bDelSysSilent, bool bDelSilent, bool bDelManSilent)
 {
-	DEBUGMSG(TRUE, (TEXT("setAutoSilent\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("setAutoSilent\r\n")));
 
 	if(getAlarmSilentState()==ASTATE_SYSTEM_SILENT)
 	{
@@ -8932,19 +8932,36 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 		m_dwPminHighValueOk=GetTickCount();
 	}
 
-	bool bCheckBPMinNMODE=false;
+//eActiveVentMode==VM_NCPAP
+	bool bCheckBPMinNCPAP=false;
 	if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false 
 		&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET 
-		&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF
-		&&	bActiveModeIsNMODE)
+		&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_NCPAP()!=MAXRANGE_TRIGGER_OFF
+		&&	eActiveVentMode==VM_NCPAP)
 	{
-		bCheckBPMinNMODE=true;
+		bCheckBPMinNCPAP=true;
 	}
 	else if(	getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET 
-			&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNMODEPara()!=MAXRANGE_TRIGGER_NMODE_OFF
-			&&	bActiveModeIsNMODE)
+			&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_NCPAP()!=MAXRANGE_TRIGGER_OFF
+			&&	eActiveVentMode==VM_NCPAP)
 	{
-		bCheckBPMinNMODE=true;
+		bCheckBPMinNCPAP=true;
+	}
+
+	//eActiveVentMode==VM_NCPAP
+	bool bCheckBPMinDUOPAP=false;
+	if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false 
+		&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET 
+		&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP()!=MAXRANGE_TRIGGER_OFF
+		&&	eActiveVentMode==VM_DUOPAP)
+	{
+		bCheckBPMinDUOPAP=true;
+	}
+	else if(	getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET 
+		&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP()!=MAXRANGE_TRIGGER_OFF
+		&&	eActiveVentMode==VM_DUOPAP)
+	{
+		bCheckBPMinDUOPAP=true;
 	}
 
 	if(bActiveModeIsNMODE==false && getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
@@ -9037,7 +9054,7 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 			}
 		}
 	}
-	else if(bCheckBPMinNMODE)
+	else if(bCheckBPMinNCPAP || bCheckBPMinDUOPAP)
 	{
 		if(stateBPMmax==AL_ON || stateBPMmax==AL_AUTO)
 		{
@@ -9192,7 +9209,7 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 		&&	getAlarmSilentState()!=ASTATE_AUTOSILENT
 		&&	getModel()->isActiveAlarmDelay()==false)
 	{
-		if(bCheckBPMinNMODE)
+		if(bCheckBPMinNCPAP || bCheckBPMinDUOPAP)
 			sz.Format(_T(" [%d]"),MessureData.m_iBPM);
 		else if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
 			sz.Format(_T(" [%d]"),MessureData.m_iBPMco2);

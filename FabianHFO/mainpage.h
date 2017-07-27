@@ -7,6 +7,13 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50157 Version 5.0.1.57
+ * @date 2017-07-21
+ * @verbatim
+	- TRIGGER handling CPAP/NCPAP changed -> independently, new display of buttones, alarm limits, numerics i.e.
+	- units of trend files values are written to the trend CSV file
+ @endverbatim
+ *
  * @subsection ver50156 Version 5.0.1.56
  * @date 2017-07-19
  * @verbatim

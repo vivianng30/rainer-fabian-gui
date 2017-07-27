@@ -1225,6 +1225,7 @@ void CViewNumericWnd::NotifyEvent(CMVEvent* pEvent)
 			{
 			case CMVEventControl::EV_CONTROL_FLOWSENSORSTATE:
 			case CMVEventControl::EV_CONTROL_O2SENSORSTATE:
+			case CMVEventControl::EV_CONTROL_TRIGGERSTATE:
 				{
 					try
 					{

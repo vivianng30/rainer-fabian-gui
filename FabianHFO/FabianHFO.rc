@@ -222,8 +222,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 5,0,1,56
- PRODUCTVERSION 5,0,1,56
+ FILEVERSION 5,0,1,57
+ PRODUCTVERSION 5,0,1,57
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -240,12 +240,12 @@ BEGIN
         BEGIN
             VALUE "Comments", "Alle Rechte vorbehalten."
             VALUE "CompanyName", "Acutronic Medical Systems AG"
-            VALUE "FileVersion", "5, 0, 1, 56"
+            VALUE "FileVersion", "5, 0, 1, 57"
             VALUE "InternalName", "FabianHFO.exe"
             VALUE "LegalCopyright", "(c) Acutronic Medical Systems AG. "
             VALUE "OriginalFilename", "FabianHFO.exe"
             VALUE "ProductName", " FabianHFO"
-            VALUE "ProductVersion", "5, 0, 1, 56"
+            VALUE "ProductVersion", "5, 0, 1, 57"
         END
     END
     BLOCK "VarFileInfo"
@@ -1927,6 +1927,9 @@ BEGIN
     IDS_TXT_LEAKCOMP_TOP    "NIV"
     IDS_TXT_LEAKCOMP_MID    "leak"
     IDS_TXT_LEAKCOMP_BOT    "compensation"
+    IDS_TXT_TRIGGER_THIGH   "T-high"
+    IDS_TXT_TRIGGER_BREATH  "Breath"
+    IDS_TXT_TRIGGER_DETECTION "Detection"
 END
 
 #endif    // German (Germany) resources

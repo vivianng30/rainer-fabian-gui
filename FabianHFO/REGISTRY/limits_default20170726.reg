@@ -323,15 +323,48 @@
 "MAXRANGE_PED_PMANUAL"=dword:00000320
 ;
 ;##########################################
-;#   MINRANGE_NEO_TRIGGER	abs. min range 10
-;#   MAXRANGE_NEO_TRIGGER	abs. max range 100
-;#   MINRANGE_PED_TRIGGER	abs. min range 10
-;#   MAXRANGE_PED_TRIGGER	abs. max range 100
+;#   MINRANGE_NEO_TRIGGER_CONV	abs. min range 10
+;#   MAXRANGE_NEO_TRIGGER_CONV	abs. max range 100
+;#   MINRANGE_PED_TRIGGER_CONV	abs. min range 10
+;#   MAXRANGE_PED_TRIGGER_CONV	abs. max range 100
 ;##########################################
-"MINRANGE_NEO_TRIGGER"=dword:0000000a
-"MAXRANGE_NEO_TRIGGER"=dword:00000064
-"MINRANGE_PED_TRIGGER"=dword:0000000a
-"MAXRANGE_PED_TRIGGER"=dword:00000064
+"MINRANGE_NEO_TRIGGER_CONV"=dword:0000000a
+"MAXRANGE_NEO_TRIGGER_CONV"=dword:00000064
+"MINRANGE_PED_TRIGGER_CONV"=dword:0000000a
+"MAXRANGE_PED_TRIGGER_CONV"=dword:00000064
+;
+;##########################################
+;#   MINRANGE_NEO_TRIGGER_CPAP	abs. min range 10
+;#   MAXRANGE_NEO_TRIGGER_CPAP	abs. max range 100
+;#   MINRANGE_PED_TRIGGER_CPAP	abs. min range 10
+;#   MAXRANGE_PED_TRIGGER_CPAP	abs. max range 100
+;##########################################
+"MINRANGE_NEO_TRIGGER_CPAP"=dword:0000000a
+"MAXRANGE_NEO_TRIGGER_CPAP"=dword:00000064
+"MINRANGE_PED_TRIGGER_CPAP"=dword:0000000a
+"MAXRANGE_PED_TRIGGER_CPAP"=dword:00000064
+;
+;##########################################
+;#   MINRANGE_NEO_TRIGGER_DUOPAP	abs. min range 10
+;#   MAXRANGE_NEO_TRIGGER_DUOPAP	abs. max range 110
+;#   MINRANGE_PED_TRIGGER_DUOPAP	abs. min range 10
+;#   MAXRANGE_PED_TRIGGER_DUOPAP	abs. max range 110
+;##########################################
+"MINRANGE_NEO_TRIGGER_DUOPAP"=dword:0000000a
+"MAXRANGE_NEO_TRIGGER_DUOPAP"=dword:0000006e
+"MINRANGE_PED_TRIGGER_DUOPAP"=dword:0000000a
+"MAXRANGE_PED_TRIGGER_DUOPAP"=dword:0000006e
+;
+;##########################################
+;#   MINRANGE_NEO_TRIGGER_NCPAP	abs. min range 10
+;#   MAXRANGE_NEO_TRIGGER_NCPAP	abs. max range 110
+;#   MINRANGE_PED_TRIGGER_NCPAP	abs. min range 10
+;#   MAXRANGE_PED_TRIGGER_NCPAP	abs. max range 110
+;##########################################
+"MINRANGE_NEO_TRIGGER_NCPAP"=dword:0000000a
+"MAXRANGE_NEO_TRIGGER_NCPAP"=dword:0000006e
+"MINRANGE_PED_TRIGGER_NCPAP"=dword:0000000a
+"MAXRANGE_PED_TRIGGER_NCPAP"=dword:0000006e
 ;
 ;##########################################
 ;#   MINRANGE_NEO_VGARANT_IPPV		abs. min range 1 is 8
@@ -465,14 +498,14 @@
 ;
 ;##########################################
 ;#   MINRANGE_NEO_HFFLOW	abs. min range 4000 is 5000
-;#   MAXRANGE_NEO_HFFLOW	abs. max range 25000 is 30000
+;#   MAXRANGE_NEO_HFFLOW	abs. max range 25000 is 20000
 ;#   MINRANGE_PED_HFFLOW	abs. min range 4000 is 5000
-;#   MAXRANGE_PED_HFFLOW	abs. max range 25000 is 30000
+;#   MAXRANGE_PED_HFFLOW	abs. max range 25000 is 20000
 ;##########################################
 "MINRANGE_NEO_HFFLOW"=dword:00001388
-"MAXRANGE_NEO_HFFLOW"=dword:00007530
+"MAXRANGE_NEO_HFFLOW"=dword:00004e20
 "MINRANGE_PED_HFFLOW"=dword:00001388
-"MAXRANGE_PED_HFFLOW"=dword:00007530
+"MAXRANGE_PED_HFFLOW"=dword:00004e20
 ;
 ;##########################################
 ;#   MINRANGE_NEO_PMEAN_REC		abs. min range 30 is 50

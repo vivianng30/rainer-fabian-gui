@@ -191,8 +191,13 @@ protected:
 	void load_ITIMEpara(bool bTrigger,bool bPRESET);
 	void load_ITIMENMODEpara(bool bPRESET);
 	void load_ITIMERECpara(bool bPRESET);
-	void load_TRIGGERCONVpara(bool bPRESET);
-	void load_TRIGGERNMODEpara(bool bPRESET);
+
+	void load_TRIGGERpara_CONV(bool bPRESET);
+	void load_TRIGGERpara_CPAP(bool bPRESET);
+
+	void load_TRIGGERpara_DUOPAP(bool bPRESET);
+	void load_TRIGGERpara_NCPAP(bool bPRESET);
+
 	void load_FLOWMINpara(bool bPRESET);
 	void load_CPAPpara(bool bPRESET);
 	void load_BACKUPpara(bool bPRESET);

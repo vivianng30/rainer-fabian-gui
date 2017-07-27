@@ -4049,16 +4049,6 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				CMVEventUI event(CMVEventUI::EV_RELOAD_CONFIG);
 				getModel()->triggerEvent(&event);
-
-				/*CStringW sData = getModel()->GetLanguageString(IDS_TXT_CONFIGLOADED);
-				CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  sData, 3000);
-				getModel()->triggerEvent(&event2);
-
-				getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
-
-				Sleep(2000);
-				AfxGetApp()->GetMainWnd()->PostMessage(WM_LANGUAGE_CHANGED);*/
-
 				return 1;
 			}
 			break;
@@ -4306,9 +4296,19 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 			}
 			break;
-		case WM_TURNOFF_TRIGGERNMODE:
+		case WM_TURNOFF_TRIGGER_NCPAP:
 			{
-				getModel()->getDATAHANDLER()->SetTriggerNMODEParadata(MAXRANGE_TRIGGER_NMODE_OFF,true);
+				getModel()->getDATAHANDLER()->SetTriggerNCPAPParadata(MAXRANGE_TRIGGER_OFF,true);
+
+				PostMessage(WM_TRIGGER_STATE);
+				return 1;
+			}
+			break;
+		case WM_TURNOFF_TRIGGER_DUOPAP:
+			{
+				getModel()->getDATAHANDLER()->SetTriggerDUOPAPParadata(MAXRANGE_TRIGGER_OFF,true);
+
+				PostMessage(WM_TRIGGER_STATE);
 				return 1;
 			}
 			break;
@@ -4559,7 +4559,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				if(m_bBackup==true)
 				{
-					DEBUGMSG(TRUE, (TEXT("WM_DEL_BACKUP\r\n")));
+					//DEBUGMSG(TRUE, (TEXT("WM_DEL_BACKUP\r\n")));
 					m_bBackup=false;
 					getModel()->getVIEWHANDLER()->SetCPAPBackup(false);
 				}
@@ -4577,7 +4577,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					{
 						if(m_bBackup==false)
 						{
-							DEBUGMSG(TRUE, (TEXT("SetCPAPBackup\r\n")));
+							//DEBUGMSG(TRUE, (TEXT("SetCPAPBackup\r\n")));
 							m_bBackup=true;
 							getModel()->getVIEWHANDLER()->SetCPAPBackup(true);
 						}
@@ -5445,6 +5445,13 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		case WM_TRIGGER_FLOWSENSORSTATE:
 			{
 				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_FLOWSENSORSTATE);
+				getModel()->triggerEvent(&eventCtrl);
+				return 1;
+			}
+			break;
+		case WM_TRIGGER_STATE:
+			{
+				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_TRIGGERSTATE);
 				getModel()->triggerEvent(&eventCtrl);
 				return 1;
 			}
@@ -9445,42 +9452,42 @@ bool CMainFrame::SaveTrendDataToUSB(UINT trendID)
 		{
 			szFolder+=IDS_TRD_FOLDER_PINSP;
 			szTrendFileName=_T("PINSP.csv");
-			szTrendName=_T("PINSP");
+			szTrendName=_T("PINSP [mbar/10]");
 		}
 		break;
 	case TREND_PMEAN:
 		{
 			szFolder+=IDS_TRD_FOLDER_PMEAN;
 			szTrendFileName=_T("PMEAN.csv");
-			szTrendName=_T("PMEAN");
+			szTrendName=_T("PMEAN [mbar/10]");
 		}
 		break;
 	case TREND_FIO2:
 		{
 			szFolder+=IDS_TRD_FOLDER_FIO2;
 			szTrendFileName=_T("FIO2.csv");
-			szTrendName=_T("FIO2");
+			szTrendName=_T("FIO2 [%/10]");
 		}
 		break;
 	case TREND_VTE:
 		{
 			szFolder+=IDS_TRD_FOLDER_VTE;
 			szTrendFileName=_T("VTE.csv");
-			szTrendName=_T("VTE");
+			szTrendName=_T("VTE [ml/10]");
 		}
 		break;
 	case TREND_COMPLIANCE:
 		{
 			szFolder+=IDS_TRD_FOLDER_COMPLIANCE;
 			szTrendFileName=_T("COMPLIANCE.csv");
-			szTrendName=_T("COMPLIANCE");
+			szTrendName=_T("COMPLIANCE [ml/mbar/100]");
 		}
 		break;
 	case TREND_CO2HFO:
 		{
 			szFolder+=IDS_TRD_FOLDER_CO2HFO;
 			szTrendFileName=_T("CO2HFO.csv");
-			szTrendName=_T("CO2HFO");
+			szTrendName=_T("CO2HFO [ml^2/sec]");
 			DEBUGMSG(TRUE, (TEXT("TREND: %s\r"),szTrendName));
 		}
 		break;
@@ -9488,77 +9495,77 @@ bool CMainFrame::SaveTrendDataToUSB(UINT trendID)
 		{
 			szFolder+=IDS_TRD_FOLDER_MV;
 			szTrendFileName=_T("MV.csv");
-			szTrendName=_T("MV");
+			szTrendName=_T("MV [ml]");
 		}
 		break;
 	case TREND_HFAMP:
 		{
 			szFolder+=IDS_TRD_FOLDER_HFAMP;
 			szTrendFileName=_T("HFAMP.csv");
-			szTrendName=_T("HFAMP");
+			szTrendName=_T("HFAMP [mbar/10]");
 		}
 		break;
 	case TREND_RSBI:
 		{
 			szFolder+=IDS_TRD_FOLDER_RSBI;
 			szTrendFileName=_T("RSBI.csv");
-			szTrendName=_T("RSBI");
+			szTrendName=_T("RSBI [/10]");
 		}
 		break;
 	case TREND_SHAREMVMAND:
 		{
 			szFolder+=IDS_TRD_FOLDER_SHAREMVMAND;
 			szTrendFileName=_T("SHAREMVMAND.csv");
-			szTrendName=_T("SHAREMVMAND");
+			szTrendName=_T("SHAREMVMAND [%]");
 		}
 		break;
 	case TREND_RESISTANCE:
 		{
 			szFolder+=IDS_TRD_FOLDER_RESISTANCE;
 			szTrendFileName=_T("RESISTANCE.csv");
-			szTrendName=_T("RESISTANCE");
+			szTrendName=_T("RESISTANCE [mbar/lps/10]");
 		}
 		break;
 	case TREND_LEAK:
 		{
 			szFolder+=IDS_TRD_FOLDER_LEAK;
 			szTrendFileName=_T("LEAK.csv");
-			szTrendName=_T("LEAK");
+			szTrendName=_T("LEAK [%]");
 		}
 		break;
 	case TREND_SPO2:
 		{
 			szFolder+=IDS_TRD_FOLDER_SPO2;
 			szTrendFileName=_T("SPO2.csv");
-			szTrendName=_T("SPO2");
+			szTrendName=_T("SPO2 [%/10]");
 		}
 		break;
 	case TREND_SPO2PR:
 		{
 			szFolder+=IDS_TRD_FOLDER_SPO2PR;
 			szTrendFileName=_T("SPO2PR.csv");
-			szTrendName=_T("SPO2PR");
+			szTrendName=_T("SPO2PR [bpm]");
 		}
 		break;
 	case TREND_SPO2PI:
 		{
 			szFolder+=IDS_TRD_FOLDER_SPO2PI;
 			szTrendFileName=_T("SPO2PI.csv");
-			szTrendName=_T("SPO2PI");
+			szTrendName=_T("SPO2PI [/1000]");
 		}
 		break;
 	case TREND_ETCO2:
 		{
 			szFolder+=IDS_TRD_FOLDER_ETCO2;
 			szTrendFileName=_T("ETCO2.csv");
-			szTrendName=_T("ETCO2");
+			szTrendName=_T("ETCO2 [mmHg/10]");
 		}
 		break;
 	case TREND_FREQUENCY:
 		{
 			szFolder+=IDS_TRD_FOLDER_FREQUENCY;
 			szTrendFileName=_T("FREQ.csv");
-			szTrendName=_T("FREQ");
+			szTrendName=_T("FREQ [bpm]");
 		}
 		break;
 	default:
