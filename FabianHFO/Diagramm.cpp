@@ -9258,8 +9258,6 @@ bool CDiagramm::CanDecreaseYScale()
 	case VOLUME_HF_GRAPH:
 	case PRESSURE_VOLUME_LOOP:
 	case PRESSURE_VOLUME_HF_LOOP:
-	case CO2_GRAPH:
-	case CO2_HF_GRAPH:
 		{
 			if(m_dYAxisMax>200)
 			{
@@ -9296,6 +9294,41 @@ bool CDiagramm::CanDecreaseYScale()
 			else
 			{
 				dLowerAxisMax=2;
+			}
+
+			if(		iTempMaxY<dLowerAxisMax
+				&&	m_dYAxisMax>dLowerAxisMax)
+			{
+				bRes=true;
+			}
+		}
+		break;
+	case CO2_GRAPH:
+	case CO2_HF_GRAPH:
+		{
+			if(m_dYAxisMax>200)
+			{
+				dLowerAxisMax=m_dYAxisMax-200;
+			}
+			else if(m_dYAxisMax>150)
+			{
+				dLowerAxisMax=m_dYAxisMax-150;
+			}
+			else if(m_dYAxisMax>100)
+			{
+				dLowerAxisMax=m_dYAxisMax-100;
+			}
+			else if(m_dYAxisMax>40)
+			{
+				dLowerAxisMax=m_dYAxisMax-20;
+			}
+			else if(m_dYAxisMax>20)
+			{
+				dLowerAxisMax=m_dYAxisMax-10;
+			}
+			else if(m_dYAxisMax>10)
+			{
+				dLowerAxisMax=10;
 			}
 
 			if(		iTempMaxY<dLowerAxisMax

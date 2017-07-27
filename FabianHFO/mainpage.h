@@ -12,6 +12,7 @@
  * @verbatim
 	- TRIGGER handling CPAP/NCPAP changed -> independently, new display of buttones, alarm limits, numerics i.e.
 	- units of trend files values are written to the trend CSV file
+	- CO2 graph scaling changed (only till minimum)
  @endverbatim
  *
  * @subsection ver50156 Version 5.0.1.56
