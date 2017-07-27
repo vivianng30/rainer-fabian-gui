@@ -7,6 +7,13 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50158 Version 5.0.1.58
+ * @date 2017-07-27	
+ * @verbatim
+	- DUOPAP & Medijet -> alarm view, Freq and Apnea green field are displayed
+	- Trigger yellow field shows preset mode state
+ @endverbatim
+ *
  * @subsection ver50157 Version 5.0.1.57
  * @date 2017-07-21
  * @verbatim

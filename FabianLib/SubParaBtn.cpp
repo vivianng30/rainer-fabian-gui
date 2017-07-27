@@ -358,16 +358,19 @@ void CSubParaBtn::DrawSUBPARA_TRIGGER(int nState)
 {
 	if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
 		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
+	//if(getModel()->getVMODEHANDLER()->activeModeIsDUOPAP())
 	{
 		DrawSUBPARA_TRIGGER_DUOPAP(nState);
 	}
 	else if(getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
 		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_NCPAP)
+	//else if(getModel()->getVMODEHANDLER()->activeModeIsNCPAP())
 	{
 		DrawSUBPARA_TRIGGER_NCPAP(nState);
 	}
 	else if(getModel()->getCONFIG()->GetCurMode()==VM_CPAP
 		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_CPAP)
+	//else if(getModel()->getVMODEHANDLER()->activeModeIsCPAP())
 	{
 		DrawSUBPARA_TRIGGER_CPAP(nState);
 	}
@@ -669,60 +672,6 @@ void CSubParaBtn::DrawSUBPARA_TRIGGER_CPAP(int nState)
 	}
 
 
-	//if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true
-	//	&& getModel()->getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE
-	//	&& getModel()->getCONFIG()->GetCurMode()==VM_PRE_CPAP)
-	//{
-	//	rcSubBtn.top = m_rcClient.top+8;
-	//	rcSubBtn.bottom = m_rcClient.bottom-8;
-
-	//	DrawText(m_hDC,_T("Breath"),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-	//	DrawText(m_hDC,_T("Detection"),-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-	//	DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_PRESSURE),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
-	//}
-	//else if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true
-	//	&& getModel()->getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
-	//{
-	//	rcSubBtn.top = m_rcClient.top+16;
-	//	rcSubBtn.bottom = m_rcClient.bottom-16;
-
-	//	DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_FLOWSENSOR),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
-	//	DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_OFF),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
-	//}
-	//else
-	//{
-	//	if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_PRESSURE)
-	//	{
-	//		rcSubBtn.top = m_rcClient.top+8;
-	//		rcSubBtn.bottom = m_rcClient.bottom-8;
-
-	//		DrawText(m_hDC,_T("Breath"),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-	//		DrawText(m_hDC,_T("Detection"),-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-	//		DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_PRESSURE),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
-
-	//	}
-	//	else if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_FLOW)
-	//	{
-	//		rcSubBtn.top = m_rcClient.top+8;
-	//		rcSubBtn.bottom = m_rcClient.bottom-8;
-
-	//		DrawText(m_hDC,_T("Breath"),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-	//		DrawText(m_hDC,_T("Detection"),-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
-	//		DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_FLOW),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
-	//	}
-	//	else//TRIGGER_OFF
-	//	{
-	//		rcSubBtn.top = m_rcClient.top+16;
-	//		rcSubBtn.bottom = m_rcClient.bottom-16;
-
-	//		rcSubBtn.top = m_rcClient.top+16;
-	//		rcSubBtn.bottom = m_rcClient.bottom-16;
-
-	//		DrawText(m_hDC,getModel()->GetLanguageString(IDS_PARA_TRIGGER),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
-	//		DrawText(m_hDC,getModel()->GetLanguageString(IDS_TXT_NOTACTIVE),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
-	//	}
-	//}
-
 	SetTextColor(m_hDC,nPrevTxtColor);
 	SetBkMode(m_hDC,nBkMode);
 	SelectObject(m_hDC,hPrevFont);
@@ -763,7 +712,56 @@ void CSubParaBtn::DrawSUBPARA_TRIGGER_DEFAULT(int nState)
 		DrawText(m_hDC,getModel()->GetLanguageString(IDS_GRAPH_PRESSURE),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
 		DrawText(m_hDC,getModel()->GetLanguageString(IDS_PARA_TRIGGER),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);//todo NEWLANGUAGE
 	}
-	else
+	else if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_VOLUME)
+	{
+		DrawText(m_hDC,getModel()->GetLanguageString(IDS_PARA_TRIGVOL),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
+
+		if(getModel()->getVMODEHANDLER()->curModeIsCONVTriggerPresetMode() && false==getModel()->getVMODEHANDLER()->activeModeIsCONVTrigger())
+		{
+			wsprintf(psz,_T("--"));
+		}
+		else if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_VOLUME)
+		{
+			wsprintf(psz,_T("%0.1f"),CTlsFloat::Round(((double)m_v.iValue)/10, 1));
+		}
+		else if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_FLOW)
+		{ 
+			wsprintf(psz,_T("%0.2f"),CTlsFloat::Round((((double)m_v.iValue)/10)*0.06, 2));
+		}
+
+		SelectObject(m_hDC,g_hf14AcuBold);
+		rcSubBtn.top = m_rcClient.top+9;
+		DrawText(m_hDC,psz,-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);
+
+		SelectObject(m_hDC,g_hf7AcuNorm);
+		DrawText(m_hDC,getModel()->GetLanguageString(IDS_UNIT_MILLILITER),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+	}
+	else if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_FLOW)
+	{
+		DrawText(m_hDC,getModel()->GetLanguageString(IDS_PARA_TRIGFLOW),-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
+
+		if(getModel()->getVMODEHANDLER()->curModeIsCONVTriggerPresetMode() && false==getModel()->getVMODEHANDLER()->activeModeIsCONVTrigger())
+		{
+			wsprintf(psz,_T("--"));
+		}
+		else if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_VOLUME)
+		{
+			wsprintf(psz,_T("%0.1f"),CTlsFloat::Round(((double)m_v.iValue)/10, 1));
+		}
+		else if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_FLOW)
+		{ 
+			wsprintf(psz,_T("%0.2f"),CTlsFloat::Round((((double)m_v.iValue)/10)*0.06, 2));
+		}
+
+		SelectObject(m_hDC,g_hf14AcuBold);
+		rcSubBtn.top = m_rcClient.top+9;
+		DrawText(m_hDC,psz,-1,&rcSubBtn,DT_VCENTER|DT_SINGLELINE|DT_CENTER);
+
+		SelectObject(m_hDC,g_hf7AcuNorm);
+		DrawText(m_hDC,getModel()->GetLanguageString(IDS_UNIT_LMIN),-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
+	}
+
+	/*else
 	{
 		DrawText(m_hDC,m_pszNameText,-1,&rcSubBtn,DT_TOP|DT_SINGLELINE|DT_CENTER);
 
@@ -782,7 +780,7 @@ void CSubParaBtn::DrawSUBPARA_TRIGGER_DEFAULT(int nState)
 
 		SelectObject(m_hDC,g_hf7AcuNorm);
 		DrawText(m_hDC,m_pszUnitText,-1,&rcSubBtn,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);
-	}
+	}*/
 
 	SetTextColor(m_hDC,nPrevTxtColor);
 	SetBkMode(m_hDC,nBkMode);

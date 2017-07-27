@@ -9672,7 +9672,7 @@ LRESULT CViewParaBtn::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 				m_pcSubPara_O2act->SetParaValue(iValue);
 			}
 
-			if(		m_pcSubPara_TrigThreshold 
+			/*if(		m_pcSubPara_TrigThreshold 
 				&&	getModel()->getVMODEHANDLER()->activeModeIsCONVTrigger()
 				&&	m_bViewPraBtnShown)
 			{
@@ -9751,6 +9751,30 @@ LRESULT CViewParaBtn::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 						m_pcSubPara_TrigThreshold->SetNameText(getModel()->GetLanguageString(IDS_PARA_TRIGFLOW));
 						m_pcSubPara_TrigThreshold->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_LMIN));
 					}
+
+					iValue=getModel()->getDATAHANDLER()->getAVGMessureDataTrigger();
+					m_pcSubPara_TrigThreshold->SetParaValue(iValue);
+				}
+			}*/
+
+
+			//########################################
+			if(		m_pcSubPara_TrigThreshold 
+				&&	getModel()->getVMODEHANDLER()->curModeIsCONVTriggerMode()
+				&&	m_bViewPraBtnShown)
+			{
+				if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
+				{
+					/*if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_VOLUME)
+					{
+						m_pcSubPara_TrigThreshold->SetNameText(getModel()->GetLanguageString(IDS_PARA_TRIGVOL));
+						m_pcSubPara_TrigThreshold->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MILLILITER));
+					}
+					else if(getModel()->getDATAHANDLER()->getTriggerOptionCONV()==TRIGGER_FLOW)
+					{
+						m_pcSubPara_TrigThreshold->SetNameText(getModel()->GetLanguageString(IDS_PARA_TRIGFLOW));
+						m_pcSubPara_TrigThreshold->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_LMIN));
+					}*/
 
 					iValue=getModel()->getDATAHANDLER()->getAVGMessureDataTrigger();
 					m_pcSubPara_TrigThreshold->SetParaValue(iValue);

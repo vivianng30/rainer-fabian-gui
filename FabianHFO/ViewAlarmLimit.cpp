@@ -1522,17 +1522,17 @@ void CViewAlarmLimit::drawFrameDUOPAP(CDC* pDC)
 
 	if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET)//FS state always off -> check sensitivity state on/off
 	{
-		bool bTriggerOn=true;
+		bool bTriggerOn=false;
 
 		if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
 			&&	getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEPara()<610)
 		{
-			bTriggerOn=false;
+			bTriggerOn=true;
 		}
 		else if(		getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP
 			&&	getModel()->getDATAHANDLER()->PRESET()->GetITimeNMODEPara()<610)
 		{
-			bTriggerOn=false;
+			bTriggerOn=true;
 		}
 
 		if(bTriggerOn)
@@ -2374,12 +2374,12 @@ void CViewAlarmLimit::drawLabel_DUOPAP(CDC* pDC)
 	if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET)//FS state always off -> check sensitivity state on/off
 	{
 		if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
-			&&	getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEPara()<610)
+			&&	getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEPara()>=610)
 		{
 			bShowApnea=false;
 		}
 		else if(		getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP
-			&&	getModel()->getDATAHANDLER()->PRESET()->GetITimeNMODEPara()<610)
+			&&	getModel()->getDATAHANDLER()->PRESET()->GetITimeNMODEPara()>=610)
 		{
 			bShowApnea=false;
 		}
@@ -3211,12 +3211,12 @@ void CViewAlarmLimit::drawDataVentilation_DUOPAP(HDC hdc)
 	if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET)//FS state always off -> check sensitivity state on/off
 	{
 		if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
-			&&	getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEPara()<610)
+			&&	getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEPara()>=610)
 		{
 			bShowBPM=false;
 		}
 		else if(		getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP
-			&&	getModel()->getDATAHANDLER()->PRESET()->GetITimeNMODEPara()<610)
+			&&	getModel()->getDATAHANDLER()->PRESET()->GetITimeNMODEPara()>=610)
 		{
 			bShowBPM=false;
 		}

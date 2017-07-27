@@ -46,6 +46,8 @@ public:
 	bool activeModeIsSIMV();
 	bool viewModeIsAnyNMODE();
 	bool curModeIsVolumeSupportMode();
+	bool curModeIsCONVTriggerMode();
+	bool curModeIsCONVTriggerPresetMode();
 
 private:
 	//singleton

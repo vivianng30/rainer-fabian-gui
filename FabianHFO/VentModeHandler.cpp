@@ -1167,6 +1167,41 @@ bool CVentModeHandler::curModeIsVolumeSupportMode()
 	return bResult;
 }
 
+bool CVentModeHandler::curModeIsCONVTriggerMode()
+{
+	bool bResult = false;
+
+	eVentMode eCurrent=getModel()->getCONFIG()->GetCurMode();
+	if(		eCurrent==VM_SIPPV
+		||	eCurrent==VM_SIMV
+		||	eCurrent==VM_SIMVPSV
+		||	eCurrent==VM_PSV
+		||	eCurrent==VM_PRE_SIPPV
+		||	eCurrent==VM_PRE_SIMV
+		||	eCurrent==VM_PRE_SIMVPSV
+		||	eCurrent==VM_PRE_PSV)
+	{
+		bResult = true;
+	}
+
+	return bResult;
+}
+
+bool CVentModeHandler::curModeIsCONVTriggerPresetMode()
+{
+	bool bResult = false;
+
+	eVentMode eCurrent=getModel()->getCONFIG()->GetCurMode();
+	if(		eCurrent==VM_PRE_SIPPV
+		||	eCurrent==VM_PRE_SIMV
+		||	eCurrent==VM_PRE_SIMVPSV
+		||	eCurrent==VM_PRE_PSV)
+	{
+		bResult = true;
+	}
+
+	return bResult;
+}
 
 bool CVentModeHandler::activeModeIsCONVTrigger()
 {
