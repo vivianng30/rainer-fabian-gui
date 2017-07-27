@@ -21,7 +21,6 @@
 ;  MAXRANGE_NEO_IFLOW_IPPV changed from 20 to 32 lpm
 ;  MAXRANGE_NEO_IFLOW_TRIGGER changed from 20 to 32 lpm
 ;  MAXRANGE_PED_THERAPYFLOW changed from 19 to 30 lpm
-;  MAXRANGE_NEO_HFFLOW changed from 20 to 30 lpm
 ;  MAXRANGE_PED_HFFLOW changed from 20 to 30 lpm
 ;  MINRANGE_NEO_EFLOW_IPPV changed from 3 to 1
 ;  MINRANGE_NEO_EFLOW_TRIGGER changed from 3 to 1
@@ -500,12 +499,12 @@
 ;#   MINRANGE_NEO_HFFLOW	abs. min range 4000 is 5000
 ;#   MAXRANGE_NEO_HFFLOW	abs. max range 25000 is 20000
 ;#   MINRANGE_PED_HFFLOW	abs. min range 4000 is 5000
-;#   MAXRANGE_PED_HFFLOW	abs. max range 25000 is 20000
+;#   MAXRANGE_PED_HFFLOW	abs. max range 25000 is 30000
 ;##########################################
 "MINRANGE_NEO_HFFLOW"=dword:00001388
-"MAXRANGE_NEO_HFFLOW"=dword:00004e20
+"MAXRANGE_NEO_HFFLOW"=dword:00004E20
 "MINRANGE_PED_HFFLOW"=dword:00001388
-"MAXRANGE_PED_HFFLOW"=dword:00004e20
+"MAXRANGE_PED_HFFLOW"=dword:00007530
 ;
 ;##########################################
 ;#   MINRANGE_NEO_PMEAN_REC		abs. min range 30 is 50
