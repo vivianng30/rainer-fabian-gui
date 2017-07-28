@@ -10114,9 +10114,11 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		SetPatDataStartup(m_bAskPatDataStartup);*/
 		ar>>m_bUseTveBTB;
 		setUseTveBTB(m_bUseTveBTB);
+
 		bool bDummy=false;
 		ar>>bDummy;//m_bVolumeTrigger;
-		//SetVolumeTrigger(m_bVolumeTrigger);m_eTriggerType
+		//SetVolumeTrigger(m_bVolumeTrigger);
+		// 
 		int iIERelationMode=0;
 		ar>>iIERelationMode;
 		SetIERelationMode((eIERelationMode)iIERelationMode);
@@ -10688,19 +10690,8 @@ void CConfiguration::SerializeFile(CArchive& ar)
 			m_eTriggerType_NCPAP=(eTriggereType)eTriggerTypeNCPAP;
 			setTriggerOption_NCPAP(m_eTriggerType_NCPAP);
 
-			if(m_eTubeSet==TUBE_INFANTFLOW)
-				m_eTriggerType_NCPAP=TRIGGER_FLOW;
-			else if(m_eTubeSet==TUBE_INFANTFLOW_LP)
-				m_eTriggerType_NCPAP=TRIGGER_FLOW;
-			else if(m_eTubeSet==TUBE_MEDIJET)
-				m_eTriggerType_NCPAP=TRIGGER_PRESSURE;
-
-			setTriggerOption_NCPAP(m_eTriggerType_NCPAP);
-
 			ar>>m_iParaDataTrigger_NCPAP;
 			getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NCPAP_16, m_iParaDataTrigger_NCPAP);
-
-			
 		}
 
 		//##################### m_iConfigVersion 3005
@@ -10756,15 +10747,6 @@ void CConfiguration::SerializeFile(CArchive& ar)
 			m_eTriggerType_CPAP=(eTriggereType)eTriggerTypeCPAP;
 			setTriggerOption_CPAP(m_eTriggerType_CPAP);
 
-			if(m_eTubeSet==TUBE_INFANTFLOW)
-				m_eTriggerType_CPAP=TRIGGER_FLOW;
-			else if(m_eTubeSet==TUBE_INFANTFLOW_LP)
-				m_eTriggerType_CPAP=TRIGGER_FLOW;
-			else if(m_eTubeSet==TUBE_MEDIJET)
-				m_eTriggerType_CPAP=TRIGGER_PRESSURE;
-
-			setTriggerOption_CPAP(m_eTriggerType_CPAP);
-
 			ar>>m_iParaDataTrigger_CPAP;
 			getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CPAP_16, m_iParaDataTrigger_CPAP);
 
@@ -10772,7 +10754,6 @@ void CConfiguration::SerializeFile(CArchive& ar)
 			BYTE eTriggerTypeDUOPAP=0;
 			ar>>eTriggerTypeDUOPAP;
 			m_eTriggerType_DUOPAP=(eTriggereType)eTriggerTypeDUOPAP;
-			setTriggerOption_DUOPAP(m_eTriggerType_DUOPAP);
 
 			if(m_eTubeSet==TUBE_INFANTFLOW)
 				m_eTriggerType_DUOPAP=TRIGGER_FLOW;

@@ -1317,9 +1317,9 @@ private:
 	eHFModuleRevision m_eHFRevision;	///< The hf revision
 
 	eTriggereType m_eTriggerType_CONV;   ///< The trigger type convert
-	eTriggereType m_eTriggerType_CPAP;  ///< The trigger type nmode
-	eTriggereType m_eTriggerType_DUOPAP;
-	eTriggereType m_eTriggerType_NCPAP;
+	eTriggereType m_eTriggerType_CPAP;  ///< The trigger type cpap
+	eTriggereType m_eTriggerType_DUOPAP;  ///< The trigger type duopap
+	eTriggereType m_eTriggerType_NCPAP;  ///< The trigger type ncpap
 
 	eLeakCompensation m_eLeakCompensation;  ///< The leak compensation
 
