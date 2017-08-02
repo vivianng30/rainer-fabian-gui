@@ -165,7 +165,7 @@ CDataHandler::CDataHandler(void)
 
 	//m_ePrevConvTrigger=TRIGGER_NONE;
 	m_ePrevTrigger_CONV=TRIGGER_NONE;
-	m_ePrevTrigger_CPAP=TRIGGER_NONE;
+	//m_ePrevTrigger_CPAP=TRIGGER_NONE;
 
 	m_bLEDdisplay=true;
 
@@ -653,10 +653,6 @@ CDataHandler::CDataHandler(void)
 	m_bProcPressureCal60=false;
 
 	m_dwRemainCO2PumpTime=0;
-
-	/*m_bNCPAPtriggerAutoEnable=false;
-	m_iPrevTRIGGERNCPAPPara=0;
-	m_bTriggerNCPAPenabled=true;*/
 
 	m_bDUOPAPtriggerAutoEnable=false;
 	m_iPrevTRIGGERDUOPAPPara=0;
