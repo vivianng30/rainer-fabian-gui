@@ -5830,7 +5830,6 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 			getSPI()->Send_PARAVAL_BACKUP(iBackup);
 			getSPI()->Send_PARAVAL_INSP_TIME(500);
 			getSPI()->Send_PARAVAL_EXH_TIME(500);
-
 			getSPI()->Send_PARAVAL_TRIG_SCHWELLE(iTrigger);
 
 			if(false==bPRICOrunning)//PRICO04
@@ -5896,7 +5895,6 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 			iVLimit=ALINK_NOTVALID;
 			iVGarant=ALINK_NOTVALID;
 			iPpsv=ALINK_NOTVALID;
-			//iTrigger=ALINK_NOTVALID;
 			iAbortCriterionPSV=ALINK_NOTVALID;
 			iFlowmin=ALINK_NOTVALID;
 			iCPAP=ALINK_NOTVALID;
@@ -5940,7 +5938,6 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 			iVLimit=ALINK_NOTVALID;
 			iVGarant=ALINK_NOTVALID;
 			iPpsv=ALINK_NOTVALID;
-			//iTrigger=ALINK_NOTVALID;
 			iAbortCriterionPSV=ALINK_NOTVALID;
 			iFlowmin=ALINK_NOTVALID;
 			iPManual=ALINK_NOTVALID;
