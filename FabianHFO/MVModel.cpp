@@ -5337,8 +5337,6 @@ WORD CMVModel::Send_MODE_OPTION2(bool bSPI,bool bSerial)
 		wMode=setBitOfWord(wMode, MODOPT2_FRESHGASEXT_BIT);
 	}
 
-	/*if(false==getCONFIG()->GetVolumeTrigger())
-		wMode=setBitOfWord(wMode, MODOPT2_TRIGGERFLOW_BIT);*/
 	eTriggereType trigger = TRIGGER_FLOW;
 	if(		getCONFIG()->GetCurMode()==VM_DUOPAP
 		||	getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)

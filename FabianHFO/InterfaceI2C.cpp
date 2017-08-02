@@ -1009,11 +1009,9 @@ bool CInterfaceI2C::SetFRAMDefaultFactoryConfig()
 	WriteConfigByte(BTPS_8,1);
 	WriteConfigByte(FRESHGASEXT_8, 0);
 	WriteConfigByte(TRIGGERTYPECONV_8,TRIGGER_FLOW);
-
 	WriteConfigByte(TRIGGERTYPENCPAP_8,TRIGGER_FLOW);
 	WriteConfigByte(TRIGGERTYPEDUOPAP_8,TRIGGER_FLOW);
 	WriteConfigByte(TRIGGERTYPECPAP_8,TRIGGER_FLOW);
-
 	WriteConfigByte(EFLOWSETTINGS_8, 0);
 	//WriteConfigByte(PLAYTRIGSOUND_8,0);
 	WriteConfigByte(HFOMANBREATH_8,0);
