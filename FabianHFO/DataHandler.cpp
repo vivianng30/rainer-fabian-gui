@@ -187,9 +187,7 @@ CDataHandler::CDataHandler(void)
 	m_iNumericFLOWOFFHFOcount=0;
 
 	m_iSPO2waveData=0;
-	//m_iSPO2_SIQ=0;
 
-	//m_iI2CErrorCodeBits=0;
 	m_nCountDelTrends=0;
 	m_bDoDelTrendThread=false;
 	
@@ -1955,17 +1953,20 @@ bool CDataHandler::checkLicensing()
 				checkDemoLicense(MOD_THERAPY);
 			}
 		}
-		if(bCheckPRICOFeature)
+		if(getModel()->getCONFIG()->isSPO2REGISTRYenabled()==true)
 		{
-			//check key
-			if(szParsedPRICOKey==encryptKey(MOD_PRICO))
+			if(bCheckPRICOFeature)
 			{
-				enablePRICOLicense();
-				delDemoLicense(MOD_PRICO,true);
-			}
-			else if(szParsedPRICOKey==encryptDEMOKey(MOD_PRICO))
-			{
-				checkDemoLicense(MOD_PRICO);
+				//check key
+				if(szParsedPRICOKey==encryptKey(MOD_PRICO))
+				{
+					enablePRICOLicense();
+					delDemoLicense(MOD_PRICO,true);
+				}
+				else if(szParsedPRICOKey==encryptDEMOKey(MOD_PRICO))
+				{
+					checkDemoLicense(MOD_PRICO);
+				}
 			}
 		}
 		if(bCheckFOTFeature)
@@ -4742,10 +4743,6 @@ SHORT CDataHandler::readSPO2waveData()
 
 void CDataHandler::writeSpO2SIQ(SHORT iSIQvalue)
 {
-	/*EnterCriticalSection(&csSPO2DataBuffer);
-	m_iSPO2_SIQ = iSIQvalue;
-	LeaveCriticalSection(&csSPO2DataBuffer);*/
-
 	getModel()->getDATAHANDLER()->setMessureDataAVG(ALINK_MSMNT_SPO2_SIQ,iSIQvalue);
 
 	if(getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_SPO2GRAPHS)
@@ -4758,10 +4755,6 @@ void CDataHandler::writeSpO2SIQ(SHORT iSIQvalue)
 
 SHORT CDataHandler::readSpO2SIQ()
 {
-	/*EnterCriticalSection(&csSPO2DataBuffer);
-	SHORT iTemp=m_iSPO2_SIQ;
-	LeaveCriticalSection(&csSPO2DataBuffer);*/
-	//return iTemp;
 	return getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_SPO2_SIQ);
 }
 
@@ -6541,7 +6534,6 @@ void CDataHandler::resetSPO2MessureData()
 	EnterCriticalSection(&csSPO2DataBuffer);
 	m_rbufSPO2.reset();
 	m_iSPO2waveData=0;
-	//m_iSPO2_SIQ=0;
 	LeaveCriticalSection(&csSPO2DataBuffer);
 	getModel()->getDATAHANDLER()->setMessureDataAVG(ALINK_MSMNT_SPO2_SIQ,0);
 }

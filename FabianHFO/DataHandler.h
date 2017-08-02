@@ -359,15 +359,6 @@ public:
 	void SetTriggerDUOPAPdisabled();
 	bool GetTriggerDUOPAPenabled();
 
-	//void SetNCPAPtriggerAutoenableFlag(BYTE iPrevTRIGGERNCPAPPara);
-	//BOOL GetNCPAPtriggerAutoenableFlag();
-	//void ResetNCPAPtriggerAutoenableFlag();
-
-	//WORD GetPrevTRIGGERNCPAPPara();
-	//void SetTriggerNCPAPenabled();
-	//void SetTriggerNCPAPdisabled();
-	//bool GetTriggerNCPAPenabled();
-
 	void SetCurrentITimePara(WORD val);
 	WORD GetCurrentITimePara();
 
@@ -810,13 +801,11 @@ private:
 protected:
 
 	CDataHandler(void);
-
 	virtual ~CDataHandler(void);
 
 	CMVModel *getModel();
 
 	DWORD GetContrast(void );
-
 	void SetContrast(DWORD dwValue );
 
 public:
@@ -831,15 +820,12 @@ public:
 	CRITICAL_SECTION	csSPO2DataBuffer;   ///< critical section for SPO2 buffer
 	CRITICAL_SECTION	csSavedBreath;  ///< critical section for saved breath buffer
 
-
 	static CircularBuffer<PBUFSPI> m_rbufVent;  ///< ring buffer for a copy of graph data for freeze/scaling
 	static CircularBuffer<PBUFSPI> m_rbufCopy;  ///< ring buffer for graph data
 	static CircularBuffer<PBUFSPI> m_rbufSPI;   ///< ring buffer for SPI graph data
 	static CircularBuffer<SHORT> m_rbufCO2; ///< ring buffer for ETCO2 data
 	static CircularBuffer<PBUFSPO2> m_rbufSPO2; ///< ring buffer for SPO2 data
 	
-
-
 	static PBUFSPI* m_pbufSavedBreath;  ///< The pbuf saved breath
 	int m_iSizeSavedBreath; ///< The size saved breath
 	
@@ -911,10 +897,43 @@ private:
 	eOxySensCalibrationstate m_eOxySensorCalState;  ///< State of the oxy sensor calendar
 	eFlowSensCalibrationstate m_eFlowSensorCalState;	///< State of the flow sensor calendar
 	
+	eVgarantState m_eCurVgarantState;   ///< The current vgarant state
+
+	eTriggereType m_ePrevTrigger_CONV;   ///< The previous convert trigger
+	eTriggereType m_ePrevTrigger_CPAP;
+
+	double m_fTrendData_Pmean;  ///< The f trend data pmean
+	double m_fTrendData_FiO2;   ///< The second f trend data fi o
+	double m_fTrendData_Pinsp;  ///< The f trend data pinsp
+	double m_fTrendData_Vte;	///< The f trend data vte
+	double m_fTrendData_Compliance; ///< The f trend data compliance
+	double m_fTrendData_CO2HFO; ///< The f trend data co 2 hfo
+	double m_fTrendData_MV; ///< The f trend data mv
+	double m_fTrendData_HFAMP;  ///< The f trend data hfamp
+	double m_fTrendData_RSBI;   ///< The f trend data rsbi
+	double m_fTrendData_ShareMVmand;	///< The f trend data share m vmand
+	double m_fTrendData_Resistance; ///< The f trend data resistance
+	double m_fTrendData_Leak;   ///< The f trend data leak
+	double m_fTrendData_SpO2;   ///< The second f trend data sp o
+	double m_fTrendData_PI; ///< The f trend data pi
+	double m_fTrendData_etCO2;  ///< The second f trend data et co
+	double m_fTrendData_SpO2PR; ///< The f trend data sp o 2 pr
+	double m_fTrendData_Frequency;  ///< The f trend data frequency
+
+	COLORREF m_crGraphColor_PRESSURE;   ///< The carriage return graph color pressure
+	COLORREF m_crGraphColor_FLOW;   ///< The carriage return graph color flow
+	COLORREF m_crGraphColor_VOLUME; ///< The carriage return graph color volume
+	COLORREF m_crGraphColor_ETCO2;  ///< The second carriage return graph color etco
+	COLORREF m_crGraphColor_SPO2;   ///< The second carriage return graph color spo
+	COLORREF m_crGraphColor_LOOP;   ///< The carriage return graph color loop
+	COLORREF m_crGraphColor_SAVEDLOOP;  ///< The carriage return graph color savedloop
+	COLORREF m_crGraphColor_TRIGGER;	///< The carriage return graph color trigger
+
 	DWORD m_dwOpTimeDevTickCountStarted;	///< The operation time development tick count started
 	DWORD m_dwOpTimeBattTickCountStarted;   ///< The operation time batt tick count started
 	DWORD m_dwOpTimeHFOTickCountStarted;	///< The operation time hfo tick count started
 	DWORD m_dwRemainCO2PumpTime;	///< The remain co 2 pump time
+	DWORD m_iContrastParm;  ///< The contrast parameter
 	
 	int m_iCountDIOERROR;   ///< The count dioerror
 	int m_iAlarmState;  ///< State of the alarm
@@ -928,13 +947,30 @@ private:
 	int m_iMSTATUS_ConPIC;  ///< The i mstatus con picture
 	int m_iMSTATUS_BlenderPIC;  ///< The i mstatus blender picture
 	int m_iCOMErrorCommandBits; ///< 32 Bit
+	int m_iPmeanDifference; ///< The pmean difference
+	int m_iPEEP_PPSVdifference; ///< The i peep pps vdifference
+	int m_iIERatioIpart;	///< The IE ratio ipart
+	int m_iIERatioEpart;	///< The IE ratio epart
+	int m_iProcPressureCal60;   ///< The proc pressure calibration 60
+
+	
 	UINT m_iSPIErrorCodeBits;   ///< The spi error code bits
 	UINT m_iCOMErrorCodeBits;   ///< 32 Bit
 	UINT m_iCO2ErrorCodeBits;   ///< The co 2 error code bits
+	UINT m_iTrendCnt;   ///< Number of trends
+	UINT m_nCountDelTrends; ///< The count delete trends
+
+	SHORT m_Status2;	///< The second status
+	SHORT m_iSPO2waveData;  ///< Information describing the spo 2wave
 	
 	WORD m_wACCU_DAT_STATE; ///< State of the w a ccu dat
 	WORD m_wBattStatMinutes;	///< The batt stat in minutes
 	WORD m_wBattStatPercents;   ///< The batt stat percents
+	WORD m_iLastVGarantParam;   ///< The last v garant parameter
+	WORD m_iLastHFVGarantParam; ///< The last hfv garant parameter
+	WORD m_iLastVLimitParam;	///< The last v limit parameter
+	WORD m_iBodyweightGramm;	///< The bodyweight gramm
+	WORD m_wHardwareConfig; ///< The hardware configuration
 	
 	BYTE m_iNumericIPPVcount;   ///< The numeric ipp vcount
 	BYTE m_iNumericSIPPVcount;  ///< The numeric sipp vcount
@@ -968,6 +1004,10 @@ private:
 	BYTE m_chFilenumEtCO2;  ///< The second filenum et co
 	BYTE m_chFilenumSpO2PR; ///< The filenum sp o 2 pr
 	BYTE m_chFilenumFrequency;  ///< The filenum frequency
+
+	BYTE m_iO2Difference;   ///< The o 2 difference
+	BYTE m_byI2CWatchdogState;  ///< State of the by i 2 c watchdog
+	BYTE m_iPrevTRIGGERDUOPAPPara;   ///< The previous trigge rnmode para
 	
 	bool m_bVGUARANTDemoLicAvailable;   ///< True if vguarant demo lic available
 	bool m_bVLIMITDemoLicAvailable; ///< True if vlimit demo lic available
@@ -1013,87 +1053,21 @@ private:
 	bool m_bVolGarantyRunning;  ///< True to volume garanty running
 	bool m_bPSVapnoe;   ///< True to ps vapnoe
 	bool m_bNurscallAlarm;  ///< True to nurscall alarm
-	
-	eVgarantState m_eCurVgarantState;   ///< The current vgarant state
-
-	DWORD m_iContrastParm;  ///< The contrast parameter
-
-	UINT m_iTrendCnt;   ///< Number of trends
-	double m_fTrendData_Pmean;  ///< The f trend data pmean
-	double m_fTrendData_FiO2;   ///< The second f trend data fi o
-	double m_fTrendData_Pinsp;  ///< The f trend data pinsp
-	double m_fTrendData_Vte;	///< The f trend data vte
-	double m_fTrendData_Compliance; ///< The f trend data compliance
-	double m_fTrendData_CO2HFO; ///< The f trend data co 2 hfo
-	double m_fTrendData_MV; ///< The f trend data mv
-	double m_fTrendData_HFAMP;  ///< The f trend data hfamp
-	double m_fTrendData_RSBI;   ///< The f trend data rsbi
-	double m_fTrendData_ShareMVmand;	///< The f trend data share m vmand
-	double m_fTrendData_Resistance; ///< The f trend data resistance
-	double m_fTrendData_Leak;   ///< The f trend data leak
-	double m_fTrendData_SpO2;   ///< The second f trend data sp o
-	double m_fTrendData_PI; ///< The f trend data pi
-	double m_fTrendData_etCO2;  ///< The second f trend data et co
-	double m_fTrendData_SpO2PR; ///< The f trend data sp o 2 pr
-	double m_fTrendData_Frequency;  ///< The f trend data frequency
-
-	BYTE m_iO2Difference;   ///< The o 2 difference
-	int m_iPmeanDifference; ///< The pmean difference
-	int m_iPEEP_PPSVdifference; ///< The i peep pps vdifference
-
 	bool m_bHFOrunning; ///< True to hf orunning
 	bool m_bFreezedGraphs;  ///< True to freezed graphs
 	bool m_bSavingTrendToUSB;   ///< True to saving trend to USB
 	bool m_bTrendsLoading;  ///< True to trends loading
-	
-	WORD m_iLastVGarantParam;   ///< The last v garant parameter
-	WORD m_iLastHFVGarantParam; ///< The last hfv garant parameter
-	WORD m_iLastVLimitParam;	///< The last v limit parameter
-
-	WORD m_wHardwareConfig; ///< The hardware configuration
-
-	BYTE m_byI2CWatchdogState;  ///< State of the by i 2 c watchdog
-
-	UINT m_nCountDelTrends; ///< The count delete trends
-
-	
 	bool m_bLEDdisplay; ///< True to le ddisplay
-
-	int m_iIERatioIpart;	///< The IE ratio ipart
-	int m_iIERatioEpart;	///< The IE ratio epart
-
-	SHORT m_Status2;	///< The second status
+	bool m_bExit;   ///< True to exit
+	bool m_bProcPressureCal60;  ///< True to proc pressure calibration 60
+	bool m_bFOToscillationState;	///< True to fo toscillation state
+	bool m_bDUOPAPtriggerAutoEnable; ///< True if nmod etrigger automatic enable
+	bool m_bTriggerDUOPAPenabled;	///< True if trigger nmod eenabled
 
 	BOOL m_bShowFlowAC; ///< True to show, false to hide the flow a c
 
-	SHORT m_iSPO2waveData;  ///< Information describing the spo 2wave
+		
+	
 
-	COLORREF m_crGraphColor_PRESSURE;   ///< The carriage return graph color pressure
-	COLORREF m_crGraphColor_FLOW;   ///< The carriage return graph color flow
-	COLORREF m_crGraphColor_VOLUME; ///< The carriage return graph color volume
-	COLORREF m_crGraphColor_ETCO2;  ///< The second carriage return graph color etco
-	COLORREF m_crGraphColor_SPO2;   ///< The second carriage return graph color spo
-	COLORREF m_crGraphColor_LOOP;   ///< The carriage return graph color loop
-	COLORREF m_crGraphColor_SAVEDLOOP;  ///< The carriage return graph color savedloop
-	COLORREF m_crGraphColor_TRIGGER;	///< The carriage return graph color trigger
-
-	bool m_bExit;   ///< True to exit
-
-	int m_iProcPressureCal60;   ///< The proc pressure calendar 60
-	bool m_bProcPressureCal60;  ///< True to proc pressure calendar 60
-
-	bool m_bFOToscillationState;	///< True to fo toscillation state
-
-	bool m_bDUOPAPtriggerAutoEnable; ///< True if nmod etrigger automatic enable
-	BYTE m_iPrevTRIGGERDUOPAPPara;   ///< The previous trigge rnmode para
-	bool m_bTriggerDUOPAPenabled;	///< True if trigger nmod eenabled
-
-	//bool m_bNCPAPtriggerAutoEnable; ///< True if nmod etrigger automatic enable
-	//BYTE m_iPrevTRIGGERNCPAPPara;   ///< The previous trigge rnmode para
-	//bool m_bTriggerNCPAPenabled;	///< True if trigger nmod eenabled
-
-	WORD m_iBodyweightGramm;	///< The bodyweight gramm
-
-	eTriggereType m_ePrevTrigger_CONV;   ///< The previous convert trigger
-	eTriggereType m_ePrevTrigger_CPAP;
+	
 };
