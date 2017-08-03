@@ -10,18 +10,6 @@
 
 #define TIMEMODECHANGE	45000
 
-//global font objects
-//extern HFONT g_hf14AcuBold;
-//extern HFONT g_hf10AcuBold;
-//extern HFONT g_hf43AcuBold;
-//extern HFONT g_hf33AcuBold;
-//extern HFONT g_hf8AcuNorm;
-
-//extern CLangAdmin* g_pGlobalLanguageStrings;
-
-// **************************************************************************
-// 
-// **************************************************************************
 CViewAlarmLimit::CViewAlarmLimit(int ViewID):
 CMVView(ViewID)
 {
@@ -69,8 +57,6 @@ CMVView(ViewID)
 	m_pcNumInfoTop= NULL;
 	m_pcNumInfoBot= NULL;
 	
-
-	//m_pcNumHeader=NULL;
 	m_pcAlarmlimitPara1=NULL;
 	m_pcAlarmlimitPara2=NULL;
 	m_pcBtnAlarm_Up=NULL;
@@ -86,17 +72,8 @@ CMVView(ViewID)
 	m_bExit=false;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 CViewAlarmLimit::~CViewAlarmLimit(void)
 {
-	/*if(m_pcNumHeader)
-		delete m_pcNumHeader;
-	m_pcNumHeader=NULL;*/
-
-	
-
 	delete m_pcStatic_Up;
 	m_pcStatic_Up=NULL;
 	delete m_pcStatic_Dw;
@@ -231,7 +208,6 @@ BEGIN_MESSAGE_MAP(CViewAlarmLimit, CMVView)
 	ON_WM_DESTROY()
 	ON_WM_TIMER()
 	ON_BN_CLICKED(IDC_BTN_ALIMIT_DELAY, &CViewAlarmLimit::OnBnClickedValue)
-	//ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 
 
@@ -1515,7 +1491,7 @@ void CViewAlarmLimit::drawFrameDUOPAP(CDC* pDC)
 	HDC hdc = *pDC;
 
 	if(m_pcAlarmlimitPara1)
-		m_pcAlarmlimitPara1->Draw(hdc,0,156);	//Pmax
+		m_pcAlarmlimitPara1->Draw(hdc,0,156);	//PIP
 
 	if(m_pcAlarmlimitPara1)
 		m_pcAlarmlimitPara1->Draw(hdc,0,211);	//PEEP
@@ -1581,7 +1557,7 @@ void CViewAlarmLimit::drawFrameCONVENTIONAL(CDC* pDC)
 	}
 
 	if(m_pcAlarmlimitPara2)
-		m_pcAlarmlimitPara2->Draw(hdc,0,156);	//Pmax
+		m_pcAlarmlimitPara2->Draw(hdc,0,156);	//PIP
 
 	if(m_eCurVentMode!=VM_HFO)
 	{
@@ -2243,19 +2219,11 @@ void CViewAlarmLimit::drawLabel_NCPAP(CDC* pDC)
 		rc.top = 266;
 		rc.bottom = 316;
 
-		/*rc.top = 321;
-		rc.bottom = 416;
-		rc.left = 10;
-		rc.right = 210;*/
 		nameText=getModel()->GetLanguageString(IDS_PARA_FREQ);
 		DrawText(hdc,nameText,-1,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 		CSize sz = pDC->GetTextExtent(nameText);
 
 		SelectObject(hdc,g_hf6AcuNorm);
-
-		/*rc.top = 322;
-		rc.bottom = 416;
-		rc.left = 15+sz.cx;*/
 
 		rc.top = 266;
 		rc.bottom = 316;
@@ -2269,10 +2237,6 @@ void CViewAlarmLimit::drawLabel_NCPAP(CDC* pDC)
 		rc.bottom = 371;
 		rc.left = 10;
 		rc.right = 210;
-		/*rc.left = 10;
-		rc.right = 210;
-		rc.top = 266;
-		rc.bottom = 316;*/
 
 		nameText=getModel()->GetLanguageString(IDS_PARA_APNOE);
 		DrawText(hdc,nameText,-1,&rc,DT_VCENTER|DT_SINGLELINE|DT_LEFT);
@@ -2280,17 +2244,11 @@ void CViewAlarmLimit::drawLabel_NCPAP(CDC* pDC)
 
 		SelectObject(hdc,g_hf6AcuNorm);
 
-		/*rc.top = 266;
-		rc.bottom = 316;
-		rc.left = 15+sz.cx;*/
-
 		rc.top = 322;
 		rc.bottom = 372;
 		rc.left = 15+sz.cx;
 		pDC->DrawText(_T("[")+getModel()->GetLanguageString(IDS_UNIT_SECONDS)+_T("]"),&rc,DT_VCENTER|DT_SINGLELINE|DT_LEFT);
-
 	}
-
 
 	SetTextColor(hdc,nPrevTxtColor);
 	SetBkMode(hdc,nBkMode);
@@ -2316,7 +2274,7 @@ void CViewAlarmLimit::drawLabel_DUOPAP(CDC* pDC)
 	rc.right = 210;
 
 	SelectObject(hdc,g_hf10AcuBold);
-	//--------------------P-------------------------------------
+	//--------------------PIP-------------------------------------
 	rc.left = 10;
 	rc.right = 210;
 	rc.top = 156;
@@ -2328,7 +2286,7 @@ void CViewAlarmLimit::drawLabel_DUOPAP(CDC* pDC)
 
 	SelectObject(hdc,g_hf6AcuNorm);
 
-	//--------------------Pmax-------------------------------------
+	//--------------------unit-------------------------------------
 	rc.top = 157;
 	rc.bottom = 230;
 	rc.left = 15+sz1.cx;
@@ -2407,19 +2365,11 @@ void CViewAlarmLimit::drawLabel_DUOPAP(CDC* pDC)
 		rc.top = 266;
 		rc.bottom = 316;
 
-		/*rc.top = 321;
-		rc.bottom = 416;
-		rc.left = 10;
-		rc.right = 210;*/
 		nameText=getModel()->GetLanguageString(IDS_PARA_FREQ);
 		DrawText(hdc,nameText,-1,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 		CSize sz = pDC->GetTextExtent(nameText);
 
 		SelectObject(hdc,g_hf6AcuNorm);
-
-		/*rc.top = 322;
-		rc.bottom = 416;
-		rc.left = 15+sz.cx;*/
 
 		rc.top = 266;
 		rc.bottom = 316;
@@ -2433,33 +2383,22 @@ void CViewAlarmLimit::drawLabel_DUOPAP(CDC* pDC)
 		rc.bottom = 371;
 		rc.left = 10;
 		rc.right = 210;
-		/*rc.left = 10;
-		rc.right = 210;
-		rc.top = 266;
-		rc.bottom = 316;*/
-
+		
 		nameText=getModel()->GetLanguageString(IDS_PARA_APNOE);
 		DrawText(hdc,nameText,-1,&rc,DT_VCENTER|DT_SINGLELINE|DT_LEFT);
 		sz = pDC->GetTextExtent(nameText);
 
 		SelectObject(hdc,g_hf6AcuNorm);
 
-		/*rc.top = 266;
-		rc.bottom = 316;
-		rc.left = 15+sz.cx;*/
-
 		rc.top = 322;
 		rc.bottom = 372;
 		rc.left = 15+sz.cx;
 		pDC->DrawText(_T("[")+getModel()->GetLanguageString(IDS_UNIT_SECONDS)+_T("]"),&rc,DT_VCENTER|DT_SINGLELINE|DT_LEFT);
-
 	}
-
 
 	SetTextColor(hdc,nPrevTxtColor);
 	SetBkMode(hdc,nBkMode);
 	SelectObject(hdc,hPrevFont);
-
 }
 
 void CViewAlarmLimit::drawLabel_CONVENTIONAL(CDC* pDC)
@@ -2544,7 +2483,6 @@ void CViewAlarmLimit::drawLabel_CONVENTIONAL(CDC* pDC)
 
 	SelectObject(hdc,g_hf10AcuBold);
 	//--------------------PEEP-------------------------------------
-
 	rc.left = 10;
 	rc.right = 210;
 	rc.top = 266;
@@ -2674,7 +2612,6 @@ void CViewAlarmLimit::drawLabel_CONVENTIONAL(CDC* pDC)
 		rc.left = 15+sz.cx;
 		pDC->DrawText(_T("[")+getModel()->GetLanguageString(IDS_UNIT_SECONDS)+_T("]"),&rc,DT_VCENTER|DT_SINGLELINE|DT_LEFT);
 	}
-
 
 	SetTextColor(hdc,nPrevTxtColor);
 	SetBkMode(hdc,nBkMode);
@@ -4672,7 +4609,6 @@ void CViewAlarmLimit::showALimitButtons_PSV()
 
 void CViewAlarmLimit::showALimitButtons_CPAP()
 {
-	//-------------------------------------------------------------
 	//Button------MV---------------------------------
 	if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
 	{
@@ -4764,7 +4700,6 @@ void CViewAlarmLimit::showALimitButtons_CPAP()
 
 void CViewAlarmLimit::showALimitButtons_NCPAP()
 {
-	//-------------------------------------------------------------
 	if(m_pcAlarmLimit_PIPmax)
 	{
 		m_pcAlarmLimit_PIPmax->ShowWindow(SW_SHOW);
@@ -4814,7 +4749,6 @@ void CViewAlarmLimit::showALimitButtons_NCPAP()
 
 void CViewAlarmLimit::showALimitButtons_DUOPAP()
 {
-	//-------------------------------------------------------------
 	if(m_pcAlarmLimit_PIPmax)
 	{
 		m_pcAlarmLimit_PIPmax->ShowWindow(SW_SHOW);

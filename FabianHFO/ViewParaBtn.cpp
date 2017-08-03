@@ -1014,21 +1014,10 @@ bool CViewParaBtn::Initialize()
 	btn.pcBmpDisabled		= m_pcPara_DisB;
 	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
 
-	//if(getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP)
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerDUOPAPMinPara();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerDUOPAPMaxPara();
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerDUOPAPMinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerDUOPAPMaxPara();
 
-		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP();
-	}
-	/*else
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNCPAPMinPara();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNCPAPMaxPara();
-
-		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_NCPAP();
-	}*/
-
+	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP();
 	
 	if(fv.iValue>fv.iUpperLimit)
 		fv.iValue=fv.iUpperLimit;
@@ -5514,7 +5503,6 @@ void CViewParaBtn::show_PRE_SIMVPSVmode()
 // **************************************************************************
 void CViewParaBtn::load_CPAPmode()
 {
-	//load_TRIGGERpara_CPAP(false);
 	load_FLOWMINpara(false);	
 	load_CPAPpara(false);
 	load_PMANUALpara(false,false);
@@ -5529,32 +5517,6 @@ void CViewParaBtn::show_CPAPmode()
 {
 	/** \brief The enter critical section. */
 	EnterCriticalSection(&csDraw);
-	/*if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
-	{
-		if(m_pcPara_BACKUP)
-			m_pcPara_BACKUP->ShowWindow(SW_SHOW);
-
-		if(m_pcPara_TRIGGERCONV)
-			m_pcPara_TRIGGERCONV->ShowWindow(SW_SHOW);
-		if(m_pcPara_TRIGGERNMODE)
-			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
-		if(m_pcSubPara_TrigThreshold)
-			m_pcSubPara_TrigThreshold->ShowWindow(SW_SHOW);
-		if(m_pcSubPara_TrigThreshold)
-			m_pcSubPara_TrigThreshold->RefreshBtn();
-	}
-	else
-	{
-		if(m_pcPara_BACKUP)
-			m_pcPara_BACKUP->ShowWindow(SW_SHOW);
-
-		if(m_pcPara_TRIGGERCONV)
-			m_pcPara_TRIGGERCONV->ShowWindow(SW_HIDE);
-		if(m_pcPara_TRIGGERNMODE)
-			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
-		if(m_pcSubPara_TrigThreshold)
-			m_pcSubPara_TrigThreshold->ShowWindow(SW_HIDE);
-	}*/
 
 	if(m_pcPara_BACKUP)
 		m_pcPara_BACKUP->ShowWindow(SW_SHOW);
@@ -5653,7 +5615,6 @@ void CViewParaBtn::show_CPAPmode()
 // **************************************************************************
 void CViewParaBtn::load_PRE_CPAPmode()
 {
-	//load_TRIGGERpara_CPAP(true);
 	load_FLOWMINpara(true);	
 	load_CPAPpara(true);
 	load_PMANUALpara(false,true);
@@ -5668,33 +5629,7 @@ void CViewParaBtn::show_PRE_CPAPmode()
 {
 	/** \brief The enter critical section. */
 	EnterCriticalSection(&csDraw);
-	/*if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
-	{
-		if(m_pcPara_BACKUP)
-			m_pcPara_BACKUP->ShowWindow(SW_SHOW);
-
-		if(m_pcPara_TRIGGERCONV)
-			m_pcPara_TRIGGERCONV->ShowWindow(SW_SHOW);
-		if(m_pcPara_TRIGGERNMODE)
-			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
-		if(m_pcSubPara_TrigThreshold)
-			m_pcSubPara_TrigThreshold->ShowWindow(SW_SHOW);
-		if(m_pcSubPara_TrigThreshold)
-			m_pcSubPara_TrigThreshold->RefreshBtn();
-	}
-	else
-	{
-		if(m_pcPara_BACKUP)
-			m_pcPara_BACKUP->ShowWindow(SW_SHOW);
-
-		if(m_pcPara_TRIGGERCONV)
-			m_pcPara_TRIGGERCONV->ShowWindow(SW_HIDE);
-		if(m_pcPara_TRIGGERNMODE)
-			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
-		if(m_pcSubPara_TrigThreshold)
-			m_pcSubPara_TrigThreshold->ShowWindow(SW_HIDE);
-	}*/
-
+	
 	if(m_pcPara_BACKUP)
 		m_pcPara_BACKUP->ShowWindow(SW_SHOW);
 
@@ -5791,7 +5726,6 @@ void CViewParaBtn::show_PRE_CPAPmode()
 // **************************************************************************
 void CViewParaBtn::load_NCPAPmode()
 {
-	//load_TRIGGERpara_NCPAP(false);
 	load_NCPAP_CPAPpara(false);
 	load_PMANUALpara(true,false);
 	load_FIO2para(false);
@@ -5884,27 +5818,7 @@ void CViewParaBtn::show_NCPAPmode()
 		else
 			m_pcSubPara_TrigThreshold->ShowWindow(SW_HIDE);
 	}
-	
-	/*if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true 
-		&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET)
-	{
-		if(m_pcPara_TRIGGERNMODE)
-			m_pcPara_TRIGGERNMODE->EnableWindow(FALSE);
-		getModel()->getDATAHANDLER()->SetTriggerNCPAPdisabled();
-	}
-	else
-	{
-		if(m_pcPara_TRIGGERNMODE)
-			m_pcPara_TRIGGERNMODE->EnableWindow(TRUE);
-		getModel()->getDATAHANDLER()->SetTriggerNCPAPenabled();
-	}
-	if(m_pcPara_TRIGGERNMODE)
-	{
-		if(true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
-			m_pcPara_TRIGGERNMODE->ShowWindow(SW_SHOW);
-		else
-			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
-	}*/
+
 	if(m_pcPara_TRIGGERNMODE)
 	{
 		m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
@@ -5929,7 +5843,6 @@ void CViewParaBtn::show_NCPAPmode()
 // **************************************************************************
 void CViewParaBtn::load_PRE_NCPAPmode()
 {
-	//load_TRIGGERpara_NCPAP(true);
 	load_NCPAP_CPAPpara(true);
 	load_PMANUALpara(true,true);
 	load_FIO2para(true);
@@ -5987,7 +5900,6 @@ void CViewParaBtn::show_PRE_NCPAPmode()
 		m_pcPara_OnOff->ShowWindow(SW_HIDE);
 	if(m_pcPara_TRIGGERCONV)
 		m_pcPara_TRIGGERCONV->ShowWindow(SW_HIDE);
-	
 	if(m_pcSubPara_BIASFLOW) 
 		m_pcSubPara_BIASFLOW->ShowWindow(SW_HIDE);
 	if(m_pcPara_BPM)
@@ -6022,26 +5934,6 @@ void CViewParaBtn::show_PRE_NCPAPmode()
 			m_pcSubPara_TrigThreshold->ShowWindow(SW_HIDE);
 	}
 
-	/*if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true 
-		&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET)
-	{
-		if(m_pcPara_TRIGGERNMODE)
-			m_pcPara_TRIGGERNMODE->EnableWindow(FALSE);
-		getModel()->getDATAHANDLER()->SetTriggerNCPAPdisabled();
-	}
-	else
-	{
-		if(m_pcPara_TRIGGERNMODE)
-			m_pcPara_TRIGGERNMODE->EnableWindow(TRUE);
-		getModel()->getDATAHANDLER()->SetTriggerNCPAPenabled();
-	}
-	if(m_pcPara_TRIGGERNMODE)
-	{
-		if(true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
-			m_pcPara_TRIGGERNMODE->ShowWindow(SW_SHOW);
-		else
-			m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
-	}*/
 	if(m_pcPara_TRIGGERNMODE)
 	{
 		m_pcPara_TRIGGERNMODE->ShowWindow(SW_HIDE);
@@ -8392,7 +8284,7 @@ void CViewParaBtn::load_BPMpara(bool bTrigger,bool bPRESET)
 			getModel()->getDATAHANDLER()->SetCurrentBPMPara(fv.iValue);
 			getModel()->getDATAHANDLER()->CalculateETime_BPMChanged(fv.iValue, false);
 		}
-		if(getModel()->getVMODEHANDLER()->modeIsPSVmode())//newVG
+		if(getModel()->getVMODEHANDLER()->modeIsPSVmode())
 		{
 			m_pcPara_BPM->SetNameText(_T(""));
 			m_pcPara_BPM->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_FREQBACKUP));
