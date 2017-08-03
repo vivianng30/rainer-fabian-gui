@@ -1213,7 +1213,11 @@ void CThreadFOT::writeFOTventdataBuffer(int iPRESSURE, double iFlow)
 		m_pbufFOTventilation[m_ibufCountFOTventilation].iValPressure=iPRESSURE;
 		m_pbufFOTventilation[m_ibufCountFOTventilation].iValFlow=iFlow;
 		m_ibufCountFOTventilation++;
-		//DEBUGMSG(TRUE, (TEXT("m_ibufCountFOTventilation %d\r\n"),m_ibufCountFOTventilation));
+
+		/*CStringW sz=_T("");
+		sz.Format(_T("flow %.2f, "), iFlow);
+		DEBUGMSG(TRUE, (sz));
+		DEBUGMSG(TRUE, (TEXT("m_ibufCountFOTventilation %d\r\n"),m_ibufCountFOTventilation));*/
 	}
 	//DEBUGMSG(TRUE, (TEXT("m_ibufCountFOTventilation %d\r\n"),m_ibufCountFOTventilation));
 	LeaveCriticalSection(&csFOTventBuffer);
@@ -1230,7 +1234,7 @@ void CThreadFOT::writeFOTventdataBuffer(int iPRESSURE, double iFlow)
 
 void CThreadFOT::resetFOTventdataBuffer()
 {
-	DEBUGMSG(TRUE, (TEXT("CThreadFOT::resetFOTventdataBuffer()\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("CThreadFOT::resetFOTventdataBuffer()\r\n")));
 	EnterCriticalSection(&csFOTventBuffer);
 	if(m_ibufCountFOTventilation>0)
 	{
@@ -1350,6 +1354,8 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 	int iTestCountbufCountFOT=0;
 	int iCountAccepted=0;
 
+	CStringW sz=_T("");
+
 	EnterCriticalSection(&csFOTventBuffer);
 
 	for(int k=0;k<(m_ibufCountFOTventilation-size);k++)
@@ -1358,28 +1364,29 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 		{
 			pp_Flow[i][0] = (double) m_pbufFOTventilation[i+k].iValFlow;
 			pp_Pressure[i][0] = (double) m_pbufFOTventilation[i+k].iValPressure;
+			/*sz.Format(_T("flow %.2f, "), m_pbufFOTventilation[i+k].iValFlow);
+			DEBUGMSG(TRUE, (sz));*/
 		}
 
-		fnCalcZ(pp_Fourier,pp_PseudoInverse,pp_Flow,pp_Pressure,i_osc_freq,i_sample_freq,p_Out);
+		if(pp_Flow!=0)
+		{
+			fnCalcZ(pp_Fourier,pp_PseudoInverse,pp_Flow,pp_Pressure,i_osc_freq,i_sample_freq,p_Out);
 
-		if(p_Out[0]<=0.0)//check Resistance >0, else not valid
-		{
-			/*bRetryResistance=true;
-			break;*/
-			bValueAccpeted=false;
+			if(p_Out[0]<=0.0)//check Resistance >0, else not valid
+			{
+				bValueAccpeted=false;
+			}
+			else if(p_Out[1]>100.0 || p_Out[1]<-500.0)//check Reactance/XRS 100>XRS>-500 cmH2O*s/L, else not valid
+			{
+				bValueAccpeted=false;
+			}
+			else if(p_Out[2]>0.20)//check FSI <= 20%, else not valid
+			{
+				bValueAccpeted=false;
+			}
 		}
-		else if(p_Out[1]>100.0 || p_Out[1]<-500.0)//check Reactance/XRS 100>XRS>-500 cmH2O*s/L, else not valid
-		{
-			/*bRetryReactance=true;
-			break;*/
+		else
 			bValueAccpeted=false;
-		}
-		else if(p_Out[2]>0.20)//check FSI <= 20%, else not valid
-		{
-			/*bRetryFSI=true;
-			break;*/
-			bValueAccpeted=false;
-		}
 
 		Sleep(0);
 
@@ -1389,7 +1396,11 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 			iCountAccepted++;
 			for(int n=0;n<4;n++)
 			{
+				/*sz.Format(_T("Y1 %d %.2f\r\n"),n,p_Out[n]);
+				DEBUGMSG(TRUE, (sz));*/
 				p_TotalOut[n] += p_Out[n]; 
+				//sz.Format(_T("Y2 %d %.2f\r\n"),n,p_TotalOut[n]);
+				//DEBUGMSG(TRUE, (sz));
 			}
 		}
 		
@@ -1403,8 +1414,12 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 
 	for(int i=0;i<4;i++)
 	{
+		/*sz.Format(_T("X1 %d %.2f\r\n"),i,p_TotalOut[i]);
+		DEBUGMSG(TRUE, (sz));*/
 		//p_TotalOut[i] = p_TotalOut[i]/(m_ibufCountFOTventilation-size);
 		p_TotalOut[i] = p_TotalOut[i]/iCountAccepted;
+		/*sz.Format(_T("X2 %d %.2f\r\n"),i,p_TotalOut[i]);
+		DEBUGMSG(TRUE, (sz));*/
 	}
 	LeaveCriticalSection(&csFOTventBuffer);
 
@@ -1414,6 +1429,9 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 	m_pbufFOTdisplay[m_iFOTdisplaySequence-1].iYValXRS=p_TotalOut[1];
 	m_iCountFOTdisplay++;
 	LeaveCriticalSection(&csFOTcalcBuffer);
+
+	/*sz.Format(_T("m_pbufFOTdisplay pressure %d iYValXRS %.2f, m_iCountFOTdisplay %d m_iFOTdisplaySequence %d\r\n"),curPressure,m_pbufFOTdisplay[m_iFOTdisplaySequence-1].iYValXRS, m_iCountFOTdisplay, m_iFOTdisplaySequence);
+	DEBUGMSG(TRUE, (sz));*/
 
 	szLog.Format(_T("#FOTcalc: pressure %d XRS%d %.2f Resistance %.2f"),curPressure, m_iFOTdisplaySequence,m_pbufFOTdisplay[m_iFOTdisplaySequence-1].iYValXRS,p_TotalOut[0]);
 	DEBUGMSG(TRUE, (szLog));

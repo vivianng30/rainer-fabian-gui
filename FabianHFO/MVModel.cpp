@@ -4505,7 +4505,7 @@ bool CMVModel::ParseAlarmStateBytes(int iAlarmState)
 			if(AfxGetApp())
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_TUBUSBLOCKED);
 
-			DEBUGMSG(TRUE, (TEXT("SPI TUBUSBLOCKED\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("SPI TUBUSBLOCKED\r\n")));
 		}
 	}
 	else
@@ -5151,19 +5151,19 @@ WORD CMVModel::Send_MODE_OPTION1(bool bSPI,bool bSerial)
 	{
 	case TUBE_INFANTFLOW:
 		{
-			DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION1 TUBE_INFANTFLOW\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION1 TUBE_INFANTFLOW\r\n")));
 		}
 		break;
 	case TUBE_MEDIJET:
 		{
 			wMode=setBitOfWord(wMode, TUBESET10_BIT);
-			DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION1 TUBE_MEDIJET\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION1 TUBE_MEDIJET\r\n")));
 		}
 		break;
 	case TUBE_INFANTFLOW_LP:
 		{
 			wMode=setBitOfWord(wMode, TUBESET11_BIT);
-			DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION1 TUBE_INFANTFLOW_LP\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION1 TUBE_INFANTFLOW_LP\r\n")));
 		}
 		break;
 	}
@@ -5361,19 +5361,19 @@ WORD CMVModel::Send_MODE_OPTION2(bool bSPI,bool bSerial)
 	{
 	case TRIGGER_VOLUME:
 		{
-			DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 TRIGGER_VOLUME\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 TRIGGER_VOLUME\r\n")));
 		}
 		break;
 	case TRIGGER_FLOW:
 		{
 			wMode=setBitOfWord(wMode, MODOPT2_TRIGGERFLOW_BIT);
-			DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 TRIGGER_FLOW\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 TRIGGER_FLOW\r\n")));
 		}
 		break;
 	case TRIGGER_PRESSURE:
 		{
 			wMode=setBitOfWord(wMode, MODOPT2_TRIGGERPRESSURE_BIT);
-			DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 TRIGGER_PRESSURE\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 TRIGGER_PRESSURE\r\n")));
 		}
 		break;
 	}

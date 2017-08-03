@@ -1869,7 +1869,7 @@ void CInterfaceSerial::Send_PARAVAL_INSP_FLOW(int val)
 	if(0==sendSerialCommand(psz))
 		theApp.getLog()->WriteLine(psz);
 
-	DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_INSP_FLOW %d\r\n"),val));
+	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_INSP_FLOW %d\r\n"),val));
 }
 
 // **************************************************************************
@@ -1883,7 +1883,7 @@ void CInterfaceSerial::Send_PARAVAL_RISETIME(int val)
 	if(0==sendSerialCommand(psz))
 		theApp.getLog()->WriteLine(psz);
 
-	DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_RISETIME %d\r\n"),val));
+	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_RISETIME %d\r\n"),val));
 }
 
 // **************************************************************************
@@ -1896,7 +1896,7 @@ void CInterfaceSerial::Send_PARAVAL_EXH_FLOW(int val)
 	if(0==sendSerialCommand(psz))
 		theApp.getLog()->WriteLine(psz);
 
-	DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_EXH_FLOW %d\r\n"),val));
+	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_EXH_FLOW %d\r\n"),val));
 }
 
 // **************************************************************************
@@ -1959,7 +1959,7 @@ void CInterfaceSerial::Send_PARAVAL_HF_FREQ(int val)
 	wsprintf(psz,_T("f%dq"),val);
 	if(0==sendSerialCommand(psz))
 		theApp.getLog()->WriteLine(psz);
-	DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_FREQ %d\r\n"),val));
+	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_FREQ %d\r\n"),val));
 }
 // **************************************************************************
 // 
@@ -1970,7 +1970,7 @@ void CInterfaceSerial::Send_PARAVAL_HF_PMITT(int val)
 	wsprintf(psz,_T("j%dq"),val);
 	if(0==sendSerialCommand(psz))
 		theApp.getLog()->WriteLine(psz);
-	DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_PMITT %d\r\n"),val));
+	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_PMITT %d\r\n"),val));
 }
 
 // **************************************************************************
@@ -1982,7 +1982,7 @@ void CInterfaceSerial::Send_PARAVAL_HF_PMEANREC(int val)
 	wsprintf(psz,_T("!%dq"),val);
 	if(0==sendSerialCommand(psz))
 		theApp.getLog()->WriteLine(psz);
-	DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_PMEANREC %d\r\n"),val));
+	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_PMEANREC %d\r\n"),val));
 }
 // **************************************************************************
 // 
@@ -1993,7 +1993,7 @@ void CInterfaceSerial::Send_PARAVAL_HF_FREQ_REC(int val)
 
 	Send_PARAVAL_EXH_TIME(iETIME/1000);
 
-	DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_FREQ_REC %d\r\n"),val));
+	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_FREQ_REC %d\r\n"),val));
 }
 // **************************************************************************
 // 
@@ -2002,7 +2002,7 @@ void CInterfaceSerial::Send_PARAVAL_HF_ITIME_REC(int val)
 {
 	Send_PARAVAL_INSP_TIME(val);
 
-	DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_ITIME_REC %d\r\n"),val));
+	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_ITIME_REC %d\r\n"),val));
 }
 
 // **************************************************************************
