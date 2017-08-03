@@ -7,6 +7,13 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50160 Version 5.0.1.60
+ * @date 2017-08-03	
+ * @verbatim
+	- bug fixed: Conventional pressure trigger
+	- bug fixed: FOT - Scaling issue
+ @endverbatim
+ *
  * @subsection ver50159 Version 5.0.1.59
  * @date 2017-08-03	
  * @verbatim

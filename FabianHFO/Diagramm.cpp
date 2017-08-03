@@ -2643,7 +2643,19 @@ double CDiagramm::CalcYAxisGridAndTicks()
 
 		//	result=(iYpixelsRight/fabs(m_dYAxisMin))*m_dYTickSpace;
 		//}
-		//else
+		if(m_dYAxisMax==0 && m_dYAxisMin==0)
+		{
+			result=((double)rect.bottom-(double)rect.top)/(double)G_NUMTICKSANDGRID;
+		}
+		else if(m_dYAxisMax==0)
+		{
+			UINT Graphbottom=m_iGraphY+m_iGraphHeight;
+			//int iYpixelsRight=Graphbottom-m_tmargin-m_iOriginY;
+			int iYpixelsRight=Graphbottom-m_tmargin-m_bmargin;
+
+			result=(iYpixelsRight/fabs(m_dYAxisMin))*m_dYTickSpace;
+		}
+		else
 		{
 			UINT Graphbottom=m_iGraphY+m_iGraphHeight;
 			int iYpixelsRight=Graphbottom-m_tmargin-m_iOriginY;
@@ -2690,7 +2702,19 @@ double CDiagramm::CalcYAxisNumerics()
 
 		//	//result=(m_iOriginY/(m_dYAxisMin*(-1)))*m_dYNumericSpace;
 		//}
-		//else
+		if(m_dYAxisMax==0 && m_dYAxisMin==0)
+		{
+			result=((double)rect.bottom-(double)rect.top)/(double)G_NUMTICKSANDGRID;
+		}
+		else if(m_dYAxisMax==0)
+		{
+			UINT Graphbottom=m_iGraphY+m_iGraphHeight;
+			//int iYpixelsRight=Graphbottom-m_tmargin-m_iOriginY;
+			int iYpixelsRight=Graphbottom-m_tmargin-m_bmargin;
+
+			result=(iYpixelsRight/fabs(m_dYAxisMin))*m_dYTickSpace;
+		}
+		else
 		{
 			UINT Graphbottom=m_iGraphY+m_iGraphHeight;
 			int iYpixelsRight=Graphbottom-m_tmargin-m_iOriginY;

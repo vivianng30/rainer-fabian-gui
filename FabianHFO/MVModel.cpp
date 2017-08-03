@@ -107,7 +107,7 @@ CMVModel::CMVModel(void)
 	m_szBuildVersion = _T("9.0.0.0");
 #else
 	m_szVersion = _T("5.0.1");
-	m_szBuildVersion = _T("5.0.1.59");
+	m_szBuildVersion = _T("5.0.1.60");
 #endif
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO"),true);
@@ -1842,13 +1842,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 							theApp.getLog()->WriteLine(_T("#HFO:0230"));
 						else
 						{
-							//getDATAHANDLER()->checkTriggerTubeDependency();
-							/*if(getDATAHANDLER()->getTriggerOptionCONV()!=TRIGGER_PRESSURE)
-							{
-								getDATAHANDLER()->SetPrevTriggerOptionCONV(getDATAHANDLER()->getTriggerOptionCONV());
-								getDATAHANDLER()->setTriggerOptionCONV(TRIGGER_PRESSURE);
-							}
-							Send_MODE_OPTION1();*/
+							getDATAHANDLER()->checkTriggerTubeDependency();
 							Send_VENT_MODE(activeMode);
 						}
 					}
@@ -1862,8 +1856,8 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 							theApp.getLog()->WriteLine(_T("#HFO:0230"));
 						else
 						{
+							getDATAHANDLER()->checkTriggerTubeDependency();
 							Send_VENT_MODE(activeMode);
-							//getDATAHANDLER()->checkTriggerTubeDependency();
 						}
 					}
 				}
