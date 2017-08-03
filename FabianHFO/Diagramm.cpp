@@ -2217,6 +2217,25 @@ double CDiagramm::CalculateYAxisTickGridSpace()
 		break;
 	case FOT_LOOP://rku, check FOTGRAPH
 		{
+			double dSpan=abs(m_dYAxisMax-m_dYAxisMin);
+
+			if(dSpan>=300)
+				result=50;
+			else if(dSpan>=200)
+				result=25;
+			else if(dSpan>=100)
+				result=20;
+			else if(dSpan>=40)
+				result=10;
+			else if(dSpan>=20)
+				result=5;
+			else 
+				result=2;
+			
+			/*double test=m_dYAxisMax;
+			if(m_dYAxisMin>=0)
+				int iStop=0;
+
 			if(m_dYAxisMin<=(-300))
 				result=50;
 			else if(m_dYAxisMin<=(-200))
@@ -2228,7 +2247,7 @@ double CDiagramm::CalculateYAxisTickGridSpace()
 			else if(m_dYAxisMin<=(-20))
 				result=5;
 			else 
-				result=2;
+				result=2;*/
 		}
 		break;
 	case VOLUME_FLOW_LOOP:
@@ -2445,7 +2464,22 @@ double CDiagramm::CalculateYAxisNumericSpace()
 		break;
 	case FOT_LOOP://rku, check FOTGRAPH
 		{
-			if(m_dYAxisMin<=(-300))
+			double dSpan=abs(m_dYAxisMax-m_dYAxisMin);
+
+			if(dSpan>=300)
+				result=50;
+			else if(dSpan>=200)
+				result=25;
+			else if(dSpan>=100)
+				result=20;
+			else if(dSpan>=40)
+				result=10;
+			else if(dSpan>=20)
+				result=5;
+			else 
+				result=2;
+
+			/*if(m_dYAxisMin<=(-300))
 				result=50;
 			else if(m_dYAxisMin<=(-200))
 				result=25;
@@ -2456,7 +2490,7 @@ double CDiagramm::CalculateYAxisNumericSpace()
 			else if(m_dYAxisMin<=(-20))
 				result=5;
 			else 
-				result=2;
+				result=2;*/
 		}
 		break;
 	case VOLUME_FLOW_LOOP:
@@ -2601,15 +2635,15 @@ double CDiagramm::CalcYAxisGridAndTicks()
 	}
 	else
 	{
-		if(m_dYAxisMax<(m_dYAxisMin*(-1)))//sollte zur Zeit nicht vorkommen
-		{
-			//result=(m_iOriginY/(m_dYAxisMin*(-1)))*m_dYTickSpace;
-			UINT Graphbottom=m_iGraphY+m_iGraphHeight;
-			int iYpixelsRight=Graphbottom-m_tmargin-m_bmargin;
+		//if(m_dYAxisMax<(m_dYAxisMin*(-1)))//sollte zur Zeit nicht vorkommen
+		//{
+		//	//result=(m_iOriginY/(m_dYAxisMin*(-1)))*m_dYTickSpace;
+		//	UINT Graphbottom=m_iGraphY+m_iGraphHeight;
+		//	int iYpixelsRight=Graphbottom-m_tmargin-m_bmargin;
 
-			result=(iYpixelsRight/fabs(m_dYAxisMin))*m_dYTickSpace;
-		}
-		else
+		//	result=(iYpixelsRight/fabs(m_dYAxisMin))*m_dYTickSpace;
+		//}
+		//else
 		{
 			UINT Graphbottom=m_iGraphY+m_iGraphHeight;
 			int iYpixelsRight=Graphbottom-m_tmargin-m_iOriginY;
@@ -2647,16 +2681,16 @@ double CDiagramm::CalcYAxisNumerics()
 	}
 	else
 	{
-		if(m_dYAxisMax<(m_dYAxisMin*(-1)))//sollte zur Zeit nicht vorkommen
-		{
-			UINT Graphbottom=m_iGraphY+m_iGraphHeight;
-			int iYpixelsRight=Graphbottom-m_tmargin-m_bmargin;
+		//if(m_dYAxisMax<(m_dYAxisMin*(-1)))//sollte zur Zeit nicht vorkommen
+		//{
+		//	UINT Graphbottom=m_iGraphY+m_iGraphHeight;
+		//	int iYpixelsRight=Graphbottom-m_tmargin-m_bmargin;
 
-			result=(iYpixelsRight/fabs(m_dYAxisMin))*m_dYTickSpace;
+		//	result=(iYpixelsRight/fabs(m_dYAxisMin))*m_dYTickSpace;
 
-			//result=(m_iOriginY/(m_dYAxisMin*(-1)))*m_dYNumericSpace;
-		}
-		else
+		//	//result=(m_iOriginY/(m_dYAxisMin*(-1)))*m_dYNumericSpace;
+		//}
+		//else
 		{
 			UINT Graphbottom=m_iGraphY+m_iGraphHeight;
 			int iYpixelsRight=Graphbottom-m_tmargin-m_iOriginY;
@@ -5668,7 +5702,7 @@ void CDiagramm::CheckAutoScaleY()
 		else
 			dTempMaxY=m_dMaxY-10;*/
 
-		if(m_dMaxY>m_dYAxisMax && m_pFunctionParams->yMax>m_dYAxisMax)
+		if(m_dMaxY>=m_dYAxisMax && m_pFunctionParams->yMax>m_dYAxisMax)
 		{
 			if(isSafeTickCountDelayExpired(m_dwLastCheckAutoScaleY, 100))
 			{
@@ -5679,7 +5713,7 @@ void CDiagramm::CheckAutoScaleY()
 				m_dMinY=G_UPPER_MAXSCALE_XRS_FOT;
 			}
 		}
-		else if(m_pFunctionParams->yMin<m_dYAxisMin && m_dMinY<m_dYAxisMin)//rku, check FOTGRAPH, nothing to change here!
+		else if(m_pFunctionParams->yMin<m_dYAxisMin && m_dMinY<=m_dYAxisMin)//rku, check FOTGRAPH, nothing to change here!
 		{
 			if(isSafeTickCountDelayExpired(m_dwLastCheckAutoScaleY, 100))
 			{
@@ -6899,87 +6933,100 @@ double CDiagramm::GetHigherYAxisMax()
 		break;
 	case FOT_LOOP:
 		{
-			double dValue=m_dMaxY;
-			dHigherAxisMax=m_dYAxisMax;
+			double test=m_dMinY;
 
-			while (dValue>dHigherAxisMax)
+			if(m_dMaxY>=0)
 			{
-				if(dHigherAxisMax>100)
+				double dValue=m_dMaxY;
+				dHigherAxisMax=m_dYAxisMax;
+
+				while (dValue>=dHigherAxisMax)
 				{
-					dHigherAxisMax=100;
-					break;
-				}
-				else if(dHigherAxisMax>80)
-				{
-					dHigherAxisMax=100;
-				}
-				else if(dHigherAxisMax>60)
-				{
-					dHigherAxisMax=80;
-				}
-				else if(dHigherAxisMax>40)
-				{
-					dHigherAxisMax=60;
-				}
-				else if(dHigherAxisMax>20)
-				{
-					dHigherAxisMax=40;
-				}
-				else if(dHigherAxisMax>10)
-				{
-					dHigherAxisMax=20;
-				}
-				else if(dHigherAxisMax>0)
-				{
-					dHigherAxisMax=10;
-				}
-				else if(dHigherAxisMax>-10)
-				{
-					dHigherAxisMax=0;
-				}
-				else if(dHigherAxisMax>-20)
-				{
-					dHigherAxisMax=-10;
-				}
-				else if(dHigherAxisMax>-40)
-				{
-					dHigherAxisMax=-20;
-				}
-				else if(dHigherAxisMax>-60)
-				{
-					dHigherAxisMax=-40;
-				}
-				else if(dHigherAxisMax>-80)
-				{
-					dHigherAxisMax=-60;
-				}
-				else if(dHigherAxisMax>-100)
-				{
-					dHigherAxisMax=-80;
-				}
-				else if(dHigherAxisMax>-200)
-				{
-					dHigherAxisMax=-100;
-				}
-				else if(dHigherAxisMax>-300)
-				{
-					dHigherAxisMax=-200;
-				}
-				else if(dHigherAxisMax>-400)
-				{
-					dHigherAxisMax=-300;
-				}
-				else if(dHigherAxisMax>-500)
-				{
-					dHigherAxisMax=-400;
-					break;
-				}
-				else
-				{
-					break;
+					if(dHigherAxisMax<10)
+					{
+						dHigherAxisMax=10;
+					}
+					else if(dHigherAxisMax<20)
+					{
+						dHigherAxisMax=20;
+					}
+					else if(dHigherAxisMax<40)
+					{
+						dHigherAxisMax=40;
+					}
+					else if(dHigherAxisMax<60)
+					{
+						dHigherAxisMax=60;
+					}
+					else if(dHigherAxisMax<80)
+					{
+						dHigherAxisMax=80;
+					}
+					else if(dHigherAxisMax<100)
+					{
+						dHigherAxisMax=100;
+						break;
+					}
+					else//should never occur
+					{
+						break;
+					}
 				}
 			}
+			else
+			{
+				double dValue=m_dMaxY;
+				dHigherAxisMax=m_dYAxisMax;
 
+				while (dValue>dHigherAxisMax)
+				{
+					if(dHigherAxisMax>-10)
+					{
+						dHigherAxisMax=0;
+					}
+					else if(dHigherAxisMax>-20)
+					{
+						dHigherAxisMax=-10;
+					}
+					else if(dHigherAxisMax>-40)
+					{
+						dHigherAxisMax=-20;
+					}
+					else if(dHigherAxisMax>-60)
+					{
+						dHigherAxisMax=-40;
+					}
+					else if(dHigherAxisMax>-80)
+					{
+						dHigherAxisMax=-60;
+					}
+					else if(dHigherAxisMax>-100)
+					{
+						dHigherAxisMax=-80;
+					}
+					else if(dHigherAxisMax>-200)
+					{
+						dHigherAxisMax=-100;
+					}
+					else if(dHigherAxisMax>-300)
+					{
+						dHigherAxisMax=-200;
+					}
+					else if(dHigherAxisMax>-400)
+					{
+						dHigherAxisMax=-300;
+					}
+					else if(dHigherAxisMax>-500)
+					{
+						dHigherAxisMax=-400;
+						break;
+					}
+					else
+					{
+						break;
+					}
+				}
+			}
 		}
 		break;
 	case PRESSURE_VOLUME_HF_LOOP:
@@ -7127,7 +7174,7 @@ double CDiagramm::GetHigherYAxisMin()
 			double dValue=m_dMinY;
 			dHigherAxisMin=m_dYAxisMin;
 
-			while (dValue<dHigherAxisMin)
+			while (dValue<=dHigherAxisMin)
 			{
 				if(dHigherAxisMin>=100)
 				{
@@ -9494,7 +9541,7 @@ bool CDiagramm::CanDecreaseYScale()
 					bRes=true;
 				}
 				else if(	iTempMinY>dHigherAxisMin
-					&&	m_dYAxisMax<dHigherAxisMin
+					&&	m_dYAxisMax>dHigherAxisMin
 					&&	m_dYAxisMin!=0)
 				{
 					bRes=true;

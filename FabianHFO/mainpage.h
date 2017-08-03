@@ -7,6 +7,13 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50159 Version 5.0.1.59
+ * @date 2017-08-03	
+ * @verbatim
+	- bug fixed: Frozen screen at FOT
+	- FOT: scaling fixed
+ @endverbatim
+ *
  * @subsection ver50158 Version 5.0.1.58
  * @date 2017-07-27	
  * @verbatim
