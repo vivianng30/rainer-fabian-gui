@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50161 Version 5.0.1.61
+ * @date 2017-08-04	
+ * @verbatim
+	- bug fixed: Freq&Apnea alarm setting at NCPAP&DUOPAP
+ @endverbatim
+ *
  * @subsection ver50160 Version 5.0.1.60
  * @date 2017-08-03	
  * @verbatim
