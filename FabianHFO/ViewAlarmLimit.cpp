@@ -1468,7 +1468,7 @@ void CViewAlarmLimit::drawFrameNCPAP(CDC* pDC)
 	if(m_pcAlarmlimitPara2)
 		m_pcAlarmlimitPara2->Draw(hdc,0,156); //CPAP
 
-	if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET)//sensitivity always on -> auto
+	if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())//sensitivity always on -> auto
 	{
 		if(m_pcAlarmlimitPara1)
 			m_pcAlarmlimitPara1->Draw(hdc,0,266);	//BPM
@@ -1476,7 +1476,7 @@ void CViewAlarmLimit::drawFrameNCPAP(CDC* pDC)
 		if(m_pcAlarmlimitPara1)
 			m_pcAlarmlimitPara1->Draw(hdc,0,321);	//Apnea
 	}
-	else if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)//TUBE_INFANTFLOW or TUBE_INFANTFLOW_LP && FS == on
+	else if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false && getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())//TUBE_INFANTFLOW or TUBE_INFANTFLOW_LP && FS == on
 	{
 		if(m_pcAlarmlimitPara1)
 			m_pcAlarmlimitPara1->Draw(hdc,0,266);	//BPM
@@ -1500,7 +1500,11 @@ void CViewAlarmLimit::drawFrameDUOPAP(CDC* pDC)
 	{
 		bool bTriggerOn=false;
 
-		if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
+		if(false==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
+		{
+			bTriggerOn=false;
+		}
+		else if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
 			&&	getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEPara()<610)
 		{
 			bTriggerOn=true;
@@ -1524,7 +1528,11 @@ void CViewAlarmLimit::drawFrameDUOPAP(CDC* pDC)
 	{
 		bool bTriggerOn=true;
 
-		if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
+		if(false==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
+		{
+			bTriggerOn=false;
+		}
+		else if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
 			&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP()==MAXRANGE_TRIGGER_OFF)
 		{
 			bTriggerOn=false;
@@ -2202,7 +2210,11 @@ void CViewAlarmLimit::drawLabel_NCPAP(CDC* pDC)
 
 	//--------------------Apnoe-------------------------------------
 	bool bShowApnea=false;
-	if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET)//sensitivity always on -> auto
+	if(false==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
+	{
+		bShowApnea=false;
+	}
+	else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET)//sensitivity always on -> auto
 	{
 		bShowApnea=true;
 	}
@@ -2329,7 +2341,11 @@ void CViewAlarmLimit::drawLabel_DUOPAP(CDC* pDC)
 
 	//--------------------Apnoe-------------------------------------
 	bool bShowApnea=true;
-	if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET)//FS state always off -> check sensitivity state on/off
+	if(false==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
+	{
+		bShowApnea=false;
+	}
+	else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET)//FS state always off -> check sensitivity state on/off
 	{
 		if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
 			&&	getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEPara()>=610)
@@ -3044,7 +3060,11 @@ void CViewAlarmLimit::drawDataVentilation_NCPAP(HDC hdc)
 
 	bool bShowBPM=false;
 
-	if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET)//sensitivity always on -> auto
+	if(false==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
+	{
+		bShowBPM=false;
+	}
+	else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET)//sensitivity always on -> auto
 	{
 		bShowBPM=true;
 	}
@@ -3145,7 +3165,11 @@ void CViewAlarmLimit::drawDataVentilation_DUOPAP(HDC hdc)
 
 	bool bShowBPM=true;
 
-	if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET)//FS state always off -> check sensitivity state on/off
+	if(false==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
+	{
+		bShowBPM=false;
+	}
+	else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET)//FS state always off -> check sensitivity state on/off
 	{
 		if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
 			&&	getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEPara()>=610)
@@ -4711,7 +4735,8 @@ void CViewAlarmLimit::showALimitButtons_NCPAP()
 
 	if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false 
 		&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET 
-		&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_NCPAP()!=MAXRANGE_TRIGGER_OFF)
+		&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_NCPAP()!=MAXRANGE_TRIGGER_OFF
+		&&	getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
 	{
 		if(m_pcAlarmLimit_Apnoe)
 		{
@@ -4722,7 +4747,9 @@ void CViewAlarmLimit::showALimitButtons_NCPAP()
 			m_pcAlarmLimit_BPM->ShowWindow(SW_SHOW);
 		}
 	}
-	else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_NCPAP()!=MAXRANGE_TRIGGER_OFF)
+	else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET 
+		&& getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_NCPAP()!=MAXRANGE_TRIGGER_OFF
+		&&	getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
 	{
 		if(m_pcAlarmLimit_Apnoe)
 		{
@@ -4761,7 +4788,8 @@ void CViewAlarmLimit::showALimitButtons_DUOPAP()
 
 	if(		getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false 
 		&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET 
-		&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP()!=MAXRANGE_TRIGGER_OFF)
+		&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP()!=MAXRANGE_TRIGGER_OFF
+		&&	getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
 	{
 		if(m_pcAlarmLimit_Apnoe)
 		{
@@ -4772,7 +4800,9 @@ void CViewAlarmLimit::showALimitButtons_DUOPAP()
 			m_pcAlarmLimit_BPM->ShowWindow(SW_SHOW);
 		}
 	}
-	else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP()!=MAXRANGE_TRIGGER_OFF)
+	else if(getModel()->getDATAHANDLER()->GetTubeSet()==TUBE_MEDIJET
+		&& getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP()!=MAXRANGE_TRIGGER_OFF
+		&&	getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
 	{
 		if(m_pcAlarmLimit_Apnoe)
 		{

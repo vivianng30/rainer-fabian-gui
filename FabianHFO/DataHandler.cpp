@@ -4934,7 +4934,6 @@ eTubeSet CDataHandler::GetTubeSet()
 }
 void CDataHandler::SetTubeSet(eTubeSet tube)
 {
-	DEBUGMSG(TRUE, (TEXT("SetTubeSet\r\n")));
 	getModel()->getCONFIG()->SetTubeSet(tube);
 
 	if(tube==TUBE_INFANTFLOW)
@@ -4952,7 +4951,6 @@ void CDataHandler::SetTubeSet(eTubeSet tube)
 		getModel()->getCONFIG()->setTriggerOption_NCPAP(TRIGGER_FLOW);
 		getModel()->getCONFIG()->setTriggerOption_DUOPAP(TRIGGER_FLOW);
 
-		//rku,PRETRIGGER
 		if(GetFlowSensorState()==FLOWSENSOR_OFF && GetPrevFlowSensorState()==FLOWSENSOR_ON)
 		{
 			SetFlowSensorState(FLOWSENSOR_ON);
@@ -10848,11 +10846,6 @@ void CDataHandler::SetCurrentTriggerPara(BYTE val)
 			}
 			SetTriggerNCPAPParadata(val,true);
 			
-			/*if(GetNCPAPtriggerAutoenableFlag())
-			{
-				ResetNCPAPtriggerAutoenableFlag();
-			}*/
-
 			if(val==MAXRANGE_TRIGGER_OFF)
 				checkTriggerTubeDependency();
 		}
