@@ -1862,52 +1862,9 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 					}
 				}
 				break;
-			//case VM_SIMV:
-			//	{
-			//		/*if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
-			//		{
-			//			getDATAHANDLER()->checkTriggerTubeDependency();
-			//		}*/
-			//	}
-			//	break;
-			//case VM_SIPPV:
-			//	{
-			//		/*if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
-			//		{
-			//			getDATAHANDLER()->checkTriggerTubeDependency();
-			//		}*/
-			//	}
-			//	break;
-			//case VM_IPPV:
-			//	{
-			//		/*if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
-			//		{
-			//			getDATAHANDLER()->checkTriggerTubeDependency();
-			//		}*/
-			//	}
-			//	break;
-			//case VM_CPAP:
-			//	{
-			//		////if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
-			//		//{
-			//		//	getDATAHANDLER()->checkTriggerTubeDependency();
-			//		//}
-			//	}
-			//	break;
-			/*case VM_HFO:
-				{
-					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
-					{
-						Send_VENT_MODE(activeMode);
-					}
-				}
-				break;*/
 			default:
 				{
-					//if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
-					{
-						Send_VENT_MODE(activeMode);
-					}
+					Send_VENT_MODE(activeMode);
 				}
 				break;
 			}
@@ -1916,9 +1873,6 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 				||	getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF
 				||	getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_AUTOOFF)
 			{
-				/*tALARMSTATES alarmState;
-				getALARMHANDLER()->getAllAlarmStates(&alarmState);*/
-
 				if(getALARMHANDLER()->ALARM_Sens_FLOW_SENSOR_DEFECT->getAlarmState()==AS_ACTIVE)
 				{
 					getALARMHANDLER()->deleteAlarm(AL_Sens_FLOW_SENSOR_DEFECT);
