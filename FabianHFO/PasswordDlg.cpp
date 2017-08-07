@@ -31,8 +31,6 @@ CPasswordDlg::CPasswordDlg(CWnd* pParent /*=NULL*/,eModule module)
 
 CPasswordDlg::~CPasswordDlg()
 {
-	//KillTimer(FOCUSTIMER);
-	//DeleteObject(m_brush);
 	DeleteObject(m_hfont);
 	DeleteObject(m_hfontButton);
 }
@@ -81,7 +79,6 @@ void CPasswordDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CPasswordDlg, CDialog)
 	ON_BN_CLICKED(IDCANCEL, &CPasswordDlg::OnBnClickedCancel)
-	//ON_WM_CTLCOLOR()
 	ON_BN_CLICKED(IDOK, &CPasswordDlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDC_BUTTON0, &CPasswordDlg::OnBnClickedButton0)
 	ON_BN_CLICKED(IDC_BUTTON1, &CPasswordDlg::OnBnClickedButton1)
@@ -121,10 +118,6 @@ BOOL CPasswordDlg::OnInitDialog()
 	//MB_YESNOCANCEL   The message box contains three pushbuttons: Yes, No, and Cancel. 
 
 	SetWindowPos(&this->wndTopMost,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
-
-	 //m_brush.CreateSolidBrush(BACKGND);
-
-	//CClientDC dc(this);
 
 	CRect rcDlg, rcRes;
 	GetClientRect(rcDlg);
@@ -254,14 +247,6 @@ BOOL CPasswordDlg::OnInitDialog()
 	m_ebHexString4.SetFont(CFont::FromHandle(m_hfontButton));
 	m_ebHexString5.SetFont(CFont::FromHandle(m_hfontButton));
 
-	//TEST
-	//m_ebHexString1.SetWindowText(_T("DDDD"));
-	//m_ebHexString2.SetWindowText(_T("06EF"));
-	// 
-	//m_ebHexString1.SetFocus();
-	// 
-	
-
 	SetTimer(FOCUSTIMER, 100, NULL);
 
 	ReleaseDC(pDC);
@@ -308,29 +293,11 @@ HFONT CPasswordDlg::CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacenam
 
 	return CreateFontIndirect( &lf );
 }
+
 void CPasswordDlg::OnBnClickedCancel()
 {
-	// TODO: Add your control notification handler code here
 	OnCancel();
 }
-
-//void DDV_Hex(CDataExchange* pDX, CString val)
-//{    
-//	if (pDX->m_bSaveAndValidate)    
-//	{        
-//		for (int i = 0; i<val.GetLength(); i++)        
-//		{            
-//			char c = val[i];            
-//			if (!((c>='0' && c<='9') || (c>='a' && c<='f') || (c>='A' && c<='F')))            
-//			{                
-//				pDX->Fail();                
-//				return;            
-//			}        
-//		}    
-//	}
-//}
-
-
 
 void CPasswordDlg::OnBnClickedOk()
 {
@@ -353,10 +320,7 @@ void CPasswordDlg::OnBnClickedOk()
 	m_ebHexString4.GetWindowText(m_szEdit4);
 	m_ebHexString5.GetWindowText(m_szEdit5);
 	CString szInputKey=m_szEdit1+_T("-")+m_szEdit2+_T("-")+m_szEdit3+_T("-")+m_szEdit4+_T("-")+m_szEdit5;
-	//CString szEncryptedFormattedKey=_T("");
-
-	//szEncryptedFormattedKey=encryptKey(m_eModule);
-
+	
 	if(encryptKey(m_eModule)==szInputKey)
 	{
 		getModel()->getDATAHANDLER()->delDemoLicense(m_eModule, true);

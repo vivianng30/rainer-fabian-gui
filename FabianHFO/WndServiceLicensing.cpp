@@ -94,7 +94,6 @@ CWndServiceLicensing::~CWndServiceLicensing()
 
 	delete m_pcDelFOT;
 	delete m_pcDelHFO;
-	//delete m_pcDelCO2;
 	delete m_pcDelNMODE;
 	delete m_pcDelVguaranty;
 	delete m_pcDelVlimit;
@@ -104,7 +103,6 @@ CWndServiceLicensing::~CWndServiceLicensing()
 	delete m_pcDelPRICO;
 	delete m_pcDelNIVTRIGGER;
 
-	//m_pcActivateMaster=NULL;
 	m_pcActivateHFO=NULL;
 	m_pcActivateFOT=NULL;
 	m_pcActivateNMODE=NULL;
@@ -157,15 +155,9 @@ BEGIN_MESSAGE_MAP(CWndServiceLicensing, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SERVICE_THERAPY_DELKEY, &CWndServiceLicensing::OnBnClickedDelTHERAPY)
 	ON_BN_CLICKED(IDC_BTN_SERVICE_LUNGREC_DELKEY, &CWndServiceLicensing::OnBnClickedDelLUNGREC)
 	ON_BN_CLICKED(IDC_BTN_SERVICE_PRICO_DELKEY, &CWndServiceLicensing::OnBnClickedDelPRICO)
-	/*ON_MESSAGE(WM_BITMAPSLIDER_MOVING, OnMyMessage)
-	ON_BN_CLICKED(IDC_BTN_SERVICE_TESTNURSECALL, &CWndServiceSettings::OnBnClickedTestNursecall)*/
 END_MESSAGE_MAP()
 
 
-
-// CWndServiceNetwork message handlers
-
-// CWndServiceNursecall message handlers
 void CWndServiceLicensing::Init()
 {
 	CClientDC dc(this);
@@ -187,10 +179,6 @@ void CWndServiceLicensing::Init()
 		szUniqueID16.AppendChar('0');
 	}
 
-	//CStringW szFile=_T("\\FFSDISK\\")+m_szLicenseFile;
-
-	//bool bCheckMasterFeature=false;
-	//bool bCheckCO2Feature=false;
 	bool bCheckVGUARANTFeature=false;
 	bool bCheckVLIMITFeature=false;
 	bool bCheckHFOFeature=false;
@@ -440,7 +428,6 @@ void CWndServiceLicensing::Init()
 	}
 	else
 	{
-		//m_bCO2ModuleEnabled=false;
 		m_bVGUARANTModuleEnabled=false;
 		m_bVLIMITModuleEnabled=false;
 		m_bHFOModuleEnabled=false;
@@ -727,8 +714,6 @@ void CWndServiceLicensing::Init()
 
 	m_pcActivate_Up= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SELSETTING_UP);
 	m_pcActivate_Dw= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SELSETTING_DW);
-	//m_pcActivate_Dis= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN160_LG_DIS);
-
 
 	BTN btn;
 
@@ -933,7 +918,7 @@ void CWndServiceLicensing::Init()
 	m_pcActivateTherapy->ShowWindow(SW_SHOW);
 
 	btn.wID					= IDC_BTN_SERVICE_THERAPY_DELKEY;	
-	btn.poPosition.x		= 30;//;586
+	btn.poPosition.x		= 30;
 	btn.poPosition.y		= 365;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
@@ -946,7 +931,7 @@ void CWndServiceLicensing::Init()
 	m_pcDelTherapy->ShowWindow(SW_HIDE);
 
 	btn.wID					= IDC_BTN_SERVICE_PRICO_KEY;	
-	btn.poPosition.x		= 30;//;586
+	btn.poPosition.x		= 30;
 	btn.poPosition.y		= 415;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
@@ -959,7 +944,7 @@ void CWndServiceLicensing::Init()
 	m_pcActivatePRICO->ShowWindow(SW_SHOW);
 
 	btn.wID					= IDC_BTN_SERVICE_PRICO_DELKEY;	
-	btn.poPosition.x		= 30;//;586
+	btn.poPosition.x		= 30;
 	btn.poPosition.y		= 415;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
@@ -972,10 +957,8 @@ void CWndServiceLicensing::Init()
 	m_pcDelPRICO->ShowWindow(SW_HIDE);
 
 
-
-	//m_pcActivateNIVTRIGGER=NULL;
 	btn.wID					= IDC_BTN_SERVICE_NIVTRIG_KEY;	
-	btn.poPosition.x		= 350;//;586
+	btn.poPosition.x		= 350;
 	btn.poPosition.y		= 15;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
@@ -988,9 +971,8 @@ void CWndServiceLicensing::Init()
 	m_pcActivateNIVTRIGGER->ShowWindow(SW_SHOW);
 
 	
-	//m_pcDelNIVTRIGGER=NULL;
 	btn.wID					= IDC_BTN_SERVICE_NIVTRIG_DELKEY;	
-	btn.poPosition.x		= 350;//;586
+	btn.poPosition.x		= 350;
 	btn.poPosition.y		= 15;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
@@ -1016,7 +998,6 @@ void CWndServiceLicensing::Draw()
 	HBITMAP hBmpMem=CreateCompatibleBitmap(dc.m_hDC,m_lX,m_lY);
 	HBITMAP hBmpMemPrev=(HBITMAP)SelectObject(hdcMem,hBmpMem);
 
-
 	CBrush cbrBack(RGB(181,178,181));
 	HBRUSH hbrprev=(HBRUSH)SelectObject(hdcMem,cbrBack);
 	HPEN hpenprev=(HPEN)SelectObject(hdcMem, (HPEN)GetStockObject(NULL_PEN));	
@@ -1026,7 +1007,6 @@ void CWndServiceLicensing::Draw()
 
 	Rectangle(hdcMem, 0, 0, m_lX, m_lY);
 
-	//CDC* pDCMem=CDC::FromHandle(hdcMem);
 	CPen penLine;
 	penLine.CreatePen(PS_SOLID,1,RGB(140,140,140));
 	SelectObject(hdcMem,(HPEN)penLine);

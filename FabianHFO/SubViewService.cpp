@@ -513,23 +513,6 @@ BOOL CSubViewService::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateC
 		//m_pcOk->SetText(_T("Ok"));
 		m_pcOk->SetText(getModel()->GetLanguageString(IDS_BTN_OK));
 		m_pcOk->ShowWindow(SW_SHOW);
-
-
-		/*btn.wID					= IDCANCEL;	
-		btn.poPosition.x		= 405;
-		btn.poPosition.y		= 390;
-		btn.pcBmpUp				= m_pc_Up;
-		btn.pcBmpDown			= m_pc_Dw;
-		btn.pcBmpFocus			= m_pc_Up;
-		btn.pcBmpDisabled		= m_pc_Up;
-		btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-		m_pcCancel=new CPushBtn(btn,COLOR_TXTBTNUP);
-		m_pcCancel->Create(this,g_hf15AcuMed,0);
-		m_pcCancel->SetText(getModel()->GetLanguageString(IDS_BTN_CANCEL));
-		m_pcCancel->ShowWindow(SW_SHOW);*/
-	
-
 	
 		SelectObject(m_hDC,hpenprev);
 		SelectObject(m_hDC,hbrprev);

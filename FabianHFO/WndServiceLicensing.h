@@ -111,11 +111,9 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnDestroy();
-	/*afx_msg LRESULT OnMyMessage(WPARAM wParam, LPARAM lParam);*/
 	afx_msg void OnBnClickedActivateNIVTRIGGER();
 	afx_msg void OnBnClickedActivateFOT();
 	afx_msg void OnBnClickedActivateHFO();
-	//afx_msg void OnBnClickedActivateCO2();
 	afx_msg void OnBnClickedActivateNMODE();
 	afx_msg void OnBnClickedActivateVGUARANTY();
 	afx_msg void OnBnClickedActivateVLIMIT();
@@ -126,7 +124,6 @@ public:
 	afx_msg void OnBnClickedDelNIVTRIGGER();
 	afx_msg void OnBnClickedDelFOT();
 	afx_msg void OnBnClickedDelHFO();
-	//afx_msg void OnBnClickedDelCO2();
 	afx_msg void OnBnClickedDelNMODE();
 	afx_msg void OnBnClickedDelVGUARANTY();
 	afx_msg void OnBnClickedDelVLIMIT();
