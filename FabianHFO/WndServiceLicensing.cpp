@@ -1041,7 +1041,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetFOTdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");;
+		CStringW szDiff=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1082,7 +1082,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetHFOdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");;
+		CStringW szDiff=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1124,7 +1124,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetNMODEdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");;
+		CStringW szDiff=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1164,7 +1164,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetVGUARANTYdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");;
+		CStringW szDiff=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1212,7 +1212,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetVLIMITdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");;
+		CStringW szDiff=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1262,7 +1262,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetLUNGRECdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");;
+		CStringW szDiff=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1313,7 +1313,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetTRENDdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");;
+		CStringW szDiff=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1354,7 +1354,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetTHERAPYdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");;
+		CStringW szDiff=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1395,7 +1395,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetPRICOdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");;
+		CStringW szDiff=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1449,7 +1449,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetNIVTRIGGERdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");;
+		CStringW szDiff=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
