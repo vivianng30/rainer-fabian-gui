@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50162 Version 5.0.1.62
+ * @date 2017-08-08	
+ * @verbatim
+	- licensing: layout changed
+ @endverbatim
+ *
  * @subsection ver50161 Version 5.0.1.61
  * @date 2017-08-04	
  * @verbatim

@@ -719,7 +719,7 @@ void CWndServiceLicensing::Init()
 
 	btn.wID					= IDC_BTN_SERVICE_FOT_KEY;	
 	btn.poPosition.x		= 30;
-	btn.poPosition.y		= 15;
+	btn.poPosition.y		= 40;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -732,7 +732,7 @@ void CWndServiceLicensing::Init()
 
 	btn.wID					= IDC_BTN_SERVICE_FOT_DELKEY;	
 	btn.poPosition.x		= 30;
-	btn.poPosition.y		= 15;
+	btn.poPosition.y		= 40;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -745,7 +745,7 @@ void CWndServiceLicensing::Init()
 
 	btn.wID					= IDC_BTN_SERVICE_HFO_KEY;	
 	btn.poPosition.x		= 30;
-	btn.poPosition.y		= 65;
+	btn.poPosition.y		= 100;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -758,7 +758,7 @@ void CWndServiceLicensing::Init()
 
 	btn.wID					= IDC_BTN_SERVICE_HFO_DELKEY;	
 	btn.poPosition.x		= 30;
-	btn.poPosition.y		= 65;
+	btn.poPosition.y		= 100;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -772,7 +772,7 @@ void CWndServiceLicensing::Init()
 
 	btn.wID					= IDC_BTN_SERVICE_NMODE_KEY;	
 	btn.poPosition.x		= 30;
-	btn.poPosition.y		= 115;
+	btn.poPosition.y		= 160;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -785,7 +785,7 @@ void CWndServiceLicensing::Init()
 
 	btn.wID					= IDC_BTN_SERVICE_NMODE_DELKEY;	
 	btn.poPosition.x		= 30;
-	btn.poPosition.y		= 115;
+	btn.poPosition.y		= 160;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -798,7 +798,7 @@ void CWndServiceLicensing::Init()
 
 	btn.wID					= IDC_BTN_SERVICE_VGUARANTY_KEY;	
 	btn.poPosition.x		= 30;
-	btn.poPosition.y		= 165;
+	btn.poPosition.y		= 220;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -811,7 +811,7 @@ void CWndServiceLicensing::Init()
 
 	btn.wID					= IDC_BTN_SERVICE_VGUARANTY_DELKEY;	
 	btn.poPosition.x		= 30;
-	btn.poPosition.y		= 165;
+	btn.poPosition.y		= 220;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -824,7 +824,7 @@ void CWndServiceLicensing::Init()
 
 	btn.wID					= IDC_BTN_SERVICE_VLIMIT_KEY;	
 	btn.poPosition.x		= 30;
-	btn.poPosition.y		= 215;
+	btn.poPosition.y		= 280;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -837,7 +837,7 @@ void CWndServiceLicensing::Init()
 
 	btn.wID					= IDC_BTN_SERVICE_VLIMIT_DELKEY;	
 	btn.poPosition.x		= 30;
-	btn.poPosition.y		= 215;
+	btn.poPosition.y		= 280;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -850,8 +850,8 @@ void CWndServiceLicensing::Init()
 
 
 	btn.wID					= IDC_BTN_SERVICE_LUNGREC_KEY;	
-	btn.poPosition.x		= 30;
-	btn.poPosition.y		= 265;
+	btn.poPosition.x		= 350;
+	btn.poPosition.y		= 40;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -864,8 +864,8 @@ void CWndServiceLicensing::Init()
 	
 
 	btn.wID					= IDC_BTN_SERVICE_LUNGREC_DELKEY;	
-	btn.poPosition.x		= 30;
-	btn.poPosition.y		= 265;
+	btn.poPosition.x		= 350;
+	btn.poPosition.y		= 40;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -877,8 +877,8 @@ void CWndServiceLicensing::Init()
 	m_pcDelLungRec->ShowWindow(SW_HIDE);
 
 	btn.wID					= IDC_BTN_SERVICE_TRENDS_KEY;	
-	btn.poPosition.x		= 30;
-	btn.poPosition.y		= 315;
+	btn.poPosition.x		= 350;
+	btn.poPosition.y		= 100;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -890,8 +890,8 @@ void CWndServiceLicensing::Init()
 	m_pcActivateTrends->ShowWindow(SW_SHOW);
 
 	btn.wID					= IDC_BTN_SERVICE_TRENDS_DELKEY;	
-	btn.poPosition.x		= 30;
-	btn.poPosition.y		= 315;
+	btn.poPosition.x		= 350;
+	btn.poPosition.y		= 100;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -905,8 +905,8 @@ void CWndServiceLicensing::Init()
 
 
 	btn.wID					= IDC_BTN_SERVICE_THERAPY_KEY;	
-	btn.poPosition.x		= 30;
-	btn.poPosition.y		= 365;
+	btn.poPosition.x		= 350;
+	btn.poPosition.y		= 160;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -918,8 +918,8 @@ void CWndServiceLicensing::Init()
 	m_pcActivateTherapy->ShowWindow(SW_SHOW);
 
 	btn.wID					= IDC_BTN_SERVICE_THERAPY_DELKEY;	
-	btn.poPosition.x		= 30;
-	btn.poPosition.y		= 365;
+	btn.poPosition.x		= 350;
+	btn.poPosition.y		= 160;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -931,8 +931,8 @@ void CWndServiceLicensing::Init()
 	m_pcDelTherapy->ShowWindow(SW_HIDE);
 
 	btn.wID					= IDC_BTN_SERVICE_PRICO_KEY;	
-	btn.poPosition.x		= 30;
-	btn.poPosition.y		= 415;
+	btn.poPosition.x		= 350;
+	btn.poPosition.y		= 220;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -944,8 +944,8 @@ void CWndServiceLicensing::Init()
 	m_pcActivatePRICO->ShowWindow(SW_SHOW);
 
 	btn.wID					= IDC_BTN_SERVICE_PRICO_DELKEY;	
-	btn.poPosition.x		= 30;
-	btn.poPosition.y		= 415;
+	btn.poPosition.x		= 350;
+	btn.poPosition.y		= 220;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -959,7 +959,7 @@ void CWndServiceLicensing::Init()
 
 	btn.wID					= IDC_BTN_SERVICE_NIVTRIG_KEY;	
 	btn.poPosition.x		= 350;
-	btn.poPosition.y		= 15;
+	btn.poPosition.y		= 280;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -973,7 +973,7 @@ void CWndServiceLicensing::Init()
 	
 	btn.wID					= IDC_BTN_SERVICE_NIVTRIG_DELKEY;	
 	btn.poPosition.x		= 350;
-	btn.poPosition.y		= 15;
+	btn.poPosition.y		= 280;
 	btn.pcBmpUp				= m_pcActivate_Up;
 	btn.pcBmpDown			= m_pcActivate_Dw;
 	btn.pcBmpFocus			= m_pcActivate_Up;
@@ -1021,19 +1021,21 @@ void CWndServiceLicensing::Draw()
 	rc.top = 480;  
 	rc.right  = 500;  
 	rc.bottom = 520;
-	CStringW cs = _T("Licensing ");
-	cs += getModel()->GetLanguageString(IDS_TXT_DEVID);
-	cs+=_T(": ");
-	cs += szDev;
-	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+	CStringW csLicense = _T("Licensing ");
+	CStringW csDemo = _T("");
+	csLicense += getModel()->GetLanguageString(IDS_TXT_DEVID);
+	csLicense+=_T(": ");
+	csLicense += szDev;
+	DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
+	bool bDemoAvailable=false;
 	SelectObject(hdcMem,g_hf14AcuMed);
 
 	rc.left = 135;  
-	rc.top = 30;  
-	rc.right  = 400;  
-	rc.bottom = 500;
-	cs = _T("FOT");
+	rc.right  = 350;  
+	rc.top = 40;  
+	rc.bottom = 88;
+	csLicense = _T("FOT");
 	if(getModel()->getDATAHANDLER()->isFOTDemoLicAvailable())
 	{
 		SYSTEMTIME stTime;
@@ -1041,7 +1043,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetFOTdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");
+		csDemo=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1050,13 +1052,21 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
-				szDiff.Format(_T(" (%d days left)"), iDaysLeft);
+				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
 
-		cs += szDiff;
+		bDemoAvailable=true;
 	}
-	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+	if(bDemoAvailable)
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		DrawText(hdcMem,csDemo,-1,&rc,DT_LEFT|DT_BOTTOM|DT_SINGLELINE);
+	}
+	else
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
+	}
 
 	
 	if(m_bFOTModuleEnabled)
@@ -1070,11 +1080,12 @@ void CWndServiceLicensing::Draw()
 		m_pcDelFOT->ShowWindow(SW_HIDE);
 	}
 
+	bDemoAvailable=false;
 	rc.left = 135;  
-	rc.top = 80;  
-	rc.right  = 400;  
-	rc.bottom = 500;
-	cs = _T("HFO");
+	rc.right  = 350; 
+	rc.top = 100;  
+	rc.bottom = 148;
+	csLicense = _T("HFO");
 	if(getModel()->getDATAHANDLER()->isHFODemoLicAvailable())
 	{
 		SYSTEMTIME stTime;
@@ -1082,7 +1093,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetHFOdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");
+		csDemo=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1091,13 +1102,21 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
-				szDiff.Format(_T(" (%d days left)"), iDaysLeft);
+				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
 
-		cs += szDiff;
+		bDemoAvailable=true;
 	}
-	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+	if(bDemoAvailable)
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		DrawText(hdcMem,csDemo,-1,&rc,DT_LEFT|DT_BOTTOM|DT_SINGLELINE);
+	}
+	else
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
+	}
 
 	if(m_bHFOModuleEnabled)
 	{
@@ -1111,12 +1130,12 @@ void CWndServiceLicensing::Draw()
 	}
 
 	
-
+	bDemoAvailable=false;
 	rc.left = 135;  
-	rc.top = 130;  
-	rc.right  = 400;  
-	rc.bottom = 500;
-	cs = _T("NMode");
+	rc.right  = 350;  
+	rc.top = 160;  
+	rc.bottom = 208;
+	csLicense = _T("NMode");
 	if(getModel()->getDATAHANDLER()->isNMODEDemoLicAvailable())
 	{
 		SYSTEMTIME stTime;
@@ -1124,7 +1143,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetNMODEdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");
+		csDemo=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1133,13 +1152,21 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
-				szDiff.Format(_T(" (%d days left)"), iDaysLeft);
+				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
 
-		cs += szDiff;
+		bDemoAvailable=true;
 	}
-	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+	if(bDemoAvailable)
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		DrawText(hdcMem,csDemo,-1,&rc,DT_LEFT|DT_BOTTOM|DT_SINGLELINE);
+	}
+	else
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
+	}
 
 	if(m_bNMODEModuleEnabled)
 	{
@@ -1152,11 +1179,12 @@ void CWndServiceLicensing::Draw()
 		m_pcDelNMODE->ShowWindow(SW_HIDE);
 	}
 
+	bDemoAvailable=false;
 	rc.left = 135;  
-	rc.top = 180;  
-	rc.right  = 400;  
-	rc.bottom = 500;
-	cs = _T("Vol. Guarantee");
+	rc.right  = 350;  
+	rc.top = 220;  
+	rc.bottom = 268;
+	csLicense = _T("Vol. Guarantee");
 	if(getModel()->getDATAHANDLER()->isVGUARANTDemoLicAvailable())
 	{
 		SYSTEMTIME stTime;
@@ -1164,7 +1192,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetVGUARANTYdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");
+		csDemo=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1173,13 +1201,21 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
-				szDiff.Format(_T(" (%d days left)"), iDaysLeft);
+				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
 
-		cs += szDiff;
+		bDemoAvailable=true;
 	}
-	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+	if(bDemoAvailable)
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		DrawText(hdcMem,csDemo,-1,&rc,DT_LEFT|DT_BOTTOM|DT_SINGLELINE);
+	}
+	else
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
+	}
 
 	if(m_bVGUARANTModuleEnabled)
 	{
@@ -1200,11 +1236,12 @@ void CWndServiceLicensing::Draw()
 		m_pcDelVguaranty->ShowWindow(SW_HIDE);
 	}
 
+	bDemoAvailable=false;
 	rc.left = 135;  
-	rc.top = 230;  
-	rc.right  = 400;  
-	rc.bottom = 500;
-	cs = _T("Vol.Limit");
+	rc.right  = 350;  
+	rc.top = 280;  
+	rc.bottom = 328;
+	csLicense = _T("Vol.Limit");
 	if(getModel()->getDATAHANDLER()->isVLIMITDemoLicAvailable())
 	{
 		SYSTEMTIME stTime;
@@ -1212,7 +1249,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetVLIMITdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");
+		csDemo=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1221,13 +1258,21 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
-				szDiff.Format(_T(" (%d days left)"), iDaysLeft);
+				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
 
-		cs += szDiff;
+		bDemoAvailable=true;
 	}
-	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+	if(bDemoAvailable)
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		DrawText(hdcMem,csDemo,-1,&rc,DT_LEFT|DT_BOTTOM|DT_SINGLELINE);
+	}
+	else
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
+	}
 
 	if(m_bVLIMITModuleEnabled)
 	{
@@ -1249,12 +1294,12 @@ void CWndServiceLicensing::Draw()
 		m_pcDelVlimit->ShowWindow(SW_HIDE);
 	}
 
-
-	rc.left = 135;  
-	rc.top = 280;  
-	rc.right  = 400;  
-	rc.bottom = 500;
-	cs = _T("Lung rec.");
+	bDemoAvailable=false;
+	rc.left = 455;  
+	rc.right  = 800;  
+	rc.top = 40;  
+	rc.bottom = 88;
+	csLicense = _T("Lung rec.");
 	if(getModel()->getDATAHANDLER()->isLUNGRECDemoLicAvailable())
 	{
 		SYSTEMTIME stTime;
@@ -1262,7 +1307,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetLUNGRECdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");
+		csDemo=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1271,13 +1316,21 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
-				szDiff.Format(_T(" (%d days left)"), iDaysLeft);
+				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
 
-		cs += szDiff;
+		bDemoAvailable=true;
 	}
-	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+	if(bDemoAvailable)
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		DrawText(hdcMem,csDemo,-1,&rc,DT_LEFT|DT_BOTTOM|DT_SINGLELINE);
+	}
+	else
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
+	}
 
 	if(m_bLUNGRECModuleEnabled)
 	{
@@ -1299,13 +1352,12 @@ void CWndServiceLicensing::Draw()
 		m_pcDelLungRec->ShowWindow(SW_HIDE);
 	}
 
-
-
-	rc.left = 135;  
-	rc.top = 330;  
-	rc.right  = 400;  
-	rc.bottom = 500;
-	cs = _T("Trend");
+	bDemoAvailable=false;
+	rc.left = 455;  
+	rc.right  = 800;   
+	rc.top = 100;  
+	rc.bottom = 148;
+	csLicense = _T("Trend");
 	if(getModel()->getDATAHANDLER()->isTRENDDemoLicAvailable())
 	{
 		SYSTEMTIME stTime;
@@ -1313,7 +1365,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetTRENDdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");
+		csDemo=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1322,13 +1374,21 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
-				szDiff.Format(_T(" (%d days left)"), iDaysLeft);
+				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
 
-		cs += szDiff;
+		bDemoAvailable=true;
 	}
-	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+	if(bDemoAvailable)
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		DrawText(hdcMem,csDemo,-1,&rc,DT_LEFT|DT_BOTTOM|DT_SINGLELINE);
+	}
+	else
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
+	}
 
 	if(m_bTRENDSModuleEnabled)
 	{
@@ -1341,12 +1401,12 @@ void CWndServiceLicensing::Draw()
 		m_pcDelTrends->ShowWindow(SW_HIDE);
 	}
 
-
-	rc.left = 135;  
-	rc.top = 380;  
-	rc.right  = 400;  
-	rc.bottom = 500;
-	cs = _T("O2 Therapy");
+	bDemoAvailable=false;
+	rc.left = 455;  
+	rc.right  = 800;  
+	rc.top = 160;  
+	rc.bottom = 208;
+	csLicense = _T("O2 Therapy");
 	if(getModel()->getDATAHANDLER()->isTHERAPYDemoLicAvailable())
 	{
 		SYSTEMTIME stTime;
@@ -1354,7 +1414,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetTHERAPYdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");
+		csDemo=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1363,13 +1423,21 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
-				szDiff.Format(_T(" (%d days left)"), iDaysLeft);
+				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
 
-		cs += szDiff;
+		bDemoAvailable=true;
 	}
-	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+	if(bDemoAvailable)
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		DrawText(hdcMem,csDemo,-1,&rc,DT_LEFT|DT_BOTTOM|DT_SINGLELINE);
+	}
+	else
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
+	}
 
 	if(m_bTHERAPYModuleEnabled)
 	{
@@ -1382,12 +1450,12 @@ void CWndServiceLicensing::Draw()
 		m_pcDelTherapy->ShowWindow(SW_HIDE);
 	}
 
-
-	rc.left = 135;  
-	rc.top = 430;  
-	rc.right  = 400;  
-	rc.bottom = 500;
-	cs = _T("PRICO");
+	bDemoAvailable=false;
+	rc.left = 455;  
+	rc.right  = 800;   
+	rc.top = 220;  
+	rc.bottom = 268;
+	csLicense = _T("PRICO");
 	if(getModel()->getDATAHANDLER()->isPRICODemoLicAvailable())
 	{
 		SYSTEMTIME stTime;
@@ -1395,7 +1463,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetPRICOdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");
+		csDemo=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1404,13 +1472,21 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
-				szDiff.Format(_T(" (%d days left)"), iDaysLeft);
+				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
 
-		cs += szDiff;
+		bDemoAvailable=true;
 	}
-	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+	if(bDemoAvailable)
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		DrawText(hdcMem,csDemo,-1,&rc,DT_LEFT|DT_BOTTOM|DT_SINGLELINE);
+	}
+	else
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
+	}
 
 	if(m_bPRICOModuleEnabled)
 	{
@@ -1426,8 +1502,8 @@ void CWndServiceLicensing::Draw()
 
 			rc.left = 25;  
 			rc.right  = 400;  
-			cs = _T("- PRICO active -");
-			DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+			csLicense = _T("- PRICO active -");
+			DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
 		}
 	}
 	else
@@ -1436,12 +1512,12 @@ void CWndServiceLicensing::Draw()
 		m_pcDelPRICO->ShowWindow(SW_HIDE);
 	}
 
-
+	bDemoAvailable=false;
 	rc.left = 455;  
-	rc.top = 30;  
-	rc.right  = 750;  
-	rc.bottom = 500;
-	cs = _T("NIV trigger");
+	rc.right  = 800;  
+	rc.top = 280;  
+	rc.bottom = 328;
+	csLicense = _T("NIV trigger");
 	if(getModel()->getDATAHANDLER()->isNIVTRIGGERDemoLicAvailable())
 	{
 		SYSTEMTIME stTime;
@@ -1449,7 +1525,7 @@ void CWndServiceLicensing::Draw()
 		COleDateTime dtCurrentTime(stTime);
 		COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetNIVTRIGGERdemoTimestamp();
 
-		CStringW szDiff=_T("(ERROR)");
+		csDemo=_T("(ERROR)");
 
 		if(dtLicenseTimestamp.GetStatus()==COleDateTime::valid)
 		{
@@ -1458,13 +1534,21 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
-				szDiff.Format(_T(" (%d days left)"), iDaysLeft);
+				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
 
-		cs += szDiff;
+		bDemoAvailable=true;
 	}
-	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+	if(bDemoAvailable)
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+		DrawText(hdcMem,csDemo,-1,&rc,DT_LEFT|DT_BOTTOM|DT_SINGLELINE);
+	}
+	else
+	{
+		DrawText(hdcMem,csLicense,-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
+	}
 
 
 	if(m_bNIVTRIGGERModuleEnabled)
