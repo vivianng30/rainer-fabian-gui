@@ -46,7 +46,7 @@ void CWndSubSettingsTubeset::Initialize()
 
 	m_eTubeSet=getModel()->getDATAHANDLER()->GetTubeSet();
 
-	m_szSetting = getModel()->GetLanguageString(IDS_TXT_TUBESET);
+	m_szSetting = getModel()->GetLanguageString(IDS_TXT_NIV)+_T(" ")+getModel()->GetLanguageString(IDS_TXT_TUBESET);
 	m_iNumValues=2;
 	
 	m_pbtn1->ShowWindow(SW_SHOW);

@@ -11,6 +11,7 @@
  * @date 2017-08-08	
  * @verbatim
 	- licensing: layout changed
+	- text changed CWndSubSettingsTubeset: NIV tube set
  @endverbatim
  *
  * @subsection ver50161 Version 5.0.1.61
