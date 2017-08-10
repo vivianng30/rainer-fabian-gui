@@ -11,6 +11,7 @@
  * @date 2017-08-10	
  * @verbatim
 	- FRAM addresses changed regarding trigger type!
+	- service settings: NEO+PED text aligned
  @endverbatim
  *
  * @subsection ver50162 Version 5.0.1.62

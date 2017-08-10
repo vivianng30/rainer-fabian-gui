@@ -592,7 +592,7 @@ void CWndServiceSettings::Draw()
 	RoundRect(hdcMem, 405, 15, 770, 100,20,20);
 
 	rc.left = 425;  
-	rc.top = 35;  
+	rc.top = 45;  
 	rc.right  = 800;  
 	rc.bottom = 500;
 	cs = _T("NEO+PED:");
