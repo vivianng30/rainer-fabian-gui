@@ -101,18 +101,11 @@ private:
 	CMenuBtn* m_pcMenuSpO2;
 	CMenuBtn* m_pcMenuOxi;
 
-	//CDTUpDwnBtn* m_pcBodyweightUp;
-	//CDTUpDwnBtn* m_pcBodyweightDwn;
-
 	CSelectSetupBtn* m_pbtnBodyweight;
 
 	CBmp* m_pcStatic_Up;
 	CBmp* m_pcStatic_Dw;
 	CBmp* m_pcStatic_Fc;
-	/*CBmp* m_pcUp_Up;
-	CBmp* m_pcUp_Dw;
-	CBmp* m_pcDw_Up;
-	CBmp* m_pcDw_Dw;*/
 
 	CBmp* m_pcMenuCO2_UP;
 	CBmp* m_pcMenuCO2_DW;
@@ -176,8 +169,6 @@ private:
 	CStringW m_szLastFlowCal;
 
 	int m_iBodyweight;
-	//int m_iCounter;
-	//eTimeChanger m_eTimeChanger;
 
 	bool m_bExit;
 	bool m_bFlowsensor;

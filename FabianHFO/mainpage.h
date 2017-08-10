@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50163 Version 5.0.1.63
+ * @date 2017-08-10	
+ * @verbatim
+	- FRAM addresses changed regarding trigger type!
+ @endverbatim
+ *
  * @subsection ver50162 Version 5.0.1.62
  * @date 2017-08-08	
  * @verbatim

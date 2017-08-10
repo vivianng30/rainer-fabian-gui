@@ -66,14 +66,7 @@ CSubViewCalFlowSensor::CSubViewCalFlowSensor()
 	m_pcNeonatal=NULL;
 	m_pcPediatric=NULL;
 
-	//m_bNeoPedConfirmed=false;
 	m_pbtnBodyweight=NULL;
-	//m_pcBodyweightUp=NULL;
-	//m_pcBodyweightDwn=NULL;
-	/*m_pcUp_Up=NULL;
-	m_pcUp_Dw=NULL;
-	m_pcDw_Up=NULL;
-	m_pcDw_Dw=NULL;*/
 
 	m_pcStatic_Up=NULL;
 	m_pcStatic_Dw=NULL;
@@ -170,8 +163,6 @@ CSubViewCalFlowSensor::CSubViewCalFlowSensor()
 	}
 
 	m_iBodyweight=0;
-	//m_iCounter=0;
-	//m_eTimeChanger=TC_OFF;
 }
 
 CSubViewCalFlowSensor::~CSubViewCalFlowSensor()
@@ -191,27 +182,12 @@ CSubViewCalFlowSensor::~CSubViewCalFlowSensor()
 	delete m_pbtnBodyweight;
 	m_pbtnBodyweight=NULL;
 
-	/*delete m_pcBodyweightUp;
-	m_pcBodyweightUp=NULL;
-	delete m_pcBodyweightDwn;
-	m_pcBodyweightDwn=NULL;*/
-
 	delete m_pcStatic_Up;
 	m_pcStatic_Up=NULL;
 	delete m_pcStatic_Dw;
 	m_pcStatic_Dw=NULL;
 	delete m_pcStatic_Fc;
 	m_pcStatic_Fc=NULL;
-
-	/*delete m_pcUp_Up;
-	delete m_pcUp_Dw;
-	delete m_pcDw_Up;
-	delete m_pcDw_Dw;
-
-	m_pcUp_Up=NULL;
-	m_pcUp_Dw=NULL;
-	m_pcDw_Up=NULL;
-	m_pcDw_Dw=NULL;*/
 
 	delete m_pcNeonatal;
 	m_pcNeonatal=NULL;
@@ -705,8 +681,6 @@ void CSubViewCalFlowSensor::Init()
 			strBodyweight.Format(_T("%d %s"),m_iBodyweight,szUnit);
 	}
 
-	
-
 	//*******************bodyweight*****************************
 	btn.wID					= IDC_BTN_SETUP_BODYWEIGHT;	
 	btn.poPosition.x		= 62;
@@ -721,43 +695,6 @@ void CSubViewCalFlowSensor::Init()
 	m_pbtnBodyweight->Create(this,g_hf23AcuBold,0);
 	m_pbtnBodyweight->SetText(strBodyweight);
 	m_pbtnBodyweight->ShowWindow(SW_SHOW);
-
-	//+++++++++++++++++bodyweight up++++++++++++++++++++++++++++++
-	//m_pcBodyweightUp=NULL;
-	/*btn.wID					= IDC_BTN_SETUP_NEXTUP;	
-	btn.poPosition.x		= 123;
-	btn.poPosition.y		= 222;
-	btn.pcBmpUp				= m_pcUp_Up;
-	btn.pcBmpDown			= m_pcUp_Dw;
-	btn.pcBmpFocus			= m_pcUp_Up;
-	btn.pcBmpDisabled		= m_pcUp_Up;
-	btn.dwFormat			= DT_VCENTER|DT_CENTER;
-
-	m_pcBodyweightUp=new CDTUpDwnBtn(btn,COLOR_TXTBTNUP);
-	m_pcBodyweightUp->Create(this,g_hf21AcuBold,0);
-	m_pcBodyweightUp->SetText(_T(""));
-	m_pcBodyweightUp->ShowWindow(SW_SHOW);*/
-
-
-	//+++++++++++++++++bodyweight up++++++++++++++++++++++++++++++
-	//m_pcBodyweightDwn=NULL;
-	/*btn.wID					= IDC_BTN_SETUP_NEXTDW;	
-	btn.poPosition.x		= 123;
-	btn.poPosition.y		= 264;
-	btn.pcBmpUp				= m_pcDw_Up;
-	btn.pcBmpDown			= m_pcDw_Dw;
-	btn.pcBmpFocus			= m_pcDw_Up;
-	btn.pcBmpDisabled		= m_pcDw_Up;
-	btn.dwFormat			= DT_VCENTER|DT_CENTER;
-
-	m_pcBodyweightDwn=new CDTUpDwnBtn(btn,COLOR_TXTBTNUP);
-	m_pcBodyweightDwn->Create(this,g_hf21AcuBold,0);
-	m_pcBodyweightDwn->SetText(_T(""));
-	m_pcBodyweightDwn->ShowWindow(SW_SHOW);*/
-
-
-	//TESTtrigger
-	//m_pcPediatric->ShowWindow(SW_HIDE);
 		
 
 	if(		getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF
@@ -1233,7 +1170,7 @@ void CSubViewCalFlowSensor::DrawStatic()
 	rc.right  = 162;  
 	rc.bottom = 315;
 	//DrawText(m_hdcStatic,_T("bodyweight"),-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
-	DrawText(m_hdcStatic,getModel()->GetLanguageString(IDS_TXT_BODYWEIGHT),-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);//todo FOTLANGUAGE
+	DrawText(m_hdcStatic,getModel()->GetLanguageString(IDS_TXT_BODYWEIGHT),-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 
 
 	SelectObject(m_hdcStatic,hbrprev);
