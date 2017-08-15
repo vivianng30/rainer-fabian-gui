@@ -2563,7 +2563,7 @@ void CParaBtn::WriteCurrentValue()
 	}
 
 
-	switch(m_btn.wID)
+ 	switch(m_btn.wID)
 	{
 	case IDC_BTN_PARA_LEAKCOMP:
 		{
