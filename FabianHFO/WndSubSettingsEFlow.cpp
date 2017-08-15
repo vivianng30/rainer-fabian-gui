@@ -129,8 +129,6 @@ void CWndSubSettingsEFlow::Initialize()
 {
 	CClientDC dc(this);
 
-	
-
 	m_bEFLOWequalILFOW=getModel()->getCONFIG()->IsEFLOWequalILFOW();
 
 	m_slider = new CBitmapSlider();
@@ -328,8 +326,6 @@ void CWndSubSettingsEFlow::Draw()
 	m_pcRegionBotLeCorner->Draw(hdcMem,200,465);
 	m_pcRegionBotRiCorner->Draw(hdcMem,580,465);
 
-	//CDC* pDCMem=CDC::FromHandle(hdcMem);
-
 
 	rc.left = 220;  
 	rc.top = 25;  
@@ -354,18 +350,6 @@ void CWndSubSettingsEFlow::Draw()
 	{
 		m_pcNextUp->ShowWindow(SW_HIDE);
 		m_pcNextDwn->ShowWindow(SW_HIDE);
-
-		/*rc.left = 435;
-		rc.top = 103;  
-		rc.right  = 600;  
-		rc.bottom = 185;
-		DrawText(hdcMem,getModel()->GetLanguageString(IDS_UNIT_LMIN),-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);*/
-
-		/*MoveToEx(hdcMem, 300, 103, NULL);
-		LineTo(hdcMem, 435, 103);
-
-		MoveToEx(hdcMem, 300, 185, NULL);
-		LineTo(hdcMem, 435, 185);*/
 
 		rc.left = 430;  
 		rc.top = 103;  
@@ -403,7 +387,11 @@ void CWndSubSettingsEFlow::Draw()
 		rc.top = 223;//225;  
 		rc.right  = 590;  
 		rc.bottom = 260;
-		DrawText(hdcMem,_T("(default: 6 l/min)"),-1,&rc,DT_TOP|DT_CENTER|DT_SINGLELINE);
+		sz.Format(_T("(%s: 6 %s)"),
+			getModel()->GetLanguageString(IDS_TXT_DEFAULT),
+			getModel()->GetLanguageString(IDS_UNIT_LMIN));
+		DrawText(hdcMem,sz,-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
+		//DrawText(hdcMem,_T("(default: 6 l/min)"),-1,&rc,DT_TOP|DT_CENTER|DT_SINGLELINE);
 
 		SelectObject(hdcMem,g_hf33AcuBold);
 
@@ -469,7 +457,11 @@ void CWndSubSettingsEFlow::Draw()
 		rc.top = 223;//225;  
 		rc.right  = 590;  
 		rc.bottom = 260;
-		DrawText(hdcMem,_T("(default: 6 l/min)"),-1,&rc,DT_TOP|DT_CENTER|DT_SINGLELINE);
+		sz.Format(_T("(%s: 6 %s)"),
+			getModel()->GetLanguageString(IDS_TXT_DEFAULT),
+			getModel()->GetLanguageString(IDS_UNIT_LMIN));
+		DrawText(hdcMem,sz,-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
+		//DrawText(hdcMem,_T("(default: 6 l/min)"),-1,&rc,DT_TOP|DT_CENTER|DT_SINGLELINE);
 	}
 
 	SelectObject(hdcMem,g_hf11AcuBold);

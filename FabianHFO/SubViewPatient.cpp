@@ -1561,8 +1561,6 @@ void CSubViewPatient::OnBnClickedReset()
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_NUMERIC);
 	}
-
-	
 }
 
 void CSubViewPatient::OnBnClickedApply()

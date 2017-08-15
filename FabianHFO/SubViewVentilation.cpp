@@ -788,8 +788,6 @@ void CSubViewVentilation::OnDestroy()
 	}
 	if(m_hDC)
 		DeleteDC(m_hDC);
-
-	
 }
 
 
