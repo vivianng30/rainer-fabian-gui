@@ -223,8 +223,29 @@ void CThreadFOT::setDateLastSequence()
 	GetLocalTime(&st);
 	COleDateTime dtTimeLast(st);
 
+	CStringW szTimeLastFOT = dtTimeLast.Format(LOCALE_NOUSEROVERRIDE,LANG_USER_DEFAULT);
+
 	EnterCriticalSection(&csFOTdate);
-	m_szLastCalculation=dtTimeLast.Format(LOCALE_NOUSEROVERRIDE,LANG_USER_DEFAULT);
+	if(false==dtTimeLast.ParseDateTime(szTimeLastFOT,LOCALE_NOUSEROVERRIDE))
+	{
+		//m_szLast21Cal=_T("- error -");
+		m_szLastCalculation=getModel()->GetLanguageString(IDS_TXT_UNKNOWN);
+		theApp.getLog()->WriteLine(_T("***last FOT calc: unknown***"));
+	}
+	else
+	{
+		m_szLastCalculation.Format(_T("%02d.%02d.%04d %02d:%02d:%02d"),
+			dtTimeLast.GetDay(),
+			dtTimeLast.GetMonth(),
+			dtTimeLast.GetYear(),
+			dtTimeLast.GetHour(),
+			dtTimeLast.GetMinute(),
+			dtTimeLast.GetSecond());
+		CStringW szLastFOTCalc=_T("***last FOTcalc: ");
+		szLastFOTCalc+=m_szLastCalculation;
+		szLastFOTCalc+=_T("***");
+		theApp.getLog()->WriteLine(szLastFOTCalc);
+	}
 	LeaveCriticalSection(&csFOTdate);
 }
 

@@ -9903,10 +9903,10 @@ bool CMainFrame::DeleteTrendData(CStringW sFolder)
 						{
 							DEBUGMSG(TRUE, (TEXT("DeleteTrendData fail %s\r\n"),sFile2));
 						}
-						/*else
+						else
 						{
-							DEBUGMSG(TRUE, (TEXT("DeleteTrendData ok %s\r\n"),sFile2));
-						}*/
+							//DEBUGMSG(TRUE, (TEXT("DeleteTrendData ok %s\r\n"),sFile2));
+						}
 					}
 					Sleep(0);
 					
