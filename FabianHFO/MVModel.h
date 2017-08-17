@@ -410,6 +410,7 @@ private:
 	static CList <CModelObserver*, CModelObserver*> m_ObserverList;
 
 	eVentMode m_eVentModePrevFOT;
+	BYTE m_iBackupPrevFOT;
 	eVolumeGuarantyAlarm m_eVGaranty;
 	eRunState m_eVentRunState;
 

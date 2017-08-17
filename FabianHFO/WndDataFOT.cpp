@@ -2596,6 +2596,12 @@ void CWndDataFOT::showFOTMessage()
 				Sleep(100);
 			}
 
+			/*if(getModel()->getDATAHANDLER()->PARADATA()->GetBackupPara()==0)
+			{
+				getModel()->getDATAHANDLER()->SetBackupParadata(0,true);
+				Sleep(100);
+			}*/
+
 			SetSTARTSTOPDepressed();
 		}
 		else

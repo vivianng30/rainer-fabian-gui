@@ -13,6 +13,7 @@
 	- FRAM addresses changed regarding trigger type!
 	- service settings: NEO+PED text aligned
 	- format last FOT switched to dd/mm/yyyy
+	- FOT: last value of CPAP backup will be saved and restored after FOT
  @endverbatim
  *
  * @subsection ver50162 Version 5.0.1.62

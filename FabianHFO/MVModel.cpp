@@ -77,6 +77,7 @@ CMVModel::CMVModel(void)
 	m_szUniqueID=_T("");
 
 	m_eVentModePrevFOT=VM_NONE;
+	m_iBackupPrevFOT=0;
 
 	m_bLoadHospitalSettingsFailed=false;
 	m_bVentilationRangeChanged=false;
@@ -1632,6 +1633,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			//DEBUGMSG(TRUE, (TEXT("EV_CONTROL_START_FOT_CONVENTIONAL 1\r\n")));
 			if(m_eVentModePrevFOT!=VM_CPAP)
 			{
+				m_iBackupPrevFOT=getDATAHANDLER()->PARADATA()->GetBackupPara();
 				//set CPAP backup para to off
 				getDATAHANDLER()->SetBackupParadata(0,false);
 
@@ -1642,6 +1644,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			}
 			else
 			{
+				m_iBackupPrevFOT=getDATAHANDLER()->PARADATA()->GetBackupPara();
 				//set CPAP backup para to off
 				getDATAHANDLER()->SetBackupParadata(0,true);
 			}
@@ -1652,11 +1655,6 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			{
 				getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_ON);
 			}
-
-			//DEBUGMSG(TRUE, (TEXT("EV_CONTROL_START_FOT_CONVENTIONAL end\r\n")));
-
-			
-			
 		}
 		break;
 	case CMVEventControl::EV_CONTROL_RESTORE_FOT_CONVENTIONAL:
@@ -1664,6 +1662,18 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			//DEBUGMSG(TRUE, (TEXT("EV_CONTROL_RESTORE_FOT_CONVENTIONAL\r\n")));
 			if(m_eVentModePrevFOT!=VM_NONE)
 			{
+				if(m_eVentModePrevFOT!=VM_CPAP)
+				{
+					//set CPAP backup para to previous value
+					getDATAHANDLER()->SetBackupParadata(m_iBackupPrevFOT,false);
+				}
+				else
+				{
+					//set CPAP backup para to previous value
+					getDATAHANDLER()->SetBackupParadata(m_iBackupPrevFOT,true);
+					Sleep(100);
+				}
+
 				//DEBUGMSG(TRUE, (TEXT("EV_CONTROL_RESTORE_FOT_CONVENTIONAL 1\r\n")));
 				if(false==getVMODEHANDLER()->changeVentMode(m_eVentModePrevFOT,1,false))
 					theApp.getLog()->WriteLine(_T("#HFO:0228fot"));
