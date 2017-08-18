@@ -1860,21 +1860,6 @@ void CWndDataFOT::Draw(bool bStatic)
 
 void CWndDataFOT::drawPIPmax()
 {
-	/*if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
-	{
-		if(getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara()==1)
-		{
-			return;
-		}
-	}
-	else
-	{
-		if(getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara()==1)
-		{
-			return;
-		}
-	}*/
-
 	bool bVGon=false;
 	if(		true==getModel()->getFOTThread()->isFOToriginVGstateOn() 
 		||	true==getModel()->getALARMHANDLER()->isVgarantAutoTurnedOff_FOT()

@@ -199,7 +199,7 @@ CMVModel *CThreadFOT::getModel()
 //	return m_bFOTrunning;
 //}
  
-void CThreadFOT::loadFOT()
+void CThreadFOT::loadHFO_FOTvalues()
 {
 	m_eFOToriginHFIERatioPara=getModel()->getDATAHANDLER()->PARADATA()->GetIERatioParaHFO();
 	m_iFOToriginHFFreqPara=getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara();

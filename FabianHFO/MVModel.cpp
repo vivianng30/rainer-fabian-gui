@@ -108,7 +108,7 @@ CMVModel::CMVModel(void)
 	m_szBuildVersion = _T("9.0.0.0");
 #else
 	m_szVersion = _T("5.0.1");
-	m_szBuildVersion = _T("5.0.1.63");
+	m_szBuildVersion = _T("5.0.1.64");
 #endif
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO"),true);
@@ -509,8 +509,7 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	}
 	if(getDATAHANDLER()->isFOTLicenseAvailable()==true)
 	{
-		//initFOTthread();xxx
-		getFOTThread()->loadFOT();
+		getFOTThread()->loadHFO_FOTvalues();
 	}
 	if(getDATAHANDLER()->isLUNGRECLicenseAvailable()==false && getCONFIG()->GetParaDataFREQ_REC()!=0)
 	{
@@ -2117,10 +2116,16 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 	case CMVEventUI::EV_PARABN_MINFLOW:
 	case CMVEventUI::EV_PARABN_VGARANT:
 	case CMVEventUI::EV_PARABN_O2FLUSH:
-	case CMVEventUI::EV_PARABN_HFFREQ:
-	//case CMVEventUI::EV_PARABN_PMAN:
-	//case CMVEventUI::EV_PARABN_IERATIO:
 		{
+			NotifyParaBtnEvent(pEvent);
+		}
+		break;
+	case CMVEventUI::EV_PARABN_HFFREQ:
+		{
+			if(getDATAHANDLER()->isFOTLicenseAvailable()==true)
+			{
+				getFOTThread()->loadHFO_FOTvalues();
+			}
 			NotifyParaBtnEvent(pEvent);
 		}
 		break;
@@ -2278,14 +2283,11 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 				getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
 			}
 
-			//rku PMEANLIMITS ?????????????????
 			getALARMHANDLER()->setAlimitsMinMaxRangePressure();
 			NotifyParaBtnEvent(pEvent);
 		}
 		break;
 	case CMVEventUI::EV_PARABN_IERATIO:
-	case CMVEventUI::EV_PARABN_HFFREQREC:
-	case CMVEventUI::EV_PARABN_PMITT:
 		{
 			if(getALARMHANDLER()->getAlimitState_MAPminLimit()==AL_AUTO)
 			{
@@ -2297,6 +2299,28 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 			}
 			//rku PMEANLIMITS ?????????????????
 			getALARMHANDLER()->setAlimitsMinMaxRangePressure();
+
+			if(getDATAHANDLER()->isFOTLicenseAvailable()==true)
+			{
+				getFOTThread()->loadHFO_FOTvalues();
+			}
+
+			NotifyParaBtnEvent(pEvent);
+		}
+		break;
+	case CMVEventUI::EV_PARABN_HFFREQREC:
+	case CMVEventUI::EV_PARABN_PMITT:
+		{
+			if(getALARMHANDLER()->getAlimitState_MAPminLimit()==AL_AUTO)
+			{
+				getDATAHANDLER()->calculateAutoAlarmlimitMAPmin();
+			}
+			if(getALARMHANDLER()->getAlimitState_MAPmaxLimit()==AL_AUTO)
+			{
+				getDATAHANDLER()->calculateAutoAlarmlimitMAPmax();
+			}
+			getALARMHANDLER()->setAlimitsMinMaxRangePressure();
+
 			NotifyParaBtnEvent(pEvent);
 		}
 		break;
@@ -2313,6 +2337,11 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 			else if(getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
 			{
 				getDATAHANDLER()->calculateAutoAlarmlimitPIPHIGH();
+			}
+
+			if(getDATAHANDLER()->isFOTLicenseAvailable()==true)
+			{
+				getFOTThread()->loadHFO_FOTvalues();
 			}
 
 			//rku PMEANLIMITS ?????????????????

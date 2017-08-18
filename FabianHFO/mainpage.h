@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50164 Version 5.0.1.64
+ * @date 2017-08-18
+ * @verbatim
+	- FOT bug: FOT-HVO PIPmax fixed
+ @endverbatim
+ *
  * @subsection ver50163 Version 5.0.1.63
  * @date 2017-08-10	
  * @verbatim
