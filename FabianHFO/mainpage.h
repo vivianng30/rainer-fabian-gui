@@ -10,7 +10,7 @@
  * @subsection ver50165 Version 5.0.1.65
  * @date 2017-08-25
  * @verbatim
-	- alarm handling: ALARM_SysAl_P_IN_O2 and ALARM_SysAl_P_IN_AIR will be checked for isActiveAlarmHigherPriority
+	- alarm handling: ALARM_SysAl_P_IN_O2, ALARM_SysAl_P_IN_AIR, ALARM_SysFail_OUTOFMEMORY and ALARM_SysFail_VOLTAGE will be checked for isActiveAlarmHigherPriority
  @endverbatim
  *
  * @subsection ver50164 Version 5.0.1.64

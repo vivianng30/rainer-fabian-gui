@@ -3345,7 +3345,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_VOLTAGE()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysFail_VOLTAGE)))
+	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysFail_VOLTAGE)))
 		return false;
 	return true;
 }
@@ -3630,7 +3630,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_OUTOFMEMORY()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysFail_OUTOFMEMORY)))
+	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysFail_OUTOFMEMORY)))
 		return false;
 	return true;
 }
