@@ -2963,6 +2963,21 @@ public:
 	bool isActiveAlarmHigherOrSamePriority(eAlarmPrio prioAlarm);
 
 	/**********************************************************************************************//**
+	 * \fn	bool CAlarmMgmtHandler::isActiveAlarmHigherPriority(eAlarmPrio prioAlarm);
+	 *
+	 * \brief	Query if 'prioAlarm' is active alarm higher priority.
+	 *
+	 * \author	Rainer
+	 * \date	25.08.2017
+	 *
+	 * \param	prioAlarm	The prio alarm.
+	 *
+	 * \return	True if active alarm higher priority, false if not.
+	 **************************************************************************************************/
+
+	bool isActiveAlarmHigherPriority(eAlarmPrio prioAlarm);
+
+	/**********************************************************************************************//**
 	 * Determine if we can set alarm checksum con picture.
 	 *
 	 * \author	Rainer

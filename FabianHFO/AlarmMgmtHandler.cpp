@@ -3150,6 +3150,21 @@ bool CAlarmMgmtHandler::isActiveAlarmHigherOrSamePriority(eAlarmPrio prioAlarm)
 	}
 	return bRes;
 }
+
+bool CAlarmMgmtHandler::isActiveAlarmHigherPriority(eAlarmPrio prioAlarm)
+{
+	bool bRes=false;
+	if(AL_NONE!=getActiveAlarm())//active alarm
+	{
+		// alarm with higher priority active???
+		if(	getPrioActiveAlarm() < prioAlarm )	
+		{
+			bRes=true;
+		}
+	}
+	return bRes;
+}
+
 bool CAlarmMgmtHandler::CanSetAlarm_ChecksumConPIC()
 {
 	if(ALARM_SysFail_ChecksumConPIC->getAlarmState()==AS_ACTIVE)
@@ -3648,7 +3663,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_P_IN_O2()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysAl_P_IN_O2)))
+	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysAl_P_IN_O2)))
 		return false;
 	return true;
 }
@@ -3679,7 +3694,7 @@ bool CAlarmMgmtHandler::CanSetAlarm_P_IN_AIR()
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		return false;
 
-	if(isActiveAlarmHigherOrSamePriority(getAlarmPrio(AL_SysAl_P_IN_AIR)))
+	if(isActiveAlarmHigherPriority(getAlarmPrio(AL_SysAl_P_IN_AIR)))
 		return false;
 	return true;
 }

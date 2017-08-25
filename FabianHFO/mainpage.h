@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50165 Version 5.0.1.65
+ * @date 2017-08-25
+ * @verbatim
+	- alarm handling: ALARM_SysAl_P_IN_O2 and ALARM_SysAl_P_IN_AIR will be checked for isActiveAlarmHigherPriority
+ @endverbatim
+ *
  * @subsection ver50164 Version 5.0.1.64
  * @date 2017-08-18
  * @verbatim
