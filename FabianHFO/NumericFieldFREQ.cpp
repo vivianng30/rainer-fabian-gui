@@ -118,7 +118,7 @@ bool CNumericFieldFREQ::drawData(bool bData, bool bFrames, bool bText, bool bLim
 		DrawText(hdcMem,_T("--"),-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 	}
 	else if(getModel()->getVMODEHANDLER()->activeModeIsDUOPAP() 
-		&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_NCPAP()==MAXRANGE_TRIGGER_OFF)
+		&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP()==MAXRANGE_TRIGGER_OFF)
 	{
 		DrawText(hdcMem,_T("--"),-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 	}

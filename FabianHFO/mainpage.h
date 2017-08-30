@@ -7,6 +7,14 @@
  *
  * @section ver Version history and changelog
  *
+ * @subsection ver50166 Version 5.0.1.66
+ * @date 2017-08-30
+ * @verbatim
+	- DUOPAP Freq display corrected
+	- HFOV Leak display corrected
+	- DCO2 alarm limits hidden when FS off
+ @endverbatim
+ * 
  * @subsection ver50165 Version 5.0.1.65
  * @date 2017-08-25
  * @verbatim

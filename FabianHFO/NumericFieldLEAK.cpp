@@ -111,7 +111,7 @@ bool CNumericFieldLEAK::drawData(bool bData, bool bFrames, bool bText, bool bLim
 
 	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 	{
-		getModel()->getDATAHANDLER()->getAVGMessureDataHFFreq();
+		iBPM=getModel()->getDATAHANDLER()->getAVGMessureDataHFFreq();
 	}
 	else
 	{
