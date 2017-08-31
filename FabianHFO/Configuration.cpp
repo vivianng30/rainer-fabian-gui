@@ -9019,7 +9019,11 @@ void CConfiguration::SetAlarmlimitDCO2maxHF(int value)
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_DCO2MAX_HF_16, value);
 	if(getModel()->getAcuLink()!=NULL)
 	{
-		if(GetAlarmlimitStateDCO2maxHF()==AL_OFF)
+		if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_DCO2MAX,ALINK_OFF);
+		}
+		else if(GetAlarmlimitStateDCO2maxHF()==AL_OFF)
 		{
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_DCO2MAX,ALINK_OFF);
 		}
@@ -9036,7 +9040,11 @@ void CConfiguration::SetAlarmlimitStateDCO2maxHF(eAlarmLimitState state)
 
 	if(getModel()->getAcuLink()!=NULL)
 	{
-		if(state==AL_OFF)
+		if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_DCO2MAX,ALINK_OFF);
+		}
+		else if(state==AL_OFF)
 		{
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_DCO2MAX,ALINK_OFF);
 		}
@@ -9064,7 +9072,11 @@ void CConfiguration::SetAlarmlimitDCO2minHF(int value)
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_DCO2MIN_HF_16, value);
 	if(getModel()->getAcuLink()!=NULL)
 	{
-		if(GetAlarmlimitStateDCO2minHF()==AL_OFF)
+		if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_DCO2MIN,ALINK_OFF);
+		}
+		else if(GetAlarmlimitStateDCO2minHF()==AL_OFF)
 		{
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_DCO2MIN,ALINK_OFF);
 		}
@@ -9081,7 +9093,11 @@ void CConfiguration::SetAlarmlimitStateDCO2minHF(eAlarmLimitState state)
 
 	if(getModel()->getAcuLink()!=NULL)
 	{
-		if(state==AL_OFF)
+		if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
+		{
+			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_DCO2MIN,ALINK_OFF);
+		}
+		else if(state==AL_OFF)
 		{
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_DCO2MIN,ALINK_OFF);
 		}

@@ -108,7 +108,7 @@ CMVModel::CMVModel(void)
 	m_szBuildVersion = _T("9.0.0.0");
 #else
 	m_szVersion = _T("5.0.1");
-	m_szBuildVersion = _T("5.0.1.67");
+	m_szBuildVersion = _T("5.0.1.68");
 #endif
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO"),true);
@@ -6206,7 +6206,10 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MVMIN,ALINK_NOTVALID);
 		}
 		
-		getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMAX,getALARMHANDLER()->getAlimitPIPmax());
+		if(mode==VM_HFO)
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMAX,ALINK_NOTVALID);
+		else
+			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMAX,getALARMHANDLER()->getAlimitPIPmax());
 
 		if(mode==VM_NCPAP || mode==VM_DUOPAP || mode==VM_THERAPIE || mode==VM_HFO || mode==VM_CPAP)
 			getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMIN,ALINK_NOTVALID);
@@ -6252,7 +6255,12 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 
 		if(mode==VM_HFO)
 		{
-			if(getALARMHANDLER()->getAlimitState_DCO2maxLimit()==AL_OFF)
+			if(getDATAHANDLER()->IsFlowSensorStateOff()==true)
+			{
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_DCO2MAX,ALINK_OFF);
+				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_DCO2MIN,ALINK_OFF);
+			}
+			else if(getALARMHANDLER()->getAlimitState_DCO2maxLimit()==AL_OFF)
 			{
 				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_DCO2MAX,ALINK_OFF);
 				getAcuLink()->setParaData(ALINK_SETT_ALIMIT_DCO2MIN,ALINK_OFF);
