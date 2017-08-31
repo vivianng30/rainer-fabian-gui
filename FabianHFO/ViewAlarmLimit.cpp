@@ -1423,13 +1423,16 @@ void CViewAlarmLimit::drawFrameHFO(CDC* pDC)
 	if(m_pcAlarmlimitPara2)
 		m_pcAlarmlimitPara2->Draw(hdc,0,156);	//MAP
 
+	/*if(m_pcAlarmlimitPara2)
+		m_pcAlarmlimitPara2->Draw(hdc,0,266);	//DCO2*/
+
 	if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
 	{
+		if(m_pcAlarmlimitPara2)						//pro - added
+			m_pcAlarmlimitPara2->Draw(hdc,0,266);	//DCO2
+
 		if(m_pcAlarmlimitPara1)
 			m_pcAlarmlimitPara1->Draw(hdc,0,376);	//Leak HFO
-
-		if(m_pcAlarmlimitPara2)
-			m_pcAlarmlimitPara2->Draw(hdc,0,266);	//DCO2
 	}
 }
 
@@ -1964,8 +1967,41 @@ void CViewAlarmLimit::drawLabel_HFO(CDC* pDC)
 	}
 
 	SelectObject(hdc,g_hf10AcuBold);
+    /*
+	//--------------------DCO2-------------------------------------
+	rc.left = 10;
+	rc.right = 210;
+	rc.top = 266;
+	rc.bottom = 299;
+	nameText=_T("DCO");
+	DrawText(hdc,nameText,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
+	CSize sz = pDC->GetTextExtent(nameText);
 
-	if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
+	SelectObject(hdc,g_hf7AcuBold);
+
+	rc.top = 266;
+	rc.bottom = 301;
+	rc.left = 10+sz.cx;
+	nameText=_T("2");
+	DrawText(hdc,nameText,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
+
+	SelectObject(hdc,g_hf6AcuNorm);
+
+	rc.top = 266;
+	rc.left = 10;
+	rc.bottom = 317;
+
+	pDC->DrawText(_T("[ml  /sec]"),&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
+
+	rc.bottom = 314;
+	rc.left+=16;
+
+	pDC->DrawText(_T("2"),&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
+
+	rc.left = 10;
+	rc.right = 210;*/
+
+	if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false) //pro - added
 	{
 		//--------------------DCO2-------------------------------------
 		rc.left = 10;
@@ -2886,9 +2922,17 @@ void CViewAlarmLimit::drawDataVentilation_HFO(HDC hdc)
 	//wsprintf(psz,_T("%0.0f"), ((double)getModel()->getDATAHANDLER()->getAVGMessureDataPmitt())/10);
 	DrawText(hdc,psz,-1,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 
+	/*
+	//--------------------DCO2max-------------------------------------
+	rc.top = 322;
+	rc.bottom = 371;
+
+	wsprintf(psz,_T("%d"),getModel()->getDATAHANDLER()->getAVGMessureDataDCO2());
+	DrawText(hdc,psz,-1,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);*/
+
 	if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
 	{
-		//--------------------DCO2max-------------------------------------
+		//--------------------DCO2max------------------------------------- //pro - added
 		rc.top = 322;
 		rc.bottom = 371;
 
@@ -4857,14 +4901,21 @@ void CViewAlarmLimit::showALimitButtons_HFO()
 		m_pcAlarmLimit_MAPmin->ShowWindow(SW_SHOW);
 	}
 
+/*
+if(m_pcAlarmLimit_DCO2hi)
+{
+	m_pcAlarmLimit_DCO2hi->ShowWindow(SW_SHOW);
+}
+
+if(m_pcAlarmLimit_DCO2lo)
+{
+	m_pcAlarmLimit_DCO2lo->ShowWindow(SW_SHOW);
+}
+*/
+
 	if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
 	{
-		if(m_pcAlarmLimit_Leak)
-		{
-			m_pcAlarmLimit_Leak->ShowWindow(SW_SHOW);
-		}
-
-		if(m_pcAlarmLimit_DCO2hi)
+		if(m_pcAlarmLimit_DCO2hi) //pro - added
 		{
 			m_pcAlarmLimit_DCO2hi->ShowWindow(SW_SHOW);
 		}
@@ -4872,6 +4923,11 @@ void CViewAlarmLimit::showALimitButtons_HFO()
 		if(m_pcAlarmLimit_DCO2lo)
 		{
 			m_pcAlarmLimit_DCO2lo->ShowWindow(SW_SHOW);
+		}
+
+		if(m_pcAlarmLimit_Leak)
+		{
+			m_pcAlarmLimit_Leak->ShowWindow(SW_SHOW);
 		}
 	}
 }
