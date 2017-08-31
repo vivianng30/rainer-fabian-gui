@@ -1677,7 +1677,11 @@ void CAlarmConditionHandler::setAlimitMVminDefault(int value)
 {
 	ALIMIT_MVMIN->setCurValue(value);
 
-	if(value<=260)
+	if(getModel()->getALARMHANDLER()->getAlimitState_MVminLimit() == AL_OFF) //pro - added
+	{
+		ALIMIT_MVMAX->setMinValue(MINRANGE_NEONATAL_MVMIN);
+	}
+	else if(value<=260)
 	{
 		ALIMIT_MVMAX->setMinValue(value+10);
 	}
