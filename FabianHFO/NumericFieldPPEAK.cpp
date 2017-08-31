@@ -103,6 +103,16 @@ bool CNumericFieldPPEAK::drawData(bool bData, bool bFrames, bool bText, bool bLi
 	//###########################################################################
 	SHORT iPmax=getModel()->getDATAHANDLER()->getBTBMessureDataPINSP();
 
+	if(false==getModel()->getDATAHANDLER()->getFOToscillationState() && eActiveVentMode==VM_HFO && false==getModel()->isMANBREATHrunning()) //pro - added
+	{
+		double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
+		double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+		if(iAmpCorFactor==0)
+			iAmpCorFactor=1;
+		iPmax=(SHORT)(((double)iPmax-iPmitt)*iAmpCorFactor)+iPmitt;
+	}
+
+
 	if(m_eSize==NUMERICSIZE_1)
 	{
 		SelectObject(hdcMem,g_hf33AcuBoldNum);
