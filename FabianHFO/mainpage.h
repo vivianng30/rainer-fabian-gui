@@ -6,7 +6,14 @@
  *
  *
  * @section ver Version history and changelog
- *
+ * @subsection ver50167 Version 5.0.1.67
+ * @date 2017-08-31
+ * @verbatim
+	- PIP displayed correct in numeric at HFOV //pro - added
+	- added condition for pressure graph in HFOV -> shifting is not needed when manual breath is running
+	- PIP high alarm limit is not drawn in HFO mode
+ @endverbatim
+ * 
  * @subsection ver50166 Version 5.0.1.66
  * @date 2017-08-30
  * @verbatim

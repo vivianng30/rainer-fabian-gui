@@ -1364,7 +1364,7 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 						iRes=MAKEWORD(byLoProx,byHiProx);
 						
 						//AmplitudeCorrectionFactor
-						if(false==getModel()->getDATAHANDLER()->getFOToscillationState() && bHFOmode)
+						if(false==getModel()->getDATAHANDLER()->getFOToscillationState() && bHFOmode && !m_bManBreathRunning)
 						{
 							double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
 							double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
@@ -3522,7 +3522,7 @@ int CInterfaceSPI::ReadSPIData()
 		iRes=MAKEWORD(byLo,byHi);
 
 		//AmplitudeCorrectionFactor
-		if(false==getModel()->getDATAHANDLER()->getFOToscillationState() && bHFOmode)
+		if(false==getModel()->getDATAHANDLER()->getFOToscillationState() && bHFOmode && !m_bManBreathRunning)
 		{
 			double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
 			double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
@@ -4185,7 +4185,7 @@ int CInterfaceSPI::ReadSPIData()
 		iRes=MAKEWORD(byLo,byHi);
 
 		//AmplitudeCorrectionFactor
-		if(false==getModel()->getDATAHANDLER()->getFOToscillationState() && bHFOmode)
+		if(false==getModel()->getDATAHANDLER()->getFOToscillationState() && bHFOmode && !m_bManBreathRunning)
 		{
 			double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
 			double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());

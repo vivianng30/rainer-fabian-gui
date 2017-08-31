@@ -82,7 +82,8 @@ bool CNumericFieldPPEAK::drawData(bool bData, bool bFrames, bool bText, bool bLi
 		drawStaticText(pDCStatic);
 	}
 
-	if(bLimits)
+	eVentMode eActiveVentMode=getModel()->getALARMHANDLER()->getSafeActiveVentMode();
+	if(bLimits && eActiveVentMode!=VM_HFO)
 	{
 		drawLimits(pDCStatic);
 	}
