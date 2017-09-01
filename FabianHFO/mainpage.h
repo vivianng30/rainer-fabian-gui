@@ -12,6 +12,7 @@
 	- aculink: if flowsensor is off DCO2 alarm limits are send as OFF
 	- aculink: PIPmax alarm limit is set as ALINK_NOTVALID in case of HFO mode
 	- aculink: HFO mode PIP value is send correct now
+	- aculink: HFO mode MV is sent as AVG instead of BTB
  @endverbatim
  * 
  * @section ver Version history and changelog

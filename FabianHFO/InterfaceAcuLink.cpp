@@ -882,9 +882,9 @@ void CInterfaceAcuLink::sendMeasurementDataHFO()
 	setMeasurementData(ALINK_MSMNT_C20C,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_RESISTANCE,ALINK_NOTVALID);
 	if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
-		setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_MIN_VOL)/10);
+		setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_MIN_VOL)/10);
 	else
-		setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_MIN_VOL));
+		setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_MIN_VOL));
 	setMeasurementData(ALINK_MSMNT_ANTEIL_RESP,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_TVE,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_TVE_RESP,ALINK_NOTVALID);
