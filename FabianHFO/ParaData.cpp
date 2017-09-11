@@ -1575,7 +1575,7 @@ void CParaData::SetDataFromMode(eVentMode mode)
 
 			getModel()->getDATAHANDLER()->PARADATA()->SetVGarantPara_IPPV(getModel()->getDATAHANDLER()->PRESET()->GetVGarantPara_IPPV(),false,true);
 
-			//SetBPMPara_IPPV(GetBPMPara_IPPV(),false,true); //todo Preset - parameter save nextRelease
+			SetBPMPara_IPPV(GetBPMPara_IPPV(),false,true);
 		}
 		break;
 	case VM_PRE_SIMV:
@@ -1614,8 +1614,8 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			}
 			getModel()->getDATAHANDLER()->PARADATA()->SetVGarantPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetVGarantPara_TRIGGER(),false,true);
 
-			//SetBPMPara_TRIGGER(GetBPMPara_TRIGGER(),false,true);//todo Preset - parameter save nextRelease
-			//SetTriggerPara_CONV(GetTriggerPara_CONV(),false,true);//todo Preset - parameter save nextRelease
+			SetBPMPara_TRIGGER(GetBPMPara_TRIGGER(),false,true);
+			SetTriggerPara_CONV(GetTriggerPara_CONV(),false,true);
 		}
 		break;
 	case VM_PRE_HFO:
@@ -1627,15 +1627,15 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 
-			//SetFreqRecPara(GetFreqRecPara(),false,true);//todo Preset - parameter save nextRelease
-			//SetHFPMeanRecPara(GetHFPMeanRecPara(),false,true);//todo Preset - parameter save nextRelease
-			//SetITimeRecPara(GetITimeRecPara(),false,true);//todo Preset - parameter save nextRelease
-			//SetHFFlowPara(GetHFFlowPara(),false,true);//todo Preset - parameter save nextRelease
-			//SetHFAMPLPara(GetHFAMPLPara(),false,true);//todo Preset - parameter save nextRelease
-			//SetHFPMeanPara(GetHFPMeanPara(),false,true);//todo Preset - parameter save nextRelease
-			//SetHFAMPLmaxPara(GetHFAMPLmaxPara(),false,true);//todo Preset - parameter save nextRelease
-			//SetIERatioParaHFO(GetIERatioParaHFO(),false,true);//todo Preset - parameter save nextRelease
-			//SetHFFreqPara(GetHFFreqPara(),false,true);//todo Preset - parameter save nextRelease
+			SetFreqRecPara(GetFreqRecPara(),false,true);
+			SetHFPMeanRecPara(GetHFPMeanRecPara(),false,true);
+			SetITimeRecPara(GetITimeRecPara(),false,true);
+			SetHFFlowPara(GetHFFlowPara(),false,true);
+			SetHFAMPLPara(GetHFAMPLPara(),false,true);
+			SetHFPMeanPara(GetHFPMeanPara(),false,true);
+			SetHFAMPLmaxPara(GetHFAMPLmaxPara(),false,true);
+			SetIERatioParaHFO(GetIERatioParaHFO(),false,true);
+			SetHFFreqPara(GetHFFreqPara(),false,true);
 		}
 		break;
 	case VM_PRE_PSV:
@@ -1675,10 +1675,10 @@ void CParaData::SetDataFromMode(eVentMode mode)
 
 			getModel()->getDATAHANDLER()->PARADATA()->SetVGarantPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetVGarantPara_TRIGGER(),false,true);
 
-			//SetPpsvPara(GetPpsvPara(),false,true);//todo Preset - parameter save nextRelease
-			//SetITimePara_TRIGGER(GetITimePara_TRIGGER(),false,true);//todo Preset - parameter save nextRelease
-			//SetETIMEPara_TRIGGER(GetETIMEPara_TRIGGER(), false,true);//todo Preset - parameter save nextRelease
-			//SetBPMPara_TRIGGER(GetBPMPara_TRIGGER(),false,true);//todo Preset - parameter save nextRelease
+			SetPpsvPara(GetPpsvPara(),false,true);
+			SetITimePara_TRIGGER(GetITimePara_TRIGGER(),false,true);
+			SetETIMEPara_TRIGGER(GetETIMEPara_TRIGGER(), false,true);
+			SetBPMPara_TRIGGER(GetBPMPara_TRIGGER(),false,true);
 		}
 		break;
 	case VM_PRE_CPAP:
@@ -1688,10 +1688,10 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 
-			//SetFlowminPara(GetFlowminPara(),false,true);//todo Preset - parameter save nextRelease
-			//SetCPAPPara(GetCPAPPara(),false,true);//todo Preset - parameter save nextRelease
-			//SetPManualCPAPPara(GetPManualCPAPPara(),false,true);//todo Preset - parameter save nextRelease
-			//SetBackupPara(GetBackupPara(),false,true);//todo Preset - parameter save nextRelease
+			SetFlowminPara(GetFlowminPara(),false,true);
+			SetCPAPPara(GetCPAPPara(),false,true);
+			SetPManualCPAPPara(GetPManualCPAPPara(),false,true);
+			SetBackupPara(GetBackupPara(),false,true);
 		}
 		break;
 	case VM_PRE_NCPAP:
@@ -1701,8 +1701,8 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 
-			//SetCPAPNMODEPara(GetCPAPNMODEPara(),false,true);//todo Preset - parameter save nextRelease
-			//SetPManualNMODEPara(GetPManualNMODEPara(),false,true);//todo Preset - parameter save nextRelease
+			SetCPAPNMODEPara(GetCPAPNMODEPara(),false,true);
+			SetPManualNMODEPara(GetPManualNMODEPara(),false,true);
 		}
 		break;
 	case VM_PRE_THERAPIE:
@@ -1711,7 +1711,7 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 
-			//SetTherapieFLOWPara(GetTherapieFLOWPara(),false,true);//todo Preset - parameter save nextRelease
+			SetTherapieFLOWPara(GetTherapieFLOWPara(),false,true);
 		}
 		break;
 	case VM_PRE_DUOPAP:
@@ -1721,12 +1721,12 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 
-			//SetCPAPNMODEPara(GetCPAPNMODEPara(),false,true);//todo Preset - parameter save nextRelease
-			//SetPManualNMODEPara(GetPManualNMODEPara(),false,true);//todo Preset - parameter save nextRelease
-			//SetTriggerPara_DUOPAP(GetTriggerPara_DUOPAP(),false,true);//todo Preset - parameter save nextRelease
-			//SetITimeNMODEPara(GetITimeNMODEPara(),false,true);//todo Preset - parameter save nextRelease
-			//SetETIMENMODEPara(GetETIMENMODEPara(),false,true);//todo Preset - parameter save nextRelease
-			//SetBPMNMODEPara(GetBPMNMODEPara(),false,true);//todo Preset - parameter save nextRelease
+			SetCPAPNMODEPara(GetCPAPNMODEPara(),false,true);
+			SetPManualNMODEPara(GetPManualNMODEPara(),false,true);
+			SetTriggerPara_DUOPAP(GetTriggerPara_DUOPAP(),false,true);
+			SetITimeNMODEPara(GetITimeNMODEPara(),false,true);
+			SetETIMENMODEPara(GetETIMENMODEPara(),false,true);
+			SetBPMNMODEPara(GetBPMNMODEPara(),false,true);
 		}
 		break;
 	default:
