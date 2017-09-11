@@ -8450,6 +8450,11 @@ void CViewParaBtn::load_HF_PMEANRECpara(bool bPRESET)
 		if(fv.iValue-MAXDIFF_PMEANREC<getModel()->getDATAHANDLER()->GetCurrentPmeanPara())
 		{
 			fv.iValue=getModel()->getDATAHANDLER()->GetCurrentPmeanPara()+MAXDIFF_PMEANREC;
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				fv.iValue=fv.iUpperLimit;
+				getModel()->getDATAHANDLER()->SetCurrentHFPMeanRecPara(fv.iValue);
+			}
 			getModel()->getDATAHANDLER()->SetCurrentHFPMeanRecPara(fv.iValue);
 		}
 		m_pcPara_PMEAN_REC->SetValue(fv, true);

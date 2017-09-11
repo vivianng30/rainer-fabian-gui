@@ -11,6 +11,7 @@
  * @verbatim
 	- mainboard 3.4 included
 	- BUG-FAB-001 Preset - parameter save fixed
+	- BUG-HFO-014 HFO Pmean rec fixed
  @endverbatim
  * 
  * @section ver Version history and changelog
