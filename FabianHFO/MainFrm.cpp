@@ -2776,13 +2776,13 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 			break;
-		case WM_SETALARM_P_IN_MIXER:
-			{
-				getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_P_IN_MIXER);
-				//getModel()->getALARMHANDLER()->SetAlarm_P_IN_MIXER(_T(""));
-				return 1;
-			}
-			break;
+		//case WM_SETALARM_P_IN_MIXER:
+		//	{
+		//		getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_P_IN_MIXER);
+		//		//getModel()->getALARMHANDLER()->SetAlarm_P_IN_MIXER(_T(""));
+		//		return 1;
+		//	}
+		//	break;
 		case WM_SETALARM_VOLTAGE:
 			{
 				getModel()->getDATAHANDLER()->ReadI2CWatchdogState();
