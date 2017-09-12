@@ -9058,6 +9058,25 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 			}
 		}
 	}
+	else if(eActiveVentMode==VM_HFO
+		&& getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
+	{
+		if(stateMAPmax==AL_ON || stateMAPmax==AL_AUTO)
+		{
+			if(	MessureData.m_iPmitt > getAlimitMAPmax())
+			{
+				bMAPmax_Alarm=true;
+			}
+		}
+
+		if(stateMAPmin==AL_ON || stateMAPmin==AL_AUTO)
+		{
+			if( MessureData.m_iPmitt < getAlimitMAPmin())
+			{
+				bMAPmin_Alarm=true;
+			}
+		}
+	}
 	else if((eActiveVentMode==VM_SIMV || eActiveVentMode==VM_SIPPV ||eActiveVentMode==VM_CPAP)
 			&& getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
 	{
