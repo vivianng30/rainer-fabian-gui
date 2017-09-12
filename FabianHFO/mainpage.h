@@ -13,6 +13,7 @@
 	- BUG-FAB-001 Preset - parameter save fixed
 	- BUG-HFO-014 HFO Pmean rec fixed
 	- WM_SETALARM_P_IN_MIXER deleted
+	- HFO+FS off: Pmean not suppressed
  @endverbatim
  * 
  * @section ver Version history and changelog
