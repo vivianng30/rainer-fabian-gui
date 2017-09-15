@@ -776,9 +776,6 @@ public:
 	int getSizeSavedBreath();
 	void setSizeSavedBreath(int iSize);
 
-	void setAcuLinkStarted();
-	bool isAcuLinkStarted();
-
 	void enableProcPressureCal60();
 	void disableProcPressureCal60();
 	bool isProcPressureCal60enabled();
@@ -951,8 +948,7 @@ private:
 	int m_iPEEP_PPSVdifference; ///< The i peep pps vdifference
 	int m_iIERatioIpart;	///< The IE ratio ipart
 	int m_iIERatioEpart;	///< The IE ratio epart
-	int m_iProcPressureCal60;   ///< The proc pressure calibration 60
-
+	
 	
 	UINT m_iSPIErrorCodeBits;   ///< The spi error code bits
 	UINT m_iCOMErrorCodeBits;   ///< 32 Bit
@@ -1032,7 +1028,6 @@ private:
 	bool m_bNIVTRIGGERLicenseAvailable; ///< True if nivtrigger license available
 
 	bool m_bPRICOrunning;   ///< True to pric orunning
-	bool m_bAcuLinkStarted; ///< True if acu link started
 	bool m_bDoDelTrendThread;   ///< True to do delete trend thread
 	bool m_bConPICChecksumError;	///< True to con picture checksum error
 	bool m_bAccuSupply; ///< True to accu supply

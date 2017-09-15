@@ -170,8 +170,7 @@ CDataHandler::CDataHandler(void)
 	m_bLEDdisplay=true;
 
 	m_bPRICOrunning=false;
-	m_bAcuLinkStarted=false;
-
+	
 	m_iNumericIPPVcount=0;
 	m_iNumericSIPPVcount=0;
 	m_iNumericSIMVcount=0;
@@ -649,7 +648,6 @@ CDataHandler::CDataHandler(void)
 	m_crGraphColor_SAVEDLOOP=0x000000;
 	m_crGraphColor_TRIGGER=0x00dc00;
 
-	m_iProcPressureCal60=600;
 	m_bProcPressureCal60=false;
 
 	m_dwRemainCO2PumpTime=0;
@@ -781,7 +779,6 @@ void CDataHandler::setExit()
 	EnterCriticalSection(&csVentDataBuffer);
 	m_rbufVent.~CircularBuffer();
 	LeaveCriticalSection(&csVentDataBuffer);
-
 
 	EnterCriticalSection(&csCopyDataBuffer);
 	m_rbufCopy.~CircularBuffer();
@@ -1033,8 +1030,6 @@ void CDataHandler::init()
 	loadNumerics();
 	loadConfig();
 
-	
-
 	if(IsCurrentModeVGarantStateOn()==true)
 	{
 		m_eCurVgarantState=VOLUMEGAR_ON;
@@ -1045,7 +1040,6 @@ void CDataHandler::init()
 	}
 
 	checkVentRangeSettings();
-	
 
 	m_iContrastParm=GetContrast();
 
@@ -1063,10 +1057,6 @@ void CDataHandler::init()
 	}
 
 	checkTriggerTubeDependency();
-
-	/*DEBUGMSG(TRUE, (TEXT("OpTime DEV %d\r\n"),(int)m_ullOpTimeDevTickCountStarted));
-	DEBUGMSG(TRUE, (TEXT("OpTime ACU %d\r\n"),(int)m_ullOpTimeBattTickCountStarted));
-	DEBUGMSG(TRUE, (TEXT("OpTime HFO %d\r\n"),(int)m_ullOpTimeHFOTickCountStarted));*/
 }
 
 /**********************************************************************************************//**
@@ -18115,14 +18105,6 @@ BYTE CDataHandler::getCountNumericTHERAPY()
 	return m_iNumericTHERAPYcount;
 }
 
-void CDataHandler::setAcuLinkStarted()
-{
-	m_bAcuLinkStarted=true;
-}
-bool CDataHandler::isAcuLinkStarted()
-{
-	return m_bAcuLinkStarted;
-}
 
 //void CDataHandler::setProcPressureCal60(int iVal)
 //{

@@ -4053,3 +4053,21 @@ typedef struct tagNUMERICINI
 	eNumericType VAL8;
 	eNumericSize SIZE8;
 }NUMERICINI, *LPNUMERICINI;
+
+//Mode of Ventilator
+enum eNumBlock {
+	NUMB_NONE			= 0,
+	NUMB_IPPV			= 1,
+	NUMB_SIPPV			= 2,
+	NUMB_SIMV			= 3,
+	NUMB_SIMVPSV		= 4,
+	NUMB_PSV			= 5,
+	NUMB_CPAP			= 6, 
+	NUMB_NCPAP			= 7,
+	NUMB_DUOPAP			= 8,
+	NUMB_HFO			= 9,
+	NUMB_THERAPY		= 10,
+	NUMB_FLOWOFFCONV	= 11,
+	NUMB_FLOWOFFCPAP	= 12,
+	NUMB_FLOWOFFHFO		= 13
+};

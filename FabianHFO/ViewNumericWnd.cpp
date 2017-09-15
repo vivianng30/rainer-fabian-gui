@@ -135,7 +135,6 @@ BOOL CViewNumericWnd::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateC
 
 		SelectObject(m_hDC,hpenprev);
 		SelectObject(m_hDC,hbrprev);
-		//cbrBack.DeleteObject();//rkuNEWFIX
 
 		return 1;
 	}
@@ -849,12 +848,7 @@ void CViewNumericWnd::HideNumWnd()
 {
 	deleteWndNumConfig();
 }
-#define DIV 1024
-// #define DIV 1
 
-const char *divisor = "K";
-// char *divisor = "";
-#define WIDTH 7
 
 // **************************************************************************
 // 
@@ -958,243 +952,52 @@ void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 	{
 	case VM_IPPV:
 		{
-			if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
-			{
-				eBlock=NUMB_FLOWOFFCONV;
-				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCONV();
-				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV();
-
-				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
-				{
-					m_iCurNumericBlock=0;
-					getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
-				}
-			}
-			else
-			{
-				eBlock=NUMB_IPPV;
-				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericIPPV();
-				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericIPPV();
-
-				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
-				{
-					m_iCurNumericBlock=0;
-					getModel()->getCONFIG()->setLastNumericIPPV(m_iCurNumericBlock);
-				}
-			}
-			
+			eBlock=SetNumericBlock_IPPV();
 		}
 		break;
 	case VM_SIMV:
 		{
-			if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
-			{
-				eBlock=NUMB_FLOWOFFCONV;
-				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCONV();
-				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV();
-
-				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
-				{
-					m_iCurNumericBlock=0;
-					getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
-				}
-			}
-			else
-			{
-				eBlock=NUMB_SIMV;
-				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericSIMV();
-				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericSIMV();
-
-				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
-				{
-					m_iCurNumericBlock=0;
-					getModel()->getCONFIG()->setLastNumericSIMV(m_iCurNumericBlock);
-				}
-			}
-			
+			eBlock=SetNumericBlock_SIMV();
 		}
 		break;
 	case VM_SIMVPSV:
 		{
-			if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
-			{
-				eBlock=NUMB_FLOWOFFCONV;
-				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCONV();
-				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV();
-
-				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
-				{
-					m_iCurNumericBlock=0;
-					getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
-				}
-			}
-			else
-			{
-				eBlock=NUMB_SIMVPSV;
-				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericSIMVPSV();
-				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericSIMVPSV();
-
-				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
-				{
-					m_iCurNumericBlock=0;
-					getModel()->getCONFIG()->setLastNumericSIMVPSV(m_iCurNumericBlock);
-				}
-			}
-			
+			eBlock=SetNumericBlock_SIMVPSV();
 		}
 		break;
 	case VM_SIPPV:
 		{
-			if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
-			{
-				eBlock=NUMB_FLOWOFFCONV;
-				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCONV();
-				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV();
-
-				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
-				{
-					m_iCurNumericBlock=0;
-					getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
-				}
-			}
-			else
-			{
-				eBlock=NUMB_SIPPV;
-				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericSIPPV();
-				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericSIPPV();
-
-				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
-				{
-					m_iCurNumericBlock=0;
-					getModel()->getCONFIG()->setLastNumericSIPPV(m_iCurNumericBlock);
-				}
-			}
-			
+			eBlock=SetNumericBlock_SIPPV();
 		}
 		break;
 	case VM_PSV:
 		{
-			if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
-			{
-				eBlock=NUMB_FLOWOFFCONV;
-				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCONV();
-				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV();
-
-				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
-				{
-					m_iCurNumericBlock=0;
-					getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
-				}
-			}
-			else
-			{
-				eBlock=NUMB_PSV;
-				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericPSV();
-				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericPSV();
-
-				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
-				{
-					m_iCurNumericBlock=0;
-					getModel()->getCONFIG()->setLastNumericPSV(m_iCurNumericBlock);
-				}
-			}
-			
+			eBlock=SetNumericBlock_PSV();
 		}
 		break;
 	case VM_CPAP:
 		{
-			if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
-			{
-				eBlock=NUMB_FLOWOFFCPAP;
-				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCPAP();
-				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCPAP();
-
-				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
-				{
-					m_iCurNumericBlock=0;
-					getModel()->getCONFIG()->setLastNumericFLOWOFFCPAP(m_iCurNumericBlock);
-				}
-			}
-			else
-			{
-				eBlock=NUMB_CPAP;
-				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericCPAP();
-				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericCPAP();
-
-				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
-				{
-					m_iCurNumericBlock=0;
-					getModel()->getCONFIG()->setLastNumericCPAP(m_iCurNumericBlock);
-				}
-			}
+			eBlock=SetNumericBlock_CPAP();
 		}
 		break;
 	case VM_HFO:
 		{
-			if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
-			{
-				eBlock=NUMB_FLOWOFFHFO;
-				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFHFO();
-				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFHFO();
-
-				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
-				{
-					m_iCurNumericBlock=0;
-					getModel()->getCONFIG()->setLastNumericFLOWOFFHFO(m_iCurNumericBlock);
-				}
-			}
-			else
-			{
-				eBlock=NUMB_HFO;
-				m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericHFO();
-				m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericHFO();
-
-				if(m_iCurNumericBlock>m_iCountNumericBlock-1)
-				{
-					m_iCurNumericBlock=0;
-					getModel()->getCONFIG()->setLastNumericHFO(m_iCurNumericBlock);
-				}
-			}
-			
+			eBlock=SetNumericBlock_HFO();
 		}
 		break;
 	case VM_NCPAP:
 		{
-			eBlock=NUMB_NCPAP;
-			m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericNCPAP();
-			m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericNCPAP();
-
-			if(m_iCurNumericBlock>m_iCountNumericBlock-1)
-			{
-				m_iCurNumericBlock=0;
-				getModel()->getCONFIG()->setLastNumericNCPAP(m_iCurNumericBlock);
-			}
+			eBlock=SetNumericBlock_NCPAP();
 		}
 		break;
 	case VM_DUOPAP:
 		{
-			eBlock=NUMB_DUOPAP;
-			m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericDUOPAP();
-			m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericDUOPAP();
-
-			if(m_iCurNumericBlock>m_iCountNumericBlock-1)
-			{
-				m_iCurNumericBlock=0;
-				getModel()->getCONFIG()->setLastNumericDUOPAP(m_iCurNumericBlock);
-			}
+			eBlock=SetNumericBlock_DUOPAP();
 		}
 		break;
 	case VM_THERAPIE:
 		{
-			eBlock=NUMB_THERAPY;
-			m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericTHERAPY();
-			m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericTHERAPY();
-
-			if(m_iCurNumericBlock>m_iCountNumericBlock-1)
-			{
-				m_iCurNumericBlock=0;
-				getModel()->getCONFIG()->setLastNumericTHERAPY(m_iCurNumericBlock);
-			}
+			eBlock=SetNumericBlock_THERAPIE();
 		}
 		break;
 	default:
@@ -1207,6 +1010,271 @@ void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 	ShowNumWnd(eBlock,bChangeCurNumBlock);
 }
 
+eNumBlock CViewNumericWnd::SetNumericBlock_IPPV()
+{
+	eNumBlock eBlock=NUMB_IPPV;
+
+	if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
+	{
+		eBlock=NUMB_FLOWOFFCONV;
+		m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCONV();
+		m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV();
+
+		if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+		{
+			m_iCurNumericBlock=0;
+			getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
+		}
+	}
+	else
+	{
+		eBlock=NUMB_IPPV;
+		m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericIPPV();
+		m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericIPPV();
+
+		if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+		{
+			m_iCurNumericBlock=0;
+			getModel()->getCONFIG()->setLastNumericIPPV(m_iCurNumericBlock);
+		}
+	}
+
+	return eBlock;
+}
+eNumBlock CViewNumericWnd::SetNumericBlock_SIMV()
+{
+	eNumBlock eBlock=NUMB_SIMV;
+
+	if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
+	{
+		eBlock=NUMB_FLOWOFFCONV;
+		m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCONV();
+		m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV();
+
+		if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+		{
+			m_iCurNumericBlock=0;
+			getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
+		}
+	}
+	else
+	{
+		eBlock=NUMB_SIMV;
+		m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericSIMV();
+		m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericSIMV();
+
+		if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+		{
+			m_iCurNumericBlock=0;
+			getModel()->getCONFIG()->setLastNumericSIMV(m_iCurNumericBlock);
+		}
+	}
+
+	return eBlock;
+}
+eNumBlock CViewNumericWnd::SetNumericBlock_SIMVPSV()
+{
+	eNumBlock eBlock=NUMB_SIMVPSV;
+
+	if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
+	{
+		eBlock=NUMB_FLOWOFFCONV;
+		m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCONV();
+		m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV();
+
+		if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+		{
+			m_iCurNumericBlock=0;
+			getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
+		}
+	}
+	else
+	{
+		eBlock=NUMB_SIMVPSV;
+		m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericSIMVPSV();
+		m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericSIMVPSV();
+
+		if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+		{
+			m_iCurNumericBlock=0;
+			getModel()->getCONFIG()->setLastNumericSIMVPSV(m_iCurNumericBlock);
+		}
+	}
+
+	return eBlock;
+}
+eNumBlock CViewNumericWnd::SetNumericBlock_SIPPV()
+{
+	eNumBlock eBlock=NUMB_SIPPV;
+
+	if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
+	{
+		eBlock=NUMB_FLOWOFFCONV;
+		m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCONV();
+		m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV();
+
+		if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+		{
+			m_iCurNumericBlock=0;
+			getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
+		}
+	}
+	else
+	{
+		eBlock=NUMB_SIPPV;
+		m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericSIPPV();
+		m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericSIPPV();
+
+		if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+		{
+			m_iCurNumericBlock=0;
+			getModel()->getCONFIG()->setLastNumericSIPPV(m_iCurNumericBlock);
+		}
+	}
+
+	return eBlock;
+}
+eNumBlock CViewNumericWnd::SetNumericBlock_PSV()
+{
+	eNumBlock eBlock=NUMB_PSV;
+
+	if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
+	{
+		eBlock=NUMB_FLOWOFFCONV;
+		m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCONV();
+		m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV();
+
+		if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+		{
+			m_iCurNumericBlock=0;
+			getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
+		}
+	}
+	else
+	{
+		eBlock=NUMB_PSV;
+		m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericPSV();
+		m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericPSV();
+
+		if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+		{
+			m_iCurNumericBlock=0;
+			getModel()->getCONFIG()->setLastNumericPSV(m_iCurNumericBlock);
+		}
+	}
+
+	return eBlock;
+}
+eNumBlock CViewNumericWnd::SetNumericBlock_CPAP()
+{
+	eNumBlock eBlock=NUMB_CPAP;
+
+	if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
+	{
+		eBlock=NUMB_FLOWOFFCPAP;
+		m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFCPAP();
+		m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCPAP();
+
+		if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+		{
+			m_iCurNumericBlock=0;
+			getModel()->getCONFIG()->setLastNumericFLOWOFFCPAP(m_iCurNumericBlock);
+		}
+	}
+	else
+	{
+		eBlock=NUMB_CPAP;
+		m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericCPAP();
+		m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericCPAP();
+
+		if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+		{
+			m_iCurNumericBlock=0;
+			getModel()->getCONFIG()->setLastNumericCPAP(m_iCurNumericBlock);
+		}
+	}
+
+	return eBlock;
+}
+eNumBlock CViewNumericWnd::SetNumericBlock_HFO()
+{
+	eNumBlock eBlock=NUMB_HFO;
+
+	if(getModel()->getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_ON)
+	{
+		eBlock=NUMB_FLOWOFFHFO;
+		m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericFLOWOFFHFO();
+		m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFHFO();
+
+		if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+		{
+			m_iCurNumericBlock=0;
+			getModel()->getCONFIG()->setLastNumericFLOWOFFHFO(m_iCurNumericBlock);
+		}
+	}
+	else
+	{
+		eBlock=NUMB_HFO;
+		m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericHFO();
+		m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericHFO();
+
+		if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+		{
+			m_iCurNumericBlock=0;
+			getModel()->getCONFIG()->setLastNumericHFO(m_iCurNumericBlock);
+		}
+	}
+
+	return eBlock;
+}
+eNumBlock CViewNumericWnd::SetNumericBlock_NCPAP()
+{
+	eNumBlock eBlock=NUMB_NCPAP;
+
+	eBlock=NUMB_NCPAP;
+	m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericNCPAP();
+	m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericNCPAP();
+
+	if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+	{
+		m_iCurNumericBlock=0;
+		getModel()->getCONFIG()->setLastNumericNCPAP(m_iCurNumericBlock);
+	}
+
+	return eBlock;
+}
+eNumBlock CViewNumericWnd::SetNumericBlock_DUOPAP()
+{
+	eNumBlock eBlock=NUMB_DUOPAP;
+
+	eBlock=NUMB_DUOPAP;
+	m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericDUOPAP();
+	m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericDUOPAP();
+
+	if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+	{
+		m_iCurNumericBlock=0;
+		getModel()->getCONFIG()->setLastNumericDUOPAP(m_iCurNumericBlock);
+	}
+
+	return eBlock;
+}
+eNumBlock CViewNumericWnd::SetNumericBlock_THERAPIE()
+{
+	eNumBlock eBlock=NUMB_THERAPY;
+
+	eBlock=NUMB_THERAPY;
+	m_iCurNumericBlock=getModel()->getCONFIG()->getLastNumericTHERAPY();
+	m_iCountNumericBlock=getModel()->getDATAHANDLER()->getCountNumericTHERAPY();
+
+	if(m_iCurNumericBlock>m_iCountNumericBlock-1)
+	{
+		m_iCurNumericBlock=0;
+		getModel()->getCONFIG()->setLastNumericTHERAPY(m_iCurNumericBlock);
+	}
+
+	return eBlock;
+}
 
 // **************************************************************************
 // 
@@ -1250,11 +1318,11 @@ void CViewNumericWnd::NotifyEvent(CMVEvent* pEvent)
 			CMVEventUI* pUIEvent = (CMVEventUI*)pEvent;
 			switch(pUIEvent->GetEventType())
 			{
-			case CMVEventUI::EV_BN_NUMERIC:
+			/*case CMVEventUI::EV_BN_NUMERIC:
 				{
 					ShowNextNumericWnd();
 				}
-				break;
+				break;*/
 			case CMVEventUI::EV_GRAPH_SETCURSOR:
 				{
 					DrawGraphCursor(pUIEvent->GetIData());
@@ -1275,10 +1343,10 @@ void CViewNumericWnd::NotifyEvent(CMVEvent* pEvent)
 // **************************************************************************
 // 
 // **************************************************************************
-void CViewNumericWnd::ShowNextNumericWnd()
-{
-
-}
+//void CViewNumericWnd::ShowNextNumericWnd()
+//{
+//
+//}
 // **************************************************************************
 // 
 // **************************************************************************
@@ -1363,8 +1431,6 @@ void CViewNumericWnd::NotifyParaBtnEvent(CMVEvent* pEvent)
 			switch(pUIEvent->GetEventType())
 			{
 			case CMVEventUI::EV_PARABN_PMITT:
-			//case CMVEventUI::EV_PARABN_IERATIO:
-			//case CMVEventUI::EV_PARABN_HFFREQREC:
 				{
 					bool bChanged=false;
 					if(getModel()->getALARMHANDLER()->getAlimitState_MAPminLimit()==AL_AUTO)
@@ -1384,18 +1450,12 @@ void CViewNumericWnd::NotifyParaBtnEvent(CMVEvent* pEvent)
 			case CMVEventUI::EV_PARABN_HFAMPL:
 				{
 					bool bChanged=false;
-					/*if(getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit()==AL_AUTO)
-					{
-						bChanged=true;
-					}*/
+					
 					if(true==getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
 					{
 						bChanged=true;
 					}
-					/*else if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
-					{
-						bChanged=true;
-					}*/
+					
 					if(bChanged)
 					{	
 						PostMessage(WM_ALIMIT_CHANGED);
@@ -1496,8 +1556,6 @@ void CViewNumericWnd::NotifyParaBtnEvent(CMVEvent* pEvent)
 			case CMVEventUI::EV_PARABN_VGARANT:
 			case CMVEventUI::EV_PARABN_O2FLUSH:
 			case CMVEventUI::EV_PARABN_HFFREQ:
-			//case CMVEventUI::EV_PARABN_HFAMPL:
-			//case CMVEventUI::EV_PARABN_IERATIO:
 			default:
 				break;
 			}
@@ -1560,9 +1618,6 @@ void CViewNumericWnd::NotifyViewStateChanged()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewNumericWnd::NotifyVentModeChanged()
 {
 	if(m_bExit)
@@ -1669,21 +1724,18 @@ LRESULT CViewNumericWnd::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	{
 	case WM_SETVIEWFOCUS:
 		{
-			//rku cs1
 			SetViewFocus();
 			return 1;
 		}
 		break;
 	case WM_SETPREVFOCUS:
 		{
-			//rku cs1
 			SetPrevFocus();
 			return 1;
 		}
 		break;
 	case WM_SETNEXTFOCUS:
 		{
-			//rku cs1
 			SetNextFocus();
 			return 1;
 		}
@@ -1796,180 +1848,165 @@ void CViewNumericWnd::BnMenuNUMERIC()
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_DEL_GRAPHCURSOR);
 
+	bChangeCurNumBlock=SetNextNumericBlock();
+
+	szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
+	m_pcMenuNumeric->RefreshText(szText);
+	
+	SetNumericBlock(bChangeCurNumBlock);
+
+	AfxGetApp()->GetMainWnd()->SetFocus();
+}
+
+bool CViewNumericWnd::SetNextNumericBlock()
+{
+	bool bChangeCurNumBlock=false;
 	switch(m_iCurrWnd)
 	{
 	case IDC_VIEW_NUM_IPPV:
 		{
+			bChangeCurNumBlock=true;
 			m_iCurNumericBlock++;
 			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericIPPV())
 			{
 				m_iCurNumericBlock=0;
 			}
 			getModel()->getCONFIG()->setLastNumericIPPV(m_iCurNumericBlock);
-			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
-			m_pcMenuNumeric->RefreshText(szText);
-			bChangeCurNumBlock=true;
 		}
 		break;
 	case IDC_VIEW_NUM_SIPPV:
 		{
+			bChangeCurNumBlock=true;
 			m_iCurNumericBlock++;
 			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericSIPPV())
 			{
 				m_iCurNumericBlock=0;
 			}
 			getModel()->getCONFIG()->setLastNumericSIPPV(m_iCurNumericBlock);
-			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
-			m_pcMenuNumeric->RefreshText(szText);
-			bChangeCurNumBlock=true;
 		}
 		break;
 	case IDC_VIEW_NUM_SIMV:
 		{
+			bChangeCurNumBlock=true;
 			m_iCurNumericBlock++;
 			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericSIMV())
 			{
 				m_iCurNumericBlock=0;
 			}
 			getModel()->getCONFIG()->setLastNumericSIMV(m_iCurNumericBlock);
-			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
-			m_pcMenuNumeric->RefreshText(szText);
-			bChangeCurNumBlock=true;
 		}
 		break;
 	case IDC_VIEW_NUM_SIMVPSV:
 		{
+			bChangeCurNumBlock=true;
 			m_iCurNumericBlock++;
 			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericSIMVPSV())
 			{
 				m_iCurNumericBlock=0;
 			}
 			getModel()->getCONFIG()->setLastNumericSIMVPSV(m_iCurNumericBlock);
-			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
-			m_pcMenuNumeric->RefreshText(szText);
-			bChangeCurNumBlock=true;
 		}
 		break;
 	case IDC_VIEW_NUM_PSV:
 		{
+			bChangeCurNumBlock=true;
 			m_iCurNumericBlock++;
 			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericPSV())
 			{
 				m_iCurNumericBlock=0;
 			}
 			getModel()->getCONFIG()->setLastNumericPSV(m_iCurNumericBlock);
-			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
-			m_pcMenuNumeric->RefreshText(szText);
-			bChangeCurNumBlock=true;
 		}
 		break;
 	case IDC_VIEW_NUM_CPAP:
 		{
+			bChangeCurNumBlock=true;
 			m_iCurNumericBlock++;
 			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericCPAP())
 			{
 				m_iCurNumericBlock=0;
 			}
 			getModel()->getCONFIG()->setLastNumericCPAP(m_iCurNumericBlock);
-			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
-			m_pcMenuNumeric->RefreshText(szText);
-			bChangeCurNumBlock=true;
 		}
 		break;
 	case IDC_VIEW_NUM_HFO:
 		{
+			bChangeCurNumBlock=true;
 			m_iCurNumericBlock++;
 			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericHFO())
 			{
 				m_iCurNumericBlock=0;
 			}
 			getModel()->getCONFIG()->setLastNumericHFO(m_iCurNumericBlock);
-			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
-			m_pcMenuNumeric->RefreshText(szText);
-			bChangeCurNumBlock=true;
 		}
 		break;
 	case IDC_VIEW_NUM_NCPAP:
 		{
+			bChangeCurNumBlock=true;
 			m_iCurNumericBlock++;
 			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericNCPAP())
 			{
 				m_iCurNumericBlock=0;
 			}
 			getModel()->getCONFIG()->setLastNumericNCPAP(m_iCurNumericBlock);
-			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
-			m_pcMenuNumeric->RefreshText(szText);
-			bChangeCurNumBlock=true;
 		}
 		break;
 	case IDC_VIEW_NUM_DUOPAP:
 		{
+			bChangeCurNumBlock=true;
 			m_iCurNumericBlock++;
 			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericDUOPAP())
 			{
 				m_iCurNumericBlock=0;
 			}
 			getModel()->getCONFIG()->setLastNumericDUOPAP(m_iCurNumericBlock);
-			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
-			m_pcMenuNumeric->RefreshText(szText);
-			bChangeCurNumBlock=true;
 		}
 		break;
 	case IDC_VIEW_NUM_THERAPY:
 		{
+			bChangeCurNumBlock=true;
 			m_iCurNumericBlock++;
 			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericTHERAPY())
 			{
 				m_iCurNumericBlock=0;
 			}
 			getModel()->getCONFIG()->setLastNumericTHERAPY(m_iCurNumericBlock);
-			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
-			m_pcMenuNumeric->RefreshText(szText);
-			bChangeCurNumBlock=true;
 		}
 		break;
 	case IDC_VIEW_NUM_FLOWOFFCONV:
 		{
+			bChangeCurNumBlock=true;
 			m_iCurNumericBlock++;
 			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV())
 			{
 				m_iCurNumericBlock=0;
 			}
 			getModel()->getCONFIG()->setLastNumericFLOWOFFCONV(m_iCurNumericBlock);
-			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
-			m_pcMenuNumeric->RefreshText(szText);
-			bChangeCurNumBlock=true;
 		}
 		break;
 	case IDC_VIEW_NUM_FLOWOFFCPAP:
 		{
+			bChangeCurNumBlock=true;
 			m_iCurNumericBlock++;
 			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCPAP())
 			{
 				m_iCurNumericBlock=0;
 			}
 			getModel()->getCONFIG()->setLastNumericFLOWOFFCPAP(m_iCurNumericBlock);
-			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
-			m_pcMenuNumeric->RefreshText(szText);
-			bChangeCurNumBlock=true;
 		}
 		break;
 	case IDC_VIEW_NUM_FLOWOFFHFO:
 		{
+			bChangeCurNumBlock=true;
 			m_iCurNumericBlock++;
 			if(m_iCurNumericBlock>=getModel()->getDATAHANDLER()->getCountNumericFLOWOFFHFO())
 			{
 				m_iCurNumericBlock=0;
 			}
 			getModel()->getCONFIG()->setLastNumericFLOWOFFHFO(m_iCurNumericBlock);
-			szText.Format(_T("  %d/%d"),m_iCurNumericBlock+1,m_iCountNumericBlock);
-			m_pcMenuNumeric->RefreshText(szText);
-			bChangeCurNumBlock=true;
 		}
 		break;
 	}
-	SetNumericBlock(bChangeCurNumBlock);
 
-	AfxGetApp()->GetMainWnd()->SetFocus();
+	return bChangeCurNumBlock;
 }
-
