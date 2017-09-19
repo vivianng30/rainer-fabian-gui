@@ -4038,7 +4038,7 @@ void CDataHandler::loadNumerics()
 			bool bCount=false;
 			if(szState==_T("TRUE"))
 			{
-				for(BYTE num=1;num<9;num++)
+				for(BYTE num=1;num<=MAX_NUMERICWND;num++)
 				{
 					readNumericINIvalues(pbufNumeric,iBlock,num,szNum);
 				}

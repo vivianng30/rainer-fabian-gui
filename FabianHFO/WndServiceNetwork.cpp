@@ -184,8 +184,10 @@ void CWndServiceNetwork::Draw()
 			cs = _T("Ethernet (no wave data)");
 		else if(m_iPDMSProtocol==ACL_SERIAL_IVOI)
 			cs = _T("VueLink/IntelliBridge");
-		else
+		else if(m_iPDMSProtocol==ACL_TERMINAL)
 			cs = _T("Terminal");
+		else
+			cs = _T("--");
 	}
 	else
 	{

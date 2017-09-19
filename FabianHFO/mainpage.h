@@ -14,6 +14,7 @@
 	- BUG-HFO-014 HFO Pmean rec fixed
 	- WM_SETALARM_P_IN_MIXER deleted
 	- HFO+FS off: Pmean not suppressed
+	- Service Network: correct display if acuLink is set to ACL_NOPDMS
  @endverbatim
  * 
  * @section ver Version history and changelog
