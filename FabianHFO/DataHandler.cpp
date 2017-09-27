@@ -1466,7 +1466,7 @@ void CDataHandler::initTrend()
 			else
 				m_chFilenumFrequency=1;
 		}
-		LeaveCriticalSection(&csTrend);//rkuNEWFIX
+		LeaveCriticalSection(&csTrend);
 
 		if(!bRes)
 		{
@@ -1495,10 +1495,11 @@ void CDataHandler::initTrend()
 			||	m_chFilenumPINSP!=m_chFilenumSpO2
 			||	m_chFilenumPINSP!=m_chFilenumSPO2PI
 			||	m_chFilenumPINSP!=m_chFilenumEtCO2
-			||	m_chFilenumPINSP!=m_chFilenumSpO2PR)
+			||	m_chFilenumPINSP!=m_chFilenumSpO2PR
+			||	m_chFilenumPINSP!=m_chFilenumFrequency)
 		{
 			CStringW sz=_T("");
-			sz.Format(_T("#HFO:0058 PINSP:%d PMEAN:%d FIO2:%d VTE:%d COMPLIANCE:%d CO2HFO2:%d MV:%d HFAMP:%d RSBI:%d ShareMVmand:%d Resistance:%d Leak:%d SpO2:%d SPO2PI:%d EtCO2:%d SpO2PR:%d"),
+			sz.Format(_T("#HFO:0058 PINSP:%d PMEAN:%d FIO2:%d VTE:%d COMPLIANCE:%d CO2HFO2:%d MV:%d HFAMP:%d RSBI:%d ShareMVmand:%d Resistance:%d Leak:%d SpO2:%d SPO2PI:%d EtCO2:%d SpO2PR:%d FREQ:%d"),
 				m_chFilenumPINSP,
 				m_chFilenumPMEAN,
 				m_chFilenumFIO2,
@@ -1514,7 +1515,8 @@ void CDataHandler::initTrend()
 				m_chFilenumSpO2,
 				m_chFilenumSPO2PI,
 				m_chFilenumEtCO2,
-				m_chFilenumSpO2PR);
+				m_chFilenumSpO2PR,
+				m_chFilenumFrequency);
 
 			theApp.getLog()->WriteLine(sz);
 			DeleteAllTrendData();
@@ -15873,7 +15875,6 @@ void CDataHandler::SaveTrendData()
 	WORD wTrendData_CO2HFO=0;
 	WORD wTrendData_MV=0;
 	WORD wTrendData_HFAMP=0;
-
 	WORD wTrendData_RSBI=0;
 	WORD wTrendData_ShareMVmand=0;
 	WORD wTrendData_Resistance=0;
@@ -17107,6 +17108,11 @@ void CDataHandler::setCOMErrorCode(int iERRORcode/*,int iSerialCommand, bool bIg
 void CDataHandler::deleteCOMErrorCode(int iERRORcode)//newVG
 {
 	m_iCOMErrorCodeBits=DeleteBit(m_iCOMErrorCodeBits,iERRORcode);
+
+	if(iERRORcode & ERRC_COM_CHECK_DATA)//newSerialAlarm
+	{
+		getModel()->getSERIAL()->resetErrorCountCheckThread();
+	}
 }
 //void CDataHandler::deleteCOMErrorCommand(int iERRORCommand)//newVG
 //{
@@ -17115,7 +17121,8 @@ void CDataHandler::deleteCOMErrorCode(int iERRORcode)//newVG
 void CDataHandler::deleteAllCOMError()//newVG
 {
 	m_iCOMErrorCodeBits=0;
-	//m_iCOMErrorCommandBits=0;
+	
+	getModel()->getSERIAL()->resetErrorCountCheckThread();//newSerialAlarm
 }
 int CDataHandler::getCOMErrorCode()//newVG
 {

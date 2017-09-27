@@ -194,15 +194,6 @@ bool CNumericFieldLEAK::drawStaticText(CDC* pDC)
 		pDC->DrawText(m_szName,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 		sz1 = pDC->GetTextExtent(m_szName);
 
-		SelectObject(hdc,g_hf7AcuBold);
-
-		/*CSize szNote;
-
-		rc.top = 13;
-		rc.left = 17+sz1.cx;
-		pDC->DrawText(m_szNameNote,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
-		szNote = pDC->GetTextExtent(m_szNameNote);*/
-
 		SelectObject(hdc,g_hf7AcuNorm);
 
 		rc.top = 10;

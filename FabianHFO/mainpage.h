@@ -15,6 +15,7 @@
 	- WM_SETALARM_P_IN_MIXER deleted
 	- HFO+FS off: Pmean not suppressed
 	- Service Network: correct display if acuLink is set to ACL_NOPDMS
+	- newSerialAlarm implemented
  @endverbatim
  * 
  * @section ver Version history and changelog

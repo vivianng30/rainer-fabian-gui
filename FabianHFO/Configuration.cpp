@@ -3933,7 +3933,6 @@ void CConfiguration::LoadSettings()
 	}
 	m_dtNextServiceDate.SetDate(iServiceYear, iServiceMonth, iServiceDay);
 
-	//pro, new - start
 	WORD iAltitude=getModel()->getI2C()->ReadConfigWord(ALTITUDE_16);
 	if(iAltitude<0 || iAltitude>5000)
 	{
@@ -3955,7 +3954,6 @@ void CConfiguration::LoadSettings()
 		getModel()->getI2C()->WriteConfigWord(FLOW_CORFACTOR_PED_16,iFCOR_PED);
 	}
 	
-	//pro, new - end
 
 	//loadParameterSettings();
 	//loadAlarmLimitSettings();

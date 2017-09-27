@@ -1443,9 +1443,7 @@
 #define IDC_BTN_MSGBOX_CANCEL		668
 #define IDC_BTN_MSGBOX_SAVE			669
 #define IDC_BTN_MSGBOX_RUN			670
-//
-//
-//
+
 
 //#define IDC_BTN_SERVICE_MASTER_DELKEY		665
 //#define IDC_BTN_SERVICE_HFO_DELKEY			666
@@ -1863,25 +1861,7 @@ enum eCurveForm {
 
 #define MAXSIZE_TREND_BUFFER	14400	//5 Tage
 
-//Trendtype
-/**
-*	\def TREND_PINSP 
-*		Peak Pressure
-*	\def TREND_PMEAN 
-*		Mean Pressure
-*	\def TREND_FIO2 
-*		FiO2
-*	\def TREND_VTE 
-*		Expiratory Mandatory Tidal Volume
-*	\def TREND_COMPLIANCE 
-*		Dynamic Compliance
-*	\def TREND_CO2HFO 
-*		Gas Transport Coefficient
-*	\def TREND_MV 
-*		Minute Volume
-*	\def TREND_HFAMP 
-*		HF Amplitude
- **/
+
 #define TREND_TEMPORARY		0
 #define TREND_PINSP			1
 #define TREND_PMEAN			2
@@ -2490,10 +2470,10 @@ enum eTimeChanger {
 	TC_PMINDELAY_DW,		// 18,
 	TC_NEBULIZER_UP,		// 19,
 	TC_NEBULIZER_DW,		// 20,
-	TC_EFLOW_UP,		// 19,
-	TC_EFLOW_DW,
-	TC_PROXCAL_UP,		// 19,
-	TC_PROXCAL_DW,
+	TC_EFLOW_UP,			// 21,
+	TC_EFLOW_DW,			// 22
+	TC_PROXCAL_UP,			// 23,
+	TC_PROXCAL_DW			// 24
 	//TC_BODYWEIGHT_UP,			// 21,
 	//TC_BODYWEIGHT_DW,			// 22,
 	//TC_WAVE2_UP,			// 23,

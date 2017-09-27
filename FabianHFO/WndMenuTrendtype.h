@@ -55,7 +55,6 @@ private:
 	CMenuBtn* m_pcTrendCO2HFO;
 	CMenuBtn* m_pcTrendMV;
 	CMenuBtn* m_pcTrendHFAMP;
-
 	CMenuBtn* m_pcTrendRSBI;
 	CMenuBtn* m_pcTrendSHAREMVMAND;
 	CMenuBtn* m_pcTrendRESISTANCE;

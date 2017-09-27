@@ -7,9 +7,7 @@
 #include "MessageBoxProxCal.h"
 #include "DlgMessageBox.h"
 #include "DlgProxPressure60.h"
-//pro, new - start
 #include <math.h>
-//pro, new - end
 
 
 // CWndServiceCalibration
@@ -23,17 +21,13 @@ CWndService()
 	m_pcFlowCorr_Dw=NULL;
 	m_pcFlowCorrPED=NULL;
 	m_pcFlowCorrNEO=NULL;
-	//pro, new - start
 	m_pcAltitude=NULL;
-	//pro, new - end
 
 	m_sliderEnableBTPS=NULL;
 
 	m_iFCOR_PED=0;
 	m_iFCOR_NEO=0;
-	//pro, new - start
 	m_iAltitude=0;
-	//pro, new - end
 	m_iCntCheckVentState=0;
 
 	m_bUseBTPS=getModel()->getCONFIG()->getBTPS();
@@ -52,7 +46,6 @@ CWndService()
 
 	m_bProx0mbarCalibrated=false;
 	
-
 	m_pcWait=NULL;
 	m_pcWait1= NULL;
 	m_pcWait2= NULL;
@@ -80,7 +73,6 @@ CWndService()
 	m_iPProxConSCL=getModel()->getSERIAL()->GetM_CAL_PRESS_SCALE();
 	m_iPProxConOFFS=getModel()->getSERIAL()->GetM_CAL_PRESS_OFFSET();
 	
-	
 	m_szLast0mbarCal=_T("");
 	m_szLast60mbarCal=_T("");
 
@@ -103,18 +95,14 @@ CWndServiceCalibration::~CWndServiceCalibration()
 	delete  m_pcFlowCorr_Dw;
 	delete  m_pcFlowCorrNEO;
 	delete  m_pcFlowCorrPED;
-	//pro, new - start
 	delete  m_pcAltitude;
-	//pro, new - end
 
 
 	m_pcFlowCorr_Up=NULL;
 	m_pcFlowCorr_Dw=NULL;
 	m_pcFlowCorrNEO=NULL;
 	m_pcFlowCorrPED=NULL;
-	//pro, new - start
 	m_pcAltitude=NULL;
-	//pro, new - end
 	
 	delete m_pcDis;
 	m_pcDis=NULL;
@@ -173,16 +161,11 @@ void CWndServiceCalibration::Init()
 	m_pcFlowCorr_Up= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_FG_UP);
 	m_pcFlowCorr_Dw= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_FG_DW);
 
-
-
-	//pro, new - start
 	//m_iFCOR_NEO=getModel()->getSPI()->Read_FLOW_CORFACTOR_NEO();
 	//m_iFCOR_PED=getModel()->getSPI()->Read_FLOW_CORFACTOR_PED();
 	m_iFCOR_NEO=getModel()->getI2C()->ReadConfigWord(FLOW_CORFACTOR_NEO_16);
 	m_iFCOR_PED=getModel()->getI2C()->ReadConfigWord(FLOW_CORFACTOR_PED_16);
 	m_iAltitude=getModel()->getI2C()->ReadConfigWord(ALTITUDE_16);
-	//pro, new - end	
-
 
 	if(m_iFCOR_NEO<500 || m_iFCOR_NEO>1500)
 		m_iFCOR_NEO=960;
@@ -204,10 +187,7 @@ void CWndServiceCalibration::Init()
 	m_pcWait7= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_WAIT30_GREY7);
 	m_pcWait8= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_WAIT30_GREY8);
 
-	
-
 	BTN btn;
-
 	btn.wID					= IDC_BTN_SERVICE_SYSCAL;	
 	btn.poPosition.x		= 20;
 	btn.poPosition.y		= 50;
@@ -276,7 +256,6 @@ void CWndServiceCalibration::Init()
 	v.nUpperLimit=1500;
 
 	v.nValue=m_iFCOR_NEO;
-	//v.tText[0]=0;
 
 	btn.wID					= IDC_BTN_SERVICE_FLOWCORR_NEO;	
 	btn.poPosition.x		= 650;//50;
@@ -307,7 +286,6 @@ void CWndServiceCalibration::Init()
 	m_pcFlowCorrPED->Create(this,g_hf7AcuNorm,g_hf27AcuBold,v);
 	m_pcFlowCorrPED->SetText(_T("Flow Corr PED"),false);
 
-	//pro, new - start
 	v.nLowerLimit=0;
 	v.nUpperLimit=50;
 
@@ -324,7 +302,6 @@ void CWndServiceCalibration::Init()
 	m_pcAltitude=new CUDBtn(btn,COLOR_TXTBTNUP,false);
 	m_pcAltitude->Create(this,g_hf7AcuNorm,g_hf27AcuBold,v);
 	m_pcAltitude->SetText(_T("Altitude [m]"),false);
-	//pro, new - end
 
 	m_pcMenuBack->ShowWindow(SW_SHOW);
 
@@ -379,8 +356,6 @@ void CWndServiceCalibration::Init()
 	
 
 	m_sliderEnableBTPS = new CBitmapSlider();
-	/*m_sliderEnableBTPS->Create(_T(""),WS_CHILD|WS_VISIBLE|SS_BITMAP|SS_NOTIFY|BS_OWNERDRAW, CRect(590,35,739,80), 
-		this,IDC_SLD_USETVEBTB);*/
 	m_sliderEnableBTPS->Create(_T(""),WS_CHILD|WS_VISIBLE|SS_BITMAP|SS_NOTIFY|BS_OWNERDRAW, CRect(620,355,769,400), 
 		this,IDC_SLD_BTPS);
 	m_sliderEnableBTPS->SetBitmapChannel( IDB_SLD_CHAN_GREY, NULL );
@@ -389,12 +364,10 @@ void CWndServiceCalibration::Init()
 	if(m_bUseBTPS)
 	{
 		m_sliderEnableBTPS->SetPos( 1 );
-		//m_pcTest->EnableWindow(TRUE);
 	}
 	else
 	{
 		m_sliderEnableBTPS->SetPos( 0 );
-		//m_pcTest->EnableWindow(FALSE);
 	}
 	m_sliderEnableBTPS->SetMargin( 5, 0, 6, 0 );
 	m_sliderEnableBTPS->DrawFocusRect( FALSE );
@@ -890,7 +863,6 @@ void CWndServiceCalibration::OnTimer(UINT_PTR nIDEvent)
 					m_bSysCalRunning=false;
 					m_pcWait=NULL;
 
-					//todo
 					m_csSysCal=_T("- SPI-ERROR -");
 
 					m_pcPProx0->EnableWindow(TRUE);
@@ -928,7 +900,6 @@ void CWndServiceCalibration::OnTimer(UINT_PTR nIDEvent)
 		m_bUpdateData=!m_bUpdateData;
 
 		checkVentRunState();
-
 	}
 
 	CWnd::OnTimer(nIDEvent);
@@ -969,9 +940,12 @@ void CWndServiceCalibration::OnBnClickedSysCal()
 		m_iWaitCount=1;
 		iCommand=CMD_SYSCALIBRATION;
 
-		m_pcPProx0->EnableWindow(FALSE);
-		m_pcPProx60->EnableWindow(FALSE);
-		m_pcExhCal->EnableWindow(FALSE);
+		if(m_pcPProx0)
+			m_pcPProx0->EnableWindow(FALSE);
+		if(m_pcPProx60)
+			m_pcPProx60->EnableWindow(FALSE);
+		if(m_pcExhCal)
+			m_pcExhCal->EnableWindow(FALSE);
 
 		theApp.getLog()->WriteLine(_T("*** Service mode CMD_SYSCALIBRATION ***"));
 	}
@@ -981,12 +955,20 @@ void CWndServiceCalibration::OnBnClickedSysCal()
 		m_iWaitCount=0;
 		m_csSysCal=_T("- Cal. canceled -");
 
-		m_pcPProx0->EnableWindow(TRUE);
+		if(m_pcPProx0)
+			m_pcPProx0->EnableWindow(TRUE);
 		if(m_bProx0mbarCalibrated)
-			m_pcPProx60->EnableWindow(TRUE);
+		{
+			if(m_pcPProx60)
+				m_pcPProx60->EnableWindow(TRUE);
+		}
 		else
-			m_pcPProx60->EnableWindow(FALSE);
-		m_pcExhCal->EnableWindow(TRUE);
+		{
+			if(m_pcPProx60)
+				m_pcPProx60->EnableWindow(FALSE);
+		}
+		if(m_pcExhCal)
+			m_pcExhCal->EnableWindow(TRUE);
 	}
 
 	getModel()->getSPI()->Send_FLOWSENS_CMND(iCommand);
@@ -1002,10 +984,14 @@ void CWndServiceCalibration::OnBnClickedProx0()
 {
 	m_bPProx0CalRunning=true;
 
-	m_pcExhCal->EnableWindow(FALSE);
-	m_pcPProx0->EnableWindow(FALSE);
-	m_pcPProx60->EnableWindow(FALSE);
-	m_pcSysCal->EnableWindow(FALSE);
+	if(m_pcExhCal)
+		m_pcExhCal->EnableWindow(FALSE);
+	if(m_pcPProx0)
+		m_pcPProx0->EnableWindow(FALSE);
+	if(m_pcPProx60)
+		m_pcPProx60->EnableWindow(FALSE);
+	if(m_pcSysCal)
+		m_pcSysCal->EnableWindow(FALSE);
 
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_PIF_SIGNAL);
@@ -1017,10 +1003,14 @@ void CWndServiceCalibration::OnBnClickedProx0()
 
 	if(iRes==IDCANCEL)
 	{
-		m_pcExhCal->EnableWindow(TRUE);
-		m_pcPProx0->EnableWindow(TRUE);
-		m_pcPProx60->EnableWindow(FALSE);
-		m_pcSysCal->EnableWindow(TRUE);
+		if(m_pcExhCal)
+			m_pcExhCal->EnableWindow(TRUE);
+		if(m_pcPProx0)
+			m_pcPProx0->EnableWindow(TRUE);
+		if(m_pcPProx60)
+			m_pcPProx60->EnableWindow(FALSE);
+		if(m_pcSysCal)
+			m_pcSysCal->EnableWindow(TRUE);
 		m_csProxCal=_T("- canceled -");
 		return;
 	}
@@ -1056,10 +1046,14 @@ void CWndServiceCalibration::OnBnClickedProx0()
 		m_iPProxConSCL=getModel()->getSERIAL()->GetM_CAL_PRESS_SCALE();
 		m_iPProxConOFFS=getModel()->getSERIAL()->GetM_CAL_PRESS_OFFSET();
 
-		m_pcExhCal->EnableWindow(TRUE);
-		m_pcPProx0->EnableWindow(TRUE);
-		m_pcPProx60->EnableWindow(FALSE);
-		m_pcSysCal->EnableWindow(TRUE);
+		if(m_pcExhCal)
+			m_pcExhCal->EnableWindow(TRUE);
+		if(m_pcPProx0)
+			m_pcPProx0->EnableWindow(TRUE);
+		if(m_pcPProx60)
+			m_pcPProx60->EnableWindow(FALSE);
+		if(m_pcSysCal)
+			m_pcSysCal->EnableWindow(TRUE);
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_PIF_DOUBLESIGNAL);
@@ -1085,10 +1079,14 @@ void CWndServiceCalibration::OnBnClickedProx0()
 			m_iPProxConSCL=getModel()->getSERIAL()->GetM_CAL_PRESS_SCALE();
 			m_iPProxConOFFS=getModel()->getSERIAL()->GetM_CAL_PRESS_OFFSET();
 
-			m_pcExhCal->EnableWindow(TRUE);
-			m_pcPProx0->EnableWindow(TRUE);
-			m_pcPProx60->EnableWindow(FALSE);
-			m_pcSysCal->EnableWindow(TRUE);
+			if(m_pcExhCal)
+				m_pcExhCal->EnableWindow(TRUE);
+			if(m_pcPProx0)
+				m_pcPProx0->EnableWindow(TRUE);
+			if(m_pcPProx60)
+				m_pcPProx60->EnableWindow(FALSE);
+			if(m_pcSysCal)
+				m_pcSysCal->EnableWindow(TRUE);
 
 			if(AfxGetApp())
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_PIF_DOUBLESIGNAL);
@@ -1106,10 +1104,14 @@ void CWndServiceCalibration::OnBnClickedProx0()
 		m_iPProxConSCL=getModel()->getSERIAL()->GetM_CAL_PRESS_SCALE();
 		m_iPProxConOFFS=getModel()->getSERIAL()->GetM_CAL_PRESS_OFFSET();
 
-		m_pcExhCal->EnableWindow(TRUE);
-		m_pcPProx0->EnableWindow(TRUE);
-		m_pcPProx60->EnableWindow(FALSE);
-		m_pcSysCal->EnableWindow(TRUE);
+		if(m_pcExhCal)
+			m_pcExhCal->EnableWindow(TRUE);
+		if(m_pcPProx0)
+			m_pcPProx0->EnableWindow(TRUE);
+		if(m_pcPProx60)
+			m_pcPProx60->EnableWindow(FALSE);
+		if(m_pcSysCal)
+			m_pcSysCal->EnableWindow(TRUE);
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_PIF_DOUBLESIGNAL);
@@ -1129,10 +1131,14 @@ void CWndServiceCalibration::OnBnClickedProx0()
 		m_iPProxConSCL=getModel()->getSERIAL()->GetM_CAL_PRESS_SCALE();
 		m_iPProxConOFFS=getModel()->getSERIAL()->GetM_CAL_PRESS_OFFSET();
 
-		m_pcExhCal->EnableWindow(TRUE);
-		m_pcPProx0->EnableWindow(TRUE);
-		m_pcPProx60->EnableWindow(FALSE);
-		m_pcSysCal->EnableWindow(TRUE);
+		if(m_pcExhCal)
+			m_pcExhCal->EnableWindow(TRUE);
+		if(m_pcPProx0)
+			m_pcPProx0->EnableWindow(TRUE);
+		if(m_pcPProx60)
+			m_pcPProx60->EnableWindow(FALSE);
+		if(m_pcSysCal)
+			m_pcSysCal->EnableWindow(TRUE);
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_PIF_DOUBLESIGNAL);
@@ -1165,15 +1171,17 @@ void CWndServiceCalibration::OnBnClickedProx0()
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_PIF_SIGNAL);
 
-	m_pcPProx60->EnableWindow(TRUE);
+	if(m_pcPProx60)
+		m_pcPProx60->EnableWindow(TRUE);
 
-	m_pcExhCal->EnableWindow(TRUE);
-	m_pcPProx0->EnableWindow(TRUE);
-	m_pcSysCal->EnableWindow(TRUE);
-
-	
+	if(m_pcExhCal)
+		m_pcExhCal->EnableWindow(TRUE);
+	if(m_pcPProx0)
+		m_pcPProx0->EnableWindow(TRUE);
+	if(m_pcSysCal)
+		m_pcSysCal->EnableWindow(TRUE);
 }
- void CWndServiceCalibration::OnBnClickedProx60()
+void CWndServiceCalibration::OnBnClickedProx60()
 {
 	m_bPProx0CalRunning=true;
 
@@ -1439,7 +1447,6 @@ void CWndServiceCalibration::OnBnClickedExhCal()
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_CONTROL_SET_MODE_EXHALVALVCAL);
 		}
 	}
-	
 }
 
 
@@ -1452,30 +1459,23 @@ LRESULT CWndServiceCalibration::WindowProc(UINT message, WPARAM wParam, LPARAM l
 			switch(lParam)
 			{
 			case IDC_BTN_SERVICE_FLOWCORR_NEO:
-				{//TODO
+				{
 					int iVal=wParam;
-					//pro, new - start
 					double iCorrFactor=CalcCorrectionFactor(m_iAltitude);
 					getModel()->getI2C()->WriteConfigWord(FLOW_CORFACTOR_NEO_16,iVal);
 					getModel()->getSPI()->Send_FLOW_CORFACTOR_NEO(iCorrFactor*iVal);
-					//getModel()->getSPI()->Send_FLOW_CORFACTOR_NEO(iVal);
-					//pro, new - end
 					return 1;
 				}
 				break;
 			case IDC_BTN_SERVICE_FLOWCORR_PED:
-				{//TODO
+				{
 					int iVal=wParam;
-					//pro, new - start
 					double iCorrFactor=CalcCorrectionFactor(m_iAltitude);
 					getModel()->getI2C()->WriteConfigWord(FLOW_CORFACTOR_PED_16,iVal);
 					getModel()->getSPI()->Send_FLOW_CORFACTOR_PED(iCorrFactor*iVal);
-					//getModel()->getSPI()->Send_FLOW_CORFACTOR_PED(iVal);
-					//pro, new - end
 					return 1;
 				}
 				break;
-			//pro, new - start
 			case IDC_BTN_SERVICE_ALTITUDE:
 				{
 					m_iAltitude=wParam*100;
@@ -1489,7 +1489,6 @@ LRESULT CWndServiceCalibration::WindowProc(UINT message, WPARAM wParam, LPARAM l
 					return 1;
 				}
 				break;
-			//pro, new - end
 			}
 		}
 		break;
@@ -1521,7 +1520,6 @@ LRESULT CWndServiceCalibration::OnMyMessage(WPARAM wParam, LPARAM lParam)
 	return 1;
 }
 
-//pro, new - start
 double CWndServiceCalibration::CalcCorrectionFactor(double iAltitude)
 {
 	double iCorrFactor=0;
@@ -1533,4 +1531,3 @@ double CWndServiceCalibration::CalcCorrectionFactor(double iAltitude)
 
 	return iCorrFactor;
 }
-//pro, new - end

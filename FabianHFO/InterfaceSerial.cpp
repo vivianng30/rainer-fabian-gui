@@ -47,7 +47,22 @@ CInterfaceSerial::CInterfaceSerial(void)
 
 	m_iM_DEMAND_FLOW=0;
 
-	m_iErrorCountCheckThread=0;
+	m_iErrorCountCheckThread_Mode=0;
+	m_iErrorCountCheckThread_VentRunState=0;
+	m_iErrorCountCheckThread_ITIME=0;
+	m_iErrorCountCheckThread_ETIME=0;
+	m_iErrorCountCheckThread_IFLOW=0;
+	m_iErrorCountCheckThread_RISETIME=0;
+	m_iErrorCountCheckThread_EFLOW=0;
+	m_iErrorCountCheckThread_PIP=0;
+	m_iErrorCountCheckThread_PMAXVG=0;
+	m_iErrorCountCheckThread_PEEP=0;
+	m_iErrorCountCheckThread_PPSV=0;
+	m_iErrorCountCheckThread_OXY=0;
+	m_iErrorCountCheckThread_HFFREQ=0;
+	m_iErrorCountCheckThread_PMEAN=0;
+	m_iErrorCountCheckThread_HFAMPLMAX=0;
+
 	m_iErrorCountSendThread=0;
 
 	m_bSerialDisconnection=false;
@@ -756,7 +771,21 @@ DWORD CInterfaceSerial::CheckSerialData(void)
 	bool bModeChanged=false;
 	DWORD dwLastModeChanged=0;
 	CStringW szCurCmd=_T("");
-	m_iErrorCountCheckThread=0;
+	m_iErrorCountCheckThread_Mode=0;
+	m_iErrorCountCheckThread_VentRunState=0;
+	m_iErrorCountCheckThread_ITIME=0;
+	m_iErrorCountCheckThread_ETIME=0;
+	m_iErrorCountCheckThread_IFLOW=0;
+	m_iErrorCountCheckThread_RISETIME=0;
+	m_iErrorCountCheckThread_EFLOW=0;
+	m_iErrorCountCheckThread_PIP=0;
+	m_iErrorCountCheckThread_PMAXVG=0;
+	m_iErrorCountCheckThread_PEEP=0;
+	m_iErrorCountCheckThread_PPSV=0;
+	m_iErrorCountCheckThread_OXY=0;
+	m_iErrorCountCheckThread_HFFREQ=0;
+	m_iErrorCountCheckThread_PMEAN=0;
+	m_iErrorCountCheckThread_HFAMPLMAX=0;
 
 	eVentMode mode = getModel()->getCONFIG()->GetCurMode();
 
@@ -838,7 +867,21 @@ DWORD CInterfaceSerial::CheckSerialData(void)
 						dwLastModeChanged=GetTickCount();
 						mode = getModel()->getCONFIG()->GetCurMode();
 						iCmnd=0;
-						m_iErrorCountCheckThread=0;
+						m_iErrorCountCheckThread_Mode=0;
+						m_iErrorCountCheckThread_VentRunState=0;
+						m_iErrorCountCheckThread_ITIME=0;
+						m_iErrorCountCheckThread_ETIME=0;
+						m_iErrorCountCheckThread_IFLOW=0;
+						m_iErrorCountCheckThread_RISETIME=0;
+						m_iErrorCountCheckThread_EFLOW=0;
+						m_iErrorCountCheckThread_PIP=0;
+						m_iErrorCountCheckThread_PMAXVG=0;
+						m_iErrorCountCheckThread_PEEP=0;
+						m_iErrorCountCheckThread_PPSV=0;
+						m_iErrorCountCheckThread_OXY=0;
+						m_iErrorCountCheckThread_HFFREQ=0;
+						m_iErrorCountCheckThread_PMEAN=0;
+						m_iErrorCountCheckThread_HFAMPLMAX=0;
 					}
 
 					if(bModeChanged)
@@ -1503,7 +1546,7 @@ DWORD CInterfaceSerial::SendSerialData(void)
 					//	MSGSend.RemoveHead();
 					//}
 					//LeaveCriticalSection(&csMSGSend);
-					if(getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_SEND_DATA)//newVG
+					if(getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_SEND_DATA)
 					{
 						getModel()->getDATAHANDLER()->checkCOMresetLastSendError(szData);
 					}
@@ -1550,7 +1593,7 @@ DWORD CInterfaceSerial::SendSerialData(void)
 								szError.Format(_T("#HFO:0013: %s"),szData);
 								theApp.getLog()->WriteLine(szError);
 
-								if(getModel()->getDATAHANDLER()->getCOMErrorCode()==ERRC_COM_SEND_DATA
+								if(getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_SEND_DATA
 									&&	true==getModel()->getDATAHANDLER()->checkCOMlastSendError(szData))//newVG
 								{
 									if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
@@ -2863,10 +2906,8 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 			if(getModel()->getCONFIG()->GetCurMode()==iTemp)
 			{
-				//newVG
-				//m_iErrorCountCheckThread=0;
-				//g_eventCOMCheckData.SetEvent();
-				
+				m_iErrorCountCheckThread_Mode=0;
+
 				if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
 					&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()==AS_ACTIVE)
 				{
@@ -2875,11 +2916,24 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			}
 			else
 			{
-				if(m_iErrorCountCheckThread>ERRORCNT_CHECK)
+				if(m_iErrorCountCheckThread_Mode>ERRORCNT_CHECK)
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT_CHECK\r\n")));
 					//error
-					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
+					//newSerialAlarm
+					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
+						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
+						&&	getModel()->isSERIALavailable()==TRUE)
+					{
+						//set alarm
+						if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
+						{
+							if(AfxGetApp())
+								AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM);
+							m_iErrorCountCheckThread_Mode=0;
+						}
+					}
+					else if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
 						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
 						&&	getModel()->isSERIALavailable()==TRUE)
 					{
@@ -2887,12 +2941,12 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						if(AfxGetApp())
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM_REINIT);
 					}
-					m_iErrorCountCheckThread=0;
+					//m_iErrorCountCheckThread=0;
 				}
 				else
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT1 ++\r\n")));
-					m_iErrorCountCheckThread++;
+					m_iErrorCountCheckThread_Mode++;
 				}
 				CStringW szError=_T("");
 				szError.Format(_T("#Serial CMD:O CtlL: %d GUI: %d"), iTemp,getModel()->getCONFIG()->GetCurMode());
@@ -3093,12 +3147,9 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 			if(!bError)
 			{
-				//newVG
-				//m_iErrorCountCheckThread=0;
-				//g_eventCOMCheckData.SetEvent();
+				m_iErrorCountCheckThread_VentRunState=0;
 				
 				if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
-					//&&	getModel()->getDATAHANDLER()->getCOMErrorCommand() & ERRC_COM_MODE_OPTION1
 					&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()==AS_ACTIVE)
 				{
 					getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysFail_IF_COM, AS_SIGNALED);
@@ -3106,11 +3157,24 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			}
 			else
 			{
-				if(m_iErrorCountCheckThread>ERRORCNT_CHECK)
+				if(m_iErrorCountCheckThread_VentRunState>ERRORCNT_CHECK)
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT_CHECK\r\n")));
 					//error
-					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
+					//newSerialAlarm
+					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
+						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
+						&&	getModel()->isSERIALavailable()==TRUE)
+					{
+						//set alarm
+						if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
+						{
+							if(AfxGetApp())
+								AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM);
+							m_iErrorCountCheckThread_VentRunState=0;
+						}
+					}
+					else if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
 						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
 						&&	getModel()->isSERIALavailable()==TRUE)
 					{
@@ -3118,12 +3182,12 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						if(AfxGetApp())
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM_REINIT);
 					}
-					m_iErrorCountCheckThread=0;
+					//m_iErrorCountCheckThread=0;
 				}
 				else
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT2 ++\r\n")));
-					m_iErrorCountCheckThread++;
+					m_iErrorCountCheckThread_VentRunState++;
 				}
 				CStringW szError=_T("");
 				szError.Format(_T("#Serial CMD:R CtlL: %d"), wTemp);
@@ -3144,12 +3208,9 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 			if(getModel()->getDATAHANDLER()->GetCurrentITimePara()==iTemp)
 			{
-				//newVG
-				//m_iErrorCountCheckThread=0;
-				//g_eventCOMCheckData.SetEvent();
+				m_iErrorCountCheckThread_ITIME=0;
 				
 				if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
-					//&&	getModel()->getDATAHANDLER()->getCOMErrorCommand() & ERRC_COM_ITIME
 					&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()==AS_ACTIVE)
 				{
 					getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysFail_IF_COM, AS_SIGNALED);
@@ -3157,11 +3218,24 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			}
 			else
 			{
-				if(m_iErrorCountCheckThread>ERRORCNT_CHECK)
+				if(m_iErrorCountCheckThread_ITIME>ERRORCNT_CHECK)
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT_CHECK\r\n")));
 					//error
-					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
+					//newSerialAlarm
+					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
+						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
+						&&	getModel()->isSERIALavailable()==TRUE)
+					{
+						//set alarm
+						if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
+						{
+							if(AfxGetApp())
+								AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM);
+							m_iErrorCountCheckThread_ITIME=0;
+						}
+					}
+					else if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
 						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
 						&&	getModel()->isSERIALavailable()==TRUE)
 					{
@@ -3169,12 +3243,12 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						if(AfxGetApp())
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM_REINIT);
 					}
-					m_iErrorCountCheckThread=0;
+					//m_iErrorCountCheckThread=0;
 				}
 				else
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT3 ++\r\n")));
-					m_iErrorCountCheckThread++;
+					m_iErrorCountCheckThread_ITIME++;
 				}
 				CStringW szError=_T("");
 				szError.Format(_T("#Serial CMD: W CtlL: %d GUI: %d"), iTemp,getModel()->getDATAHANDLER()->GetCurrentITimePara());
@@ -3194,12 +3268,9 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 			if(getModel()->getDATAHANDLER()->GetCurrentETimePara()==iTemp)
 			{
-				//newVG
-				//m_iErrorCountCheckThread=0;
-				//g_eventCOMCheckData.SetEvent();
+				m_iErrorCountCheckThread_ETIME=0;
 
 				if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
-					//&&	getModel()->getDATAHANDLER()->getCOMErrorCommand() & ERRC_COM_ETIME
 					&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()==AS_ACTIVE)
 				{
 					getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysFail_IF_COM, AS_SIGNALED);
@@ -3207,11 +3278,24 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			}
 			else
 			{
-				if(m_iErrorCountCheckThread>ERRORCNT_CHECK)
+				if(m_iErrorCountCheckThread_ETIME>ERRORCNT_CHECK)
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT_CHECK\r\n")));
 					//error
-					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
+					//newSerialAlarm
+					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
+						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
+						&&	getModel()->isSERIALavailable()==TRUE)
+					{
+						//set alarm
+						if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
+						{
+							if(AfxGetApp())
+								AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM);
+							m_iErrorCountCheckThread_ETIME=0;
+						}
+					}
+					else if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
 						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
 						&&	getModel()->isSERIALavailable()==TRUE)
 					{
@@ -3219,12 +3303,12 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						if(AfxGetApp())
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM_REINIT);
 					}
-					m_iErrorCountCheckThread=0;
+					//m_iErrorCountCheckThread=0;
 				}
 				else
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT4 ++\r\n")));
-					m_iErrorCountCheckThread++;
+					m_iErrorCountCheckThread_ETIME++;
 				}
 
 				CStringW szError=_T("");
@@ -3245,12 +3329,9 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 			if(getModel()->getDATAHANDLER()->GetCurrentIFlowPara()==iTemp)
 			{
-				//newVG
-				//m_iErrorCountCheckThread=0;
-				//g_eventCOMCheckData.SetEvent();
+				m_iErrorCountCheckThread_IFLOW=0;
 
 				if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
-					//&&	getModel()->getDATAHANDLER()->getCOMErrorCommand() & ERRC_COM_IFLOW
 					&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()==AS_ACTIVE)
 				{
 					getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysFail_IF_COM, AS_SIGNALED);
@@ -3258,11 +3339,24 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			}
 			else
 			{
-				if(m_iErrorCountCheckThread>ERRORCNT_CHECK)
+				if(m_iErrorCountCheckThread_IFLOW>ERRORCNT_CHECK)
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT_CHECK\r\n")));
 					//error
-					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
+					//newSerialAlarm
+					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
+						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
+						&&	getModel()->isSERIALavailable()==TRUE)
+					{
+						//set alarm
+						if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
+						{
+							if(AfxGetApp())
+								AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM);
+							m_iErrorCountCheckThread_IFLOW=0;
+						}
+					}
+					else if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
 						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
 						&&	getModel()->isSERIALavailable()==TRUE)
 					{
@@ -3270,12 +3364,12 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						if(AfxGetApp())
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM_REINIT);
 					}
-					m_iErrorCountCheckThread=0;
+					//m_iErrorCountCheckThread=0;
 				}
 				else
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT5 ++\r\n")));
-					m_iErrorCountCheckThread++;
+					m_iErrorCountCheckThread_IFLOW++;
 				}
 
 				CStringW szError=_T("");
@@ -3298,12 +3392,9 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 			if(iRiseTime==iTemp)
 			{
-				//newVG
-				//m_iErrorCountCheckThread=0;
-				//g_eventCOMCheckData.SetEvent();
+				m_iErrorCountCheckThread_RISETIME=0;
 
 				if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
-					//&&	getModel()->getDATAHANDLER()->getCOMErrorCommand() & ERRC_COM_RISETIME
 					&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()==AS_ACTIVE)
 				{
 					getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysFail_IF_COM, AS_SIGNALED);
@@ -3311,11 +3402,24 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			}
 			else
 			{
-				if(m_iErrorCountCheckThread>ERRORCNT_CHECK)
+				if(m_iErrorCountCheckThread_RISETIME>ERRORCNT_CHECK)
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT_CHECK\r\n")));
 					//error
-					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
+					//newSerialAlarm
+					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
+						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
+						&&	getModel()->isSERIALavailable()==TRUE)
+					{
+						//set alarm
+						if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
+						{
+							if(AfxGetApp())
+								AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM);
+							m_iErrorCountCheckThread_RISETIME=0;
+						}
+					}
+					else if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
 						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
 						&&	getModel()->isSERIALavailable()==TRUE)
 					{
@@ -3323,12 +3427,12 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						if(AfxGetApp())
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM_REINIT);
 					}
-					m_iErrorCountCheckThread=0;
+					//m_iErrorCountCheckThread=0;
 				}
 				else
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT6 ++\r\n")));
-					m_iErrorCountCheckThread++;
+					m_iErrorCountCheckThread_RISETIME++;
 				}
 
 				CStringW szError=_T("");
@@ -3363,9 +3467,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 			if(iFlow==iTemp)
 			{
-				//newVG
-				//m_iErrorCountCheckThread=0;
-				//g_eventCOMCheckData.SetEvent();
+				m_iErrorCountCheckThread_EFLOW=0;
 
 				if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
 					//&&	getModel()->getDATAHANDLER()->getCOMErrorCommand() & ERRC_COM_EFLOW
@@ -3376,11 +3478,24 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			}
 			else
 			{
-				if(m_iErrorCountCheckThread>ERRORCNT_CHECK)
+				if(m_iErrorCountCheckThread_EFLOW>ERRORCNT_CHECK)
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT_CHECK\r\n")));
 					//error
-					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
+					//newSerialAlarm
+					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
+						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
+						&&	getModel()->isSERIALavailable()==TRUE)
+					{
+						//set alarm
+						if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
+						{
+							if(AfxGetApp())
+								AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM);
+							m_iErrorCountCheckThread_EFLOW=0;
+						}
+					}
+					else if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
 						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
 						&&	getModel()->isSERIALavailable()==TRUE)
 					{
@@ -3388,12 +3503,12 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						if(AfxGetApp())
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM_REINIT);
 					}
-					m_iErrorCountCheckThread=0;
+					//m_iErrorCountCheckThread=0;
 				}
 				else
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT7 ++\r\n")));
-					m_iErrorCountCheckThread++;
+					m_iErrorCountCheckThread_EFLOW++;
 				}
 
 				CStringW szError=_T("");
@@ -3415,9 +3530,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 			if(getModel()->getDATAHANDLER()->GetCurrentHFFreqPara()==iTemp)
 			{
-				//newVG
-				//m_iErrorCountCheckThread=0;
-				//g_eventCOMCheckData.SetEvent();
+				m_iErrorCountCheckThread_HFFREQ=0;
 
 				if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
 					//&&	getModel()->getDATAHANDLER()->getCOMErrorCommand() & ERRC_COM_HFFREQ
@@ -3428,11 +3541,24 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			}
 			else
 			{
-				if(m_iErrorCountCheckThread>ERRORCNT_CHECK)
+				if(m_iErrorCountCheckThread_HFFREQ>ERRORCNT_CHECK)
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT_CHECK\r\n")));
 					//error
-					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
+					//newSerialAlarm
+					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
+						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
+						&&	getModel()->isSERIALavailable()==TRUE)
+					{
+						//set alarm
+						if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
+						{
+							if(AfxGetApp())
+								AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM);
+							m_iErrorCountCheckThread_HFFREQ=0;
+						}
+					}
+					else if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
 						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
 						&&	getModel()->isSERIALavailable()==TRUE)
 					{
@@ -3440,12 +3566,12 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						if(AfxGetApp())
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM_REINIT);
 					}
-					m_iErrorCountCheckThread=0;
+					//m_iErrorCountCheckThread=0;
 				}
 				else
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT8 ++\r\n")));
-					m_iErrorCountCheckThread++;
+					m_iErrorCountCheckThread_HFFREQ++;
 				}
 
 				CStringW szError=_T("");
@@ -3466,9 +3592,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 			if(getModel()->getDATAHANDLER()->GetCurrentPmeanPara()==iTemp)
 			{
-				//newVG
-				//m_iErrorCountCheckThread=0;
-				//g_eventCOMCheckData.SetEvent();
+				m_iErrorCountCheckThread_PMEAN=0;
 
 				if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
 					//&&	getModel()->getDATAHANDLER()->getCOMErrorCommand() & ERRC_COM_HFPMEAN
@@ -3479,11 +3603,24 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			}
 			else
 			{
-				if(m_iErrorCountCheckThread>ERRORCNT_CHECK)
+				if(m_iErrorCountCheckThread_PMEAN>ERRORCNT_CHECK)
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT_CHECK\r\n")));
 					//error
-					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
+					//newSerialAlarm
+					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
+						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
+						&&	getModel()->isSERIALavailable()==TRUE)
+					{
+						//set alarm
+						if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
+						{
+							if(AfxGetApp())
+								AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM);
+							m_iErrorCountCheckThread_PMEAN=0;
+						}
+					}
+					else if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
 						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
 						&&	getModel()->isSERIALavailable()==TRUE)
 					{
@@ -3491,12 +3628,12 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						if(AfxGetApp())
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM_REINIT);
 					}
-					m_iErrorCountCheckThread=0;
+					//m_iErrorCountCheckThread=0;
 				}
 				else
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT9 ++\r\n")));
-					m_iErrorCountCheckThread++;
+					m_iErrorCountCheckThread_PMEAN++;
 				}
 
 				CStringW szError=_T("");
@@ -3577,9 +3714,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 			if(wHFAMPL==iTemp)
 			{
-				//newVG
-				//m_iErrorCountCheckThread=0;
-				//g_eventCOMCheckData.SetEvent();
+				m_iErrorCountCheckThread_HFAMPLMAX=0;
 
 				if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
 					//&&	getModel()->getDATAHANDLER()->getCOMErrorCommand() & ERRC_COM_HFAMP
@@ -3590,11 +3725,24 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			}
 			else
 			{
-				if(m_iErrorCountCheckThread>ERRORCNT_CHECK)
+				if(m_iErrorCountCheckThread_HFAMPLMAX>ERRORCNT_CHECK)
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT_CHECK\r\n")));
 					//error
-					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
+					//newSerialAlarm
+					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
+						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
+						&&	getModel()->isSERIALavailable()==TRUE)
+					{
+						//set alarm
+						if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
+						{
+							if(AfxGetApp())
+								AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM);
+							m_iErrorCountCheckThread_HFAMPLMAX=0;
+						}
+					}
+					else if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
 						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
 						&&	getModel()->isSERIALavailable()==TRUE)
 					{
@@ -3602,12 +3750,12 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						if(AfxGetApp())
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM_REINIT);
 					}
-					m_iErrorCountCheckThread=0;
+					//m_iErrorCountCheckThread=0;
 				}
 				else
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT10 ++\r\n")));
-					m_iErrorCountCheckThread++;
+					m_iErrorCountCheckThread_HFAMPLMAX++;
 				}
 
 				CStringW szError=_T("");
@@ -3643,9 +3791,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 			if(iPIP==iTemp)
 			{
-				//newVG
-				//m_iErrorCountCheckThread=0;
-				//g_eventCOMCheckData.SetEvent();
+				m_iErrorCountCheckThread_PIP=0;
 
 				//newVG
 				if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
@@ -3657,11 +3803,24 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			}
 			else
 			{
-				if(m_iErrorCountCheckThread>ERRORCNT_CHECK)
+				if(m_iErrorCountCheckThread_PIP>ERRORCNT_CHECK)
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT_CHECK\r\n")));
 					//error
-					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
+					//newSerialAlarm
+					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
+						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
+						&&	getModel()->isSERIALavailable()==TRUE)
+					{
+						//set alarm
+						if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
+						{
+							if(AfxGetApp())
+								AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM);
+							m_iErrorCountCheckThread_PIP=0;
+						}
+					}
+					else if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
 						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
 						&&	getModel()->isSERIALavailable()==TRUE)
 					{
@@ -3669,13 +3828,13 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						if(AfxGetApp())
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM_REINIT);
 					}
-					m_iErrorCountCheckThread=0;
+					//m_iErrorCountCheckThread=0;
 				}
 				else
 				{
 					//DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT11 ++\r\n")));
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT11 ++ PIC%d DEV%d\r\n"),iTemp,iPIP));
-					m_iErrorCountCheckThread++;
+					m_iErrorCountCheckThread_PIP++;
 				}
 
 				CStringW szError=_T("");
@@ -3699,9 +3858,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 			if(iPMAX==iTemp)
 			{
-				//newVG
-				//m_iErrorCountCheckThread=0;
-				//g_eventCOMCheckData.SetEvent();
+				m_iErrorCountCheckThread_PMAXVG=0;
 
 				if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
 					//&&	getModel()->getDATAHANDLER()->getCOMErrorCommand() & ERRC_COM_PMAXVG
@@ -3712,11 +3869,24 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			}
 			else
 			{
-				if(m_iErrorCountCheckThread>ERRORCNT_CHECK)
+				if(m_iErrorCountCheckThread_PMAXVG>ERRORCNT_CHECK)
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT_CHECK\r\n")));
 					//error
-					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
+					//newSerialAlarm
+					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
+						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
+						&&	getModel()->isSERIALavailable()==TRUE)
+					{
+						//set alarm
+						if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
+						{
+							if(AfxGetApp())
+								AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM);
+							m_iErrorCountCheckThread_PMAXVG=0;
+						}
+					}
+					else if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
 						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
 						&&	getModel()->isSERIALavailable()==TRUE)
 					{
@@ -3724,12 +3894,12 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						if(AfxGetApp())
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM_REINIT);
 					}
-					m_iErrorCountCheckThread=0;
+					//m_iErrorCountCheckThread=0;
 				}
 				else
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT12 ++\r\n")));
-					m_iErrorCountCheckThread++;
+					m_iErrorCountCheckThread_PMAXVG++;
 				}
 
 				CStringW szError=_T("");
@@ -3750,9 +3920,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 			if(getModel()->getDATAHANDLER()->GetCurrentPEEPPara()==iTemp)
 			{
-				//newVG
-				//m_iErrorCountCheckThread=0;
-				//g_eventCOMCheckData.SetEvent();
+				m_iErrorCountCheckThread_PEEP=0;
 
 				if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
 					//&&	getModel()->getDATAHANDLER()->getCOMErrorCommand() & ERRC_COM_PEEP
@@ -3763,11 +3931,24 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			}
 			else
 			{
-				if(m_iErrorCountCheckThread>ERRORCNT_CHECK)
+				if(m_iErrorCountCheckThread_PEEP>ERRORCNT_CHECK)
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT_CHECK\r\n")));
 					//error
-					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
+					//newSerialAlarm
+					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
+						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
+						&&	getModel()->isSERIALavailable()==TRUE)
+					{
+						//set alarm
+						if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
+						{
+							if(AfxGetApp())
+								AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM);
+							m_iErrorCountCheckThread_PEEP=0;
+						}
+					}
+					else if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
 						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
 						&&	getModel()->isSERIALavailable()==TRUE)
 					{
@@ -3775,12 +3956,12 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						if(AfxGetApp())
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM_REINIT);
 					}
-					m_iErrorCountCheckThread=0;
+					//m_iErrorCountCheckThread=0;
 				}
 				else
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT13 ++\r\n")));
-					m_iErrorCountCheckThread++;
+					m_iErrorCountCheckThread_PEEP++;
 				}
 
 
@@ -3802,9 +3983,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 			if(getModel()->getDATAHANDLER()->GetCurrentPpsvPara()==iTemp)
 			{
-				//newVG
-				//m_iErrorCountCheckThread=0;
-				//g_eventCOMCheckData.SetEvent();
+				m_iErrorCountCheckThread_PPSV=0;
 
 				if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
 					//&&	getModel()->getDATAHANDLER()->getCOMErrorCommand() & ERRC_COM_PPSV
@@ -3815,11 +3994,23 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			}
 			else
 			{
-				if(m_iErrorCountCheckThread>ERRORCNT_CHECK)
+				if(m_iErrorCountCheckThread_PPSV>ERRORCNT_CHECK)
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT_CHECK\r\n")));
 					//error
-					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
+					//newSerialAlarm
+					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
+						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
+						&&	getModel()->isSERIALavailable()==TRUE)
+					{
+						//set alarm
+						if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
+						{
+							if(AfxGetApp())
+								AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM);
+						}
+					}
+					else if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
 						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
 						&&	getModel()->isSERIALavailable()==TRUE)
 					{
@@ -3827,12 +4018,12 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						if(AfxGetApp())
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM_REINIT);
 					}
-					m_iErrorCountCheckThread=0;
+					//m_iErrorCountCheckThread=0;
 				}
 				else
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT14 ++\r\n")));
-					m_iErrorCountCheckThread++;
+					m_iErrorCountCheckThread_PPSV++;
 				}
 
 				CStringW szError=_T("");
@@ -3877,9 +4068,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			}
 			if(iCurVal==iTemp)
 			{
-				//newVG
-				//m_iErrorCountCheckThread=0;
-				//g_eventCOMCheckData.SetEvent();
+				m_iErrorCountCheckThread_OXY=0;
 
 				if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
 					//&&	getModel()->getDATAHANDLER()->getCOMErrorCommand() & ERRC_COM_O2
@@ -3890,11 +4079,24 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			}
 			else
 			{
-				if(m_iErrorCountCheckThread>ERRORCNT_CHECK)
+				if(m_iErrorCountCheckThread_OXY>ERRORCNT_CHECK)
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT_CHECK\r\n")));
 					//error
-					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
+					//newSerialAlarm
+					if(		getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_CHECK_DATA
+						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
+						&&	getModel()->isSERIALavailable()==TRUE)
+					{
+						//set alarm
+						if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_COM())
+						{
+							if(AfxGetApp())
+								AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM);
+							m_iErrorCountCheckThread_OXY=0;
+						}
+					}
+					else if(		getModel()->getDATAHANDLER()->getCOMErrorCode() == 0
 						&&	getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()!=AS_ACTIVE
 						&&	getModel()->isSERIALavailable()==TRUE)
 					{
@@ -3902,12 +4104,12 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						if(AfxGetApp())
 							AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_COM_REINIT);
 					}
-					m_iErrorCountCheckThread=0;
+					//m_iErrorCountCheckThread=0;
 				}
 				else
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ERRORCNT15 ++\r\n")));
-					m_iErrorCountCheckThread++;
+					m_iErrorCountCheckThread_OXY++;
 				}
 
 				CStringW szError=_T("");
@@ -4220,3 +4422,22 @@ int CInterfaceSerial::GetCOMValue(CTlsBlob bl)
 //
 //	//LeaveCriticalSection(&csTestLock);
 //}
+
+void CInterfaceSerial::resetErrorCountCheckThread()//newSerialAlarm
+{
+	m_iErrorCountCheckThread_Mode=0;
+	m_iErrorCountCheckThread_VentRunState=0;
+	m_iErrorCountCheckThread_ITIME=0;
+	m_iErrorCountCheckThread_ETIME=0;
+	m_iErrorCountCheckThread_IFLOW=0;
+	m_iErrorCountCheckThread_RISETIME=0;
+	m_iErrorCountCheckThread_EFLOW=0;
+	m_iErrorCountCheckThread_PIP=0;
+	m_iErrorCountCheckThread_PMAXVG=0;
+	m_iErrorCountCheckThread_PEEP=0;
+	m_iErrorCountCheckThread_PPSV=0;
+	m_iErrorCountCheckThread_OXY=0;
+	m_iErrorCountCheckThread_HFFREQ=0;
+	m_iErrorCountCheckThread_PMEAN=0;
+	m_iErrorCountCheckThread_HFAMPLMAX=0;
+}

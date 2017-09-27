@@ -321,12 +321,12 @@ bool CNumericFieldMECHANIC::drawStaticText(CDC* pDC)
 	pDC->DrawText(m_szUnitMBARLPS,&rc,DT_TOP|DT_SINGLELINE|DT_RIGHT);
 
 
-	CSize sz1;
+	/*CSize sz1;
 
 	pDC->DrawText(m_szName,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 	sz1 = pDC->GetTextExtent(m_szName);
 
-	SelectObject(hdc,g_hf7AcuBold);
+	SelectObject(hdc,g_hf7AcuBold);*/
 
 	
 

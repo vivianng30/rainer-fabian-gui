@@ -32,8 +32,6 @@ CMessageBoxProxCal::CMessageBoxProxCal(CWnd* pParent /*=NULL*/,CStringW sCaption
 
 CMessageBoxProxCal::~CMessageBoxProxCal()
 {
-	//KillTimer(PROXPRESSURECALTIMER);
-
 	DeleteObject(m_brush);
 	DeleteObject(m_hfont);
 	DeleteObject(m_hfontButton);
@@ -85,27 +83,12 @@ BOOL CMessageBoxProxCal::OnInitDialog()
 	CRect rcDlg, rcRes;
 	GetClientRect(rcDlg);
 
-	//int iResWidth=0;
-	//int iResHeight=0;
-
-	//if(getModel()->IsSDCARDfont())
-	//{
-	//	//_tcscpy_s(m_pszFontName,_countof(m_pszFontName),_T("SimHei"));
-	//	_tcscpy_s(m_pszFontName,_countof(m_pszFontName),_T("Arial Unicode MS"));
-	//}
-	//else
-	//{
-	//	_tcscpy_s(m_pszFontName,_countof(m_pszFontName),_T("arial"));
-	//}
-
 	_tcscpy_s(m_pszFontName,_countof(m_pszFontName),getModel()->GetFontFace());
 
 	CDC* pDC = this->GetDC();
 	m_hfont=CreateFontHandle(pDC,16,m_pszFontName,FW_BOLD,0);
 	m_hfontButton=CreateFontHandle(pDC,18,m_pszFontName,FW_BOLD,0);
 
-	
-	//SetFont(CFont::FromHandle(m_hfont));
 	m_szStaticTextMsg.SetFont(CFont::FromHandle(m_hfont));
 
 	m_btn0mbar.SetFont(CFont::FromHandle(m_hfontButton));
@@ -147,9 +130,6 @@ BOOL CMessageBoxProxCal::OnInitDialog()
 		break;
 		}
 
-	//m_iPressure=getModel()->getDATAHANDLER()->getMessureDataPRESSURE();
-	//m_iPProxADC=getModel()->getSPI()->Read_P_PROX_ADC();
-
 	m_szPProxADC.SetWindowText(_T("PPROX ADC:"));
 	m_szPressure.SetWindowText(_T("Pressure:"));
 
@@ -161,7 +141,6 @@ BOOL CMessageBoxProxCal::OnInitDialog()
 	SetTimer(PROXPRESSURECALTIMER, 250, NULL);
 
 	return TRUE;   // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
 void CMessageBoxProxCal::OnBnClickedBtnOxy0()
@@ -186,15 +165,9 @@ HBRUSH CMessageBoxProxCal::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
 
-	//// TODO:  Change any attributes of the DC here
-
-	//// TODO:  Return a different brush if the default is not desired
-	//return hbr;
-
 	switch (nCtlColor) 
 	{ 
 	case CTLCOLOR_STATIC:  // Für alle Statics           
-		//pDC->SetTextColor(RGB(0, 0, 0)); 
 		pDC->SetBkColor(BACKGND); 
 
 		//case CTLCOLOR_MSGBOX:     // Für den Dialog             
@@ -205,7 +178,6 @@ HBRUSH CMessageBoxProxCal::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	default: 
 		hbr= m_brush;
 	} 
-
 
 	return hbr;
 }

@@ -2855,9 +2855,9 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				{
 					DEBUGMSG(TRUE, (TEXT("#COM ok\r\n")));
 
-					getModel()->getDATAHANDLER()->deleteCOMErrorCode(ERRC_COM_INIT); //newVG
-					getModel()->getDATAHANDLER()->deleteCOMErrorCode(ERRC_COM_CHECK_DATA); //newVG
-					getModel()->getDATAHANDLER()->deleteCOMErrorCode(ERRC_COM_READ_MSTATUS); //newVG
+					getModel()->getDATAHANDLER()->deleteCOMErrorCode(ERRC_COM_INIT); 
+					//getModel()->getDATAHANDLER()->deleteCOMErrorCode(ERRC_COM_CHECK_DATA); //newSerialAlarm
+					getModel()->getDATAHANDLER()->deleteCOMErrorCode(ERRC_COM_READ_MSTATUS); 
 					//getModel()->getDATAHANDLER()->deleteCOMError(); //newVG
 
 					getModel()->setSERIALavailable(TRUE);
@@ -9623,11 +9623,11 @@ bool CMainFrame::SaveTrendDataToUSB(UINT trendID)
 			//DEBUGMSG(TRUE, (TEXT("stream %s\r"),szBuffer));
 		}
 
-		DEBUGMSG(TRUE, (TEXT("Save Trend USB wFilenum %d\r"),wFilenum));
+		/*DEBUGMSG(TRUE, (TEXT("Save Trend USB wFilenum %d\r"),wFilenum));
 		DEBUGMSG(TRUE, (TEXT("Save Trend USB iBufPos %d\r"),iBufPos));
 		DEBUGMSG(TRUE, (TEXT("Save Trend USB nMax %d\r"),nMax));
 		DEBUGMSG(TRUE, (TEXT("Save Trend USB iTrendBufCount %d\r"),iTrendBufCount));
-		DEBUGMSG(TRUE, (TEXT("Save Trend USB szFile %s\r"),szFile));
+		DEBUGMSG(TRUE, (TEXT("Save Trend USB szFile %s\r"),szFile));*/
 
 		while(		bFileExists 
 			&&	bDeserialized 

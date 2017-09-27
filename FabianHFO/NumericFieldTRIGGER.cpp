@@ -39,12 +39,12 @@ CNumericField(size)
 	if(trigger==TRIGGER_VOLUME)
 	{
 		m_szName=getModel()->GetLanguageString(IDS_PARA_TRIGVOL);
-		m_szUnit=getModel()->GetLanguageString(IDS_UNIT_MILLILITER);
+		m_szUnit=_T("[")+getModel()->GetLanguageString(IDS_UNIT_MILLILITER)+_T("]");
 	}
 	else if(trigger==TRIGGER_FLOW)
 	{
 		m_szName=getModel()->GetLanguageString(IDS_PARA_TRIGFLOW);
-		m_szUnit=getModel()->GetLanguageString(IDS_UNIT_LMIN);
+		m_szUnit=_T("[")+getModel()->GetLanguageString(IDS_UNIT_LMIN)+_T("]");
 	}
 	else if(trigger==TRIGGER_PRESSURE)
 	{

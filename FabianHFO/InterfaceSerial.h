@@ -140,7 +140,7 @@ protected:
 
 	bool CheckBlenderStatusBits(CTlsBlob bl);
 
-
+	void resetErrorCountCheckThread();
 protected:
 
 	friend UINT CSerialReceiveThread(LPVOID pc);
@@ -224,7 +224,23 @@ protected:
 
 	//int m_iTestCount;
 
-	int m_iErrorCountCheckThread;
+	BYTE m_iErrorCountCheckThread_Mode;
+	BYTE m_iErrorCountCheckThread_VentRunState;
+	BYTE m_iErrorCountCheckThread_ITIME;
+	BYTE m_iErrorCountCheckThread_ETIME;
+	BYTE m_iErrorCountCheckThread_IFLOW;
+	BYTE m_iErrorCountCheckThread_RISETIME;
+	BYTE m_iErrorCountCheckThread_EFLOW;
+	BYTE m_iErrorCountCheckThread_PIP;
+	BYTE m_iErrorCountCheckThread_PMAXVG;
+	BYTE m_iErrorCountCheckThread_PEEP;
+	BYTE m_iErrorCountCheckThread_PPSV;
+	BYTE m_iErrorCountCheckThread_OXY;
+
+	BYTE m_iErrorCountCheckThread_HFFREQ;
+	BYTE m_iErrorCountCheckThread_PMEAN;
+	BYTE m_iErrorCountCheckThread_HFAMPLMAX;
+
 	int m_iErrorCountSendThread;
 
 	//bool m_bResetTestFlag;

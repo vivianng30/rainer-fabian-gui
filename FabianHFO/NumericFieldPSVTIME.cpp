@@ -15,7 +15,7 @@ CNumericField(size)
 {
 	m_szName=getModel()->GetLanguageString(IDS_PARA_PSVTIME);
 	m_szNameNote=_T("");
-	m_szUnit=getModel()->GetLanguageString(IDS_UNIT_SECONDS);
+	m_szUnit=_T("[")+getModel()->GetLanguageString(IDS_UNIT_SECONDS)+_T("]");
 }
 
 CNumericFieldPSVTIME::~CNumericFieldPSVTIME()

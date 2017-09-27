@@ -342,16 +342,14 @@ void CUDBtn::Draw(int nState)
 						wsprintf(psz,_T("%0.3f"),dbVal);
 						DrawText(m_hDC,psz,-1,&rc,DT_BOTTOM|DT_CENTER);
 					}
-					//pro, new - start
 					else if(m_btn.wID==IDC_BTN_SERVICE_ALTITUDE)
-					{ //TODO
+					{
 						double dbVal = (double)m_v.nValue*100;
 						//cs.Format(_T("%0.3f"), m_dbFCOR);
 						SelectObject(m_hDC,m_hFontValue);
 						wsprintf(psz,_T("%0.0f"),dbVal);
 						DrawText(m_hDC,psz,-1,&rc,DT_BOTTOM|DT_CENTER);
 					}
-					//pro, new - end
 					else
 					{
 						SelectObject(m_hDC,m_hFontValue);

@@ -28,14 +28,14 @@ protected:
 
 	void checkVentRunState();
 
+	double CalcCorrectionFactor(double iAltitude);
+
 private:
 	CBmp* m_pcFlowCorr_Up;
 	CBmp* m_pcFlowCorr_Dw;
 	CUDBtn* m_pcFlowCorrNEO;
 	CUDBtn* m_pcFlowCorrPED;
-	//pro, new - start
 	CUDBtn* m_pcAltitude;
-	//pro, new - end
 
 	CBitmapSlider*	m_sliderEnableBTPS;
 
@@ -49,9 +49,7 @@ private:
 	int m_iFCOR_PED;
 	int m_iWaitCount;
 
-	//pro, new - start
 	WORD m_iAltitude;
-	//pro, new - end	
 
 	bool m_bUseBTPS;
 	bool m_bUpdateData;
@@ -101,7 +99,7 @@ private:
 
 	bool m_bProx0mbarCalibrated;
 
-	double CalcCorrectionFactor(double iAltitude);
+	
 
 protected:
 	DECLARE_MESSAGE_MAP()
