@@ -114,7 +114,7 @@ public:
 	//TEST LOCK SERIAL
 	//void lockTest();
 
-
+	void resetErrorCountCheckThread();
 
 private:
 	//singleton
@@ -140,7 +140,7 @@ protected:
 
 	bool CheckBlenderStatusBits(CTlsBlob bl);
 
-	void resetErrorCountCheckThread();
+	
 protected:
 
 	friend UINT CSerialReceiveThread(LPVOID pc);

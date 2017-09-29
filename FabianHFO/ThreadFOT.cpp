@@ -1673,13 +1673,14 @@ DWORD CThreadFOT::FOTData(void)
 								setFOTstate(FOT_WAITVALIDDATA);
 								startFOToscillation();
 							}
+							m_iCountFOTimer=0;//FOT_TIMEOUT
 						}
 						break;
 					case FOT_WAITVALIDDATA:
 						
 						checkFOTvalidMeasurementData();
 
-						//m_iCountFOTimer++;
+						m_iCountFOTimer++;//FOT_TIMEOUT
 
 						if(true==isFOTDataValid())
 						{

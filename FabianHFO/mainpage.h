@@ -16,6 +16,7 @@
 	- HFO+FS off: Pmean not suppressed
 	- Service Network: correct display if acuLink is set to ACL_NOPDMS
 	- newSerialAlarm implemented
+	- FOT timeout 15 sec for valid data check //FOT_TIMEOUT
  @endverbatim
  * 
  * @section ver Version history and changelog
