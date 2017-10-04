@@ -1185,7 +1185,7 @@ void CWndDataFOT::Draw(bool bStatic)
 
 				if(getModel()->getFOTThread())
 				{
-					if(getModel()->getFOTThread()->getCurFOTsequence()<getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara())
+					if(getModel()->getFOTThread()->getCurFOTsequence()<=getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara())
 					{
 						//show button continue
 						BYTE iFOTnextsequence=0;
@@ -1372,7 +1372,7 @@ void CWndDataFOT::Draw(bool bStatic)
 					{
 						//m_pcBtnRunSeq->ShowWindow(SW_SHOW);
 
-						szERROR.Format(_T("ERROR state %d CurFOTseq %d hfo_STEPS %d\r\n"),(int)feFOTstate,getModel()->getFOTThread()->getCurFOTsequence(),getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara());
+						szERROR.Format(_T("FOT: ERROR state %d CurFOTseq %d hfo_STEPS %d\r\n"),(int)feFOTstate,getModel()->getFOTThread()->getCurFOTsequence(),getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara());
 						DEBUGMSG(TRUE, (szERROR));
 						theApp.getLog()->WriteLine(szERROR);
 					}
@@ -1539,7 +1539,7 @@ void CWndDataFOT::Draw(bool bStatic)
 
 				if(getModel()->getFOTThread())
 				{
-					if(getModel()->getFOTThread()->getCurFOTsequence()<getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara())
+					if(getModel()->getFOTThread()->getCurFOTsequence()<=getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara())
 					{
 						//show button continue
 						BYTE iFOTnextsequence=0;
@@ -1811,7 +1811,7 @@ void CWndDataFOT::Draw(bool bStatic)
 					}
 					else
 					{
-						szERROR.Format(_T("ERROR state %d CurFOTseq %d conv_STEPS %d\r\n"),(int)feFOTstate,getModel()->getFOTThread()->getCurFOTsequence(),getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara());
+						szERROR.Format(_T("FOT: ERROR state %d CurFOTseq %d conv_STEPS %d\r\n"),(int)feFOTstate,getModel()->getFOTThread()->getCurFOTsequence(),getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara());
 						DEBUGMSG(TRUE, (szERROR));
 						theApp.getLog()->WriteLine(szERROR);
 					}
@@ -3274,11 +3274,11 @@ void CWndDataFOT::OnBnClickedStartStop()
 				if(AfxGetApp() != NULL)
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_STOP_FOT);
 			}
-			else
+			/*else
 			{
 				if(GetParent())
 					GetParent()->PostMessage(WM_GRAPH_REDRAW);
-			}
+			}*/
 		}
 	}
 	else
@@ -3295,8 +3295,8 @@ void CWndDataFOT::OnBnClickedStartStop()
 		GetParent()->PostMessage(WM_GRAPH_REDRAW);
 
 
-	if(AfxGetApp())
-		AfxGetApp()->GetMainWnd()->SetFocus();
+	/*if(AfxGetApp())
+		AfxGetApp()->GetMainWnd()->SetFocus();*/
 }
 void CWndDataFOT::OnBnClickedDecrease()
 {

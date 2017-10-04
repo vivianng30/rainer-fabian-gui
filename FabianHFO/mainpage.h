@@ -6,8 +6,8 @@
  *
  *
  * @section ver Version history and changelog
- * @subsection ver5020 Version 5.0.2.0
- * @date 2017-09-11
+ * @subsection ver5100 Version 5.1.0.0
+ * @date 2017-10-04
  * @verbatim
 	- mainboard 3.4 included
 	- BUG-FAB-001 Preset - parameter save fixed
@@ -17,6 +17,8 @@
 	- Service Network: correct display if acuLink is set to ACL_NOPDMS
 	- newSerialAlarm implemented
 	- FOT timeout 15 sec for valid data check //FOT_TIMEOUT
+	- BUG-HFO-023 FOT Xrs display fixed
+	- BUG-HFO-024 FOT last step no.1/2 fixed
  @endverbatim
  * 
  * @section ver Version history and changelog

@@ -1019,6 +1019,9 @@ void CThreadFOT::repeatSequence()
 
 		//DEBUGMSG(TRUE, (TEXT("CThreadFOT g_eventFOT.SetEvent()\r\n")));
 		g_eventFOT.SetEvent();
+
+		if(AfxGetApp() != NULL)
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_GRAPH_REDRAW);
 	}
 	
 }
@@ -1753,28 +1756,34 @@ DWORD CThreadFOT::FOTData(void)
 							}
 							else
 							{
-								setFOTstate(FOT_OFF);
-								m_iCountFOTimer=getModel()->getCONFIG()->getFOTventDelaytime();
-								getModel()->getVIEWHANDLER()->drawFOTtime(m_iCountFOTimer);
-
 								startCalculation();
 
-
-								setDateLastSequence();
-
-								if(m_bFOTconvRunning)
+								if(FOT_RETRY!=getFOTstate())
 								{
-									restoreFOTConvVentMode();
-									
-									m_bFOTconvRunning=false;
-									stopThread();
+									setFOTstate(FOT_OFF);
+									m_iCountFOTimer=getModel()->getCONFIG()->getFOTventDelaytime();
+									getModel()->getVIEWHANDLER()->drawFOTtime(m_iCountFOTimer);
+
+									setDateLastSequence();
+
+									if(m_bFOTconvRunning)
+									{
+										restoreFOTConvVentMode();
+
+										m_bFOTconvRunning=false;
+										stopThread();
+									}
+									else
+									{
+										restoreFOTHFOVentMode();
+
+										m_bFOThfoRunning=false;
+										stopThread();
+									}
 								}
 								else
 								{
-									restoreFOTHFOVentMode();
-
-									m_bFOThfoRunning=false;
-									stopThread();
+									DEBUGMSG(TRUE, (TEXT("xxxxxxxxxxx FOT_RETRY\r\n")));
 								}
 							}
 						}

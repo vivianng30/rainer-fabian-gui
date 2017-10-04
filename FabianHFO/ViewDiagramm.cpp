@@ -4580,6 +4580,9 @@ LRESULT CViewDiagramm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 		{
 			Show();
 
+			if(AfxGetApp())
+				AfxGetApp()->GetMainWnd()->SetFocus();
+
 			return 1;
 		}
 		break;
