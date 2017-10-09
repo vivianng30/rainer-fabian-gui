@@ -2341,15 +2341,10 @@ enum eCurveForm {
 #define S_PARA_TRIG_SCHWELLE		105	//Triggerschwelle
 #define M_FLOWSENS_CMND				106	//Flowsensor commando
 #define S_FLOWSENS_CMND				107	//Flowsensor commando
-
 #define M_FLOW_CORFACTOR_PED		108	//Korrekturfaktor Flow PED
 #define S_FLOW_CORFACTOR_PED		109	//Korrekturfaktor Flow PED
-
-//#define M_STATE_VOLGARANTY		108	//Pediatric / Neonatal
-//#define S_STATE_VOLGARANTY		109	//Pediatric / Neonatal
 #define M_PARA_RISETIME				110	// //newVG
 #define S_PARA_RISETIME				111	// //newVG
-
 #define M_ABORTCRITERION_PSV		112	//Abbruchkriterium PSV in % vom inspirat. Spitzenfluﬂ
 #define S_ABORTCRITERION_PSV		113	//Abbruchkriterium PSV in % vom inspirat. Spitzenfluﬂ
 //#define M_RESISTANCE				114	//Resistance

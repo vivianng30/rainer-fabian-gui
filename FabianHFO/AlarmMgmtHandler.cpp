@@ -6840,7 +6840,7 @@ void CAlarmMgmtHandler::setAlarmStatePDMS(eAlarm eAlarmToSet, eStateOfAlarm stat
 			break;
 		case AL_PatAl_PIPmax:						
 			{
-				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_Pmax,(int)state);
+				getModel()->getAcuLink()->setAlarmData(ALINK_ALARM_PatAl_PIPmax,(int)state);
 			}
 			break;
 		case AL_PatAl_PIPmin:						

@@ -980,7 +980,7 @@ void CInterfaceAcuLink::clearAlarmArray()
 	setAlarmData(ALINK_ALARM_SysFail_IF_ACULINK,0);
 	setAlarmData(ALINK_ALARM_PatAl_MVmax,0);
 	setAlarmData(ALINK_ALARM_PatAl_MVmin,0);
-	setAlarmData(ALINK_ALARM_PatAl_Pmax,0);
+	setAlarmData(ALINK_ALARM_PatAl_PIPmax,0);
 	setAlarmData(ALINK_ALARM_PatAl_PminLow,0);
 	setAlarmData(ALINK_ALARM_PatAl_PminHigh,0);
 	setAlarmData(ALINK_ALARM_PatAl_BPMmax,0);

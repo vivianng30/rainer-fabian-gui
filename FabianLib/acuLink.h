@@ -719,7 +719,7 @@
 #define ALINK_ALARM_Sens_O2_NOT_CALIBRATED			32
 #define ALINK_ALARM_PatAl_MVmax						33
 #define ALINK_ALARM_PatAl_MVmin						34 
-#define ALINK_ALARM_PatAl_Pmax						35 
+#define ALINK_ALARM_PatAl_PIPmax					35 
 #define ALINK_ALARM_PatAl_PminLow					36 
 #define ALINK_ALARM_PatAl_PminHigh					37 
 #define ALINK_ALARM_PatAl_BPMmax					38 

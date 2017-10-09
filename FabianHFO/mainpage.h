@@ -19,6 +19,7 @@
 	- FOT timeout 15 sec for valid data check //FOT_TIMEOUT
 	- BUG-HFO-023 FOT Xrs display fixed
 	- BUG-HFO-024 FOT last step no.1/2 fixed
+	- InitTRend moved to MainFrm Timer Thread
  @endverbatim
  * 
  * @section ver Version history and changelog

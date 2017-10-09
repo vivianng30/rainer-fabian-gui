@@ -1023,7 +1023,7 @@ void CDataHandler::init()
 			getModel()->getCONFIG()->SetVolumeControl(VCTRL_VLIMIT);
 	}
 
-	initTrend();
+	//initTrend();
 
 	loadIniConfiguration();
 	loadDiagrammColor();
@@ -15615,7 +15615,7 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 
 	CStringW szTime = dtTimeLastTrend.Format(LOCALE_NOUSEROVERRIDE,LANG_USER_DEFAULT);
 
-	//DEBUGMSG(TRUE, (TEXT("UpdateTrendData GetTimestamp %s trend %d\r\n"),szTime, (int)type));
+	DEBUGMSG(TRUE, (TEXT("UpdateTrendData trend %d\r\n"),(int)type));
 
 	if(	dtTimeLastTrend.GetStatus() != COleDateTime::null)
 	{

@@ -503,13 +503,6 @@ void CSubViewNetwork::Draw()
 	SetTextColor(hdcMem,0x0000000);
 
 	/****************************************************/
-	/*RoundRect(hdcMem, 110, 20, 670, 110,20,20);
-
-	SelectObject(hdcMem,cbrDarkRound);
-
-	RoundRect(hdcMem, 110, 20, 670, 50,20,20);
-
-	SetTextColor(hdcMem,RGB(255,255,255));*/
 
 	SetTextColor(hdcMem,0x0000000);
 

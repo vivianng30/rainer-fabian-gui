@@ -48,6 +48,9 @@ public:
 	BYTE GetPDMSprotocol();
 	void SetPDMSprotocol(BYTE prot);
 
+	eAcuLinkVersion GetAcuLinkVersion();
+	void SetAcuLinkVersion(eAcuLinkVersion vers);
+
 	UINT GetEthernetPort();
 	void SetEthernetPort(UINT port);
 
@@ -56,9 +59,6 @@ public:
 	BYTE getSPO2module();
 	void setSPO2module(BYTE mod, bool bReinit=false);
 	bool isSpO2ConfigInProgress();
-
-	eAcuLinkVersion GetAcuLinkVersion();
-	void SetAcuLinkVersion(eAcuLinkVersion vers);
 
 	int GetVentRange();
 	void SetVentRange(int range);

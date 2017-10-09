@@ -4041,7 +4041,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 		}*/
 
 		bool bPRICOrunning=false;
-		if(getModel()->getPRICOThread())//PRICO04
+		if(getModel()->getPRICOThread())
 		{
 			if(getModel()->getPRICOThread()->isPRICOalgorithmRunning())
 			{

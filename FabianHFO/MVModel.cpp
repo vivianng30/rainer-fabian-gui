@@ -5392,7 +5392,7 @@ WORD CMVModel::Send_MODE_OPTION2(bool bSPI,bool bSerial)
 // **************************************************************************
 void CMVModel::Send_VENT_MODE(eVentMode mode)
 {
-	//DEBUGMSG(TRUE, (TEXT("CMVModel::Send_VENT_MODE start\r\n")));
+	DEBUGMSG(TRUE, (TEXT("CMVModel::Send_VENT_MODE start\r\n")));
 	getSERIAL()->Send_VENT_MODE(mode);
 	getSPI()->Send_VENT_MODE(mode);
 	
@@ -6386,17 +6386,7 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 		}
 	}
 
-	Sleep(0);
-
 	Send_MODE_OPTION1();
-
-	//theApp.getLog()->WriteLine(_T("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Send_VENT_MODE"));
-	//DEBUGMSG(TRUE, (TEXT("CMVModel::Send_VENT_MODE end\r\n")));
-
-	/*if(getAcuLink()!=NULL)
-	{
-		SendTerminalSettings(mode);
-	}*/
 }
 
 // **************************************************************************

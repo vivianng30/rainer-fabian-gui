@@ -8395,6 +8395,9 @@ DWORD CMainFrame::DoTimerFunctions(void)
 
 	if(getModel()->getDATAHANDLER()->isTRENDLicenseAvailable())
 	{
+		getModel()->getDATAHANDLER()->initTrend();
+		Sleep(0);
+
 		UINT iSec=getModel()->getDATAHANDLER()->CheckLastTrendData();
 		if(iSec!=0)
 		{
