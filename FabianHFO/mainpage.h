@@ -20,6 +20,7 @@
 	- BUG-HFO-023 FOT Xrs display fixed
 	- BUG-HFO-024 FOT last step no.1/2 fixed
 	- InitTRend moved to MainFrm Timer Thread
+	- HFO AmplitudeCorrectionFactor: changing HFfreq para will send HF amplitude with new correction factor again
  @endverbatim
  * 
  * @section ver Version history and changelog

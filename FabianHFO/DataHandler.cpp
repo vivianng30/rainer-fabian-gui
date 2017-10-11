@@ -13236,6 +13236,14 @@ void CDataHandler::SetCurrentHFFreqPara(BYTE val)
 
 			if(AfxGetApp())
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_PARABN_HFFREQ);
+
+			if(PARADATA()->IsHFVGarantStateOn()==true)
+				SetHFAMPLmaxParadata(PARADATA()->GetHFAMPLmaxPara(), true);
+			else
+				SetHFAMPLParadata(PARADATA()->GetHFAMPLPara(), true);
+
+			if(AfxGetApp())
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_PARABN_HFAMPL);
 		}
 		break;
 	case VM_PRE_HFO:

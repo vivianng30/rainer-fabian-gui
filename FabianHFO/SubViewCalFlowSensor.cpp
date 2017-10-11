@@ -807,7 +807,6 @@ void CSubViewCalFlowSensor::OnDestroy()
 	StopFlowSensorCheckThread();
 	getModel()->getDATAHANDLER()->SetFlowSensorCalibrating(false);
 
-	//KillTimer(CHANGETIMER);
 	KillTimer(FLOWSENS_VALUE);
 
 	if(m_pDlg)
@@ -1614,7 +1613,6 @@ LRESULT CSubViewCalFlowSensor::WindowProc(UINT message, WPARAM wParam, LPARAM lP
 					if(lParam==CPresetMenuBtn::UP)
 					{
 						showNeoPedMessage(wParam);
-						//SetOneButtonPreset_Freshgas(wParam);
 					}
 					return 1;
 				}
@@ -1715,19 +1713,15 @@ LRESULT CSubViewCalFlowSensor::WindowProc(UINT message, WPARAM wParam, LPARAM lP
 						{
 							m_bCancelFlowCal=true;
 							StopFlowSensorCheckThread();
-							//m_bDoFlowCheck=false;
 
 							if(GetParent())
 								GetParent()->PostMessage(WM_SET_SETUPTIMER);
 						}
 					}
-					
 					return 1;
 				}
 				break;
-			}
-
-			
+			}		
 		}
 		break;
 	}
@@ -1795,7 +1789,6 @@ void CSubViewCalFlowSensor::SetOneButtonDepressed_NeoPed(int btnID)
 
 	getModel()->getDATAHANDLER()->setBodyweight(0,true);
 	m_pbtnBodyweight->RefreshText(_T("--"));
-	//m_bNeoPedConfirmed=false;
 }
 void CSubViewCalFlowSensor::SetOneButtonPreset_NeoPed(int btnID)
 {
