@@ -21,6 +21,8 @@
 	- BUG-HFO-024 FOT last step no.1/2 fixed
 	- InitTRend moved to MainFrm Timer Thread
 	- HFO AmplitudeCorrectionFactor: changing HFfreq para will send HF amplitude with new correction factor again
+	- initial flag for serial check routine implemented
+	- DUOPAP with Medijet and trigger off: Freq and Apnea alarm fields in alarm view are hidden
  @endverbatim
  * 
  * @section ver Version history and changelog

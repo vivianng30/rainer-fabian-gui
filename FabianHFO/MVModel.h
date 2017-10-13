@@ -260,6 +260,9 @@ public:
 	void SetVideoRunning(bool bState);
 	bool IsVideoRunning();
 
+	bool isVentModeInitialized();
+	void setVentModeInitialized();
+
 	void Send_VENT_MODE(eVentMode mode);
 	WORD Send_MODE_OPTION1(bool bSPI=true,bool bSerial=true);
 	WORD Send_MODE_OPTION2(bool bSPI=true,bool bSerial=true);
@@ -380,6 +383,7 @@ private:
 	static CRITICAL_SECTION	m_csO2Flush;
 	static CRITICAL_SECTION	m_csETCO2;
 	static CRITICAL_SECTION	m_csSPO2;
+	static CRITICAL_SECTION	m_csVentModeInit;
 
 	//rkuINITIF
 	static CMVViewHandler *VIEWHANDLER;
@@ -450,5 +454,6 @@ private:
 	bool m_bVentilationRangeChanged;
 	bool m_bVideoRunning;
 	bool m_bCO2inprogress;
+	bool m_bVentModeInitialized;
 
 };

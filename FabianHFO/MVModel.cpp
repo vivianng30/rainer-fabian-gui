@@ -19,6 +19,7 @@ CRITICAL_SECTION CMVModel::m_csLangString;
 CRITICAL_SECTION CMVModel::m_csTrigger;
 CRITICAL_SECTION CMVModel::m_csETCO2;
 CRITICAL_SECTION CMVModel::m_csSPO2;
+CRITICAL_SECTION CMVModel::m_csVentModeInit;
 
 CMVModel* CMVModel::theModel=0;
 
@@ -73,6 +74,7 @@ CMVModel::CMVModel(void)
 	InitializeCriticalSection(&m_csO2Flush);
 	InitializeCriticalSection(&m_csETCO2);
 	InitializeCriticalSection(&m_csSPO2);
+	InitializeCriticalSection(&m_csVentModeInit);
 
 	m_szUniqueID=_T("");
 
@@ -143,6 +145,8 @@ CMVModel::CMVModel(void)
 	m_bSPI_TUBE_OCCLUSION=false;
 
 	m_bExit=false;
+
+	m_bVentModeInitialized=false;
 }
 
 // **************************************************************************
@@ -154,6 +158,7 @@ CMVModel::~CMVModel(void)
 		LANGUAGE->DestroyInstance();
 	LANGUAGE=NULL;
 
+	DeleteCriticalSection(&m_csVentModeInit);
 	DeleteCriticalSection(&m_csETCO2);
 	DeleteCriticalSection(&m_csSPO2);
 	DeleteCriticalSection(&m_csO2Flush);
@@ -6387,6 +6392,29 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 	}
 
 	Send_MODE_OPTION1();
+
+	if(isVentModeInitialized()==false)
+	{
+		setVentModeInitialized();
+	}
+}
+
+bool CMVModel::isVentModeInitialized()
+{
+	bool bInitialized=false;
+
+	EnterCriticalSection(&m_csVentModeInit);
+	bInitialized=m_bVentModeInitialized;
+	LeaveCriticalSection(&m_csVentModeInit);
+
+	return bInitialized;
+}
+
+void CMVModel::setVentModeInitialized()
+{
+	EnterCriticalSection(&m_csVentModeInit);
+	m_bVentModeInitialized=true;
+	LeaveCriticalSection(&m_csVentModeInit);
 }
 
 // **************************************************************************

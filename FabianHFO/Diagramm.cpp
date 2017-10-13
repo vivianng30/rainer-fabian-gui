@@ -9950,13 +9950,13 @@ void CDiagramm::DrawConnectLoop(CPoint *pts, int iSize, bool levelPlot)
 	if(m_bExit)
 		return;
 
-	CPen pen,penLevel1,penLevel2;
+	CPen pen;//,penLevel1,penLevel2;
 	CPen *poldpenDC=NULL;
 	CPen *poldpen1=NULL;
 	CPen  *poldpen2=NULL;
 	pen.CreatePen(PS_SOLID,m_iGraphPenSize,m_crCurrentGraphPenColor);
-	penLevel1.CreatePen(PS_SOLID,m_iGraphPenSize,m_crPrevLoop2);
-	penLevel2.CreatePen(PS_SOLID,m_iGraphPenSize,m_crPrevLoop3);
+	//penLevel1.CreatePen(PS_SOLID,m_iGraphPenSize,m_crPrevLoop2);
+	//penLevel2.CreatePen(PS_SOLID,m_iGraphPenSize,m_crPrevLoop3);
 
 	CBrush brush;
 	CBrush *poldbrushDC=NULL;
@@ -10012,8 +10012,8 @@ void CDiagramm::DrawConnectLoop(CPoint *pts, int iSize, bool levelPlot)
 	dc.SelectObject(poldbrushDC);
 
 	pen.DeleteObject();
-	penLevel1.DeleteObject();
-	penLevel2.DeleteObject();
+	//penLevel1.DeleteObject();
+	//penLevel2.DeleteObject();
 	//brush.DeleteObject();//rkuNEWFIX
 }
 

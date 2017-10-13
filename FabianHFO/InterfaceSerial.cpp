@@ -655,10 +655,13 @@ static UINT CSerialCheckThread( LPVOID pc )
 DWORD CInterfaceSerial::CheckSerialData(void) 
 {
 	WORD iCnt=0;
-	while(iCnt<40 && doCheckThread())
+	while(iCnt<40 && doCheckThread() && false==getModel()->isVentModeInitialized())
 	{
 		Sleep(500);
 		iCnt++;
+
+		if(iCnt>120)//should not be endless
+			break;
 	}
 
 	if(!doCheckThread())
