@@ -6799,6 +6799,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\REGISTRY\RISETIME_disable.reg"
+				>
+			</File>
+			<File
+				RelativePath=".\REGISTRY\RISETIME_enable.reg"
+				>
+			</File>
+			<File
 				RelativePath=".\REGISTRY\settingsFOT.reg"
 				>
 			</File>

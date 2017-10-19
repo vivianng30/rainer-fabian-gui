@@ -2982,7 +2982,7 @@ void CMVModel::triggerMatrixEvent(CMVEvent* pEvent)
 						break;
 					case VS_GRAPH:
 						{
-							getVIEWHANDLER()->changeViewState(VS_PARA,VSS_GRAPH_SINGLE_LINEGRAPHS);
+							getVIEWHANDLER()->changeViewState(VS_PARA,VSS_GRAPH_SINGLE_LINEGRAPHS,true);
 						}
 						break;
 					default:
