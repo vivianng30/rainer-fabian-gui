@@ -24,6 +24,7 @@
 	- initial flag for serial check routine implemented
 	- DUOPAP with Medijet and trigger off: Freq and Apnea alarm fields in alarm view are hidden
 	- critical bug fixed (deadlock): HFO mode and wave view, FS off and graph freezed, switch to home view works now
+	- EVO_V_10 - SpO2 defaults implemented
  @endverbatim
  * 
  * @section ver Version history and changelog

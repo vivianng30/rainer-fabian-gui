@@ -523,7 +523,11 @@ void CAlarmConditionHandler::setAlarmLimitRanges_DEFAULT()
 		ALIMIT_MVMAX->setMaxValue(MAXRANGE_NEONATAL_MVMAX);
 
 		int iMVmin=ALIMIT_MVMIN->getCurValue();
-		if(iMVmin<=260)
+		if(getModel()->getALARMHANDLER()->getAlimitState_MVminLimit() == AL_OFF)
+		{
+			ALIMIT_MVMAX->setMinValue(MINRANGE_NEONATAL_MVMIN);
+		}
+		else if(iMVmin<=260)
 		{
 			ALIMIT_MVMAX->setMinValue(iMVmin+10);
 		}
@@ -601,7 +605,11 @@ void CAlarmConditionHandler::setAlarmLimitRanges_DEFAULT()
 		ALIMIT_MVMAX->setMaxValue(MAXRANGE_PEDIATRIC_MVMAX);
 
 		int iMVmin=ALIMIT_MVMIN->getCurValue();
-		if(iMVmin<=260)
+		if(getModel()->getALARMHANDLER()->getAlimitState_MVminLimit() == AL_OFF)
+		{
+			ALIMIT_MVMAX->setMinValue(MINRANGE_PEDIATRIC_MVMIN);
+		}
+		else if(iMVmin<=260)
 		{
 			ALIMIT_MVMAX->setMinValue(iMVmin+10);
 		}

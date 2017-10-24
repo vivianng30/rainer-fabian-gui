@@ -1789,21 +1789,18 @@ LRESULT CViewTrend::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	{
 	case WM_SETVIEWFOCUS:
 		{
-			//rku cs1
 			SetViewFocus();
 			return 1;
 		}
 		break;
 	case WM_SETNEXTFOCUS:
 		{
-			//rku cs1
 			SetNextFocus();
 			return 1;
 		}
 		break;
 	case WM_SETPREVFOCUS:
 		{
-			//rku cs1
 			SetPrevFocus();
 			return 1;
 		}

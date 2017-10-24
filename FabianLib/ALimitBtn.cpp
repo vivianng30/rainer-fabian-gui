@@ -1549,7 +1549,7 @@ void CALimitBtn::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 							SetCurLimit(m_v.iAbsoluteLowerLimit, false);*/
 
-							if(getModel()->getALARMHANDLER()->getAlimitMVmax()>10) //pro - added
+							if(getModel()->getALARMHANDLER()->getAlimitMVmax()>10)
 							{
 								getModel()->getALARMHANDLER()->setAlimitState_MVminLimit(AL_ON);
 

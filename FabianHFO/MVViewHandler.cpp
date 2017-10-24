@@ -2699,6 +2699,7 @@ eViewSubState CMVViewHandler::getPrevGraphSubState()
 void CMVViewHandler::changeViewState(eViewState state,eViewSubState substate,bool bIgnoreFreeze)
 {
 	StopDiagramm(bIgnoreFreeze);
+	Sleep(0);
 
 	if(getModel()->getCONFIG()->CurModeIsPresetMode()==true  || getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
 		getModel()->getVMODEHANDLER()->changeToPrevMode();
