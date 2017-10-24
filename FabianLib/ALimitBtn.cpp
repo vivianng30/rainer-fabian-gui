@@ -940,10 +940,21 @@ void CALimitBtn::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 						m_v.iCurrentLimit = (m_v.iCurrentLimit/10)*10;
 
-						if(m_v.iCurrentLimit>m_v.iAbsoluteLowerLimit)
+						int iCurPEEPmin=getModel()->getALARMHANDLER()->getAlimitPEEPmin();
+
+						if(m_bAlarmLimitState==AL_OFF)
+						{
+							;
+						}
+						else if(m_v.iCurrentLimit>m_v.iAbsoluteLowerLimit)
 							m_v.iCurrentLimit=m_v.iCurrentLimit-10;
 						else
+						{
+							getModel()->getALARMHANDLER()->setAlimitState_PIPminLimit(AL_OFF);
+
 							m_bEndOfRange = true;
+							m_bAlarmLimitState=AL_OFF;
+						}
 					}
 					break;
 				case IDC_BTN_ALARM_PEEP_LO:
@@ -1611,7 +1622,15 @@ void CALimitBtn::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 						}
 						m_v.iCurrentLimit = (m_v.iCurrentLimit/10)*10;
 
-						if(m_v.iCurrentLimit<m_v.iAbsoluteUpperLimit)
+						if(m_bAlarmLimitState==AL_OFF)
+						{
+							getModel()->getALARMHANDLER()->setAlimitState_PIPminLimit(AL_ON);
+
+							m_bAlarmLimitState=AL_ON;
+
+							SetCurLimit(m_v.iAbsoluteLowerLimit, false);
+						}
+						else if(m_v.iCurrentLimit<m_v.iAbsoluteUpperLimit)
 							m_v.iCurrentLimit=m_v.iCurrentLimit+10;
 						else
 							m_bEndOfRange = true;

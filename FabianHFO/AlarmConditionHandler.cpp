@@ -517,6 +517,7 @@ void CAlarmConditionHandler::setAlarmLimitValues_DUOPAP()
 
 void CAlarmConditionHandler::setAlarmLimitRanges_DEFAULT()
 {
+	DEBUGMSG(TRUE, (TEXT("CAlarmConditionHandler::setAlarmLimitRanges_DEFAULT()\r\n")));
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
 	{
 		//MVmax
@@ -578,10 +579,20 @@ void CAlarmConditionHandler::setAlarmLimitRanges_DEFAULT()
 		{
 			iCurPEEP+=5;
 		}
+		DEBUGMSG(TRUE, (TEXT("ALIMIT_PIPMIN->setMinValue %d\r\n"),iCurPEEP));//rku newPIPOFF
 		ALIMIT_PIPMIN->setMinValue(iCurPEEP);
 
 		//PEEP
-		ALIMIT_PEEPMIN->setMaxValue(ALIMIT_PIPMIN->getCurValue());
+		if (ALIMIT_PIPMIN->getLimitState()==AL_OFF)//rku newPIPOFF
+		{
+			DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT));
+			ALIMIT_PEEPMIN->setMaxValue(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
+		}
+		else
+		{
+			DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),ALIMIT_PIPMIN->getCurValue()));
+			ALIMIT_PEEPMIN->setMaxValue(ALIMIT_PIPMIN->getCurValue());
+		}
 		ALIMIT_PEEPMIN->setMinValue(MINRANGE_NEONATAL_CPAPPEEPMIN);
 
 
@@ -664,11 +675,21 @@ void CAlarmConditionHandler::setAlarmLimitRanges_DEFAULT()
 		{
 			iCurPEEP+=5;
 		}
+		DEBUGMSG(TRUE, (TEXT("ALIMIT_PIPMIN->setMinValue %d\r\n"),iCurPEEP));//rku newPIPOFF
 		ALIMIT_PIPMIN->setMinValue(iCurPEEP);
 		//ALIMIT_PIPMIN->setMinValue(ALIMIT_PEEPMIN->getCurValue());
 
 		//PEEP
-		ALIMIT_PEEPMIN->setMaxValue(ALIMIT_PIPMIN->getCurValue());
+		if (ALIMIT_PIPMIN->getLimitState()==AL_OFF)//rku newPIPOFF
+		{
+			DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT));
+			ALIMIT_PEEPMIN->setMaxValue(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
+		}
+		else
+		{
+			DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),ALIMIT_PIPMIN->getCurValue()));
+			ALIMIT_PEEPMIN->setMaxValue(ALIMIT_PIPMIN->getCurValue());
+		}
 		ALIMIT_PEEPMIN->setMinValue(MINRANGE_PEDIATRIC_CPAPPEEPMIN);
 		
 		//BPM
@@ -1915,7 +1936,14 @@ void CAlarmConditionHandler::setAlimitPIPminDefault(int value)
 	//ALIMIT_PEEPMIN->setMaxValue(value-DIFF_PMAX_PMIN_LIMIT);
 	//ALIMIT_PEEPMIN->setMaxValue(ALIMIT_PIPMIN->getCurValue());
 
-	setAlimitMaxRangePEEPmin(ALIMIT_PIPMIN->getCurValue());
+	if (ALIMIT_PIPMIN->getLimitState()==AL_OFF)//rku newPIPOFF
+	{
+		setAlimitMaxRangePEEPmin(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
+	}
+	else
+	{
+		setAlimitMaxRangePEEPmin(ALIMIT_PIPMIN->getCurValue());
+	}
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALPIPmin%d,"), value);
@@ -2308,6 +2336,7 @@ void CAlarmConditionHandler::setAlimitsMinMaxRangeDUOPAP()
 
 void CAlarmConditionHandler::setAlimitsMinMaxRangePressure()
 {
+	DEBUGMSG(TRUE, (TEXT("CAlarmConditionHandler::setAlimitsMinMaxRangePressure\r\n")));
 	//rku PMEANLIMITS ?????????????????
 	int iLI_PIPMAX	=ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT;
 	int iLI_PIPMIN_HI	=ALIMIT_PIPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT;
@@ -2460,10 +2489,12 @@ void CAlarmConditionHandler::setAlimitMaxRangePIPmin(int iRangeVal)
 
 void CAlarmConditionHandler::setAlimitMinRangePIPmin(int iRangeVal)
 {
+	DEBUGMSG(TRUE, (TEXT("ALIMIT_PIPMIN->setMinValue %d\r\n"),iRangeVal));//rku newPIPOFF
 	ALIMIT_PIPMIN->setMinValue(iRangeVal);
 }
 void CAlarmConditionHandler::setAlimitMaxRangePEEPmin(int iRangeVal)
 {
+	DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),iRangeVal));//rku newPIPOFF
 	ALIMIT_PEEPMIN->setMaxValue(iRangeVal);
 }
 
@@ -3316,22 +3347,22 @@ void CAlarmConditionHandler::setAlimitState_PIPminLimit(eAlarmLimitState state)
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALPmax AL_ON"));
+			theApp.getLog()->WriteLine(_T("ALPIPmin AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALPmax AL_OFF"));
+			theApp.getLog()->WriteLine(_T("ALPIPmin AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALPmax AL_AUTO"));
+			theApp.getLog()->WriteLine(_T("ALPIPmin AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALPIPmax AL_CALC"));
+			theApp.getLog()->WriteLine(_T("ALPIPmin AL_CALC"));
 		}
 		break;
 	}

@@ -3238,8 +3238,8 @@ void CConfiguration::LoadSettings()
 		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PIPMIN_16,m_iAlarmlimitPIPmin);
 	}
 	m_iAlarmlimitStatePIPmin=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PIPMIN_8);
-	if(m_iAlarmlimitStatePIPmin==AL_OFF || m_iAlarmlimitStatePIPmin==AL_AUTO)
-		m_iAlarmlimitStatePIPmin=AL_ON;
+	/*if(m_iAlarmlimitStatePIPmin==AL_OFF || m_iAlarmlimitStatePIPmin==AL_AUTO)
+		m_iAlarmlimitStatePIPmin=AL_ON;*/
 	if(m_iAlarmlimitStatePIPmin<AL_ON || m_iAlarmlimitStatePIPmin>AL_AUTO)
 	{
 		m_iAlarmlimitStatePIPmin=FACTORY_ALIMIT_STATE_PIPMIN;
