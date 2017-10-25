@@ -418,7 +418,7 @@ BOOL CWndDataFOT::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 			m_pcPara_FOT_Steps->Create(this,dwStyleNoTab,fv);
 			m_pcPara_FOT_Steps->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
 			m_pcPara_FOT_Steps->SetNameText(_T("FOT"));
-			m_pcPara_FOT_Steps->SetNameNoteText(_T("steps"));
+			m_pcPara_FOT_Steps->SetNameNoteText(getModel()->GetLanguageString(IDS_TXT_FOT_STEPS));
 			m_pcPara_FOT_Steps->SetUnitText(_T(""));
 			m_pcPara_FOT_Steps->ShowWindow(SW_SHOW);
 
