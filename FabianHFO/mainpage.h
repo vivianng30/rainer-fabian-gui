@@ -6,8 +6,8 @@
  *
  *
  * @section ver Version history and changelog
- * @subsection ver5100 Version 5.1.0.0
- * @date 2017-10-04
+ * @subsection ver5050 Version 5.0.5.0
+ * @date 2017-10-25
  * @verbatim
 	- mainboard 3.4 included
 	- BUG-FAB-001 Preset - parameter save fixed
