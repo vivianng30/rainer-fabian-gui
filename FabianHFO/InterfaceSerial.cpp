@@ -1994,7 +1994,7 @@ void CInterfaceSerial::Send_PARAVAL_HF_AMPL(int val)
 	wsprintf(psz,_T("m%dq"),val);
 	if(0==sendSerialCommand(psz))
 		theApp.getLog()->WriteLine(psz);
-	DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_AMPL %d\r\n"),val));
+	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_AMPL %d\r\n"),val));
 }
 // **************************************************************************
 // 

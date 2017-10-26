@@ -517,7 +517,7 @@ void CAlarmConditionHandler::setAlarmLimitValues_DUOPAP()
 
 void CAlarmConditionHandler::setAlarmLimitRanges_DEFAULT()
 {
-	DEBUGMSG(TRUE, (TEXT("CAlarmConditionHandler::setAlarmLimitRanges_DEFAULT()\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("CAlarmConditionHandler::setAlarmLimitRanges_DEFAULT()\r\n")));
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
 	{
 		//MVmax
@@ -579,18 +579,18 @@ void CAlarmConditionHandler::setAlarmLimitRanges_DEFAULT()
 		{
 			iCurPEEP+=5;
 		}
-		DEBUGMSG(TRUE, (TEXT("ALIMIT_PIPMIN->setMinValue %d\r\n"),iCurPEEP));//rku newPIPOFF
+		//DEBUGMSG(TRUE, (TEXT("ALIMIT_PIPMIN->setMinValue %d\r\n"),iCurPEEP));//rku newPIPOFF
 		ALIMIT_PIPMIN->setMinValue(iCurPEEP);
 
 		//PEEP
 		if (ALIMIT_PIPMIN->getLimitState()==AL_OFF)//rku newPIPOFF
 		{
-			DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT));
+			//DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT));
 			ALIMIT_PEEPMIN->setMaxValue(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
 		}
 		else
 		{
-			DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),ALIMIT_PIPMIN->getCurValue()));
+			//DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),ALIMIT_PIPMIN->getCurValue()));
 			ALIMIT_PEEPMIN->setMaxValue(ALIMIT_PIPMIN->getCurValue());
 		}
 		ALIMIT_PEEPMIN->setMinValue(MINRANGE_NEONATAL_CPAPPEEPMIN);
@@ -675,19 +675,19 @@ void CAlarmConditionHandler::setAlarmLimitRanges_DEFAULT()
 		{
 			iCurPEEP+=5;
 		}
-		DEBUGMSG(TRUE, (TEXT("ALIMIT_PIPMIN->setMinValue %d\r\n"),iCurPEEP));//rku newPIPOFF
+		//DEBUGMSG(TRUE, (TEXT("ALIMIT_PIPMIN->setMinValue %d\r\n"),iCurPEEP));//rku newPIPOFF
 		ALIMIT_PIPMIN->setMinValue(iCurPEEP);
 		//ALIMIT_PIPMIN->setMinValue(ALIMIT_PEEPMIN->getCurValue());
 
 		//PEEP
 		if (ALIMIT_PIPMIN->getLimitState()==AL_OFF)//rku newPIPOFF
 		{
-			DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT));
+			//DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT));
 			ALIMIT_PEEPMIN->setMaxValue(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
 		}
 		else
 		{
-			DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),ALIMIT_PIPMIN->getCurValue()));
+			//DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),ALIMIT_PIPMIN->getCurValue()));
 			ALIMIT_PEEPMIN->setMaxValue(ALIMIT_PIPMIN->getCurValue());
 		}
 		ALIMIT_PEEPMIN->setMinValue(MINRANGE_PEDIATRIC_CPAPPEEPMIN);
@@ -2336,7 +2336,7 @@ void CAlarmConditionHandler::setAlimitsMinMaxRangeDUOPAP()
 
 void CAlarmConditionHandler::setAlimitsMinMaxRangePressure()
 {
-	DEBUGMSG(TRUE, (TEXT("CAlarmConditionHandler::setAlimitsMinMaxRangePressure\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("CAlarmConditionHandler::setAlimitsMinMaxRangePressure\r\n")));
 	//rku PMEANLIMITS ?????????????????
 	int iLI_PIPMAX	=ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT;
 	int iLI_PIPMIN_HI	=ALIMIT_PIPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT;
@@ -2489,12 +2489,12 @@ void CAlarmConditionHandler::setAlimitMaxRangePIPmin(int iRangeVal)
 
 void CAlarmConditionHandler::setAlimitMinRangePIPmin(int iRangeVal)
 {
-	DEBUGMSG(TRUE, (TEXT("ALIMIT_PIPMIN->setMinValue %d\r\n"),iRangeVal));//rku newPIPOFF
+	//DEBUGMSG(TRUE, (TEXT("ALIMIT_PIPMIN->setMinValue %d\r\n"),iRangeVal));//rku newPIPOFF
 	ALIMIT_PIPMIN->setMinValue(iRangeVal);
 }
 void CAlarmConditionHandler::setAlimitMaxRangePEEPmin(int iRangeVal)
 {
-	DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),iRangeVal));//rku newPIPOFF
+	//DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),iRangeVal));//rku newPIPOFF
 	ALIMIT_PEEPMIN->setMaxValue(iRangeVal);
 }
 

@@ -26,6 +26,7 @@
 	- critical bug fixed (deadlock): HFO mode and wave view, FS off and graph freezed, switch to home view works now
 	- SpO2 defaults implemented
 	- PIP low OFF option
+	- FOT: focus after drawn step fixed
  @endverbatim
  * 
  * @section ver Version history and changelog

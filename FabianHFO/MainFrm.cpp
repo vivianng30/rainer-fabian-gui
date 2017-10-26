@@ -9820,7 +9820,7 @@ DWORD CMainFrame::DelTrendData(void)
 	{
 	case WAIT_OBJECT_0:
 		{
-			DEBUGMSG(TRUE, (TEXT("start DelTrendData\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("start DelTrendData\r\n")));
 			if(m_bDoDelTrendThread)
 			{
 				CStringW sPathOld =_T("");
@@ -9857,7 +9857,7 @@ DWORD CMainFrame::DelTrendData(void)
 				if(hSearch!=INVALID_HANDLE_VALUE)
 					FindClose(hSearch);
 			}
-			DEBUGMSG(TRUE, (TEXT("stop DelTrendData\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("stop DelTrendData\r\n")));
 		}
 		break;
 	default:

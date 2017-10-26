@@ -2546,7 +2546,7 @@ void CViewDiagramm::StopDiagramm(bool bIgnoreFreeze)
 {
 	if(!m_bFreeze || bIgnoreFreeze)
 		StopGraphThread();
-	DEBUGMSG(TRUE, (TEXT("xxxxxxxxxxxxxxx StopDiagramm\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("xxxxxxxxxxxxxxx StopDiagramm\r\n")));
 }
 
 
@@ -4377,6 +4377,7 @@ LRESULT CViewDiagramm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	case WM_DRAW_FOT_STEP:
 		{
 			drawFOTsteps();
+			this->SetFocus();
 			return 1;
 		}
 		break;
@@ -7900,7 +7901,7 @@ void CViewDiagramm::increaseYScaleToNextValue_VOLUME()
 // **************************************************************************
 void CViewDiagramm::StartGraphThread( void )
 {
-	DEBUGMSG(TRUE, (TEXT("StartGraphThread\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("StartGraphThread\r\n")));
 	EnterCriticalSection(&csDoThread);
 	bool bDoThread=m_bDoThread;
 	LeaveCriticalSection(&csDoThread);
@@ -7940,7 +7941,7 @@ void CViewDiagramm::StopGraphThread( void )
 		m_bDoThread=false;;
 		LeaveCriticalSection(&csDoThread);
 
-		DEBUGMSG(TRUE, (TEXT("xxxxxxxxxxxxxxx StopGraphThread1\r\n")));
+		//DEBUGMSG(TRUE, (TEXT("xxxxxxxxxxxxxxx StopGraphThread1\r\n")));
 		if(bDoThread)
 		{
 			g_eventGraphData.SetEvent();
@@ -7956,7 +7957,7 @@ void CViewDiagramm::StopGraphThread( void )
 			}
 		}
 
-		DEBUGMSG(TRUE, (TEXT("xxxxxxxxxxxxxxx StopGraphThread2\r\n")));
+		//DEBUGMSG(TRUE, (TEXT("xxxxxxxxxxxxxxx StopGraphThread2\r\n")));
 
 		if(m_pcwtGraphThread!=NULL)
 		{
@@ -11341,7 +11342,7 @@ void CViewDiagramm::drawFOTsteps()
 	else
 		return;
 
-	DEBUGMSG(TRUE, (TEXT("CViewDiagramm::drawFOTsteps getBufSizeFOTdisplay %d\r\n"),iSize));
+	//DEBUGMSG(TRUE, (TEXT("CViewDiagramm::drawFOTsteps getBufSizeFOTdisplay %d\r\n"),iSize));
 
 	if(iSize==0)
 	{

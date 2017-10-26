@@ -3706,9 +3706,9 @@ void CDiagramm::DoPlotSavedLoopPoints()
 				   m_dMinY=y;
 			   }
 
-			   DEBUGMSG(TRUE, (TEXT("m_dMaxY %d\r\n"),(int)m_dMaxY));
+			   /*DEBUGMSG(TRUE, (TEXT("m_dMaxY %d\r\n"),(int)m_dMaxY));
 			   DEBUGMSG(TRUE, (TEXT("m_dMinY %d\r\n"),(int)m_dMinY));
-			   DEBUGMSG(TRUE, (TEXT("Y %d\r\n"),(int)y));
+			   DEBUGMSG(TRUE, (TEXT("Y %d\r\n"),(int)y));*/
 
 			   pixelx= (UINT)(xstart+(x-m_dXAxisMin)/xperpixel);
 

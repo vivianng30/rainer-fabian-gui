@@ -201,6 +201,7 @@ CMVModel *CThreadFOT::getModel()
  
 void CThreadFOT::loadHFO_FOTvalues()
 {
+	DEBUGMSG(TRUE, (TEXT("loadHFO_FOTvalues\r\n")));
 	m_eFOToriginHFIERatioPara=getModel()->getDATAHANDLER()->PARADATA()->GetIERatioParaHFO();
 	m_iFOToriginHFFreqPara=getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara();
 	m_iFOToriginHFAMPLPara=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLPara();
@@ -218,7 +219,6 @@ CString CThreadFOT::getDateLastSequence()
 
 void CThreadFOT::setDateLastSequence()
 {
-	DEBUGMSG(TRUE, (TEXT("setDateLastSequence\r\n")));
 	SYSTEMTIME st;
 	GetLocalTime(&st);
 	COleDateTime dtTimeLast(st);
@@ -282,6 +282,7 @@ void CThreadFOT::stopFOT()
 
 void CThreadFOT::startFOToscillation()
 {
+	DEBUGMSG(TRUE, (TEXT("startFOToscillation\r\n")));
 	getModel()->getDATAHANDLER()->setFOToscillationState(true);
 
 	//DEBUGMSG(TRUE, (TEXT("CThreadFOT::startFOToscillation()\r\n")));
@@ -299,11 +300,13 @@ void CThreadFOT::startFOToscillation()
 }
 void CThreadFOT::changeToFOTConvVentMode()
 {
+	DEBUGMSG(TRUE, (TEXT("changeToFOTConvVentMode\r\n")));
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_CONTROL_START_FOT_CONVENTIONAL);
 }
 void CThreadFOT::restoreFOTConvVentMode()
 {
+	DEBUGMSG(TRUE, (TEXT("restoreFOTConvVentMode\r\n")));
 	//stop FOT oscillation
 	getModel()->getDATAHANDLER()->setFOToscillationState(false);
 		
@@ -315,6 +318,7 @@ void CThreadFOT::restoreFOTConvVentMode()
 
 void CThreadFOT::restoreFOTHFOVentMode()
 {
+	DEBUGMSG(TRUE, (TEXT("restoreFOTHFOVentMode\r\n")));
 	getModel()->getDATAHANDLER()->setFOToscillationState(false);
 
 	bool bSend=getModel()->getVMODEHANDLER()->activeModeIsHFO();
@@ -341,6 +345,7 @@ void CThreadFOT::restoreFOTHFOVentMode()
 
 void CThreadFOT::startFOTconventional()
 {
+	DEBUGMSG(TRUE, (TEXT("startFOTconventional\r\n")));
 	m_bFOTconvRunning=true;
 	CString szLog=_T("");
 	theApp.getLog()->WriteLine(_T("#FOT: start CONVENTIONAL"));
@@ -398,6 +403,7 @@ void CThreadFOT::stopFOTconventional()
 
 void CThreadFOT::startFOThfo()
 {
+	DEBUGMSG(TRUE, (TEXT("startFOThfo\r\n")));
 	m_bFOThfoRunning=true;
 	CString szLog=_T("");
 	theApp.getLog()->WriteLine(_T("#FOT: start HFO"));
@@ -539,10 +545,10 @@ void CThreadFOT::calcParaFOTCONV()
 
 void CThreadFOT::setDecreaseParaFOTCONV(bool bIncreaseSeq)
 {
+	DEBUGMSG(TRUE, (TEXT("CThreadFOT::setDecreaseParaFOTCONV()\r\n")));
+
 	//resetFOTventdataBuffer();
 
-	DEBUGMSG(TRUE, (TEXT("CThreadFOT::setDecreaseParaFOTCONV()\r\n")));
-	
 	if(bIncreaseSeq)
 		increaseFOTsequence();
 	calcDecreaseParaFOTCONV();
@@ -591,7 +597,7 @@ void CThreadFOT::calcDecreaseParaFOTCONV()
 	{
 		m_bDecreasing=true;
 		m_icurFOTPEEP=iPEEPSTART;
-		DEBUGMSG(TRUE, (TEXT("setFOTCONVpara() m_icurFOTPEEP1 %d\r\n"),m_icurFOTPEEP));
+		//DEBUGMSG(TRUE, (TEXT("setFOTCONVpara() m_icurFOTPEEP1 %d\r\n"),m_icurFOTPEEP));
 	}
 	else
 	{
@@ -629,7 +635,7 @@ void CThreadFOT::calcDecreaseParaFOTCONV()
 		}
 		LeaveCriticalSection(&csFOTsequence);
 		
-		DEBUGMSG(TRUE, (TEXT("calcDecreaseParaFOTCONV() m_icurFOTPEEP%d iFOTsequence%d prevSequ %d\r\n"),m_icurFOTPEEP, m_iFOTsequence, iprevFOTsequence));
+		//DEBUGMSG(TRUE, (TEXT("calcDecreaseParaFOTCONV() m_icurFOTPEEP%d iFOTsequence%d prevSequ %d\r\n"),m_icurFOTPEEP, m_iFOTsequence, iprevFOTsequence));
 		
 		m_bDecreasing=true;
 	}
@@ -660,15 +666,15 @@ void CThreadFOT::calcDecreaseParaFOTCONV()
 		m_icurFOTPIP=m_icurFOTPEEP+m_iFOToriginDiffPEEP_PINSP;
 		//DEBUGMSG(TRUE, (TEXT("setFOTCONVpara m_icurFOTPIP5 %d \r\n"),m_icurFOTPIP));
 	}
-	DEBUGMSG(TRUE, (TEXT("calcDecreaseParaFOTCONV() m_iFOTsequence%d, m_iFOTdisplaySequence%d, m_icurFOTPEEP%d, m_iFOTPEEPStep%d, m_icurFOTPSV%d, m_icurFOTPIPMAXVG%d, m_icurFOTPIP%d\r\n"),m_iFOTsequence,m_iFOTdisplaySequence,m_icurFOTPEEP,m_iFOTPEEPStep,m_icurFOTPSV,m_icurFOTPIPMAXVG,m_icurFOTPIP));
+	//DEBUGMSG(TRUE, (TEXT("calcDecreaseParaFOTCONV() m_iFOTsequence%d, m_iFOTdisplaySequence%d, m_icurFOTPEEP%d, m_iFOTPEEPStep%d, m_icurFOTPSV%d, m_icurFOTPIPMAXVG%d, m_icurFOTPIP%d\r\n"),m_iFOTsequence,m_iFOTdisplaySequence,m_icurFOTPEEP,m_iFOTPEEPStep,m_icurFOTPSV,m_icurFOTPIPMAXVG,m_icurFOTPIP));
 
 }
 
 void CThreadFOT::setParaFOTCONV(bool bRetry)
 {
+	DEBUGMSG(TRUE, (TEXT("setParaFOTCONV()\r\n")));
 	resetFOTventdataBuffer();
 
-	DEBUGMSG(TRUE, (TEXT("setParaFOTCONV()\r\n")));
 	if(false==bRetry)
 	{
 		increaseFOTsequence();
@@ -687,7 +693,7 @@ void CThreadFOT::setParaFOTCONV(bool bRetry)
 			fALVALUE fv;
 			fv.iAbsoluteLowerLimit=getModel()->getALARMHANDLER()->getAlimitMinRangePIPmin();
 			fv.iAbsoluteUpperLimit=getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmin();
-			DEBUGMSG(TRUE, (TEXT("getAlimitPEEPmin %d\r\n"),getModel()->getALARMHANDLER()->getAlimitPEEPmin()));
+			//DEBUGMSG(TRUE, (TEXT("getAlimitPEEPmin %d\r\n"),getModel()->getALARMHANDLER()->getAlimitPEEPmin()));
 			fv.iCurrentLimit=getModel()->getALARMHANDLER()->getAlimitPEEPmin()+m_iFOToriginPIPlowPEEPAlimitDiff;
 
 			if(fv.iCurrentLimit<fv.iAbsoluteLowerLimit)
@@ -701,13 +707,13 @@ void CThreadFOT::setParaFOTCONV(bool bRetry)
 				getModel()->getALARMHANDLER()->setAlimitPIPmin(fv.iCurrentLimit);
 			}
 			getModel()->getALARMHANDLER()->setAlimitPIPmin(fv.iCurrentLimit);
-			DEBUGMSG(TRUE, (TEXT("setAlimitPIPmin %d\r\n"),fv.iCurrentLimit));
+			//DEBUGMSG(TRUE, (TEXT("setAlimitPIPmin %d\r\n"),fv.iCurrentLimit));
 		}
 		
 	}
 	else
 	{
-		DEBUGMSG(TRUE, (TEXT("CThreadFOT::setParaFOTCONV() RETRY\r\n")));
+		//DEBUGMSG(TRUE, (TEXT("CThreadFOT::setParaFOTCONV() RETRY\r\n")));
 	}
 
 	if(AfxGetApp() != NULL)
@@ -716,6 +722,8 @@ void CThreadFOT::setParaFOTCONV(bool bRetry)
 
 void CThreadFOT::calcDecreaseParaFOTHFO()
 {
+	DEBUGMSG(TRUE, (TEXT("calcDecreaseParaFOTHFO\r\n")));
+	
 	WORD iPmeanEND=getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_PMEANENDPara();
 	WORD iPmeanSTART=getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_PMEANSTARTPara();
 	WORD iSteps=getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara();
@@ -766,6 +774,7 @@ void CThreadFOT::calcDecreaseParaFOTHFO()
 }
 void CThreadFOT::calcParaFOTHFO()
 {
+	DEBUGMSG(TRUE, (TEXT("calcParaFOTHFO\r\n")));
 	WORD iPmeanEND=getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_PMEANENDPara();
 	WORD iPmeanSTART=getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_PMEANSTARTPara();
 	WORD iSteps=getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara();
@@ -807,6 +816,7 @@ void CThreadFOT::calcParaFOTHFO()
 }
 void CThreadFOT::setDecreaseParaFOTHFO(bool bIncreaseSeq)
 {
+	DEBUGMSG(TRUE, (TEXT("setDecreaseParaFOTHFO\r\n")));
 	resetFOTventdataBuffer();
 
 	if(bIncreaseSeq)
@@ -821,6 +831,7 @@ void CThreadFOT::setDecreaseParaFOTHFO(bool bIncreaseSeq)
 }
 void CThreadFOT::setParaFOTHFO(bool bRetry)
 {
+	DEBUGMSG(TRUE, (TEXT("setParaFOTHFO\r\n")));
 	resetFOTventdataBuffer();
 
 	if(false==bRetry)
@@ -831,10 +842,10 @@ void CThreadFOT::setParaFOTHFO(bool bRetry)
 		
 		getModel()->getDATAHANDLER()->SetHFPMeanParadata(m_icurFOTHFPmean, true);
 	}
-	else
+	/*else
 	{
 		DEBUGMSG(TRUE, (TEXT("CThreadFOT::setParaFOTHFO() RETRY\r\n")));
-	}
+	}*/
 
 
 	if(AfxGetApp() != NULL)
@@ -880,7 +891,7 @@ SHORT CThreadFOT::getFOToriginDiffPEEP_PMAXVG()
 }
 void CThreadFOT::startCalculation()
 {
-	//DEBUGMSG(TRUE, (TEXT("CThreadFOT::startCalculation()\r\n")));
+	DEBUGMSG(TRUE, (TEXT("CThreadFOT::startCalculation()\r\n")));
 	if(m_bFOTconvRunning)
 	{
 		restoreFOTConvVentMode();
@@ -914,6 +925,7 @@ void CThreadFOT::runStep()
 }
 void CThreadFOT::continueSequence()	
 {
+	DEBUGMSG(TRUE, (TEXT("continueSequence\r\n")));
 	if(getFOTstate()==FOT_WAITCONTINUE)
 	{
 		//DEBUGMSG(TRUE, (TEXT("CThreadFOT::continueWithSequence()\r\n")));
@@ -931,10 +943,10 @@ void CThreadFOT::continueSequence()
 		//DEBUGMSG(TRUE, (TEXT("CThreadFOT g_eventFOT.SetEvent()\r\n")));
 		g_eventFOT.SetEvent();
 	}
-	else//ERROR
-	{
-		DEBUGMSG(TRUE, (TEXT("ERROR CThreadFOT::continueWithSequence() %d\r\n"),(int)getFOTstate()));
-	}
+	//else//ERROR
+	//{
+	//	DEBUGMSG(TRUE, (TEXT("ERROR CThreadFOT::continueWithSequence() %d\r\n"),(int)getFOTstate()));
+	//}
 }
 void CThreadFOT::decreaseSequence()
 {
@@ -980,7 +992,7 @@ void CThreadFOT::repeatSequence()
 
 	if(getFOTstate()==FOT_RETRY)
 	{
-		DEBUGMSG(TRUE, (TEXT("CThreadFOT::continueWithSequence() RETRY\r\n")));
+		//DEBUGMSG(TRUE, (TEXT("CThreadFOT::continueWithSequence() RETRY\r\n")));
 		if(m_bFOTconvRunning)
 		{
 			setParaFOTCONV(true);
@@ -1071,13 +1083,14 @@ BYTE CThreadFOT::getCurFOTsequence()
 
 void CThreadFOT::increaseFOTsequence()
 {
+	DEBUGMSG(TRUE, (TEXT("increaseFOTsequence %d\r\n"),m_iFOTsequence));
+
 	EnterCriticalSection(&csFOTsequence);
 	m_iFOTsequence++;
 	LeaveCriticalSection(&csFOTsequence);
 
 	m_iFOTdisplaySequence++;
-	DEBUGMSG(TRUE, (TEXT("increaseFOTsequence %d\r\n"),m_iFOTsequence));
-}
+	}
 
 void CThreadFOT::resetFOTsequence()
 {
@@ -1136,7 +1149,7 @@ void CThreadFOT::resetRetryERROR()
 
 void CThreadFOT::setFOTstate(SequenceStatesFOT feState)
 {
-	//DEBUGMSG(TRUE, (TEXT("CThreadFOT::setFOTstate() %d\r\n"),(int)feState));
+	DEBUGMSG(TRUE, (TEXT("CThreadFOT::setFOTstate() %d\r\n"),(int)feState));
 	
 	EnterCriticalSection(&csFOTstate);
 	feFOTstate=feState;
@@ -1308,6 +1321,7 @@ BYTE CThreadFOT::getBufSizeFOTdisplay()
 
 void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 {
+	DEBUGMSG(TRUE, (TEXT("calculateFOTdata\r\n")));
 	EnterCriticalSection(&csFOTventBuffer);
 	if(m_ibufCountFOTventilation==0)
 	{
@@ -1458,7 +1472,7 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 	DEBUGMSG(TRUE, (sz));*/
 
 	szLog.Format(_T("#FOTcalc: pressure %d XRS%d %.2f Resistance %.2f"),curPressure, m_iFOTdisplaySequence,m_pbufFOTdisplay[m_iFOTdisplaySequence-1].iYValXRS,p_TotalOut[0]);
-	DEBUGMSG(TRUE, (szLog));
+	//DEBUGMSG(TRUE, (szLog));
 	theApp.getLog()->WriteLine(szLog);
 	
 	//DWORD dwEnd=GetTickCount();
@@ -1781,10 +1795,10 @@ DWORD CThreadFOT::FOTData(void)
 										stopThread();
 									}
 								}
-								else
+								/*else
 								{
 									DEBUGMSG(TRUE, (TEXT("xxxxxxxxxxx FOT_RETRY\r\n")));
-								}
+								}*/
 							}
 						}
 						break;

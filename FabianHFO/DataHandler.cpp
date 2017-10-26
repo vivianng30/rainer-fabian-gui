@@ -5364,43 +5364,43 @@ void CDataHandler::checkPRESETTriggerTubeDependency()
 }
 void CDataHandler::checkTriggerTubeDependency()
 {
-	DEBUGMSG(TRUE, (TEXT("checkTriggerTubeDependency\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("checkTriggerTubeDependency\r\n")));
 
 	switch(getModel()->getVMODEHANDLER()->getCurrentActiveMode())
 	{
 	case VM_DUOPAP:
 		{
-			DEBUGMSG(TRUE, (TEXT("checkTriggerTubeDependency_DUOPAP\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("checkTriggerTubeDependency_DUOPAP\r\n")));
 			checkTriggerTubeDependency_DUOPAP();
 		}
 		break;
 	case VM_NCPAP:
 		{
-			DEBUGMSG(TRUE, (TEXT("checkTriggerTubeDependency_NCPAP\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("checkTriggerTubeDependency_NCPAP\r\n")));
 			checkTriggerTubeDependency_NCPAP();
 		}
 		break;
 	case VM_CPAP:
 		{
-			DEBUGMSG(TRUE, (TEXT("checkTriggerTubeDependency_CPAP\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("checkTriggerTubeDependency_CPAP\r\n")));
 			checkTriggerTubeDependency_CPAP();
 		}
 		break;
 	case VM_IPPV:
 		{
-			DEBUGMSG(TRUE, (TEXT("checkTriggerTubeDependency_IPPV\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("checkTriggerTubeDependency_IPPV\r\n")));
 			checkTriggerTubeDependency_IPPV();
 		}
 		break;
 	case VM_SIPPV:
 		{
-			DEBUGMSG(TRUE, (TEXT("checkTriggerTubeDependency_SIPPV\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("checkTriggerTubeDependency_SIPPV\r\n")));
 			checkTriggerTubeDependency_SIPPV();
 		}
 		break;
 	case VM_SIMV:
 		{
-			DEBUGMSG(TRUE, (TEXT("checkTriggerTubeDependency_SIMV\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("checkTriggerTubeDependency_SIMV\r\n")));
 			checkTriggerTubeDependency_SIMV();
 		}
 		break;
