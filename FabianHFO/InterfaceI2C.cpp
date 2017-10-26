@@ -955,6 +955,7 @@ bool CInterfaceI2C::SetFRAMDefaultFactoryConfig()
 	COleDateTime dtVGUARANTYdemoTimestamp = getModel()->getCONFIG()->GetVGUARANTYdemoTimestamp();
 	COleDateTime dtNMODEdemoTimestamp = getModel()->getCONFIG()->GetNMODEdemoTimestamp();
 	COleDateTime dtHFOdemoTimestamp = getModel()->getCONFIG()->GetHFOdemoTimestamp();
+	COleDateTime dtNIVTRIGGERdemoTimestamp = getModel()->getCONFIG()->GetNIVTRIGGERdemoTimestamp();
 
 	Erase64FRAM();
 
@@ -968,6 +969,7 @@ bool CInterfaceI2C::SetFRAMDefaultFactoryConfig()
 	getModel()->getCONFIG()->SetVGUARANTYdemoTimestamp(dtVGUARANTYdemoTimestamp);
 	getModel()->getCONFIG()->SetNMODEdemoTimestamp(dtNMODEdemoTimestamp);
 	getModel()->getCONFIG()->SetHFOdemoTimestamp(dtHFOdemoTimestamp);
+	getModel()->getCONFIG()->SetNIVTRIGGERdemoTimestamp(dtNIVTRIGGERdemoTimestamp);
 
 	WriteConfigByte(SPO2FASTSAT_8,0);
 	WriteConfigByte(SPO2SENSITIVITY_8, (BYTE)SPO2_SENSITIVITY_NORMAL);

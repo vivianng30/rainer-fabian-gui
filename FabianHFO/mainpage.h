@@ -27,6 +27,7 @@
 	- SpO2 defaults implemented
 	- PIP low OFF option
 	- FOT: focus after drawn step fixed
+	- NIVTRIGGER demo license will be restored after factory reset
  @endverbatim
  * 
  * @section ver Version history and changelog
