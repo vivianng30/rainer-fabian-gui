@@ -29,6 +29,7 @@
 	- FOT: focus after drawn step fixed
 	- NIVTRIGGER demo license will be restored after factory reset
 	- DUOPAP Frequency parameter button text: If NIV trigger license is not available Text is "Freq" and not "BackupFreq"
+	- DEMO licenseing: days left cannot become negative
  @endverbatim
  * 
  * @section ver Version history and changelog

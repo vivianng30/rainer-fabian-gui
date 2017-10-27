@@ -1052,6 +1052,8 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+				if(iDaysLeft<0)
+					iDaysLeft=0;
 				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
@@ -1102,6 +1104,8 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+				if(iDaysLeft<0)
+					iDaysLeft=0;
 				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
@@ -1152,6 +1156,8 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+				if(iDaysLeft<0)
+					iDaysLeft=0;
 				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
@@ -1201,6 +1207,8 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+				if(iDaysLeft<0)
+					iDaysLeft=0;
 				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
@@ -1258,6 +1266,8 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+				if(iDaysLeft<0)
+					iDaysLeft=0;
 				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
@@ -1316,6 +1326,8 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+				if(iDaysLeft<0)
+					iDaysLeft=0;
 				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
@@ -1374,6 +1386,8 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+				if(iDaysLeft<0)
+					iDaysLeft=0;
 				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
@@ -1423,6 +1437,8 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+				if(iDaysLeft<0)
+					iDaysLeft=0;
 				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
@@ -1472,6 +1488,8 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+				if(iDaysLeft<0)
+					iDaysLeft=0;
 				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
@@ -1534,6 +1552,8 @@ void CWndServiceLicensing::Draw()
 				COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
 				int iDaysLeft=DEMOLICENSE-dtElapsePeriod.GetTotalDays();
+				if(iDaysLeft<0)
+					iDaysLeft=0;
 				csDemo.Format(_T(" (%d days left)"), iDaysLeft);
 			}
 		}
