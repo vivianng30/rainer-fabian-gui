@@ -3681,8 +3681,6 @@ void CDataHandler::disableNIVTRIGGERLicense()
 	delDemoLicense(MOD_NIVTRIGGER,false);
 
 	getModel()->getCONFIG()->disableNIVTRIGGER();
-
-	
 }
 
 bool CDataHandler::isNIVTRIGGERDemoLicAvailable()

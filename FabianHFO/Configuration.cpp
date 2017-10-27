@@ -10706,6 +10706,9 @@ void CConfiguration::SerializeFile(CArchive& ar)
 
 			ar>>m_iParaDataTrigger_NCPAP;
 			getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NCPAP_16, m_iParaDataTrigger_NCPAP);
+
+			if(m_iParaDataTrigger_NCPAP!=MAXRANGE_TRIGGER_OFF && getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable()==false)
+				disableNIVTRIGGER();
 		}
 
 		//##################### m_iConfigVersion 3005
@@ -10780,6 +10783,9 @@ void CConfiguration::SerializeFile(CArchive& ar)
 
 			ar>>m_iParaDataTrigger_DUOPAP;
 			getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_DUOPAP_16, m_iParaDataTrigger_DUOPAP);
+
+			if(m_iParaDataTrigger_DUOPAP!=MAXRANGE_TRIGGER_OFF && getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable()==false)
+				disableNIVTRIGGER();
 		}
 	}
 }
@@ -11259,10 +11265,8 @@ void CConfiguration::setLastNumericFLOWOFFHFO(BYTE num)
 
 void CConfiguration::disableNIVTRIGGER()
 {
-	SetParaDataTrigger_NCPAP(FACTORY_NCPAP_TRIGGER);
-	SetParaDataTrigger_DUOPAP(FACTORY_DUOPAP_TRIGGER);
-
-	//getModel()->getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_OFF);
+	SetParaDataTrigger_NCPAP(MAXRANGE_TRIGGER_OFF);
+	SetParaDataTrigger_DUOPAP(MAXRANGE_TRIGGER_OFF);
 
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
