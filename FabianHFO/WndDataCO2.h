@@ -29,6 +29,7 @@ public:
 	virtual ~CWndDataCO2();
 
 	virtual BOOL Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext = NULL);
+	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Init();
 	void Show(bool bShow);
@@ -48,6 +49,7 @@ protected:
 
 	CMVModel *getModel();
 private:
+	CRITICAL_SECTION	csValues;
 	CRITICAL_SECTION	csDoThread;
 
 	CMVModel* m_pModel;
@@ -95,7 +97,6 @@ private:
 	bool m_bCO2ValueValid;
 	bool m_bETCO2ValueValid;
 	bool m_bFreqValuevalid;
-	//bool m_bFICO2ValueValid;
 	
 	friend UINT CCO2DataThread(LPVOID pc);
 	CWinThread*	m_pcwtCO2DataThread;

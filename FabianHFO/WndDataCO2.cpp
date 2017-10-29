@@ -18,6 +18,7 @@ IMPLEMENT_DYNAMIC(CWndDataCO2, CWnd)
 CWndDataCO2::CWndDataCO2()
 {
 	InitializeCriticalSection(&csDoThread);
+	InitializeCriticalSection(&csValues);
 
 	m_pModel=NULL;
 	m_pcO2ParaLeft=NULL;
@@ -34,6 +35,9 @@ CWndDataCO2::CWndDataCO2()
 	m_hdcStatic=NULL;
 	m_hbmpStatic=NULL;
 
+	
+
+	EnterCriticalSection(&csValues);
 	m_dwRemainCO2PumpTime=0;
 	if(getModel()->getCONFIG()->GetTimePumpAutoOn()!=0)
 	{
@@ -43,7 +47,6 @@ CWndDataCO2::CWndDataCO2()
 	{
 		m_bAutoonPump=false;
 	}
-
 	if(getModel()->getETCO2()!=NULL)
 	{
 		m_bSystemDateOk=getModel()->getETCO2()->isSystemDateOk();
@@ -54,7 +57,6 @@ CWndDataCO2::CWndDataCO2()
 		m_bCO2ValueValid=getModel()->getETCO2()->isCO2ValueValid();
 		m_bETCO2ValueValid=getModel()->getETCO2()->isETCO2ValueValid();
 		m_bFreqValuevalid=getModel()->getETCO2()->isFreqValueValid();
-		//m_bFICO2ValueValid=getModel()->getETCO2()->isFICO2ValueValid();
 		m_bPumpOn=getModel()->getETCO2()->isPumpOn();
 	}
 	else
@@ -67,25 +69,15 @@ CWndDataCO2::CWndDataCO2()
 		m_bCO2ValueValid=false;
 		m_bETCO2ValueValid=false;
 		m_bFreqValuevalid=false;
-		//m_bFICO2ValueValid=false;
 		m_bPumpOn=false;
 	}
-	
-
 	m_iETCO2=0;
-	//m_iINSPCO2=0;
 	m_iRESPRATE=0;
+	LeaveCriticalSection(&csValues);
 	
-
 	m_byCO2Module=getModel()->getCONFIG()->getCO2module();
-
-	/*xxxxxxxxxxxx
-	für CO2MODULE_MICROPOD button pump off
-	für CO2MODULE_CAPNOSTAT andere EInstellmöglichkeit???????*/
-	/*m_iCO2AVG=0;
-	m_iO2COMP=0;*/
-
-	
+	m_csUnit = _T("");
+	m_eCO2unit = CO2_UNIT_MMHG;
 
 	m_pcwtCO2DataThread=NULL;
 	m_hThreadCO2Data=INVALID_HANDLE_VALUE;
@@ -98,8 +90,7 @@ CWndDataCO2::CWndDataCO2()
 	m_pcResetTime_Dw=NULL;
 	m_pcResetTime=NULL;
 
-	m_csUnit = _T("");
-	m_eCO2unit = CO2_UNIT_MMHG;
+	
 
 	m_sliderPassword=NULL;
 }
@@ -139,6 +130,7 @@ CWndDataCO2::~CWndDataCO2()
 	m_pcO2ParaRight=NULL;
 
 	DeleteCriticalSection(&csDoThread);
+	DeleteCriticalSection(&csValues);
 }
 
 CMVModel *CWndDataCO2::getModel()
@@ -204,7 +196,6 @@ BOOL CWndDataCO2::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 		SelectObject(m_hDC,hbrprev);
 		SelectObject(m_hdcStatic, hpenprevStat);
 		SelectObject(m_hdcStatic,hbrprevStat);
-		//cbrBack.DeleteObject();//rkuNEWFIX
 
 		bRes=true;
 	}
@@ -220,16 +211,16 @@ BOOL CWndDataCO2::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 
 void CWndDataCO2::Init()
 {
+	EnterCriticalSection(&csValues);
 	if(m_byCO2Module==CO2MODULE_MICROPOD)
 	{
 		m_sliderPassword = new CBitmapSlider();
-		/*m_sliderPassword->Create(_T(""),WS_CHILD|WS_VISIBLE|SS_BITMAP|SS_NOTIFY|BS_OWNERDRAW, CRect(380,40,529,85), 
-			this,IDC_SLD_CO2PUMP);*/
 		m_sliderPassword->Create(_T(""),WS_CHILD|WS_VISIBLE|SS_BITMAP|SS_NOTIFY|BS_OWNERDRAW, CRect(200,32,349,77), 
 			this,IDC_SLD_CO2PUMP);
 		m_sliderPassword->SetBitmapChannel( IDB_SLD_CHAN_GREY, NULL );
 		m_sliderPassword->SetBitmapThumb( IDB_SLD_THUMB_GREY, IDB_SLD_THUMB_ACT_GREY);
 		m_sliderPassword->SetRange( 0, 1 );
+		
 		if(m_bPumpOn==false)
 		{
 			m_sliderPassword->SetPos( 0 );
@@ -243,11 +234,8 @@ void CWndDataCO2::Init()
 		m_sliderPassword->DrawFocusRect( FALSE );
 	}
 
-	//m_iRESPRATE=getModel()->getDATAHANDLER()->getCurAVGMessureDataBPM();
 	m_iRESPRATE=getModel()->getDATAHANDLER()->getAVGMessureDataBPMco2();
 	m_iETCO2=getModel()->getDATAHANDLER()->getAVGMessureDataETCO2();
-	//m_iINSPCO2=getModel()->getDATAHANDLER()->getAVGMessureDataInspCO2();
-
 	m_eCO2unit=getModel()->getCONFIG()->GetCO2unit();
 	switch(m_eCO2unit)
 	{
@@ -268,6 +256,8 @@ void CWndDataCO2::Init()
 		}
 		break;
 	}
+	LeaveCriticalSection(&csValues);
+	
 
 	BTN btn;
 
@@ -283,6 +273,7 @@ void CWndDataCO2::Init()
 	m_pcResetTime->Create(this,g_hf8AcuBold,0);
 	m_pcResetTime->SetText(getModel()->GetLanguageString(IDS_TXT_CO2_RESTARTTIMER_TOP),getModel()->GetLanguageString(IDS_TXT_CO2_RESTARTTIMER_BOT));
 	
+	EnterCriticalSection(&csValues);
 	if(m_bPumpOn)
 	{
 		m_dwRemainCO2PumpTime=0;
@@ -295,9 +286,9 @@ void CWndDataCO2::Init()
 		else
 			m_pcResetTime->ShowWindow(SW_HIDE);
 	}
+	LeaveCriticalSection(&csValues);
+	
 
-	/*m_iCO2AVG=0;
-	m_iO2COMP=0;*/
 
 	StartCO2DataThread();
 }
@@ -315,22 +306,33 @@ void CWndDataCO2::Show(bool bShow)
 	}
 }
 
-//LRESULT CWndDataCO2::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
-//{
-//	switch(message)
-//	{
-//	case WM_SYSTEMSTATE_CHANGED:
-//		{
-//			
-//
-//			return 1;
-//		}
-//		break;
-//	default:
-//		break;
-//	}
-//	return CWnd::WindowProc(message, wParam, lParam);
-//}
+LRESULT CWndDataCO2::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
+{
+	switch(message)
+	{
+	case WM_REDRAW_CO2WND_COMPLETE:
+		{
+			Draw(true,true);
+			return 1;
+		}
+		break;
+	case WM_REDRAW_CO2WND_DATA:
+		{
+			Draw(false,false);
+			return 1;
+		}
+		break;
+	case WM_REDRAW_CO2WND_STATIC:
+		{
+			Draw(true,false);
+			return 1;
+		}
+		break;
+	default:
+		break;
+	}
+	return CWnd::WindowProc(message, wParam, lParam);
+}
 void CWndDataCO2::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -381,11 +383,17 @@ void CWndDataCO2::OnDestroy()
 }
 void CWndDataCO2::UpdateMessureData(bool bLimits)
 {
-	Draw(bLimits,bLimits);
+	if(bLimits)
+		PostMessage(WM_REDRAW_CO2WND_COMPLETE);//Draw(true,true);xxxx
+	else
+		PostMessage(WM_REDRAW_CO2WND_DATA);//Draw(false,false);
+	//Draw(bLimits,bLimits);
 }
 
 void CWndDataCO2::UpdateInfoData(bool resetAvailable)
 {
+	
+	EnterCriticalSection(&csValues);
 	m_dwRemainCO2PumpTime=getModel()->getDATAHANDLER()->getRemainCO2PumpTime()/1000;
 
 	if(resetAvailable)
@@ -399,45 +407,14 @@ void CWndDataCO2::UpdateInfoData(bool resetAvailable)
 	{
 		m_pcResetTime->ShowWindow(SW_HIDE);
 	}
+	LeaveCriticalSection(&csValues);
 	
-	Draw(true,false);
+	PostMessage(WM_REDRAW_CO2WND_STATIC);
+	//Draw(true,false);
 }
 
-//void CWndDataCO2::CO2PumpOn()
-//{
-//	if(m_byCO2Module==CO2MODULE_MICROPOD)
-//	{
-//		if(m_bPumpOn==false)
-//		{
-//			m_sliderPassword->SetPos( 0 );
-//			if(m_bAutoonPump)
-//				m_pcResetTime->ShowWindow(SW_SHOW);
-//			else
-//				m_pcResetTime->ShowWindow(SW_HIDE);
-//		}
-//		else
-//		{
-//			m_dwRemainCO2PumpTime=0;
-//			m_sliderPassword->SetPos( 1 );
-//			m_pcResetTime->ShowWindow(SW_HIDE);
-//		}
-//	}
-//	else
-//	{
-//		m_pcResetTime->ShowWindow(SW_HIDE);
-//	}
-//	
-//}
 
-//void CWndDataCO2::UpdateAlarmLimits()
-//{
-//	Draw(false,true);
-//}
 
-//void CWndDataCO2::RedrawData()
-//{
-//	Draw(true,true);
-//}
 void CWndDataCO2::Draw(bool bStatic, bool bLimits)
 {
 	CClientDC dc(this);
@@ -471,19 +448,26 @@ void CWndDataCO2::Draw(bool bStatic, bool bLimits)
 	BitBlt(m_hDC, 0, 0, m_lX, m_lY, m_hdcStatic, 0, 0, SRCCOPY);
 	BitBlt(hdcMem, 0, 0, m_lX, m_lY,m_hdcStatic , 0, 0, SRCCOPY);
 
+	EnterCriticalSection(&csValues);
+	bool bETCO2ValueValid=m_bETCO2ValueValid;
+	bool bCO2ValueValid=m_bCO2ValueValid;
+	bool bFreqValuevalid=m_bFreqValuevalid;
+	BYTE byCO2Module=m_byCO2Module;
+	SHORT iETCO2=m_iETCO2;
+	SHORT iRESPRATE=m_iRESPRATE;
+	LeaveCriticalSection(&csValues);
 	
 	CStringW cs = _T("");
 
-	if(m_byCO2Module==CO2MODULE_MICROPOD)
+	if(byCO2Module==CO2MODULE_MICROPOD)
 	{
 		rc.left = 15;  
 		rc.top = 30;  
 		rc.right  = 185;  
 		rc.bottom = 200;
-		if(m_bETCO2ValueValid)
+		if(bETCO2ValueValid)
 		{
-			//cs.Format(_T("%d"), m_iETCO2);
-			cs.Format(_T("%0.1f"), (double)m_iETCO2/10);
+			cs.Format(_T("%0.1f"), (double)iETCO2/10);
 		}
 		else
 		{
@@ -497,9 +481,9 @@ void CWndDataCO2::Draw(bool bStatic, bool bLimits)
 		rc.left = 395;  
 		rc.right  = 565;
 
-		if(m_bFreqValuevalid)
+		if(bFreqValuevalid)
 		{
-			cs.Format(_T("%d"), m_iRESPRATE);
+			cs.Format(_T("%d"), iRESPRATE);
 		}
 		else
 		{
@@ -514,10 +498,10 @@ void CWndDataCO2::Draw(bool bStatic, bool bLimits)
 		rc.top = 30;  
 		rc.right  = 186;  
 		rc.bottom = 200;
-		if(m_bETCO2ValueValid)
+		if(bETCO2ValueValid)
 		{
 			//cs.Format(_T("%d"), m_iETCO2);
-			cs.Format(_T("%0.1f"), (double)m_iETCO2/10);
+			cs.Format(_T("%0.1f"), (double)iETCO2/10);
 		}
 		else
 		{
@@ -532,9 +516,9 @@ void CWndDataCO2::Draw(bool bStatic, bool bLimits)
 		////rc.top = 60;  
 		rc.right  = 545;  
 		////rc.bottom = 200;
-		if(m_bFreqValuevalid)
+		if(bFreqValuevalid)
 		{
-			cs.Format(_T("%d"), m_iRESPRATE);
+			cs.Format(_T("%d"), iRESPRATE);
 		}
 		else
 		{
@@ -543,47 +527,7 @@ void CWndDataCO2::Draw(bool bStatic, bool bLimits)
 		
 		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 	}
-	//*******************************ETCO2*****************************//
-
-	//test
-	//m_iETCO2=1500;
-
 	
-
-	//*******************************InspCO2*****************************//
-
-	//rc.left = 305;//194;  
-	////rc.top = 60;  
-	//rc.right  = 545;//364;  
-	////rc.bottom = 200;
-	////cs.Format(_T("%d"), m_iINSPCO2);
-	//cs.Format(_T("%0.1f"), (double)m_iINSPCO2/10);
-	//DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
-
-
-	
-
-	//*******************************CO2 avg*****************************//
-	//SelectObject(hdcMem,g_hf10AcuBold);
-
-	//rc.left = 170;  
-	//rc.top = 103;  
-	//rc.right  = 205;  
-	//rc.bottom = 200;
-	////cs.Format(_T("%d"), m_iCO2AVG);
-	//cs.Format(_T("%0.1f"), (double)m_iCO2AVG/10);
-	//DrawText(hdcMem,cs,-1,&rc,DT_RIGHT|DT_TOP|DT_SINGLELINE);
-
-	//*******************************O2 comp*****************************//
-	/*rc.left = 410;  
-	rc.top = 103;  
-	rc.right  = 440;  
-	rc.bottom = 200;
-	cs.Format(_T("%d"), m_iO2COMP);
-	DrawText(hdcMem,cs,-1,&rc,DT_RIGHT|DT_TOP|DT_SINGLELINE);*/
-
-	
-	//dc.BitBlt(0,0,m_lX,m_lY,CDC::FromHandle(hdcMem),0,0,SRCCOPY);
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,hdcMem,0,0,SRCCOPY);
 
 	SetTextColor(hdcMem,tc);
@@ -591,15 +535,10 @@ void CWndDataCO2::Draw(bool bStatic, bool bLimits)
 
 	SelectObject(hdcMem,hbrprev);
 	SelectObject(hdcMem,hpenprev);
-
-	//DeleteObject(cbrBack);//rkuNEWFIX
-	//DeleteObject(cbrYellow);
-
 	SelectObject(hdcMem,hBmpMemPrev);
 	SelectObject(hdcMem,hPrevFont);
 	DeleteObject(hBmpMem);
 	DeleteDC(hdcMem);
-
 }
 
 void CWndDataCO2::DrawStatic()
@@ -633,13 +572,19 @@ void CWndDataCO2::DrawStatic()
 
 	SelectObject(m_hdcStatic,cbrBack);
 
-	/*Rectangle(m_hdcStatic, 0, 90, 545, 95);
-	Rectangle(m_hdcStatic, 179, 10, 184, 90);
-	Rectangle(m_hdcStatic, 361, 10, 366, 90);
-	Rectangle(m_hdcStatic, 270, 95, 275, 129);*/
-
 	CStringW cs = _T("");
 	
+	EnterCriticalSection(&csValues);
+	bool bPumpOn=m_bPumpOn;
+	bool bAutoonPump=m_bAutoonPump;
+	DWORD dwRemainCO2PumpTime=m_dwRemainCO2PumpTime;
+	BYTE byStateBytes=m_byStateBytes;
+	BYTE byExtendedStateBytes=m_byExtendedStateBytes;
+	bool bSystemDateOk=m_bSystemDateOk;
+	bool bCalibrationIsDue=m_bCalibrationIsDue;
+	bool bServiceIsDue=m_bServiceIsDue;
+	LeaveCriticalSection(&csValues);
+
 	if(m_byCO2Module==CO2MODULE_MICROPOD)
 	{
 		Rectangle(m_hdcStatic, 0, 80, 565, 85);
@@ -659,22 +604,26 @@ void CWndDataCO2::DrawStatic()
 		DrawText(m_hdcStatic,cs,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 		
 
+		EnterCriticalSection(&csValues);
 		int iPos=m_sliderPassword->GetPos();
-		if(iPos==1 && m_bPumpOn==false)
+		if(iPos==1 && bPumpOn==false)
 		{
 			m_sliderPassword->SetPos(0);
-			if(m_bAutoonPump)
+			if(bAutoonPump)
 				m_pcResetTime->ShowWindow(SW_SHOW);
 			else
 				m_pcResetTime->ShowWindow(SW_HIDE);
 		}
-		else if(iPos==0 && m_bPumpOn==true)
+		else if(iPos==0 && bPumpOn==true)
 		{
 			m_dwRemainCO2PumpTime=0;
+			dwRemainCO2PumpTime=0;
+			
 			m_sliderPassword->SetPos(1);
 			m_pcResetTime->ShowWindow(SW_HIDE);
 		}
-		
+		LeaveCriticalSection(&csValues);
+
 
 		//*******************************ETCO2*****************************//
 		rc.left = 15;  
@@ -716,33 +665,6 @@ void CWndDataCO2::DrawStatic()
 		cs = _T("   [")+getModel()->GetLanguageString(IDS_UNIT_BPM)+_T("]");
 		DrawText(m_hdcStatic,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 		//SelectObject(m_hdcStatic,g_hf7AcuBold);
-
-		//rc.left = 385+sz.cx;//199;  
-		//rc.top = 5;  
-		//rc.right  = 545;//364;  
-		//rc.bottom = 200;
-		////cs = _T("Resp Rate [BPM]");
-		//cs = getModel()->GetLanguageString(IDS_PARA_ETCO);
-		//sz += pDCStatic->GetTextExtent(cs);
-		////cs += _T("   [")+getModel()->GetLanguageString(IDS_UNIT_BPM)+_T("]");
-		//DrawText(m_hdcStatic,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
-
-		//rc.left = 385+sz.cx;  
-		//rc.top = 10;  
-		//rc.right  = 545;  
-		//rc.bottom = 200;
-		////cs = getModel()->GetLanguageString(IDS_PARA_ETCO2);
-		//cs = _T("2");
-		//DrawText(m_hdcStatic,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
-		////SelectObject(m_hdcStatic,g_hf14AcuMed);
-
-		//rc.left = 385+sz.cx;//199;  
-		//rc.top = 5;  
-		//rc.right  = 545;//364;  
-		//rc.bottom = 200;
-		////cs = _T("Resp Rate [BPM]");
-		//cs = _T("   [")+getModel()->GetLanguageString(IDS_UNIT_BPM)+_T("]");
-		//DrawText(m_hdcStatic,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 	}
 	else
 	{
@@ -750,11 +672,6 @@ void CWndDataCO2::DrawStatic()
 		Rectangle(m_hdcStatic, 280, 00, 285, 80);
 
 
-		/*Rectangle(m_hdcStatic, 179, 10, 184, 129);
-		Rectangle(m_hdcStatic, 361, 10, 366, 129);*/
-		/*Rectangle(m_hdcStatic, 179, 10, 184, 90);
-		Rectangle(m_hdcStatic, 361, 10, 366, 90);*/
-		//Rectangle(m_hdcStatic, 270, 95, 275, 129);
 		
 		//*******************************ETCO2*****************************//
 		rc.left = 15;  
@@ -785,89 +702,9 @@ void CWndDataCO2::DrawStatic()
 		cs = getModel()->GetLanguageString(IDS_PARA_CO2FREQ);
 		cs += _T("   [")+getModel()->GetLanguageString(IDS_UNIT_BPM)+_T("]");
 		DrawText(m_hdcStatic,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+
+		m_pcResetTime->ShowWindow(SW_HIDE);
 	}
-
-	
-
-	//*******************************InspCO2*****************************//
-	//SelectObject(hdcMem,g_hf14AcuMed);
-	//rc.left = 290;//199;  
-	////rc.top = 25;  
-	//rc.right  = 545;//364;  
-	//rc.bottom = 200;
-	//cs = _T("Insp CO");
-	//sz = pDCStatic->GetTextExtent(cs);
-	//cs += _T("      ");
-	//cs += m_csUnit;
-	//DrawText(m_hdcStatic,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
-
-	//rc.left = 290+sz.cx;  
-	//rc.top = 20;  
-	//rc.right  = 545;  
-	//rc.bottom = 200;
-	////cs = getModel()->GetLanguageString(IDS_PARA_ETCO2);
-	//cs = _T("2");
-	//DrawText(m_hdcStatic,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
-
-	
-
-	//*******************************CO2 avg*****************************//
-	/*SelectObject(m_hdcStatic,g_hf10AcuBold);
-	rc.left = 15;  
-	rc.top = 103;  
-	rc.right  = 155;  
-	rc.bottom = 200;
-	cs = _T("CO2 (10 sec avg):");
-	DrawText(m_hdcStatic,cs,-1,&rc,DT_RIGHT|DT_TOP|DT_SINGLELINE);
-
-	SelectObject(m_hdcStatic,g_hf10AcuBold);
-
-
-	rc.left = 210;  
-	rc.top = 103;  
-	rc.right  = 260;  
-	rc.bottom = 200;
-	unit=getModel()->getCONFIG()->GetCO2unit();
-	switch(unit)
-	{
-	case CO2_UNIT_KPA:
-		{
-			cs =getModel()->GetLanguageString(IDS_UNIT_KPA);
-		}
-		break;
-	case CO2_UNIT_PERCENT:
-		{
-			cs =getModel()->GetLanguageString(IDS_UNIT_VOLPERCENT);
-		}
-		break;
-	case CO2_UNIT_MMHG:
-	default:
-		{
-			cs =getModel()->GetLanguageString(IDS_UNIT_MMHG);
-		}
-		break;
-	}
-	DrawText(m_hdcStatic,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);*/
-
-
-	//*******************************O2 comp*****************************//
-	/*SelectObject(m_hdcStatic,g_hf10AcuBold);
-	rc.left = 290;  
-	rc.top = 103;  
-	rc.right  = 405;  
-	rc.bottom = 200;
-	cs = _T("O2 Comp:");
-	DrawText(m_hdcStatic,cs,-1,&rc,DT_RIGHT|DT_TOP|DT_SINGLELINE);
-
-	SelectObject(m_hdcStatic,g_hf10AcuBold);
-
-	rc.left = 445;  
-	rc.top = 103;  
-	rc.right  = 535;  
-	rc.bottom = 200;
-	cs = getModel()->GetLanguageString(IDS_UNIT_PERCENT);
-	DrawText(m_hdcStatic,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);*/
-
 
 	//*******************************Sensor state*****************************//
 	SelectObject(m_hdcStatic,g_hf10AcuBold);
@@ -882,7 +719,7 @@ void CWndDataCO2::DrawStatic()
 
 	if(m_byCO2Module==CO2MODULE_CAPNOSTAT)
 	{
-		switch(m_byStateBytes)
+		switch(byStateBytes)
 		{
 		case 0xFF:
 			{
@@ -974,7 +811,7 @@ void CWndDataCO2::DrawStatic()
 	}
 	else if(m_byCO2Module==CO2MODULE_MICROPOD && getModel()->getETCO2())
 	{
-		if(m_byStateBytes==0xFF)
+		if(byStateBytes==0xFF)
 		{
 			cs += getModel()->GetLanguageString(IDS_TXT_SENSOR_OFF);
 			bOk=false;
@@ -992,19 +829,19 @@ void CWndDataCO2::DrawStatic()
 			bOk=false;
 			
 
-			if(m_dwRemainCO2PumpTime>0)
+			if(dwRemainCO2PumpTime>0)
 			{
 				bTimer=true;
 
-				int iMin=m_dwRemainCO2PumpTime/60;
+				int iMin=dwRemainCO2PumpTime/60;
 				int iSec=0;
 				if(iMin>0)
 				{
-					iSec=m_dwRemainCO2PumpTime-(iMin*60);
+					iSec=dwRemainCO2PumpTime-(iMin*60);
 				}
 				else
 				{
-					iSec=m_dwRemainCO2PumpTime;
+					iSec=dwRemainCO2PumpTime;
 				}
 				if(iSec<10)
 				{
@@ -1015,8 +852,6 @@ void CWndDataCO2::DrawStatic()
 					szTime.Format(_T("%d%s %d%s"), iMin,getModel()->GetLanguageString(IDS_UNIT_MIN),iSec,getModel()->GetLanguageString(IDS_UNIT_SECONDS));
 				}
 				cs.Format(_T("%s %s: "), getModel()->GetLanguageString(IDS_MENU_CO2), getModel()->GetLanguageString(IDS_TXT_CO2AUTOPUMP));
-				
-				
 			}
 			else
 			{
@@ -1025,71 +860,71 @@ void CWndDataCO2::DrawStatic()
 		}
 		else
 		{
-			if(m_byStateBytes & BIT7)
+			if(byStateBytes & BIT7)
 			{
 				//fault bit -> check extended status
-				if(m_byExtendedStateBytes & BIT0)
+				if(byExtendedStateBytes & BIT0)
 				{
 					//Check calibration
 					cs+=getModel()->GetLanguageString(IDS_TXT_SENSOR_CHECKCAL);
 					bOk=false;
 				}
-				else if(m_byExtendedStateBytes & BIT1)
+				else if(byExtendedStateBytes & BIT1)
 				{
 					//Check flow
 					cs+=getModel()->GetLanguageString(IDS_TXT_SENSOR_CHECKFLOW);
 					bOk=false;
 				}
-				else if(m_byExtendedStateBytes & BIT2)
+				else if(byExtendedStateBytes & BIT2)
 				{
 					//Occlusion in gas input line
 					cs+=getModel()->GetLanguageString(IDS_TXT_SENSOR_OCCLUSION);
 					bOk=false;
 				}
-				else if(m_byExtendedStateBytes & BIT3)
+				else if(byExtendedStateBytes & BIT3)
 				{
 					//Temperature out of range
 					cs += getModel()->GetLanguageString(IDS_TXT_SENSOR_OVERTEMP);
 					bOk=false;
 				}
-				else if(m_byExtendedStateBytes & BIT7)
+				else if(byExtendedStateBytes & BIT7)
 				{
 					//malfunction, service code is set
 					cs+=getModel()->GetLanguageString(IDS_TXT_SENSOR_MALFUNC);
 					bOk=false;
 				}
 			}
-			else if(m_byStateBytes & BIT6)
+			else if(byStateBytes & BIT6)
 			{
 				//filter line not connected
 				cs+=getModel()->GetLanguageString(IDS_TXT_SENSOR_LINENOTCON);
 				bOk=false;
 			}
-			else if(m_byStateBytes & BIT5)
+			else if(byStateBytes & BIT5)
 			{
 				//purging in progress
 				cs+=getModel()->GetLanguageString(IDS_TXT_SENSOR_PURGING);
 				bOk=false;
 			}
-			else if(m_byStateBytes & BIT4)
+			else if(byStateBytes & BIT4)
 			{
 				//SFM in progress
 				cs+=getModel()->GetLanguageString(IDS_TXT_SENSOR_SFM);
 				bOk=false;
 			}
-			else if(m_byStateBytes & BIT2)
+			else if(byStateBytes & BIT2)
 			{
 				//CO2 value over-range
 				cs+=getModel()->GetLanguageString(IDS_TXT_SENSOR_CO2RANGE);
 				bOk=false;
 			}
-			else if(m_byStateBytes & BIT1)
+			else if(byStateBytes & BIT1)
 			{
 				//initialization
 				cs+=getModel()->GetLanguageString(IDS_TXT_SENSOR_INIT);
 				bOk=false;
 			}
-			else if(m_byStateBytes & BIT0)
+			else if(byStateBytes & BIT0)
 			{
 				//invalid CO2 value
 				cs+=getModel()->GetLanguageString(IDS_TXT_SENSOR_INVALIDCO2);
@@ -1101,21 +936,21 @@ void CWndDataCO2::DrawStatic()
 		{
 			cs += getModel()->GetLanguageString(IDS_TXT_SENSOR_OK);
 
-			if(m_bSystemDateOk==false)
+			if(bSystemDateOk==false)
 			{
 				bOk=false;
 				cs+=_T(" (");
 				cs+=getModel()->GetLanguageString(IDS_TXT_WRONG_SYSTEMDATE);
 				cs+=_T(")");
 			}
-			else if(m_bServiceIsDue)
+			else if(bServiceIsDue)
 			{
 				bOk=false;
 				cs += _T(" (");
 				cs += getModel()->GetLanguageString(IDS_TXT_SERVICE_REQUIRE);
 				cs += _T(")");
 			}
-			else if(m_bCalibrationIsDue)
+			else if(bCalibrationIsDue)
 			{
 				bOk=false;
 				cs += _T(" (");
@@ -1134,16 +969,6 @@ void CWndDataCO2::DrawStatic()
 	{
 		SetTextColor(m_hdcStatic,RGB(255,0,0));
 	}
-	
-	
-	/*if(m_bCO2ValueValid==false)
-	{
-		cs+=_T(" , CO2 value not valid!");
-	}
-	if(m_bETCO2ValueValid==false)
-	{
-		cs+=_T(" , etCO2 value not valid!");
-	}*/
 	
 	if(bTimer)
 	{
@@ -1175,14 +1000,7 @@ void CWndDataCO2::DrawStatic()
 
 	SelectObject(m_hdcStatic,hbrprev);
 	SelectObject(m_hdcStatic,hpenprev);
-
-	//DeleteObject(cbrBack);//rkuNEWFIX
-	//DeleteObject(cbrYellow);//rkuNEWFIX
-	//DeleteObject(cbrGrey);//rkuNEWFIX
-
 	SelectObject(m_hdcStatic,hPrevFont);
-	
-
 }
 
 // **************************************************************************
@@ -1202,9 +1020,6 @@ bool CWndDataCO2::DrawLimits()
 	if(m_byCO2Module==CO2MODULE_MICROPOD)
 	{
 		//################ETCO2 Max + Min##################
-		//m_pcLimitHigh_Up->Draw(m_hdcStatic,123,40);
-		//m_pcLimitLow_Up->Draw(m_hdcStatic,123,70);
-
 		m_pcLimitHigh_Up->Draw(m_hdcStatic,120,35);//right-60, top+2
 		m_pcLimitLow_Up->Draw(m_hdcStatic,120,60);//right-60, bottom-16
 
@@ -1224,13 +1039,8 @@ bool CWndDataCO2::DrawLimits()
 		}
 		else if(limitstateEtco2Max != AL_OFF)
 		{
-			/*if(m_wna.iUpperLimit8>=10000)
-				SelectObject(m_hdcStatic,g_hf10AcuBold);*/
-			//wsprintf(psz,_T("%d"),getModel()->getALARMHANDLER()->getAlimitETCO2max());
 			wsprintf(psz,_T("%0.0f"),CTlsFloat::Round(((double)getModel()->getALARMHANDLER()->getAlimitETCO2max())/10, 0));
-			//wsprintf(psz,_T("%d"),150);
 			pDCStatic->DrawText(psz,&rc,DT_TOP|DT_SINGLELINE|DT_RIGHT);
-			//SelectObject(m_hdcStatic,g_hf11AcuBold);
 		}
 		if(limitstateEtco2Min == AL_CALC)
 		{
@@ -1242,44 +1052,13 @@ bool CWndDataCO2::DrawLimits()
 		}
 		else if(limitstateEtco2Min != AL_OFF)
 		{
-			/*if(m_wna.iUpperLimit8>=10000)
-				SelectObject(m_hdcStatic,g_hf10AcuBold);*/
 			wsprintf(psz,_T("%0.0f"),CTlsFloat::Round(((double)getModel()->getALARMHANDLER()->getAlimitETCO2min())/10, 0));
-
-
 			pDCStatic->DrawText(psz,&rc,DT_BOTTOM|DT_SINGLELINE|DT_RIGHT);
 		}
-
-		//################Freq Max ##################
-		
-		//m_pcLimitHigh_Up->Draw(m_hdcStatic,483,40);
-
-		//rc.top = 38;
-		//rc.bottom = 85;
-		//rc.left=475;
-		//rc.right=540;//175;
-		//eAlarmLimitState limitstateFreqMax = getModel()->getALARMHANDLER()->getAlimitState_BPMmaxLimit();
-		//if(limitstateFreqMax == AL_CALC)
-		//{
-		//	pDCStatic->DrawText(getModel()->GetLanguageString(IDS_TXT_AUTO),&rc,DT_TOP|DT_SINGLELINE|DT_RIGHT);
-		//}
-		//else if(limitstateFreqMax == AL_OFF)
-		//{
-		//	pDCStatic->DrawText(getModel()->GetLanguageString(IDS_TXT_OFF),&rc,DT_TOP|DT_SINGLELINE|DT_RIGHT);
-		//}
-		//else if(limitstateFreqMax != AL_OFF)
-		//{
-		//	wsprintf(psz,_T("%d"),getModel()->getALARMHANDLER()->ALARMLIMITS->getAlimitBPMmax());
-		//	pDCStatic->DrawText(psz,&rc,DT_TOP|DT_SINGLELINE|DT_RIGHT);
-		//	//SelectObject(m_hdcStatic,g_hf11AcuBold);
-		//}
 	}
 	else
 	{
 		//################ETCO2 Max + Min##################
-		//m_pcLimitHigh_Up->Draw(m_hdcStatic,123,40);
-		//m_pcLimitLow_Up->Draw(m_hdcStatic,123,70);
-
 		m_pcLimitHigh_Up->Draw(m_hdcStatic,200,30);//right-60, top+2
 		m_pcLimitLow_Up->Draw(m_hdcStatic,200,60);//right-60, bottom-16
 
@@ -1299,13 +1078,8 @@ bool CWndDataCO2::DrawLimits()
 		}
 		else if(limitstateMax != AL_OFF)
 		{
-			/*if(m_wna.iUpperLimit8>=10000)
-				SelectObject(m_hdcStatic,g_hf10AcuBold);*/
-			//wsprintf(psz,_T("%d"),getModel()->getALARMHANDLER()->getAlimitETCO2max());
 			wsprintf(psz,_T("%0.0f"),CTlsFloat::Round(((double)getModel()->getALARMHANDLER()->getAlimitETCO2max())/10, 0));
-			//wsprintf(psz,_T("%d"),150);
 			pDCStatic->DrawText(psz,&rc,DT_TOP|DT_SINGLELINE|DT_RIGHT);
-			//SelectObject(m_hdcStatic,g_hf11AcuBold);
 		}
 		if(limitstateMin == AL_CALC)
 		{
@@ -1317,40 +1091,10 @@ bool CWndDataCO2::DrawLimits()
 		}
 		else if(limitstateMin != AL_OFF)
 		{
-			/*if(m_wna.iUpperLimit8>=10000)
-				SelectObject(m_hdcStatic,g_hf10AcuBold);*/
 			wsprintf(psz,_T("%0.0f"),CTlsFloat::Round(((double)getModel()->getALARMHANDLER()->getAlimitETCO2min())/10, 0));
-
-
 			pDCStatic->DrawText(psz,&rc,DT_BOTTOM|DT_SINGLELINE|DT_RIGHT);
 		}
-
-		//################Freq Max ##################
-
-		//m_pcLimitHigh_Up->Draw(m_hdcStatic,475,40);
-
-		//rc.top = 38;
-		//rc.bottom = 75;
-		//rc.left=475;
-		//rc.right=535;//175;
-		//eAlarmLimitState limitstateFreqMax = getModel()->getALARMHANDLER()->getAlimitState_BPMmaxLimit();
-		//if(limitstateFreqMax == AL_CALC)
-		//{
-		//	pDCStatic->DrawText(getModel()->GetLanguageString(IDS_TXT_AUTO),&rc,DT_TOP|DT_SINGLELINE|DT_RIGHT);
-		//}
-		//else if(limitstateFreqMax == AL_OFF)
-		//{
-		//	pDCStatic->DrawText(getModel()->GetLanguageString(IDS_TXT_OFF),&rc,DT_TOP|DT_SINGLELINE|DT_RIGHT);
-		//}
-		//else if(limitstateFreqMax != AL_OFF)
-		//{
-		//	wsprintf(psz,_T("%d"),getModel()->getALARMHANDLER()->ALARMLIMITS->getAlimitBPMmax());
-		//	pDCStatic->DrawText(psz,&rc,DT_TOP|DT_SINGLELINE|DT_RIGHT);
-		//	//SelectObject(m_hdcStatic,g_hf11AcuBold);
-		//}
 	}
-	
-
 
 	SetTextColor(m_hdcStatic,nPrevTxtColor);
 	SetBkMode(m_hdcStatic,nBkMode);
@@ -1410,7 +1154,6 @@ void CWndDataCO2::StopCO2DataThread( void )
 			}
 		}
 	}
-
 }
 
 bool CWndDataCO2::doThread()
@@ -1496,17 +1239,18 @@ DWORD CWndDataCO2::CO2Data(void)
 			bool bDraw=false;
 
 			SHORT iTempETCO2=getModel()->getDATAHANDLER()->getAVGMessureDataETCO2();
+			EnterCriticalSection(&csValues);
 			if(m_iETCO2!=iTempETCO2)
 			{
 				m_iETCO2=iTempETCO2;
 				bDraw=true;
 			}
+			LeaveCriticalSection(&csValues);
 
 			BYTE byStateBytes=0xFF;
 			BYTE byExtendedStateBytes=0;
 			bool bCO2ValueValid=false;
 			bool bETCO2ValueValid=false;
-			//bool bFICO2ValueValid=false;
 			bool bPumpStateOn=false;
 			bool bFreqValuevalid=false;
 			bool bCalibrationIsDue=false;
@@ -1519,14 +1263,15 @@ DWORD CWndDataCO2::CO2Data(void)
 				byExtendedStateBytes=getModel()->getETCO2()->getExtendedStateBytes();
 				bCO2ValueValid=getModel()->getETCO2()->isCO2ValueValid();
 				bETCO2ValueValid=getModel()->getETCO2()->isETCO2ValueValid();
-				//bFICO2ValueValid=getModel()->getETCO2()->isFICO2ValueValid();
 				bPumpStateOn=getModel()->getETCO2()->isPumpOn();
 				bFreqValuevalid=getModel()->getETCO2()->isFreqValueValid();
 				bCalibrationIsDue=getModel()->getETCO2()->isCalibrationDue();
 				bServiceIsDue=getModel()->getETCO2()->isServiceDue();
 				bSystemDateOk=getModel()->getETCO2()->isSystemDateOk();
 			}
+			SHORT iTemp=getModel()->getDATAHANDLER()->getAVGMessureDataBPMco2();
 
+			EnterCriticalSection(&csValues);
 			if(bSystemDateOk!=m_bSystemDateOk)
 			{
 				m_bSystemDateOk=bSystemDateOk;
@@ -1542,26 +1287,21 @@ DWORD CWndDataCO2::CO2Data(void)
 				m_bServiceIsDue=bServiceIsDue;
 				bDraw=true;
 			}
-
-			SHORT iTemp=getModel()->getDATAHANDLER()->getAVGMessureDataBPMco2();
 			if(m_iRESPRATE!=iTemp)
 			{
 				m_iRESPRATE=iTemp;
 				bDraw=true;
 			}
-
 			if(		byStateBytes!=m_byStateBytes
 				||	byExtendedStateBytes!=m_byExtendedStateBytes
 				||	bCO2ValueValid!=m_bCO2ValueValid
 				||	bETCO2ValueValid!=m_bETCO2ValueValid
-				//||	bFICO2ValueValid!=m_bFICO2ValueValid
 				||	bFreqValuevalid!=m_bFreqValuevalid
 				||	bPumpStateOn!=m_bPumpOn)
 			{
 				m_bCalibrationIsDue=bCalibrationIsDue;
 				m_byStateBytes=byStateBytes;
 				m_byExtendedStateBytes=byExtendedStateBytes;
-				//m_bFICO2ValueValid=bFICO2ValueValid;
 				m_bETCO2ValueValid=bETCO2ValueValid;
 				m_bFreqValuevalid=bFreqValuevalid;
 				m_bCO2ValueValid=bCO2ValueValid;
@@ -1573,37 +1313,28 @@ DWORD CWndDataCO2::CO2Data(void)
 			{
 				bDraw=false;
 			}
+			bool bPumpOn=m_bPumpOn;
+			bool bAutoonPump=m_bAutoonPump;
+
 			if(m_byCO2Module==CO2MODULE_MICROPOD)
 			{
 				int iPos=m_sliderPassword->GetPos();
-				if(iPos==1 && m_bPumpOn==false)
+				if(iPos==1 && bPumpOn==false)
 				{
-					m_sliderPassword->SetPos(0);
-					if(m_bAutoonPump)
-						m_pcResetTime->ShowWindow(SW_SHOW);
-					else
-						m_pcResetTime->ShowWindow(SW_HIDE);
+					bDraw=true;
 				}
-				else if(iPos==0 && m_bPumpOn==true)
+				else if(iPos==0 && bPumpOn==true)
 				{
-					m_sliderPassword->SetPos(1);
-					m_pcResetTime->ShowWindow(SW_HIDE);
+					bDraw=true;
 				}
 			}
-			else
-			{
-				m_pcResetTime->ShowWindow(SW_HIDE);
-			}
-			
-			if(m_bPumpOn==true)
-			{
-				m_dwRemainCO2PumpTime=0;
-			}
+			LeaveCriticalSection(&csValues);
 
+			
 			if(bDraw)
-				Draw(true,true);
+				PostMessage(WM_REDRAW_CO2WND_COMPLETE);//Draw(true,true);xxxx
 			else
-				Draw(false,false);
+				PostMessage(WM_REDRAW_CO2WND_DATA);//Draw(false,false);
 		}
 	}while(doThread());
 
@@ -1620,11 +1351,12 @@ LRESULT CWndDataCO2::OnMyMessage(WPARAM wParam, LPARAM lParam)
 		{
 			if(lParam==1)
 			{
-				m_dwRemainCO2PumpTime=0;
 				if(getModel()->getETCO2()!=NULL)
 					getModel()->getETCO2()->set_PumpStateOn();
+				EnterCriticalSection(&csValues);
+				m_dwRemainCO2PumpTime=0;
 				m_bPumpOn=true;
-				//7theApp.getLog()->WriteLine(_T("*** CO2 pump: on ***"));
+				LeaveCriticalSection(&csValues);
 
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_KILL_CO2PUMPTIMER);
@@ -1633,9 +1365,10 @@ LRESULT CWndDataCO2::OnMyMessage(WPARAM wParam, LPARAM lParam)
 			{
 				if(getModel()->getETCO2()!=NULL)
 					getModel()->getETCO2()->set_PumpStateOff();
+				EnterCriticalSection(&csValues);
 				m_bPumpOn=false;
-				//theApp.getLog()->WriteLine(_T("*** CO2 pump: off ***"));
-
+				LeaveCriticalSection(&csValues);
+				
 				if(getModel()->getALARMHANDLER()->ALARM_Sens_CO2_FILTERLINE_NOTCONNECTED->getAlarmState()!=AS_NONE)
 				{
 					getModel()->getALARMHANDLER()->deleteAlarm(AL_Sens_CO2_FILTERLINE_NOTCONNECTED, true);
@@ -1668,6 +1401,7 @@ LRESULT CWndDataCO2::OnMyMessage(WPARAM wParam, LPARAM lParam)
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SET_CO2PUMPTIMER);
 			}
 
+			EnterCriticalSection(&csValues);
 			if(m_bPumpOn)
 			{
 				m_pcResetTime->ShowWindow(SW_HIDE);
@@ -1679,10 +1413,9 @@ LRESULT CWndDataCO2::OnMyMessage(WPARAM wParam, LPARAM lParam)
 				else
 					m_pcResetTime->ShowWindow(SW_HIDE);
 			}
+			LeaveCriticalSection(&csValues);
 
-			
-
-			Draw(true,true);
+			PostMessage(WM_REDRAW_CO2WND_COMPLETE);
 		}
 		break;
 	}

@@ -6,6 +6,7 @@
  *
  *
  * @section ver Version history and changelog
+ * 
  * @subsection ver5050 Version 5.0.5.0
  * @date 2017-10-25
  * @verbatim
@@ -31,9 +32,9 @@
 	- DUOPAP Frequency parameter button text: If NIV trigger license is not available Text is "Freq" and not "BackupFreq"
 	- DEMO licenseing: days left cannot become negative
 	- NIVTRIGGER: factory settings and hospital settings check the license and NIVTRIGGER state
+	- CWndDataCO2: CRITICAL SECTION for values, new drawing through WM messages
  @endverbatim
  * 
- * @section ver Version history and changelog
  * @subsection ver50168 Version 5.0.1.68
  * @date 2017-08-31
  * @verbatim
@@ -43,7 +44,6 @@
 	- aculink: HFO mode MV is sent as AVG instead of BTB
  @endverbatim
  * 
- * @section ver Version history and changelog
  * @subsection ver50167 Version 5.0.1.67
  * @date 2017-08-31
  * @verbatim
