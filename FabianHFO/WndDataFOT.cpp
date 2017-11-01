@@ -34,9 +34,6 @@ CWndDataFOT::CWndDataFOT(CMVView *parentView)
 	m_lXo=0;
 	m_lYo=0;
 
-	m_bHourglassRun=false;
-	
-
 	m_pcPara_UpT=NULL;
 	m_pcPara_FcT=NULL;
 	m_pcPara_DwT=NULL;
@@ -49,9 +46,6 @@ CWndDataFOT::CWndDataFOT(CMVView *parentView)
 	m_pcPara_FOT_PmeanHigh=NULL;
 	m_pcPara_FOT_PEEPLow=NULL;
 	m_pcPara_FOT_PEEPHigh=NULL;
-
-	//m_pcPara_FOTamplitude=NULL;
-	//m_pcPara_FOTfreq=NULL;
 	
 	m_pcBtnStartStopSeq=NULL;
 	m_pcBtnRunSeq=NULL;
@@ -74,14 +68,6 @@ CWndDataFOT::CWndDataFOT(CMVView *parentView)
 	m_pcDecreaseSeq_Up=NULL;
 	m_pcDecreaseSeqx_Dis=NULL;
 
-	/*m_pcMenuStartStop=NULL;
-	m_pcMenuStartStop_Dw=NULL;
-	m_pcMenuStartStop_Up=NULL;
-	m_pcMenuStartStop_Dis=NULL;
-
-	m_pcContinueFOTseq=NULL;
-	m_pcContinueFOTseq_Dw=NULL;
-	m_pcContinueFOTseq_Up=NULL;*/
 
 	m_pcWait=NULL;
 	m_pcWait1= NULL;
@@ -99,9 +85,7 @@ CWndDataFOT::CWndDataFOT(CMVView *parentView)
 	else
 		feFOTstate=FOT_OFF;
 	m_iCountFOTimer=0;
-	//m_bFOTdataAvailable=false;
-
-	//m_bPMEANEND_SetKey=false;
+	m_bHourglassRun=false;
 }
 
 CWndDataFOT::~CWndDataFOT()
@@ -164,17 +148,6 @@ BOOL CWndDataFOT::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 		m_pcPara_FcB		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_PARA_FC_BOT);
 		m_pcPara_DwB		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_PARA_DW_BOT);
 
-		/*m_pcMenuStartStop_Dw	=new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_ONOFF_DW);
-		m_pcMenuStartStop_Up	=new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_ONOFF_UP);
-		m_pcMenuStartStop_Dis	=new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_ONOFF_DIS);
-
-
-		m_pcContinueFOTseq_Up =new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN160_LG_UP);
-		m_pcContinueFOTseq_Dw =new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN160_LG_DW);*/
-		
-
-
-
 		m_pcStartStopSeq_Dw= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_FOT_ONOFF_DW);
 		m_pcStartStopSeq_Up= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_FOT_ONOFF_UP);
 		m_pcStartStopSeq_Dis= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_FOT_ONOFF_DIS);
@@ -208,8 +181,6 @@ BOOL CWndDataFOT::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 		
 		if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 		{
-			
-
 			//Parameter Button------FOT steps---------------------------------
 			btn.wID					= IDC_BTN_PARA_FOT_STEPS;	
 			btn.poPosition.x		= 7;
@@ -770,9 +741,6 @@ void CWndDataFOT::OnDestroy()
 		delete m_pcDecreaseSeqx_Dis;
 	m_pcDecreaseSeqx_Dis=NULL;
 
-
-	
-
 	if(m_pcPara_FOT_Steps)
 		delete m_pcPara_FOT_Steps;
 	m_pcPara_FOT_Steps=NULL;
@@ -1164,8 +1132,6 @@ void CWndDataFOT::Draw(bool bStatic)
 				SelectObject(hdcMem,g_hf7AcuNorm);
 				csText.Format(_T("%s"), szUnitPRESSURE);
 				DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_BOTTOM|DT_SINGLELINE);
-				
-				
 			}
 			else
 			{
@@ -1247,21 +1213,18 @@ void CWndDataFOT::Draw(bool bStatic)
 							case RETRY_FSI:
 								{
 									csText=getModel()->GetLanguageString(IDS_TXT_FOT_POORQUALITY);
-									//csText=getModel()->GetLanguageString(IDS_TXT_FOT_FSI);
 									//csText=_T("FSI high");
 								}
 								break;
 							case RETRY_RESISTANCE:
 								{
 									csText=getModel()->GetLanguageString(IDS_TXT_FOT_POORQUALITY);
-									//csText=getModel()->GetLanguageString(IDS_TXT_FOT_RESISTANCE);
 									//csText=_T("RESISTANCE low");
 								}
 								break;
 							case RETRY_REACTANCE:
 								{
 									csText=getModel()->GetLanguageString(IDS_TXT_FOT_POORQUALITY);
-									//csText=getModel()->GetLanguageString(IDS_TXT_FOT_REACTANCE);
 									//csText=_T("REACTANCE out of range");
 								}
 								break;
@@ -1365,22 +1328,15 @@ void CWndDataFOT::Draw(bool bStatic)
 							SelectObject(hdcMem,g_hf7AcuNorm);
 							csText.Format(_T("%s"), szUnitPRESSURE);
 							DrawText(hdcMem,csText,-1,&rc,DT_CENTER|DT_BOTTOM|DT_SINGLELINE);
-
 						}
 					}
 					else
 					{
-						//m_pcBtnRunSeq->ShowWindow(SW_SHOW);
-
 						szERROR.Format(_T("FOT: ERROR state %d CurFOTseq %d hfo_STEPS %d\r\n"),(int)feFOTstate,getModel()->getFOTThread()->getCurFOTsequence(),getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara());
 						DEBUGMSG(TRUE, (szERROR));
 						theApp.getLog()->WriteLine(szERROR);
 					}
 				}
-				/*else
-				{
-					m_pcBtnRunSeq->ShowWindow(SW_SHOW);
-				}*/
 			}
 		}
 	}
@@ -1396,9 +1352,6 @@ void CWndDataFOT::Draw(bool bStatic)
 			{
 				stopHourglass();
 			}
-
-			//hide button continue
-			//m_pcBtnRunSeq->ShowWindow(SW_SHOW);
 
 			SelectObject(hdcMem,cbrRoundNoData);
 			SelectObject(hdcMem,(HPEN)GetStockObject(NULL_PEN));
@@ -1556,8 +1509,6 @@ void CWndDataFOT::Draw(bool bStatic)
 							iFOTnextsequence=getModel()->getFOTThread()->getCurFOTsequence()+1;
 						}
 						
-						//m_pcBtnRunSeq->ShowWindow(SW_SHOW);
-
 						SetTextColor(hdcMem,RGB(0,0,0));
 						SelectObject(hdcMem,g_hf8AcuBold);
 						rc.left = 102;  
@@ -1601,21 +1552,18 @@ void CWndDataFOT::Draw(bool bStatic)
 							case RETRY_FSI:
 								{
 									csText=getModel()->GetLanguageString(IDS_TXT_FOT_POORQUALITY);
-									//csText=getModel()->GetLanguageString(IDS_TXT_FOT_FSI);
 									//csText=_T("FSI high");
 								}
 								break;
 							case RETRY_RESISTANCE:
 								{
 									csText=getModel()->GetLanguageString(IDS_TXT_FOT_POORQUALITY);
-									//csText=getModel()->GetLanguageString(IDS_TXT_FOT_RESISTANCE);
 									//csText=_T("RESISTANCE low");
 								}
 								break;
 							case RETRY_REACTANCE:
 								{
 									csText=getModel()->GetLanguageString(IDS_TXT_FOT_POORQUALITY);
-									//csText=getModel()->GetLanguageString(IDS_TXT_FOT_REACTANCE);
 									//csText=_T("REACTANCE out of range");
 								}
 								break;
@@ -1848,8 +1796,6 @@ void CWndDataFOT::Draw(bool bStatic)
 
 	SelectObject(hdcMem,hbrprev);
 	SelectObject(hdcMem,hpenprev);
-
-
 
 	SelectObject(hdcMem,hBmpMemPrev);
 	SelectObject(hdcMem,hPrevFont);

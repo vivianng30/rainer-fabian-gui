@@ -18,16 +18,9 @@ IMPLEMENT_DYNAMIC(CWndDataSPO2, CWnd)
 
 CWndDataSPO2::CWndDataSPO2()
 {
-	InitializeCriticalSection(&csDraw);
+	InitializeCriticalSection(&csValues);
 	InitializeCriticalSection(&csDoThread);
 	m_pModel=NULL;
-
-	m_bSpO2Out=false;
-	m_bSpO2blink=false;
-
-	//m_bFiO2Out=false;
-	//m_bFiO2blink=false;
-
 
 	m_hdcStatic=NULL;
 	m_hbmpStatic=NULL;
@@ -64,6 +57,10 @@ CWndDataSPO2::CWndDataSPO2()
 	m_hThreadSPO2Data=INVALID_HANDLE_VALUE;
 	m_bDoThread=false;
 
+	EnterCriticalSection(&csValues);
+	m_bSpO2Out=false;
+	m_bSpO2blink=false;
+
 	m_iSPO2=0;
 	m_iPulseRate=0;
 	m_iPerfusionIndex=0;
@@ -76,6 +73,7 @@ CWndDataSPO2::CWndDataSPO2()
 
 	m_iAlimitSPO2max=0;
 	m_iAlimitSPO2min=0;
+	LeaveCriticalSection(&csValues);
 
 	m_pcLimitHigh_Up=NULL;
 	m_pcLimitLow_Up=NULL;
@@ -158,7 +156,7 @@ CWndDataSPO2::~CWndDataSPO2()
 	penLine.DeleteObject();//rkuNEWFIX
 	penBlueVal.DeleteObject();//rkuNEWFIX
 
-	DeleteCriticalSection(&csDraw);
+	DeleteCriticalSection(&csValues);
 	DeleteCriticalSection(&csDoThread);
 }
 
@@ -484,6 +482,7 @@ BOOL CWndDataSPO2::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateCont
 
 void CWndDataSPO2::Init()
 {
+	EnterCriticalSection(&csValues);
 	m_iSPO2=getModel()->getDATAHANDLER()->getAVGMessureDataSPO2();
 	m_iPulseRate=getModel()->getDATAHANDLER()->getAVGMessureDataSpO2PulseRate();
 	m_iPerfusionIndex=getModel()->getDATAHANDLER()->getAVGMessureDataSpO2PerfusionIndex();
@@ -533,9 +532,8 @@ void CWndDataSPO2::Init()
 
 		m_iAlimitSPO2min=iAlimitSPO2min;
 	}
+	LeaveCriticalSection(&csValues);
 	
-	
-
 	StartSPO2DataThread();
 
 	if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
@@ -549,8 +547,6 @@ void CWndDataSPO2::Show(bool bShow)
 	if(bShow)
 	{
 		SetWindowPos(NULL,0,0,m_lX,m_lX,SWP_NOSIZE|SWP_NOMOVE|SWP_SHOWWINDOW);
-		//Draw(true,true);
-		//Draw((bool bStatic, bool bValues, bool bLimits, bool bPRICOSpO2, bool bPRICOFiO2);
 		Draw(true, true, true, true);
 	}
 	else
@@ -610,15 +606,9 @@ void CWndDataSPO2::OnPaint()
 	//DEBUGMSG(TRUE, (TEXT("CWndDataSPO2::OnPaint\r\n")));
 }
 
-//void CWndDataSPO2::UpdateAlarmLimits()
-//{
-//	Draw(false,true);
-//}
 
 void CWndDataSPO2::Draw(bool bStatic, bool bValues, bool bPRICOSpO2, bool bPRICOFiO2)
 {
-	EnterCriticalSection(&csDraw);
-
 	if(bStatic)
 	{
 		DrawStatic();
@@ -632,8 +622,6 @@ void CWndDataSPO2::Draw(bool bStatic, bool bValues, bool bPRICOSpO2, bool bPRICO
 
 	if(bPRICOFiO2 && getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
 		drawPRICOFiO2();
-
-	LeaveCriticalSection(&csDraw);
 }
 
 void CWndDataSPO2::DrawStatic()
@@ -647,10 +635,7 @@ void CWndDataSPO2::DrawStatic()
 	CBrush cbrYellow(RGB(252,252,170));
 	CBrush cbrDarkGrey(DARKGREY);
 	CBrush cbrLightGrey(LIGHTGREY);
-	//rkuNEWFIX
-	//CPen penLine;
-	//penLine.CreatePen(PS_SOLID,1,RGB(140,140,140));
-
+	
 	HBRUSH hbrprev=(HBRUSH)SelectObject(m_hdcStatic,cbrBack);
 	HPEN hpenprev=(HPEN)SelectObject(m_hdcStatic, (HPEN)GetStockObject(NULL_PEN));	
 	int nBkMode=SetBkMode(m_hdcStatic,TRANSPARENT);
@@ -807,6 +792,7 @@ void CWndDataSPO2::DrawStatic()
 		}
 		else
 		{
+			EnterCriticalSection(&csValues);
 			if(m_iEXCEPTIONS2 & BIT0)	// no sensor connected
 			{
 				cs += _T(" ");
@@ -920,6 +906,7 @@ void CWndDataSPO2::DrawStatic()
 				//cs += _T(" demo mode,");
 				cs += _T(",");
 			}
+			LeaveCriticalSection(&csValues);
 		}
 
 		if(!bSensorNotConnected && !bCheckSensor && !bPulseSearch && !bDemoMode && bProcessingActive)	// processing active
@@ -958,8 +945,6 @@ void CWndDataSPO2::DrawStatic()
 	//################ PULSERATE ##################
 	m_pcLimitHigh_Up->Draw(m_hdcStatic,500,35);//right-60, top+2
 	m_pcLimitLow_Up->Draw(m_hdcStatic,500,60);//right-60, bottom-16
-
-
 	
 	BitBlt(m_hDC, 0, 0, m_lX, m_lY, m_hdcStatic, 0, 0, SRCCOPY);
 
@@ -968,13 +953,6 @@ void CWndDataSPO2::DrawStatic()
 
 	SelectObject(m_hdcStatic,hbrprev);
 	SelectObject(m_hdcStatic,hpenprev);
-
-	//DeleteObject(cbrBack);//rkuNEWFIX
-	//DeleteObject(cbrYellow);//rkuNEWFIX
-	//DeleteObject(cbrDarkGrey);//rkuNEWFIX
-	//DeleteObject(cbrLightGrey);//rkuNEWFIX
-
-	//penLine.DeleteObject();//rkuNEWFIX
 
 	SelectObject(m_hdcStatic,hPrevFont);
 }
@@ -987,15 +965,9 @@ void CWndDataSPO2::DrawValues()
 	HBITMAP hBmpMem=CreateCompatibleBitmap(dc.m_hDC,565,80);
 	HBITMAP hBmpMemPrev=(HBITMAP)SelectObject(hdcMem,hBmpMem);
 	
-	/*HDC hdcMem = *pDC;
-	HBITMAP hBmpMem=CreateCompatibleBitmap(hdcMem,565,80);
-	HBITMAP hBmpMemPrev=(HBITMAP)SelectObject(hdcMem,hBmpMem);*/
-
 	BitBlt(hdcMem, 0, 0, 565, 80,m_hdcStatic , 0, 0, SRCCOPY);
 
-	//RECT rcCl;
 	RECT rc;
-	//GetClientRect(&rcCl);
 
 	CBrush cbrBack(BACKGND);
 	HBRUSH hbrprev=(HBRUSH)SelectObject(hdcMem,cbrBack);
@@ -1007,6 +979,8 @@ void CWndDataSPO2::DrawValues()
 	
 	CStringW cs = _T("");
 
+	EnterCriticalSection(&csValues);
+
 	rc.left = 15;  
 	rc.top = 30;  
 	rc.right  = 185;  
@@ -1014,7 +988,6 @@ void CWndDataSPO2::DrawValues()
 	if(m_iSPO2>0)
 	{
 		cs.Format(_T("%0.0f"), CTlsFloat::Round(((double)m_iSPO2)/10, 0));
-		//cs.Format(_T("%d"), m_iSPO2/10);
 	}
 	else
 	{
@@ -1060,8 +1033,7 @@ void CWndDataSPO2::DrawValues()
 
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-	//CDC* pDC=CDC::FromHandle(hdcMem);
-	//DrawLimits(pDC);
+	LeaveCriticalSection(&csValues);
 
 	SelectObject(hdcMem,g_hf10AcuBold);
 	SetTextColor(hdcMem,RGB(200,0,0));
@@ -1069,8 +1041,6 @@ void CWndDataSPO2::DrawValues()
 	TCHAR psz[MAX_PATH];
 
 	//################ SpO2 ##################
-	//m_pcLimitHigh_Up->Draw(hdcMem,120,30);//right-60, top+2
-	//m_pcLimitLow_Up->Draw(hdcMem,120,60);//right-60, bottom-16
 	
 	rc.top = 33;
 	rc.bottom = 75;
@@ -1106,8 +1076,6 @@ void CWndDataSPO2::DrawValues()
 	}
 
 	//################ PI ##################
-	//m_pcLimitLow_Up->Draw(hdcMem,310,60);
-	//m_pcLimitLow_Up->Draw(m_hdcStatic,300,45);
 
 	rc.top = 33;
 	rc.bottom = 75;
@@ -1139,16 +1107,9 @@ void CWndDataSPO2::DrawValues()
 		}
 
 		DrawText(hdcMem,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_RIGHT);
-
-		/*rc.left=295;
-		rc.right=325;
-
-		pDCStatic->DrawText(psz,&rc,DT_BOTTOM|DT_SINGLELINE|DT_CENTER);*/
 	}
 
 	//################ PULSERATE ##################
-	//m_pcLimitHigh_Up->Draw(hdcMem,500,30);//right-60, top+2
-	//m_pcLimitLow_Up->Draw(hdcMem,500,60);//right-60, bottom-16
 
 	rc.top = 33;
 	rc.bottom = 75;
@@ -1192,8 +1153,6 @@ void CWndDataSPO2::DrawValues()
 	SelectObject(hdcMem,hbrprev);
 	SelectObject(hdcMem,hpenprev);
 
-	//DeleteObject(cbrBack);//rkuNEWFIX
-
 	SelectObject(hdcMem,hBmpMemPrev);
 	SelectObject(hdcMem,hPrevFont);
 	DeleteObject(hBmpMem);
@@ -1232,11 +1191,7 @@ void CWndDataSPO2::drawPRICOSpO2()
 	HBITMAP hBmpMem=CreateCompatibleBitmap(dc.m_hDC,268,32);
 	HBITMAP hBmpMemPrev=(HBITMAP)SelectObject(hdcMem,hBmpMem);
 
-	//BitBlt(hdcMem, 0, 0, 268,32,m_hdcStatic , 0, 0, SRCCOPY);
-
 	CBrush cbrYellow(RGB(252,252,170));
-	//CPen penLine(PS_SOLID,1,RGB(140,140,140)); //rkuNEWFIX
-	//CPen penCurVal(PS_SOLID,2,RGB(0,0,255)); //rkuNEWFIX
 
 	HBRUSH hbrprev=(HBRUSH)SelectObject(hdcMem,cbrYellow);
 	HPEN hpenprev=(HPEN)SelectObject(hdcMem, (HPEN)penLine);	
@@ -1248,72 +1203,80 @@ void CWndDataSPO2::drawPRICOSpO2()
 	SelectObject(hdcMem, (HPEN)GetStockObject(NULL_PEN));
 	SelectObject(hdcMem,cbrGeen);
 
+	EnterCriticalSection(&csValues);
+
 	//get low high range and draw green area depending on alarm lit SPO2
 	double iSPO2low=m_iSPO2LOWvalue;
 	double iSPO2high=m_iSPO2HIGHvalue;
 	double iDiffSPO2=m_iAlimitSPO2max-m_iAlimitSPO2min;
 	double iFactor=266/iDiffSPO2;
 
+	int iAlimitSPO2min=m_iAlimitSPO2min;
+	int iAlimitSPO2max=m_iAlimitSPO2max;
+
+	bool bSpO2blink=m_bSpO2blink;
+	bool bProcessing=m_bProcessing;
+
+	int iSPO2=CTlsFloat::Round(((double)m_iSPO2)/10, 0);
+
+	LeaveCriticalSection(&csValues);
+
 	int iPosLow=0;
 	int iPosHigh=0;
-	if(iSPO2low==m_iAlimitSPO2min)
+	if(iSPO2low==iAlimitSPO2min)
 	{
 		iPosLow=1;//223;
 	}
 	else
 	{
-		iPosLow=(int)(1+((iSPO2low-(double)m_iAlimitSPO2min)*iFactor));
+		iPosLow=(int)(1+((iSPO2low-(double)iAlimitSPO2min)*iFactor));
 	}
 
-	if(iSPO2high==m_iAlimitSPO2max)
+	if(iSPO2high==iAlimitSPO2max)
 	{
 		//iPosHigh=489;
 		iPosHigh=267;
 	}
 	else
 	{
-		iPosHigh=(int)(1+((iSPO2high-(double)m_iAlimitSPO2min)*iFactor));
+		iPosHigh=(int)(1+((iSPO2high-(double)iAlimitSPO2min)*iFactor));
 	}
-	//Rectangle(m_hdcStatic, iPosLow, 124, iPosHigh, 154);
 	rc.left = iPosLow;  
 	rc.top = 1;
 	rc.right  = iPosHigh;  
 	rc.bottom = 31;
 	Rectangle(hdcMem, iPosLow, 1, iPosHigh, 31);
-
 	
-
-	int iSPO2=CTlsFloat::Round(((double)m_iSPO2)/10, 0);
 	int iPos=0;
 	//bool bOutside=false;
-	if(iSPO2>m_iAlimitSPO2max)
+	if(iSPO2>iAlimitSPO2max)
 	{
 		iPos=266;//488;
 		//bOutside=true;
 	}
-	else if(iSPO2<m_iAlimitSPO2min)
+	else if(iSPO2<iAlimitSPO2min)
 	{
 		iPos=1;//488;
 		//bOutside=true;
 	}
-	else if(iSPO2==m_iAlimitSPO2max)
+	else if(iSPO2==iAlimitSPO2max)
 	{
 		iPos=266;//488;
 	}
-	else if(iSPO2==m_iAlimitSPO2min)
+	else if(iSPO2==iAlimitSPO2min)
 	{
 		iPos=1;//223;
 	}
 	else
 	{
-		iPos=(int)(1+(((double)(iSPO2-m_iAlimitSPO2min)*iFactor)));
+		iPos=(int)(1+(((double)(iSPO2-iAlimitSPO2min)*iFactor)));
 		
 		//Ellipse(m_hdcStatic,222, 124, 230, 154);
 	}
 
 	SelectObject(hdcMem, (HPEN)penBlueVal);
 
-	if(false==m_bSpO2blink && m_bProcessing && iSPO2>0)
+	if(false==bSpO2blink && bProcessing && iSPO2>0)
 	{
 		MoveToEx(hdcMem, iPos, 1, NULL);
 		LineTo(hdcMem, iPos, 31);
@@ -1323,11 +1286,6 @@ void CWndDataSPO2::drawPRICOSpO2()
 	BitBlt(m_hDC,rcCl.left,rcCl.top,rcCl.right,rcCl.bottom,hdcMem,0,0,SRCCOPY);
 	
 	SetBkMode(hdcMem,nBkMode);
-
-	//DeleteObject(cbrYellow);//rkuNEWFIX
-	//DeleteObject(cbrGeen);//rkuNEWFIX
-	//penLine.DeleteObject(); //rkuNEWFIX
-	//penCurVal.DeleteObject(); //rkuNEWFIX
 
 	SelectObject(hdcMem,hbrprev);
 	SelectObject(hdcMem,hpenprev);
@@ -1350,10 +1308,6 @@ void CWndDataSPO2::drawPRICOFiO2()
 	rcCl.right  = 490;  
 	rcCl.bottom = 155;
 
-	/*rc.left = 222;  
-	rc.top = 123;  
-	rc.right  = 490;  
-	rc.bottom = 155;*/
 	rc.left = 0;  
 	rc.top = 0;  
 	rc.right  = 268;  
@@ -1364,27 +1318,28 @@ void CWndDataSPO2::drawPRICOFiO2()
 	HBITMAP hBmpMem=CreateCompatibleBitmap(dc.m_hDC,268,32);
 	HBITMAP hBmpMemPrev=(HBITMAP)SelectObject(hdcMem,hBmpMem);
 
-	//BitBlt(hdcMem, 0, 0, 268,32,m_hdcStatic , 0, 0, SRCCOPY);
 
 	CBrush cbrYellow(RGB(252,252,170));
-	//CPen penLine(PS_SOLID,1,RGB(140,140,140)); //rkuNEWFIX
-	//CPen penCurVal(PS_SOLID,2,RGB(0,0,255)); //rkuNEWFIX
 
 	HBRUSH hbrprev=(HBRUSH)SelectObject(hdcMem,cbrYellow);
 	HPEN hpenprev=(HPEN)SelectObject(hdcMem, (HPEN)penLine);	
 	int nBkMode=SetBkMode(hdcMem,TRANSPARENT);
 	
-	//FillRect(hdcMem,&rc,cbrYellow);
 	Rectangle(hdcMem, 0, 0, 268, 32);
-	//Rectangle(m_hdcStatic, 222, 123, 490, 155);
 
 	CBrush cbrGeen(RGB(0,190,0));
 	SelectObject(hdcMem, (HPEN)GetStockObject(NULL_PEN));
 	SelectObject(hdcMem,cbrGeen);
 	
+	EnterCriticalSection(&csValues);
+
 	//get low high range and draw green area
 	double iFiO2low=m_iFIO2LOWvalue*10;
 	double iFiO2high=m_iFIO2HIGHvalue*10;
+
+	SHORT iFiO2measuredValue=m_iFiO2measuredValue;
+
+	LeaveCriticalSection(&csValues);
 	
 	int iPosLow=0;
 	int iPosHigh=0;
@@ -1418,17 +1373,17 @@ void CWndDataSPO2::drawPRICOFiO2()
 	SelectObject(hdcMem, (HPEN)penBlueVal);  //rkuNEWFIX
 	
 	int iPos=0;
-	if(m_iFiO2measuredValue>=1000)
+	if(iFiO2measuredValue>=1000)
 	{
 		iPos=266;
 	}
-	else if(m_iFiO2measuredValue<=210)
+	else if(iFiO2measuredValue<=210)
 	{
 		iPos=1;
 	}
-	else//if(m_iFiO2measuredValue>210)
+	else//if(iFiO2measuredValue>210)
 	{
-		double iDiffFiO2=((double)m_iFiO2measuredValue-210)/10;
+		double iDiffFiO2=((double)iFiO2measuredValue-210)/10;
 		iPos=(int)(1+(iDiffFiO2*3.3));		
 	}
 
@@ -1442,12 +1397,6 @@ void CWndDataSPO2::drawPRICOFiO2()
 
 	SelectObject(hdcMem,hbrprev);
 	SelectObject(hdcMem,hpenprev);
-
-	//DeleteObject(cbrYellow);//rkuNEWFIX
-	//DeleteObject(cbrGeen);//rkuNEWFIX
-
-	//penLine.DeleteObject(); //rkuNEWFIX
-	//penCurVal.DeleteObject(); //rkuNEWFIX
 
 	SelectObject(hdcMem,hBmpMemPrev);
 	DeleteObject(hBmpMem);
@@ -1592,6 +1541,8 @@ DWORD CWndDataSPO2::SPO2Data(void)
 			bool bDrawPRICOFiO2=false;
 			bool bCheckPricoState=false;
 
+			EnterCriticalSection(&csValues);
+			
 			SHORT iFiO2measuredValue=getModel()->getDATAHANDLER()->getAppliedFiO2para();//rku O2
 			if(m_iFiO2measuredValue!=iFiO2measuredValue)
 			{
@@ -1672,6 +1623,8 @@ DWORD CWndDataSPO2::SPO2Data(void)
 					bDrawValue=true;
 				}
 			}
+
+			LeaveCriticalSection(&csValues);
 			
 			if(bDrawEXCEPTIONS2)
 			{
@@ -1710,12 +1663,17 @@ void CWndDataSPO2::drawMeasuredFiO2Value()
 // **************************************************************************
 void CWndDataSPO2::setFIO2LOWvalue(BYTE iFIO2LOWvalue)
 {
-	if(m_iFIO2LOWvalue!=iFIO2LOWvalue)
+	EnterCriticalSection(&csValues);
+	BYTE iTemp=m_iFIO2LOWvalue;
+	LeaveCriticalSection(&csValues);
+
+	if(iTemp!=iFIO2LOWvalue)
 	{
+		EnterCriticalSection(&csValues);
 		m_iFIO2LOWvalue=iFIO2LOWvalue;
+		LeaveCriticalSection(&csValues);
+
 		Draw(false, false, false, true);
-		
-		
 	}
 }
 // **************************************************************************
@@ -1723,13 +1681,17 @@ void CWndDataSPO2::setFIO2LOWvalue(BYTE iFIO2LOWvalue)
 // **************************************************************************
 void CWndDataSPO2::setFIO2HIGHvalue(BYTE iFIO2HIGHvalue)
 {
-	if(m_iFIO2HIGHvalue!=iFIO2HIGHvalue)
-	{
-		m_iFIO2HIGHvalue=iFIO2HIGHvalue;
-		//drawPRICOFiO2();
-		Draw(false, false, false, true);
+	EnterCriticalSection(&csValues);
+	BYTE iTemp=m_iFIO2HIGHvalue;
+	LeaveCriticalSection(&csValues);
 
-		
+	if(iTemp!=iFIO2HIGHvalue)
+	{
+		EnterCriticalSection(&csValues);
+		m_iFIO2HIGHvalue=iFIO2HIGHvalue;
+		LeaveCriticalSection(&csValues);
+
+		Draw(false, false, false, true);
 	}
 }
 
@@ -1738,12 +1700,17 @@ void CWndDataSPO2::setFIO2HIGHvalue(BYTE iFIO2HIGHvalue)
 // **************************************************************************
 void CWndDataSPO2::setSPO2LOWvalue(BYTE iSPO2LOWvalue)
 {
-	if(m_iSPO2LOWvalue!=iSPO2LOWvalue)
-	{
-		m_iSPO2LOWvalue=iSPO2LOWvalue;
-		Draw(false, false, true, false);
+	EnterCriticalSection(&csValues);
+	BYTE iTemp=m_iSPO2LOWvalue;
+	LeaveCriticalSection(&csValues);
 
-		
+	if(iTemp!=iSPO2LOWvalue)
+	{
+		EnterCriticalSection(&csValues);
+		m_iSPO2LOWvalue=iSPO2LOWvalue;
+		LeaveCriticalSection(&csValues);
+
+		Draw(false, false, true, false);
 	}
 }
 // **************************************************************************
@@ -1751,9 +1718,15 @@ void CWndDataSPO2::setSPO2LOWvalue(BYTE iSPO2LOWvalue)
 // **************************************************************************
 void CWndDataSPO2::setSPO2HIGHvalue(BYTE iSPO2HIGHvalue)
 {
-	if(m_iSPO2HIGHvalue!=iSPO2HIGHvalue)
+	EnterCriticalSection(&csValues);
+	BYTE iTemp=m_iSPO2HIGHvalue;
+	LeaveCriticalSection(&csValues);
+
+	if(iTemp!=iSPO2HIGHvalue)
 	{
+		EnterCriticalSection(&csValues);
 		m_iSPO2HIGHvalue=iSPO2HIGHvalue;
+		LeaveCriticalSection(&csValues);
 		
 		Draw(false, false, true, false);
 	}
@@ -1801,8 +1774,6 @@ void CWndDataSPO2::checkPRICOstate()
 		}
 	}
 
-	
-
 	if(bPRICOdisable)
 	{
 		disablePRICObtn();
@@ -1824,12 +1795,14 @@ void CWndDataSPO2::checkPRICOstate()
 		enablePRICObtn();
 	}
 
+	EnterCriticalSection(&csValues);
 	if(getModel()->getSPO2())
 	{
 		m_bProcessing=getModel()->getSPO2()->isStateOk();
 	}
 	else
 		m_bProcessing=false;
+	LeaveCriticalSection(&csValues);
 	
 
 	if(GetParent())
@@ -1842,17 +1815,7 @@ void CWndDataSPO2::UpdateMessureData()
 	g_eventSPO2Data.SetEvent();
 	//Draw(bLimits,bLimits);
 }
-//void CWndDataSPO2::UpdateSPO2Range()
-//{
-//	/*m_iSPO2HIGHvalue=getModel()->getDATAHANDLER()->getPRICO_SPO2highRange();
-//	m_iSPO2LOWvalue=getModel()->getDATAHANDLER()->getPRICO_SPO2lowRange();
-//
-//	m_pcLimitBtn_SPO2low->SetParaValue(m_iSPO2LOWvalue);
-//	m_pcLimitBtn_SPO2high->SetParaValue(m_iSPO2HIGHvalue);*/
-//
-//
-//	UpdateLimitData();
-//}
+
 
 void CWndDataSPO2::UpdateLimitData()
 {
@@ -1880,17 +1843,18 @@ void CWndDataSPO2::UpdateLimitData()
 	iUpperLimit=iAlimitSPO2max;
 	m_pcLimitBtn_SPO2high->SetLimits(iLowerLimit, iUpperLimit);
 
+	EnterCriticalSection(&csValues);
 	m_iAlimitSPO2max=iAlimitSPO2max;
 	m_iAlimitSPO2min=iAlimitSPO2min;
 
 	m_iSPO2HIGHvalue=getModel()->getDATAHANDLER()->getPRICO_SPO2highRange();
 	m_iSPO2LOWvalue=getModel()->getDATAHANDLER()->getPRICO_SPO2lowRange();
+	LeaveCriticalSection(&csValues);
 
 	m_pcLimitBtn_SPO2low->SetParaValue(m_iSPO2LOWvalue);
 	m_pcLimitBtn_SPO2high->SetParaValue(m_iSPO2HIGHvalue);
 
 	Draw(false, true, true, false);
-	//g_eventSPO2Data.SetEvent();
 }
 
 LRESULT CWndDataSPO2::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
@@ -1906,21 +1870,7 @@ LRESULT CWndDataSPO2::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 			}
 		}
 		break;
-		//case WM_FIO2_CHANGED://PRICO02
-		//	{
-		//		drawPRICOFiO2();
-		//		if(GetParent())
-		//			GetParent()->PostMessage(WM_SET_PARATIMER);
-		//	}
-		//	break;
-		//case WM_SPO2_CHANGED://PRICO02
-		//	{
-		//		drawPRICOSpO2();
-		//		if(GetParent())
-		//			GetParent()->PostMessage(WM_SET_PARATIMER);
-		//	}
-		//	break;
-	case WM_FIO2LOW_LIMITED://PRICO02
+	case WM_FIO2LOW_LIMITED:
 		{
 			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("! PRICO: limmited due to current O2 !"), 3000);
 			getModel()->triggerEvent(&event);
@@ -1928,7 +1878,7 @@ LRESULT CWndDataSPO2::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 			getModel()->getSOUND()->SetPIFSound(PIF_SIGNAL);
 		}
 		break;
-	case WM_FIO2HIGH_LIMITED://PRICO02
+	case WM_FIO2HIGH_LIMITED:
 		{
 			CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("! PRICO: limmited due to current O2 !"), 3000);
 			getModel()->triggerEvent(&event);
@@ -1975,15 +1925,15 @@ LRESULT CWndDataSPO2::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 					if(getModel()->getDATAHANDLER()->getPRICOState()==true)
 					{
 						m_pcPRICO_OnOff->Depress(false);
-						getModel()->getDATAHANDLER()->setPRICOoff();//PRICO04
+						getModel()->getDATAHANDLER()->setPRICOoff();
 					}
 					else
 					{
 						m_pcPRICO_OnOff->Depress(true);
-						getModel()->getDATAHANDLER()->setPRICOon();//PRICO04
+						getModel()->getDATAHANDLER()->setPRICOon();
 					}
 
-					if(getModel()->getALARMHANDLER()->isPRICOAutoTurnedOff())//rku AUTOPRICO
+					if(getModel()->getALARMHANDLER()->isPRICOAutoTurnedOff())
 					{
 						getModel()->getALARMHANDLER()->resetPRICOAutoTurnedOff();
 					}
@@ -2001,32 +1951,7 @@ LRESULT CWndDataSPO2::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//void CWndDataSPO2::SetOneButtonDepressed(int btnID)
-//{
-//	POSITION pos;
-//	try
-//	{
-//		for( pos = m_plLimitBtn.GetHeadPosition(); pos != NULL; )
-//		{
-//			CParaBtn* pParaBtn = ( CParaBtn* ) m_plLimitBtn.GetNext( pos );
-//			if(pParaBtn->GetBtnId() != btnID)
-//			{
-//				if(pParaBtn->GetButton())
-//				{
-//					pParaBtn->DrawDirectUp(false);
-//				}
-//			}
-//		}
-//	}
-//	catch (...)
-//	{
-//		CFabianHFOApp::ReportException(_T("EXCEPTION: CWndDataSPO2::SetOneButtonDepressed"));
-//	}
-//	
-//}
+
 bool CWndDataSPO2::isLimitBtnDepressed()
 {
 	bool bDepressed=false;
@@ -2076,6 +2001,7 @@ void CWndDataSPO2::OnTimer(UINT_PTR nIDEvent)
 	if(nIDEvent==PICORANGETIMER)
 	{
 		bool bSpO2=false;
+		EnterCriticalSection(&csValues);
 		if(m_bSpO2Out)
 		{
 			bSpO2=true;
@@ -2083,15 +2009,10 @@ void CWndDataSPO2::OnTimer(UINT_PTR nIDEvent)
 		}
 
 		bool bFiO2=false;
-		/*if(m_bFiO2Out)
-		{
-			bFiO2=true;
-			m_bFiO2blink=!m_bFiO2blink;
-		}*/
+		LeaveCriticalSection(&csValues);
+		
 		Draw(false, false, bSpO2, bFiO2);
 	}
 	
-	
-
 	CWnd::OnTimer(nIDEvent);
 }

@@ -85,7 +85,7 @@ protected:
 
 	CMVModel *getModel();
 private:
-	CRITICAL_SECTION	csDraw;
+	CRITICAL_SECTION	csValues;
 	CRITICAL_SECTION	csDoThread;
 
 	CMVModel* m_pModel;

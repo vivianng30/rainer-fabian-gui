@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  * 
+ * @subsection ver5051 Version 5.0.5.1
+ * @date 2017-11-01
+ * @verbatim
+	- drawing of CO2 and SpO2 WND thread safe
+ @endverbatim
+ * 
  * @subsection ver5050 Version 5.0.5.0
  * @date 2017-10-25
  * @verbatim
