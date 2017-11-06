@@ -109,8 +109,8 @@ CMVModel::CMVModel(void)
 	m_szVersion = _T("9.0.0");
 	m_szBuildVersion = _T("9.0.0.0");
 #else
-	m_szVersion = _T("5.0.1");
-	m_szBuildVersion = _T("5.0.5.1");
+	m_szVersion = _T("5.0.5");
+	m_szBuildVersion = _T("5.0.5.0");
 #endif
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO"),true);
@@ -1567,7 +1567,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 				||	getCONFIG()->GetCurMode()==VM_THERAPIE)
 			{
 				getVIEWHANDLER()->changeViewState(VS_PARA,VSS_GRAPH_SINGLE_LINEGRAPHS);
-				DeleteO2calFlag();
+				//DeleteO2calFlag();
 				//if(AfxGetApp())
 				//	AfxGetApp()->GetMainWnd()->PostMessage(WM_DELAY_AUTOOXYCAL);
 			}

@@ -7,14 +7,8 @@
  *
  * @section ver Version history and changelog
  * 
- * @subsection ver5051 Version 5.0.5.1
- * @date 2017-11-01
- * @verbatim
-	- drawing of CO2 and SpO2 WND thread safe
- @endverbatim
- * 
  * @subsection ver5050 Version 5.0.5.0
- * @date 2017-10-25
+ * @date 2017-11-06
  * @verbatim
 	- mainboard 3.4 included
 	- BUG-FAB-001 Preset - parameter save fixed
@@ -39,6 +33,8 @@
 	- DEMO licenseing: days left cannot become negative
 	- NIVTRIGGER: factory settings and hospital settings check the license and NIVTRIGGER state
 	- CWndDataCO2: CRITICAL SECTION for values, new drawing through WM messages
+	- drawing of CO2 and SpO2 WND thread safe
+	- EVO_V_11 - O2 calibration changed, after connection air supply the O2 calibration starts also in NMODE
  @endverbatim
  * 
  * @subsection ver50168 Version 5.0.1.68
