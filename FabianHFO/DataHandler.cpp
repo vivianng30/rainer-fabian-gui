@@ -4887,6 +4887,7 @@ void CDataHandler::start()
 	if(HFRevision==HFREV_2)
 		m_wHardwareConfig=setBitOfWord(m_wHardwareConfig, HFOMODULE_BIT);
 
+	/*HARDWARE CONFIG is the start command for CTL PIC!!!!*/
 	getModel()->getSERIAL()->Send_HARDWARE_CONFIG(m_wHardwareConfig);
 	getModel()->getSPI()->Send_HARDWARE_CONFIG(m_wHardwareConfig);
 

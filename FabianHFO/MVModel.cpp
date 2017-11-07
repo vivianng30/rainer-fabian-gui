@@ -499,7 +499,7 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	initSerialController();
 
 
-	DATAHANDLER->start();//serial must be initialized first!
+	DATAHANDLER->start();//serial must be initialized first, sends down start command to serial PIC (==hardware configuration)
 	if(VIEWHANDLER==NULL)
 	{
 		VIEWHANDLER=CMVViewHandler::GetInstance();
