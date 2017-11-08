@@ -432,9 +432,11 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	szLAN.Format(_T("***Init LanguageID %s ID %d***"), m_pszFontName, m_wLanguageID);
 	theApp.getLog()->WriteLine(szLAN);
 		
+	StartI2CWatchdogThread();
+
 	getModel()->Init(m_pszFontName,m_wLanguageID);
 
-	StartI2CWatchdogThread();
+	//StartI2CWatchdogThread();
 
 //#ifndef SIMULATION_ENTREK //rkuNEWFIX
 //	StartThreadWatchdogThread();
@@ -1257,6 +1259,12 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	
 		switch (message)
 		{
+		//case WM_START_I2CWATCHDOG:
+		//	{
+		//		//StartI2CWatchdogThread();
+		//		
+		//		return 1;
+		//	}
 		case WM_RETRYCO2:
 			{
 				getModel()->DeinitCO2module();
@@ -7952,6 +7960,14 @@ DWORD CMainFrame::SetI2CWatchdog(void)
 	DWORD dwEnd=0;
 	bool bPrintError=true;
 	
+	while(false==getModel()->getI2Cinitialized() && m_bDoI2CWatchdogThread)
+	{
+		Sleep(5);
+	}
+
+	if(false==m_bDoI2CWatchdogThread)
+		return 99;
+
 	do
 	{
 		dwEnd=GetTickCount();

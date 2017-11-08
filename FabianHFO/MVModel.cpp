@@ -14,6 +14,7 @@
 CRITICAL_SECTION CMVModel::m_csO2Flush;
 CRITICAL_SECTION CMVModel::m_csSerial;
 CRITICAL_SECTION CMVModel::m_csI2C;
+CRITICAL_SECTION CMVModel::m_csI2Cinit;
 CRITICAL_SECTION CMVModel::m_csObservers;
 CRITICAL_SECTION CMVModel::m_csLangString;
 CRITICAL_SECTION CMVModel::m_csTrigger;
@@ -75,6 +76,7 @@ CMVModel::CMVModel(void)
 	InitializeCriticalSection(&m_csETCO2);
 	InitializeCriticalSection(&m_csSPO2);
 	InitializeCriticalSection(&m_csVentModeInit);
+	InitializeCriticalSection(&m_csI2Cinit);
 
 	m_szUniqueID=_T("");
 
@@ -147,6 +149,8 @@ CMVModel::CMVModel(void)
 	m_bExit=false;
 
 	m_bVentModeInitialized=false;
+
+	m_bI2Cinitialized=false;
 }
 
 // **************************************************************************
@@ -158,6 +162,7 @@ CMVModel::~CMVModel(void)
 		LANGUAGE->DestroyInstance();
 	LANGUAGE=NULL;
 
+	DeleteCriticalSection(&m_csI2Cinit);
 	DeleteCriticalSection(&m_csVentModeInit);
 	DeleteCriticalSection(&m_csETCO2);
 	DeleteCriticalSection(&m_csSPO2);
@@ -408,7 +413,25 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	
 #ifndef SIMULATION_VERSION
 	I2C=CInterfaceI2C::GetInstance();
+	if(I2C==NULL)
+	{
+		theApp.getLog()->WriteLine(_T("#ERROR: I2C NULL"));
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_I2C);
+	}
+	else if(I2C->Init(true)==false)
+	{
+		I2C=NULL;
+		theApp.getLog()->WriteLine(_T("#ERROR: I2C INIT"));
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_I2C);
+	}
 #endif
+
+	setI2Cinitialized();
+	/*if(AfxGetApp())
+		AfxGetApp()->GetMainWnd()->PostMessage(WM_START_I2CWATCHDOG);*/
+	Sleep(5);
 
 	LANGUAGE=CLanguage::GetInstance();
 	CONFIG=CConfiguration::GetInstance();
@@ -550,6 +573,21 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	
 	if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_STARTUP);
+}
+
+void CMVModel::setI2Cinitialized()
+{
+	EnterCriticalSection(&m_csI2Cinit);
+	m_bI2Cinitialized=true;
+	LeaveCriticalSection(&m_csI2Cinit);
+}
+bool CMVModel::getI2Cinitialized()
+{
+	bool bTemp=false;
+	EnterCriticalSection(&m_csI2Cinit);
+	bTemp=m_bI2Cinitialized;
+	LeaveCriticalSection(&m_csI2Cinit);
+	return bTemp;
 }
 
 void CMVModel::initPRICOthread()
