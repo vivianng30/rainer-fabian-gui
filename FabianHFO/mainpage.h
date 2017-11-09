@@ -37,6 +37,7 @@
 	- EVO_V_11 - O2 calibration changed, after connection air supply the O2 calibration starts also in NMODE
 	- I2C watchdog directly started after I2C initialization
 	- Amplitude Correction Factor excluded //AmplitudeCorrectionFactor
+	- Dialog 60 mbar calibration text position changed
  @endverbatim
  * 
  * @subsection ver50168 Version 5.0.1.68

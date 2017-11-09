@@ -87,6 +87,7 @@ BOOL CMessageBoxProxCal::OnInitDialog()
 
 	CDC* pDC = this->GetDC();
 	m_hfont=CreateFontHandle(pDC,16,m_pszFontName,FW_BOLD,0);
+	this->SetFont(CFont::FromHandle(m_hfont));
 	m_hfontButton=CreateFontHandle(pDC,18,m_pszFontName,FW_BOLD,0);
 
 	m_szStaticTextMsg.SetFont(CFont::FromHandle(m_hfont));

@@ -100,6 +100,7 @@ BOOL CNumInputDlg::OnInitDialog()
 
 	_tcscpy_s(m_pszFontName,_countof(m_pszFontName),getModel()->GetFontFace());
 	m_hfont=CreateFontHandle(pDC,16,m_pszFontName,FW_BOLD,0);
+	this->SetFont(CFont::FromHandle(m_hfont));
 	m_hfontButton=CreateFontHandle(pDC,18,m_pszFontName,FW_BOLD,0);
 
 	CString szCaption=_T("Input panel: ");

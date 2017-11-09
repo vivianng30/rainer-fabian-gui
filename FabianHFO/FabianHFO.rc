@@ -212,7 +212,7 @@ STYLE DS_SETFONT | WS_POPUP
 FONT 12, "@Arial Unicode MS"
 BEGIN
     LTEXT           "Pressure:",IDC_PRESSURE,55,96,50,8
-    LTEXT           "PPROX ADC:",IDC_PROXADC,110,96,72,8
+    LTEXT           "PPROX ADC:",IDC_PROXADC,110,96,91,8
 END
 
 

@@ -206,9 +206,13 @@ BOOL CDlgProxPressure60::OnInitDialog()
 	CDC* pDC = this->GetDC();
 
 	m_hfont=CreateFontHandle(pDC,16,m_pszFontName,FW_BOLD,0);
+	this->SetFont(CFont::FromHandle(m_hfont));
 	m_szPProxADC.SetFont(CFont::FromHandle(m_hfont));
 	m_szPressure.SetFont(CFont::FromHandle(m_hfont));
 	
+	m_szPProxADC.MoveWindow(270,255,180,20);
+	m_szPressure.MoveWindow(130,255,130,20);
+
 	m_pcDlgLeft= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_DLG_LEFT);
 	m_pcDlgLeftTop= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_DLG_LEFT_TOP);
 	m_pcDlgLeftBot= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_DLG_LEFT_BOT);
