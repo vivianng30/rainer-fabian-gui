@@ -865,16 +865,18 @@ void CInterfaceAcuLink::sendMeasurementDataTHERAPIE()
 }
 void CInterfaceAcuLink::sendMeasurementDataHFO()
 {
-	SHORT iPmax=getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_P_PEAK);
-	if(false==getModel()->getDATAHANDLER()->getFOToscillationState() && false==getModel()->isMANBREATHrunning()) //pro - added
-	{
-		double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
-		double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
-		if(iAmpCorFactor==0)
-			iAmpCorFactor=1;
-		iPmax=(SHORT)(((double)iPmax-iPmitt)*iAmpCorFactor)+iPmitt;
-	}
-	setMeasurementData(ALINK_MSMNT_P_PEAK,iPmax);
+	//AmplitudeCorrectionFactor
+	//SHORT iPmax=getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_P_PEAK);
+	//if(false==getModel()->getDATAHANDLER()->getFOToscillationState() && false==getModel()->isMANBREATHrunning()) //pro - added
+	//{
+	//	double iPmitt=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
+	//	double iAmpCorFactor = getModel()->getDATAHANDLER()->getAmpCorFactor(getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+	//	if(iAmpCorFactor==0)
+	//		iAmpCorFactor=1;
+	//	iPmax=(SHORT)(((double)iPmax-iPmitt)*iAmpCorFactor)+iPmitt;
+	//}
+	//setMeasurementData(ALINK_MSMNT_P_PEAK,iPmax);
+	setMeasurementData(ALINK_MSMNT_P_PEAK,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_P_PEAK));
 	setMeasurementData(ALINK_MSMNT_P_MEAN,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_P_MEAN));
 	setMeasurementData(ALINK_MSMNT_PEEP,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_T_INSP_PSV,ALINK_NOTVALID);

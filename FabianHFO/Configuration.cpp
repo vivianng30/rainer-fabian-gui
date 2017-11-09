@@ -4126,7 +4126,6 @@ void CConfiguration::LoadSettings()
 	m_bParaDataVGarantOn_IPPV=m_bParaDataVGarantOn_TRIGGER;
 #endif
 
-	//AmplitudeCorrectionFactor
 	readAmpCorFactor();
 
 	m_wOldConfigVersion=m_iConfigVersion;
@@ -11892,7 +11891,7 @@ void CConfiguration::SetHFOdemoTimestamp(COleDateTime dateTime)
 		dateTime.GetYear());
 	theApp.getLog()->WriteLine(szTxt);
 }
-//AmplitudeCorrectionFactor
+
 void CConfiguration::readAmpCorFactor()
 {
 	if(CTlsFile::Exists(AMPCORFACTORINI))
@@ -11935,7 +11934,7 @@ void CConfiguration::readAmpCorFactor()
 		}
 	}
 }
-//AmplitudeCorrectionFactor
+
 double CConfiguration::getAmpCorFactor(BYTE iFreq)
 {
 	if(iFreq<5 || iFreq>20)

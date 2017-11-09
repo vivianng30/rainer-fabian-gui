@@ -18151,7 +18151,7 @@ DWORD CDataHandler::getRemainCO2PumpTime()
 {
 	return m_dwRemainCO2PumpTime;
 }
-//AmplitudeCorrectionFactor
+
 double CDataHandler::getAmpCorFactor(BYTE iFreq)
 {
 	return getModel()->getCONFIG()->getAmpCorFactor(iFreq);
