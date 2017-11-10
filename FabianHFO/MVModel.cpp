@@ -433,6 +433,8 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_START_I2CWATCHDOG);*/
 	Sleep(5);
 
+	DEBUGMSG(TRUE, (TEXT("#########init interfaceses\r\n")));
+
 	LANGUAGE=CLanguage::GetInstance();
 	CONFIG=CConfiguration::GetInstance();
 	ALARMHANDLER = CAlarmMgmtHandler::getInstance();
@@ -447,7 +449,10 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	
 	PIF=CInterfaceFSBus::GetInstance();
 	DIO=CInterfaceDIO::GetInstance();
+
+	DEBUGMSG(TRUE, (TEXT("#########getinstance datahandler\r\n")));
 	DATAHANDLER=CDataHandler::getInstance();
+
 	MODEHANDLER=CVentModeHandler::getInstance();
 	MONITORTHR=CThreadMonitor::getInstance();
 	ALARMTHR=CThreadAlarm::getInstance();
@@ -457,6 +462,8 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 
 	//###################################################
 	//init phase
+
+	DEBUGMSG(TRUE, (TEXT("#########init I2C\r\n")));
 
 #ifndef SIMULATION_VERSION
 	if(I2C==NULL)
@@ -474,7 +481,10 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	}
 #endif
 
+	DEBUGMSG(TRUE, (TEXT("#########init config\r\n")));
 	CONFIG->Init();
+	
+	DEBUGMSG(TRUE, (TEXT("#########init language\r\n")));
 	LANGUAGE->Init();
 
 	if(getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL)
@@ -493,8 +503,11 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	}
 
 	SOUND->Init();//after PIF init!
+	DEBUGMSG(TRUE, (TEXT("#########init datahandler\r\n")));
 	DATAHANDLER->init();
+	DEBUGMSG(TRUE, (TEXT("#########init datahandler finished\r\n")));
 	ALARMHANDLER->init();
+	DEBUGMSG(TRUE, (TEXT("#########init alarmhandler finished\r\n")));
 
 	if(DIO->Init())
 	{
@@ -505,7 +518,7 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 		SetDIOavailability(FALSE);
 	}
 
-
+	DEBUGMSG(TRUE, (TEXT("#########init SPI\r\n")));
 #ifndef SIMULATION_NOSPI
 	if(SPI!=NULL && SPI->Init())
 	{
@@ -518,19 +531,22 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 		theApp.getLog()->WriteLine(_T("#HFO:0227"));
 	}
 #endif
+	DEBUGMSG(TRUE, (TEXT("#########init acuLink\r\n")));
 	initAcuLink();
+	DEBUGMSG(TRUE, (TEXT("#########init SERIAL\r\n")));
 	initSerialController();
 
-
+	DEBUGMSG(TRUE, (TEXT("#########datahandler start\r\n")));
 	DATAHANDLER->start();//serial must be initialized first, sends down start command to serial PIC (==hardware configuration)
 	if(VIEWHANDLER==NULL)
 	{
 		VIEWHANDLER=CMVViewHandler::GetInstance();
 	}
-	
+	DEBUGMSG(TRUE, (TEXT("#########init modules\r\n")));
 	initCO2module();
 	initSPO2module();
 
+	DEBUGMSG(TRUE, (TEXT("#########init PRICO\r\n")));
 	if(getDATAHANDLER()->isPRICOLicenseAvailable()==true)
 	{
 		initPRICOthread();
@@ -557,7 +573,8 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 #ifdef SIMULATION_ENTREK
 	theApp.getLog()->WriteLine(_T("+++SIMULATION_ENTREK+++"));
 #endif
-
+#
+	DEBUGMSG(TRUE, (TEXT("#########write versions\r\n")));
 	writeMainboardVersionToLog();
 	writeVentRangeToLog();
 	writeKernelVersionToLog();
@@ -566,11 +583,13 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	writeLEAKCOMPENSATIONToLog();
 	writeALTITUDEToLog();
 
+	DEBUGMSG(TRUE, (TEXT("#########start threads\r\n")));
 	startThreads();
 
 	if(getSERIAL())
 		getSERIAL()->Send_FOTconv_AMP_FREQ(0);//turn FOT off at startup
 	
+	DEBUGMSG(TRUE, (TEXT("#########WM STARTUP\r\n")));
 	if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_STARTUP);
 }
@@ -1549,6 +1568,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 		break;
 	case CMVEventControl::EV_CONTROL_STARTUP_SUCCESS:
 		{
+			DEBUGMSG(TRUE, (TEXT("#########STARTUP\r\n")));
 			//needs to be called here as first function!!!
 			getALARMHANDLER()->ventModeChanged();
 

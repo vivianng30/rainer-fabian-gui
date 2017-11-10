@@ -159,6 +159,7 @@ CDataHandler::CDataHandler(void)
 	InitializeCriticalSection(&csOxyState);
 	InitializeCriticalSection(&csTrendFileData);
 	InitializeCriticalSection(&csTrend);
+	InitializeCriticalSection(&csTrendUpdate);
 	InitializeCriticalSection(&csDelTrendThread);
 	InitializeCriticalSection(&csSavedBreath);
 	InitializeCriticalSection(&csFOTosciState);
@@ -655,6 +656,27 @@ CDataHandler::CDataHandler(void)
 	m_bDUOPAPtriggerAutoEnable=false;
 	m_iPrevTRIGGERDUOPAPPara=0;
 	m_bTriggerDUOPAPenabled=true;
+
+	m_bInitialSaveTrend=false;
+	m_bTrendUpdateRunning=false;
+	m_sTempTrendData_Pmean=0;
+	m_wTempTrendData_Pinsp=0;
+	m_wTempTrendData_FiO2=0;
+	m_wTempTrendData_Vte=0;
+	m_wTempTrendData_Compliance=0;
+	m_wTempTrendData_CO2HFO=0;
+	m_wTempTrendData_MV=0;
+	m_wTempTrendData_HFAMP=0;
+	m_wTempTrendData_RSBI=0;
+	m_wTempTrendData_ShareMVmand=0;
+	m_wTempTrendData_Resistance=0;
+	m_wTempTrendData_Leak=0;
+	m_wTempTrendData_SpO2=0;
+	m_wTempTrendData_PI=0;
+	m_wTempTrendData_etCO2=0;
+	m_wTempTrendData_SpO2PR=0;
+	m_wTempTrendData_Frequency=0;
+	//m_dtTempTimestamp=COleDateTime::null;
 }
 
 /**********************************************************************************************//**
@@ -845,6 +867,7 @@ void CDataHandler::setExit()
 	DeleteCriticalSection(&csOxyState);
 	DeleteCriticalSection(&csTrendFileData);
 	DeleteCriticalSection(&csTrend);
+	DeleteCriticalSection(&csTrendUpdate);
 	DeleteCriticalSection(&csDelTrendThread);
 	DeleteCriticalSection(&csSavedBreath);
 	DeleteCriticalSection(&csFOTosciState);
@@ -15389,9 +15412,12 @@ int CDataHandler::GetMSTATUS_BlenderPIC()
 // **************************************************************************
 UINT CDataHandler::CheckLastTrendData()
 {
+	EnterCriticalSection(&csTrendUpdate);
+	m_bTrendUpdateRunning=true;
+	LeaveCriticalSection(&csTrendUpdate);
 	DEBUGMSG(TRUE, (TEXT("CheckLastTrendData start\r\n")));
 	//rkuTOCHECKFIX
-	DWORD dwStart=GetTickCount();
+	//DWORD dwStart=GetTickCount();
 	int iRes=0;
 
 	COleDateTime dtTimeLastTrendPINSP = m_cTendPINSP.GetTimestamp();
@@ -15505,12 +15531,16 @@ UINT CDataHandler::CheckLastTrendData()
 	}
 	LeaveCriticalSection(&csTrend);
 
-	DWORD dwEnd=GetTickCount();
-	DEBUGMSG(TRUE, (TEXT("CheckLastTrendData time %d\r\n"),dwEnd-dwStart));
+	//DWORD dwEnd=GetTickCount();
+	//DEBUGMSG(TRUE, (TEXT("CheckLastTrendData time %d\r\n"),dwEnd-dwStart));
 	//DEBUGMSG(TRUE, (TEXT("CheckLastTrendData end \r\n")));
 
 	if(iRes<0)
 		iRes=0;
+
+	EnterCriticalSection(&csTrendUpdate);
+	m_bTrendUpdateRunning=false;
+	LeaveCriticalSection(&csTrendUpdate);
 
 	return iRes;
 }
@@ -15679,6 +15709,7 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 								}
 								SerializeTrend(type,true);	
 							}
+							Sleep(0);
 						}
 					}
 					catch (...)
@@ -15708,6 +15739,7 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 
 									SerializeTrend(type,true);
 								}
+								Sleep(0);
 							}
 						}
 						catch (...)
@@ -15738,6 +15770,7 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 								}
 
 								SerializeTrend(type,true);
+								Sleep(0);
 							}
 						}
 						catch (...)
@@ -15759,6 +15792,7 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 							{
 								SerializeTrend(type,true);
 							}
+							Sleep(0);
 						}
 					}
 					catch (...)
@@ -15833,6 +15867,7 @@ int CDataHandler::GetDemandFlowData()
 // **************************************************************************
 void CDataHandler::SaveTrendData()
 {
+	DEBUGMSG(TRUE, (TEXT("************SaveTrendData\r\n")));
 	EnterCriticalSection(&csTrendFileData);
 	int iTrendCnt=m_iTrendCnt;
 	double fTrendData_Pmean=m_fTrendData_Pmean;
@@ -15914,10 +15949,44 @@ void CDataHandler::SaveTrendData()
 		wTrendData_Frequency=fTrendData_Frequency/iTrendCnt;
 	}
 
-	//test
-	/*wTrendData_Pinsp+=50;
-	if(wTrendData_Pinsp>=400)
-	wTrendData_Pinsp=200;*/
+	//function to save trend temporary if trend update is still running
+	EnterCriticalSection(&csTrendUpdate);
+	bool bUpdateRunnig=m_bTrendUpdateRunning;
+	LeaveCriticalSection(&csTrendUpdate);
+
+	if(bUpdateRunnig)
+	{
+		DEBUGMSG(TRUE, (TEXT("************TREND UPDATE RUNNING -> save temp\r\n")));
+		m_bInitialSaveTrend=true;
+		iTrendCnt=0;
+
+		m_wTempTrendData_Pinsp=wTrendData_Pinsp;
+		m_sTempTrendData_Pmean=sTrendData_Pmean;
+		m_wTempTrendData_FiO2=wTrendData_FiO2;
+		m_wTempTrendData_Vte=wTrendData_Vte;
+		m_wTempTrendData_Compliance=wTrendData_Compliance;
+		m_wTempTrendData_CO2HFO=wTrendData_CO2HFO;
+		m_wTempTrendData_MV=wTrendData_MV;
+		m_wTempTrendData_HFAMP=wTrendData_HFAMP;
+		m_wTempTrendData_RSBI=wTrendData_RSBI;
+		m_wTempTrendData_ShareMVmand=wTrendData_ShareMVmand;
+		m_wTempTrendData_Resistance=wTrendData_Resistance;
+		m_wTempTrendData_Leak=wTrendData_Leak;
+		m_wTempTrendData_SpO2=wTrendData_SpO2;
+		m_wTempTrendData_PI=wTrendData_PI;
+		m_wTempTrendData_etCO2=wTrendData_etCO2;
+		m_wTempTrendData_SpO2PR=wTrendData_SpO2PR;
+		m_wTempTrendData_Frequency=wTrendData_Frequency;
+		SYSTEMTIME st;
+		GetLocalTime(&st);
+		m_dtTempTimestamp=COleDateTime(st);
+	}
+	else if(m_bInitialSaveTrend)
+	{
+		m_bInitialSaveTrend=false;
+
+		saveTempTrends();	
+	}
 
 	CStringW szVal=_T("");
 	
@@ -16044,6 +16113,139 @@ void CDataHandler::SaveTrendData()
 	}
 }
 
+void CDataHandler::saveTempTrends()
+{
+	WORD wBufCount = 0;
+	bool bSerialize=false;
+
+	EnterCriticalSection(&csTrend);
+	wBufCount = m_cTendPINSP.WriteBuffer(m_wTempTrendData_Pinsp, m_dtTempTimestamp);
+	if(wBufCount>=SERIALZEBUFFER)
+	{
+		bSerialize=true;
+	}
+
+	wBufCount = m_cTendPMEAN.WriteBuffer(m_sTempTrendData_Pmean, m_dtTempTimestamp);
+	if(wBufCount>=SERIALZEBUFFER)
+	{
+		bSerialize=true;
+	}
+
+	wBufCount = m_cTendFIO2.WriteBuffer(m_wTempTrendData_FiO2, m_dtTempTimestamp);
+	if(wBufCount>=SERIALZEBUFFER)
+	{
+		bSerialize=true;
+	}
+
+	wBufCount = m_cTendVTE.WriteBuffer(m_wTempTrendData_Vte, m_dtTempTimestamp);
+	if(wBufCount>=SERIALZEBUFFER)
+	{
+		bSerialize=true;
+	}
+
+	wBufCount = m_cTendCOMPLIANCE.WriteBuffer(m_wTempTrendData_Compliance, m_dtTempTimestamp);
+	if(wBufCount>=SERIALZEBUFFER)
+	{
+		bSerialize=true;
+	}
+
+	wBufCount = m_cTendCO2HFO.WriteBuffer(m_wTempTrendData_CO2HFO, m_dtTempTimestamp);
+	if(wBufCount>=SERIALZEBUFFER)
+	{
+		bSerialize=true;
+	}
+
+	wBufCount = m_cTendMV.WriteBuffer(m_wTempTrendData_MV, m_dtTempTimestamp);
+	if(wBufCount>=SERIALZEBUFFER)
+	{
+		bSerialize=true;
+	}
+
+	wBufCount = m_cTendHFAMP.WriteBuffer(m_wTempTrendData_HFAMP, m_dtTempTimestamp);
+	if(wBufCount>=SERIALZEBUFFER)
+	{
+		bSerialize=true;
+	}
+
+	wBufCount = m_cTendRSBI.WriteBuffer(m_wTempTrendData_RSBI, m_dtTempTimestamp);
+	if(wBufCount>=SERIALZEBUFFER)
+	{
+		bSerialize=true;
+	}
+
+	wBufCount = m_cTendShareMVmand.WriteBuffer(m_wTempTrendData_ShareMVmand, m_dtTempTimestamp);
+	if(wBufCount>=SERIALZEBUFFER)
+	{
+		bSerialize=true;
+	}
+
+	wBufCount = m_cTendResistance.WriteBuffer(m_wTempTrendData_Resistance, m_dtTempTimestamp);
+	if(wBufCount>=SERIALZEBUFFER)
+	{
+		bSerialize=true;
+	}
+
+	wBufCount = m_cTendLeak.WriteBuffer(m_wTempTrendData_Leak, m_dtTempTimestamp);
+	if(wBufCount>=SERIALZEBUFFER)
+	{
+		bSerialize=true;
+	}
+
+	wBufCount = m_cTendSpO2.WriteBuffer(m_wTempTrendData_SpO2, m_dtTempTimestamp);
+	if(wBufCount>=SERIALZEBUFFER)
+	{
+		bSerialize=true;
+	}
+
+	wBufCount = m_cTendSpO2PI.WriteBuffer(m_wTempTrendData_PI, m_dtTempTimestamp);
+	if(wBufCount>=SERIALZEBUFFER)
+	{
+		bSerialize=true;
+	}
+
+	wBufCount = m_cTendEtCO2.WriteBuffer(m_wTempTrendData_etCO2, m_dtTempTimestamp);
+	if(wBufCount>=SERIALZEBUFFER)
+	{
+		bSerialize=true;
+	}
+
+	wBufCount = m_cTendSpO2PR.WriteBuffer(m_wTempTrendData_SpO2PR, m_dtTempTimestamp);
+	if(wBufCount>=SERIALZEBUFFER)
+	{
+		bSerialize=true;
+	}
+
+	wBufCount = m_cTendFrequency.WriteBuffer(m_wTempTrendData_Frequency, m_dtTempTimestamp);
+
+	if(wBufCount>=SERIALZEBUFFER)
+	{
+		bSerialize=true;
+	}
+	LeaveCriticalSection(&csTrend);
+
+	if(bSerialize)
+	{
+		SerializeAllTrends(true);
+	}
+
+	m_sTempTrendData_Pmean=0;
+	m_wTempTrendData_Pinsp=0;
+	m_wTempTrendData_FiO2=0;
+	m_wTempTrendData_Vte=0;
+	m_wTempTrendData_Compliance=0;
+	m_wTempTrendData_CO2HFO=0;
+	m_wTempTrendData_MV=0;
+	m_wTempTrendData_HFAMP=0;
+	m_wTempTrendData_RSBI=0;
+	m_wTempTrendData_ShareMVmand=0;
+	m_wTempTrendData_Resistance=0;
+	m_wTempTrendData_Leak=0;
+	m_wTempTrendData_SpO2=0;
+	m_wTempTrendData_PI=0;
+	m_wTempTrendData_etCO2=0;
+	m_wTempTrendData_SpO2PR=0;
+	m_wTempTrendData_Frequency=0;
+}
 void CDataHandler::SerializeTrend(UINT type, bool bIncreaseFileNum)
 {
 	CStringW szFile=_T("");

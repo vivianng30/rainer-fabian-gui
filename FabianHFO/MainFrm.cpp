@@ -8414,7 +8414,10 @@ DWORD CMainFrame::DoTimerFunctions(void)
 		getModel()->getDATAHANDLER()->initTrend();
 		Sleep(0);
 
+		DEBUGMSG(TRUE, (TEXT("#########datahandler CheckLastTrendData\r\n")));
 		UINT iSec=getModel()->getDATAHANDLER()->CheckLastTrendData();
+		DEBUGMSG(TRUE, (TEXT("#########datahandler CheckLastTrendData finished\r\n")));
+
 		if(iSec!=0)
 		{
 			dwLastTickCountTrend=(iSec*1000);
@@ -8822,6 +8825,7 @@ DWORD CMainFrame::DoTimerFunctions(void)
 							{
 								if(getModel()->getDATAHANDLER()->isTRENDLicenseAvailable())
 								{
+									DEBUGMSG(TRUE, (TEXT("TIMER SaveTrendData\r\n")));
 									if(m_bStartTrend)
 										getModel()->getDATAHANDLER()->SaveTrendData();
 								}

@@ -750,6 +750,8 @@ public:
 	bool DeserializeTrend(UINT type, BYTE fileNum);
 	bool DeserializeTempTrend(UINT type, WORD fileNum);
 
+	void saveTempTrends();
+
 	BYTE getCountNumericIPPV();
 	BYTE getCountNumericSIPPV();
 	BYTE getCountNumericSIMV();
@@ -807,6 +809,7 @@ protected:
 
 public:
 	CRITICAL_SECTION	csTrend;	///< critical section for tend data
+	CRITICAL_SECTION	csTrendUpdate;	///< critical section for tend update
 	CRITICAL_SECTION	csTrendFileData;	///< critical section for file of trend data
 	CRITICAL_SECTION	csDelTrendThread;   ///< critical section for deleteing trend data //rkuNEWFIX
 	CRITICAL_SECTION	csOpTime;   ///< critical section for operating time
@@ -959,6 +962,25 @@ private:
 	SHORT m_Status2;	///< The second status
 	SHORT m_iSPO2waveData;  ///< Information describing the spo 2wave
 	
+	SHORT m_sTempTrendData_Pmean;
+	WORD m_wTempTrendData_Pinsp;
+	WORD m_wTempTrendData_FiO2;
+	WORD m_wTempTrendData_Vte;
+	WORD m_wTempTrendData_Compliance;
+	WORD m_wTempTrendData_CO2HFO;
+	WORD m_wTempTrendData_MV;
+	WORD m_wTempTrendData_HFAMP;
+	WORD m_wTempTrendData_RSBI;
+	WORD m_wTempTrendData_ShareMVmand;
+	WORD m_wTempTrendData_Resistance;
+	WORD m_wTempTrendData_Leak;
+	WORD m_wTempTrendData_SpO2;
+	WORD m_wTempTrendData_PI;
+	WORD m_wTempTrendData_etCO2;
+	WORD m_wTempTrendData_SpO2PR;
+	WORD m_wTempTrendData_Frequency;
+	COleDateTime m_dtTempTimestamp;
+
 	WORD m_wACCU_DAT_STATE; ///< State of the w a ccu dat
 	WORD m_wBattStatMinutes;	///< The batt stat in minutes
 	WORD m_wBattStatPercents;   ///< The batt stat percents
@@ -1059,9 +1081,12 @@ private:
 	bool m_bDUOPAPtriggerAutoEnable; ///< True if nmod etrigger automatic enable
 	bool m_bTriggerDUOPAPenabled;	///< True if trigger nmod eenabled
 
+	bool m_bTrendUpdateRunning;
+	bool m_bInitialSaveTrend;
+
 	BOOL m_bShowFlowAC; ///< True to show, false to hide the flow a c
 
-		
+	
 	
 
 	

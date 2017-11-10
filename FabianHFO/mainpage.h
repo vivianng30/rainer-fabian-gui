@@ -38,6 +38,7 @@
 	- I2C watchdog directly started after I2C initialization
 	- Amplitude Correction Factor excluded //AmplitudeCorrectionFactor
 	- Dialog 60 mbar calibration text position changed
+	- function to save trend temporary if trend update is still running implemented
  @endverbatim
  * 
  * @subsection ver50168 Version 5.0.1.68
