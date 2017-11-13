@@ -34,7 +34,7 @@ public:
 	virtual bool SetNextFocus();
 	virtual bool SetPrevFocus();
 
-	void StopDiagramm(bool bIgnoreFreeze=false);
+	void StopDiagramm(bool bStopFreeze=false);
 
 	//Observer
 	virtual void NotifyVentModeChanged();

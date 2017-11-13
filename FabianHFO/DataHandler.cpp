@@ -15867,7 +15867,7 @@ int CDataHandler::GetDemandFlowData()
 // **************************************************************************
 void CDataHandler::SaveTrendData()
 {
-	DEBUGMSG(TRUE, (TEXT("************SaveTrendData\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("************SaveTrendData\r\n")));
 	EnterCriticalSection(&csTrendFileData);
 	int iTrendCnt=m_iTrendCnt;
 	double fTrendData_Pmean=m_fTrendData_Pmean;

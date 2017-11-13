@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  * 
+ * @subsection ver5051 Version 5.0.5.1
+ * @date 2017-11-13
+ * @verbatim
+	- bug fixed: graph is synchron now after switching back to main view when graph was frozen in wave view 
+ @endverbatim
+ * 
  * @subsection ver5050 Version 5.0.5.0
  * @date 2017-11-06
  * @verbatim

@@ -2103,11 +2103,11 @@ void CMVViewHandler::SetOxyHourglass(bool state)
 // **************************************************************************
 // 
 // **************************************************************************
-void CMVViewHandler::StopDiagramm(bool bIgnoreFreeze)
+void CMVViewHandler::StopDiagramm(bool bStopFreeze)
 {
 	EnterCriticalSection(&csViewDiagramm);
 	if(m_vDiagramm)
-		m_vDiagramm->StopDiagramm(bIgnoreFreeze);
+		m_vDiagramm->StopDiagramm(bStopFreeze);
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
@@ -2696,9 +2696,10 @@ eViewSubState CMVViewHandler::getPrevGraphSubState()
 	return state;
 }
 
-void CMVViewHandler::changeViewState(eViewState state,eViewSubState substate,bool bIgnoreFreeze)
+void CMVViewHandler::changeViewState(eViewState state,eViewSubState substate,bool bStopFreeze)
 {
-	StopDiagramm(bIgnoreFreeze);
+	DEBUGMSG(TRUE, (TEXT("xxxxx changeViewState\r\n")));
+	StopDiagramm(bStopFreeze);
 	Sleep(0);
 
 	if(getModel()->getCONFIG()->CurModeIsPresetMode()==true  || getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)

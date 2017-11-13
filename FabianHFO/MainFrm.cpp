@@ -8825,7 +8825,7 @@ DWORD CMainFrame::DoTimerFunctions(void)
 							{
 								if(getModel()->getDATAHANDLER()->isTRENDLicenseAvailable())
 								{
-									DEBUGMSG(TRUE, (TEXT("TIMER SaveTrendData\r\n")));
+									//DEBUGMSG(TRUE, (TEXT("TIMER SaveTrendData\r\n")));
 									if(m_bStartTrend)
 										getModel()->getDATAHANDLER()->SaveTrendData();
 								}

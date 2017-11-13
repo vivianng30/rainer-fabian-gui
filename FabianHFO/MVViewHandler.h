@@ -183,7 +183,7 @@ public:
 
 	//void SetFlowData(int valueInsp, int valueExsp);
 
-	void StopDiagramm(bool bIgnoreFreeze=false);
+	void StopDiagramm(bool bStopFreeze=false);
 
 	void DrawCountDownStartTime(int iCountDownStart);
 	void StopCountDownStartTime();
@@ -215,7 +215,7 @@ public:
 	//void VentModeChanged();
 	//virtual void NotifyEvent(CMVEvent* pEvent);
 
-	void changeViewState(eViewState state,eViewSubState substate,bool bIgnoreFreeze=false);
+	void changeViewState(eViewState state,eViewSubState substate,bool bStopFreeze=false);
 	void changeToPrevViewState();
 	bool canChangeViewStateAlarmDependend();
 
