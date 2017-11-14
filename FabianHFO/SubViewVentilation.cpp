@@ -514,11 +514,15 @@ BOOL CSubViewVentilation::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCre
 			m_pcHFOManBreath->SetValueText(getModel()->GetLanguageString(IDS_TXT_DISABLED));
 
 		}
-		m_pcHFOManBreath->ShowWindow(SW_SHOW);
-		m_plBtn.AddTail(m_pcHFOManBreath);
-
-		
-
+		if(true==getModel()->getDATAHANDLER()->isHFOLicenseAvailable())
+		{
+			m_pcHFOManBreath->ShowWindow(SW_SHOW);
+			m_plBtn.AddTail(m_pcHFOManBreath);
+		}
+		else
+		{
+			m_pcHFOManBreath->ShowWindow(SW_HIDE);
+		}
 
 
 		//################################### 8. TRIGGERMODE ###########################
@@ -875,7 +879,8 @@ void CSubViewVentilation::Draw()
 	RoundRect(hdcMem,20,340,385,400,20,20);
 
 	//#############man breath HFO
-	RoundRect(hdcMem,20,404,385,464,20,20);
+	if(true==getModel()->getDATAHANDLER()->isHFOLicenseAvailable())
+		RoundRect(hdcMem,20,404,385,464,20,20);
 
 
 	//##################################################

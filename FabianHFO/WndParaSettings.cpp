@@ -594,16 +594,13 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		m_pcFreshgasInt->Create(this,g_hf9AcuBold,0);
 		m_pcFreshgasInt->SetTextTwoLines(getModel()->GetLanguageString(IDS_BTN_BIAS_INT1),getModel()->GetLanguageString(IDS_BTN_BIAS_INT2));
 
-		if(getModel()->getCONFIG()->isBiasFlowActive()==true)
+		if(getModel()->getCONFIG()->isBiasFlowActive()==true && true==getModel()->getDATAHANDLER()->isHFOLicenseAvailable())
 		{
 			m_pcFreshgasInt->ShowWindow(SW_SHOW);
-			//m_pcFreshgasInt->EnableWindow(TRUE);
 		}
 		else
 		{
 			m_pcFreshgasInt->ShowWindow(SW_HIDE);
-			//m_pcFreshgasInt->ShowWindow(SW_SHOW);
-			//m_pcFreshgasInt->EnableWindow(FALSE);
 		}
 
 
@@ -624,16 +621,13 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		m_pcFreshgasExt->Create(this,g_hf9AcuBold,0);
 		m_pcFreshgasExt->SetTextTwoLines(getModel()->GetLanguageString(IDS_BTN_BIAS_EXT1),getModel()->GetLanguageString(IDS_BTN_BIAS_EXT2));
 		
-		if(getModel()->getCONFIG()->isBiasFlowActive()==true)
+		if(getModel()->getCONFIG()->isBiasFlowActive()==true && true==getModel()->getDATAHANDLER()->isHFOLicenseAvailable())
 		{
 			m_pcFreshgasExt->ShowWindow(SW_SHOW);
-			//m_pcFreshgasExt->EnableWindow(TRUE);
 		}
 		else
 		{
 			m_pcFreshgasExt->ShowWindow(SW_HIDE);
-			//m_pcFreshgasExt->ShowWindow(SW_SHOW);
-			//m_pcFreshgasExt->EnableWindow(FALSE);
 		}
 
 		
@@ -983,22 +977,13 @@ void CWndParaSettings::Show(bool bShow)
 		}
 
 
-		if(getModel()->getCONFIG()->isBiasFlowActive()==true)
+		if(getModel()->getCONFIG()->isBiasFlowActive()==true && true==getModel()->getDATAHANDLER()->isHFOLicenseAvailable())
 		{
 			m_pcFreshgasInt->ShowWindow(SW_SHOW);
-			//m_pcFreshgasInt->EnableWindow(TRUE);
-
 			m_pcFreshgasExt->ShowWindow(SW_SHOW);
-			//m_pcFreshgasExt->EnableWindow(TRUE);
 		}
 		else
 		{
-			/*m_pcFreshgasInt->ShowWindow(SW_SHOW);
-			m_pcFreshgasInt->EnableWindow(FALSE);
-
-			m_pcFreshgasExt->ShowWindow(SW_SHOW);
-			m_pcFreshgasExt->EnableWindow(FALSE);*/
-
 			m_pcFreshgasInt->ShowWindow(SW_HIDE);
 			m_pcFreshgasExt->ShowWindow(SW_HIDE);
 		}
@@ -1429,7 +1414,7 @@ void CWndParaSettings::Draw()
 
 	//}
 	
-	if(getModel()->getCONFIG()->isBiasFlowActive()==true)
+	if(getModel()->getCONFIG()->isBiasFlowActive()==true && true==getModel()->getDATAHANDLER()->isHFOLicenseAvailable())
 	{
 		RoundRect(hdcMem, 430, 3, 540, 113,20,20);
 	}
