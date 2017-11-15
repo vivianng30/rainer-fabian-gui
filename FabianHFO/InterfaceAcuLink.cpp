@@ -186,9 +186,10 @@ void CInterfaceAcuLink::sendMeasurementDataIPPV()
 	setMeasurementData(ALINK_MSMNT_DYNCOMPL,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_DYNCOMPL)/10);
 	setMeasurementData(ALINK_MSMNT_C20C,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_C20C));
 	setMeasurementData(ALINK_MSMNT_RESISTANCE,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_RESISTANCE));
-	if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
+	//INT iTest=getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_MIN_VOL)/10;
+	/*if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
 		setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_MIN_VOL)/10);
-	else
+	else*/
 		setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_MIN_VOL));
 	setMeasurementData(ALINK_MSMNT_ANTEIL_RESP,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_TVE,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_TVE));
@@ -261,9 +262,9 @@ void CInterfaceAcuLink::sendMeasurementDataSIPPV()
 	setMeasurementData(ALINK_MSMNT_DYNCOMPL,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_DYNCOMPL)/10);
 	setMeasurementData(ALINK_MSMNT_C20C,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_C20C));
 	setMeasurementData(ALINK_MSMNT_RESISTANCE,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_RESISTANCE));
-	if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
+	/*if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
 		setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_MIN_VOL)/10);
-	else
+	else*/
 		setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_MIN_VOL));
 	setMeasurementData(ALINK_MSMNT_ANTEIL_RESP,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_TVE,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE));
@@ -340,9 +341,9 @@ void CInterfaceAcuLink::sendMeasurementDataPSV()
 	setMeasurementData(ALINK_MSMNT_DYNCOMPL,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_DYNCOMPL)/10);
 	setMeasurementData(ALINK_MSMNT_C20C,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_C20C));
 	setMeasurementData(ALINK_MSMNT_RESISTANCE,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_RESISTANCE));
-	if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
+	/*if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
 		setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_MIN_VOL)/10);
-	else
+	else*/
 		setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_MIN_VOL));
 	setMeasurementData(ALINK_MSMNT_ANTEIL_RESP,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_TVE,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE));
@@ -415,9 +416,9 @@ void CInterfaceAcuLink::sendMeasurementDataSIMV()
 	setMeasurementData(ALINK_MSMNT_DYNCOMPL,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_DYNCOMPL)/10);
 	setMeasurementData(ALINK_MSMNT_C20C,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_C20C));
 	setMeasurementData(ALINK_MSMNT_RESISTANCE,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_RESISTANCE));
-	if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
+	/*if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
 		setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_MIN_VOL)/10);
-	else
+	else*/
 		setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_MIN_VOL));
 	setMeasurementData(ALINK_MSMNT_ANTEIL_RESP,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_ANTEIL_RESP));
 	setMeasurementData(ALINK_MSMNT_TVE,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE));
@@ -500,9 +501,9 @@ void CInterfaceAcuLink::sendMeasurementDataSIMVPSV()
 	setMeasurementData(ALINK_MSMNT_DYNCOMPL,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_DYNCOMPL)/10);
 	setMeasurementData(ALINK_MSMNT_C20C,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_C20C));
 	setMeasurementData(ALINK_MSMNT_RESISTANCE,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_RESISTANCE));
-	if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
+	/*if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
 		setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_MIN_VOL)/10);
-	else
+	else*/
 		setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_MIN_VOL));
 	setMeasurementData(ALINK_MSMNT_ANTEIL_RESP,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_ANTEIL_RESP));
 	setMeasurementData(ALINK_MSMNT_TVE,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE));
@@ -582,9 +583,9 @@ void CInterfaceAcuLink::sendMeasurementDataCPAP()
 	setMeasurementData(ALINK_MSMNT_DYNCOMPL,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_DYNCOMPL)/10);
 	setMeasurementData(ALINK_MSMNT_C20C,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_C20C));
 	setMeasurementData(ALINK_MSMNT_RESISTANCE,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_RESISTANCE));
-	if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
+	/*if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
 		setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_MIN_VOL)/10);
-	else
+	else*/
 		setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_MIN_VOL));
 	setMeasurementData(ALINK_MSMNT_ANTEIL_RESP,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_TVE,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE));
@@ -883,9 +884,9 @@ void CInterfaceAcuLink::sendMeasurementDataHFO()
 	setMeasurementData(ALINK_MSMNT_DYNCOMPL,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_C20C,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_RESISTANCE,ALINK_NOTVALID);
-	if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
+	/*if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
 		setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_MIN_VOL)/10);
-	else
+	else*/
 		setMeasurementData(ALINK_MSMNT_MIN_VOL,getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_MIN_VOL));
 	setMeasurementData(ALINK_MSMNT_ANTEIL_RESP,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_TVE,ALINK_NOTVALID);

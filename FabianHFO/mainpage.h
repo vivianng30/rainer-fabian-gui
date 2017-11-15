@@ -13,6 +13,7 @@
 	- bug fixed: graph is synchron now after switching back to main view when graph was frozen in wave view
 	- BIAS FLow: only visible if HFO license is available and biasflow enabled
 	- ventilation menu: manual breath HFO only available if HFO license is available
+	- acuLink: bug in IVOI ALINK_MSMNT_MIN_VOL fixed, exponent is -2 -> acuLink divide the sent value by 10, not Fabian anymore
  @endverbatim
  * 
  * @subsection ver5050 Version 5.0.5.0
