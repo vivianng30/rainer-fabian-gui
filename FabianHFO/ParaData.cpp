@@ -1575,7 +1575,7 @@ void CParaData::SetDataFromMode(eVentMode mode)
 
 			getModel()->getDATAHANDLER()->PARADATA()->SetVGarantPara_IPPV(getModel()->getDATAHANDLER()->PRESET()->GetVGarantPara_IPPV(),false,true);
 
-			getModel()->getDATAHANDLER()->PARADATA()->SetBPMPara_IPPV(GetBPMPara_IPPV(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetBPMPara_IPPV(getModel()->getDATAHANDLER()->PRESET()->GetBPMPara_IPPV(),false,true);
 		}
 		break;
 	case VM_PRE_SIMV:
@@ -1614,8 +1614,8 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			}
 			getModel()->getDATAHANDLER()->PARADATA()->SetVGarantPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetVGarantPara_TRIGGER(),false,true);
 
-			getModel()->getDATAHANDLER()->PARADATA()->SetBPMPara_TRIGGER(GetBPMPara_TRIGGER(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerPara_CONV(GetTriggerPara_CONV(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetBPMPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetBPMPara_TRIGGER(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerPara_CONV(getModel()->getDATAHANDLER()->PRESET()->GetTriggerPara_CONV(),false,true);
 		}
 		break;
 	case VM_PRE_HFO:
@@ -1627,15 +1627,15 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 
-			getModel()->getDATAHANDLER()->PARADATA()->SetFreqRecPara(GetFreqRecPara(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetHFPMeanRecPara(GetHFPMeanRecPara(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetITimeRecPara(GetITimeRecPara(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetHFFlowPara(GetHFFlowPara(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetHFAMPLPara(GetHFAMPLPara(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetHFPMeanPara(GetHFPMeanPara(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetHFAMPLmaxPara(GetHFAMPLmaxPara(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetIERatioParaHFO(GetIERatioParaHFO(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetHFFreqPara(GetHFFreqPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetFreqRecPara(getModel()->getDATAHANDLER()->PRESET()->GetFreqRecPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetHFPMeanRecPara(getModel()->getDATAHANDLER()->PRESET()->GetHFPMeanRecPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetITimeRecPara(getModel()->getDATAHANDLER()->PRESET()->GetITimeRecPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetHFFlowPara(getModel()->getDATAHANDLER()->PRESET()->GetHFFlowPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetHFAMPLPara(getModel()->getDATAHANDLER()->PRESET()->GetHFAMPLPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetHFPMeanPara(getModel()->getDATAHANDLER()->PRESET()->GetHFPMeanPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetHFAMPLmaxPara(getModel()->getDATAHANDLER()->PRESET()->GetHFAMPLmaxPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetIERatioParaHFO(getModel()->getDATAHANDLER()->PRESET()->GetIERatioParaHFO(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetHFFreqPara(getModel()->getDATAHANDLER()->PRESET()->GetHFFreqPara(),false,true);
 		}
 		break;
 	case VM_PRE_PSV:
@@ -1675,10 +1675,10 @@ void CParaData::SetDataFromMode(eVentMode mode)
 
 			getModel()->getDATAHANDLER()->PARADATA()->SetVGarantPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetVGarantPara_TRIGGER(),false,true);
 
-			getModel()->getDATAHANDLER()->PARADATA()->SetPpsvPara(GetPpsvPara(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetITimePara_TRIGGER(GetITimePara_TRIGGER(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetETIMEPara_TRIGGER(GetETIMEPara_TRIGGER(), false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetBPMPara_TRIGGER(GetBPMPara_TRIGGER(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetPpsvPara(getModel()->getDATAHANDLER()->PRESET()->GetPpsvPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetITimePara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetITimePara_TRIGGER(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetETIMEPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetETIMEPara_TRIGGER(), false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetBPMPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetBPMPara_TRIGGER(),false,true);
 		}
 		break;
 	case VM_PRE_CPAP:
@@ -1688,10 +1688,10 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 
-			getModel()->getDATAHANDLER()->PARADATA()->SetFlowminPara(GetFlowminPara(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetCPAPPara(GetCPAPPara(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetPManualCPAPPara(GetPManualCPAPPara(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetBackupPara(GetBackupPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetFlowminPara(getModel()->getDATAHANDLER()->PRESET()->GetFlowminPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetCPAPPara(getModel()->getDATAHANDLER()->PRESET()->GetCPAPPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetPManualCPAPPara(getModel()->getDATAHANDLER()->PRESET()->GetPManualCPAPPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetBackupPara(getModel()->getDATAHANDLER()->PRESET()->GetBackupPara(),false,true);
 		}
 		break;
 	case VM_PRE_NCPAP:
@@ -1701,8 +1701,8 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 
-			getModel()->getDATAHANDLER()->PARADATA()->SetCPAPNMODEPara(GetCPAPNMODEPara(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetPManualNMODEPara(GetPManualNMODEPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetCPAPNMODEPara(getModel()->getDATAHANDLER()->PRESET()->GetCPAPNMODEPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetPManualNMODEPara(getModel()->getDATAHANDLER()->PRESET()->GetPManualNMODEPara(),false,true);
 		}
 		break;
 	case VM_PRE_THERAPIE:
@@ -1711,7 +1711,7 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 
-			getModel()->getDATAHANDLER()->PARADATA()->SetTherapieFLOWPara(GetTherapieFLOWPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetTherapieFLOWPara(getModel()->getDATAHANDLER()->PRESET()->GetTherapieFLOWPara(),false,true);
 		}
 		break;
 	case VM_PRE_DUOPAP:
@@ -1721,12 +1721,12 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 
-			getModel()->getDATAHANDLER()->PARADATA()->SetCPAPNMODEPara(GetCPAPNMODEPara(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetPManualNMODEPara(GetPManualNMODEPara(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerPara_DUOPAP(GetTriggerPara_DUOPAP(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetITimeNMODEPara(GetITimeNMODEPara(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetETIMENMODEPara(GetETIMENMODEPara(),false,true);
-			getModel()->getDATAHANDLER()->PARADATA()->SetBPMNMODEPara(GetBPMNMODEPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetCPAPNMODEPara(getModel()->getDATAHANDLER()->PRESET()->GetCPAPNMODEPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetPManualNMODEPara(getModel()->getDATAHANDLER()->PRESET()->GetPManualNMODEPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerPara_DUOPAP(getModel()->getDATAHANDLER()->PRESET()->GetTriggerPara_DUOPAP(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetITimeNMODEPara(getModel()->getDATAHANDLER()->PRESET()->GetITimeNMODEPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetETIMENMODEPara(getModel()->getDATAHANDLER()->PRESET()->GetETIMENMODEPara(),false,true);
+			getModel()->getDATAHANDLER()->PARADATA()->SetBPMNMODEPara(getModel()->getDATAHANDLER()->PRESET()->GetBPMNMODEPara(),false,true);
 		}
 		break;
 	default:

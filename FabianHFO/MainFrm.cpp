@@ -9117,6 +9117,16 @@ DWORD CMainFrame::CheckOxyCal(void)
 				if(m_bDelayAutoOxyCal)
 					break;
 
+				eStateOfAlarm state1=getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_AIR->getAlarmState();
+				eStateOfAlarm state2=getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_O2->getAlarmState();
+				if(		getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_O2->getAlarmState()==AS_ACTIVE
+					||	getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_AIR->getAlarmState()==AS_ACTIVE)
+				{
+					m_bDelayAutoOxyCal=true;
+					getModel()->SetO2calFlag();
+					break;
+				}
+
 				theApp.getLog()->WriteLine(_T("*** O2 cal time***"));
 				if(	getModel()->getDATAHANDLER()->GetO2SensorState()==OXYSENS_OFF)
 					break;

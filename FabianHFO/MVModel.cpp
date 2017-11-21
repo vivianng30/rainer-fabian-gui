@@ -1320,6 +1320,11 @@ bool CMVModel::IsO2calFlag()
 	return m_bO2calFlag;
 }
 
+void CMVModel::SetO2calFlag()
+{
+	m_bO2calFlag=true;
+}
+
 void CMVModel::DeleteO2calFlag()
 {
 	if(		getALARMHANDLER()->ALARM_SysAl_P_IN_O2->getAlarmState()!=AS_ACTIVE
@@ -1329,8 +1334,7 @@ void CMVModel::DeleteO2calFlag()
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_DELAY_AUTOOXYCAL);
-	}
-	
+	}	
 }
 
 bool CMVModel::IsFlowsensorFlag()
@@ -1625,7 +1629,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 				||	getCONFIG()->GetCurMode()==VM_THERAPIE)
 			{
 				getVIEWHANDLER()->changeViewState(VS_PARA,VSS_GRAPH_SINGLE_LINEGRAPHS);
-				//DeleteO2calFlag();
+				DeleteO2calFlag();
 				//if(AfxGetApp())
 				//	AfxGetApp()->GetMainWnd()->PostMessage(WM_DELAY_AUTOOXYCAL);
 			}

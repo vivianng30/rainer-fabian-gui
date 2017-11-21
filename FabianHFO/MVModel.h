@@ -184,6 +184,7 @@ public:
 	WORD GetLanguageID();
 	void SetLanguageID(WORD id);
 
+	void SetO2calFlag();
 	bool IsO2calFlag();
 	void DeleteO2calFlag();
 	bool IsFlowsensorFlag();

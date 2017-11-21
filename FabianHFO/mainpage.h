@@ -7,6 +7,13 @@
  *
  * @section ver Version history and changelog
  * 
+ * @subsection ver5052 Version 5.0.5.2
+ * @date 2017-11-20
+ * @verbatim
+	- EVO_V_11 - O2 calibration changed, after connection air supply the O2 calibration starts also in NMODE
+	- ParaData: SetDataFromMode changed
+ @endverbatim
+ * 
  * @subsection ver5051 Version 5.0.5.1
  * @date 2017-11-13
  * @verbatim
