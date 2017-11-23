@@ -112,13 +112,16 @@ bool CNumericFieldFREQ::drawData(bool bData, bool bFrames, bool bText, bool bLim
 	}
 
 	if(		getModel()->getVMODEHANDLER()->activeModeIsNCPAP() 
+		&&	false==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
+	{
+		DrawText(hdcMem,_T("--"),-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
+	}
+	else if(		getModel()->getVMODEHANDLER()->activeModeIsNCPAP() 
 		&&	getModel()->getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET 
 		&&	getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
 	{
 		DrawText(hdcMem,_T("--"),-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 	}
-	/*else if(getModel()->getVMODEHANDLER()->activeModeIsDUOPAP() 
-		&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_NCPAP()==MAXRANGE_TRIGGER_OFF)*/
 	else if(getModel()->getVMODEHANDLER()->activeModeIsDUOPAP() 
 		&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP()==MAXRANGE_TRIGGER_OFF) //pro - added
 	{
