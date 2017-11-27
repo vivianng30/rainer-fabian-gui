@@ -1884,32 +1884,6 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 				activeMode=getCONFIG()->GetCurMode();
 			switch(activeMode)
 			{
-			//case VM_DUOPAP:
-			//	{
-			//		if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
-			//		{
-			//			//if(getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET)//pressure trigger
-			//			{
-			//				getDATAHANDLER()->checkTriggerTubeDependency();
-			//			}
-
-			//			Send_VENT_MODE(activeMode);
-			//		}
-			//	}
-			//	break;
-			//case VM_NCPAP:
-			//	{
-			//		//if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
-			//		{
-			//			//if(getDATAHANDLER()->GetTubeSet()!=TUBE_MEDIJET)//pressure trigger
-			//			{
-			//				getDATAHANDLER()->checkTriggerTubeDependency();
-			//			}
-
-			//			Send_VENT_MODE(activeMode);
-			//		}
-			//	}
-			//	break;
 			case VM_PSV:
 				{
 					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
@@ -1919,7 +1893,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 						else
 						{
 							getDATAHANDLER()->checkTriggerTubeDependency();
-							Send_VENT_MODE(activeMode);
+							Send_VENT_MODE(VM_PSV);
 						}
 					}
 				}
@@ -1933,7 +1907,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 						else
 						{
 							getDATAHANDLER()->checkTriggerTubeDependency();
-							Send_VENT_MODE(activeMode);
+							Send_VENT_MODE(VM_SIMVPSV);
 						}
 					}
 				}

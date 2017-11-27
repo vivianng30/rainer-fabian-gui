@@ -13,6 +13,7 @@
 	- EVO_V_11 - O2 calibration changed, after connection air supply the O2 calibration starts also in NMODE
 	- ParaData: SetDataFromMode changed
 	- Numerics: Freq will be diplayed as "--" if NCPAP and no NIVtriggerLicense available
+	- EV_CONTROL_FLOWSENSORSTATE changed (wrong ventmode)
  @endverbatim
  * 
  * @subsection ver5051 Version 5.0.5.1
