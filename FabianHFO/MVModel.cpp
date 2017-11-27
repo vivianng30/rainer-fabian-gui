@@ -1893,7 +1893,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 						else
 						{
 							getDATAHANDLER()->checkTriggerTubeDependency();
-							Send_VENT_MODE(VM_PSV);
+							Send_VENT_MODE(VM_SIPPV);
 						}
 					}
 				}
@@ -1907,7 +1907,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 						else
 						{
 							getDATAHANDLER()->checkTriggerTubeDependency();
-							Send_VENT_MODE(VM_SIMVPSV);
+							Send_VENT_MODE(VM_SIMV);
 						}
 					}
 				}
