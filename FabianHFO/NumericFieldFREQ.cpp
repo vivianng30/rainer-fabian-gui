@@ -122,11 +122,11 @@ bool CNumericFieldFREQ::drawData(bool bData, bool bFrames, bool bText, bool bLim
 	{
 		DrawText(hdcMem,_T("--"),-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 	}
-	else if(getModel()->getVMODEHANDLER()->activeModeIsDUOPAP() 
-		&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP()==MAXRANGE_TRIGGER_OFF) //pro - added
-	{
-		DrawText(hdcMem,_T("--"),-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
-	}
+	//else if(getModel()->getVMODEHANDLER()->activeModeIsDUOPAP() 
+	//	&&	getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP()==MAXRANGE_TRIGGER_OFF) //pro - added
+	//{
+	//	DrawText(hdcMem,_T("--"),-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
+	//}
 	else
 	{
 		wsprintf(psz,_T("%d"),iBPM );

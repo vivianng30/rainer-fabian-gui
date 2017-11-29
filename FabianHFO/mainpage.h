@@ -14,6 +14,7 @@
 	- ParaData: SetDataFromMode changed
 	- Numerics: Freq will be diplayed as "--" if NCPAP and no NIVtriggerLicense available
 	- EV_CONTROL_FLOWSENSORSTATE changed (wrong ventmode)
+	- Freq is displayed in DUOPAP mode even when trigger is off
  @endverbatim
  * 
  * @subsection ver5051 Version 5.0.5.1
