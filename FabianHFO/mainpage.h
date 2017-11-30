@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  * 
+ * @subsection ver5060 Version 5.0.6.0
+ * @date 2017-11-30
+ * @verbatim
+	- Release version
+ @endverbatim
+ * 
  * @subsection ver5052 Version 5.0.5.2
  * @date 2017-11-23
  * @verbatim
