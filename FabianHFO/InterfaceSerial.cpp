@@ -2873,6 +2873,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			tempFlow = tempFlow - (tempFlow * (((tempFlow/1000) * 0.013) - 0.032));
 			m_iM_INSP_FLOW = (int)tempFlow;
 		}
+
 		getModel()->getDATAHANDLER()->SetInspFlowData(m_iM_INSP_FLOW);
 
 		g_evCOM_M_INSP_FLOW.SetEvent();
@@ -2893,6 +2894,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 			tempFlow = tempFlow - (tempFlow * (((tempFlow/1000) * 0.013) - 0.032));
 			m_iM_EXP_FLOW = (int)tempFlow;
 		}
+
 		getModel()->getDATAHANDLER()->SetExpFlowData(m_iM_EXP_FLOW);
 
 		g_evCOM_M_EXP_FLOW.SetEvent();
