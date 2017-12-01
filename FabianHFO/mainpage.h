@@ -11,6 +11,7 @@
  * @date 2017-11-30
  * @verbatim
 	- Release version
+	- calculation of I-Flow/E-FLow in NCPAP/DUOPAP and InfantFlow included
  @endverbatim
  * 
  * @subsection ver5052 Version 5.0.5.2
