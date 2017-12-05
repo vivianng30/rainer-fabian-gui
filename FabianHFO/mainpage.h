@@ -11,6 +11,7 @@
  * @date 2017-12-05
  * @verbatim
 	- Terminal interface for Rotterdam merged
+	- deviceinfo.txt: bug fixed in PDMS protocol 
  @endverbatim
  * 
  * @subsection ver5060 Version 5.0.6.0

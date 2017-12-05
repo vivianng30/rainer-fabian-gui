@@ -977,28 +977,21 @@ void CSubViewTools::OnBnClickedDevInfoToUSB()
 
 		
 		BYTE iPDMSProtocol=getModel()->getCONFIG()->GetPDMSprotocol();
-		if(getModel()->getAcuLink()!=NULL)
-		{
-			if(iPDMSProtocol==ACL_SERIAL_ASCII)
-				szTemp = _T("Serial (no wave data)");
-			else if(iPDMSProtocol==ACL_SERIAL_WAVE)
-				szTemp = _T("Serial (with wave data)");
-			else if(iPDMSProtocol==ACL_ETHERNET_WAVE)
-				szTemp = _T("Ethernet (with wave data)");
-			else if(iPDMSProtocol==ACL_ETHERNET)
-				szTemp = _T("Ethernet (no wave data)");
-			else if(iPDMSProtocol==ACL_SERIAL_IVOI)
-				szTemp = _T("VueLink/IntelliBridge");
-			else
-				szTemp = _T("Terminal");
-		}
+		if(iPDMSProtocol==ACL_SERIAL_ASCII)
+			szTemp = _T("Serial (no wave data)");
+		else if(iPDMSProtocol==ACL_SERIAL_WAVE)
+			szTemp = _T("Serial (with wave data)");
+		else if(iPDMSProtocol==ACL_ETHERNET_WAVE)
+			szTemp = _T("Ethernet (with wave data)");
+		else if(iPDMSProtocol==ACL_ETHERNET)
+			szTemp = _T("Ethernet (no wave data)");
+		else if(iPDMSProtocol==ACL_SERIAL_IVOI)
+			szTemp = _T("VueLink/IntelliBridge");
+		else if(iPDMSProtocol==ACL_TERMINAL)
+			szTemp = _T("Terminal");
 		else
-		{
-			if(iPDMSProtocol==ACL_TERMINAL)
-				szTemp = _T("Terminal");
-			else
-				szTemp = _T("--");
-		}
+			szTemp = _T("--");
+
 		szToFile.Format(_T("- PDMS protocol: %s"), szTemp);
 		lfDeviceInfoFile->WriteLine(szToFile,false);
 

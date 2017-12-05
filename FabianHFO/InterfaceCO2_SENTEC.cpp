@@ -63,7 +63,7 @@ int CInterfaceCO2_SENTEC::Init(BYTE com)
 		return ShowError(GetLastError(), _T("Unable to open COM-port"));
 
 	// Setup the serial port (9600,8N1, which is the default setting)
-	lLastError = Setup(CSerial::EBaud19200,CSerial::EData8,CSerial::EParNone,CSerial::EStop1);
+	lLastError = Setup(CSerial::EBaud115200,CSerial::EData8,CSerial::EParNone,CSerial::EStop1);
 	if (lLastError != ERROR_SUCCESS)
 		return ShowError(GetLastError(), _T("Unable to set COM-port setting"));
 
