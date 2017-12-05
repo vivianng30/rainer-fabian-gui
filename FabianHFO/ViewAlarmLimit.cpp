@@ -3894,6 +3894,7 @@ void CViewAlarmLimit::NotifyEvent(CMVEvent* pEvent)
 }
 void CViewAlarmLimit::NotifyVentModeChanged()
 {
+	DEBUGMSG(TRUE, (TEXT("CViewAlarmLimit::NotifyVentModeChanged()\r\n")));
 	if(m_bExit)
 		return;
 

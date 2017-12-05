@@ -7872,7 +7872,7 @@ void CConfiguration::SetParaDataTrigger_CONV(BYTE iVal)
 	m_iParaDataTrigger_CONV=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CONVENT_16, iVal);
 
-	DEBUGMSG(TRUE, (TEXT("SetParaDataTrigger_CONV %d\r\n"),(int)iVal));
+	//DEBUGMSG(TRUE, (TEXT("SetParaDataTrigger_CONV %d\r\n"),(int)iVal));
 }
 
 BYTE CConfiguration::GetParaDataTrigger_CPAP()
@@ -7884,7 +7884,7 @@ void CConfiguration::SetParaDataTrigger_CPAP(BYTE iVal)
 	m_iParaDataTrigger_CPAP=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CPAP_16, iVal);
 
-	DEBUGMSG(TRUE, (TEXT("SetParaDataTrigger_CPAP %d\r\n"),(int)iVal));
+	//DEBUGMSG(TRUE, (TEXT("SetParaDataTrigger_CPAP %d\r\n"),(int)iVal));
 }
 
 BYTE CConfiguration::GetParaDataTrigger_NCPAP()
@@ -7896,7 +7896,7 @@ void CConfiguration::SetParaDataTrigger_NCPAP(BYTE iVal)
 	m_iParaDataTrigger_NCPAP=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NCPAP_16, iVal);
 
-	DEBUGMSG(TRUE, (TEXT("SetParaDataTrigger_NCPAP %d\r\n"),(int)iVal));
+	//DEBUGMSG(TRUE, (TEXT("SetParaDataTrigger_NCPAP %d\r\n"),(int)iVal));
 }
 
 BYTE CConfiguration::GetParaDataTrigger_DUOPAP()
@@ -7908,7 +7908,7 @@ void CConfiguration::SetParaDataTrigger_DUOPAP(BYTE iVal)
 	m_iParaDataTrigger_DUOPAP=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_DUOPAP_16, iVal);
 
-	DEBUGMSG(TRUE, (TEXT("SetParaDataTrigger_DUOPAP %d\r\n"),(int)iVal));
+	//DEBUGMSG(TRUE, (TEXT("SetParaDataTrigger_DUOPAP %d\r\n"),(int)iVal));
 }
 // **************************************************************************
 // 

@@ -20,10 +20,10 @@
 #include "StdAfx.h"
 #include "InterfaceTerminal.h"
 #include "MVModel.h"
+#include "MVViewHandler.h"
 
 #include "TlsStream.h"
 
-//extern CEvent g_eventTerminalSendData;
 
 CInterfaceTerminal* CInterfaceTerminal::theTerminalInterface=0;
 CList<LPTERMINALMSG, LPTERMINALMSG>  CInterfaceTerminal::MSGSend;
@@ -52,18 +52,8 @@ CInterfaceTerminal::CInterfaceTerminal(void)
 	faSendDataBuf[0]=0x0000;
 	fwSendDataSize=0;
 
-	/*m_pcwtTerminalThread=NULL;
-	m_bDoTerminalThread=false;
-
-	m_hThreadTerminal=INVALID_HANDLE_VALUE;*/
-
-	//m_pcwtTerminalReceiveThread=NULL;
 	m_pcwtTerminalSendThread=NULL;
-
 	m_hThreadTerminalSend=INVALID_HANDLE_VALUE;
-	//m_hThreadTerminalReceive=INVALID_HANDLE_VALUE;
-
-	//m_bDoTerminalReceiveThread=false;
 	m_bDoTerminalSendThread=false;
 
 	m_iCntBuf=0;
@@ -116,6 +106,114 @@ bool CInterfaceTerminal::Init()
 	OpenCOM();
 
 	Write("fabianHFO");
+//#define DUMP_TERMINALCMD
+
+#ifdef DUMP_TERMINALCMD
+	//sendData_Cmd(TERMINAL_GET_MEASUREMENTS_ONCE_BTB);			//0x00
+	//sendData_Cmd(TERMINAL_GET_MEASUREMENTS_CONTINIOUS_BTB);	//0x01
+	//sendData_Cmd(TERMINAL_GET_MEASUREMENTS_ONCE_AVG	);		//0x02
+	//sendData_Cmd(TERMINAL_GET_MEASUREMENTS_CONTINIOUS_AVG);	//0x03
+	//sendData_Cmd(TERMINAL_GET_WAVE_DATA);					//0x04
+	//sendData_Cmd(TERMINAL_GET_VENT_MODE);					//0x05//'O'
+	//sendData_Cmd(TERMINAL_GET_MODE_OPTION1);					//0x06//'R'
+	//sendData_Cmd(TERMINAL_GET_MODE_OPTION2);					//0x07//')'
+	//sendData_Cmd(TERMINAL_GET_VENT_RUNSTATE);					//0x09
+	//sendData_Cmd(TERMINAL_GET_STATE_VLimit);					//0x0A
+	//sendData_Cmd(TERMINAL_GET_STATE_VGarant);					//0x0B
+	//sendData_Cmd(TERMINAL_GET_PARAM_VentRange);				//0x0C
+	//sendData_Cmd(TERMINAL_GET_PARAM_IERatioHFO);				//0x0D
+	//sendData_Cmd(TERMINAL_GET_MANBREATHrunning);				//0x0E
+	//sendData_Cmd(TERMINAL_GET_PressureRiseCtrl);				//0x0F
+	//sendData_Cmd(TERMINAL_GET_PARAM_HFOFreqRec);				//0x10
+	//sendData_Cmd(TERMINAL_GET_PARAM_HFOFlow);					//0x11
+	//sendData_Cmd(TERMINAL_GET_LeakCompensation);				//0x12
+	//sendData_Cmd(TERMINAL_GET_TriggerOption);					//0x13
+	//sendData_Cmd(TERMINAL_GET_FOToscillationState);			//0x14
+	//sendData_Cmd(TERMINAL_GET_PARAM_PINSP);					//0x15
+	//sendData_Cmd(TERMINAL_GET_PARAM_PEEP);						//0x16
+	//sendData_Cmd(TERMINAL_GET_PARAM_PPSV);						//0x17
+	//sendData_Cmd(TERMINAL_GET_PARAM_BPM);						//0x18
+	//sendData_Cmd(TERMINAL_GET_PARAM_HFAmpl);					//0x19
+	//sendData_Cmd(TERMINAL_GET_PARAM_HFAmplMax);				//0x1A
+	//sendData_Cmd(TERMINAL_GET_PARAM_HFFreq);					//0x1B
+	//sendData_Cmd(TERMINAL_GET_PARAM_O2);						//0x1C
+	//sendData_Cmd(TERMINAL_GET_PARAM_IFlow);					//0x1D
+	//sendData_Cmd(TERMINAL_GET_PARAM_EFlow);					//0x1E
+	//sendData_Cmd(TERMINAL_GET_PARAM_Risetime);					//0x1F
+	//sendData_Cmd(TERMINAL_GET_PARAM_ITime);					//0x20
+	//sendData_Cmd(TERMINAL_GET_PARAM_ETime);					//0x21
+	//sendData_Cmd(TERMINAL_GET_PARAM_HFPMean);					//0x22
+	//sendData_Cmd(TERMINAL_GET_PARAM_HFPMeanRec);				//0x23
+	//sendData_Cmd(TERMINAL_GET_PARAM_VLimit);					//0x24
+	//sendData_Cmd(TERMINAL_GET_PARAM_VGarant);					//0x25
+	//sendData_Cmd(TERMINAL_GET_PARAM_AbortCriterionPSV);		//0x26
+	//sendData_Cmd(TERMINAL_GET_PARAM_TherapieFlow);				//0x27
+	//sendData_Cmd(TERMINAL_GET_PARAM_Trigger);					//0x28
+	//sendData_Cmd(TERMINAL_GET_PARAM_Flowmin);					//0x29
+	//sendData_Cmd(TERMINAL_GET_PARAM_CPAP);						//0x2A
+	//sendData_Cmd(TERMINAL_GET_PARAM_PManual);					//0x2B
+	//sendData_Cmd(TERMINAL_GET_PARAM_Backup);					//0x2C
+	//sendData_Cmd(TERMINAL_GET_PARAM_ITimeRec);					//0x2D
+	//sendData_Cmd(TERMINAL_GET_PARAM_ETIMERec);					//0x2E
+	//sendData_Cmd(TERMINAL_GET_PARAM_SPO2LOW);					//0x2F
+	//sendData_Cmd(TERMINAL_GET_PARAM_SPO2HIGH);					//0x30
+	//sendData_Cmd(TERMINAL_GET_PARAM_FIO2LOW);					//0x31
+	//sendData_Cmd(TERMINAL_GET_PARAM_FIO2HIGH);					//0x32
+	//sendData_Cmd(TERMINAL_GET_STATE_PRICO);						//0x33
+
+	//sendData_Cmd(TERMINAL_STOP_CONTINIOUS_MEASUREMENTS);		//0x50
+	//sendData_Cmd(TERMINAL_STOP_WAVE_DATA);						//0x51
+	
+	//sendData_BYTE(TERMINAL_SET_VENT_MODE, 1);						//0x52
+	//sendData_BYTE(TERMINAL_SET_VENT_MODE, 2);
+	//sendData_BYTE(TERMINAL_SET_VENT_MODE, 8);
+	//sendData_BYTE(TERMINAL_SET_VENT_MODE, 9);
+
+	//sendData_BYTE(TERMINAL_SET_VENT_RUNSTATE, xxx);				//0x55
+	//sendData_BYTE(TERMINAL_SET_STATE_VLimit, xxx);				//0x56
+	//sendData_BYTE(TERMINAL_SET_STATE_VGarant, 1);				//0x57
+	//sendData_BYTE(TERMINAL_SET_PARAM_VentRange, xxx);			//0x58
+	//sendData_BYTE(TERMINAL_SET_PARAM_IERatioHFO, xxx);			//0x59
+	//sendData_BYTE(TERMINAL_SET_MANBREATHrunning, xxx);			//0x5A
+	//sendData_BYTE(TERMINAL_SET_PressureRiseCtrl, xxx);			//0x5B
+	//sendData_SHORT(TERMINAL_SET_PARAM_HFOFreqRec, xxx);			//0x5C
+	//sendData_SHORT(TERMINAL_SET_PARAM_HFOFlow, xxx);				//0x5D
+	//sendData_BYTE(TERMINAL_SET_LeakCompensation, xxx);			//0x5E
+	//sendData_SHORT(TERMINAL_SET_PARAM_PINSP, 200);				//0x60
+	//sendData_SHORT(TERMINAL_SET_PARAM_PEEP, xxx);					//0x61
+	//sendData_SHORT(TERMINAL_SET_PARAM_PPSV, xxx);					//0x62
+	//sendData_SHORT(TERMINAL_SET_PARAM_BPM, xxx);					//0x63
+	//sendData_SHORT(TERMINAL_SET_PARAM_HFAmpl, xxx);				//0x64
+	//sendData_SHORT(TERMINAL_SET_PARAM_HFAmplMax, xxx);			//0x65
+	//sendData_SHORT(TERMINAL_SET_PARAM_HFFreq, xxx);				//0x66
+	//sendData_BYTE(TERMINAL_SET_PARAM_O2	, xxx);				//0x67
+	//sendData_SHORT(TERMINAL_SET_PARAM_IFlow, xxx);				//0x68
+	//sendData_SHORT(TERMINAL_SET_PARAM_EFlow, xxx);				//0x6A
+	//sendData_SHORT(TERMINAL_SET_PARAM_RiseTime, xxx);				//0x6B
+	//sendData_SHORT(TERMINAL_SET_PARAM_ITime	, xxx);			//0x6C
+	//sendData_SHORT(TERMINAL_SET_PARAM_ETime, xxx);				//0x6D
+	//sendData_SHORT(TERMINAL_SET_PARAM_HFPMean, xxx);				//0x6E
+	//sendData_SHORT(TERMINAL_SET_PARAM_HFPMeanRec, xxx);			//0x6F
+	//sendData_SHORT(TERMINAL_SET_PARAM_VLimit, xxx);				//0x70
+	//sendData_SHORT(TERMINAL_SET_PARAM_VGarant, xxx);				//0x71
+	//sendData_BYTE(TERMINAL_SET_PARAM_AbortCriterionPSV, xxx);	//0x72
+	//sendData_SHORT(TERMINAL_SET_PARAM_TherapieFlow, xxx);			//0x73
+	//sendData_BYTE(TERMINAL_SET_PARAM_Trigger, xxx);				//0x74
+	//sendData_SHORT(TERMINAL_SET_PARAM_Flowmin, xxx);				//0x55
+	//sendData_SHORT(TERMINAL_SET_PARAM_CPAP, xxx);					//0x76
+	//sendData_SHORT(TERMINAL_SET_PARAM_PManual, xxx);				//0x77
+	//sendData_BYTE(TERMINAL_SET_PARAM_Backup, xxx);				//0x78
+	//sendData_SHORT(TERMINAL_SET_PARAM_ITimeRec, xxx);				//0x79
+	//sendData_BYTE(TERMINAL_SET_PARAM_O2_FLUSH, xxx);				//0x7A
+	//sendData_BYTE(TERMINAL_SET_PARAM_SPO2LOW, xxx);				//0x7A
+	//sendData_BYTE(TERMINAL_SET_PARAM_SPO2HIGH, xxx);				//0x7B
+	//sendData_BYTE(TERMINAL_SET_PARAM_FIO2LOW, xxx);				//0x7C
+	//sendData_BYTE(TERMINAL_SET_PARAM_FIO2HIGH, xxx);				//0x7D
+	//sendData_BYTE(TERMINAL_SET_STATE_PRICO, xxx);				//0x7E
+	
+	//sendData_Cmd(TERMINAL_GET_MEASUREMENTS_CONTINIOUS_AVG);
+
+#endif
 
 	return 0;
 
@@ -170,15 +268,17 @@ bool CInterfaceTerminal::OpenCOM()
 
 	if (lLastError != ERROR_SUCCESS)
 	{
-		if(ERROR_ALREADY_INITIALIZED==lLastError)
+		/*if(ERROR_ALREADY_INITIALIZED==lLastError)
 		{
 			
-		}
+		}*/
 		return bRes;
 	}
 
 	// Setup the serial port (9600,8N1, which is the default setting)
-	lLastError = Setup(CSerial::EBaud115200,CSerial::EData8,CSerial::EParNone,CSerial::EStop1);
+	//lLastError = Setup(CSerial::EBaud115200,CSerial::EData8,CSerial::EParNone,CSerial::EStop1);
+	//lLastError = Setup(CSerial::EBaud256000,CSerial::EData8,CSerial::EParNone,CSerial::EStop1);
+	lLastError = Setup(CSerial::EBaud230400,CSerial::EData8,CSerial::EParNone,CSerial::EStop1);
 	if (lLastError != ERROR_SUCCESS)
 	{
 		DEBUGMSG(TRUE, (TEXT("OpenCOM Unable to set COM-port setting\r\n")));
@@ -194,11 +294,9 @@ bool CInterfaceTerminal::OpenCOM()
 
 	if(bRes)
 	{
-		StartListener();
-		
+		StartListener();	
 	}
 	return bRes;
-
 }
 
 
@@ -207,8 +305,6 @@ bool CInterfaceTerminal::OpenCOM()
 //**************************************************************************/
 void CInterfaceTerminal::StartTerminalThread( void )
 {
-	
-
 	m_bDoTerminalSendThread=true;
 
 	if(m_pcwtTerminalSendThread!=NULL)
@@ -234,14 +330,10 @@ void CInterfaceTerminal::StartTerminalThread( void )
 //**************************************************************************/
 void CInterfaceTerminal::StopTerminalThread( void )
 {
-
-
 	if(m_bDoTerminalSendThread)
 	{
 		m_bDoTerminalSendThread=false;
 
-		//g_eventTerminalSendData.SetEvent();
-		
 		if (WaitForSingleObject(m_pcwtTerminalSendThread->m_hThread,2000) == WAIT_TIMEOUT)
 		{
 			theApp.getLog()->WriteLine(_T("#HFO:0213"));
@@ -263,135 +355,133 @@ void CInterfaceTerminal::OnEvent(EEvent eEvent, EError eError)
 	//DATA byte 0 ... DATA byte n - data bytes 0 thru n
 	//CKS: checksum, is computed by adding the data bytes using unsigned modulo 256 arithmetic, beginning with NBF,CMD,DATAbyte 0...DATAbyte n
 
-	//WORD i;
-	//BYTE c;
-	//// Handle data receive event
-	//if (eEvent & CSerial::EEventRecv)
-	//{
-	//	do
-	//	{
-	//		// Read data from the COM-port
-	//		Read(faRecvBuf, sizeof(faRecvBuf)-1,&fdwRecvBufLen);
+	WORD i;
+	BYTE c;
+	// Handle data receive event
+	if (eEvent & CSerial::EEventRecv)
+	{
+		do
+		{
+			// Read data from the COM-port
+			Read(faRecvBuf, sizeof(faRecvBuf)-1,&fdwRecvBufLen);
 
-	//		for (i = 0; i < fdwRecvBufLen; i++)
-	//		{
-	//			c = faRecvBuf[i];
-	//			
-	//			switch (feRecvState)
-	//			{
-	//			case TERM_STATE_SOM:
+			for (i = 0; i < fdwRecvBufLen; i++)
+			{
+				c = faRecvBuf[i];
+				
+				switch (feRecvState)
+				{
+				case TERM_STATE_SOM:
 
-	//				fwRecvDataCnt=0;
-	//				fwCalcChkSum = 0;
-	//				fwReadChkSum=0;
-	//				fwRecvDataSize=0;
-	//				fwRecvDataCode=0;
-	//				fwRecvDataBufCnt=0;
+					fwRecvDataCnt=0;
+					fwCalcChkSum = 0;
+					fwReadChkSum=0;
+					fwRecvDataSize=0;
+					fwRecvDataCode=0;
+					fwRecvDataBufCnt=0;
 
-	//				switch (faRecvBuf[i])
-	//				{
-	//				case TERM_MSG_SOM:
-	//					//feRecvState = TERM_STATE_DATA_SIZE;
-	//					feRecvState = TERM_STATE_DATA_SIZE;
-	//					//DEBUGMSG(TRUE, (TEXT("TERM_MSG_SOM\r\n")));
-	//					break;
+					switch (faRecvBuf[i])
+					{
+					case TERM_MSG_SOM:
+						feRecvState = TERM_STATE_DATA_SIZE;
+						//DEBUGMSG(TRUE, (TEXT("TERM_MSG_SOM\r\n")));
+						break;
 
-	//				default:
-	//					// forget the rest
-	//					feRecvState = TERM_STATE_SOM;
-	//					DEBUGMSG(TRUE, (TEXT("OnEvent5\r\n")));
-	//					return;
-	//				} // switch (faRecvBuf[i])
-	//				break;
+					default:
+						// forget the rest
+						feRecvState = TERM_STATE_SOM;
+						DEBUGMSG(TRUE, (TEXT("OnEvent5\r\n")));
+						return;
+					} // switch (faRecvBuf[i])
+					break;
 
-	//			case TERM_STATE_DATA_SIZE:
+				case TERM_STATE_DATA_SIZE:
 
-	//				fwCalcChkSum += c;
-	//				fwRecvDataSize = c;
-	//				feRecvState = TERM_STATE_CODE;
-	//				//DEBUGMSG(TRUE, (TEXT("TERM_STATE_DATA_SIZE\r\n")));
-	//				break;
+					fwCalcChkSum += c;
+					fwRecvDataSize = c;
+					feRecvState = TERM_STATE_CODE;
+					//DEBUGMSG(TRUE, (TEXT("TERM_STATE_DATA_SIZE\r\n")));
+					break;
 
-	//			case TERM_STATE_CODE:
-	//				
-	//				fwCalcChkSum += c;
-	//				fwRecvDataCode = c;
-	//				fwRecvDataCnt++;
-	//				if(fwRecvDataSize==2)
-	//				{
-	//					feRecvState = TERM_STATE_CHKSUM;
-	//					//DEBUGMSG(TRUE, (TEXT("TERM_STATE_CODE size==2\r\n")));
-	//				}
-	//				else
-	//				{
-	//					feRecvState = TERM_STATE_DATA;
-	//					//DEBUGMSG(TRUE, (TEXT("TERM_STATE_CODE\r\n")));
-	//				}
-	//				
-	//				
-	//				break;
+				case TERM_STATE_CODE:
+					
+					fwCalcChkSum += c;
+					fwRecvDataCode = c;
+					fwRecvDataCnt++;
+					if(fwRecvDataSize==2)
+					{
+						feRecvState = TERM_STATE_CHKSUM;
+						//DEBUGMSG(TRUE, (TEXT("TERM_STATE_CODE size==2\r\n")));
+					}
+					else
+					{
+						feRecvState = TERM_STATE_DATA;
+						//DEBUGMSG(TRUE, (TEXT("TERM_STATE_CODE\r\n")));
+					}
+					
+					break;
 
-	//			case TERM_STATE_DATA:
+				case TERM_STATE_DATA:
 
-	//				//DEBUGMSG(TRUE, (TEXT("TERM_STATE_DATA\r\n")));
-	//				fwCalcChkSum += c;
-	//				faDataBuf[fwRecvDataBufCnt] = c;
-	//				fwRecvDataBufCnt++;
-	//				fwRecvDataCnt++;
-	//				feRecvState = TERM_STATE_DATA;
+					//DEBUGMSG(TRUE, (TEXT("TERM_STATE_DATA\r\n")));
+					fwCalcChkSum += c;
+					faDataBuf[fwRecvDataBufCnt] = c;
+					fwRecvDataBufCnt++;
+					fwRecvDataCnt++;
+					feRecvState = TERM_STATE_DATA;
 
-	//				if(fwRecvDataCnt>=(fwRecvDataSize-1))
-	//					feRecvState = TERM_STATE_CHKSUM;
+					if(fwRecvDataCnt>=(fwRecvDataSize-1))
+						feRecvState = TERM_STATE_CHKSUM;
 
-	//				break;
+					break;
 
 
-	//			/*case TERM_STATE_DATA1:
+				/*case TERM_STATE_DATA1:
 
-	//				fwCalcChkSum += c;
-	//				faDataBuf[0] = c;
-	//				fwDataCnt++;
-	//				feRecvState = TERM_STATE_DATA2;
+					fwCalcChkSum += c;
+					faDataBuf[0] = c;
+					fwDataCnt++;
+					feRecvState = TERM_STATE_DATA2;
 
-	//				break;
+					break;
 
-	//			case TERM_STATE_DATA2:
+				case TERM_STATE_DATA2:
 
-	//				fwCalcChkSum += c;
-	//				faDataBuf[1] = c;
-	//				fwDataCnt++;
+					fwCalcChkSum += c;
+					faDataBuf[1] = c;
+					fwDataCnt++;
 
-	//				feRecvState = TERM_STATE_CHKSUM;
+					feRecvState = TERM_STATE_CHKSUM;
 
-	//				break;*/
+					break;*/
 
-	//			case TERM_STATE_CHKSUM:
+				case TERM_STATE_CHKSUM:
 
-	//				//DEBUGMSG(TRUE, (TEXT("TERM_STATE_CHKSUM\r\n")));
-	//				fwReadChkSum = c;
-	//				if(fwReadChkSum == fwCalcChkSum)
-	//				{
-	//					//DEBUGMSG(TRUE, (TEXT("checksum ok\r\n")));
-	//					//TRACE(_T("checksum ok \n"));
-	//					this->PerformMsg();
-	//				}
-	//				else
-	//				{
-	//					//checksum error
-	//					DEBUGMSG(TRUE, (TEXT("checksum error\r\n")));
-	//				}
+					//DEBUGMSG(TRUE, (TEXT("TERM_STATE_CHKSUM\r\n")));
+					fwReadChkSum = c;
+					if(fwReadChkSum == fwCalcChkSum)
+					{
+						//DEBUGMSG(TRUE, (TEXT("checksum ok\r\n")));
+						//TRACE(_T("checksum ok \n"));
+						this->PerformMsg();
+					}
+					else
+					{
+						//checksum error
+						DEBUGMSG(TRUE, (TEXT("checksum error\r\n")));
+					}
 
-	//				feRecvState = TERM_STATE_SOM;
-	//				break;
+					feRecvState = TERM_STATE_SOM;
+					break;
 
-	//			default:
-	//				return;
-	//			} // switch (feRecvState)
-	//		} // for i
-	//	}
-	//	while (fdwRecvBufLen > 0);
+				default:
+					return;
+				} // switch (feRecvState)
+			} // for i
+		}
+		while (fdwRecvBufLen > 0);
 
-	//}
+	}
 
 	return;
 }
@@ -401,11 +491,10 @@ bool CInterfaceTerminal::PerformMsg()
 	CString szError=_T("");
 	bool bNewData=false;
 	
-	
 	switch(fwRecvDataCode)
 	{
 		//slave messages
-		case TERM_GET_MEASUREMENTS_ONCE_BTB:
+		case TERMINAL_GET_MEASUREMENTS_ONCE_BTB:
 			{
 				DEBUGMSG(TRUE, (TEXT("TERM_GET_MEASUREMENTS_ONCE_BTB\r\n")));
 				m_bSendContiniousMeasurements=false;
@@ -415,7 +504,7 @@ bool CInterfaceTerminal::PerformMsg()
 				
 			}
 			break;
-		case TERM_GET_MEASUREMENTS_CONTINIOUS_BTB:
+		case TERMINAL_GET_MEASUREMENTS_CONTINIOUS_BTB:
 			{
 				DEBUGMSG(TRUE, (TEXT("TERM_GET_MEASUREMENTS_CONTINIOUS_BTB\r\n")));
 				m_bMEASUREMENTS_AVG=false;
@@ -424,7 +513,7 @@ bool CInterfaceTerminal::PerformMsg()
 				m_bSendContiniousMeasurements=true;
 			}
 			break;
-		case TERM_GET_MEASUREMENTS_ONCE_AVG:
+		case TERMINAL_GET_MEASUREMENTS_ONCE_AVG:
 			{
 				DEBUGMSG(TRUE, (TEXT("TERM_GET_MEASUREMENTS_ONCE_AVG\r\n")));
 				m_bSendContiniousMeasurements=false;
@@ -433,7 +522,7 @@ bool CInterfaceTerminal::PerformMsg()
 				m_bMEASUREMENTS_AVG=false;
 			}
 			break;
-		case TERM_GET_MEASUREMENTS_CONTINIOUS_AVG:
+		case TERMINAL_GET_MEASUREMENTS_CONTINIOUS_AVG:
 			{
 				DEBUGMSG(TRUE, (TEXT("TERM_GET_MEASUREMENTS_CONTINIOUS_AVG\r\n")));
 				m_bMEASUREMENTS_BTB=false;
@@ -442,7 +531,7 @@ bool CInterfaceTerminal::PerformMsg()
 				m_bSendContiniousMeasurements=true;
 			}
 			break;
-		case TERM_STOP_CONTINIOUS_MEASUREMENTS:
+		case TERMINAL_STOP_CONTINIOUS_MEASUREMENTS:
 			{
 				DEBUGMSG(TRUE, (TEXT("TERM_STOP_CONTINIOUS_MEASUREMENTS\r\n")));
 				m_bSendContiniousMeasurements=false;
@@ -450,7 +539,7 @@ bool CInterfaceTerminal::PerformMsg()
 				m_bMEASUREMENTS_AVG=false;
 			}
 			break;
-		case TERM_GET_WAVE_DATA:
+		case TERMINAL_GET_WAVE_DATA:
 			{
 				DEBUGMSG(TRUE, (TEXT("TERM_GET_WAVE_DATA\r\n")));
 				EnterCriticalSection(&csEnableSend);
@@ -458,7 +547,7 @@ bool CInterfaceTerminal::PerformMsg()
 				LeaveCriticalSection(&csEnableSend);
 			}
 			break;
-		case TERM_STOP_WAVE_DATA:
+		case TERMINAL_STOP_WAVE_DATA:
 			{
 				DEBUGMSG(TRUE, (TEXT("TERM_STOP_WAVE_DATA\r\n")));
 				EnterCriticalSection(&csEnableSend);
@@ -466,7 +555,7 @@ bool CInterfaceTerminal::PerformMsg()
 				LeaveCriticalSection(&csEnableSend);
 			}
 			break;
-		case TERM_GET_VENT_MODE:
+		case TERMINAL_GET_VENT_MODE:
 			{
 				DEBUGMSG(TRUE, (TEXT("TERM_GET_VENT_MODE\r\n")));
 				eVentMode eActiveVentMode;
@@ -475,221 +564,672 @@ bool CInterfaceTerminal::PerformMsg()
 				else
 					eActiveVentMode=getModel()->getCONFIG()->GetPrevMode();
 
-				sendData_BYTE(TERM_VENT_MODE, (BYTE)eActiveVentMode);
+				sendData_BYTE(TERMINAL_VENT_MODE, (BYTE)eActiveVentMode);
 			}
 			break;
-		case TERM_GET_MODE_OPTION:
+		case TERMINAL_SET_VENT_MODE:
 			{
-				sendModeOption();
+				DEBUGMSG(TRUE, (TEXT("TERM_SET_VENT_MODE1\r\n")));
+				BYTE state=faDataBuf[0];
+
+				/*if(getModel()->getVIEWHANDLER()->getViewState()!=VS_PARA)
+				{
+					getModel()->getVIEWHANDLER()->changeViewState(VS_PARA,VSS_GRAPH_SINGLE_LINEGRAPHS);
+					Sleep(400);
+				}*/
+				setVentMode(state);
+				/*Sleep(400);
+				setVentMode(state);xxx*/
 			}
 			break;
-		case TERM_GET_MODE_OPTION2:
+		case TERMINAL_GET_MODE_OPTION1:
+			{
+				sendModeOption1();
+			}
+			break;
+		case TERMINAL_GET_VENT_RUNSTATE:
+			{
+				if(VENT_STOPPED==getModel()->GetVentRunState())//return 0
+				{
+					sendData_BYTE(TERMINAL_VENT_RUNSTATE, 0);
+				}
+				else if(VENT_RUNNING==getModel()->GetVentRunState())//return 1
+				{
+					sendData_BYTE(TERMINAL_VENT_RUNSTATE, 1);
+				}
+				else//VENT_STANDBY, return 2
+				{
+					sendData_BYTE(TERMINAL_VENT_RUNSTATE, 2);
+				}
+			}
+			break;
+		case TERMINAL_SET_VENT_RUNSTATE:
+			{
+				BYTE iVal=faDataBuf[0];
+				setVent_RunState(iVal);
+			}
+			break;
+		case TERMINAL_GET_STATE_VGarant:
+			{
+				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+				{
+					if(getModel()->getDATAHANDLER()->PARADATA()->IsVGarantStateOn_IPPV())
+						sendData_BYTE(TERMINAL_STATE_VGarant, 1);
+					else
+						sendData_BYTE(TERMINAL_STATE_VGarant, 0);
+				}
+				else
+				{
+					if(getModel()->getDATAHANDLER()->PARADATA()->IsVGarantStateOn_TRIGGER())
+						sendData_BYTE(TERMINAL_STATE_VGarant, 1);
+					else
+						sendData_BYTE(TERMINAL_STATE_VGarant, 0);
+				}
+			}
+			break;
+		case TERMINAL_SET_STATE_VGarant:
+			{
+				BYTE iVal=faDataBuf[0];
+				setState_VGarant(iVal);
+			}
+			break;
+		case TERMINAL_GET_STATE_VLimit:
+			{
+				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+				{
+					if(getModel()->getDATAHANDLER()->PARADATA()->IsVLimitParamOn_IPPV())
+						sendData_BYTE(TERMINAL_STATE_VLimit, 1);
+					else
+						sendData_BYTE(TERMINAL_STATE_VLimit, 0);
+				}
+				else
+				{
+					if(getModel()->getDATAHANDLER()->PARADATA()->IsVLimitParamOn_TRIGGER())
+						sendData_BYTE(TERMINAL_STATE_VLimit, 1);
+					else
+						sendData_BYTE(TERMINAL_STATE_VLimit, 0);
+				}
+			}
+			break;
+		case TERMINAL_SET_STATE_VLimit:
+			{
+				BYTE iVal=faDataBuf[0];
+				setState_VLimit(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_VentRange:
+			{
+				sendData_BYTE(TERMINAL_PARAM_VentRange, (BYTE)getModel()->getCONFIG()->GetVentRange());
+			}
+			break;
+		case TERMINAL_SET_PARAM_VentRange:
+			{
+				BYTE state=faDataBuf[0];
+				setVentRange(state);
+			}
+			break;
+		case TERMINAL_GET_PARAM_IERatioHFO:
+			{
+				sendData_BYTE(TERMINAL_PARAM_IERatioHFO, (BYTE)getModel()->getDATAHANDLER()->GetCurrentIERatioParaHFO());//RIE_1_3=0, RIE_1_2=1,RIE_1_1=2
+			}
+			break;
+		case TERMINAL_SET_PARAM_IERatioHFO:
+			{
+				BYTE state=faDataBuf[0];
+				setParam_IERatioHFO(state);
+			}
+			break;
+		case TERMINAL_GET_MANBREATHrunning:
+			{
+				if(getModel()->isMANBREATHrunning())//0=false, 1=true
+					sendData_BYTE(TERMINAL_MANBREATHrunning, 1);
+				else
+					sendData_BYTE(TERMINAL_MANBREATHrunning, 0);
+			}
+			break;
+		case TERMINAL_SET_MANBREATHrunning:
+			{
+				BYTE state=faDataBuf[0];
+				set_MANBREATHrunning(state);
+			}
+			break;
+		case TERMINAL_GET_MODE_OPTION2:
 			{
 				sendModeOption2();
 			}
 			break;
-		/*case TERM_GET_HW_CONFIG:
+		case TERMINAL_GET_PressureRiseCtrl:
 			{
-				sendData_SHORT(TERM_HW_CONFIG, (SHORT)getModel()->getDATAHANDLER()->getHWconfig());
+				eCurveForm form = getModel()->getCONFIG()->GetCurPressureRiseCtrl();
+
+				switch(form)
+				{
+				case CURVE_IFLOW:
+					{
+						sendData_BYTE(TERMINAL_PressureRiseCtrl, 0);
+					}
+					break;
+				case CURVE_LINEAR:
+					{
+						sendData_BYTE(TERMINAL_PressureRiseCtrl, 1);
+					}
+					break;
+				case CURVE_AUTOFLOW: 
+					{
+						sendData_BYTE(TERMINAL_PressureRiseCtrl, 2);
+					}
+					break;
+				}
+			}
+			break;
+		case TERMINAL_SET_PressureRiseCtrl:
+			{
+				BYTE state=faDataBuf[0];
+				set_PressureRiseCtrl(state);
+			}
+			break;
+		case TERMINAL_GET_PARAM_HFOFreqRec:
+			{
+				if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
+				{
+					sendData_SHORT(TERMINAL_PARAM_HFOFreqRec, (SHORT)getModel()->getDATAHANDLER()->GetCurrentFreqRecPara());
+				}
+				else
+				{
+					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+				}
+				
+			}
+			break;
+		case TERMINAL_SET_PARAM_HFOFreqRec:
+			{
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_HFOFreqRec(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_HFOFlow:
+			{
+				if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
+				{
+					sendData_SHORT(TERMINAL_PARAM_HFOFlow, (SHORT)getModel()->getDATAHANDLER()->GetCurrentHFFlowPara());
+				}
+				else
+				{
+					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+				}
+			}
+			break;
+		case TERMINAL_SET_PARAM_HFOFlow:
+			{
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_HFOFlow(iVal);
+			}
+			break;
+		case TERMINAL_GET_LeakCompensation:
+			{
+				eLeakCompensation eLeakCompOff=getModel()->getCONFIG()->getLeakCompensation();
+				switch(eLeakCompOff)
+				{
+				case LC_LOW:
+					{
+						sendData_BYTE(TERMINAL_LeakCompensation, 0);
+					}
+					break;
+				case LC_MIDDLE:
+					{
+						sendData_BYTE(TERMINAL_LeakCompensation, 1);
+					}
+					break;
+				case LC_HIGH:
+					{
+						sendData_BYTE(TERMINAL_LeakCompensation, 2);
+					}
+					break;
+				}
+			}
+			break;
+		case TERMINAL_SET_LeakCompensation:
+			{
+				BYTE iVal=faDataBuf[0];
+				setLeakCompensation(iVal);
+			}
+			break;
+		case TERMINAL_GET_TriggerOption:
+			{
+				eTriggereType trigger = TRIGGER_FLOW;
+				if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
+					||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
+				{
+					trigger=getModel()->getDATAHANDLER()->getTriggerOptionDUOPAP();
+				}
+				else if(	getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
+					||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_NCPAP)
+				{
+					trigger=getModel()->getDATAHANDLER()->getTriggerOptionNCPAP();
+				}
+				else
+				{
+					trigger=getModel()->getDATAHANDLER()->getTriggerOptionCONV();
+				}
+				switch(trigger)
+				{
+				case TRIGGER_VOLUME:
+					{
+						sendData_BYTE(TERMINAL_TriggerOption, 0);
+					}
+					break;
+				case TRIGGER_FLOW:
+					{
+						sendData_BYTE(TERMINAL_TriggerOption, 1);
+					}
+					break;
+				case TRIGGER_PRESSURE:
+					{
+						sendData_BYTE(TERMINAL_TriggerOption, 2);
+					}
+					break;
+				}
+			}
+			break;
+		/*case TERMINAL_SET_TriggerOption:
+			{
+				BYTE iVal=faDataBuf[0];
+				setTriggerOption(iVal);
 			}
 			break;*/
-		case TERM_GET_PARAM_IFlow:
+		case TERMINAL_GET_FOToscillationState:
+			{
+				if(true==getModel()->getDATAHANDLER()->getFOToscillationState())
+				{
+					sendData_BYTE(TERMINAL_FOToscillationState, 1);
+				}
+				else
+				{
+					sendData_BYTE(TERMINAL_FOToscillationState, 0);
+				}
+			}
+			break;
+		case TERMINAL_GET_PARAM_PINSP:
+			{
+				sendData_SHORT(TERMINAL_PARAM_PINSP, (SHORT)getModel()->getDATAHANDLER()->GetActiveModePINSPPara());
+			}
+			break;
+		case TERMINAL_SET_PARAM_PINSP:
+			{
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_PINSP(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_PEEP:
 			{
 				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-					sendData_SHORT(TERM_PARAM_IFlow, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetIFlowPara_IPPV());
+					sendData_SHORT(TERMINAL_PARAM_PEEP, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_IPPV());
 				else
-					sendData_SHORT(TERM_PARAM_IFlow, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetIFlowPara_TRIGGER());
+					sendData_SHORT(TERMINAL_PARAM_PEEP, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_TRIGGER());
 			}
 			break;
-		case TERM_GET_PARAM_EFlow:
+		case TERMINAL_SET_PARAM_PEEP:
 			{
-				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-					sendData_SHORT(TERM_PARAM_EFlow, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWPara_IPPV());
-				else
-					sendData_SHORT(TERM_PARAM_EFlow, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWPara_TRIGGER());
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_PEEP(iVal);
 			}
 			break;
-		case TERM_GET_PARAM_TherapieFlow:
+		case TERMINAL_GET_PARAM_PPSV:
 			{
-				sendData_SHORT(TERM_PARAM_TherapieFlow, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetTherapieFLOWPara());
+				sendData_SHORT(TERMINAL_PARAM_PPSV, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetPpsvPara());
 			}
 			break;
-		case TERM_GET_PARAM_Risetime:
+		case TERMINAL_SET_PARAM_PPSV:
 			{
-				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-					sendData_SHORT(TERM_PARAM_Risetime, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetRisetimePara_IPPV());
-				else
-					sendData_SHORT(TERM_PARAM_Risetime, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetRisetimePara_TRIGGER());
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_PPSV(iVal);
 			}
 			break;
-		case TERM_GET_PARAM_PEEP:
+		case TERMINAL_GET_PARAM_BPM:
 			{
-				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-					sendData_SHORT(TERM_PARAM_PEEP, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_IPPV());
-				else
-					sendData_SHORT(TERM_PARAM_PEEP, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_TRIGGER());
+				sendData_SHORT(TERMINAL_PARAM_BPM, (SHORT)getModel()->getDATAHANDLER()->GetCurrentITimePara());
 			}
 			break;
-		case TERM_GET_PARAM_PINSP:
+		case TERMINAL_SET_PARAM_BPM:
 			{
-				sendData_SHORT(TERM_PARAM_PINSP, (SHORT)getModel()->getDATAHANDLER()->GetActiveModePINSPPara());//newVG
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_BPM(iVal);
 			}
 			break;
-		case TERM_GET_PARAM_ITime:
+		case TERMINAL_GET_PARAM_HFAmpl:
 			{
-				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-					sendData_SHORT(TERM_PARAM_ITime, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetITimePara_IPPV());
-				else
-					sendData_SHORT(TERM_PARAM_ITime, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetITimePara_TRIGGER());
+				WORD iHFAmpl=0;
+				iHFAmpl=(int)getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLPara();
+
+				sendData_SHORT(TERMINAL_PARAM_HFAmpl, (SHORT)iHFAmpl);
 			}
 			break;
-		case TERM_GET_PARAM_ETime:
+		case TERMINAL_SET_PARAM_HFAmpl:
 			{
-				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-					sendData_SHORT(TERM_PARAM_ETime, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetETIMEPara_IPPV());
-				else
-					sendData_SHORT(TERM_PARAM_ETime, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetETIMEPara_TRIGGER());
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_HFAmpl(iVal);
 			}
 			break;
-		case TERM_GET_PARAM_BPM:
+		case TERMINAL_GET_PARAM_HFAmplMax:
 			{
-				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-					sendData_SHORT(TERM_PARAM_BPM, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetBPMPara_IPPV());
-				else
-					sendData_SHORT(TERM_PARAM_BPM, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetBPMPara_TRIGGER());
+				WORD iHFAmpl=iHFAmpl=(int)getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLmaxPara();
+
+				sendData_SHORT(TERMINAL_PARAM_HFAmplMax, (SHORT)iHFAmpl);
 			}
 			break;
-		case TERM_GET_PARAM_O2:
+		case TERMINAL_SET_PARAM_HFAmplMax:
+			{
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_HFAmplMax(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_HFFreq:
+			{
+				sendData_SHORT(TERMINAL_PARAM_HFFreq, getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+			}
+			break;
+		case TERMINAL_SET_PARAM_HFFreq:
+			{
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_HFFreq(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_O2:
 			{
 				BYTE iO2=0;
 				if(getModel()->isO2FlushActive())
 					iO2=getModel()->getDATAHANDLER()->PARADATA()->GetO2FlushPara();
 				else
 					iO2=getModel()->getDATAHANDLER()->PARADATA()->GetO2Para();
-				sendData_BYTE(TERM_PARAM_O2, iO2);
+				sendData_BYTE(TERMINAL_PARAM_O2, iO2);
 			}
 			break;
-		case TERM_GET_PARAM_VLimit:
+		case TERMINAL_SET_PARAM_O2:
+			{
+				BYTE iVal=faDataBuf[0];
+				setParam_FiO2(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_IFlow:
 			{
 				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-					sendData_SHORT(TERM_PARAM_VLimit, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_IPPV());
+					sendData_SHORT(TERMINAL_PARAM_IFlow, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetIFlowPara_IPPV());
 				else
-					sendData_SHORT(TERM_PARAM_VLimit, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_TRIGGER());
+					sendData_SHORT(TERMINAL_PARAM_IFlow, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetIFlowPara_TRIGGER());
 			}
 			break;
-		case TERM_GET_PARAM_VGarant:
+		case TERMINAL_SET_PARAM_IFlow:
+			{
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_IFlow(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_EFlow:
 			{
 				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-					sendData_SHORT(TERM_PARAM_VGarant, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetVGarantPara_IPPV());
+					sendData_SHORT(TERMINAL_PARAM_EFlow, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWPara_IPPV());
 				else
-					sendData_SHORT(TERM_PARAM_VGarant, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetVGarantPara_TRIGGER());
+					sendData_SHORT(TERMINAL_PARAM_EFlow, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWPara_TRIGGER());
 			}
 			break;
-		case TERM_GET_PARAM_PPSV:
+		case TERMINAL_SET_PARAM_EFlow:
 			{
-				sendData_SHORT(TERM_PARAM_PPSV, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetPpsvPara());
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_EFlow(iVal);
 			}
 			break;
-		case TERM_GET_PARAM_Trigger:
+		case TERMINAL_GET_PARAM_Risetime:
 			{
-				sendData_BYTE(TERM_PARAM_Trigger, getModel()->getDATAHANDLER()->GetCurrentTriggerPara());
-			}
-			break;
-		case TERM_GET_PARAM_AbortCriterionPSV:
-			{
-				sendData_SHORT(TERM_PARAM_AbortCriterionPSV, (SHORT)getModel()->getCONFIG()->GetPercentAbortCriterionPSV());
-			}
-			break;
-		case TERM_GET_PARAM_Flowmin:
-			{
-				sendData_SHORT(TERM_PARAM_Flowmin, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetFlowminPara());
-			}
-			break;
-		case TERM_GET_PARAM_CPAP:
-			{
-				sendData_SHORT(TERM_PARAM_CPAP, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetCPAPPara());
-			}
-			break;
-		case TERM_GET_PARAM_PManual:
-			{
-				//sendData_SHORT(TERM_PARAM_PManual, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetPManualPara());
-			}
-			break;
-		case TERM_GET_PARAM_Backup:
-			{
-				sendData_BYTE(TERM_PARAM_Backup, getModel()->getDATAHANDLER()->PARADATA()->GetBackupPara());
-			}
-			break;
-		case TERM_GET_PARAM_CPAPnmode:
-			{
-				sendData_SHORT(TERM_PARAM_CPAPnmode, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetCPAPNMODEPara());
-			}
-			break;
-		case TERM_GET_PARAM_PManualnmode:
-			{
-				sendData_SHORT(TERM_PARAM_PManualnmode, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetPManualNMODEPara());
-			}
-			break;
-		case TERM_GET_PARAM_ITimeNMODE:
-			{
-				sendData_SHORT(TERM_PARAM_ITimeNMODE, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEPara());
-			}
-			break;
-		case TERM_GET_PARAM_ETimeNMODE:
-			{
-				sendData_SHORT(TERM_PARAM_ETimeNMODE, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetETIMENMODEPara());
-			}
-			break;
-		case TERM_GET_PARAM_BPMNMODE:
-			{
-				sendData_SHORT(TERM_PARAM_BPMNMODE, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetBPMNMODEPara());
-			}
-			break;
-		case TERM_GET_PARAM_HFAmpl:
-			{
-				WORD iHFAmpl=0;
-				if(getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
-					iHFAmpl=(int)getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLmaxPara();
+				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+					sendData_SHORT(TERMINAL_PARAM_Risetime, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetRisetimePara_IPPV());
 				else
-					iHFAmpl=(int)getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLPara();
-
-				sendData_SHORT(TERM_PARAM_HFAmpl, (SHORT)iHFAmpl);
+					sendData_SHORT(TERMINAL_PARAM_Risetime, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetRisetimePara_TRIGGER());
 			}
 			break;
-		case TERM_GET_PARAM_HFFreq:
+		case TERMINAL_SET_PARAM_RiseTime:
 			{
-				sendData_BYTE(TERM_PARAM_HFFreq, getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara());
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_RiseTime(iVal);
 			}
 			break;
-		case TERM_GET_PARAM_HFPMean:
+		case TERMINAL_GET_PARAM_ITime:
 			{
-				sendData_SHORT(TERM_PARAM_HFPMean, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara());
+				sendData_SHORT(TERMINAL_PARAM_ITime, (SHORT)getModel()->getDATAHANDLER()->GetCurrentITimePara());
 			}
 			break;
-		case TERM_GET_PARAM_ITimeRec:
+		case TERMINAL_SET_PARAM_ITime:
 			{
-				sendData_SHORT(TERM_PARAM_ITimeRec, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetITimeRecPara());
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_ITime(iVal);
 			}
 			break;
-		case TERM_GET_PARAM_ETIMERec:
+		case TERMINAL_GET_PARAM_ETime:
+			{
+				sendData_SHORT(TERMINAL_PARAM_ETime, (SHORT)getModel()->getDATAHANDLER()->GetCurrentETimePara());
+			}
+			break;
+		case TERMINAL_SET_PARAM_ETime:
+			{
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_ETime(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_HFPMean:
+			{
+				sendData_SHORT(TERMINAL_PARAM_HFPMean, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara());
+			}
+			break;
+		case TERMINAL_SET_PARAM_HFPMean:
+			{
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_HFPMean(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_HFPMeanRec:
+			{
+				sendData_SHORT(TERMINAL_PARAM_HFPMeanRec, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecPara());
+			}
+			break;
+		case TERMINAL_SET_PARAM_HFPMeanRec:
+			{
+				if(getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable())
+				{
+					WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+					setParam_HFPMeanRec(iVal);
+				}
+				else
+				{
+					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+				}
+			}
+			break;
+		case TERMINAL_GET_PARAM_VLimit:
+			{
+				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+					sendData_SHORT(TERMINAL_PARAM_VLimit, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_IPPV());
+				else
+					sendData_SHORT(TERMINAL_PARAM_VLimit, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_TRIGGER());
+			}
+			break;
+		case TERMINAL_SET_PARAM_VLimit:
+			{
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_VLimit(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_VGarant:
+			{
+				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+					sendData_SHORT(TERMINAL_PARAM_VGarant, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetVGarantPara_IPPV());
+				else
+					sendData_SHORT(TERMINAL_PARAM_VGarant, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetVGarantPara_TRIGGER());
+			}
+			break;
+		case TERMINAL_SET_PARAM_VGarant:
+			{
+				if(getModel()->getDATAHANDLER()->isVGUARANTLicenseAvailable())
+				{
+					WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+					setParam_VGarant(iVal);
+				}
+				else
+				{
+					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+				}
+			}
+			break;
+		case TERMINAL_GET_PARAM_AbortCriterionPSV:
+			{
+				sendData_BYTE(TERMINAL_PARAM_AbortCriterionPSV, (BYTE)getModel()->getCONFIG()->GetPercentAbortCriterionPSV());
+			}
+			break;
+		case TERMINAL_SET_PARAM_AbortCriterionPSV:
+			{
+				BYTE iVal=faDataBuf[0];
+				setParam_AbortCriterionPSV(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_TherapieFlow:
+			{
+				sendData_SHORT(TERMINAL_PARAM_TherapieFlow, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetTherapieFLOWPara());
+			}
+			break;
+		case TERMINAL_SET_PARAM_TherapieFlow:
+			{
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_TherapieFlow(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_Trigger:
+			{
+				sendData_BYTE(TERMINAL_PARAM_Trigger, getModel()->getDATAHANDLER()->GetCurrentTriggerPara());
+			}
+			break;
+		case TERMINAL_SET_PARAM_Trigger:
+			{
+				BYTE iVal=faDataBuf[0];
+				setParam_Trigger(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_Flowmin:
+			{
+				sendData_SHORT(TERMINAL_PARAM_Flowmin, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetFlowminPara());
+			}
+			break;
+		case TERMINAL_SET_PARAM_Flowmin://only in CPAP
+			{
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_Flowmin(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_CPAP://CPAP,NCPAP and DUOPAP
+			{
+				switch(getModel()->getCONFIG()->GetCurMode())
+				{
+				case VM_CPAP:
+					{
+						sendData_SHORT(TERMINAL_PARAM_CPAP, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetCPAPPara());
+					}
+					break;
+				case VM_NCPAP:
+					{
+						sendData_SHORT(TERMINAL_PARAM_CPAP, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetCPAPNMODEPara());
+					}
+					break;
+				case VM_DUOPAP:
+					{
+						sendData_SHORT(TERMINAL_PARAM_CPAP, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetCPAPNMODEPara());
+					}
+					break;
+				default:
+					sendData_Cmd(TERM_PARAM_NOSUPPORT);
+					break;
+				}
+			}
+			break;
+		case TERMINAL_SET_PARAM_CPAP:
+			{
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_CPAP(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_PManual:
+			{
+				switch(getModel()->getCONFIG()->GetCurMode())
+				{
+				case VM_CPAP:
+					{
+						sendData_SHORT(TERMINAL_PARAM_PManual, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetPManualCPAPPara());
+					}
+					break;
+				case VM_NCPAP:
+					{
+						sendData_SHORT(TERMINAL_PARAM_PManual, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetPManualNMODEPara());
+					}
+					break;
+				case VM_HFO:
+					{
+						sendData_SHORT(TERMINAL_PARAM_PManual, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetPManualHFOPara());
+					}
+					break;
+				default:
+					sendData_Cmd(TERM_PARAM_NOSUPPORT);
+					break;
+				}
+			}
+			break;
+		case TERMINAL_SET_PARAM_PManual:
+			{
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_PManual(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_Backup:
+			{
+				sendData_BYTE(TERMINAL_PARAM_Backup, getModel()->getDATAHANDLER()->PARADATA()->GetBackupPara());
+			}
+			break;
+		case TERMINAL_SET_PARAM_Backup:
+			{
+				BYTE iVal=faDataBuf[0];
+				setParam_Backup(iVal);
+			}
+			break;		
+		case TERMINAL_GET_PARAM_ITimeRec:
+			{
+				sendData_SHORT(TERMINAL_PARAM_ITimeRec, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetITimeRecPara());
+			}
+			break;
+		case TERMINAL_SET_PARAM_ITimeRec:
+			{
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_ITimeRec(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_ETIMERec:
 			{
 				int iETIMERec=0;
 				if(getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable()==false && getModel()->getDATAHANDLER()->PARADATA()->GetFreqRecPara()!=0)
 				{
 					iETIMERec=1;
-					
 				}
 				else
 				{
 					iETIMERec=getModel()->getDATAHANDLER()->GetHF_ETIME_REC(getModel()->getDATAHANDLER()->PARADATA()->GetFreqRecPara());
 				}
-				sendData_SHORT(TERM_PARAM_ETIMERec, (SHORT)iETIMERec);
+				sendData_SHORT(TERMINAL_PARAM_ETIMERec, (SHORT)iETIMERec);
 			}
 			break;
-		case TERM_GET_PARAM_FreqRec:
+		/*case TERMINAL_SET_PARAM_ETIMERec:
+			{
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_ETimeRec(iVal);
+			}
+			break;*/
+		/*case TERMINAL_GET_PARAM_FreqRec:
 			{
 				int iFreqRec=0;;
-				
+
 				if(getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable()==false && getModel()->getDATAHANDLER()->PARADATA()->GetFreqRecPara()!=0)
 				{
 					iFreqRec=0;
@@ -698,950 +1238,112 @@ bool CInterfaceTerminal::PerformMsg()
 				{
 					iFreqRec=getModel()->getDATAHANDLER()->PARADATA()->GetFreqRecPara();
 				}
-				sendData_SHORT(TERM_PARAM_FreqRec, (SHORT)iFreqRec);
+				sendData_SHORT(TERMINAL_PARAM_FreqRec, (SHORT)iFreqRec);
 			}
 			break;
-		case TERM_GET_PARAM_HFPMeanRec:
+		case TERMINAL_SET_PARAM_FreqRec:
 			{
-				sendData_SHORT(TERM_PARAM_HFPMeanRec, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecPara());
-			}
-		case TERM_GET_PARAM_HFFlow:
-			{
-				sendData_SHORT(TERM_PARAM_HFFlow, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetHFFlowPara());
-			}
-			break;
-		case TERM_GET_PARAM_HFVGarant:
-			{
-				sendData_SHORT(TERM_PARAM_HFVGarant, (SHORT)getModel()->getDATAHANDLER()->PARADATA()->GetHFVGarantPara());
-			}
-			break;
-		//case TERM_SET_VENT_MODE:
-		//	{
-		//		DEBUGMSG(TRUE, (TEXT("TERM_SET_VENT_MODE1\r\n")));
-		//		BYTE state=faDataBuf[0];
-		//		if(state>VM_NONE && state<VM_SERVICE)
-		//		{
-		//			DEBUGMSG(TRUE, (TEXT("TERM_SET_VENT_MODE2\r\n")));
-		//			getModel()->VentModeChanged((eVentMode)state);
-		//			/*if(AfxGetApp() != NULL)
-		//				AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);*/
-		//		}
-		//	}
-		//	break;
-		/*case TERM_SET_MODE_OPTION1:
-			{
-
-			}
-			break;
-		case TERM_SET_MODE_OPTION2:
-			{
-
+				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
+				setParam_FreqRec(iVal);
 			}
 			break;*/
-		case TERM_SET_PARAM_IFlow:
+		case TERMINAL_SET_PARAM_O2_FLUSH:
 			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-				//SHORT iVal2=MAKEWORD(faDataBuf[0],faDataBuf[1]);
-
-				WORD iLowerLimit=0;
-				WORD iUpperLimit=0;
-
-				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+				BYTE iVal=faDataBuf[0];
+				setParam_O2_FLUSH(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_SPO2LOW:
+			{
+				if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
 				{
-					iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowMinPara_IPPV();
-					iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowMaxPara_IPPV();
+					sendData_BYTE(TERMINAL_PARAM_SPO2LOW, getModel()->getDATAHANDLER()->getPRICO_SPO2lowRange());
 				}
 				else
 				{
-					iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowMinPara_TRIGGER();
-					iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowMaxPara_TRIGGER();
-				}
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentIFlowPara(iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+					sendData_Cmd(TERM_PARAM_NOSUPPORT);
 				}
 			}
 			break;
-		case TERM_SET_PARAM_EFlow:
+		case TERMINAL_SET_PARAM_SPO2LOW:
 			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=0;
-				WORD iUpperLimit=0;
-
-				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+				BYTE iVal=faDataBuf[0];
+				setParam_SPO2LOW(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_SPO2HIGH:
+			{
+				if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
 				{
-					iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_IPPV();
-					iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_IPPV();
+					sendData_BYTE(TERMINAL_PARAM_SPO2HIGH, getModel()->getDATAHANDLER()->getPRICO_SPO2highRange());
 				}
 				else
 				{
-					iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_TRIGGER();
-					iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_TRIGGER();
-				}
-
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentEFlowPara(iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+					sendData_Cmd(TERM_PARAM_NOSUPPORT);
 				}
 			}
 			break;
-		case TERM_SET_PARAM_TherapieFlow:
+		case TERMINAL_SET_PARAM_SPO2HIGH:
 			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTherapieFlowMinPara();
-				WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTherapieFlowMaxPara();
-
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
+				BYTE iVal=faDataBuf[0];
+				setParam_SPO2HIGH(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_FIO2LOW:
+			{
+				if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
 				{
-					getModel()->getDATAHANDLER()->SetCurrentTherapieFlowParaData(iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
+					sendData_BYTE(TERMINAL_PARAM_FIO2LOW, getModel()->getDATAHANDLER()->PARADATA()->GetITimeRecPara());
 				}
 				else
 				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+					sendData_Cmd(TERM_PARAM_NOSUPPORT);
 				}
 			}
 			break;
-		case TERM_SET_PARAM_RiseTime:
+		case TERMINAL_SET_PARAM_FIO2LOW:
 			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=0;
-				WORD iUpperLimit=0;
-
-				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+				BYTE iVal=faDataBuf[0];
+				setParam_FIO2LOW(iVal);
+			}
+			break;
+		case TERMINAL_GET_PARAM_FIO2HIGH:
+			{
+				if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
 				{
-					iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimeMinPara_IPPV();
-					iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimeMaxPara_IPPV();
+					sendData_BYTE(TERMINAL_PARAM_FIO2HIGH, getModel()->getDATAHANDLER()->getPRICO_FIO2highRange());
 				}
 				else
 				{
-					iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimeMinPara_TRIGGER();
-					iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimeMaxPara_TRIGGER();
-				}
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentRisetimePara(iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+					sendData_Cmd(TERM_PARAM_NOSUPPORT);
 				}
 			}
 			break;
-		case TERM_SET_PARAM_PEEP:
+		case TERMINAL_SET_PARAM_FIO2HIGH:
 			{
-				//WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				//WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPPSVMinPara();
-				//WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPPSVMaxPara();
-
-				//if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				//{
-				//	getModel()->getDATAHANDLER()->SetCurrentPEEPPara(iVal);
-				//	if(AfxGetApp() != NULL)
-				//		AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-				//	//sendData_Cmd(TERM_PARAM_ACKN);
-				//}
-				//else
-				//{
-				//	sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				//}
-				
-				sendData_Cmd(TERM_PARAM_NOSUPPORT);
+				BYTE iVal=faDataBuf[0];
+				setParam_FIO2HIGH(iVal);
 			}
 			break;
-		case TERM_SET_PARAM_PINSP:
+		case TERMINAL_GET_STATE_PRICO:
 			{
-				//WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				//WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPInspMinPara();
-				//WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPInspMaxPara();
-
-				//if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				//{
-				//	getModel()->getDATAHANDLER()->SetCurrentPinspPara(iVal);
-				//	if(AfxGetApp() != NULL)
-				//		AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-				//	//sendData_Cmd(TERM_PARAM_ACKN);
-				//}
-				//else
-				//{
-				//	sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				//}
-
-				sendData_Cmd(TERM_PARAM_NOSUPPORT);
-			}
-			break;
-		case TERM_SET_PARAM_ITime:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=0;
-				WORD iUpperLimit=0;
-
-				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+				if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
 				{
-					iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeMinPara_IPPV();
-					iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeMaxPara_IPPV();
-				}
-				else
-				{
-					iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeMinPara_TRIGGER();
-					iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeMaxPara_TRIGGER();
-				}
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentITimePara(iVal);
-					if(getModel()->getCONFIG()->GetIERelationMode()==RM_SET_ItoBPM)
-					{
-						getModel()->getDATAHANDLER()->CalculateETime_ITimeChanged(iVal,false);
-					}
+					if(getModel()->getDATAHANDLER()->getPRICOState()==true)
+						sendData_BYTE(TERMINAL_STATE_PRICO, 1);
 					else
-					{
-						getModel()->getDATAHANDLER()->CalculateBPM_ITimeChanged(iVal,false);
-					}
-					getModel()->getDATAHANDLER()->SetCurrentTempITime(iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
+						sendData_BYTE(TERMINAL_STATE_PRICO, 0);
 				}
 				else
 				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+					sendData_Cmd(TERM_PARAM_NOSUPPORT);
 				}
 			}
 			break;
-		case TERM_SET_PARAM_ETime:
+		case TERMINAL_SET_STATE_PRICO:
 			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=0;
-				WORD iUpperLimit=0;
-
-				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-				{
-					iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEMinPara_IPPV();
-					iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEMaxPara_IPPV();
-				}
-				else
-				{
-					iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEMinPara_TRIGGER();
-					iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEMaxPara_TRIGGER();
-				}
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentETimePara(iVal);
-					getModel()->getDATAHANDLER()->CalculateBPM_ETimeChanged(iVal, false);
-					getModel()->getDATAHANDLER()->SetCurrentTempETime(iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-			}
-			break;
-		case TERM_SET_PARAM_BPM:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=0;
-				WORD iUpperLimit=0;
-
-				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-				{
-					iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMMinPara_IPPV();
-					iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMMaxPara_IPPV();
-				}
-				else
-				{
-					iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMMinPara_TRIGGER();
-					iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMMaxPara_TRIGGER();
-
-				}
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentBPMPara(iVal);
-					getModel()->getDATAHANDLER()->CalculateETime_BPMChanged(iVal, false);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-			}
-			break;
-		case TERM_SET_PARAM_O2:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetO2MinPara();
-				WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetO2MaxPara();
-
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentO2Para((BYTE)iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}	
-			}
-			break;
-		case TERM_SET_PARAM_O2_FLUSH:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetO2FlushMinPara();
-				WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetO2FlushMaxPara();
-
-				
-
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					if(iVal<(getModel()->getDATAHANDLER()->PARADATA()->GetO2Para()+MAXDIFF_O2_FLUSH))
-					{
-						sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-					}
-					else
-					{
-						getModel()->getDATAHANDLER()->SetCurrentO2FlushPara((BYTE)iVal);
-						if(AfxGetApp() != NULL)
-							AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-					}
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-			}
-			break;
-		//case TERM_SET_PARAM_VLimit:
-		//	{
-		//		WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-		//		WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetXXXMinPara();
-		//		WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetXXXMaxPara();
-
-		//		if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-		//		{
-		//			getModel()->getDATAHANDLER()->SetCurrentXXXPara(iVal);
-		//			if(AfxGetApp() != NULL)
-		//				AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-		//			//sendData_Cmd(TERM_PARAM_ACKN);
-		//		}
-		//		else
-		//		{
-		//			sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-		//		}
-		//	}
-		//	break;
-		//case TERM_SET_PARAM_VGarant:
-		//	{
-		//		if(getModel()->getDATAHANDLER()->isVGUARANTLicenseAvailable())
-		//		{
-		//			WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-		//			WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVGarantMinPara();
-		//			WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVGarantMaxPara();
-
-		//			if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-		//			{
-		//				if(iVal==0)
-		//					getModel()->getDATAHANDLER()->SetCurrentVGarantParamData(iVal,false,true);
-		//				else
-		//					getModel()->getDATAHANDLER()->SetCurrentVGarantParamData(iVal,true,true);
-
-		//				if(AfxGetApp() != NULL)
-		//					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-		//				//sendData_Cmd(TERM_PARAM_ACKN);
-		//			}
-		//			else
-		//			{
-		//				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-		//			}
-		//		}
-		//		else
-		//		{
-		//			sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-		//		}
-		//		
-		//	}
-		//	break;
-		case TERM_SET_PARAM_PPSV:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPpsvMinPara();
-				WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPpsvMaxPara();
-
-				SHORT iPEEP=0;
-				SHORT iPINSP=0;
-
-				if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-				{
-					iPEEP=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_IPPV();
-					iPINSP=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPPara_IPPV();
-				}
-				else
-				{
-					iPEEP=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_TRIGGER();
-					iPINSP=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPPara_TRIGGER();
-				}
-				
-
-				if(iVal>iPINSP)
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-				else if(iVal<iPEEP+20)
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-				else if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentPpsvPara(iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-
-				sendData_Cmd(TERM_PARAM_NOSUPPORT);
-			}
-			break;
-		case TERM_SET_PARAM_Trigger:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=0;
-				WORD iUpperLimit=0;
-				if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
-					||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
-				{
-					iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerDUOPAPMinPara();
-					iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerDUOPAPMaxPara();
-				}
-				else if(getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
-					||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_NCPAP)
-				{
-					iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNCPAPMinPara();
-					iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNCPAPMaxPara();
-				}
-				else
-				{
-					iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerCONVMinPara();
-					iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerCONVMaxPara();
-				}
-
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentTriggerPara((BYTE)iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-			}
-			break;
-		case TERM_SET_PARAM_AbortCriterionPSV:
-			{
-				//WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				//WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetXXXMinPara();
-				//WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetXXXMaxPara();
-
-				//if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				//{
-				//	getModel()->getDATAHANDLER()->SetCurrentXXXPara(iVal);
-				//	if(AfxGetApp() != NULL)
-				//		AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-				//	//sendData_Cmd(TERM_PARAM_ACKN);
-				//}
-				//else
-				//{
-				//	sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				//}
-
-				sendData_Cmd(TERM_PARAM_NOSUPPORT);
-			}
-			break;
-		case TERM_SET_PARAM_Flowmin:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetFlowminMinPara();
-				WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetFlowminMaxPara();
-
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetFlowMinParadata(iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-			}
-			break;
-		case TERM_SET_PARAM_CPAP:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPMinPara();
-				WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPMaxPara();
-
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentCPAPPara(iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-			}
-			break;
-		case TERM_SET_PARAM_PManual:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMinPara();
-				WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMaxPara();
-
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentPManPara(iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-			}
-			break;
-		case TERM_SET_PARAM_Backup:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBackupMinPara();
-				WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBackupMaxPara();
-
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentBackupPara((BYTE)iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-			}
-			break;
-		case TERM_SET_PARAM_CPAPnmode:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPNMODEMinPara();
-				WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPNMODEMaxPara();
-
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentCPAPPara(iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-			}
-			break;
-		case TERM_SET_PARAM_PManualnmode:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualNMODEMinPara();
-				WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualNMODEMaxPara();
-
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentPManPara(iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-			}
-			break;
-		case TERM_SET_PARAM_ITimeNMODE:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEMinPara();
-				WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEMaxPara();
-
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentITimePara(iVal);
-					if(getModel()->getCONFIG()->GetIERelationMode()==RM_SET_ItoBPM)
-					{
-						getModel()->getDATAHANDLER()->CalculateETime_ITimeChanged(iVal,false);
-					}
-					else
-					{
-						getModel()->getDATAHANDLER()->CalculateBPM_ITimeChanged(iVal,false);
-					}
-					getModel()->getDATAHANDLER()->SetCurrentTempITime(iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-			}
-			break;
-		case TERM_SET_PARAM_ETimeNMODE:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMENMODEMinPara();
-				WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMENMODEMaxPara();
-
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentETimePara(iVal);
-					getModel()->getDATAHANDLER()->CalculateBPM_ETimeChanged(iVal, false);
-					getModel()->getDATAHANDLER()->SetCurrentTempETime(iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-			}
-			break;
-		case TERM_SET_PARAM_BPMNMODE:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMNMODEMinPara();
-				WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMNMODEMaxPara();
-
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentBPMPara(iVal);
-					getModel()->getDATAHANDLER()->CalculateETime_BPMChanged(iVal, false);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-			}
-			break;
-		case TERM_SET_PARAM_HFAmpl:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLMinPara();
-				WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLMaxPara();
-
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					if(getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
-						getModel()->getDATAHANDLER()->SetCurrentHFAMPLmaxPara(iVal);
-					else
-						getModel()->getDATAHANDLER()->SetCurrentHFAMPLPara(iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-			}
-			break;
-		case TERM_SET_PARAM_HFFreq:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqMinPara();
-				WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqMaxPara();
-
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentHFFreqPara((BYTE)iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-			}
-			break;
-		case TERM_SET_PARAM_HFPMean:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanMinPara();
-				WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanMaxPara();
-
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentPMeanPara(iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-			}
-			break;
-		case TERM_SET_PARAM_ITimeRec:
-			{
-				if(getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable())
-				{
-					WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-					WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeRecMinPara();
-					WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeRecMaxPara();
-
-					if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-					{
-						getModel()->getDATAHANDLER()->SetCurrentITimeRecPara(iVal);
-						if(AfxGetApp() != NULL)
-							AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-						//sendData_Cmd(TERM_PARAM_ACKN);
-					}
-					else
-					{
-						sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-					}
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-
-				
-			}
-			break;
-		case TERM_SET_PARAM_ETIMERec:
-			{
-				/*if(getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable())
-				{
-				}*/
-
-				//WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				//WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetXXXMinPara();
-				//WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetXXXMaxPara();
-
-				//if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				//{
-				//	getModel()->getDATAHANDLER()->SetCurrentXXXPara(iVal);
-				//	if(AfxGetApp() != NULL)
-				//		AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-				//	//sendData_Cmd(TERM_PARAM_ACKN);
-				//}
-				//else
-				//{
-				//	sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				//}
-
-				sendData_Cmd(TERM_PARAM_NOSUPPORT);
-			}
-			break;
-		case TERM_SET_PARAM_FreqRec:
-			{
-				if(getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable())
-				{
-					WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-					WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetFreqRecMinPara();
-					WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetFreqRecMaxPara();
-
-					if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-					{
-						getModel()->getDATAHANDLER()->SetCurrentFreqRecPara(iVal);
-						if(AfxGetApp() != NULL)
-							AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-						//sendData_Cmd(TERM_PARAM_ACKN);
-					}
-					else
-					{
-						sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-					}
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-				
-			}
-			break;
-		case TERM_SET_PARAM_HFPMeanRec:
-			{
-				if(getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable())
-				{
-					WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-					WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMinPara();
-					WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMaxPara();
-
-					if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-					{
-						getModel()->getDATAHANDLER()->SetCurrentHFPMeanRecPara(iVal);
-						if(AfxGetApp() != NULL)
-							AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-						//sendData_Cmd(TERM_PARAM_ACKN);
-					}
-					else
-					{
-						sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-					}
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-				
-			}
-			break;
-		case TERM_SET_PARAM_HFFlow:
-			{
-				WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFFlowMinPara();
-				WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFFlowMaxPara();
-
-				if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				{
-					getModel()->getDATAHANDLER()->SetCurrentHFFlowPara(iVal);
-					if(AfxGetApp() != NULL)
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-					//sendData_Cmd(TERM_PARAM_ACKN);
-				}
-				else
-				{
-					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				}
-			}
-			break;
-		case TERM_SET_PARAM_HFVGarant:
-			{
-				//WORD iVal=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
-				//WORD iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetXXXMinPara();
-				//WORD iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetXXXMaxPara();
-
-				//if(iVal<=iUpperLimit && iVal>=iLowerLimit)
-				//{
-				//	getModel()->getDATAHANDLER()->SetCurrentXXXPara(iVal);
-				//	if(AfxGetApp() != NULL)
-				//		AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
-
-				//	//sendData_Cmd(TERM_PARAM_ACKN);
-				//}
-				//else
-				//{
-				//	sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
-				//}
-
-				sendData_Cmd(TERM_PARAM_NOSUPPORT);
+				BYTE iVal=faDataBuf[0];
+				setState_PRICO(iVal);
 			}
 			break;
 		default:
@@ -1656,8 +1358,2117 @@ bool CInterfaceTerminal::PerformMsg()
 	
 	return true;
 }
+//void CInterfaceTerminal::setTriggerOption(BYTE iVal)
+//{
+//	if(iVal<TRIGGER_VOLUME || iVal>TRIGGER_PRESSURE)
+//	{
+//		sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+//	}
+//	else
+//	{
+//		if(getModel()->getCONFIG()->CurModeIsPresetMode())
+//		{
+//			sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+//		}
+//		else if(getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP)
+//		{
+//		}
+//		else if(getModel()->getCONFIG()->GetCurMode()==VM_NCPAP)
+//		{
+//		}
+//		else
+//		{
+//		}
+//
+//		getModel()->getCONFIG()->setLeakCompensation((eLeakCompensation)iVal);
+//		if(AfxGetApp() != NULL)
+//			AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+//	}
+//}
+void CInterfaceTerminal::setLeakCompensation(BYTE iVal)
+{
+	if(iVal<LC_LOW || iVal>LC_HIGH)
+	{
+		sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+	}
+	else
+	{
+		getModel()->getCONFIG()->setLeakCompensation((eLeakCompensation)iVal);
+		if(AfxGetApp() != NULL)
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+	}
+}
+void CInterfaceTerminal::setParam_HFOFlow(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_HFO:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
 
-void CInterfaceTerminal::sendModeOption()
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFFlowMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFFlowMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentHFFlowPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_HFOFreqRec(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_HFO:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+			if(getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable())
+			{
+				fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetFreqRecMinPara();
+				fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetFreqRecMaxPara();
+
+				if(fv.iValue>fv.iUpperLimit)
+				{
+					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+				}
+				else if(fv.iValue<fv.iLowerLimit)
+				{
+					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+				}
+				else
+				{
+					getModel()->getDATAHANDLER()->SetCurrentFreqRecPara(fv.iValue);
+					if(AfxGetApp() != NULL)
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+				}
+			}
+			else
+			{
+				sendData_Cmd(TERM_PARAM_NOSUPPORT);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_PINSP(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_IPPV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+			
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPMinPara_IPPV();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPMaxPara_IPPV();
+			
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentPINSPPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_SERVICE:
+	case VM_SIMV:
+	case VM_SIPPV:
+	case VM_SIMVPSV:
+	case VM_PSV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+			
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPMinPara_TRIGGER();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPMaxPara_TRIGGER();
+			
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentPINSPPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setVentMode(BYTE state)
+{
+	if(state>VM_NONE && state<VM_SERVICE)
+	{
+		switch(state)
+		{
+		case VM_IPPV:
+			{
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_TERMINAL_IPPV);
+			}
+			break;
+		case VM_SIPPV:
+			{
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_TERMINAL_SIPPV);
+			}
+			break;
+		case VM_SIMV:
+			{
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_TERMINAL_SIMV);
+			}
+			break;
+		case VM_SIMVPSV:
+			{
+				if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
+				{
+					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+				}
+				else
+				{
+					if(AfxGetApp() != NULL)
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_TERMINAL_SIMVPSV);
+				}
+			}
+			break;
+		case VM_PSV:
+			{
+				if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
+				{
+					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+				}
+				else
+				{
+					if(AfxGetApp() != NULL)
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_TERMINAL_PSV);
+				}
+			}
+			break;
+		case VM_CPAP:
+			{
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_TERMINAL_CPAP);
+			}
+			break;
+		case VM_NCPAP:
+			{
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_TERMINAL_NCPAP);
+			}
+			break;
+		case VM_DUOPAP:
+			{
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_TERMINAL_DUOPAP);
+			}
+			break;
+		case VM_HFO:
+			{
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_TERMINAL_HFO);
+			}
+			break;
+		case VM_THERAPIE:
+			{
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_TERMINAL_THERAPY);
+			}
+			break;
+		default:
+			sendData_Cmd(TERM_PARAM_NOSUPPORT);
+			break;
+		}
+	}
+	else
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+}
+void CInterfaceTerminal::set_PressureRiseCtrl(BYTE iVal)
+{
+	if(iVal<CURVE_IFLOW || iVal>CURVE_AUTOFLOW)
+	{
+		sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+	}
+	else
+	{
+		getModel()->getCONFIG()->SetCurPressureRiseCtrl((eCurveForm)iVal);
+		getModel()->Send_MODE_OPTION2();
+
+		if(AfxGetApp() != NULL)
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+	}
+}
+void CInterfaceTerminal::set_MANBREATHrunning(BYTE iVal)
+{
+	if(iVal<0 || iVal>1)
+	{
+		sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+	}
+	else
+	{
+		eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
+		if(		getModel()->getCONFIG()->IsHFOManBreathEnabled()==false 
+			&&	getModel()->getVMODEHANDLER()->activeModeIsHFO())
+		{
+			sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		}
+		else if(		getModel()->getCONFIG()->IsHFOManBreathEnabled()==true 
+			&&	getModel()->getVMODEHANDLER()->activeModeIsHFO()
+			&&	getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable()==true 
+			&&	getModel()->getDATAHANDLER()->PARADATA()->GetFreqRecPara()!=0)
+		{
+			sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		}
+		else if(eActiveVentMode==VM_THERAPIE)
+		{
+			sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		}
+		else if(getModel()->GetVentRunState()==VENT_RUNNING)
+		{
+			if(iVal==0)
+			{
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_DEACTIVATE_MANBREATH);
+			}
+			else
+			{
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_ACTIVATE_MANBREATH);
+			}
+		}
+		else
+		{
+			sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		}
+	}
+}
+void CInterfaceTerminal::setParam_IERatioHFO(BYTE iVal)
+{
+	if(iVal<RIE_1_3 || iVal>RIE_1_1)
+	{
+		sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+	}
+	else
+	{
+		fVALUE fv;
+		fv.iValue=iVal;
+
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIERatioMinPara();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIERatioMaxPara();
+
+		if(fv.iValue>fv.iUpperLimit)
+		{
+			sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+		}
+		else if(fv.iValue<fv.iLowerLimit)
+		{
+			sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+		}
+		else
+		{
+			getModel()->getDATAHANDLER()->SetCurrentIERatioParaHFO((eRatioIE)iVal);
+			if(AfxGetApp() != NULL)
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+		}
+		
+	}
+}
+void CInterfaceTerminal::setVentRange(BYTE iVal)
+{
+	if(iVal<NEONATAL || iVal>PEDIATRIC)
+	{
+		sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+	}
+	else
+	{
+		getModel()->getCONFIG()->SetVentRange(iVal);
+	}
+}
+void CInterfaceTerminal::setParam_EFlow(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_IPPV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_IPPV();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_IPPV();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentEFlowPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_SIPPV:
+	case VM_SIMV:
+	case VM_SIMVPSV:
+	case VM_PSV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_TRIGGER();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_TRIGGER();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentEFlowPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_ITime(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_IPPV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+			
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeMinPara_IPPV();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeMaxPara_IPPV();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentITimePara(fv.iValue);
+				if(getModel()->getCONFIG()->GetIERelationMode()==RM_SET_ItoBPM)
+				{
+					getModel()->getDATAHANDLER()->CalculateETime_ITimeChanged(fv.iValue,false);
+				}
+				else
+				{
+					getModel()->getDATAHANDLER()->CalculateBPM_ITimeChanged(fv.iValue,false);
+				}
+				getModel()->getDATAHANDLER()->SetCurrentTempITime(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_SIPPV:
+	case VM_SIMV:
+	case VM_SIMVPSV:
+	case VM_PSV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+			
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeMinPara_TRIGGER();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeMaxPara_TRIGGER();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentITimePara(fv.iValue);
+				if(getModel()->getCONFIG()->GetIERelationMode()==RM_SET_ItoBPM)
+				{
+					getModel()->getDATAHANDLER()->CalculateETime_ITimeChanged(fv.iValue,false);
+				}
+				else
+				{
+					getModel()->getDATAHANDLER()->CalculateBPM_ITimeChanged(fv.iValue,false);
+				}
+				getModel()->getDATAHANDLER()->SetCurrentTempITime(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_DUOPAP:
+		{
+			fVALUE fvITIME;
+			fVALUE fvETIME;
+
+			fvITIME.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEMinPara();
+			fvITIME.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEMaxPara();
+			fvITIME.iValue=iVal;
+			fvETIME.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetETIMENMODEPara();
+
+			if(fvITIME.iValue>fvITIME.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fvITIME.iValue<fvITIME.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentITimePara(fvITIME.iValue);
+				if(getModel()->getCONFIG()->GetIERelationMode()==RM_SET_ItoBPM)
+				{
+					getModel()->getDATAHANDLER()->CalculateETime_ITimeChanged(fvITIME.iValue,false);
+				}
+				else
+				{
+					getModel()->getDATAHANDLER()->CalculateBPM_ITimeChanged(fvITIME.iValue,false);
+				}
+				getModel()->getDATAHANDLER()->SetCurrentTempETime(fvETIME.iValue);
+				getModel()->getDATAHANDLER()->SetCurrentTempITime(fvITIME.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_ETime(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_IPPV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEMinPara_IPPV();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEMaxPara_IPPV();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentETimePara(fv.iValue);
+				getModel()->getDATAHANDLER()->CalculateBPM_ETimeChanged(fv.iValue, false);
+				getModel()->getDATAHANDLER()->SetCurrentTempETime(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_SIPPV:
+	case VM_SIMV:
+	case VM_SIMVPSV:
+	case VM_PSV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEMinPara_TRIGGER();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEMaxPara_TRIGGER();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentETimePara(fv.iValue);
+				getModel()->getDATAHANDLER()->CalculateBPM_ETimeChanged(fv.iValue, false);
+				getModel()->getDATAHANDLER()->SetCurrentTempETime(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_DUOPAP:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMENMODEMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMENMODEMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentETimePara(fv.iValue);
+				getModel()->getDATAHANDLER()->CalculateBPM_ETimeChanged(fv.iValue, false);
+				getModel()->getDATAHANDLER()->SetCurrentTempETime(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_RiseTime(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_IPPV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+			int iITIME=0;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimeMinPara_IPPV();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimeMaxPara_IPPV();
+			iITIME= getModel()->getDATAHANDLER()->PARADATA()->GetITimePara_IPPV();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue>iITIME)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentRisetimePara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_SIPPV:
+	case VM_SIMV:
+	case VM_SIMVPSV:
+	case VM_PSV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+			int iITIME=0;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimeMinPara_TRIGGER();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimeMaxPara_TRIGGER();
+			iITIME= getModel()->getDATAHANDLER()->PARADATA()->GetITimePara_TRIGGER();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue>iITIME)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentRisetimePara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_AbortCriterionPSV(BYTE iVal)
+{
+	if(iVal>MAX_ABORTCRITERION_PSV)
+	{
+		sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+	}
+	else if(iVal<MIN_ABORTCRITERION_PSV)
+	{
+		sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+	}
+	else
+	{
+		getModel()->getCONFIG()->SetPercentAbortCriterionPSV(iVal);
+		getModel()->Send_ABORT_CRITERIONPSV(iVal,false,true);
+		if(AfxGetApp() != NULL)
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+	}
+}
+void CInterfaceTerminal::setParam_VGarant(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_IPPV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVGarantMinPara_IPPV();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVGarantMaxPara_IPPV();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentVGarantParamData(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_SIPPV:
+	case VM_SIMV:
+	case VM_SIMVPSV:
+	case VM_PSV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVGarantMinPara_TRIGGER();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVGarantMaxPara_TRIGGER();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentVGarantParamData(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_HFO:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFVGarantMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFVGarantMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentVGarantParamData(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setState_PRICO(BYTE iVal)
+{
+	if(getModel()->getCONFIG()->getSPO2module()==SPO2MODULE_MASIMO)
+	{
+		if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
+		{
+			if(iVal<0 || iVal>1)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				if(iVal==0)
+				{
+					getModel()->getDATAHANDLER()->setPRICOoff();
+				}
+				else
+				{
+					getModel()->getDATAHANDLER()->setPRICOon();
+				}
+
+				if(getModel()->getALARMHANDLER()->isPRICOAutoTurnedOff())
+				{
+					getModel()->getALARMHANDLER()->resetPRICOAutoTurnedOff();
+				}
+			}
+		}
+		else
+		{
+			sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		}
+	}
+	else
+	{
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+	}
+}
+void CInterfaceTerminal::setParam_FIO2HIGH(BYTE iVal)
+{
+	if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
+	{
+		fVALUE fv;
+		fv.iValue=iVal;
+
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->getPRICO_FIO2lowRange();
+		fv.iUpperLimit=100;
+
+		if(fv.iValue>fv.iUpperLimit)
+		{
+			sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+		}
+		else if(fv.iValue<fv.iLowerLimit)
+		{
+			sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+		}
+		else
+		{
+			getModel()->getDATAHANDLER()->setPRICO_FIO2highRange(fv.iValue);
+			if(AfxGetApp() != NULL)
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+		}
+	}
+	else
+	{
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+	}
+	
+}
+void CInterfaceTerminal::setParam_FIO2LOW(BYTE iVal)
+{
+	if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
+	{
+		fVALUE fv;
+		fv.iValue=iVal;
+
+		fv.iLowerLimit=21;
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->getPRICO_FIO2highRange();
+
+		if(fv.iValue>fv.iUpperLimit)
+		{
+			sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+		}
+		else if(fv.iValue<fv.iLowerLimit)
+		{
+			sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+		}
+		else
+		{
+			getModel()->getDATAHANDLER()->setPRICO_FIO2lowRange(fv.iValue);
+			if(AfxGetApp() != NULL)
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+		}
+	}
+	else
+	{
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+	}
+}
+void CInterfaceTerminal::setParam_SPO2HIGH(BYTE iVal)
+{
+	if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
+	{
+		fVALUE fv;
+		fv.iValue=iVal;
+
+		eAlarmLimitState limitstateSPO2Max = getModel()->getALARMHANDLER()->getAlimitState_SPO2maxLimit();
+
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->getPRICO_SPO2lowRange();
+		if(limitstateSPO2Max==AL_OFF || limitstateSPO2Max==AL_CALC)
+			fv.iUpperLimit=100;
+		else
+			fv.iUpperLimit=CTlsFloat::Round(((double)getModel()->getALARMHANDLER()->getAlimitSPO2max())/10, 0);
+
+		if(fv.iValue>fv.iUpperLimit)
+		{
+			sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+		}
+		else if(fv.iValue<fv.iLowerLimit)
+		{
+			sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+		}
+		else
+		{
+			getModel()->getDATAHANDLER()->setPRICO_SPO2highRange(fv.iValue);
+			if(AfxGetApp() != NULL)
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+		}
+	}
+	else
+	{
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+	}
+}
+void CInterfaceTerminal::setParam_SPO2LOW(BYTE iVal)
+{
+	if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
+	{
+		fVALUE fv;
+		fv.iValue=iVal;
+
+		eAlarmLimitState limitstateSPO2Max = getModel()->getALARMHANDLER()->getAlimitState_SPO2maxLimit();
+		eAlarmLimitState limitstateSPO2Min = getModel()->getALARMHANDLER()->getAlimitState_SPO2minLimit();
+
+		if(limitstateSPO2Max==AL_OFF || limitstateSPO2Max==AL_CALC)
+			fv.iUpperLimit=100;
+		else
+			fv.iUpperLimit=CTlsFloat::Round(((double)getModel()->getALARMHANDLER()->getAlimitSPO2max())/10, 0);
+
+		if(limitstateSPO2Min==AL_OFF || limitstateSPO2Min==AL_CALC)
+			fv.iLowerLimit=0;
+		else
+			fv.iLowerLimit=CTlsFloat::Round(((double)getModel()->getALARMHANDLER()->getAlimitSPO2min())/10, 0);
+
+		if(fv.iValue>fv.iUpperLimit)
+		{
+			sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+		}
+		else if(fv.iValue<fv.iLowerLimit)
+		{
+			sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+		}
+		else
+		{
+			getModel()->getDATAHANDLER()->setPRICO_SPO2lowRange(fv.iValue);
+			if(AfxGetApp() != NULL)
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+		}
+	}
+	else
+	{
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+	}
+}
+void CInterfaceTerminal::setParam_O2_FLUSH(BYTE iVal)
+{
+	fVALUE fv;
+	fv.iValue=iVal;
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetO2FlushMinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetO2FlushMaxPara();
+
+	if(fv.iValue<(getModel()->getDATAHANDLER()->PRESET()->GetO2Para()+MAXDIFF_O2_FLUSH))
+	{
+		sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+	}
+	else if(fv.iValue>fv.iUpperLimit)
+	{
+		sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+	}
+	else if(fv.iValue<fv.iLowerLimit)
+	{
+		sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+	}
+	else
+	{
+		getModel()->getDATAHANDLER()->SetCurrentO2FlushPara(fv.iValue);
+		if(AfxGetApp() != NULL)
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+	}
+}
+
+//void CInterfaceTerminal::setParam_ETimeRec(WORD iVal)
+//{
+//	switch(getModel()->getCONFIG()->GetCurMode())
+//	{
+//	case VM_HFO:
+//		{
+//			fVALUE fv;
+//			fv.iValue=iVal;
+//			if(getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable())
+//			{
+//				fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetFreqRecMinPara();
+//				fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetFreqRecMaxPara();
+//
+//				if(fv.iValue>fv.iUpperLimit)
+//				{
+//					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+//				}
+//				else if(fv.iValue<fv.iLowerLimit)
+//				{
+//					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+//				}
+//				else
+//				{
+//					getModel()->getDATAHANDLER()->SetCurrentFreqRecPara(fv.iValue);
+//					if(AfxGetApp() != NULL)
+//						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+//				}
+//			}
+//			else
+//			{
+//				sendData_Cmd(TERM_PARAM_NOSUPPORT);
+//			}
+//		}
+//		break;
+//	default:
+//		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+//		break;
+//	}
+//}
+void CInterfaceTerminal::setParam_ITimeRec(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_HFO:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+			if(getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable())
+			{
+				fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeRecMinPara();
+				fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeRecMaxPara();
+
+				if(fv.iValue>fv.iUpperLimit)
+				{
+					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+				}
+				else if(fv.iValue<fv.iLowerLimit)
+				{
+					sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+				}
+				else
+				{
+					getModel()->getDATAHANDLER()->SetCurrentITimeRecPara(fv.iValue);
+					if(AfxGetApp() != NULL)
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+				}
+			}
+			else
+			{
+				sendData_Cmd(TERM_PARAM_NOSUPPORT);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_Backup(BYTE iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_CPAP:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBackupMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBackupMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentBackupPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_PManual(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_CPAP:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentPManPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_NCPAP:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualNMODEMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualNMODEMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentPManPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_HFO:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMaxPara();
+
+			WORD iPmean=getModel()->getDATAHANDLER()->PRESET()->GetHFPMeanPara();
+			if(fv.iValue<iPmean+5)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetPManualHFOParadata(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_CPAP(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_CPAP:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentCPAPPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_NCPAP:
+	case VM_DUOPAP:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPNMODEMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPNMODEMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentCPAPPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_Flowmin(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_CPAP:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetFlowminMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetFlowminMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetFlowminParadata(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_Trigger(BYTE iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_DUOPAP:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerDUOPAPMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerDUOPAPMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentTriggerPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_NCPAP:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNCPAPMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerNCPAPMaxPara();
+
+			if(fv.iValue!=TRIGGER_SENSITIVITY_AUTO)
+			{
+				fv.iValue=TRIGGER_SENSITIVITY_AUTO;
+				getModel()->getDATAHANDLER()->SetCurrentTriggerPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				fv.iValue=TRIGGER_SENSITIVITY_AUTO;
+				getModel()->getDATAHANDLER()->SetCurrentTriggerPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_CPAP:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerCPAPMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerCPAPMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentTriggerPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_SIPPV:
+	case VM_SIMV:
+	case VM_SIMVPSV:
+	case VM_PSV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerCONVMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerCONVMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentTriggerPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_TherapieFlow(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_THERAPIE:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTherapieFlowMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTherapieFlowMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentTherapieFlowParaData(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_VLimit(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_IPPV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVLimitMinPara_IPPV();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVLimitMaxPara_IPPV();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentVLimitParam(fv.iValue,getModel()->getDATAHANDLER()->IsCurrentModeVLimitStateOn(),true);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_SIPPV:
+	case VM_SIMV:
+	case VM_SIMVPSV:
+	case VM_PSV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVLimitMinPara_TRIGGER();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVLimitMaxPara_TRIGGER();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentVLimitParam(fv.iValue,getModel()->getDATAHANDLER()->IsCurrentModeVLimitStateOn(),true);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_IFlow(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_IPPV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowMinPara_IPPV();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowMaxPara_IPPV();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentIFlowPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_SIPPV:
+	case VM_SIMV:
+	case VM_SIMVPSV:
+	case VM_PSV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowMinPara_TRIGGER();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowMaxPara_TRIGGER();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentIFlowPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_FiO2(BYTE iVal)
+{
+	fVALUE fv;
+	fv.iValue=iVal;
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetO2MinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetO2MaxPara();
+
+	if(fv.iValue>fv.iUpperLimit)
+	{
+		sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+	}
+	else if(fv.iValue<fv.iLowerLimit)
+	{
+		sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+	}
+	else
+	{
+		getModel()->getDATAHANDLER()->SetCurrentO2Para(fv.iValue);
+
+		if(AfxGetApp() != NULL)
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+	}
+}
+void CInterfaceTerminal::setVent_RunState(BYTE iVal)
+{
+	bool bTriggerVENT_STOPPED=false;
+	bool bTriggerVENT_RUNNING=false;
+	bool bTriggerVENT_STANDBY=false;
+
+	switch(iVal)
+	{
+	case VENT_STOPPED:
+		getModel()->getALARMHANDLER()->setAlarmSilent(false,true);
+		getModel()->SetVentRunState(VENT_STOPPED);
+		bTriggerVENT_STOPPED=true;
+		break;
+	case VENT_RUNNING:
+		getModel()->SetVentRunState(VENT_RUNNING);
+		getModel()->getALARMHANDLER()->setAutoSilent(false,true,false);
+		bTriggerVENT_RUNNING=true;
+		break;
+	case VENT_STANDBY:
+		getModel()->SetVentRunState(VENT_STANDBY);
+		getModel()->getALARMHANDLER()->setAlarmSilent();
+		bTriggerVENT_STANDBY=true;
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+		break;
+	}
+
+	if(bTriggerVENT_STOPPED)
+	{
+		CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STOP_VENTILATION);
+		getModel()->triggerEvent(&eventCtrl);
+	}
+	else if(bTriggerVENT_RUNNING)
+	{
+		CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_START_VENTILATION);
+		getModel()->triggerEvent(&eventCtrl);
+	}
+	else if(bTriggerVENT_STANDBY)
+	{
+		CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STANDBY);
+		getModel()->triggerEvent(&eventCtrl);
+	}
+}
+void CInterfaceTerminal::setState_VLimit(BYTE iVal)
+{
+	if(false==getModel()->getDATAHANDLER()->isVLIMITLicenseAvailable())
+	{
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+	}
+	else if(getModel()->getCONFIG()->GetVolumeControl()!=VCTRL_VLIMIT)
+	{
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+	}
+	else
+	{
+		if(getModel()->getVMODEHANDLER()->curModeIsVolumeSupportMode())
+		{
+			switch(iVal)
+			{
+			case 0:
+				getModel()->getDATAHANDLER()->SetCurrentVLimitParam(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_TRIGGER(),false,true);
+
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+				break;
+			case 1:
+				getModel()->getDATAHANDLER()->SetCurrentVLimitParam(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_TRIGGER(),true,true);
+
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+				break;
+			default:
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+				break;
+			}
+		}
+		else
+		{
+			sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		}
+		
+	}
+	
+}
+void CInterfaceTerminal::setState_VGarant(BYTE iVal)
+{
+	if(false==getModel()->getDATAHANDLER()->isVGUARANTLicenseAvailable())
+	{
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+	}
+	else if(getModel()->getCONFIG()->GetVolumeControl()!=VCTRL_VGARANT)
+	{
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+	}
+	else
+	{
+		if(getModel()->getVMODEHANDLER()->curModeIsVolumeSupportMode())
+		{
+			switch(iVal)
+			{
+			case 0:
+				getModel()->getDATAHANDLER()->ChangeVgarantState(VOLUMEGAR_OFF);
+
+				/*if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);*/
+				break;
+			case 1:
+				getModel()->getDATAHANDLER()->ChangeVgarantState(VOLUMEGAR_ON);
+
+				/*if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);*/
+				break;
+			default:
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+				break;
+			}
+		}
+		else
+		{
+			sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		}
+		
+	}
+}
+void CInterfaceTerminal::setParam_HFFreq(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_HFO:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentHFFreqPara(fv.iValue);
+
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_HFPMeanRec(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_HFO:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentHFPMeanRecPara(fv.iValue);
+
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_HFPMean(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_HFO:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentPMeanPara(fv.iValue);
+
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_HFAmpl(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_HFO:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentHFAMPLPara(fv.iValue);
+
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_HFAmplMax(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_HFO:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentHFAMPLmaxPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_BPM(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_IPPV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMMinPara_IPPV();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMMaxPara_IPPV();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentBPMPara(fv.iValue);
+				getModel()->getDATAHANDLER()->CalculateETime_BPMChanged(fv.iValue, false);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_SIPPV:
+	case VM_SIMV:
+	case VM_SIMVPSV:
+	case VM_PSV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMMinPara_TRIGGER();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMMaxPara_TRIGGER();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentBPMPara(fv.iValue);
+				getModel()->getDATAHANDLER()->CalculateETime_BPMChanged(fv.iValue, false);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_DUOPAP:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMNMODEMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMNMODEMaxPara();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentBPMPara(fv.iValue);
+				getModel()->getDATAHANDLER()->CalculateETime_BPMChanged(fv.iValue, false);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+
+	
+}
+void CInterfaceTerminal::setParam_PPSV(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_SIMVPSV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPpsvMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPpsvMaxPara();
+
+			SHORT iPINSP=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPPara_TRIGGER();
+			SHORT iPEEP=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_TRIGGER();
+
+			if(fv.iValue>iPINSP)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<iPEEP+20)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentPpsvPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_PSV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPpsvMinPara();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPpsvMaxPara();
+
+			SHORT iPINSP=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPPara_TRIGGER();
+			if(fv.iValue>iPINSP)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<(20+getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_TRIGGER()))
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentPpsvPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::setParam_PEEP(WORD iVal)
+{
+	switch(getModel()->getCONFIG()->GetCurMode())
+	{
+	case VM_IPPV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			if(getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_LINEAR)
+			{
+				fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPMinPara_RISETIME();
+			}
+			else
+			{
+				fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPMinPara_IPPV();
+			}
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPMaxPara_IPPV();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentPEEPPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	case VM_SERVICE:
+	case VM_SIMV:
+	case VM_SIPPV:
+	case VM_SIMVPSV:
+	case VM_PSV:
+		{
+			fVALUE fv;
+			fv.iValue=iVal;
+
+			if(getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_LINEAR)
+			{
+				fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPMinPara_RISETIME();
+			}
+			else
+			{
+				fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPMinPara_TRIGGER();
+			}
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPMaxPara_TRIGGER();
+
+			if(fv.iValue>fv.iUpperLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else if(fv.iValue<fv.iLowerLimit)
+			{
+				sendData_Cmd(TERM_PARAM_OUTOFFRANGE);
+			}
+			else
+			{
+				getModel()->getDATAHANDLER()->SetCurrentPEEPPara(fv.iValue);
+				if(AfxGetApp() != NULL)
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
+			}
+		}
+		break;
+	default:
+		sendData_Cmd(TERM_PARAM_NOSUPPORT);
+		break;
+	}
+}
+void CInterfaceTerminal::sendModeOption1()
 {
 	SHORT wMode=0;
 
@@ -1680,77 +3491,52 @@ void CInterfaceTerminal::sendModeOption()
 	if(true==getModel()->getDATAHANDLER()->IsFlowSensorCalibrating())
 		wMode=getModel()->setBitOfWord(wMode, FLOWCALA_BIT);
 
+	if(true==getModel()->getCONFIG()->getBTPS())
+	{
+		wMode=getModel()->setBitOfWord(wMode, BTPS_BIT);
+		//DEBUGMSG(TRUE, (TEXT("send BTPS true\r\n")));
+	}
+	/*else
+	{
+		DEBUGMSG(TRUE, (TEXT("send BTPS false\r\n")));
+	}*/
+
 	if(true==getModel()->getDATAHANDLER()->GetExhalValvCalMode())
 		wMode=getModel()->setBitOfWord(wMode, AVABGLEICH_BIT);
 
-	/*if(false==getModel()->getCONFIG()->GetVolumeTrigger())
-		wMode=getModel()->setBitOfWord(wMode, TRIGGERMODE_BIT);*/
-	eTriggereType trigger = TRIGGER_FLOW;
-	if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
-		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
-	{
-		trigger=getModel()->getDATAHANDLER()->getTriggerOptionDUOPAP();
-	}
-	else if(	getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
-		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_NCPAP)
-	{
-		trigger=getModel()->getDATAHANDLER()->getTriggerOptionNCPAP();
-	}
-	/*else if(	getModel()->getCONFIG()->GetCurMode()==VM_CPAP
-		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_CPAP)
-	{
-		trigger=getModel()->getDATAHANDLER()->getTriggerOption_CPAP();
-	}*/
-	else
-	{
-		trigger=getModel()->getDATAHANDLER()->getTriggerOptionCONV();//&& getModel()->getVMODEHANDLER()->activeModeIsTriggerMode()
-	}
-	switch(trigger)
-	{
-	case TRIGGER_VOLUME:
-		{
-			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 TRIGGER_VOLUME\r\n")));
-		}
-		break;
-	case TRIGGER_FLOW:
-		{
-			getModel()->setBitOfWord(wMode, MODOPT2_TRIGGERFLOW_BIT);
-			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 TRIGGER_FLOW\r\n")));
-		}
-		break;
-	case TRIGGER_PRESSURE:
-		{
-			getModel()->setBitOfWord(wMode, MODOPT2_TRIGGERPRESSURE_BIT);
-			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 MODOPT2_TRIGGERPRESSURE_BIT\r\n")));
-		}
-		break;
-	}
-
+	/*if(false==getCONFIG()->GetVolumeTrigger())
+		wMode=setBitOfWord(wMode, TRIGGERMODE_BIT);*/
 
 	if(true==getModel()->getDATAHANDLER()->GetO21SensorCalState())
 	{
+		//DEBUGMSG(TRUE, (TEXT("OXYCAL21_BIT\r\n")));
 		wMode=getModel()->setBitOfWord(wMode, OXYCAL21_BIT);
 	}
 
 	if(true==getModel()->getDATAHANDLER()->GetO100SensorCalState())
+	{
+		//DEBUGMSG(TRUE, (TEXT("OXYCAL100_BIT\r\n")));
 		wMode=getModel()->setBitOfWord(wMode, OXYCAL100_BIT);
+	}
 
 	eTubeSet eTube=getModel()->getDATAHANDLER()->GetTubeSet();
 	switch(eTube)
 	{
-	/*case TUBE_INFANTFLOW:
+	case TUBE_INFANTFLOW:
 		{
-			wMode=setBitOfWord(wMode, TUBESET11_BIT);
+			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION1 TUBE_INFANTFLOW\r\n")));
 		}
-		break;*/
+		break;
 	case TUBE_MEDIJET:
 		{
 			wMode=getModel()->setBitOfWord(wMode, TUBESET10_BIT);
+			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION1 TUBE_MEDIJET\r\n")));
 		}
 		break;
 	case TUBE_INFANTFLOW_LP:
 		{
 			wMode=getModel()->setBitOfWord(wMode, TUBESET11_BIT);
+			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION1 TUBE_INFANTFLOW_LP\r\n")));
 		}
 		break;
 	}
@@ -1763,16 +3549,19 @@ void CInterfaceTerminal::sendModeOption()
 		{
 		case RIE_1_3:
 			{
+				//DEBUGMSG(TRUE, (TEXT("Send IERATIO 1:3\r\n")));
 			}
 			break;
 		case RIE_1_2:
 			{
 				wMode=getModel()->setBitOfWord(wMode, IERATIO12_BIT);
+				//DEBUGMSG(TRUE, (TEXT("Send IERATIO 1:2\r\n")));
 			}
 			break;
 		case RIE_1_1:
 			{
 				wMode=getModel()->setBitOfWord(wMode, IERATIO13_BIT);
+				//DEBUGMSG(TRUE, (TEXT("Send IERATIO 1:1\r\n")));
 			}
 			break;
 		}
@@ -1785,16 +3574,19 @@ void CInterfaceTerminal::sendModeOption()
 		{
 		case RIE_1_3:
 			{
+				//DEBUGMSG(TRUE, (TEXT("Send IERATIO 1:3\r\n")));
 			}
 			break;
 		case RIE_1_2:
 			{
 				wMode=getModel()->setBitOfWord(wMode, IERATIO12_BIT);
+				//DEBUGMSG(TRUE, (TEXT("Send IERATIO 1:2\r\n")));
 			}
 			break;
 		case RIE_1_1:
 			{
 				wMode=getModel()->setBitOfWord(wMode, IERATIO13_BIT);
+				//DEBUGMSG(TRUE, (TEXT("Send IERATIO 1:1\r\n")));
 			}
 			break;
 		}
@@ -1809,7 +3601,7 @@ void CInterfaceTerminal::sendModeOption()
 		wMode=getModel()->setBitOfWord(wMode, MANBREAT15_BIT);
 	}
 	
-	sendData_SHORT(TERM_MODE_OPTION, wMode);
+	sendData_SHORT(TERMINAL_MODE_OPTION1, wMode);
 }
 
 void CInterfaceTerminal::sendModeOption2()
@@ -1822,19 +3614,24 @@ void CInterfaceTerminal::sendModeOption2()
 	{
 	case CURVE_IFLOW:
 		{
+			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 CURVE_IFLOW\r\n")));
 		}
 		break;
 	case CURVE_LINEAR:
 		{
 			wMode=getModel()->setBitOfWord(wMode, MODOPT2_CURVEFORM1_BIT);
+			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 CURVE_LINEAR\r\n")));
 		}
 		break;
-	/*case CURVE_AUTOFLOW:
+	case CURVE_AUTOFLOW: 
 		{
 			wMode=getModel()->setBitOfWord(wMode, MODOPT2_CURVEFORM2_BIT);
+			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 CURVE_AUTOFLOW\r\n")));
 		}
-		break;*/
+		break;
 	}
+
+
 
 	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 	{
@@ -1852,13 +3649,10 @@ void CInterfaceTerminal::sendModeOption2()
 		}
 	}
 
-	/*if(getModel()->getDATAHANDLER()->isNebulizerOn()==true)
+	/*if(getDATAHANDLER()->isNebulizerOn()==true)
 	{
-		wMode=getModel()->setBitOfWord(wMode, MODOPT2_NEBULIZER_BIT);
-	}*/
-	/*if(getModel()->getCONFIG()->isLeakCompOff())
-	{
-		wMode=getModel()->setBitOfWord(wMode, MODOPT2_LEAKCOMPENSATION_BIT);
+		wMode=setBitOfWord(wMode, MODOPT2_NEBULIZER_BIT);
+		
 	}*/
 
 	eLeakCompensation eLeakCompOff=getModel()->getCONFIG()->getLeakCompensation();
@@ -1887,7 +3681,67 @@ void CInterfaceTerminal::sendModeOption2()
 		break;
 	}
 
-	sendData_SHORT(TERM_MODE_OPTION2, wMode);
+	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
+	{
+		if(getModel()->getCONFIG()->getFreshgasExt()==true)
+		{
+			wMode=getModel()->setBitOfWord(wMode, MODOPT2_FRESHGASEXT_BIT);
+			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 FreshgasExt\r\n")));
+		}
+		else
+		{
+			//DEBUGMSG(TRUE, (TEXT("Send_MODE_OPTION2 FreshgasInt\r\n")));
+		}
+	}
+	else if(getModel()->getVMODEHANDLER()->activeModeIsNMODE())
+	{
+		wMode=getModel()->setBitOfWord(wMode, MODOPT2_FRESHGASEXT_BIT);
+	}
+
+	eTriggereType trigger = TRIGGER_FLOW;
+	if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
+		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
+	{
+		trigger=getModel()->getDATAHANDLER()->getTriggerOptionDUOPAP();
+	}
+	else if(	getModel()->getCONFIG()->GetCurMode()==VM_NCPAP
+		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_NCPAP)
+	{
+		trigger=getModel()->getDATAHANDLER()->getTriggerOptionNCPAP();
+	}
+	/*else if(	getCONFIG()->GetCurMode()==VM_CPAP
+		||	getCONFIG()->GetCurMode()==VM_PRE_CPAP)
+	{
+		trigger=getDATAHANDLER()->getTriggerOption_CPAP();
+	}*/
+	else
+	{
+		trigger=getModel()->getDATAHANDLER()->getTriggerOptionCONV();
+	}
+	switch(trigger)
+	{
+	case TRIGGER_VOLUME:
+		{
+		}
+		break;
+	case TRIGGER_FLOW:
+		{
+			wMode=getModel()->setBitOfWord(wMode, MODOPT2_TRIGGERFLOW_BIT);
+		}
+		break;
+	case TRIGGER_PRESSURE:
+		{
+			wMode=getModel()->setBitOfWord(wMode, MODOPT2_TRIGGERPRESSURE_BIT);
+		}
+		break;
+	}
+	
+	if(true==getModel()->getDATAHANDLER()->getFOToscillationState())
+	{
+		wMode=getModel()->setBitOfWord(wMode, MODOPT2_FOTRUN_BIT);//BIT9
+	}
+
+	sendData_SHORT(TERMINAL_MODE_OPTION2, wMode);
 }
 
 //#####################################CheckThread########################################
@@ -2084,7 +3938,7 @@ DWORD CInterfaceTerminal::SendTerminalData(void)
 
 	//m_bSendWaveData=true;
 
-	setWaveDataActive();
+	//setWaveDataActive();
 
 	do
 	{
@@ -2108,6 +3962,11 @@ DWORD CInterfaceTerminal::SendTerminalData(void)
 			delete (void *)szTemp;
 
 			pos = MSGSend.GetHeadPosition();
+
+			/*int iTest=MSGSend.GetSize();
+
+			if(iTest>100)
+				int iStop=0;*/
 
 			LeaveCriticalSection(&csMSGSend);
 		}
@@ -2185,7 +4044,7 @@ void CInterfaceTerminal::sendWaveData(SHORT  iValPressure,SHORT  iValFlow,SHORT 
 
 	msg->byBuffer[0]=TERM_MSG_SOM;
 	msg->byBuffer[1]=10;
-	msg->byBuffer[2]=TERM_WAVE_DATA; 
+	msg->byBuffer[2]=TERMINAL_WAVE_DATA; 
 	
 	msg->byBuffer[3]=HIBYTE(iValPressure);
 	msg->byBuffer[4]=LOBYTE(iValPressure);
@@ -2548,7 +4407,12 @@ void CInterfaceTerminal::sendData_Cmd(BYTE command)
 
 	msg->bySize=4;
 
+#ifdef DUMP_TERMINALCMD
+	DEBUGMSG(TRUE, (TEXT("Terminal CMD: %x %x %x %x  \r\n"),msg->byBuffer[0],msg->byBuffer[1],msg->byBuffer[2],msg->byBuffer[3]));
+#else
 	send(msg);
+#endif
+	
 }
 
 
@@ -2571,7 +4435,11 @@ void CInterfaceTerminal::sendData_SHORT(BYTE command, SHORT val)
 
 	msg->bySize=6;
 
+#ifdef DUMP_TERMINALCMD
+	DEBUGMSG(TRUE, (TEXT("Terminal CMD: %x %x %x %x %x %x\r\n"),msg->byBuffer[0],msg->byBuffer[1],msg->byBuffer[2],msg->byBuffer[3],msg->byBuffer[4],msg->byBuffer[5]));
+#else
 	send(msg);
+#endif
 }
 
 void CInterfaceTerminal::sendData_BYTE(BYTE command, BYTE val) 
@@ -2599,7 +4467,11 @@ void CInterfaceTerminal::sendData_BYTE(BYTE command, BYTE val)
 
 	msg->bySize=5;
 
+#ifdef DUMP_TERMINALCMD
+	DEBUGMSG(TRUE, (TEXT("Terminal CMD: %x %x %x %x %x\r\n"),msg->byBuffer[0],msg->byBuffer[1],msg->byBuffer[2],msg->byBuffer[3],msg->byBuffer[4]));
+#else
 	send(msg);
+#endif
 }
 
 // **************************************************************************
@@ -2668,10 +4540,6 @@ void CInterfaceTerminal::sendMessurementData()
 		pMessureData.m_iPercent=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_ANTEIL_RESP);
 		//getModel()->getDATAHANDLER()->getBlockMessureDataAVG(&pMessureData);
 	}
-	
-	
-//getMessureDataBTB(NUMT_PPEAK);
-	
 
 	bool bCO2value=false;
 	bool bCO2module=false;
@@ -2863,11 +4731,11 @@ void CInterfaceTerminal::sendMessurementData()
 
 	if(m_bMEASUREMENTS_BTB)
 	{
-		msg->byBuffer[2]=TERM_MEASUREMENTS_BTB; 
+		msg->byBuffer[2]=TERMINAL_MEASUREMENTS_BTB; 
 	}
 	else //if (m_bMEASUREMENTS_AVG)
 	{
-		msg->byBuffer[2]=TERM_MEASUREMENTS_AVG; 
+		msg->byBuffer[2]=TERMINAL_MEASUREMENTS_AVG; 
 	}
 
 	msg->byBuffer[3]=(BYTE)eActiveVentMode;

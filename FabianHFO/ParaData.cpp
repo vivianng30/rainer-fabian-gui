@@ -1563,7 +1563,7 @@ void CParaData::SetDataFromMode(eVentMode mode)
 				getModel()->getDATAHANDLER()->PARADATA()->SetPmaxVolGPara_IPPV(getModel()->getDATAHANDLER()->PRESET()->GetPmaxVolGPara_IPPV(),false,true);
 				getModel()->getDATAHANDLER()->PARADATA()->SetPINSPPara_IPPV(getModel()->getDATAHANDLER()->PRESET()->GetPINSPPara_IPPV(),false,false);
 				getModel()->getDATAHANDLER()->PARADATA()->SetVLimitParam_IPPV(getModel()->getDATAHANDLER()->PRESET()->GetVLimitParam_IPPV(),false,true,true);
-				
+
 			}
 			else
 			{
@@ -1623,7 +1623,7 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			getModel()->getDATAHANDLER()->PRESET()->GetParaData(&m_data);
 			//getModel()->getDATAHANDLER()->PARADATA()->SetPINSPPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetPinspPara_TRIGGER(),true,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetHFVGarantPara(getModel()->getDATAHANDLER()->PRESET()->GetHFVGarantPara(),false,true);
-			
+
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
 
@@ -1659,7 +1659,7 @@ void CParaData::SetDataFromMode(eVentMode mode)
 			getModel()->getDATAHANDLER()->PARADATA()->SetTriggerPara_CONV(getModel()->getDATAHANDLER()->PRESET()->GetTriggerPara_CONV(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2Para(getModel()->getDATAHANDLER()->PRESET()->GetO2Para(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetO2FlushPara(getModel()->getDATAHANDLER()->PRESET()->GetO2FlushPara(),true);
-			
+
 			//kein PinspVolG an SERIAL schicken!
 			getModel()->getDATAHANDLER()->PARADATA()->SetPmaxVolGPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetPmaxVolGPara_TRIGGER(),false,true);
 			getModel()->getDATAHANDLER()->PARADATA()->SetPINSPPara_TRIGGER(getModel()->getDATAHANDLER()->PRESET()->GetPINSPPara_TRIGGER(),false,true);
@@ -1732,7 +1732,7 @@ void CParaData::SetDataFromMode(eVentMode mode)
 	default:
 		break;
 	}
-	
+
 }
 
 // **************************************************************************

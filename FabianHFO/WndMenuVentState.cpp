@@ -735,6 +735,7 @@ LRESULT CWndMenuVentState::WindowProc(UINT message, WPARAM wParam, LPARAM lParam
 // **************************************************************************
 void CWndMenuVentState::SetOneButtonDepressed(int btnID)
 {
+	DEBUGMSG(TRUE, (TEXT("CWndMenuVentState::SetOneButtonDepressed start\r\n")));
 	POSITION pos;
 
 	try
@@ -763,6 +764,7 @@ void CWndMenuVentState::SetOneButtonDepressed(int btnID)
 	{
 		theApp.ReportException(_T("CWndMenuTrendtype::SetOneButtonDepressed"));
 	}
+	DEBUGMSG(TRUE, (TEXT("CWndMenuVentState::SetOneButtonDepressed end\r\n")));
 	
 }
 

@@ -1491,7 +1491,8 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 							{
 								if(getModel()->getTERMINAL()->isWaveDataActive())
 								{
-									if(iCntTerminal>=4)//250Hz 
+									//if(iCntTerminal>=4)//250Hz 
+									if(iCntTerminal>=3)//333Hz 
 									{
 										getModel()->getTERMINAL()->sendWaveData(_pBufData.iValPressure,_pBufData.iValFlow*ALINK_FACTOR_FLOW,_pBufData.iValCO2);
 										iCntTerminal=0;

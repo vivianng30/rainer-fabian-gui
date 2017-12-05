@@ -8658,8 +8658,7 @@ void CViewParaBtn::load_PPSVpara(bool bSIMV, bool bPRESET)
 				fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPpsvMinPara();
 				fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPpsvMaxPara();
 
-				SHORT iPINSP=getModel()->getDATAHANDLER()->PRESET()->GetPINSPPara_TRIGGER();
-				iPINSP=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPPara_TRIGGER();
+				SHORT iPINSP=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPPara_TRIGGER();
 				if(getModel()->getDATAHANDLER()->PARADATA()->GetPpsvPara()>iPINSP)
 				{
 					getModel()->getDATAHANDLER()->SetPpsvParadata(iPINSP);
@@ -8823,7 +8822,7 @@ void CViewParaBtn::load_PEEPpara(bool bTrigger,bool bPRESET)
 	fVALUE fv;
 	/** \brief The enter critical section. */
 	EnterCriticalSection(&csDraw);
-	if(m_pcPara_PEEP)
+ 	if(m_pcPara_PEEP)
 	{
 		if(bTrigger)
 		{
@@ -9228,8 +9227,8 @@ void CViewParaBtn::SetAllButtonUnpressed()
 // **************************************************************************
 void CViewParaBtn::NotifyVentModeChanged()
 {
-	m_bViewPraBtnShown=false;
 	ShowParaBtn(true);
+	
 	m_bViewPraBtnShown=true;
 }
 

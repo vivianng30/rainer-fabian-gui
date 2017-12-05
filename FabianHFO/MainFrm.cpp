@@ -1265,6 +1265,77 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		//		
 		//		return 1;
 		//	}
+		case WM_TERMINAL_IPPV:
+			{
+				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_IPPV))
+					theApp.getLog()->WriteLine(_T("#HFO:T400"));
+				return 1;
+			}
+			break;
+		case WM_TERMINAL_SIPPV:
+			{
+				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_SIPPV))
+					theApp.getLog()->WriteLine(_T("#HFO:T401"));
+				return 1;
+			}
+			break;
+		case WM_TERMINAL_SIMV:
+			{
+				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_SIMV))
+					theApp.getLog()->WriteLine(_T("#HFO:T402"));
+				return 1;
+			}
+			break;
+		case WM_TERMINAL_SIMVPSV:
+			{
+				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_SIMVPSV))
+					theApp.getLog()->WriteLine(_T("#HFO:T403"));
+				return 1;
+			}
+			break;
+		case WM_TERMINAL_PSV:
+			{
+				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_PSV))
+					theApp.getLog()->WriteLine(_T("#HFO:T404"));
+				return 1;
+			}
+			break;
+		case WM_TERMINAL_CPAP:
+			{
+				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_CPAP))
+					theApp.getLog()->WriteLine(_T("#HFO:T405"));
+				return 1;
+			}
+			break;
+		case WM_TERMINAL_NCPAP:
+			{
+				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_NCPAP))
+					theApp.getLog()->WriteLine(_T("#HFO:T406"));
+				return 1;
+			}
+			break;
+		case WM_TERMINAL_DUOPAP:
+			{
+				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_DUOPAP))
+					theApp.getLog()->WriteLine(_T("#HFO:T407"));
+				return 1;
+			}
+			break;
+		case WM_TERMINAL_HFO:
+			{
+				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_HFO))
+					theApp.getLog()->WriteLine(_T("#HFO:T408"));
+				return 1;
+			}
+			break;
+		case WM_TERMINAL_THERAPY:
+			{
+				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_THERAPIE))
+					theApp.getLog()->WriteLine(_T("#HFO:T409"));
+				return 1;
+			}
+			break;
+
 		case WM_RETRYCO2:
 			{
 				getModel()->DeinitCO2module();
@@ -2573,7 +2644,6 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					{
 						if(getModel()->getDATAHANDLER()->PARADATA()->IsVLimitParamOn_IPPV())
 						{
-							//PostMessage(WM_PARABUTTON_TURNEDOWN,IDC_BTN_PARA_VGARANT,0);
 							getModel()->getDATAHANDLER()->SetVLimitParamdata_IPPV(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_IPPV(),false,true);
 						}
 					}
@@ -2581,11 +2651,9 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					{
 						if(getModel()->getDATAHANDLER()->PARADATA()->IsVLimitParamOn_TRIGGER())
 						{
-							//PostMessage(WM_PARABUTTON_TURNEDOWN,IDC_BTN_PARA_VGARANT,0);
 							getModel()->getDATAHANDLER()->SetVLimitParamdata_TRIGGER(getModel()->getDATAHANDLER()->PARADATA()->GetVLimitParam_TRIGGER(),false,true);
 						}
 					}
-					
 
 					theApp.getLog()->WriteLine(_T("VgarantAutoTurnedOn WM_FLOWCAL_FINNISHED"));
 					getModel()->getDATAHANDLER()->ChangeVgarantState(VOLUMEGAR_PARA_AUTOENABLED);
@@ -2593,7 +2661,6 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				else if(getModel()->getALARMHANDLER()->isVlimitAutoTurnedOff_FlowSensor()
 					&& getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==false)
 				{
-					
 					if(getModel()->getDATAHANDLER()->IsActiveModeVGarantStateOn())
 					{
 						getModel()->getDATAHANDLER()->ChangeVgarantState(VOLUMEGAR_OFF);
@@ -2618,7 +2685,6 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		case WM_SERIAL_SETALARM_CHECKSUMCONPIC:
 			{
 				getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_ChecksumConPIC);
-				//getModel()->getALARMHANDLER()->SetAlarm_ChecksumConPIC(_T(""));
 				return 1;
 			}
 			break;
@@ -2626,7 +2692,6 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				getModel()->getDATAHANDLER()->SetConPICChecksumError(false);
 				theApp.getLog()->WriteLine(_T("Delete AL_SysFail_ChecksumConPIC"));
-				//getModel()->getALARMHANDLER()->deleteAlarm(AL_SysFail_ChecksumConPIC);
 				getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysFail_ChecksumConPIC,AS_SIGNALED);
 				return 1;
 			}
@@ -4508,10 +4573,17 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					getModel()->NotifyMonitorData();
 
 				
-				if(getModel()->getAcuLink()!=NULL)
+				if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL
+					&&	getModel()->getTERMINAL()->isMeasurementDataActive())
+				{
+					//DEBUGMSG(TRUE, (TEXT("WM_NEWMONITORDATA\r\n")));
+					getModel()->getTERMINAL()->sendMessurementData();
+				}
+				else if(getModel()->getAcuLink()!=NULL)
 				{
 					getModel()->getAcuLink()->sendMeasurementData();
 				}
+				 
 				
 				return 1;
 			}
@@ -5640,6 +5712,40 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 				//getModel()->getALARMHANDLER()->setAutoSilent(false,false,false);
 				getModel()->getDATAHANDLER()->checkLimits();
+				return 1;
+			}
+			break;
+		case WM_ACTIVATE_MANBREATH:
+			{
+				m_bMatrxDwn_MANBREATHdisabled=false;
+				m_bMatrxDwn_MANBREATH=true;
+
+				getModel()->ResetExhalValvCalMode();
+
+				getModel()->activateMANBREATH();
+
+				int iTime=(getModel()->getCONFIG()->GetManBreathTime())*1000;
+				SetTimer(MANBREATHTIMER,iTime,NULL);
+
+				getModel()->getSERIAL()->Send_START_MAN_BREATH();
+				PostMessage(WM_CONTROL_START_MANBREATH);
+				return 1;
+			}
+			break;
+		case WM_DEACTIVATE_MANBREATH:
+			{
+				if(getModel()->isMANBREATHrunning())
+				{
+					KillTimer(MANBREATHTIMER);
+
+
+					getModel()->getSERIAL()->Send_STOP_MAN_BREATH();
+
+					CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STOP_MANBREATH);
+					getModel()->triggerEvent(&eventCtrl);
+
+					getModel()->deactivateMANBREATH();
+				}
 				return 1;
 			}
 			break;
@@ -9116,6 +9222,16 @@ DWORD CMainFrame::CheckOxyCal(void)
 			{
 				if(m_bDelayAutoOxyCal)
 					break;
+
+				eStateOfAlarm state1=getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_AIR->getAlarmState();
+				eStateOfAlarm state2=getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_O2->getAlarmState();
+				if(		getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_O2->getAlarmState()==AS_ACTIVE
+					||	getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_AIR->getAlarmState()==AS_ACTIVE)
+				{
+					m_bDelayAutoOxyCal=true;
+					getModel()->SetO2calFlag();
+					break;
+				}
 
 				eStateOfAlarm state1=getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_AIR->getAlarmState();
 				eStateOfAlarm state2=getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_O2->getAlarmState();

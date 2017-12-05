@@ -2698,7 +2698,7 @@ eViewSubState CMVViewHandler::getPrevGraphSubState()
 
 void CMVViewHandler::changeViewState(eViewState state,eViewSubState substate,bool bStopFreeze)
 {
-	DEBUGMSG(TRUE, (TEXT("xxxxx changeViewState\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("xxxxx changeViewState\r\n")));
 	StopDiagramm(bStopFreeze);
 	Sleep(0);
 

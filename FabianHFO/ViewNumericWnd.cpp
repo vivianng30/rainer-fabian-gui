@@ -512,6 +512,7 @@ void CViewNumericWnd::ShowWndNumIPPV()
  **************************************************************************************************/
 void CViewNumericWnd::ShowWndNumSIPPV()
 {
+	DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::ShowWndNumSIPPV() start\r\n")));
 	if(getModel()->getDATAHANDLER()->getCountNumericSIPPV()>1)
 	{
 		CString szText=_T("");
@@ -546,6 +547,7 @@ void CViewNumericWnd::ShowWndNumSIPPV()
 		break;
 	}
 	LeaveCriticalSection(&csNumWnd);
+	DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::ShowWndNumSIPPV() end\r\n")));
 }
 
 /**********************************************************************************************//**
@@ -855,6 +857,7 @@ void CViewNumericWnd::HideNumWnd()
 // **************************************************************************
 void CViewNumericWnd::ShowNumWnd(eNumBlock eBlock,bool bChangeCurNumBlock)
 {
+	DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::ShowNumWnd() start\r\n")));
 	if(m_eNumBlock!=eBlock || bChangeCurNumBlock)
 		HideNumWnd();
 
@@ -936,6 +939,7 @@ void CViewNumericWnd::ShowNumWnd(eNumBlock eBlock,bool bChangeCurNumBlock)
 	{
 		DeleteGraphCursor();
 	}
+	DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::ShowNumWnd() end\r\n")));
 }
 
 
@@ -945,6 +949,7 @@ void CViewNumericWnd::ShowNumWnd(eNumBlock eBlock,bool bChangeCurNumBlock)
 // **************************************************************************
 void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 {
+	DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::SetNumericBlock() start\r\n")));
 	eNumBlock eBlock=NUMB_IPPV;
 
 	eVentMode eMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -1007,7 +1012,11 @@ void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 		break;
 	}
 
+	DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::SetNumericBlock() 1\r\n")));
+
 	ShowNumWnd(eBlock,bChangeCurNumBlock);
+
+	DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::SetNumericBlock() end\r\n")));
 }
 
 eNumBlock CViewNumericWnd::SetNumericBlock_IPPV()
@@ -1620,6 +1629,7 @@ void CViewNumericWnd::NotifyViewStateChanged()
 
 void CViewNumericWnd::NotifyVentModeChanged()
 {
+	DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::NotifyVentModeChanged()\r\n")));
 	if(m_bExit)
 		return;
 

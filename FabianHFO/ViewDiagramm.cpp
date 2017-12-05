@@ -2546,10 +2546,10 @@ void CViewDiagramm::StopDiagramm(bool bStopFreeze)
 {
 	if(!m_bFreeze || bStopFreeze)
 	{
-		DEBUGMSG(TRUE, (TEXT("xxxxx StopDiagramm StopGraphThread\r\n")));
+		//DEBUGMSG(TRUE, (TEXT("xxxxx StopDiagramm StopGraphThread\r\n")));
 		StopGraphThread();
 	}
-	DEBUGMSG(TRUE, (TEXT("xxxxxxxxxxxxxxx StopDiagramm\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("xxxxxxxxxxxxxxx StopDiagramm\r\n")));
 
 	if(bStopFreeze)
 		m_bFreeze=false;
@@ -2575,11 +2575,11 @@ void CViewDiagramm::drawView(bool bNextGraph)
 		return;
 	DrawCursor(0);
 
-	DEBUGMSG(TRUE, (TEXT("xxxxxxx CViewDiagramm::drawView\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("xxxxxxx CViewDiagramm::drawView\r\n")));
 
 	if(!m_bFreeze)
 	{
-		DEBUGMSG(TRUE, (TEXT("xxxxx CViewDiagramm::drawView updateCopyDataBuffer\r\n")));
+		//DEBUGMSG(TRUE, (TEXT("xxxxx CViewDiagramm::drawView updateCopyDataBuffer\r\n")));
 		if(m_pcwtGraphThread!=NULL)
 			StopGraphThread();
 
@@ -5464,6 +5464,7 @@ void CViewDiagramm::ShowWndMenuGraphs(bool bShow)
 // **************************************************************************
 void CViewDiagramm::NotifyVentModeChanged()
 {
+	DEBUGMSG(TRUE, (TEXT("CViewDiagramm::NotifyVentModeChanged()\r\n")));
 	bool bResetAll=false;
 	if(getModel()->getVMODEHANDLER()->activeModeIsTrigger()==false)
 	{

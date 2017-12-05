@@ -31,6 +31,7 @@
 	- BIAS FLow: only visible if HFO license is available and biasflow enabled
 	- ventilation menu: manual breath HFO only available if HFO license is available
 	- acuLink: bug in IVOI ALINK_MSMNT_MIN_VOL fixed, exponent is -2 -> acuLink divide the sent value by 10, not Fabian anymore
+	- EV_CONTROL_FLOWSENSORSTATE changed (wrong ventmode)
  @endverbatim
  * 
  * @subsection ver5050 Version 5.0.5.0

@@ -2593,7 +2593,7 @@ void CParaBtn::WriteCurrentValue()
 	case IDC_BTN_PARA_PCURVE:
 		{
 			getModel()->getCONFIG()->SetCurPressureRiseCtrl((eCurveForm)m_v.iValue);
-			getModel()->Send_MODE_OPTION1();
+			getModel()->Send_MODE_OPTION2();
 			bStopFOT=false;
 		}
 		break;
