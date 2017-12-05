@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  * 
+ * @subsection ver5060 Version 5.0.7.0
+ * @date 2017-12-05
+ * @verbatim
+	- Terminal interface for Rotterdam merged
+ @endverbatim
+ * 
  * @subsection ver5060 Version 5.0.6.0
  * @date 2017-11-30
  * @verbatim
