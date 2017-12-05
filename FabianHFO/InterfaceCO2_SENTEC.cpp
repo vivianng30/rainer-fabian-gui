@@ -25,7 +25,7 @@ CInterfaceCO2_SENTEC::~CInterfaceCO2_SENTEC(void)
 
 int CInterfaceCO2_SENTEC::Init(BYTE com)
 {
-	DEBUGMSG(TRUE, (TEXT("CInterfaceCO2_CAPNOSTAT::Init\r\n")));
+	DEBUGMSG(TRUE, (TEXT("CInterfaceCO2_SENTEC::Init\r\n")));
 	getModel()->setCO2inprogress(true);
 	m_com=com;
 	m_iETCO2=0;
@@ -71,7 +71,7 @@ int CInterfaceCO2_SENTEC::Init(BYTE com)
 
 	//startETCO2Thread();
 
-	DEBUGMSG(TRUE, (TEXT("CInterfaceCO2_CAPNOSTAT::Init2\r\n")));
+	DEBUGMSG(TRUE, (TEXT("CInterfaceCO2_SENTEC::Init2\r\n")));
 
 	return 0;
 }
@@ -109,7 +109,7 @@ int CInterfaceCO2_SENTEC::Deinit()
 	}
 	g_eventCO2Data.SetEvent();
 
-	DEBUGMSG(TRUE, (TEXT("CInterfaceCO2_CAPNOSTAT::Deinit2\r\n")));
+	DEBUGMSG(TRUE, (TEXT("CInterfaceCO2_SENTEC::Deinit2\r\n")));
 
 	//getModel()->setCO2inprogress(false);
 
