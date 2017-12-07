@@ -1672,7 +1672,7 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 	}while(m_bDoSPIMonitorThread);
 
 	m_bSPIrunning=false;
-	theApp.getLog()->WriteLine(_T("#THR:013"));
+	//theApp.getLog()->WriteLine(_T("#THR:013"));
 
 	return 0;
 }
@@ -2108,7 +2108,7 @@ DWORD CInterfaceSPI::SPICommunicationData(void)
 	/*if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_THR_STOP,THR_SPISEND);*/
 
-	theApp.getLog()->WriteLine(_T("#THR:014"));
+	//theApp.getLog()->WriteLine(_T("#THR:014"));
 
 	return 0;
 }

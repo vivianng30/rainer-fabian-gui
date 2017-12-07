@@ -1646,7 +1646,7 @@ DWORD CWndDataSPO2::SPO2Data(void)
 		}
 	}while(doThread());
 
-	theApp.getLog()->WriteLine(_T("#THR:035"));
+	//theApp.getLog()->WriteLine(_T("#THR:035"));
 
 	return 0;
 }

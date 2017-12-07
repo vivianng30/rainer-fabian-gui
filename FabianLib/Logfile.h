@@ -27,6 +27,7 @@ public:
 
 	bool Open();
 	bool Close();
+	void Exit();
 	virtual ~Logfile();
 
 	void StartLogfileThread(void);

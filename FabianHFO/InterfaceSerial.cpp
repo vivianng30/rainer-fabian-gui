@@ -1081,7 +1081,7 @@ DWORD CInterfaceSerial::CheckSerialData(void)
 	}while(doCheckThread() && m_comPort.m_hCommPort!=INVALID_HANDLE_VALUE);
 
 	DEBUGMSG(TRUE, (TEXT("END CheckSerialData\r\n")));
-	theApp.getLog()->WriteLine(_T("#THR:012"));
+	//theApp.getLog()->WriteLine(_T("#THR:012"));
 
 	return 0;
 }

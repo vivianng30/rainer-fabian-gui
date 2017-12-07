@@ -690,7 +690,6 @@ CDataHandler::CDataHandler(void)
 
 CDataHandler::~CDataHandler(void)
 {
-	
 }
 
 
@@ -788,8 +787,10 @@ void CDataHandler::setExit()
 
 	saveOpTime();
 
+
 	m_PARADATA->DestroyInstance();
 	m_PRESET->DestroyInstance();
+
 
 	EnterCriticalSection(&csSavedBreath);
 	if (m_pbufSavedBreath != NULL) {
@@ -5431,7 +5432,7 @@ void CDataHandler::checkTriggerTubeDependency()
 
 void CDataHandler::checkTriggerTubeDependency_DUOPAP()
 {
-	if(		true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
+	if(true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
 	{
 		if(GetTubeSet()==TUBE_MEDIJET)//pressure trigger
 		{
@@ -5550,6 +5551,14 @@ void CDataHandler::checkTriggerTubeDependency_DUOPAP()
 			}
 		}
 	}
+	else
+	{
+		if(getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()!=AL_OFF)
+		{
+			if(AfxGetApp() != NULL)
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_TURNOFF_APNEA);
+		}
+	}
 }
 void CDataHandler::checkTriggerTubeDependency_NCPAP()
 {
@@ -5595,6 +5604,14 @@ void CDataHandler::checkTriggerTubeDependency_NCPAP()
 						AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_STATE);
 				}
 			}
+		}
+	}
+	else
+	{
+		if(getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()!=AL_OFF)
+		{
+			if(AfxGetApp() != NULL)
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_TURNOFF_APNEA);
 		}
 	}
 }

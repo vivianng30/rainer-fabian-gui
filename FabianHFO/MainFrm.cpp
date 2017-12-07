@@ -160,7 +160,7 @@ CMainFrame::CMainFrame()
 	m_bWD0error=false;//WEC2013
 	m_bWDERRORI2C=false;//WEC2013
 
-	//m_ullWatchdog=0;
+	m_bStartInstaller=false;
 
 	m_bForceShutdown=false;//WEC2013
 	m_pModel = NULL;//WEC2013
@@ -308,7 +308,65 @@ CMainFrame::CMainFrame()
 
 CMainFrame::~CMainFrame()
 {
-	//DeleteCriticalSection(&csThreadWatchdog);
+	if(m_pcwtSaveTrendUSBThread!=NULL)
+	{
+		delete m_pcwtSaveTrendUSBThread;
+		m_pcwtSaveTrendUSBThread=NULL;
+
+		if(m_hThreadSaveTrendUSB!=INVALID_HANDLE_VALUE)
+		{
+			CloseHandle(m_hThreadSaveTrendUSB);
+			m_hThreadSaveTrendUSB=INVALID_HANDLE_VALUE;
+		}
+	}
+
+	if(m_pcwtDelTrendThread!=NULL)
+	{
+		delete m_pcwtDelTrendThread;
+		m_pcwtDelTrendThread=NULL;
+
+		if(m_hThreadDelTrend!=INVALID_HANDLE_VALUE)
+		{
+			CloseHandle(m_hThreadDelTrend);
+			m_hThreadDelTrend=INVALID_HANDLE_VALUE;
+		}
+	}
+
+	if(m_pcwtTimerThread!=NULL)
+	{
+		delete m_pcwtTimerThread;
+		m_pcwtTimerThread=NULL;
+
+		if(m_hThreadTimerFunctions!=INVALID_HANDLE_VALUE)
+		{
+			CloseHandle(m_hThreadTimerFunctions);
+			m_hThreadTimerFunctions=INVALID_HANDLE_VALUE;
+		}
+	}
+
+	if(m_pcwtOxyCalThread!=NULL)
+	{
+		delete m_pcwtOxyCalThread;
+		m_pcwtOxyCalThread=NULL;
+
+		if(m_hThreadOxyCal!=INVALID_HANDLE_VALUE)
+		{
+			CloseHandle(m_hThreadOxyCal);
+			m_hThreadOxyCal=INVALID_HANDLE_VALUE;
+		}
+	}
+
+	if(m_pcwtI2CWatchdogThread!=NULL)
+	{
+		delete m_pcwtI2CWatchdogThread;
+		m_pcwtI2CWatchdogThread=NULL;
+
+		if(m_hThreadI2CWatchdog!=INVALID_HANDLE_VALUE)
+		{
+			CloseHandle(m_hThreadI2CWatchdog);
+			m_hThreadI2CWatchdog=INVALID_HANDLE_VALUE;
+		}
+	}
 }
 
 // **************************************************************************
@@ -435,12 +493,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	StartI2CWatchdogThread();
 
 	getModel()->Init(m_pszFontName,m_wLanguageID);
-
-	//StartI2CWatchdogThread();
-
-//#ifndef SIMULATION_ENTREK //rkuNEWFIX
-//	StartThreadWatchdogThread();
-//#endif
 
 	getModel()->getALARMHANDLER()->setSystemSilent();
 
@@ -1349,10 +1401,10 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 				theApp.getLog()->WriteLine(L"**** BROADCAST QuitVentilator ****");
 
-				getModel()->Quit();
+				//getModel()->Quit();
 
 				m_bForceShutdown=true;
-				PostMessage(WM_CLOSE);
+				PostMessage(WM_QUIT_VENTILATOR);
 
 				return 1;
 			}
@@ -2583,32 +2635,23 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				getModel()->triggerEvent(&event);
 				return 1;
 	#endif
-				
 			}
 			break;
 		case WM_BN_MATRIX_ONOFF_DOWN:
 			{
-				//test turn off without power off
-				//getModel()->StartInstaller();
-				//getModel()->SetAccuTurnoff();
-				//PostMessage(WM_VENT_TURNOFF);
-
 				getModel()->getDATAHANDLER()->saveOpTime();//newOPtime
 
 				//test entrek
 	#ifndef SIMULATION_ENTREK
-				//getModel()->getVIEWHANDLER()->closeNebulizer();
 				CMVEventMatrix event(CMVEventMatrix::EV_BN_MATRIX_ONOFF_DOWN);
 				getModel()->triggerEvent(&event);
 	#endif
-				
 				
 	#ifdef SIMULATION_ENTREK
 				getModel()->StartInstaller();
 				getModel()->SetAccuTurnoff();
 				PostMessage(WM_VENT_TURNOFF);
 	#endif		
-				
 				return 1;
 			}
 			break;
@@ -5422,15 +5465,26 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		case WM_VENT_TURNOFF:
 			{
 				theApp.SetEXITState();
-				if(AfxGetApp())
-					AfxGetApp()->GetMainWnd()->PostMessage(WM_THR_STOP,THR_MAIN);//rkuNEWFIX
+				//if(AfxGetApp())
+				//	AfxGetApp()->GetMainWnd()->PostMessage(WM_THR_STOP,THR_MAIN);//rkuNEWFIX
 				
 				m_iCountTimeUntilOff=0;
 				KillTimer(OFFTIMER);
+
+				getModel()->SetVentRunState(VENT_STOPPED);
+				getModel()->Send_MODE_OPTION1();
+
 			
 				getModel()->getVIEWHANDLER()->changeViewState(VS_SHUTDOWN,VSS_NONE);
-				QuitVentilator();
+				
+				PostMessage(WM_QUIT_VENTILATOR);
+				
 				return 1;
+			}
+			break;
+		case WM_QUIT_VENTILATOR:
+			{
+				QuitVentilator();
 			}
 			break;
 		case WM_OXYCAL_HOURGLASS_TIMER:
@@ -5856,18 +5910,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 
 
-void CMainFrame::QuitVentilator()
-{
-	m_bExit=true;
 
-	theApp.getLog()->WriteLine(L"**** QuitVentilator ****");
-
-	getModel()->Quit();
-
-	//::PostMessage(HWND_BROADCAST,WM_ACULINK_SHUTDOWN,0,0);
-
-	PostMessage(WM_CLOSE);
-}
 
 
 //The following is the functions that I used for my Windows CE application.
@@ -5934,8 +5977,127 @@ void CMainFrame::QuitVentilator()
 //}
 
 
+void CMainFrame::stopThreads()
+{
+	StopSaveTrendUSBThread();
+	StopDelTrendThread();
+	StopOxyCalThread();
+	StopTimerThread();
+	StopI2CWatchdogThread();
+}
 
+void CMainFrame::stopWatchdog()
+{
+#ifndef _DEBUG	
+	KillTimer(WATCHDOGTIMER);
 
+	// *"Normal" exit (m_bRun=false)*****************************************
+	if(!StopWatchDogTimer(g_hWatchDog,0))
+	{
+		// TODO:		
+		//DWORD dwError=GetLastError();
+		//return;
+	}
+	CloseHandle(g_hWatchDog);
+
+	//DWORD dwResult=WaitForSingleObject(g_hAction,2*WD_PERIODE);
+	DWORD dwResult=WaitForSingleObject(g_hAction,3000);
+	if(dwResult&WAIT_OBJECT_0)
+	{
+		// TODO:
+		/*CTlsRegistry reg(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
+		reg.WriteDWORD(_T("Watchdog3"), 0);*/
+		//DWORD dwError=GetLastError();
+		//return 0;
+	}
+#endif
+
+	::CloseHandle(g_hAction);
+}
+
+void CMainFrame::QuitVentilator()
+{
+	m_bExit=true;
+
+	theApp.getLog()->WriteLine(L"**** QuitVentilator ****");
+
+	getModel()->getSPI()->send_Shutdown();
+
+	KillTimer(CHECKCOM_TIMER);
+	KillTimer(PMIN_ALARMDELAY_TIMER);
+	KillTimer(OXYCAL_HOURGLASS_TIMER);
+	KillTimer(DISABLE_PATALARM_O2_TIMER);
+	KillTimer(UDPDOWNUPTIMER);
+	KillTimer(AUTOSCREENLOCKTIMER);
+	KillTimer(HOMETIMER);
+	KillTimer(AUTOLIMITTIMER);
+	KillTimer(O2FLUSHTIMER);
+	KillTimer(COUNTSTOPBREATHTIMER);
+	KillTimer(ALARMSILENTTIMER);
+	KillTimer(STARTSTOPTIMER);
+	KillTimer(MANBREATHTIMER);
+	KillTimer(CO2PUMPTIMER);
+	KillTimer(ACTIVEALARMTIMER);
+
+	BYTE iPDMSProtocol=getModel()->getCONFIG()->GetPDMSprotocol();
+	if(		iPDMSProtocol==ACL_SERIAL_ASCII
+		||	iPDMSProtocol==ACL_SERIAL_WAVE
+		||	iPDMSProtocol==ACL_ETHERNET_WAVE
+		||	iPDMSProtocol==ACL_ETHERNET
+		||	iPDMSProtocol==ACL_SERIAL_IVOI)
+	{
+		if(getModel()->getAcuLink()!=NULL)
+			getModel()->getAcuLink()->setShutdown(1);
+	}
+
+	CString szOpTime=_T("");
+	int iBat=getModel()->getDATAHANDLER()->getOpTimeBatteryMin(true);
+	int iDev=getModel()->getDATAHANDLER()->getOpTimeDeviceMin(true);
+	int iHFO=getModel()->getDATAHANDLER()->getOpTimeHFOMin(true);
+	szOpTime.Format(_T("#OperatingTime [minutes]: battery %d device %d HFO %d#"),iBat, iDev, iHFO);
+	theApp.getLog()->WriteLine(szOpTime);
+
+	m_bStartInstaller=getModel()->IsInstaller();
+
+	//I2C turnoff 
+#ifndef SIMULATION_ENTREK
+	if(getModel()->IsAccuTurnoff()==false && !m_bStartInstaller && !m_bForceShutdown)
+		getModel()->getI2C()->WriteAccuWord(ACCU_DAT_CMND,ACCU_CMND_SHUTDOWN);
+#endif
+
+	getModel()->getSOUND()->SetPIFSound(PIF_SHUTDOWN);
+
+	stopThreads();
+	stopWatchdog();
+
+	try
+	{
+		getModel()->Deinit();
+	}
+	catch (CException* e)
+	{
+		TCHAR   szCause[255];
+		e->GetErrorMessage(szCause, 255);
+
+		CString errorStr=_T("");
+		errorStr.Format(_T("getModel()->Deinit: %s"),szCause);
+
+		theApp.ReportException(errorStr);
+
+		e->Delete();
+	}
+	catch(...)
+	{
+		theApp.ReportException(_T("getModel()->Deinit"));
+	}
+
+	getModel()->DestroyInstance();
+	m_pModel=NULL;
+
+	theApp.CloseLog();
+
+	PostMessage(WM_CLOSE);
+}
 
 //************************************
 // Method:    OnDestroy
@@ -5949,153 +6111,7 @@ void CMainFrame::QuitVentilator()
 void CMainFrame::OnDestroy()
 {
 	CFrameWnd::OnDestroy();
-
-	getModel()->getSPI()->send_Shutdown();
-
-	/*KillTimer(FOT_COLLECT_TIMER);
-	KillTimer(FOT_HFO_TIMER);
-	KillTimer(FOT_CONV_TIMER);*/
-	KillTimer(CHECKCOM_TIMER);
-	//KillTimer(FLOWSENSOR_DELAY_TIMER);
-	//KillTimer(NEBULIZER_TIMER);
-	KillTimer(PMIN_ALARMDELAY_TIMER);
-	KillTimer(OXYCAL_HOURGLASS_TIMER);
-	KillTimer(DISABLE_PATALARM_O2_TIMER);
-	KillTimer(UDPDOWNUPTIMER);
-	KillTimer(AUTOSCREENLOCKTIMER);
-	KillTimer(HOMETIMER);
-	KillTimer(AUTOLIMITTIMER);
-	KillTimer(O2FLUSHTIMER);
-	KillTimer(COUNTSTOPBREATHTIMER);
-	KillTimer(ALARMSILENTTIMER);
-	//KillTimer(ALARMSOUND);
-	KillTimer(STARTSTOPTIMER);
-	KillTimer(MANBREATHTIMER);
-	KillTimer(CO2PUMPTIMER);
-	KillTimer(ACTIVEALARMTIMER);
-
 	
-
-	bool bStartInstaller=getModel()->IsInstaller();
-
-	StopSaveTrendUSBThread();
-	StopDelTrendThread();
-	StopOxyCalThread();
-	StopTimerThread();
-	StopI2CWatchdogThread();
-
-	//rkuNEWFIX
-	/*if(m_pcwtThreadWatchdogThread!=NULL)
-	{
-		delete m_pcwtThreadWatchdogThread;
-		m_pcwtThreadWatchdogThread=NULL;
-
-		if(m_hThreadThreadWatchdog!=INVALID_HANDLE_VALUE)
-		{
-			CloseHandle(m_hThreadThreadWatchdog);
-			m_hThreadThreadWatchdog=INVALID_HANDLE_VALUE;
-		}
-	}*/
-
-	if(m_pcwtSaveTrendUSBThread!=NULL)
-	{
-		delete m_pcwtSaveTrendUSBThread;
-		m_pcwtSaveTrendUSBThread=NULL;
-
-		if(m_hThreadSaveTrendUSB!=INVALID_HANDLE_VALUE)
-		{
-			CloseHandle(m_hThreadSaveTrendUSB);
-			m_hThreadSaveTrendUSB=INVALID_HANDLE_VALUE;
-		}
-	}
-
-	if(m_pcwtDelTrendThread!=NULL)
-	{
-		delete m_pcwtDelTrendThread;
-		m_pcwtDelTrendThread=NULL;
-
-		if(m_hThreadDelTrend!=INVALID_HANDLE_VALUE)
-		{
-			CloseHandle(m_hThreadDelTrend);
-			m_hThreadDelTrend=INVALID_HANDLE_VALUE;
-		}
-	}
-
-	if(m_pcwtTimerThread!=NULL)
-	{
-		delete m_pcwtTimerThread;
-		m_pcwtTimerThread=NULL;
-
-		if(m_hThreadTimerFunctions!=INVALID_HANDLE_VALUE)
-		{
-			CloseHandle(m_hThreadTimerFunctions);
-			m_hThreadTimerFunctions=INVALID_HANDLE_VALUE;
-		}
-	}
-
-	if(m_pcwtOxyCalThread!=NULL)
-	{
-		delete m_pcwtOxyCalThread;
-		m_pcwtOxyCalThread=NULL;
-
-		if(m_hThreadOxyCal!=INVALID_HANDLE_VALUE)
-		{
-			CloseHandle(m_hThreadOxyCal);
-			m_hThreadOxyCal=INVALID_HANDLE_VALUE;
-		}
-	}
-
-	if(m_pcwtI2CWatchdogThread!=NULL)
-	{
-		delete m_pcwtI2CWatchdogThread;
-		m_pcwtI2CWatchdogThread=NULL;
-
-		if(m_hThreadI2CWatchdog!=INVALID_HANDLE_VALUE)
-		{
-			CloseHandle(m_hThreadI2CWatchdog);
-			m_hThreadI2CWatchdog=INVALID_HANDLE_VALUE;
-		}
-	}
-
-	Sleep(300);
-
-	getModel()->SetVentRunState(VENT_STOPPED);
-	getModel()->Send_MODE_OPTION1();
-
-	//theApp.getLog()->WriteLine(_T("SHUTDOWN4"),false);
-
-	//::PostMessage(HWND_BROADCAST,WM_ACULINK_SHUTDOWN,0,0);
-	if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setShutdown(1);
-
-	CString szOpTime=_T("");
-	int iBat=getModel()->getDATAHANDLER()->getOpTimeBatteryMin(true);
-	int iDev=getModel()->getDATAHANDLER()->getOpTimeDeviceMin(true);
-	int iHFO=getModel()->getDATAHANDLER()->getOpTimeHFOMin(true);
-	szOpTime.Format(_T("#OperatingTime [minutes]: battery %d device %d HFO %d#"),iBat, iDev, iHFO);
-	theApp.getLog()->WriteLine(szOpTime);
-
-	////
-	//I2C turnoff 
-#ifndef SIMULATION_ENTREK
-	if(getModel()->IsAccuTurnoff()==false && !bStartInstaller && !m_bForceShutdown)
-		getModel()->getI2C()->WriteAccuWord(ACCU_DAT_CMND,ACCU_CMND_SHUTDOWN);
-#endif
-
-	getModel()->getSOUND()->SetPIFSound(PIF_SHUTDOWN);
-
-	//theApp.getLog()->WriteLine(_T("SHUTDOWN"),false);
-	//getModel()->DetachObserver(this);
-
-	
-
-	getModel()->Deinit();
-	getModel()->DestroyInstance();
-	m_pModel=NULL;
-
-	//theApp.getLog()->WriteLine(L" ");
-	theApp.getLog()->WriteLine(L"**** finished ****");
-	theApp.CloseLog();
 
 	if(m_hf10Bold!=NULL)
 	{
@@ -6320,7 +6336,7 @@ void CMainFrame::OnDestroy()
 	
 
 	//old installer version
-	if(bStartInstaller && CTlsFile::Exists(_T("\\Hard Disk\\SETUP\\SetupFabian.exe")))
+	if(m_bStartInstaller && CTlsFile::Exists(_T("\\Hard Disk\\SETUP\\SetupFabian.exe")))
 	{
 		CString fileFrom=_T("\\Hard Disk\\SETUP\\SetupFabian.exe");
 		CString szCopyTo=_T("");
@@ -6352,36 +6368,32 @@ void CMainFrame::OnDestroy()
 
 
 
-#ifndef _DEBUG	
-	KillTimer(WATCHDOGTIMER);
+//#ifndef _DEBUG	
+//	KillTimer(WATCHDOGTIMER);
+//
+//	// *"Normal" exit (m_bRun=false)*****************************************
+//	if(!StopWatchDogTimer(g_hWatchDog,0))
+//	{
+//		// TODO:		
+//		//DWORD dwError=GetLastError();
+//		//return;
+//	}
+//	CloseHandle(g_hWatchDog);
+//
+//	//DWORD dwResult=WaitForSingleObject(g_hAction,2*WD_PERIODE);
+//	DWORD dwResult=WaitForSingleObject(g_hAction,3000);
+//	if(dwResult&WAIT_OBJECT_0)
+//	{
+//		// TODO:
+//		/*CTlsRegistry reg(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
+//		reg.WriteDWORD(_T("Watchdog3"), 0);*/
+//		//DWORD dwError=GetLastError();
+//		//return 0;
+//	}
+//#endif
+//
+//	::CloseHandle(g_hAction);
 
-
-	// *"Normal" exit (m_bRun=false)*****************************************
-	if(!StopWatchDogTimer(g_hWatchDog,0))
-	{
-		// TODO:		
-		//DWORD dwError=GetLastError();
-		//return;
-	}
-	CloseHandle(g_hWatchDog);
-
-	//DWORD dwResult=WaitForSingleObject(g_hAction,2*WD_PERIODE);
-	DWORD dwResult=WaitForSingleObject(g_hAction,3000);
-	if(dwResult&WAIT_OBJECT_0)
-	{
-		// TODO:
-		/*CTlsRegistry reg(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
-		reg.WriteDWORD(_T("Watchdog3"), 0);*/
-		//DWORD dwError=GetLastError();
-		//return 0;
-	}
-
-
-#endif
-
-	::CloseHandle(g_hAction);
-
-	
 }
 
 void CMainFrame::checkSERIAL()
@@ -8134,7 +8146,7 @@ DWORD CMainFrame::SetI2CWatchdog(void)
 		}
 	}while(m_bDoI2CWatchdogThread);
 
-	theApp.getLog()->WriteLine(_T("#THR:018"));
+	//theApp.getLog()->WriteLine(_T("#THR:018"));
 
 	return 0;
 }
@@ -8389,7 +8401,7 @@ DWORD CMainFrame::SaveTrendUSB(void)
 	}
 	m_bDoSaveTrendUSBThread=false;
 
-	theApp.getLog()->WriteLine(_T("#THR:021"));
+	//theApp.getLog()->WriteLine(_T("#THR:021"));
 
 	return 0;
 }
@@ -8982,7 +8994,7 @@ DWORD CMainFrame::DoTimerFunctions(void)
 
 	}while(m_bDoDoTimerFunctionsThread);
 
-	theApp.getLog()->WriteLine(_T("#THR:020"));
+	//theApp.getLog()->WriteLine(_T("#THR:020"));
 
 	return 0;
 }
@@ -9288,7 +9300,7 @@ DWORD CMainFrame::CheckOxyCal(void)
 
 	m_bDoOxyCalThread=false;
 
-	theApp.getLog()->WriteLine(_T("#THR:019"));
+	//theApp.getLog()->WriteLine(_T("#THR:019"));
 
 	return 0;
 }

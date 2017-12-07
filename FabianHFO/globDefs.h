@@ -951,6 +951,7 @@
 #define WM_TERMINAL_HFO						WM_USER + 0x5858
 #define WM_TERMINAL_THERAPY					WM_USER + 0x5859
 
+#define WM_QUIT_VENTILATOR					WM_USER + 0x5900
 //threads to watch
 //depends on number of THREADS - WM_THR_xxxx
 #define MAXSIZE_THREADS		7

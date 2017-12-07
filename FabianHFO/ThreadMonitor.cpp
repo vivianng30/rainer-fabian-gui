@@ -199,7 +199,7 @@ DWORD CThreadMonitor::MonitorData(void)
 		}
 	}while(m_bDoMonitorThread);
 
-	theApp.getLog()->WriteLine(_T("#THR:023"));
+	//theApp.getLog()->WriteLine(_T("#THR:023"));
 
 	return 0;
 }

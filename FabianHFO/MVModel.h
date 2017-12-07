@@ -249,7 +249,7 @@ public:
 	void StartInstaller();
 	bool IsInstaller();
 
-	void Quit();
+	//void Quit();
 
 	void EnablePatAlarmO2dependend();
 	void DisablePatAlarmO2dependend();

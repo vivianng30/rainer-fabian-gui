@@ -343,6 +343,7 @@ bool CInterfaceAcuLink_EXTERNAL::deinit()
 
 void CInterfaceAcuLink_EXTERNAL::setShutdown(UINT uiVal)
 {
+	//theApp.getLog()->WriteLine(_T("SHUTDOWN CInterfaceAcuLink_EXTERNAL::setShutdown"));
 	if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_ASCII)
 	{
 		//do nothing here

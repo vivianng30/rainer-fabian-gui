@@ -1494,7 +1494,7 @@ DWORD CSubViewLanguage::LoadLanguage(void)
 		//DestroyWndHourglass();
 	}
 
-	theApp.getLog()->WriteLine(_T("#THR:029"));
+	//theApp.getLog()->WriteLine(_T("#THR:029"));
 
 	return 0;
 }

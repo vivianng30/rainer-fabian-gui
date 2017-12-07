@@ -1338,7 +1338,7 @@ DWORD CWndDataCO2::CO2Data(void)
 		}
 	}while(doThread());
 
-	theApp.getLog()->WriteLine(_T("#THR:033"));
+	//theApp.getLog()->WriteLine(_T("#THR:033"));
 
 	return 0;
 }

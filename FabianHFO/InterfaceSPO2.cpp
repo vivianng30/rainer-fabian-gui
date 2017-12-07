@@ -438,7 +438,7 @@ DWORD CInterfaceSPO2::SPO2check(void)
 
 	}while(m_bDoSPO2checkThread);
 
-	theApp.getLog()->WriteLine(_T("#THR:017"));
+	//theApp.getLog()->WriteLine(_T("#THR:017"));
 	DEBUGMSG(TRUE, (TEXT("#THR:017\r\n")));
 	return 0;
 }
@@ -536,7 +536,7 @@ DWORD CInterfaceSPO2::SendSPO2Data(void)
 
 	}while(m_bDoSPO2SendThread);
 
-	theApp.getLog()->WriteLine(_T("#THR:015"));
+	//theApp.getLog()->WriteLine(_T("#THR:015"));
 	DEBUGMSG(TRUE, (TEXT("#THR:015\r\n")));
 	
 	return 0;

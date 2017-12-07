@@ -1437,7 +1437,7 @@ DWORD CSubViewTools::WaitTrendUSB(void)
 		}
 	}while(m_bDoWaitTrendUSBThread);
 
-	theApp.getLog()->WriteLine(_T("#THR:030"));
+	//theApp.getLog()->WriteLine(_T("#THR:030"));
 
 	return 0;
 }

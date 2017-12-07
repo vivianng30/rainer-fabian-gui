@@ -219,7 +219,7 @@ DWORD CThreadAlarm::AlarmData(void)
 		}
 	}while(m_bDoAlarmThread);
 
-	theApp.getLog()->WriteLine(_T("#THR:024"));
+	//theApp.getLog()->WriteLine(_T("#THR:024"));
 
 	return 0;
 }

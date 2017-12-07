@@ -12,6 +12,8 @@
  * @verbatim
 	- Terminal interface for Rotterdam merged
 	- deviceinfo.txt: bug fixed in PDMS protocol 
+	- shutdown sequence changed
+	- Changing from not-NIV mode to NIV mode when Apnea alarm is set but there is no NIV-trigger license, Apnea alarm will be turned off.
  @endverbatim
  * 
  * @subsection ver5060 Version 5.0.6.0

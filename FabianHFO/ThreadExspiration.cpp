@@ -202,7 +202,7 @@ DWORD CThreadExspiration::Exspirationstart(void)
 		}
 	}while(m_bDoExspirationThread);
 
-	theApp.getLog()->WriteLine(_T("#THR:026"));
+	//theApp.getLog()->WriteLine(_T("#THR:026"));
 
 	return 0;
 }

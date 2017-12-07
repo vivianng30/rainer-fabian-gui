@@ -1830,7 +1830,7 @@ DWORD CSubViewCalOxySensor::CheckOxySensor()
 
 	}while(m_bDoCheckThread);
 
-	theApp.getLog()->WriteLine(_T("#THR:028"));
+	//theApp.getLog()->WriteLine(_T("#THR:028"));
 
 	return 0;
 

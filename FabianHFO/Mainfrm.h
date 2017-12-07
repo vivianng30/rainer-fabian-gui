@@ -56,6 +56,9 @@ protected:
 	//void StartThreadWatchdogThread(void);//rkuNEWFIX
 	//void StopThreadWatchdogThread( void );//rkuNEWFIX
 	
+	void stopThreads();
+	void stopWatchdog();
+
 	void StartI2CWatchdogThread(void);
 	void StopI2CWatchdogThread( void );
 
@@ -275,6 +278,7 @@ protected:
 	bool m_bForceShutdown;//WEC2013
 	bool m_bInitialized;//WEC2013
 
+	bool m_bStartInstaller;
 // Generated message map functions
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

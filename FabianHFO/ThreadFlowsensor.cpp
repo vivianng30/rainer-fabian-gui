@@ -221,7 +221,7 @@ DWORD CThreadFlowsensor::FlowsensorData(void)
 
 	}while(m_bDoFlowsensorThread);
 
-	theApp.getLog()->WriteLine(_T("#THR:025"));
+	//theApp.getLog()->WriteLine(_T("#THR:025"));
 
 	return 0;
 }

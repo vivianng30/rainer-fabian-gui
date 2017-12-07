@@ -966,7 +966,6 @@ void CMVModel::Deinit()
 	ETCO2=NULL;
 	LeaveCriticalSection(&m_csETCO2);
 	
-
 	EnterCriticalSection(&m_csSPO2);
 	if(SPO2)
 	{
@@ -976,7 +975,6 @@ void CMVModel::Deinit()
 	SPO2=NULL;
 	LeaveCriticalSection(&m_csSPO2);
 	
-
 	EnterCriticalSection(&m_csSerial);
 	if(SERIAL)
 	{
@@ -1042,14 +1040,53 @@ void CMVModel::Deinit()
 
 	if(DATAHANDLER)
 	{
-		DATAHANDLER->setExit();
+		try
+		{
+			DATAHANDLER->setExit();
+		}
+		catch (CException* e)
+		{
+			TCHAR   szCause[255];
+			e->GetErrorMessage(szCause, 255);
+
+			CString errorStr=_T("");
+			errorStr.Format(_T("DATAHANDLER->setExit: %s"),szCause);
+
+			theApp.ReportException(errorStr);
+
+			e->Delete();
+		}
+		catch(...)
+		{
+			theApp.ReportException(_T("DATAHANDLER->setExit"));
+		}
+		
 		DATAHANDLER->destroyInstance();
 	}
 	DATAHANDLER=NULL;
 
 	if(CONFIG!=NULL)
 	{
-		CONFIG->DestroyInstance();
+		try
+		{
+			CONFIG->DestroyInstance();
+		}
+		catch (CException* e)
+		{
+			TCHAR   szCause[255];
+			e->GetErrorMessage(szCause, 255);
+
+			CString errorStr=_T("");
+			errorStr.Format(_T("CONFIG->DestroyInstance: %s"),szCause);
+
+			theApp.ReportException(errorStr);
+
+			e->Delete();
+		}
+		catch(...)
+		{
+			theApp.ReportException(_T("CONFIG->DestroyInstance"));
+		}
 	}
 	CONFIG=NULL;
 }
@@ -5076,10 +5113,10 @@ bool CMVModel::IsAccuTurnoff()
 	return m_bAccuTurnOff;
 }
 
-void CMVModel::Quit()
-{
-	m_bExit=true;
-}
+//void CMVModel::Quit()
+//{
+//	m_bExit=true;
+//}
 
 
 

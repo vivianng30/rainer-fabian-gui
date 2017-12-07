@@ -610,7 +610,7 @@ DWORD CInterfaceCO2::SendETCO2Data(void)
 
 	}while(m_bDoETCO2SendThread);
 
-	theApp.getLog()->WriteLine(_T("#THR:006"));
+	//theApp.getLog()->WriteLine(_T("#THR:006"));
 	
 	return 0;
 }
@@ -688,7 +688,7 @@ DWORD CInterfaceCO2::ETCO2check(void)
 			CheckModuleState();
 	}while(m_bDoETCO2checkThread);
 
-	theApp.getLog()->WriteLine(_T("#THR:008"));
+	//theApp.getLog()->WriteLine(_T("#THR:008"));
 	
 	return 0;
 }
@@ -796,7 +796,7 @@ DWORD CInterfaceCO2::ETCO2Init(void)
 		InitializeSequenz();//command 84h
 	}
 
-	theApp.getLog()->WriteLine(_T("#THR:007"));
+	//theApp.getLog()->WriteLine(_T("#THR:007"));
 
 	return 0;
 }

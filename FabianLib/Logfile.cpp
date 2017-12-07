@@ -70,11 +70,14 @@ bool Logfile::Close()
 	return true;
 }
 
-Logfile::~Logfile()
+void Logfile::Exit()
 {
 	m_bExit=true;
 	StopLogfileThread();
+}
 
+Logfile::~Logfile()
+{
 	if(m_pcwtWriteLogThread!=NULL)
 	{
 		delete m_pcwtWriteLogThread;

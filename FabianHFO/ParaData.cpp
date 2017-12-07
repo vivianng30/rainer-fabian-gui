@@ -557,7 +557,6 @@ CParaData* CParaData::GetInstance()
 // **************************************************************************
 void CParaData::DestroyInstance()
 {
-
 	if(theData != NULL)
 	{
 		delete theData;

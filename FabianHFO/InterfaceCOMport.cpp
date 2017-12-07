@@ -343,7 +343,7 @@ DWORD CInterfaceCOMport::COMcheck(void)
 
 	}while(m_bDoCOMcheckThread);
 
-	theApp.getLog()->WriteLine(_T("#THR:005"));
+	//theApp.getLog()->WriteLine(_T("#THR:005"));
 	//DEBUGMSG(TRUE, (TEXT("end CInterfaceCOM::COMcheck\r\n")));
 	return 0;
 }
@@ -436,7 +436,7 @@ DWORD CInterfaceCOMport::SendCOMData(void)
 
 	}while(m_bDoCOMSendThread);
 
-	theApp.getLog()->WriteLine(_T("#THR:003"));
+	//theApp.getLog()->WriteLine(_T("#THR:003"));
 
 	
 	return 0;
@@ -541,7 +541,7 @@ DWORD CInterfaceCOMport::COMInit(void)
 	if(m_bStartup)
 		InitializeSequenz();//command 84h
 
-	theApp.getLog()->WriteLine(_T("#THR:004"));
+	//theApp.getLog()->WriteLine(_T("#THR:004"));
 
 	return 0;
 }

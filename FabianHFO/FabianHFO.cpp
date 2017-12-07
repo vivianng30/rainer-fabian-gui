@@ -170,8 +170,9 @@ void CFabianHFOApp::OpenLog()
 }
 void CFabianHFOApp::CloseLog()
 {
-	delete log;
-	log=NULL;
+	log->Exit();
+	//delete log;
+	//log=NULL;
 }
 
 Logfile *CFabianHFOApp::getLog()
