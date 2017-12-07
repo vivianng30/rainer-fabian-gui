@@ -4951,14 +4951,23 @@ void CDataHandler::SetTubeSet(eTubeSet tube)
 {
 	getModel()->getCONFIG()->SetTubeSet(tube);
 
+	eVentMode actMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
+
 	if(tube==TUBE_INFANTFLOW)
 	{
 		getModel()->getCONFIG()->setTriggerOption_NCPAP(TRIGGER_FLOW);
 		getModel()->getCONFIG()->setTriggerOption_DUOPAP(TRIGGER_FLOW);
 
-		if(GetFlowSensorState()==FLOWSENSOR_OFF && GetPrevFlowSensorState()==FLOWSENSOR_ON)
+		if(		GetFlowSensorState()==FLOWSENSOR_OFF 
+			&&	GetPrevFlowSensorState()==FLOWSENSOR_ON)
 		{
-			SetFlowSensorState(FLOWSENSOR_ON);
+			if(actMode==VM_DUOPAP || actMode==VM_NCPAP)
+			{
+				if(true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
+					SetFlowSensorState(FLOWSENSOR_ON);
+			}
+			else
+				SetFlowSensorState(FLOWSENSOR_ON);
 		}
 	}
 	else if(tube==TUBE_INFANTFLOW_LP)
@@ -4966,9 +4975,16 @@ void CDataHandler::SetTubeSet(eTubeSet tube)
 		getModel()->getCONFIG()->setTriggerOption_NCPAP(TRIGGER_FLOW);
 		getModel()->getCONFIG()->setTriggerOption_DUOPAP(TRIGGER_FLOW);
 
-		if(GetFlowSensorState()==FLOWSENSOR_OFF && GetPrevFlowSensorState()==FLOWSENSOR_ON)
+		if(		GetFlowSensorState()==FLOWSENSOR_OFF 
+			&&	GetPrevFlowSensorState()==FLOWSENSOR_ON)
 		{
-			SetFlowSensorState(FLOWSENSOR_ON);
+			if(actMode==VM_DUOPAP || actMode==VM_NCPAP)
+			{
+				if(true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
+					SetFlowSensorState(FLOWSENSOR_ON);
+			}
+			else
+				SetFlowSensorState(FLOWSENSOR_ON);
 		}
 	}
 	else if(tube==TUBE_MEDIJET)

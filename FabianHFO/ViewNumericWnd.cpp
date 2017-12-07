@@ -949,7 +949,7 @@ void CViewNumericWnd::ShowNumWnd(eNumBlock eBlock,bool bChangeCurNumBlock)
 // **************************************************************************
 void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 {
-	DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::SetNumericBlock() start\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::SetNumericBlock() start\r\n")));
 	eNumBlock eBlock=NUMB_IPPV;
 
 	eVentMode eMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -1012,11 +1012,11 @@ void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 		break;
 	}
 
-	DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::SetNumericBlock() 1\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::SetNumericBlock() 1\r\n")));
 
 	ShowNumWnd(eBlock,bChangeCurNumBlock);
 
-	DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::SetNumericBlock() end\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::SetNumericBlock() end\r\n")));
 }
 
 eNumBlock CViewNumericWnd::SetNumericBlock_IPPV()
