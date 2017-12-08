@@ -15,7 +15,7 @@
 	- shutdown sequence changed
 	- Changing from not-NIV mode to NIV mode when Apnea alarm is set but there is no NIV-trigger license, Apnea alarm will be turned off.
 	- CDataHandler::SetTubeSet: checks in NCPAP/DUOAPAP mode if nivtrigger license available
-	- FACTORY_ALIMIT_VAL_APNOE changed to "0" and FACTORY_ALIMIT_STATE_APNOE chaged to off
+	- Factory setting will check for NIV trigger license regarding apnea state and value
  @endverbatim
  * 
  * @subsection ver5060 Version 5.0.6.0
