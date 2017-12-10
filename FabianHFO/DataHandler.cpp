@@ -4966,8 +4966,6 @@ void CDataHandler::SetTubeSet(eTubeSet tube)
 				if(true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
 					SetFlowSensorState(FLOWSENSOR_ON);
 			}
-			else
-				SetFlowSensorState(FLOWSENSOR_ON);
 		}
 	}
 	else if(tube==TUBE_INFANTFLOW_LP)
@@ -4983,8 +4981,6 @@ void CDataHandler::SetTubeSet(eTubeSet tube)
 				if(true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
 					SetFlowSensorState(FLOWSENSOR_ON);
 			}
-			else
-				SetFlowSensorState(FLOWSENSOR_ON);
 		}
 	}
 	else if(tube==TUBE_MEDIJET)
@@ -4994,7 +4990,11 @@ void CDataHandler::SetTubeSet(eTubeSet tube)
 
 		if(GetFlowSensorState()==FLOWSENSOR_ON)
 		{
-			SetFlowSensorState(FLOWSENSOR_OFF);
+			if(actMode==VM_DUOPAP || actMode==VM_NCPAP)
+			{
+				if(true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
+					SetFlowSensorState(FLOWSENSOR_OFF);
+			}
 		}
 	}
 	
