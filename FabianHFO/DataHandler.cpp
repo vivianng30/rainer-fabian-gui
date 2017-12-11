@@ -4992,7 +4992,6 @@ void CDataHandler::SetTubeSet(eTubeSet tube)
 		{
 			if(actMode==VM_DUOPAP || actMode==VM_NCPAP)
 			{
-				if(true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
 					SetFlowSensorState(FLOWSENSOR_OFF);
 			}
 		}
