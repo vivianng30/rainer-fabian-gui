@@ -111,7 +111,7 @@ CMVModel::CMVModel(void)
 	m_szVersion = _T("9.0.0");
 	m_szBuildVersion = _T("9.0.0.0");
 #else
-	m_szVersion = _T("5.0.6");
+	m_szVersion = _T("5.0.7");
 	m_szBuildVersion = _T("5.0.7.0");
 #endif
 
