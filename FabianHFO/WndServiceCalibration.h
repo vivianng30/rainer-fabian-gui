@@ -61,6 +61,9 @@ private:
 	bool m_bPProx0CalRunning;
 	bool m_bPProx60CalRunning;
 	
+	eVentMode m_curVentMode;
+	SHORT m_iCPAP;
+	WORD m_iFlow;
 
 	CBmp* m_pcWait;
 	CBmp* m_pcWait1;

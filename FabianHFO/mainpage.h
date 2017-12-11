@@ -16,6 +16,7 @@
 	- Changing from not-NIV mode to NIV mode when Apnea alarm is set but there is no NIV-trigger license, Apnea alarm will be turned off.
 	- CDataHandler::SetTubeSet: checks in NCPAP/DUOAPAP mode if nivtrigger license available
 	- Factory setting will check for NIV trigger license regarding apnea state and value
+	- 0 and 60 mbar calibration only available in CPAP mode with 5 mbar CPAP and 4 lpm Flow
  @endverbatim
  * 
  * @subsection ver5060 Version 5.0.6.0

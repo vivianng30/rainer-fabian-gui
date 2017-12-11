@@ -83,6 +83,10 @@ CWndService()
 
 	m_bPProx0CalRunning=false;
 	m_bPProx60CalRunning=false;
+
+	m_curVentMode=getModel()->getCONFIG()->GetPrevMode();
+	m_iCPAP=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPPara();
+	m_iFlow=getModel()->getDATAHANDLER()->PARADATA()->GetFlowminPara();
 }
 
 CWndServiceCalibration::~CWndServiceCalibration()
@@ -590,18 +594,34 @@ void CWndServiceCalibration::Draw()
 
 	rc.left = 210;
 	rc.right  = 580;
-	rc.top = 190;  
+	rc.top = 180;  
 	cs = _T("Last 0 mbar calibration:  ");
 	cs+= m_szLast0mbarCal;
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-	rc.top = 210;  
+	rc.top = 200;  
 	cs = _T("Last 60 mbar calibration:  ");
 	cs+= m_szLast60mbarCal;
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 
+	if(		m_curVentMode!=VM_CPAP
+		||	m_iCPAP!=50
+		||	m_iFlow!=4000)
+	{
+		SetTextColor(hdcMem,RGB(255,0,0));
 
+		rc.left = 210;
+		rc.right  = 550;
+		rc.top = 225;  
+		cs = _T("Pressure calibration only available in CPAP mode with CPAP of 5 mbar, and flow of 4 lpm, please apply these settings!");
+		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_WORDBREAK);
+
+		SetTextColor(hdcMem,0x0000000);
+
+		m_pcPProx0->EnableWindow(FALSE);
+		m_pcPProx60->EnableWindow(FALSE);
+	}
 
 	//rc.left = 10;  
 	rc.top = 240;  
@@ -835,11 +855,22 @@ void CWndServiceCalibration::OnTimer(UINT_PTR nIDEvent)
 						m_csSysCal=_T("- calibrated -");
 					}
 
-					m_pcPProx0->EnableWindow(TRUE);
-					if(m_bProx0mbarCalibrated)
-						m_pcPProx60->EnableWindow(TRUE);
-					else
+					if(		m_curVentMode!=VM_CPAP
+						||	m_iCPAP!=50
+						||	m_iFlow!=4000)
+					{
+						m_pcPProx0->EnableWindow(FALSE);
 						m_pcPProx60->EnableWindow(FALSE);
+					}
+					else
+					{
+						m_pcPProx0->EnableWindow(TRUE);
+						if(m_bProx0mbarCalibrated)
+							m_pcPProx60->EnableWindow(TRUE);
+						else
+							m_pcPProx60->EnableWindow(FALSE);
+					}
+					
 					m_pcExhCal->EnableWindow(TRUE);
 				}
 				else if(iCommand==-1)
@@ -850,11 +881,22 @@ void CWndServiceCalibration::OnTimer(UINT_PTR nIDEvent)
 
 					m_csSysCal=_T("- SPI-ERROR -");
 
-					m_pcPProx0->EnableWindow(TRUE);
-					if(m_bProx0mbarCalibrated)
-						m_pcPProx60->EnableWindow(TRUE);
-					else
+					if(		m_curVentMode!=VM_CPAP
+						||	m_iCPAP!=50
+						||	m_iFlow!=4000)
+					{
+						m_pcPProx0->EnableWindow(FALSE);
 						m_pcPProx60->EnableWindow(FALSE);
+					}
+					else
+					{
+						m_pcPProx0->EnableWindow(TRUE);
+						if(m_bProx0mbarCalibrated)
+							m_pcPProx60->EnableWindow(TRUE);
+						else
+							m_pcPProx60->EnableWindow(FALSE);
+					}
+					
 					m_pcExhCal->EnableWindow(TRUE);
 				}
 				else if(iCommand!=CMD_SYSCALIBRATION)
@@ -865,11 +907,22 @@ void CWndServiceCalibration::OnTimer(UINT_PTR nIDEvent)
 
 					m_csSysCal=_T("- SPI-ERROR -");
 
-					m_pcPProx0->EnableWindow(TRUE);
-					if(m_bProx0mbarCalibrated)
-						m_pcPProx60->EnableWindow(TRUE);
-					else
+					if(		m_curVentMode!=VM_CPAP
+						||	m_iCPAP!=50
+						||	m_iFlow!=4000)
+					{
+						m_pcPProx0->EnableWindow(FALSE);
 						m_pcPProx60->EnableWindow(FALSE);
+					}
+					else
+					{
+						m_pcPProx0->EnableWindow(TRUE);
+						if(m_bProx0mbarCalibrated)
+							m_pcPProx60->EnableWindow(TRUE);
+						else
+							m_pcPProx60->EnableWindow(FALSE);
+					}
+					
 					m_pcExhCal->EnableWindow(TRUE);
 				}
 			}
@@ -955,18 +1008,29 @@ void CWndServiceCalibration::OnBnClickedSysCal()
 		m_iWaitCount=0;
 		m_csSysCal=_T("- Cal. canceled -");
 
-		if(m_pcPProx0)
-			m_pcPProx0->EnableWindow(TRUE);
-		if(m_bProx0mbarCalibrated)
+		if(		m_curVentMode!=VM_CPAP
+			||	m_iCPAP!=50
+			||	m_iFlow!=4000)
 		{
-			if(m_pcPProx60)
-				m_pcPProx60->EnableWindow(TRUE);
+			m_pcPProx0->EnableWindow(FALSE);
+			m_pcPProx60->EnableWindow(FALSE);
 		}
 		else
 		{
-			if(m_pcPProx60)
-				m_pcPProx60->EnableWindow(FALSE);
+			if(m_pcPProx0)
+				m_pcPProx0->EnableWindow(TRUE);
+			if(m_bProx0mbarCalibrated)
+			{
+				if(m_pcPProx60)
+					m_pcPProx60->EnableWindow(TRUE);
+			}
+			else
+			{
+				if(m_pcPProx60)
+					m_pcPProx60->EnableWindow(FALSE);
+			}
 		}
+		
 		if(m_pcExhCal)
 			m_pcExhCal->EnableWindow(TRUE);
 	}
@@ -1005,10 +1069,21 @@ void CWndServiceCalibration::OnBnClickedProx0()
 	{
 		if(m_pcExhCal)
 			m_pcExhCal->EnableWindow(TRUE);
-		if(m_pcPProx0)
-			m_pcPProx0->EnableWindow(TRUE);
-		if(m_pcPProx60)
+		if(		m_curVentMode!=VM_CPAP
+			||	m_iCPAP!=50
+			||	m_iFlow!=4000)
+		{
+			m_pcPProx0->EnableWindow(FALSE);
 			m_pcPProx60->EnableWindow(FALSE);
+		}
+		else
+		{
+			if(m_pcPProx0)
+				m_pcPProx0->EnableWindow(TRUE);
+			if(m_pcPProx60)
+				m_pcPProx60->EnableWindow(FALSE);
+		}
+		
 		if(m_pcSysCal)
 			m_pcSysCal->EnableWindow(TRUE);
 		m_csProxCal=_T("- canceled -");
@@ -1048,10 +1123,21 @@ void CWndServiceCalibration::OnBnClickedProx0()
 
 		if(m_pcExhCal)
 			m_pcExhCal->EnableWindow(TRUE);
-		if(m_pcPProx0)
-			m_pcPProx0->EnableWindow(TRUE);
-		if(m_pcPProx60)
+		if(		m_curVentMode!=VM_CPAP
+			||	m_iCPAP!=50
+			||	m_iFlow!=4000)
+		{
+			m_pcPProx0->EnableWindow(FALSE);
 			m_pcPProx60->EnableWindow(FALSE);
+		}
+		else
+		{
+			if(m_pcPProx0)
+				m_pcPProx0->EnableWindow(TRUE);
+			if(m_pcPProx60)
+				m_pcPProx60->EnableWindow(FALSE);
+		}
+		
 		if(m_pcSysCal)
 			m_pcSysCal->EnableWindow(TRUE);
 
@@ -1081,10 +1167,21 @@ void CWndServiceCalibration::OnBnClickedProx0()
 
 			if(m_pcExhCal)
 				m_pcExhCal->EnableWindow(TRUE);
-			if(m_pcPProx0)
-				m_pcPProx0->EnableWindow(TRUE);
-			if(m_pcPProx60)
+			if(		m_curVentMode!=VM_CPAP
+				||	m_iCPAP!=50
+				||	m_iFlow!=4000)
+			{
+				m_pcPProx0->EnableWindow(FALSE);
 				m_pcPProx60->EnableWindow(FALSE);
+			}
+			else
+			{
+				if(m_pcPProx0)
+					m_pcPProx0->EnableWindow(TRUE);
+				if(m_pcPProx60)
+					m_pcPProx60->EnableWindow(FALSE);
+			}
+			
 			if(m_pcSysCal)
 				m_pcSysCal->EnableWindow(TRUE);
 
@@ -1106,10 +1203,21 @@ void CWndServiceCalibration::OnBnClickedProx0()
 
 		if(m_pcExhCal)
 			m_pcExhCal->EnableWindow(TRUE);
-		if(m_pcPProx0)
-			m_pcPProx0->EnableWindow(TRUE);
-		if(m_pcPProx60)
+		if(		m_curVentMode!=VM_CPAP
+			||	m_iCPAP!=50
+			||	m_iFlow!=4000)
+		{
+			m_pcPProx0->EnableWindow(FALSE);
 			m_pcPProx60->EnableWindow(FALSE);
+		}
+		else
+		{
+			if(m_pcPProx0)
+				m_pcPProx0->EnableWindow(TRUE);
+			if(m_pcPProx60)
+				m_pcPProx60->EnableWindow(FALSE);
+		}
+		
 		if(m_pcSysCal)
 			m_pcSysCal->EnableWindow(TRUE);
 
@@ -1133,10 +1241,21 @@ void CWndServiceCalibration::OnBnClickedProx0()
 
 		if(m_pcExhCal)
 			m_pcExhCal->EnableWindow(TRUE);
-		if(m_pcPProx0)
-			m_pcPProx0->EnableWindow(TRUE);
-		if(m_pcPProx60)
+		if(		m_curVentMode!=VM_CPAP
+			||	m_iCPAP!=50
+			||	m_iFlow!=4000)
+		{
+			m_pcPProx0->EnableWindow(FALSE);
 			m_pcPProx60->EnableWindow(FALSE);
+		}
+		else
+		{
+			if(m_pcPProx0)
+				m_pcPProx0->EnableWindow(TRUE);
+			if(m_pcPProx60)
+				m_pcPProx60->EnableWindow(FALSE);
+		}
+		
 		if(m_pcSysCal)
 			m_pcSysCal->EnableWindow(TRUE);
 
@@ -1171,15 +1290,27 @@ void CWndServiceCalibration::OnBnClickedProx0()
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_PIF_SIGNAL);
 
-	if(m_pcPProx60)
-		m_pcPProx60->EnableWindow(TRUE);
+	
 
 	if(m_pcExhCal)
 		m_pcExhCal->EnableWindow(TRUE);
-	if(m_pcPProx0)
-		m_pcPProx0->EnableWindow(TRUE);
 	if(m_pcSysCal)
 		m_pcSysCal->EnableWindow(TRUE);
+
+	if(		m_curVentMode!=VM_CPAP
+		||	m_iCPAP!=50
+		||	m_iFlow!=4000)
+	{
+		m_pcPProx0->EnableWindow(FALSE);
+		m_pcPProx60->EnableWindow(FALSE);
+	}
+	else
+	{
+		if(m_pcPProx0)
+			m_pcPProx0->EnableWindow(TRUE);
+		if(m_pcPProx60)
+			m_pcPProx60->EnableWindow(TRUE);
+	}
 }
 void CWndServiceCalibration::OnBnClickedProx60()
 {
@@ -1202,9 +1333,20 @@ void CWndServiceCalibration::OnBnClickedProx60()
 	{
 		m_csProxCal=_T("- canceled -");
 		m_pcExhCal->EnableWindow(TRUE);
-		m_pcPProx0->EnableWindow(TRUE);
-		m_pcPProx60->EnableWindow(TRUE);
 		m_pcSysCal->EnableWindow(TRUE);
+		if(		m_curVentMode!=VM_CPAP
+			||	m_iCPAP!=50
+			||	m_iFlow!=4000)
+		{
+			m_pcPProx0->EnableWindow(FALSE);
+			m_pcPProx60->EnableWindow(FALSE);
+		}
+		else
+		{
+			m_pcPProx0->EnableWindow(TRUE);
+			m_pcPProx60->EnableWindow(TRUE);
+
+		}
 		return;
 	}
 
@@ -1221,9 +1363,20 @@ void CWndServiceCalibration::OnBnClickedProx60()
 		getModel()->getDATAHANDLER()->disableProcPressureCal60();
 		m_csProxCal=_T("- canceled -");
 		m_pcExhCal->EnableWindow(TRUE);
-		m_pcPProx0->EnableWindow(TRUE);
-		m_pcPProx60->EnableWindow(TRUE);
 		m_pcSysCal->EnableWindow(TRUE);
+		if(		m_curVentMode!=VM_CPAP
+			||	m_iCPAP!=50
+			||	m_iFlow!=4000)
+		{
+			m_pcPProx0->EnableWindow(FALSE);
+			m_pcPProx60->EnableWindow(FALSE);
+		}
+		else
+		{
+			m_pcPProx0->EnableWindow(TRUE);
+			m_pcPProx60->EnableWindow(TRUE);
+
+		}
 		getModel()->getDATAHANDLER()->SetPINSPParadata_IPPV(600,true);
 		return;
 	}
@@ -1231,8 +1384,18 @@ void CWndServiceCalibration::OnBnClickedProx60()
 	{
 		getModel()->getDATAHANDLER()->disableProcPressureCal60();
 		m_pcExhCal->EnableWindow(TRUE);
-		m_pcPProx0->EnableWindow(TRUE);
-		m_pcPProx60->EnableWindow(TRUE);
+		if(		m_curVentMode!=VM_CPAP
+			||	m_iCPAP!=50
+			||	m_iFlow!=4000)
+		{
+			m_pcPProx0->EnableWindow(FALSE);
+			m_pcPProx60->EnableWindow(FALSE);
+		}
+		else
+		{
+			m_pcPProx0->EnableWindow(TRUE);
+			m_pcPProx60->EnableWindow(TRUE);
+		}
 		m_pcSysCal->EnableWindow(TRUE);
 		getModel()->getDATAHANDLER()->SetPINSPParadata_IPPV(600,true);
 		return;
@@ -1267,9 +1430,19 @@ void CWndServiceCalibration::OnBnClickedProx60()
 		m_iPProxConOFFS=getModel()->getSERIAL()->GetM_CAL_PRESS_OFFSET();
 
 		m_pcExhCal->EnableWindow(TRUE);
-		m_pcPProx0->EnableWindow(TRUE);
-		m_pcPProx60->EnableWindow(TRUE);
 		m_pcSysCal->EnableWindow(TRUE);
+		if(		m_curVentMode!=VM_CPAP
+			||	m_iCPAP!=50
+			||	m_iFlow!=4000)
+		{
+			m_pcPProx0->EnableWindow(FALSE);
+			m_pcPProx60->EnableWindow(FALSE);
+		}
+		else
+		{
+			m_pcPProx0->EnableWindow(TRUE);
+			m_pcPProx60->EnableWindow(TRUE);
+		}
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_PIF_DOUBLESIGNAL);
@@ -1298,9 +1471,19 @@ void CWndServiceCalibration::OnBnClickedProx60()
 			m_iPProxConOFFS=getModel()->getSERIAL()->GetM_CAL_PRESS_OFFSET();
 
 			m_pcExhCal->EnableWindow(TRUE);
-			m_pcPProx0->EnableWindow(TRUE);
-			m_pcPProx60->EnableWindow(TRUE);
 			m_pcSysCal->EnableWindow(TRUE);
+			if(		m_curVentMode!=VM_CPAP
+				||	m_iCPAP!=50
+				||	m_iFlow!=4000)
+			{
+				m_pcPProx0->EnableWindow(FALSE);
+				m_pcPProx60->EnableWindow(FALSE);
+			}
+			else
+			{
+				m_pcPProx0->EnableWindow(TRUE);
+				m_pcPProx60->EnableWindow(TRUE);
+			}
 
 			if(AfxGetApp())
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_PIF_DOUBLESIGNAL);
@@ -1322,9 +1505,19 @@ void CWndServiceCalibration::OnBnClickedProx60()
 		m_iPProxConOFFS=getModel()->getSERIAL()->GetM_CAL_PRESS_OFFSET();
 
 		m_pcExhCal->EnableWindow(TRUE);
-		m_pcPProx0->EnableWindow(TRUE);
-		m_pcPProx60->EnableWindow(TRUE);
 		m_pcSysCal->EnableWindow(TRUE);
+		if(		m_curVentMode!=VM_CPAP
+			||	m_iCPAP!=50
+			||	m_iFlow!=4000)
+		{
+			m_pcPProx0->EnableWindow(FALSE);
+			m_pcPProx60->EnableWindow(FALSE);
+		}
+		else
+		{
+			m_pcPProx0->EnableWindow(TRUE);
+			m_pcPProx60->EnableWindow(TRUE);
+		}
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_PIF_DOUBLESIGNAL);
@@ -1348,9 +1541,19 @@ void CWndServiceCalibration::OnBnClickedProx60()
 		m_iPProxConOFFS=getModel()->getSERIAL()->GetM_CAL_PRESS_OFFSET();
 
 		m_pcExhCal->EnableWindow(TRUE);
-		m_pcPProx0->EnableWindow(TRUE);
-		m_pcPProx60->EnableWindow(TRUE);
 		m_pcSysCal->EnableWindow(TRUE);
+		if(		m_curVentMode!=VM_CPAP
+			||	m_iCPAP!=50
+			||	m_iFlow!=4000)
+		{
+			m_pcPProx0->EnableWindow(FALSE);
+			m_pcPProx60->EnableWindow(FALSE);
+		}
+		else
+		{
+			m_pcPProx0->EnableWindow(TRUE);
+			m_pcPProx60->EnableWindow(TRUE);
+		}
 
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_PIF_DOUBLESIGNAL);
@@ -1381,8 +1584,18 @@ void CWndServiceCalibration::OnBnClickedProx60()
 	m_szLast60mbarCal=szTimeLastCal60mbar;
 
 	m_pcExhCal->EnableWindow(TRUE);
-	m_pcPProx0->EnableWindow(TRUE);
-	m_pcPProx60->EnableWindow(TRUE);
+	if(		m_curVentMode!=VM_CPAP
+		||	m_iCPAP!=50
+		||	m_iFlow!=4000)
+	{
+		m_pcPProx0->EnableWindow(FALSE);
+		m_pcPProx60->EnableWindow(FALSE);
+	}
+	else
+	{
+		m_pcPProx0->EnableWindow(TRUE);
+		m_pcPProx60->EnableWindow(TRUE);
+	}
 	m_pcSysCal->EnableWindow(TRUE);
 	getModel()->getDATAHANDLER()->disableProcPressureCal60();
 
