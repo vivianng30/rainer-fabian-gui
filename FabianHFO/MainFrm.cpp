@@ -1465,7 +1465,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					theApp.writeLogError(GetLastError(), _T("WD: Unable to refresh#4"));
 				}
 	#endif
-				SetTimer(WATCHDOGTIMER,5000,NULL);
+				SetTimer(WATCHDOGTIMER,2000,NULL);
 				g_bMainWatchdogPending=false;
 
 				getModel()->getVIEWHANDLER()->UpdateServiceView();
