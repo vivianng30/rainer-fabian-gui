@@ -431,7 +431,7 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	setI2Cinitialized();
 	/*if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_START_I2CWATCHDOG);*/
-	Sleep(5);
+	Sleep(0);
 
 	DEBUGMSG(TRUE, (TEXT("#########init interfaceses\r\n")));
 

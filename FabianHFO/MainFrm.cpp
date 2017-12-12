@@ -485,12 +485,14 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CreateAcuFonts(m_wLanguageID,false);
 	LoadGlobalAcuFonts(m_wLanguageID);
 	
+	SetTimer(WATCHDOGTIMER,2000,NULL);
 
 	CString szLAN=_T("");
 	szLAN.Format(_T("***Init LanguageID %s ID %d***"), m_pszFontName, m_wLanguageID);
 	theApp.getLog()->WriteLine(szLAN);
 		
 	StartI2CWatchdogThread();
+
 
 	getModel()->Init(m_pszFontName,m_wLanguageID);
 
@@ -4376,7 +4378,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case WM_STARTUP_SUCCESS:
 			{
-				SetTimer(WATCHDOGTIMER,5000,NULL);
+				//SetTimer(WATCHDOGTIMER,5000,NULL);
 
 				CMVEventControl eventCtrl(CMVEventControl::EV_CONTROL_STARTUP_SUCCESS);
 				getModel()->triggerEvent(&eventCtrl);
