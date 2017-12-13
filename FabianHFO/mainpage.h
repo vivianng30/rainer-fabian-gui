@@ -18,6 +18,7 @@
 	- Factory setting will check for NIV trigger license regarding apnea state and value
 	- 0 and 60 mbar calibration only available in CPAP mode with 5 mbar CPAP and 4 lpm Flow
 	- NetDCU watchdog starts earlier
+	- HFO: if FS will be turned off, the conventional trigger will be set to PRESSURE TRIGGER 
  @endverbatim
  * 
  * @subsection ver5060 Version 5.0.6.0

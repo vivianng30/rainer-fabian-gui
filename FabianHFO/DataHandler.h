@@ -496,6 +496,7 @@ public:
 	void checkTriggerTubeDependency_IPPV();
 	void checkTriggerTubeDependency_SIPPV();
 	void checkTriggerTubeDependency_SIMV();
+	void checkTriggerTubeDependency_HFO();
 
 	bool IsFlowSensorStateOff();
 	eFlowSensorState GetFlowSensorState();

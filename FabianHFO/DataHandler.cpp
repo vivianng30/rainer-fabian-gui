@@ -5442,6 +5442,12 @@ void CDataHandler::checkTriggerTubeDependency()
 			checkTriggerTubeDependency_SIMV();
 		}
 		break;
+	case VM_HFO:
+		{
+			//DEBUGMSG(TRUE, (TEXT("checkTriggerTubeDependency_SIMV\r\n")));
+			checkTriggerTubeDependency_HFO();
+		}
+		break;
 	}
 }
 
@@ -5683,6 +5689,16 @@ void CDataHandler::checkTriggerTubeDependency_SIPPV()
 	}
 }
 void CDataHandler::checkTriggerTubeDependency_SIMV()
+{
+	if(		GetFlowSensorState()==FLOWSENSOR_MANOFF
+		&&	getTriggerOptionCONV()!=TRIGGER_PRESSURE)
+	{
+		SetPrevTriggerOptionCONV(getTriggerOptionCONV());
+		setTriggerOptionCONV(TRIGGER_PRESSURE);
+		getModel()->Send_MODE_OPTION1();
+	}
+}
+void CDataHandler::checkTriggerTubeDependency_HFO()
 {
 	if(		GetFlowSensorState()==FLOWSENSOR_MANOFF
 		&&	getTriggerOptionCONV()!=TRIGGER_PRESSURE)
