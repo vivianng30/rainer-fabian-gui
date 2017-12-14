@@ -14,7 +14,7 @@
 CRITICAL_SECTION CMVModel::m_csO2Flush;
 CRITICAL_SECTION CMVModel::m_csSerial;
 CRITICAL_SECTION CMVModel::m_csI2C;
-CRITICAL_SECTION CMVModel::m_csI2Cinit;
+//CRITICAL_SECTION CMVModel::m_csI2Cinit;
 CRITICAL_SECTION CMVModel::m_csObservers;
 CRITICAL_SECTION CMVModel::m_csLangString;
 CRITICAL_SECTION CMVModel::m_csTrigger;
@@ -76,7 +76,7 @@ CMVModel::CMVModel(void)
 	InitializeCriticalSection(&m_csETCO2);
 	InitializeCriticalSection(&m_csSPO2);
 	InitializeCriticalSection(&m_csVentModeInit);
-	InitializeCriticalSection(&m_csI2Cinit);
+	//InitializeCriticalSection(&m_csI2Cinit);
 
 	m_szUniqueID=_T("");
 
@@ -150,7 +150,7 @@ CMVModel::CMVModel(void)
 
 	m_bVentModeInitialized=false;
 
-	m_bI2Cinitialized=false;
+	//m_bI2Cinitialized=false;
 }
 
 // **************************************************************************
@@ -162,7 +162,7 @@ CMVModel::~CMVModel(void)
 		LANGUAGE->DestroyInstance();
 	LANGUAGE=NULL;
 
-	DeleteCriticalSection(&m_csI2Cinit);
+	//DeleteCriticalSection(&m_csI2Cinit);
 	DeleteCriticalSection(&m_csVentModeInit);
 	DeleteCriticalSection(&m_csETCO2);
 	DeleteCriticalSection(&m_csSPO2);
@@ -391,6 +391,7 @@ CAlarmMgmtHandler* CMVModel::getALARMHANDLER()
 // **************************************************************************
 void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 {
+	theApp.getLog()->WriteLine(_T("#M:001"));
 	m_szFontName=szFontName;
 	m_wLanguageID=wLanguageID;
 
@@ -411,6 +412,8 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	GetAdapterInfo();
 	checkUniqueID();
 	
+	theApp.getLog()->WriteLine(_T("#M:002"));
+
 #ifndef SIMULATION_VERSION
 	I2C=CInterfaceI2C::GetInstance();
 	if(I2C==NULL)
@@ -428,30 +431,45 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	}
 #endif
 
-	setI2Cinitialized();
-	/*if(AfxGetApp())
-		AfxGetApp()->GetMainWnd()->PostMessage(WM_START_I2CWATCHDOG);*/
+	//setI2Cinitialized();
+	if(AfxGetApp())
+		AfxGetApp()->GetMainWnd()->PostMessage(WM_START_I2CWATCHDOG);
 	Sleep(0);
+
+	theApp.getLog()->WriteLine(_T("#M:003"));
 
 	DEBUGMSG(TRUE, (TEXT("#########init interfaceses\r\n")));
 
 	LANGUAGE=CLanguage::GetInstance();
 	CONFIG=CConfiguration::GetInstance();
+
+	theApp.getLog()->WriteLine(_T("#M:004"));
+
 	ALARMHANDLER = CAlarmMgmtHandler::getInstance();
+
+	theApp.getLog()->WriteLine(_T("#M:005"));
 
 #ifndef SIMULATION_NOSERIAL
 	SERIAL=CInterfaceSerial::GetInstance();
 #endif
 
+	theApp.getLog()->WriteLine(_T("#M:006"));
+
 #ifndef SIMULATION_NOSPI
 	SPI=CInterfaceSPI::GetInstance();
 #endif
 	
+	theApp.getLog()->WriteLine(_T("#M:007"));
+
 	PIF=CInterfaceFSBus::GetInstance();
 	DIO=CInterfaceDIO::GetInstance();
 
+	theApp.getLog()->WriteLine(_T("#M:008"));
+
 	DEBUGMSG(TRUE, (TEXT("#########getinstance datahandler\r\n")));
 	DATAHANDLER=CDataHandler::getInstance();
+
+	theApp.getLog()->WriteLine(_T("#M:009"));
 
 	MODEHANDLER=CVentModeHandler::getInstance();
 	MONITORTHR=CThreadMonitor::getInstance();
@@ -460,30 +478,34 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	EXSPIRATIONTHR=CThreadExspiration::getInstance();
 	SOUND=CSoundPlayer::GetInstance();	
 
+	theApp.getLog()->WriteLine(_T("#M:010"));
+
 	//###################################################
 	//init phase
 
 	DEBUGMSG(TRUE, (TEXT("#########init I2C\r\n")));
 
-#ifndef SIMULATION_VERSION
-	if(I2C==NULL)
-	{
-		theApp.getLog()->WriteLine(_T("#ERROR: I2C NULL"));
-		if(AfxGetApp())
-			AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_I2C);
-	}
-	else if(I2C->Init(true)==false)
-	{
-		I2C=NULL;
-		theApp.getLog()->WriteLine(_T("#ERROR: I2C INIT"));
-		if(AfxGetApp())
-			AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_I2C);
-	}
-#endif
+//#ifndef SIMULATION_VERSION
+//	if(I2C==NULL)
+//	{
+//		theApp.getLog()->WriteLine(_T("#ERROR: I2C NULL"));
+//		if(AfxGetApp())
+//			AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_I2C);
+//	}
+//	else if(I2C->Init(true)==false)
+//	{
+//		I2C=NULL;
+//		theApp.getLog()->WriteLine(_T("#ERROR: I2C INIT"));
+//		if(AfxGetApp())
+//			AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_I2C);
+//	}
+//#endif
 
 	DEBUGMSG(TRUE, (TEXT("#########init config\r\n")));
 	CONFIG->Init();
 	
+	theApp.getLog()->WriteLine(_T("#M:011"));
+
 	DEBUGMSG(TRUE, (TEXT("#########init language\r\n")));
 	LANGUAGE->Init();
 
@@ -503,11 +525,19 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	}
 
 	SOUND->Init();//after PIF init!
+
 	DEBUGMSG(TRUE, (TEXT("#########init datahandler\r\n")));
+	theApp.getLog()->WriteLine(_T("#M:012"));
+
 	DATAHANDLER->init();
+
 	DEBUGMSG(TRUE, (TEXT("#########init datahandler finished\r\n")));
+	theApp.getLog()->WriteLine(_T("#M:013"));
+
 	ALARMHANDLER->init();
+
 	DEBUGMSG(TRUE, (TEXT("#########init alarmhandler finished\r\n")));
+	theApp.getLog()->WriteLine(_T("#M:014"));
 
 	if(DIO->Init())
 	{
@@ -519,6 +549,8 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	}
 
 	DEBUGMSG(TRUE, (TEXT("#########init SPI\r\n")));
+	theApp.getLog()->WriteLine(_T("#M:015"));
+
 #ifndef SIMULATION_NOSPI
 	if(SPI!=NULL && SPI->Init())
 	{
@@ -531,32 +563,54 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 		theApp.getLog()->WriteLine(_T("#HFO:0227"));
 	}
 #endif
+
 	DEBUGMSG(TRUE, (TEXT("#########init acuLink\r\n")));
+	theApp.getLog()->WriteLine(_T("#M:016"));
+
 	initAcuLink();
+
 	DEBUGMSG(TRUE, (TEXT("#########init SERIAL\r\n")));
+	theApp.getLog()->WriteLine(_T("#M:017"));
+
 	initSerialController();
 
 	DEBUGMSG(TRUE, (TEXT("#########datahandler start\r\n")));
+	theApp.getLog()->WriteLine(_T("#M:018"));
+
 	DATAHANDLER->start();//serial must be initialized first, sends down start command to serial PIC (==hardware configuration)
+	
+	theApp.getLog()->WriteLine(_T("#M:019"));
+	
 	if(VIEWHANDLER==NULL)
 	{
 		VIEWHANDLER=CMVViewHandler::GetInstance();
 	}
+
+	theApp.getLog()->WriteLine(_T("#M:020"));
 	DEBUGMSG(TRUE, (TEXT("#########init modules\r\n")));
+
 	initCO2module();
+
+	theApp.getLog()->WriteLine(_T("#M:021"));
+
 	initSPO2module();
+
+	theApp.getLog()->WriteLine(_T("#M:022"));
 
 	DEBUGMSG(TRUE, (TEXT("#########init PRICO\r\n")));
 	if(getDATAHANDLER()->isPRICOLicenseAvailable()==true)
 	{
+		theApp.getLog()->WriteLine(_T("#M:022.1"));
 		initPRICOthread();
 	}
 	if(getDATAHANDLER()->isFOTLicenseAvailable()==true)
 	{
+		theApp.getLog()->WriteLine(_T("#M:022.2"));
 		getFOTThread()->loadHFO_FOTvalues();
 	}
 	if(getDATAHANDLER()->isLUNGRECLicenseAvailable()==false && getCONFIG()->GetParaDataFREQ_REC()!=0)
 	{
+		theApp.getLog()->WriteLine(_T("#M:022.3"));
 		getCONFIG()->SetParaDataFREQ_REC(FACTORY_HFO_FREQREC);
 	}
 	
@@ -573,8 +627,10 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 #ifdef SIMULATION_ENTREK
 	theApp.getLog()->WriteLine(_T("+++SIMULATION_ENTREK+++"));
 #endif
-#
+
 	DEBUGMSG(TRUE, (TEXT("#########write versions\r\n")));
+	theApp.getLog()->WriteLine(_T("#M:023"));
+
 	writeMainboardVersionToLog();
 	writeVentRangeToLog();
 	writeKernelVersionToLog();
@@ -582,6 +638,8 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	writeBIASFlowStateToLog();
 	writeLEAKCOMPENSATIONToLog();
 	writeALTITUDEToLog();
+
+	theApp.getLog()->WriteLine(_T("#M:024"));
 
 	DEBUGMSG(TRUE, (TEXT("#########start threads\r\n")));
 	startThreads();
@@ -592,22 +650,24 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	DEBUGMSG(TRUE, (TEXT("#########WM STARTUP\r\n")));
 	if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_STARTUP);
+
+	theApp.getLog()->WriteLine(_T("#M:025"));
 }
 
-void CMVModel::setI2Cinitialized()
-{
-	EnterCriticalSection(&m_csI2Cinit);
-	m_bI2Cinitialized=true;
-	LeaveCriticalSection(&m_csI2Cinit);
-}
-bool CMVModel::getI2Cinitialized()
-{
-	bool bTemp=false;
-	EnterCriticalSection(&m_csI2Cinit);
-	bTemp=m_bI2Cinitialized;
-	LeaveCriticalSection(&m_csI2Cinit);
-	return bTemp;
-}
+//void CMVModel::setI2Cinitialized()
+//{
+//	EnterCriticalSection(&m_csI2Cinit);
+//	m_bI2Cinitialized=true;
+//	LeaveCriticalSection(&m_csI2Cinit);
+//}
+//bool CMVModel::getI2Cinitialized()
+//{
+//	bool bTemp=false;
+//	EnterCriticalSection(&m_csI2Cinit);
+//	bTemp=m_bI2Cinitialized;
+//	LeaveCriticalSection(&m_csI2Cinit);
+//	return bTemp;
+//}
 
 void CMVModel::initPRICOthread()
 {

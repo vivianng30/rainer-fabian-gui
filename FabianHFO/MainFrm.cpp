@@ -135,7 +135,7 @@ CEvent g_evCOM_M_INSP_FLOW;	 //X
 CEvent g_evCOM_M_EXP_FLOW;	 //x
 CEvent g_evCOM_M_DEMAND_FLOW;	 //b
 
-
+CRITICAL_SECTION CMainFrame::m_csI2Cinit;
 
 // CMainFrame
 
@@ -156,11 +156,14 @@ END_MESSAGE_MAP()
 
 CMainFrame::CMainFrame()
 {
+	InitializeCriticalSection(&m_csI2Cinit);
+
 	m_bInitialized=false;//WEC2013
 	m_bWD0error=false;//WEC2013
 	m_bWDERRORI2C=false;//WEC2013
 
 	m_bStartInstaller=false;
+	m_bI2Cinitialized=false;
 
 	m_bForceShutdown=false;//WEC2013
 	m_pModel = NULL;//WEC2013
@@ -367,6 +370,8 @@ CMainFrame::~CMainFrame()
 			m_hThreadI2CWatchdog=INVALID_HANDLE_VALUE;
 		}
 	}
+
+	DeleteCriticalSection(&m_csI2Cinit);
 }
 
 // **************************************************************************
@@ -1313,12 +1318,14 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	
 		switch (message)
 		{
-		//case WM_START_I2CWATCHDOG:
-		//	{
-		//		//StartI2CWatchdogThread();
-		//		
-		//		return 1;
-		//	}
+		case WM_START_I2CWATCHDOG:
+			{
+				//StartI2CWatchdogThread();
+				EnterCriticalSection(&m_csI2Cinit);
+				m_bI2Cinitialized=true;
+				LeaveCriticalSection(&m_csI2Cinit);
+				return 1;
+			}
 		case WM_TERMINAL_IPPV:
 			{
 				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_IPPV))
@@ -8080,10 +8087,24 @@ DWORD CMainFrame::SetI2CWatchdog(void)
 	DWORD dwEnd=0;
 	bool bPrintError=true;
 	
-	while(false==getModel()->getI2Cinitialized() && m_bDoI2CWatchdogThread)
+	bool bI2Cinitialized=false;
+	EnterCriticalSection(&m_csI2Cinit);
+	bI2Cinitialized=m_bI2Cinitialized;
+	LeaveCriticalSection(&m_csI2Cinit);
+
+	while(false==bI2Cinitialized && m_bDoI2CWatchdogThread)
 	{
 		Sleep(5);
+
+		EnterCriticalSection(&m_csI2Cinit);
+		bI2Cinitialized=m_bI2Cinitialized;
+		LeaveCriticalSection(&m_csI2Cinit);
 	}
+
+	/*while(false==getModel()->getI2Cinitialized() && m_bDoI2CWatchdogThread)
+	{
+		Sleep(5);
+	}*/
 
 	if(false==m_bDoI2CWatchdogThread)
 		return 99;

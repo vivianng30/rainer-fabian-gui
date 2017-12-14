@@ -333,7 +333,7 @@ public:
 	void initPRICOthread();
 	void deinitPRICOthread();
 
-	bool getI2Cinitialized();
+	//bool getI2Cinitialized();
 
 	int _httoi(const TCHAR *value);
 
@@ -375,12 +375,12 @@ protected:
 
 	void ChangeLanguage();
 
-	void setI2Cinitialized();
+	//void setI2Cinitialized();
 
 private:
 	static CRITICAL_SECTION m_csObservers;
 	static CRITICAL_SECTION m_csI2C;
-	static CRITICAL_SECTION m_csI2Cinit;
+	//static CRITICAL_SECTION m_csI2Cinit;
 	static CRITICAL_SECTION m_csSerial;
 	static CRITICAL_SECTION	m_csLangString;
 	static CRITICAL_SECTION	m_csTrigger;
@@ -459,6 +459,6 @@ private:
 	bool m_bVideoRunning;
 	bool m_bCO2inprogress;
 	bool m_bVentModeInitialized;
-	bool m_bI2Cinitialized;
+	//bool m_bI2Cinitialized;
 
 };

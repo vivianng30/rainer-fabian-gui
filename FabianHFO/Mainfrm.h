@@ -98,7 +98,7 @@ public:
 
 protected: 
 	//CRITICAL_SECTION	csThreadWatchdog;
-
+	static CRITICAL_SECTION m_csI2Cinit;
 	CMVModel *m_pModel;//WEC2013
 
 	bool m_bExit;//WEC2013
@@ -279,6 +279,7 @@ protected:
 	bool m_bInitialized;//WEC2013
 
 	bool m_bStartInstaller;
+	bool m_bI2Cinitialized;
 // Generated message map functions
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
