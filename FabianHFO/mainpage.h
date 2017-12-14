@@ -19,6 +19,9 @@
 	- 0 and 60 mbar calibration only available in CPAP mode with 5 mbar CPAP and 4 lpm Flow
 	- NetDCU watchdog starts earlier
 	- HFO: if FS will be turned off, the conventional trigger will be set to PRESSURE TRIGGER 
+	- CMVModel: double initialization of I2C deleted
+	- new log entries for startup implemented into CMVModel
+	- initialization of I2C watchdog changed
  @endverbatim
  * 
  * @subsection ver5060 Version 5.0.6.0
