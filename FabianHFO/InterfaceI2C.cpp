@@ -102,7 +102,7 @@ CInterfaceI2C::CInterfaceI2C(void)
 
 	m_wUseForUDP=0;
 
-	m_iMainBoard=MAINBOARD_21;
+	//m_iMainBoard=MAINBOARD_21;
 
 	m_bReadI2C=false;
 	m_bLog=true;
@@ -271,21 +271,13 @@ void CInterfaceI2C::scanForDeviceMCP(bool bStartup)
 {
 	if(ScanForDevice(DEVICE_ADDRESS_MCP,bStartup))
 	{
-		if(TRUE==IsI2C_FRAMavailability())
+		/*if(TRUE==IsI2C_FRAMavailability())
 		{
 			m_iMainBoard=ReadConfigByte(HWCONF_MAINBOARD);
-		}
+		}*/
 
 		bool bResult=InitMCP_ControlerPIC();
 		
-		/*if(m_iMainBoard<MAINBOARD_40)
-		{
-			bResult=InitMCP_ControlerPIC_MB3();
-		}
-		else
-		{
-			bResult=InitMCP_ControlerPIC_MB4();
-		}*/
 		if(bResult)
 			SetI2C_MCPavailability(TRUE);
 	}
@@ -335,14 +327,14 @@ bool CInterfaceI2C::InitMCP_ControlerPIC()
 {
 
 	bool bResult=false;
-	if(m_iMainBoard<MAINBOARD_40)
+	//if(m_iMainBoard<MAINBOARD_40)
 	{
 		bResult=InitMCP_ControlerPIC_MB3();
 	}
-	else
+	/*else
 	{
 		bResult=InitMCP_ControlerPIC_MB4();
-	}
+	}*/
 
 	if(bResult)
 		SetMCPstate(MCP_CONTROLLER);
@@ -477,14 +469,14 @@ bool CInterfaceI2C::InitMCP_ControlerPIC_MB4()
 bool CInterfaceI2C::InitMCP_HfoPIC()
 {
 	bool bResult=false;
-	if(m_iMainBoard<MAINBOARD_40)
+	//if(m_iMainBoard<MAINBOARD_40)
 	{
 		bResult=InitMCP_HfoPIC_MB3();
 	}
-	else
+	/*else
 	{
 		bResult=InitMCP_HfoPIC_MB4();
-	}
+	}*/
 
 	if(bResult)
 		SetMCPstate(MCP_HFO);
@@ -697,10 +689,10 @@ void CInterfaceI2C::SetMCPwatchdog()
 			m_byGP1_ACCESS = m_byGP1_ACCESS & ~b1;
 		}
 
-		if(m_iMainBoard<MAINBOARD_40)
+		//if(m_iMainBoard<MAINBOARD_40)
 			SetRegister8(DEVICE_ADDRESS_MCP, GP1_ACCESS, m_byGP1_ACCESS);
-		else
-			SetRegister8(DEVICE_ADDRESS_MCP, OLATB, m_byGP1_ACCESS);
+		/*else
+			SetRegister8(DEVICE_ADDRESS_MCP, OLATB, m_byGP1_ACCESS);*/
 
 		LeaveCriticalSection(&m_csI2C);
 	}

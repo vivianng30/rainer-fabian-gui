@@ -221,7 +221,7 @@ protected:
 	BYTE m_byCurDevAddr; 
 	WORD m_wCurReg;
 
-	BYTE m_iMainBoard;
+	//BYTE m_iMainBoard;
 
 	bool m_bI2CError;
 	bool m_bAlarmSet;
