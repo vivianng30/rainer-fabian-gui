@@ -4933,6 +4933,11 @@ void CDataHandler::start()
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_SET_EFLOWEQUIFLOW);
 	}
 
+	//initial settings for I-TIME/E-TIME for acuLink needed
+	SetSaveIERelationValue_ETIME(GetCurrentETimePara());
+	SetSaveIERelationValue_ITIME(GetCurrentITimePara());
+	SetCurrentTempETime(GetSaveIERelationValue_ETIME());
+	SetCurrentTempITime(GetSaveIERelationValue_ITIME());
 	
 }
 
