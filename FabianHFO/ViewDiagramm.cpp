@@ -2552,7 +2552,10 @@ void CViewDiagramm::StopDiagramm(bool bStopFreeze)
 	//DEBUGMSG(TRUE, (TEXT("xxxxxxxxxxxxxxx StopDiagramm\r\n")));
 
 	if(bStopFreeze)
+	{
 		m_bFreeze=false;
+		m_bFreezeNextBreath=false;
+	}
 }
 
 
