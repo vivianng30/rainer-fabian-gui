@@ -8101,6 +8101,8 @@ DWORD CMainFrame::SetI2CWatchdog(void)
 		LeaveCriticalSection(&m_csI2Cinit);
 	}
 
+	Sleep(200);
+
 	/*while(false==getModel()->getI2Cinitialized() && m_bDoI2CWatchdogThread)
 	{
 		Sleep(5);

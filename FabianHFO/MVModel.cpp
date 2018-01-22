@@ -431,10 +431,11 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	}
 #endif
 
+	Sleep(50);
 	//setI2Cinitialized();
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_START_I2CWATCHDOG);
-	Sleep(0);
+	//Sleep(0);
 
 	theApp.getLog()->WriteLine(_T("#M:003"));
 

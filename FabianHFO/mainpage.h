@@ -8,10 +8,11 @@
  * @section ver Version history and changelog
  * 
  * @subsection ver5080 Version 5.0.8.0
- * @date 2018-01-17
+ * @date 2018-01-22
  * @verbatim
 	- Mainboard initialization for MB4 changed (now the same as MB3)
 	- initial settings for I-TIME/E-TIME for acuLink needed
+	- Delay in I2C watchdog at startup (-> fke)
  @endverbatim
  * 
  * @subsection ver5070 Version 5.0.7.0
