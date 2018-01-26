@@ -4302,7 +4302,6 @@ bool CInterfaceSerial::CheckStatusBits(CTlsBlob bl)
 			}
 		}
 		
-
 		if(byTemp & DISCONNECTIONBIT)
 		{
 			m_bSerialDisconnection=true;

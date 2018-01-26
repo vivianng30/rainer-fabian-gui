@@ -17245,17 +17245,12 @@ void CDataHandler::SetPinspNotReachedFlag(bool state)
 	if(		getModel()->getALARMHANDLER()->getAlarmSilentState()==ASTATE_SYSTEM_SILENT
 		||	getModel()->getALARMHANDLER()->getAlarmSilentState()==ASTATE_SILENT
 		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE
-		||	getModel()->getVIEWHANDLER()->getViewState()==VS_STARTUP)
+		||	getModel()->getVIEWHANDLER()->getViewState()==VS_STARTUP
+		||	false==getModel()->getVMODEHANDLER()->activeModeIsDUOPAP())
 		return;
 
-	//checkhere
-	m_bPinspNotReached=state;
-
-	
-
-	eStateOfAlarm statePinsp_NotReached = getModel()->getALARMHANDLER()->ALARM_SysLimit_Pinsp_NotReached->getAlarmState();
-
 	if(		state==true
+		&&	false==m_bPinspNotReached
 		&&	getModel()->getALARMHANDLER()->ALARM_DISCONNECTION->getAlarmState()!=AS_ACTIVE
 		&&	getModel()->getSERIAL()->IsSerialDisconnection()==false
 		&&	getModel()->IsSPIDisconnection()==false
@@ -17263,31 +17258,34 @@ void CDataHandler::SetPinspNotReachedFlag(bool state)
 		&&	!getModel()->isO2FlushActive()
 		&&	!getModel()->isMANBREATHrunning())
 	{
-		if(getModel()->getALARMHANDLER()->CanSetAlarm_Pinsp_NotReached())
-		{
-			if(AfxGetApp())
-				AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_PINSPNOTREACHED);
-		}
+		if(AfxGetApp())
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_PINSPNOTREACHED);
+
+		m_bPinspNotReached=true;
 	}
 	else if(	state==false
-		&&	statePinsp_NotReached!=AS_NONE)
+		&&	true==m_bPinspNotReached)
 	{
-		getModel()->getALARMHANDLER()->deleteAlarm(AL_SysLimit_Pinsp_NotReached);
+		m_bPinspNotReached=false;
+		//getModel()->getALARMHANDLER()->deleteAlarm(AL_SysLimit_Pinsp_NotReached);
 	}
 	else if(	getModel()->IsCalibrationViewActive()==true
-		&&	statePinsp_NotReached!=AS_NONE)
+		&&	true==m_bPinspNotReached)
 	{
-		getModel()->getALARMHANDLER()->deleteAlarm(AL_SysLimit_Pinsp_NotReached);
+		m_bPinspNotReached=false;
+		//getModel()->getALARMHANDLER()->deleteAlarm(AL_SysLimit_Pinsp_NotReached);
 	}
 	else if(	getModel()->isO2FlushActive()
-		&&	statePinsp_NotReached!=AS_NONE)
+		&&	true==m_bPinspNotReached)
 	{
-		getModel()->getALARMHANDLER()->deleteAlarm(AL_SysLimit_Pinsp_NotReached);
+		m_bPinspNotReached=false;
+		//getModel()->getALARMHANDLER()->deleteAlarm(AL_SysLimit_Pinsp_NotReached);
 	}
 	else if(	getModel()->isMANBREATHrunning()
-		&&	statePinsp_NotReached!=AS_NONE)
+		&&	true==m_bPinspNotReached)
 	{
-		getModel()->getALARMHANDLER()->deleteAlarm(AL_SysLimit_Pinsp_NotReached);
+		m_bPinspNotReached=false;
+		//getModel()->getALARMHANDLER()->deleteAlarm(AL_SysLimit_Pinsp_NotReached);
 	}
 }
 bool CDataHandler::GetPinspNotReachedFlag()

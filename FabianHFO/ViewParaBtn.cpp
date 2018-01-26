@@ -2721,10 +2721,10 @@ void CViewParaBtn::ShowParaBtn(bool bVentModeChanged)
 		&&	getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_SYSTEM_SILENT)
 	{
 		bool bSetIFlowArrow=false;
-		if(getModel()->getALARMHANDLER()->ALARM_SysLimit_Pinsp_NotReached->getAlarmState()!=AS_NONE)
+		/*if(getModel()->getALARMHANDLER()->ALARM_SysLimit_Pinsp_NotReached->getAlarmState()!=AS_NONE)
 		{
 			bSetIFlowArrow=true;
-		}
+		}*/
 
 		if(getModel()->getALARMHANDLER()->ALARM_SysLimit_Vlimitted->getAlarmState()!=AS_NONE)
 		{
@@ -9310,10 +9310,10 @@ void CViewParaBtn::OnTimer(UINT_PTR nIDEvent)
 			if(iState&BIT6)
 				bSetIFlowArrow=true;
 		}
-		if(getModel()->getALARMHANDLER()->ALARM_SysLimit_Pinsp_NotReached->getAlarmState()!=AS_NONE)
+		/*if(getModel()->getALARMHANDLER()->ALARM_SysLimit_Pinsp_NotReached->getAlarmState()!=AS_NONE)
 		{
 			bSetIFlowArrow=true;
-		}
+		}*/
 
 		if(!bSetIFlowArrow)
 		{
@@ -11658,10 +11658,10 @@ void CViewParaBtn::NotifyEvent(CMVEvent* pEvent)
 						EnterCriticalSection(&csDraw);
 
 						bool bSetIFlowArrow=false;
-						if(getModel()->getALARMHANDLER()->ALARM_SysLimit_Pinsp_NotReached->getAlarmState()!=AS_NONE)
+						/*if(getModel()->getALARMHANDLER()->ALARM_SysLimit_Pinsp_NotReached->getAlarmState()!=AS_NONE)
 						{
 							bSetIFlowArrow=true;
-						}
+						}*/
 
 						if(getModel()->getALARMHANDLER()->ALARM_SysLimit_Vlimitted->getAlarmState()!=AS_NONE)
 						{
@@ -11955,10 +11955,10 @@ void CViewParaBtn::setPSVapnoe(bool bState)
 				m_pcPara_HFAMPL->SetAlarmArrowUp(false);
 		}
 
-		if(getModel()->getALARMHANDLER()->ALARM_SysLimit_Pinsp_NotReached->getAlarmState()!=AS_NONE)
+		/*if(getModel()->getALARMHANDLER()->ALARM_SysLimit_Pinsp_NotReached->getAlarmState()!=AS_NONE)
 		{
 			bSetIFlowArrow=true;
-		}
+		}*/
 
 		if(bSetIFlowArrow)
 		{

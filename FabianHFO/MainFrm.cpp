@@ -3793,7 +3793,11 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		//	break;
 		case WM_SETALARM_PINSPNOTREACHED:
 			{
-				getModel()->getALARMHANDLER()->setAlarm(AL_SysLimit_Pinsp_NotReached);
+				CStringW sData = getModel()->GetLanguageString(IDS_ALARM_PINSP_NOTREACH);
+				CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  sData, 5000);
+				getModel()->triggerEvent(&event2);
+
+				//getModel()->getALARMHANDLER()->setAlarm(AL_SysLimit_Pinsp_NotReached);
 				return 1;
 			}
 			break;
