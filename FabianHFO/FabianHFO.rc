@@ -1932,6 +1932,11 @@ BEGIN
     IDS_TXT_TRIGGER_DETECTION "Detection"
 END
 
+STRINGTABLE 
+BEGIN
+    IDS_TXT_CHECKLEAK       "check leak"
+END
+
 #endif    // German (Germany) resources
 /////////////////////////////////////////////////////////////////////////////
 

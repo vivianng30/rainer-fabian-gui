@@ -1550,7 +1550,6 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 						//	FindClose( hDriver );
 						//}
 
-
 						CMVEventUI event(CMVEventUI::EV_BN_IPPV);
 						getModel()->triggerEvent(&event);
 						return 1;
@@ -3794,6 +3793,8 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		case WM_SETALARM_PINSPNOTREACHED:
 			{
 				CStringW sData = getModel()->GetLanguageString(IDS_ALARM_PINSP_NOTREACH);
+				sData += _T(" > ");
+				sData += getModel()->GetLanguageString(IDS_TXT_CHECKLEAK);
 				CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  sData, 5000);
 				getModel()->triggerEvent(&event2);
 

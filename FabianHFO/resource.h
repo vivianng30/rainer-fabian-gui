@@ -1478,6 +1478,7 @@
 #define IDS_TXT_TRIGGER_THIGH           12154
 #define IDS_TXT_TRIGGER_BREATH          12155
 #define IDS_TXT_TRIGGER_DETECTION       12156
+#define IDS_TXT_CHECKLEAK               12163
 #define IDS_NEW                         65000
 #define IDS_FILE                        65001
 #define IDS_HELP                        65002
