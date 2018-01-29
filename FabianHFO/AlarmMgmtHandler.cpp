@@ -775,8 +775,9 @@ void CAlarmMgmtHandler::setLogAlarm(eAlarm	enAlarm, CStringW szAlarmTxt)
 
 	if(m_AlarmLogfile)
 	{
-		szAlarm=getLogTxtAlarm(enAlarm);
-		szAlarm+= _T(" ")+ szAlarmTxt;
+		szAlarm.Format(_T("%s%s|%d"),getLogTxtAlarm(enAlarm),szAlarmTxt,(int)getModel()->getVMODEHANDLER()->getCurrentActiveMode());
+		/*szAlarm=getLogTxtAlarm(enAlarm);
+		szAlarm+= _T(" ")+ szAlarmTxt;*/
 		m_AlarmLogfile->WriteLine(szAlarm);
 	}
 }

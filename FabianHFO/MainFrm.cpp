@@ -3798,6 +3798,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  sData, 5000);
 				getModel()->triggerEvent(&event2);
 
+				getModel()->getALARMHANDLER()->setLogTxt(sData);
 				//getModel()->getALARMHANDLER()->setAlarm(AL_SysLimit_Pinsp_NotReached);
 				return 1;
 			}

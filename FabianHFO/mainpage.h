@@ -8,13 +8,15 @@
  * @section ver Version history and changelog
  * 
  * @subsection ver5080 Version 5.0.8.0
- * @date 2018-01-26
+ * @date 2018-01-29
  * @verbatim
 	- Mainboard initialization for MB4 changed (now the same as MB3)
 	- initial settings for I-TIME/E-TIME for acuLink needed
 	- Delay in I2C watchdog at startup (-> fke)
 	- bug fixed: if graph is frozen in loop view -> home -> graph will be continued
 	- PinspNotReached only in DUOPAP as text message displayed, in other modes not available anymore
+	- PinspNotReached will be written to alarm log (since this is not an alarm anymore)
+	- alarm log: vent mode will be written additional
  @endverbatim
  * 
  * @subsection ver5070 Version 5.0.7.0
