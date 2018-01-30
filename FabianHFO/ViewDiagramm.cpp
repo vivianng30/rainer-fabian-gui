@@ -755,7 +755,7 @@ bool CViewDiagramm::CreateWndGraphCO2(int x, int y, int nWidth, int nHeight)
 
 				if(	getModel()->getCONFIG()->GraphIsAutoScale())
 				{
-					dYAxisMax=G_LOWER_MAXSCALE_DCO2;
+					dYAxisMax=G_LOWER_MAXSCALE_CO2;
 				}
 				else
 				{
