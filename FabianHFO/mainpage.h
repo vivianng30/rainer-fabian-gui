@@ -17,6 +17,16 @@
 	- PinspNotReached only in DUOPAP as text message displayed, in other modes not available anymore
 	- PinspNotReached will be written to alarm log (since this is not an alarm anymore)
 	- alarm log: vent mode will be written additional
+	- terminal interface with base class implemented
+	- 2 different terminal interfaces available now: : ACL_TERMINAL_REMOTE + ACL_TERMINAL_WAVE
+	- ACL_TERMINAL_WAVE can be enabled/disabled in service menu network
+	- check of acuLink installation in service menu:
+		no AcuLink.exe"Installation: #001"
+		no AcuLink_DLL.dll"Installation: #002"
+		GetPDMSprotocol()==ACL_NOPDMS"Installation: #003"
+		GetPDMSprotocol()==ACL_TERMINAL_REMOTE"Installation: #004"
+		GetPDMSprotocol()==ACL_TERMINAL_WAVE"Installation: #005"
+		"Installation: ok");
  @endverbatim
  * 
  * @subsection ver5070 Version 5.0.7.0

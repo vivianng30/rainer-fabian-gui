@@ -1485,14 +1485,28 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 							}
 							
 						}
-						else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL)
+						else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_REMOTE)
 						{
 							if(getModel()->getTERMINAL())
 							{
 								if(getModel()->getTERMINAL()->isWaveDataActive())
 								{
-									//if(iCntTerminal>=4)//250Hz 
 									if(iCntTerminal>=3)//333Hz 
+									{
+										getModel()->getTERMINAL()->sendWaveData(_pBufData.iValPressure,_pBufData.iValFlow*ALINK_FACTOR_FLOW,_pBufData.iValCO2);
+										iCntTerminal=0;
+									}
+									iCntTerminal++;
+								}
+							}
+						}
+						else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_WAVE)
+						{
+							if(getModel()->getTERMINAL())
+							{
+								if(getModel()->getTERMINAL()->isWaveDataActive())
+								{
+									if(iCntTerminal>=4)//250Hz 
 									{
 										getModel()->getTERMINAL()->sendWaveData(_pBufData.iValPressure,_pBufData.iValFlow*ALINK_FACTOR_FLOW,_pBufData.iValCO2);
 										iCntTerminal=0;

@@ -32,17 +32,20 @@ CWndService()
 		m_bDHCP=true;
 	else
 		m_bDHCP=false;
+
+	m_sliderTerminalWave=NULL;
 }
 
 CWndServiceNetwork::~CWndServiceNetwork()
 {
+
 }
 
 
 BEGIN_MESSAGE_MAP(CWndServiceNetwork, CWnd)
 	ON_WM_DESTROY()
-	/*ON_MESSAGE(WM_BITMAPSLIDER_MOVING, OnMyMessage)
-	ON_BN_CLICKED(IDC_BTN_SERVICE_TESTNURSECALL, &CWndServiceSettings::OnBnClickedTestNursecall)*/
+	ON_MESSAGE(WM_BITMAPSLIDER_MOVING, OnMyMessage)
+	/*ON_BN_CLICKED(IDC_BTN_SERVICE_TESTNURSECALL, &CWndServiceSettings::OnBnClickedTestNursecall)*/
 END_MESSAGE_MAP()
 
 
@@ -68,7 +71,37 @@ void CWndServiceNetwork::Init()
 	}
 	
 
+	m_sliderTerminalWave = new CBitmapSlider();
+	m_sliderTerminalWave->Create(_T(""),WS_CHILD|WS_VISIBLE|SS_BITMAP|SS_NOTIFY|BS_OWNERDRAW, CRect(200,340,349,380),  
+		this,IDC_SLD_TERMINAL_WAVE);
+	m_sliderTerminalWave->SetBitmapChannel( IDB_SLD_CHAN_GREY, NULL );
+	m_sliderTerminalWave->SetBitmapThumb( IDB_SLD_THUMB_GREY, IDB_SLD_THUMB_ACT_GREY);
+	m_sliderTerminalWave->SetRange( 0, 1 );
+	if(ACL_TERMINAL_WAVE==m_iPDMSProtocol)
+	{
+		m_sliderTerminalWave->SetPos( 1 );
+	}
+	else
+	{
+		m_sliderTerminalWave->SetPos( 0 );
+	}
+	m_sliderTerminalWave->SetMargin( 5, 0, 6, 0 );
+	m_sliderTerminalWave->DrawFocusRect( FALSE );
+
+	if(		ACL_TERMINAL_WAVE==m_iPDMSProtocol
+		||	ACL_NOPDMS==m_iPDMSProtocol)
+	{
+		m_sliderTerminalWave->ShowWindow(SW_SHOW);
+	}
+	else
+	{
+		m_sliderTerminalWave->ShowWindow(SW_HIDE);
+	}
+
+	
 	m_pcMenuBack->ShowWindow(SW_SHOW);
+
+	
 }
 
 void CWndServiceNetwork::Draw()
@@ -101,7 +134,7 @@ void CWndServiceNetwork::Draw()
 
 	/**********************acuLink******************************/
 	SelectObject(hdcMem,cbrRound);
-	RoundRect(hdcMem, 20, 20, 750, 310,20,20);
+	RoundRect(hdcMem, 20, 20, 750, 400,20,20);
 
 	SelectObject(hdcMem,cbrDarkRound);
 
@@ -172,6 +205,8 @@ void CWndServiceNetwork::Draw()
 	rc.right  = 700;  
 	rc.bottom = 500;
 
+	m_iPDMSProtocol=getModel()->getCONFIG()->GetPDMSprotocol();
+
 	if(m_bAcuLink)
 	{
 		if(m_iPDMSProtocol==ACL_SERIAL_ASCII)
@@ -184,15 +219,19 @@ void CWndServiceNetwork::Draw()
 			cs = _T("Ethernet (no wave data)");
 		else if(m_iPDMSProtocol==ACL_SERIAL_IVOI)
 			cs = _T("VueLink/IntelliBridge");
-		else if(m_iPDMSProtocol==ACL_TERMINAL)
-			cs = _T("Terminal");
+		else if(m_iPDMSProtocol==ACL_TERMINAL_REMOTE)
+			cs = _T("Terminal Remote");
+		else if(m_iPDMSProtocol==ACL_TERMINAL_WAVE)
+			cs = _T("Terminal Wave");
 		else
 			cs = _T("--");
 	}
 	else
 	{
-		if(m_iPDMSProtocol==ACL_TERMINAL)
-			cs = _T("Terminal");
+		if(m_iPDMSProtocol==ACL_TERMINAL_REMOTE)
+			cs = _T("Terminal Remote");
+		else if(m_iPDMSProtocol==ACL_TERMINAL_WAVE)
+			cs = _T("Terminal Wave");
 		else
 			cs = _T("--");
 	}
@@ -241,8 +280,10 @@ void CWndServiceNetwork::Draw()
 	}
 	else
 	{
-		if(m_iPDMSProtocol==ACL_TERMINAL)
-			cs = _T("Terminal");
+		if(m_iPDMSProtocol==ACL_TERMINAL_REMOTE)
+			cs = _T("Terminal Remote");
+		else if(m_iPDMSProtocol==ACL_TERMINAL_WAVE)
+			cs = _T("Terminal Wave");
 		else
 			cs = _T("--");
 	}
@@ -337,9 +378,13 @@ void CWndServiceNetwork::Draw()
 	{
 		cs = _T("Installation: #003");
 	}
-	else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL)
+	else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_REMOTE)
 	{
 		cs = _T("Installation: #004");
+	}
+	else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_WAVE)
+	{
+		cs = _T("Installation: #005");
 	}
 	else
 	{
@@ -372,18 +417,37 @@ void CWndServiceNetwork::Draw()
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
 
-	/*rc.left = 180;  
-	rc.top = 170;  
-	rc.right  = 400;  
-	rc.bottom = 500;
+	rc.left = 60;  
+	rc.top = 320;  
+	rc.right  = 450;  
+	rc.bottom = 360;
 
-	if(m_bAcuLink)
-		cs = _T("IP address");
-	else
-		cs = _T("DHCP");
-	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);*/
+	cs = _T("Terminal Wave:");
+	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
 
-	//dc.BitBlt(0,0,m_lX,m_lY,CDC::FromHandle(hdcMem),0,0,SRCCOPY);
+	if(		ACL_SERIAL_ASCII==m_iPDMSProtocol
+		||	ACL_SERIAL_IVOI==m_iPDMSProtocol
+		||	ACL_ETHERNET==m_iPDMSProtocol
+		||	ACL_TERMINAL_REMOTE==m_iPDMSProtocol
+		||	ACL_SERIAL_WAVE==m_iPDMSProtocol
+		||	ACL_ETHERNET_WAVE==m_iPDMSProtocol
+		||	ACL_RS232_IVOI==m_iPDMSProtocol
+		||	ACL_RS232_DATA==m_iPDMSProtocol
+		||	ACL_RS232_WAVES==m_iPDMSProtocol
+		||	ACL_RJ45_DATA==m_iPDMSProtocol
+		||	ACL_RJ45_WAVES==m_iPDMSProtocol)
+	{
+		rc.left = 200;  
+		rc.top = 320;  
+		rc.right  = 450;  
+		rc.bottom = 360;
+
+		cs = _T("- not available -");
+		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
+	}
+	
+
+
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,hdcMem,0,0,SRCCOPY);
 
 	SetTextColor(hdcMem,tc);
@@ -412,4 +476,32 @@ void CWndServiceNetwork::Draw()
 void CWndServiceNetwork::OnDestroy()
 {
 	CWndService::OnDestroy();
+
+	if(m_sliderTerminalWave)
+		delete m_sliderTerminalWave;
+	m_sliderTerminalWave=NULL;
+}
+
+LRESULT CWndServiceNetwork::OnMyMessage(WPARAM wParam, LPARAM lParam)
+{
+	switch(wParam)
+	{
+	case IDC_SLD_TERMINAL_WAVE:
+		{
+			if(lParam==1)
+			{
+				getModel()->getCONFIG()->SetPDMSprotocol(ACL_TERMINAL_WAVE);
+				getModel()->initTerminal();
+			}
+			else
+			{
+				getModel()->getCONFIG()->SetPDMSprotocol(ACL_NOPDMS);
+				getModel()->deinitTerminal();
+			}
+
+			Draw();
+		}
+		break;
+	}
+	return 1;
 }

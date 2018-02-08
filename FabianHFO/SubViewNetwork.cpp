@@ -571,9 +571,14 @@ void CSubViewNetwork::Draw()
 		cs=_T("Ethernet (no wave data)");
 		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 	}
-	else if(m_iPDMSProtocol==ACL_TERMINAL)
+	else if(m_iPDMSProtocol==ACL_TERMINAL_REMOTE)
 	{
-		cs=_T("Terminal");
+		cs=_T("Terminal REMOTE");
+		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+	}
+	else if(m_iPDMSProtocol==ACL_TERMINAL_WAVE)
+	{
+		cs=_T("Terminal WAVE");
 		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 	}
 	else

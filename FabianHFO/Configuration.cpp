@@ -1082,6 +1082,9 @@ void CConfiguration::LoadSettings()
 		m_iPDMSProtocol=ACL_RS232_ASCII;
 	#endif
 
+	//TEST
+	//m_iPDMSProtocol=ACL_TERMINAL_WAVE;
+
 	m_eAcuLinkVersion=(eAcuLinkVersion)getModel()->getI2C()->ReadConfigByte(ACULINKVERSION);
 	if(m_eAcuLinkVersion>ALINKVERS_4)
 	{
@@ -1100,7 +1103,8 @@ void CConfiguration::LoadSettings()
 		if(		(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_ASCII
 			||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_WAVE
 			||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI
-			||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL
+			||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_REMOTE
+			||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_WAVE
 			||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_ETHERNET_WAVE)
 			&& m_iCO2module!=CO2MODULE_NONE)
 		{

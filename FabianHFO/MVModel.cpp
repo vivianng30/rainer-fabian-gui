@@ -288,7 +288,14 @@ CInterfaceTerminal *CMVModel::getTERMINAL()
 { 
 	if(TERMINAL==NULL)
 	{
-		TERMINAL=CInterfaceTerminal::GetInstance();
+		if(getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_REMOTE)
+		{
+			TERMINAL=CInterfaceTerminal::GetInstance(ACL_TERMINAL_REMOTE);
+		}
+		else if(getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_WAVE)
+		{
+			TERMINAL=CInterfaceTerminal::GetInstance(ACL_TERMINAL_WAVE);
+		}
 	}
 	return TERMINAL;
 }
@@ -510,11 +517,6 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	DEBUGMSG(TRUE, (TEXT("#########init language\r\n")));
 	LANGUAGE->Init();
 
-	if(getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL)
-	{
-		TERMINAL=CInterfaceTerminal::GetInstance();
-		TERMINAL->Init();
-	}
 	
 	if(PIF->Init())
 	{
@@ -615,6 +617,9 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 		getCONFIG()->SetParaDataFREQ_REC(FACTORY_HFO_FREQREC);
 	}
 	
+	initTerminal();
+	theApp.getLog()->WriteLine(_T("#M:023"));
+	
 	
 #ifdef SIMULATION_NOSPI
 	theApp.getLog()->WriteLine(_T("+++SIMULATION_NOSPI+++"));
@@ -630,7 +635,7 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 #endif
 
 	DEBUGMSG(TRUE, (TEXT("#########write versions\r\n")));
-	theApp.getLog()->WriteLine(_T("#M:023"));
+	theApp.getLog()->WriteLine(_T("#M:024"));
 
 	writeMainboardVersionToLog();
 	writeVentRangeToLog();
@@ -640,7 +645,7 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	writeLEAKCOMPENSATIONToLog();
 	writeALTITUDEToLog();
 
-	theApp.getLog()->WriteLine(_T("#M:024"));
+	theApp.getLog()->WriteLine(_T("#M:025"));
 
 	DEBUGMSG(TRUE, (TEXT("#########start threads\r\n")));
 	startThreads();
@@ -652,7 +657,7 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_STARTUP);
 
-	theApp.getLog()->WriteLine(_T("#M:025"));
+	theApp.getLog()->WriteLine(_T("#M:026"));
 }
 
 //void CMVModel::setI2Cinitialized()
@@ -669,6 +674,31 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 //	LeaveCriticalSection(&m_csI2Cinit);
 //	return bTemp;
 //}
+
+
+void CMVModel::initTerminal()
+{
+	if(getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_REMOTE)
+	{
+		TERMINAL=CInterfaceTerminal::GetInstance(ACL_TERMINAL_REMOTE);
+		TERMINAL->Init();
+	}
+	else if(getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_WAVE)
+	{
+		TERMINAL=CInterfaceTerminal::GetInstance(ACL_TERMINAL_WAVE);
+		TERMINAL->Init();
+	}
+}
+
+void CMVModel::deinitTerminal()
+{
+	if(TERMINAL)
+	{
+		TERMINAL->Deinit();
+		TERMINAL->DestroyInstance();
+	}
+	TERMINAL=NULL;
+}
 
 void CMVModel::initPRICOthread()
 {
@@ -840,7 +870,8 @@ bool CMVModel::initAcuLink()
 		&&	CTlsFile::Exists(_T("\\FFSDISK\\AcuLink_DLL.dll"))
 		&&	CTlsFile::Exists(szFileAcuLink)
 		&&  getCONFIG()->GetPDMSprotocol()!=ACL_NOPDMS
-		&&  getCONFIG()->GetPDMSprotocol()!=ACL_TERMINAL)
+		&&  getCONFIG()->GetPDMSprotocol()!=ACL_TERMINAL_REMOTE
+		&&  getCONFIG()->GetPDMSprotocol()!=ACL_TERMINAL_WAVE)
 	{
 		ACULINK=CInterfaceAcuLink::getInstance(getCONFIG()->GetPDMSprotocol());
 
@@ -875,9 +906,13 @@ bool CMVModel::initAcuLink()
 		{
 			theApp.getLog()->WriteLine(_T("***ACULINK=ACL_NOPDMS***"));
 		}
-		else if(getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL)
+		else if(getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_REMOTE)
 		{
-			theApp.getLog()->WriteLine(_T("***ACULINK=ACL_TERMINAL***"));
+			theApp.getLog()->WriteLine(_T("***ACULINK=ACL_TERMINAL_REMOTE***"));
+		}
+		else if(getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_WAVE)
+		{
+			theApp.getLog()->WriteLine(_T("***ACULINK=ACL_TERMINAL_WAVE***"));
 		}
 
 		return false;
@@ -1188,7 +1223,8 @@ void CMVModel::initCO2module()
 					&&  getCONFIG()->GetPDMSprotocol()!=ACL_SERIAL_ASCII
 					&&  getCONFIG()->GetPDMSprotocol()!=ACL_SERIAL_WAVE
 					&&	getCONFIG()->GetPDMSprotocol()!=ACL_SERIAL_IVOI
-					&&	getCONFIG()->GetPDMSprotocol()!=ACL_TERMINAL)
+					&&	getCONFIG()->GetPDMSprotocol()!=ACL_TERMINAL_REMOTE
+					&&	getCONFIG()->GetPDMSprotocol()!=ACL_TERMINAL_WAVE)
 				{
 					if(ETCO2->Init(1)==0)
 					{
@@ -1205,7 +1241,8 @@ void CMVModel::initCO2module()
 					&&  (getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_ASCII
 					||	getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_WAVE
 					||	getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI
-					||	getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL))
+					||	getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_REMOTE
+					||	getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_WAVE))
 				{
 					getCONFIG()->setCO2module(CO2MODULE_NONE);
 					ETCO2=NULL;

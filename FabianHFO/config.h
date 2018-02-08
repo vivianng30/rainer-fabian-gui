@@ -69,15 +69,16 @@ enum eHFModuleRevision {
 #define ACL_SERIAL_ASCII	1
 #define ACL_SERIAL_IVOI		2
 #define ACL_ETHERNET		3
-#define ACL_TERMINAL		4
+#define ACL_TERMINAL_REMOTE	4
 #define ACL_SERIAL_WAVE		5
 #define ACL_ETHERNET_WAVE	6
+#define ACL_TERMINAL_WAVE	7
 //new eigenes protocol
-#define ACL_RS232_IVOI		7
-#define ACL_RS232_DATA		8
-#define ACL_RS232_WAVES		9
-#define ACL_RJ45_DATA		10
-#define ACL_RJ45_WAVES		11
+#define ACL_RS232_IVOI		10
+#define ACL_RS232_DATA		11
+#define ACL_RS232_WAVES		12
+#define ACL_RJ45_DATA		13
+#define ACL_RJ45_WAVES		14
 
 //language IDs
 enum eLanguage {

@@ -50,7 +50,8 @@ void CWndSubSettingsCO2Module::Initialize()
 		if(		getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_ASCII
 			||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_WAVE
 			||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI
-			||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL
+			||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_REMOTE
+			||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_WAVE
 			||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_ETHERNET_WAVE)
 		{
 			m_iNumValues=1;
@@ -212,7 +213,8 @@ void CWndSubSettingsCO2Module::Draw()
 		&& (getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_ASCII
 		||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_WAVE
 		||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI
-		||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL
+		||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_REMOTE
+		||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_WAVE
 		||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_ETHERNET_WAVE))
 	{
 		SetTextColor(hdcMem,RGB(255,0,0));

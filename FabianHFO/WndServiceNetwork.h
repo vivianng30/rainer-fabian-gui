@@ -1,6 +1,6 @@
 #pragma once
 #include "WndService.h"
-//#include "BitmapSlider.h"
+#include "BitmapSlider.h"
 #include "KbrdBtn.h"
 
 // CWndServiceNetwork
@@ -28,6 +28,9 @@ private:
 
 	CBmp* m_pcNurse;*/
 
+	CBitmapSlider*	m_sliderTerminalWave;
+	//bool m_bTerminalWave;
+
 	bool m_bAcuLink;
 	bool m_bAcuLinkLicense;
 
@@ -43,6 +46,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnDestroy();
-	/*afx_msg LRESULT OnMyMessage(WPARAM wParam, LPARAM lParam);
-	afx_msg void OnBnClickedTestNursecall();*/
+	afx_msg LRESULT OnMyMessage(WPARAM wParam, LPARAM lParam);
+	/*afx_msg void OnBnClickedTestNursecall();*/
 };

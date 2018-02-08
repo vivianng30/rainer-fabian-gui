@@ -91,7 +91,8 @@ CSubViewCO2::CSubViewCO2()
 		(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_ASCII
 		||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_WAVE
 		||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI
-		||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL
+		||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_REMOTE
+		||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_WAVE
 		||  getModel()->getCONFIG()->GetPDMSprotocol()==ACL_ETHERNET_WAVE))
 	{
 		if(m_byCO2Module!=CO2MODULE_NONE)//should never happen, catched in configuration

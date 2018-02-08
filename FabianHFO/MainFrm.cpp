@@ -4631,7 +4631,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					getModel()->NotifyMonitorData();
 
 				
-				if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL
+				if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_REMOTE
 					&&	getModel()->getTERMINAL()->isMeasurementDataActive())
 				{
 					//DEBUGMSG(TRUE, (TEXT("WM_NEWMONITORDATA\r\n")));

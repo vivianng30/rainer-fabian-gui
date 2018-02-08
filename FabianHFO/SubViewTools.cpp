@@ -987,8 +987,10 @@ void CSubViewTools::OnBnClickedDevInfoToUSB()
 			szTemp = _T("Ethernet (no wave data)");
 		else if(iPDMSProtocol==ACL_SERIAL_IVOI)
 			szTemp = _T("VueLink/IntelliBridge");
-		else if(iPDMSProtocol==ACL_TERMINAL)
-			szTemp = _T("Terminal");
+		else if(iPDMSProtocol==ACL_TERMINAL_REMOTE)
+			szTemp = _T("Terminal Remote");
+		else if(iPDMSProtocol==ACL_TERMINAL_WAVE)
+			szTemp = _T("Terminal Wave");
 		else
 			szTemp = _T("--");
 

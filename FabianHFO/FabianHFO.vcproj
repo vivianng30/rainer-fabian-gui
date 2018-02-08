@@ -2083,6 +2083,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InterfaceTerminalRemote.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\InterfaceTerminalWave.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Language.cpp"
 				>
 			</File>
@@ -3226,6 +3234,14 @@
 			</File>
 			<File
 				RelativePath=".\InterfaceTerminal.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InterfaceTerminalRemote.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InterfaceTerminalWave.h"
 				>
 			</File>
 			<File

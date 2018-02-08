@@ -313,6 +313,9 @@ public:
 	void setVentilationRangeChanged(bool bState);
 	bool getVentilationRangeChanged();
 
+	void initTerminal();
+	void deinitTerminal();
+
 	void initCO2module();
 	void DeinitCO2module();
 	void logCO2module();
