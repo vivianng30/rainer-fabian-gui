@@ -418,9 +418,9 @@ void CWndServiceNetwork::Draw()
 
 
 	rc.left = 60;  
-	rc.top = 320;  
+	rc.top = 340;  
 	rc.right  = 450;  
-	rc.bottom = 360;
+	rc.bottom = 380;
 
 	cs = _T("Terminal Wave:");
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_VCENTER|DT_SINGLELINE);
