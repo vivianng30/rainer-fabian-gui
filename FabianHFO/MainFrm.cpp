@@ -6036,6 +6036,7 @@ void CMainFrame::QuitVentilator()
 
 	theApp.getLog()->WriteLine(L"**** QuitVentilator ****");
 
+	getModel()->getSOUND()->SetPIFSound(PIF_SHUTDOWN);
 	getModel()->getSPI()->send_Shutdown();
 
 	KillTimer(CHECKCOM_TIMER);
@@ -6080,7 +6081,7 @@ void CMainFrame::QuitVentilator()
 		getModel()->getI2C()->WriteAccuWord(ACCU_DAT_CMND,ACCU_CMND_SHUTDOWN);
 #endif
 
-	getModel()->getSOUND()->SetPIFSound(PIF_SHUTDOWN);
+	//getModel()->getSOUND()->SetPIFSound(PIF_SHUTDOWN);
 
 	stopThreads();
 	stopWatchdog();

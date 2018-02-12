@@ -27,6 +27,7 @@
 		GetPDMSprotocol()==ACL_TERMINAL_REMOTE"Installation: #004"
 		GetPDMSprotocol()==ACL_TERMINAL_WAVE"Installation: #005"
 		"Installation: ok");
+	- SHUTDOWN: order changed regarding PIF due to new ALARM PIC (mwa)
  @endverbatim
  * 
  * @subsection ver5070 Version 5.0.7.0
