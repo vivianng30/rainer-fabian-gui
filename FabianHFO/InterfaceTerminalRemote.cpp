@@ -35,7 +35,6 @@ CInterfaceTerminalRemote::~CInterfaceTerminalRemote()
 {
 }
 
-
 //BEGIN_MESSAGE_MAP(CInterfaceTerminalRemote, CInterfaceTerminal)
 //END_MESSAGE_MAP()
 

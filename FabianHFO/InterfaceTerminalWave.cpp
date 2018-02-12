@@ -88,4 +88,5 @@ bool CInterfaceTerminalWave::OpenCOM()
 
 void CInterfaceTerminalWave::OnEvent(EEvent eEvent, EError eError)
 {
+	//nothing to do here yet
 }

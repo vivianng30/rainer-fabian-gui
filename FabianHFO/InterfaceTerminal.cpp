@@ -3980,11 +3980,6 @@ DWORD CInterfaceTerminal::SendTerminalData(void)
 
 			pos = MSGSend.GetHeadPosition();
 
-			/*int iTest=MSGSend.GetSize();
-
-			if(iTest>100)
-				int iStop=0;*/
-
 			LeaveCriticalSection(&csMSGSend);
 		}
 		Sleep(1);

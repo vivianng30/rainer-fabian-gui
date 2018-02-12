@@ -1072,7 +1072,7 @@ void CConfiguration::LoadSettings()
 	//m_iCO2module=CO2MODULE_MICROPOD;
 
 	m_iPDMSProtocol=getModel()->getI2C()->ReadConfigByte(PDMSCONFIG);
-	if(m_iPDMSProtocol>ACL_ETHERNET_WAVE)
+	if(m_iPDMSProtocol>ACL_TERMINAL_WAVE)
 	{
 		getModel()->getI2C()->WriteConfigByte(PDMSCONFIG,ACL_NOPDMS);
 		m_iPDMSProtocol=ACL_NOPDMS;

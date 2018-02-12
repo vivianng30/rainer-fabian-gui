@@ -482,6 +482,7 @@ void CWndServiceNetwork::OnDestroy()
 	m_sliderTerminalWave=NULL;
 }
 
+
 LRESULT CWndServiceNetwork::OnMyMessage(WPARAM wParam, LPARAM lParam)
 {
 	switch(wParam)
