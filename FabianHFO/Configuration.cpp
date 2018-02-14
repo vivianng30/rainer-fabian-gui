@@ -29,7 +29,7 @@ CConfiguration::CConfiguration()
 	m_bSpO2ConfigInProgress=false;
 
 	m_wOldConfigVersion=0;
-	m_iConfigVersion=3005;
+	m_iConfigVersion=3006;
 	m_iParaDataHFFlow=0;
 	m_iLanguageID=0;
 	//m_wHFamp=0;
@@ -90,6 +90,7 @@ CConfiguration::CConfiguration()
 	//m_eTriggerTypeCONV=TRIGGER_FLOW;
 	//m_eTriggerTypeNMODE=TRIGGER_FLOW;
 
+	m_ePrevTrigger_CONV=TRIGGER_NONE;
 	m_eTriggerType_CONV=TRIGGER_FLOW;
 	m_eTriggerType_CPAP=TRIGGER_FLOW;
 	m_eTriggerType_DUOPAP=TRIGGER_FLOW;
@@ -453,7 +454,7 @@ void CConfiguration::Init()
 	dbAmpCorFactorHFO_K=10000;
 	dbAmpCorFactorHFO_J=10000;
 
-	m_iConfigVersion=3005;
+	m_iConfigVersion=3006;
 	m_iParaDataHFFlow=0;
 	m_iLanguageID=0;
 	m_iFOTventDelaytime=0;
@@ -512,6 +513,7 @@ void CConfiguration::Init()
 	//m_eTriggerTypeCONV=TRIGGER_FLOW;
 	//m_eTriggerTypeNMODE=TRIGGER_FLOW;
 
+	m_ePrevTrigger_CONV=TRIGGER_NONE;
 	m_eTriggerType_CONV=TRIGGER_FLOW;
 	m_eTriggerType_CPAP=TRIGGER_FLOW;
 	m_eTriggerType_DUOPAP=TRIGGER_FLOW;
@@ -1386,6 +1388,13 @@ void CConfiguration::LoadSettings()
 	{
 		m_eTriggerType_CONV=TRIGGER_FLOW;
 		getModel()->getI2C()->WriteConfigByte(TRIGGERTYPECONV_8,TRIGGER_FLOW);
+	}
+
+	m_ePrevTrigger_CONV=(eTriggereType)getModel()->getI2C()->ReadConfigByte(PREVTRIGGERTYPECONV_8);
+	if(m_ePrevTrigger_CONV<TRIGGER_VOLUME  || m_ePrevTrigger_CONV>TRIGGER_NONE) //previous pressure trigger check, allowed setting: VOLUME,FLOW,PRESSURE,NONE
+	{
+		m_ePrevTrigger_CONV=TRIGGER_NONE;
+		getModel()->getI2C()->WriteConfigByte(PREVTRIGGERTYPECONV_8,TRIGGER_FLOW);
 	}
 
 	m_eTriggerType_CPAP=(eTriggereType)getModel()->getI2C()->ReadConfigByte(TRIGGERTYPECPAP_8);
@@ -5048,6 +5057,18 @@ void CConfiguration::setTriggerOption_CONV(eTriggereType type)
 eTriggereType CConfiguration::getTriggerOption_CONV()
 {
 	return m_eTriggerType_CONV;
+}
+
+void CConfiguration::setPrevTriggerOption_CONV(eTriggereType type)
+{
+	m_ePrevTrigger_CONV=type;
+	getModel()->getI2C()->WriteConfigByte(PREVTRIGGERTYPECONV_8, (BYTE)type);
+
+	DEBUGMSG(TRUE, (TEXT("setTriggerOption_CONV %d\r\n"),(int)type));
+}
+eTriggereType CConfiguration::getPrevTriggerOption_CONV()
+{
+	return m_ePrevTrigger_CONV;
 }
 
 void CConfiguration::setTriggerOption_CPAP(eTriggereType type)
@@ -10083,6 +10104,9 @@ void CConfiguration::SerializeFile(CArchive& ar)
 
 		ar<<(BYTE)m_eTriggerType_DUOPAP;
 		ar<<m_iParaDataTrigger_DUOPAP;
+		
+		////##################### m_iConfigVersion 3006
+		ar<<(BYTE)m_ePrevTrigger_CONV;
 	}
 	else
 	{
@@ -10789,6 +10813,15 @@ void CConfiguration::SerializeFile(CArchive& ar)
 
 			if(m_iParaDataTrigger_DUOPAP!=MAXRANGE_TRIGGER_OFF && getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable()==false)
 				disableNIVTRIGGER();
+		}
+
+		//##################### m_iConfigVersion 3006
+		if(iConfigVersion>=3006)
+		{
+			BYTE ePrevTriggerTypeCONV=0;
+			ar>>ePrevTriggerTypeCONV;
+			m_ePrevTrigger_CONV=(eTriggereType)ePrevTriggerTypeCONV;
+			setTriggerOption_CONV(m_ePrevTrigger_CONV);
 		}
 	}
 }

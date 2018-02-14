@@ -28,6 +28,8 @@
 		GetPDMSprotocol()==ACL_TERMINAL_WAVE"Installation: #005"
 		"Installation: ok");
 	- SHUTDOWN: order changed regarding PIF due to new ALARM PIC (mwa)
+	- Configuration: m_iConfigVersion changed to 3006
+	- previous trigger conventional will be saved to FRAM
  @endverbatim
  * 
  * @subsection ver5070 Version 5.0.7.0

@@ -900,7 +900,7 @@ private:
 	
 	eVgarantState m_eCurVgarantState;   ///< The current vgarant state
 
-	eTriggereType m_ePrevTrigger_CONV;   ///< The previous convert trigger
+	//eTriggereType m_ePrevTrigger_CONV;   ///< The previous conventional trigger
 	//eTriggereType m_ePrevTrigger_CPAP;
 
 	double m_fTrendData_Pmean;  ///< The f trend data pmean

@@ -165,7 +165,7 @@ CDataHandler::CDataHandler(void)
 	InitializeCriticalSection(&csFOTosciState);
 
 	//m_ePrevConvTrigger=TRIGGER_NONE;
-	m_ePrevTrigger_CONV=TRIGGER_NONE;
+	//m_ePrevTrigger_CONV=TRIGGER_NONE;
 	//m_ePrevTrigger_CPAP=TRIGGER_NONE;
 
 	m_bLEDdisplay=true;
@@ -9315,11 +9315,13 @@ eTriggereType CDataHandler::getTriggerOptionCONV()
 }
 void CDataHandler::SetPrevTriggerOptionCONV(eTriggereType type)
 {
-	m_ePrevTrigger_CONV=type;
+	getModel()->getCONFIG()->setPrevTriggerOption_CONV(type);
+	//m_ePrevTrigger_CONV=type;
 }
 eTriggereType CDataHandler::getPrevTriggerOptionCONV()
 {
-	return m_ePrevTrigger_CONV;
+	return getModel()->getCONFIG()->getPrevTriggerOption_CONV();
+	//return m_ePrevTrigger_CONV;
 }
 //###########################
 //void CDataHandler::setTriggerOption_CPAP(eTriggereType type)

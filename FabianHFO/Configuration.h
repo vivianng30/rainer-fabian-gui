@@ -86,6 +86,9 @@ public:
 	void TrendSetFilled(bool state);
 	bool TrendIsFilled();
 
+	void setPrevTriggerOption_CONV(eTriggereType type);
+	eTriggereType getPrevTriggerOption_CONV();
+
 	void setTriggerOption_CONV(eTriggereType type);
 	eTriggereType getTriggerOption_CONV();
 
@@ -1316,6 +1319,7 @@ private:
 	eAVRevision  m_eAVRevision; ///< a v revision
 	eHFModuleRevision m_eHFRevision;	///< The hf revision
 
+	eTriggereType m_ePrevTrigger_CONV;   ///< The previous conventional trigger
 	eTriggereType m_eTriggerType_CONV;   ///< The trigger type convert
 	eTriggereType m_eTriggerType_CPAP;  ///< The trigger type cpap
 	eTriggereType m_eTriggerType_DUOPAP;  ///< The trigger type duopap
