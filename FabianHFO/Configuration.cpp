@@ -1060,7 +1060,7 @@ void CConfiguration::LoadSettings()
 	}
 
 	m_iCO2module=getModel()->getI2C()->ReadConfigByte(CO2CONFIG);
-	if(m_iCO2module>CO2MODULE_SENTEC)
+	if(m_iCO2module>CO2MODULE_MICROPOD)
 	{
 		getModel()->getI2C()->WriteConfigByte(CO2CONFIG,CO2MODULE_NONE);
 		m_iCO2module=CO2MODULE_NONE;
