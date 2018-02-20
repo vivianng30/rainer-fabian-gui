@@ -11,25 +11,6 @@
 **/
 //=============================================================================
 
-//=============================================================================
-/** 
-* \brief description
-* \class is used to indicate that the comment block contains documentation for the class Test
-* \struct to document a C-struct.
-* \enum to document an enumeration type. 
-* \fn to document a function. 
-* \var to document a variable or typedef or enum value
-* \def to document a #define. 
-* \typedef to document a type definition. 
-* \file to document a file. 
-* \author Rainer Kuehner
-* \date 2013-01-21 Creation of file
-*
-*
-**/
-//=============================================================================
-
-
 
 #include "StdAfx.h"
 #include "DataHandler.h"
@@ -2019,6 +2000,16 @@ bool CDataHandler::checkLicensing()
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Getdemo timestamp
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	module	The module.
+ *
+ * \return	A COleDateTime.
+ **************************************************************************************************/
 
 COleDateTime CDataHandler::GetdemoTimestamp(eModule module)
 {
@@ -2083,6 +2074,15 @@ COleDateTime CDataHandler::GetdemoTimestamp(eModule module)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Check demo license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	module	The module.
+ **************************************************************************************************/
 
 void CDataHandler::checkDemoLicense(eModule module)
 {
@@ -2156,6 +2156,13 @@ void CDataHandler::checkDemoLicense(eModule module)
 	}
 }
 
+/**********************************************************************************************//**
+ * Check demo license hfo
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkDemoLicense_HFO()
 {
 	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetHFOdemoTimestamp();
@@ -2186,6 +2193,14 @@ void CDataHandler::checkDemoLicense_HFO()
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Check demo license nmode
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkDemoLicense_NMODE()
 {
 	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetNMODEdemoTimestamp();
@@ -2216,6 +2231,14 @@ void CDataHandler::checkDemoLicense_NMODE()
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Check demo license vguaranty
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkDemoLicense_VGUARANTY()
 {
 	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetVGUARANTYdemoTimestamp();
@@ -2246,6 +2269,14 @@ void CDataHandler::checkDemoLicense_VGUARANTY()
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Check demo license vlimit
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkDemoLicense_VLIMIT()
 {
 	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetVLIMITdemoTimestamp();
@@ -2276,6 +2307,14 @@ void CDataHandler::checkDemoLicense_VLIMIT()
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Check demo license lungrec
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkDemoLicense_LUNGREC()
 {
 	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetLUNGRECdemoTimestamp();
@@ -2306,6 +2345,14 @@ void CDataHandler::checkDemoLicense_LUNGREC()
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Check demo license trend
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkDemoLicense_TREND()
 {
 	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetTRENDdemoTimestamp();
@@ -2336,6 +2383,14 @@ void CDataHandler::checkDemoLicense_TREND()
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Check demo license therapy
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkDemoLicense_THERAPY()
 {
 	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetTHERAPYdemoTimestamp();
@@ -2366,6 +2421,14 @@ void CDataHandler::checkDemoLicense_THERAPY()
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Check demo license prico
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkDemoLicense_PRICO()
 {
 	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetPRICOdemoTimestamp();
@@ -2396,6 +2459,14 @@ void CDataHandler::checkDemoLicense_PRICO()
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Check demo license fot
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkDemoLicense_FOT()
 {
 	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetFOTdemoTimestamp();
@@ -2442,6 +2513,13 @@ void CDataHandler::checkDemoLicense_FOT()
 	}
 }
 
+/**********************************************************************************************//**
+ * Check demo license nivtrigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkDemoLicense_NIVTRIGGER()
 {
 	COleDateTime dtLicenseTimestamp = getModel()->getCONFIG()->GetNIVTRIGGERdemoTimestamp();
@@ -2487,6 +2565,15 @@ void CDataHandler::checkDemoLicense_NIVTRIGGER()
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets demo license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	module	The module.
+ **************************************************************************************************/
 
 void CDataHandler::setDemoLicense(eModule module)
 {
@@ -2565,6 +2652,17 @@ void CDataHandler::setDemoLicense(eModule module)
 
 	endableDemoLicense(module);
 }
+
+/**********************************************************************************************//**
+ * Deletes the demo license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	module	The module.
+ * \param	bReset	True to reset.
+ **************************************************************************************************/
+
 void CDataHandler::delDemoLicense(eModule module, bool bReset)
 {
 	
@@ -2684,6 +2782,16 @@ void CDataHandler::delDemoLicense(eModule module, bool bReset)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_LICENSING_CHANGED);*/
 
 }
+
+/**********************************************************************************************//**
+ * Endable demo license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	module	The module.
+ **************************************************************************************************/
+
 void CDataHandler::endableDemoLicense(eModule module)
 {
 	switch(module)
@@ -3516,12 +3624,28 @@ bool CDataHandler::isHFOLicenseAvailable()
 {
 	return m_bHFOLicenseAvailable;
 }
+
+/**********************************************************************************************//**
+ * Enables the hfo license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::enableHFOLicense()
 {
 	//m_bHFOLicenseAvailable=false;
 	m_bHFOLicenseAvailable=true;
 	theApp.getLog()->WriteLine(_T("-enableHFOmodule"));
 }
+
+/**********************************************************************************************//**
+ * Disables the hfo license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::disableHFOLicense()
 {
 	m_bHFOLicenseAvailable=false;
@@ -3529,6 +3653,15 @@ void CDataHandler::disableHFOLicense()
 
 	delDemoLicense(MOD_HFO,false);
 }
+
+/**********************************************************************************************//**
+ * Queries if the hfo demo lic is available
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if the hfo demo lic is available, false if not.
+ **************************************************************************************************/
 
 bool CDataHandler::isHFODemoLicAvailable()
 {
@@ -3546,11 +3679,27 @@ bool CDataHandler::isNMODELicenseAvailable()
 {
 	return m_bNMODELicenseAvailable;
 }
+
+/**********************************************************************************************//**
+ * Enables the nmode license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::enableNMODELicense()
 {
 	m_bNMODELicenseAvailable=true;
 	theApp.getLog()->WriteLine(_T("-enableNMODEmodule"));
 }
+
+/**********************************************************************************************//**
+ * Disables the nmode license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::disableNMODELicense()
 {
 	m_bNMODELicenseAvailable=false;
@@ -3559,6 +3708,15 @@ void CDataHandler::disableNMODELicense()
 	delDemoLicense(MOD_NMODE,false);
 
 }
+
+/**********************************************************************************************//**
+ * Queries if the nmode demo lic is available
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if the nmode demo lic is available, false if not.
+ **************************************************************************************************/
 
 bool CDataHandler::isNMODEDemoLicAvailable()
 {
@@ -3577,11 +3735,27 @@ bool CDataHandler::isVGUARANTLicenseAvailable()
 	//return false;
 	return m_bVGUARANTLicenseAvailable;
 }
+
+/**********************************************************************************************//**
+ * Enables the vguarant license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::enableVGUARANTLicense()
 {
 	m_bVGUARANTLicenseAvailable=true;
 	theApp.getLog()->WriteLine(_T("-enableVGUARANTmodule"));
 }
+
+/**********************************************************************************************//**
+ * Disables the vguarant license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::disableVGUARANTLicense()
 {
 	m_bVGUARANTLicenseAvailable=false;
@@ -3590,6 +3764,16 @@ void CDataHandler::disableVGUARANTLicense()
 	delDemoLicense(MOD_VGUARANTY,false);
 
 }
+
+/**********************************************************************************************//**
+ * Queries if the vguarant demo lic is available
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if the vguarant demo lic is available, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::isVGUARANTDemoLicAvailable()
 {
 	return m_bVGUARANTDemoLicAvailable;
@@ -3605,11 +3789,27 @@ bool CDataHandler::isVLIMITLicenseAvailable()
 {
 	return m_bVLIMITLicenseAvailable;
 }
+
+/**********************************************************************************************//**
+ * Enables the vlimit license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::enableVLIMITLicense()
 {
 	m_bVLIMITLicenseAvailable=true;
 	theApp.getLog()->WriteLine(_T("-enableVLIMITmodule"));
 }
+
+/**********************************************************************************************//**
+ * Disables the vlimit license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::disableVLIMITLicense()
 {
 	m_bVLIMITLicenseAvailable=false;
@@ -3618,6 +3818,16 @@ void CDataHandler::disableVLIMITLicense()
 	delDemoLicense(MOD_VLIMIT,false);
 
 }
+
+/**********************************************************************************************//**
+ * Queries if the vlimit demo lic is available
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if the vlimit demo lic is available, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::isVLIMITDemoLicAvailable()
 {
 	return m_bVLIMITDemoLicAvailable;
@@ -3633,11 +3843,27 @@ bool CDataHandler::isLUNGRECLicenseAvailable()
 {
 	return m_bLUNGRECLicenseAvailable;
 }
+
+/**********************************************************************************************//**
+ * Enables the lungrec license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::enableLUNGRECLicense()
 {
 	m_bLUNGRECLicenseAvailable=true;
 	theApp.getLog()->WriteLine(_T("-enableLUNGRECmodule"));
 }
+
+/**********************************************************************************************//**
+ * Disables the lungrec license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::disableLUNGRECLicense()
 {
 	m_bLUNGRECLicenseAvailable=false;
@@ -3646,6 +3872,16 @@ void CDataHandler::disableLUNGRECLicense()
 	delDemoLicense(MOD_LUNGREC,false);
 
 }
+
+/**********************************************************************************************//**
+ * Queries if the lungrec demo lic is available
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if the lungrec demo lic is available, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::isLUNGRECDemoLicAvailable()
 {
 	return m_bLUNGRECDemoLicAvailable;
@@ -3662,11 +3898,27 @@ bool CDataHandler::isTRENDLicenseAvailable()
 {
 	return m_bTRENDLicenseAvailable;
 }
+
+/**********************************************************************************************//**
+ * Enables the trend license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::enableTRENDLicense()
 {
 	m_bTRENDLicenseAvailable=true;
 	theApp.getLog()->WriteLine(_T("-enableTRENDmodule"));
 }
+
+/**********************************************************************************************//**
+ * Disables the trend license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::disableTRENDLicense()
 {
 	m_bTRENDLicenseAvailable=false;
@@ -3674,6 +3926,16 @@ void CDataHandler::disableTRENDLicense()
 
 	delDemoLicense(MOD_TREND,false);
 }
+
+/**********************************************************************************************//**
+ * Queries if the trend demo lic is available
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if the trend demo lic is available, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::isTRENDDemoLicAvailable()
 {
 	return m_bTRENDDemoLicAvailable;
@@ -3692,11 +3954,27 @@ bool CDataHandler::isNIVTRIGGERLicenseAvailable()
 {
 	return m_bNIVTRIGGERLicenseAvailable;
 }
+
+/**********************************************************************************************//**
+ * Enables the nivtrigger license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::enableNIVTRIGGERLicense()
 {
 	m_bNIVTRIGGERLicenseAvailable=true;
 	theApp.getLog()->WriteLine(_T("-enableNIVTRIGGERmodule"));
 }
+
+/**********************************************************************************************//**
+ * Disables the nivtrigger license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::disableNIVTRIGGERLicense()
 {
 	m_bNIVTRIGGERLicenseAvailable=false;
@@ -3707,10 +3985,28 @@ void CDataHandler::disableNIVTRIGGERLicense()
 	getModel()->getCONFIG()->disableNIVTRIGGER();
 }
 
+/**********************************************************************************************//**
+ * Queries if the nivtrigger demo lic is available
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if the nivtrigger demo lic is available, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::isNIVTRIGGERDemoLicAvailable()
 {
 	return m_bNIVTRIGGERDemoLicAvailable;
 }
+
+/**********************************************************************************************//**
+ * Queries if the nivtrigger is available
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if the nivtrigger is available, false if not.
+ **************************************************************************************************/
 
 bool CDataHandler::isNIVTRIGGERAvailable()
 {
@@ -3730,6 +4026,14 @@ bool CDataHandler::isFOTLicenseAvailable()
 {
 	return m_bFOTLicenseAvailable;
 }
+
+/**********************************************************************************************//**
+ * Enables the fot license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::enableFOTLicense()
 {
 	m_bFOTLicenseAvailable=true;
@@ -3737,6 +4041,14 @@ void CDataHandler::enableFOTLicense()
 
 	getModel()->initFOTthread();
 }
+
+/**********************************************************************************************//**
+ * Disables the fot license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::disableFOTLicense()
 {
 	m_bFOTLicenseAvailable=false;
@@ -3746,6 +4058,15 @@ void CDataHandler::disableFOTLicense()
 
 	getModel()->deinitFOTthread();
 }
+
+/**********************************************************************************************//**
+ * Queries if the fot demo lic is available
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if the fot demo lic is available, false if not.
+ **************************************************************************************************/
 
 bool CDataHandler::isFOTDemoLicAvailable()
 {
@@ -3764,11 +4085,27 @@ bool CDataHandler::isTHERAPYLicenseAvailable()
 {
 	return m_bTHERAPYLicenseAvailable;
 }
+
+/**********************************************************************************************//**
+ * Enables the therapy license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::enableTHERAPYLicense()
 {
 	m_bTHERAPYLicenseAvailable=true;
 	theApp.getLog()->WriteLine(_T("-enableTHERAPYmodule"));
 }
+
+/**********************************************************************************************//**
+ * Disables the therapy license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::disableTHERAPYLicense()
 {
 	m_bTHERAPYLicenseAvailable=false;
@@ -3777,6 +4114,16 @@ void CDataHandler::disableTHERAPYLicense()
 	delDemoLicense(MOD_THERAPY,false);
 
 }
+
+/**********************************************************************************************//**
+ * Queries if the therapy demo lic is available
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if the therapy demo lic is available, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::isTHERAPYDemoLicAvailable()
 {
 	return m_bTHERAPYDemoLicAvailable;
@@ -3792,6 +4139,14 @@ bool CDataHandler::isPRICOLicenseAvailable()
 {
 	return m_bPRICOLicenseAvailable;
 }
+
+/**********************************************************************************************//**
+ * Enables the prico license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::enablePRICOLicense()
 {
 	m_bPRICOLicenseAvailable=true;
@@ -3800,6 +4155,14 @@ void CDataHandler::enablePRICOLicense()
 	getModel()->initPRICOthread();
 
 }
+
+/**********************************************************************************************//**
+ * Disables the prico license
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::disablePRICOLicense()
 {
 	m_bPRICOLicenseAvailable=false;
@@ -3810,6 +4173,16 @@ void CDataHandler::disablePRICOLicense()
 	getModel()->deinitPRICOthread();
 
 }
+
+/**********************************************************************************************//**
+ * Queries if the prico demo lic is available
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if the prico demo lic is available, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::isPRICODemoLicAvailable()
 {
 	return m_bPRICODemoLicAvailable;
@@ -3877,34 +4250,113 @@ void CDataHandler::loadDiagrammColor()
 	m_crGraphColor_TRIGGER=CTlsIniFile::ReadIniDWORD(_T("WAVE"),  _T("TRIGGER"), 0x00dc00, FABIANINI);
 }
 
+/**********************************************************************************************//**
+ * Gets graph color pressure
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The graph color pressure.
+ **************************************************************************************************/
+
 COLORREF CDataHandler::getGraphColor_PRESSURE()
 {
 	return m_crGraphColor_PRESSURE;
 }
+
+/**********************************************************************************************//**
+ * Gets graph color flow
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The graph color flow.
+ **************************************************************************************************/
+
 COLORREF CDataHandler::getGraphColor_FLOW()
 {
 	return m_crGraphColor_FLOW;
 }
+
+/**********************************************************************************************//**
+ * Gets graph color volume
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The graph color volume.
+ **************************************************************************************************/
+
 COLORREF CDataHandler::getGraphColor_VOLUME()
 {
 	return m_crGraphColor_VOLUME;
 }
+
+/**********************************************************************************************//**
+ * Gets graph color etco 2
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The graph color etco 2.
+ **************************************************************************************************/
+
 COLORREF CDataHandler::getGraphColor_ETCO2()
 {
 	return m_crGraphColor_ETCO2;
 }
+
+/**********************************************************************************************//**
+ * Gets graph color spo 2
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The graph color spo 2.
+ **************************************************************************************************/
+
 COLORREF CDataHandler::getGraphColor_SPO2()
 {
 	return m_crGraphColor_SPO2;
 }
+
+/**********************************************************************************************//**
+ * Gets graph color loop
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The graph color loop.
+ **************************************************************************************************/
+
 COLORREF CDataHandler::getGraphColor_LOOP()
 {
 	return m_crGraphColor_LOOP;
 }
+
+/**********************************************************************************************//**
+ * Gets graph color savedloop
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The graph color savedloop.
+ **************************************************************************************************/
+
 COLORREF CDataHandler::getGraphColor_SAVEDLOOP()
 {
 	return m_crGraphColor_SAVEDLOOP;
 }
+
+/**********************************************************************************************//**
+ * Gets graph color trigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The graph color trigger.
+ **************************************************************************************************/
+
 COLORREF CDataHandler::getGraphColor_TRIGGER()
 {
 	return m_crGraphColor_TRIGGER;
@@ -4118,6 +4570,17 @@ void CDataHandler::loadNumerics()
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets numeric in istate
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param [in,out]	pbufNumeric	If non-null, the pbuf numeric.
+ * \param 		  	iBlock	   	Zero-based index of the block.
+ * \param 		  	szState	   	The state.
+ **************************************************************************************************/
+
 void CDataHandler::setNumericINIstate(NUMERICINI* pbufNumeric,BYTE iBlock,CStringW szState)
 {
 	if(szState==_T("FALSE"))
@@ -4133,6 +4596,18 @@ void CDataHandler::setNumericINIstate(NUMERICINI* pbufNumeric,BYTE iBlock,CStrin
 		pbufNumeric->SHOW=FALSE;
 	}
 }
+
+/**********************************************************************************************//**
+ * Reads numeric in ivalues
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param [in,out]	pbufNumeric	If non-null, the pbuf numeric.
+ * \param 		  	iBlock	   	Zero-based index of the block.
+ * \param 		  	num		   	Number of.
+ * \param 		  	szNum	   	Number of.
+ **************************************************************************************************/
 
 void CDataHandler::readNumericINIvalues(NUMERICINI* pbufNumeric,BYTE iBlock,BYTE num,CStringW szNum)
 {
@@ -4206,6 +4681,18 @@ void CDataHandler::readNumericINIvalues(NUMERICINI* pbufNumeric,BYTE iBlock,BYTE
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets numeric type
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	szVal	The value.
+ *
+ * \return	The numeric type.
+ **************************************************************************************************/
+
 eNumericType CDataHandler::getNumericType(CStringW szVal)
 {
 	if(szVal==_T("PPEAK"))
@@ -4369,6 +4856,18 @@ eNumericType CDataHandler::getNumericType(CStringW szVal)
 		return NUMT_PPEAK;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets numeric size
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	szSize	The size.
+ *
+ * \return	The numeric size.
+ **************************************************************************************************/
+
 eNumericSize CDataHandler::getNumericSize(CStringW szSize)
 {
 	if(szSize==_T("0"))
@@ -4704,6 +5203,15 @@ void CDataHandler::loadConfig()
 	
 }
 
+/**********************************************************************************************//**
+ * Writes a data buffer
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	pBufData	Information describing the buffer.
+ **************************************************************************************************/
+
 void CDataHandler::writeDataBuffer(const PBUFSPI& pBufData)
 {
 	/*EnterCriticalSection(&csSPIDataBuffer);
@@ -4729,12 +5237,30 @@ void CDataHandler::writeDataBuffer(const PBUFSPI& pBufData)
 	
 }
 
+/**********************************************************************************************//**
+ * Writes a spo 2 buffer
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	pBufData	Information describing the buffer.
+ **************************************************************************************************/
+
 void CDataHandler::writeSPO2Buffer(const PBUFSPO2& pBufData)
 {
 	EnterCriticalSection(&csSPO2DataBuffer);
 	m_rbufSPO2.write(pBufData);
 	LeaveCriticalSection(&csSPO2DataBuffer);
 }
+
+/**********************************************************************************************//**
+ * Writes a spo 2wave data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
 
 void CDataHandler::writeSPO2waveData(SHORT iVal)
 {
@@ -4743,6 +5269,15 @@ void CDataHandler::writeSPO2waveData(SHORT iVal)
 	LeaveCriticalSection(&csSPO2DataBuffer);
 }
 
+/**********************************************************************************************//**
+ * Reads spo 2wave data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The spo 2wave data.
+ **************************************************************************************************/
+
 SHORT CDataHandler::readSPO2waveData()
 {
 	EnterCriticalSection(&csSPO2DataBuffer);
@@ -4750,6 +5285,15 @@ SHORT CDataHandler::readSPO2waveData()
 	LeaveCriticalSection(&csSPO2DataBuffer);
 	return iTemp;
 }
+
+/**********************************************************************************************//**
+ * Writes a sp o 2 siq
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iSIQvalue	Zero-based index of the SI qvalue.
+ **************************************************************************************************/
 
 void CDataHandler::writeSpO2SIQ(SHORT iSIQvalue)
 {
@@ -4763,41 +5307,29 @@ void CDataHandler::writeSpO2SIQ(SHORT iSIQvalue)
 	
 }
 
+/**********************************************************************************************//**
+ * Reads sp o 2 siq
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The sp o 2 siq.
+ **************************************************************************************************/
+
 SHORT CDataHandler::readSpO2SIQ()
 {
 	return getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_SPO2_SIQ);
 }
 
-//void CDataHandler::writeEMGBuffer(const PBUFEMG& pBufData)
-//{
-//	EnterCriticalSection(&csEMGDataBuffer);
-//	m_rbufEMG.write(pBufData);
-//	LeaveCriticalSection(&csEMGDataBuffer);
-//}
-//
-//void CDataHandler::writeEMGwaveData(SHORT iVal)
-//{
-//	EnterCriticalSection(&csEMGDataBuffer);
-//	m_iEMGwaveData=iVal;
-//	LeaveCriticalSection(&csEMGDataBuffer);
-//}
-//
-//SHORT CDataHandler::readEMGwaveData()
-//{
-//	EnterCriticalSection(&csEMGDataBuffer);
-//	SHORT iTemp=m_iEMGwaveData;
-//	LeaveCriticalSection(&csEMGDataBuffer);
-//	return iTemp;
-//}
+/**********************************************************************************************//**
+ * Writes a co 2 buffer
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	pBufData	Information describing the buffer.
+ **************************************************************************************************/
 
-//void CDataHandler::setSpO2InterpolationValues(SPO2_INTERPOLATION* pStruct)
-//{
-//	memcpy(&m_structSpO2Interpolation,pStruct,sizeof(SPO2_INTERPOLATION));
-//}
-
-
-
-//void CDataHandler::writeCO2Buffer(const PBUFCO2& pBufData)
 void CDataHandler::writeCO2Buffer(const SHORT& pBufData)
 {
 	EnterCriticalSection(&csCO2DataBuffer);
@@ -4805,12 +5337,28 @@ void CDataHandler::writeCO2Buffer(const SHORT& pBufData)
 	LeaveCriticalSection(&csCO2DataBuffer);
 }
 
+/**********************************************************************************************//**
+ * Writes a copy data buffer
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	pBufData	Information describing the buffer.
+ **************************************************************************************************/
+
 void CDataHandler::writeCopyDataBuffer(const PBUFSPI& pBufData)
 {
 	EnterCriticalSection(&csCopyDataBuffer);
 	m_rbufCopy.write(pBufData);
 	LeaveCriticalSection(&csCopyDataBuffer);
 }
+
+/**********************************************************************************************//**
+ * Updates the copy data buffer
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
 
 void CDataHandler::updateCopyDataBuffer()
 {
@@ -4831,29 +5379,17 @@ void CDataHandler::updateCopyDataBuffer()
 	//DEBUGMSG(TRUE, (TEXT("write2 %d %d\r\n"),iWriteIndex2, iVal2));
 }
 
-//void CDataHandler::updateFOTDataBuffer()
-//{
-//	static PBUFFOT m_abufFOT[];
-//
-//	updateCopyDataBuffer();
-//	int iCountVal=MAXSIZE_FOT_BUFFER;
-//
-//	m_rbufFOT.reset();//MAXSIZE_FOT_BUFFER
-//	EnterCriticalSection(&csCopyDataBuffer);
-//	EnterCriticalSection(&csFOTDataBuffer);
-//	if(m_rbufCopy.getCount()<MAXSIZE_FOT_BUFFER)
-//		iCountVal=m_rbufCopy.getCount();
-//	for (int iCnt=0;iCnt<iCountVal;iCnt++)
-//	{
-//		m_rbufFOT[iCnt].iValPressure=m_rbufCopy[iCnt].iValPressure;
-//		m_rbufFOT[iCnt].iValFlow=m_rbufCopy[iCnt].iValFlow();
-//	}
-//	LeaveCriticalSection(&csFOTDataBuffer);
-//	LeaveCriticalSection(&csCopyDataBuffer);
-//}
-
-
-
+/**********************************************************************************************//**
+ * Sets bit of byte
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	x	The x coordinate.
+ * \param	n	An int to process.
+ *
+ * \return	A BYTE.
+ **************************************************************************************************/
 
 BYTE CDataHandler::setBitOfByte(BYTE x, unsigned int n)
 {
@@ -4862,6 +5398,18 @@ BYTE CDataHandler::setBitOfByte(BYTE x, unsigned int n)
 	return x;
 }
 
+/**********************************************************************************************//**
+ * Sets bit of word
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	x	A WORD to process.
+ * \param	n	An int to process.
+ *
+ * \return	A WORD.
+ **************************************************************************************************/
+
 WORD CDataHandler::setBitOfWord(WORD x, unsigned int n)
 {
 	x = x | (1 << n);
@@ -4869,17 +5417,27 @@ WORD CDataHandler::setBitOfWord(WORD x, unsigned int n)
 	return x;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets h wconfig
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The h wconfig.
+ **************************************************************************************************/
+
 WORD CDataHandler::getHWconfig()
 {
 	return m_wHardwareConfig;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Starts this object
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::start()
 {
 	m_PRESET = CParaDataPRESET::GetInstance();
@@ -4941,17 +5499,29 @@ void CDataHandler::start()
 	
 }
 
+/**********************************************************************************************//**
+ * Gets tube set
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The tube set.
+ **************************************************************************************************/
 
-
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 eTubeSet CDataHandler::GetTubeSet()
 {
 	return getModel()->getCONFIG()->GetTubeSet();
 }
+
+/**********************************************************************************************//**
+ * Sets tube set
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	tube	The tube.
+ **************************************************************************************************/
+
 void CDataHandler::SetTubeSet(eTubeSet tube)
 {
 	getModel()->getCONFIG()->SetTubeSet(tube);
@@ -5007,18 +5577,15 @@ void CDataHandler::SetTubeSet(eTubeSet tube)
 	getModel()->Send_MODE_OPTION1();
 }
 
+/**********************************************************************************************//**
+ * Gets flow sensor calendar state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The flow sensor calendar state.
+ **************************************************************************************************/
 
-
-
-//************************************
-// Method:    GetFlowSensorCalState
-// FullName:  CDataHandler::GetFlowSensorCalState
-// Access:    public 
-// Returns:   eFlowSensCalibrationstate
-// Qualifier:
-//
-//  2015/07/02: flow sensor handling checked for thread safe
-//************************************
 eFlowSensCalibrationstate CDataHandler::GetFlowSensorCalState()
 {
 	EnterCriticalSection(&csFlowsensorState);
@@ -5027,16 +5594,16 @@ eFlowSensCalibrationstate CDataHandler::GetFlowSensorCalState()
 
 	return eState;
 }
-//************************************
-// Method:    SetFlowSensorCalState
-// FullName:  CDataHandler::SetFlowSensorCalState
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: eFlowSensCalibrationstate state
-//
-//  2015/07/02: flow sensor handling checked for thread safe
-//************************************
+
+/**********************************************************************************************//**
+ * Sets flow sensor calendar state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CDataHandler::SetFlowSensorCalState(eFlowSensCalibrationstate state)
 {
 	EnterCriticalSection(&csFlowsensorState);
@@ -5073,15 +5640,16 @@ eFlowSensorState CDataHandler::GetPrevFlowSensorState()
 {
 	return m_ePrevFlowSensorState;
 }
-//************************************
-// Method:    IsFlowSensorCalibrating
-// FullName:  CDataHandler::IsFlowSensorCalibrating
-// Access:    public 
-// Returns:   bool
-// Qualifier:
-//
-//  2015/07/02: flow sensor handling checked for thread safe
-//************************************
+
+/**********************************************************************************************//**
+ * Query if this object is flow sensor calibrating
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if flow sensor calibrating, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::IsFlowSensorCalibrating()
 {
 	EnterCriticalSection(&csFlowsensorState);
@@ -5089,16 +5657,16 @@ bool CDataHandler::IsFlowSensorCalibrating()
 	LeaveCriticalSection(&csFlowsensorState);
 	return bstate;
 }
-//************************************
-// Method:    SetFlowSensorCalibrating
-// FullName:  CDataHandler::SetFlowSensorCalibrating
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: bool state
-//
-//  2015/07/02: flow sensor handling checked for thread safe
-//************************************
+
+/**********************************************************************************************//**
+ * Sets flow sensor calibrating
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CDataHandler::SetFlowSensorCalibrating(bool state)
 {
 	EnterCriticalSection(&csFlowsensorState);
@@ -5106,15 +5674,16 @@ void CDataHandler::SetFlowSensorCalibrating(bool state)
 	LeaveCriticalSection(&csFlowsensorState);
 	getModel()->Send_MODE_OPTION1();
 }
-//************************************
-// Method:    IsFlowSensorStateOff
-// FullName:  CDataHandler::IsFlowSensorStateOff
-// Access:    public 
-// Returns:   bool
-// Qualifier:
-//
-//  2015/07/02: flow sensor handling checked for thread safe
-//************************************
+
+/**********************************************************************************************//**
+ * Query if this object is flow sensor state off
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if flow sensor state off, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::IsFlowSensorStateOff()
 {
 	bool bRes=false;
@@ -5127,15 +5696,16 @@ bool CDataHandler::IsFlowSensorStateOff()
 
 	return bRes;
 }
-//************************************
-// Method:    GetFlowSensorState
-// FullName:  CDataHandler::GetFlowSensorState
-// Access:    public 
-// Returns:   eFlowSensorState
-// Qualifier:
-//
-//  2015/07/02: flow sensor handling checked for thread safe
-//************************************
+
+/**********************************************************************************************//**
+ * Gets flow sensor state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The flow sensor state.
+ **************************************************************************************************/
+
 eFlowSensorState CDataHandler::GetFlowSensorState()
 {
 	EnterCriticalSection(&csFlowsensorState);
@@ -5143,16 +5713,16 @@ eFlowSensorState CDataHandler::GetFlowSensorState()
 	LeaveCriticalSection(&csFlowsensorState);
 	return eState;
 }
-//************************************
-// Method:    SetFlowSensorState
-// FullName:  CDataHandler::SetFlowSensorState
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: eFlowSensorState state
-//
-//  2015/07/02: flow sensor handling checked for thread safe
-//************************************
+
+/**********************************************************************************************//**
+ * Sets flow sensor state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CDataHandler::SetFlowSensorState(eFlowSensorState state)
 {
 	bool bDeleteFlowDependAlarms=false;
@@ -5314,6 +5884,14 @@ void CDataHandler::SetFlowSensorState(eFlowSensorState state)
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_TRIGGER_FLOWSENSORSTATE);
 }
+
+/**********************************************************************************************//**
+ * Check preset trigger tube dependency
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkPRESETTriggerTubeDependency()
 {
 	if(VM_PRE_DUOPAP==getModel()->getCONFIG()->GetCurMode())
@@ -5405,6 +5983,14 @@ void CDataHandler::checkPRESETTriggerTubeDependency()
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Check trigger tube dependency
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkTriggerTubeDependency()
 {
 	//DEBUGMSG(TRUE, (TEXT("checkTriggerTubeDependency\r\n")));
@@ -5455,6 +6041,13 @@ void CDataHandler::checkTriggerTubeDependency()
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Check trigger tube dependency duopap
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
 
 void CDataHandler::checkTriggerTubeDependency_DUOPAP()
 {
@@ -5586,6 +6179,14 @@ void CDataHandler::checkTriggerTubeDependency_DUOPAP()
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Check trigger tube dependency ncpap
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkTriggerTubeDependency_NCPAP()
 {
 	if(true==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
@@ -5641,6 +6242,14 @@ void CDataHandler::checkTriggerTubeDependency_NCPAP()
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Check trigger tube dependency cpap
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkTriggerTubeDependency_CPAP()
 {
 	if(		IsFlowSensorStateOff()==true
@@ -5673,6 +6282,14 @@ void CDataHandler::checkTriggerTubeDependency_CPAP()
 		SetTriggerCONVParadata(TRIGGER_SENSITIVITY_AUTO,true);
 	}
 }
+
+/**********************************************************************************************//**
+ * Check trigger tube dependency ippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkTriggerTubeDependency_IPPV()
 {
 	if(		GetFlowSensorState()==FLOWSENSOR_MANOFF
@@ -5683,6 +6300,14 @@ void CDataHandler::checkTriggerTubeDependency_IPPV()
 		getModel()->Send_MODE_OPTION1();
 	}
 }
+
+/**********************************************************************************************//**
+ * Check trigger tube dependency sippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkTriggerTubeDependency_SIPPV()
 {
 	if(		GetFlowSensorState()==FLOWSENSOR_MANOFF
@@ -5693,6 +6318,14 @@ void CDataHandler::checkTriggerTubeDependency_SIPPV()
 		getModel()->Send_MODE_OPTION1();
 	}
 }
+
+/**********************************************************************************************//**
+ * Check trigger tube dependency simv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkTriggerTubeDependency_SIMV()
 {
 	if(		GetFlowSensorState()==FLOWSENSOR_MANOFF
@@ -5703,6 +6336,14 @@ void CDataHandler::checkTriggerTubeDependency_SIMV()
 		getModel()->Send_MODE_OPTION1();
 	}
 }
+
+/**********************************************************************************************//**
+ * Check trigger tube dependency hfo
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkTriggerTubeDependency_HFO()
 {
 	if(		GetFlowSensorState()==FLOWSENSOR_MANOFF
@@ -5714,14 +6355,39 @@ void CDataHandler::checkTriggerTubeDependency_HFO()
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets trigger duopa penabled
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::SetTriggerDUOPAPenabled()
 {
 	m_bTriggerDUOPAPenabled=true;
 }
+
+/**********************************************************************************************//**
+ * Sets trigger duopa pdisabled
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::SetTriggerDUOPAPdisabled()
 {
 	m_bTriggerDUOPAPenabled=false;
 }
+
+/**********************************************************************************************//**
+ * Gets trigger duopa penabled
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::GetTriggerDUOPAPenabled()
 {
 	return m_bTriggerDUOPAPenabled;
@@ -5740,27 +6406,44 @@ bool CDataHandler::GetTriggerDUOPAPenabled()
 //{
 //	return m_bTriggerNCPAPenabled;
 //}
-//***************************************************************************
-//      
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Sets ventil burn running
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CDataHandler::SetVentilBurnRunning(bool state)
 {
 	m_bVentilBurnRunning=state;
 }
+
+/**********************************************************************************************//**
+ * Query if this object is ventil burn running
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if ventil burn running, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::IsVentilBurnRunning()
 {
 	return m_bVentilBurnRunning;
 }
 
-//************************************
-// Method:    GetOxyCalRunning
-// FullName:  CDataHandler::GetOxyCalRunning
-// Access:    public 
-// Returns:   bool
-// Qualifier:
-//
-//  2015/07/02: o2 handling checked for thread safe
-//************************************
+/**********************************************************************************************//**
+ * Gets oxy calendar running
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::GetOxyCalRunning()
 {
 	EnterCriticalSection(&csOxyCal);
@@ -5768,16 +6451,16 @@ bool CDataHandler::GetOxyCalRunning()
 	LeaveCriticalSection(&csOxyCal);
 	return bState;
 }
-//************************************
-// Method:    SetOxyCalRunning
-// FullName:  CDataHandler::SetOxyCalRunning
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: bool state
-//
-//  2015/07/02: o2 handling checked for thread safe
-//************************************
+
+/**********************************************************************************************//**
+ * Sets oxy calendar running
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CDataHandler::SetOxyCalRunning(bool state)
 {
 	/*if(state)
@@ -5802,6 +6485,15 @@ void CDataHandler::SetOxyCalRunning(bool state)
 	
 }
 
+/**********************************************************************************************//**
+ * Sets oxy hourglass running
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CDataHandler::SetOxyHourglassRunning(bool state)
 {
 	/*if(state)
@@ -5817,6 +6509,15 @@ void CDataHandler::SetOxyHourglassRunning(bool state)
 	LeaveCriticalSection(&csOxyCal);
 }
 
+/**********************************************************************************************//**
+ * Query if this object is oxy hourglass running
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if oxy hourglass running, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::isOxyHourglassRunning()
 {
 	bool bOxyHour=false;
@@ -5826,16 +6527,15 @@ bool CDataHandler::isOxyHourglassRunning()
 	return bOxyHour;
 }
 
+/**********************************************************************************************//**
+ * Gets oxy sensor calendar state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The oxy sensor calendar state.
+ **************************************************************************************************/
 
-//************************************
-// Method:    GetOxySensorCalState
-// FullName:  CDataHandler::GetOxySensorCalState
-// Access:    public 
-// Returns:   eOxySensCalibrationstate
-// Qualifier:
-//
-//  2015/07/02: o2 handling checked for thread safe
-//************************************
 eOxySensCalibrationstate CDataHandler::GetOxySensorCalState()
 {
 	EnterCriticalSection(&csOxyCal);
@@ -5843,16 +6543,16 @@ eOxySensCalibrationstate CDataHandler::GetOxySensorCalState()
 	LeaveCriticalSection(&csOxyCal);
 	return state;
 }
-//************************************
-// Method:    SetOxySensorCalState
-// FullName:  CDataHandler::SetOxySensorCalState
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: eOxySensCalibrationstate state
-//
-//  2015/07/02: o2 handling checked for thread safe
-//************************************
+
+/**********************************************************************************************//**
+ * Sets oxy sensor calendar state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CDataHandler::SetOxySensorCalState(eOxySensCalibrationstate state)
 {
 	EnterCriticalSection(&csOxyCal);
@@ -5860,15 +6560,15 @@ void CDataHandler::SetOxySensorCalState(eOxySensCalibrationstate state)
 	LeaveCriticalSection(&csOxyCal);
 }
 
-//************************************
-// Method:    GetO2SensorState
-// FullName:  CDataHandler::GetO2SensorState
-// Access:    public 
-// Returns:   eOxySensorState
-// Qualifier:
-//
-//  2015/07/02: o2 handling checked for thread safe
-//************************************
+/**********************************************************************************************//**
+ * Gets o 2 sensor state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The o 2 sensor state.
+ **************************************************************************************************/
+
 eOxySensorState CDataHandler::GetO2SensorState()
 {
 	EnterCriticalSection(&csOxyState);
@@ -5876,16 +6576,16 @@ eOxySensorState CDataHandler::GetO2SensorState()
 	LeaveCriticalSection(&csOxyState);
 	return state;
 }
-//************************************
-// Method:    SetO2SensorState
-// FullName:  CDataHandler::SetO2SensorState
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: eOxySensorState state
-//
-//  2015/07/02: o2 handling checked for thread safe
-//************************************
+
+/**********************************************************************************************//**
+ * Sets o 2 sensor state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CDataHandler::SetO2SensorState(eOxySensorState state)
 {
 	EnterCriticalSection(&csOxyState);
@@ -5902,15 +6602,15 @@ void CDataHandler::SetO2SensorState(eOxySensorState state)
 	}
 }
 
-//************************************
-// Method:    GetO21SensorCalState
-// FullName:  CDataHandler::GetO21SensorCalState
-// Access:    public 
-// Returns:   bool
-// Qualifier:
-//
-//  2015/07/02: o2 handling checked for thread safe
-//************************************
+/**********************************************************************************************//**
+ * Gets o 21 sensor calendar state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::GetO21SensorCalState()
 {
 	EnterCriticalSection(&csOxyState);
@@ -5918,16 +6618,16 @@ bool CDataHandler::GetO21SensorCalState()
 	LeaveCriticalSection(&csOxyState);
 	return bState;
 }
-//************************************
-// Method:    SetO21SensorCalState
-// FullName:  CDataHandler::SetO21SensorCalState
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: bool state
-//
-//  2015/07/02: o2 handling checked for thread safe
-//************************************
+
+/**********************************************************************************************//**
+ * Sets o 21 sensor calendar state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CDataHandler::SetO21SensorCalState(bool state)
 {
 	EnterCriticalSection(&csOxyState);
@@ -5935,15 +6635,15 @@ void CDataHandler::SetO21SensorCalState(bool state)
 	LeaveCriticalSection(&csOxyState);
 }
 
-//************************************
-// Method:    GetO100SensorCalState
-// FullName:  CDataHandler::GetO100SensorCalState
-// Access:    public 
-// Returns:   bool
-// Qualifier:
-//
-//  2015/07/02: o2 handling checked for thread safe
-//************************************
+/**********************************************************************************************//**
+ * Gets o 100 sensor calendar state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::GetO100SensorCalState()
 {
 	EnterCriticalSection(&csOxyState);
@@ -5951,16 +6651,16 @@ bool CDataHandler::GetO100SensorCalState()
 	LeaveCriticalSection(&csOxyState);
 	return bState;
 }
-//************************************
-// Method:    SetO100SensorCalState
-// FullName:  CDataHandler::SetO100SensorCalState
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: bool state
-//
-//  2015/07/02: o2 handling checked for thread safe
-//************************************
+
+/**********************************************************************************************//**
+ * Sets o 100 sensor calendar state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CDataHandler::SetO100SensorCalState(bool state)
 {
 	EnterCriticalSection(&csOxyState);
@@ -5968,25 +6668,41 @@ void CDataHandler::SetO100SensorCalState(bool state)
 	LeaveCriticalSection(&csOxyState);
 }
 
+/**********************************************************************************************//**
+ * Sets exhalatin valve calendar mode
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
-
-//***************************************************************************
-//      
-//**************************************************************************
 void CDataHandler::SetExhalValvCalMode(bool state)
 {
 	m_bExhalValvCalMode=state;
 }
+
+/**********************************************************************************************//**
+ * Gets exhalation valve calibration mode
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::GetExhalValvCalMode()
 {
 	return m_bExhalValvCalMode;
 }
 
+/**********************************************************************************************//**
+ * Sets mainboard data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
 
-
-//***************************************************************************
-//      
-//**************************************************************************
 void CDataHandler::setMainboardData()
 {
 	EnterCriticalSection(&csMainboardData);
@@ -6036,6 +6752,16 @@ void CDataHandler::setMainboardData()
 	LeaveCriticalSection(&csMainboardData);
 
 }
+
+/**********************************************************************************************//**
+ * Gets mainboard data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param [in,out]	pDataMainboard	If non-null, the data mainboard.
+ **************************************************************************************************/
+
 void CDataHandler::getMainboardData(MAINBOARD_DATA* pDataMainboard)
 {
 	EnterCriticalSection(&csMainboardData);
@@ -6052,6 +6778,16 @@ void CDataHandler::getMainboardData(MAINBOARD_DATA* pDataMainboard)
 	LeaveCriticalSection(&csMainboardData);
 }
 
+/**********************************************************************************************//**
+ * Sets messure data vg
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	type	The type.
+ * \param	val 	The value.
+ **************************************************************************************************/
+
 void CDataHandler::setMessureDataAVG(BYTE type, INT val)
 {
 	EnterCriticalSection(&csMessureDataAVG);
@@ -6061,6 +6797,17 @@ void CDataHandler::setMessureDataAVG(BYTE type, INT val)
 	}
 	LeaveCriticalSection(&csMessureDataAVG);
 }
+
+/**********************************************************************************************//**
+ * Gets messure data vg
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	type	The type.
+ *
+ * \return	The messure data vg.
+ **************************************************************************************************/
 
 INT CDataHandler::getMessureDataAVG(BYTE type)
 {
@@ -6078,6 +6825,13 @@ INT CDataHandler::getMessureDataAVG(BYTE type)
 	LeaveCriticalSection(&csMessureDataAVG);
 	return iTemp;
 }
+
+/**********************************************************************************************//**
+ * Sets messure data v gas trend data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
 
 void CDataHandler::setMessureDataAVGasTrendData()
 {
@@ -6134,6 +6888,15 @@ void CDataHandler::setMessureDataAVGasTrendData()
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets messure data btb
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	type	The type.
+ * \param	val 	The value.
+ **************************************************************************************************/
 
 void CDataHandler::setMessureDataBTB(BYTE type, INT val)
 {
@@ -6142,6 +6905,18 @@ void CDataHandler::setMessureDataBTB(BYTE type, INT val)
 		m_pbufMessureBTB[type]=val;
 	LeaveCriticalSection(&csMessureDataBTB);
 }
+
+/**********************************************************************************************//**
+ * Gets messure data btb
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	type	The type.
+ *
+ * \return	The messure data btb.
+ **************************************************************************************************/
+
 INT CDataHandler::getMessureDataBTB(BYTE type)
 {
 	INT iTemp=0;
@@ -6160,8 +6935,12 @@ INT CDataHandler::getMessureDataBTB(BYTE type)
 	return iTemp;
 }
 
-
-
+/**********************************************************************************************//**
+ * Check limits
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
 
 void CDataHandler::checkLimits()
 {
@@ -6173,12 +6952,15 @@ void CDataHandler::checkLimits()
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets messure data pressure
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The messure data pressure.
+ **************************************************************************************************/
 
-
-
-//***************************************************************************
-//      
-//**************************************************************************
 SHORT CDataHandler::getMessureDataPRESSURE()
 {
 	EnterCriticalSection(&csMessureData);
@@ -6186,15 +6968,32 @@ SHORT CDataHandler::getMessureDataPRESSURE()
 	LeaveCriticalSection(&csMessureData);
 	return iTemp;
 }
+
+/**********************************************************************************************//**
+ * Sets messure data pressure
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CDataHandler::setMessureDataPRESSURE(SHORT value)
 {
 	EnterCriticalSection(&csMessureData);
 	m_dataMessure.m_iPRESSURE=value;
 	LeaveCriticalSection(&csMessureData);
 }
-//***************************************************************************
-//      
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets messure data flow
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The messure data flow.
+ **************************************************************************************************/
+
 SHORT CDataHandler::getMessureDataFLOW()
 {
 	EnterCriticalSection(&csMessureData);
@@ -6202,15 +7001,32 @@ SHORT CDataHandler::getMessureDataFLOW()
 	LeaveCriticalSection(&csMessureData);
 	return iTemp;
 }
+
+/**********************************************************************************************//**
+ * Sets messure data flow
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CDataHandler::setMessureDataFLOW(SHORT value)
 {
 	EnterCriticalSection(&csMessureData);
 	m_dataMessure.m_iFLOW=value;	//Achtung, tatsächlicher Meß-Wert ist um Faktor 2 größer
 	LeaveCriticalSection(&csMessureData);
 }
-//***************************************************************************
-//      
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets messure data volume
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The messure data volume.
+ **************************************************************************************************/
+
 SHORT CDataHandler::getMessureDataVOLUME()
 {
 	EnterCriticalSection(&csMessureData);
@@ -6218,15 +7034,32 @@ SHORT CDataHandler::getMessureDataVOLUME()
 	LeaveCriticalSection(&csMessureData);
 	return iTemp;
 }
+
+/**********************************************************************************************//**
+ * Sets messure data volume
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CDataHandler::setMessureDataVOLUME(SHORT value)
 {
 	EnterCriticalSection(&csMessureData);
 	m_dataMessure.m_iVOLUME=value;
 	LeaveCriticalSection(&csMessureData);
 }
-//***************************************************************************
-//      
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets a vg messure data pinsp
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data pinsp.
+ **************************************************************************************************/
+
 SHORT CDataHandler::getAVGMessureDataPINSP()
 {
 	return (SHORT)getMessureDataAVG(ALINK_MSMNT_P_PEAK);
@@ -6235,6 +7068,16 @@ SHORT CDataHandler::getAVGMessureDataPINSP()
 //{
 //	setMessureDataAVG(NUMT_PPEAK,value);
 //}
+
+/**********************************************************************************************//**
+ * Gets btb messure data pinsp
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The btb messure data pinsp.
+ **************************************************************************************************/
+
 SHORT CDataHandler::getBTBMessureDataPINSP()
 {
 	return (SHORT)getMessureDataBTB(ALINK_MSMNT_P_PEAK);
@@ -6244,10 +7087,15 @@ SHORT CDataHandler::getBTBMessureDataPINSP()
 //	setMessureDataBTB(NUMT_PPEAK,value);
 //}
 
+/**********************************************************************************************//**
+ * Gets a vg messure data trigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data trigger.
+ **************************************************************************************************/
 
-//***************************************************************************
-//      
-//**************************************************************************
 WORD CDataHandler::getAVGMessureDataTrigger()
 {
 	return (WORD)getMessureDataAVG(ALINK_MSMNT_TRIGGER);
@@ -6256,6 +7104,16 @@ WORD CDataHandler::getAVGMessureDataTrigger()
 //{
 //	setMessureDataAVG(NUMT_TRIGGER,value);
 //}
+
+/**********************************************************************************************//**
+ * Gets btb messure data trigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The btb messure data trigger.
+ **************************************************************************************************/
+
 WORD CDataHandler::getBTBMessureDataTrigger()
 {
 	return (WORD)getMessureDataBTB(ALINK_MSMNT_TRIGGER);
@@ -6265,9 +7123,15 @@ WORD CDataHandler::getBTBMessureDataTrigger()
 //	setMessureDataBTB(NUMT_TRIGGER,value);
 //}
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Gets a vg messure data i time psv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data i time psv.
+ **************************************************************************************************/
+
 WORD CDataHandler::getAVGMessureDataITimePSV()
 {
 	return (WORD)getMessureDataAVG(ALINK_MSMNT_T_INSP_PSV);
@@ -6276,6 +7140,16 @@ WORD CDataHandler::getAVGMessureDataITimePSV()
 //{
 //	setMessureDataAVG(NUMT_PSVTIME,value);
 //}
+
+/**********************************************************************************************//**
+ * Gets btb messure data i time psv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The btb messure data i time psv.
+ **************************************************************************************************/
+
 WORD CDataHandler::getBTBMessureDataITimePSV()
 {
 	return (WORD)getMessureDataBTB(ALINK_MSMNT_T_INSP_PSV);
@@ -6285,9 +7159,15 @@ WORD CDataHandler::getBTBMessureDataITimePSV()
 //	setMessureDataBTB(NUMT_PSVTIME,value);
 //}
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Gets a vg messure data pmitt
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data pmitt.
+ **************************************************************************************************/
+
 SHORT CDataHandler::getAVGMessureDataPmitt()
 {
 	return (SHORT)getMessureDataAVG(ALINK_MSMNT_P_MEAN);
@@ -6296,6 +7176,16 @@ SHORT CDataHandler::getAVGMessureDataPmitt()
 //{
 //	setMessureDataAVG(NUMT_PMEAN,value);
 //}
+
+/**********************************************************************************************//**
+ * Gets btb messure data pmitt
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The btb messure data pmitt.
+ **************************************************************************************************/
+
 SHORT CDataHandler::getBTBMessureDataPmitt()
 {
 	return (SHORT)getMessureDataBTB(ALINK_MSMNT_P_MEAN);
@@ -6304,9 +7194,16 @@ SHORT CDataHandler::getBTBMessureDataPmitt()
 //{
 //	setMessureDataBTB(NUMT_PMEAN,value);
 //}
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets a vg messure data peep
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data peep.
+ **************************************************************************************************/
+
 SHORT CDataHandler::getAVGMessureDataPEEP()
 {
 	return (SHORT)getMessureDataAVG(ALINK_MSMNT_PEEP);
@@ -6315,6 +7212,16 @@ SHORT CDataHandler::getAVGMessureDataPEEP()
 //{
 //	setMessureDataAVG(NUMT_PEEP,value);
 //}
+
+/**********************************************************************************************//**
+ * Gets btb messure data peep
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The btb messure data peep.
+ **************************************************************************************************/
+
 SHORT CDataHandler::getBTBMessureDataPEEP()
 {
 	return (SHORT)getMessureDataBTB(ALINK_MSMNT_PEEP);
@@ -6324,9 +7231,16 @@ SHORT CDataHandler::getBTBMessureDataPEEP()
 //{
 //	setMessureDataBTB(NUMT_PEEP,value);
 //}
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets a vg messure data compliance
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data compliance.
+ **************************************************************************************************/
+
 WORD CDataHandler::getAVGMessureDataCompliance()
 {
 	return (WORD)getMessureDataAVG(ALINK_MSMNT_DYNCOMPL);
@@ -6338,6 +7252,15 @@ WORD CDataHandler::getAVGMessureDataCompliance()
 //	setMessureDataAVG(NUM_TAU,iTau);
 //}
 
+/**********************************************************************************************//**
+ * Gets btb messure data compliance
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The btb messure data compliance.
+ **************************************************************************************************/
+
 WORD CDataHandler::getBTBMessureDataCompliance()
 {
 	return (WORD)getMessureDataBTB(ALINK_MSMNT_DYNCOMPL);
@@ -6348,9 +7271,16 @@ WORD CDataHandler::getBTBMessureDataCompliance()
 //	int iTau=value*getMessureDataBTB(ALINK_MSMNT_RESISTANCE);
 //	setMessureDataBTB(NUM_TAU,iTau);
 //}
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets a vg messure data c 20 c
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data c 20 c.
+ **************************************************************************************************/
+
 WORD CDataHandler::getAVGMessureDataC20C()
 {
 	return (WORD)getMessureDataAVG(ALINK_MSMNT_C20C);
@@ -6360,6 +7290,15 @@ WORD CDataHandler::getAVGMessureDataC20C()
 //	setMessureDataAVG(NUMT_C20C,value);
 //}
 
+/**********************************************************************************************//**
+ * Gets btb messure data c 20 c
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The btb messure data c 20 c.
+ **************************************************************************************************/
+
 WORD CDataHandler::getBTBMessureDataC20C()
 {
 	return (WORD)getMessureDataBTB(ALINK_MSMNT_C20C);
@@ -6368,9 +7307,16 @@ WORD CDataHandler::getBTBMessureDataC20C()
 //{
 //	setMessureDataBTB(NUMT_C20C,value);
 //}
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets a vg messure data resistance
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data resistance.
+ **************************************************************************************************/
+
 WORD CDataHandler::getAVGMessureDataResistance()
 {
 	return (WORD)getMessureDataAVG(ALINK_MSMNT_RESISTANCE);
@@ -6382,6 +7328,16 @@ WORD CDataHandler::getAVGMessureDataResistance()
 //	int iTau=value*getMessureDataAVG(NUMT_COMPLIANCE);
 //	setMessureDataAVG(NUMT_TAU,iTau);
 //}
+
+/**********************************************************************************************//**
+ * Gets btb messure data resistance
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The btb messure data resistance.
+ **************************************************************************************************/
+
 WORD CDataHandler::getBTBMessureDataResistance()
 {
 	return (WORD)getMessureDataBTB(ALINK_MSMNT_RESISTANCE);
@@ -6393,9 +7349,16 @@ WORD CDataHandler::getBTBMessureDataResistance()
 //	int iTau=value*getMessureDataBTB(NUM_COMPLIANCE);
 //	setMessureDataBTB(NUM_TAU,iTau);
 //}
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets a vg messure data mv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data mv.
+ **************************************************************************************************/
+
 WORD CDataHandler::getAVGMessureDataMV()
 {
 	return (WORD)getMessureDataAVG(ALINK_MSMNT_MIN_VOL);
@@ -6404,6 +7367,16 @@ WORD CDataHandler::getAVGMessureDataMV()
 //{
 //	setMessureDataAVG(NUMT_MVEXP,value);
 //}
+
+/**********************************************************************************************//**
+ * Gets btb messure data mv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The btb messure data mv.
+ **************************************************************************************************/
+
 WORD CDataHandler::getBTBMessureDataMV()
 {
 	return (WORD)getMessureDataBTB(ALINK_MSMNT_MIN_VOL);
@@ -6412,9 +7385,16 @@ WORD CDataHandler::getBTBMessureDataMV()
 //{
 //	setMessureDataBTB(NUMT_MVEXP,value);
 //}
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets a vg messure data percent
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data percent.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getAVGMessureDataPercent()
 {
 	return (BYTE)getMessureDataAVG(ALINK_MSMNT_ANTEIL_RESP);
@@ -6423,6 +7403,16 @@ BYTE CDataHandler::getAVGMessureDataPercent()
 //{
 //	setMessureDataAVG(NUMT_SHAREMV,value);
 //}
+
+/**********************************************************************************************//**
+ * Gets btb messure data percent
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The btb messure data percent.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getBTBMessureDataPercent()
 {
 	return (BYTE)getMessureDataBTB(ALINK_MSMNT_ANTEIL_RESP);
@@ -6432,9 +7422,15 @@ BYTE CDataHandler::getBTBMessureDataPercent()
 //	setMessureDataBTB(NUMT_SHAREMV,value);
 //}
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Gets a vg messure data hf ampl
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data hf ampl.
+ **************************************************************************************************/
+
 WORD CDataHandler::getAVGMessureDataHFAmpl()
 {
 	return (WORD)getMessureDataAVG(ALINK_MSMNT_HFO_AMP);
@@ -6443,6 +7439,16 @@ WORD CDataHandler::getAVGMessureDataHFAmpl()
 //{
 //	setMessureDataAVG(NUMT_HFOAMP,value);
 //}
+
+/**********************************************************************************************//**
+ * Gets btb messure data hf ampl
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The btb messure data hf ampl.
+ **************************************************************************************************/
+
 WORD CDataHandler::getBTBMessureDataHFAmpl()
 {
 	return (WORD)getMessureDataBTB(ALINK_MSMNT_HFO_AMP);
@@ -6451,9 +7457,16 @@ WORD CDataHandler::getBTBMessureDataHFAmpl()
 //{
 //	setMessureDataBTB(NUMT_HFOAMP,value);
 //}
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets a vg messure data hf frequency
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data hf frequency.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getAVGMessureDataHFFreq()
 {
 	return (BYTE)getMessureDataAVG(ALINK_MSMNT_HFO_FREQ);
@@ -6462,6 +7475,16 @@ BYTE CDataHandler::getAVGMessureDataHFFreq()
 //{
 //	setMessureDataAVG(NUMT_HFOFREQ,value);
 //}
+
+/**********************************************************************************************//**
+ * Gets btb messure data hf frequency
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The btb messure data hf frequency.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getBTBMessureDataHFFreq()
 {
 	return (BYTE)getMessureDataBTB(ALINK_MSMNT_HFO_FREQ);
@@ -6471,9 +7494,15 @@ BYTE CDataHandler::getBTBMessureDataHFFreq()
 //	setMessureDataBTB(NUMT_HFOFREQ,value);
 //}
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Gets a vg messure data tvehfo
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data tvehfo.
+ **************************************************************************************************/
+
 WORD CDataHandler::getAVGMessureDataTVEHFO()
 {
 	WORD iTemp = 0;
@@ -6492,6 +7521,16 @@ WORD CDataHandler::getAVGMessureDataTVEHFO()
 //{
 //	setMessureDataAVG(NUMT_HFOVTE,value);
 //}
+
+/**********************************************************************************************//**
+ * Gets btb messure data tvehfo
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The btb messure data tvehfo.
+ **************************************************************************************************/
+
 WORD CDataHandler::getBTBMessureDataTVEHFO()
 {
 	return (WORD)getMessureDataBTB(ALINK_MSMNT_TVE_HFO);
@@ -6501,9 +7540,15 @@ WORD CDataHandler::getBTBMessureDataTVEHFO()
 //	setMessureDataBTB(NUMT_HFOVTE,value);
 //}
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Gets a vg messure data dco 2
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data dco 2.
+ **************************************************************************************************/
+
 WORD CDataHandler::getAVGMessureDataDCO2()
 {
 	return (WORD)getMessureDataAVG(ALINK_MSMNT_DCO2);
@@ -6512,6 +7557,16 @@ WORD CDataHandler::getAVGMessureDataDCO2()
 //{
 //	setMessureDataAVG(NUMT_DCO2,value);
 //}
+
+/**********************************************************************************************//**
+ * Gets btb messure data dco 2
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The btb messure data dco 2.
+ **************************************************************************************************/
+
 WORD CDataHandler::getBTBMessureDataDCO2()
 {
 	return (WORD)getMessureDataBTB(ALINK_MSMNT_DCO2);
@@ -6520,9 +7575,16 @@ WORD CDataHandler::getBTBMessureDataDCO2()
 //{
 //	setMessureDataBTB(NUMT_DCO2,value);
 //}
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets messure data tvi
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The messure data tvi.
+ **************************************************************************************************/
+
 WORD CDataHandler::getMessureDataTVI()
 {
 	WORD iTemp = 0;
@@ -6548,9 +7610,6 @@ WORD CDataHandler::getMessureDataTVI()
 //	setMessureDataBTB(NUMT_VTI,value);
 //}
 
-//***************************************************************************
-//     
-//**************************************************************************
 //void CDataHandler::setAVGMessureDataSPO2(SHORT value)
 //{
 //	setMessureDataAVG(NUMT_SPO2,value);
@@ -6563,6 +7622,16 @@ WORD CDataHandler::getMessureDataTVI()
 //		}
 //	}*/
 //}
+
+/**********************************************************************************************//**
+ * Gets a vg messure data spo 2
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data spo 2.
+ **************************************************************************************************/
+
 SHORT CDataHandler::getAVGMessureDataSPO2()
 {
 	return (SHORT)getMessureDataAVG(ALINK_MSMNT_SPO2);
@@ -6572,6 +7641,16 @@ SHORT CDataHandler::getAVGMessureDataSPO2()
 //{
 //	setMessureDataAVG(NUMT_SPO2_PR,value);
 //}
+
+/**********************************************************************************************//**
+ * Gets a vg messure data sp o 2 pulse rate
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data sp o 2 pulse rate.
+ **************************************************************************************************/
+
 SHORT CDataHandler::getAVGMessureDataSpO2PulseRate()
 {
 	return (SHORT)getMessureDataAVG(ALINK_MSMNT_SPO2_PR);
@@ -6581,10 +7660,27 @@ SHORT CDataHandler::getAVGMessureDataSpO2PulseRate()
 //{
 //	setMessureDataAVG(NUMT_SPO2_PI,value);
 //}
+
+/**********************************************************************************************//**
+ * Gets a vg messure data sp o 2 perfusion index
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data sp o 2 perfusion index.
+ **************************************************************************************************/
+
 SHORT CDataHandler::getAVGMessureDataSpO2PerfusionIndex()
 {
 	return (SHORT)getMessureDataAVG(ALINK_MSMNT_SPO2_PI);
 }
+
+/**********************************************************************************************//**
+ * Resets the spo 2 messure data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
 
 void CDataHandler::resetSPO2MessureData()
 {
@@ -6599,9 +7695,6 @@ void CDataHandler::resetSPO2MessureData()
 	getModel()->getDATAHANDLER()->setMessureDataAVG(ALINK_MSMNT_SPO2_SIQ,0);
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
 //void CDataHandler::resetEMGMessureData()
 //{
 //	//setMessureDataAVG(NUMT_SPO2,0);
@@ -6614,33 +7707,51 @@ void CDataHandler::resetSPO2MessureData()
 //	LeaveCriticalSection(&csEMGDataBuffer);
 //}
 
-//***************************************************************************
-//     
-//**************************************************************************
 //void CDataHandler::setAVGMessureDataETCO2(SHORT value)
 //{
 //	setMessureDataAVG(NUMT_ETCO2,value);
 //}
+
+/**********************************************************************************************//**
+ * Gets a vg messure data etco 2
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data etco 2.
+ **************************************************************************************************/
+
 SHORT CDataHandler::getAVGMessureDataETCO2()
 {
 	return (SHORT)getMessureDataAVG(ALINK_MSMNT_ETCO2);
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
 //void CDataHandler::setAVGMessureDataFICO2(int value)
 //{
 //	setMessureDataAVG(NUMT_FICO2,value);
 //}
+
+/**********************************************************************************************//**
+ * Gets a vg messure data fico 2
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data fico 2.
+ **************************************************************************************************/
+
 int CDataHandler::getAVGMessureDataFICO2()
 {
 	return (SHORT)getMessureDataAVG(ALINK_MSMNT_FICO2);
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Resets the co 2 messure data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::resetCO2MessureData()
 {
 	setMessureDataAVG(ALINK_MSMNT_ETCO2,0);
@@ -6649,9 +7760,14 @@ void CDataHandler::resetCO2MessureData()
 	m_rbufCO2.reset();
 	LeaveCriticalSection(&csCO2DataBuffer);
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Sends the messure data volume correction
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::sendMessureDataVolumeCorrection()
 {
 	EnterCriticalSection(&csMessureData);
@@ -6661,15 +7777,31 @@ void CDataHandler::sendMessureDataVolumeCorrection()
 	
 }
 
+/**********************************************************************************************//**
+ * Sets messure data volume correction
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CDataHandler::setMessureDataVolumeCorrection(BYTE value)
 {
 	EnterCriticalSection(&csMessureData);
 	m_dataMessure.m_iVolumeCorr=value;
 	LeaveCriticalSection(&csMessureData);
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets messure data tve
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The messure data tve.
+ **************************************************************************************************/
+
 WORD CDataHandler::getMessureDataTVE()
 {
 	WORD iTemp = 0;
@@ -6694,9 +7826,16 @@ WORD CDataHandler::getMessureDataTVE()
 //{
 //	setMessureDataBTB(NUMT_VTE,value);
 //}
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets messure data TV eresp
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The messure data TV eresp.
+ **************************************************************************************************/
+
 WORD CDataHandler::getMessureDataTVEresp()
 {
 	WORD iTemp = 0;
@@ -6720,9 +7859,16 @@ WORD CDataHandler::getMessureDataTVEresp()
 //{
 //	setMessureDataBTB(NUMT_VTEMAND,value);
 //}
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets messure data TV epat
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The messure data TV epat.
+ **************************************************************************************************/
+
 WORD CDataHandler::getMessureDataTVEpat()
 {
 	WORD iTemp = 0;
@@ -6748,9 +7894,15 @@ WORD CDataHandler::getMessureDataTVEpat()
 //	setMessureDataBTB(NUMT_VTESPONT,value);
 //}
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Gets a vg messure data bp mco 2
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data bp mco 2.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getAVGMessureDataBPMco2()
 {
 	return (BYTE)getMessureDataAVG(ALINK_MSMNT_FREQETCO2);
@@ -6759,6 +7911,16 @@ BYTE CDataHandler::getAVGMessureDataBPMco2()
 //{
 //	setMessureDataAVG(NUMT_FREQETCO2,value);
 //}
+
+/**********************************************************************************************//**
+ * Gets btb messure data bp mco 2
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The btb messure data bp mco 2.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getBTBMessureDataBPMco2()
 {
 	return (BYTE)getMessureDataBTB(ALINK_MSMNT_FREQETCO2);
@@ -6768,9 +7930,15 @@ BYTE CDataHandler::getBTBMessureDataBPMco2()
 //	setMessureDataBTB(NUMT_FREQETCO2,value);
 //}
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Gets a vg messure data bpm
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data bpm.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getAVGMessureDataBPM()
 {
 	return (BYTE)getMessureDataAVG(ALINK_MSMNT_FREQ);
@@ -6779,6 +7947,16 @@ BYTE CDataHandler::getAVGMessureDataBPM()
 //{
 //	setMessureDataAVG(NUMT_FREQ,value);
 //}
+
+/**********************************************************************************************//**
+ * Gets btb messure data bpm
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The btb messure data bpm.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getBTBMessureDataBPM()
 {
 	return (BYTE)getMessureDataBTB(ALINK_MSMNT_FREQ);
@@ -6788,11 +7966,15 @@ BYTE CDataHandler::getBTBMessureDataBPM()
 //	setMessureDataBTB(NUMT_FREQ,value);
 //}
 
+/**********************************************************************************************//**
+ * Gets applied fi o 2para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The applied fi o 2para.
+ **************************************************************************************************/
 
-
-//***************************************************************************
-//     
-//**************************************************************************
 SHORT CDataHandler::getAppliedFiO2para()
 {
 	SHORT iTemp = 0;
@@ -6824,6 +8006,15 @@ SHORT CDataHandler::getAppliedFiO2para()
 	return iTemp;
 }
 
+/**********************************************************************************************//**
+ * Gets messure data o 2
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The messure data o 2.
+ **************************************************************************************************/
+
 SHORT CDataHandler::getMessureDataO2()
 {
 	EnterCriticalSection(&csMessureDataBTB);
@@ -6832,6 +8023,16 @@ SHORT CDataHandler::getMessureDataO2()
 
 	return iTemp;
 }
+
+/**********************************************************************************************//**
+ * Sets messure data o 2
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CDataHandler::setMessureDataO2(SHORT value)
 {
 	EnterCriticalSection(&csMessureDataBTB);
@@ -6842,9 +8043,16 @@ void CDataHandler::setMessureDataO2(SHORT value)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_NEW_FIO2DATA);
 
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets a vg messure data leak
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	a vg messure data leak.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getAVGMessureDataLeak()
 {
 	return (BYTE)getMessureDataAVG(ALINK_MSMNT_LEAK);
@@ -6853,6 +8061,16 @@ BYTE CDataHandler::getAVGMessureDataLeak()
 //{
 //	setMessureDataAVG(NUMT_LEAK,value);
 //}
+
+/**********************************************************************************************//**
+ * Gets btb messure data leak
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The btb messure data leak.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getBTBMessureDataLeak()
 {
 	return (BYTE)getMessureDataBTB(ALINK_MSMNT_LEAK);
@@ -6862,334 +8080,19 @@ BYTE CDataHandler::getBTBMessureDataLeak()
 //	setMessureDataBTB(NUMT_LEAK,value);
 //}
 
+/**********************************************************************************************//**
+ * Check i erelation
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iITime	The i time.
+ * \param	iBPM  	Zero-based index of the bpm.
+ * \param	iETime	The e time.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-//***************************************************************************
-//     
-//**************************************************************************
-//void CDataHandler::getMessureRangeData(MESSURE_RANGE_DATA* pMessureRangeData)
-//{
-//	memcpy(pMessureRangeData,&m_dataMessureRange,sizeof(MESSURE_RANGE_DATA));
-//}
-//void CDataHandler::setMessureRangeData(MESSURE_RANGE_DATA* pMessureRangeData)
-//{
-//	memcpy(&m_dataMessureRange,pMessureRangeData,sizeof(MESSURE_RANGE_DATA));
-//}
-//***************************************************************************
-//     
-//**************************************************************************
-//SHORT CDataHandler::getMessureRangeDataPINSP_UpperLimit()
-//{
-//	return m_dataMessureRange.m_iPINSP_UpperLimit;
-//}
-//void CDataHandler::setMessureRangeDataPINSP_UpperLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iPINSP_UpperLimit=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::getMessureRangeDataPINSP_LowerLimit()
-//{
-//	return m_dataMessureRange.m_iPINSP_LowerLimit;
-//}
-//void CDataHandler::setMessureRangeDataPINSP_LowerLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iPINSP_LowerLimit=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::getMessureRangeDataPmitt_UpperLimit()
-//{
-//	return m_dataMessureRange.m_iPmitt_UpperLimit;
-//}
-//void CDataHandler::setMessureRangeDataPmitt_UpperLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iPmitt_UpperLimit=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::getMessureRangeDataPmitt_LowerLimit()
-//{
-//	return m_dataMessureRange.m_iPmitt_LowerLimit;
-//}
-//void CDataHandler::setMessureRangeDataPmitt_LowerLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iPmitt_LowerLimit=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::getMessureRangeDataPEEP_UpperLimit()
-//{
-//	return m_dataMessureRange.m_iPEEP_UpperLimit;
-//}
-//void CDataHandler::setMessureRangeDataPEEP_UpperLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iPEEP_UpperLimit=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::getMessureRangeDataPEEP_LowerLimit()
-//{
-//	return m_dataMessureRange.m_iPEEP_LowerLimit;
-//}
-//void CDataHandler::setMessureRangeDataPEEP_LowerLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iPEEP_LowerLimit=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::getMessureRangeDataMV_UpperLimit_NEONATAL()
-//{
-//	return m_dataMessureRange.m_iMV_UpperLimit_NEONATAL;
-//}
-//void CDataHandler::setMessureRangeDataMV_UpperLimit_NEONATAL(SHORT value)
-//{
-//	m_dataMessureRange.m_iMV_UpperLimit_NEONATAL=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::getMessureRangeDataMV_LowerLimit_NEONATAL()
-//{
-//	return m_dataMessureRange.m_iMV_LowerLimit_NEONATAL;
-//}
-//void CDataHandler::setMessureRangeDataMV_LowerLimit_NEONATAL(SHORT value)
-//{
-//	m_dataMessureRange.m_iMV_LowerLimit_NEONATAL=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::getMessureRangeDataMV_UpperLimit_PEDIATRIC()
-//{
-//	return m_dataMessureRange.m_iMV_UpperLimit_PEDIATRIC;
-//}
-//void CDataHandler::setMessureRangeDataMV_UpperLimit_PEDIATRIC(SHORT value)
-//{
-//	m_dataMessureRange.m_iMV_UpperLimit_PEDIATRIC=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::getMessureRangeDataMV_LowerLimit_PEDIATRIC()
-//{
-//	return m_dataMessureRange.m_iMV_LowerLimit_PEDIATRIC;
-//}
-//void CDataHandler::setMessureRangeDataMV_LowerLimit_PEDIATRIC(SHORT value)
-//{
-//	m_dataMessureRange.m_iMV_LowerLimit_PEDIATRIC=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::getMessureRangeDataTVE_UpperLimit_NEONATAL()
-//{
-//	return m_dataMessureRange.m_iTVE_UpperLimit_NEONATAL;
-//}
-//void CDataHandler::setMessureRangeDataTVE_UpperLimit_NEONATAL(SHORT value)
-//{
-//	m_dataMessureRange.m_iTVE_UpperLimit_NEONATAL=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::getMessureRangeDataTVE_LowerLimit_NEONATAL()
-//{
-//	return m_dataMessureRange.m_iTVE_LowerLimit_NEONATAL;
-//}
-//void CDataHandler::setMessureRangeDataTVE_LowerLimit_NEONATAL(SHORT value)
-//{
-//	m_dataMessureRange.m_iTVE_LowerLimit_NEONATAL=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::getMessureRangeDataTVE_UpperLimit_PEDIATRIC()
-//{
-//	return m_dataMessureRange.m_iTVE_UpperLimit_PEDIATRIC;
-//}
-//void CDataHandler::setMessureRangeDataMTVE_UpperLimit_PEDIATRIC(SHORT value)
-//{
-//	m_dataMessureRange.m_iTVE_UpperLimit_PEDIATRIC=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::getMessureRangeDataTVE_LowerLimit_PEDIATRIC()
-//{
-//	return m_dataMessureRange.m_iTVE_LowerLimit_PEDIATRIC;
-//}
-//void CDataHandler::setMessureRangeDataTVE_LowerLimit_PEDIATRIC(SHORT value)
-//{
-//	m_dataMessureRange.m_iTVE_LowerLimit_PEDIATRIC=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::getMessureRangeDataLeak_UpperLimit()
-//{
-//	return m_dataMessureRange.m_iLeak_UpperLimit;
-//}
-//void CDataHandler::SetMessureRangeDataLeak_UpperLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iLeak_UpperLimit=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::GetMessureRangeDataLeak_LowerLimit()
-//{
-//	return m_dataMessureRange.m_iLeak_LowerLimit;
-//}
-//void CDataHandler::SetMessureRangeDataLeak_LowerLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iLeak_LowerLimit=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::GetMessureRangeDataDynCompl_UpperLimit()
-//{
-//	return m_dataMessureRange.m_iDynCompl_UpperLimit;
-//}
-//void CDataHandler::SetMessureRangeDataDynCompl_UpperLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iDynCompl_UpperLimit=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::GetMessureRangeDataDynCompl_LowerLimit()
-//{
-//	return m_dataMessureRange.m_iDynCompl_LowerLimit;
-//}
-//void CDataHandler::SetMessureRangeDataDynCompl_LowerLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iDynCompl_LowerLimit=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::GetMessureRangeDataResistance_UpperLimit()
-//{
-//	return m_dataMessureRange.m_iResistance_UpperLimit;
-//}
-//void CDataHandler::SetMessureRangeDataResistance_UpperLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iResistance_UpperLimit=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::GetMessureRangeDataResistance_LowerLimit()
-//{
-//	return m_dataMessureRange.m_iResistance_LowerLimit;
-//}
-//void CDataHandler::SetMessureRangeDataResistance_LowerLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iResistance_LowerLimit=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::GetMessureRangeDataO2_UpperLimit()
-//{
-//	return m_dataMessureRange.m_iO2_UpperLimit;
-//}
-//void CDataHandler::SetMessureRangeDataO2_UpperLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iO2_UpperLimit=value;
-//}
-////***************************************************************************
-////     
-////**************************************************************************
-//SHORT CDataHandler::GetMessureRangeDataO2_LowerLimit()
-//{
-//	return m_dataMessureRange.m_iO2_LowerLimit;
-//}
-//void CDataHandler::SetMessureRangeDataO2_LowerLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iO2_LowerLimit=value;
-//}
-
-//***************************************************************************
-//     
-//**************************************************************************
-//SHORT CDataHandler::GetMessureDataHFAmpl_UpperLimit()
-//{
-//	return m_dataMessureRange.m_iHFAmpl_UpperLimit;
-//}
-//void CDataHandler::SetMessureDataHFAmpl_UpperLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iHFAmpl_UpperLimit=value;
-//}
-//***************************************************************************
-//     
-//**************************************************************************
-//SHORT CDataHandler::GetMessureDataHFAmpl_LowerLimit()
-//{
-//	return m_dataMessureRange.m_iHFAmpl_LowerLimit;
-//}
-//void CDataHandler::SetMessureDataHFAmpl_LowerLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iHFAmpl_LowerLimit=value;
-//}
-
-//***************************************************************************
-//     
-//**************************************************************************
-//SHORT CDataHandler::GetMessureDataHFFreq_UpperLimit()
-//{
-//	return m_dataMessureRange.m_iHFFreq_UpperLimit;
-//}
-//void CDataHandler::SetMessureDataHFFreq_UpperLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iHFFreq_UpperLimit=value;
-//}
-//***************************************************************************
-//     
-//**************************************************************************
-//SHORT CDataHandler::GetMessureDataHFFreq_LowerLimit()
-//{
-//	return m_dataMessureRange.m_iHFFreq_LowerLimit;
-//}
-//void CDataHandler::SetMessureDataHFFreq_LowerLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iHFFreq_LowerLimit=value;
-//}
-
-//***************************************************************************
-//     
-//**************************************************************************
-//SHORT CDataHandler::GetMessureDataDCO2_UpperLimit()
-//{
-//	return m_dataMessureRange.m_iDCO2_UpperLimit;
-//}
-//void CDataHandler::SetMessureDataDCO2_UpperLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iDCO2_UpperLimit=value;
-//}
-//***************************************************************************
-//     
-//**************************************************************************
-//SHORT CDataHandler::GetMessureDataDCO2_LowerLimit()
-//{
-//	return m_dataMessureRange.m_iDCO2_LowerLimit;
-//}
-//void CDataHandler::SetMessureDataDCO2_LowerLimit(SHORT value)
-//{
-//	m_dataMessureRange.m_iDCO2_LowerLimit=value;
-//}
-
-
-//***************************************************************************
-//     
-//**************************************************************************
 bool CDataHandler::CheckIErelation(int iITime,int iBPM,int iETime)
 {
 	bool bSetFactory=false;
@@ -7290,9 +8193,19 @@ bool CDataHandler::CheckIErelation(int iITime,int iBPM,int iETime)
 	return bSetFactory;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Confirm ito bp mrelation
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iITime	The i time.
+ * \param	iBPM  	Zero-based index of the bpm.
+ * \param	iETime	The e time.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::ConfirmItoBPMrelation(int iITime,int iBPM,int iETime)
 {
 	bool bRes=false;
@@ -7305,9 +8218,19 @@ bool CDataHandler::ConfirmItoBPMrelation(int iITime,int iBPM,int iETime)
 	return bRes;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Confirm ito erelation
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iITime	The i time.
+ * \param	iETime	The e time.
+ * \param	iBPM  	Zero-based index of the bpm.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::ConfirmItoErelation(int iITime,int iETime,int iBPM)
 {
 	bool bRes=false;
@@ -7320,9 +8243,18 @@ bool CDataHandler::ConfirmItoErelation(int iITime,int iETime,int iBPM)
 	return bRes;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Initial calculate time i time changed ippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	fITime	The i time.
+ * \param	bTemp 	True to temporary.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::InitialCalculateETime_ITimeChanged_IPPV(int fITime, bool bTemp)
 {
 	//double fResult=0;
@@ -7350,9 +8282,18 @@ bool CDataHandler::InitialCalculateETime_ITimeChanged_IPPV(int fITime, bool bTem
 	return true;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Initial calculate time i time changed trigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	fITime	The i time.
+ * \param	bTemp 	True to temporary.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::InitialCalculateETime_ITimeChanged_TRIGGER(int fITime, bool bTemp)
 {
 	//double fResult=0;
@@ -7380,9 +8321,18 @@ bool CDataHandler::InitialCalculateETime_ITimeChanged_TRIGGER(int fITime, bool b
 	return true;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Initial calculate time i time changed nmode
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	fITime	The i time.
+ * \param	bTemp 	True to temporary.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::InitialCalculateETime_ITimeChanged_NMODE(int fITime, bool bTemp)
 {
 	//double fResult=0;
@@ -7410,6 +8360,18 @@ bool CDataHandler::InitialCalculateETime_ITimeChanged_NMODE(int fITime, bool bTe
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Initial calculate bpm i time changed trigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	fITime	The i time.
+ * \param	bTemp 	True to temporary.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::InitialCalculateBPM_ITimeChanged_TRIGGER(int fITime, bool bTemp)
 {
 	//double fResult=0;
@@ -7431,6 +8393,19 @@ bool CDataHandler::InitialCalculateBPM_ITimeChanged_TRIGGER(int fITime, bool bTe
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Initial calculate bpm i time changed ippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	fITime	The i time.
+ * \param	bTemp 	True to temporary.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::InitialCalculateBPM_ITimeChanged_IPPV(int fITime, bool bTemp)
 {
 	//double fResult=0;
@@ -7452,6 +8427,19 @@ bool CDataHandler::InitialCalculateBPM_ITimeChanged_IPPV(int fITime, bool bTemp)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Initial calculate bpm i time changed nmode
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	fITime	The i time.
+ * \param	bTemp 	True to temporary.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::InitialCalculateBPM_ITimeChanged_NMODE(int fITime, bool bTemp)
 {
 	//double fResult=0;
@@ -7474,10 +8462,18 @@ bool CDataHandler::InitialCalculateBPM_ITimeChanged_NMODE(int fITime, bool bTemp
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Calculates the time i time changed
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	fITime	The i time.
+ * \param	bTemp 	True to temporary.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-//***************************************************************************
-//     
-//**************************************************************************
 bool CDataHandler::CalculateETime_ITimeChanged(int fITime, bool bTemp)
 {
 	int iResult=0;
@@ -7630,6 +8626,18 @@ bool CDataHandler::CalculateETime_ITimeChanged(int fITime, bool bTemp)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Calculates the bpm i time changed
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	fITime	The i time.
+ * \param	bTemp 	True to temporary.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::CalculateBPM_ITimeChanged(int fITime, bool bTemp)
 {
 	//double fResult=0;
@@ -7759,6 +8767,18 @@ bool CDataHandler::CalculateBPM_ITimeChanged(int fITime, bool bTemp)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Calculates the time bpm changed
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iBpm 	Zero-based index of the bpm.
+ * \param	bTemp	True to temporary.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CDataHandler::CalculateETime_BPMChanged(int iBpm, bool bTemp)
 {
@@ -7917,6 +8937,18 @@ bool CDataHandler::CalculateETime_BPMChanged(int iBpm, bool bTemp)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Calculates the bpm e time changed
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	fETime	The e time.
+ * \param	bTemp 	True to temporary.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::CalculateBPM_ETimeChanged(int fETime, bool bTemp)
 {
 	//double dResult=0;
@@ -8072,60 +9104,127 @@ bool CDataHandler::CalculateBPM_ETimeChanged(int fETime, bool bTemp)
 	return true;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Gets current temporary i time
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current temporary i time.
+ **************************************************************************************************/
+
 int CDataHandler::GetCurrentTempITime()
 {
 	return m_iTempITime;
 }
+
+/**********************************************************************************************//**
+ * Sets current temporary i time
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentTempITime(int val)
 {
 	m_iTempITime=val;
 }
 
+/**********************************************************************************************//**
+ * Gets save IE relation value itime
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The save IE relation value itime.
+ **************************************************************************************************/
 
-
-//***************************************************************************
-//     
-//**************************************************************************
 int CDataHandler::GetSaveIERelationValue_ITIME()
 {
 	return m_iSaveIERelationValue_ITIME;
 }
+
+/**********************************************************************************************//**
+ * Sets save IE relation value itime
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetSaveIERelationValue_ITIME(int val)
 {
 	m_iSaveIERelationValue_ITIME=val;
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets save IE relation value etime
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The save IE relation value etime.
+ **************************************************************************************************/
+
 int CDataHandler::GetSaveIERelationValue_ETIME()
 {
 	return m_iSaveIERelationValue_ETIME;
 }
+
+/**********************************************************************************************//**
+ * Sets save IE relation value etime
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetSaveIERelationValue_ETIME(int val)
 {
 	m_iSaveIERelationValue_ETIME=val;
 }
 
+/**********************************************************************************************//**
+ * Gets current temporary e time
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current temporary e time.
+ **************************************************************************************************/
 
-
-//***************************************************************************
-//     
-//**************************************************************************
 int CDataHandler::GetCurrentTempETime()
 {
 	return m_iTempETime;
 }
+
+/**********************************************************************************************//**
+ * Sets current temporary e time
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentTempETime(int val)
 {
 	m_iTempETime=val;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit vgaranty
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit vgaranty.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitVgaranty()
 {
 	int iValue = 0;
@@ -8205,9 +9304,15 @@ int CDataHandler::calculateAutoAlarmlimitVgaranty()
 	return iValue;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit vlimit
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit vlimit.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitVlimit()
 {
 	int iValue = 0;
@@ -8282,9 +9387,15 @@ int CDataHandler::calculateAutoAlarmlimitVlimit()
 	return iValue;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit m vmax
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit m vmax.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitMVmax()
 {
 	int iValue=getAVGMessureDataMV();
@@ -8314,9 +9425,16 @@ int CDataHandler::calculateAutoAlarmlimitMVmax()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit m vmin
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit m vmin.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitMVmin()
 {
 	int iValue = getAVGMessureDataMV();
@@ -8342,9 +9460,16 @@ int CDataHandler::calculateAutoAlarmlimitMVmin()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit piphigh
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit piphigh.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitPIPHIGH()
 {
 	//DEBUGMSG(TRUE, (TEXT("calculateAutoAlarmlimitPIPHIGH\r\n")));
@@ -8616,9 +9741,15 @@ int CDataHandler::calculateAutoAlarmlimitPIPHIGH()
 	return iValue;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit piplow
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit piplow.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitPIPLOW()
 {
 	int iValue = 0;
@@ -8660,9 +9791,16 @@ int CDataHandler::calculateAutoAlarmlimitPIPLOW()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit pee pmin
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit pee pmin.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitPEEPmin()
 {
 	//DEBUGMSG(TRUE, (TEXT("calculateAutoAlarmlimitPEEPmin\r\n")));
@@ -8742,9 +9880,16 @@ int CDataHandler::calculateAutoAlarmlimitPEEPmin()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit bp mmax
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit bp mmax.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitBPMmax()
 {
 	int iValue = getAVGMessureDataBPM();
@@ -8756,9 +9901,16 @@ int CDataHandler::calculateAutoAlarmlimitBPMmax()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit leakmax
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit leakmax.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitLeakmax()
 {
 	int iValue = getAVGMessureDataLeak();
@@ -8775,9 +9927,16 @@ int CDataHandler::calculateAutoAlarmlimitLeakmax()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit apnoe
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit apnoe.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitApnoe()
 {
 	getModel()->getALARMHANDLER()->setAlimitApnoe(AUTOALARMLIMIT_APNOE);
@@ -8785,7 +9944,14 @@ int CDataHandler::calculateAutoAlarmlimitApnoe()
 	return AUTOALARMLIMIT_APNOE;
 }
 
-
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit ma pmax
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit ma pmax.
+ **************************************************************************************************/
 
 int CDataHandler::calculateAutoAlarmlimitMAPmax()
 {
@@ -8819,6 +9985,15 @@ int CDataHandler::calculateAutoAlarmlimitMAPmax()
 	return iValue;
 }
 
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit ma pmin
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit ma pmin.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitMAPmin()
 {
 	int iValue = 0;
@@ -8851,9 +10026,15 @@ int CDataHandler::calculateAutoAlarmlimitMAPmin()
 	return iValue;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit dco 2max
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit dco 2max.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitDCO2max()
 {
 	int iValue = getAVGMessureDataDCO2();
@@ -8892,9 +10073,16 @@ int CDataHandler::calculateAutoAlarmlimitDCO2max()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit dco 2min
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit dco 2min.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitDCO2min()
 {
 	int iValue = getAVGMessureDataDCO2();
@@ -8930,10 +10118,15 @@ int CDataHandler::calculateAutoAlarmlimitDCO2min()
 	return iValue;
 }
 
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit etco 2max
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit etco 2max.
+ **************************************************************************************************/
 
-//***************************************************************************
-//     
-//**************************************************************************
 int CDataHandler::calculateAutoAlarmlimitETCO2max()
 {
 	int iValue = getAVGMessureDataETCO2();
@@ -8968,9 +10161,16 @@ int CDataHandler::calculateAutoAlarmlimitETCO2max()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit etco 2min
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit etco 2min.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitETCO2min()
 {
 	int iValue = getAVGMessureDataETCO2();
@@ -9003,9 +10203,15 @@ int CDataHandler::calculateAutoAlarmlimitETCO2min()
 	return iValue;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit fico 2max
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit fico 2max.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitFICO2max()
 {
 	int iValue = getAVGMessureDataFICO2();
@@ -9040,9 +10246,16 @@ int CDataHandler::calculateAutoAlarmlimitFICO2max()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit fico 2min
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit fico 2min.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitFICO2min()
 {
 	int iValue = getAVGMessureDataFICO2();
@@ -9075,9 +10288,15 @@ int CDataHandler::calculateAutoAlarmlimitFICO2min()
 	return iValue;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit spo 2max
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit spo 2max.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitSPO2max()
 {
 	int iValue = getAVGMessureDataSPO2();
@@ -9122,9 +10341,16 @@ int CDataHandler::calculateAutoAlarmlimitSPO2max()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit spo 2min
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit spo 2min.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitSPO2min()
 {
 	int iValue = getAVGMessureDataSPO2();
@@ -9168,6 +10394,16 @@ int CDataHandler::calculateAutoAlarmlimitSPO2min()
 
 	return iValue;
 }
+
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit pulse ratemax
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit pulse ratemax.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitPulseRatemax()
 {
 	int iValue = getAVGMessureDataSpO2PulseRate();
@@ -9202,6 +10438,16 @@ int CDataHandler::calculateAutoAlarmlimitPulseRatemax()
 
 	return iValue;
 }
+
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit pulse ratemin
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit pulse ratemin.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitPulseRatemin()
 {
 	int iValue = getAVGMessureDataSpO2PulseRate();
@@ -9236,6 +10482,16 @@ int CDataHandler::calculateAutoAlarmlimitPulseRatemin()
 
 	return iValue;
 }
+
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit spo 2 p imin
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit spo 2 p imin.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitSPO2_PImin()
 {
 	int iValue = getAVGMessureDataSpO2PerfusionIndex();
@@ -9265,11 +10521,29 @@ int CDataHandler::calculateAutoAlarmlimitSPO2_PImin()
 	return iValue;
 }
 
+/**********************************************************************************************//**
+ * Calculates the automatic alarmlimit spo 2 SI qmin
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The calculated automatic alarmlimit spo 2 SI qmin.
+ **************************************************************************************************/
+
 int CDataHandler::calculateAutoAlarmlimitSPO2_SIQmin()
 {
 	getModel()->getALARMHANDLER()->setAlimitSPO2_SIQmin(AUTOALARMLIMIT_SPO2_SIQMIN);
 	return AUTOALARMLIMIT_SPO2_SIQMIN;
 }
+
+/**********************************************************************************************//**
+ * Gets current IE relation 100
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current IE relation 100.
+ **************************************************************************************************/
 
 int CDataHandler::GetCurrentIERelation100()
 {
@@ -9285,6 +10559,15 @@ int CDataHandler::GetCurrentIERelation100()
 	return (int)(fValue*100);
 }
 
+/**********************************************************************************************//**
+ * Gets current ei relation 100
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current ei relation 100.
+ **************************************************************************************************/
+
 int CDataHandler::GetCurrentEIRelation100()
 {
 	double fValue=0;
@@ -9299,8 +10582,14 @@ int CDataHandler::GetCurrentEIRelation100()
 	return (int)(fValue*100);
 }
 
-
-
+/**********************************************************************************************//**
+ * Sets trigger option convert
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	type	The type.
+ **************************************************************************************************/
 
 void CDataHandler::setTriggerOptionCONV(eTriggereType type)
 {
@@ -9309,21 +10598,50 @@ void CDataHandler::setTriggerOptionCONV(eTriggereType type)
 
 	getModel()->Send_MODE_OPTION1();
 }
+
+/**********************************************************************************************//**
+ * Gets trigger option convert
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The trigger option convert.
+ **************************************************************************************************/
+
 eTriggereType CDataHandler::getTriggerOptionCONV()
 {
 	return getModel()->getCONFIG()->getTriggerOption_CONV();
 }
+
+/**********************************************************************************************//**
+ * Sets previous trigger option convert
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	type	The type.
+ **************************************************************************************************/
+
 void CDataHandler::SetPrevTriggerOptionCONV(eTriggereType type)
 {
 	getModel()->getCONFIG()->setPrevTriggerOption_CONV(type);
 	//m_ePrevTrigger_CONV=type;
 }
+
+/**********************************************************************************************//**
+ * Gets the previous trigger option convert
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The previous trigger option convert.
+ **************************************************************************************************/
+
 eTriggereType CDataHandler::getPrevTriggerOptionCONV()
 {
 	return getModel()->getCONFIG()->getPrevTriggerOption_CONV();
 	//return m_ePrevTrigger_CONV;
 }
-//###########################
 //void CDataHandler::setTriggerOption_CPAP(eTriggereType type)
 //{
 //	//DEBUGMSG(TRUE, (TEXT("setTriggerOption_CPAP %d\r\n"),(int)type));
@@ -9344,17 +10662,44 @@ eTriggereType CDataHandler::getPrevTriggerOptionCONV()
 //	return m_ePrevTrigger_CPAP;
 //}
 
+/**********************************************************************************************//**
+ * Sets trigger option duopap
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	type	The type.
+ **************************************************************************************************/
+
 void CDataHandler::setTriggerOptionDUOPAP(eTriggereType type)
 {
 	getModel()->getCONFIG()->setTriggerOption_DUOPAP(type);
 
 	getModel()->Send_MODE_OPTION1();
 }
+
+/**********************************************************************************************//**
+ * Gets trigger option duopap
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The trigger option duopap.
+ **************************************************************************************************/
+
 eTriggereType CDataHandler::getTriggerOptionDUOPAP()
 {
 	return getModel()->getCONFIG()->getTriggerOption_DUOPAP();
 }
 
+/**********************************************************************************************//**
+ * Sets trigger option ncpap
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	type	The type.
+ **************************************************************************************************/
 
 void CDataHandler::setTriggerOptionNCPAP(eTriggereType type)
 {
@@ -9362,11 +10707,29 @@ void CDataHandler::setTriggerOptionNCPAP(eTriggereType type)
 
 	getModel()->Send_MODE_OPTION1();
 }
+
+/**********************************************************************************************//**
+ * Gets trigger option ncpap
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The trigger option ncpap.
+ **************************************************************************************************/
+
 eTriggereType CDataHandler::getTriggerOptionNCPAP()
 {
 	return getModel()->getCONFIG()->getTriggerOption_NCPAP();
 }
 
+/**********************************************************************************************//**
+ * Sets ppsv as delta peep value
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	bPPSVasDeltaPEEPValue	True to pps vas delta peep value.
+ **************************************************************************************************/
 
 void CDataHandler::setPpsvAsDeltaPEEPValue(BOOL bPPSVasDeltaPEEPValue)
 {
@@ -9377,6 +10740,15 @@ void CDataHandler::setPpsvAsDeltaPEEPValue(BOOL bPPSVasDeltaPEEPValue)
 	else
 		getModel()->Send_VENT_MODE(getModel()->getCONFIG()->GetCurMode());
 }
+
+/**********************************************************************************************//**
+ * Sets current o 2 flush time
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iTime	Zero-based index of the time.
+ **************************************************************************************************/
 
 void CDataHandler::SetCurO2FlushTime(BYTE iTime)
 {
@@ -9389,11 +10761,28 @@ void CDataHandler::SetCurO2FlushTime(BYTE iTime)
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets current o 2 flush time
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current o 2 flush time.
+ **************************************************************************************************/
+
 BYTE CDataHandler::GetCurO2FlushTime()
 {
 	return getModel()->getCONFIG()->GetFlushTime();
 }
 
+/**********************************************************************************************//**
+ * Gets current v garant minimum para data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current v garant minimum para data.
+ **************************************************************************************************/
 
 WORD CDataHandler::GetCurrentVGarantMinParaData()
 {
@@ -9445,6 +10834,16 @@ WORD CDataHandler::GetCurrentVGarantMinParaData()
 
 	return iValue;
 }
+
+/**********************************************************************************************//**
+ * Gets the previous v garant minimum para data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The previous v garant minimum para data.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetPreviousVGarantMinParaData()
 {
 	WORD iVal=0;
@@ -9484,6 +10883,15 @@ WORD CDataHandler::GetPreviousVGarantMinParaData()
 
 	return iVal;
 }
+
+/**********************************************************************************************//**
+ * Gets current v garant para data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current v garant para data.
+ **************************************************************************************************/
 
 WORD CDataHandler::GetCurrentVGarantParaData()
 {
@@ -9538,6 +10946,14 @@ WORD CDataHandler::GetCurrentVGarantParaData()
 
 }
 
+/**********************************************************************************************//**
+ * Gets the previous v garant para data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The previous v garant para data.
+ **************************************************************************************************/
 
 WORD CDataHandler::GetPreviousVGarantParaData()
 {
@@ -9571,7 +10987,14 @@ WORD CDataHandler::GetPreviousVGarantParaData()
 	return iVal;
 }
 
-
+/**********************************************************************************************//**
+ * Gets v limit minimum para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The v limit minimum para.
+ **************************************************************************************************/
 
 WORD CDataHandler::GetVLimitMinPara()
 {
@@ -9619,6 +11042,16 @@ WORD CDataHandler::GetVLimitMinPara()
 
 	return iValue;
 }
+
+/**********************************************************************************************//**
+ * Gets the previous v limit minimum para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The previous v limit minimum para.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetPrevVLimitMinPara()
 {
 	WORD iVal=0;
@@ -9716,6 +11149,14 @@ WORD CDataHandler::GetCurrentVLimitPara()
 	return iValue;
 }
 
+/**********************************************************************************************//**
+ * Gets the previous v limit para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The previous v limit para.
+ **************************************************************************************************/
 
 WORD CDataHandler::GetPrevVLimitPara()
 {
@@ -9766,8 +11207,12 @@ WORD CDataHandler::GetPrevVLimitPara()
 	return iVal;
 }
 
-
-
+/**********************************************************************************************//**
+ * Saves the last v limit parameter
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
 
 void CDataHandler::SaveLastVLimitParam()
 {
@@ -9776,16 +11221,30 @@ void CDataHandler::SaveLastVLimitParam()
 	else
 		m_iLastVLimitParam=PARADATA()->GetVLimitParam_TRIGGER();
 }
+
+/**********************************************************************************************//**
+ * Gets the last v limit parameter
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The last v limit parameter.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetLastVLimitParam()
 {
 	return m_iLastVLimitParam;
 }
 
+/**********************************************************************************************//**
+ * Query if this object is active mode v garant state on
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if active mode v garant state on, false if not.
+ **************************************************************************************************/
 
-
-//***************************************************************************
-//     
-//**************************************************************************
 bool CDataHandler::IsActiveModeVGarantStateOn()
 {
 	bool bResult=false;
@@ -9841,9 +11300,15 @@ bool CDataHandler::IsActiveModeVGarantStateOn()
 	
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Query if this object is current mode v garant state on
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if current mode v garant state on, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::IsCurrentModeVGarantStateOn()
 {
 	bool bResult=false;
@@ -9898,9 +11363,15 @@ bool CDataHandler::IsCurrentModeVGarantStateOn()
 	
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Query if this object is previous v garant state on
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if previous v garant state on, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::IsPrevVGarantStateOn()
 {
 	bool bResult=false;
@@ -9935,12 +11406,15 @@ bool CDataHandler::IsPrevVGarantStateOn()
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Query if this object is current mode v limit state on
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if current mode v limit state on, false if not.
+ **************************************************************************************************/
 
-
-
-//***************************************************************************
-//     
-//**************************************************************************
 bool CDataHandler::IsCurrentModeVLimitStateOn()
 {
 	bool bResult=false;
@@ -9984,9 +11458,15 @@ bool CDataHandler::IsCurrentModeVLimitStateOn()
 	return bResult;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Query if this object is active mode v limit state on
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if active mode v limit state on, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::IsActiveModeVLimitStateOn()
 {
 	bool bResult=false;
@@ -10025,9 +11505,16 @@ bool CDataHandler::IsActiveModeVLimitStateOn()
 	
 	return bResult;
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Query if this object is previous v limit state on
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if previous v limit state on, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::IsPrevVLimitStateOn()
 {
 	bool bResult=false;
@@ -10056,9 +11543,15 @@ bool CDataHandler::IsPrevVLimitStateOn()
 	return bResult;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Gets current p manual maximum key
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current p manual maximum key.
+ **************************************************************************************************/
+
 SHORT CDataHandler::GetCurrentPManualMaxKey()
 {
 	SHORT iValue=0;
@@ -10109,9 +11602,16 @@ SHORT CDataHandler::GetCurrentPManualMaxKey()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets current therapie flow maximum key
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current therapie flow maximum key.
+ **************************************************************************************************/
+
 SHORT CDataHandler::GetCurrentTherapieFlowMaxKey()
 {
 	int iValue=0;
@@ -10152,9 +11652,16 @@ SHORT CDataHandler::GetCurrentTherapieFlowMaxKey()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets current cpap maximum key
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current cpap maximum key.
+ **************************************************************************************************/
+
 SHORT CDataHandler::GetCurrentCPAPMaxKey()
 {
 	SHORT iValue=0;
@@ -10205,9 +11712,6 @@ SHORT CDataHandler::GetCurrentCPAPMaxKey()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
 //SHORT CDataHandler::GetCurrentHFampMaxKey()
 //{
 //	SHORT iValue=0;
@@ -10232,9 +11736,16 @@ SHORT CDataHandler::GetCurrentCPAPMaxKey()
 //
 //	return iValue;
 //}
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets current p insp maximum key
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current p insp maximum key.
+ **************************************************************************************************/
+
 SHORT CDataHandler::GetCurrentPInspMaxKey()
 {
 	SHORT iValue=0;
@@ -10278,9 +11789,15 @@ SHORT CDataHandler::GetCurrentPInspMaxKey()
 	return iValue;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Gets current i flow maximum key
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current i flow maximum key.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetCurrentIFlowMaxKey()
 {
 	WORD iValue=0;
@@ -10323,9 +11840,16 @@ WORD CDataHandler::GetCurrentIFlowMaxKey()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets current e flow maximum key
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current e flow maximum key.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetCurrentEFlowMaxKey()
 {
 	WORD iValue=0;
@@ -10368,9 +11892,16 @@ WORD CDataHandler::GetCurrentEFlowMaxKey()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets current vlimit maximum key
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current vlimit maximum key.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetCurrentVlimitMaxKey()
 {
 	WORD iValue=0;
@@ -10421,9 +11952,16 @@ WORD CDataHandler::GetCurrentVlimitMaxKey()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets current vgarant maximum key
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current vgarant maximum key.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetCurrentVgarantMaxKey()
 {
 	WORD iValue=0;
@@ -10482,9 +12020,16 @@ WORD CDataHandler::GetCurrentVgarantMaxKey()
 
 	return iValue;
 }
-//***************************************************************************
-//     
-//**************************************************************************
+
+/**********************************************************************************************//**
+ * Gets current ppsv maximum key
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current ppsv maximum key.
+ **************************************************************************************************/
+
 SHORT CDataHandler::GetCurrentPpsvMaxKey()
 {
 	SHORT iValue=0;
@@ -10512,9 +12057,15 @@ SHORT CDataHandler::GetCurrentPpsvMaxKey()
 	return iValue;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Gets current peep maximum key
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current peep maximum key.
+ **************************************************************************************************/
+
 SHORT CDataHandler::GetCurrentPeepMaxKey()
 {
 	SHORT iValue=0;
@@ -10558,9 +12109,15 @@ SHORT CDataHandler::GetCurrentPeepMaxKey()
 	return iValue;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Gets current peep minimum key
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current peep minimum key.
+ **************************************************************************************************/
+
 SHORT CDataHandler::GetCurrentPeepMinKey()
 {
 	SHORT iValue=0;
@@ -10604,9 +12161,15 @@ SHORT CDataHandler::GetCurrentPeepMinKey()
 	return iValue;
 }
 
-//***************************************************************************
-//     
-//**************************************************************************
+/**********************************************************************************************//**
+ * Gets current mode string
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current mode string.
+ **************************************************************************************************/
+
 CStringW CDataHandler::GetCurrentModeString()
 {
 	CStringW sz = _T("");
@@ -10742,6 +12305,15 @@ CStringW CDataHandler::GetCurrentModeString()
 
 	return sz;
 }
+
+/**********************************************************************************************//**
+ * Gets the previous mode string
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The previous mode string.
+ **************************************************************************************************/
 
 CStringW CDataHandler::GetPrevModeString()
 {
@@ -11027,20 +12599,55 @@ BYTE CDataHandler::GetCurrentTriggerPara()
 	return iValue;
 }
 
+/**********************************************************************************************//**
+ * Sets duopa ptrigger autoenable flag
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iPrevTRIGGERDUOPAPPara	Zero-based index of the previous triggerduopap para.
+ **************************************************************************************************/
+
 void CDataHandler::SetDUOPAPtriggerAutoenableFlag(BYTE iPrevTRIGGERDUOPAPPara)
 {
 	m_bDUOPAPtriggerAutoEnable=true;
 	m_iPrevTRIGGERDUOPAPPara=iPrevTRIGGERDUOPAPPara;
 }
 
+/**********************************************************************************************//**
+ * Gets duopa ptrigger autoenable flag
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CDataHandler::GetDUOPAPtriggerAutoenableFlag()
 {
 	return m_bDUOPAPtriggerAutoEnable;
 }
+
+/**********************************************************************************************//**
+ * Gets the previous triggerduopap para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The previous triggerduopap para.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetPrevTRIGGERDUOPAPPara()
 {
 	return m_iPrevTRIGGERDUOPAPPara;
 }
+
+/**********************************************************************************************//**
+ * Resets the duopa ptrigger autoenable flag
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
 
 void CDataHandler::ResetDUOPAPtriggerAutoenableFlag()
 {
@@ -11048,7 +12655,6 @@ void CDataHandler::ResetDUOPAPtriggerAutoenableFlag()
 	m_iPrevTRIGGERDUOPAPPara=0;
 }
 
-//#############
 //void CDataHandler::SetNCPAPtriggerAutoenableFlag(BYTE iPrevTRIGGERNCPAPPara)
 //{
 //	m_bNCPAPtriggerAutoEnable=true;
@@ -11070,9 +12676,15 @@ void CDataHandler::ResetDUOPAPtriggerAutoenableFlag()
 //	m_iPrevTRIGGERNCPAPPara=0;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets current i time para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentITimePara(WORD val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -11149,6 +12761,16 @@ void CDataHandler::SetCurrentITimePara(WORD val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets current i time para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current i time para.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetCurrentITimePara()
 {
 	WORD fValue=0;
@@ -11200,9 +12822,13 @@ WORD CDataHandler::GetCurrentITimePara()
 	return fValue;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Calculates the IE ratio parts
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::CalculateIERatioParts()
 {
 	int iTempIErelation =GetCurrentIERelation100();
@@ -11242,26 +12868,72 @@ void CDataHandler::CalculateIERatioParts()
 	getModel()->getAcuLink()->setParaData(ALINK_SETT_IERATIO_IPART,GetIERatioIpart());
 	getModel()->getAcuLink()->setParaData(ALINK_SETT_IERATIO_EPART,GetIERatioEpart());
 }
+
+/**********************************************************************************************//**
+ * Gets IE ratio ipart
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The IE ratio ipart.
+ **************************************************************************************************/
+
 int CDataHandler::GetIERatioIpart()
 {
 	return m_iIERatioIpart;
 }
+
+/**********************************************************************************************//**
+ * Sets IE ratio ipart
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CDataHandler::SetIERatioIpart(int iVal)
 {
 	m_iIERatioIpart=iVal;
 }
+
+/**********************************************************************************************//**
+ * Gets IE ratio epart
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The IE ratio epart.
+ **************************************************************************************************/
+
 int CDataHandler::GetIERatioEpart()
 {
 	return 	m_iIERatioEpart;
 }
+
+/**********************************************************************************************//**
+ * Sets IE ratio epart
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CDataHandler::SetIERatioEpart(int iVal)
 {
 	m_iIERatioEpart=iVal;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets current e time para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentETimePara(WORD val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -11328,6 +13000,16 @@ void CDataHandler::SetCurrentETimePara(WORD val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets current e time para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current e time para.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetCurrentETimePara()
 {
 	WORD fValue=0;
@@ -11387,11 +13069,15 @@ WORD CDataHandler::GetCurrentETimePara()
 	return fValue;
 }
 
+/**********************************************************************************************//**
+ * Sets current bpm para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CDataHandler::SetCurrentBPMPara(WORD val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -11464,6 +13150,16 @@ void CDataHandler::SetCurrentBPMPara(WORD val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets current bpm para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current bpm para.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetCurrentBPMPara()
 {
 	WORD iValue=0;
@@ -11523,9 +13219,15 @@ WORD CDataHandler::GetCurrentBPMPara()
 	return iValue;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets current o 2 para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentO2Para(BYTE val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -11591,6 +13293,16 @@ void CDataHandler::SetCurrentO2Para(BYTE val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets current o 2 para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current o 2 para.
+ **************************************************************************************************/
+
 BYTE CDataHandler::GetCurrentO2Para()
 {
 	BYTE fValue=0;
@@ -11633,9 +13345,16 @@ BYTE CDataHandler::GetCurrentO2Para()
 
 	return fValue;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets current o 2 flush para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentO2FlushPara(BYTE val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -11678,6 +13397,16 @@ void CDataHandler::SetCurrentO2FlushPara(BYTE val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets current o 2 flush para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current o 2 flush para.
+ **************************************************************************************************/
+
 BYTE CDataHandler::GetCurrentO2FlushPara()
 {
 	int iValue=0;
@@ -11722,9 +13451,15 @@ BYTE CDataHandler::GetCurrentO2FlushPara()
 	return iValue;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets current risetime para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentRisetimePara(WORD val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -11776,6 +13511,16 @@ void CDataHandler::SetCurrentRisetimePara(WORD val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets current risetime para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current risetime para.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetCurrentRisetimePara()
 {
 	WORD fValue=0;
@@ -11824,9 +13569,16 @@ WORD CDataHandler::GetCurrentRisetimePara()
 
 	return fValue;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets current hf flow para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentHFFlowPara(WORD val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -11850,6 +13602,16 @@ void CDataHandler::SetCurrentHFFlowPara(WORD val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets current hf flow para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current hf flow para.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetCurrentHFFlowPara()
 {
 	WORD fValue=0;
@@ -11874,9 +13636,16 @@ WORD CDataHandler::GetCurrentHFFlowPara()
 
 	return fValue;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets current i flow para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentIFlowPara(WORD val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -11949,6 +13718,15 @@ void CDataHandler::SetCurrentIFlowPara(WORD val)
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets current i flow para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current i flow para.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetCurrentIFlowPara()
 {
 	WORD fValue=0;
@@ -11993,9 +13771,16 @@ WORD CDataHandler::GetCurrentIFlowPara()
 
 	return fValue;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets current e flow para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentEFlowPara(WORD val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -12039,6 +13824,16 @@ void CDataHandler::SetCurrentEFlowPara(WORD val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets flow minimum paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetFlowMinParadata(WORD val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -12097,6 +13892,15 @@ void CDataHandler::SetFlowMinParadata(WORD val)
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets current e flow para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current e flow para.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetCurrentEFlowPara()
 {
 	WORD fValue=0;
@@ -12130,6 +13934,16 @@ WORD CDataHandler::GetCurrentEFlowPara()
 
 	return fValue;
 }
+
+/**********************************************************************************************//**
+ * Gets flowmin para data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The flowmin para data.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetFlowminParaData()
 {
 	WORD fValue=0;
@@ -12166,10 +13980,15 @@ WORD CDataHandler::GetFlowminParaData()
 	return fValue;
 }
 
+/**********************************************************************************************//**
+ * Sets current therapie flow para data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CDataHandler::SetCurrentTherapieFlowParaData(WORD val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -12192,6 +14011,15 @@ void CDataHandler::SetCurrentTherapieFlowParaData(WORD val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets current therapie flow para data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current therapie flow para data.
+ **************************************************************************************************/
 
 WORD CDataHandler::GetCurrentTherapieFlowParaData()
 {
@@ -12219,12 +14047,28 @@ WORD CDataHandler::GetCurrentTherapieFlowParaData()
 	return fValue;
 }
 
-
+/**********************************************************************************************//**
+ * Gets vgarant state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The vgarant state.
+ **************************************************************************************************/
 
 eVgarantState CDataHandler::GetVgarantState()
 {
 	return m_eCurVgarantState;
 }
+
+/**********************************************************************************************//**
+ * Change vgarant state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
 
 void CDataHandler::ChangeVgarantState(eVgarantState state)
 {
@@ -12330,9 +14174,15 @@ void CDataHandler::ChangeVgarantState(eVgarantState state)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets current pmax volume g para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentPmaxVolGPara(SHORT val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -12405,9 +14255,15 @@ void CDataHandler::SetCurrentPmaxVolGPara(SHORT val)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets current pinsp para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentPINSPPara(SHORT val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -12467,7 +14323,6 @@ void CDataHandler::SetCurrentPINSPPara(SHORT val)
 	}
 }
 
-//newVG
 //SHORT CDataHandler::GetCurrentPIPPara()
 //{
 //	SHORT iValue=0;
@@ -12536,14 +14391,33 @@ void CDataHandler::SetCurrentPINSPPara(SHORT val)
 //	return iValue;
 //}
 
-SHORT CDataHandler::GetActiveModePRESSUREPara()//newVG
+/**********************************************************************************************//**
+ * Gets active mode pressure para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The active mode pressure para.
+ **************************************************************************************************/
+
+SHORT CDataHandler::GetActiveModePRESSUREPara()
 {
 	if(IsActiveModeVGarantStateOn())
 		return GetActiveModePMAXVGPara();
 	else
 		return GetActiveModePINSPPara();
 }
-SHORT CDataHandler::GetActiveModePINSPPara()//newVG
+
+/**********************************************************************************************//**
+ * Gets active mode pinsp para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The active mode pinsp para.
+ **************************************************************************************************/
+
+SHORT CDataHandler::GetActiveModePINSPPara()
 {
 	SHORT iValue=0;
 
@@ -12615,7 +14489,16 @@ SHORT CDataHandler::GetActiveModePINSPPara()//newVG
 	return iValue;
 }
 
-SHORT CDataHandler::GetActiveModePMAXVGPara()//newVG
+/**********************************************************************************************//**
+ * Gets active mode pmaxvg para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The active mode pmaxvg para.
+ **************************************************************************************************/
+
+SHORT CDataHandler::GetActiveModePMAXVGPara()
 {
 	SHORT iValue=0;
 
@@ -12672,6 +14555,15 @@ SHORT CDataHandler::GetActiveModePMAXVGPara()//newVG
 
 	return iValue;
 }
+
+/**********************************************************************************************//**
+ * Gets current pmax volume g para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current pmax volume g para.
+ **************************************************************************************************/
 
 SHORT CDataHandler::GetCurrentPmaxVolGPara()
 {
@@ -12744,6 +14636,16 @@ SHORT CDataHandler::GetCurrentPmaxVolGPara()
 
 	return iValue;
 }
+
+/**********************************************************************************************//**
+ * Gets current pinsp para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current pinsp para.
+ **************************************************************************************************/
+
 SHORT CDataHandler::GetCurrentPINSPPara()
 {
 	SHORT iValue=0;
@@ -12831,9 +14733,15 @@ SHORT CDataHandler::GetCurrentPINSPPara()
 	return iValue;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets current peep para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentPEEPPara(SHORT val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -12883,6 +14791,15 @@ void CDataHandler::SetCurrentPEEPPara(SHORT val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets current peep para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current peep para.
+ **************************************************************************************************/
 
 SHORT CDataHandler::GetCurrentPEEPPara()
 {
@@ -12953,16 +14870,22 @@ SHORT CDataHandler::GetCurrentPEEPPara()
 	return iValue;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets current ppsv para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentPpsvPara(SHORT val)
 {
 	bool bSend=true;
 
 	switch(getModel()->getCONFIG()->GetCurMode())
 	{
-	//case VM_PSV: //newVG
+	//case VM_PSV: 
 	//	{
 	//		if(PARADATA()->GetPpsvPara()!=val)
 	//		{
@@ -13004,6 +14927,16 @@ void CDataHandler::SetCurrentPpsvPara(SHORT val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets current ppsv para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current ppsv para.
+ **************************************************************************************************/
+
 SHORT CDataHandler::GetCurrentPpsvPara()
 {
 	int iValue=0;
@@ -13031,9 +14964,15 @@ SHORT CDataHandler::GetCurrentPpsvPara()
 	return iValue;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets current cpap para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentCPAPPara(SHORT val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -13080,6 +15019,15 @@ void CDataHandler::SetCurrentCPAPPara(SHORT val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets current p manager para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
 
 void CDataHandler::SetCurrentPManPara(SHORT val)
 {
@@ -13155,10 +15103,15 @@ void CDataHandler::SetCurrentPManPara(SHORT val)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets current p mean para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CDataHandler::SetCurrentPMeanPara(WORD val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -13184,6 +15137,16 @@ void CDataHandler::SetCurrentPMeanPara(WORD val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets current pmean para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current pmean para.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetCurrentPmeanPara()
 {
 	WORD fValue=0;
@@ -13209,10 +15172,15 @@ WORD CDataHandler::GetCurrentPmeanPara()
 	return fValue;
 }
 
+/**********************************************************************************************//**
+ * Sets current backup para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CDataHandler::SetCurrentBackupPara(BYTE val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -13242,9 +15210,15 @@ void CDataHandler::SetCurrentBackupPara(BYTE val)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets current IE ratio para hfo
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentIERatioParaHFO(eRatioIE val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -13270,6 +15244,16 @@ void CDataHandler::SetCurrentIERatioParaHFO(eRatioIE val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets current IE ratio para hfo
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current IE ratio para hfo.
+ **************************************************************************************************/
+
 eRatioIE CDataHandler::GetCurrentIERatioParaHFO()
 {
 	eRatioIE iValue=RIE_1_1;
@@ -13295,10 +15279,15 @@ eRatioIE CDataHandler::GetCurrentIERatioParaHFO()
 	return iValue;
 }
 
+/**********************************************************************************************//**
+ * Sets current hf frequency para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CDataHandler::SetCurrentHFFreqPara(BYTE val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -13332,6 +15321,16 @@ void CDataHandler::SetCurrentHFFreqPara(BYTE val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets current hf frequency para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current hf frequency para.
+ **************************************************************************************************/
+
 BYTE CDataHandler::GetCurrentHFFreqPara()
 {
 	BYTE fValue=0;
@@ -13357,9 +15356,15 @@ BYTE CDataHandler::GetCurrentHFFreqPara()
 	return fValue;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets current hfamp lmax para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentHFAMPLmaxPara(WORD val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -13386,6 +15391,16 @@ void CDataHandler::SetCurrentHFAMPLmaxPara(WORD val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets current hfamp lmax para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current hfamp lmax para.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetCurrentHFAMPLmaxPara()
 {
 	WORD fValue=0;
@@ -13410,6 +15425,16 @@ WORD CDataHandler::GetCurrentHFAMPLmaxPara()
 
 	return fValue;
 }
+
+/**********************************************************************************************//**
+ * Sets current i time record para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentITimeRecPara(WORD val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -13432,6 +15457,16 @@ void CDataHandler::SetCurrentITimeRecPara(WORD val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets current i time record para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current i time record para.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetCurrentITimeRecPara()
 {
 	int fValue=0;
@@ -13457,6 +15492,18 @@ WORD CDataHandler::GetCurrentITimeRecPara()
 	return fValue;
 }
 
+/**********************************************************************************************//**
+ * Calculates the hf etime record
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	valFREQ 	The value frequency.
+ * \param	valITIME	The value itime.
+ *
+ * \return	The calculated hf etime record.
+ **************************************************************************************************/
+
 int CDataHandler::CalculateHF_ETIME_REC(int valFREQ, int valITIME)
 {
 	if(valFREQ==0)
@@ -13471,6 +15518,17 @@ int CDataHandler::CalculateHF_ETIME_REC(int valFREQ, int valITIME)
 
 	return iETimeRec; //sec
 }
+
+/**********************************************************************************************//**
+ * Gets hf etime record
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	valFREQ	The value frequency.
+ *
+ * \return	The hf etime record.
+ **************************************************************************************************/
 
 int CDataHandler::GetHF_ETIME_REC(int valFREQ)
 {
@@ -13487,6 +15545,16 @@ int CDataHandler::GetHF_ETIME_REC(int valFREQ)
 
 	return iETimeRec; //sec
 }
+
+/**********************************************************************************************//**
+ * Sets current frequency record para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentFreqRecPara(WORD val)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -13542,6 +15610,16 @@ void CDataHandler::SetCurrentFreqRecPara(WORD val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets current frequency record para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current frequency record para.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetCurrentFreqRecPara()
 {
 	int fValue=0;
@@ -13566,6 +15644,15 @@ WORD CDataHandler::GetCurrentFreqRecPara()
 
 	return fValue;
 }
+
+/**********************************************************************************************//**
+ * Sets current hfp mean record para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
 
 void CDataHandler::SetCurrentHFPMeanRecPara(WORD val)
 {
@@ -13598,6 +15685,16 @@ void CDataHandler::SetCurrentHFPMeanRecPara(WORD val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets current hfp mean record para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current hfp mean record para.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetCurrentHFPMeanRecPara()
 {
 	WORD fValue=0;
@@ -13622,6 +15719,15 @@ WORD CDataHandler::GetCurrentHFPMeanRecPara()
 
 	return fValue;
 }
+
+/**********************************************************************************************//**
+ * Sets current hfampl para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
 
 void CDataHandler::SetCurrentHFAMPLPara(WORD val)
 {
@@ -13653,6 +15759,16 @@ void CDataHandler::SetCurrentHFAMPLPara(WORD val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets current hfampl para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current hfampl para.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetCurrentHFAMPLPara()
 {
 	WORD fValue=0;
@@ -13678,9 +15794,15 @@ WORD CDataHandler::GetCurrentHFAMPLPara()
 	return fValue;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets current v garant parameter data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetCurrentVGarantParamData(WORD val)
 {
 	//bool bReset=false;
@@ -13771,6 +15893,17 @@ void CDataHandler::SetCurrentVGarantParamData(WORD val)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets current v limit parameter
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val  	The value.
+ * \param	bOn  	True to on.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
 
 void CDataHandler::SetCurrentVLimitParam(WORD val, bool bOn, bool bSend)
 {
@@ -13887,6 +16020,15 @@ void CDataHandler::SetCurrentVLimitParam(WORD val, bool bOn, bool bSend)
 //	
 //}
 
+/**********************************************************************************************//**
+ * Sets current fot steps para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::setCurrentFOT_STEPSPara(WORD val)
 {
 	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
@@ -13904,6 +16046,14 @@ void CDataHandler::setCurrentFOT_STEPSPara(WORD val)
 		checkFOTPEEPPara();
 	}
 }
+
+/**********************************************************************************************//**
+ * Check fotpeep para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::checkFOTPEEPPara()
 {
 	bool bUpdatePEEPParas=false;
@@ -13938,6 +16088,15 @@ void CDataHandler::checkFOTPEEPPara()
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets current fot peepstart para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::setCurrentFOT_PEEPSTARTPara(WORD val)
 {
 	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
@@ -13950,6 +16109,16 @@ void CDataHandler::setCurrentFOT_PEEPSTARTPara(WORD val)
 		SetFOTconv_PEEPSTARTParadata(val,false);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets current fot peepend para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::setCurrentFOT_PEEPENDPara(WORD val)
 {
 	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
@@ -13962,6 +16131,13 @@ void CDataHandler::setCurrentFOT_PEEPENDPara(WORD val)
 		SetFOTconv_PEEPENDParadata(val,false);
 	}
 }
+
+/**********************************************************************************************//**
+ * Check fot pmean para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
 
 void CDataHandler::checkFOTPmeanPara()
 {
@@ -13996,6 +16172,16 @@ void CDataHandler::checkFOTPmeanPara()
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_FOT_UPDATE_PMEAN);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets current fot pmeanstart para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::setCurrentFOT_PMEANSTARTPara(WORD val)
 {
 	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
@@ -14008,6 +16194,16 @@ void CDataHandler::setCurrentFOT_PMEANSTARTPara(WORD val)
 		//error	
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets current fot pmeanend para
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CDataHandler::setCurrentFOT_PMEANENDPara(WORD val)
 {
 	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
@@ -14021,9 +16217,17 @@ void CDataHandler::setCurrentFOT_PMEANENDPara(WORD val)
 	}
 }
 
-// **************************************************************************
-// CContrastDlg helper functions
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the contrast
+ *
+ * CContrastDlg helper functions
+ * 
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The contrast.
+ **************************************************************************************************/
+
 DWORD CDataHandler::GetContrast(void )
 {
 	struct ContrastCmdInputParm ContrastParm, RetParm;  
@@ -14068,6 +16272,15 @@ DWORD CDataHandler::GetContrast(void )
 
 }
 
+/**********************************************************************************************//**
+ * Sets a contrast
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	dwValue	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetContrast(DWORD dwValue )
 {
 	struct ContrastCmdInputParm ContrastParm, RetParm;  
@@ -14095,6 +16308,15 @@ void CDataHandler::SetContrast(DWORD dwValue )
 
 	DeleteDC( dcLCD );
 }
+
+/**********************************************************************************************//**
+ * Increase contrast
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
 
 DWORD CDataHandler::IncreaseContrast()
 {
@@ -14179,6 +16401,16 @@ DWORD CDataHandler::IncreaseContrast()
 	return m_iContrastParm;
 
 }
+
+/**********************************************************************************************//**
+ * Decrease contrast
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CDataHandler::DecreaseContrast()
 {
 	struct ContrastCmdInputParm ContrastParm, RetParm;  
@@ -14261,6 +16493,15 @@ DWORD CDataHandler::DecreaseContrast()
 	return m_iContrastParm;
 }
 
+/**********************************************************************************************//**
+ * Increase maximum contrast
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CDataHandler::IncreaseMaxContrast()
 {
 	struct ContrastCmdInputParm ContrastParm, RetParm;  
@@ -14321,6 +16562,16 @@ DWORD CDataHandler::IncreaseMaxContrast()
 
 	return m_iContrastParm;
 }
+
+/**********************************************************************************************//**
+ * Decrease maximum contrast
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CDataHandler::DecreaseMaxContrast()
 {
 	struct ContrastCmdInputParm ContrastParm, RetParm;  
@@ -14383,177 +16634,45 @@ DWORD CDataHandler::DecreaseMaxContrast()
 	return m_iContrastParm;
 }
 
+/**********************************************************************************************//**
+ * Gets current contrast parameter
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The current contrast parameter.
+ **************************************************************************************************/
+
 DWORD CDataHandler::GetCurContrastParm()
 {
 	return m_iContrastParm;
 }
 
-//bool CDataHandler::activeModeIsCPAP()
-//{
-//	if(getModel()->getCONFIG()->GetCurMode()==VM_CPAP)
-//	{
-//		return true;
-//	}
-//	else if(getModel()->getCONFIG()->CurModeIsPresetMode() && getModel()->getCONFIG()->GetPrevMode()==VM_CPAP)
-//	{
-//		return true;
-//	}
-//	else
-//		return false;
-//}
-//bool CDataHandler::activeModeIsIPPV()
-//{
-//	if(getModel()->getCONFIG()->GetCurMode()==VM_IPPV)
-//	{
-//		return true;
-//	}
-//	else if(getModel()->getCONFIG()->CurModeIsPresetMode() && getModel()->getCONFIG()->GetPrevMode()==VM_IPPV)
-//	{
-//		return true;
-//	}
-//	else
-//		return false;
-//}
-//
-//bool CDataHandler::activeModeIsHFO()
-//{
-//	if(getModel()->getCONFIG()->GetCurMode()==VM_HFO)
-//	{
-//		return true;
-//	}
-//	else if(getModel()->getCONFIG()->CurModeIsPresetMode() && getModel()->getCONFIG()->GetPrevMode()==VM_HFO)
-//	{
-//		return true;
-//	}
-//	else
-//		return false;
-//}
-//bool CDataHandler::activeModeHasPSV()
-//{
-//	if(		getModel()->getCONFIG()->GetCurMode()==VM_PSV
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_SIMVPSV)
-//	{
-//		return true;
-//	}
-//	else if(	getModel()->getCONFIG()->CurModeIsPresetMode()==true 
-//		&&	(	getModel()->getCONFIG()->GetPrevMode()==VM_PSV
-//		||	getModel()->getCONFIG()->GetPrevMode()==VM_SIMVPSV))
-//	{
-//		return true;
-//	}
-//	else
-//		return false;
-//}
-//bool CDataHandler::activeModeIsVM_PSV()
-//{
-//	if(getModel()->getCONFIG()->GetCurMode()==VM_PSV)
-//	{
-//		return true;
-//	}
-//	else if(	getModel()->getCONFIG()->CurModeIsPresetMode()==true 
-//			&&	getModel()->getCONFIG()->GetPrevMode()==VM_PSV)
-//	{
-//		return true;
-//	}
-//	else
-//		return false;
-//}
-//bool CDataHandler::modeIsPSVmode()
-//{
-//	if(getModel()->getCONFIG()->GetCurMode()==VM_PSV)
-//	{
-//		return true;
-//	}
-//	else if(getModel()->getCONFIG()->GetCurMode()==VM_PRE_PSV)
-//	{
-//		return true;
-//	}
-//	else
-//		return false;
-//}
-//
-//
-//
-//bool CDataHandler::activeModeIsNMODE()
-//{
-//	if(		getModel()->getCONFIG()->GetCurMode()==VM_NCPAP 
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_THERAPIE)
-//	{
-//		return true;
-//	}
-//	else if(	getModel()->getCONFIG()->CurModeIsPresetMode()==true 
-//			&&	(		getModel()->getCONFIG()->GetPrevMode()==VM_DUOPAP
-//					||	getModel()->getCONFIG()->GetPrevMode()==VM_NCPAP
-//					||	getModel()->getCONFIG()->GetPrevMode()==VM_THERAPIE))
-//	{
-//		return true;
-//	}
-//	else
-//		return false;
-//}
-//
-//bool CDataHandler::curModeIsVolumeSupportMode()
-//{
-//	bool bResult = false;
-//
-//	if(		getModel()->getCONFIG()->GetCurMode()==VM_IPPV
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_SIPPV
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_SIMV
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_SIMVPSV
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_PSV
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_HFO
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_IPPV
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_SIPPV
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_SIMV
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_SIMVPSV
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_PSV
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_HFO)
-//	{
-//		bResult = true;
-//	}
-//
-//	return bResult;
-//}
-//
-//bool CDataHandler::activeModeIsTriggerMode()
-//{
-//	bool bResult = false;
-//
-//	if(		getModel()->getCONFIG()->GetCurMode()==VM_SIPPV
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_SIMV
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_SIMVPSV
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_PSV)
-//	{
-//		bResult = true;
-//	}
-//	else if(	getModel()->getCONFIG()->CurModeIsPresetMode() && 
-//				(	getModel()->getCONFIG()->GetPrevMode()==VM_SIPPV
-//				||	getModel()->getCONFIG()->GetPrevMode()==VM_SIMV
-//				||	getModel()->getCONFIG()->GetPrevMode()==VM_SIMVPSV
-//				||	getModel()->getCONFIG()->GetPrevMode()==VM_PSV))
-//	{
-//		bResult = true;
-//	}
-//
-//	return bResult;
-//}
+/**********************************************************************************************//**
+ * Sets alarm state bytes
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iAlarmState	State of the alarm.
+ **************************************************************************************************/
 
-
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CDataHandler::SetAlarmStateBytes(int iAlarmState)
 {
 	EnterCriticalSection(&csAlarmStateBytes);
 	m_iAlarmState=iAlarmState;
 	LeaveCriticalSection(&csAlarmStateBytes);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets alarm state bytes
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The alarm state bytes.
+ **************************************************************************************************/
+
 int CDataHandler::GetAlarmStateBytes()
 {
 	EnterCriticalSection(&csAlarmStateBytes);
@@ -14562,9 +16681,13 @@ int CDataHandler::GetAlarmStateBytes()
 	return iTemp;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Resets the alarm state bytes
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::ResetAlarmStateBytes()
 {
 	EnterCriticalSection(&csAlarmStateBytes);
@@ -14572,32 +16695,31 @@ void CDataHandler::ResetAlarmStateBytes()
 	LeaveCriticalSection(&csAlarmStateBytes);
 }
 
+/**********************************************************************************************//**
+ * Sets flowsensor state bytes
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iState	Zero-based index of the state.
+ **************************************************************************************************/
 
-//************************************
-// Method:    SetFlowsensorStateBytes
-// FullName:  CDataHandler::SetFlowsensorStateBytes
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: int iState
-//
-//  2015/07/02: flow sensor handling checked for thread safe
-//************************************
 void CDataHandler::SetFlowsensorStateBytes(int iState)
 {
 	EnterCriticalSection(&csFlowsensorStateBytes);
 	m_iFlowsensorState=iState;
 	LeaveCriticalSection(&csFlowsensorStateBytes);
 }
-//************************************
-// Method:    GetFlowsensorStateBytes
-// FullName:  CDataHandler::GetFlowsensorStateBytes
-// Access:    public 
-// Returns:   int
-// Qualifier:
-//
-//  2015/07/02: flow sensor handling checked for thread safe
-//************************************
+
+/**********************************************************************************************//**
+ * Gets flowsensor state bytes
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The flowsensor state bytes.
+ **************************************************************************************************/
+
 int CDataHandler::GetFlowsensorStateBytes()
 {
 	EnterCriticalSection(&csFlowsensorStateBytes);
@@ -14606,15 +16728,13 @@ int CDataHandler::GetFlowsensorStateBytes()
 	return iTemp;
 }
 
-//************************************
-// Method:    ResetFlowsensorStateBytes
-// FullName:  CDataHandler::ResetFlowsensorStateBytes
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-//  2015/07/02: flow sensor handling checked for thread safe
-//************************************
+/**********************************************************************************************//**
+ * Resets the flowsensor state bytes
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::ResetFlowsensorStateBytes()
 {
 	EnterCriticalSection(&csFlowsensorStateBytes);
@@ -14622,120 +16742,253 @@ void CDataHandler::ResetFlowsensorStateBytes()
 	LeaveCriticalSection(&csFlowsensorStateBytes);
 }
 
+/**********************************************************************************************//**
+ * Sets con picture checksum error
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CDataHandler::SetConPICChecksumError(bool state)
 {
 	m_bConPICChecksumError=state;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets con picture checksum error
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::GetConPICChecksumError()
 {
 	return m_bConPICChecksumError;
 }
 
+/**********************************************************************************************//**
+ * Sets controller picture checksum
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iChecksum	Zero-based index of the checksum.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CDataHandler::SetControllerPIC_Checksum(int iChecksum)
 {
 	m_dataMainboard.m_iConductorChecksum=iChecksum;
 }
+
+/**********************************************************************************************//**
+ * Gets controller picture checksum
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The controller picture checksum.
+ **************************************************************************************************/
 
 int CDataHandler::GetControllerPIC_Checksum()
 {
 	return m_dataMainboard.m_iConductorChecksum;
 }
 
+/**********************************************************************************************//**
+ * Sets controller picture calpressscale
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CDataHandler::SetControllerPIC_CALPRESSSCALE(int iVal)
 {
 	m_iConductorCALPRESSSCALE=iVal;
 }
+
+/**********************************************************************************************//**
+ * Gets controller picture calpressscale
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The controller picture calpressscale.
+ **************************************************************************************************/
 
 int CDataHandler::GetControllerPIC_CALPRESSSCALE()
 {
 	return m_iConductorCALPRESSSCALE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets controller picture calpressoffset
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CDataHandler::SetControllerPIC_CALPRESSOFFSET(int iVal)
 {
 	m_iConductorCALPRESSOFFSET=iVal;
 }
+
+/**********************************************************************************************//**
+ * Gets controller picture calpressoffset
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The controller picture calpressoffset.
+ **************************************************************************************************/
 
 int CDataHandler::GetControllerPIC_CALPRESSOFFSET()
 {
 	return m_iConductorCALPRESSOFFSET;
 }
 
+/**********************************************************************************************//**
+ * Sets controller picture version
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	sz	The size.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CDataHandler::SetControllerPIC_Version(CStringW sz)
 {
 	m_dataMainboard.m_szConductorVersion=sz;
 }
+
+/**********************************************************************************************//**
+ * Gets controller picture version
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The controller picture version.
+ **************************************************************************************************/
+
 CStringW CDataHandler::GetControllerPIC_Version()
 {
 	return m_dataMainboard.m_szConductorVersion;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets blender picture version
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	sz	The size.
+ **************************************************************************************************/
+
 void CDataHandler::SetBlenderPIC_Version(CStringW sz)
 {
 	m_dataMainboard.m_szBlenderVersion=sz;
 }
+
+/**********************************************************************************************//**
+ * Gets blender picture version
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The blender picture version.
+ **************************************************************************************************/
+
 CStringW CDataHandler::GetBlenderPIC_Version()
 {
 	return m_dataMainboard.m_szBlenderVersion;
 }
 
+/**********************************************************************************************//**
+ * Sets hfopic version
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	sz	The size.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CDataHandler::SetHFOPIC_Version(CStringW sz)
 {
 	m_dataMainboard.m_szHfoVersion=sz;
 }
+
+/**********************************************************************************************//**
+ * Gets hfopic version
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The hfopic version.
+ **************************************************************************************************/
+
 CStringW CDataHandler::GetHFOPIC_Version()
 {
 	return m_dataMainboard.m_szHfoVersion;
 }
+
+/**********************************************************************************************//**
+ * Sets hfopic checksum
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iChecksum	Zero-based index of the checksum.
+ **************************************************************************************************/
+
 void CDataHandler::SetHFOPIC_Checksum(int iChecksum)
 {
 	m_dataMainboard.m_iHfoChecksum=iChecksum;
 }
+
+/**********************************************************************************************//**
+ * Gets hfopic checksum
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The hfopic checksum.
+ **************************************************************************************************/
+
 int CDataHandler::GetHFOPIC_Checksum()
 {
 	return m_dataMainboard.m_iHfoChecksum;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets accu state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The accu state.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetAccuState()
 {
 	return m_wACCU_DAT_STATE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Check akku
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	bRange	True to range.
+ **************************************************************************************************/
+
 void CDataHandler::CheckAkku(bool bRange)
 {
 	WORD wBatteryState=0;
@@ -15105,18 +17358,43 @@ void CDataHandler::CheckAkku(bool bRange)
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets battery stat minutes
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The battery stat minutes.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetBatteryStatMinutes()
 {
 	return m_wBattStatMinutes;
 }
 
+/**********************************************************************************************//**
+ * Gets battery stat percent
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The battery stat percent.
+ **************************************************************************************************/
+
 WORD CDataHandler::GetBatteryStatPercent()
 {
 	return m_wBattStatPercents;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets operation time hfo minimum
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	min	The minimum.
+ **************************************************************************************************/
+
 void CDataHandler::setOpTimeHFOMin(UINT min)
 {
 	getModel()->getCONFIG()->setOperatingMinutesHFO(min, true);
@@ -15128,6 +17406,18 @@ void CDataHandler::setOpTimeHFOMin(UINT min)
 		m_dwOpTimeHFOTickCountStarted=0;
 	LeaveCriticalSection(&csOpTime);
 }
+
+/**********************************************************************************************//**
+ * Finds the optimehfomin of the given arguments
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	bSave	True to save.
+ *
+ * \return	The calculated operation time hfo minimum.
+ **************************************************************************************************/
+
 DWORD CDataHandler::getOpTimeHFOMin(bool bSave)
 {
 	DWORD curOpMinHFO=getModel()->getCONFIG()->getOperatingMinutesHFO();
@@ -15155,6 +17445,14 @@ DWORD CDataHandler::getOpTimeHFOMin(bool bSave)
 
 	return curOpMinHFO;
 }
+
+/**********************************************************************************************//**
+ * Resets the operation time hfo
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::resetOpTimeHFO()
 {
 	getModel()->getCONFIG()->setOperatingMinutesHFO(0, true);
@@ -15164,9 +17462,15 @@ void CDataHandler::resetOpTimeHFO()
 	saveOpTime();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets operation time device minimum
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	min	The minimum.
+ **************************************************************************************************/
+
 void CDataHandler::setOpTimeDeviceMin(UINT min)
 {
 	getModel()->getCONFIG()->setOperatingMinutesDevice(min, true);
@@ -15175,6 +17479,17 @@ void CDataHandler::setOpTimeDeviceMin(UINT min)
 	m_dwOpTimeDevTickCountStarted=GetTickCount();
 	LeaveCriticalSection(&csOpTime);
 }
+
+/**********************************************************************************************//**
+ * Finds the optimedevicemin of the given arguments
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	bSave	True to save.
+ *
+ * \return	The calculated operation time device minimum.
+ **************************************************************************************************/
 
 DWORD CDataHandler::getOpTimeDeviceMin(bool bSave)
 {
@@ -15204,6 +17519,13 @@ DWORD CDataHandler::getOpTimeDeviceMin(bool bSave)
 	return curOpMinDEVICE;
 }
 
+/**********************************************************************************************//**
+ * Resets the operation time device
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::resetOpTimeDevice()
 {
 	getModel()->getCONFIG()->setOperatingMinutesDevice(0, true);
@@ -15213,9 +17535,15 @@ void CDataHandler::resetOpTimeDevice()
 	saveOpTime();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets operation time battery minimum
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	min	The minimum.
+ **************************************************************************************************/
+
 void CDataHandler::setOpTimeBatteryMin(UINT min)
 {
 	getModel()->getCONFIG()->setOperatingMinutesBattery(min, true);
@@ -15227,6 +17555,18 @@ void CDataHandler::setOpTimeBatteryMin(UINT min)
 		m_dwOpTimeBattTickCountStarted=0;
 	LeaveCriticalSection(&csOpTime);
 }
+
+/**********************************************************************************************//**
+ * Finds the optimebatterymin of the given arguments
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	bSave	True to save.
+ *
+ * \return	The calculated operation time battery minimum.
+ **************************************************************************************************/
+
 DWORD CDataHandler::getOpTimeBatteryMin(bool bSave)
 {
 	DWORD curOpMinBATTERY=getModel()->getCONFIG()->getOperatingMinutesBattery();
@@ -15256,6 +17596,13 @@ DWORD CDataHandler::getOpTimeBatteryMin(bool bSave)
 	return curOpMinBATTERY;
 }
 
+/**********************************************************************************************//**
+ * Resets the operation time battery
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::resetOpTimeBattery()
 {
 	getModel()->getCONFIG()->setOperatingMinutesBattery(0, true);
@@ -15265,9 +17612,13 @@ void CDataHandler::resetOpTimeBattery()
 	saveOpTime();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Saves the operation time
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::saveOpTime()
 {
 	DWORD dwOpTimeDevMin=getModel()->getCONFIG()->getOperatingMinutesDevice();
@@ -15346,9 +17697,17 @@ void CDataHandler::saveOpTime()
 	DEBUGMSG(TRUE, (TEXT("OpTime HFO %d %d\r\n"),(int)dwOpTimeHFOMin,(int)m_dwOpTimeHFOTickCountStarted));*/
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets accu supply
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	True to state.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::SetAccuSupply(bool state)
 {
 	if(state == m_bAccuSupply)
@@ -15413,58 +17772,100 @@ bool CDataHandler::SetAccuSupply(bool state)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Query if this object is accu supply
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if accu supply, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::IsAccuSupply()
 {
 	return m_bAccuSupply;
 }
 
+/**********************************************************************************************//**
+ * Sets mstatus conductor picture
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CDataHandler::SetMSTATUS_ConductorPIC(int state)
 {
 	m_iMSTATUS_ConPIC=state;
 }
+
+/**********************************************************************************************//**
+ * Gets mstatus conductor picture
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The mstatus conductor picture.
+ **************************************************************************************************/
 
 int CDataHandler::GetMSTATUS_ConductorPIC()
 {
 	return m_iMSTATUS_ConPIC;
 }
 
-// **************************************************************************
-// Die Codes vom Mischer:  
-// 1            Luft Regelung gestört
-// 2            Oxi Regelung gestört
-// 4            Kommunikation zum Ctl-PIC Checksum fail
-// 8            Hitzdraht Luft defekt
-// 16           Hitzdraht Oxi defekt
-// 32           FRAM / Memory Checksum fail
-// 64           Zero Kal fail
-// 128 oder 160        FRAM fail
-//
-// Sample:
-// 65 setzt sich zusammen aus 64 + 1:
-// --> 64: Zero fail -> d.h. Nullpunkt kalibrierung fehlgeschlagen
-// --> 1:  Luft Regelung gestört  -> Flow wird nicht erreicht
-//
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets mstatus blender picture
+ *
+ * Die Codes vom Mischer:  
+ * 1            Luft Regelung gestört
+ * 2            Oxi Regelung gestört
+ * 4            Kommunikation zum Ctl-PIC Checksum fail
+ * 8            Hitzdraht Luft defekt
+ * 16           Hitzdraht Oxi defekt
+ * 32           FRAM / Memory Checksum fail
+ * 64           Zero Kal fail
+ * 28 oder 160        FRAM fail
+ * 
+ * Sample:
+ * 65 setzt sich zusammen aus 64 + 1:
+ * --> 64: Zero fail -> d.h. Nullpunkt kalibrierung fehlgeschlagen
+ * --> 1:  Luft Regelung gestört  -> Flow wird nicht erreicht
+ *   
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CDataHandler::SetMSTATUS_BlenderPIC(int state)
 {
 	m_iMSTATUS_BlenderPIC=state;
 }
+
+/**********************************************************************************************//**
+ * Gets mstatus blender picture
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The mstatus blender picture.
+ **************************************************************************************************/
 
 int CDataHandler::GetMSTATUS_BlenderPIC()
 {
 	return m_iMSTATUS_BlenderPIC;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Check last trend data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 UINT CDataHandler::CheckLastTrendData()
 {
 	EnterCriticalSection(&csTrendUpdate);
@@ -15600,9 +18001,18 @@ UINT CDataHandler::CheckLastTrendData()
 	return iRes;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Updates the trend data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	type  	The type.
+ * \param	dtTime	The dt time.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 {
 	int iResult=0;
@@ -15866,9 +18276,15 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets insp flow data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	valueInsp	The value insp.
+ **************************************************************************************************/
+
 void CDataHandler::SetInspFlowData(int valueInsp)
 {
 	setMessureDataAVG(ALINK_MSMNT_IFLOW,valueInsp);
@@ -15883,6 +18299,16 @@ void CDataHandler::SetInspFlowData(int valueInsp)
 	}
 	
 }
+
+/**********************************************************************************************//**
+ * Sets exponent flow data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	valueExp	The value exponent.
+ **************************************************************************************************/
+
 void CDataHandler::SetExpFlowData(int valueExp)
 {
 	setMessureDataAVG(ALINK_MSMNT_EFLOW,valueExp);
@@ -15892,17 +18318,44 @@ void CDataHandler::SetExpFlowData(int valueExp)
 		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_EFLOW,valueExp);
 	
 }
+
+/**********************************************************************************************//**
+ * Gets insp flow data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The insp flow data.
+ **************************************************************************************************/
+
 int CDataHandler::GetInspFlowData()
 {
 	return getMessureDataAVG(ALINK_MSMNT_IFLOW);
 }
+
+/**********************************************************************************************//**
+ * Gets exponent flow data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The exponent flow data.
+ **************************************************************************************************/
+
 int CDataHandler::GetExpFlowData()
 {
 	return getMessureDataAVG(ALINK_MSMNT_EFLOW);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets demand flow data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	valueDem	The value dem.
+ **************************************************************************************************/
+
 void CDataHandler::SetDemandFlowData(int valueDem)
 {
 	setMessureDataAVG(ALINK_MSMNT_DEMAND_FLOW,valueDem);
@@ -15912,14 +18365,28 @@ void CDataHandler::SetDemandFlowData(int valueDem)
 		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_DEMAND_FLOW,valueDem);
 	
 }
+
+/**********************************************************************************************//**
+ * Gets demand flow data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The demand flow data.
+ **************************************************************************************************/
+
 int CDataHandler::GetDemandFlowData()
 {
 	return getMessureDataAVG(ALINK_MSMNT_DEMAND_FLOW);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Saves the trend data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::SaveTrendData()
 {
 	//DEBUGMSG(TRUE, (TEXT("************SaveTrendData\r\n")));
@@ -16168,6 +18635,13 @@ void CDataHandler::SaveTrendData()
 	}
 }
 
+/**********************************************************************************************//**
+ * Saves the temporary trends
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::saveTempTrends()
 {
 	WORD wBufCount = 0;
@@ -16301,6 +18775,17 @@ void CDataHandler::saveTempTrends()
 	m_wTempTrendData_SpO2PR=0;
 	m_wTempTrendData_Frequency=0;
 }
+
+/**********************************************************************************************//**
+ * Serialize trend
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	type				The type.
+ * \param	bIncreaseFileNum	True to increase file number.
+ **************************************************************************************************/
+
 void CDataHandler::SerializeTrend(UINT type, bool bIncreaseFileNum)
 {
 	CStringW szFile=_T("");
@@ -16577,7 +19062,16 @@ void CDataHandler::SerializeTrend(UINT type, bool bIncreaseFileNum)
 	}
 }
 
-void CDataHandler::SerializeAllTrends(bool bIncreaseFileNum)//rkuNEWFIX
+/**********************************************************************************************//**
+ * Serialize all trends
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	bIncreaseFileNum	True to increase file number.
+ **************************************************************************************************/
+
+void CDataHandler::SerializeAllTrends(bool bIncreaseFileNum)
 {
 	//rkuNEWFIX
 	EnterCriticalSection(&csTrend);
@@ -16603,6 +19097,19 @@ void CDataHandler::SerializeAllTrends(bool bIncreaseFileNum)//rkuNEWFIX
 	SerializeTrend(TREND_FREQUENCY, bIncreaseFileNum);
 	LeaveCriticalSection(&csTrend);
 }
+
+/**********************************************************************************************//**
+ * Deserialize trend
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	type   	The type.
+ * \param	fileNum	The file number.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::DeserializeTrend(UINT type, BYTE fileNum)
 {
 	bool bRes=true;
@@ -16767,7 +19274,17 @@ bool CDataHandler::DeserializeTrend(UINT type, BYTE fileNum)
 	return bRes;
 }
 
-
+/**********************************************************************************************//**
+ * Deserialize temporary trend
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	type   	The type.
+ * \param	fileNum	The file number.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CDataHandler::DeserializeTempTrend(UINT type, WORD fileNum)
 {
@@ -16907,6 +19424,12 @@ bool CDataHandler::DeserializeTempTrend(UINT type, WORD fileNum)
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Deletes all trend data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
 
 void CDataHandler::DeleteAllTrendData()
 {
@@ -17223,25 +19746,43 @@ void CDataHandler::DeleteAllTrendData()
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_DEL_TRENDDATA);
 }
 
+/**********************************************************************************************//**
+ * Queries if the patient data is available
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if the patient data is available, false if not.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 bool CDataHandler::isPatientDataAvailable()
 {
 	return m_bPatientDataAvailable;
 }
+
+/**********************************************************************************************//**
+ * Sets patient data available
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
 
 void CDataHandler::setPatientDataAvailable(bool bState)
 {
 	m_bPatientDataAvailable=bState;
 }
 
+/**********************************************************************************************//**
+ * Sets pinsp not reached flag
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CDataHandler::SetPinspNotReachedFlag(bool state)
 {
 	if(		getModel()->getALARMHANDLER()->getAlarmSilentState()==ASTATE_SYSTEM_SILENT
@@ -17290,14 +19831,31 @@ void CDataHandler::SetPinspNotReachedFlag(bool state)
 		//getModel()->getALARMHANDLER()->deleteAlarm(AL_SysLimit_Pinsp_NotReached);
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets pinsp not reached flag
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::GetPinspNotReachedFlag()
 {
 	return m_bPinspNotReached;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets spi error code
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	bit				  	The bit.
+ * \param	bIgnoreSilentState	True to ignore silent state.
+ **************************************************************************************************/
+
 void CDataHandler::setSPIErrorCode(int bit, bool bIgnoreSilentState)
 {
 	eVentSilentState silentState=getModel()->getALARMHANDLER()->getAlarmSilentState();
@@ -17316,18 +19874,43 @@ void CDataHandler::setSPIErrorCode(int bit, bool bIgnoreSilentState)
 //{
 //	m_iSPIErrorCodeBits=DeleteBit(m_iSPIErrorCodeBits,bit);
 //}
+
+/**********************************************************************************************//**
+ * Deletes the spi error code
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::deleteSPIErrorCode()
 {
 	m_iSPIErrorCodeBits=0;
 }
+
+/**********************************************************************************************//**
+ * Gets spi error code
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The spi error code.
+ **************************************************************************************************/
+
 int CDataHandler::getSPIErrorCode()
 {
 	return m_iSPIErrorCodeBits;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets co 2 error code
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	bit				  	The bit.
+ * \param	bIgnoreSilentState	True to ignore silent state.
+ **************************************************************************************************/
+
 void CDataHandler::SetCO2ErrorCode(int bit, bool bIgnoreSilentState)
 {
 	eVentSilentState silentState=getModel()->getALARMHANDLER()->getAlarmSilentState();
@@ -17341,20 +19924,57 @@ void CDataHandler::SetCO2ErrorCode(int bit, bool bIgnoreSilentState)
 		m_iCO2ErrorCodeBits=SetBit(m_iCO2ErrorCodeBits,bit);
 	}
 }
+
+/**********************************************************************************************//**
+ * Deletes the co 2 error code described by bit
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	bit	The bit.
+ **************************************************************************************************/
+
 void CDataHandler::DeleteCO2ErrorCode(int bit)
 {
 	m_iCO2ErrorCodeBits=DeleteBit(m_iCO2ErrorCodeBits,bit);
 }
+
+/**********************************************************************************************//**
+ * Deletes the co 2 error code
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::DeleteCO2ErrorCode()
 {
 	m_iCO2ErrorCodeBits=0;
 }
+
+/**********************************************************************************************//**
+ * Gets co 2 error code
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The co 2 error code.
+ **************************************************************************************************/
+
 int CDataHandler::GetCO2ErrorCode()
 {
 	return m_iCO2ErrorCodeBits;
 }
 
-void CDataHandler::setCOMErrorCode(int iERRORcode/*,int iSerialCommand, bool bIgnoreSilentState*/)//newVG
+/**********************************************************************************************//**
+ * Sets com error code
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iERRORcode	Zero-based index of the erro rcode.
+ **************************************************************************************************/
+
+void CDataHandler::setCOMErrorCode(int iERRORcode/*,int iSerialCommand, bool bIgnoreSilentState*/)
 {
 	m_iCOMErrorCodeBits=SetBit(m_iCOMErrorCodeBits,iERRORcode);
 	/*if(iERRORcode==ERRC_COM_CHECK_DATA)
@@ -17367,7 +19987,17 @@ void CDataHandler::setCOMErrorCode(int iERRORcode/*,int iSerialCommand, bool bIg
 	theApp.getLog()->WriteLine(szTemp);
 	DEBUGMSG(TRUE, (szTemp));
 }
-void CDataHandler::deleteCOMErrorCode(int iERRORcode)//newVG
+
+/**********************************************************************************************//**
+ * Deletes the com error code described by iERRORcode
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iERRORcode	Zero-based index of the erro rcode.
+ **************************************************************************************************/
+
+void CDataHandler::deleteCOMErrorCode(int iERRORcode)
 {
 	m_iCOMErrorCodeBits=DeleteBit(m_iCOMErrorCodeBits,iERRORcode);
 
@@ -17380,22 +20010,51 @@ void CDataHandler::deleteCOMErrorCode(int iERRORcode)//newVG
 //{
 //	m_iCOMErrorCommandBits=DeleteBit(m_iCOMErrorCommandBits,iERRORCommand);
 //}
-void CDataHandler::deleteAllCOMError()//newVG
+
+/**********************************************************************************************//**
+ * Deletes all com error
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
+void CDataHandler::deleteAllCOMError()
 {
 	m_iCOMErrorCodeBits=0;
 	
 	getModel()->getSERIAL()->resetErrorCountCheckThread();//newSerialAlarm
 }
-int CDataHandler::getCOMErrorCode()//newVG
+
+/**********************************************************************************************//**
+ * Gets com error code
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The com error code.
+ **************************************************************************************************/
+
+int CDataHandler::getCOMErrorCode()
 {
 	return m_iCOMErrorCodeBits;
 }
-//int CDataHandler::getCOMErrorCommand()//newVG
+//int CDataHandler::getCOMErrorCommand()
 //{
 //	return m_iCOMErrorCommandBits;
 //}
 
-bool CDataHandler::setCOMLastSendError(CStringW szData)//newVG
+/**********************************************************************************************//**
+ * Sets com last send error
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	szData	The data.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
+bool CDataHandler::setCOMLastSendError(CStringW szData)
 {
 	bool bAlarm=true;
 
@@ -17415,7 +20074,19 @@ bool CDataHandler::setCOMLastSendError(CStringW szData)//newVG
 
 	return bAlarm;
 }
-bool CDataHandler::checkCOMlastSendError(CStringW szData)//newVG
+
+/**********************************************************************************************//**
+ * Check co mlast send error
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	szData	The data.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
+bool CDataHandler::checkCOMlastSendError(CStringW szData)
 {
 	bool bSameError=false;
 	CStringW szCommand=szData.Mid( 0, 1 );
@@ -17425,21 +20096,28 @@ bool CDataHandler::checkCOMlastSendError(CStringW szData)//newVG
 	}
 	return bSameError;
 }
-void CDataHandler::checkCOMresetLastSendError(CStringW szData)//newVG
+
+/**********************************************************************************************//**
+ * Check co mreset last send error
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	szData	The data.
+ **************************************************************************************************/
+
+void CDataHandler::checkCOMresetLastSendError(CStringW szData)
 {
 	CStringW szCommand=szData.Mid( 0, 1 );
 	if(szCommand==m_szCOMlastSendError)
 	{
 		deleteCOMErrorCode(ERRC_COM_SEND_DATA);
-		if(getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()==AS_ACTIVE) //newVG
+		if(getModel()->getALARMHANDLER()->ALARM_SysFail_IF_COM->getAlarmState()==AS_ACTIVE)
 		{
 			getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysFail_IF_COM, AS_SIGNALED);
 		}
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
 //void CDataHandler::SetI2CErrorCode(int bit)
 //{
 //	m_iI2CErrorCodeBits=SetBit(m_iI2CErrorCodeBits,bit);
@@ -17457,9 +20135,15 @@ void CDataHandler::checkCOMresetLastSendError(CStringW szData)//newVG
 //	return m_iI2CErrorCodeBits;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets ps vapnoe
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
+
 void CDataHandler::setPSVapnoe(bool bState)
 {
 	
@@ -17486,11 +20170,29 @@ void CDataHandler::setPSVapnoe(bool bState)
 
 	m_bPSVapnoe=bState;
 }
+
+/**********************************************************************************************//**
+ * Query if this object is ps vapnoe
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if ps vapnoe, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::isPSVapnoe()
 {
 	return m_bPSVapnoe;
 }
 
+/**********************************************************************************************//**
+ * Sets nurscall alarm
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
 void CDataHandler::SetNurscallAlarm(bool state)
 {
@@ -17538,23 +20240,30 @@ void CDataHandler::SetNurscallAlarm(bool state)
 	m_bNurscallAlarm=state;
 	
 }
+
+/**********************************************************************************************//**
+ * Query if this object is nurscall alarm
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if nurscall alarm, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::isNurscallAlarm()
 {
 	return m_bNurscallAlarm;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//void CDataHandler::setPRICO_O2(BYTE iCalcFiO2)
-//{
-//	//getModel()->getVIEWHANDLER()->setOxyPPRICO(iCalcFiO2);//PRICO04
-//
-//	//setO2FlushDiff(iCalcFiO2);//PRICO04
-//	//SetO2Paradata(iCalcFiO2,true);//PRICO04
-//
-//	//getModel()->Send_PARA_OXY_RATIO(iCalcFiO2,true,true);//PRICO04
-//}
+/**********************************************************************************************//**
+ * Sets o 2 difference
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iFlushVal	Zero-based index of the flush value.
+ **************************************************************************************************/
+
 void CDataHandler::setO2Diff(BYTE iFlushVal)
 {
 	m_iO2Difference=iFlushVal-GetCurrentO2Para();
@@ -17563,6 +20272,15 @@ void CDataHandler::setO2Diff(BYTE iFlushVal)
 
 	getModel()->getCONFIG()->SetO2Difference(m_iO2Difference);
 }
+
+/**********************************************************************************************//**
+ * Sets o 2 flush difference
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
 
 void CDataHandler::setO2FlushDiff(BYTE iVal)
 {
@@ -17573,14 +20291,29 @@ void CDataHandler::setO2FlushDiff(BYTE iVal)
 	getModel()->getCONFIG()->SetO2Difference(m_iO2Difference);
 }
 
+/**********************************************************************************************//**
+ * Gets o 2 difference
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The o 2 difference.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getO2Diff()
 {
 	return m_iO2Difference;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets peep ppsv difference
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iDiff	Zero-based index of the difference.
+ **************************************************************************************************/
+
 void CDataHandler::setPEEP_PpsvDifference(int iDiff)
 {
 	DEBUGMSG(TRUE, (TEXT("CDataHandler::setPEEP_PPSVdifference %d\r\n"),iDiff));
@@ -17592,6 +20325,15 @@ void CDataHandler::setPEEP_PpsvDifference(int iDiff)
 	}
 
 }
+
+/**********************************************************************************************//**
+ * Gets peep ppsv difference
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The peep ppsv difference.
+ **************************************************************************************************/
 
 int CDataHandler::getPEEP_PpsvDifference()
 {
@@ -17638,9 +20380,15 @@ void CDataHandler::checkVGdependency()//rku, PMAX check
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets pmean record difference
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CDataHandler::setPmeanRecDifference(int iVal)
 {
 	m_iPmeanDifference=iVal;
@@ -17660,13 +20408,30 @@ void CDataHandler::setPmeanRecDifference(int iVal)
 //	SetCurrentHFPMeanRecPara(GetCurrentHFPMeanRecPara());
 //
 //}
+
+/**********************************************************************************************//**
+ * Gets pmean difference
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The pmean difference.
+ **************************************************************************************************/
+
 int CDataHandler::getPmeanDifference()
 {
 	return m_iPmeanDifference;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets hf orunning
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CDataHandler::SetHFOrunning(bool state)
 {
 	bool bTemp=m_bHFOrunning;
@@ -17694,14 +20459,33 @@ void CDataHandler::SetHFOrunning(bool state)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Query if this object is hf orunning
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if hf orunning, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::IsHFOrunning()
 {
 	return m_bHFOrunning;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets a bit
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	x	The x coordinate.
+ * \param	n	An int to process.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CDataHandler::SetBit(int x, unsigned int n)
 {
 	//x = x | (1 << n);
@@ -17709,6 +20493,19 @@ int CDataHandler::SetBit(int x, unsigned int n)
 
 	return x;
 }
+
+/**********************************************************************************************//**
+ * Deletes the bit
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	x	The x coordinate.
+ * \param	n	An int to process.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CDataHandler::DeleteBit(int x, unsigned int n)
 {
 	//x = x & ~(1 << n);
@@ -17717,38 +20514,106 @@ int CDataHandler::DeleteBit(int x, unsigned int n)
 	return x;
 }
 
+/**********************************************************************************************//**
+ * Query if this object is graph freezed
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if graph freezed, false if not.
+ **************************************************************************************************/
 
 bool CDataHandler::IsGraphFreezed()
 {
 	return m_bFreezedGraphs;
 }
+
+/**********************************************************************************************//**
+ * Sets graph freezed
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CDataHandler::SetGraphFreezed(bool state)
 {
 	m_bFreezedGraphs=state;
 }
 
+/**********************************************************************************************//**
+ * Sets saving trend to us bactiv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::SetSavingTrendToUSBactiv()
 {
 	m_bSavingTrendToUSB=true;
 }
+
+/**********************************************************************************************//**
+ * Sets saving trend to us binactiv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::SetSavingTrendToUSBinactiv()
 {
 	m_bSavingTrendToUSB=false;
 }
+
+/**********************************************************************************************//**
+ * Query if this object is saving trend to us bactiv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if saving trend to us bactiv, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::IsSavingTrendToUSBactiv()
 {
 	return m_bSavingTrendToUSB;
 }
+
+/**********************************************************************************************//**
+ * Loading trend data
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
 
 void CDataHandler::LoadingTrendData(bool bState)
 {
 	m_bTrendsLoading=bState;
 }
 
+/**********************************************************************************************//**
+ * Query if this object is trend data loading
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if trend data loading, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::IsTrendDataLoading()
 {
 	return m_bTrendsLoading;
 }
+
+/**********************************************************************************************//**
+ * Reads i 2 c watchdog state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
 
 void CDataHandler::ReadI2CWatchdogState()
 {
@@ -17758,15 +20623,40 @@ void CDataHandler::ReadI2CWatchdogState()
 	theApp.getLog()->WriteLine(szTemp);
 }
 
+/**********************************************************************************************//**
+ * Resets the i 2 c watchdog state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::ResetI2CWatchdogState()
 {
 	m_byI2CWatchdogState=0;
 }
 
+/**********************************************************************************************//**
+ * Gets i 2 c watchdog state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The i 2 c watchdog state.
+ **************************************************************************************************/
+
 BYTE CDataHandler::GetI2CWatchdogState()
 {
 	return m_byI2CWatchdogState;
 }
+
+/**********************************************************************************************//**
+ * Sets delete trend thread
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
 void CDataHandler::SetDelTrendThread(bool state)
 {
@@ -17785,44 +20675,97 @@ void CDataHandler::SetDelTrendThread(bool state)
 	}*/
 }
 
-bool CDataHandler::getDelTrendThread()//rkuNEWFIX
+/**********************************************************************************************//**
+ * Gets delete trend thread
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
+bool CDataHandler::getDelTrendThread()
 {
-	EnterCriticalSection(&csDelTrendThread);//rkuNEWFIX
+	EnterCriticalSection(&csDelTrendThread);
 	bool state=m_bDoDelTrendThread;
-	LeaveCriticalSection(&csDelTrendThread);//rkuNEWFIX
+	LeaveCriticalSection(&csDelTrendThread);
 
 	return state;
 }
 
+/**********************************************************************************************//**
+ * Query if this object is le ddisplay
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if le ddisplay, false if not.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CDataHandler::IsLEDdisplay()
 {
 	return m_bLEDdisplay;
 }
 
+/**********************************************************************************************//**
+ * Sets v garant paradata ippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	   	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CDataHandler::SetVGarantParadata_IPPV(WORD val, bool bSend,bool bConfig)
 {
 	PARADATA()->SetVGarantPara_IPPV(val,bSend,bConfig);
 	PRESET()->SetVGarantPara_IPPV(val,false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets v garant paradata trigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	   	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CDataHandler::SetVGarantParadata_TRIGGER(WORD val, bool bSend,bool bConfig)
 {
 	PARADATA()->SetVGarantPara_TRIGGER(val,bSend,bConfig);
 	PRESET()->SetVGarantPara_TRIGGER(val,false,false);
 }
+
+/**********************************************************************************************//**
+ * Sets hfv garant paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val	   	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CDataHandler::SetHFVGarantParadata(WORD val, bool bSend,bool bConfig)
 {
 	PARADATA()->SetHFVGarantPara(val,bSend,bConfig);
 	PRESET()->SetHFVGarantPara(val,false,false);
 }
-void CDataHandler::setVGARANTControlEnabled()//EFLOW1
+
+/**********************************************************************************************//**
+ * Sets vgarant control enabled
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
+void CDataHandler::setVGARANTControlEnabled()
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
 
@@ -17846,7 +20789,15 @@ void CDataHandler::setVGARANTControlEnabled()//EFLOW1
 	}
 	getModel()->getALARMHANDLER()->resetVgVlAutoTurnedOff();
 }
-void CDataHandler::setVLIMITControlEnabled()//EFLOW1
+
+/**********************************************************************************************//**
+ * Sets vlimit control enabled
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
+void CDataHandler::setVLIMITControlEnabled()
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
 
@@ -17882,6 +20833,16 @@ void CDataHandler::setVLIMITControlEnabled()//EFLOW1
 	}
 	getModel()->getALARMHANDLER()->resetVgVlAutoTurnedOff();
 }
+
+/**********************************************************************************************//**
+ * Sets active mode volume garanty state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	bOn	True to on.
+ **************************************************************************************************/
+
 void CDataHandler::SetActiveModeVolumeGarantyState(bool bOn)
 {
 	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -17919,7 +20880,17 @@ void CDataHandler::SetActiveModeVolumeGarantyState(bool bOn)
 		SetVGarantState_TRIGGER(bOn/*,bSend,bConfig,bAutoOn,bAutoOff*/);
 	}
 }
-void CDataHandler::SetPresetModeVolumeGarantyState(bool bOn/*,bool bSend,bool bConfig,bool bAutoOn,bool bAutoOff*/)
+
+/**********************************************************************************************//**
+ * Sets preset mode volume garanty state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	bOn	True to on.
+ **************************************************************************************************/
+
+void CDataHandler::SetPresetModeVolumeGarantyState(bool bOn)
 {
 	if(getModel()->getCONFIG()->GetCurMode()==VM_PRE_HFO)
 		PRESET()->SetHFVGarantState(bOn,false,false);
@@ -17928,21 +20899,51 @@ void CDataHandler::SetPresetModeVolumeGarantyState(bool bOn/*,bool bSend,bool bC
 	else
 		PRESET()->SetVGarantState_TRIGGER(bOn,false,false);
 }
-void CDataHandler::SetVGarantState_TRIGGER(bool bOn/*,bool bSend,bool bConfig,bool bAutoOn,bool bAutoOff*/)
+
+/**********************************************************************************************//**
+ * Sets v garant state trigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	bOn	True to on.
+ **************************************************************************************************/
+
+void CDataHandler::SetVGarantState_TRIGGER(bool bOn)
 {
 	/*WORD iValue=PARADATA()->GetPmaxVolGPara_TRIGGER();
 	SetVGarantParamVal_TRIGGER(iValue, bOn,bSend,bConfig,bAutoOn,bAutoOff)*/
 	PARADATA()->SetVGarantState_TRIGGER(bOn,true,true);
 	PRESET()->SetVGarantState_TRIGGER(bOn,false,false);
 }
-void CDataHandler::SetVGarantState_IPPV(bool bOn/*,bool bSend,bool bConfig,bool bAutoOn,bool bAutoOff*/)
+
+/**********************************************************************************************//**
+ * Sets v garant state ippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	bOn	True to on.
+ **************************************************************************************************/
+
+void CDataHandler::SetVGarantState_IPPV(bool bOn)
 {
 	/*WORD iValue=PARADATA()->GetPmaxVolGPara_IPPV();
 	SetVGarantParamVal_IPPV(iValue, bOn,bSend,bConfig,bAutoOn,bAutoOff)*/
 	PARADATA()->SetVGarantState_IPPV(bOn,true,true);
 	PRESET()->SetVGarantState_IPPV(bOn,false,false);
 }
-void CDataHandler::SetHFVGarantState(bool bOn/*,bool bSend,bool bConfig,bool bAutoOn,bool bAutoOff*/)
+
+/**********************************************************************************************//**
+ * Sets hfv garant state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	bOn	True to on.
+ **************************************************************************************************/
+
+void CDataHandler::SetHFVGarantState(bool bOn)
 {
 	/*WORD iValue=PARADATA()->GetHFAMPLVolGPara();
 	SetHFVGarantParaVal(iValue, bOn,bSend,bConfig,bAutoOn,bAutoOff)*/
@@ -17950,78 +20951,227 @@ void CDataHandler::SetHFVGarantState(bool bOn/*,bool bSend,bool bConfig,bool bAu
 	PRESET()->SetHFVGarantState(bOn,false,false);
 }
 
-
+/**********************************************************************************************//**
+ * Sets v limit paradata ippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val  	The value.
+ * \param	bOn  	True to on.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
 
 void CDataHandler::SetVLimitParadata_IPPV(WORD val, bool bOn,bool bSend)
 {
 	PARADATA()->SetVLimitParam_IPPV(val,bOn,bSend,true);
 	PRESET()->SetVLimitParam_IPPV(val,bOn,false,false);
 }
+
+/**********************************************************************************************//**
+ * Sets v limit paradata trigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val  	The value.
+ * \param	bOn  	True to on.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetVLimitParadata_TRIGGER(WORD val, bool bOn,bool bSend)
 {
 	PARADATA()->SetVLimitParam_TRIGGER(val,bOn,bSend,true);
 	PRESET()->SetVLimitParam_TRIGGER(val,bOn,false,false);
 }
 
-
+/**********************************************************************************************//**
+ * Sets v limit paramdata ippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val  	The value.
+ * \param	bOn  	True to on.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
 
 void CDataHandler::SetVLimitParamdata_IPPV(WORD val, bool bOn,bool bSend)
 {
 	PARADATA()->SetVLimitParam_IPPV(val, bOn,bSend,true);
 	PRESET()->SetVLimitParam_IPPV(val, bOn,false,false);
 }
+
+/**********************************************************************************************//**
+ * Sets v limit paramdata trigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	val  	The value.
+ * \param	bOn  	True to on.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetVLimitParamdata_TRIGGER(WORD val, bool bOn,bool bSend)
 {
 	PARADATA()->SetVLimitParam_TRIGGER(val, bOn,bSend,true);
 	PRESET()->SetVLimitParam_TRIGGER(val, bOn,false,false);
 }
 
+/**********************************************************************************************//**
+ * Sets etime paradata trigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetETIMEParadata_TRIGGER(WORD value, bool bSend)
 {
 	PARADATA()->SetETIMEPara_TRIGGER(value, bSend,true);
 	PRESET()->SetETIMEPara_TRIGGER(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets etime paradata ippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetETIMEParadata_IPPV(WORD value, bool bSend)
 {
 	PARADATA()->SetETIMEPara_IPPV(value, bSend,true);
 	PRESET()->SetETIMEPara_IPPV(value, false, false);
 }
 
+/**********************************************************************************************//**
+ * Sets etimenmode paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetETIMENMODEParadata(WORD value, bool bSend)
 {
 	PARADATA()->SetETIMENMODEPara(value, bSend,true);
 	PRESET()->SetETIMENMODEPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets bpm paradata trigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetBPMParadata_TRIGGER(WORD value, bool bSend)
 {
 	PARADATA()->SetBPMPara_TRIGGER(value, bSend,true);
 	PRESET()->SetBPMPara_TRIGGER(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets bpm paradata ippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetBPMParadata_IPPV(WORD value, bool bSend)
 {
 	PARADATA()->SetBPMPara_IPPV(value, bSend,true);
 	PRESET()->SetBPMPara_IPPV(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets bpmnmode paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetBPMNMODEParadata(WORD value, bool bSend)
 {
 	PARADATA()->SetBPMNMODEPara(value, bSend,true);
 	PRESET()->SetBPMNMODEPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets trigger cpap paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetTriggerCPAPParadata(BYTE value, bool bSend)
 {
 	PARADATA()->SetTriggerPara_CPAP(value, bSend,true);
 	PRESET()->SetTriggerPara_CPAP(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets trigger convert paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetTriggerCONVParadata(BYTE value, bool bSend)
 {
 	PARADATA()->SetTriggerPara_CONV(value, bSend,true);
 	PRESET()->SetTriggerPara_CONV(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets trigger duopap paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetTriggerDUOPAPParadata(BYTE value, bool bSend)
 {
 	PARADATA()->SetTriggerPara_DUOPAP(value, bSend,true);
 	PRESET()->SetTriggerPara_DUOPAP(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets trigger ncpap paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
 
 void CDataHandler::SetTriggerNCPAPParadata(BYTE value, bool bSend)
 {
@@ -18029,240 +21179,733 @@ void CDataHandler::SetTriggerNCPAPParadata(BYTE value, bool bSend)
 	PRESET()->SetTriggerPara_NCPAP(value, false, false);
 }
 
+/**********************************************************************************************//**
+ * Sets i time paradata trigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetITimeParadata_TRIGGER(WORD value, bool bSend)
 {
 	PARADATA()->SetITimePara_TRIGGER(value, bSend,true);
 	PRESET()->SetITimePara_TRIGGER(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets i time paradata ippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetITimeParadata_IPPV(WORD value, bool bSend)
 {
 	PARADATA()->SetITimePara_IPPV(value, bSend,true);
 	PRESET()->SetITimePara_IPPV(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets i time nmode paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetITimeNMODEParadata(WORD value, bool bSend)
 {
 	PARADATA()->SetITimeNMODEPara(value, bSend,true);
 	PRESET()->SetITimeNMODEPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets o 2 paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetO2Paradata(BYTE value, bool bSend)
 {
 	PARADATA()->SetO2Para(value, bSend,true);
 	PRESET()->SetO2Para(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets o 2 flush paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CDataHandler::SetO2FlushParadata(BYTE value)
 {
 	PARADATA()->SetO2FlushPara(value,true);
 	PRESET()->SetO2FlushPara(value, false);
 }
+
+/**********************************************************************************************//**
+ * Sets risetime paradata trigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetRisetimeParadata_TRIGGER(WORD value, bool bSend)
 {
 	PARADATA()->SetRisetimePara_TRIGGER(value, bSend,true);
 	PRESET()->SetRisetimePara_TRIGGER(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets risetime paradata ippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetRisetimeParadata_IPPV(WORD value, bool bSend)
 {
 	PARADATA()->SetRisetimePara_IPPV(value, bSend,true);
 	PRESET()->SetRisetimePara_IPPV(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets hf flow paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetHFFlowParadata(WORD value, bool bSend)
 {
 	PARADATA()->SetHFFlowPara(value, bSend,true);
 	PRESET()->SetHFFlowPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets i flow paradata trigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetIFlowParadata_TRIGGER(WORD value, bool bSend)
 {
 	PARADATA()->SetIFlowPara_TRIGGER(value, bSend,true);
 	PRESET()->SetIFlowPara_TRIGGER(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets i flow paradata ippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetIFlowParadata_IPPV(WORD value, bool bSend)
 {
 	PARADATA()->SetIFlowPara_IPPV(value, bSend,true);
 	PRESET()->SetIFlowPara_IPPV(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets e flow paradata trigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetEFlowParadata_TRIGGER(WORD value, bool bSend)
 {
 	PARADATA()->SetEFLOWPara_TRIGGER(value, bSend,true);
 	PRESET()->SetEFLOWPara_TRIGGER(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets e flow paradata ippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetEFlowParadata_IPPV(WORD value, bool bSend)
 {
 	PARADATA()->SetEFLOWPara_IPPV(value, bSend,true);
 	PRESET()->SetEFLOWPara_IPPV(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets flowmin paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetFlowminParadata(WORD value, bool bSend)
 {
 	PARADATA()->SetFlowminPara(value, bSend,true);
 	PRESET()->SetFlowminPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets therapie flow paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetTherapieFLOWParadata(WORD value, bool bSend)
 {
 	PARADATA()->SetTherapieFLOWPara(value, bSend,true);
 	PRESET()->SetTherapieFLOWPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets pmax volume g paradata trigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetPmaxVolGParadata_TRIGGER(SHORT value, bool bSend)
 {
 	PARADATA()->SetPmaxVolGPara_TRIGGER(value, bSend,true);
 	PRESET()->SetPmaxVolGPara_TRIGGER(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets pmax volume g paradata ippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetPmaxVolGParadata_IPPV(SHORT value, bool bSend)
 {
 	PARADATA()->SetPmaxVolGPara_IPPV(value, bSend,true);
 	PRESET()->SetPmaxVolGPara_IPPV(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets pinsp paradata trigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetPINSPParadata_TRIGGER(SHORT value, bool bSend)
 {
 	PARADATA()->SetPINSPPara_TRIGGER(value, bSend,true);
 	PRESET()->SetPINSPPara_TRIGGER(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets pinsp paradata ippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetPINSPParadata_IPPV(SHORT value, bool bSend)
 {
-	if(value%10!=0)//check test
-	{
-		int iStop=0;
-	}
 	PARADATA()->SetPINSPPara_IPPV(value, bSend,true);
 	PRESET()->SetPINSPPara_IPPV(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets peep paradata trigger
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetPEEPParadata_TRIGGER(SHORT value, bool bSend)
 {
 	PARADATA()->SetPEEPPara_TRIGGER(value, bSend,true);
 	PRESET()->SetPEEPPara_TRIGGER(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets peep paradata ippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetPEEPParadata_IPPV(SHORT value, bool bSend)
 {
 	PARADATA()->SetPEEPPara_IPPV(value, bSend,true);
 	PRESET()->SetPEEPPara_IPPV(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets ppsv paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetPpsvParadata(SHORT value, bool bSend)
 {
 	PARADATA()->SetPpsvPara(value, bSend,true);
 	PRESET()->SetPpsvPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets cpap paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetCPAPParadata(SHORT value, bool bSend)
 {
 	PARADATA()->SetCPAPPara(value, bSend,true);
 	PRESET()->SetCPAPPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets cpapnmode paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetCPAPNMODEParadata(SHORT value, bool bSend)
 {
 	PARADATA()->SetCPAPNMODEPara(value, bSend,true);
 	PRESET()->SetCPAPNMODEPara(value, false, false);
 }
 
+/**********************************************************************************************//**
+ * Sets p manual hfo paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
 
 void CDataHandler::SetPManualHFOParadata(SHORT value, bool bSend)
 {
 	PARADATA()->SetPManualHFOPara(value, bSend,true);
 	PRESET()->SetPManualHFOPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets p manual cpap paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetPManualCPAPParadata(SHORT value, bool bSend)
 {
 	PARADATA()->SetPManualCPAPPara(value, bSend,true);
 	PRESET()->SetPManualCPAPPara(value, false, false);
 }
 
+/**********************************************************************************************//**
+ * Sets p manual nmode paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
 
 void CDataHandler::SetPManualNMODEParadata(SHORT value, bool bSend)
 {
 	PARADATA()->SetPManualNMODEPara(value, bSend,true);
 	PRESET()->SetPManualNMODEPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets hfp mean paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetHFPMeanParadata(WORD value, bool bSend)
 {
 	PARADATA()->SetHFPMeanPara(value, bSend,true);
 	PRESET()->SetHFPMeanPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets backup paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetBackupParadata(BYTE value, bool bSend)
 {
 	PARADATA()->SetBackupPara(value, bSend,true);
 	PRESET()->SetBackupPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets IE ratio paradata hfo
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	ratio	The ratio.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetIERatioParadataHFO(eRatioIE ratio, bool bSend)
 {
 	PARADATA()->SetIERatioParaHFO(ratio, bSend,true);
 	PRESET()->SetIERatioParaHFO(ratio, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets hf frequency paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetHFFreqParadata(BYTE value, bool bSend)
 {
 	PARADATA()->SetHFFreqPara(value, bSend,true);
 	PRESET()->SetHFFreqPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets hfamp lmax paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetHFAMPLmaxParadata(WORD value, bool bSend)
 {
 	PARADATA()->SetHFAMPLmaxPara(value, bSend,true);
 	PRESET()->SetHFAMPLmaxPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets i time record paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetITimeRecParadata(WORD value, bool bSend)
 {
 	PARADATA()->SetITimeRecPara(value, bSend,true);
 	PRESET()->SetITimeRecPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets frequency record paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetFreqRecParadata(WORD value, bool bSend)
 {
 	PARADATA()->SetFreqRecPara(value, bSend,true);
 	PRESET()->SetFreqRecPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets hfp mean record paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetHFPMeanRecParadata(WORD value, bool bSend)
 {
 	PARADATA()->SetHFPMeanRecPara(value, bSend,true);
 	PRESET()->SetHFPMeanRecPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets hfampl paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetHFAMPLParadata(WORD value, bool bSend)
 {
 	PARADATA()->SetHFAMPLPara(value, bSend,true);
 	PRESET()->SetHFAMPLPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets fo tconv amplitude paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetFOTconv_AMPLITUDEParadata(WORD value, bool bSend)
 {
 	PARADATA()->setFOTconv_AMPLITUDEPara(value, bSend,true);
 	PRESET()->setFOTconv_AMPLITUDEPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets fo tconv frequency paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetFOTconv_FREQParadata(WORD value, bool bSend)
 {
 	PARADATA()->setFOTconv_FREQPara(value, bSend,true);
 	PRESET()->setFOTconv_FREQPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets fo tconv steps paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetFOTconv_STEPSParadata(WORD value, bool bSend)
 {
 	PARADATA()->setFOTconv_STEPSPara(value, bSend,true);
 	PRESET()->setFOTconv_STEPSPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets fo tconv peepstart paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetFOTconv_PEEPSTARTParadata(WORD value, bool bSend)
 {
 	PARADATA()->setFOTconv_PEEPSTARTPara(value, bSend,true);
 	PRESET()->setFOTconv_PEEPSTARTPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets fo tconv peepend paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetFOTconv_PEEPENDParadata(WORD value, bool bSend)
 {
 	PARADATA()->setFOTconv_PEEPENDPara(value, bSend,true);
 	PRESET()->setFOTconv_PEEPENDPara(value, false, false);
 }
 
+/**********************************************************************************************//**
+ * Sets fo thfo amplitude paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetFOThfo_AMPLITUDEParadata(WORD value, bool bSend)
 {
 	PARADATA()->setFOThfo_AMPLITUDEPara(value, bSend,true);
 	PRESET()->setFOThfo_AMPLITUDEPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets fo thfo frequency paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetFOThfo_FREQParadata(WORD value, bool bSend)
 {
 	PARADATA()->setFOThfo_FREQPara(value, bSend,true);
 	PRESET()->setFOThfo_FREQPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets fo thfo steps paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetFOThfo_STEPSParadata(WORD value, bool bSend)
 {
 	PARADATA()->setFOThfo_STEPSPara(value, bSend,true);
 	PRESET()->setFOThfo_STEPSPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets fo thfo pmeanstart paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetFOThfo_PMEANSTARTParadata(WORD value, bool bSend)
 {
 	PARADATA()->setFOThfo_PMEANSTARTPara(value, bSend,true);
 	PRESET()->setFOThfo_PMEANSTARTPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets fo thfo pmeanend paradata
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	value	The value.
+ * \param	bSend	True to send.
+ **************************************************************************************************/
+
 void CDataHandler::SetFOThfo_PMEANENDParadata(WORD value, bool bSend)
 {
 	PARADATA()->setFOThfo_PMEANENDPara(value, bSend,true);
 	PRESET()->setFOThfo_PMEANENDPara(value, false, false);
 }
+
+/**********************************************************************************************//**
+ * Sets fo toscillation state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	bOsciRun	True to osci run.
+ **************************************************************************************************/
 
 void CDataHandler::setFOToscillationState(bool bOsciRun)
 {
@@ -18273,6 +21916,15 @@ void CDataHandler::setFOToscillationState(bool bOsciRun)
 	getModel()->Send_MODE_OPTION1();
 }
 
+/**********************************************************************************************//**
+ * Gets fo toscillation state
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDataHandler::getFOToscillationState()
 {
 	bool bState=false;
@@ -18281,6 +21933,16 @@ bool CDataHandler::getFOToscillationState()
 	LeaveCriticalSection(&csFOTosciState);
 	return bState;
 }
+
+/**********************************************************************************************//**
+ * Sets a bodyweight
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	weightGramm	The weight gramm.
+ * \param	bLog	   	True to log.
+ **************************************************************************************************/
 
 void CDataHandler::setBodyweight(WORD weightGramm, bool bLog)
 {
@@ -18296,116 +21958,307 @@ void CDataHandler::setBodyweight(WORD weightGramm, bool bLog)
 	}
 	
 }
+
+/**********************************************************************************************//**
+ * Gets the bodyweight
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The bodyweight.
+ **************************************************************************************************/
+
 WORD CDataHandler::getBodyweight()
 {
 	return m_iBodyweightGramm;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets status 2
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CDataHandler::setStatus2(SHORT state)
 {
 	m_Status2=state;
 }
+
+/**********************************************************************************************//**
+ * Gets status 2
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The status 2.
+ **************************************************************************************************/
+
 SHORT CDataHandler::getStatus2()
 {
 	return m_Status2;
 }
 
+/**********************************************************************************************//**
+ * Gets count numeric flowoffconv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The count numeric flowoffconv.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getCountNumericFLOWOFFCONV()
 {
 	return m_iNumericFLOWOFFCONVcount;
 }
+
+/**********************************************************************************************//**
+ * Gets count numeric flowoffcpap
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The count numeric flowoffcpap.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getCountNumericFLOWOFFCPAP()
 {
 	return m_iNumericFLOWOFFCPAPcount;
 }
+
+/**********************************************************************************************//**
+ * Gets count numeric flowoffhfo
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The count numeric flowoffhfo.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getCountNumericFLOWOFFHFO()
 {
 	return m_iNumericFLOWOFFHFOcount;
 }
+
+/**********************************************************************************************//**
+ * Gets count numeric ippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The count numeric ippv.
+ **************************************************************************************************/
 
 BYTE CDataHandler::getCountNumericIPPV()
 {
 	return m_iNumericIPPVcount;
 }
 
+/**********************************************************************************************//**
+ * Gets count numeric sippv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The count numeric sippv.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getCountNumericSIPPV()
 {
 	return m_iNumericSIPPVcount;
 }
+
+/**********************************************************************************************//**
+ * Gets count numeric simv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The count numeric simv.
+ **************************************************************************************************/
 
 BYTE CDataHandler::getCountNumericSIMV()
 {
 	return m_iNumericSIMVcount;
 }
 
+/**********************************************************************************************//**
+ * Gets count numeric simvpsv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The count numeric simvpsv.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getCountNumericSIMVPSV()
 {
 	return m_iNumericSIMVPSVcount;
 }
+
+/**********************************************************************************************//**
+ * Gets count numeric psv
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The count numeric psv.
+ **************************************************************************************************/
 
 BYTE CDataHandler::getCountNumericPSV()
 {
 	return m_iNumericPSVcount;
 }
 
+/**********************************************************************************************//**
+ * Gets count numeric cpap
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The count numeric cpap.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getCountNumericCPAP()
 {
 	return m_iNumericCPAPcount;
 }
+
+/**********************************************************************************************//**
+ * Gets count numeric hfo
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The count numeric hfo.
+ **************************************************************************************************/
 
 BYTE CDataHandler::getCountNumericHFO()
 {
 	return m_iNumericHFOcount;
 }
 
+/**********************************************************************************************//**
+ * Gets count numeric ncpap
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The count numeric ncpap.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getCountNumericNCPAP()
 {
 	return m_iNumericNCPAPcount;
 }
+
+/**********************************************************************************************//**
+ * Gets count numeric duopap
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The count numeric duopap.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getCountNumericDUOPAP()
 {
 	return m_iNumericDUOPAPcount;
 }
+
+/**********************************************************************************************//**
+ * Gets count numeric therapy
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	The count numeric therapy.
+ **************************************************************************************************/
+
 BYTE CDataHandler::getCountNumericTHERAPY()
 {
 	return m_iNumericTHERAPYcount;
 }
 
-
-//void CDataHandler::setProcPressureCal60(int iVal)
-//{
-//	DEBUGMSG(TRUE, (TEXT("setProcPressureCal60 %d\r\n"),iVal));
-//	m_iProcPressureCal60=iVal;
-//}
-//int CDataHandler::getProcPressureCal60()
-//{
-//	return m_iProcPressureCal60;
-//}
+/**********************************************************************************************//**
+ * Enables the proc pressure calendar 60
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
 
 void CDataHandler::enableProcPressureCal60()
 {
 	m_bProcPressureCal60=true;
 }
+
+/**********************************************************************************************//**
+ * Disables the proc pressure calendar 60
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDataHandler::disableProcPressureCal60()
 {
 	m_bProcPressureCal60=false;
 }
+
+/**********************************************************************************************//**
+ * Query if this object is proc pressure calendar 60enabled
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \return	True if proc pressure calendar 60enabled, false if not.
+ **************************************************************************************************/
+
 bool CDataHandler::isProcPressureCal60enabled()
 {
 	return m_bProcPressureCal60;
 }
 
+/**********************************************************************************************//**
+ * Sets remain co 2 pump time
+ *
+ * \author	Rainer
+ * \date	20.02.2018
+ *
+ * \param	time	The time.
+ **************************************************************************************************/
+
 void CDataHandler::setRemainCO2PumpTime(DWORD time)
 {
 	m_dwRemainCO2PumpTime=time;
 }
+
+/**********************************************************************************************//**
+ * Gets remain co 2 pump time
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	The remain co 2 pump time.
+ **************************************************************************************************/
+
 DWORD CDataHandler::getRemainCO2PumpTime()
 {
 	return m_dwRemainCO2PumpTime;
 }
+
+/**********************************************************************************************//**
+ * Gets amp cor factor
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	iFreq	Zero-based index of the frequency.
+ *
+ * \return	The amp cor factor.
+ **************************************************************************************************/
 
 double CDataHandler::getAmpCorFactor(BYTE iFreq)
 {

@@ -7,15 +7,34 @@
 #include <exception>
 
 #ifdef _DEBUG
+
+/**********************************************************************************************//**
+ * A macro that defines new
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ **************************************************************************************************/
+
 #define new DEBUG_NEW
 #endif
 
-
-// CChildView
+/**********************************************************************************************//**
+ * CChildView
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ **************************************************************************************************/
 
 CChildView::CChildView()
 {
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CChildView class
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ **************************************************************************************************/
 
 CChildView::~CChildView()
 {
@@ -28,9 +47,16 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
-
-
-// CChildView message handlers
+/**********************************************************************************************//**
+ * CChildView message handlers
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param [in,out]	cs	The create struct.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs) 
 {
@@ -47,6 +73,13 @@ BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs)
 	return TRUE;
 }
 
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ **************************************************************************************************/
+
 void CChildView::OnPaint() 
 {
 	CPaintDC dc(this); // device context for painting
@@ -56,6 +89,16 @@ void CChildView::OnPaint()
 	// Do not call CWnd::OnPaint() for painting messages
 }
 
+/**********************************************************************************************//**
+ * Executes the erase bkgnd action
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 BOOL CChildView::OnEraseBkgnd(CDC* pDC)
 {

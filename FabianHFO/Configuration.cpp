@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	Configuration.cpp.
+ *
+ * Implements the configuration class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "Configuration.h"
 #include "TlsRegistry.h"
@@ -8,7 +14,21 @@
 
 CConfiguration* CConfiguration::theConfig=0;
 
+/**********************************************************************************************//**
+ * A macro that defines ampcorfactorini
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ **************************************************************************************************/
+
 #define AMPCORFACTORINI       _T("\\FFSDISK\\ampCorFactor.ini")
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CConfiguration class
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ **************************************************************************************************/
 
 CConfiguration::CConfiguration()
 {
@@ -399,14 +419,27 @@ CConfiguration::CConfiguration()
 	m_dtNextServiceDate.SetStatus(COleDateTime::null);
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CConfiguration class
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ **************************************************************************************************/
+
 CConfiguration::~CConfiguration(void)
 {
 	DeleteCriticalSection(&csVentMode);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CConfiguration::getModel()
 {
 	if(m_pModel==NULL)
@@ -414,9 +447,15 @@ CMVModel *CConfiguration::getModel()
 	return m_pModel;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the instance
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
+
 CConfiguration* CConfiguration::GetInstance()
 {
 	if(theConfig == NULL)
@@ -426,9 +465,13 @@ CConfiguration* CConfiguration::GetInstance()
 	return theConfig;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ **************************************************************************************************/
+
 void CConfiguration::DestroyInstance()
 {
 	if(theConfig != NULL)
@@ -438,9 +481,13 @@ void CConfiguration::DestroyInstance()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this object
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ **************************************************************************************************/
+
 void CConfiguration::Init()
 {
 	m_pModel=NULL;
@@ -829,9 +876,13 @@ void CConfiguration::Init()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Loads the settings
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ **************************************************************************************************/
+
 void CConfiguration::LoadSettings()
 {
 	CTlsRegistry regLang(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
@@ -4144,53 +4195,130 @@ void CConfiguration::LoadSettings()
 	m_wOldConfigVersion=m_iConfigVersion;
 }
 
+/**********************************************************************************************//**
+ * Gets board sub type
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The board sub type.
+ **************************************************************************************************/
 
 CStringW CConfiguration::GetBoardSubType()
 {
 	return m_szNetDCUversion;
 }
 
+/**********************************************************************************************//**
+ * Gets kernel version
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The kernel version.
+ **************************************************************************************************/
+
 CStringW CConfiguration::GetKernelVersion()
 {
 	return m_szKernel;
 }
+
+/**********************************************************************************************//**
+ * Gets kernel acu version
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The kernel acu version.
+ **************************************************************************************************/
 
 CStringW CConfiguration::GetKernelAcuVersion()
 {
 	return m_szAcuKernel;
 }
 
+/**********************************************************************************************//**
+ * Gets kernel version date
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The kernel version date.
+ **************************************************************************************************/
+
 CStringW CConfiguration::GetKernelVersionDate()
 {
 	return m_szKernelDate;
 }
 
+/**********************************************************************************************//**
+ * Graph set last view state
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CConfiguration::GraphSetLastViewState(int state)
 {
 	m_GraphLastViewState=state;
 	getModel()->getI2C()->WriteConfigByte(GRAPHLASTVIEWSUBSTATE_8,m_GraphLastViewState);
 }
+
+/**********************************************************************************************//**
+ * Graph get last view state
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::GraphGetLastViewState()
 {
 	return m_GraphLastViewState;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the language
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The language.
+ **************************************************************************************************/
+
 CStringW CConfiguration::getLANGUAGE()
 {
 	return m_szLanguageID;
 }
+
+/**********************************************************************************************//**
+ * Gets language identifier
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The language identifier.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetLanguageID()
 {
 	return m_iLanguageID;
 }
+
+/**********************************************************************************************//**
+ * Gets language i dfrom name
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	szLID	The lid.
+ *
+ * \return	The language i dfrom name.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetLanguageIDfromName(CStringW szLID)
 {
 	WORD cLandID=0;
@@ -4286,6 +4414,18 @@ WORD CConfiguration::GetLanguageIDfromName(CStringW szLID)
 
 	return cLandID;
 }
+
+/**********************************************************************************************//**
+ * Gets language namefrom identifier
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iID	Zero-based index of the identifier.
+ *
+ * \return	The language namefrom identifier.
+ **************************************************************************************************/
+
 CStringW CConfiguration::GetLanguageNamefromID(WORD iID)
 {
 	CStringW szLandName=_T("");
@@ -4396,6 +4536,16 @@ CStringW CConfiguration::GetLanguageNamefromID(WORD iID)
 
 	return szLandName;
 }
+
+/**********************************************************************************************//**
+ * Sets a language
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	szLID	The lid.
+ **************************************************************************************************/
+
 void CConfiguration::SetLanguage(CStringW szLID)
 {
 	BYTE cLandID=0;
@@ -4511,13 +4661,28 @@ void CConfiguration::SetLanguage(CStringW szLID)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarm volume
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarm volume.
+ **************************************************************************************************/
+
 eAlarmLoudness CConfiguration::GetAlarmVolume()
 {
 	return m_eAlarmVolume;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm volume
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
 
 void CConfiguration::SetAlarmVolume(eAlarmLoudness state)
 {
@@ -4553,13 +4718,29 @@ void CConfiguration::SetAlarmVolume(eAlarmLoudness state)
 	regVolume.FlushHKCU();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Determines if we can use tve btb
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CConfiguration::useTveBTB()
 {
 	return m_bUseTveBTB;
 }
+
+/**********************************************************************************************//**
+ * Sets use tve btb
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::setUseTveBTB(bool state)
 {
 	m_bUseTveBTB=state;
@@ -4575,13 +4756,29 @@ void CConfiguration::setUseTveBTB(bool state)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Determines if we can use neo ped
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CConfiguration::useNeoPed()
 {
 	return m_bUseNeoPed;
 }
+
+/**********************************************************************************************//**
+ * Sets use neo ped
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::setUseNeoPed(bool state)
 {
 	m_bUseNeoPed=state;
@@ -4604,13 +4801,29 @@ void CConfiguration::setUseNeoPed(bool state)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the btps
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CConfiguration::getBTPS()
 {
 	return m_bBTPSenable;
 }
+
+/**********************************************************************************************//**
+ * Sets the btps
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::setBTPS(bool state)
 {
 	if(m_bBTPSenable!=state)
@@ -4627,13 +4840,28 @@ void CConfiguration::setBTPS(bool state)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets IE relation mode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The IE relation mode.
+ **************************************************************************************************/
+
 eIERelationMode CConfiguration::GetIERelationMode()
 {
 	return m_eIERelationMode;
 }
+
+/**********************************************************************************************//**
+ * Sets IE relation mode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	mode	The mode.
+ **************************************************************************************************/
 
 void CConfiguration::SetIERelationMode(eIERelationMode mode)
 {
@@ -4641,14 +4869,29 @@ void CConfiguration::SetIERelationMode(eIERelationMode mode)
 	getModel()->getI2C()->WriteConfigByte(IERELATIONMODE_8, (int)mode);
 }
 
+/**********************************************************************************************//**
+ * Gets co 2unit
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The co 2unit.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 eCO2unit CConfiguration::GetCO2unit()
 {
 	return m_eCO2unit;
 }
+
+/**********************************************************************************************//**
+ * Sets co 2unit
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	unit	The unit.
+ **************************************************************************************************/
+
 void CConfiguration::SetCO2unit(eCO2unit unit)
 {
 	if(m_eCO2unit==unit)
@@ -4670,11 +4913,29 @@ void CConfiguration::SetCO2unit(eCO2unit unit)
 //	return m_bCO2ModuleEnabled;
 //}
 
+/**********************************************************************************************//**
+ * Gets co 2 baro pressure
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The co 2 baro pressure.
+ **************************************************************************************************/
 
 SHORT CConfiguration::GetCO2BaroPressure()
 {
 	return m_iCO2BaroPressure;
 }
+
+/**********************************************************************************************//**
+ * Sets co 2 baro pressure
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetCO2BaroPressure(SHORT value)
 {
 	m_iCO2BaroPressure=value;
@@ -4689,28 +4950,58 @@ void CConfiguration::SetCO2BaroPressure(SHORT value)
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets time pump automatic on
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The time pump automatic on.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 BYTE CConfiguration::GetTimePumpAutoOn()
 {
 	return m_iCO2TimePumpAutoOn;
 }
+
+/**********************************************************************************************//**
+ * Sets time pump automatic on
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetTimePumpAutoOn(BYTE value)
 {
 	m_iCO2TimePumpAutoOn=value;
 	getModel()->getI2C()->WriteConfigByte(CO2TIMEPUMPAUTOON,(BYTE)m_iCO2TimePumpAutoOn);
 }
 
+/**********************************************************************************************//**
+ * Query if this object is fast sa ton
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if fast sa ton, false if not.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CConfiguration::isFastSATon()
 {
 	return m_bFastSATon;
 }
+
+/**********************************************************************************************//**
+ * Sets fast sa ton
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	bFastSATon	True to fast sa ton.
+ **************************************************************************************************/
+
 void CConfiguration::setFastSATon(bool bFastSATon)
 {
 	m_bFastSATon=bFastSATon;
@@ -4724,13 +5015,29 @@ void CConfiguration::setFastSATon(bool bFastSATon)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets spo 2alarm delay
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The spo 2alarm delay.
+ **************************************************************************************************/
+
 eSPO2alarmdelay CConfiguration::getSPO2alarmDelay()
 {
 	return m_eSPO2alarmdelay;
 }
+
+/**********************************************************************************************//**
+ * Sets spo 2alarm delay
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	delay	The delay.
+ **************************************************************************************************/
+
 void CConfiguration::setSPO2alarmDelay(eSPO2alarmdelay delay)
 {
 	m_eSPO2alarmdelay=delay;
@@ -4744,13 +5051,29 @@ void CConfiguration::setSPO2alarmDelay(eSPO2alarmdelay delay)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets spo 2averaging time
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The spo 2averaging time.
+ **************************************************************************************************/
+
 eSPO2averagingtime CConfiguration::getSPO2averagingTime()
 {
 	return m_eSPO2averagingTime;
 }
+
+/**********************************************************************************************//**
+ * Sets spo 2averaging time
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	avtime	The avtime.
+ **************************************************************************************************/
+
 void CConfiguration::setSPO2averagingTime(eSPO2averagingtime avtime)
 {
 	m_eSPO2averagingTime=avtime;
@@ -4761,13 +5084,29 @@ void CConfiguration::setSPO2averagingTime(eSPO2averagingtime avtime)
 	}*/
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets sensitivity mode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The sensitivity mode.
+ **************************************************************************************************/
+
 eSPO2sensitivitymode CConfiguration::getSensitivityMode()
 {
 	return m_eSPO2SensitivityMode;
 }
+
+/**********************************************************************************************//**
+ * Sets sensitivity mode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	mode	The mode.
+ **************************************************************************************************/
+
 void CConfiguration::setSensitivityMode(eSPO2sensitivitymode mode)
 {
 	m_eSPO2SensitivityMode=mode;
@@ -4778,13 +5117,28 @@ void CConfiguration::setSensitivityMode(eSPO2sensitivitymode mode)
 	}*/
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets reference flow sensor
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The reference flow sensor.
+ **************************************************************************************************/
+
 eRefFlowSensor CConfiguration::GetRefFlowSensor()
 {
 	return m_eRefFlowSensor;
 }
+
+/**********************************************************************************************//**
+ * Sets reference flow sensor
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	mode	The mode.
+ **************************************************************************************************/
 
 void CConfiguration::SetRefFlowSensor(eRefFlowSensor mode)
 {
@@ -4792,13 +5146,29 @@ void CConfiguration::SetRefFlowSensor(eRefFlowSensor mode)
 	getModel()->getI2C()->WriteConfigByte(REFFLOWSENSOR_8, (int)mode);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets pressure unit
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The pressure unit.
+ **************************************************************************************************/
+
 ePressureUnit CConfiguration::GetPressureUnit()
 {
 	return m_ePressureUnit;
 }
+
+/**********************************************************************************************//**
+ * Sets pressure unit
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	eUnit	The unit.
+ **************************************************************************************************/
+
 void CConfiguration::SetPressureUnit(ePressureUnit eUnit)
 {
 	m_ePressureUnit=eUnit;
@@ -4810,15 +5180,29 @@ void CConfiguration::SetPressureUnit(ePressureUnit eUnit)
 	}
 }
 
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Gets volume control
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The volume control.
+ **************************************************************************************************/
+
 eVolumeControl CConfiguration::GetVolumeControl()
 {
 	return m_eVControl;
 }
+
+/**********************************************************************************************//**
+ * Sets volume control
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	eCtrl	The control.
+ **************************************************************************************************/
+
 void CConfiguration::SetVolumeControl(eVolumeControl eCtrl)
 {
 	m_eVControl=eCtrl;
@@ -4830,9 +5214,15 @@ void CConfiguration::SetVolumeControl(eVolumeControl eCtrl)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets freshgas extent
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::setFreshgasExt(bool state)
 {
 	bool bChanged=false;
@@ -4859,81 +5249,217 @@ void CConfiguration::setFreshgasExt(bool state)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets freshgas extent
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CConfiguration::getFreshgasExt()
 {
 	return m_bFreshgasExt;
 }
+
+/**********************************************************************************************//**
+ * Queries if the bias flow is active
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if the bias flow is active, false if not.
+ **************************************************************************************************/
 
 bool CConfiguration::isBiasFlowActive()
 {
 	return m_bBiasFlow;
 }
 
+/**********************************************************************************************//**
+ * Query if this object is spo 2 registr yenabled
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if spo 2 registr yenabled, false if not.
+ **************************************************************************************************/
+
 bool CConfiguration::isSPO2REGISTRYenabled()
 {
 	return m_bSPO2registry;
 }
+
+ /**********************************************************************************************//**
+  * Query if this object is co 2 registr yenabled
+  *
+  * \author	Rainer
+  * \date	19.02.2018
+  *
+  * \return	True if co 2 registr yenabled, false if not.
+  **************************************************************************************************/
+
  bool CConfiguration::isCO2REGISTRYenabled()
  {
 	return m_bCO2registry;
  }
+
+ /**********************************************************************************************//**
+  * Query if this object is risetimeregistr yenabled
+  *
+  * \author	Rainer
+  * \date	19.02.2018
+  *
+  * \return	True if risetimeregistr yenabled, false if not.
+  **************************************************************************************************/
+
  bool CConfiguration::isRISETIMEREGISTRYenabled()
  {
 	 //return false;
 	 return m_bRISETIMEregistry;
  }
 
-//bool CConfiguration::isPRICOenabled()
-//{
-//	return m_bPRICO;
-//}
+/**********************************************************************************************//**
+ * Gets prico spo 2low range
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The calculated prico spo 2low range.
+ **************************************************************************************************/
 
-// **************************************************************************
 BYTE CConfiguration::getPRICO_SPO2lowRange()
 {
 	return m_iPRICO_SPO2lowRange;
 }
+
+/**********************************************************************************************//**
+ * Sets prico spo 2low range
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	SPO2low	The spo 2low.
+ **************************************************************************************************/
+
 void CConfiguration::setPRICO_SPO2lowRange(BYTE SPO2low)
 {
 	m_iPRICO_SPO2lowRange=SPO2low;
 	getModel()->getI2C()->WriteConfigByte(PRICOSPO2LOW_8,m_iPRICO_SPO2lowRange);
 }
+
+/**********************************************************************************************//**
+ * Gets prico spo 2high range
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The calculated prico spo 2high range.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getPRICO_SPO2highRange()
 {
 	return m_iPRICO_SPO2highRange;
 }
+
+/**********************************************************************************************//**
+ * Sets prico spo 2high range
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	SPO2high	The spo 2high.
+ **************************************************************************************************/
+
 void CConfiguration::setPRICO_SPO2highRange(BYTE SPO2high)
 {
 	m_iPRICO_SPO2highRange=SPO2high;
 	getModel()->getI2C()->WriteConfigByte(PRICOSPO2HIGH_8,m_iPRICO_SPO2highRange);
 }
 
+/**********************************************************************************************//**
+ * Gets prico fio 2low range
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The calculated prico fio 2low range.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getPRICO_FIO2lowRange()
 {
 	return m_iPRICO_FIO2lowRange;
 }
+
+/**********************************************************************************************//**
+ * Sets prico fio 2low range
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	FIO2low	The fio 2low.
+ **************************************************************************************************/
+
 void CConfiguration::setPRICO_FIO2lowRange(BYTE FIO2low)
 {
 	m_iPRICO_FIO2lowRange=FIO2low;
 	getModel()->getI2C()->WriteConfigByte(PRICOFIO2LOW_8,m_iPRICO_FIO2lowRange);
 }
+
+/**********************************************************************************************//**
+ * Gets prico fio 2high range
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The calculated prico fio 2high range.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getPRICO_FIO2highRange()
 {
 	return m_iPRICO_FIO2highRange;
 }
+
+/**********************************************************************************************//**
+ * Sets prico fio 2high range
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	FIO2high	The fio 2high.
+ **************************************************************************************************/
+
 void CConfiguration::setPRICO_FIO2highRange(BYTE FIO2high)
 {
 	m_iPRICO_FIO2highRange=FIO2high;
 	getModel()->getI2C()->WriteConfigByte(PRICOFIO2HIGH_8,m_iPRICO_FIO2highRange);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets tube set
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The tube set.
+ **************************************************************************************************/
+
 eTubeSet CConfiguration::GetTubeSet()
 {
 	return m_eTubeSet;
 }
+
+/**********************************************************************************************//**
+ * Sets tube set
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	tube	The tube.
+ **************************************************************************************************/
+
 void CConfiguration::SetTubeSet(eTubeSet tube)
 {
 	m_eTubeSet=tube;
@@ -4941,19 +5467,43 @@ void CConfiguration::SetTubeSet(eTubeSet tube)
 
 }
 
+/**********************************************************************************************//**
+ * Gets tube configuration
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The tube configuration.
+ **************************************************************************************************/
 
 eTubeConfig CConfiguration::GetTubeConfig()
 {
 	return m_eTubeType;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets flow sensor state
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The flow sensor state.
+ **************************************************************************************************/
+
 eFlowSensorState CConfiguration::GetFlowSensorState()
 {
 	return m_eFlowSensorState;
 }
+
+/**********************************************************************************************//**
+ * Sets flow sensor state
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetFlowSensorState(eFlowSensorState state)
 {
 
@@ -4968,9 +5518,15 @@ void CConfiguration::SetFlowSensorState(eFlowSensorState state)
 	getModel()->getI2C()->WriteConfigByte(FLOWSENSORSTATE_8, (int)m_eFlowSensorState);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Graph set automatic scale
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::GraphSetAutoScale(bool state)
 {
 	m_bGraphAutoScale=state;
@@ -4979,14 +5535,30 @@ void CConfiguration::GraphSetAutoScale(bool state)
 	else
 		getModel()->getI2C()->WriteConfigByte(GRAPHAUTOSCALE_8, 0);
 }
+
+/**********************************************************************************************//**
+ * Determines if we can graph is automatic scale
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CConfiguration::GraphIsAutoScale()
 {
 	return m_bGraphAutoScale;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Trend set automatic scale
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetAutoScale(bool state)
 {
 	m_bTrendAutoScale=state;
@@ -4995,14 +5567,30 @@ void CConfiguration::TrendSetAutoScale(bool state)
 	else
 		getModel()->getI2C()->WriteConfigByte(TRENDAUTOSCALE_8, 0);
 }
+
+/**********************************************************************************************//**
+ * Determines if we can trend is automatic scale
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CConfiguration::TrendIsAutoScale()
 {
 	return m_bTrendAutoScale;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Graph set filled
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::GraphSetFilled(bool state)
 {
 	m_bFilledGraph=state;
@@ -5011,14 +5599,30 @@ void CConfiguration::GraphSetFilled(bool state)
 	else
 		getModel()->getI2C()->WriteConfigByte(FILLEDGRAPH_8, 0);
 }
+
+/**********************************************************************************************//**
+ * Determines if we can graph is filled
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CConfiguration::GraphIsFilled()
 {
 	return m_bFilledGraph;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Trend set filled
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetFilled(bool state)
 {
 	m_bFilledTrend=state;
@@ -5027,25 +5631,29 @@ void CConfiguration::TrendSetFilled(bool state)
 	else
 		getModel()->getI2C()->WriteConfigByte(FILLEDTREND_8, 0);
 }
+
+/**********************************************************************************************//**
+ * Determines if we can trend is filled
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CConfiguration::TrendIsFilled()
 {
 	return m_bFilledTrend;
 }
-// **************************************************************************
-// 
-// **************************************************************************
-//void CConfiguration::SetVolumeTrigger(bool state)
-//{
-//	m_bVolumeTrigger=state;
-//	if(state)
-//		getModel()->getI2C()->WriteConfigByte(VOLUMETRIGGER_8, 1);
-//	else
-//		getModel()->getI2C()->WriteConfigByte(VOLUMETRIGGER_8, 0);
-//}
-//bool CConfiguration::GetVolumeTrigger()
-//{
-//	return m_bVolumeTrigger;
-//}
+
+/**********************************************************************************************//**
+ * Sets trigger option convert
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	type	The type.
+ **************************************************************************************************/
 
 void CConfiguration::setTriggerOption_CONV(eTriggereType type)
 {
@@ -5054,10 +5662,29 @@ void CConfiguration::setTriggerOption_CONV(eTriggereType type)
 
 	DEBUGMSG(TRUE, (TEXT("setTriggerOption_CONV %d\r\n"),(int)type));
 }
+
+/**********************************************************************************************//**
+ * Gets trigger option convert
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The trigger option convert.
+ **************************************************************************************************/
+
 eTriggereType CConfiguration::getTriggerOption_CONV()
 {
 	return m_eTriggerType_CONV;
 }
+
+/**********************************************************************************************//**
+ * Sets previous trigger option convert
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	type	The type.
+ **************************************************************************************************/
 
 void CConfiguration::setPrevTriggerOption_CONV(eTriggereType type)
 {
@@ -5066,10 +5693,29 @@ void CConfiguration::setPrevTriggerOption_CONV(eTriggereType type)
 
 	DEBUGMSG(TRUE, (TEXT("setTriggerOption_CONV %d\r\n"),(int)type));
 }
+
+/**********************************************************************************************//**
+ * Gets the previous trigger option convert
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The previous trigger option convert.
+ **************************************************************************************************/
+
 eTriggereType CConfiguration::getPrevTriggerOption_CONV()
 {
 	return m_ePrevTrigger_CONV;
 }
+
+/**********************************************************************************************//**
+ * Sets trigger option cpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	type	The type.
+ **************************************************************************************************/
 
 void CConfiguration::setTriggerOption_CPAP(eTriggereType type)
 {
@@ -5078,11 +5724,29 @@ void CConfiguration::setTriggerOption_CPAP(eTriggereType type)
 
 	DEBUGMSG(TRUE, (TEXT("setTriggerOption_CPAP %d\r\n"),(int)type));
 }
+
+/**********************************************************************************************//**
+ * Gets trigger option cpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The trigger option cpap.
+ **************************************************************************************************/
+
 eTriggereType CConfiguration::getTriggerOption_CPAP()
 {
 	return m_eTriggerType_CPAP;
 }
 
+/**********************************************************************************************//**
+ * Sets trigger option duopap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	type	The type.
+ **************************************************************************************************/
 
 void CConfiguration::setTriggerOption_DUOPAP(eTriggereType type)
 {
@@ -5091,11 +5755,29 @@ void CConfiguration::setTriggerOption_DUOPAP(eTriggereType type)
 
 	DEBUGMSG(TRUE, (TEXT("setTriggerOption_DUOPAP %d\r\n"),(int)type));
 }
+
+/**********************************************************************************************//**
+ * Gets trigger option duopap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The trigger option duopap.
+ **************************************************************************************************/
+
 eTriggereType CConfiguration::getTriggerOption_DUOPAP()
 {
 	return m_eTriggerType_DUOPAP;
 }
 
+/**********************************************************************************************//**
+ * Sets trigger option ncpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	type	The type.
+ **************************************************************************************************/
 
 void CConfiguration::setTriggerOption_NCPAP(eTriggereType type)
 {
@@ -5104,28 +5786,60 @@ void CConfiguration::setTriggerOption_NCPAP(eTriggereType type)
 
 	DEBUGMSG(TRUE, (TEXT("setTriggerOption_NCPAP %d\r\n"),(int)type));
 }
+
+/**********************************************************************************************//**
+ * Gets trigger option ncpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The trigger option ncpap.
+ **************************************************************************************************/
+
 eTriggereType CConfiguration::getTriggerOption_NCPAP()
 {
 	return m_eTriggerType_NCPAP;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets automatic oxy calendar
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAutoOxyCal(eAutoOxyCal state)
 {
 	m_eAutoOxyCal=state;
 	getModel()->getI2C()->WriteConfigByte(AUTOOXYCAL_8, (eAutoOxyCal)state);
 
 }
+
+/**********************************************************************************************//**
+ * Gets automatic oxy calendar
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The automatic oxy calendar.
+ **************************************************************************************************/
+
 eAutoOxyCal CConfiguration::GetAutoOxyCal()
 {
 	return m_eAutoOxyCal;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets automatic screenlock time
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAutoScreenlockTime(eAutoScreenlock state)
 {
 	m_eAutoScreenlocktime=state;
@@ -5160,10 +5874,29 @@ void CConfiguration::SetAutoScreenlockTime(eAutoScreenlock state)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets automatic screenlock time
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The automatic screenlock time.
+ **************************************************************************************************/
+
 eAutoScreenlock CConfiguration::GetAutoScreenlockTime()
 {
 	return m_eAutoScreenlocktime;
 }
+
+/**********************************************************************************************//**
+ * Sets automatic screenlock active
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
 void CConfiguration::SetAutoScreenlockActive(bool state)
 {
@@ -5213,13 +5946,30 @@ void CConfiguration::SetAutoScreenlockActive(bool state)
 	
 
 }
+
+/**********************************************************************************************//**
+ * Queries if the automatic screenlock is active
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if the automatic screenlock is active, false if not.
+ **************************************************************************************************/
+
 bool CConfiguration::IsAutoScreenlockActive()
 {
 	return m_bAutoScreenlockActive;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets service password disabled
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::SetServicePasswordDisabled(bool state)
 {
 	m_bServicePasswordDisabled=state;
@@ -5233,14 +5983,30 @@ void CConfiguration::SetServicePasswordDisabled(bool state)
 	}
 	getModel()->getI2C()->WriteConfigByte(SERVICEPSWRDDISABLED_8, (BYTE)state);
 }
+
+/**********************************************************************************************//**
+ * Queries if the service password is disabled
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if the service password is disabled, false if not.
+ **************************************************************************************************/
+
 bool CConfiguration::IsServicePasswordDisabled()
 {
 	return m_bServicePasswordDisabled;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets nursecall active
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::SetNursecallActive(bool state)
 {
 	m_bNursecallActive=state;
@@ -5254,14 +6020,30 @@ void CConfiguration::SetNursecallActive(bool state)
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_SYSTEMSTATE_CHANGED);
 }
+
+/**********************************************************************************************//**
+ * Queries if the nursecall is active
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if the nursecall is active, false if not.
+ **************************************************************************************************/
+
 bool CConfiguration::IsNursecallActive()
 {
 	return m_bNursecallActive;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets enable autolimit
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::SetEnableAutolimit(bool state)
 {
 	m_bEnableAutolimit=state;
@@ -5272,14 +6054,30 @@ void CConfiguration::SetEnableAutolimit(bool state)
 		getModel()->getI2C()->WriteConfigByte(AUTOALARMLIMIT_8, 1);
 
 }
+
+/**********************************************************************************************//**
+ * Queries if the enable autolimit is active
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if the enable autolimit is active, false if not.
+ **************************************************************************************************/
+
 bool CConfiguration::IsEnableAutolimitActive()
 {
 	return m_bEnableAutolimit;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets enable factory
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::SetEnableFactory(bool state)
 {
 	m_bEnableFactory=state;
@@ -5292,13 +6090,30 @@ void CConfiguration::SetEnableFactory(bool state)
 	/*if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_SYSTEMSTATE_CHANGED);*/
 }
+
+/**********************************************************************************************//**
+ * Queries if the enable factory is active
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if the enable factory is active, false if not.
+ **************************************************************************************************/
+
 bool CConfiguration::IsEnableFactoryActive()
 {
 	return m_bEnableFactory;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets hfo manager breath enabled
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::SetHFOManBreathEnabled(bool state)
 {
 	m_bHFOManBreathEnabled=state;
@@ -5310,14 +6125,30 @@ void CConfiguration::SetHFOManBreathEnabled(bool state)
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_SYSTEMSTATE_CHANGED);
 }
+
+/**********************************************************************************************//**
+ * Queries if the hfo manager breath is enabled
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if the hfo manager breath is enabled, false if not.
+ **************************************************************************************************/
+
 bool CConfiguration::IsHFOManBreathEnabled()
 {
 	return m_bHFOManBreathEnabled;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets eflo wequal ilfow
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::SetEFLOWequalILFOW(bool state)
 {
 	m_bEFLOWequalILFOW=state;
@@ -5336,18 +6167,44 @@ void CConfiguration::SetEFLOWequalILFOW(bool state)
 
 	
 }
+
+/**********************************************************************************************//**
+ * Query if this object is eflo wequal ilfow
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if eflo wequal ilfow, false if not.
+ **************************************************************************************************/
+
 bool CConfiguration::IsEFLOWequalILFOW()
 {
 	return m_bEFLOWequalILFOW;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets show e flow in settings
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CConfiguration::getShowEFlowInSettings()
 {
 	return m_bShowEFlowInSettings;
 }
+
+/**********************************************************************************************//**
+ * Sets show e flow in settings
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::setShowEFlowInSettings(bool bState)
 {
 	m_bShowEFlowInSettings=bState;
@@ -5361,9 +6218,16 @@ void CConfiguration::setShowEFlowInSettings(bool bState)
 		getModel()->getI2C()->WriteConfigByte(EFLOWSETTINGS_8, 0);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets play backup sound
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CConfiguration::GetPlayBackupSound()
 {
 	return m_bPlayBackupSound;
@@ -5381,9 +6245,16 @@ bool CConfiguration::GetPlayBackupSound()
 //		getModel()->getI2C()->WriteConfigByte(BACKUPSOUND_8, 0);
 //	}
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets play vlimit sound
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CConfiguration::GetPlayVlimitSound()
 {
 	return m_bPlayVlimitSound;
@@ -5409,22 +6280,45 @@ bool CConfiguration::GetPlayVlimitSound()
 //		}
 //	}
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets percent abort criterion psv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetPercentAbortCriterionPSV(int iVal)
 {
 	m_iPercentAbortCriterionPSV=iVal;
 	getModel()->getI2C()->WriteConfigByte(ABORTCRITERIONPSV_8, iVal);
 }
+
+/**********************************************************************************************//**
+ * Gets percent abort criterion psv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The percent abort criterion psv.
+ **************************************************************************************************/
+
 int CConfiguration::GetPercentAbortCriterionPSV()
 {
 	return m_iPercentAbortCriterionPSV;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets flush time
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	byTime	The by time.
+ **************************************************************************************************/
+
 void CConfiguration::SetFlushTime(BYTE byTime)
 {
 
@@ -5435,193 +6329,450 @@ void CConfiguration::SetFlushTime(BYTE byTime)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_FLUSHTIME,byTime);
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets flush time
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The flush time.
+ **************************************************************************************************/
+
 BYTE CConfiguration::GetFlushTime()
 {
 	return m_byFlushTime;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets manager breath time
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iTime	Zero-based index of the time.
+ **************************************************************************************************/
+
 void CConfiguration::SetManBreathTime(int iTime)
 {
 	
 	m_iManBreathTime=iTime;
 	getModel()->getI2C()->WriteConfigByte(MANBREATHTIME_8, iTime);
 }
+
+/**********************************************************************************************//**
+ * Gets manager breath time
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The manager breath time.
+ **************************************************************************************************/
+
 int CConfiguration::GetManBreathTime()
 {
 	return m_iManBreathTime;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets fo tconv amplitude
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	amp	The amp.
+ **************************************************************************************************/
+
 void CConfiguration::setFOTconv_AMPLITUDE(WORD amp)
 {
 	m_iFOTconv_AMPLITUDE=amp;
 	getModel()->getI2C()->WriteConfigWord(PARA_FOT_CONV_AMPLITUDE_16, amp);
 }
+
+/**********************************************************************************************//**
+ * Gets fo tconv amplitude
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The fo tconv amplitude.
+ **************************************************************************************************/
+
 WORD CConfiguration::getFOTconv_AMPLITUDE()
 {
 	return m_iFOTconv_AMPLITUDE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets fo tconv frequency
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	freq	The frequency.
+ **************************************************************************************************/
+
 void CConfiguration::setFOTconv_FREQ(BYTE freq)
 {
 	m_iFOTconv_FREQ=freq;
 	getModel()->getI2C()->WriteConfigByte(PARA_FOT_CONV_FREQ_8, freq);
 }
+
+/**********************************************************************************************//**
+ * Gets fo tconv frequency
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The fo tconv frequency.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getFOTconv_FREQ()
 {
 	return m_iFOTconv_FREQ;
 }
+
+/**********************************************************************************************//**
+ * Sets fo tconv peepend
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	peep	The peep.
+ **************************************************************************************************/
+
 void CConfiguration::setFOTconv_PEEPEND(WORD peep)
 {
 	m_iFOTconv_PEEPEND=peep;
 	getModel()->getI2C()->WriteConfigWord(PARA_FOT_CONV_PEEPEND_16, peep);
 }
+
+/**********************************************************************************************//**
+ * Gets fo tconv peepend
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The fo tconv peepend.
+ **************************************************************************************************/
+
 WORD CConfiguration::getFOTconv_PEEPEND()
 {
 	return m_iFOTconv_PEEPEND;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets fo tconv peepstart
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	peep	The peep.
+ **************************************************************************************************/
+
 void CConfiguration::setFOTconv_PEEPSTART(WORD peep)
 {
 	m_iFOTconv_PEEPSTART=peep;
 	getModel()->getI2C()->WriteConfigWord(PARA_FOT_CONV_PEEPSTART_16, peep);
 }
+
+/**********************************************************************************************//**
+ * Gets fo tconv peepstart
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The fo tconv peepstart.
+ **************************************************************************************************/
+
 WORD CConfiguration::getFOTconv_PEEPSTART()
 {
 	return m_iFOTconv_PEEPSTART;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets fo tconv steps
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	steps	The steps.
+ **************************************************************************************************/
+
 void CConfiguration::setFOTconv_STEPS(BYTE steps)
 {
 	m_iFOTconv_STEPS=steps;
 	getModel()->getI2C()->WriteConfigByte(PARA_FOT_CONV_STEPS_8, steps);
 }
+
+/**********************************************************************************************//**
+ * Gets fo tconv steps
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The fo tconv steps.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getFOTconv_STEPS()
 {
 	return m_iFOTconv_STEPS;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets difference peepfot
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	diff	The difference.
+ **************************************************************************************************/
+
 void CConfiguration::setDiffPEEPFOT(WORD diff)
 {
 	m_iDiffPEEPFOT=diff;
 }
+
+/**********************************************************************************************//**
+ * Gets difference peepfot
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The difference peepfot.
+ **************************************************************************************************/
+
 WORD CConfiguration::getDiffPEEPFOT()
 {
 	return m_iDiffPEEPFOT;
 }
 
+/**********************************************************************************************//**
+ * Sets fo thfo amplitude
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	amp	The amp.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CConfiguration::setFOThfo_AMPLITUDE(WORD amp)
 {
 	m_iFOThfo_AMPLITUDE=amp;
 	getModel()->getI2C()->WriteConfigByte(PARA_FOT_HFO_AMPLITUDE_16, amp);
 }
+
+/**********************************************************************************************//**
+ * Gets fo thfo amplitude
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The fo thfo amplitude.
+ **************************************************************************************************/
+
 WORD CConfiguration::getFOThfo_AMPLITUDE()
 {
 	return m_iFOThfo_AMPLITUDE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets fo thfo frequency
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	freq	The frequency.
+ **************************************************************************************************/
+
 void CConfiguration::setFOThfo_FREQ(BYTE freq)
 {
 	m_iFOThfo_FREQ=freq;
 	getModel()->getI2C()->WriteConfigByte(PARA_FOT_HFO_FREQ_8, freq);
 }
+
+/**********************************************************************************************//**
+ * Gets fo thfo frequency
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The fo thfo frequency.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getFOThfo_FREQ()
 {
 	return m_iFOThfo_FREQ;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets fo thfo pmeanend
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	pmean	The pmean.
+ **************************************************************************************************/
+
 void CConfiguration::setFOThfo_PMEANEND(WORD pmean)
 {
 	m_iFOThfo_PMEANEND=pmean;
 	getModel()->getI2C()->WriteConfigWord(PARA_FOT_HFO_PMEANEND_16, pmean);
 }
+
+/**********************************************************************************************//**
+ * Gets fo thfo pmeanend
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The fo thfo pmeanend.
+ **************************************************************************************************/
+
 WORD CConfiguration::getFOThfo_PMEANEND()
 {
 	return m_iFOThfo_PMEANEND;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets fo thfo pmeanstart
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	pmean	The pmean.
+ **************************************************************************************************/
+
 void CConfiguration::setFOThfo_PMEANSTART(WORD pmean)
 {
 	m_iFOThfo_PMEANSTART=pmean;
 	getModel()->getI2C()->WriteConfigWord(PARA_FOT_HFO_PMEANSTART_16, pmean);
 }
+
+/**********************************************************************************************//**
+ * Gets fo thfo pmeanstart
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The fo thfo pmeanstart.
+ **************************************************************************************************/
+
 WORD CConfiguration::getFOThfo_PMEANSTART()
 {
 	return m_iFOThfo_PMEANSTART;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets fo thfo steps
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	steps	The steps.
+ **************************************************************************************************/
+
 void CConfiguration::setFOThfo_STEPS(BYTE steps)
 {
 	m_iFOThfo_STEPS=steps;
 	getModel()->getI2C()->WriteConfigByte(PARA_FOT_HFO_STEPS_8, steps);
 }
+
+/**********************************************************************************************//**
+ * Gets fo thfo steps
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The fo thfo steps.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getFOThfo_STEPS()
 {
 	return m_iFOThfo_STEPS;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets difference pmean fot
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	diff	The difference.
+ **************************************************************************************************/
+
 void CConfiguration::setDiffPmeanFOT(WORD diff)
 {
 	m_iDiffPmeanFOT=diff;
 }
+
+/**********************************************************************************************//**
+ * Gets difference pmean fot
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The difference pmean fot.
+ **************************************************************************************************/
+
 WORD CConfiguration::getDiffPmeanFOT()
 {
 	return m_iDiffPmeanFOT;
 }
 
+/**********************************************************************************************//**
+ * Sets nebulizer time
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iTime	Zero-based index of the time.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CConfiguration::SetNebulizerTime(int iTime)
 {
 
 	m_iNebulizerTime=iTime;
 	getModel()->getI2C()->WriteConfigByte(NEBULIZERTIME_8, iTime);
 }
+
+/**********************************************************************************************//**
+ * Gets nebulizer time
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The nebulizer time.
+ **************************************************************************************************/
+
 int CConfiguration::GetNebulizerTime()
 {
 	return m_iNebulizerTime;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets current pmin alarm delay
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The current pmin alarm delay.
+ **************************************************************************************************/
+
 int CConfiguration::GetCurPminAlarmDelay()
 {
 	return m_iPminAlarmDelay;
 }
+
+/**********************************************************************************************//**
+ * Sets current pmin alarm delay
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iTime	Zero-based index of the time.
+ **************************************************************************************************/
+
 void CConfiguration::SetCurPminAlarmDelay(int iTime)
 {
 
@@ -5629,22 +6780,35 @@ void CConfiguration::SetCurPminAlarmDelay(int iTime)
 	getModel()->getI2C()->WriteConfigByte(PMINALARMDELAY_8, iTime);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets current patient alarm delay
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The current patient alarm delay.
+ **************************************************************************************************/
+
 int CConfiguration::getCurPatientAlarmDelay()
 {
 	return m_iPatientAlarmDelay;
 }
+
+/**********************************************************************************************//**
+ * Sets current patient alarm delay
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iTime	Zero-based index of the time.
+ **************************************************************************************************/
+
 void CConfiguration::setCurPatientAlarmDelay(int iTime)
 {
 	m_iPatientAlarmDelay=iTime;
 	getModel()->getI2C()->WriteConfigByte(PATIENTALARMDELAY_8, iTime);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 //double CConfiguration::GetMAXSCALE_CLFIO2_GRAPH()
 //{
 //	return (double)m_iMAXSCALE_CLFIO2_GRAPH/10;
@@ -5665,50 +6829,150 @@ void CConfiguration::setCurPatientAlarmDelay(int iTime)
 //	m_iMAXSCALE_EMG_GRAPH=iTemp;
 //	getModel()->getI2C()->WriteConfigWord(MAXSCALE_EMG_GRAPH_16, iTemp);
 //}
+
+/**********************************************************************************************//**
+ * Gets maxscale spo 2 graph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale spo 2 graph.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_SPO2_GRAPH()
 {
 	return (double)m_iMAXSCALE_SPO2_GRAPH/10;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale spo 2 graph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_SPO2_GRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_SPO2_GRAPH=iTemp;
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_SPO2_GRAPH_16, iTemp);
 }
+
+/**********************************************************************************************//**
+ * Gets maxscale co 2 graph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale co 2 graph.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_CO2_GRAPH()
 {
 	return (double)m_iMAXSCALE_CO2_GRAPH/10;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale co 2 graph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_CO2_GRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_CO2_GRAPH=iTemp;
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_CO2_GRAPH_16, iTemp);
 }
+
+/**********************************************************************************************//**
+ * Gets maxscale flow graph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale flow graph.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_FLOW_GRAPH()
 {
 	return (double)m_iMAXSCALE_FLOW_GRAPH/10;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale flow graph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_FLOW_GRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_FLOW_GRAPH=iTemp;
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_FLOW_GRAPH_16, iTemp);
 }
+
+/**********************************************************************************************//**
+ * Gets maxscale pressure graph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale pressure graph.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_PRESSURE_GRAPH()
 {
 	return (double)m_iMAXSCALE_PRESSURE_GRAPH/10;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale pressure graph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_PRESSURE_GRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_PRESSURE_GRAPH=iTemp;
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_PRESSURE_GRAPH_16, iTemp);
 }
+
+/**********************************************************************************************//**
+ * Gets maxscale volume graph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale volume graph.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_VOLUME_GRAPH()
 {
 	return (double)m_iMAXSCALE_VOLUME_GRAPH/10;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale volume graph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_VOLUME_GRAPH(double value)
 {
 	int iTemp=(int)(value*10);
@@ -5716,63 +6980,179 @@ void CConfiguration::SetMAXSCALE_VOLUME_GRAPH(double value)
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_GRAPH_16, iTemp);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets maxscale spo 2 hfgraph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale spo 2 hfgraph.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_SPO2_HFGRAPH()
 {
 	return (double)m_iMAXSCALE_SPO2_HFGRAPH/10;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale spo 2 hfgraph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_SPO2_HFGRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_SPO2_HFGRAPH=iTemp;
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_SPO2_HFGRAPH_16, iTemp);
 }
+
+/**********************************************************************************************//**
+ * Gets maxscale co 2 hfgraph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale co 2 hfgraph.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_CO2_HFGRAPH()
 {
 	return (double)m_iMAXSCALE_CO2_HFGRAPH/10;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale co 2 hfgraph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_CO2_HFGRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_CO2_HFGRAPH=iTemp;
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_CO2_HFGRAPH_16, iTemp);
 }
+
+/**********************************************************************************************//**
+ * Gets maxscale flow hfgraph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale flow hfgraph.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_FLOW_HFGRAPH()
 {
 	return (double)m_iMAXSCALE_FLOW_HFGRAPH/10;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale flow hfgraph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_FLOW_HFGRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_FLOW_HFGRAPH=iTemp;
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_FLOW_HFGRAPH_16, iTemp);
 }
+
+/**********************************************************************************************//**
+ * Gets maxscale volume hfgraph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale volume hfgraph.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_VOLUME_HFGRAPH()
 {
 	return (double)m_iMAXSCALE_VOLUME_HFGRAPH/10;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale volume hfgraph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_VOLUME_HFGRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_VOLUME_HFGRAPH=iTemp;
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_HFGRAPH_16, iTemp);
 }
+
+/**********************************************************************************************//**
+ * Gets maxscale pressure hfgraph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale pressure hfgraph.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_PRESSURE_HFGRAPH()
 {
 	return (double)m_iMAXSCALE_PRESSURE_HFGRAPH/10;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale pressure hfgraph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_PRESSURE_HFGRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_PRESSURE_HFGRAPH=iTemp;
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_PRESSURE_HFGRAPH_16, iTemp);
 }
+
+/**********************************************************************************************//**
+ * Gets minscale pressure hfgraph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The minscale pressure hfgraph.
+ **************************************************************************************************/
+
 double CConfiguration::GetMINSCALE_PRESSURE_HFGRAPH()
 {
 	return (double)m_iMINSCALE_PRESSURE_HFGRAPH/10;
 }
+
+/**********************************************************************************************//**
+ * Sets minscale pressure hfgraph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMINSCALE_PRESSURE_HFGRAPH(double value)
 {
 	int iTemp=(int)(value*10);
@@ -5780,53 +7160,149 @@ void CConfiguration::SetMINSCALE_PRESSURE_HFGRAPH(double value)
 	getModel()->getI2C()->WriteConfigWord(MINSCALE_PRESSURE_HFGRAPH_16, iTemp);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets maxscale pressure hfpvloop
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale pressure hfpvloop.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_PRESSURE_HFPVLOOP()
 {
 	return (double)m_iMAXSCALE_PRESSURE_HFPVLOOP/10;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale pressure hfpvloop
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_PRESSURE_HFPVLOOP(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_PRESSURE_HFPVLOOP=iTemp;
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_PRESSURE_HFPVLOOP_16, iTemp);
 }
+
+/**********************************************************************************************//**
+ * Gets minscale pressure hfpvloop
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The minscale pressure hfpvloop.
+ **************************************************************************************************/
+
 double CConfiguration::GetMINSCALE_PRESSURE_HFPVLOOP()
 {
 	return (double)m_iMINSCALE_PRESSURE_HFPVLOOP/10;
 }
+
+/**********************************************************************************************//**
+ * Sets minscale pressure hfpvloop
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMINSCALE_PRESSURE_HFPVLOOP(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMINSCALE_PRESSURE_HFPVLOOP=iTemp;
 	getModel()->getI2C()->WriteConfigWord(MINSCALE_PRESSURE_HFPVLOOP_16, iTemp);
 }
+
+/**********************************************************************************************//**
+ * Gets maxscale volume hfpvloop
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale volume hfpvloop.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_VOLUME_HFPVLOOP()
 {
 	return (double)m_iMAXSCALE_VOLUME_HFPVLOOP/10;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale volume hfpvloop
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_VOLUME_HFPVLOOP(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_VOLUME_HFPVLOOP=iTemp;
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_HFPVLOOP_16, iTemp);
 }
+
+/**********************************************************************************************//**
+ * Gets maxscale flow hfvfloop
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale flow hfvfloop.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_FLOW_HFVFLOOP()
 {
 	return (double)m_iMAXSCALE_FLOW_HFVFLOOP/10;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale flow hfvfloop
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_FLOW_HFVFLOOP(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_FLOW_HFVFLOOP=iTemp;
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_FLOW_HFVFLOOP_16, iTemp);
 }
+
+/**********************************************************************************************//**
+ * Gets maxscale volume hfvfloop
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale volume hfvfloop.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_VOLUME_HFVFLOOP()
 {
 	return (double)m_iMAXSCALE_VOLUME_HFVFLOOP/10;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale volume hfvfloop
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_VOLUME_HFVFLOOP(double value)
 {
 	int iTemp=(int)(value*10);
@@ -5834,43 +7310,118 @@ void CConfiguration::SetMAXSCALE_VOLUME_HFVFLOOP(double value)
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_HFVFLOOP_16, iTemp);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets maxscale pressure pvloop
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale pressure pvloop.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_PRESSURE_PVLOOP()
 {
 	return (double)m_iMAXSCALE_PRESSURE_PVLOOP/10;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale pressure pvloop
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_PRESSURE_PVLOOP(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_PRESSURE_PVLOOP=iTemp;
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_PRESSURE_PVLOOP_16, iTemp);
 }
+
+/**********************************************************************************************//**
+ * Gets maxscale volume pvloop
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale volume pvloop.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_VOLUME_PVLOOP()
 {
 	return (double)m_iMAXSCALE_VOLUME_PVLOOP/10;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale volume pvloop
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_VOLUME_PVLOOP(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_VOLUME_PVLOOP=iTemp;
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_PVLOOP_16, iTemp);
 }
+
+/**********************************************************************************************//**
+ * Gets maxscale volume vfloop
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale volume vfloop.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_VOLUME_VFLOOP()
 {
 	return (double)m_iMAXSCALE_VOLUME_VFLOOP/10;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale volume vfloop
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_VOLUME_VFLOOP(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_VOLUME_VFLOOP=iTemp;
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_VFLOOP_16, iTemp);
 }
+
+/**********************************************************************************************//**
+ * Gets maxscale flow vfloop
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale flow vfloop.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_FLOW_VFLOOP()
 {
 	return (double)m_iMAXSCALE_FLOW_VFLOOP/10;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale flow vfloop
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
 
 void CConfiguration::SetMAXSCALE_FLOW_VFLOOP(double value)
 {
@@ -5879,255 +7430,595 @@ void CConfiguration::SetMAXSCALE_FLOW_VFLOOP(double value)
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_FLOW_VFLOOP_16, iTemp);
 }
 
-/**=================================================================================================
- * \fn double CConfiguration::GetMAXSCALE_FOT_PMEAN()
+/**********************************************************************************************//**
+ * Gets maxscale fot pressure
  *
- * \brief Gets maxscale fot pmean.
+ * \author	Rainer
+ * \date	19.02.2018
  *
- * \author Rainer
- * \date 28 Jan 2016
- *
- * \return The maxscale fot pmean.
- *===============================================================================================**/
+ * \return	The maxscale fot pressure.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_FOT_PRESSURE()
 {
 	return (double)m_iMAXSCALE_FOT_PRESSURE;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale fot pressure
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_FOT_PRESSURE(double value)
 {
 	m_iMAXSCALE_FOT_PRESSURE=value;
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_FOT_PRESSURE_16, value);
 }
+
+/**********************************************************************************************//**
+ * Gets minscale fot xrs
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The minscale fot xrs.
+ **************************************************************************************************/
+
 double CConfiguration::GetMINSCALE_FOT_XRS()
 {
 	return m_iMINSCALE_FOT_XRS;
 }
+
+/**********************************************************************************************//**
+ * Sets minscale fot xrs
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMINSCALE_FOT_XRS(double value)
 {
 	m_iMINSCALE_FOT_XRS=value;
 	//getModel()->getI2C()->WriteConfigWord(MINSCALE_FOT_XRS_16, value); //rku, check FOTGRAPH
 }
 
+/**********************************************************************************************//**
+ * Gets maxscale fot xrs
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The maxscale fot xrs.
+ **************************************************************************************************/
+
 double CConfiguration::GetMAXSCALE_FOT_XRS()
 {
 	return m_iMAXSCALE_FOT_XRS;
 }
+
+/**********************************************************************************************//**
+ * Sets maxscale fot xrs
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetMAXSCALE_FOT_XRS(double value)
 {
 	m_iMAXSCALE_FOT_XRS=value;
 	//getModel()->getI2C()->WriteConfigWord(MINSCALE_FOT_XRS_16, value); //rku, check FOTGRAPH
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Trend set p insp maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetPInspMax(int value)
 {
 	m_iTrendPInspMax=value;
 	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_PINSP_16, value);
 }
+
+/**********************************************************************************************//**
+ * Trend get p insp maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::TrendGetPInspMax()
 {
 	return m_iTrendPInspMax;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Trend set p mean maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetPMeanMax(int value)
 {
 	m_iTrendPMeanMax=value;
 	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_PMEAN_16, value);
 }
+
+/**********************************************************************************************//**
+ * Trend get p mean maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::TrendGetPMeanMax()
 {
 	return m_iTrendPMeanMax;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Trend set fio 2 maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetFIO2Max(int value)
 {
 	m_iTrendFIO2Max=value;
 	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_FIO2_16, value);
 }
+
+/**********************************************************************************************//**
+ * Trend get fio 2 maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::TrendGetFIO2Max()
 {
 	return m_iTrendFIO2Max;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Trend set vte maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetVteMax(int value)
 {
 	m_iTrendVteMax=value;
 	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_VTE_16, value);
 }
+
+/**********************************************************************************************//**
+ * Trend get vte maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::TrendGetVteMax()
 {
 	return m_iTrendVteMax;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Trend set compliance maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetComplianceMax(int value)
 {
 	m_iTrendComplianceMax=value;
 	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_COMPLIANCE_16, value);
 }
+
+/**********************************************************************************************//**
+ * Trend get compliance maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::TrendGetComplianceMax()
 {
 	return m_iTrendComplianceMax;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Trend set dco 2 maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetDCO2Max(int value)
 {
 	m_iTrendDCO2Max=value;
 	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_DCO2_16, value);
 }
+
+/**********************************************************************************************//**
+ * Trend get dco 2 maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::TrendGetDCO2Max()
 {
 	return m_iTrendDCO2Max;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Trend set mv maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetMVMax(int value)
 {
 	m_iTrendMVMax=value;
 	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_MV_16, value);
 }
+
+/**********************************************************************************************//**
+ * Trend get mv maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::TrendGetMVMax()
 {
 	return m_iTrendMVMax;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Trend set hfamp maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetHFAMPMax(int value)
 {
 	m_iTrendHFAMPMax=value;
 	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_HFAMP_16, value);
 }
+
+/**********************************************************************************************//**
+ * Trend get hfamp maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::TrendGetHFAMPMax()
 {
 	return m_iTrendHFAMPMax;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Trend set rsbi maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetRSBIMax(int value)
 {
 	m_iTrendRSBIMax=value;
 	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_RSBI_16, value);
 }
+
+/**********************************************************************************************//**
+ * Trend get rsbi maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::TrendGetRSBIMax()
 {
 	return m_iTrendRSBIMax;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Trend set sharemvmand maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetSHAREMVMANDMax(int value)
 {
 	m_iTrendSHAREMVMANDMax=value;
 	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SHAREMVMAND_16, value);
 }
+
+/**********************************************************************************************//**
+ * Trend get sharemvmand maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::TrendGetSHAREMVMANDMax()
 {
 	return m_iTrendSHAREMVMANDMax;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Trend set resistance maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetRESISTANCEMax(int value)
 {
 	m_iTrendRESISTANCEMax=value;
 	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_RESISTANCE_16, value);
 }
+
+/**********************************************************************************************//**
+ * Trend get resistance maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::TrendGetRESISTANCEMax()
 {
 	return m_iTrendRESISTANCEMax;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Trend set leak maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetLEAKMax(int value)
 {
 	m_iTrendLEAKMax=value;
 	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_LEAK_16, value);
 }
+
+/**********************************************************************************************//**
+ * Trend get leak maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::TrendGetLEAKMax()
 {
 	return m_iTrendLEAKMax;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Trend set spo 2 maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetSPO2Max(int value)
 {
 	m_iTrendSPO2Max=value;
 	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SPO2_16, value);
 }
+
+/**********************************************************************************************//**
+ * Trend get spo 2 maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::TrendGetSPO2Max()
 {
 	return m_iTrendSPO2Max;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Trend set spo 2 pr maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetSPO2PRMax(int value)
 {
 	m_iTrendSPO2PRMax=value;
 	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SPO2PR_16, value);
 }
+
+/**********************************************************************************************//**
+ * Trend get spo 2 pr maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::TrendGetSPO2PRMax()
 {
 	return m_iTrendSPO2PRMax;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Trend set frequency maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetFREQUENCYMax(int value)
 {
 	m_iTrendFREQUENCYMax=value;
 	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_FREQUENCY_16, value);
 }
+
+/**********************************************************************************************//**
+ * Trend get frequency maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::TrendGetFREQUENCYMax()
 {
 	return m_iTrendFREQUENCYMax;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Trend set spo 2 pi maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetSPO2PIMax(int value)
 {
 	m_iTrendSPO2PIMax=value;
 	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SPO2PI_16, value);
 }
+
+/**********************************************************************************************//**
+ * Trend get spo 2 pi maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::TrendGetSPO2PIMax()
 {
 	return m_iTrendSPO2PIMax;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Trend set etco 2 maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::TrendSetETCO2Max(int value)
 {
 	m_iTrendETCO2Max=value;
 	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_ETCO2_16, value);
 }
+
+/**********************************************************************************************//**
+ * Trend get etco 2 maximum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::TrendGetETCO2Max()
 {
 	return m_iTrendETCO2Max;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Graph set actual speed graph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::GraphSetActualSpeedGraph(int value)
 {
 	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
@@ -6142,6 +8033,16 @@ void CConfiguration::GraphSetActualSpeedGraph(int value)
 	}
 	
 }
+
+/**********************************************************************************************//**
+ * Graph get actual speed graph
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::GraphGetActualSpeedGraph()
 {
 	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
@@ -6154,92 +8055,190 @@ int CConfiguration::GraphGetActualSpeedGraph()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Graph set actual speed clfio 2
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::GraphSetActualSpeedCLFIO2(int value)
 {
 	m_iGraphSpeedCLFIO2=value;
 	getModel()->getI2C()->WriteConfigByte(GRAPHSPEEDCLFIO2_8, value);
 
 }
+
+/**********************************************************************************************//**
+ * Graph get actual speed clfio 2
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::GraphGetActualSpeedCLFIO2()
 {
 	return m_iGraphSpeedCLFIO2;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets trend span
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	span	The span.
+ **************************************************************************************************/
+
 void CConfiguration::SetTrendSpan(UINT span)
 {
 	m_iTrendSpan=span;
 	getModel()->getI2C()->WriteConfigWord(TREND_SPAN_16, span);
 }
+
+/**********************************************************************************************//**
+ * Gets trend span
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The trend span.
+ **************************************************************************************************/
+
 UINT CConfiguration::GetTrendSpan()
 {
 	return m_iTrendSpan;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets trend type 1
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	type	The type.
+ **************************************************************************************************/
+
 void CConfiguration::SetTrendType1(UINT type)
 {
 	m_iTypeTrend1=type;
 	getModel()->getI2C()->WriteConfigByte(TREND_TYPE1_8, type);
 }
+
+/**********************************************************************************************//**
+ * Gets trend type 1
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The trend type 1.
+ **************************************************************************************************/
+
 UINT CConfiguration::GetTrendType1()
 {
 	return m_iTypeTrend1;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets trend type 2
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	type	The type.
+ **************************************************************************************************/
+
 void CConfiguration::SetTrendType2(UINT type)
 {
 	m_iTypeTrend2=type;
 	getModel()->getI2C()->WriteConfigByte(TREND_TYPE2_8, type);
 }
+
+/**********************************************************************************************//**
+ * Gets trend type 2
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The trend type 2.
+ **************************************************************************************************/
+
 UINT CConfiguration::GetTrendType2()
 {
 	return m_iTypeTrend2;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets trend type 3
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	type	The type.
+ **************************************************************************************************/
+
 void CConfiguration::SetTrendType3(UINT type)
 {
 	m_iTypeTrend3=type;
 	getModel()->getI2C()->WriteConfigByte(TREND_TYPE3_8, type);
 }
+
+/**********************************************************************************************//**
+ * Gets trend type 3
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The trend type 3.
+ **************************************************************************************************/
+
 UINT CConfiguration::GetTrendType3()
 {
 	return m_iTypeTrend3;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets ppsv as delta peep value
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::setPpsvAsDeltaPEEPValue(BOOL bState)
 {
 	m_bPPSVasDeltaPEEPValue=bState;
 	getModel()->getI2C()->WriteConfigByte(PPSV_AS_PEEPDELTA_8, bState);
 }
+
+/**********************************************************************************************//**
+ * Query if this object is ppsv as delta peep value
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if ppsv as delta peep value, false if not.
+ **************************************************************************************************/
+
 BOOL CConfiguration::isPpsvAsDeltaPEEPValue()
 {
 	return m_bPPSVasDeltaPEEPValue;
 }
 
 /**********************************************************************************************//**
- * @fn	void CConfiguration::setLeakCompensation(BOOL bState)
+ * Sets leak compensation
  *
- * @brief	Sets leak component off.
- * 			If m_eLeakCompensation is TRUE, then LEAKCOMPENSATIONOFF_8 in FRAM set to 1
+ * \author	Rainer
+ * \date	19.02.2018
  *
- * @author	Rainer Kuehner
- * @date	16.03.2016
- *
- * @param	bState	true to state.
+ * \param	leakComp	The leak component.
  **************************************************************************************************/
+
 void CConfiguration::setLeakCompensation(eLeakCompensation leakComp)
 {
 	m_eLeakCompensation=leakComp;
@@ -6248,17 +8247,46 @@ void CConfiguration::setLeakCompensation(eLeakCompensation leakComp)
 	getModel()->Send_MODE_OPTION2(true,true);
 	getModel()->writeLEAKCOMPENSATIONToLog();
 }
+
+/**********************************************************************************************//**
+ * Gets leak compensation
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The leak compensation.
+ **************************************************************************************************/
+
 eLeakCompensation CConfiguration::getLeakCompensation()
 {
 	return m_eLeakCompensation;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets the next service date
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The next service date.
+ **************************************************************************************************/
+
 COleDateTime CConfiguration::getNextServiceDate()
 {
 	return m_dtNextServiceDate;
 }
+
+/**********************************************************************************************//**
+ * Sets next service date
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iYear 	Zero-based index of the year.
+ * \param	iMonth	Zero-based index of the month.
+ * \param	iDate 	Zero-based index of the date.
+ **************************************************************************************************/
+
 void CConfiguration::setNextServiceDate(WORD iYear, WORD iMonth, WORD iDate)
 {
 	getModel()->getI2C()->WriteConfigWord(SERVICE_YEAR_16, iYear);
@@ -6267,51 +8295,128 @@ void CConfiguration::setNextServiceDate(WORD iYear, WORD iMonth, WORD iDate)
 	m_dtNextServiceDate.SetDate(iYear, iMonth, iDate);
 	getModel()->isMaintenanceNeeded();
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Graph set primary line diagramm
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::GraphSetPrimaryLineDiagramm(int value)
 {
 	m_iPrimaryLineDiagramm=value;
 	getModel()->getI2C()->WriteConfigByte(CURLINEDIAGRAMM_8, value);
 }
+
+/**********************************************************************************************//**
+ * Graph get primary line diagramm
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CConfiguration::GraphGetPrimaryLineDiagramm()
 {
 	return m_iPrimaryLineDiagramm;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets system h wrevision
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The system h wrevision.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getSystemHWrevision()
 {
 	return m_iSystemHWrevision;
 }
+
+/**********************************************************************************************//**
+ * Gets development type
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The development type.
+ **************************************************************************************************/
+
 eDevType CConfiguration::getDevType()
 {
 	return m_eDevType;
 }
+
+/**********************************************************************************************//**
+ * Gets flow sensor type
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The flow sensor type.
+ **************************************************************************************************/
+
 eFlowSensorType CConfiguration::getFlowSensorType()
 {
 	return m_eFlowSensorType;
 }
+
+/**********************************************************************************************//**
+ * Gets a v revision
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	a v revision.
+ **************************************************************************************************/
+
 eAVRevision CConfiguration::getAVRevision()
 {
 	return m_eAVRevision;
 }
+
+/**********************************************************************************************//**
+ * Gets hf module revision
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The hf module revision.
+ **************************************************************************************************/
 
 eHFModuleRevision CConfiguration::getHFModuleRevision()
 {
 	return m_eHFRevision;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets main board version
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The main board version.
+ **************************************************************************************************/
+
 BYTE CConfiguration::GetMainBoardVersion()
 {
 	return m_iMainBoard;
 }
+
+/**********************************************************************************************//**
+ * Sets main board version
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	vers	The vers.
+ **************************************************************************************************/
 
 void CConfiguration::setMainBoardVersion(UINT vers)
 {
@@ -6319,21 +8424,58 @@ void CConfiguration::setMainBoardVersion(UINT vers)
 	getModel()->getI2C()->WriteConfigByte(HWCONF_MAINBOARD,vers);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets temporary spo 2module
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	mod	The modifier.
+ **************************************************************************************************/
+
 void CConfiguration::setTempSPO2module(BYTE mod)
 {
 	m_bySPO2ModuleTemp=mod;
 }
+
+/**********************************************************************************************//**
+ * Gets temporary spo 2module
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The temporary spo 2module.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getTempSPO2module()
 {
 	return m_bySPO2ModuleTemp;
 }
+
+/**********************************************************************************************//**
+ * Gets spo 2module
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The spo 2module.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getSPO2module()
 {
 	return m_iSPO2module;
 }
+
+/**********************************************************************************************//**
+ * Sets spo 2module
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	mod	   	The modifier.
+ * \param	bReinit	True to reinitialize.
+ **************************************************************************************************/
+
 void CConfiguration::setSPO2module(BYTE mod, bool bReinit)
 {
 	m_bSpO2ConfigInProgress=true;
@@ -6483,25 +8625,70 @@ void CConfiguration::setSPO2module(BYTE mod, bool bReinit)
 		getModel()->logSPO2module();
 }
 
+/**********************************************************************************************//**
+ * Query if this object is sp o 2 configuration in progress
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if sp o 2 configuration in progress, false if not.
+ **************************************************************************************************/
+
 bool CConfiguration::isSpO2ConfigInProgress()
 {
 	return m_bSpO2ConfigInProgress;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets temporary co 2module
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	mod	The modifier.
+ **************************************************************************************************/
+
 void CConfiguration::setTempCO2module(BYTE mod)
 {
 	m_byCO2ModuleTemp=mod;
 }
+
+/**********************************************************************************************//**
+ * Gets temporary co 2module
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The temporary co 2module.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getTempCO2module()
 {
 	return m_byCO2ModuleTemp;
 }
+
+/**********************************************************************************************//**
+ * Gets co 2module
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The co 2module.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getCO2module()
 {
 	return m_iCO2module;
 }
+
+/**********************************************************************************************//**
+ * Sets co 2module
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	mod	The modifier.
+ **************************************************************************************************/
 
 void CConfiguration::setCO2module(BYTE mod)//CO2RKU
 {
@@ -6630,13 +8817,29 @@ void CConfiguration::setCO2module(BYTE mod)//CO2RKU
 	getModel()->logCO2module();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets ethernet port
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The ethernet port.
+ **************************************************************************************************/
+
 UINT CConfiguration::GetEthernetPort()
 {
 	return m_iEthernetPort;
 }
+
+/**********************************************************************************************//**
+ * Sets ethernet port
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	port	The port.
+ **************************************************************************************************/
+
 void CConfiguration::SetEthernetPort(UINT port)
 {
 	m_iEthernetPort=port;
@@ -6644,13 +8847,28 @@ void CConfiguration::SetEthernetPort(UINT port)
 	getModel()->getI2C()->WriteConfigWord(ETHERNETPORT_16,m_iEthernetPort);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets pdm sprotocol
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The pdm sprotocol.
+ **************************************************************************************************/
+
 BYTE CConfiguration::GetPDMSprotocol()
 {
 	return m_iPDMSProtocol;
 }
+
+/**********************************************************************************************//**
+ * Sets pdm sprotocol
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	prot	The prot.
+ **************************************************************************************************/
 
 void CConfiguration::SetPDMSprotocol(BYTE prot)
 {
@@ -6659,22 +8877,57 @@ void CConfiguration::SetPDMSprotocol(BYTE prot)
 	getModel()->getI2C()->WriteConfigByte(PDMSCONFIG,m_iPDMSProtocol);
 }
 
+/**********************************************************************************************//**
+ * Gets acu link version
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The acu link version.
+ **************************************************************************************************/
+
 eAcuLinkVersion CConfiguration::GetAcuLinkVersion()
 {
 	return m_eAcuLinkVersion;
 }
+
+/**********************************************************************************************//**
+ * Sets acu link version
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	vers	The vers.
+ **************************************************************************************************/
+
 void CConfiguration::SetAcuLinkVersion(eAcuLinkVersion vers)
 {
 	m_eAcuLinkVersion=vers;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets vent range
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The calculated vent range.
+ **************************************************************************************************/
+
 int CConfiguration::GetVentRange()
 {
 	return m_iVentRange;
 }
+
+/**********************************************************************************************//**
+ * Sets vent range
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	range	The range.
+ **************************************************************************************************/
+
 void CConfiguration::SetVentRange(int range)
 {
 	if(NEONATAL==range)
@@ -6722,15 +8975,13 @@ void CConfiguration::SetVentRange(int range)
 		getModel()->Send_VENT_MODE(getModel()->getCONFIG()->GetCurMode());*/
 }
 
-// **************************************************************************
-/**
- * @brief Check the settings depending on ventilation range NEONATAL/PEDIATRIC
+/**********************************************************************************************//**
+ * Check vent range settings
  *
- *   Checks following settings of the settings depending on ventilation range of
- *   NEONATAL/PEDIATRIC:
- *   - scaling of volume graph/loop
- **/
-// **************************************************************************
+ * \author	Rainer
+ * \date	19.02.2018
+ **************************************************************************************************/
+
 void CConfiguration::checkVentRangeSettings()
 {
 	//check max scaling of volume graph/loop
@@ -6786,9 +9037,15 @@ void CConfiguration::checkVentRangeSettings()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Determines if we can current mode is preset mode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CConfiguration::CurModeIsPresetMode()
 {
 	eVentMode mode=VM_NONE;
@@ -6813,9 +9070,15 @@ bool CConfiguration::CurModeIsPresetMode()
 		return false;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets current pressure rise control
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	form	The form.
+ **************************************************************************************************/
+
 void CConfiguration::SetCurPressureRiseCtrl(eCurveForm form)
 {
 	int iIFlow=0;
@@ -6890,6 +9153,16 @@ void CConfiguration::SetCurPressureRiseCtrl(eCurveForm form)
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_SYSTEMSTATE_CHANGED);
 }
+
+/**********************************************************************************************//**
+ * Gets current pressure rise control
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The current pressure rise control.
+ **************************************************************************************************/
+
 eCurveForm CConfiguration::GetCurPressureRiseCtrl()
 {
 	 
@@ -6910,9 +9183,15 @@ eCurveForm CConfiguration::GetCurPressureRiseCtrl()
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets current mode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The current mode.
+ **************************************************************************************************/
+
 eVentMode CConfiguration::GetCurMode()//newSPI
 {
 	eVentMode mode=VM_NONE;
@@ -6922,9 +9201,16 @@ eVentMode CConfiguration::GetCurMode()//newSPI
 
 	return mode;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets current mode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetCurMode(eVentMode state)//newSPI
 {
 	if(		state != VM_PRE_IPPV
@@ -6967,11 +9253,15 @@ void CConfiguration::SetCurMode(eVentMode state)//newSPI
 	LeaveCriticalSection(&csVentMode);
 }
 
+/**********************************************************************************************//**
+ * Gets the previous mode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The previous mode.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 eVentMode CConfiguration::GetPrevMode()//newSPI
 {
 	eVentMode mode=VM_NONE;
@@ -6981,9 +9271,16 @@ eVentMode CConfiguration::GetPrevMode()//newSPI
 
 	return mode;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets previous mode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetPrevMode(eVentMode state)//newSPI
 {
 	EnterCriticalSection(&csVentMode);
@@ -6993,13 +9290,28 @@ void CConfiguration::SetPrevMode(eVentMode state)//newSPI
 	getModel()->getI2C()->WriteConfigByte(PREVVENTMODE_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets current a limit numeric
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The current a limit numeric.
+ **************************************************************************************************/
+
 eALimitNumeric CConfiguration::getCurALimitNumeric()
 {
 	return m_eLastALimitNumeric;
 }
+
+/**********************************************************************************************//**
+ * Sets current a limit numeric
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	numeric	The numeric.
+ **************************************************************************************************/
 
 void CConfiguration::setCurALimitNumeric(eALimitNumeric numeric)
 {
@@ -7007,58 +9319,153 @@ void CConfiguration::setCurALimitNumeric(eALimitNumeric numeric)
 	getModel()->getI2C()->WriteConfigByte(ALIMITLASTNUMERICSTATE_8,numeric);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the last selected sv setting btns
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last selected sv setting btns.
+ **************************************************************************************************/
+
 int CConfiguration::GetLastSelectedSVSettingBtns()
 {
 	return m_iSetupView_SettingBtn;
 }
+
+/**********************************************************************************************//**
+ * Sets last selected sv setting btns
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	btns	The btns.
+ **************************************************************************************************/
+
 void CConfiguration::SetLastSelectedSVSettingBtns(int btns)
 {
 	m_iSetupView_SettingBtn=btns;
 }
 
+/**********************************************************************************************//**
+ * Gets the last selected svco 2 btns
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last selected svco 2 btns.
+ **************************************************************************************************/
 
 int CConfiguration::GetLastSelectedSVCO2Btns()
 {
 	return m_iSetupView_CO2Btn;
 }
+
+/**********************************************************************************************//**
+ * Sets last selected svco 2 btns
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	btns	The btns.
+ **************************************************************************************************/
+
 void CConfiguration::SetLastSelectedSVCO2Btns(int btns)
 {
 	m_iSetupView_CO2Btn=btns;
 }
 
+/**********************************************************************************************//**
+ * Gets the last selected svspo 2 btns
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last selected svspo 2 btns.
+ **************************************************************************************************/
+
 int CConfiguration::GetLastSelectedSVSPO2Btns()
 {
 	return m_iSetupView_SPO2Btn;
 }
+
+/**********************************************************************************************//**
+ * Sets last selected svspo 2 btns
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	btns	The btns.
+ **************************************************************************************************/
+
 void CConfiguration::SetLastSelectedSVSPO2Btns(int btns)
 {
 	m_iSetupView_SPO2Btn=btns;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the last selected a l btns
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last selected a l btns.
+ **************************************************************************************************/
+
 int CConfiguration::GetLastSelectedALBtns()
 {
 	return m_iALimit_Btn;
 }
+
+/**********************************************************************************************//**
+ * Sets last selected a l btns
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	btns	The btns.
+ **************************************************************************************************/
+
 void CConfiguration::SetLastSelectedALBtns(int btns)
 {
 	//DEBUGMSG(TRUE, (TEXT("SetLastSelectedALBtns() %d\r\n"),btns));
 	m_iALimit_Btn=btns;
 }
 
+/**********************************************************************************************//**
+ * Gets the last selected fot view btns
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last selected fot view btns.
+ **************************************************************************************************/
+
 int CConfiguration::getLastSelectedFOTViewBtns()
 {
 	return m_iFOTViewBtn;
 }
+
+/**********************************************************************************************//**
+ * Sets last selected fot view btns
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	btns	The btns.
+ **************************************************************************************************/
+
 void CConfiguration::setLastSelectedFOTViewBtns(int btns)
 {
 	m_iFOTViewBtn=btns;
 }
+
+/**********************************************************************************************//**
+ * Readin fo tvent delaytime
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ **************************************************************************************************/
 
 void CConfiguration::readinFOTventDelaytime()
 {
@@ -7070,6 +9477,16 @@ void CConfiguration::readinFOTventDelaytime()
 	if(m_iFOTventDelaytime<VENTDELAYTIME_MIN || m_iFOTventDelaytime>VENTDELAYTIME_MAX)
 		m_iFOTventDelaytime=VENTDELAYTIME;
 }
+
+/**********************************************************************************************//**
+ * Gets fo tvent delaytime
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The fo tvent delaytime.
+ **************************************************************************************************/
+
 WORD CConfiguration::getFOTventDelaytime()
 {
 	CTlsRegistry regLang(_T("HKCU\\Software\\FabianHFO\\WorkState\\FOT"),true);
@@ -7079,9 +9496,16 @@ WORD CConfiguration::getFOTventDelaytime()
 		m_iFOTventDelaytime=VENTDELAYTIME;
 	return m_iFOTventDelaytime;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets the last selected para view btns
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last selected para view btns.
+ **************************************************************************************************/
+
 int CConfiguration::GetLastSelectedParaViewBtns()
 {
 	//return m_iParaView_Btn;
@@ -7155,6 +9579,16 @@ int CConfiguration::GetLastSelectedParaViewBtns()
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets last selected para view btns
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	btns	The btns.
+ **************************************************************************************************/
+
 void CConfiguration::SetLastSelectedParaViewBtns(int btns)
 {
 	switch(GetCurMode())
@@ -7227,9 +9661,16 @@ void CConfiguration::SetLastSelectedParaViewBtns(int btns)
 		break;
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data i time ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data i time ippv.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataITime_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -7239,6 +9680,16 @@ WORD CConfiguration::GetParaDataITime_IPPV()
 #endif
 	
 }
+
+/**********************************************************************************************//**
+ * Sets para data i time ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataITime_IPPV(WORD iVal)
 {
 #ifdef BACKUP_VENTILATION
@@ -7249,27 +9700,74 @@ void CConfiguration::SetParaDataITime_IPPV(WORD iVal)
 	getModel()->getI2C()->WriteConfigWord(PARA_ITIME_TRIGGER_16, iVal);
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets para data i time trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data i time trigger.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataITime_TRIGGER()
 {
 	return m_iParaDataITime_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Sets para data i time trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataITime_TRIGGER(WORD iVal)
 {
 	m_iParaDataITime_TRIGGER=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_ITIME_TRIGGER_16, iVal);
 }
+
+/**********************************************************************************************//**
+ * Gets para data i time nmode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data i time nmode.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataITime_NMODE()
 {
 	return m_iParaDataITime_NMODE;
 }
+
+/**********************************************************************************************//**
+ * Sets para data i time nmode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataITime_NMODE(WORD iVal)
 {
 	m_iParaDataITime_NMODE=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_ITIME_NMODE_16, iVal);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data etime ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data etime ippv.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataETIME_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -7278,6 +9776,16 @@ WORD CConfiguration::GetParaDataETIME_IPPV()
 	return m_iParaDataETIME_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Sets para data etime ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataETIME_IPPV(WORD iVal)
 {
 #ifdef BACKUP_VENTILATION
@@ -7288,27 +9796,74 @@ void CConfiguration::SetParaDataETIME_IPPV(WORD iVal)
 	getModel()->getI2C()->WriteConfigWord(PARA_ETIME_TRIGGER_16, iVal);
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets para data etime trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data etime trigger.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataETIME_TRIGGER()
 {
 	return m_iParaDataETIME_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Sets para data etime trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataETIME_TRIGGER(WORD iVal)
 {
 	m_iParaDataETIME_TRIGGER=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_ETIME_TRIGGER_16, iVal);
 }
+
+/**********************************************************************************************//**
+ * Gets para data etime nmode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data etime nmode.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataETIME_NMODE()
 {
 	return m_iParaDataETIME_NMODE;
 }
+
+/**********************************************************************************************//**
+ * Sets para data etime nmode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataETIME_NMODE(WORD iVal)
 {
 	m_iParaDataETIME_NMODE=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_ETIME_NMODE_16, iVal);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data bpm ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data bpm ippv.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataBPM_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -7317,6 +9872,16 @@ WORD CConfiguration::GetParaDataBPM_IPPV()
 	return m_iParaDataBPM_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Sets para data bpm ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataBPM_IPPV(WORD iVal)
 {
 #ifdef BACKUP_VENTILATION
@@ -7333,10 +9898,30 @@ void CConfiguration::SetParaDataBPM_IPPV(WORD iVal)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_FREQ,m_iParaDataBPM_TRIGGER);*/
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets para data bpm trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data bpm trigger.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataBPM_TRIGGER()
 {
 	return m_iParaDataBPM_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Sets para data bpm trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataBPM_TRIGGER(WORD iVal)
 {
 	m_iParaDataBPM_TRIGGER=iVal;
@@ -7345,10 +9930,30 @@ void CConfiguration::SetParaDataBPM_TRIGGER(WORD iVal)
 	/*if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_FREQ,m_iParaDataBPM_TRIGGER);*/
 }
+
+/**********************************************************************************************//**
+ * Gets para data bpm nmode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data bpm nmode.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataBPM_NMODE()
 {
 	return m_iParaDataBPM_NMODE;
 }
+
+/**********************************************************************************************//**
+ * Sets para data bpm nmode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataBPM_NMODE(WORD iVal)
 {
 	m_iParaDataBPM_NMODE=iVal;
@@ -7357,9 +9962,16 @@ void CConfiguration::SetParaDataBPM_NMODE(WORD iVal)
 	/*if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_FREQ,m_iParaDataBPM_NMODE);*/
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data i flow ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data i flow ippv.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataIFlow_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -7368,6 +9980,16 @@ WORD CConfiguration::GetParaDataIFlow_IPPV()
 	return m_iParaDataIFlow_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Sets para data i flow ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataIFlow_IPPV(WORD iVal)
 {
 #ifdef BACKUP_VENTILATION
@@ -7378,32 +10000,74 @@ void CConfiguration::SetParaDataIFlow_IPPV(WORD iVal)
 	getModel()->getI2C()->WriteConfigWord(PARA_IFLOW_TRIGGER_16, iVal);
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets para data i flow trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data i flow trigger.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataIFlow_TRIGGER()
 {
 	return m_iParaDataIFlow_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Sets para data i flow trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataIFlow_TRIGGER(WORD iVal)
 {
 	m_iParaDataIFlow_TRIGGER=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_IFLOW_TRIGGER_16, iVal);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets para data hf flow
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data hf flow.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataHFFlow()
 {
 	return m_iParaDataHFFlow;
 }
+
+/**********************************************************************************************//**
+ * Sets para data hf flow
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataHFFlow(WORD iVal)
 {
 	m_iParaDataHFFlow=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_HFFLOW_16, iVal);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets para data risetime ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data risetime ippv.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataRisetime_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -7412,6 +10076,16 @@ WORD CConfiguration::GetParaDataRisetime_IPPV()
 	return m_iParaDataRisetime_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Sets para data risetime ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataRisetime_IPPV(WORD iVal)
 {
 #ifdef BACKUP_VENTILATION
@@ -7422,27 +10096,74 @@ void CConfiguration::SetParaDataRisetime_IPPV(WORD iVal)
 	getModel()->getI2C()->WriteConfigWord(PARA_RISETIME_TRIGGER_16, iVal);
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets para data risetime trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data risetime trigger.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataRisetime_TRIGGER()
 {
 	return m_iParaDataRisetime_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Sets para data risetime trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataRisetime_TRIGGER(WORD iVal)
 {
 	m_iParaDataRisetime_TRIGGER=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_RISETIME_TRIGGER_16, iVal);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data therapie flow
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data therapie flow.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataTherapieFlow()
 {
 	return m_iParaDataTherapieFlow;
 }
+
+/**********************************************************************************************//**
+ * Sets para data therapie flow
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataTherapieFlow(WORD iVal)
 {
 	m_iParaDataTherapieFlow=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_THERAPYFLOW_16, iVal);
 }
+
+/**********************************************************************************************//**
+ * Gets para data e flow ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data e flow ippv.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataEFlow_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -7451,6 +10172,16 @@ WORD CConfiguration::GetParaDataEFlow_IPPV()
 	return m_iParaDataEFlow_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Sets para data e flow ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataEFlow_IPPV(WORD iVal)
 {
 #ifdef BACKUP_VENTILATION
@@ -7461,27 +10192,74 @@ void CConfiguration::SetParaDataEFlow_IPPV(WORD iVal)
 	getModel()->getI2C()->WriteConfigWord(PARA_EFLOW_TRIGGER_16, iVal);
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets para data e flow trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data e flow trigger.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataEFlow_TRIGGER()
 {
 	return m_iParaDataEFlow_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Sets para data e flow trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataEFlow_TRIGGER(WORD iVal)
 {
 	m_iParaDataEFlow_TRIGGER=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_EFLOW_TRIGGER_16, iVal);
 }
+
+/**********************************************************************************************//**
+ * Gets para data flow minimum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The calculated para data flow minimum.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataFlowMin()
 {
 	return m_iParaDataFlowMin;
 }
+
+/**********************************************************************************************//**
+ * Sets para data flow minimum
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataFlowMin(WORD iVal)
 {
 	m_iParaDataFlowMin=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_FLOWMIN_16, iVal);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data peep ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data peep ippv.
+ **************************************************************************************************/
+
 SHORT CConfiguration::GetParaDataPEEP_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -7490,6 +10268,16 @@ SHORT CConfiguration::GetParaDataPEEP_IPPV()
 	return m_iParaDataPEEP_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Sets para data peep ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataPEEP_IPPV(SHORT iVal)
 {
 #ifdef BACKUP_VENTILATION
@@ -7500,48 +10288,118 @@ void CConfiguration::SetParaDataPEEP_IPPV(SHORT iVal)
 	getModel()->getI2C()->WriteConfigWord(PARA_PEEP_TRIGGER_16, iVal);
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets para data peep trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data peep trigger.
+ **************************************************************************************************/
+
 SHORT CConfiguration::GetParaDataPEEP_TRIGGER()
 {
 	return m_iParaDataPEEP_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Sets para data peep trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataPEEP_TRIGGER(SHORT iVal)
 {
 	m_iParaDataPEEP_TRIGGER=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_PEEP_TRIGGER_16, iVal);
 }
-// **************************************************************************
-// 
-// **************************************************************************
-//SHORT CConfiguration::GetParaDataCPAP()
-//{
-//	return m_iParaDataCpap;
-//}
+
+/**********************************************************************************************//**
+ * Sets para data cpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataCPAP(SHORT iVal)
 {
 	m_iParaDataCpap=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_CPAP_16, iVal);
 }
+
+/**********************************************************************************************//**
+ * Gets para data cpap nmode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data cpap nmode.
+ **************************************************************************************************/
+
 SHORT CConfiguration::GetParaDataCPAP_NMODE()
 {
 	return m_iParaDataNmode;
 }
+
+/**********************************************************************************************//**
+ * Sets para data cpap nmode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataCPAP_NMODE(SHORT iVal)
 {
 	m_iParaDataNmode=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_CPAP_NMODE_16, iVal);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data p insp trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data p insp trigger.
+ **************************************************************************************************/
+
 SHORT CConfiguration::GetParaDataPInsp_TRIGGER()
 {
 	return m_iParaDataPInsp_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Sets para data p insp trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataPInsp_TRIGGER(SHORT iVal)
 {
 	m_iParaDataPInsp_TRIGGER=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_PINSP_TRIGGER_16, iVal);
 }
+
+/**********************************************************************************************//**
+ * Gets para data p insp ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data p insp ippv.
+ **************************************************************************************************/
+
 SHORT CConfiguration::GetParaDataPInsp_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -7550,6 +10408,16 @@ SHORT CConfiguration::GetParaDataPInsp_IPPV()
 	return m_iParaDataPInsp_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Sets para data p insp ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataPInsp_IPPV(SHORT iVal)
 {
 #ifdef BACKUP_VENTILATION
@@ -7560,15 +10428,45 @@ void CConfiguration::SetParaDataPInsp_IPPV(SHORT iVal)
 	getModel()->getI2C()->WriteConfigWord(PARA_PINSP_TRIGGER_16, iVal);
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets para data pmax volume g trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data pmax volume g trigger.
+ **************************************************************************************************/
+
 SHORT CConfiguration::GetParaDataPmaxVolG_TRIGGER()
 {
 	return m_iParaDataPmaxVolG_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Sets para data pmax volume g trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataPmaxVolG_TRIGGER(SHORT iVal)
 {
 	m_iParaDataPmaxVolG_TRIGGER=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_PMAXVOLG_TRIGGER_16, iVal);
 }
+
+/**********************************************************************************************//**
+ * Gets para data pmax volume g ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data pmax volume g ippv.
+ **************************************************************************************************/
+
 SHORT CConfiguration::GetParaDataPmaxVolG_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -7577,6 +10475,16 @@ SHORT CConfiguration::GetParaDataPmaxVolG_IPPV()
 	return m_iParaDataPmaxVolG_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Sets para data pmax volume g ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataPmaxVolG_IPPV(SHORT iVal)
 {
 #ifdef BACKUP_VENTILATION
@@ -7587,25 +10495,60 @@ void CConfiguration::SetParaDataPmaxVolG_IPPV(SHORT iVal)
 	getModel()->getI2C()->WriteConfigWord(PARA_PMAXVOLG_TRIGGER_16, iVal);
 #endif
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data ppsv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data ppsv.
+ **************************************************************************************************/
+
 SHORT CConfiguration::GetParaDataPpsv()
 {
 	return m_iParaDataPPSV;
 }
+
+/**********************************************************************************************//**
+ * Sets para data ppsv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataPpsv(SHORT iVal)
 {
 	m_iParaDataPPSV=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_PPSV_16, iVal);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data p manual hfo
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data p manual hfo.
+ **************************************************************************************************/
+
 SHORT CConfiguration::GetParaDataPManual_HFO()
 {
 	return m_iParaDataPManual_HFO;
 }
+
+/**********************************************************************************************//**
+ * Sets para data p manual hfo
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal			Zero-based index of the value.
+ * \param	bSendAcuLink	True to send acu link.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataPManual_HFO(SHORT iVal, bool bSendAcuLink)//PMAN1
 {
 	m_iParaDataPManual_HFO=iVal;
@@ -7618,6 +10561,17 @@ void CConfiguration::SetParaDataPManual_HFO(SHORT iVal, bool bSendAcuLink)//PMAN
 //{
 //	return m_iParaDataPManual_CPAP;
 //}
+
+/**********************************************************************************************//**
+ * Sets para data p manual cpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal			Zero-based index of the value.
+ * \param	bSendAcuLink	True to send acu link.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataPManual_CPAP(SHORT iVal, bool bSendAcuLink)//PMAN1
 {
 	m_iParaDataPManual_CPAP=iVal;
@@ -7626,10 +10580,29 @@ void CConfiguration::SetParaDataPManual_CPAP(SHORT iVal, bool bSendAcuLink)//PMA
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_PMANUAL,iVal);
 }
 
+/**********************************************************************************************//**
+ * Gets para data p manual nmode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data p manual nmode.
+ **************************************************************************************************/
+
 SHORT CConfiguration::GetParaDataPManual_NMODE()
 {
 	return m_iParaDataPManual_NMODE;
 }
+
+/**********************************************************************************************//**
+ * Sets para data p manual nmode
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataPManual_NMODE(SHORT iVal)
 {
 	m_iParaDataPManual_NMODE=iVal;
@@ -7637,22 +10610,59 @@ void CConfiguration::SetParaDataPManual_NMODE(SHORT iVal)
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_PDUO,iVal);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data o 2
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data o 2.
+ **************************************************************************************************/
+
 BYTE CConfiguration::GetParaDataO2()
 {
 	return m_iParaDataO2;
 }
+
+/**********************************************************************************************//**
+ * Sets para data o 2
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataO2(BYTE iVal)
 {
 	m_iParaDataO2=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_O2_16, iVal);
 }
+
+/**********************************************************************************************//**
+ * Gets para data o 2 flush
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data o 2 flush.
+ **************************************************************************************************/
+
 BYTE CConfiguration::GetParaDataO2Flush()
 {
 	return m_iParaDataO2Flush;
 }
+
+/**********************************************************************************************//**
+ * Sets para data o 2 flush
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataO2Flush(BYTE iVal)
 {
 	m_iParaDataO2Flush=iVal;
@@ -7660,10 +10670,30 @@ void CConfiguration::SetParaDataO2Flush(BYTE iVal)
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_O2FLUSH,iVal);
 }
+
+/**********************************************************************************************//**
+ * Gets o 2 difference
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The o 2 difference.
+ **************************************************************************************************/
+
 BYTE CConfiguration::GetO2Difference()
 {
 	return m_iO2Difference;
 }
+
+/**********************************************************************************************//**
+ * Sets o 2 difference
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetO2Difference(BYTE value)
 {
 	m_iO2Difference=value;
@@ -7671,10 +10701,29 @@ void CConfiguration::SetO2Difference(BYTE value)
 
 }
 
+/**********************************************************************************************//**
+ * Gets peep ppsv difference
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The peep ppsv difference.
+ **************************************************************************************************/
+
 int CConfiguration::getPEEP_PpsvDifference()
 {
 	return m_iPPSVDifference;
 }
+
+/**********************************************************************************************//**
+ * Sets peep ppsv difference
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::setPEEP_PpsvDifference(int value)
 {
 	if(m_iPPSVDifference!=value)
@@ -7687,13 +10736,29 @@ void CConfiguration::setPEEP_PpsvDifference(int value)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets pmean difference
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The pmean difference.
+ **************************************************************************************************/
+
 int	CConfiguration::GetPmeanDifference()
 {
 	return m_iPmeanDifference;
 }
+
+/**********************************************************************************************//**
+ * Sets pmean difference
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetPmeanDifference(int value)
 {
 	if(m_iPmeanDifference!=value)
@@ -7703,14 +10768,30 @@ void CConfiguration::SetPmeanDifference(int value)
 		getModel()->getI2C()->WriteConfigWord(PARA_PMEANDIFF_16, value);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data v limit trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data v limit trigger.
+ **************************************************************************************************/
 
 WORD CConfiguration::GetParaDataVLimit_TRIGGER()
 {
 	return m_iParaDataVLimit_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Gets para data v limit ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data v limit ippv.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataVLimit_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -7719,11 +10800,31 @@ WORD CConfiguration::GetParaDataVLimit_IPPV()
 	return m_iParaDataVLimit_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Sets para data v limit trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataVLimit_TRIGGER(WORD iVal)
 {
 	m_iParaDataVLimit_TRIGGER=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_VLIMIT_TRIGGER_16, iVal);
 }
+
+/**********************************************************************************************//**
+ * Sets para data v limit ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataVLimit_IPPV(WORD iVal)
 {
 #ifdef BACKUP_VENTILATION
@@ -7734,10 +10835,30 @@ void CConfiguration::SetParaDataVLimit_IPPV(WORD iVal)
 	getModel()->getI2C()->WriteConfigWord(PARA_VLIMIT_TRIGGER_16, iVal);
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets para data v limit state trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CConfiguration::GetParaDataVLimitState_TRIGGER()
 {
 	return m_bParaDataVLimitOn_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Gets para data v limit state ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CConfiguration::GetParaDataVLimitState_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -7746,6 +10867,16 @@ bool CConfiguration::GetParaDataVLimitState_IPPV()
 	return m_bParaDataVLimitOn_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Sets para data v limit state trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataVLimitState_TRIGGER(bool bState)
 {
 	m_bParaDataVLimitOn_TRIGGER=bState;
@@ -7759,6 +10890,16 @@ void CConfiguration::SetParaDataVLimitState_TRIGGER(bool bState)
 		getModel()->getI2C()->WriteConfigByte(PARA_VLIMITSTATE_TRIGGER_8, 0);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets para data v limit state ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataVLimitState_IPPV(bool bState)
 {
 #ifdef BACKUP_VENTILATION
@@ -7786,13 +10927,30 @@ void CConfiguration::SetParaDataVLimitState_IPPV(bool bState)
 #endif
 	
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data v garant trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data v garant trigger.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataVGarant_TRIGGER()
 {
 	return m_iParaDataVGarant_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Gets para data v garant ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data v garant ippv.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataVGarant_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -7802,11 +10960,31 @@ WORD CConfiguration::GetParaDataVGarant_IPPV()
 #endif
 	
 }
+
+/**********************************************************************************************//**
+ * Sets para data v garant trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataVGarant_TRIGGER(WORD iVal)
 {
 	m_iParaDataVGarant_TRIGGER=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_VGARANT_TRIGGER_16, iVal);
 }
+
+/**********************************************************************************************//**
+ * Sets para data v garant ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataVGarant_IPPV(WORD iVal)
 {
 #ifdef BACKUP_VENTILATION
@@ -7817,10 +10995,30 @@ void CConfiguration::SetParaDataVGarant_IPPV(WORD iVal)
 	getModel()->getI2C()->WriteConfigWord(PARA_VGARANT_TRIGGER_16, iVal);
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets para data v garant state trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CConfiguration::GetParaDataVGarantState_TRIGGER()
 {
 	return m_bParaDataVGarantOn_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Gets para data v garant state ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CConfiguration::GetParaDataVGarantState_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -7829,6 +11027,16 @@ bool CConfiguration::GetParaDataVGarantState_IPPV()
 	return m_bParaDataVGarantOn_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Sets para data v garant state trigger
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataVGarantState_TRIGGER(bool bState)
 {
 	m_bParaDataVGarantOn_TRIGGER=bState;
@@ -7841,6 +11049,16 @@ void CConfiguration::SetParaDataVGarantState_TRIGGER(bool bState)
 		getModel()->getI2C()->WriteConfigByte(PARA_VGARANTSTATE_TRIGGER_8, 0);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets para data v garant state ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataVGarantState_IPPV(bool bState)
 {
 #ifdef BACKUP_VENTILATION
@@ -7865,9 +11083,6 @@ void CConfiguration::SetParaDataVGarantState_IPPV(bool bState)
 	}
 #endif
 }
-// **************************************************************************
-// 
-// **************************************************************************
 //BYTE CConfiguration::GetParaDataTriggerCONV()
 //{
 //	return m_iParaDataTriggerCONV;
@@ -7888,10 +11103,29 @@ void CConfiguration::SetParaDataVGarantState_IPPV(bool bState)
 //	getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NMODE_16, iVal);
 //}
 
+/**********************************************************************************************//**
+ * Gets para data trigger convert
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data trigger convert.
+ **************************************************************************************************/
+
 BYTE CConfiguration::GetParaDataTrigger_CONV()
 {
 	return m_iParaDataTrigger_CONV;
 }
+
+/**********************************************************************************************//**
+ * Sets para data trigger convert
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataTrigger_CONV(BYTE iVal)
 {
 	m_iParaDataTrigger_CONV=iVal;
@@ -7900,10 +11134,29 @@ void CConfiguration::SetParaDataTrigger_CONV(BYTE iVal)
 	//DEBUGMSG(TRUE, (TEXT("SetParaDataTrigger_CONV %d\r\n"),(int)iVal));
 }
 
+/**********************************************************************************************//**
+ * Gets para data trigger cpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data trigger cpap.
+ **************************************************************************************************/
+
 BYTE CConfiguration::GetParaDataTrigger_CPAP()
 {
 	return m_iParaDataTrigger_CPAP;
 }
+
+/**********************************************************************************************//**
+ * Sets para data trigger cpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataTrigger_CPAP(BYTE iVal)
 {
 	m_iParaDataTrigger_CPAP=iVal;
@@ -7912,10 +11165,29 @@ void CConfiguration::SetParaDataTrigger_CPAP(BYTE iVal)
 	//DEBUGMSG(TRUE, (TEXT("SetParaDataTrigger_CPAP %d\r\n"),(int)iVal));
 }
 
+/**********************************************************************************************//**
+ * Gets para data trigger ncpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data trigger ncpap.
+ **************************************************************************************************/
+
 BYTE CConfiguration::GetParaDataTrigger_NCPAP()
 {
 	return m_iParaDataTrigger_NCPAP;
 }
+
+/**********************************************************************************************//**
+ * Sets para data trigger ncpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataTrigger_NCPAP(BYTE iVal)
 {
 	m_iParaDataTrigger_NCPAP=iVal;
@@ -7924,10 +11196,29 @@ void CConfiguration::SetParaDataTrigger_NCPAP(BYTE iVal)
 	//DEBUGMSG(TRUE, (TEXT("SetParaDataTrigger_NCPAP %d\r\n"),(int)iVal));
 }
 
+/**********************************************************************************************//**
+ * Gets para data trigger duopap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data trigger duopap.
+ **************************************************************************************************/
+
 BYTE CConfiguration::GetParaDataTrigger_DUOPAP()
 {
 	return m_iParaDataTrigger_DUOPAP;
 }
+
+/**********************************************************************************************//**
+ * Sets para data trigger duopap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataTrigger_DUOPAP(BYTE iVal)
 {
 	m_iParaDataTrigger_DUOPAP=iVal;
@@ -7935,82 +11226,204 @@ void CConfiguration::SetParaDataTrigger_DUOPAP(BYTE iVal)
 
 	//DEBUGMSG(TRUE, (TEXT("SetParaDataTrigger_DUOPAP %d\r\n"),(int)iVal));
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data backup
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data backup.
+ **************************************************************************************************/
+
 BYTE CConfiguration::GetParaDataBackup()
 {
 	return m_iParaDataBackup;
 }
+
+/**********************************************************************************************//**
+ * Sets para data backup
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataBackup(BYTE iVal)
 {
 	m_iParaDataBackup=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_BACKUP_16, iVal);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data hf ampl
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data hf ampl.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataHFAmpl()
 {
 	return m_iParaDataHFAmpl;
 }
+
+/**********************************************************************************************//**
+ * Sets para data hf ampl
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataHFAmpl(WORD iVal)
 {
 	m_iParaDataHFAmpl=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_HFO_HFAMPL_16, iVal);
 }
+
+/**********************************************************************************************//**
+ * Gets para data hf amplmax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data hf amplmax.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataHFAmplmax()
 {
 	return m_iParaDataHFAmplmax;
 }
+
+/**********************************************************************************************//**
+ * Sets para data hf amplmax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataHFAmplmax(WORD iVal)
 {
 	m_iParaDataHFAmplmax=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_HFO_HFAMPL_VOLG_16, iVal);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data hf frequency
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data hf frequency.
+ **************************************************************************************************/
+
 BYTE CConfiguration::GetParaDataHFFreq()
 {
 	return m_iParaDataHFFreq;
 }
+
+/**********************************************************************************************//**
+ * Sets para data hf frequency
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataHFFreq(BYTE iVal)
 {
 	m_iParaDataHFFreq=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_HFO_HFFREQ_16, iVal);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data hf pmean
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data hf pmean.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataHFPmean()
 {
 	return m_iParaDataHFPmean;
 }
+
+/**********************************************************************************************//**
+ * Sets para data hf pmean
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataHFPmean(WORD iVal)
 {
 	m_iParaDataHFPmean=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_HFO_PMEAN_16, iVal);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data i time record
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data i time record.
+ **************************************************************************************************/
+
 WORD	CConfiguration::GetParaDataITimeRec()
 {
 	return m_iParaDataHFITimeRec;
 }
+
+/**********************************************************************************************//**
+ * Sets para data i time record
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataITimeRec(WORD iVal)
 {
 	m_iParaDataHFITimeRec=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_HFO_ITIMEREC16, iVal);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data frequency record
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data frequency record.
+ **************************************************************************************************/
+
 WORD	CConfiguration::GetParaDataFREQ_REC()
 {
 	return m_iParaDataHFFREQ_REC;
 }
+
+/**********************************************************************************************//**
+ * Sets para data frequency record
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataFREQ_REC(WORD iVal)
 {
 	m_iParaDataHFFREQ_REC=iVal;
@@ -8033,34 +11446,88 @@ void CConfiguration::SetParaDataFREQ_REC(WORD iVal)
 	}
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data hfp mean record
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data hfp mean record.
+ **************************************************************************************************/
+
 WORD	CConfiguration::GetParaDataHFPMeanRec()
 {
 	return m_iParaDataHFPMeanRec;
 }
+
+/**********************************************************************************************//**
+ * Sets para data hfp mean record
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataHFPMeanRec(WORD iVal)
 {
 	m_iParaDataHFPMeanRec=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_HFO_PMEANREC16, iVal);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data hfv garant
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data hfv garant.
+ **************************************************************************************************/
+
 WORD CConfiguration::GetParaDataHFVGarant()
 {
 	return m_iParaDataHFVGarant;
 }
+
+/**********************************************************************************************//**
+ * Sets para data hfv garant
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataHFVGarant(WORD iVal)
 {
 	m_iParaDataHFVGarant=iVal;
 	getModel()->getI2C()->WriteConfigWord(PARA_HFO_VGARANT_16, iVal);
 }
+
+/**********************************************************************************************//**
+ * Gets para data hfv garant state
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CConfiguration::GetParaDataHFVGarantState()
 {
 	return m_bParaDataHFVGarantState;
 }
+
+/**********************************************************************************************//**
+ * Sets para data hfv garant state
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataHFVGarantState(bool bState)
 {
 	m_bParaDataHFVGarantState=bState;
@@ -8073,23 +11540,45 @@ void CConfiguration::SetParaDataHFVGarantState(bool bState)
 		getModel()->getI2C()->WriteConfigByte(PARA_HFO_VGARANTSTATE_8, 0);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data hfie ratio
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The para data hfie ratio.
+ **************************************************************************************************/
+
 eRatioIE CConfiguration::GetParaDataHFIERatio()
 {
 	return m_iParaDataHFIERatio;
 }
+
+/**********************************************************************************************//**
+ * Sets para data hfie ratio
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CConfiguration::SetParaDataHFIERatio(eRatioIE iVal)
 {
 	m_iParaDataHFIERatio=iVal;
 	getModel()->getI2C()->WriteConfigByte(PARA_HFO_IERATIO_8, (int)iVal);
 }
 
+/**********************************************************************************************//**
+ * Determines if we can deaktivate v garant state
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CConfiguration::DeaktivateVGarantState()
 {
 	/*m_iParaDataVGarant_TRIGGER=0;
@@ -8109,6 +11598,15 @@ bool CConfiguration::DeaktivateVGarantState()
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Determines if we can deaktivate v limit state
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CConfiguration::DeaktivateVLimitState()
 {
 	m_bParaDataVLimitOn_TRIGGER=false;
@@ -8121,19 +11619,43 @@ bool CConfiguration::DeaktivateVLimitState()
 	return true;
 }
 
-//Current Alarmlimits
+/**********************************************************************************************//**
+ * Current Alarmlimits
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit spo 2max.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 int CConfiguration::GetAlarmlimitSPO2max()
 {
 	return m_iAlarmlimitSPO2max;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state spo 2max
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state spo 2max.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2max()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateSPO2max;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit spo 2max
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitSPO2max(int value)
 {
 	m_iAlarmlimitSPO2max=value;
@@ -8147,23 +11669,59 @@ void CConfiguration::SetAlarmlimitSPO2max(int value)
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MAX, value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state spo 2max
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateSPO2max(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateSPO2max=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MAX_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit spo 2min
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit spo 2min.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitSPO2min()
 {
 	return m_iAlarmlimitSPO2min;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state spo 2min
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state spo 2min.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2min()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateSPO2min;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit spo 2min
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitSPO2min(int value)
 {
 	m_iAlarmlimitSPO2min=value;
@@ -8177,24 +11735,59 @@ void CConfiguration::SetAlarmlimitSPO2min(int value)
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2MIN, value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state spo 2min
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateSPO2min(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateSPO2min=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MIN_8, state);
 }
 
+/**********************************************************************************************//**
+ * Gets alarmlimit pulse ratemax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit pulse ratemax.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 int CConfiguration::GetAlarmlimitPulseRatemax()
 {
 	return m_iAlarmlimitPulseRatemax;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state pulse ratemax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state pulse ratemax.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStatePulseRatemax()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStatePulseRatemax;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit pulse ratemax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitPulseRatemax(int value)
 {
 	m_iAlarmlimitPulseRatemax=value;
@@ -8208,23 +11801,59 @@ void CConfiguration::SetAlarmlimitPulseRatemax(int value)
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX, value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state pulse ratemax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStatePulseRatemax(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePulseRatemax=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMAX_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit pulse ratemin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit pulse ratemin.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitPulseRatemin()
 {
 	return m_iAlarmlimitPulseRatemin;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state pulse ratemin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state pulse ratemin.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStatePulseRatemin()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStatePulseRatemin;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit pulse ratemin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitPulseRatemin(int value)
 {
 	m_iAlarmlimitPulseRatemin=value;
@@ -8238,24 +11867,59 @@ void CConfiguration::SetAlarmlimitPulseRatemin(int value)
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN, value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state pulse ratemin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStatePulseRatemin(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePulseRatemin=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMIN_8, state);
 }
 
+/**********************************************************************************************//**
+ * Gets alarmlimit spo 2 p imin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit spo 2 p imin.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 int CConfiguration::GetAlarmlimitSPO2_PImin()
 {
 	return m_iAlarmlimitSPO2_PImin;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state spo 2 p imin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state spo 2 p imin.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2_PImin()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateSPO2_PImin;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit spo 2 p imin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitSPO2_PImin(int value)
 {
 	m_iAlarmlimitSPO2_PImin=value;
@@ -8269,22 +11933,59 @@ void CConfiguration::SetAlarmlimitSPO2_PImin(int value)
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2PIMIN, value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state spo 2 p imin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateSPO2_PImin(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateSPO2_PImin=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_PIMIN_8, state);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets alarmlimit spo 2 SI qmin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit spo 2 SI qmin.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitSPO2_SIQmin()
 {
 	return m_iAlarmlimitSPO2_SIQmin;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state spo 2 SI qmin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state spo 2 SI qmin.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2_SIQmin()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateSPO2_SIQmin;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit spo 2 SI qmin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitSPO2_SIQmin(int value)
 {
 	m_iAlarmlimitSPO2_SIQmin=value;
@@ -8298,22 +11999,59 @@ void CConfiguration::SetAlarmlimitSPO2_SIQmin(int value)
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2SIQMIN, value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state spo 2 SI qmin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateSPO2_SIQmin(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateSPO2_SIQmin=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_SIQMIN_8, state);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets alarmlimit etco 2max
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit etco 2max.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitETCO2max()
 {
 	return m_iAlarmlimitETCO2max;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state etco 2max
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state etco 2max.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateETCO2max()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateETCO2max;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit etco 2max
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitETCO2max(int value)
 {
 	m_iAlarmlimitETCO2max=value;
@@ -8327,23 +12065,59 @@ void CConfiguration::SetAlarmlimitETCO2max(int value)
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX, value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state etco 2max
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateETCO2max(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateETCO2max=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MAX_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit etco 2min
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit etco 2min.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitETCO2min()
 {
 	return m_iAlarmlimitETCO2min;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state etco 2min
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state etco 2min.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateETCO2min()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateETCO2min;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit etco 2min
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitETCO2min(int value)
 {
 	m_iAlarmlimitETCO2min=value;
@@ -8357,24 +12131,59 @@ void CConfiguration::SetAlarmlimitETCO2min(int value)
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MIN, value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state etco 2min
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateETCO2min(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateETCO2min=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MIN_8, state);
 }
 
+/**********************************************************************************************//**
+ * Gets alarmlimit fico 2max
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit fico 2max.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 int CConfiguration::GetAlarmlimitFICO2max()
 {
 	return m_iAlarmlimitFICO2max;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state fico 2max
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state fico 2max.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateFICO2max()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateFICO2max;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit fico 2max
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitFICO2max(int value)
 {
 	m_iAlarmlimitFICO2max=value;
@@ -8388,23 +12197,59 @@ void CConfiguration::SetAlarmlimitFICO2max(int value)
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MAX, value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state fico 2max
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateFICO2max(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateFICO2max=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MAX_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit fico 2min
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit fico 2min.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitFICO2min()
 {
 	return m_iAlarmlimitFICO2min;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state fico 2min
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state fico 2min.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateFICO2min()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateFICO2min;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit fico 2min
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitFICO2min(int value)
 {
 	m_iAlarmlimitFICO2min=value;
@@ -8418,22 +12263,59 @@ void CConfiguration::SetAlarmlimitFICO2min(int value)
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MIN, value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state fico 2min
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateFICO2min(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateFICO2min=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MIN_8, state);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets alarmlimit m vmax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit m vmax.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitMVmax()
 {
 	return m_iAlarmlimitMVmax;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state m vmax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state m vmax.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateMVmax()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateMVmax;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit m vmax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitMVmax(int value)
 {
 	m_iAlarmlimitMVmax=value;
@@ -8441,23 +12323,59 @@ void CConfiguration::SetAlarmlimitMVmax(int value)
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MVMAX,value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state m vmax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateMVmax(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateMVmax=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMAX_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit m vmin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit m vmin.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitMVmin()
 {
 	return m_iAlarmlimitMVmin;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state m vmin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state m vmin.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateMVmin()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateMVmin;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit m vmin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitMVmin(int value)
 {
 	m_iAlarmlimitMVmin=value;
@@ -8475,23 +12393,59 @@ void CConfiguration::SetAlarmlimitMVmin(int value)
 		}
 	}	
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state m vmin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateMVmin(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateMVmin=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMIN_8, m_iAlarmlimitStateMVmin);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit pi pmax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit pi pmax.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitPIPmax()
 {
 	return m_iAlarmlimitPIPmax;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state pi pmax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state pi pmax.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStatePIPmax()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStatePIPmax;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit pi pmax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitPIPmax(int value)
 {
 	m_iAlarmlimitPIPmax=value;
@@ -8499,23 +12453,59 @@ void CConfiguration::SetAlarmlimitPIPmax(int value)
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMAX,value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state pi pmax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStatePIPmax(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePIPmax=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PIPMAX_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit pi pmin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit pi pmin.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitPIPmin()
 {
 	return m_iAlarmlimitPIPmin;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state pi pmin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state pi pmin.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStatePIPmin()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStatePIPmin;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit pi pmin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitPIPmin(int value)
 {
 	m_iAlarmlimitPIPmin=value;
@@ -8523,22 +12513,59 @@ void CConfiguration::SetAlarmlimitPIPmin(int value)
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMIN,value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state pi pmin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStatePIPmin(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePIPmin=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PIPMIN_8, state);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets alarmlimit pee pmin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit pee pmin.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitPEEPmin()
 {
 	return m_iAlarmlimitPEEPmin;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state pee pmin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state pee pmin.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStatePEEPmin()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStatePEEPmin;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit pee pmin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitPEEPmin(int value)
 {
 	m_iAlarmlimitPEEPmin=value;
@@ -8546,23 +12573,59 @@ void CConfiguration::SetAlarmlimitPEEPmin(int value)
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PEEPMIN,value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state pee pmin
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStatePEEPmin(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePEEPmin=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit bp mmax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit bp mmax.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitBPMmax()
 {
 	return m_iAlarmlimitBPMmax;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state bp mmax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state bp mmax.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateBPMmax()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateBPMmax;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit bp mmax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitBPMmax(int value)
 {
 	m_iAlarmlimitBPMmax=value;
@@ -8575,23 +12638,59 @@ void CConfiguration::SetAlarmlimitBPMmax(int value)
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FREQMAX,ALINK_OFF);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state bp mmax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateBPMmax(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateBPMmax=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_BPMMAX_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alimit leakmax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alimit leakmax.
+ **************************************************************************************************/
+
 int CConfiguration::getAlimitLeakmax()
 {
 	return m_iAlimitLeakmax;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state leakmax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state leakmax.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateLeakmax()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateLeakmax;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit leakmax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitLeakmax(int value)
 {
 	m_iAlimitLeakmax=value;
@@ -8604,15 +12703,31 @@ void CConfiguration::SetAlarmlimitLeakmax(int value)
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_LEAKMAX,ALINK_OFF);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state leakmax
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateLeakmax(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateLeakmax=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_LEAKMAX_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit apnoe
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit apnoe.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitApnoe()
 {
 	if(GetCurMode() == VM_IPPV)//newSPI
@@ -8624,6 +12739,16 @@ int CConfiguration::GetAlarmlimitApnoe()
 		return m_iAlarmlimitApnoe;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state apnoe
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state apnoe.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateApnoe()
 {
 	if(GetCurMode() == VM_IPPV)//newSPI
@@ -8635,6 +12760,16 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateApnoe()
 		return (eAlarmLimitState)m_iAlarmlimitStateApnoe;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit apnoe
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::setAlimitApnoe(int value)
 {
 	if(GetCurMode() == VM_IPPV)//newSPI
@@ -8647,33 +12782,77 @@ void CConfiguration::setAlimitApnoe(int value)
 	m_iAlarmlimitApnoe=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_APNOE_16, value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state apnoe
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateApnoe(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateApnoe=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_APNOE_8, state);
 }
 
+/**********************************************************************************************//**
+ * Current Alarmlimits HFO
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit spo 2max hf.
+ **************************************************************************************************/
 
-//Current Alarmlimits HFO
-// **************************************************************************
-// 
-// **************************************************************************
 int CConfiguration::GetAlarmlimitSPO2maxHF()
 {
 	//return m_iAlarmlimitSPO2maxHF;
 	return GetAlarmlimitSPO2max();
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state spo 2max hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state spo 2max hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2maxHF()
 {
 	//return (eAlarmLimitState)m_iAlarmlimitStateSPO2maxHF;
 	return GetAlarmlimitStateSPO2max();
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit spo 2max hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitSPO2maxHF(int value)
 {
 	/*m_iAlarmlimitSPO2maxHF=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MAX_HF_16, value);*/
 	SetAlarmlimitSPO2max(value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state spo 2max hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateSPO2maxHF(eAlarmLimitState state)
 {
 	/*m_iAlarmlimitStateSPO2maxHF=(int)state;
@@ -8681,25 +12860,61 @@ void CConfiguration::SetAlarmlimitStateSPO2maxHF(eAlarmLimitState state)
 	SetAlarmlimitStateSPO2max(state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit spo 2min hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit spo 2min hf.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitSPO2minHF()
 {
 	//return m_iAlarmlimitSPO2minHF;
 	return GetAlarmlimitSPO2min();
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state spo 2min hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state spo 2min hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2minHF()
 {
 	//return (eAlarmLimitState)m_iAlarmlimitStateSPO2minHF;
 	return GetAlarmlimitStateSPO2min();
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit spo 2min hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitSPO2minHF(int value)
 {
 	/*m_iAlarmlimitSPO2minHF=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MIN_HF_16, value);*/
 	SetAlarmlimitSPO2min(value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state spo 2min hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateSPO2minHF(eAlarmLimitState state)
 {
 	/*m_iAlarmlimitStateSPO2minHF=(int)state;
@@ -8707,20 +12922,45 @@ void CConfiguration::SetAlarmlimitStateSPO2minHF(eAlarmLimitState state)
 	SetAlarmlimitStateSPO2min(state);
 }
 
+/**********************************************************************************************//**
+ * Gets alarmlimit pulse ratemax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit pulse ratemax hf.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 int CConfiguration::GetAlarmlimitPulseRatemaxHF()
 {
 	//return m_iAlarmlimitPulseRatemaxHF;
 	return GetAlarmlimitPulseRatemax();
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state pulse ratemax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state pulse ratemax hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStatePulseRatemaxHF()
 {
 	//return (eAlarmLimitState)m_iAlarmlimitStatePulseRatemaxHF;
 	return GetAlarmlimitStatePulseRatemax();
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit pulse ratemax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitPulseRatemaxHF(int value)
 {
 	/*m_iAlarmlimitPulseRatemaxHF=value;
@@ -8729,6 +12969,16 @@ void CConfiguration::SetAlarmlimitPulseRatemaxHF(int value)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX,value);*/
 	SetAlarmlimitPulseRatemax(value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state pulse ratemax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStatePulseRatemaxHF(eAlarmLimitState state)
 {
 	/*m_iAlarmlimitStatePulseRatemaxHF=(int)state;
@@ -8736,19 +12986,45 @@ void CConfiguration::SetAlarmlimitStatePulseRatemaxHF(eAlarmLimitState state)
 	SetAlarmlimitStatePulseRatemax(state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit pulse ratemin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit pulse ratemin hf.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitPulseRateminHF()
 {
 	//return m_iAlarmlimitPulseRateminHF;
 	return GetAlarmlimitPulseRatemin();
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state pulse ratemin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state pulse ratemin hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStatePulseRateminHF()
 {
 	//return (eAlarmLimitState)m_iAlarmlimitStatePulseRateminHF;
 	return GetAlarmlimitStatePulseRatemin();
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit pulse ratemin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitPulseRateminHF(int value)
 {
 	//m_iAlarmlimitPulseRateminHF=value;
@@ -8757,6 +13033,16 @@ void CConfiguration::SetAlarmlimitPulseRateminHF(int value)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN,value);*/
 	SetAlarmlimitPulseRatemin(value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state pulse ratemin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStatePulseRateminHF(eAlarmLimitState state)
 {
 	/*m_iAlarmlimitStatePulseRateminHF=(int)state;
@@ -8764,20 +13050,45 @@ void CConfiguration::SetAlarmlimitStatePulseRateminHF(eAlarmLimitState state)
 	SetAlarmlimitStatePulseRatemin(state);
 }
 
+/**********************************************************************************************//**
+ * Gets alarmlimit spo 2 p imin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit spo 2 p imin hf.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 int CConfiguration::GetAlarmlimitSPO2_PIminHF()
 {
 	//return m_iAlarmlimitSPO2_PIminHF;
 	return GetAlarmlimitSPO2_PImin();
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state spo 2 p imin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state spo 2 p imin hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2_PIminHF()
 {
 	//return (eAlarmLimitState)m_iAlarmlimitStateSPO2_PIminHF;
 	return GetAlarmlimitStateSPO2_PImin();
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit spo 2 p imin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitSPO2_PIminHF(int value)
 {
 	/*m_iAlarmlimitSPO2_PIminHF=value;
@@ -8786,6 +13097,16 @@ void CConfiguration::SetAlarmlimitSPO2_PIminHF(int value)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2_PIMIN,value);*/
 	SetAlarmlimitSPO2_PImin(value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state spo 2 p imin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateSPO2_PIminHF(eAlarmLimitState state)
 {
 	/*m_iAlarmlimitStateSPO2_PIminHF=(int)state;
@@ -8793,28 +13114,61 @@ void CConfiguration::SetAlarmlimitStateSPO2_PIminHF(eAlarmLimitState state)
 	SetAlarmlimitStateSPO2_PImin(state);
 }
 
+/**********************************************************************************************//**
+ * Gets alarmlimit spo 2 SI qmin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit spo 2 SI qmin hf.
+ **************************************************************************************************/
 
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 int CConfiguration::GetAlarmlimitSPO2_SIQminHF()
 {
 	//return m_iAlarmlimitSPO2_SIQminHF;
 	return GetAlarmlimitSPO2_SIQmin();
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state spo 2 SI qmin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state spo 2 SI qmin hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2_SIQminHF()
 {
 	//return (eAlarmLimitState)m_iAlarmlimitStateSPO2_SIQminHF;
 	return GetAlarmlimitStateSPO2_SIQmin();
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit spo 2 SI qmin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitSPO2_SIQminHF(int value)
 {
 	/*m_iAlarmlimitSPO2_SIQminHF=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_PIMIN_HF_16, value);*/
 	SetAlarmlimitSPO2_SIQmin(value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state spo 2 SI qmin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateSPO2_SIQminHF(eAlarmLimitState state)
 {
 	/*m_iAlarmlimitStateSPO2_SIQminHF=(int)state;
@@ -8822,17 +13176,43 @@ void CConfiguration::SetAlarmlimitStateSPO2_SIQminHF(eAlarmLimitState state)
 	SetAlarmlimitStateSPO2_SIQmin(state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit etco 2max hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit etco 2max hf.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitETCO2maxHF()
 {
 	return m_iAlarmlimitETCO2maxHF;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state etco 2max hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state etco 2max hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateETCO2maxHF()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateETCO2maxHF;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit etco 2max hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitETCO2maxHF(int value)
 {
 	m_iAlarmlimitETCO2maxHF=value;
@@ -8843,23 +13223,59 @@ void CConfiguration::SetAlarmlimitETCO2maxHF(int value)
 	else
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX, value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state etco 2max hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateETCO2maxHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateETCO2maxHF=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MAX_HF_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit etco 2min hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit etco 2min hf.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitETCO2minHF()
 {
 	return m_iAlarmlimitETCO2minHF;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state etco 2min hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state etco 2min hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateETCO2minHF()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateETCO2minHF;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit etco 2min hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitETCO2minHF(int value)
 {
 	m_iAlarmlimitETCO2minHF=value;
@@ -8870,24 +13286,59 @@ void CConfiguration::SetAlarmlimitETCO2minHF(int value)
 	else
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MIN, value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state etco 2min hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateETCO2minHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateETCO2minHF=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MIN_HF_8, state);
 }
 
+/**********************************************************************************************//**
+ * Gets alarmlimit fico 2max hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit fico 2max hf.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 int CConfiguration::GetAlarmlimitFICO2maxHF()
 {
 	return m_iAlarmlimitFICO2maxHF;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state fico 2max hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state fico 2max hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateFICO2maxHF()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateFICO2maxHF;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit fico 2max hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitFICO2maxHF(int value)
 {
 	m_iAlarmlimitFICO2maxHF=value;
@@ -8898,23 +13349,59 @@ void CConfiguration::SetAlarmlimitFICO2maxHF(int value)
 	else
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MAX, value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state fico 2max hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateFICO2maxHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateFICO2maxHF=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MAX_HF_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit fico 2min hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit fico 2min hf.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitFICO2minHF()
 {
 	return m_iAlarmlimitFICO2minHF;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state fico 2min hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state fico 2min hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateFICO2minHF()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateFICO2minHF;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit fico 2min hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitFICO2minHF(int value)
 {
 	m_iAlarmlimitFICO2minHF=value;
@@ -8925,23 +13412,59 @@ void CConfiguration::SetAlarmlimitFICO2minHF(int value)
 	else
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MIN, value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state fico 2min hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateFICO2minHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateFICO2minHF=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MIN_HF_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit ma pmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit ma pmax hf.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitMAPmaxHF()
 {
 	return m_iAlarmlimitMAPmaxHF;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state ma pmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state ma pmax hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateMAPmaxHF()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateMAPmaxHF;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit ma pmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitMAPmaxHF(int value)
 {
 	m_iAlarmlimitMAPmaxHF=value;
@@ -8958,6 +13481,16 @@ void CConfiguration::SetAlarmlimitMAPmaxHF(int value)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state ma pmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateMAPmaxHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateMAPmaxHF=(int)state;
@@ -8976,17 +13509,43 @@ void CConfiguration::SetAlarmlimitStateMAPmaxHF(eAlarmLimitState state)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit ma pmin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit ma pmin hf.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitMAPminHF()
 {
 	return m_iAlarmlimitMAPminHF;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state ma pmin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state ma pmin hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateMAPminHF()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateMAPminHF;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit ma pmin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitMAPminHF(int value)
 {
 	m_iAlarmlimitMAPminHF=value;
@@ -9003,6 +13562,16 @@ void CConfiguration::SetAlarmlimitMAPminHF(int value)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state ma pmin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateMAPminHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateMAPminHF=(int)state;
@@ -9022,19 +13591,43 @@ void CConfiguration::SetAlarmlimitStateMAPminHF(eAlarmLimitState state)
 
 }
 
+/**********************************************************************************************//**
+ * Gets alarmlimit dco 2max hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit dco 2max hf.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 int CConfiguration::GetAlarmlimitDCO2maxHF()
 {
 	return m_iAlarmlimitDCO2maxHF;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state dco 2max hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state dco 2max hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateDCO2maxHF()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateDCO2maxHF;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit dco 2max hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitDCO2maxHF(int value)
 {
 	m_iAlarmlimitDCO2maxHF=value;
@@ -9055,6 +13648,16 @@ void CConfiguration::SetAlarmlimitDCO2maxHF(int value)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state dco 2max hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateDCO2maxHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateDCO2maxHF=(int)state;
@@ -9077,17 +13680,43 @@ void CConfiguration::SetAlarmlimitStateDCO2maxHF(eAlarmLimitState state)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit dco 2min hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit dco 2min hf.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitDCO2minHF()
 {
 	return m_iAlarmlimitDCO2minHF;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state dco 2min hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state dco 2min hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateDCO2minHF()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateDCO2minHF;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit dco 2min hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitDCO2minHF(int value)
 {
 	m_iAlarmlimitDCO2minHF=value;
@@ -9108,6 +13737,16 @@ void CConfiguration::SetAlarmlimitDCO2minHF(int value)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state dco 2min hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateDCO2minHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateDCO2minHF=(int)state;
@@ -9131,17 +13770,43 @@ void CConfiguration::SetAlarmlimitStateDCO2minHF(eAlarmLimitState state)
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit m vmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit m vmax hf.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitMVmaxHF()
 {
 	return m_iAlarmlimitMVmaxHF;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state m vmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state m vmax hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateMVmaxHF()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateMVmaxHF;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit m vmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitMVmaxHF(int value)
 {
 	m_iAlarmlimitMVmaxHF=value;
@@ -9149,23 +13814,59 @@ void CConfiguration::SetAlarmlimitMVmaxHF(int value)
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MVMAX,value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state m vmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateMVmaxHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateMVmaxHF=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMAX_HF_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit m vmin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit m vmin hf.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitMVminHF()
 {
 	return m_iAlarmlimitMVminHF;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state m vmin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state m vmin hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateMVminHF()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateMVminHF;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit m vmin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitMVminHF(int value)
 {
 	m_iAlarmlimitMVminHF=value;
@@ -9182,23 +13883,59 @@ void CConfiguration::SetAlarmlimitMVminHF(int value)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state m vmin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateMVminHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateMVminHF=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMIN_HF_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit pmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit pmax hf.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitPmaxHF()
 {
 	return m_iAlarmlimitPmaxHF;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state pmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state pmax hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStatePmaxHF()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStatePmaxHF;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit pmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitPmaxHF(int value)
 {
 	m_iAlarmlimitPmaxHF=value;
@@ -9206,23 +13943,59 @@ void CConfiguration::SetAlarmlimitPmaxHF(int value)
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMAX,value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state pmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStatePmaxHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePmaxHF=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_HF_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit pee pmin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit pee pmin hf.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitPEEPminHF()
 {
 	return m_iAlarmlimitPEEPminHF;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state pee pmin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state pee pmin hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStatePEEPminHF()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStatePEEPminHF;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit pee pmin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitPEEPminHF(int value)
 {
 	m_iAlarmlimitPEEPminHF=value;
@@ -9230,23 +14003,59 @@ void CConfiguration::SetAlarmlimitPEEPminHF(int value)
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PEEPMIN,value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state pee pmin hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStatePEEPminHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePEEPminHF=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_HF_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit bp mmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit bp mmax hf.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitBPMmaxHF()
 {
 	return m_iAlarmlimitBPMmaxHF;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state bp mmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state bp mmax hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateBPMmaxHF()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateBPMmaxHF;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit bp mmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitBPMmaxHF(int value)
 {
 	m_iAlarmlimitBPMmaxHF=value;
@@ -9259,23 +14068,59 @@ void CConfiguration::SetAlarmlimitBPMmaxHF(int value)
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FREQMAX,ALINK_OFF);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state bp mmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateBPMmaxHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateBPMmaxHF=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_BPMMAX_HF_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit leakmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit leakmax hf.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitLeakmaxHF()
 {
 	return m_iAlarmlimitLeakmaxHF;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state leakmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state leakmax hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateLeakmaxHF()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateLeakmaxHF;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit leakmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitLeakmaxHF(int value)
 {
 	m_iAlarmlimitLeakmaxHF=value;
@@ -9288,23 +14133,59 @@ void CConfiguration::SetAlarmlimitLeakmaxHF(int value)
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_LEAKMAX,ALINK_OFF);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state leakmax hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateLeakmaxHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateLeakmaxHF=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_LEAKMAX_HF_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit apnoe hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit apnoe hf.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitApnoeHF()
 {
 	return m_iAlarmlimitApnoeHF;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state apnoe hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state apnoe hf.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStateApnoeHF()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStateApnoeHF;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit apnoe hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitApnoeHF(int value)
 {
 	m_iAlarmlimitApnoeHF=value;
@@ -9317,24 +14198,59 @@ void CConfiguration::SetAlarmlimitApnoeHF(int value)
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_APNOE_TIME,ALINK_OFF);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state apnoe hf
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStateApnoeHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateApnoeHF=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_APNOE_HF_8, state);
 }
 
+/**********************************************************************************************//**
+ * Gets alarmlimit pmax cpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit pmax cpap.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 int CConfiguration::GetAlarmlimitPmaxCpap()
 {
 	return m_iAlarmlimitPmaxCpap;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state pmax cpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state pmax cpap.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStatePmaxCpap()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStatePmaxCpap;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit pmax cpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitPmaxCpap(int value)
 {
 	m_iAlarmlimitPmaxCpap=value;
@@ -9342,23 +14258,59 @@ void CConfiguration::SetAlarmlimitPmaxCpap(int value)
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMAX,value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state pmax cpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStatePmaxCpap(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePmaxCpap=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_CPAP_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit pee pmin cpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit pee pmin cpap.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitPEEPminCpap()
 {
 	return m_iAlarmlimitPEEPminCpap;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state pee pmin cpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state pee pmin cpap.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStatePEEPminCpap()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStatePEEPminCpap;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit pee pmin cpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitPEEPminCpap(int value)
 {
 	m_iAlarmlimitPEEPminCpap=value;
@@ -9366,24 +14318,59 @@ void CConfiguration::SetAlarmlimitPEEPminCpap(int value)
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PEEPMIN,value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state pee pmin cpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStatePEEPminCpap(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePEEPminCpap=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_CPAP_8, state);
 }
 
-//NMODE
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit pmax duopap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit pmax duopap.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitPmaxDUOPAP()
 {
 	return m_iAlarmlimitPmaxDUOPAP;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state pmax duopap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state pmax duopap.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStatePmaxDUOPAP()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStatePIPmaxDUOPAP;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit pmax duopap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitPmaxDUOPAP(int value)
 {
 	m_iAlarmlimitPmaxDUOPAP=value;
@@ -9391,23 +14378,59 @@ void CConfiguration::SetAlarmlimitPmaxDUOPAP(int value)
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMAX,value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state pmax duopap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStatePmaxDUOPAP(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePIPmaxDUOPAP=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_DUOPAP_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit pmax ncpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit pmax ncpap.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitPmaxNCPAP()
 {
 	return m_iAlarmlimitPIPmaxNCPAP;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state pmax ncpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state pmax ncpap.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStatePmaxNCPAP()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStatePmaxNCPAP;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit pmax ncpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitPmaxNCPAP(int value)
 {
 	m_iAlarmlimitPIPmaxNCPAP=value;
@@ -9415,23 +14438,59 @@ void CConfiguration::SetAlarmlimitPmaxNCPAP(int value)
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMAX,value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state pmax ncpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStatePmaxNCPAP(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePmaxNCPAP=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_NCPAP_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit pee pmin duopap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit pee pmin duopap.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitPEEPminDUOPAP()
 {
 	return m_iAlarmlimitPEEPminDUOPAP;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state pee pmin duopap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state pee pmin duopap.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStatePEEPminDUOPAP()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStatePEEPminDUOPAP;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit pee pmin duopap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitPEEPminDUOPAP(int value)
 {
 	m_iAlarmlimitPEEPminDUOPAP=value;
@@ -9439,23 +14498,59 @@ void CConfiguration::SetAlarmlimitPEEPminDUOPAP(int value)
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PEEPMIN,value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state pee pmin duopap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStatePEEPminDUOPAP(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePEEPminDUOPAP=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_DUOPAP_8, state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarmlimit pee pmin ncpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit pee pmin ncpap.
+ **************************************************************************************************/
+
 int CConfiguration::GetAlarmlimitPEEPminNCPAP()
 {
 	return m_iAlarmlimitPEEPminNCPAP;
 }
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state pee pmin ncpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The alarmlimit state pee pmin ncpap.
+ **************************************************************************************************/
+
 eAlarmLimitState CConfiguration::GetAlarmlimitStatePEEPminNCPAP()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStatePEEPminNCPAP;
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit pee pmin ncpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitPEEPminNCPAP(int value)
 {
 	m_iAlarmlimitPEEPminNCPAP=value;
@@ -9463,14 +14558,32 @@ void CConfiguration::SetAlarmlimitPEEPminNCPAP(int value)
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PEEPMIN,value);
 }
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state pee pmin ncpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CConfiguration::SetAlarmlimitStatePEEPminNCPAP(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePEEPminNCPAP=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_NCPAP_8, state);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets last written trend file
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	type 	The type.
+ * \param	count	Number of.
+ **************************************************************************************************/
+
 void CConfiguration::SetLastWrittenTrendFile(UINT type, BYTE count)
 {
 	switch(type)
@@ -9562,6 +14675,17 @@ void CConfiguration::SetLastWrittenTrendFile(UINT type, BYTE count)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets the last written trend file
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	type	The type.
+ *
+ * \return	The last written trend file.
+ **************************************************************************************************/
 
 BYTE CConfiguration::GetLastWrittenTrendFile(UINT type)
 {
@@ -9662,43 +14786,112 @@ BYTE CConfiguration::GetLastWrittenTrendFile(UINT type)
 	return byResult;
 }
 
+/**********************************************************************************************//**
+ * Gets patient remark
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The patient remark.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 CStringW CConfiguration::GetPatientRemark()
 {
 	CTlsRegistry regPat(_T("HKCU\\Software\\FabianHFO\\PatientData"),true);
 	return regPat.ReadString(_T("Remark"), _T(""));
 }
 
+/**********************************************************************************************//**
+ * Gets patient name
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The patient name.
+ **************************************************************************************************/
+
 CStringW CConfiguration::GetPatientName()
 {
 	CTlsRegistry regPat(_T("HKCU\\Software\\FabianHFO\\PatientData"),true);
 	return regPat.ReadString(_T("Name"), _T(""));
 }
+
+/**********************************************************************************************//**
+ * Gets patient firstname
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The patient firstname.
+ **************************************************************************************************/
+
 CStringW CConfiguration::GetPatientFirstname()
 {
 	CTlsRegistry regPat(_T("HKCU\\Software\\FabianHFO\\PatientData"),true);
 	return regPat.ReadString(_T("Firtsname"), _T(""));
 }
+
+/**********************************************************************************************//**
+ * Gets patient identifier
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The patient identifier.
+ **************************************************************************************************/
+
 int CConfiguration::GetPatientID()
 {
 	CTlsRegistry regPat(_T("HKCU\\Software\\FabianHFO\\PatientData"),true);
 	return regPat.ReadDWORD(_T("PersID"), 0);
 	//return regPat.ReadString(_T("PersID"), _T(""));
 }
+
+/**********************************************************************************************//**
+ * Gets patient weight
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The patient weight.
+ **************************************************************************************************/
+
 int CConfiguration::GetPatientWeight()
 {
 	CTlsRegistry regPat(_T("HKCU\\Software\\FabianHFO\\PatientData"),true);
 	return regPat.ReadDWORD(_T("Weight"), 0);
 }
+
+/**********************************************************************************************//**
+ * Gets patient birthday
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The patient birthday.
+ **************************************************************************************************/
+
 CStringW CConfiguration::GetPatientBirthday()
 {
 	CTlsRegistry regPat(_T("HKCU\\Software\\FabianHFO\\PatientData"),true);
 	
 	return regPat.ReadString(_T("DateOfBirth"), _T(""));
 }
+
+/**********************************************************************************************//**
+ * Sets patient data
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	name	 	The name.
+ * \param	firstName	The person's first name.
+ * \param	persID   	Identifier for the pers.
+ * \param	weight   	The weight.
+ * \param	szTime   	The time.
+ * \param	szRemark 	The remark.
+ **************************************************************************************************/
+
 void CConfiguration::SetPatientData(CStringW name, CStringW firstName, int persID, int weight, CStringW  szTime, CStringW  szRemark)
 {
 	CTlsRegistry regPat(_T("HKCU\\Software\\FabianHFO\\PatientData"),true);
@@ -9724,14 +14917,30 @@ void CConfiguration::SetPatientData(CStringW name, CStringW firstName, int persI
 	}
 }
 
-
-
+/**********************************************************************************************//**
+ * Gets the last calendar oxy 21
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last calendar oxy 21.
+ **************************************************************************************************/
 
 CStringW CConfiguration::GetLastCalOxy21()
 {
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
 	return regWorkState.ReadString(_T("LastCalOxy21"), _T(""));
 }
+
+/**********************************************************************************************//**
+ * Sets last calendar oxy 21
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	szDateTime	The date time.
+ **************************************************************************************************/
+
 void CConfiguration::SetLastCalOxy21(CStringW szDateTime)
 {
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
@@ -9740,11 +14949,30 @@ void CConfiguration::SetLastCalOxy21(CStringW szDateTime)
 	regWorkState.FlushHKCU();
 }
 
+/**********************************************************************************************//**
+ * Gets the last calendar oxy 100
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last calendar oxy 100.
+ **************************************************************************************************/
+
 CStringW CConfiguration::GetLastCalOxy100()
 {
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
 	return regWorkState.ReadString(_T("LastCalOxy100"), _T(""));
 }
+
+/**********************************************************************************************//**
+ * Sets last calendar oxy 100
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	szDateTime	The date time.
+ **************************************************************************************************/
+
 void CConfiguration::SetLastCalOxy100(CStringW szDateTime)
 {
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
@@ -9753,11 +14981,30 @@ void CConfiguration::SetLastCalOxy100(CStringW szDateTime)
 	regWorkState.FlushHKCU();
 }
 
+/**********************************************************************************************//**
+ * Gets the last calendar flow
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last calendar flow.
+ **************************************************************************************************/
+
 CStringW CConfiguration::GetLastCalFlow()
 {
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
 	return regWorkState.ReadString(_T("LastCalFlow"), _T(""));
 }
+
+/**********************************************************************************************//**
+ * Sets last calendar flow
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	szDateTime	The date time.
+ **************************************************************************************************/
+
 void CConfiguration::SetLastCalFlow(CStringW szDateTime)
 {
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
@@ -9766,11 +15013,30 @@ void CConfiguration::SetLastCalFlow(CStringW szDateTime)
 	regWorkState.FlushHKCU();
 }
 
+/**********************************************************************************************//**
+ * Gets the last calendar 0mbar
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last calendar 0mbar.
+ **************************************************************************************************/
+
 CStringW CConfiguration::GetLastCal0mbar()
 {
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
 	return regWorkState.ReadString(_T("LastCal0mbar"), _T(""));
 }
+
+/**********************************************************************************************//**
+ * Sets last calendar 0mbar
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	szDateTime	The date time.
+ **************************************************************************************************/
+
 void CConfiguration::SetLastCal0mbar(CStringW szDateTime)
 {
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
@@ -9779,11 +15045,30 @@ void CConfiguration::SetLastCal0mbar(CStringW szDateTime)
 	regWorkState.FlushHKCU();
 }
 
+/**********************************************************************************************//**
+ * Gets the last calendar 60mbar
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last calendar 60mbar.
+ **************************************************************************************************/
+
 CStringW CConfiguration::GetLastCal60mbar()
 {
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
 	return regWorkState.ReadString(_T("LastCal60mbar"), _T(""));
 }
+
+/**********************************************************************************************//**
+ * Sets last calendar 60mbar
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	szDateTime	The date time.
+ **************************************************************************************************/
+
 void CConfiguration::SetLastCal60mbar(CStringW szDateTime)
 {
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
@@ -9792,6 +15077,14 @@ void CConfiguration::SetLastCal60mbar(CStringW szDateTime)
 	regWorkState.FlushHKCU();
 }
 
+/**********************************************************************************************//**
+ * Gets operating minutes device
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The operating minutes device.
+ **************************************************************************************************/
 
 DWORD CConfiguration::getOperatingMinutesDevice()
 {
@@ -9800,6 +15093,16 @@ DWORD CConfiguration::getOperatingMinutesDevice()
 
 	return iMin;
 }
+
+/**********************************************************************************************//**
+ * Sets operating minutes device
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	min		 	The minimum.
+ * \param	bFlushReg	True to flush register.
+ **************************************************************************************************/
 
 void CConfiguration::setOperatingMinutesDevice(DWORD min, bool bFlushReg)
 {
@@ -9810,6 +15113,15 @@ void CConfiguration::setOperatingMinutesDevice(DWORD min, bool bFlushReg)
 
 }
 
+/**********************************************************************************************//**
+ * Gets operating minutes battery
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The operating minutes battery.
+ **************************************************************************************************/
+
 DWORD CConfiguration::getOperatingMinutesBattery()
 {
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
@@ -9817,6 +15129,16 @@ DWORD CConfiguration::getOperatingMinutesBattery()
 
 	return iMin;
 }
+
+/**********************************************************************************************//**
+ * Sets operating minutes battery
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	min		 	The minimum.
+ * \param	bFlushReg	True to flush register.
+ **************************************************************************************************/
 
 void CConfiguration::setOperatingMinutesBattery(DWORD min, bool bFlushReg)
 {
@@ -9826,6 +15148,15 @@ void CConfiguration::setOperatingMinutesBattery(DWORD min, bool bFlushReg)
 		regWorkState.FlushHKCU();
 }
 
+/**********************************************************************************************//**
+ * Gets operating minutes hfo
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The operating minutes hfo.
+ **************************************************************************************************/
+
 DWORD CConfiguration::getOperatingMinutesHFO()
 {
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
@@ -9833,6 +15164,17 @@ DWORD CConfiguration::getOperatingMinutesHFO()
 
 	return iMin;
 }
+
+/**********************************************************************************************//**
+ * Sets operating minutes hfo
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	min		 	The minimum.
+ * \param	bFlushReg	True to flush register.
+ **************************************************************************************************/
+
 void CConfiguration::setOperatingMinutesHFO(DWORD min, bool bFlushReg)
 {
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
@@ -9841,6 +15183,14 @@ void CConfiguration::setOperatingMinutesHFO(DWORD min, bool bFlushReg)
 		regWorkState.FlushHKCU();
 }
 
+/**********************************************************************************************//**
+ * Serialize file
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param [in,out]	ar	The archive.
+ **************************************************************************************************/
 
 void CConfiguration::SerializeFile(CArchive& ar)
 {
@@ -10996,31 +16346,73 @@ void CConfiguration::SerializeFile(CArchive& ar)
 //	}
 //}
 
+/**********************************************************************************************//**
+ * Gets configuration version
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The configuration version.
+ **************************************************************************************************/
+
 int CConfiguration::getConfigVersion()
 {
 	return m_iConfigVersion;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the last numeric ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last numeric ippv.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getLastNumericIPPV()
 {
 	return m_iCurNumericBlock_IPPV;
 }
+
+/**********************************************************************************************//**
+ * Sets last numeric ippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	num	Number of.
+ **************************************************************************************************/
+
 void CConfiguration::setLastNumericIPPV(BYTE num)
 {
 	m_iCurNumericBlock_IPPV=num;
 
 	getModel()->getI2C()->WriteConfigByte(NUMBLOCK_IPPV_8, num);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets the last numeric sippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last numeric sippv.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getLastNumericSIPPV()
 {
 	return m_iCurNumericBlock_SIPPV;
 }
+
+/**********************************************************************************************//**
+ * Sets last numeric sippv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	num	Number of.
+ **************************************************************************************************/
+
 void CConfiguration::setLastNumericSIPPV(BYTE num)
 {
 	m_iCurNumericBlock_SIPPV=num;
@@ -11028,13 +16420,29 @@ void CConfiguration::setLastNumericSIPPV(BYTE num)
 	getModel()->getI2C()->WriteConfigByte(NUMBLOCK_SIPPV_8, num);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the last numeric simv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last numeric simv.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getLastNumericSIMV()
 {
 	return m_iCurNumericBlock_SIMV;
 }
+
+/**********************************************************************************************//**
+ * Sets last numeric simv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	num	Number of.
+ **************************************************************************************************/
+
 void CConfiguration::setLastNumericSIMV(BYTE num)
 {
 	m_iCurNumericBlock_SIMV=num;
@@ -11042,13 +16450,29 @@ void CConfiguration::setLastNumericSIMV(BYTE num)
 	getModel()->getI2C()->WriteConfigByte(NUMBLOCK_SIMV_8, num);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the last numeric simvpsv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last numeric simvpsv.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getLastNumericSIMVPSV()
 {
 	return m_iCurNumericBlock_SIMVPSV;
 }
+
+/**********************************************************************************************//**
+ * Sets last numeric simvpsv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	num	Number of.
+ **************************************************************************************************/
+
 void CConfiguration::setLastNumericSIMVPSV(BYTE num)
 {
 	m_iCurNumericBlock_SIMVPSV=num;
@@ -11056,13 +16480,29 @@ void CConfiguration::setLastNumericSIMVPSV(BYTE num)
 	getModel()->getI2C()->WriteConfigByte(NUMBLOCK_SIMVPSV_8, num);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the last numeric psv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last numeric psv.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getLastNumericPSV()
 {
 	return m_iCurNumericBlock_PSV;
 }
+
+/**********************************************************************************************//**
+ * Sets last numeric psv
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	num	Number of.
+ **************************************************************************************************/
+
 void CConfiguration::setLastNumericPSV(BYTE num)
 {
 	m_iCurNumericBlock_PSV=num;
@@ -11070,13 +16510,29 @@ void CConfiguration::setLastNumericPSV(BYTE num)
 	getModel()->getI2C()->WriteConfigByte(NUMBLOCK_PSV_8, num);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the last numeric cpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last numeric cpap.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getLastNumericCPAP()
 {
 	return m_iCurNumericBlock_CPAP;
 }
+
+/**********************************************************************************************//**
+ * Sets last numeric cpap
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	num	Number of.
+ **************************************************************************************************/
+
 void CConfiguration::setLastNumericCPAP(BYTE num)
 {
 	m_iCurNumericBlock_CPAP=num;
@@ -11084,13 +16540,29 @@ void CConfiguration::setLastNumericCPAP(BYTE num)
 	getModel()->getI2C()->WriteConfigByte(NUMBLOCK_CPAP_8, num);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the last numeric hfo
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last numeric hfo.
+ **************************************************************************************************/
+
 BYTE CConfiguration::getLastNumericHFO()
 {
 	return m_iCurNumericBlock_HFO;
 }
+
+/**********************************************************************************************//**
+ * Sets last numeric hfo
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	num	Number of.
+ **************************************************************************************************/
+
 void CConfiguration::setLastNumericHFO(BYTE num)
 {
 	m_iCurNumericBlock_HFO=num;
@@ -11100,14 +16572,20 @@ void CConfiguration::setLastNumericHFO(BYTE num)
 
 /**********************************************************************************************//**
  * @fn	BYTE CConfiguration::getLastNumericNCPAP()
- *
+ * 
  * @brief	Gets the last numeric ncpap.
- *
+ * 
  * @author	Rainer Kuehner
  * @date	08.02.2017
- *
+ * 
  * @return	The last numeric ncpap.
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last numeric ncpap.
  **************************************************************************************************/
+
 BYTE CConfiguration::getLastNumericNCPAP()
 {
 	return m_iCurNumericBlock_NCPAP;
@@ -11115,14 +16593,20 @@ BYTE CConfiguration::getLastNumericNCPAP()
 
 /**********************************************************************************************//**
  * @fn	void CConfiguration::setLastNumericNCPAP(BYTE num)
- *
+ * 
  * @brief	Sets last numeric ncpap.
- *
+ * 
  * @author	Rainer Kuehner
  * @date	08.02.2017
- *
+ * 
  * @param	num	Number of.
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	num	Number of.
  **************************************************************************************************/
+
 void CConfiguration::setLastNumericNCPAP(BYTE num)
 {
 	m_iCurNumericBlock_NCPAP=num;
@@ -11132,14 +16616,20 @@ void CConfiguration::setLastNumericNCPAP(BYTE num)
 
 /**********************************************************************************************//**
  * @fn	BYTE CConfiguration::getLastNumericDUOPAP()
- *
+ * 
  * @brief	Gets the last numeric duopap.
- *
+ * 
  * @author	Rainer Kuehner
  * @date	08.02.2017
- *
+ * 
  * @return	The last numeric duopap.
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last numeric duopap.
  **************************************************************************************************/
+
 BYTE CConfiguration::getLastNumericDUOPAP()
 {
 	return m_iCurNumericBlock_DUOPAP;
@@ -11147,14 +16637,20 @@ BYTE CConfiguration::getLastNumericDUOPAP()
 
 /**********************************************************************************************//**
  * @fn	void CConfiguration::setLastNumericDUOPAP(BYTE num)
- *
+ * 
  * @brief	Sets last numeric duopap.
- *
+ * 
  * @author	Rainer Kuehner
  * @date	08.02.2017
- *
+ * 
  * @param	num	Number of.
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	num	Number of.
  **************************************************************************************************/
+
 void CConfiguration::setLastNumericDUOPAP(BYTE num)
 {
 	m_iCurNumericBlock_DUOPAP=num;
@@ -11164,14 +16660,20 @@ void CConfiguration::setLastNumericDUOPAP(BYTE num)
 
 /**********************************************************************************************//**
  * @fn	BYTE CConfiguration::getLastNumericTHERAPY()
- *
+ * 
  * @brief	Gets the last numeric therapy.
- *
+ * 
  * @author	Rainer Kuehner
  * @date	08.02.2017
- *
+ * 
  * @return	The last numeric therapy.
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last numeric therapy.
  **************************************************************************************************/
+
 BYTE CConfiguration::getLastNumericTHERAPY()
 {
 	return m_iCurNumericBlock_THERAPY;
@@ -11179,14 +16681,20 @@ BYTE CConfiguration::getLastNumericTHERAPY()
 
 /**********************************************************************************************//**
  * @fn	void CConfiguration::setLastNumericTHERAPY(BYTE num)
- *
+ * 
  * @brief	Sets last numeric therapy.
- *
+ * 
  * @author	Rainer Kuehner
  * @date	08.02.2017
- *
+ * 
  * @param	num	Number of.
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	num	Number of.
  **************************************************************************************************/
+
 void CConfiguration::setLastNumericTHERAPY(BYTE num)
 {
 	m_iCurNumericBlock_THERAPY=num;
@@ -11196,31 +16704,41 @@ void CConfiguration::setLastNumericTHERAPY(BYTE num)
 
 /**********************************************************************************************//**
  * @fn	BYTE CConfiguration::getLastNumericFLOWOFFCONV()
- *
+ * 
  * @brief	Gets the last numeric flowoffconv.
- *
+ * 
  * @author	Rainer Kuehner
  * @date	13.02.2017
- *
+ * 
  * @return	The last numeric flowoffconv.
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last numeric flowoffconv.
  **************************************************************************************************/
+
 BYTE CConfiguration::getLastNumericFLOWOFFCONV()
 {
 	return m_iCurNumericBlock_FLOWOFFCONV;
 }
 
-
-
 /**********************************************************************************************//**
  * @fn	void CConfiguration::setLastNumericFLOWOFFCONV(BYTE num)
- *
+ * 
  * @brief	Sets last numeric flowoffconv.
- *
+ * 
  * @author	Rainer Kuehner
  * @date	13.02.2017
- *
+ * 
  * @param	num	Number of.
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	num	Number of.
  **************************************************************************************************/
+
 void CConfiguration::setLastNumericFLOWOFFCONV(BYTE num)
 {
 	m_iCurNumericBlock_FLOWOFFCONV=num;
@@ -11230,14 +16748,20 @@ void CConfiguration::setLastNumericFLOWOFFCONV(BYTE num)
 
 /**********************************************************************************************//**
  * @fn	BYTE CConfiguration::getLastNumericFLOWOFFCPAP()
- *
+ * 
  * @brief	Gets the last numeric flowoffcpap.
- *
+ * 
  * @author	Rainer Kuehner
  * @date	31.03.2017
- *
+ * 
  * @return	The last numeric flowoffcpap.
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last numeric flowoffcpap.
  **************************************************************************************************/
+
 BYTE CConfiguration::getLastNumericFLOWOFFCPAP()
 {
 	return m_iCurNumericBlock_FLOWOFFCPAP;
@@ -11245,14 +16769,20 @@ BYTE CConfiguration::getLastNumericFLOWOFFCPAP()
 
 /**********************************************************************************************//**
  * @fn	void CConfiguration::setLastNumericFLOWOFFCPAP(BYTE num)
- *
+ * 
  * @brief	Sets last numeric flowoffcpap.
- *
+ * 
  * @author	Rainer Kuehner
  * @date	31.03.2017
- *
+ * 
  * @param	num	Number of.
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	num	Number of.
  **************************************************************************************************/
+
 void CConfiguration::setLastNumericFLOWOFFCPAP(BYTE num)
 {
 	m_iCurNumericBlock_FLOWOFFCPAP=num;
@@ -11262,14 +16792,20 @@ void CConfiguration::setLastNumericFLOWOFFCPAP(BYTE num)
 
 /**********************************************************************************************//**
  * @fn	BYTE CConfiguration::getLastNumericFLOWOFFHFO()
- *
+ * 
  * @brief	Gets the last numeric flowoffhfo.
- *
+ * 
  * @author	Rainer Kuehner
  * @date	13.02.2017
- *
+ * 
  * @return	The last numeric flowoffhfo.
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The last numeric flowoffhfo.
  **************************************************************************************************/
+
 BYTE CConfiguration::getLastNumericFLOWOFFHFO()
 {
 	return m_iCurNumericBlock_FLOWOFFHFO;
@@ -11277,14 +16813,20 @@ BYTE CConfiguration::getLastNumericFLOWOFFHFO()
 
 /**********************************************************************************************//**
  * @fn	void CConfiguration::setLastNumericFLOWOFFHFO(BYTE num)
- *
+ * 
  * @brief	Sets last numeric flowoffhfo.
- *
+ * 
  * @author	Rainer Kuehner
  * @date	13.02.2017
- *
+ * 
  * @param	num	Number of.
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	num	Number of.
  **************************************************************************************************/
+
 void CConfiguration::setLastNumericFLOWOFFHFO(BYTE num)
 {
 	m_iCurNumericBlock_FLOWOFFHFO=num;
@@ -11388,14 +16930,20 @@ void CConfiguration::SetNIVTRIGGERdemoTimestamp(COleDateTime dateTime)
 
 /**********************************************************************************************//**
  * @fn	COleDateTime CConfiguration::GetFOTdemoTimestamp()
- *
+ * 
  * @brief	Gets fotdemo timestamp.
- *
+ * 
  * @author	Rainer Kuehner
  * @date	09.02.2017
- *
+ * 
  * @return	The fotdemo timestamp.
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The fo tdemo timestamp.
  **************************************************************************************************/
+
 COleDateTime CConfiguration::GetFOTdemoTimestamp()
 {
 	WORD iDemoYear=getModel()->getI2C()->ReadConfigWord(DEMO_FOT_YEAR_16);
@@ -11421,6 +16969,16 @@ COleDateTime CConfiguration::GetFOTdemoTimestamp()
 	
 	return dtdemoTimestamp;
 }
+
+/**********************************************************************************************//**
+ * Sets fo tdemo timestamp
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	dateTime	The date time.
+ **************************************************************************************************/
+
 void CConfiguration::SetFOTdemoTimestamp(COleDateTime dateTime)
 {
 	WORD iDemoYear=0;
@@ -11455,6 +17013,14 @@ void CConfiguration::SetFOTdemoTimestamp(COleDateTime dateTime)
 	theApp.getLog()->WriteLine(szTxt);
 }
 
+/**********************************************************************************************//**
+ * Gets pric odemo timestamp
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The pric odemo timestamp.
+ **************************************************************************************************/
 
 COleDateTime CConfiguration::GetPRICOdemoTimestamp()
 {
@@ -11481,6 +17047,16 @@ COleDateTime CConfiguration::GetPRICOdemoTimestamp()
 
 	return dtdemoTimestamp;
 }
+
+/**********************************************************************************************//**
+ * Sets pric odemo timestamp
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	dateTime	The date time.
+ **************************************************************************************************/
+
 void CConfiguration::SetPRICOdemoTimestamp(COleDateTime dateTime)
 {
 	WORD iDemoYear=0;
@@ -11515,6 +17091,15 @@ void CConfiguration::SetPRICOdemoTimestamp(COleDateTime dateTime)
 	theApp.getLog()->WriteLine(szTxt);
 }
 
+/**********************************************************************************************//**
+ * Gets therap ydemo timestamp
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The therap ydemo timestamp.
+ **************************************************************************************************/
+
 COleDateTime CConfiguration::GetTHERAPYdemoTimestamp()
 {
 	WORD iDemoYear=getModel()->getI2C()->ReadConfigWord(DEMO_THERAPY_YEAR_16);
@@ -11540,6 +17125,16 @@ COleDateTime CConfiguration::GetTHERAPYdemoTimestamp()
 
 	return dtdemoTimestamp;
 }
+
+/**********************************************************************************************//**
+ * Sets therap ydemo timestamp
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	dateTime	The date time.
+ **************************************************************************************************/
+
 void CConfiguration::SetTHERAPYdemoTimestamp(COleDateTime dateTime)
 {
 	WORD iDemoYear=0;
@@ -11574,6 +17169,15 @@ void CConfiguration::SetTHERAPYdemoTimestamp(COleDateTime dateTime)
 	theApp.getLog()->WriteLine(szTxt);
 }
 
+/**********************************************************************************************//**
+ * Gets tren ddemo timestamp
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The tren ddemo timestamp.
+ **************************************************************************************************/
+
 COleDateTime CConfiguration::GetTRENDdemoTimestamp()
 {
 	WORD iDemoYear=getModel()->getI2C()->ReadConfigWord(DEMO_TREND_YEAR_16);
@@ -11599,6 +17203,16 @@ COleDateTime CConfiguration::GetTRENDdemoTimestamp()
 
 	return dtdemoTimestamp;
 }
+
+/**********************************************************************************************//**
+ * Sets tren ddemo timestamp
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	dateTime	The date time.
+ **************************************************************************************************/
+
 void CConfiguration::SetTRENDdemoTimestamp(COleDateTime dateTime)
 {
 	WORD iDemoYear=0;
@@ -11633,6 +17247,15 @@ void CConfiguration::SetTRENDdemoTimestamp(COleDateTime dateTime)
 	theApp.getLog()->WriteLine(szTxt);
 }
 
+/**********************************************************************************************//**
+ * Gets lungre cdemo timestamp
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The lungre cdemo timestamp.
+ **************************************************************************************************/
+
 COleDateTime CConfiguration::GetLUNGRECdemoTimestamp()
 {
 	WORD iDemoYear=getModel()->getI2C()->ReadConfigWord(DEMO_LUNGREC_YEAR_16);
@@ -11658,6 +17281,16 @@ COleDateTime CConfiguration::GetLUNGRECdemoTimestamp()
 
 	return dtdemoTimestamp;
 }
+
+/**********************************************************************************************//**
+ * Sets lungre cdemo timestamp
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	dateTime	The date time.
+ **************************************************************************************************/
+
 void CConfiguration::SetLUNGRECdemoTimestamp(COleDateTime dateTime)
 {
 	WORD iDemoYear=0;
@@ -11692,6 +17325,15 @@ void CConfiguration::SetLUNGRECdemoTimestamp(COleDateTime dateTime)
 	theApp.getLog()->WriteLine(szTxt);
 }
 
+/**********************************************************************************************//**
+ * Gets vlimi tdemo timestamp
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The vlimi tdemo timestamp.
+ **************************************************************************************************/
+
 COleDateTime CConfiguration::GetVLIMITdemoTimestamp()
 {
 	WORD iDemoYear=getModel()->getI2C()->ReadConfigWord(DEMO_VLIMIT_YEAR_16);
@@ -11717,6 +17359,16 @@ COleDateTime CConfiguration::GetVLIMITdemoTimestamp()
 
 	return dtdemoTimestamp;
 }
+
+/**********************************************************************************************//**
+ * Sets vlimi tdemo timestamp
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	dateTime	The date time.
+ **************************************************************************************************/
+
 void CConfiguration::SetVLIMITdemoTimestamp(COleDateTime dateTime)
 {
 	WORD iDemoYear=0;
@@ -11751,6 +17403,15 @@ void CConfiguration::SetVLIMITdemoTimestamp(COleDateTime dateTime)
 	theApp.getLog()->WriteLine(szTxt);
 }
 
+/**********************************************************************************************//**
+ * Gets vguarant ydemo timestamp
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The vguarant ydemo timestamp.
+ **************************************************************************************************/
+
 COleDateTime CConfiguration::GetVGUARANTYdemoTimestamp()
 {
 	WORD iDemoYear=getModel()->getI2C()->ReadConfigWord(DEMO_VGUARANTY_YEAR_16);
@@ -11776,6 +17437,16 @@ COleDateTime CConfiguration::GetVGUARANTYdemoTimestamp()
 
 	return dtdemoTimestamp;
 }
+
+/**********************************************************************************************//**
+ * Sets vguarant ydemo timestamp
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	dateTime	The date time.
+ **************************************************************************************************/
+
 void CConfiguration::SetVGUARANTYdemoTimestamp(COleDateTime dateTime)
 {
 	WORD iDemoYear=0;
@@ -11810,6 +17481,15 @@ void CConfiguration::SetVGUARANTYdemoTimestamp(COleDateTime dateTime)
 	theApp.getLog()->WriteLine(szTxt);
 }
 
+/**********************************************************************************************//**
+ * Gets nmod edemo timestamp
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The nmod edemo timestamp.
+ **************************************************************************************************/
+
 COleDateTime CConfiguration::GetNMODEdemoTimestamp()
 {
 	WORD iDemoYear=getModel()->getI2C()->ReadConfigWord(DEMO_NMODE_YEAR_16);
@@ -11835,6 +17515,16 @@ COleDateTime CConfiguration::GetNMODEdemoTimestamp()
 
 	return dtdemoTimestamp;
 }
+
+/**********************************************************************************************//**
+ * Sets nmod edemo timestamp
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	dateTime	The date time.
+ **************************************************************************************************/
+
 void CConfiguration::SetNMODEdemoTimestamp(COleDateTime dateTime)
 {
 	WORD iDemoYear=0;
@@ -11869,6 +17559,15 @@ void CConfiguration::SetNMODEdemoTimestamp(COleDateTime dateTime)
 	theApp.getLog()->WriteLine(szTxt);
 }
 
+/**********************************************************************************************//**
+ * Gets hf odemo timestamp
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The hf odemo timestamp.
+ **************************************************************************************************/
+
 COleDateTime CConfiguration::GetHFOdemoTimestamp()
 {
 	WORD iDemoYear=getModel()->getI2C()->ReadConfigWord(DEMO_HFO_YEAR_16);
@@ -11894,6 +17593,16 @@ COleDateTime CConfiguration::GetHFOdemoTimestamp()
 
 	return dtdemoTimestamp;
 }
+
+/**********************************************************************************************//**
+ * Sets hf odemo timestamp
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	dateTime	The date time.
+ **************************************************************************************************/
+
 void CConfiguration::SetHFOdemoTimestamp(COleDateTime dateTime)
 {
 	WORD iDemoYear=0;
@@ -11928,6 +17637,13 @@ void CConfiguration::SetHFOdemoTimestamp(COleDateTime dateTime)
 		dateTime.GetYear());
 	theApp.getLog()->WriteLine(szTxt);
 }
+
+/**********************************************************************************************//**
+ * Reads amp cor factor
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ **************************************************************************************************/
 
 void CConfiguration::readAmpCorFactor()
 {
@@ -11972,6 +17688,17 @@ void CConfiguration::readAmpCorFactor()
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets amp cor factor
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \param	iFreq	Zero-based index of the frequency.
+ *
+ * \return	The amp cor factor.
+ **************************************************************************************************/
+
 double CConfiguration::getAmpCorFactor(BYTE iFreq)
 {
 	if(iFreq<5 || iFreq>20)
@@ -11980,18 +17707,57 @@ double CConfiguration::getAmpCorFactor(BYTE iFreq)
 	return dbBufAmpCorFactor[iFreq-5];
 }
 
+/**********************************************************************************************//**
+ * Gets amp cor factor convert k
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The amp cor factor convert k.
+ **************************************************************************************************/
+
 double CConfiguration::getAmpCorFactorCONV_K()
 {
 	return dbAmpCorFactorCONV_K;
 }
+
+/**********************************************************************************************//**
+ * Gets amp cor factor convert j
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The amp cor factor convert j.
+ **************************************************************************************************/
+
 double CConfiguration::getAmpCorFactorCONV_J()
 {
 	return dbAmpCorFactorCONV_J;
 }
+
+/**********************************************************************************************//**
+ * Gets amp cor factor hfo k
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The amp cor factor hfo k.
+ **************************************************************************************************/
+
 double CConfiguration::getAmpCorFactorHFO_K()
 {
 	return dbAmpCorFactorHFO_K;
 }
+
+/**********************************************************************************************//**
+ * Gets amp cor factor hfo j
+ *
+ * \author	Rainer
+ * \date	19.02.2018
+ *
+ * \return	The amp cor factor hfo j.
+ **************************************************************************************************/
+
 double CConfiguration::getAmpCorFactorHFO_J()
 {
 	return dbAmpCorFactorHFO_J;

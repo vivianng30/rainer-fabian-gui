@@ -4271,14 +4271,14 @@ bool CInterfaceSerial::CheckStatusBits(CTlsBlob bl)
 			}
 		}
 
-		if(byTemp & IPRESSUREBIT)
+		/*if(byTemp & IPRESSUREBIT)
 		{
 			getModel()->getDATAHANDLER()->SetPinspNotReachedFlag(true);
 		}
 		else
 		{
 			getModel()->getDATAHANDLER()->SetPinspNotReachedFlag(false);
-		}
+		}*/
 
 		if(getModel()->getCONFIG()->GetCurMode()!=VM_SERVICE)
 		{

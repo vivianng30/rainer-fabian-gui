@@ -31,6 +31,7 @@
 	- Configuration: m_iConfigVersion changed to 3006
 	- previous trigger conventional will be saved to FRAM
 	- CO2 module SenTec excluded from configuration
+	- alarm PinspNotReached excluded
  @endverbatim
  * 
  * @subsection ver5070 Version 5.0.7.0
