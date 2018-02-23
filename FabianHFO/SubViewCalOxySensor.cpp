@@ -6,8 +6,31 @@
 #include "SubViewCalOxySensor.h"
 #include "globDefs.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 //global font objects
@@ -36,11 +59,24 @@ extern HFONT g_hf70BoldNum;
 
 extern CEvent g_eventCheckSensor;
 
-// CSubViewCalOxySensor
-
-
+/**********************************************************************************************//**
+ * CSubViewCalOxySensor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CSubViewCalOxySensor, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CSubViewCalOxySensor class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewCalOxySensor::CSubViewCalOxySensor()
 {
@@ -126,6 +162,13 @@ CSubViewCalOxySensor::CSubViewCalOxySensor()
 	m_bTwoLines=false;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CSubViewCalOxySensor class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CSubViewCalOxySensor::~CSubViewCalOxySensor()
 {
 	delete m_pcExclamation;
@@ -186,12 +229,15 @@ BEGIN_MESSAGE_MAP(CSubViewCalOxySensor, CWnd)
 	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CSubViewCalOxySensor message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
 
-
-// CSubViewCalOxySensor message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 CMVModel *CSubViewCalOxySensor::getModel()
 {
 	if(m_pModel==NULL)
@@ -199,9 +245,20 @@ CMVModel *CSubViewCalOxySensor::getModel()
 	return m_pModel;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates a window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewCalOxySensor::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext)
 {
 	if (!Create(pParentWnd, rc, nID, pContext))
@@ -211,9 +268,21 @@ bool CSubViewCalOxySensor::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, 
 
 	return true;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSubViewCalOxySensor::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -294,6 +363,13 @@ BOOL CSubViewCalOxySensor::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCr
 	else
 		return 0;
 }
+
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewCalOxySensor::Init()
 {
@@ -452,6 +528,12 @@ void CSubViewCalOxySensor::Init()
 
 }
 
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewCalOxySensor::OnPaint()
 {
@@ -459,15 +541,13 @@ void CSubViewCalOxySensor::OnPaint()
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CSubViewCalOxySensor::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewCalOxySensor::OnDestroy()
 {
 	m_bExit=true;
@@ -510,9 +590,15 @@ void CSubViewCalOxySensor::OnDestroy()
 		DeleteObject(m_hbmpTmp);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CSubViewCalOxySensor::Show(BOOL bShow) 
 {
 	if(this->IsWindowVisible() == bShow)
@@ -532,10 +618,17 @@ void CSubViewCalOxySensor::Show(BOOL bShow)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets o2 sensor text
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pszTextTop	The text top.
+ * \param [in,out]	pszTextBot	The text bottom.
+ * \param 		  	bTwoLines 	True to two lines.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewCalOxySensor::SetO2SensorText(CStringW& pszTextTop,CStringW& pszTextBot,bool bTwoLines)
 {
 	EnterCriticalSection(&csOxy);
@@ -545,19 +638,31 @@ void CSubViewCalOxySensor::SetO2SensorText(CStringW& pszTextTop,CStringW& pszTex
 	LeaveCriticalSection(&csOxy);
 }
 
+/**********************************************************************************************//**
+ * Sets o2 sensor value
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewCalOxySensor::SetO2SensorValue(int val)
 {
 	EnterCriticalSection(&csOxy);
 	m_iO2Value = val;
 	LeaveCriticalSection(&csOxy);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Refresh o2 sensor value
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CSubViewCalOxySensor::RefreshO2SensorValue(int val)
 {
 	EnterCriticalSection(&csOxy);
@@ -568,11 +673,16 @@ void CSubViewCalOxySensor::RefreshO2SensorValue(int val)
 	
 }
 
+/**********************************************************************************************//**
+ * Draw o2 sensor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bStatic	True to static.
+ * \param	bText  	True to text.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewCalOxySensor::DrawO2Sensor(bool bStatic, bool bText)
 {
 	EnterCriticalSection(&csOxy);
@@ -704,10 +814,13 @@ void CSubViewCalOxySensor::DrawO2Sensor(bool bStatic, bool bText)
 	LeaveCriticalSection(&csOxy);
 }
 
+/**********************************************************************************************//**
+ * Draw static
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewCalOxySensor::DrawStatic(/*CDC* pDC*/)
 {
 	CDC* pDCStatic=CDC::FromHandle(m_hdcStatic);
@@ -746,9 +859,13 @@ void CSubViewCalOxySensor::DrawStatic(/*CDC* pDC*/)
 	SetTextColor(m_hdcStatic,nPrevTxtColor);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw calibration text
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewCalOxySensor::DrawCalText()
 {
 	CDC* pDCTemp=CDC::FromHandle(m_hdcTmp);
@@ -836,9 +953,15 @@ void CSubViewCalOxySensor::DrawCalText()
 	SelectObject(m_hDC,hPrevFont);*/
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets calibration 21 ok
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bCalibrated	True if calibrated.
+ **************************************************************************************************/
+
 void CSubViewCalOxySensor::SetCalibration21Ok(bool bCalibrated)
 {
 	EnterCriticalSection(&csOxy);
@@ -860,6 +983,15 @@ void CSubViewCalOxySensor::SetCalibration21Ok(bool bCalibrated)
 
 	DrawO2Sensor(false,true);
 }
+
+/**********************************************************************************************//**
+ * Sets calibration 100 ok
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bCalibrated	True if calibrated.
+ **************************************************************************************************/
 
 void CSubViewCalOxySensor::SetCalibration100Ok(bool bCalibrated)
 {
@@ -883,9 +1015,17 @@ void CSubViewCalOxySensor::SetCalibration100Ok(bool bCalibrated)
 
 	DrawO2Sensor(false,true);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets calibration state
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	state  	The state.
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CSubViewCalOxySensor::SetCalState(eOxySensCalibrationstate state,bool bRedraw)
 {
 	EnterCriticalSection(&csOxy);
@@ -989,6 +1129,19 @@ void CSubViewCalOxySensor::SetCalState(eOxySensCalibrationstate state,bool bRedr
 		DrawO2Sensor(false,true);
 	}
 }
+
+/**********************************************************************************************//**
+ * Check oxy sensor state
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bRedraw			True to redraw.
+ * \param	bCalibrating	True to calibrating.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewCalOxySensor::CheckOxySensorState(bool bRedraw, bool bCalibrating)
 {
 	bool bRes=false;
@@ -1096,9 +1249,15 @@ bool CSubViewCalOxySensor::CheckOxySensorState(bool bRedraw, bool bCalibrating)
 	return bRes;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets calibration running
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CSubViewCalOxySensor::SetCalRunning(eOxySensorCalRunState state)
 {
 	EnterCriticalSection(&csOxy);
@@ -1138,9 +1297,15 @@ void CSubViewCalOxySensor::SetCalRunning(eOxySensorCalRunState state)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CSubViewCalOxySensor::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==OXYSENS_VALUE)
@@ -1174,9 +1339,15 @@ void CSubViewCalOxySensor::OnTimer(UINT_PTR nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Updates the calibration time described by bRedraw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CSubViewCalOxySensor::UpdateCalTime(bool bRedraw)
 {
 	EnterCriticalSection(&csOxy);
@@ -1237,6 +1408,19 @@ void CSubViewCalOxySensor::UpdateCalTime(bool bRedraw)
 		DrawO2Sensor(false,true);
 	}
 }
+
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
 LRESULT CSubViewCalOxySensor::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
@@ -1431,17 +1615,30 @@ LRESULT CSubViewCalOxySensor::WindowProc(UINT message, WPARAM wParam, LPARAM lPa
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Enables the on off
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CSubViewCalOxySensor::EnableOnOFF(BOOL state)
 {
 	if(m_pcOxyOnOff)
 		m_pcOxyOnOff->EnableWindow(state);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Shows the oxy btns
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	disable	True to disable, false to enable.
+ **************************************************************************************************/
+
 void CSubViewCalOxySensor::ShowOxyBtns(bool disable)
 {
 	if(disable)
@@ -1493,6 +1690,13 @@ void CSubViewCalOxySensor::ShowOxyBtns(bool disable)
 
 }
 
+/**********************************************************************************************//**
+ * Starts o21 sensor check routine
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewCalOxySensor::StartO21SensorCheckRoutine()
 {
 	if(m_bCheckActive)
@@ -1512,6 +1716,13 @@ void CSubViewCalOxySensor::StartO21SensorCheckRoutine()
 	g_eventCheckSensor.SetEvent();
 }
 
+/**********************************************************************************************//**
+ * Stops o21 sensor check routine
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewCalOxySensor::StopO21SensorCheckRoutine()
 {
 	//StopO21SensorCheckThread();
@@ -1524,8 +1735,12 @@ void CSubViewCalOxySensor::StopO21SensorCheckRoutine()
 		GetParent()->PostMessage(WM_SET_SETUPTIMER);
 }
 
-
-
+/**********************************************************************************************//**
+ * Starts o100 sensor check routine
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewCalOxySensor::StartO100SensorCheckRoutine()
 {
@@ -1544,6 +1759,13 @@ void CSubViewCalOxySensor::StartO100SensorCheckRoutine()
 	g_eventCheckSensor.SetEvent();
 }
 
+/**********************************************************************************************//**
+ * Stops o100 sensor check routine
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewCalOxySensor::StopO100SensorCheckRoutine()
 {
 	//StopO100SensorCheckThread();
@@ -1556,10 +1778,13 @@ void CSubViewCalOxySensor::StopO100SensorCheckRoutine()
 		GetParent()->PostMessage(WM_SET_SETUPTIMER);
 }
 
+/**********************************************************************************************//**
+ * Starts check oxy thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewCalOxySensor::StartCheckOxyThread( void )
 {
 	m_bDoCheckThread=true;
@@ -1582,16 +1807,13 @@ void CSubViewCalOxySensor::StartCheckOxyThread( void )
 	m_pcwtCheckOxyThread->ResumeThread();
 }
 
-//************************************
-// Method:    StopCheckOxyThread
-// FullName:  CSubViewCalOxySensor::StopCheckOxyThread
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Stops check oxy thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewCalOxySensor::StopCheckOxyThread( void )
 {
 	if(m_bDoCheckThread)
@@ -1613,10 +1835,17 @@ void CSubViewCalOxySensor::StopCheckOxyThread( void )
 	}
 }
 
-//#####################################SendThread########################################
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Check oxy thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CCheckOxyThread( LPVOID pc )
 {
 	try
@@ -1646,6 +1875,14 @@ static UINT CCheckOxyThread( LPVOID pc )
 	return TRUE;
 }
 
+/**********************************************************************************************//**
+ * Check oxy sensor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
 
 DWORD CSubViewCalOxySensor::CheckOxySensor()
 {

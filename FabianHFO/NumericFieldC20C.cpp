@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldC20C.h"
 
-
-// CNumericFieldC20C
+/**********************************************************************************************//**
+ * CNumericFieldC20C
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldC20C, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldC20C class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldC20C::CNumericFieldC20C(eNumericSize size):
 CNumericField(size)
@@ -18,6 +34,13 @@ CNumericField(size)
 	m_szNameNote=_T("20");
 	m_szUnit=_T("");
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldC20C class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CNumericFieldC20C::~CNumericFieldC20C()
 {
@@ -30,27 +53,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldC20C, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldC20C message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldC20C message handlers
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericFieldC20C::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CNumericFieldC20C::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldC20C::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -149,9 +178,6 @@ bool CNumericFieldC20C::drawData(bool bData, bool bFrames, bool bText, bool bLim
 }
 
 
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldC20C::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -171,9 +197,17 @@ bool CNumericFieldC20C::drawData(bool bData, bool bFrames, bool bText, bool bLim
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldC20C::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -246,10 +280,17 @@ bool CNumericFieldC20C::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldC20C::drawLimits(CDC* pDC)
 {
 	

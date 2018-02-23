@@ -7,10 +7,25 @@
 #include "MVModel.h"
 
 extern CEvent g_eventNewMonitorData;
+
+/**********************************************************************************************//**
+ * A macro that defines refresh monitordata
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define REFRESH_MONITORDATA 1000
 
 // CThreadMonitor
 CThreadMonitor* CThreadMonitor::theThreadMonitor=0;
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CThreadMonitor class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CThreadMonitor::CThreadMonitor()
 {
@@ -24,15 +39,13 @@ CThreadMonitor::CThreadMonitor()
 
 }
 
-//************************************
-// Method:    ~CThreadMonitor
-// FullName:  CThreadMonitor::~CThreadMonitor
-// Access:    protected 
-// Returns:   
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Finalizes an instance of the CThreadMonitor class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CThreadMonitor::~CThreadMonitor()
 {
 	stopMonitorThread();
@@ -48,14 +61,16 @@ CThreadMonitor::~CThreadMonitor()
 		}
 	}
 }
-//=============================================================================
-/**
- * @brief Get the instance of Monitor thread (singleton).
+
+/**********************************************************************************************//**
+ * Gets the instance
  *
- * @return the instance of Monitor thread
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  *
- **/
-//=============================================================================
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
+
 CThreadMonitor* CThreadMonitor::getInstance()
 {
 	if(theThreadMonitor == 0)
@@ -65,11 +80,13 @@ CThreadMonitor* CThreadMonitor::getInstance()
 	return theThreadMonitor;
 }
 
-//=============================================================================
-/**
- * @brief Destroys the instance of Monitor thread (singleton).
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadMonitor::destroyInstance()
 {
 	if(theThreadMonitor != NULL)
@@ -78,14 +95,16 @@ void CThreadMonitor::destroyInstance()
 		theThreadMonitor = NULL;
 	}
 }
-//=============================================================================
-/**
- * @brief Get the instance of the model (singleton).
+
+/**********************************************************************************************//**
+ * Gets the model
  *
- * @return the instance of the model
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  *
- **/
-//=============================================================================
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CThreadMonitor::getModel()
 {
 	if(m_pModel==NULL)
@@ -93,11 +112,13 @@ CMVModel *CThreadMonitor::getModel()
 	return m_pModel;
 }
 
+/**********************************************************************************************//**
+ * Starts monitor thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// CThreadMonitor message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CThreadMonitor::startMonitorThread( void )
 {
 	m_bDoMonitorThread=true;
@@ -121,16 +142,13 @@ void CThreadMonitor::startMonitorThread( void )
 	m_pcwtMonitorThread->ResumeThread();
 }
 
-//************************************
-// Method:    stopMonitorThread
-// FullName:  CThreadMonitor::stopMonitorThread
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Stops monitor thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadMonitor::stopMonitorThread( void )
 {
 	if(m_bDoMonitorThread)
@@ -149,9 +167,17 @@ void CThreadMonitor::stopMonitorThread( void )
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Monitor thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT MonitorThread( LPVOID pc )
 {
 	try
@@ -180,9 +206,16 @@ static UINT MonitorThread( LPVOID pc )
 	//((CThreadMonitor*)pc)->MonitorData();
 	return TRUE;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Monitor data
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CThreadMonitor::MonitorData(void) 
 {
 	CeSetThreadPriority(m_pcwtMonitorThread->m_hThread,130);

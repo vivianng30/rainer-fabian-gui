@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldINFOFLOWOFF.h"
 
-
-// CNumericFieldINFOFLOWOFF
+/**********************************************************************************************//**
+ * CNumericFieldINFOFLOWOFF
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldINFOFLOWOFF, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldINFOFLOWOFF class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldINFOFLOWOFF::CNumericFieldINFOFLOWOFF(eNumericSize size):
 CNumericField(size)
@@ -17,6 +33,13 @@ CNumericField(size)
 	m_szNameNote=_T("");
 	m_szUnit=_T("");
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldINFOFLOWOFF class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CNumericFieldINFOFLOWOFF::~CNumericFieldINFOFLOWOFF()
 {
@@ -29,17 +52,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldINFOFLOWOFF, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldINFOFLOWOFF message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldINFOFLOWOFF message handlers
 void CNumericFieldINFOFLOWOFF::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldINFOFLOWOFF::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -82,10 +121,17 @@ bool CNumericFieldINFOFLOWOFF::drawData(bool bData, bool bFrames, bool bText, bo
 	return bReturn;
 }
 
+/**********************************************************************************************//**
+ * Draw frames
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldINFOFLOWOFF::drawFrames(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -112,9 +158,17 @@ bool CNumericFieldINFOFLOWOFF::drawFrames(CDC* pDC)
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldINFOFLOWOFF::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -130,8 +184,6 @@ bool CNumericFieldINFOFLOWOFF::drawStaticText(CDC* pDC)
 
 	pDC->DrawText(getModel()->GetLanguageString(IDS_TXT_FLOWSENSOR_OFF),&rc,DT_VCENTER|DT_SINGLELINE|DT_CENTER);
 
-	
-	
 
 	SetTextColor(hdc,nPrevTxtColor);
 	SetBkMode(hdc,nBkMode);
@@ -139,10 +191,17 @@ bool CNumericFieldINFOFLOWOFF::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldINFOFLOWOFF::drawLimits(CDC* pDC)
 {
 	return true;

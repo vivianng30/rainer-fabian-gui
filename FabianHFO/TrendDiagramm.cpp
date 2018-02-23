@@ -14,11 +14,51 @@ extern HFONT g_hf7AcuNorm;
 extern HFONT g_hf7AcuBold;
 extern HFONT g_hf14AcuNormNum;
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the TrendDiagramm class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
+
 IMPLEMENT_DYNAMIC(CTrendDiagramm, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CTrendDiagramm class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CTrendDiagramm::CTrendDiagramm()
 {
@@ -130,13 +170,27 @@ CTrendDiagramm::CTrendDiagramm()
 	m_tsOffsetStartTime.SetDateTimeSpan(0,0,0,0);
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CTrendDiagramm class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CTrendDiagramm::~CTrendDiagramm()
 {
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CTrendDiagramm::getModel()
 {
 	if(m_pModel==NULL)
@@ -156,12 +210,21 @@ BEGIN_MESSAGE_MAP(CTrendDiagramm, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CTrendDiagramm-Meldungshandler
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd 	If non-null, the parent window.
+ * \param 		  	rc		   	The rectangle.
+ * \param 		  	nID		   	The identifier.
+ * \param 		  	colorscheme	The colorscheme.
+ * \param [in,out]	pContext   	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// CTrendDiagramm-Meldungshandler
-
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CTrendDiagramm::Create(CWnd* pParentWnd, const RECT rc, UINT nID, UINT colorscheme, CCreateContext* pContext) 
 {
 	GraphSetAllDefaults();
@@ -323,9 +386,13 @@ BOOL CTrendDiagramm::Create(CWnd* pParentWnd, const RECT rc, UINT nID, UINT colo
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CTrendDiagramm::OnPaint() 
 {
 	CPaintDC dc(this);
@@ -337,15 +404,13 @@ void CTrendDiagramm::OnPaint()
 
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CTrendDiagramm::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CTrendDiagramm::OnDestroy() 
 {
 	delete m_pcGraphDecrease;
@@ -403,9 +468,15 @@ void CTrendDiagramm::OnDestroy()
 		DeleteObject(m_hbmpGraph);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CTrendDiagramm::Show(BOOL bShow) 
 {
 	if(this->IsWindowVisible() == bShow)
@@ -421,30 +492,46 @@ void CTrendDiagramm::Show(BOOL bShow)
 		SetWindowPos(NULL,0,0,0,0,SWP_NOSIZE|SWP_NOMOVE|SWP_HIDEWINDOW);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets trend type
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The trend type.
+ **************************************************************************************************/
+
 int CTrendDiagramm::GetTrendType()
 {
 	return m_iTrendType;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets trend type
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iType	Zero-based index of the type.
+ **************************************************************************************************/
+
 void CTrendDiagramm::SetTrendType(int iType)
 {
 	m_iTrendType=iType;
 }
 
-// **************************************************************************
-// This function sets all the member variables to their default values
-// creates the default font, etc....
-// Because there are so may member variables, attempting to make
-// constructors to cover all possibilites will be a pain - so all
-// constructors should call this
-// function first, then overwrite the default values as required.
-// **************************************************************************
+/**********************************************************************************************//**
+ * Graph set all defaults
+ * 
+ * This function sets all the member variables to their default values creates the default font,
+ * etc.... Because there are so may member variables, attempting to make constructors to cover
+ * all possibilites will be a pain - so all constructors should call this function first, then
+ * overwrite the default values as required.
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CTrendDiagramm::GraphSetAllDefaults()
 {
 	SetDefaultColorScheme();
@@ -470,13 +557,19 @@ void CTrendDiagramm::GraphSetAllDefaults()
 	m_pFunctionParams=NULL;
 }
 
-/////////////////// SetColorScheme ////////////////////////////////////////////
-/*																			///
-SetColorScheme set the color scheme for the graph						///
-There are 8 colorschemes in total but default colour scheme is the		///
-same as as the WHITE colorscheme (which is really grey)					///
-*/																			///
-///////////////////////////////////////////////////////////////////////////////
+/**********************************************************************************************//**
+ * Sets color scheme
+ * 
+ * SetColorScheme set the color scheme for the graph There are 8 colorschemes in total but
+ * default colour scheme is the same as as the WHITE colorscheme (which is really grey)
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	Scheme 	The scheme.
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CTrendDiagramm::SetColorScheme(int Scheme, BOOL bRedraw)
 {
 	/*
@@ -616,84 +709,24 @@ void CTrendDiagramm::SetColorScheme(int Scheme, BOOL bRedraw)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets x coordinate axis scale
+ * 
+ * This sets the min and max values of the x-axis (of the plotting area)
+ *  			It also sets what proportion of the x-range is denoted by one pixel a.ka. PixelsPerX It
+ *  			also caluclates where the x-origin (the x==0) point lies along the x-axis - if x does not
+ *  			pass through zero the x-origin gidline is shown at the top or bottom of the graph. (the x-
+ *  			origin point on screen is stored in the m_iOriginX parameter as
+ *  			 an offset from the LHS of the (total) graph
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	min	   	The minimum.
+ * \param	max	   	The maximum.
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
 
-
-
-
-
-////////////////////////// CalcTopMargin ///////////////////////////////////
-/*
-Returns the spacing between the top adge of the graph and the top of the	
-plotting area.
-*/
-////////////////////////////////////////////////////////////////////////////
-//UINT CTrendDiagramm::CalcTopMargin()
-//{
-//	/*the top margin comprises the following
-//	1* blank line + 1*Line (graph Title) + 
-//	1*blank line +1*Line (graph function);
-//	This margin is fixed
-//	*/
-//	return 4*m_iCharHeight;
-//}
-
-
-/////////////////////  CalcBottommargin  //////////////////////////////////
-/*
-Returns the space between the bottom of the grapgh and the bottom
-of the actual plotting area
-*/
-//////////////////////////////////////////////////////////////////////////
-//UINT CTrendDiagramm::CalcBottomMargin()
-//{
-//	/* The bottom margin comprises the following
-//	1*blank line +1*Line(x axis title) + 1* line(x-values)+1*line(ticks);
-//	Mind you this is a 'minimum margin' - required below the x-axis
-//	There might be a lot of space below this depending on the x-axis scale
-//	*/
-//	return 3*m_iCharHeight;
-//}
-
-/////////////////////// CalcLeftmargin ////////////////////////////////////
-/*
-Returns the margin between the left of the graph and the left of the
-plotiing area
-*/
-////////////////////////////////////////////////////////////////////////////
-//UINT CTrendDiagramm::CalcLeftMargin()
-//{
-//	/*The Left margin comprise the following;
-//	1*blank line + 5*lines (for the yaxis values)+1*line (yticks);
-//	This margin is a 'minimum' value - there may be more space to the 
-//	left of this depending on negative scaling of the x-axis
-//	*/
-//	return 13*m_iCharWidth;
-//}
-
-///////////////////////// CalcRightMargin ////////////////////////////////////
-/*
-Returns the space between the right side of the plotting area and the right
-sode of the graph
-*/
-//////////////////////////////////////////////////////////////////////////////
-//UINT CTrendDiagramm::CalcRightMargin()
-//{
-//	/*This margin is simple - there is a blank line
-//	on the right side of width:
-//	*/
-//	return m_iCharWidth;
-//}
-
-// **************************************************************************
-// This sets the min and max values of the x-axis (of the plotting area)
-//				It also sets what proportion of the x-range is denoted by one pixel
-//				a.ka. PixelsPerX
-//				It also caluclates where the x-origin (the x==0) point lies along
-//				the x-axis - if x does not pass through zero the x-origin gidline is shown
-//				at the top or bottom of the graph.
-//				(the x-origin point on screen is stored in the m_iOriginX parameter as 
-//				 an offset from the LHS of the (total) graph
-// **************************************************************************
 void CTrendDiagramm::SetXAxisScale(double min, double max, BOOL bRedraw)
 {
 	//DEBUGMSG(TRUE, (TEXT("SetXAxisScale ID %d min %d max %d\r\n"),m_nID,min,max));
@@ -746,31 +779,57 @@ void CTrendDiagramm::SetXAxisScale(double min, double max, BOOL bRedraw)
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets pixels per minute
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The pixels per minute.
+ **************************************************************************************************/
+
 double CTrendDiagramm::GetPixelsPerMinute()
 {
 	return m_dPixelsPerX;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * **************************************************************************
+ * 
+ * **************************************************************************
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The y coordinate pixels of diagramm.
+ **************************************************************************************************/
+
 int CTrendDiagramm::GetYPixelsOfDiagramm()
 {
 	return m_iGraphHeight-(m_bmargin+m_tmargin);
 }
 
-/////////////////////// SetYAxisScale /////////////////////////////////////////
-// **************************************************************************
-// This sets the min and max values of the y-axis (of the plotting area)
-//				It also sets what proportion of the grapgh axis pixels represents 1Y
-//				(PixelsPerY =plotheightinpixels/yrange)
-//				It also caluclates where the y-origin (the y==0) point lies along
-//				the y-axis - if y does not pass through zero the y-origin gidline is shown
-//				at the left or right of the graph (this can be overridden by using the SetYLineAtLeft()
-//				function.
-//				(the y-origin point on screen is stored in the m_iOriginY parameter as 
-//				an offset from the bottom of the (total) graph
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets y coordinate axis scale
+ * 
+ * This sets the min
+ *  and max values of the y-axis (of the plotting area)
+ * 				It also sets what proportion of the grapgh axis pixels represents 1Y (PixelsPerY
+ * 				=plotheightinpixels/yrange)
+ * 				It also caluclates where the y-origin (the y==0) point lies along the y-axis - if y does
+ * 				not pass through zero the y-origin gidline is shown at the left or right of the graph
+ * 				(this can be overridden by using the SetYLineAtLeft()
+ * 				function. (the y-origin point on screen is stored in the m_iOriginY parameter as an
+ * 				offset from the bottom of the (total) graph
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	min	   	The minimum.
+ * \param	max	   	The maximum.
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CTrendDiagramm::SetYAxisScale(double min, double max, BOOL bRedraw)
 {
 	double temp,scale;
@@ -824,19 +883,22 @@ void CTrendDiagramm::SetYAxisScale(double min, double max, BOOL bRedraw)
 	}		
 }
 
+/**********************************************************************************************//**
+ * Paints the graph
+ * 
+ * This paints the
+ *  entire graph on to the holding window's
+ * 				client area;
+ * 				It does it in steps starting from the background and working forward. As the graph is NOT
+ * 				a window object in it's own right, it uses the display context of the holding window. If
+ * 				it has not been given a pointer to the holding window, it will not paint. Any CGraph
+ * 				routine that paints to the screen, checks the window pointer first. The last thing to be
+ * 				painted is the plotting of the function data (if any)
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-//////////////////////// PaintGraph //////////////////////////////////////
-// **************************************************************************
-// This paints the entire graph on to the holding window's
-//				client area;
-//				It does it in steps starting from the background and working forward.
-//				As the graph is NOT a window object in it's own right, it uses the
-//				display context of the holding window. If it has not been given a 
-//				pointer to the holding window, it will not paint.
-//				Any CGraph routine that paints to the screen, checks the window pointer
-//				first.
-//				The last thing to be painted is the plotting of the function data (if any)
-// **************************************************************************
 void CTrendDiagramm::PaintGraph()
 {
 	//here we draw the graph
@@ -929,10 +991,18 @@ void CTrendDiagramm::PaintGraph()
 	//DeleteObject(brush);
 }
 
-// **************************************************************************
-// Draws the state "autoscale" on the top right side of the graph
-//				if autoscale state is set.
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw autoscale state
+ * 
+ * Draws the state "autoscale" on the top right side of the graph
+ *  if autoscale state is set.
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CTrendDiagramm::DrawAutoscaleState(CDC* pDC)
 {
 	//The graph title is drawn one character line down
@@ -971,14 +1041,20 @@ void CTrendDiagramm::DrawAutoscaleState(CDC* pDC)
 	//DeleteObject(brush);
 }
 
-//////////////////// DrawGrid ////////////////////////////////////////////////
-// **************************************************************************
-// The grid comprises two parts - the rectangle drawn around the plotting area
-//				and the vertical&horizontal gridlines.
-//				The outline rectangle is always drawn, the drawing of the gidlines
-//				is contrlled by the m_bShowGrid member parameter using the ShowGrid function.
-//				The grid color is  m_crGridColor.
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw grid number
+ * 
+ * The grid comprises two parts - the rectangle drawn around the plotting area and the
+ * vertical&amp;horizontal gridlines. The outline rectangle is always drawn, the drawing of the
+ * gidlines is contrlled by the m_bShowGrid member parameter using the ShowGrid function. The
+ * grid color is  m_crGridColor.
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CTrendDiagramm::DrawGridNum(CDC* pDC)
 {
 
@@ -1605,16 +1681,21 @@ void CTrendDiagramm::DrawGridNum(CDC* pDC)
 	//DeleteObject(brush);
 }
 
-////////////////////// DrawTicks ///////////////////////////////////////////
-// **************************************************************************
-// DrawTicks does two things - it draws the x & Y axis lines and it also
-//				draws the little 'tick' lines.
-//				The axis lines are always shown but the 'ticks' are controlled by the
-//				m_bShowTicks member (using the ShowTicks function);
-//				The length of the ticks are set by the #define in the header file
-//				the axis lines and ticks use the same color (m_crXTickColor for
-//				the x-axis and m_crYTickColor for the y-axis)
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw ticks
+ * 
+ * DrawTicks does two things - it draws the x &amp; Y axis lines and it also draws the little
+ * 'tick' lines. The axis lines are always shown but the 'ticks' are controlled by the
+ * m_bShowTicks member (using the ShowTicks function);
+ * The length of the ticks are set by the #define in the header file the axis lines and ticks
+ * use the same color (m_crXTickColor for the x-axis and m_crYTickColor for the y-axis)
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CTrendDiagramm::DrawTicks(CDC* pDC)
 {
 	//pretty much the same as showing the grid because the ticks and
@@ -1749,9 +1830,15 @@ void CTrendDiagramm::DrawTicks(CDC* pDC)
 	yTickPen.DeleteObject();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw trend cursor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bClear	True to clear.
+ **************************************************************************************************/
+
 void CTrendDiagramm::DrawTrendCursor(bool bClear)
 {
 	CClientDC dc(this);
@@ -1842,6 +1929,17 @@ void CTrendDiagramm::DrawTrendCursor(bool bClear)
 	dc.SelectObject(holdbrush);
 	cursorpen.DeleteObject();
 }
+
+/**********************************************************************************************//**
+ * Sets trend cursor position
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iCurTrendCursorPos	The current trend cursor position.
+ * \param	iPosbufferX		  	Zero-based index of the posbuffer x coordinate.
+ **************************************************************************************************/
+
 void CTrendDiagramm::SetTrendCursorPos(int iCurTrendCursorPos, int iPosbufferX)
 {
 	//DEBUGMSG(TRUE, (TEXT("SetTrendCursorPos %d %d\r\n"),iCurTrendCursorPos,iPosbufferX));
@@ -1861,14 +1959,42 @@ void CTrendDiagramm::SetTrendCursorPos(int iCurTrendCursorPos, int iPosbufferX)
 	DrawTrendCursor(true);
 }
 
+/**********************************************************************************************//**
+ * Gets trend cursor position
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The trend cursor position.
+ **************************************************************************************************/
+
 int CTrendDiagramm::GetTrendCursorPos()
 {
 	return m_iCurTrendCursorPos;
 }
+
+/**********************************************************************************************//**
+ * Gets trend buffer x coordinate position
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The trend buffer x coordinate position.
+ **************************************************************************************************/
+
 int CTrendDiagramm::GetTrendBufferXPos()
 {
 	return m_iPosbufferX;
 }
+
+/**********************************************************************************************//**
+ * Gets trend cursor value
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The trend cursor value.
+ **************************************************************************************************/
 
 int CTrendDiagramm::GetTrendCursorValue()
 {
@@ -1876,6 +2002,17 @@ int CTrendDiagramm::GetTrendCursorValue()
 	
 	return val;
 }
+
+/**********************************************************************************************//**
+ * Move trend cursor left
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bFast	True to fast.
+ *
+ * \return	An int.
+ **************************************************************************************************/
 
 int CTrendDiagramm::MoveTrendCursorLeft(bool bFast)
 {
@@ -1926,6 +2063,17 @@ int CTrendDiagramm::MoveTrendCursorLeft(bool bFast)
 	return GetTrendCursorValue();
 }
 
+/**********************************************************************************************//**
+ * Move trend cursor right
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bFast	True to fast.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CTrendDiagramm::MoveTrendCursorRight(bool bFast)
 {
 	if(bFast)
@@ -1974,9 +2122,15 @@ int CTrendDiagramm::MoveTrendCursorRight(bool bFast)
 	return GetTrendCursorValue();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw cursor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CTrendDiagramm::DrawCursor(bool state)
 {
 	if(!m_bAutofit)
@@ -2043,14 +2197,19 @@ void CTrendDiagramm::DrawCursor(bool state)
 	
 }
 
+/**********************************************************************************************//**
+ * Calculates the data area
+ * 
+ * This function calculates the actual plotting area of the graph this is the graph area minus
+ * the top,bottom,left &amp; right margins Returns: CRect with the plotting area (in client area
+ * co-ords)
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The calculated data area.
+ **************************************************************************************************/
 
-///////////// CalcDataArea ////////////////////////////////////////////////////
-// **************************************************************************
-// This function calculates the actual plotting area of the graph
-//				this is the graph area minus the top,bottom,left & right margins
-//				Returns:
-//				CRect with the plotting area (in client area co-ords)
-// **************************************************************************
 CRect CTrendDiagramm::CalcDataArea()
 {
 	CRect dataarea;
@@ -2061,23 +2220,19 @@ CRect CTrendDiagramm::CalcDataArea()
 	return dataarea;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//int CTrendDiagramm::GetRightPixelsOfXAxis()
-//{
-//	UINT Graphright=m_iGraphX+m_iGraphWidth;
-//	int iXpixelsRight=Graphright-m_rmargin-m_iOriginX;
-//
-//	return iXpixelsRight;
-//}
+/**********************************************************************************************//**
+ * Gets data area width
+ * 
+ * This function calculates the actual plotting area of the graph this is the graph area minus
+ * the top,bottom,left &amp; right margins Returns: CRect with the plotting area (in client area
+ * co-ords)
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The data area width.
+ **************************************************************************************************/
 
-// **************************************************************************
-// This function calculates the actual plotting area of the graph
-//				this is the graph area minus the top,bottom,left & right margins
-//				Returns:
-//				CRect with the plotting area (in client area co-ords)
-// **************************************************************************
 int CTrendDiagramm::GetDataAreaWidth()
 {
 	int iWidth = m_iGraphWidth-m_rmargin-m_lmargin;
@@ -2085,12 +2240,19 @@ int CTrendDiagramm::GetDataAreaWidth()
 	return iWidth;
 }
 
-// **************************************************************************
-// This function calculates the actual plotting area of the graph
-//				this is the graph area minus the top,bottom,left & right margins
-//				Returns:
-//				CRect with the plotting area (in client area co-ords)
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets data area hight
+ * 
+ * This function calculates the actual plotting area of the graph this is the graph area minus
+ * the top,bottom,left &amp; right margins Returns: CRect with the plotting area (in client area
+ * co-ords)
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The data area hight.
+ **************************************************************************************************/
+
 int CTrendDiagramm::GetDataAreaHight()
 {
 	int iHight = m_iGraphHeight-m_bmargin-m_tmargin;
@@ -2098,17 +2260,20 @@ int CTrendDiagramm::GetDataAreaHight()
 	return iHight;
 }
 
+/**********************************************************************************************//**
+ * Calculates the x coordinate axis grid and ticks
+ * 
+ * This calculates the positions of the vertical gridlines of the plot area. This is also used
+ * for x-axis ticks as the ticks line up with the gridlines. How many they are is determined by
+ * the G_NUMTICKSANDGRID  define in the header file Return: a double denoting the x-asis grid
+ * spacing
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The calculated x coordinate axis grid and ticks.
+ **************************************************************************************************/
 
-///////////////////// CalcXAxisGridAndTicks ////////////////////////////////
-// **************************************************************************
-//  This calculates the positions of the vertical gridlines of the plot area.
-//				This is also used for x-axis ticks as the ticks line up with
-//				the gridlines.
-//				How many they are is determined by the G_NUMTICKSANDGRID  define
-//				in the header file
-//				Return:
-//				a double denoting the x-asis grid spacing
-// **************************************************************************
 double CTrendDiagramm::CalcXAxisGridAndTicks()
 {
 	//the placing of the ticks co-incide with gridlines
@@ -2140,15 +2305,20 @@ double CTrendDiagramm::CalcXAxisGridAndTicks()
 	return result;
 }
 
-// **************************************************************************
-// This calculates the positions of the vertical gridlines of the plot area.
-//				This is also used for x-axis ticks as the ticks line up with
-//				the gridlines.
-//				How many they are is determined by the G_NUMTICKSANDGRID  define
-//				in the header file
-//				Return:
-//				a double denoting the x-asis grid spacing
-// **************************************************************************
+/**********************************************************************************************//**
+ * Calculates the x coordinate axis numerics
+ * 
+ * This calculates the positions of the vertical gridlines of the plot area. This is also used
+ * for x-axis ticks as the ticks line up with the gridlines. How many they are is determined by
+ * the G_NUMTICKSANDGRID  define in the header file Return: a double denoting the x-asis grid
+ * spacing
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The calculated x coordinate axis numerics.
+ **************************************************************************************************/
+
 double CTrendDiagramm::CalcXAxisNumerics()
 {
 	//the placing of the ticks co-incide with gridlines
@@ -2181,10 +2351,15 @@ double CTrendDiagramm::CalcXAxisNumerics()
 
 }
 
+/**********************************************************************************************//**
+ * Calculates the y coordinate axis tick grid space
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The calculated y coordinate axis tick grid space.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 double CTrendDiagramm::CalculateYAxisTickGridSpace()
 {
 	double result =0;
@@ -2246,9 +2421,16 @@ double CTrendDiagramm::CalculateYAxisTickGridSpace()
 
 	return result;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Calculates the y coordinate axis numeric space
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The calculated y coordinate axis numeric space.
+ **************************************************************************************************/
+
 double CTrendDiagramm::CalculateYAxisNumericSpace()
 {
 	double result =0;
@@ -2310,9 +2492,14 @@ double CTrendDiagramm::CalculateYAxisNumericSpace()
 
 	return result;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets x coordinate axis tick space
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CTrendDiagramm::SetXAxisTickSpace()
 {
 	int iTimeSpan=(int)m_dXAxisMax;
@@ -2382,73 +2569,119 @@ void CTrendDiagramm::SetXAxisTickSpace()
 	//m_dXTickSpace=dXTickSpace;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Get x coordinate axis tick space
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The x coordinate axis tick space.
+ **************************************************************************************************/
+
 double CTrendDiagramm::GetXAxisTickSpace()
 {
 	return m_dXTickSpace;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets x coordinate axis numeric space
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	dXNumericSpace	The x coordinate numeric space.
+ **************************************************************************************************/
+
 void CTrendDiagramm::SetXAxisNumericSpace(double dXNumericSpace)
 {
 	DEBUGMSG(TRUE, (TEXT("SetXAxisNumericSpace ID %d dXNumericSpace %d\r\n"),m_nID,dXNumericSpace));
 	m_dXNumericSpace=dXNumericSpace;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Get x coordinate axis numeric space
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The x coordinate axis numeric space.
+ **************************************************************************************************/
+
 double CTrendDiagramm::GetXAxisNumericSpace()
 {
 	return m_dXNumericSpace;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets y coordinate axis tick space
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	dYTickSpace	The y coordinate tick space.
+ **************************************************************************************************/
+
 void CTrendDiagramm::SetYAxisTickSpace(double dYTickSpace)
 {
 	m_dYTickSpace=dYTickSpace;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Get y coordinate axis tick space
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The y coordinate axis tick space.
+ **************************************************************************************************/
+
 double CTrendDiagramm::GetYAxisTickSpace()
 {
 	return m_dYTickSpace;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets y coordinate axis numeric space
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	dYNumericSpace	The y coordinate numeric space.
+ **************************************************************************************************/
+
 void CTrendDiagramm::SetYAxisNumericSpace(double dYNumericSpace)
 {
 	m_dYNumericSpace=dYNumericSpace;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Get y coordinate axis numeric space
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The y coordinate axis numeric space.
+ **************************************************************************************************/
+
 double CTrendDiagramm::GetYAxisNumericSpace()
 {
 	return m_dYNumericSpace;
 }
 
+/**********************************************************************************************//**
+ * Calculates the y coordinate axis grid and ticks
+ * 
+ * This calculates the positions of the horizontal gridlines of the plot area. This is also used
+ * for y-axis ticks as the ticks line up with the gridlines. How many they are is determined by
+ * the G_NUMTICKSANDGRID  define in the header file Return: A double denoting the howizontal
+ * gridline spacing
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The calculated y coordinate axis grid and ticks.
+ **************************************************************************************************/
 
-
-
-///////////////////  CalcYAxisGridAndTicks  //////////////////////////////////
-// **************************************************************************
-// This calculates the positions of the horizontal gridlines of the plot area.
-//				This is also used for y-axis ticks as the ticks line up with
-//				the gridlines.
-//				How many they are is determined by the G_NUMTICKSANDGRID  define
-//				in the header file
-//				Return:
-//				A double denoting the howizontal gridline spacing
-// **************************************************************************
 double CTrendDiagramm::CalcYAxisGridAndTicks()
 {
 	//the placing of the ticks co-incide with gridlines
@@ -2478,15 +2711,20 @@ double CTrendDiagramm::CalcYAxisGridAndTicks()
 	return result;
 }
 
-// **************************************************************************
-// This calculates the positions of the horizontal gridlines of the plot area.
-//				This is also used for y-axis ticks as the ticks line up with
-//				the gridlines.
-//				How many they are is determined by the G_NUMTICKSANDGRID  define
-//				in the header file
-//				Return:
-//				A double denoting the howizontal gridline spacing
-// **************************************************************************
+/**********************************************************************************************//**
+ * Calculates the y coordinate axis numerics
+ * 
+ * This calculates the positions of the horizontal gridlines of the plot area. This is also used
+ * for y-axis ticks as the ticks line up with the gridlines. How many they are is determined by
+ * the G_NUMTICKSANDGRID  define in the header file Return: A double denoting the howizontal
+ * gridline spacing
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The calculated y coordinate axis numerics.
+ **************************************************************************************************/
+
 double CTrendDiagramm::CalcYAxisNumerics()
 {
 	////the placing of the ticks co-incide with gridlines
@@ -2520,54 +2758,17 @@ double CTrendDiagramm::CalcYAxisNumerics()
 	return result;
 }
 
+/**********************************************************************************************//**
+ * Draw x coordinate legend
+ * 
+ * The Xaxis legend is drawn below the plotting area below the x-axis scale numbers
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
 
-
-
-
-///////////////////// DrawGraphTitle ////////////////////////////////////
-/*
-This draws the Graph title string in the color m_crGraphTitleColor
-This title is centred abobe the plotting area.
-*/
-////////////////////////////////////////////////////////////////////////
-//void CTrendDiagramm::DrawGraphTitle(CDC* pDC)
-//{
-//	//The graph title is drawn one character line down
-//	//centered left right between the left and right margins
-//	UINT lmargin=CalcLeftMargin();
-//	UINT rmargin=CalcRightMargin();
-//	CRect rect;
-//	rect.left=m_iGraphX+lmargin;
-//	rect.top=m_iGraphY+m_iCharHeight;
-//	rect.right=m_iGraphX+m_iGraphWidth-rmargin;
-//	rect.bottom=rect.top+m_iCharHeight;
-//
-//	//draw the title using the specified colorscheme
-//	//using the graph font
-//	CDC *pdc=m_pWnd->GetDC();
-//	CFont *poldfont;
-//
-//	//note we must clear of any old stuff crap fom this area
-//	CBrush brush;
-//	brush.CreateSolidBrush(m_crGraphBkColor);
-//	//or bottom of a given rect
-//	pdc->FillRect(&rect,&brush);
-//
-//	pdc->SetBkMode(TRANSPARENT);
-//	pdc->SetTextColor(m_crGraphTitleColor);
-//	poldfont=pdc->SelectObject(&m_GraphFont);
-//	pdc->DrawText(m_szGraphTitle,&rect,DT_CENTER|DT_END_ELLIPSIS);
-//
-//	//cleanup
-//	pdc->SelectObject(poldfont);
-//	m_pWnd->ReleaseDC(pdc);
-//}
-
-///////////////////// DrawXLegend //////////////////////////////////////////////
-// **************************************************************************
-// The Xaxis legend is drawn below the plotting area
-//				below the x-axis scale numbers
-// **************************************************************************
 void CTrendDiagramm::DrawXLegend(CDC* pDC)
 {
 	//The x legend is drawn  below the data area
@@ -2602,11 +2803,17 @@ void CTrendDiagramm::DrawXLegend(CDC* pDC)
 	//DeleteObject(brush);
 }
 
-//////////////////////// DrawYlegend //////////////////////////////////////////
-// **************************************************************************
-// The Y legend is drawn at the LHS of the plot area between the yaxis max 
-//				and yaxis min scale
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw y coordinate legend
+ * 
+ * The Y legend is drawn at the LHS of the plot area between the yaxis max and yaxis min scale
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CTrendDiagramm::DrawYLegend(CDC* pDC)
 {
 	//The Y legend is drawn down the left hand side just
@@ -2648,11 +2855,18 @@ void CTrendDiagramm::DrawYLegend(CDC* pDC)
 	//DeleteObject(brush);
 }
 
-///////////////////// DrawXAxisNumbers //////////////////////////////////////
-// **************************************************************************
-// The X axis scale numbers are drawm directly below the plot area.
-//				Three numbers are drawn, min, middle and max scaling
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw x coordinate axis numbers
+ * 
+ * The X axis scale numbers are drawm directly below the plot area. Three numbers are drawn, min,
+ * middle and max scaling
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CTrendDiagramm::DrawXAxisNumbers(CDC* pDC)
 {
 	CStringW astring;
@@ -2800,12 +3014,18 @@ void CTrendDiagramm::DrawXAxisNumbers(CDC* pDC)
 	//DeleteObject(brush);
 }
 
-///////////////////// DrawYAxisNumbers //////////////////////////////////////
-// **************************************************************************
-// The Y axis scale is drawn on the LHS of the plot area.
-//				Only two numbers are drawn - min and max to allow for the Y-axis
-//				legend.
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw y coordinate axis numbers
+ * 
+ * The Y axis scale is drawn on the LHS of the plot area. Only two numbers are drawn - min and
+ * max to allow for the Y-axis legend.
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CTrendDiagramm::DrawYAxisNumbers(CDC* pDC)
 {
 	CStringW astring;
@@ -3006,107 +3226,75 @@ void CTrendDiagramm::DrawYAxisNumbers(CDC* pDC)
 	pDC->SelectObject(hPrevFont);
 }
 
+/**********************************************************************************************//**
+ * Sets default color scheme
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-////////////////// DrawFunctionName /////////////////////////////////////
-/*
-The function Name is drawn just above the plot area and below the Graph Title;
-Usually the Function Name is autoset - but it's just another text string
-which can be change programitcally.
-*/
-////////////////////////////////////////////////////////////////////////////
-//void CTrendDiagramm::DrawFunctionName(CDC* pDC)
-//{
-//	//The function name is drawn just above the dataarea
-//	//centered, using it's own color
-//	CRect dataarea=CalcDataArea();
-//	CRect rect;
-//	rect.top=dataarea.top-m_iCharHeight;
-//	rect.bottom=dataarea.top;
-//	rect.left=dataarea.left;
-//	rect.right=dataarea.right;
-//
-//	//move up a pixel so as not to get too close to the 
-//	//dataarea top
-//	rect.bottom-=2;
-//	rect.top-=2;
-//
-//	CBrush brush;
-//	brush.CreateSolidBrush(m_crGraphBkColor);
-//	CFont *poldfont;
-//
-//	CDC *pdc=m_pWnd->GetDC();
-//	pdc->FillRect(&rect,&brush);
-//
-//	poldfont=pdc->SelectObject(&m_GraphFont);
-//	pdc->SetTextColor(m_crFunctionNameColor);
-//	pdc->SetBkMode(TRANSPARENT);
-//	pdc->DrawText(m_szFunctionNameText,&rect,DT_CENTER|DT_END_ELLIPSIS);
-//
-//	//cleanup
-//	pdc->SelectObject(poldfont);
-//	m_pWnd->ReleaseDC(pdc);
-//}
-
-////////////////// SetdefaultColorScheme  //////////////////////////////////
-/*
-sets the colours of various bits back to the default colours
-*/
-///////////////////////////////////////////////////////////////////////////
 void CTrendDiagramm::SetDefaultColorScheme()
 {
 	SetColorScheme(G_DEFAULTSCHEME);
 }
 
+/**********************************************************************************************//**
+ * Sets default graph title
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-//////////////////////  SetDefaultGraphTitle //////////////////////////////
-/*
-Sets the default graph title
-*/
-///////////////////////////////////////////////////////////////////////////
 void CTrendDiagramm::SetDefaultGraphTitle()
 {
 	m_szGraphTitle=_T("Graph Title goes here");
 }
 
+/**********************************************************************************************//**
+ * Sets default x coordinate legend
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-//////////// SetDefaultXLegend/////////////////////////////////////////////
-/*
-
-*/
-///////////////////////////////////////////////////////////////////////////
 void CTrendDiagramm::SetDefaultXLegend()
 {
 	m_szXLegendText=_T("X Axis Legend Text here");
 }
 
-///////////////// SetDefaultYLegend ///////////////////////////////////////
-/*
+/**********************************************************************************************//**
+ * Sets default y coordinate legend
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-*/
-///////////////////////////////////////////////////////////////////////////
 void CTrendDiagramm::SetDefaultYLegend()
 {
 	m_szYLegendText=_T("Y Axis Legend text  here");
 }
 
+/**********************************************************************************************//**
+ * Sets default function name
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-
-////////////////////// SetDefaultFunctionname  //////////////////////////////
-/*
-*/
-/////////////////////////////////////////////////////////////////////////////
 void CTrendDiagramm::SetDefaultFunctionName()
 {
 	m_szFunctionNameText=_T("Function Name (or extra text)");
 }
 
-///////////////////////// SetGraphTitle /////////////////////////////////////
-/*
-This sets the GraphTitle
-Takes:
-CStringW
-*/
-/////////////////////////////////////////////////////////////////////////////
+/**********************************************************************************************//**
+ * Sets graph title
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	GraphTitle	The graph title.
+ **************************************************************************************************/
+
 void CTrendDiagramm::SetGraphTitle(CStringW GraphTitle)
 {
 	//CDC* pDCStatic=CDC::FromHandle(m_hdcStatic);
@@ -3115,11 +3303,15 @@ void CTrendDiagramm::SetGraphTitle(CStringW GraphTitle)
 
 }
 
+/**********************************************************************************************//**
+ * Sets x coordinate legend text
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	XText	The text.
+ **************************************************************************************************/
 
-//////////////////////// SetXLegendText  ///////////////////////////////////
-// **************************************************************************
-// Sets the X axis legend text
-// **************************************************************************
 void CTrendDiagramm::SetXLegendText(CStringW XText)
 {
 	CDC* pDCStatic=CDC::FromHandle(m_hdcStatic);
@@ -3127,11 +3319,15 @@ void CTrendDiagramm::SetXLegendText(CStringW XText)
 	DrawXLegend(pDCStatic);
 }
 
+/**********************************************************************************************//**
+ * Sets y coordinate legend text
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	YText	The text.
+ **************************************************************************************************/
 
-////////////////////// SetYLegendText /////////////////////////////////////
-// **************************************************************************
-// Sets the Y axis legend text
-// **************************************************************************
 void CTrendDiagramm::SetYLegendText(CStringW YText)
 {
 	CDC* pDCStatic=CDC::FromHandle(m_hdcStatic);
@@ -3139,12 +3335,15 @@ void CTrendDiagramm::SetYLegendText(CStringW YText)
 	DrawYLegend(pDCStatic);
 }
 
+/**********************************************************************************************//**
+ * Sets function name
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	FunctionName	Name of the function.
+ **************************************************************************************************/
 
-////////////////////////////// SetFunctionName /////////////////////////////
-/*
-Sets the Function name text string
-*/
-////////////////////////////////////////////////////////////////////////////
 void CTrendDiagramm::SetFunctionName(CStringW FunctionName)
 {
 	//CDC* pDCStatic=CDC::FromHandle(m_hdcStatic);
@@ -3152,29 +3351,17 @@ void CTrendDiagramm::SetFunctionName(CStringW FunctionName)
 	//DrawFunctionName(pDCStatic);
 }
 
-//////////////////// SetYLineAtLeft ////////////////////////////////////////
-// **************************************************************************
-// The Y axis line can be forced to the LHS of the 
-//				plot area using this function
-// **************************************************************************
-//void CTrendDiagramm::SetYLineAtLeft(BOOL AtLeft)
-//{
-//	BOOL bprevious=m_bYLineAtLeft;
-//	m_bYLineAtLeft=AtLeft;
-//	//if there is a change in the Y line position then we will have to
-//	//redraw the graph
-//	if (m_bYLineAtLeft != bprevious)
-//	{
-//		PaintGraph();
-//	}
-//}
+/**********************************************************************************************//**
+ * Shows the grid
+ * 
+ * This switches the grid on or off as set by the bShow parameter The graph is repainted to match
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
 
-////////////////////////// ShowGrid /////////////////////////////////////////
-/*
-This switches the grid on or off as set by the bShow parameter
-The graph is repainted to match
-*/
-/////////////////////////////////////////////////////////////////////////////
 void CTrendDiagramm::ShowGrid(BOOL bShow)
 {
 	//this is public function
@@ -3189,11 +3376,17 @@ void CTrendDiagramm::ShowGrid(BOOL bShow)
 	}
 }
 
-/////////////////// ShowTicks ////////////////////////////////////////////
-// **************************************************************************
-// This switches the x and y axis 'ticks' on or off as set by the
-//				bShow parameter
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows the ticks
+ * 
+ * This switches the x and y axis 'ticks' on or off as set by the bShow parameter
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CTrendDiagramm::ShowTicks(BOOL bShow)
 {
 	//this is public function
@@ -3209,21 +3402,26 @@ void CTrendDiagramm::ShowTicks(BOOL bShow)
 
 }
 
-////////////////////// ConvertToGraphCoords ///////////////////////////////////
-// **************************************************************************
-// ConvertToGraphCoords (double x, double y) will take the	
-//				result of some calculation as given by x and y and return where				
-//				they should be plotted on the graph.				
-//				As we are can only plot a whole pixel the return value is of	
-//				type LONG (as apposed to double).						
-//				The Y-pixel is in the HIWORD and x-pixel in the LOWORD of the	
-//				return.													
-//				Note that depending on the scale of the graph, the return coords	
-//				of a single pixel could be one of many.						
-//				For example: if the x axis is 400 pixels wide, but is scaled to		
-//				represent 1000, then each pixel represent 2.5 in the real world.	
-//				So to pixel 398 represent the real world values of 995 to 996.5 inc.
-// **************************************************************************
+/**********************************************************************************************//**
+ * Converts this instance to a graph coordinates
+ * 
+ * ConvertToGraphCoords (double x, double y) will take the result of some calculation as given
+ * by x and y and return where they should be plotted on the graph. As we are can only plot a
+ * whole pixel the return value is of type LONG (as apposed to double). The Y-pixel is in the
+ * HIWORD and x-pixel in the LOWORD of the return. Note that depending on the scale of the graph,
+ * the return coords of a single pixel could be one of many. For example: if the x axis is 400
+ * pixels wide, but is scaled to represent 1000, then each pixel represent 2.5 in the real
+ * world. So to pixel 398 represent the real world values of 995 to 996.5 inc.
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	x	The x coordinate.
+ * \param	y	The y coordinate.
+ *
+ * \return	The given data converted to a graph coordinates.
+ **************************************************************************************************/
+
 LONG CTrendDiagramm::ConvertToGraphCoords(double x, double y)
 {
 
@@ -3257,18 +3455,22 @@ LONG CTrendDiagramm::ConvertToGraphCoords(double x, double y)
 	return result;
 }
 
+/**********************************************************************************************//**
+ * Executes the function operation
+ * 
+ * The user fills in a G_FUNCTIONSTRUCT relevant to a function and passes a pointer to it to
+ * this function. The pointer to this G_FUNCTIONSTRUCT is saved in a member variable This
+ * function does some preliminary stuff  and if there are no obvious problems it then calls the
+ * PaintGraph function.
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pFunctionParams	If non-null, options for controlling the function.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-///////////////////////////// DoFunction //////////////////////////////////////
-// **************************************************************************
-// The user fills in a G_FUNCTIONSTRUCT relevant to a function and passes	
-//				a pointer to it to this function.				
-//				The pointer to this G_FUNCTIONSTRUCT is saved in a member variable
-//				This function does some preliminary stuff  and if there are no	
-//				obvious problems it then calls the PaintGraph function.			
-//
-//				Returns:								
-//				FALSE if there are no problems
-// **************************************************************************
 BOOL CTrendDiagramm::DoFunction(G_FUNCTIONSTRUCT_TD *pFunctionParams)
 {
 	if( (pFunctionParams->pPlotXYItems==NULL) && (pFunctionParams->FuncType==G_PLOTXY))
@@ -3283,12 +3485,13 @@ BOOL CTrendDiagramm::DoFunction(G_FUNCTIONSTRUCT_TD *pFunctionParams)
 	return TRUE;
 }
 
+/**********************************************************************************************//**
+ * Clears the function
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-///////////////////////// ClearFunction ////////////////////////////////
-// **************************************************************************
-// his resets the G_FUNCTIONSTRUCT member pointer		
-//		The graph is repainteed (cleared)
-// **************************************************************************
 void CTrendDiagramm::ClearFunction()
 {
 	////m_pFunctionParams=NULL; //reset the pointer
@@ -3306,14 +3509,17 @@ void CTrendDiagramm::ClearFunction()
 	PaintGraph();
 }
 
+/**********************************************************************************************//**
+ * Draw function
+ * 
+ * This is called from within the PaintGraph routine to draw the actual function onto the graph.
+ * This functions just switches the FunctionType member specified in the G_FUNCTIONSTRUCT and
+ * calls the appropriate routine.
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-/////////////////////////////// DrawFunction  /////////////////////////////////
-// **************************************************************************
-// This is called from within the PaintGraph routine to draw	
-//				the actual function onto the graph.				
-//				This functions just switches the FunctionType member specified in the
-//				G_FUNCTIONSTRUCT and calls the appropriate routine.
-// **************************************************************************
 void CTrendDiagramm::DrawFunction()
 {
 	if(!m_pFunctionParams)
@@ -3337,20 +3543,20 @@ void CTrendDiagramm::DrawFunction()
 	}
 }
 
+/**********************************************************************************************//**
+ * Executes the plot xy points operation
+ * 
+ * This has many similarities with the other functions - however there is no need to calculate Y
+ * in the sane way as in the other function as it is given. a particular x point on the graph is
+ * also given - we place the given y value at the given x point Other: a. We will not bother
+ * plotting  if x &lt; the graph scale XMin or &gt; XMax b. Only dot, bar and line will be
+ * acceptable for the chart type. Any other will default to bar. However be aware that line is
+ * only suitable if the x-values are in sequence. c. The usual y constraints apply
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// This has many similarities with the other functions - however		
-//				there is no need to calculate Y  in the sane way as in the other function
-//				as it is given.											
-//				a particular x point on the graph is also given - we place the	
-//				given y value at the given x point							
-//				Other:														
-//				a. We will not bother plotting  if x < the graph scale XMin or > XMax
-//				b. Only dot, bar and line will be acceptable for the chart type. Any other
-//				will default to bar. However be aware that line is only suitable if the	
-//				x-values are in sequence.						
-//				c. The usual y constraints apply
-// **************************************************************************
 void CTrendDiagramm::DoPlotXYPoints()
 {
 	double xperpixel= VALUESPERMINUTE/m_dPixelsPerX;
@@ -3616,913 +3822,13 @@ void CTrendDiagramm::DoPlotXYPoints()
 	}//SWITCH
 }
 
-// **************************************************************************
-// This has many similarities with the other functions - however		
-//				there is no need to calculate Y  in the sane way as in the other function
-//				as it is given.											
-//				a particular x point on the graph is also given - we place the	
-//				given y value at the given x point							
-//				Other:														
-//				a. We will not bother plotting  if x < the graph scale XMin or > XMax
-//				b. Only dot, bar and line will be acceptable for the chart type. Any other
-//				will default to bar. However be aware that line is only suitable if the	
-//				x-values are in sequence.						
-//				c. The usual y constraints apply
-// **************************************************************************
-//void CTrendDiagramm::DoPlotYPoints()
-//{
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	//double xperpixel= 1/m_dPixelsPerX;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
-//
-//
-//
-//	/*UINT Graphbottom=m_iGraphY+m_iGraphHeight;
-//	UINT Graphright=m_iGraphX+m_iGraphWidth;*/
-//
-//	switch(m_pFunctionParams->ChartType)
-//	{
-//	case G_LINECHART:
-//		{
-//			int iPointsCount=0;
-//
-//			for (UINT count =0; count < m_pFunctionParams->num_PlotXYItems; count++)
-//			{
-//				
-//				double y=m_pFunctionParams->pPlotXYItems[count].pPlotXYItems.y;
-//
-//				UINT pixelx= xstart+(count+1-m_dXAxisMin);
-//
-//				y=ConstrainY(y);	
-//				UINT pixely=ystart-(y-m_dYAxisMin)/yperpixel;
-//
-//				ptsTrend[count].x=pixelx;
-//				ptsTrend[count].y=pixely;
-//
-//				iPointsCount++;
-//			}
-//
-//			PlotPointArray(ptsTrend,iPointsCount);
-//
-//
-//			break;
-//		}
-//	case G_FILLEDCHART:
-//		{
-//			
-//			int iPointsCount=0;
-//
-//			ptsTrend[0].x=xstart+1-m_dXAxisMin;
-//			ptsTrend[0].y=ystart-(0-m_dYAxisMin)/yperpixel;
-//
-//			iPointsCount++;
-//
-//			UINT count;
-//
-//			for (count =0; count < m_pFunctionParams->num_PlotXYItems; count++)
-//			{
-//
-//				double y=m_pFunctionParams->pPlotXYItems[count].pPlotXYItems.y;
-//
-//				UINT pixelx= xstart+(count+1-m_dXAxisMin);
-//
-//				y=ConstrainY(y);	
-//				UINT pixely=ystart-(y-m_dYAxisMin)/yperpixel;
-//
-//				ptsTrend[count+1].x=pixelx;
-//				ptsTrend[count+1].y=pixely;
-//
-//				iPointsCount++;
-//			}
-//
-//			ptsTrend[count+1].x=xstart+(count-m_dXAxisMin);
-//			ptsTrend[count+1].y=ystart-(0-m_dYAxisMin)/yperpixel;
-//
-//			iPointsCount++;
-//
-//			PlotPointArray(ptsTrend,iPointsCount);
-//
-//
-//			break;
-//		}
-//	default:
-//		{
-//			break;
-//		}
-//	}//SWITCH
-//}
+/**********************************************************************************************//**
+ * Check automatic scale y coordinate
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-////////////////////// DoSineX ////////////////////////////////////////////////
-/*																			///
-This draws the function ASinX											///
-*/																			///
-///////////////////////////////////////////////////////////////////////////////
-//void CTrendDiagramm::DoSineX()
-//{
-//	//we loop round from the given xstart to xend
-//	//plotting y=sinx
-//	UINT prevx=0;
-//	UINT prevy=0;
-//	BOOL firstpoint=TRUE;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	double xperpixel= 1/m_dPixelsPerX;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);//
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//the left hand side of the graph plot area on screen
-//
-//	//how many steps (pixels) in the x-direction
-//	UINT xspan=(m_dXAxisMax - m_dXAxisMin)*m_dPixelsPerX;
-//
-//	UINT step;
-//	if(m_pFunctionParams->ChartType==G_BARCHART)
-//	{
-//		step=G_BARCHARTWIDTH;
-//	}
-//	else
-//	{
-//		step=1;
-//	}
-//
-//	for (UINT count =0; count < xspan; count+=step)
-//	{
-//		//do the function
-//		double y=m_pFunctionParams->Const_1*sin(m_dXAxisMin+count*xperpixel);
-//
-//		UINT pixelx=xstart+count;
-//
-//		y=ConstrainY(y);
-//		UINT pixely=ystart-((y-m_dYAxisMin)/yperpixel);
-//
-//
-//
-//		if(firstpoint)
-//		{
-//			prevx=pixelx;
-//			prevy=pixely;
-//			firstpoint=FALSE;
-//		}
-//		PlotPoints(pixelx,pixely,prevx,prevy);
-//		//current point becomes previous point
-//		prevx=pixelx;
-//		prevy=pixely;
-//
-//	}
-//
-//}
-
-//////////////////// DoCosX ////////////////////////////////////////////////////
-/*																			////
-Draws the function CosX													////
-*/																			////
-////////////////////////////////////////////////////////////////////////////////
-//void CTrendDiagramm::DoCosX()
-//{
-//	//we loop round from the given xstart to xend
-//	UINT prevx=0;
-//	UINT prevy=0;
-//	BOOL firstpoint=TRUE;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	double xperpixel= 1/m_dPixelsPerX;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);//
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//the left hand side of the graph plot area on screen
-//
-//	//how many steps (pixels) in the x-direction
-//	UINT xspan=(m_dXAxisMax - m_dXAxisMin)*m_dPixelsPerX;
-//
-//	UINT step;
-//	if(m_pFunctionParams->ChartType==G_BARCHART)
-//	{
-//		step=G_BARCHARTWIDTH;
-//	}
-//	else
-//	{
-//		step=1;
-//	}
-//
-//	for (UINT count =0; count < xspan; count+=step)
-//	{
-//		//do the function
-//		double y=m_pFunctionParams->Const_1*cos(m_dXAxisMin+count*xperpixel);
-//
-//		UINT pixelx=xstart+count;
-//
-//		y=ConstrainY(y);
-//		UINT pixely=ystart-((y-m_dYAxisMin)/yperpixel);
-//
-//		if(firstpoint)
-//		{
-//			prevx=pixelx;
-//			prevy=pixely;
-//			firstpoint=FALSE;
-//		}
-//		PlotPoints(pixelx,pixely,prevx,prevy);
-//		//current point becomes previous point
-//		prevx=pixelx;
-//		prevy=pixely;
-//	}
-//}
-
-/////////////////// DoXSquared  ///////////////////////////////////////////////////
-/*																				///
-*/																				///
-///////////////////////////////////////////////////////////////////////////////////
-//void CTrendDiagramm::DoXSquared()
-//{
-//	//we loop round from the given xstart to xend
-//	UINT prevx=0;
-//	UINT prevy=0;
-//	BOOL firstpoint=TRUE;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	double xperpixel= 1/m_dPixelsPerX;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);//
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//the left hand side of the graph plot area on screen
-//
-//	//how many steps (pixels) in the x-direction
-//	UINT xspan=(m_dXAxisMax -m_dXAxisMin)*m_dPixelsPerX;
-//
-//	UINT step;
-//	if(m_pFunctionParams->ChartType==G_BARCHART)
-//	{
-//		step=G_BARCHARTWIDTH;
-//	}
-//	else
-//	{
-//		step=1;
-//	}
-//
-//	for (UINT count =0; count < xspan; count+=step)
-//	{
-//		//do the function
-//		double y=pow( (m_dXAxisMin+count*xperpixel),2);
-//
-//		UINT pixelx=xstart+count;
-//		y=ConstrainY(y);//keep y within the plottable y scale
-//
-//		UINT pixely=ystart-((y-m_dYAxisMin)/yperpixel);
-//
-//		if(firstpoint)
-//		{
-//			prevx=pixelx;
-//			prevy=pixely;
-//			firstpoint=FALSE;
-//		}
-//		PlotPoints(pixelx,pixely,prevx,prevy);
-//		//current point becomes previous point
-//		prevx=pixelx;
-//		prevy=pixely;
-//
-//	}
-//}
-
-/////////////////// DoXCubed   /////////////////////////////////////////////////
-/*																			////
-*/																			////
-////////////////////////////////////////////////////////////////////////////////
-//void CTrendDiagramm::DoXCubed()
-//{
-//	//we loop round from the given xstart to xend
-//	UINT prevx=0;
-//	UINT prevy=0;
-//	BOOL firstpoint=TRUE;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	double xperpixel= 1/m_dPixelsPerX;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);//
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
-//
-//	//how many steps (pixels) in the x-direction
-//	UINT xspan=(m_dXAxisMax - m_dXAxisMin)*m_dPixelsPerX;
-//
-//	UINT step;
-//	if(m_pFunctionParams->ChartType==G_BARCHART)
-//	{
-//		step=G_BARCHARTWIDTH;
-//	}
-//	else
-//	{
-//		step=1;
-//	}
-//
-//	for (UINT count =0; count < xspan; count+=step)
-//	{
-//		//do the function
-//		double y=pow( (m_dXAxisMin+count*xperpixel),3.00);
-//
-//		UINT pixelx=xstart+count;
-//
-//		y=ConstrainY(y);	
-//		UINT pixely=ystart-((y-m_dYAxisMin)/yperpixel);
-//
-//		if(firstpoint)
-//		{
-//			prevx=pixelx;
-//			prevy=pixely;
-//			firstpoint=FALSE;
-//		}
-//		PlotPoints(pixelx,pixely,prevx,prevy);
-//		//current point becomes previous point
-//		prevx=pixelx;
-//		prevy=pixely;
-//
-//	}
-//}
-
-//////////////////// DoMXPlusC ////////////////////////////////////////////////
-/*																			///	
-*/																			///
-///////////////////////////////////////////////////////////////////////////////
-//void CTrendDiagramm::DoMXPlusC()
-//{
-//	UINT prevx=0;
-//	UINT prevy=0;
-//	BOOL firstpoint=TRUE;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	double xperpixel= 1/m_dPixelsPerX;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);//
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
-//
-//	//how many steps are they (pixels) in the x-direction
-//	UINT xspan=(m_dXAxisMax - m_dXAxisMin)*m_dPixelsPerX;
-//
-//	UINT step;
-//	if(m_pFunctionParams->ChartType==G_BARCHART)
-//	{
-//		step=G_BARCHARTWIDTH;
-//	}
-//	else
-//	{
-//		step=1;
-//	}
-//
-//	for (UINT count =0; count < xspan; count+=step)
-//	{
-//		//do the function
-//		double y=m_pFunctionParams->Const_1*( m_dXAxisMin+(count*xperpixel))+m_pFunctionParams->Const_2;
-//
-//		UINT pixelx=xstart+count;
-//
-//		y=ConstrainY(y);	
-//		UINT pixely=ystart-((y-m_dYAxisMin)/yperpixel);
-//
-//		if(firstpoint)
-//		{
-//			prevx=pixelx;
-//			prevy=pixely;
-//			firstpoint=FALSE;
-//		}
-//		PlotPoints(pixelx,pixely,prevx,prevy);
-//		//current point becomes previous point
-//		prevx=pixelx;
-//		prevy=pixely;
-//
-//	}
-//}
-
-
-////////////////////////// DoLogeX  ///////////////////////////////////////////////
-/*																				///
-*/																				///
-///////////////////////////////////////////////////////////////////////////////////
-//void CTrendDiagramm::DoLogeX()
-//{
-//	UINT prevx=0;
-//	UINT prevy=0;
-//	BOOL firstpoint=TRUE;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	double xperpixel= 1/m_dPixelsPerX;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);//
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
-//
-//	//how many steps are they (pixels) in the x-direction
-//	UINT xspan=(m_dXAxisMax - m_dXAxisMin)*m_dPixelsPerX;
-//
-//	UINT step;
-//	if(m_pFunctionParams->ChartType==G_BARCHART)
-//	{
-//		step=G_BARCHARTWIDTH;
-//	}
-//	else
-//	{
-//		step=1;
-//	}
-//
-//	for (UINT count =0; count < xspan; count+=step)
-//	{
-//		//do the function
-//		double y=log( m_dXAxisMin+(count*xperpixel));
-//
-//		UINT pixelx=xstart+count;
-//
-//		y=ConstrainY(y);	
-//		UINT pixely=ystart-(y-m_dYAxisMin)/yperpixel;
-//
-//		if(firstpoint)
-//		{
-//			prevx=pixelx;
-//			prevy=pixely;
-//			firstpoint=FALSE;
-//		}
-//		PlotPoints(pixelx,pixely,prevx,prevy);
-//		//current point becomes previous point
-//		prevx=pixelx;
-//		prevy=pixely;
-//
-//	}
-//}
-
-
-////////////////////////  DoPlotXY ////////////////////////////////////////////////
-/*																				///	
-This has many similarities with the other functions - however				///
-there is no need to calculate Y  in the sane way as in the other function	///
-as it is given.																///
-a particular x point on the graph is also given - we place the				/// 
-given y value at the given x point											///
-Other:																		///
-a. We will not bother plotting  if x < the graph scale XMin or > XMax		///
-b. Only dot, bar and line will be acceptable for the chart type. Any other	///
-will default to bar. However be aware that line is only suitable if the		///
-x-values are in sequence.													///
-c. The usual y constraints apply											///
-*/																				///																			////
-///////////////////////////////////////////////////////////////////////////////////
-//void CTrendDiagramm::DoPlotXY()
-//{
-//	UINT prevx=0;
-//	UINT prevy=0;
-//	BOOL firstpoint=TRUE;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	double xperpixel= VALUESPERMINUTE/m_dPixelsPerX;
-//	//double xperpixel= 1;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
-//
-//	for (UINT count =0; count < m_pFunctionParams->num_PlotXYItems; count++)
-//	{
-//
-//		double x=m_pFunctionParams->pPlotXYItems[count].pPlotXYItems.x;
-//		double y=m_pFunctionParams->pPlotXYItems[count].pPlotXYItems.y;
-//
-//		//if x is off scale - don't bother
-//		if ( (x < m_dXAxisMin) || (x > m_dXAxisMax*VALUESPERMINUTE))
-//		{
-//			continue; //NEXT !!!!!!
-//		}
-//
-//		//UINT pixelx= xstart+(x-m_dXAxisMin)/xperpixel;
-//		UINT pixelx= xstart+498-(x-m_dXAxisMin)/xperpixel;
-//
-//
-//		y=ConstrainY(y);	
-//		UINT pixely=ystart-(y-m_dYAxisMin)/yperpixel;
-//
-//		if(firstpoint)
-//		{
-//			prevx=pixelx;
-//			prevy=pixely;
-//			firstpoint=FALSE;
-//		}
-//		PlotPoints(pixelx,pixely,prevx,prevy);
-//		//current point becomes previous point
-//		prevx=pixelx;
-//		prevy=pixely;
-//
-//	}
-//}
-
-
-////////////////////////  DoPlotXY ////////////////////////////////////////////////
-/*																				///	
-This has many similarities with the other functions - however				///
-there is no need to calculate Y  in the sane way as in the other function	///
-as it is given.																///
-a particular x point on the graph is also given - we place the				/// 
-given y value at the given x point											///
-Other:																		///
-a. We will not bother plotting  if x < the graph scale XMin or > XMax		///
-b. Only dot, bar and line will be acceptable for the chart type. Any other	///
-will default to bar. However be aware that line is only suitable if the		///
-x-values are in sequence.													///
-c. The usual y constraints apply											///
-*/																				///																			////
-///////////////////////////////////////////////////////////////////////////////////
-//void CTrendDiagramm::DoPlotY()
-//{
-//	UINT prevx=0;
-//	UINT prevy=0;
-//	BOOL firstpoint=TRUE;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	//double xperpixel= 1/m_dPixelsPerX;
-//	double xperpixel= 1;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
-//
-//	for (UINT count =0; count < m_pFunctionParams->num_PlotXYItems; count++)
-//	{
-//
-//		double x=m_pFunctionParams->pPlotXYItems[count].pPlotXYItems.x;
-//		double y=m_pFunctionParams->pPlotXYItems[count].pPlotXYItems.y;
-//
-//		//if x is off scale - don't bother
-//		if ( (x < m_dXAxisMin) || (x > m_dXAxisMax))
-//		{
-//			continue; //NEXT !!!!!!
-//		}
-//
-//		UINT pixelx= xstart+(x-m_dXAxisMin)/xperpixel;
-//
-//		y=ConstrainY(y);	
-//		UINT pixely=ystart-(y-m_dYAxisMin)/yperpixel;
-//
-//		if(firstpoint)
-//		{
-//			prevx=pixelx;
-//			prevy=pixely;
-//			firstpoint=FALSE;
-//		}
-//		PlotPoints(pixelx,pixely,prevx,prevy);
-//		//current point becomes previous point
-//		prevx=pixelx;
-//		prevy=pixely;
-//
-//	}
-//}
-
-
-/////////////////////// DoDeviationPercentAbs /////////////////////////////////////
-/*																				///
-There are two types of deviation graphs, namely percent and absolute		///
-but hey both end up here to be sorted out									///
-*/																				///
-///////////////////////////////////////////////////////////////////////////////////
-//void CTrendDiagramm::DoDeviationPercentAbs()
-//{
-//	///* 
-//	//No X valuess are supplied. The x-axis represents
-//	//samples really
-//	//a. We will not bother plotting  if x < the graph scale XMin or > XMax
-//	//c. The usual y constraints apply
-//	//*/
-//	//UINT prevx=0;
-//	//UINT prevy=0;
-//	//BOOL firstpoint=TRUE;
-//
-//	//LONG result;
-//	//UINT xstart;
-//	//UINT ystart;
-//	//double yperpixel=1/m_dPixelsPerY;
-//
-//	//result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);
-//	//xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	//ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
-//
-//	///*
-//	//We need to know when we will run off the right hand side
-//	//*/
-//	//CRect dataarea=CalcDataArea();
-//
-//	//for (UINT count =0; count < m_pFunctionParams->num_PlotXYItems*2; count+=2)
-//	//{
-//
-//	//	double yval;//will hold percent or absolute devaition
-//	//	double yset=m_pFunctionParams->pPlotXYItems[count];
-//	//	double yactual=m_pFunctionParams->pPlotXYItems[count+1];
-//	//	if( m_pFunctionParams->FuncType==G_PLOTDEV_PERCENT)
-//	//	{
-//	//		yval=(yactual-yset)/yset*100; //percentage of setpoint
-//	//	}
-//	//	else
-//	//	{
-//	//		yval=(yactual-yset); //difference
-//	//	}
-//
-//
-//	//	//if we reach the right hand side then we can stop
-//
-//	//	UINT pixelx= xstart+( (count/2)*m_dPixelsPerX);
-//	//	if (pixelx > dataarea.right )
-//	//	{
-//	//		return; //no need to go any further
-//	//	}
-//
-//
-//	//	yval=ConstrainY(yval);	
-//	//	UINT pixely=ystart-(yval-m_dYAxisMin)/yperpixel;
-//
-//	//	if(firstpoint)
-//	//	{
-//	//		prevx=pixelx;
-//	//		prevy=pixely;
-//	//		firstpoint=FALSE;
-//	//	}
-//	//	PlotPoints(pixelx,pixely,prevx,prevy);
-//	//	//current point becomes previous point
-//	//	prevx=pixelx;
-//	//	prevy=pixely;
-//
-//	//}
-//}
-
-
-///////////////////// DoMultiPlotXY  //////////////////////////////////////////////
-/*	This has many similarities with the PlotXY functions - it plots several		///
-graphs on the																///
-same scale and axis.														///
-It loops (number of graphs) times - drawing each graph in it's				///
-entirety each time.															///
-Other:																		///
-a. We will not bother plotting  if x < the graph scale XMin or > XMax		///
-b. Dot, bar, and line will be acceptable for the chart type.				///
-c. The usual y constraints apply											///
-///
-The number of graphs required are givenn in the								///
-Const_1 fiend of the G_FUNCTIONSTRUCT										///
-*/																				///
-///////////////////////////////////////////////////////////////////////////////////
-//void CTrendDiagramm::DoMultiPlotXY()
-//{
-//	UINT prevx=0;
-//	UINT prevy=0;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	//double xperpixel= 1/m_dPixelsPerX;
-//	double xperpixel= 1;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
-//
-//	//how many graphs?
-//	UINT num_graphs=m_pFunctionParams->Const_1;
-//	//how may plot items per graph
-//	UINT num_plotitems=m_pFunctionParams->num_PlotXYItems;
-//	//save the default pen color
-//	COLORREF savedpencolor=m_crGraphPenColor;
-//	UINT PenCount=0;
-//
-//	for( long countgraphs=0;countgraphs < 
-//		num_graphs*num_plotitems*2;countgraphs+=(long)num_plotitems*2)
-//	{
-//
-//		//set the pencolor for the current graph
-//		m_crGraphPenColor=GetMultiPlotPenColor(PenCount);
-//
-//		BOOL firstpoint=TRUE;//first time round each graph loop
-//
-//		for (UINT count =0; count < num_plotitems; count++)
-//		{
-//
-//			double x=(m_pFunctionParams->pPlotXYItems+countgraphs)[count].pPlotXYItems.x;
-//			double y=(m_pFunctionParams->pPlotXYItems+countgraphs)[count].pPlotXYItems.y;
-//
-//			//if x is off scale - don't bother
-//			if ( (x < m_dXAxisMin) || (x > m_dXAxisMax))
-//			{
-//				continue; //NEXT !!!!!!
-//			}
-//
-//			UINT pixelx= xstart+(x-m_dXAxisMin)/xperpixel;
-//
-//			y=ConstrainY(y);	
-//			UINT pixely=ystart-(y-m_dYAxisMin)/yperpixel;
-//
-//			if(firstpoint)
-//			{
-//				prevx=pixelx;
-//				prevy=pixely;
-//				firstpoint=FALSE;
-//			}
-//			PlotPoints(pixelx,pixely,prevx,prevy);
-//			//current point becomes previous point
-//			prevx=pixelx;
-//			prevy=pixely;
-//
-//		}//end this graph
-//
-//		PenCount++; //next pen
-//	}//all graphs
-//
-//	//restore the graph pencolor
-//	m_crGraphPenColor=savedpencolor;
-//}
-
-///////////////    DoHistogram ////////////////////////////////////////////////////
-/*																				///
-The user can request two types of histogram, namely							///
-one where the frequency of occurrence is displayed as anumber value,		///
-the other where the frequency of occurrence is displayed as a percentage	///
-of the of the quantity of dataitems											///
-Either way they both end up here to be plotted.								///
-The usersupplies the usual data pairs.										///
-However, the first values of the pair(usually the x value)					///
-is not used by this function. The user can use this as a sequence			///
-number if they wish.														///
-We use the send value of each pair -usually the y value.					///
-//For the histogram - we need to calulate									///
-//a. The mean value															///
-//b. The Root of the Mean of the Squares;									///
-///
-To disply the data we, we divide the graph(dataarea) by the width			///
-of a bar to see how many we can fit in. We then divide the min-max			///
-span of the data into the same amount of slices.							///
-We then check each data item to see which slice it falls into.				///
-*/																				///
-///////////////////////////////////////////////////////////////////////////////////
-//void CTrendDiagramm::DoHistogram()
-//{
-//
-//	//UINT prevx=0;
-//	//UINT prevy=0;
-//	//BOOL firstpoint=TRUE;
-//
-//	//LONG result;
-//	//UINT xstart;
-//	//UINT ystart;
-//
-//	//result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);
-//	//xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	//ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
-//
-//	////we will autoscale the x-axis to match the min and max value in the data;
-//	//UINT count;
-//	//double minval,maxval;
-//	//minval=maxval=m_pFunctionParams->pPlotXYItems[1];
-//	//for (count =0; count < m_pFunctionParams->num_PlotXYItems*2; count+=2)
-//	//{
-//	//	if(m_pFunctionParams->pPlotXYItems[count+1] < minval)
-//	//	{
-//	//		minval=m_pFunctionParams->pPlotXYItems[count+1];
-//	//	}
-//	//	else if (m_pFunctionParams->pPlotXYItems[count+1] > maxval)
-//	//	{
-//	//		maxval=m_pFunctionParams->pPlotXYItems[count+1];
-//	//	}
-//	//}
-//	////we should have just found the min and max values of the data
-//	////scale graph accordingly
-//	//SetXAxisScale(minval,maxval);
-//	//DrawXAxisNumbers();
-//
-//	////find how many bars can fit into the praph plot width
-//	//CRect dataarearect=CalcDataArea();
-//	//UINT num_strips= (dataarearect.right-dataarearect.left)/G_BARCHARTWIDTH;
-//
-//	////find out how much a strip is 'worth'
-//	//double strip_val= (maxval-minval)/num_strips;
-//	////count the frequency of the data
-//	//double *pCounts=new double[num_strips];
-//	//memset(pCounts,0,num_strips*sizeof(double));
-//	//for(count=0;count < m_pFunctionParams->num_PlotXYItems*2;count +=2)
-//	//{
-//	//	double value=m_pFunctionParams->pPlotXYItems[count+1];
-//	//	//see which strip the current value falls into
-//	//	for(UINT stripcount=0; stripcount<num_strips;stripcount++)
-//	//	{
-//
-//	//		if( (value >=minval+(stripcount*strip_val)) && 
-//	//			(value <= minval+(stripcount*strip_val)+strip_val))	
-//	//		{
-//	//			pCounts[stripcount]++;
-//	//			break;
-//	//		}
-//	//	}
-//
-//	//}
-//	///*
-//	//Chack if we are showing the histogram frequencies as an absolute
-//	//occurrence figure or as a percentage occurrence
-//	//*/
-//	//if(m_pFunctionParams->FuncType==G_HISTOGRAM_ABS)
-//	//{
-//
-//	//	//find the maximum frequency of occurence and scale the 
-//	//	//y axis
-//	//	int max_freqcurrent=pCounts[0]; //preset a start point
-//	//	for(count=1;count < num_strips; count++)
-//	//	{
-//	//		if (pCounts[count] > max_freqcurrent)
-//	//		{
-//	//			max_freqcurrent=pCounts[count];
-//	//		}
-//	//	}
-//
-//	//	SetYAxisScale(0,max_freqcurrent+1);
-//
-//	//}
-//	//else
-//	//{
-//	//	//we are showing as a percentage
-//	//	//change the ocurrences from an absolute occurence figure to % occurrence
-//
-//	//	for(count=0;count < num_strips; count++)
-//	//	{
-//	//		pCounts[count] =( (pCounts[count]/ ((double)m_pFunctionParams->num_PlotXYItems))*100);
-//	//	}
-//
-//	//	//find the maximum frequency of occurence and scale the 
-//	//	//y axis
-//	//	int max_freqcurrent=pCounts[0]; //preset a start point
-//	//	for(count=1;count < num_strips; count++)
-//	//	{
-//	//		if (pCounts[count] > max_freqcurrent)
-//	//		{
-//	//			max_freqcurrent=pCounts[count];
-//	//		}
-//	//	}
-//
-//
-//	//	SetYAxisScale(0,max_freqcurrent+1);
-//	//}
-//
-//	////in both cases
-//	//DrawYAxisNumbers();
-//
-//	////we have changed the x & y axis scaling so recalculate
-//	////the yperpixel and/or xperpixel as required
-//	//double yperpixel=1/m_dPixelsPerY;	
-//
-//	//for (count =0; count < num_strips; count++)
-//	//{		
-//	//	UINT pixelx= xstart+(count*G_BARCHARTWIDTH);;
-//
-//	//	pCounts[count]=ConstrainY(pCounts[count]);	
-//	//	UINT pixely=ystart-(pCounts[count]/yperpixel);
-//
-//	//	if(firstpoint)
-//	//	{
-//	//		prevx=pixelx;
-//	//		prevy=pixely;
-//	//		firstpoint=FALSE;
-//	//	}
-//	//	PlotPoints(pixelx,pixely,prevx,prevy);
-//	//	//current point becomes previous point
-//	//	prevx=pixelx;
-//	//	prevy=pixely;
-//
-//	//}
-//	////cleanup
-//	//delete []pCounts;
-//}
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CTrendDiagramm::CheckAutoScaleY()
 {
 	bool bRedraw=false;
@@ -4565,6 +3871,17 @@ void CTrendDiagramm::CheckAutoScaleY()
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets negative yoffset
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	dwMaxY	The maximum y coordinate.
+ *
+ * \return	The negative yoffset.
+ **************************************************************************************************/
+
 double CTrendDiagramm::GetNegativeYoffset(double dwMaxY)
 {
 	double result=(dwMaxY/(GetYPixelsOfDiagramm()-10));
@@ -4573,9 +3890,13 @@ double CTrendDiagramm::GetNegativeYoffset(double dwMaxY)
 	return result;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Increase y coordinate scale
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CTrendDiagramm::IncreaseYScale()
 {
 	double dHigherYAxisMax=GetHigherYAxisMax();
@@ -4674,9 +3995,16 @@ void CTrendDiagramm::IncreaseYScale()
 		}
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets higher y coordinate axis maximum
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The calculated higher y coordinate axis maximum.
+ **************************************************************************************************/
+
 double CTrendDiagramm::GetHigherYAxisMax()
 {
 	double dValue=m_dMaxY;
@@ -4957,9 +4285,16 @@ double CTrendDiagramm::GetHigherYAxisMax()
 	return dHigherAxisMax;
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Determines if we can increase y coordinate scale to next value
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CTrendDiagramm::IncreaseYScaleToNextValue()
 {
 	bool bResult=false;
@@ -5062,9 +4397,13 @@ bool CTrendDiagramm::IncreaseYScaleToNextValue()
 	return bResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Decrease y coordinate scale
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CTrendDiagramm::DecreaseYScale()
 {
 	double dHigherYAxisMax=GetLowerYAxisMax();
@@ -5163,9 +4502,16 @@ void CTrendDiagramm::DecreaseYScale()
 		}
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets lower y coordinate axis maximum
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The calculated lower y coordinate axis maximum.
+ **************************************************************************************************/
+
 double CTrendDiagramm::GetLowerYAxisMax()
 {
 	double dValue=m_dMaxY;
@@ -5544,9 +4890,15 @@ double CTrendDiagramm::GetLowerYAxisMax()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Determines if we can decrease y coordinate scale to next value
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CTrendDiagramm::DecreaseYScaleToNextValue()
 {
 	bool bResult=false;
@@ -5647,9 +4999,16 @@ bool CTrendDiagramm::DecreaseYScaleToNextValue()
 	}
 	return bResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets the next higher y coordinate axis maximum
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The calculated next higher y coordinate axis maximum.
+ **************************************************************************************************/
+
 double CTrendDiagramm::GetNextHigherYAxisMax()
 {
 	double dHigherAxisMax=0;
@@ -5879,9 +5238,16 @@ double CTrendDiagramm::GetNextHigherYAxisMax()
 	return dHigherAxisMax;
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Determine if we can decrease y coordinate scale
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if we can decrease y coordinate scale, false if not.
+ **************************************************************************************************/
+
 bool CTrendDiagramm::CanDecreaseYScale()
 {
 	bool bRes=false;
@@ -6129,9 +5495,16 @@ bool CTrendDiagramm::CanDecreaseYScale()
 	}
 	return bRes;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets the next lower y coordinate axis maximum
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The calculated next lower y coordinate axis maximum.
+ **************************************************************************************************/
+
 double CTrendDiagramm::GetNextLowerYAxisMax()
 {
 	double dLowerAxisMax=0;
@@ -6342,64 +5715,22 @@ double CTrendDiagramm::GetNextLowerYAxisMax()
 
 }
 
+/**********************************************************************************************//**
+ * Plot point array
+ * 
+ * Each Function e.g. DoSineX,DoPlotXY, etc, calls this function as they calculate each point so
+ * that each point can be drawn on the Takes: UINT x, UNIT y - the graph co-ord of the point
+ * just calculeted (current point). UINT prevx, UINT prevy - the co-ords of the previous point
+ * This routine checks what type of plot (line, dot, or bar) is required and calls the
+ * appropriate routine
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pts  	If non-null, the points.
+ * \param 		  	iSize	Zero-based index of the size.
+ **************************************************************************************************/
 
-
-///////////////// PlotPoints  /////////////////////////////////////////////
-/*																		///
-Each Function e.g. DoSineX,DoPlotXY, etc, calls this function as	///
-they calculate each point so that each point can be drawn on the	///
-Takes:																///
-UINT x, UNIT y - the graph co-ord of the point just calculeted		///
-(current point).													///
-UINT prevx, UINT prevy - the co-ords of the previous point			///
-This routine checks what type of plot (line, dot, or bar) is		///
-required and calls the appropriate routine							///
-*/																		///
-///////////////////////////////////////////////////////////////////////////
-//void CTrendDiagramm::PlotPoints(UINT x, UINT y, UINT prevx, UINT prevy)
-//{
-//	//here we check the chart type and plot the points accordingly
-//	//we need to constarin the Y values to keep them within the
-//	//plot area;
-//
-//	switch(m_pFunctionParams->ChartType)
-//	{
-//	case G_LINECHART:
-//		{
-//			DrawConnectLine(prevx,prevy,x,y);
-//			break;
-//		}
-//	case G_FILLEDCHART:
-//		{
-//			//DrawFilledLine(prevx,prevy,x,y);
-//			break;
-//		}
-//	/*case G_BARCHART:
-//		{
-//			DrawBar(x,y);
-//			break;
-//		}*/
-//	case G_DOTCHART:
-//	default:
-//		{
-//			DrawDot(x,y);
-//			break;
-//		}
-//	}//SWITCH
-//
-//	return;
-//}
-
-// **************************************************************************
-// Each Function e.g. DoSineX,DoPlotXY, etc, calls this function as
-//				they calculate each point so that each point can be drawn on the
-//				Takes:												
-//				UINT x, UNIT y - the graph co-ord of the point just calculeted
-//				(current point).										
-//				UINT prevx, UINT prevy - the co-ords of the previous point		
-//				This routine checks what type of plot (line, dot, or bar) is
-//				required and calls the appropriate routine
-// **************************************************************************
 void CTrendDiagramm::PlotPointArray(CPoint *pts, int iSize)
 {
 	//here we check the chart type and plot the points accordingly
@@ -6428,29 +5759,18 @@ void CTrendDiagramm::PlotPointArray(CPoint *pts, int iSize)
 	return;
 }
 
+/**********************************************************************************************//**
+ * Draw connect line
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	FromX	from x coordinate.
+ * \param	FromY	from y coordinate.
+ * \param	ToX  	to x coordinate.
+ * \param	ToY  	to y coordinate.
+ **************************************************************************************************/
 
-
-
-///////////////////// DrawDot /////////////////////////////////////////////
-/*																		///
-For the Dot chart type - this routine plots the pixel at the given	///
-point																///
-*/																		///
-///////////////////////////////////////////////////////////////////////////
-//void CTrendDiagramm::DrawDot(UINT X, UINT Y)
-//{
-//	CClientDC dc(this);
-//	
-//	dc.SetPixel(X,Y,m_crGraphPenColor);
-//}
-
-
-//////////////////////////// DrawConnectLine //////////////////////////////////
-/*																			///
-For the line chat type, this routine draws a line between previous		///
-point (FROM) and current point (TO)										///
-*/																			///
-///////////////////////////////////////////////////////////////////////////////
 void CTrendDiagramm::DrawConnectLine(UINT FromX, UINT FromY, UINT ToX, UINT ToY)
 {
 	//draws a connecting line between to pixels
@@ -6471,10 +5791,16 @@ void CTrendDiagramm::DrawConnectLine(UINT FromX, UINT FromY, UINT ToX, UINT ToY)
 	pen.DeleteObject();
 }
 
-// **************************************************************************
-// For the line chat type, this routine draws a line between previous	
-//				point (FROM) and current point (TO)
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw connect line
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pts  	If non-null, the points.
+ * \param 		  	iSize	Zero-based index of the size.
+ **************************************************************************************************/
+
 void CTrendDiagramm::DrawConnectLine(CPoint *pts, int iSize)
 {
 	CClientDC dc(this);
@@ -6499,10 +5825,16 @@ void CTrendDiagramm::DrawConnectLine(CPoint *pts, int iSize)
 	pen.DeleteObject();
 }
 
-// **************************************************************************
-// For the line chat type, this routine draws a line between previous	
-//				point (FROM) and current point (TO)
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw filled line
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pts  	If non-null, the points.
+ * \param 		  	iSize	Zero-based index of the size.
+ **************************************************************************************************/
+
 void CTrendDiagramm::DrawFilledLine(CPoint *pts, int iSize)
 {
 	CPen pen, *poldpen;
@@ -6530,17 +5862,19 @@ void CTrendDiagramm::DrawFilledLine(CPoint *pts, int iSize)
 	pen.DeleteObject();
 }
 
+/**********************************************************************************************//**
+ * Constrain y coordinate
+ * 
+ * This function makes sure that a value of Y plot valuestays within stays within the plot area.
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	y	The y coordinate.
+ *
+ * \return	A doubley constrained to the plotting area.
+ **************************************************************************************************/
 
-//////////////// ConstrainY  //////////////////////////////////////////////
-/*																		///
-This function makes sure that a value of Y plot valuestays within	///
-stays within the plot area.											///
-Input:																///
-double Y value														///
-Returns:															///
-double y constrained to the plotting area							///
-*/																		///
-///////////////////////////////////////////////////////////////////////////
 double CTrendDiagramm::ConstrainY(double y)
 {
 
@@ -6560,70 +5894,44 @@ double CTrendDiagramm::ConstrainY(double y)
 	return y; //should never get here???
 }
 
-//////////////  GetMultiPlotPenColor //////////////////////////////////////////
-/*																			///
-For multiply xy graphs we cycle through a series of pens for each graph	///
-Input:																	///
-UINT PenNumber (synonymous with GraphNumber)							///
-Returns:																///
-COLORREF of next pen in the cycle										///
-*/																			///
-///////////////////////////////////////////////////////////////////////////////
-//COLORREF CTrendDiagramm::GetMultiPlotPenColor(UINT PenNumber)
-//{
-//	//keep the pen within range
-//	PenNumber=PenNumber%G_NUM_MULTIPLOT_COLORS;
-//	switch(PenNumber)
-//	{
-//	case 0:
-//		return G_MULTIPLOT_COLOR_ONE;
-//		break;
-//	case 1:
-//		return G_MULTIPLOT_COLOR_TWO;
-//		break;
-//	case 2:
-//		return G_MULTIPLOT_COLOR_THREE;
-//		break;
-//	case 3:
-//		return G_MULTIPLOT_COLOR_FOUR;
-//		break;
-//	case 4:
-//		return G_MULTIPLOT_COLOR_FIVE;
-//		break;
-//	case 5:
-//		return G_MULTIPLOT_COLOR_SIX;
-//		break;
-//	case 6:
-//		return G_MULTIPLOT_COLOR_SEVEN;
-//		break;
-//	case 7:
-//		return G_MULTIPLOT_COLOR_EIGHT;
-//		break;
-//	default:
-//		return G_MULTIPLOT_COLOR_ONE;
-//	}
-//
-//}
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets an autofit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CTrendDiagramm::SetAutofit(bool state)
 {
 	m_bAutofit=state;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the set focus action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pOldWnd	If non-null, the old window.
+ **************************************************************************************************/
+
 void CTrendDiagramm::OnSetFocus(CWnd* pOldWnd)
 {
 	CWnd::OnSetFocus(pOldWnd);
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the kill focus action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pNewWnd	If non-null, the new window.
+ **************************************************************************************************/
+
 void CTrendDiagramm::OnKillFocus(CWnd* pNewWnd)
 {
 	CWnd::OnKillFocus(pNewWnd);
@@ -6635,9 +5943,19 @@ void CTrendDiagramm::OnKillFocus(CWnd* pNewWnd)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CTrendDiagramm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -6721,28 +6039,17 @@ LRESULT CTrendDiagramm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//void CTrendDiagramm::OnTimer(UINT_PTR nIDEvent)
-//{
-//	if(nIDEvent==TRENDUP)
-//	{
-//		if(AfxGetApp() != NULL)
-//			AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_CURSOR_UP);
-//	}
-//	else if(nIDEvent==TRENDDOWN)
-//	{
-//		if(AfxGetApp() != NULL)
-//			AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_CURSOR_DOWN);
-//	}
-//
-//	CWnd::OnTimer(nIDEvent);
-//}
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CTrendDiagramm::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -6915,6 +6222,15 @@ BOOL CTrendDiagramm::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
+/**********************************************************************************************//**
+ * Sets a firstpoint
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	state	True to state.
+ * \param	prevx	The prevx.
+ **************************************************************************************************/
 
 void CTrendDiagramm::SetFirstpoint(bool state, UINT prevx)
 {
@@ -6923,12 +6239,29 @@ void CTrendDiagramm::SetFirstpoint(bool state, UINT prevx)
 		m_prevx=prevx;
 }
 
+/**********************************************************************************************//**
+ * Gets the previous xval
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The previous xval.
+ **************************************************************************************************/
 
 UINT CTrendDiagramm::GetPrevXval()
 {
 	//int iX=m_prevx;
 	return m_prevx;
 }
+
+/**********************************************************************************************//**
+ * Gets offset minutes
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The offset minutes.
+ **************************************************************************************************/
 
 int CTrendDiagramm::GetOffsetMinutes()
 {
@@ -6941,10 +6274,28 @@ int CTrendDiagramm::GetOffsetMinutes()
 //	return m_dtOffsetTime;
 //}
 
+/**********************************************************************************************//**
+ * Gets start time
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The start time.
+ **************************************************************************************************/
+
 COleDateTime CTrendDiagramm::GetStartTime()
 {
 	return m_dtStartTime;
 }
+
+/**********************************************************************************************//**
+ * Gets move span
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The move span.
+ **************************************************************************************************/
 
 int CTrendDiagramm::GetMoveSpan()
 {
@@ -6963,6 +6314,17 @@ int CTrendDiagramm::GetMoveSpan()
 	}
 	return iRes;
 }
+
+/**********************************************************************************************//**
+ * Move to position
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iPos	Zero-based index of the position.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CTrendDiagramm::MoveToPos(int iPos)
 {
@@ -6995,6 +6357,17 @@ bool CTrendDiagramm::MoveToPos(int iPos)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Move left
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iSpan	Zero-based index of the span.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CTrendDiagramm::MoveLeft(UINT iSpan)
 {
 	int iCurOffsetStartTime=(int)m_tsOffsetStartTime.GetTotalMinutes();
@@ -7026,6 +6399,16 @@ bool CTrendDiagramm::MoveLeft(UINT iSpan)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Move right
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iSpan	Zero-based index of the span.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CTrendDiagramm::MoveRight(UINT iSpan)
 {
@@ -7054,6 +6437,16 @@ bool CTrendDiagramm::MoveRight(UINT iSpan)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Increase time
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CTrendDiagramm::IncreaseTime()
 {
 	//int iTrendSpan=(int)GetTrendSpan();
@@ -7069,6 +6462,16 @@ int CTrendDiagramm::IncreaseTime()
 	return iTrendSpan;
 
 }
+
+/**********************************************************************************************//**
+ * Decrease time
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CTrendDiagramm::DecreaseTime()
 {
 	//int iTrendSpan=(int)GetTrendSpan();
@@ -7083,6 +6486,15 @@ int CTrendDiagramm::DecreaseTime()
 
 	return iTrendSpan;
 }
+
+/**********************************************************************************************//**
+ * Gets the next decrease trend span
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The next decrease trend span.
+ **************************************************************************************************/
 
 int CTrendDiagramm::GetNextDecreaseTrendSpan()
 {
@@ -7131,6 +6543,15 @@ int CTrendDiagramm::GetNextDecreaseTrendSpan()
 	return iTrendSpan;
 }
 
+/**********************************************************************************************//**
+ * Gets the next increase trend span
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The next increase trend span.
+ **************************************************************************************************/
+
 int CTrendDiagramm::GetNextIncreaseTrendSpan()
 {
 	int iTrendSpan=(int)GetTrendSpan();
@@ -7178,10 +6599,28 @@ int CTrendDiagramm::GetNextIncreaseTrendSpan()
 	return iTrendSpan;
 }
 
+/**********************************************************************************************//**
+ * Gets trend span
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The trend span.
+ **************************************************************************************************/
+
 double CTrendDiagramm::GetTrendSpan()
 {
 	return m_dXAxisMax;
 }
+
+/**********************************************************************************************//**
+ * Sets trend span
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iTrendSpan	Zero-based index of the trend span.
+ **************************************************************************************************/
 
 void CTrendDiagramm::SetTrendSpan(int iTrendSpan)
 {
@@ -7194,837 +6633,24 @@ void CTrendDiagramm::SetTrendSpan(int iTrendSpan)
 
 }
 
+/**********************************************************************************************//**
+ * Refresh local time
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	dtStartTime 	The dt start time.
+ * \param	dtOffsetTime	The dt offset time.
+ **************************************************************************************************/
+
 void CTrendDiagramm::RefreshLocalTime(COleDateTime dtStartTime, COleDateTime dtOffsetTime)
 {
 	m_dtOffsetTime=dtOffsetTime;
 	m_dtStartTime=dtStartTime;
 }
 
-/***************************************************************************/
-//     Purpose: This has many similarities with the PlotXY functions - it plots several
-//				graphs on the same scale and axis.											
-//				It loops (number of graphs) times - drawing each graph in it's	
-//				entirety each time.									
-//				Other:														
-//				a. We will not bother plotting  if x < the graph scale XMin or > XMax	
-//				b. Dot, bar, and line will be acceptable for the chart type.	
-//				c. The usual y constraints apply								
-//
-//				The number of graphs required are givenn in the					
-//				Const_1 fiend of the G_FUNCTIONSTRUCT
-//**************************************************************************/
-//void CDiagramm::DoMultiPlotXY()
-//{
-//	UINT prevx=0;
-//	UINT prevy=0;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	double xperpixel= 1/m_dPixelsPerX;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
-//
-//	//how many graphs?
-//	UINT num_graphs=m_pFunctionParams->Const_1;
-//	//how may plot items per graph
-//	UINT num_plotitems=m_pFunctionParams->num_PlotXYItems;
-//	//save the default pen color
-//	COLORREF savedpencolor=m_crGraphPenColor;
-//	UINT PenCount=0;
-//
-//	for( long countgraphs=0;countgraphs < 
-//		num_graphs*num_plotitems;countgraphs+=(long)num_plotitems)
-//	{
-//
-//		//set the pencolor for the current graph
-//		m_crGraphPenColor=GetMultiPlotPenColor(PenCount);
-//
-//		BOOL firstpoint=TRUE;//first time round each graph loop
-//
-//		for (UINT count =0; count < num_plotitems; count++)
-//		{
-//
-//			double x=(m_pFunctionParams->pPlotXYItems+countgraphs)[count].pPlotXYItems->x;
-//			double y=(m_pFunctionParams->pPlotXYItems+countgraphs)[count].pPlotXYItems->y;
-//
-//			//if x is off scale - don't bother
-//			if ( (x < m_dXAxisMin) || (x > m_dXAxisMax))
-//			{
-//				continue; //NEXT !!!!!!
-//			}
-//
-//			UINT pixelx= xstart+(x-m_dXAxisMin)/xperpixel;
-//
-//			y=ConstrainY(y);	
-//			UINT pixely=ystart-(y-m_dYAxisMin)/yperpixel;
-//
-//			if(firstpoint)
-//			{
-//				prevx=pixelx;
-//				prevy=pixely;
-//				firstpoint=FALSE;
-//			}
-//			PlotPoints(pixelx,pixely,prevx,prevy);
-//			//current point becomes previous point
-//			prevx=pixelx;
-//			prevy=pixely;
-//
-//		}//end this graph
-//
-//		PenCount++; //next pen
-//	}//all graphs
-//
-//	//restore the graph pencolor
-//	m_crGraphPenColor=savedpencolor;
-//}
-
-/***************************************************************************/
-//     Purpose: There are two types of deviation graphs, namely percent and absolute
-//				but hey both end up here to be sorted out
-//**************************************************************************/
-//void CDiagramm::DoDeviationPercentAbs()
-//{
-//	/* 
-//	No X valuess are supplied. The x-axis represents
-//	samples really
-//	a. We will not bother plotting  if x < the graph scale XMin or > XMax
-//	c. The usual y constraints apply
-//	*/
-//	UINT prevx=0;
-//	UINT prevy=0;
-//	BOOL firstpoint=TRUE;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
-//
-//	/*
-//	We need to know when we will run off the right hand side
-//	*/
-//	CRect dataarea=CalcDataArea();
-//
-//	for (UINT count =0; count < m_pFunctionParams->num_PlotXYItems; count++)
-//	{
-//
-//		double yval;//will hold percent or absolute devaition
-//		double yset=m_pFunctionParams->pPlotXYItems[count].pPlotXYItems->x;
-//		double yactual=m_pFunctionParams->pPlotXYItems[count].pPlotXYItems->y;
-//		if( m_pFunctionParams->FuncType==G_PLOTDEV_PERCENT)
-//		{
-//			yval=(yactual-yset)/yset*100; //percentage of setpoint
-//		}
-//		else
-//		{
-//			yval=(yactual-yset); //difference
-//		}
-//
-//
-//		//if we reach the right hand side then we can stop
-//
-//		UINT pixelx= xstart+( (count/2)*m_dPixelsPerX);
-//		if (pixelx > dataarea.right )
-//		{
-//			return; //no need to go any further
-//		}
-//
-//
-//		yval=ConstrainY(yval);	
-//		UINT pixely=ystart-(yval-m_dYAxisMin)/yperpixel;
-//
-//		if(firstpoint)
-//		{
-//			prevx=pixelx;
-//			prevy=pixely;
-//			firstpoint=FALSE;
-//		}
-//		PlotPoints(pixelx,pixely,prevx,prevy);
-//		//current point becomes previous point
-//		prevx=pixelx;
-//		prevy=pixely;
-//
-//	}
-//}
-
-/***************************************************************************/
-//     Purpose: 
-//**************************************************************************/
-//void CDiagramm::DoLogeX()
-//{
-//	UINT prevx=0;
-//	UINT prevy=0;
-//	BOOL firstpoint=TRUE;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	double xperpixel= 1/m_dPixelsPerX;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);//
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
-//
-//	//how many steps are they (pixels) in the x-direction
-//	UINT xspan=(m_dXAxisMax - m_dXAxisMin)*m_dPixelsPerX;
-//
-//	UINT step;
-//	if(m_pFunctionParams->ChartType==G_BARCHART)
-//	{
-//		step=G_BARCHARTWIDTH;
-//	}
-//	else
-//	{
-//		step=1;
-//	}
-//
-//	for (UINT count =0; count < xspan; count+=step)
-//	{
-//		//do the function
-//		double y=log( m_dXAxisMin+(count*xperpixel));
-//
-//		UINT pixelx=xstart+count;
-//
-//		y=ConstrainY(y);	
-//		UINT pixely=ystart-(y-m_dYAxisMin)/yperpixel;
-//
-//		if(firstpoint)
-//		{
-//			prevx=pixelx;
-//			prevy=pixely;
-//			firstpoint=FALSE;
-//		}
-//		PlotPoints(pixelx,pixely,prevx,prevy);
-//		//current point becomes previous point
-//		prevx=pixelx;
-//		prevy=pixely;
-//
-//	}
-//}
-
-
-/***************************************************************************/
-//     Purpose: This has many similarities with the other functions - however		
-//				there is no need to calculate Y  in the sane way as in the other function
-//				as it is given.											
-//				a particular x point on the graph is also given - we place the	
-//				given y value at the given x point							
-//				Other:														
-//				a. We will not bother plotting  if x < the graph scale XMin or > XMax
-//				b. Only dot, bar and line will be acceptable for the chart type. Any other
-//				will default to bar. However be aware that line is only suitable if the	
-//				x-values are in sequence.						
-//				c. The usual y constraints apply
-//**************************************************************************/
-//void CDiagramm::DoPlotXY()
-//{
-//	//UINT prevx=0;
-//	//UINT prevy=0;
-//	//BOOL firstpoint=TRUE;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	double xperpixel= 1/m_dPixelsPerX;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
-//
-//	bool bChangeColor=false;
-//	if(m_pModel->getDATAHANDLER()->CurModeIsTriggerMode())
-//	{
-//		if(m_pFunctionParams->bTrig && m_pFunctionParams->bATZ && !m_bTriggeredBreath)
-//		{
-//			bChangeColor=true;
-//		}
-//		else if(!m_pFunctionParams->bTrig && m_pFunctionParams->bATZ && m_bTriggeredBreath)
-//		{
-//			bChangeColor=true;
-//		}
-//	}
-//	
-//
-//	for (UINT count =0; count < m_pFunctionParams->num_PlotXYItems; count++)
-//	{
-//
-//		double x=m_pFunctionParams->pPlotXYItems[count].pPlotXYItems->x;
-//		double y=m_pFunctionParams->pPlotXYItems[count].pPlotXYItems->y;
-//
-//		if(m_pFunctionParams->iValATZ==count && bChangeColor)
-//			SetTriggeredBreath(!m_bTriggeredBreath);
-//
-//		//if x is off scale - don't bother
-//		if ( (x < m_dXAxisMin) || (x > m_dXAxisMax))
-//		{
-//			continue; //NEXT !!!!!!
-//		}
-//
-//		UINT pixelx= xstart+(x-m_dXAxisMin)/xperpixel;
-//
-//		y=ConstrainY(y);	
-//		UINT pixely=ystart-(y-m_dYAxisMin)/yperpixel;
-//
-//		if(m_bFirstpoint)
-//		{
-//			m_prevx=pixelx;
-//			m_prevy=pixely;
-//			m_bFirstpoint=FALSE;
-//		}
-//
-//		PlotPoints(pixelx,pixely,m_prevx,m_prevy);
-//		//current point becomes previous point
-//		m_prevx=pixelx;
-//		m_prevy=pixely;
-//
-//	}
-//}
-
-/***************************************************************************/
-//     Purpose: This draws the function ASinX
-//**************************************************************************/
-//void CDiagramm::DoSineX()
-//{
-//	//we loop round from the given xstart to xend
-//	//plotting y=sinx
-//	UINT prevx=0;
-//	UINT prevy=0;
-//	BOOL firstpoint=TRUE;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	double xperpixel= 1/m_dPixelsPerX;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);//
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//the left hand side of the graph plot area on screen
-//
-//	//how many steps (pixels) in the x-direction
-//	UINT xspan=(m_dXAxisMax - m_dXAxisMin)*m_dPixelsPerX;
-//
-//	UINT step;
-//	if(m_pFunctionParams->ChartType==G_BARCHART)
-//	{
-//		step=G_BARCHARTWIDTH;
-//	}
-//	else
-//	{
-//		step=1;
-//	}
-//
-//	for (UINT count =0; count < xspan; count+=step)
-//	{
-//		//do the function
-//		double y=m_pFunctionParams->Const_1*sin(m_dXAxisMin+count*xperpixel);
-//
-//		UINT pixelx=xstart+count;
-//
-//		y=ConstrainY(y);
-//		UINT pixely=ystart-((y-m_dYAxisMin)/yperpixel);
-//
-//
-//
-//		if(firstpoint)
-//		{
-//			prevx=pixelx;
-//			prevy=pixely;
-//			firstpoint=FALSE;
-//		}
-//		PlotPoints(pixelx,pixely,prevx,prevy);
-//		//current point becomes previous point
-//		prevx=pixelx;
-//		prevy=pixely;
-//
-//	}
-//
-//}
-
-/***************************************************************************/
-//     Purpose: Draws the function CosX	
-//**************************************************************************/
-//void CDiagramm::DoCosX()
-//{
-//	//we loop round from the given xstart to xend
-//	UINT prevx=0;
-//	UINT prevy=0;
-//	BOOL firstpoint=TRUE;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	double xperpixel= 1/m_dPixelsPerX;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);//
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//the left hand side of the graph plot area on screen
-//
-//	//how many steps (pixels) in the x-direction
-//	UINT xspan=(m_dXAxisMax - m_dXAxisMin)*m_dPixelsPerX;
-//
-//	UINT step;
-//	if(m_pFunctionParams->ChartType==G_BARCHART)
-//	{
-//		step=G_BARCHARTWIDTH;
-//	}
-//	else
-//	{
-//		step=1;
-//	}
-//
-//	for (UINT count =0; count < xspan; count+=step)
-//	{
-//		//do the function
-//		double y=m_pFunctionParams->Const_1*cos(m_dXAxisMin+count*xperpixel);
-//
-//		UINT pixelx=xstart+count;
-//
-//		y=ConstrainY(y);
-//		UINT pixely=ystart-((y-m_dYAxisMin)/yperpixel);
-//
-//		if(firstpoint)
-//		{
-//			prevx=pixelx;
-//			prevy=pixely;
-//			firstpoint=FALSE;
-//		}
-//		PlotPoints(pixelx,pixely,prevx,prevy);
-//		//current point becomes previous point
-//		prevx=pixelx;
-//		prevy=pixely;
-//	}
-//}
-
-/***************************************************************************/
-//     Purpose: 
-//**************************************************************************/
-//void CDiagramm::DoXSquared()
-//{
-//	//we loop round from the given xstart to xend
-//	UINT prevx=0;
-//	UINT prevy=0;
-//	BOOL firstpoint=TRUE;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	double xperpixel= 1/m_dPixelsPerX;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);//
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//the left hand side of the graph plot area on screen
-//
-//	//how many steps (pixels) in the x-direction
-//	UINT xspan=(m_dXAxisMax -m_dXAxisMin)*m_dPixelsPerX;
-//
-//	UINT step;
-//	if(m_pFunctionParams->ChartType==G_BARCHART)
-//	{
-//		step=G_BARCHARTWIDTH;
-//	}
-//	else
-//	{
-//		step=1;
-//	}
-//
-//	for (UINT count =0; count < xspan; count+=step)
-//	{
-//		//do the function
-//		double y=pow( (m_dXAxisMin+count*xperpixel),2);
-//
-//		UINT pixelx=xstart+count;
-//		y=ConstrainY(y);//keep y within the plottable y scale
-//
-//		UINT pixely=ystart-((y-m_dYAxisMin)/yperpixel);
-//
-//		if(firstpoint)
-//		{
-//			prevx=pixelx;
-//			prevy=pixely;
-//			firstpoint=FALSE;
-//		}
-//		PlotPoints(pixelx,pixely,prevx,prevy);
-//		//current point becomes previous point
-//		prevx=pixelx;
-//		prevy=pixely;
-//
-//	}
-//}
-
-/***************************************************************************/
-//     Purpose: 
-//**************************************************************************/
-//void CDiagramm::DoXCubed()
-//{
-//	//we loop round from the given xstart to xend
-//	UINT prevx=0;
-//	UINT prevy=0;
-//	BOOL firstpoint=TRUE;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	double xperpixel= 1/m_dPixelsPerX;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);//
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
-//
-//	//how many steps (pixels) in the x-direction
-//	UINT xspan=(m_dXAxisMax - m_dXAxisMin)*m_dPixelsPerX;
-//
-//	UINT step;
-//	if(m_pFunctionParams->ChartType==G_BARCHART)
-//	{
-//		step=G_BARCHARTWIDTH;
-//	}
-//	else
-//	{
-//		step=1;
-//	}
-//
-//	for (UINT count =0; count < xspan; count+=step)
-//	{
-//		//do the function
-//		double y=pow( (m_dXAxisMin+count*xperpixel),3.00);
-//
-//		UINT pixelx=xstart+count;
-//
-//		y=ConstrainY(y);	
-//		UINT pixely=ystart-((y-m_dYAxisMin)/yperpixel);
-//
-//		if(firstpoint)
-//		{
-//			prevx=pixelx;
-//			prevy=pixely;
-//			firstpoint=FALSE;
-//		}
-//		PlotPoints(pixelx,pixely,prevx,prevy);
-//		//current point becomes previous point
-//		prevx=pixelx;
-//		prevy=pixely;
-//
-//	}
-//}
-
-/***************************************************************************/
-//     Purpose: 
-//**************************************************************************/
-//void CDiagramm::DoMXPlusC()
-//{
-//	UINT prevx=0;
-//	UINT prevy=0;
-//	BOOL firstpoint=TRUE;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//	double xperpixel= 1/m_dPixelsPerX;
-//	double yperpixel=1/m_dPixelsPerY;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);//
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
-//
-//	//how many steps are they (pixels) in the x-direction
-//	UINT xspan=(m_dXAxisMax - m_dXAxisMin)*m_dPixelsPerX;
-//
-//	UINT step;
-//	if(m_pFunctionParams->ChartType==G_BARCHART)
-//	{
-//		step=G_BARCHARTWIDTH;
-//	}
-//	else
-//	{
-//		step=1;
-//	}
-//
-//	for (UINT count =0; count < xspan; count+=step)
-//	{
-//		//do the function
-//		double y=m_pFunctionParams->Const_1*( m_dXAxisMin+(count*xperpixel))+m_pFunctionParams->Const_2;
-//
-//		UINT pixelx=xstart+count;
-//
-//		y=ConstrainY(y);	
-//		UINT pixely=ystart-((y-m_dYAxisMin)/yperpixel);
-//
-//		if(firstpoint)
-//		{
-//			prevx=pixelx;
-//			prevy=pixely;
-//			firstpoint=FALSE;
-//		}
-//		PlotPoints(pixelx,pixely,prevx,prevy);
-//		//current point becomes previous point
-//		prevx=pixelx;
-//		prevy=pixely;
-//
-//	}
-//}
-
-/***************************************************************************/
-//     Purpose: For the Dot chart type - this routine plots the pixel 
-//				at the given point
-//**************************************************************************/
-//void CDiagramm::DrawDot(UINT X, UINT Y)
-//{
-//	CClientDC dc(this);
-//	dc.SetPixel(X,Y,m_crGraphPenColor);
-//}
-
-/***************************************************************************/
-//     Purpose: This draws the bar of a bar chart				
-//				The lefthand side of the bar is at point xy.			
-//				It also calcultes whether it is a 'positive' bar or a 'negative 'bar'
-//				Some manipulation of the barwidths maybe required depending on what
-//				function is being drawn
-//**************************************************************************/
-//void CDiagramm::DrawBar(UINT x, UINT y)
-//{
-//	//here we create a vertical rect
-//	//and fill it with the current pen color
-//	//we only use the current point - the width
-//	//of the barchart is added to make rect
-//
-//	//for plotxy, dev% an dev (abs) barcharts, we have to adjust the width
-//	//because for these funtions the user provides a set of xpoint for the
-//	//plot. These points may be unevenly spread and may cause overlapping
-//	//bars.
-//	//we do however know howmuch one unit of x is worth in pixels so we
-//	//use that as our barwidth
-//
-//	UINT barwidth;
-//	if	(		(m_pFunctionParams->FuncType==G_PLOTXY)
-//		|| (m_pFunctionParams->FuncType==G_PLOTDEV_PERCENT)
-//		|| (m_pFunctionParams->FuncType==G_PLOTDEV_ABS)
-//		)
-//	{
-//		if( m_dPixelsPerX >1)
-//		{
-//			barwidth=m_dPixelsPerX;
-//		}
-//		else
-//		{
-//			barwidth=1;
-//		}//
-//	}
-//	else //Standard bars for everybody else
-//	{
-//		barwidth=G_BARCHARTWIDTH;
-//	}
-//
-//	CRect rect,dataarea;
-//	dataarea=CalcDataArea();
-//	//remember when we create the bar we must not step over the graph RHS
-//	rect.left=x;
-//	rect.right= ((x+barwidth)<dataarea.right)? x+barwidth :dataarea.right;
-//	//the tricky bit
-//	//the top/bottom of the bar depends on whether the bar
-//	//is a negative value or positive value
-//
-//	//note we have need of the Y origin here
-//	//the Yorigin is an off-set from the bottom of the entire graph bottom
-//	//and therefore includes the bottom margin -
-//	// - not from the bottom of the plot area as is our  pixel co-ords
-//	UINT Yorg=m_iOriginY-m_bmargin;
-//
-//
-//	if(y < dataarea.bottom-Yorg)
-//	{
-//		//it's a 'positive' value
-//		rect.top=y;
-//		rect.bottom=dataarea.bottom-Yorg;
-//
-//	}
-//	else
-//	{
-//		rect.top=dataarea.bottom-Yorg;
-//		rect.bottom=y;
-//		// it's a negative value
-//	}
-//
-//	CPen pen, *poldpen;
-//	CBrush brush;	
-//
-//	CClientDC dc(this);
-//
-//	brush.CreateSolidBrush(m_crGraphPenColor);
-//	pen.CreatePen(PS_SOLID,1,m_crGraphPenColor);
-//	poldpen=dc.SelectObject(&pen);
-//
-//	dc.Rectangle(&rect);
-//
-//	dc.SelectObject(poldpen);
-//}
 
 
 
-/***************************************************************************/
-//     Purpose: The user can request two types of histogram, namely			
-//				one where the frequency of occurrence is displayed as anumber value,
-//				the other where the frequency of occurrence is displayed as a percentage
-//				of the of the quantity of dataitems								
-//				Either way they both end up here to be plotted.					
-//				The usersupplies the usual data pairs.							
-//				However, the first values of the pair(usually the x value)			
-//				is not used by this function. The user can use this as a sequence	
-//				number if they wish.												
-//				We use the send value of each pair -usually the y value.			
-//				//For the histogram - we need to calulate						
-//				//a. The mean value													
-//				//b. The Root of the Mean of the Squares;							
-//
-//				To disply the data we, we divide the graph(dataarea) by the width	
-//				of a bar to see how many we can fit in. We then divide the min-max	
-//				span of the data into the same amount of slices.				
-//				We then check each data item to see which slice it falls into.
-//**************************************************************************/
-//void CDiagramm::DoHistogram()
-//{
-//
-//	UINT prevx=0;
-//	UINT prevy=0;
-//	BOOL firstpoint=TRUE;
-//
-//	LONG result;
-//	UINT xstart;
-//	UINT ystart;
-//
-//	result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);
-//	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
-//	ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
-//
-//	//we will autoscale the x-axis to match the min and max value in the data;
-//	UINT count;
-//	double minval,maxval;
-//	minval=maxval=m_pFunctionParams->pPlotXYItems[1];
-//	for (count =0; count < m_pFunctionParams->num_PlotXYItems*2; count+=2)
-//	{
-//		if(m_pFunctionParams->pPlotXYItems[count+1] < minval)
-//		{
-//			minval=m_pFunctionParams->pPlotXYItems[count+1];
-//		}
-//		else if (m_pFunctionParams->pPlotXYItems[count+1] > maxval)
-//		{
-//			maxval=m_pFunctionParams->pPlotXYItems[count+1];
-//		}
-//	}
-//	//we should have just found the min and max values of the data
-//	//scale graph accordingly
-//	SetXAxisScale(minval,maxval);
-//	DrawXAxisNumbers();
-//
-//	//find how many bars can fit into the praph plot width
-//	CRect dataarearect=CalcDataArea();
-//	UINT num_strips= (dataarearect.right-dataarearect.left)/G_BARCHARTWIDTH;
-//
-//	//find out how much a strip is 'worth'
-//	double strip_val= (maxval-minval)/num_strips;
-//	//count the frequency of the data
-//	double *pCounts=new double[num_strips];
-//	memset(pCounts,0,num_strips*sizeof(double));
-//	for(count=0;count < m_pFunctionParams->num_PlotXYItems*2;count +=2)
-//	{
-//		double value=m_pFunctionParams->pPlotXYItems[count+1];
-//		//see which strip the current value falls into
-//		for(UINT stripcount=0; stripcount<num_strips;stripcount++)
-//		{
-//
-//			if( (value >=minval+(stripcount*strip_val)) && 
-//				(value <= minval+(stripcount*strip_val)+strip_val))	
-//			{
-//				pCounts[stripcount]++;
-//				break;
-//			}
-//		}
-//
-//	}
-//	/*
-//	Chack if we are showing the histogram frequencies as an absolute
-//	occurrence figure or as a percentage occurrence
-//	*/
-//	if(m_pFunctionParams->FuncType==G_HISTOGRAM_ABS)
-//	{
-//
-//		//find the maximum frequency of occurence and scale the 
-//		//y axis
-//		int max_freqcurrent=pCounts[0]; //preset a start point
-//		for(count=1;count < num_strips; count++)
-//		{
-//			if (pCounts[count] > max_freqcurrent)
-//			{
-//				max_freqcurrent=pCounts[count];
-//			}
-//		}
-//
-//		SetYAxisScale(0,max_freqcurrent+1);
-//
-//	}
-//	else
-//	{
-//		//we are showing as a percentage
-//		//change the ocurrences from an absolute occurence figure to % occurrence
-//
-//		for(count=0;count < num_strips; count++)
-//		{
-//			pCounts[count] =( (pCounts[count]/ ((double)m_pFunctionParams->num_PlotXYItems))*100);
-//		}
-//
-//		//find the maximum frequency of occurence and scale the 
-//		//y axis
-//		int max_freqcurrent=pCounts[0]; //preset a start point
-//		for(count=1;count < num_strips; count++)
-//		{
-//			if (pCounts[count] > max_freqcurrent)
-//			{
-//				max_freqcurrent=pCounts[count];
-//			}
-//		}
-//
-//
-//		SetYAxisScale(0,max_freqcurrent+1);
-//	}
-//
-//	//in both cases
-//	DrawYAxisNumbers();
-//
-//	//we have changed the x & y axis scaling so recalculate
-//	//the yperpixel and/or xperpixel as required
-//	double yperpixel=1/m_dPixelsPerY;	
-//
-//	for (count =0; count < num_strips; count++)
-//	{		
-//		UINT pixelx= xstart+(count*G_BARCHARTWIDTH);;
-//
-//		pCounts[count]=ConstrainY(pCounts[count]);	
-//		UINT pixely=ystart-(pCounts[count]/yperpixel);
-//
-//		if(firstpoint)
-//		{
-//			prevx=pixelx;
-//			prevy=pixely;
-//			firstpoint=FALSE;
-//		}
-//		PlotPoints(pixelx,pixely,prevx,prevy);
-//		//current point becomes previous point
-//		prevx=pixelx;
-//		prevy=pixely;
-//
-//	}
-//	//cleanup
-//	delete []pCounts;
-//}
+
+

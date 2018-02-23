@@ -12,11 +12,29 @@ extern HFONT g_hf31AcuBold;
 extern HFONT g_hf8AcuBold;
 extern HFONT g_hf23AcuBold;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaBtn_O2Flush class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	btn		   	The button.
+ * \param 		  	nOffset	   	The offset.
+ * \param 		  	bScrollOver	True to scroll over.
+ **************************************************************************************************/
+
 CParaBtn_O2Flush::CParaBtn_O2Flush(BTN &btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 	m_bOff=false;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_O2Flush class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_O2Flush::~CParaBtn_O2Flush(void)
 {
@@ -35,7 +53,14 @@ BEGIN_MESSAGE_MAP(CParaBtn_O2Flush, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
+/**********************************************************************************************//**
+ * Check value
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iO2Value	Zero-based index of the o 2 value.
+ **************************************************************************************************/
 
 void CParaBtn_O2Flush::CheckValue(int iO2Value)
 {
@@ -52,10 +77,15 @@ void CParaBtn_O2Flush::CheckValue(int iO2Value)
 	}
 }
 
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CParaBtn_O2Flush::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -215,8 +245,16 @@ void CParaBtn_O2Flush::Draw(int nState)
 	}
 }
 
-
-
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_O2Flush::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {

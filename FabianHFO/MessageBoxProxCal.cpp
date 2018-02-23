@@ -7,12 +7,29 @@
 #include "MessageBoxProxCal.h"
 #include "colour.h"
 
-
-
-
-// CMessageBoxOxyCal dialog
+/**********************************************************************************************//**
+ * CMessageBoxOxyCal dialog
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CMessageBoxProxCal, CDialog)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CMessageBoxProxCal class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pParent 	If non-null, the parent.
+ * \param 		  	sCaption	The caption.
+ * \param 		  	sText   	The text.
+ * \param 		  	iFlags  	Zero-based index of the flags.
+ **************************************************************************************************/
 
 CMessageBoxProxCal::CMessageBoxProxCal(CWnd* pParent /*=NULL*/,CStringW sCaption, CStringW sText, UINT iFlags)
 	: CDialog(CMessageBoxProxCal::IDD, pParent)
@@ -30,6 +47,13 @@ CMessageBoxProxCal::CMessageBoxProxCal(CWnd* pParent /*=NULL*/,CStringW sCaption
 	m_iPProxADC=0;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CMessageBoxProxCal class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CMessageBoxProxCal::~CMessageBoxProxCal()
 {
 	DeleteObject(m_brush);
@@ -37,15 +61,30 @@ CMessageBoxProxCal::~CMessageBoxProxCal()
 	DeleteObject(m_hfontButton);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CMessageBoxProxCal::getModel()
 {
 	if(m_pModel==NULL)
 		m_pModel=CMVModel::GetInstance();
 	return m_pModel;
 }
+
+/**********************************************************************************************//**
+ * Exchanges data to/from the controls in this dialog
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDX	If non-null, an object that manages the data exchange operation.
+ **************************************************************************************************/
 
 void CMessageBoxProxCal::DoDataExchange(CDataExchange* pDX)
 {
@@ -68,8 +107,15 @@ BEGIN_MESSAGE_MAP(CMessageBoxProxCal, CDialog)
 	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CMessageBoxProxCal message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// CMessageBoxProxCal message handlers
 BOOL CMessageBoxProxCal::OnInitDialog() 
 {
 	CDialog::OnInitDialog();
@@ -144,11 +190,25 @@ BOOL CMessageBoxProxCal::OnInitDialog()
 	return TRUE;   // return TRUE unless you set the focus to a control
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked button oxy 0 action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMessageBoxProxCal::OnBnClickedBtnOxy0()
 {
 	KillTimer(PROXPRESSURECALTIMER);
 	OnOK();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked button oxy 60 action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMessageBoxProxCal::OnBnClickedBtnOxy60()
 {
@@ -156,11 +216,31 @@ void CMessageBoxProxCal::OnBnClickedBtnOxy60()
 	OnOK();
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked cancel action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMessageBoxProxCal::OnBnClickedCancel()
 {
 	KillTimer(PROXPRESSURECALTIMER);
 	OnCancel();
 }
+
+/**********************************************************************************************//**
+ * Executes the control color action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC		 	If non-null, the device-context.
+ * \param [in,out]	pWnd	 	If non-null, the window.
+ * \param 		  	nCtlColor	The control color.
+ *
+ * \return	The handle of the brush.
+ **************************************************************************************************/
 
 HBRUSH CMessageBoxProxCal::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
@@ -183,9 +263,21 @@ HBRUSH CMessageBoxProxCal::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	return hbr;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates font handle
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC				If non-null, the device-context.
+ * \param 		  	nPixHeight  	Height of the pix.
+ * \param [in,out]	pszFacename 	If non-null, the facename.
+ * \param 		  	lFontWeight 	The font weight.
+ * \param 		  	iOrientation	Zero-based index of the orientation.
+ *
+ * \return	The new font handle.
+ **************************************************************************************************/
+
 HFONT CMessageBoxProxCal::CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation) 
 {
 	// Standard settings
@@ -211,6 +303,16 @@ HFONT CMessageBoxProxCal::CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszF
 
 	return CreateFontIndirect( &lf );
 }
+
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CMessageBoxProxCal::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==PROXPRESSURECALTIMER)

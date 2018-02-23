@@ -5,8 +5,31 @@
 #include "FabianHFO.h"
 #include "SubViewSystem.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 //global font objects
@@ -30,9 +53,24 @@ extern HFONT g_hf33AcuBold;
 extern HFONT g_hf43AcuBold;
 extern HFONT g_hf53AcuBold;
 
-// CSubViewSystem
+/**********************************************************************************************//**
+ * CSubViewSystem
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CSubViewSystem, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CSubViewSystem class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewSystem::CSubViewSystem()
 {
@@ -57,6 +95,13 @@ CSubViewSystem::CSubViewSystem()
 	m_iMainVersion=getModel()->getCONFIG()->GetMainBoardVersion();
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CSubViewSystem class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CSubViewSystem::~CSubViewSystem()
 {
 }
@@ -67,22 +112,36 @@ BEGIN_MESSAGE_MAP(CSubViewSystem, CWnd)
 	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CSubViewSystem message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
 
-
-// CSubViewSystem message handlers
-
-// **************************************************************************
-// 
-// **************************************************************************
 CMVModel *CSubViewSystem::getModel()
 {
 	if(m_pModel==NULL)
 		m_pModel=CMVModel::GetInstance();
 	return m_pModel;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates a window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewSystem::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext)
 {
 	if (!Create(pParentWnd, rc, nID, pContext))
@@ -95,9 +154,20 @@ bool CSubViewSystem::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreat
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSubViewSystem::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -138,9 +208,13 @@ BOOL CSubViewSystem::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateCo
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewSystem::Initialize()
 {
 	//CClientDC dc(this);
@@ -150,9 +224,15 @@ void CSubViewSystem::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CSubViewSystem::Show(bool bShow)
 {
 	if(bShow)
@@ -181,15 +261,13 @@ void CSubViewSystem::Show(bool bShow)
 	}
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CSubViewSystem::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewSystem::OnDestroy()
 {
 	KillTimer(SERVICETIMER);
@@ -205,9 +283,13 @@ void CSubViewSystem::OnDestroy()
 		DeleteDC(m_hDC);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewSystem::Draw()
 {
 	RECT rcCl;
@@ -519,9 +601,16 @@ void CSubViewSystem::Draw()
 	DeleteDC(hdcMem);
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CSubViewSystem::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==SERVICETIMER)

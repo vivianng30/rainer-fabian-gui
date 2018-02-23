@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldVTEMANDSPONT.h"
 
-
-// CNumericFieldVTEMANDSPONT
+/**********************************************************************************************//**
+ * CNumericFieldVTEMANDSPONT
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldVTEMANDSPONT, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldVTEMANDSPONT class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldVTEMANDSPONT::CNumericFieldVTEMANDSPONT(eNumericSize size):
 CNumericField(size)
@@ -19,6 +35,13 @@ CNumericField(size)
 	m_szNameNotePat=getModel()->GetLanguageString(IDS_PARA_TE) + _T(" ") + getModel()->GetLanguageString(IDS_PARA_PAT);
 	m_szUnit=_T("[")+getModel()->GetLanguageString(IDS_UNIT_MILLILITER)+_T("]");
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldVTEMANDSPONT class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CNumericFieldVTEMANDSPONT::~CNumericFieldVTEMANDSPONT()
 {
@@ -31,27 +54,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldVTEMANDSPONT, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldVTEMANDSPONT message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldVTEMANDSPONT message handlers
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericFieldVTEMANDSPONT::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CNumericFieldVTEMANDSPONT::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldVTEMANDSPONT::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -167,10 +196,6 @@ bool CNumericFieldVTEMANDSPONT::drawData(bool bData, bool bFrames, bool bText, b
 	return bReturn;
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldVTEMANDSPONT::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -190,9 +215,17 @@ bool CNumericFieldVTEMANDSPONT::drawData(bool bData, bool bFrames, bool bText, b
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldVTEMANDSPONT::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -323,10 +356,17 @@ bool CNumericFieldVTEMANDSPONT::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldVTEMANDSPONT::drawLimits(CDC* pDC)
 {
 	

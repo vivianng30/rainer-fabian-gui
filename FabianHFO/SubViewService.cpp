@@ -5,8 +5,31 @@
 #include "FabianHFO.h"
 #include "SubViewService.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 //global font objects
@@ -30,9 +53,24 @@ extern HFONT g_hf33AcuBold;
 extern HFONT g_hf43AcuBold;
 extern HFONT g_hf53AcuBold;
 
-// CSubViewService
+/**********************************************************************************************//**
+ * CSubViewService
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CSubViewService, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CSubViewService class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewService::CSubViewService()
 {
@@ -85,6 +123,13 @@ CSubViewService::CSubViewService()
 	m_szInfo=getModel()->GetLanguageString(IDS_TXT_SETPWD);
 	m_bInfoClean=false;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CSubViewService class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewService::~CSubViewService()
 {
@@ -172,21 +217,36 @@ BEGIN_MESSAGE_MAP(CSubViewService, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SETUP_KBRD_f, &CSubViewService::OnBnClicked_f)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CSubViewService message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
 
-
-// CSubViewService message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 CMVModel *CSubViewService::getModel()
 {
 	if(m_pModel==NULL)
 		m_pModel=CMVModel::GetInstance();
 	return m_pModel;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates a window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewService::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext)
 {
 	if (!Create(pParentWnd, rc, nID, pContext))
@@ -196,9 +256,21 @@ bool CSubViewService::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCrea
 
 	return true;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSubViewService::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -524,9 +596,15 @@ BOOL CSubViewService::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateC
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CSubViewService::Show(bool bShow)
 {
 	if(bShow)
@@ -548,15 +626,13 @@ void CSubViewService::Show(bool bShow)
 
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CSubViewService::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewService::OnDestroy()
 {
 	CWnd::OnDestroy();
@@ -570,6 +646,14 @@ void CSubViewService::OnDestroy()
 		DeleteDC(m_hDC);
 }
 
+/**********************************************************************************************//**
+ * Keys
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	c	An int to process.
+ **************************************************************************************************/
 
 void CSubViewService::Key(int c)
 {
@@ -592,79 +676,216 @@ void CSubViewService::Key(int c)
 
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked delete action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewService::OnBnClickedDel()
 {
 	Key(-1);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewService::OnBnClicked_1()
 {
 	Key('1');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewService::OnBnClicked_2()
 {
 	Key('2');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 3 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewService::OnBnClicked_3()
 {
 	Key('3');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 4 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewService::OnBnClicked_4()
 {
 	Key('4');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 5 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewService::OnBnClicked_5()
 {
 	Key('5');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 6 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewService::OnBnClicked_6()
 {
 	Key('6');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 7 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewService::OnBnClicked_7()
 {
 	Key('7');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 8 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewService::OnBnClicked_8()
 {
 	Key('8');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 9 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewService::OnBnClicked_9()
 {
 	Key('9');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 0 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewService::OnBnClicked_0()
 {
 	Key('0');
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked e action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewService::OnBnClicked_e()
 {
 	Key('E');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked an action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewService::OnBnClicked_a()
 {
 	Key('A');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewService::OnBnClicked_d()
 {
 	Key('D');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked f action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewService::OnBnClicked_f()
 {
 	Key('F');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked c action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewService::OnBnClicked_c()
 {
 	Key('C');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked b action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewService::OnBnClicked_b()
 {
 	Key('B');
 }
 
+/**********************************************************************************************//**
+ * Button clicked ok
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewService::BnClickedOk()
 {
@@ -699,12 +920,26 @@ void CSubViewService::BnClickedOk()
 	}
 	
 }
+
+/**********************************************************************************************//**
+ * Button clicked cancel
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewService::BnClickedCancel()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_PASSWORD_ERR);
 }
 
+/**********************************************************************************************//**
+ * Clears the information
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewService::ClearInfo()
 {
@@ -720,6 +955,12 @@ void CSubViewService::ClearInfo()
 	}
 }
 
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewService::Draw()
 {
@@ -866,9 +1107,19 @@ void CSubViewService::Draw()
 	DeleteDC(hdcMem);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CSubViewService::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)

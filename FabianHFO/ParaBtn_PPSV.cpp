@@ -16,11 +16,30 @@ extern HFONT g_hf8AcuBold;
 
 CViewParaBtn* CParaBtn_PPSV::VIEWPARAPTN=0;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaBtn_PPSV class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	parent	   	If non-null, the parent.
+ * \param 		  	btn		   	The button.
+ * \param 		  	nOffset	   	The offset.
+ * \param 		  	bScrollOver	True to scroll over.
+ **************************************************************************************************/
+
 CParaBtn_PPSV::CParaBtn_PPSV(CViewParaBtn* parent, BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 	VIEWPARAPTN=parent;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_PPSV class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_PPSV::~CParaBtn_PPSV(void)
 {
@@ -39,11 +58,16 @@ BEGIN_MESSAGE_MAP(CParaBtn_PPSV, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * Sets a value
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	v	   	A fVALUE to process.
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CParaBtn_PPSV::SetValue(fVALUE v, bool bRedraw) 
 {
 	//if(TRUE==getModel()->getCONFIG()->isPPSVasDeltaPEEPValue())
@@ -77,9 +101,15 @@ void CParaBtn_PPSV::SetValue(fVALUE v, bool bRedraw)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CParaBtn_PPSV::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -361,7 +391,16 @@ void CParaBtn_PPSV::Draw(int nState)
 	}
 }
 
-
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_PPSV::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
@@ -556,6 +595,15 @@ void CParaBtn_PPSV::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	m_bLMouseButtonDown = false;
 }
 
+/**********************************************************************************************//**
+ * Executes the l button up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CParaBtn_PPSV::OnLButtonUp(UINT nFlags, CPoint point) 
 {

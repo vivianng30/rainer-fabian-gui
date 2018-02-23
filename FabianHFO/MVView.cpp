@@ -5,11 +5,14 @@
 #include "FabianHFO.h"
 #include "MVView.h"
 
-
-
-
-// CMVView
-
+/**********************************************************************************************//**
+ * CMVView
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	ViewID	Identifier for the view.
+ **************************************************************************************************/
 
 CMVView::CMVView(int ViewID):
 m_iViewID(ViewID)
@@ -29,6 +32,13 @@ m_iViewID(ViewID)
 	m_hBmp=NULL;
 	m_hBmpPrev=NULL;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CMVView class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CMVView::~CMVView()
 {
@@ -68,9 +78,20 @@ END_MESSAGE_MAP()
 //	return TRUE;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CMVView::Create(CWnd* pParentWnd, const RECT &rc, UINT nID, CCreateContext* pContext) 
 {
 	//csView.Lock();
@@ -106,41 +127,125 @@ BOOL CMVView::Create(CWnd* pParentWnd, const RECT &rc, UINT nID, CCreateContext*
 	}
 }
 
+/**********************************************************************************************//**
+ * Notifies the data changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVView::NotifyDataChanged()
 {
 
 }
+
+/**********************************************************************************************//**
+ * Opens this instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVView::Open()
 {
 
 }
+
+/**********************************************************************************************//**
+ * Closes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVView::Close()
 {
 
 }
+
+/**********************************************************************************************//**
+ * Shows this instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVView::Show()
 {
 
 }
+
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CMVView::Show(bool bRedraw)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Hides this instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVView::Hide()
 {
 }
+
+/**********************************************************************************************//**
+ * Sets view focus
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVView::SetViewFocus()
 {
 	SetFocus();
 }
+
+/**********************************************************************************************//**
+ * Sets next focus
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVView::SetNextFocus()
 {
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Sets previous focus
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVView::SetPrevFocus()
 {
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMVView::OnPaint() 
 {
@@ -153,10 +258,15 @@ void CMVView::OnPaint()
 	// Do not call CWnd::OnPaint() for painting messages
 }
 
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 CMVModel *CMVView::getModel()
 {
 	if(m_pModel==NULL)
@@ -164,27 +274,41 @@ CMVModel *CMVView::getModel()
 	return m_pModel;
 }
 
-
-// CMVView message handlers
+/**********************************************************************************************//**
+ * CMVView message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CMVView::CreateView()
 {
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVView::Initialize()
 {
 	return true;
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CMVView::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVView::OnDestroy()
 {
 	getModel()->DetachObserver(this);
@@ -192,9 +316,20 @@ void CMVView::OnDestroy()
 
 	__super::OnDestroy();
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CMVView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)

@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldSHAREMV.h"
 
-
-// CNumericFieldSHAREMV
+/**********************************************************************************************//**
+ * CNumericFieldSHAREMV
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldSHAREMV, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldSHAREMV class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldSHAREMV::CNumericFieldSHAREMV(eNumericSize size):
 CNumericField(size)
@@ -25,6 +41,13 @@ CNumericField(size)
 	m_szUnit=_T("");
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldSHAREMV class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CNumericFieldSHAREMV::~CNumericFieldSHAREMV()
 {
 }
@@ -36,26 +59,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldSHAREMV, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldSHAREMV message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldSHAREMV message handlers
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericFieldSHAREMV::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CNumericFieldSHAREMV::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldSHAREMV::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -133,10 +163,6 @@ bool CNumericFieldSHAREMV::drawData(bool bData, bool bFrames, bool bText, bool b
 	return bReturn;
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldSHAREMV::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -156,9 +182,17 @@ bool CNumericFieldSHAREMV::drawData(bool bData, bool bFrames, bool bText, bool b
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldSHAREMV::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -232,10 +266,17 @@ bool CNumericFieldSHAREMV::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldSHAREMV::drawLimits(CDC* pDC)
 {
 	

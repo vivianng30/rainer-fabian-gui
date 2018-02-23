@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldFREQ.h"
 
-
-// CNumericFieldFREQ
+/**********************************************************************************************//**
+ * CNumericFieldFREQ
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldFREQ, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldFREQ class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldFREQ::CNumericFieldFREQ(eNumericSize size):
 CNumericField(size)
@@ -17,6 +33,13 @@ CNumericField(size)
 	m_szNameNote=_T("");
 	m_szUnit=_T("[")+getModel()->GetLanguageString(IDS_UNIT_BPM)+_T("]");
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldFREQ class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CNumericFieldFREQ::~CNumericFieldFREQ()
 {
@@ -29,27 +52,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldFREQ, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldFREQ message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldFREQ message handlers
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericFieldFREQ::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CNumericFieldFREQ::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldFREQ::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -151,9 +180,6 @@ bool CNumericFieldFREQ::drawData(bool bData, bool bFrames, bool bText, bool bLim
 }
 
 
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldFREQ::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -173,9 +199,17 @@ bool CNumericFieldFREQ::drawData(bool bData, bool bFrames, bool bText, bool bLim
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldFREQ::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -231,10 +265,17 @@ bool CNumericFieldFREQ::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldFREQ::drawLimits(CDC* pDC)
 {
 	HDC hdc = *pDC;

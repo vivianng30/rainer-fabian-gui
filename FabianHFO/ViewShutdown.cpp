@@ -6,8 +6,14 @@
 #include "ViewShutdown.h"
 #include "TlsFile.h"
 
-// CViewShutdown
-
+/**********************************************************************************************//**
+ * CViewShutdown
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iViewID	Identifier for the view.
+ **************************************************************************************************/
 
 CViewShutdown::CViewShutdown(int iViewID):
 CMVView(iViewID)
@@ -17,6 +23,13 @@ CMVView(iViewID)
 	m_pcShutdown=NULL;
 	m_pcAccu=NULL;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CViewShutdown class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CViewShutdown::~CViewShutdown()
 {
@@ -40,13 +53,15 @@ BEGIN_MESSAGE_MAP(CViewShutdown, CMVView)
 	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CViewShutdown message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CViewShutdown message handlers
-
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewShutdown::CreateView()
 {
 	RECT rcLd={0,0,800,600};
@@ -63,9 +78,20 @@ bool CViewShutdown::CreateView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CViewShutdown::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -114,9 +140,15 @@ BOOL CViewShutdown::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateCon
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewShutdown::Initialize()
 {
 	bool result=false;
@@ -125,6 +157,19 @@ bool CViewShutdown::Initialize()
 
 	return result;
 }
+
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
 LRESULT CViewShutdown::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
@@ -154,40 +199,60 @@ LRESULT CViewShutdown::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	}
 	return CWnd::WindowProc(message, wParam, lParam);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Opens this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewShutdown::Open()
 {
 }
 
+/**********************************************************************************************//**
+ * Closes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewShutdown::Close()
 {
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewShutdown::Show()
 {
 	this->ShowWindow(SW_SHOW);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Hides this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewShutdown::Hide()
 {
 	this->ShowWindow(SW_HIDE);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewShutdown::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -195,18 +260,13 @@ void CViewShutdown::OnPaint()
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CViewShutdown::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CViewShutdown::OnDestroy()
 {
 	KillTimer(STARTUPTIMER);
@@ -214,9 +274,13 @@ void CViewShutdown::OnDestroy()
 	CMVView::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewShutdown::Draw()
 {
 

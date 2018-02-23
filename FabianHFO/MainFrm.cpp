@@ -14,130 +14,215 @@
 
 extern "C" BOOL WINAPI TouchCalibrate( void );
 
+/**********************************************************************************************//**
+ * *** Preprocessor *******************************************************
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-/***** Preprocessor ********************************************************/
 #define WD_NAME			_T("Verifying")		// watch dog name
-//#define WD_PERIODE		20000				// watch dog refresh time in ms
-//#define WD_WAIT			11000				// wait time in ms if watch dog timer is not refreshed
+
+/**********************************************************************************************//**
+ * A macro that defines wd periode
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 #define WD_PERIODE		35000				// watch dog refresh time in ms
+
+/**********************************************************************************************//**
+ * A macro that defines wd wait
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 #define WD_WAIT			11000				// wait time in ms if watch dog timer is not refreshed
+
+/**********************************************************************************************//**
+ * A macro that defines matrixdelay
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 #define MATRIXDELAY 150
+
+/**********************************************************************************************//**
+ * A macro that defines errorcnt spi
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 #define ERRORCNT_SPI	4
 
 /***** Global **************************************************************/		
-HANDLE	g_hWatchDog;
-HANDLE	g_hAction;
-bool	m_bRun;
-bool	g_bMainWatchdogFlag;
-bool	g_bMainWatchdogPending;
+HANDLE	g_hWatchDog;	///< Handle of the watch dog
+HANDLE	g_hAction;  ///< Handle of the action
+bool	m_bRun; ///< True to run
+bool	g_bMainWatchdogFlag;	///< True to main watchdog flag
+bool	g_bMainWatchdogPending; ///< True to main watchdog pending
 
 bool Action(void*);
 
 
 #ifdef _DEBUG
+
+/**********************************************************************************************//**
+ * A macro that defines new
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 #define new DEBUG_NEW
 #endif
 
+/**********************************************************************************************//**
+ * TimerValue
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-//TimerValue
 #define AUTOLIMITMINUTE	60000
-//#define AUTOLIMITNOW	100
+
+/**********************************************************************************************//**
+ * A macro that defines timemodechange
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 #define TIMEMODECHANGE	45000
+
+/**********************************************************************************************//**
+ * A macro that defines timestartstop
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 #define TIMESTARTSTOP	500
+
+/**********************************************************************************************//**
+ * A macro that defines counttimestartstop
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 #define COUNTTIMESTARTSTOP	1000
+
+/**********************************************************************************************//**
+ * A macro that defines timealarmsilent
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 #define TIMEALARMSILENT	1000
-//#define TIMEACTIVEALARMDELAY	20000
-//#define TIMEALARMSILENT120	120000
-//#define TIMEALARMSOUND	3000
 
-
+/**********************************************************************************************//**
+ * A macro that defines standby
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 #define STANDBY 120
 
 
 
 //global font objects
-//HFONT g_hf3AcuNorm;
-//HFONT g_hf4AcuNorm;
-HFONT g_hf5AcuNorm;
-HFONT g_hf6AcuNorm;
-HFONT g_hf6AcuBold;
-HFONT g_hf7AcuNorm;
-HFONT g_hf7AcuBold;
-HFONT g_hf7AcuBold90degree;
-HFONT g_hf8AcuNorm;
-HFONT g_hf8AcuBold;
-HFONT g_hf9AcuBold;
-HFONT g_hf10AcuBold;
-HFONT g_hf11AcuBold;
-HFONT g_hf11AcuBoldNum;
-HFONT g_hf13AcuBold;
-HFONT g_hf13AcuBoldNum;
-HFONT g_hf14AcuMed;
-HFONT g_hf14AcuBold;
-HFONT g_hf14AcuNormNum;
-HFONT g_hf15AcuMed;
+HFONT g_hf5AcuNorm; ///< The hf 5 acu normalise
+HFONT g_hf6AcuNorm; ///< The hf 6 acu normalise
+HFONT g_hf6AcuBold; ///< The hf 6 acu bold
+HFONT g_hf7AcuNorm; ///< The hf 7 acu normalise
+HFONT g_hf7AcuBold; ///< The hf 7 acu bold
+HFONT g_hf7AcuBold90degree; ///< The hf 7 acu bold 90degree
+HFONT g_hf8AcuNorm; ///< The hf 8 acu normalise
+HFONT g_hf8AcuBold; ///< The hf 8 acu bold
+HFONT g_hf9AcuBold; ///< The hf 9 acu bold
+HFONT g_hf10AcuBold;	///< The hf 10 acu bold
+HFONT g_hf11AcuBold;	///< The hf 11 acu bold
+HFONT g_hf11AcuBoldNum; ///< The hf 11 acu bold number
+HFONT g_hf13AcuBold;	///< The hf 13 acu bold
+HFONT g_hf13AcuBoldNum; ///< The hf 13 acu bold number
+HFONT g_hf14AcuMed; ///< The hf 14 acu median
+HFONT g_hf14AcuBold;	///< The hf 14 acu bold
+HFONT g_hf14AcuNormNum; ///< The hf 14 acu normalise number
+HFONT g_hf15AcuMed; ///< The hf 15 acu median
 //HFONT g_hf24Normal;
 //HFONT g_hf24Medium;
-HFONT g_hf17AcuBold;
-HFONT g_hf19AcuMed;
-HFONT g_hf21AcuBold;
-HFONT g_hf23AcuBold;
-HFONT g_hf25AcuMed;
-HFONT g_hf27AcuBold;
-HFONT g_hf31AcuBold;
-HFONT g_hf31AcuBoldNum;
-HFONT g_hf33AcuBold;
-HFONT g_hf33AcuBoldNum;
-HFONT g_hf34BoldNum;
+HFONT g_hf17AcuBold;	///< The hf 17 acu bold
+HFONT g_hf19AcuMed; ///< The hf 19 acu median
+HFONT g_hf21AcuBold;	///< The hf 21 acu bold
+HFONT g_hf23AcuBold;	///< The hf 23 acu bold
+HFONT g_hf25AcuMed; ///< The hf 25 acu median
+HFONT g_hf27AcuBold;	///< The hf 27 acu bold
+HFONT g_hf31AcuBold;	///< The hf 31 acu bold
+HFONT g_hf31AcuBoldNum; ///< The hf 31 acu bold number
+HFONT g_hf33AcuBold;	///< The hf 33 acu bold
+HFONT g_hf33AcuBoldNum; ///< The hf 33 acu bold number
+HFONT g_hf34BoldNum;	///< The hf 34 bold number
 
 //HFONT g_hf42Bold;
-HFONT g_hf43AcuBold;
-HFONT g_hf53AcuBold;
-HFONT g_hf70Bold;
-HFONT g_hf70BoldNum;
+HFONT g_hf43AcuBold;	///< The hf 43 acu bold
+HFONT g_hf53AcuBold;	///< The hf 53 acu bold
+HFONT g_hf70Bold;   ///< The hf 70 bold
+HFONT g_hf70BoldNum;	///< The hf 70 bold number
 
 
 
-CEvent g_eventFOT;
-CEvent g_eventPRICO;
-CEvent eventDoTestTimerFunctions;
-CEvent g_eventGraphData;
-CEvent eventWaitTrendUSBfinish;
-CEvent g_eventNewMonitorData;
-CEvent g_eventNewAlarmData;
-CEvent g_eventNewFlowsensorData;
-CEvent g_eventExspiration;
-CEvent g_eventCheckSensor;
-CEvent g_eventI2Cdata;
-CEvent g_eventI2Cdone;
-//CEvent g_eventCOMCheckData; //newVG 
-CEvent g_eventCOM;
-CEvent g_eventCO2CheckData;
-CEvent g_eventCO2Data;
-CEvent g_eventETCO2SendData;
-CEvent g_eventSPO2Data;
-CEvent g_eventSPO2SendData;
-CEvent g_eventSPO2CheckData;
-CEvent g_eventCOMIFData;
-CEvent g_eventCOMIFSendData;
-CEvent g_eventCOMIFCheckData;
-CEvent g_eventTerminalSendData;
-CEvent g_evBLENDER_STATUS; //l
-CEvent g_evBLENDER_VERSION;	//H
-CEvent g_evCOM_VERSION; //Y
-CEvent g_evCOM_CAL_PRESS_OFFSET; //G
-CEvent g_evCOM_CAL_PRESS_SCALE;	 //B
-CEvent g_evCOM_CHECKSUM;	//N
-CEvent g_evCOM_STATUS; //L
-CEvent g_evCOM_M_INSP_FLOW;	 //X
-CEvent g_evCOM_M_EXP_FLOW;	 //x
-CEvent g_evCOM_M_DEMAND_FLOW;	 //b
+CEvent g_eventFOT;  ///< The event fot
+CEvent g_eventPRICO;	///< The event prico
+CEvent eventDoTestTimerFunctions;   ///< The event do test timer functions
+CEvent g_eventGraphData;	///< Information describing the event graph
+CEvent eventWaitTrendUSBfinish; ///< The event wait trend us bfinish
+CEvent g_eventNewMonitorData;   ///< Information describing the event new monitor
+CEvent g_eventNewAlarmData; ///< Information describing the event new alarm
+CEvent g_eventNewFlowsensorData;	///< Information describing the event new flowsensor
+CEvent g_eventExspiration;  ///< The event exspiration
+CEvent g_eventCheckSensor;  ///< The event check sensor
+CEvent g_eventI2Cdata;  ///< The event i 2 cdata
+CEvent g_eventI2Cdone;  ///< The event i 2 cdone
+CEvent g_eventCOM;  ///< The event com
+CEvent g_eventCO2CheckData; ///< Information describing the event co 2 check
+CEvent g_eventCO2Data;  ///< Information describing the event co 2
+CEvent g_eventETCO2SendData;	///< Information describing the event etco 2 send
+CEvent g_eventSPO2Data; ///< Information describing the event spo 2
+CEvent g_eventSPO2SendData; ///< Information describing the event spo 2 send
+CEvent g_eventSPO2CheckData;	///< Information describing the event spo 2 check
+CEvent g_eventCOMIFData;	///< Information describing the event comif
+CEvent g_eventCOMIFSendData;	///< Information describing the event comif send
+CEvent g_eventCOMIFCheckData;   ///< Information describing the event comif check
+CEvent g_eventTerminalSendData; ///< Information describing the event terminal send
+CEvent g_evBLENDER_STATUS;  ///< l
+CEvent g_evBLENDER_VERSION; ///< H
+CEvent g_evCOM_VERSION; ///< Y
+CEvent g_evCOM_CAL_PRESS_OFFSET;	///< G
+CEvent g_evCOM_CAL_PRESS_SCALE; ///< B
+CEvent g_evCOM_CHECKSUM;	///< N
+CEvent g_evCOM_STATUS;  ///< L
+CEvent g_evCOM_M_INSP_FLOW; ///< X
+CEvent g_evCOM_M_EXP_FLOW;  ///< x
+CEvent g_evCOM_M_DEMAND_FLOW;   ///< b
 
 CRITICAL_SECTION CMainFrame::m_csI2Cinit;
 
-// CMainFrame
+/**********************************************************************************************//**
+ * CMainFrame
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CMainFrame, CFrameWnd)
 
@@ -149,10 +234,12 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
-
-
-
-// CMainFrame construction/destruction
+/**********************************************************************************************//**
+ * CMainFrame construction/destruction
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CMainFrame::CMainFrame()
 {
@@ -309,6 +396,13 @@ CMainFrame::CMainFrame()
 	//InitializeCriticalSection(&csThreadWatchdog);
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CMainFrame class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CMainFrame::~CMainFrame()
 {
 	if(m_pcwtSaveTrendUSBThread!=NULL)
@@ -374,9 +468,15 @@ CMainFrame::~CMainFrame()
 	DeleteCriticalSection(&m_csI2Cinit);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CMainFrame::getModel()
 {
 	if(m_pModel==NULL)
@@ -393,6 +493,16 @@ CMVModel *CMainFrame::getModel()
 //	return 1;
 //}
 
+/**********************************************************************************************//**
+ * Called when this window is created
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	lpCreateStruct	The create structure.
+ *
+ * \return	An int.
+ **************************************************************************************************/
 
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
@@ -594,7 +704,16 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-
+/**********************************************************************************************//**
+ * Pre create window
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	cs	The create struct.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
@@ -618,13 +737,28 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 // CMainFrame diagnostics
 
 #ifdef _DEBUG
+
+/**********************************************************************************************//**
+ * Assert valid
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMainFrame::AssertValid() const
 {
 	CFrameWnd::AssertValid();
 }
 #endif //_DEBUG
 
-// CMainFrame message handlers
+/**********************************************************************************************//**
+ * CMainFrame message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pOldWnd	If non-null, the old window.
+ **************************************************************************************************/
 
 void CMainFrame::OnSetFocus(CWnd* pOldWnd)
 {
@@ -648,9 +782,18 @@ void CMainFrame::OnSetFocus(CWnd* pOldWnd)
 //	return CFrameWnd::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
 //}
 
-//----------------------------------------------------------------------
-// 
-//----------------------------------------------------------------------
+/**********************************************************************************************//**
+ * Creates acu fonts
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	wLanguageID	   	Identifier for the language.
+ * \param	bSetFaceToModel	True to set face to model.
+ *
+ * \return	The new acu fonts.
+ **************************************************************************************************/
+
 WORD CMainFrame::CreateAcuFonts(WORD wLanguageID, bool bSetFaceToModel)
 {
 	CClientDC dc(this);
@@ -988,6 +1131,16 @@ WORD CMainFrame::CreateAcuFonts(WORD wLanguageID, bool bSetFaceToModel)
 
 	return wLanguageID;
 }
+
+/**********************************************************************************************//**
+ * Loads global acu fonts
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	wLanguageID	Identifier for the language.
+ **************************************************************************************************/
+
 void CMainFrame::LoadGlobalAcuFonts(WORD wLanguageID)
 {
 	switch(wLanguageID)
@@ -1108,9 +1261,13 @@ void CMainFrame::LoadGlobalAcuFonts(WORD wLanguageID)
 	
 }
 
-//----------------------------------------------------------------------
-// register all fonts stored on FFSDISK
-//----------------------------------------------------------------------
+/**********************************************************************************************//**
+ * Registers the ffsdisk fonts
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMainFrame::RegisterFFSDISKFonts()
 {
 	HANDLE hSearch;
@@ -1146,9 +1303,13 @@ void CMainFrame::RegisterFFSDISKFonts()
 	//delete fileData;
 }
 
-//----------------------------------------------------------------------
-// register all fonts stored on FFSDISK
-//----------------------------------------------------------------------
+/**********************************************************************************************//**
+ * Registers the SD card fonts
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMainFrame::RegisterSDCardFonts()
 {
 	HANDLE hSearch;
@@ -1186,10 +1347,13 @@ void CMainFrame::RegisterSDCardFonts()
 	//delete fileData;
 }
 
+/**********************************************************************************************//**
+ * Unregisters the ffsdisk fonts
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-//----------------------------------------------------------------------
-// register all fonts stored on FFSDISK
-//----------------------------------------------------------------------
 void CMainFrame::UnregisterFFSDISKFonts()
 {
 	HANDLE hSearch;
@@ -1225,9 +1389,13 @@ void CMainFrame::UnregisterFFSDISKFonts()
 	//delete fileData;
 }
 
-//----------------------------------------------------------------------
-// register all fonts stored on FFSDISK
-//----------------------------------------------------------------------
+/**********************************************************************************************//**
+ * Unregisters the SD card fonts
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMainFrame::UnregisterSDCardFonts()
 {
 	HANDLE hSearch;
@@ -1262,11 +1430,22 @@ void CMainFrame::UnregisterSDCardFonts()
 	::SendMessage(HWND_BROADCAST,WM_FONTCHANGE,0,0);
 	//delete fileData;
 }
-// **************************************************************************
-//
-// 
-//
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates font handle
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC				If non-null, the device-context.
+ * \param 		  	nPixHeight  	Height of the pix.
+ * \param [in,out]	pszFacename 	If non-null, the facename.
+ * \param 		  	lFontWeight 	The font weight.
+ * \param 		  	iOrientation	Zero-based index of the orientation.
+ *
+ * \return	The new font handle.
+ **************************************************************************************************/
+
 HFONT CMainFrame::CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation) 
 {
 	// Standard settings
@@ -1293,9 +1472,18 @@ HFONT CMainFrame::CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacename,
 	return CreateFontIndirect( &lf );
 }
 
-
-
-
+/**********************************************************************************************//**
+ * Definition window proc
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
 LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
 {
@@ -5991,6 +6179,12 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 //	PostFeedBackMsg(Msg);
 //}
 
+/**********************************************************************************************//**
+ * Stops the threads
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMainFrame::stopThreads()
 {
@@ -6000,6 +6194,13 @@ void CMainFrame::stopThreads()
 	StopTimerThread();
 	StopI2CWatchdogThread();
 }
+
+/**********************************************************************************************//**
+ * Stops a watchdog
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMainFrame::stopWatchdog()
 {
@@ -6029,6 +6230,13 @@ void CMainFrame::stopWatchdog()
 
 	::CloseHandle(g_hAction);
 }
+
+/**********************************************************************************************//**
+ * Quit ventilator
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMainFrame::QuitVentilator()
 {
@@ -6115,15 +6323,13 @@ void CMainFrame::QuitVentilator()
 	PostMessage(WM_CLOSE);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CMainFrame::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMainFrame::OnDestroy()
 {
 	CFrameWnd::OnDestroy();
@@ -6412,6 +6618,13 @@ void CMainFrame::OnDestroy()
 
 }
 
+/**********************************************************************************************//**
+ * Check serial
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMainFrame::checkSERIAL()
 {
 	if(getModel()->getSERIAL()->GetM_CHECKSUM(true)>0)
@@ -6438,6 +6651,15 @@ void CMainFrame::checkSERIAL()
 			getModel()->getALARMHANDLER()->setAlarm(AL_SysFail_IF_COM);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
 
 void CMainFrame::OnTimer(UINT_PTR nIDEvent)
 {
@@ -6688,6 +6910,17 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
 //	return TIMERR_NOERROR == result;
 //}
 
+/**********************************************************************************************//**
+ * Executes the erase bkgnd action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CMainFrame::OnEraseBkgnd(CDC* pDC)
 {
 	CRect rc;
@@ -6700,11 +6933,17 @@ BOOL CMainFrame::OnEraseBkgnd(CDC* pDC)
 	return TRUE;
 }
 
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CMainFrame::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -7371,11 +7610,15 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
+/**********************************************************************************************//**
+ * Calculates the single automatic limit
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	para	The para.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 {
 	switch(para)
@@ -7882,9 +8125,6 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 	
 }
 
-// **************************************************************************
-// //rkuNEWFIX
-// **************************************************************************
 //void CMainFrame::StartThreadWatchdogThread( void )
 //{
 //	m_bDoThreadWatchdogThread=true;
@@ -7999,9 +8239,13 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 //	return 0;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Starts i2c watchdog thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMainFrame::StartI2CWatchdogThread( void )
 {
 	m_bDoI2CWatchdogThread=true;
@@ -8027,16 +8271,13 @@ void CMainFrame::StartI2CWatchdogThread( void )
 	m_pcwtI2CWatchdogThread->ResumeThread();
 }
 
-//************************************
-// Method:    StopI2CWatchdogThread
-// FullName:  CMainFrame::StopI2CWatchdogThread
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Stops i2c watchdog thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMainFrame::StopI2CWatchdogThread( void )
 {
 	if(m_bDoI2CWatchdogThread)
@@ -8054,31 +8295,33 @@ void CMainFrame::StopI2CWatchdogThread( void )
 		}
 	}
 }
-//************************************
-// Method:    CI2CWatchdogThread
-// FullName:  CI2CWatchdogThread
-// Access:    public static 
-// Returns:   UINT
-// Qualifier:
-// Parameter: LPVOID pc
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * i2c watchdog thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CI2CWatchdogThread( LPVOID pc )
 {
 	((CMainFrame*)pc)->SetI2CWatchdog();
 	return TRUE;
 }
-//************************************
-// Method:    SetI2CWatchdog
-// FullName:  CMainFrame::SetI2CWatchdog
-// Access:    protected 
-// Returns:   DWORD
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * Sets i2c watchdog
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CMainFrame::SetI2CWatchdog(void) 
 {
 	//BOOL bTest=CeSetThreadPriority(m_pcwtI2CWatchdogThread->m_hThread,WATCHDOGPRIO);
@@ -8183,7 +8426,16 @@ DWORD CMainFrame::SetI2CWatchdog(void)
 	return 0;
 }
 
-
+/**********************************************************************************************//**
+ * Actions the given parameter 1
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	parameter1	If non-null, the first parameter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool Action(void*)
 {
@@ -8251,9 +8503,13 @@ bool Action(void*)
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Starts save trend USB thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMainFrame::StartSaveTrendUSBThread( void )
 {
 	m_bDoSaveTrendUSBThread=true;
@@ -8276,16 +8532,13 @@ void CMainFrame::StartSaveTrendUSBThread( void )
 	m_pcwtSaveTrendUSBThread->ResumeThread();
 }
 
-//************************************
-// Method:    StopSaveTrendUSBThread
-// FullName:  CMainFrame::StopSaveTrendUSBThread
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Stops save trend USB thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMainFrame::StopSaveTrendUSBThread( void )
 {
 	if(m_bDoSaveTrendUSBThread)
@@ -8303,16 +8556,18 @@ void CMainFrame::StopSaveTrendUSBThread( void )
 		}
 	}
 }
-//************************************
-// Method:    CSaveTrendUSBThread
-// FullName:  CSaveTrendUSBThread
-// Access:    public static 
-// Returns:   UINT
-// Qualifier:
-// Parameter: LPVOID pc
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * Saves a trend USB thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CSaveTrendUSBThread( LPVOID pc )
 {
 	try
@@ -8341,16 +8596,16 @@ static UINT CSaveTrendUSBThread( LPVOID pc )
 	//((CMainFrame*)pc)->SaveTrendUSB();
 	return TRUE;
 }
-//************************************
-// Method:    SaveTrendUSB
-// FullName:  CMainFrame::SaveTrendUSB
-// Access:    protected 
-// Returns:   DWORD
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * Saves the trend USB
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CMainFrame::SaveTrendUSB(void) 
 {
 	DWORD dw = ::WaitForSingleObject(eventSaveTrendUSBfinish, INFINITE);
@@ -8438,10 +8693,13 @@ DWORD CMainFrame::SaveTrendUSB(void)
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Starts timer thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CMainFrame::StartTimerThread(void)
 {
 	m_bDoDoTimerFunctionsThread=true;
@@ -8463,16 +8721,14 @@ void CMainFrame::StartTimerThread(void)
 	m_pcwtTimerThread->m_bAutoDelete = FALSE; 
 	m_pcwtTimerThread->ResumeThread();
 }
-//************************************
-// Method:    StopTimerThread
-// FullName:  CMainFrame::StopTimerThread
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * Stops timer thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMainFrame::StopTimerThread( void )
 {
 	if(m_bDoDoTimerFunctionsThread)
@@ -8491,16 +8747,18 @@ void CMainFrame::StopTimerThread( void )
 	}
 	
 }
-//************************************
-// Method:    CTimerThread
-// FullName:  CTimerThread
-// Access:    public static 
-// Returns:   UINT
-// Qualifier:
-// Parameter: LPVOID pc
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * Timer thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CTimerThread( LPVOID pc )
 {
 	try
@@ -8530,16 +8788,15 @@ static UINT CTimerThread( LPVOID pc )
 	return TRUE;
 }
 
-//************************************
-// Method:    DoTimerFunctions
-// FullName:  CMainFrame::DoTimerFunctions
-// Access:    protected 
-// Returns:   DWORD
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Executes the timer functions operation
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CMainFrame::DoTimerFunctions(void) 
 {
 	DWORD WAIT=100;
@@ -9031,11 +9288,13 @@ DWORD CMainFrame::DoTimerFunctions(void)
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Starts oxy calibration thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CMainFrame::StartOxyCalThread( void )
 {
 	m_bDoOxyCalThread=true;
@@ -9059,16 +9318,13 @@ void CMainFrame::StartOxyCalThread( void )
 	m_pcwtOxyCalThread->ResumeThread();
 }
 
-//************************************
-// Method:    StopOxyCalThread
-// FullName:  CMainFrame::StopOxyCalThread
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Stops oxy calibration thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMainFrame::StopOxyCalThread( void )
 {
 	if(m_bDoOxyCalThread)
@@ -9088,16 +9344,18 @@ void CMainFrame::StopOxyCalThread( void )
 		}
 	}
 }
-//************************************
-// Method:    COxyCalThread
-// FullName:  COxyCalThread
-// Access:    public static 
-// Returns:   UINT
-// Qualifier:
-// Parameter: LPVOID pc
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * Oxy calibration thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT COxyCalThread( LPVOID pc )
 {
 	try
@@ -9126,16 +9384,16 @@ static UINT COxyCalThread( LPVOID pc )
 	//((CMainFrame*)pc)->CheckOxyCal();
 	return TRUE;
 }
-//************************************
-// Method:    CheckOxyCal
-// FullName:  CMainFrame::CheckOxyCal
-// Access:    protected 
-// Returns:   DWORD
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * Check oxy calibrate
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CMainFrame::CheckOxyCal(void) 
 {
 	Sleep(1000);
@@ -9336,16 +9594,16 @@ DWORD CMainFrame::CheckOxyCal(void)
 
 	return 0;
 }
-//************************************
-// Method:    CalOxySensor21
-// FullName:  CMainFrame::CalOxySensor21
-// Access:    protected 
-// Returns:   bool
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * Determines if we can calibrate oxy sensor 21
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMainFrame::CalOxySensor21(void) 
 {
 	bool bResult=true;
@@ -9470,16 +9728,16 @@ bool CMainFrame::CalOxySensor21(void)
 	}
 	return bResult;
 }
-//************************************
-// Method:    CalOxySensor100
-// FullName:  CMainFrame::CalOxySensor100
-// Access:    protected 
-// Returns:   bool
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * Determines if we can calibrate oxy sensor 100
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMainFrame::CalOxySensor100(void) 
 {
 	bool bResult=true;
@@ -9602,11 +9860,17 @@ bool CMainFrame::CalOxySensor100(void)
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Saves a trend data to USB
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	trendID	Identifier for the trend.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 bool CMainFrame::SaveTrendDataToUSB(UINT trendID)
 {
 	int nMax=0;
@@ -9890,10 +10154,13 @@ bool CMainFrame::SaveTrendDataToUSB(UINT trendID)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Starts delete trend thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CMainFrame::StartDelTrendThread( void )
 {
 	DEBUGMSG(TRUE, (TEXT("StartDelTrendThread\r\n")));
@@ -9917,16 +10184,13 @@ void CMainFrame::StartDelTrendThread( void )
 	m_pcwtDelTrendThread->ResumeThread();
 }
 
-//************************************
-// Method:    StopDelTrendThread
-// FullName:  CMainFrame::StopDelTrendThread
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Stops delete trend thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMainFrame::StopDelTrendThread( void )
 {
 	DEBUGMSG(TRUE, (TEXT("StopDelTrendThread\r\n")));
@@ -9945,16 +10209,18 @@ void CMainFrame::StopDelTrendThread( void )
 		}
 	}
 }
-//************************************
-// Method:    CDelTrendThread
-// FullName:  CDelTrendThread
-// Access:    public static 
-// Returns:   UINT
-// Qualifier:
-// Parameter: LPVOID pc
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * Deletes the trend thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CDelTrendThread( LPVOID pc )
 {
 	try
@@ -9983,16 +10249,16 @@ static UINT CDelTrendThread( LPVOID pc )
 	//((CMainFrame*)pc)->DelTrendData();
 	return TRUE;
 }
-//************************************
-// Method:    DelTrendData
-// FullName:  CMainFrame::DelTrendData
-// Access:    protected 
-// Returns:   DWORD
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * Deletes the trend data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CMainFrame::DelTrendData(void) 
 {
 	DWORD dw = ::WaitForSingleObject(eventDelTrend, INFINITE);
@@ -10049,16 +10315,17 @@ DWORD CMainFrame::DelTrendData(void)
 	return 0;
 }
 
-//************************************
-// Method:    DeleteTrendData
-// FullName:  CMainFrame::DeleteTrendData
-// Access:    protected 
-// Returns:   bool
-// Qualifier:
-// Parameter: CStringW sFolder
-//
-// 2015/06/18: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Deletes the trend data described by sFolder
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	sFolder	Pathname of the folder.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMainFrame::DeleteTrendData(CStringW sFolder)
 {
 	bool bResult=true;
@@ -10116,6 +10383,12 @@ bool CMainFrame::DeleteTrendData(CStringW sFolder)
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Starts aculink
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMainFrame::startAcuLink()
 {
@@ -10377,7 +10650,18 @@ void CMainFrame::startAcuLink()
 #endif
 }
 
-//rkuTICKCOUNT
+/**********************************************************************************************//**
+ * Query if 'oldTickCount' is safe tick count delay expired
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	oldTickCount	Number of old ticks.
+ * \param	delay			The delay.
+ *
+ * \return	True if safe tick count delay expired, false if not.
+ **************************************************************************************************/
+
 bool CMainFrame::isSafeTickCountDelayExpired(DWORD oldTickCount, UINT delay)////used to check if old tick count plus delay is still lower than actual tickCount, (dwLastTickCount+DELAY<getTickCount64())
 {
 	bool bExpired=false;

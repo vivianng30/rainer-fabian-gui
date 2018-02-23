@@ -89,14 +89,13 @@ CAlarmPtr CAlarmMgmtHandler::ALARM_Accu_30=NULL;
 CAlarmPtr CAlarmMgmtHandler::ALARM_Accu_15=NULL;
 
 
-/**=================================================================================================
- * \fn CAlarmMgmtHandler::CAlarmMgmtHandler()
+/**********************************************************************************************//**
+ * Initializes a new instance of the CAlarmMgmtHandler class
  *
- * \brief Initializes a new instance of the CAlarmMgmtHandler class.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *===============================================================================================**/
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 CAlarmMgmtHandler::CAlarmMgmtHandler()
 {
 	InitializeCriticalSection(&csPRICOautoOffState);
@@ -154,14 +153,13 @@ CAlarmMgmtHandler::CAlarmMgmtHandler()
 	m_pAlarmlist=NULL;
 }
 
-/**=================================================================================================
- * \fn CAlarmMgmtHandler::~CAlarmMgmtHandler()
+/**********************************************************************************************//**
+ * Finalizes an instance of the CAlarmMgmtHandler class
  *
- * \brief Finalizes an instance of the CAlarmMgmtHandler class.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *===============================================================================================**/
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 CAlarmMgmtHandler::~CAlarmMgmtHandler()
 {
 	if(ALARM_NONE)
@@ -401,16 +399,16 @@ CAlarmMgmtHandler::~CAlarmMgmtHandler()
 	DeleteCriticalSection(&csPRICOautoOffState);
 }
 
-/**=================================================================================================
- * \fn CAlarmMgmtHandler* CAlarmMgmtHandler::getInstance()
+
+/**********************************************************************************************//**
+ * Gets the instance
  *
- * \brief Gets the instance. Singleton
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \return null if it fails, else the instance.
- *===============================================================================================**/
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
+
 CAlarmMgmtHandler* CAlarmMgmtHandler::getInstance()
 {
 	if(theAlarmHandler == 0)
@@ -420,14 +418,14 @@ CAlarmMgmtHandler* CAlarmMgmtHandler::getInstance()
 	return theAlarmHandler;
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::destroyInstance()
+
+/**********************************************************************************************//**
+ * Destroys the instance
  *
- * \brief Destroys the instance.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *===============================================================================================**/
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::destroyInstance()
 {
 	if(theAlarmHandler != NULL)
@@ -437,14 +435,13 @@ void CAlarmMgmtHandler::destroyInstance()
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::init()
+/**********************************************************************************************//**
+ * Initializes this instance
  *
- * \brief Initialises this object.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *===============================================================================================**/
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::init()
 {
 	initAlarmList();
@@ -457,14 +454,13 @@ void CAlarmMgmtHandler::init()
 		ALARMLIMITS=new CAlarmConditionHandler();
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::initAlarmList()
+/**********************************************************************************************//**
+ * Initializes the alarm list
  *
- * \brief Initialises the alarm list.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *===============================================================================================**/
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::initAlarmList()
 {
 	ALARM_SysFail_IF_SPI = new CAlarm(AL_SysFail_IF_SPI,AT_SYSFAIL,AP_1,AS_NONE,0);
@@ -625,14 +621,13 @@ void CAlarmMgmtHandler::initAlarmList()
 
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::deinit()
+/**********************************************************************************************//**
+ * Deinits this instance
  *
- * \brief Deinits this object.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *===============================================================================================**/
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::deinit()
 {
 	if(ALARMLIMITS)
@@ -646,16 +641,16 @@ void CAlarmMgmtHandler::deinit()
 		m_AlarmLogfile->WriteLine(L"**** finished ****");
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::setSPO2alarmDelay(UINT iDelayTime)
+
+/**********************************************************************************************//**
+ * Sets spo 2alarm delay
  *
- * \brief Sets spo2alarm delay.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param iDelayTime The delay time.
- *===============================================================================================**/
+ * \param	delay	The delay.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setSPO2alarmDelay(eSPO2alarmdelay delay)
 {
 	UINT iDelayTime=0;
@@ -695,16 +690,16 @@ void CAlarmMgmtHandler::setSPO2alarmDelay(eSPO2alarmdelay delay)
 	ALARM_PatAl_SPO2_SIQmin->setAlarmDelayTimeSec(iDelayTime);
 }
 
-/**=================================================================================================
- * \fn CMVModel *CAlarmMgmtHandler::getModel()
+
+/**********************************************************************************************//**
+ * Gets the model
  *
- * \brief Gets the model.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \return null if it fails, else the model.
- *===============================================================================================**/
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CAlarmMgmtHandler::getModel()
 {
 	if(m_pModel==NULL)
@@ -712,16 +707,16 @@ CMVModel *CAlarmMgmtHandler::getModel()
 	return m_pModel;
 }
 
-/**=================================================================================================
- * \fn CTlsLoglist * CAlarmMgmtHandler::getAlarmLog()
+
+/**********************************************************************************************//**
+ * Gets alarm log
  *
- * \brief Gets alarm log. Singleton
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \return null if it fails, else the alarm log.
- *===============================================================================================**/
+ * \return	Null if it fails, else the alarm log.
+ **************************************************************************************************/
+
 CTlsLoglist * CAlarmMgmtHandler::getAlarmLog()
 {
 	if(m_AlarmLoglist)
@@ -736,33 +731,33 @@ CTlsLoglist * CAlarmMgmtHandler::getAlarmLog()
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::setLogTxt(CStringW sz)
+
+/**********************************************************************************************//**
+ * Sets log text
  *
- * \brief Sets log text.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param sz The size.
- *===============================================================================================**/
+ * \param	sz	The size.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setLogTxt(CStringW sz)
 {
 	if(m_AlarmLogfile)
 		m_AlarmLogfile->WriteLine(sz);
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::setLogAlarm(eAlarm enAlarm, CStringW szAlarmTxt)
+
+/**********************************************************************************************//**
+ * Sets log alarm
  *
- * \brief Writes an alarm into logfile and loglist.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param enAlarm    The en alarm.
- * \param szAlarmTxt The alarm text.
- *===============================================================================================**/
+ * \param	enAlarm   	The en alarm.
+ * \param	szAlarmTxt	The alarm text.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setLogAlarm(eAlarm	enAlarm, CStringW szAlarmTxt)
 {
 	CStringW szAlarm=_T("");
@@ -782,14 +777,14 @@ void CAlarmMgmtHandler::setLogAlarm(eAlarm	enAlarm, CStringW szAlarmTxt)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::checkLogAlarmDate()
+
+/**********************************************************************************************//**
+ * Check log alarm date
  *
- * \brief Check log alarm date.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *===============================================================================================**/
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::checkLogAlarmDate()
 {
 	if(m_AlarmLogfile)
@@ -798,18 +793,18 @@ void CAlarmMgmtHandler::checkLogAlarmDate()
 	}
 }
 
-/**=================================================================================================
- * \fn CStringW CAlarmMgmtHandler::getLogTxtAlarm(eAlarm enAlarm)
+
+/**********************************************************************************************//**
+ * Gets log text alarm
  *
- * \brief Gets log text alarm.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * \author Rainer
- * \date 23 Nov 2015
+ * \param	enAlarm	The en alarm.
  *
- * \param enAlarm The en alarm.
- *
- * \return The log text alarm.
- *===============================================================================================**/
+ * \return	The log text alarm.
+ **************************************************************************************************/
+
 CStringW CAlarmMgmtHandler::getLogTxtAlarm(eAlarm enAlarm)
 {
 	switch(enAlarm)
@@ -1259,28 +1254,26 @@ CStringW CAlarmMgmtHandler::getLogTxtAlarm(eAlarm enAlarm)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::loadConfig()
+/**********************************************************************************************//**
+ * Loads the configuration
  *
- * \brief Loads the configuration.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *===============================================================================================**/
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::loadConfig()
 {
 	init();
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::ventModeChanged()
+
+/**********************************************************************************************//**
+ * Vent mode changed
  *
- * \brief Ventilation mode changed.
- * 		  Notification to reload the alarm limits.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *===============================================================================================**/
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::ventModeChanged()
 {
 	EnterCriticalSection(&csActiveVentMode);
@@ -1293,16 +1286,16 @@ void CAlarmMgmtHandler::ventModeChanged()
 	}
 }
 
-/**=================================================================================================
- * \fn eVentMode CAlarmMgmtHandler::getSafeActiveVentMode()
+
+/**********************************************************************************************//**
+ * Gets safe active vent mode
  *
- * \brief Gets safe active vent mode. Critical Section.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \return The safe active vent mode.
- *===============================================================================================**/
+ * \return	The safe active vent mode.
+ **************************************************************************************************/
+
 eVentMode CAlarmMgmtHandler::getSafeActiveVentMode()
 {
 	eVentMode mode=VM_NONE;
@@ -1312,16 +1305,16 @@ eVentMode CAlarmMgmtHandler::getSafeActiveVentMode()
 	return mode;
 }
 
-/**=================================================================================================
- * \fn eAlarm CAlarmMgmtHandler::getActiveAlarm()
+
+/**********************************************************************************************//**
+ * Gets active alarm
  *
- * \brief Gets active alarm. Critical Section.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \return The active alarm.
- *===============================================================================================**/
+ * \return	The active alarm.
+ **************************************************************************************************/
+
 eAlarm CAlarmMgmtHandler::getActiveAlarm()
 {
 	EnterCriticalSection(&csActiveAlarm);
@@ -1330,16 +1323,15 @@ eAlarm CAlarmMgmtHandler::getActiveAlarm()
 	return alarm;
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::setActiveAlarm(eAlarm alarm)
+/**********************************************************************************************//**
+ * Sets active alarm
  *
- * \brief Sets active alarm. Critical Section.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param alarm The alarm.
- *===============================================================================================**/
+ * \param	alarm	The alarm.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setActiveAlarm(eAlarm alarm)
 {
 	EnterCriticalSection(&csActiveAlarm);
@@ -1347,16 +1339,16 @@ void CAlarmMgmtHandler::setActiveAlarm(eAlarm alarm)
 	LeaveCriticalSection(&csActiveAlarm);
 }
 
-/**=================================================================================================
- * \fn eVentSilentState CAlarmMgmtHandler::getAlarmSilentState()
+
+/**********************************************************************************************//**
+ * Gets alarm silent state
  *
- * \brief Gets alarm silent state. Critical Section.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \return The alarm silent state.
- *===============================================================================================**/
+ * \return	The alarm silent state.
+ **************************************************************************************************/
+
 eVentSilentState CAlarmMgmtHandler::getAlarmSilentState()
 {
 	EnterCriticalSection(&csAlarmSilentState);
@@ -1365,16 +1357,16 @@ eVentSilentState CAlarmMgmtHandler::getAlarmSilentState()
 	return state;
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::setAlarmSilentState(eVentSilentState state)
+
+/**********************************************************************************************//**
+ * Sets alarm silent state
  *
- * \brief Sets alarm silent state. Critical Section.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param state The state.
- *===============================================================================================**/
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlarmSilentState(eVentSilentState state)
 {
 	EnterCriticalSection(&csAlarmSilentState);
@@ -1382,16 +1374,16 @@ void CAlarmMgmtHandler::setAlarmSilentState(eVentSilentState state)
 	LeaveCriticalSection(&csAlarmSilentState);
 }
 
-/**=================================================================================================
- * \fn eAlarmPrio CAlarmMgmtHandler::getPrioActiveAlarm()
+
+/**********************************************************************************************//**
+ * Gets priority active alarm
  *
- * \brief Gets prio active alarm. Critical Section.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \return The prio active alarm.
- *===============================================================================================**/
+ * \return	The priority active alarm.
+ **************************************************************************************************/
+
 eAlarmPrio CAlarmMgmtHandler::getPrioActiveAlarm()
 {
 	EnterCriticalSection(&csPrioActiveAlarm);
@@ -1400,16 +1392,16 @@ eAlarmPrio CAlarmMgmtHandler::getPrioActiveAlarm()
 	return prio;
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::setPrioActiveAlarm(eAlarmPrio prio)
+
+/**********************************************************************************************//**
+ * Sets priority active alarm
  *
- * \brief Sets prio active alarm. Critical Section.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param prio The prio.
- *===============================================================================================**/
+ * \param	prio	The priority.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setPrioActiveAlarm(eAlarmPrio prio)
 {
 	EnterCriticalSection(&csPrioActiveAlarm);
@@ -1417,16 +1409,15 @@ void CAlarmMgmtHandler::setPrioActiveAlarm(eAlarmPrio prio)
 	LeaveCriticalSection(&csPrioActiveAlarm);
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::setStartupSilent(bool bState)
+/**********************************************************************************************//**
+ * Sets startup silent
  *
- * \brief Sets system to startup silent.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param bState true to state.
- *===============================================================================================**/
+ * \param	bState	True to state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setStartupSilent(bool bState)
 {
 	if(bState)
@@ -1454,16 +1445,15 @@ void CAlarmMgmtHandler::setStartupSilent(bool bState)
 	updateAlarmSound();
 }
 
-/**=================================================================================================
- * \fn bool CAlarmMgmtHandler::getStartupSilent()
+/**********************************************************************************************//**
+ * Gets startup silent
  *
- * \brief Gets startup silent.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \return true if it succeeds, false if it fails.
- *===============================================================================================**/
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::getStartupSilent()
 {
 	EnterCriticalSection(&csAlarmSilentState);
@@ -1472,14 +1462,14 @@ bool CAlarmMgmtHandler::getStartupSilent()
 	return bState;
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::setAlarmsilentActive()
+
+/**********************************************************************************************//**
+ * Sets alarmsilent active
  *
- * \brief Sets alarmsilent active.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *===============================================================================================**/
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlarmsilentActive()
 {
 	setStartupSilent(false);
@@ -1503,14 +1493,14 @@ void CAlarmMgmtHandler::setAlarmsilentActive()
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::setSystemSilentActive()
+
+/**********************************************************************************************//**
+ * Sets system silent active
  *
- * \brief Sets system silent active.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *===============================================================================================**/
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setSystemSilentActive()
 {
 	setStartupSilent(false);
@@ -1534,14 +1524,14 @@ void CAlarmMgmtHandler::setSystemSilentActive()
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::setSystemSilent()
+
+/**********************************************************************************************//**
+ * Sets system silent
  *
- * \brief Sets system silent.
- *
- * \author Rainer
- * \date 23 Nov 2015
- *===============================================================================================**/
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setSystemSilent()
 {
 	setStartupSilent(false);
@@ -1565,17 +1555,17 @@ void CAlarmMgmtHandler::setSystemSilent()
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::setAlarmSilent(bool bDelSysSilent,bool bDelAllAlarms)
+
+/**********************************************************************************************//**
+ * Sets alarm silent
  *
- * \brief Sets alarm silent.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param bDelSysSilent true to delete the system silent.
- * \param bDelAllAlarms true to delete the alarms.
- *===============================================================================================**/
+ * \param	bDelSysSilent	True to delete the system silent.
+ * \param	bDelAllAlarms	True to delete the alarms.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlarmSilent(bool bDelSysSilent,bool bDelAllAlarms)
 {
 	DEBUGMSG(TRUE, (TEXT("setAlarmSilent\r\n")));
@@ -1626,18 +1616,18 @@ void CAlarmMgmtHandler::setAlarmSilent(bool bDelSysSilent,bool bDelAllAlarms)
 	}
 }
 
-/**=================================================================================================
- * \fn void CAlarmMgmtHandler::setAutoSilent(bool bDelSysSilent, bool bDelSilent, bool bDelManSilent)
+
+/**********************************************************************************************//**
+ * Sets automatic silent
  *
- * \brief Sets automatic silent.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * \author Rainer
- * \date 23 Nov 2015
- *
- * \param bDelSysSilent true to delete the system silent state.
- * \param bDelSilent    true to delete the silent state.
- * \param bDelManSilent true to delete the manual silent state.
- *===============================================================================================**/
+ * \param	bDelSysSilent	True to delete the system silent.
+ * \param	bDelSilent   	True to delete the silent.
+ * \param	bDelManSilent	True to delete the manager silent.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAutoSilent(bool bDelSysSilent, bool bDelSilent, bool bDelManSilent)
 {
 	//DEBUGMSG(TRUE, (TEXT("setAutoSilent\r\n")));
@@ -1712,6 +1702,14 @@ void CAlarmMgmtHandler::setAutoSilent(bool bDelSysSilent, bool bDelSilent, bool 
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets manual silent
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bRefreshTime	True to refresh time.
+ **************************************************************************************************/
 
 void CAlarmMgmtHandler::setManualSilent(bool bRefreshTime)
 {
@@ -1735,6 +1733,13 @@ void CAlarmMgmtHandler::setManualSilent(bool bRefreshTime)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets calibration silent
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CAlarmMgmtHandler::setCalibrationSilent()
 {
@@ -1761,6 +1766,15 @@ void CAlarmMgmtHandler::setCalibrationSilent()
 	}
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is manual silent state
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if manual silent state, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::isManualSilentState()
 {
 	if(getAlarmSilentState()==ASTATE_MANSILENT)
@@ -1770,6 +1784,17 @@ bool CAlarmMgmtHandler::isManualSilentState()
 	else
 		return false;
 }
+
+/**********************************************************************************************//**
+ * Gets alarm text
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarm	The alarm.
+ *
+ * \return	The alarm text.
+ **************************************************************************************************/
 
 CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 {
@@ -2446,6 +2471,17 @@ CStringW CAlarmMgmtHandler::getAlarmText(eAlarm alarm)
 	return sz;
 }
 
+/**********************************************************************************************//**
+ * Gets alarm priority
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarm	The alarm.
+ *
+ * \return	The alarm priority.
+ **************************************************************************************************/
+
 eAlarmPrio CAlarmMgmtHandler::getAlarmPrio(eAlarm alarm)
 {
 	switch(alarm)
@@ -2587,6 +2623,17 @@ eAlarmPrio CAlarmMgmtHandler::getAlarmPrio(eAlarm alarm)
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets alarm type
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarm	The alarm.
+ *
+ * \return	The alarm type.
+ **************************************************************************************************/
+
 eAlarmType CAlarmMgmtHandler::getAlarmType(eAlarm alarm)
 {
 	switch(alarm)
@@ -2709,6 +2756,15 @@ eAlarmType CAlarmMgmtHandler::getAlarmType(eAlarm alarm)
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets signaled alarm
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The signaled alarm.
+ **************************************************************************************************/
+
 eAlarm CAlarmMgmtHandler::getSignaledAlarm()
 {
 	eAlarm actAlarm=AL_NONE;
@@ -2745,7 +2801,17 @@ eAlarm CAlarmMgmtHandler::getSignaledAlarm()
 	return actAlarm;
 }
 
-
+/**********************************************************************************************//**
+ * Sets an alarm
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarm   	The alarm.
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::setAlarm(eAlarm alarm, CStringW alarmTxt)
 {
@@ -3138,6 +3204,17 @@ bool CAlarmMgmtHandler::setAlarm(eAlarm alarm, CStringW alarmTxt)
 	return bRes;
 }
 
+/**********************************************************************************************//**
+ * Query if 'prioAlarm' is active alarm higher or same priority
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	prioAlarm	The prio alarm.
+ *
+ * \return	True if active alarm higher or same priority, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::isActiveAlarmHigherOrSamePriority(eAlarmPrio prioAlarm)
 {
 	bool bRes=false;
@@ -3152,6 +3229,17 @@ bool CAlarmMgmtHandler::isActiveAlarmHigherOrSamePriority(eAlarmPrio prioAlarm)
 	return bRes;
 }
 
+/**********************************************************************************************//**
+ * Query if 'prioAlarm' is active alarm higher priority
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	prioAlarm	The prio alarm.
+ *
+ * \return	True if active alarm higher priority, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::isActiveAlarmHigherPriority(eAlarmPrio prioAlarm)
 {
 	bool bRes=false;
@@ -3165,6 +3253,15 @@ bool CAlarmMgmtHandler::isActiveAlarmHigherPriority(eAlarmPrio prioAlarm)
 	}
 	return bRes;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm checksum Controller PIC
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm checksum Controller PIC, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::CanSetAlarm_ChecksumConPIC()
 {
@@ -3183,6 +3280,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_ChecksumConPIC()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm checksum Controller PIC
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_ChecksumConPIC(CStringW alarmTxt)
 {
 	if(CanSetAlarm_ChecksumConPIC()==false)
@@ -3198,6 +3307,15 @@ bool CAlarmMgmtHandler::SetAlarm_ChecksumConPIC(CStringW alarmTxt)
 	
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm checksum monitor PIC
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm checksum monitor PIC, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::CanSetAlarm_ChecksumMonPIC()
 {
@@ -3216,6 +3334,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_ChecksumMonPIC()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm checksum monitor PIC
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_ChecksumMonPIC(CStringW alarmTxt)
 {
 	if(CanSetAlarm_ChecksumMonPIC()==false)
@@ -3233,6 +3363,16 @@ bool CAlarmMgmtHandler::SetAlarm_ChecksumMonPIC(CStringW alarmTxt)
 	
 
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm relais defect
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm relais defect, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_RELAIS_DEFECT()
 {
 	if(ALARM_SysFail_RELAIS_DEFECT->getAlarmState()==AS_ACTIVE)
@@ -3250,6 +3390,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_RELAIS_DEFECT()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm relais defect
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_RELAIS_DEFECT(CStringW alarmTxt)
 {
 	if(CanSetAlarm_RELAIS_DEFECT()==false)
@@ -3265,6 +3417,16 @@ bool CAlarmMgmtHandler::SetAlarm_RELAIS_DEFECT(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm mixer avcal
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm mixer avcal, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_MIXER_AVCAL()
 {
 	if(ALARM_SysFail_MIXER_AVCAL->getAlarmState()==AS_ACTIVE)
@@ -3282,6 +3444,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_MIXER_AVCAL()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm mixer avcal
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_MIXER_AVCAL(CStringW alarmTxt)
 {
 	if(CanSetAlarm_MIXER_AVCAL()==false)
@@ -3298,6 +3472,15 @@ bool CAlarmMgmtHandler::SetAlarm_MIXER_AVCAL(CStringW alarmTxt)
 	return true;
 
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm pressure in mixer
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm pressure in mixer, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::CanSetAlarm_P_IN_MIXER()
 {
@@ -3316,6 +3499,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_P_IN_MIXER()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm pressure in mixer
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_P_IN_MIXER(CStringW alarmTxt)
 {
 	if(CanSetAlarm_P_IN_MIXER()==false)
@@ -3332,6 +3527,15 @@ bool CAlarmMgmtHandler::SetAlarm_P_IN_MIXER(CStringW alarmTxt)
 	return true;
 
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm voltage
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm voltage, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::CanSetAlarm_VOLTAGE()
 {
@@ -3350,6 +3554,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_VOLTAGE()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm voltage
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_VOLTAGE(CStringW alarmTxt)
 {
 	if(CanSetAlarm_VOLTAGE()==false)
@@ -3371,6 +3587,16 @@ bool CAlarmMgmtHandler::SetAlarm_VOLTAGE(CStringW alarmTxt)
 	return true;
 
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm interface spi
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm interface spi, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_IF_SPI()//newSPI
 {
 	if(ALARM_SysFail_IF_SPI->getAlarmState()==AS_ACTIVE)
@@ -3388,6 +3614,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_IF_SPI()//newSPI
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm interface spi
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_IF_SPI(CStringW alarmTxt)//newSPI
 {
 	if(CanSetAlarm_IF_SPI()==false)
@@ -3407,6 +3645,16 @@ bool CAlarmMgmtHandler::SetAlarm_IF_SPI(CStringW alarmTxt)//newSPI
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm interface dio
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm interface dio, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_IF_DIO()
 {
 	if(ALARM_SysFail_IF_DIO->getAlarmState()==AS_ACTIVE)
@@ -3424,6 +3672,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_IF_DIO()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm interface dio
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_IF_DIO(CStringW alarmTxt)
 {
 	if(CanSetAlarm_IF_DIO()==false)
@@ -3440,6 +3700,16 @@ bool CAlarmMgmtHandler::SetAlarm_IF_DIO(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm interface com
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm interface com, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_IF_COM()
 {
 	if(ALARM_SysFail_IF_COM->getAlarmState()==AS_ACTIVE)
@@ -3457,6 +3727,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_IF_COM()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm interface com
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_IF_COM(CStringW alarmTxt)
 {
 	if(CanSetAlarm_IF_COM()==false)
@@ -3472,6 +3754,15 @@ bool CAlarmMgmtHandler::SetAlarm_IF_COM(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm interface i2c
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm interface i2c, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::CanSetAlarm_IF_I2C()
 {
@@ -3490,6 +3781,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_IF_I2C()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm interface i2c
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_IF_I2C(CStringW alarmTxt)
 {
 	if(CanSetAlarm_IF_I2C()==false)
@@ -3507,6 +3810,16 @@ bool CAlarmMgmtHandler::SetAlarm_IF_I2C(CStringW alarmTxt)
 	setActiveAlarm(alarm, alarmTxt);
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm interface pif
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm interface pif, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_IF_PIF()
 {
 	if(ALARM_SysFail_IF_PIF->getAlarmState()==AS_ACTIVE)
@@ -3524,6 +3837,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_IF_PIF()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm interface pif
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_IF_PIF(CStringW alarmTxt)
 {
 	if(CanSetAlarm_IF_PIF()==false)
@@ -3586,6 +3911,16 @@ bool CAlarmMgmtHandler::SetAlarm_IF_PIF(CStringW alarmTxt)
 //
 //	return true;
 //}
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm fan
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm fan, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_Fan()
 {
 	if(ALARM_SysFail_Fan->getAlarmState()==AS_ACTIVE)
@@ -3603,6 +3938,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_Fan()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm fan
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_Fan(CStringW alarmTxt)
 {
 	if(CanSetAlarm_Fan()==false)
@@ -3618,6 +3965,16 @@ bool CAlarmMgmtHandler::SetAlarm_Fan(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm outofmemory
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm outofmemory, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_OUTOFMEMORY()
 {
 	if(ALARM_SysFail_OUTOFMEMORY->getAlarmState()==AS_ACTIVE)
@@ -3635,6 +3992,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_OUTOFMEMORY()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm outofmemory
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_OUTOFMEMORY(CStringW alarmTxt)
 {
 	if(CanSetAlarm_OUTOFMEMORY()==false)
@@ -3651,6 +4020,16 @@ bool CAlarmMgmtHandler::SetAlarm_OUTOFMEMORY(CStringW alarmTxt)
 	return true;
 
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm Pin o2
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm Pin o2, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_P_IN_O2()
 {
 	if(ALARM_SysAl_P_IN_O2->getAlarmState()==AS_ACTIVE)
@@ -3668,6 +4047,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_P_IN_O2()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm Pin o2
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_P_IN_O2(CStringW alarmTxt)
 {
 	if(CanSetAlarm_P_IN_O2()==false)
@@ -3682,6 +4073,16 @@ bool CAlarmMgmtHandler::SetAlarm_P_IN_O2(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm Pin air
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm Pin air, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_P_IN_AIR()
 {
 	if(ALARM_SysAl_P_IN_AIR->getAlarmState()==AS_ACTIVE)
@@ -3699,6 +4100,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_P_IN_AIR()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm Pin air
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_P_IN_AIR(CStringW alarmTxt)
 {
 	if(CanSetAlarm_P_IN_AIR()==false)
@@ -3713,6 +4126,16 @@ bool CAlarmMgmtHandler::SetAlarm_P_IN_AIR(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm tube occlusion
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm tube occlusion, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_TUBE_OCCLUSION()
 {
 	if(ALARM_SysAl_TUBE_OCCLUSION->getAlarmState()==AS_ACTIVE)
@@ -3730,6 +4153,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_TUBE_OCCLUSION()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm tube occlusion
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_TUBE_OCCLUSION(CStringW alarmTxt)
 {
 	if(CanSetAlarm_TUBE_OCCLUSION()==false)
@@ -3744,6 +4179,15 @@ bool CAlarmMgmtHandler::SetAlarm_TUBE_OCCLUSION(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm disconnection
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm disconnection, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::CanSetAlarm_DISCONNECTION()
 {
@@ -3768,6 +4212,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_DISCONNECTION()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm disconnection
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_DISCONNECTION(CStringW alarmTxt)
 {
 	if(CanSetAlarm_DISCONNECTION()==false)
@@ -3782,6 +4238,16 @@ bool CAlarmMgmtHandler::SetAlarm_DISCONNECTION(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm tubusblocked
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm tubusblocked, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_TUBUSBLOCKED()
 {
 	//bool bResult=false;
@@ -3807,6 +4273,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_TUBUSBLOCKED()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm tubusblocked
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_TUBUSBLOCKED(CStringW alarmTxt)
 {
 	if(CanSetAlarm_TUBUSBLOCKED()==false)
@@ -3822,130 +4300,16 @@ bool CAlarmMgmtHandler::SetAlarm_TUBUSBLOCKED(CStringW alarmTxt)
 	return true;
 }
 
-//SetAlarm_NEBULIZER_DISCONNECTION
-//bool CAlarmMgmtHandler::CanSetAlarm_NEBULIZER_DISCONNECTION()
-//{
-//	if(m_eAlarmStates.eSoA_Nebulizer_Disconnection==AS_ACTIVE)
-//		return false;
-//
-//	if(m_eAlarmStates.eSoA_IF_SPI==AS_ACTIVE)
-//		return false;
-//
-//	
-//
-//	eVentSilentState silentState=getAlarmSilentState();
-//
-//	//higher alarms silent or service mode????
-//	if(		silentState==ASTATE_SYSTEM_SILENT
-//		||	silentState==ASTATE_SILENT
-//		//||	silentState==ASTATE_MANSILENT_CALIBRATION
-//		/*||	silentState==ASTATE_MANSILENT_SYSFAIL
-//		||	silentState==ASTATE_MANSILENT_SYSALARM
-//		||	silentState==ASTATE_MANSILENT*/
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
-//		return false;
-//
-//	eAlarm alarm=AL_Nebulizer_Disconnection;
-//	eAlarmPrio prioAlarm = getAlarmPrio(alarm);
-//
-//	if(AL_NONE!=m_eActiveAlarm)//active alarm
-//	{
-//		// alarm with higher priority active???
-//		if(	m_ePrioActiveAlarm < prioAlarm )	
-//		{
-//			return false;
-//		}
-//	}
-//	return true;
-//}
-//bool CAlarmHandler::SetAlarm_NEBULIZER_DISCONNECTION(CStringW alarmTxt)
-//{
-//	if(CanSetAlarm_NEBULIZER_DISCONNECTION()==false)
-//		return false;
-//
-//	eAlarm alarm=AL_Nebulizer_Disconnection;
-//	eAlarmPrio prioAlarm = getAlarmPrio(alarm);
-//
-//	writeAlarmArray(alarm,AS_ACTIVE);
-//	updateInternalAlarmState(alarm,AS_ACTIVE);
-//	updateActiveAlarm(alarm,AS_ACTIVE);
-//	updateAlarmSound();
-//
-//
-//	CStringW szTemp=_T("");
-//	szTemp.Format(_T("#%d"), prioAlarm);
-//	alarmTxt+=szTemp;
-//	setLogAlarm(alarm, alarmTxt);
-//
-//	if(AfxGetApp() != NULL)
-//		AfxGetApp()->GetMainWnd()->PostMessage(WM_ALARMSTATE_CHANGED);
-//
-//	return true;
-//}
 
-//AL_Nebulizer_SysError
-//bool CAlarmMgmtHandler::CanSetAlarm_NEBULIZER_SYSERROR()
-//{
-//	if(m_eAlarmStates.eSoA_Nebulizer_SysError==AS_ACTIVE)
-//		return false;
-//
-//	if(m_eAlarmStates.eSoA_IF_SPI==AS_ACTIVE)
-//		return false;
-//
-//	
-//
-//	eVentSilentState silentState=getAlarmSilentState();
-//
-//	//higher alarms silent or service mode????
-//	if(		silentState==ASTATE_SYSTEM_SILENT
-//		||	silentState==ASTATE_SILENT
-//		//||	silentState==ASTATE_MANSILENT_CALIBRATION
-//		/*||	silentState==ASTATE_MANSILENT_SYSFAIL
-//		||	silentState==ASTATE_MANSILENT_SYSALARM
-//		||	silentState==ASTATE_MANSILENT*/
-//		||	getModel()->getCONFIG()->GetCurMode()==VM_SERVICE)
-//		return false;
-//
-//	eAlarm alarm=AL_Nebulizer_SysError;
-//	eAlarmPrio prioAlarm = getAlarmPrio(alarm);
-//
-//	if(AL_NONE!=m_eActiveAlarm)//active alarm
-//	{
-//		// alarm with higher priority active???
-//		if(	m_ePrioActiveAlarm < prioAlarm )	
-//		{
-//			return false;
-//		}
-//	}
-//	return true;
-//}
-//bool CAlarmMgmtHandler::SetAlarm_NEBULIZER_SYSERROR(CStringW alarmTxt)
-//{
-//	if(CanSetAlarm_NEBULIZER_SYSERROR()==false)
-//		return false;
-//
-//	eAlarm alarm=AL_Nebulizer_SysError;
-//	eAlarmPrio prioAlarm = getAlarmPrio(alarm);
-//
-//	writeAlarmArray(alarm,AS_ACTIVE);
-//	updateInternalAlarmState(alarm,AS_ACTIVE);
-//	updateActiveAlarm(alarm,AS_ACTIVE);
-//	updateAlarmSound();
-//
-//
-//	CStringW szTemp=_T("");
-//	szTemp.Format(_T("#%d"), prioAlarm);
-//	alarmTxt+=szTemp;
-//	setLogAlarm(alarm, alarmTxt);
-//
-//	if(AfxGetApp() != NULL)
-//		AfxGetApp()->GetMainWnd()->PostMessage(WM_ALARMSTATE_CHANGED);
-//
-//	return true;
-//}
 
-	
-
+/**********************************************************************************************//**
+ * Determine if we can set alarm flow sensor defect
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm flow sensor defect, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::CanSetAlarm_FLOW_SENSOR_DEFECT()
 {
@@ -3973,6 +4337,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_FLOW_SENSOR_DEFECT()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm flow sensor defect
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_FLOW_SENSOR_DEFECT(CStringW alarmTxt)
 {
 	if(CanSetAlarm_FLOW_SENSOR_DEFECT()==false)
@@ -3987,6 +4363,16 @@ bool CAlarmMgmtHandler::SetAlarm_FLOW_SENSOR_DEFECT(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm flow sensor cleaning
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm flow sensor cleaning, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_FLOW_SENSOR_CLEANING()
 {
 	if(ALARM_Sens_FLOW_SENSOR_CLEANING->getAlarmState()==AS_ACTIVE)
@@ -4013,6 +4399,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_FLOW_SENSOR_CLEANING()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm flow sensor cleaning
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_FLOW_SENSOR_CLEANING(CStringW alarmTxt)
 {
 	if(CanSetAlarm_FLOW_SENSOR_CLEANING()==false)
@@ -4027,6 +4425,16 @@ bool CAlarmMgmtHandler::SetAlarm_FLOW_SENSOR_CLEANING(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm flow sensor notconnected
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm flow sensor notconnected, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_FLOW_SENSOR_NOTCONNECTED()
 {
 	if(ALARM_Sens_FLOW_SENSOR_NOTCONNECTED->getAlarmState()==AS_ACTIVE)
@@ -4053,6 +4461,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_FLOW_SENSOR_NOTCONNECTED()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm flow sensor notconnected
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_FLOW_SENSOR_NOTCONNECTED(CStringW alarmTxt)
 {
 	if(CanSetAlarm_FLOW_SENSOR_NOTCONNECTED()==false)
@@ -4067,6 +4487,16 @@ bool CAlarmMgmtHandler::SetAlarm_FLOW_SENSOR_NOTCONNECTED(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm o2 sensor defect
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm o2 sensor defect, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_O2_SENSOR_DEFECT()
 {
 	if(ALARM_Sens_O2_SENSOR_DEFECT->getAlarmState()==AS_ACTIVE)
@@ -4093,6 +4523,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_O2_SENSOR_DEFECT()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm o2 sensor defect
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_O2_SENSOR_DEFECT(CStringW alarmTxt)
 {
 	if(CanSetAlarm_O2_SENSOR_DEFECT()==false)
@@ -4106,6 +4548,16 @@ bool CAlarmMgmtHandler::SetAlarm_O2_SENSOR_DEFECT(CStringW alarmTxt)
 	setActiveAlarm(alarm, alarmTxt);
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm o2 sensor used
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm o2 sensor used, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_O2_SENSOR_USED()
 {
 	if(ALARM_Sens_O2_SENSOR_USED->getAlarmState()==AS_ACTIVE)
@@ -4132,6 +4584,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_O2_SENSOR_USED()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm o2 sensor used
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_O2_SENSOR_USED(CStringW alarmTxt)
 {
 	if(CanSetAlarm_O2_SENSOR_USED()==false)
@@ -4146,6 +4610,16 @@ bool CAlarmMgmtHandler::SetAlarm_O2_SENSOR_USED(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm o2 value incorrect
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm o2 value incorrect, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_O2_VALUE_INCORRECT()
 {
 	if(ALARM_Sens_O2_VALUE_INCORRECT->getAlarmState()==AS_ACTIVE)
@@ -4172,6 +4646,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_O2_VALUE_INCORRECT()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm o2 value incorrect
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_O2_VALUE_INCORRECT(CStringW alarmTxt)
 {
 	if(CanSetAlarm_O2_VALUE_INCORRECT()==false)
@@ -4186,6 +4672,16 @@ bool CAlarmMgmtHandler::SetAlarm_O2_VALUE_INCORRECT(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm o2 not calibrated
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm o2 not calibrated, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_O2_NOT_CALIBRATED()
 {
 	if(ALARM_Sens_O2_NOT_CALIBRATED->getAlarmState()==AS_ACTIVE)
@@ -4212,6 +4708,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_O2_NOT_CALIBRATED()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm o2 not calibrated
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_O2_NOT_CALIBRATED(CStringW alarmTxt)
 {
 	if(CanSetAlarm_O2_NOT_CALIBRATED()==false)
@@ -4226,6 +4734,16 @@ bool CAlarmMgmtHandler::SetAlarm_O2_NOT_CALIBRATED(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm prico fio2out of range
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm prico fio2out of range, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_PRICO_FiO2outOfRange()
 {
 	if(ALARM_Sens_PRICO_FiO2outOfRange->getAlarmState()==AS_ACTIVE)
@@ -4249,6 +4767,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_PRICO_FiO2outOfRange()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm prico fio2out of range
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_PRICO_FiO2outOfRange(CStringW alarmTxt)
 {
 	if(CanSetAlarm_PRICO_FiO2outOfRange()==false)
@@ -4263,6 +4793,16 @@ bool CAlarmMgmtHandler::SetAlarm_PRICO_FiO2outOfRange(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm spo2 sensorfaulty
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm spo2 sensorfaulty, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_SPO2_SENSORFAULTY()
 {
 	if(ALARM_Sens_SPO2_SENSORFAULTY->getAlarmState()==AS_ACTIVE)
@@ -4283,6 +4823,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_SPO2_SENSORFAULTY()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm spo2 sensorfaulty
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_SPO2_SENSORFAULTY(CStringW alarmTxt)
 {
 	if(CanSetAlarm_SPO2_SENSORFAULTY()==false)
@@ -4302,6 +4854,15 @@ bool CAlarmMgmtHandler::SetAlarm_SPO2_SENSORFAULTY(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm spo2 checksensor
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm spo2 checksensor, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::CanSetAlarm_SPO2_CHECKSENSOR()
 {
@@ -4326,6 +4887,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_SPO2_CHECKSENSOR()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm spo2 checksensor
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_SPO2_CHECKSENSOR(CStringW alarmTxt)
 {
 	if(CanSetAlarm_SPO2_CHECKSENSOR()==false)
@@ -4340,6 +4913,15 @@ bool CAlarmMgmtHandler::SetAlarm_SPO2_CHECKSENSOR(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm spo2 module notconnected
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm spo2 module notconnected, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::CanSetAlarm_SPO2_MODULE_NOTCONNECTED()
 {
@@ -4358,6 +4940,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_SPO2_MODULE_NOTCONNECTED()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm spo2 module notconnected
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_SPO2_MODULE_NOTCONNECTED(CStringW alarmTxt)
 {
 	if(CanSetAlarm_SPO2_MODULE_NOTCONNECTED()==false)
@@ -4382,6 +4976,15 @@ bool CAlarmMgmtHandler::SetAlarm_SPO2_MODULE_NOTCONNECTED(CStringW alarmTxt)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Determine if we can set alarm co2 module notconnected
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm co2 module notconnected, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_CO2_MODULE_NOTCONNECTED()
 {
 	if(ALARM_Sens_CO2_MODULE_NOTCONNECTED->getAlarmState()==AS_ACTIVE)
@@ -4399,6 +5002,17 @@ bool CAlarmMgmtHandler::CanSetAlarm_CO2_MODULE_NOTCONNECTED()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm co2 module notconnected
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::SetAlarm_CO2_MODULE_NOTCONNECTED(CStringW alarmTxt)
 {
@@ -4432,6 +5046,15 @@ bool CAlarmMgmtHandler::SetAlarm_CO2_MODULE_NOTCONNECTED(CStringW alarmTxt)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Determine if we can set alarm co2 filterline notconnected
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm co2 filterline notconnected, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_CO2_FILTERLINE_NOTCONNECTED()
 {
 	if(ALARM_Sens_CO2_FILTERLINE_NOTCONNECTED->getAlarmState()==AS_ACTIVE)
@@ -4452,6 +5075,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_CO2_FILTERLINE_NOTCONNECTED()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm co2 filterline notconnected
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_CO2_FILTERLINE_NOTCONNECTED(CStringW alarmTxt)
 {
 	if(CanSetAlarm_CO2_FILTERLINE_NOTCONNECTED()==false)
@@ -4466,6 +5101,16 @@ bool CAlarmMgmtHandler::SetAlarm_CO2_FILTERLINE_NOTCONNECTED(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm co2 checksamplingline
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm co2 checksamplingline, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_CO2_CHECKSAMPLINGLINE()
 {
 	if(ALARM_Sens_CO2_CHECKSAMPLINGLINE->getAlarmState()==AS_ACTIVE)
@@ -4487,6 +5132,17 @@ bool CAlarmMgmtHandler::CanSetAlarm_CO2_CHECKSAMPLINGLINE()
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Sets alarm co2 checksamplingline
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_CO2_CHECKSAMPLINGLINE(CStringW alarmTxt)
 {
 	if(CanSetAlarm_CO2_CHECKSAMPLINGLINE()==false)
@@ -4501,6 +5157,16 @@ bool CAlarmMgmtHandler::SetAlarm_CO2_CHECKSAMPLINGLINE(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm co2 checkairwayadapter
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm co2 checkairwayadapter, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_CO2_CHECKAIRWAYADAPTER()
 {
 	if(ALARM_Sens_CO2_CHECKAIRWAYADAPTER->getAlarmState()==AS_ACTIVE)
@@ -4522,6 +5188,17 @@ bool CAlarmMgmtHandler::CanSetAlarm_CO2_CHECKAIRWAYADAPTER()
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Sets alarm co2 checkairwayadapter
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_CO2_CHECKAIRWAYADAPTER(CStringW alarmTxt)
 {
 	if(CanSetAlarm_CO2_CHECKAIRWAYADAPTER()==false)
@@ -4536,6 +5213,15 @@ bool CAlarmMgmtHandler::SetAlarm_CO2_CHECKAIRWAYADAPTER(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm co2 sensorfaulty
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm co2 sensorfaulty, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::CanSetAlarm_CO2_SENSORFAULTY()
 {
@@ -4557,6 +5243,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_CO2_SENSORFAULTY()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm co2 sensorfaulty
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_CO2_SENSORFAULTY(CStringW alarmTxt)
 {
 	if(CanSetAlarm_CO2_SENSORFAULTY()==false)
@@ -4572,6 +5270,14 @@ bool CAlarmMgmtHandler::SetAlarm_CO2_SENSORFAULTY(CStringW alarmTxt)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Determine if we can set alarm MVmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm MVmax, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::CanSetAlarm_MVmax()
 {
@@ -4591,6 +5297,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_MVmax()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm MVmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_MVmax(CStringW alarmTxt)
 {
 	if(CanSetAlarm_MVmax()==false)
@@ -4602,6 +5320,16 @@ bool CAlarmMgmtHandler::SetAlarm_MVmax(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm MVmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm MVmin, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_MVmin()
 {
 	if(		getModel()->getDATAHANDLER()->IsHFOrunning()==false
@@ -4624,6 +5352,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_MVmin()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm MVmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_MVmin(CStringW alarmTxt)
 {
 	if(CanSetAlarm_MVmin()==false)
@@ -4635,6 +5375,16 @@ bool CAlarmMgmtHandler::SetAlarm_MVmin(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm prico SIQvalue
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm prico SIQvalue, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_PRICO_SIQvalue()
 {
 	if(ALARM_PatAl_SPO2_SIQmin->getAlarmState()==AS_ACTIVE)
@@ -4662,6 +5412,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_PRICO_SIQvalue()
 	}
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm prico SIQvalue
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_PRICO_SIQvalue(CStringW alarmTxt)
 {
 	if(CanSetAlarm_PRICO_SIQvalue()==false)
@@ -4682,6 +5444,14 @@ bool CAlarmMgmtHandler::SetAlarm_PRICO_SIQvalue(CStringW alarmTxt)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Determine if we can set alarm prico fio2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm prico fio2max, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::CanSetAlarm_PRICO_FiO2max()
 {
@@ -4710,6 +5480,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_PRICO_FiO2max()
 	}
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm prico fio2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_PRICO_FiO2max(CStringW alarmTxt)
 {
 	if(CanSetAlarm_PRICO_FiO2max()==false)
@@ -4729,6 +5511,16 @@ bool CAlarmMgmtHandler::SetAlarm_PRICO_FiO2max(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm prico fio2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm prico fio2min, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_PRICO_FiO2min()
 {
 	if(ALARM_PRICO_FiO2min->getAlarmState()==AS_ACTIVE)
@@ -4756,6 +5548,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_PRICO_FiO2min()
 	}
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm prico fio2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_PRICO_FiO2min(CStringW alarmTxt)
 {
 	if(CanSetAlarm_PRICO_FiO2min()==false)
@@ -4776,10 +5580,29 @@ bool CAlarmMgmtHandler::SetAlarm_PRICO_FiO2min(CStringW alarmTxt)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Sets pi pmax alarm text
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setPIPmaxAlarmText(CStringW alarmTxt)
 {
 	m_szPIPmaxAlarmText=alarmTxt;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm PIPmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm PIPmax, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_PIPmax()
 {
 	if(ALARM_PatAl_PIPmax->getAlarmState()==AS_ACTIVE)
@@ -4807,6 +5630,16 @@ bool CAlarmMgmtHandler::CanSetAlarm_PIPmax()
 	}
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm PIPmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_PIPmax()
 {
 	if(CanSetAlarm_PIPmax()==false)
@@ -4827,11 +5660,29 @@ bool CAlarmMgmtHandler::SetAlarm_PIPmax()
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Sets PIPmin alarm text
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ **************************************************************************************************/
 
 void CAlarmMgmtHandler::setPIPminAlarmText(CStringW alarmTxt)
 {
 	m_szPIPminAlarmText=alarmTxt;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm PIPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm PIPmin, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_PIPmin()
 {
 	if(ALARM_PatAl_PIPmin->getAlarmState()==AS_ACTIVE)
@@ -4862,14 +5713,20 @@ bool CAlarmMgmtHandler::CanSetAlarm_PIPmin()
 
 /**********************************************************************************************//**
  * @fn	bool CAlarmMgmtHandler::SetAlarm_PIPmin()
- *
+ * 
  * @brief	Sets alarm pi pmin.
- *
+ * 
  * @author	Rainer Kuehner
  * @date	27.09.2016
- *
+ * 
  * @return	true if it succeeds, false if it fails.
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_PIPmin()
 {
 	if(CanSetAlarm_PIPmin()==false)
@@ -4889,15 +5746,44 @@ bool CAlarmMgmtHandler::SetAlarm_PIPmin()
 
 	return true;
 }
-//###############################
+
+/**********************************************************************************************//**
+ * Sets PEEPmin low alarm text
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setPEEPminLowAlarmText(CStringW alarmTxt)
 {
 	m_szPEEPminLowAlarmText=alarmTxt;
 }
+
+/**********************************************************************************************//**
+ * Sets PEEPmin low alarm value
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setPEEPminLowAlarmValue(int value)
 {
 	m_iPEEPminLowAlarmValue=value;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm PEEPmin low
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm PEEPmin low, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_PEEPminLow()
 {
 	if(ALARM_PatAl_PEEPminLow->getAlarmState()==AS_ACTIVE)
@@ -4927,6 +5813,16 @@ bool CAlarmMgmtHandler::CanSetAlarm_PEEPminLow()
 	}
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm PEEPmin low
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_PEEPminLow()
 {
 	if(CanSetAlarm_PEEPminLow()==false)
@@ -4957,14 +5853,43 @@ bool CAlarmMgmtHandler::SetAlarm_PEEPminLow()
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Sets PEEPmin high alarm text
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setPEEPminHighAlarmText(CStringW alarmTxt)
 {
 	m_szPEEPminHighAlarmText=alarmTxt;
 }
+
+/**********************************************************************************************//**
+ * Sets PEEPmin high alarm value
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setPEEPminHighAlarmValue(int value)
 {
 	m_iPEEPminHighAlarmValue=value;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm PEEPmin high
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm PEEPmin high, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_PEEPminHigh()
 {
 	if(ALARM_PatAl_PEEPminHigh->getAlarmState()==AS_ACTIVE)
@@ -4994,6 +5919,16 @@ bool CAlarmMgmtHandler::CanSetAlarm_PEEPminHigh()
 	}
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm PEEPmin high
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_PEEPminHigh()
 {
 	if(CanSetAlarm_PEEPminHigh()==false)
@@ -5025,6 +5960,16 @@ bool CAlarmMgmtHandler::SetAlarm_PEEPminHigh()
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm bpmmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm bpmmax, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_BPMmax()
 {
 	if(ALARM_PatAl_BPMmax->getAlarmState()==AS_ACTIVE)
@@ -5043,6 +5988,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_BPMmax()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm bpmmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_BPMmax(CStringW alarmTxt)
 {
 	if(CanSetAlarm_BPMmax()==false)
@@ -5054,6 +6011,16 @@ bool CAlarmMgmtHandler::SetAlarm_BPMmax(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm leakmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm leakmax, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_Leakmax()
 {
 	if(ALARM_PatAl_Leakmax->getAlarmState()==AS_ACTIVE)
@@ -5072,6 +6039,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_Leakmax()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm leakmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_Leakmax(CStringW alarmTxt)
 {
 	if(CanSetAlarm_Leakmax()==false)
@@ -5083,6 +6062,16 @@ bool CAlarmMgmtHandler::SetAlarm_Leakmax(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm apnoe
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm apnoe, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_Apnoe()
 {
 	eVentMode eCurActive=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
@@ -5112,6 +6101,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_Apnoe()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm apnoe
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_Apnoe(CStringW alarmTxt)
 {
 	if(CanSetAlarm_Apnoe()==false)
@@ -5126,6 +6127,15 @@ bool CAlarmMgmtHandler::SetAlarm_Apnoe(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm MAPmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm MAPmax, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::CanSetAlarm_MAPmax()
 {
@@ -5145,6 +6155,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_MAPmax()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm MAPmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_MAPmax(CStringW alarmTxt)
 {
 	if(CanSetAlarm_MAPmax()==false)
@@ -5156,6 +6178,16 @@ bool CAlarmMgmtHandler::SetAlarm_MAPmax(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm MAPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm MAPmin, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_MAPmin()
 {
 	if(ALARM_PatAl_MAPmin->getAlarmState()==AS_ACTIVE)
@@ -5174,6 +6206,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_MAPmin()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm MAPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_MAPmin(CStringW alarmTxt)
 {
 	if(CanSetAlarm_MAPmin()==false)
@@ -5185,6 +6229,15 @@ bool CAlarmMgmtHandler::SetAlarm_MAPmin(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm dco2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm dco2max, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::CanSetAlarm_DCO2max()
 {
@@ -5204,6 +6257,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_DCO2max()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm dco2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_DCO2max(CStringW alarmTxt)
 {
 	if(CanSetAlarm_DCO2max()==false)
@@ -5215,6 +6280,16 @@ bool CAlarmMgmtHandler::SetAlarm_DCO2max(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm dco2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm dco2min, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_DCO2min()
 {
 	if(ALARM_PatAl_DCO2min->getAlarmState()==AS_ACTIVE)
@@ -5233,6 +6308,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_DCO2min()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm dco2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_DCO2min(CStringW alarmTxt)
 {
 	if(CanSetAlarm_DCO2min()==false)
@@ -5244,6 +6331,16 @@ bool CAlarmMgmtHandler::SetAlarm_DCO2min(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm etco2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm etco2max, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_ETCO2max()
 {
 	if(getModel()->getETCO2()==NULL)
@@ -5269,6 +6366,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_ETCO2max()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm etco2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_ETCO2max(CStringW alarmTxt)
 {
 	if(CanSetAlarm_ETCO2max()==false)
@@ -5280,6 +6389,16 @@ bool CAlarmMgmtHandler::SetAlarm_ETCO2max(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm etco2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm etco2min, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_ETCO2min()
 {
 	if(getModel()->getETCO2()==NULL)
@@ -5305,6 +6424,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_ETCO2min()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm etco2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_ETCO2min(CStringW alarmTxt)
 {
 	if(CanSetAlarm_ETCO2min()==false)
@@ -5316,6 +6447,15 @@ bool CAlarmMgmtHandler::SetAlarm_ETCO2min(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm fico2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm fico2max, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::CanSetAlarm_FICO2max()
 {
@@ -5342,6 +6482,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_FICO2max()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm fico2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_FICO2max(CStringW alarmTxt)
 {
 	if(CanSetAlarm_FICO2max()==false)
@@ -5352,6 +6504,16 @@ bool CAlarmMgmtHandler::SetAlarm_FICO2max(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm fico2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm fico2min, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_FICO2min()
 {
 	if(getModel()->getETCO2()==NULL)
@@ -5377,6 +6539,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_FICO2min()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm fico2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_FICO2min(CStringW alarmTxt)
 {
 	if(CanSetAlarm_FICO2min()==false)
@@ -5387,6 +6561,15 @@ bool CAlarmMgmtHandler::SetAlarm_FICO2min(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm spo2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm spo2max, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::CanSetAlarm_SPO2max()
 {
@@ -5412,6 +6595,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_SPO2max()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm spo2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_SPO2max(CStringW alarmTxt)
 {
 	if(CanSetAlarm_SPO2max()==false)
@@ -5422,6 +6617,16 @@ bool CAlarmMgmtHandler::SetAlarm_SPO2max(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm spo2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm spo2min, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_SPO2min()
 {
 	if(getModel()->getSPO2()==NULL)
@@ -5446,6 +6651,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_SPO2min()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm spo2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_SPO2min(CStringW alarmTxt)
 {
 	if(CanSetAlarm_SPO2min()==false)
@@ -5456,6 +6673,16 @@ bool CAlarmMgmtHandler::SetAlarm_SPO2min(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm pulseratemax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm pulseratemax, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_PulseRatemax()
 {
 	if(getModel()->getSPO2()==NULL)
@@ -5480,6 +6707,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_PulseRatemax()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm pulseratemax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_PulseRatemax(CStringW alarmTxt)
 {
 	if(CanSetAlarm_PulseRatemax()==false)
@@ -5490,6 +6729,16 @@ bool CAlarmMgmtHandler::SetAlarm_PulseRatemax(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm pulseratemin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm pulseratemin, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_PulseRatemin()
 {
 	if(getModel()->getSPO2()==NULL)
@@ -5514,6 +6763,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_PulseRatemin()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm pulseratemin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_PulseRatemin(CStringW alarmTxt)
 {
 	if(CanSetAlarm_PulseRatemin()==false)
@@ -5524,6 +6785,16 @@ bool CAlarmMgmtHandler::SetAlarm_PulseRatemin(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm spo2 PImin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm spo2 PImin, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_SPO2_PImin()
 {
 	if(getModel()->getSPO2()==NULL)
@@ -5548,6 +6819,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_SPO2_PImin()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm spo2 PImin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_SPO2_PImin(CStringW alarmTxt)
 {
 	if(CanSetAlarm_SPO2_PImin()==false)
@@ -5558,6 +6841,16 @@ bool CAlarmMgmtHandler::SetAlarm_SPO2_PImin(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm Pinsp not reached
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm Pinsp not reached, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_Pinsp_NotReached()
 {
 	if(ALARM_SysLimit_Pinsp_NotReached->getAlarmState()==AS_ACTIVE)
@@ -5580,6 +6873,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_Pinsp_NotReached()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm Pinsp not reached
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_Pinsp_NotReached(CStringW alarmTxt)
 {
 	if(CanSetAlarm_Pinsp_NotReached()==false)
@@ -5590,6 +6895,16 @@ bool CAlarmMgmtHandler::SetAlarm_Pinsp_NotReached(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm vlimitted
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm vlimitted, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_Vlimitted()
 {
 	if(ALARM_SysLimit_Vlimitted->getAlarmState()==AS_ACTIVE)
@@ -5612,6 +6927,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_Vlimitted()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm vlimitted
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_Vlimitted(CStringW alarmTxt)
 {
 	if(CanSetAlarm_Vlimitted()==false)
@@ -5622,6 +6949,16 @@ bool CAlarmMgmtHandler::SetAlarm_Vlimitted(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm vgaranty
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm vgaranty, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_Vgaranty()
 {
 	if(ALARM_SysLimit_Vgaranty->getAlarmState()==AS_ACTIVE)
@@ -5644,6 +6981,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_Vgaranty()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm vgaranty
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_Vgaranty(CStringW alarmTxt)
 {
 	if(CanSetAlarm_Vgaranty()==false)
@@ -5654,6 +7003,16 @@ bool CAlarmMgmtHandler::SetAlarm_Vgaranty(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm accu power
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm accu power, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_Accu_POWER()
 {
 	if(ALARM_Accu_POWER->getAlarmState()==AS_ACTIVE)
@@ -5669,6 +7028,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_Accu_POWER()
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm accu power
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_Accu_POWER(CStringW alarmTxt)
 {
 	if(CanSetAlarm_Accu_POWER()==false)
@@ -5684,6 +7055,16 @@ bool CAlarmMgmtHandler::SetAlarm_Accu_POWER(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm accu60
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm accu60, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_Accu_60()
 {
 	if(ALARM_Accu_60->getAlarmState()==AS_ACTIVE)
@@ -5699,6 +7080,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_Accu_60()
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm accu60
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_Accu_60(CStringW alarmTxt)
 {
 	if(CanSetAlarm_Accu_60()==false)
@@ -5714,6 +7107,16 @@ bool CAlarmMgmtHandler::SetAlarm_Accu_60(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm accu30
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm accu30, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_Accu_30()
 {
 	if(ALARM_Accu_30->getAlarmState()==AS_ACTIVE)
@@ -5728,6 +7131,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_Accu_30()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm accu30
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_Accu_30(CStringW alarmTxt)
 {
 	if(CanSetAlarm_Accu_30()==false)
@@ -5743,6 +7158,16 @@ bool CAlarmMgmtHandler::SetAlarm_Accu_30(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm accu15
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm accu15, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_Accu_15()
 {
 	if(ALARM_Accu_15->getAlarmState()==AS_ACTIVE)
@@ -5757,6 +7182,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_Accu_15()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm accu15
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_Accu_15(CStringW alarmTxt)
 {
 	if(CanSetAlarm_Accu_15()==false)
@@ -5772,6 +7209,16 @@ bool CAlarmMgmtHandler::SetAlarm_Accu_15(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm accu empty
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm accu empty, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_AccuEmpty()
 {
 	if(ALARM_Accu_Empty->getAlarmState()==AS_ACTIVE)
@@ -5786,6 +7233,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_AccuEmpty()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm accu empty
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_AccuEmpty(CStringW alarmTxt)
 {
 	if(CanSetAlarm_AccuEmpty()==false)
@@ -5802,6 +7261,16 @@ bool CAlarmMgmtHandler::SetAlarm_AccuEmpty(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determine if we can set alarm accu defect
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if we can set alarm accu defect, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::CanSetAlarm_AccuDefect()
 {
 	if(ALARM_Accu_Defect->getAlarmState()==AS_ACTIVE)
@@ -5817,6 +7286,18 @@ bool CAlarmMgmtHandler::CanSetAlarm_AccuDefect()
 		return false;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm accu defect
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarmTxt	The alarm text.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::SetAlarm_AccuDefect(CStringW alarmTxt)
 {
 	if(CanSetAlarm_AccuDefect()==false)
@@ -5832,6 +7313,16 @@ bool CAlarmMgmtHandler::SetAlarm_AccuDefect(CStringW alarmTxt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Queries if the pric orelevant alarm is active
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if the pric orelevant alarm is active, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::isPRICOrelevantAlarmActive()//rku AUTOPRICO
 {
 	bool bRes=false;
@@ -5859,6 +7350,16 @@ bool CAlarmMgmtHandler::isPRICOrelevantAlarmActive()//rku AUTOPRICO
 	}
 	return bRes;
 }
+
+/**********************************************************************************************//**
+ * Queries if the fo trelevant alarm is active
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if the fo trelevant alarm is active, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::isFOTrelevantAlarmActive()
 {
 	bool bRes=false;
@@ -5877,6 +7378,17 @@ bool CAlarmMgmtHandler::isFOTrelevantAlarmActive()
 	}
 	return bRes;
 }
+
+/**********************************************************************************************//**
+ * Sets active alarm
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	actAlarm	The act alarm.
+ * \param	alarmTxt	The alarm text.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setActiveAlarm(eAlarm actAlarm, CStringW alarmTxt)//rku AUTOPRICO
 {
 	EnterCriticalSection(&csAlarmList);
@@ -5920,6 +7432,16 @@ void CAlarmMgmtHandler::setActiveAlarm(eAlarm actAlarm, CStringW alarmTxt)//rku 
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_ALARMSTATE_CHANGED);
 }
+
+/**********************************************************************************************//**
+ * Gets the next active alarm
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The next active alarm.
+ **************************************************************************************************/
+
 eAlarm CAlarmMgmtHandler::getNextActiveAlarm()
 {
 	eAlarm actAlarm=AL_NONE;
@@ -5952,6 +7474,13 @@ eAlarm CAlarmMgmtHandler::getNextActiveAlarm()
 	return actAlarm;
 }
 
+/**********************************************************************************************//**
+ * Updates the active alarm
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::updateActiveAlarm()
 {
 	//DEBUGMSG(TRUE, (TEXT("CAlarmMgmtHandler::updateActiveAlarm()\r\n")));
@@ -5968,6 +7497,16 @@ void CAlarmMgmtHandler::updateActiveAlarm()
 		setAlarmStatePDMS(newActive, AS_ACTIVE);
 	}
 }
+
+/**********************************************************************************************//**
+ * Updates the active alarm
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarm	The alarm.
+ * \param	state	The state.
+ **************************************************************************************************/
 
 void CAlarmMgmtHandler::updateActiveAlarm(eAlarm alarm,eStateOfAlarm state)
 {
@@ -6003,6 +7542,13 @@ void CAlarmMgmtHandler::updateActiveAlarm(eAlarm alarm,eStateOfAlarm state)
 		setAlarmStatePDMS(getActiveAlarm(), AS_ACTIVE);
 	}
 }
+
+/**********************************************************************************************//**
+ * Check prico alarms
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CAlarmMgmtHandler::CheckPRICOalarms()//rku AUTOPRICO
 {
@@ -6060,6 +7606,14 @@ void CAlarmMgmtHandler::CheckPRICOalarms()//rku AUTOPRICO
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Check automatic enable prico
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::checkAutoEnablePRICO()//rku AUTOPRICO
 {
 	eAlarm curActive=getActiveAlarm();
@@ -6139,6 +7693,19 @@ void CAlarmMgmtHandler::checkAutoEnablePRICO()//rku AUTOPRICO
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets state of alarm
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarm  	The alarm.
+ * \param	eState 	The state.
+ * \param	bUpdate	True to update.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::setStateOfAlarm(eAlarm alarm, eStateOfAlarm eState, bool bUpdate)
 {
 	bool bResult = false; 
@@ -6163,7 +7730,17 @@ bool CAlarmMgmtHandler::setStateOfAlarm(eAlarm alarm, eStateOfAlarm eState, bool
 	return bResult;
 }
 
-
+/**********************************************************************************************//**
+ * Deletes the alarm
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	alarm  	The alarm.
+ * \param	bUpdate	True to update.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::deleteAlarm(eAlarm alarm, bool bUpdate)
 {
@@ -6190,6 +7767,17 @@ bool CAlarmMgmtHandler::deleteAlarm(eAlarm alarm, bool bUpdate)
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Sets lower prio active alarms signaled
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	prio	The prio.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::setLowerPrioActiveAlarmsSignaled(eAlarmPrio prio)
 {
 	bool bRes=false;
@@ -6211,6 +7799,15 @@ bool CAlarmMgmtHandler::setLowerPrioActiveAlarmsSignaled(eAlarmPrio prio)
 	return bRes;
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is alarm
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if alarm, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::isAlarm()
 {
 	bool bResult = false; 
@@ -6230,6 +7827,15 @@ bool CAlarmMgmtHandler::isAlarm()
 
 	return bResult;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is active alarm
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if active alarm, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::isActiveAlarm()
 {
@@ -6251,6 +7857,15 @@ bool CAlarmMgmtHandler::isActiveAlarm()
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is signaled alarm
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if signaled alarm, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::isSignaledAlarm()
 {
 	bool bResult = false; 
@@ -6270,6 +7885,17 @@ bool CAlarmMgmtHandler::isSignaledAlarm()
 
 	return bResult;
 }
+
+/**********************************************************************************************//**
+ * Query if 'type' is alarm type
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	type	The type.
+ *
+ * \return	True if alarm type, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::isAlarmType(eAlarmType type)
 {
@@ -6296,6 +7922,16 @@ bool CAlarmMgmtHandler::isAlarmType(eAlarmType type)
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Query if 'type' is active alarm type
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	type	The type.
+ *
+ * \return	True if active alarm type, false if not.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::isActiveAlarmType(eAlarmType type)
 {
@@ -6321,6 +7957,17 @@ bool CAlarmMgmtHandler::isActiveAlarmType(eAlarmType type)
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Query if 'type' is signaled alarm type
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	type	The type.
+ *
+ * \return	True if signaled alarm type, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::isSignaledAlarmType(eAlarmType type)
 {
 	bool bResult = false; 
@@ -6345,6 +7992,13 @@ bool CAlarmMgmtHandler::isSignaledAlarmType(eAlarmType type)
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Deletes the signaled alarms
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::deleteSignaledAlarms()
 {
 	EnterCriticalSection(&csAlarmList);
@@ -6366,6 +8020,13 @@ void CAlarmMgmtHandler::deleteSignaledAlarms()
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_ALARMSTATE_CHANGED);
 }
+
+/**********************************************************************************************//**
+ * Deletes the signaled alarmlimit states
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CAlarmMgmtHandler::deleteSignaledAlarmlimitStates()
 {
@@ -6390,6 +8051,15 @@ void CAlarmMgmtHandler::deleteSignaledAlarmlimitStates()
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_ALARMSTATE_CHANGED);
 }
 
+/**********************************************************************************************//**
+ * Deletes the akku alarms
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::deleteAkkuAlarms()
 {
 	bool bRes=false;
@@ -6411,6 +8081,17 @@ bool CAlarmMgmtHandler::deleteAkkuAlarms()
 	updateAlarmSound();
 	return bRes;
 }
+
+/**********************************************************************************************//**
+ * Deletes the lower priority alarms described by priority
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	prio	The prio.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CAlarmMgmtHandler::deleteLowerPrioAlarms(eAlarmPrio prio)
 {
@@ -6434,6 +8115,15 @@ bool CAlarmMgmtHandler::deleteLowerPrioAlarms(eAlarmPrio prio)
 
 	return bRes;
 }
+
+/**********************************************************************************************//**
+ * Deletes all alarms described by bDeleteAkkuAlarms
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bDeleteAkkuAlarms	True to delete the akku alarms.
+ **************************************************************************************************/
 
 void CAlarmMgmtHandler::deleteAllAlarms(bool bDeleteAkkuAlarms)
 {
@@ -6519,6 +8209,18 @@ void CAlarmMgmtHandler::deleteAllAlarms(bool bDeleteAkkuAlarms)
 		getModel()->getETCO2()->resetStateBytes();
 }
 
+/**********************************************************************************************//**
+ * Deletes the alarm type
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	type   	The type.
+ * \param	bUpdate	True to update.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::deleteAlarmType(eAlarmType type, bool bUpdate)
 {
 	bool bResult = false; 
@@ -6555,6 +8257,13 @@ bool CAlarmMgmtHandler::deleteAlarmType(eAlarmType type, bool bUpdate)
 
 	return bResult;
 }
+
+/**********************************************************************************************//**
+ * Updates the alarm sound
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CAlarmMgmtHandler::updateAlarmSound()
 {
@@ -6674,6 +8383,14 @@ void CAlarmMgmtHandler::updateAlarmSound()
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Updates the alarm states silent state dependend
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::updateAlarmStatesSilentStateDependend()
 {
 	updateActiveAlarm();
@@ -6682,6 +8399,15 @@ void CAlarmMgmtHandler::updateAlarmStatesSilentStateDependend()
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_ALARMSTATE_CHANGED);
 }
 
+/**********************************************************************************************//**
+ * Sets alarm state pdms
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	eAlarmToSet	Set the alarm to belongs to.
+ * \param	state	   	The state.
+ **************************************************************************************************/
 
 void CAlarmMgmtHandler::setAlarmStatePDMS(eAlarm eAlarmToSet, eStateOfAlarm state)
 {
@@ -7051,6 +8777,13 @@ void CAlarmMgmtHandler::setAlarmStatePDMS(eAlarm eAlarmToSet, eStateOfAlarm stat
 	
 }
 
+/**********************************************************************************************//**
+ * Resets the vg vl automatic turned off
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::resetVgVlAutoTurnedOff()
 {
 	EnterCriticalSection(&csVGVLautoOffState);
@@ -7062,6 +8795,13 @@ void CAlarmMgmtHandler::resetVgVlAutoTurnedOff()
 	LeaveCriticalSection(&csVGVLautoOffState);
 }
 
+/**********************************************************************************************//**
+ * Resets the vg vl automatic turned off flow sensor
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void  CAlarmMgmtHandler::resetVgVlAutoTurnedOff_FlowSensor()
 {
 	EnterCriticalSection(&csVGVLautoOffState);
@@ -7069,6 +8809,14 @@ void  CAlarmMgmtHandler::resetVgVlAutoTurnedOff_FlowSensor()
 	m_bVlimitAutoTurnedOff_FlowSensor=false;
 	LeaveCriticalSection(&csVGVLautoOffState);
 }
+
+/**********************************************************************************************//**
+ * Resets the vg vl automatic turned off tube
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void  CAlarmMgmtHandler::resetVgVlAutoTurnedOff_Tube()
 {
 	EnterCriticalSection(&csVGVLautoOffState);
@@ -7076,6 +8824,14 @@ void  CAlarmMgmtHandler::resetVgVlAutoTurnedOff_Tube()
 	m_bVlimitAutoTurnedOff_Tube=false;
 	LeaveCriticalSection(&csVGVLautoOffState);
 }
+
+/**********************************************************************************************//**
+ * Sets vgarant automatic turned off fot
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setVgarantAutoTurnedOff_FOT()
 {
 	EnterCriticalSection(&csVGVLautoOffState);
@@ -7083,12 +8839,30 @@ void CAlarmMgmtHandler::setVgarantAutoTurnedOff_FOT()
 	LeaveCriticalSection(&csVGVLautoOffState);
 
 }
+
+/**********************************************************************************************//**
+ * Resets the vg automatic turned off fot
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void  CAlarmMgmtHandler::resetVgAutoTurnedOff_FOT()
 {
 	EnterCriticalSection(&csVGVLautoOffState);
 	m_bVgarantAutoTurnedOff_FOT=false;
 	LeaveCriticalSection(&csVGVLautoOffState);
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is vgarant automatic turned off fot
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if vgarant automatic turned off fot, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::isVgarantAutoTurnedOff_FOT()
 {
 	EnterCriticalSection(&csVGVLautoOffState);
@@ -7096,6 +8870,13 @@ bool CAlarmMgmtHandler::isVgarantAutoTurnedOff_FOT()
 	LeaveCriticalSection(&csVGVLautoOffState);
 	return bState;
 }
+
+/**********************************************************************************************//**
+ * Sets vgarant automatic turned off flow sensor
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CAlarmMgmtHandler::setVgarantAutoTurnedOff_FlowSensor()
 {
@@ -7105,6 +8886,12 @@ void CAlarmMgmtHandler::setVgarantAutoTurnedOff_FlowSensor()
 	
 }
 
+/**********************************************************************************************//**
+ * Resets the vgarant automatic turned off flow sensor
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CAlarmMgmtHandler::resetVgarantAutoTurnedOff_FlowSensor()
 {
@@ -7112,6 +8899,16 @@ void CAlarmMgmtHandler::resetVgarantAutoTurnedOff_FlowSensor()
 	m_bVgarantAutoTurnedOff_FlowSensor=false;
 	LeaveCriticalSection(&csVGVLautoOffState);
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is vgarant automatic turned off flow sensor
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if vgarant automatic turned off flow sensor, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::isVgarantAutoTurnedOff_FlowSensor()
 {
 	EnterCriticalSection(&csVGVLautoOffState);
@@ -7119,18 +8916,44 @@ bool CAlarmMgmtHandler::isVgarantAutoTurnedOff_FlowSensor()
 	LeaveCriticalSection(&csVGVLautoOffState);
 	return bState;
 }
+
+/**********************************************************************************************//**
+ * Sets vlimit automatic turned off flow sensor
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setVlimitAutoTurnedOff_FlowSensor()
 {
 	EnterCriticalSection(&csVGVLautoOffState);
 	m_bVlimitAutoTurnedOff_FlowSensor=true;
 	LeaveCriticalSection(&csVGVLautoOffState);
 }
+
+/**********************************************************************************************//**
+ * Resets the vlimit automatic turned off flow sensor
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::resetVlimitAutoTurnedOff_FlowSensor()
 {
 	EnterCriticalSection(&csVGVLautoOffState);
 	m_bVlimitAutoTurnedOff_FlowSensor=false;
 	LeaveCriticalSection(&csVGVLautoOffState);
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is vlimit automatic turned off flow sensor
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if vlimit automatic turned off flow sensor, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::isVlimitAutoTurnedOff_FlowSensor()
 {
 	EnterCriticalSection(&csVGVLautoOffState);
@@ -7139,6 +8962,12 @@ bool CAlarmMgmtHandler::isVlimitAutoTurnedOff_FlowSensor()
 	return bState;
 }
 
+/**********************************************************************************************//**
+ * Sets vgarant automatic turned off tube
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CAlarmMgmtHandler::setVgarantAutoTurnedOff_Tube()
 {
@@ -7146,12 +8975,30 @@ void CAlarmMgmtHandler::setVgarantAutoTurnedOff_Tube()
 	m_bVgarantAutoTurnedOff_Tube=true;
 	LeaveCriticalSection(&csVGVLautoOffState);
 }
+
+/**********************************************************************************************//**
+ * Resets the vgarant automatic turned off tube
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::resetVgarantAutoTurnedOff_Tube()
 {
 	EnterCriticalSection(&csVGVLautoOffState);
 	m_bVgarantAutoTurnedOff_Tube=false;
 	LeaveCriticalSection(&csVGVLautoOffState);
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is vgarant automatic turned off tube
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if vgarant automatic turned off tube, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::isVgarantAutoTurnedOff_Tube()
 {
 	EnterCriticalSection(&csVGVLautoOffState);
@@ -7159,18 +9006,44 @@ bool CAlarmMgmtHandler::isVgarantAutoTurnedOff_Tube()
 	LeaveCriticalSection(&csVGVLautoOffState);
 	return bState;
 }
+
+/**********************************************************************************************//**
+ * Sets vlimit automatic turned off tube
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setVlimitAutoTurnedOff_Tube()
 {
 	EnterCriticalSection(&csVGVLautoOffState);
 	m_bVlimitAutoTurnedOff_Tube=true;
 	LeaveCriticalSection(&csVGVLautoOffState);
 }
+
+/**********************************************************************************************//**
+ * Resets the vlimit automatic turned off tube
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::resetVlimitAutoTurnedOff_Tube()
 {
 	EnterCriticalSection(&csVGVLautoOffState);
 	m_bVlimitAutoTurnedOff_Tube=false;
 	LeaveCriticalSection(&csVGVLautoOffState);
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is vlimit automatic turned off tube
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if vlimit automatic turned off tube, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::isVlimitAutoTurnedOff_Tube()
 {
 	EnterCriticalSection(&csVGVLautoOffState);
@@ -7178,6 +9051,16 @@ bool CAlarmMgmtHandler::isVlimitAutoTurnedOff_Tube()
 	LeaveCriticalSection(&csVGVLautoOffState);
 	return bState;
 }
+
+/**********************************************************************************************//**
+ * Sets prico automatic turned off
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bAutoTurnOn	True to enable, false to disable the automatic turn.
+ * \param	prioAlarm  	The prio alarm.
+ **************************************************************************************************/
 
 void CAlarmMgmtHandler::setPRICOAutoTurnedOff(bool bAutoTurnOn, eAlarmPrio prioAlarm)
 {
@@ -7189,6 +9072,14 @@ void CAlarmMgmtHandler::setPRICOAutoTurnedOff(bool bAutoTurnOn, eAlarmPrio prioA
 	m_ePRICOAutoAlarmPriority=prioAlarm;
 	LeaveCriticalSection(&csPRICOautoOffState);
 }
+
+/**********************************************************************************************//**
+ * Resets the prico automatic turned off
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::resetPRICOAutoTurnedOff()
 {
 	//theApp.getLog()->WriteLine(_T("resetPRICOAutoTurnedOff"));
@@ -7200,6 +9091,14 @@ void CAlarmMgmtHandler::resetPRICOAutoTurnedOff()
 	m_ePRICOAutoAlarmPriority=AP_NONE;
 	LeaveCriticalSection(&csPRICOautoOffState);
 }
+
+/**********************************************************************************************//**
+ * Resets the prico automatic turne on flag
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::resetPRICOAutoTurneOnFlag()
 {
 	//theApp.getLog()->WriteLine(_T("resetPRICOAutoTurnedOff"));
@@ -7209,6 +9108,16 @@ void CAlarmMgmtHandler::resetPRICOAutoTurneOnFlag()
 	m_bPRICOAutoTurnOn=false;
 	LeaveCriticalSection(&csPRICOautoOffState);
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is prico automatic turned off
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if prico automatic turned off, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::isPRICOAutoTurnedOff()
 {
 	EnterCriticalSection(&csPRICOautoOffState);
@@ -7216,6 +9125,16 @@ bool CAlarmMgmtHandler::isPRICOAutoTurnedOff()
 	LeaveCriticalSection(&csPRICOautoOffState);
 	return bState;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is prico automatic turned on
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if prico automatic turned on, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::isPRICOAutoTurnedOn()
 {
 	EnterCriticalSection(&csPRICOautoOffState);
@@ -7223,6 +9142,16 @@ bool CAlarmMgmtHandler::isPRICOAutoTurnedOn()
 	LeaveCriticalSection(&csPRICOautoOffState);
 	return bState;
 }
+
+/**********************************************************************************************//**
+ * Gets prico automatic alarm priority
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The prico automatic alarm priority.
+ **************************************************************************************************/
+
 eAlarmPrio CAlarmMgmtHandler::getPRICOAutoAlarmPriority()
 {
 	EnterCriticalSection(&csPRICOautoOffState);
@@ -7231,6 +9160,14 @@ eAlarmPrio CAlarmMgmtHandler::getPRICOAutoAlarmPriority()
 	return ePrio;
 }
 
+/**********************************************************************************************//**
+ * Gets alimit state MVmax limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state MVmax limit.
+ **************************************************************************************************/
 
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_MVmaxLimit()
 {
@@ -7241,6 +9178,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_MVmaxLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state MVmin limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state mVmin limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_MVminLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7250,6 +9197,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_MVminLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state PIPmax limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state PIPmax limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_PIPmaxLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7259,6 +9216,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_PIPmaxLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state PIPmin limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state PIPmin limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_PIPminLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7268,6 +9235,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_PIPminLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state PEEPmin limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state PEEPmin limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_PEEPminLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7277,6 +9254,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_PEEPminLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state bpmmax limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state bpmmax limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_BPMmaxLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7286,6 +9273,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_BPMmaxLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state leakmax limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state leakmax limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_LeakmaxLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7295,6 +9292,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_LeakmaxLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state apnoe limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state apnoe limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_ApnoeLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7305,6 +9312,15 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_ApnoeLimit()
 	return state;
 }
 
+/**********************************************************************************************//**
+ * Gets alimit state MAPmax limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state MAPmax limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_MAPmaxLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7314,6 +9330,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_MAPmaxLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state MAPmin limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state MAPmin limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_MAPminLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7324,6 +9350,15 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_MAPminLimit()
 	return state;
 }
 
+/**********************************************************************************************//**
+ * Gets alimit state dco2max limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state dco2max limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_DCO2maxLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7333,6 +9368,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_DCO2maxLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state dco2min limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state dco2min limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_DCO2minLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7342,6 +9387,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_DCO2minLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state etco2max limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state etco2max limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_ETCO2maxLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7351,6 +9406,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_ETCO2maxLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state etco2min limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state etco2min limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_ETCO2minLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7360,6 +9425,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_ETCO2minLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state fico2max limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state fico2max limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_FICO2maxLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7369,6 +9444,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_FICO2maxLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state fico2min limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state fico2min limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_FICO2minLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7378,6 +9463,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_FICO2minLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state spo2max limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state spo2max limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_SPO2maxLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7387,6 +9482,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_SPO2maxLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state spo2min limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state spo2min limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_SPO2minLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7396,6 +9501,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_SPO2minLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state pulseratemax limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state pulseratemax limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_PulseRatemaxLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7405,6 +9520,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_PulseRatemaxLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state pulseratemin limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state pulseratemin limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_PulseRateminLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7414,6 +9539,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_PulseRateminLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state spo2 PImin limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state spo2 PImin limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_SPO2_PIminLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7423,6 +9558,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_SPO2_PIminLimit()
 	}
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit state spo2 SIQmin limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit state spo2 SIQmin limit.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmMgmtHandler::getAlimitState_SPO2_SIQminLimit()
 {
 	eAlarmLimitState state=AL_OFF;
@@ -7432,7 +9577,16 @@ eAlarmLimitState CAlarmMgmtHandler::getAlimitState_SPO2_SIQminLimit()
 	}
 	return state;
 }
-//###############################################################
+
+/**********************************************************************************************//**
+ * Sets alimit apnoe
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitApnoe(int value)
 {
 	if(ALARMLIMITS)
@@ -7440,6 +9594,16 @@ void CAlarmMgmtHandler::setAlimitApnoe(int value)
 		ALARMLIMITS->setAlimitApnoe(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit bpmmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitBPMmax(int value)
 {
 	if(ALARMLIMITS)
@@ -7447,6 +9611,16 @@ void CAlarmMgmtHandler::setAlimitBPMmax(int value)
 		ALARMLIMITS->setAlimitBPMmax(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit MVmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMVmax(int value)
 {
 	if(ALARMLIMITS)
@@ -7454,6 +9628,16 @@ void CAlarmMgmtHandler::setAlimitMVmax(int value)
 		ALARMLIMITS->setAlimitMVmax(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit MVmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMVmin(int value)
 {
 	if(ALARMLIMITS)
@@ -7461,6 +9645,16 @@ void CAlarmMgmtHandler::setAlimitMVmin(int value)
 		ALARMLIMITS->setAlimitMVmin(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit leakmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitLeakmax(int value)
 {
 	if(ALARMLIMITS)
@@ -7468,6 +9662,16 @@ void CAlarmMgmtHandler::setAlimitLeakmax(int value)
 		ALARMLIMITS->setAlimitLeakmax(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit PEEPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitPEEPmin(int value)
 {
 	if(ALARMLIMITS)
@@ -7475,6 +9679,16 @@ void CAlarmMgmtHandler::setAlimitPEEPmin(int value)
 		ALARMLIMITS->setAlimitPEEPmin(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit PIPmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitPIPmax(int value)
 {
 	if(ALARMLIMITS)
@@ -7482,6 +9696,16 @@ void CAlarmMgmtHandler::setAlimitPIPmax(int value)
 		ALARMLIMITS->setAlimitPIPmax(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit PIPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitPIPmin(int value)
 {
 	if(ALARMLIMITS)
@@ -7489,6 +9713,16 @@ void CAlarmMgmtHandler::setAlimitPIPmin(int value)
 		ALARMLIMITS->setAlimitPIPmin(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit MAPmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMAPmax(int value)
 {
 	if(ALARMLIMITS)
@@ -7496,6 +9730,16 @@ void CAlarmMgmtHandler::setAlimitMAPmax(int value)
 		ALARMLIMITS->setAlimitMAPmax(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit MAPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMAPmin(int value)
 {
 	if(ALARMLIMITS)
@@ -7503,6 +9747,16 @@ void CAlarmMgmtHandler::setAlimitMAPmin(int value)
 		ALARMLIMITS->setAlimitMAPmin(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit dco2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitDCO2max(int value)
 {
 	if(ALARMLIMITS)
@@ -7510,6 +9764,16 @@ void CAlarmMgmtHandler::setAlimitDCO2max(int value)
 		ALARMLIMITS->setAlimitDCO2max(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit dco2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitDCO2min(int value)
 {
 	if(ALARMLIMITS)
@@ -7517,6 +9781,16 @@ void CAlarmMgmtHandler::setAlimitDCO2min(int value)
 		ALARMLIMITS->setAlimitDCO2min(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit etco2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitETCO2max(int value)
 {
 	if(ALARMLIMITS)
@@ -7524,6 +9798,16 @@ void CAlarmMgmtHandler::setAlimitETCO2max(int value)
 		ALARMLIMITS->setAlimitETCO2max(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit etco2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitETCO2min(int value)
 {
 	if(ALARMLIMITS)
@@ -7531,6 +9815,16 @@ void CAlarmMgmtHandler::setAlimitETCO2min(int value)
 		ALARMLIMITS->setAlimitETCO2min(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit fico2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitFICO2max(int value)
 {
 	if(ALARMLIMITS)
@@ -7538,6 +9832,16 @@ void CAlarmMgmtHandler::setAlimitFICO2max(int value)
 		ALARMLIMITS->setAlimitFICO2max(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit fico2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitFICO2min(int value)
 {
 	if(ALARMLIMITS)
@@ -7545,6 +9849,16 @@ void CAlarmMgmtHandler::setAlimitFICO2min(int value)
 		ALARMLIMITS->setAlimitFICO2min(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit spo2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitSPO2max(int value)
 {
 	if(value==0)//testZERO
@@ -7579,6 +9893,16 @@ void CAlarmMgmtHandler::setAlimitSPO2max(int value)
 		getModel()->getVIEWHANDLER()->UpdateLimitData();
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit spo2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitSPO2min(int value)
 {
 	bool bUpdateLimitData=false;
@@ -7605,6 +9929,16 @@ void CAlarmMgmtHandler::setAlimitSPO2min(int value)
 		getModel()->getVIEWHANDLER()->UpdateLimitData();
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit pulseratemax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitPulseRatemax(int value)
 {
 	if(ALARMLIMITS)
@@ -7612,6 +9946,16 @@ void CAlarmMgmtHandler::setAlimitPulseRatemax(int value)
 		ALARMLIMITS->setAlimitPulseRatemax(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit pulseratemin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitPulseRatemin(int value)
 {
 	if(ALARMLIMITS)
@@ -7619,6 +9963,16 @@ void CAlarmMgmtHandler::setAlimitPulseRatemin(int value)
 		ALARMLIMITS->setAlimitPulseRatemin(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit spo2 PImin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitSPO2_PImin(int value)
 {
 	if(ALARMLIMITS)
@@ -7626,6 +9980,16 @@ void CAlarmMgmtHandler::setAlimitSPO2_PImin(int value)
 		ALARMLIMITS->setAlimitSPO2_PImin(value);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit spo2 SIQmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitSPO2_SIQmin(int value)
 {
 	if(ALARMLIMITS)
@@ -7633,7 +9997,14 @@ void CAlarmMgmtHandler::setAlimitSPO2_SIQmin(int value)
 		ALARMLIMITS->setAlimitSPO2_SIQmin(value);
 	}
 }
-//##########################################################################
+
+/**********************************************************************************************//**
+ * Sets alimits minimum maximum range cpap
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitsMinMaxRangeCpap()
 {
 	if(ALARMLIMITS)
@@ -7641,6 +10012,14 @@ void CAlarmMgmtHandler::setAlimitsMinMaxRangeCpap()
 		ALARMLIMITS->setAlimitsMinMaxRangeCpap();
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimits minimum maximum range ncpap
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitsMinMaxRangeNCPAP()
 {
 	if(ALARMLIMITS)
@@ -7648,6 +10027,14 @@ void CAlarmMgmtHandler::setAlimitsMinMaxRangeNCPAP()
 		ALARMLIMITS->setAlimitsMinMaxRangeNCPAP();
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimits minimum maximum range duopap
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitsMinMaxRangeDUOPAP()
 {
 	if(ALARMLIMITS)
@@ -7655,6 +10042,14 @@ void CAlarmMgmtHandler::setAlimitsMinMaxRangeDUOPAP()
 		ALARMLIMITS->setAlimitsMinMaxRangeDUOPAP();
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimits minimum maximum range pressure
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitsMinMaxRangePressure()
 {
 	if(ALARMLIMITS)
@@ -7662,7 +10057,16 @@ void CAlarmMgmtHandler::setAlimitsMinMaxRangePressure()
 		ALARMLIMITS->setAlimitsMinMaxRangePressure();
 	}
 }
-//##########################################################################
+
+/**********************************************************************************************//**
+ * Gets alimit MVmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit MVmin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMVmin()
 {
 	int iLimit=0;
@@ -7672,6 +10076,16 @@ int CAlarmMgmtHandler::getAlimitMVmin()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit MVmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit MVmax.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMVmax()
 {
 	int iLimit=0;
@@ -7681,6 +10095,16 @@ int CAlarmMgmtHandler::getAlimitMVmax()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit PIPmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit PIPmax.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitPIPmax()
 {
 	int iLimit=0;
@@ -7690,6 +10114,16 @@ int CAlarmMgmtHandler::getAlimitPIPmax()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit PIPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit PIPmin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitPIPmin()
 {
 	int iLimit=0;
@@ -7699,6 +10133,16 @@ int CAlarmMgmtHandler::getAlimitPIPmin()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit PEEPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit PEEPmin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitPEEPmin()
 {
 	int iLimit=0;
@@ -7708,6 +10152,16 @@ int CAlarmMgmtHandler::getAlimitPEEPmin()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit leakmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit leakmax.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitLeakmax()
 {
 	int iLimit=0;
@@ -7717,6 +10171,16 @@ int CAlarmMgmtHandler::getAlimitLeakmax()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit bpmmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit bpmmax.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitBPMmax()
 {
 	int iLimit=0;
@@ -7726,6 +10190,16 @@ int CAlarmMgmtHandler::getAlimitBPMmax()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit apnoe
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit apnoe.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitApnoe()
 {
 	int iLimit=0;
@@ -7735,6 +10209,15 @@ int CAlarmMgmtHandler::getAlimitApnoe()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit MAPmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit MAPmax.
+ **************************************************************************************************/
 
 int CAlarmMgmtHandler::getAlimitMAPmax()
 {
@@ -7746,6 +10229,15 @@ int CAlarmMgmtHandler::getAlimitMAPmax()
 	return iLimit;
 }
 
+/**********************************************************************************************//**
+ * Gets alimit MAPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit MAPmin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMAPmin()
 {
 	int iLimit=0;
@@ -7756,6 +10248,15 @@ int CAlarmMgmtHandler::getAlimitMAPmin()
 	return iLimit;
 }
 
+/**********************************************************************************************//**
+ * Gets alimit dco2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit dco2min.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitDCO2min()
 {
 	int iLimit=0;
@@ -7765,6 +10266,16 @@ int CAlarmMgmtHandler::getAlimitDCO2min()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit dco2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit dco2max.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitDCO2max()
 {
 	int iLimit=0;
@@ -7774,6 +10285,16 @@ int CAlarmMgmtHandler::getAlimitDCO2max()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit etco2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit etco2min.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitETCO2min()
 {
 	int iLimit=0;
@@ -7783,6 +10304,16 @@ int CAlarmMgmtHandler::getAlimitETCO2min()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit etco2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit etco2max.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitETCO2max()
 {
 	int iLimit=0;
@@ -7792,6 +10323,16 @@ int CAlarmMgmtHandler::getAlimitETCO2max()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit fico2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit fico2min.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitFICO2min()
 {
 	int iLimit=0;
@@ -7801,6 +10342,16 @@ int CAlarmMgmtHandler::getAlimitFICO2min()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit fico2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit fico2max.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitFICO2max()
 {
 	int iLimit=0;
@@ -7810,6 +10361,16 @@ int CAlarmMgmtHandler::getAlimitFICO2max()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit spo2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit spo2max.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitSPO2max()
 {
 	int iLimit=0;
@@ -7819,6 +10380,16 @@ int CAlarmMgmtHandler::getAlimitSPO2max()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit spo2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit spo2min.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitSPO2min()
 {
 	int iLimit=0;
@@ -7828,6 +10399,16 @@ int CAlarmMgmtHandler::getAlimitSPO2min()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit pulseratemax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit pulseratemax.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitPulseRatemax()
 {
 	int iLimit=0;
@@ -7837,6 +10418,16 @@ int CAlarmMgmtHandler::getAlimitPulseRatemax()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit pulseratemin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit pulseratemin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitPulseRatemin()
 {
 	int iLimit=0;
@@ -7846,6 +10437,16 @@ int CAlarmMgmtHandler::getAlimitPulseRatemin()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit spo2 PImin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit spo2 PImin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitSPO2_PImin()
 {
 	int iLimit=0;
@@ -7855,6 +10456,16 @@ int CAlarmMgmtHandler::getAlimitSPO2_PImin()
 	}
 	return iLimit;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit spo2 SIQmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit spo2 SIQmin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitSPO2_SIQmin()
 {
 	int iLimit=0;
@@ -7865,6 +10476,16 @@ int CAlarmMgmtHandler::getAlimitSPO2_SIQmin()
 	return iLimit;
 }
 //###############################################################
+
+/**********************************************************************************************//**
+ * Sets alimit maximum range PIPmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangePIPmax(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -7872,6 +10493,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangePIPmax(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangePIPmax(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range PIPmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangePIPmax(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -7880,6 +10511,15 @@ void CAlarmMgmtHandler::setAlimitMinRangePIPmax(int iRangeVal)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets alimit maximum range PIPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangePIPmin(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -7887,6 +10527,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangePIPmin(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangePIPmin(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range PIPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangePIPmin(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -7895,6 +10545,15 @@ void CAlarmMgmtHandler::setAlimitMinRangePIPmin(int iRangeVal)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets alimit maximum range PEEPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangePEEPmin(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -7902,6 +10561,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangePEEPmin(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangePEEPmin(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range PEEPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangePEEPmin(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -7909,6 +10578,16 @@ void CAlarmMgmtHandler::setAlimitMinRangePEEPmin(int iRangeVal)
 		ALARMLIMITS->setAlimitMinRangePEEPmin(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit maximum range MVmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangeMVmin(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -7916,6 +10595,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangeMVmin(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangeMVmin(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range MVmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangeMVmin(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -7923,6 +10612,16 @@ void CAlarmMgmtHandler::setAlimitMinRangeMVmin(int iRangeVal)
 		ALARMLIMITS->setAlimitMinRangeMVmin(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit maximum range MVmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangeMVmax(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -7930,6 +10629,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangeMVmax(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangeMVmax(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range MVmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangeMVmax(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -7937,6 +10646,16 @@ void CAlarmMgmtHandler::setAlimitMinRangeMVmax(int iRangeVal)
 		ALARMLIMITS->setAlimitMinRangeMVmax(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit maximum range leakmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangeLeakmax(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -7944,6 +10663,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangeLeakmax(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangeLeakmax(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range leakmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangeLeakmax(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -7951,6 +10680,16 @@ void CAlarmMgmtHandler::setAlimitMinRangeLeakmax(int iRangeVal)
 		ALARMLIMITS->setAlimitMinRangeLeakmax(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit maximum range bpmmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangeBPMmax(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -7958,6 +10697,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangeBPMmax(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangeBPMmax(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range bpmmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangeBPMmax(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -7965,6 +10714,16 @@ void CAlarmMgmtHandler::setAlimitMinRangeBPMmax(int iRangeVal)
 		ALARMLIMITS->setAlimitMinRangeBPMmax(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit maximum range apnoe
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangeApnoe(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -7972,6 +10731,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangeApnoe(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangeApnoe(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range apnoe
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangeApnoe(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -7980,6 +10749,15 @@ void CAlarmMgmtHandler::setAlimitMinRangeApnoe(int iRangeVal)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets alimit maximum range MAPmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangeMAPmax(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -7987,6 +10765,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangeMAPmax(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangeMAPmax(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range MAPmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangeMAPmax(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -7994,6 +10782,16 @@ void CAlarmMgmtHandler::setAlimitMinRangeMAPmax(int iRangeVal)
 		ALARMLIMITS->setAlimitMinRangeMAPmax(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit maximum range MAPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangeMAPmin(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8001,6 +10799,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangeMAPmin(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangeMAPmin(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range MAPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangeMAPmin(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8009,6 +10817,15 @@ void CAlarmMgmtHandler::setAlimitMinRangeMAPmin(int iRangeVal)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets alimit maximum range dco2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangeDCO2min(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8016,6 +10833,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangeDCO2min(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangeDCO2min(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range dco2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangeDCO2min(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8023,6 +10850,16 @@ void CAlarmMgmtHandler::setAlimitMinRangeDCO2min(int iRangeVal)
 		ALARMLIMITS->setAlimitMinRangeDCO2min(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit maximum range dco2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangeDCO2max(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8030,6 +10867,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangeDCO2max(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangeDCO2max(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range dco2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangeDCO2max(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8037,6 +10884,16 @@ void CAlarmMgmtHandler::setAlimitMinRangeDCO2max(int iRangeVal)
 		ALARMLIMITS->setAlimitMinRangeDCO2max(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit maximum range etco2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangeETCO2min(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8044,6 +10901,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangeETCO2min(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangeETCO2min(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range etco2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangeETCO2min(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8051,6 +10918,16 @@ void CAlarmMgmtHandler::setAlimitMinRangeETCO2min(int iRangeVal)
 		ALARMLIMITS->setAlimitMinRangeETCO2min(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit maximum range etco2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangeETCO2max(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8058,6 +10935,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangeETCO2max(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangeETCO2max(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range etco2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangeETCO2max(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8065,6 +10952,16 @@ void CAlarmMgmtHandler::setAlimitMinRangeETCO2max(int iRangeVal)
 		ALARMLIMITS->setAlimitMinRangeETCO2max(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit maximum range fico2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangeFICO2min(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8072,6 +10969,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangeFICO2min(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangeFICO2min(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range fico2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangeFICO2min(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8079,6 +10986,16 @@ void CAlarmMgmtHandler::setAlimitMinRangeFICO2min(int iRangeVal)
 		ALARMLIMITS->setAlimitMinRangeFICO2min(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit maximum range fico2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangeFICO2max(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8086,6 +11003,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangeFICO2max(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangeFICO2max(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range fico2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangeFICO2max(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8093,6 +11020,16 @@ void CAlarmMgmtHandler::setAlimitMinRangeFICO2max(int iRangeVal)
 		ALARMLIMITS->setAlimitMinRangeFICO2max(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit maximum range spo2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangeSPO2max(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8101,6 +11038,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangeSPO2max(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangeSPO2max(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range spo2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangeSPO2max(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8109,6 +11056,16 @@ void CAlarmMgmtHandler::setAlimitMinRangeSPO2max(int iRangeVal)
 		ALARMLIMITS->setAlimitMinRangeSPO2max(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit maximum range spo2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangeSPO2min(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8117,6 +11074,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangeSPO2min(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangeSPO2min(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range spo2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangeSPO2min(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8125,6 +11092,16 @@ void CAlarmMgmtHandler::setAlimitMinRangeSPO2min(int iRangeVal)
 		ALARMLIMITS->setAlimitMinRangeSPO2min(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit maximum range pulseratemin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangePulseRatemin(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8133,6 +11110,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangePulseRatemin(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangePulseRatemin(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range pulseratemax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangePulseRatemax(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8141,6 +11128,16 @@ void CAlarmMgmtHandler::setAlimitMinRangePulseRatemax(int iRangeVal)
 		ALARMLIMITS->setAlimitMinRangePulseRatemax(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit maximum range pulseratemax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangePulseRatemax(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8149,6 +11146,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangePulseRatemax(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangePulseRatemax(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range pulseratemin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangePulseRatemin(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8157,6 +11164,16 @@ void CAlarmMgmtHandler::setAlimitMinRangePulseRatemin(int iRangeVal)
 		ALARMLIMITS->setAlimitMinRangePulseRatemin(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit maximum range spo2 PImin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMaxRangeSPO2_PImin(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8164,6 +11181,16 @@ void CAlarmMgmtHandler::setAlimitMaxRangeSPO2_PImin(int iRangeVal)
 		ALARMLIMITS->setAlimitMaxRangeSPO2_PImin(iRangeVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit minimum range spo2 PImin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iRangeVal	Zero-based index of the range value.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitMinRangeSPO2_PImin(int iRangeVal)
 {
 	if(ALARMLIMITS)
@@ -8171,7 +11198,16 @@ void CAlarmMgmtHandler::setAlimitMinRangeSPO2_PImin(int iRangeVal)
 		ALARMLIMITS->setAlimitMinRangeSPO2_PImin(iRangeVal);
 	}
 }
-//##########################################################
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range PIPmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range PIPmax.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangePIPmax()
 {
 	int iRange=0;
@@ -8181,6 +11217,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangePIPmax()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range PIPmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range PIPmax.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangePIPmax()
 {
 	int iRange=0;
@@ -8190,7 +11236,16 @@ int CAlarmMgmtHandler::getAlimitMinRangePIPmax()
 	}
 	return iRange;
 }
-//##########################################################
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range PIPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range PIPmin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangePIPmin()
 {
 	int iRange=0;
@@ -8200,6 +11255,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangePIPmin()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range PIPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range PIPmin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangePIPmin()
 {
 	int iRange=0;
@@ -8209,7 +11274,16 @@ int CAlarmMgmtHandler::getAlimitMinRangePIPmin()
 	}
 	return iRange;
 }
-//##########################################################
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range PEEPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range PEEPmin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangePEEPmin()
 {
 	int iRange=0;
@@ -8219,6 +11293,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangePEEPmin()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range PEEPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range PEEPmin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangePEEPmin()
 {
 	int iRange=0;
@@ -8228,6 +11312,16 @@ int CAlarmMgmtHandler::getAlimitMinRangePEEPmin()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range MVmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range MVmin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangeMVmin()
 {
 	int iRange=0;
@@ -8237,6 +11331,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangeMVmin()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range MVmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range MVmin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangeMVmin()
 {
 	int iRange=0;
@@ -8246,6 +11350,16 @@ int CAlarmMgmtHandler::getAlimitMinRangeMVmin()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range MVmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range MVmax.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangeMVmax()
 {
 	int iRange=0;
@@ -8255,6 +11369,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangeMVmax()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range MVmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range MVmax.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangeMVmax()
 {
 	int iRange=0;
@@ -8264,6 +11388,16 @@ int CAlarmMgmtHandler::getAlimitMinRangeMVmax()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range leakmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range leakmax.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangeLeakmax()
 {
 	int iRange=0;
@@ -8273,6 +11407,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangeLeakmax()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range leakmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range leakmax.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangeLeakmax()
 {
 	int iRange=0;
@@ -8282,6 +11426,16 @@ int CAlarmMgmtHandler::getAlimitMinRangeLeakmax()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range bpmmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range bpmmax.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangeBPMmax()
 {
 	int iRange=0;
@@ -8291,6 +11445,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangeBPMmax()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range bpmmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range bpmmax.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangeBPMmax()
 {
 	int iRange=0;
@@ -8300,6 +11464,16 @@ int CAlarmMgmtHandler::getAlimitMinRangeBPMmax()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range apnoe
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range apnoe.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangeApnoe()
 {
 	int iRange=0;
@@ -8309,6 +11483,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangeApnoe()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range apnoe
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range apnoe.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangeApnoe()
 {
 	int iRange=0;
@@ -8319,6 +11503,15 @@ int CAlarmMgmtHandler::getAlimitMinRangeApnoe()
 	return iRange;
 }
 
+/**********************************************************************************************//**
+ * Gets alimit maximum range MAPmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range MAPmax.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangeMAPmax()
 {
 	int iRange=0;
@@ -8328,6 +11521,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangeMAPmax()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range MAPmax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range MAPmax.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangeMAPmax()
 {
 	int iRange=0;
@@ -8337,6 +11540,16 @@ int CAlarmMgmtHandler::getAlimitMinRangeMAPmax()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range MAPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range MAPmin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangeMAPmin()
 {
 	int iRange=0;
@@ -8346,6 +11559,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangeMAPmin()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range MAPmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range MAPmin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangeMAPmin()
 {
 	int iRange=0;
@@ -8356,6 +11579,14 @@ int CAlarmMgmtHandler::getAlimitMinRangeMAPmin()
 	return iRange;
 }
 
+/**********************************************************************************************//**
+ * Gets alimit maximum range dco2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range dco2min.
+ **************************************************************************************************/
 
 int CAlarmMgmtHandler::getAlimitMaxRangeDCO2min()
 {
@@ -8366,6 +11597,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangeDCO2min()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range dco2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range dco2min.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangeDCO2min()
 {
 	int iRange=0;
@@ -8375,6 +11616,16 @@ int CAlarmMgmtHandler::getAlimitMinRangeDCO2min()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range dco2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range dco2max.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangeDCO2max()
 {
 	int iRange=0;
@@ -8384,6 +11635,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangeDCO2max()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range dco2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range dco2max.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangeDCO2max()
 {
 	int iRange=0;
@@ -8393,6 +11654,16 @@ int CAlarmMgmtHandler::getAlimitMinRangeDCO2max()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range etco2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range etco2min.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangeETCO2min()
 {
 	int iRange=0;
@@ -8402,6 +11673,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangeETCO2min()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range etco2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range etco2min.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangeETCO2min()
 {
 	int iRange=0;
@@ -8411,6 +11692,16 @@ int CAlarmMgmtHandler::getAlimitMinRangeETCO2min()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range etco2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range etco2max.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangeETCO2max()
 {
 	int iRange=0;
@@ -8420,6 +11711,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangeETCO2max()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range etco2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range etco2max.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangeETCO2max()
 {
 	int iRange=0;
@@ -8429,6 +11730,16 @@ int CAlarmMgmtHandler::getAlimitMinRangeETCO2max()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range fico2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range fico2min.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangeFICO2min()
 {
 	int iRange=0;
@@ -8438,6 +11749,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangeFICO2min()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range fico2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range fico2min.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangeFICO2min()
 {
 	int iRange=0;
@@ -8447,6 +11768,16 @@ int CAlarmMgmtHandler::getAlimitMinRangeFICO2min()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range fico2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range fico2max.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangeFICO2max()
 {
 	int iRange=0;
@@ -8456,6 +11787,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangeFICO2max()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range fico2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range fico2max.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangeFICO2max()
 {
 	int iRange=0;
@@ -8465,6 +11806,16 @@ int CAlarmMgmtHandler::getAlimitMinRangeFICO2max()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range spo2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range spo2max.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangeSPO2max()
 {
 	int iRange=0;
@@ -8474,6 +11825,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangeSPO2max()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range spo2max
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range spo2max.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangeSPO2max()
 {
 	int iRange=0;
@@ -8483,6 +11844,16 @@ int CAlarmMgmtHandler::getAlimitMinRangeSPO2max()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range spo2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range spo2min.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangeSPO2min()
 {
 	int iRange=0;
@@ -8492,6 +11863,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangeSPO2min()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range spo2min
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range spo2min.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangeSPO2min()
 {
 	int iRange=0;
@@ -8501,6 +11882,16 @@ int CAlarmMgmtHandler::getAlimitMinRangeSPO2min()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range pulseratemin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range pulseratemin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangePulseRatemin()
 {
 	int iRange=0;
@@ -8510,6 +11901,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangePulseRatemin()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range pulseratemax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range pulseratemax.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangePulseRatemax()
 {
 	int iRange=0;
@@ -8519,6 +11920,16 @@ int CAlarmMgmtHandler::getAlimitMinRangePulseRatemax()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range pulseratemax
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range pulseratemax.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangePulseRatemax()
 {
 	int iRange=0;
@@ -8528,6 +11939,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangePulseRatemax()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range pulseratemin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range pulseratemin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangePulseRatemin()
 {
 	int iRange=0;
@@ -8537,6 +11958,16 @@ int CAlarmMgmtHandler::getAlimitMinRangePulseRatemin()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range spo2 PImin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range spo2 PImin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangeSPO2_PImin()
 {
 	int iRange=0;
@@ -8546,6 +11977,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangeSPO2_PImin()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range spo2 PImin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range spo2 PImin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangeSPO2_PImin()
 {
 	int iRange=0;
@@ -8555,6 +11996,16 @@ int CAlarmMgmtHandler::getAlimitMinRangeSPO2_PImin()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit maximum range spo2 SIQmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit maximum range spo2 SIQmin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMaxRangeSPO2_SIQmin()
 {
 	int iRange=0;
@@ -8564,6 +12015,16 @@ int CAlarmMgmtHandler::getAlimitMaxRangeSPO2_SIQmin()
 	}
 	return iRange;
 }
+
+/**********************************************************************************************//**
+ * Gets alimit minimum range spo2 SIQmin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alimit minimum range spo2 SIQmin.
+ **************************************************************************************************/
+
 int CAlarmMgmtHandler::getAlimitMinRangeSPO2_SIQmin()
 {
 	int iRange=0;
@@ -8574,9 +12035,16 @@ int CAlarmMgmtHandler::getAlimitMinRangeSPO2_SIQmin()
 	return iRange;
 }
 
-//##################################################################################
 
-//############################################################################
+/**********************************************************************************************//**
+ * Sets alimit state apnoe limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_ApnoeLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8584,6 +12052,16 @@ void CAlarmMgmtHandler::setAlimitState_ApnoeLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_ApnoeLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state bpmmax limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_BPMmaxLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8591,6 +12069,16 @@ void CAlarmMgmtHandler::setAlimitState_BPMmaxLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_BPMmaxLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state leakmax limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_LeakmaxLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8598,6 +12086,16 @@ void CAlarmMgmtHandler::setAlimitState_LeakmaxLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_LeakmaxLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state MVmax limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_MVmaxLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8605,6 +12103,16 @@ void CAlarmMgmtHandler::setAlimitState_MVmaxLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_MVmaxLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state MVmin limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_MVminLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8612,6 +12120,16 @@ void CAlarmMgmtHandler::setAlimitState_MVminLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_MVminLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state PEEPmin limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_PEEPminLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8619,6 +12137,16 @@ void CAlarmMgmtHandler::setAlimitState_PEEPminLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_PEEPminLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state PIPmax limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_PIPmaxLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8626,6 +12154,16 @@ void CAlarmMgmtHandler::setAlimitState_PIPmaxLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_PIPmaxLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state PIPmin limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_PIPminLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8634,6 +12172,15 @@ void CAlarmMgmtHandler::setAlimitState_PIPminLimit(eAlarmLimitState state)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets alimit state MAPmax limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_MAPmaxLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8641,6 +12188,16 @@ void CAlarmMgmtHandler::setAlimitState_MAPmaxLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_MAPmaxLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state MAPmin limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_MAPminLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8649,6 +12206,15 @@ void CAlarmMgmtHandler::setAlimitState_MAPminLimit(eAlarmLimitState state)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets alimit state dco2max limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_DCO2maxLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8656,6 +12222,16 @@ void CAlarmMgmtHandler::setAlimitState_DCO2maxLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_DCO2maxLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state dco2min limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_DCO2minLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8663,6 +12239,16 @@ void CAlarmMgmtHandler::setAlimitState_DCO2minLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_DCO2minLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state etco2max limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_ETCO2maxLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8670,6 +12256,16 @@ void CAlarmMgmtHandler::setAlimitState_ETCO2maxLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_ETCO2maxLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state etco2min limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_ETCO2minLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8677,6 +12273,16 @@ void CAlarmMgmtHandler::setAlimitState_ETCO2minLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_ETCO2minLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state fico2max limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_FICO2maxLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8684,6 +12290,16 @@ void CAlarmMgmtHandler::setAlimitState_FICO2maxLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_FICO2maxLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state fico2min limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_FICO2minLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8691,6 +12307,16 @@ void CAlarmMgmtHandler::setAlimitState_FICO2minLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_FICO2minLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state spo2max limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_SPO2maxLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8699,6 +12325,16 @@ void CAlarmMgmtHandler::setAlimitState_SPO2maxLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_SPO2maxLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state spo2min limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_SPO2minLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8707,6 +12343,16 @@ void CAlarmMgmtHandler::setAlimitState_SPO2minLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_SPO2minLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state pulseratemax limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_PulseRatemaxLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8714,6 +12360,16 @@ void CAlarmMgmtHandler::setAlimitState_PulseRatemaxLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_PulseRatemaxLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state pulseratemin limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_PulseRateminLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8721,6 +12377,16 @@ void CAlarmMgmtHandler::setAlimitState_PulseRateminLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_PulseRateminLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state spo2 PImin limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_SPO2_PIminLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8728,6 +12394,16 @@ void CAlarmMgmtHandler::setAlimitState_SPO2_PIminLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_SPO2_PIminLimit(state);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alimit state spo2 SIQmin limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::setAlimitState_SPO2_SIQminLimit(eAlarmLimitState state)
 {
 	if(ALARMLIMITS)
@@ -8735,7 +12411,14 @@ void CAlarmMgmtHandler::setAlimitState_SPO2_SIQminLimit(eAlarmLimitState state)
 		ALARMLIMITS->setAlimitState_SPO2_SIQminLimit(state);
 	}
 }
-//#################################################################################################
+
+/**********************************************************************************************//**
+ * Sets alimit state calculated
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::SetAlimitStateCalculated()
 {
 	if(ALARMLIMITS)
@@ -8744,27 +12427,38 @@ void CAlarmMgmtHandler::SetAlimitStateCalculated()
 	}
 }
 
+/**********************************************************************************************//**
+ * Check flow sensor state
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CAlarmMgmtHandler::CheckFlowSensorState()
 {
 	getModel()->CheckFlowsensorData();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Check alarm state bytes
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::CheckAlarmStateBytes()
 {
 	getModel()->CheckAlarmData();
 	g_eventNewAlarmData.SetEvent();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Check limits
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::checkLimits()
 {
 	// alarm with higher priority active???
@@ -8791,6 +12485,13 @@ void CAlarmMgmtHandler::checkLimits()
 		checkSpO2Limits();
 	}
 }
+
+/**********************************************************************************************//**
+ * Check ventilation limits
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CAlarmMgmtHandler::checkVentilationLimits()
 {
@@ -9315,6 +13016,13 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 	}
 }
 
+/**********************************************************************************************//**
+ * Check co2 limits
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CAlarmMgmtHandler::checkCO2Limits()
 {
 	if(getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE && getModel()->getETCO2())
@@ -9578,6 +13286,13 @@ void CAlarmMgmtHandler::checkCO2Limits()
 
 	
 }
+
+/**********************************************************************************************//**
+ * Check spo2 limits
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CAlarmMgmtHandler::checkSpO2Limits()
 {
@@ -9919,7 +13634,18 @@ void CAlarmMgmtHandler::checkSpO2Limits()
 	}
 }
 
-//rkuTICKCOUNT
+/**********************************************************************************************//**
+ * Query if 'oldTickCount' is safe tick count delay expired
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	oldTickCount	Number of old ticks.
+ * \param	delay			The delay.
+ *
+ * \return	True if safe tick count delay expired, false if not.
+ **************************************************************************************************/
+
 bool CAlarmMgmtHandler::isSafeTickCountDelayExpired(DWORD oldTickCount, UINT delay)////used to check if old tick count plus delay is still lower than actual tickCount, (dwLastTickCount+DELAY<getTickCount64())
 {
 	//return Test_isSafeTickCountDelayExpired(oldTickCount, delay);

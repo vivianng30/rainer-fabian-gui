@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldPPEAK.h"
 
-
-// CNumericFieldPPEAK
+/**********************************************************************************************//**
+ * CNumericFieldPPEAK
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldPPEAK, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldPPEAK class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldPPEAK::CNumericFieldPPEAK(eNumericSize size):
 CNumericField(size)
@@ -26,6 +42,13 @@ CNumericField(size)
 	}
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldPPEAK class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CNumericFieldPPEAK::~CNumericFieldPPEAK()
 {
 	
@@ -38,26 +61,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldPPEAK, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldPPEAK message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldPPEAK message handlers
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericFieldPPEAK::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CNumericFieldPPEAK::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldPPEAK::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -156,10 +186,6 @@ bool CNumericFieldPPEAK::drawData(bool bData, bool bFrames, bool bText, bool bLi
 	return bReturn;
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldPPEAK::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -176,9 +202,17 @@ bool CNumericFieldPPEAK::drawData(bool bData, bool bFrames, bool bText, bool bLi
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldPPEAK::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -254,10 +288,17 @@ bool CNumericFieldPPEAK::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldPPEAK::drawLimits(CDC* pDC)
 {
 	HDC hdc = *pDC;

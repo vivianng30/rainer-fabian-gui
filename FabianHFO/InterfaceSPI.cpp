@@ -1,89 +1,501 @@
+/**********************************************************************************************//**
+ * \file	InterfaceSPI.cpp.
+ *
+ * Implements the interface spi class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "InterfaceSPI.h"
 #include "MVModel.h"
 #include "acuLink.h"
 #include "MVViewHandler.h"
 
+/**********************************************************************************************//**
+ * A macro that defines waitackn
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define WAITACKN 2
 
-//The pin number is the sum of the bit number and the port number multiplied by 8. 
-//For example to modify Pin 11 of connector J5, look at the table in the NetDCU device driver document. 
-//It shows that this is bit 2 of port 1. So the pin number is 2 + 1*8 = 10.
-//   BYTE pin = 10;
-//   DeviceIoControl(hDev, IOCTL_DIO_SET_PIN, &pin, 1, NULL, 0, NULL, NULL);
-
-
-//#define ACKNPINBIT 4
-//#define ACKNPINPORT 0
+/**********************************************************************************************//**
+ * A macro that defines cdpinbit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 #define CDPINBIT 4
-//#define CDPINPORT 0
-//#define CDPINBIT 8
-//#define CDPINPORT 1
+
+/**********************************************************************************************//**
+ * A macro that defines maxpfvbloc kB ufsize
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 #define MAXPFVBLOCKBUFSIZE 210
+
+/**********************************************************************************************//**
+ * A macro that defines maxnumblocks
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define MAXNUMBLOCKS 30
 
+/**********************************************************************************************//**
+ * A macro that defines bloc kB ufsize
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define BLOCKBUFSIZE 42
-//#define ATZBLOCKBUFSIZE 40
-//#define AVGBLOCKBUFSIZE 40
+
+/**********************************************************************************************//**
+ * #define ATZBLOCKBUFSIZE 40
+ * #define AVGBLOCKBUFSIZE 40
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 #define INSPIRATIONBIT		(1 << 0)
+
+/**********************************************************************************************//**
+ * A macro that defines triggeredatzbit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define TRIGGEREDATZBIT		(1 << 1)
+
+/**********************************************************************************************//**
+ * A macro that defines alarmchangedbit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define ALARMCHANGEDBIT		(1 << 2)
+
+/**********************************************************************************************//**
+ * A macro that defines flowsenschangedbit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define FLOWSENSCHANGEDBIT	(1 << 3)
+
+/**********************************************************************************************//**
+ * A macro that defines mechatzbit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define MECHATZBIT			(1 << 4)
+
+/**********************************************************************************************//**
+ * A macro that defines autoflowbit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define AUTOFLOWBIT			(1 << 5)
 
+/**********************************************************************************************//**
+ * A macro that defines timeout monitordata
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 #define TIMEOUT_MONITORDATA 1000
+
+/**********************************************************************************************//**
+ * A macro that defines spi delay
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define SPI_DELAY			200
 
-//Minimum & Maximum of messurement data
+/**********************************************************************************************//**
+ * Minimum & Maximum of messurement data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_P_Peak_Min		0
+
+/**********************************************************************************************//**
+ * A macro that defines mes data p peak Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_P_Peak_Max		1500
+
+/**********************************************************************************************//**
+ * A macro that defines mes data p mean Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_P_Mean_Min		-500
+
+/**********************************************************************************************//**
+ * A macro that defines mes data p mean Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_P_Mean_Max		1500
+
+/**********************************************************************************************//**
+ * A macro that defines mes data peep Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_PEEP_Min		-500
+
+/**********************************************************************************************//**
+ * A macro that defines mes data peep Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_PEEP_Max		1500
+
+/**********************************************************************************************//**
+ * A macro that defines mes data t insp psv Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_T_insp_PSV_Min	0
+
+/**********************************************************************************************//**
+ * A macro that defines mes data t insp psv Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_T_insp_PSV_Max	5000
+
+/**********************************************************************************************//**
+ * A macro that defines mes data Dynamic compl Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_Dyn_Compl_Min	0
+
+/**********************************************************************************************//**
+ * A macro that defines mes data Dynamic compl Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_Dyn_Compl_Max	50000
+
+/**********************************************************************************************//**
+ * A macro that defines mes data c 20 c Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_C20C_Min		0
+
+/**********************************************************************************************//**
+ * A macro that defines mes data c 20 c Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_C20C_Max		999
+
+/**********************************************************************************************//**
+ * A macro that defines mes data resistance Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_Resistance_Min	0
+
+/**********************************************************************************************//**
+ * A macro that defines mes data resistance Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_Resistance_Max	9990
+
+/**********************************************************************************************//**
+ * A macro that defines mes data Minimum Volume Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_Min_Vol_Min		0
+
+/**********************************************************************************************//**
+ * A macro that defines mes data Minimum Volume Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_Min_Vol_Max		20000
+
+/**********************************************************************************************//**
+ * A macro that defines mes data perc resp Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_Perc_Resp_Min	0
+
+/**********************************************************************************************//**
+ * A macro that defines mes data perc resp Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_Perc_Resp_Max	100
+
+/**********************************************************************************************//**
+ * A macro that defines mes data tve Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_TVE_Min			0
+
+/**********************************************************************************************//**
+ * A macro that defines mes data tve Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_TVE_Max			6000
+
+/**********************************************************************************************//**
+ * A macro that defines mes data tve resp Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_TVE_Resp_Min	0
+
+/**********************************************************************************************//**
+ * A macro that defines mes data tve resp Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_TVE_Resp_Max	6000
+
+/**********************************************************************************************//**
+ * A macro that defines mes data tve Pattern Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_TVE_Pat_Min		0
+
+/**********************************************************************************************//**
+ * A macro that defines mes data tve Pattern Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_TVE_Pat_Max		6000
+
+/**********************************************************************************************//**
+ * A macro that defines mes data leak Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_Leak_Min		0
+
+/**********************************************************************************************//**
+ * A macro that defines mes data leak Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_Leak_Max		100
+
+/**********************************************************************************************//**
+ * A macro that defines mes data Frequency Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_Freq_Min		0
+
+/**********************************************************************************************//**
+ * A macro that defines mes data Frequency Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_Freq_Max		250
+
+/**********************************************************************************************//**
+ * A macro that defines mes data trig value Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_Trig_Value_Min	0
+
+/**********************************************************************************************//**
+ * A macro that defines mes data trig value Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_Trig_Value_Max	7500
+
+/**********************************************************************************************//**
+ * A macro that defines mes data tvi Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_TVI_Min			0
+
+/**********************************************************************************************//**
+ * A macro that defines mes data tvi Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_TVI_Max			6000
+
+/**********************************************************************************************//**
+ * A macro that defines mes data hfo amp Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_HFO_Amp_Min		0
+
+/**********************************************************************************************//**
+ * A macro that defines mes data hfo amp Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_HFO_Amp_Max		2000
+
+/**********************************************************************************************//**
+ * A macro that defines mes data tve hfo Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_TVE_HFO_Min		0
+
+/**********************************************************************************************//**
+ * A macro that defines mes data tve hfo Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_TVE_HFO_Max		2000
+
+/**********************************************************************************************//**
+ * A macro that defines mes data dco 2 Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_DCO2_Min		0
+
+/**********************************************************************************************//**
+ * A macro that defines mes data dco 2 Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_DCO2_Max		10000
+
+/**********************************************************************************************//**
+ * A macro that defines mes data hfo Frequency Minimum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_HFO_Freq_Min	0
+
+/**********************************************************************************************//**
+ * A macro that defines mes data hfo Frequency Maximum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define	MesData_HFO_Freq_Max	20
 
 CInterfaceSPI* CInterfaceSPI::theSPIInterface=0;
 
-
+/**********************************************************************************************//**
+ * Initializes a new instance of the CInterfaceSPI class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 CInterfaceSPI::CInterfaceSPI(void)
 {
@@ -173,6 +585,13 @@ CInterfaceSPI::CInterfaceSPI(void)
 	m_bShowReadSPIDataError=false;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CInterfaceSPI class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 CInterfaceSPI::~CInterfaceSPI(void)
 {
 	StopSPIMonitorThread();
@@ -220,9 +639,15 @@ CInterfaceSPI::~CInterfaceSPI(void)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
+
 CInterfaceSPI* CInterfaceSPI::GetInstance()
 {
 	if(theSPIInterface == 0)
@@ -233,9 +658,13 @@ CInterfaceSPI* CInterfaceSPI::GetInstance()
 	return theSPIInterface;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceSPI::DestroyInstance()
 {
 	
@@ -247,9 +676,15 @@ void CInterfaceSPI::DestroyInstance()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceSPI::Init()
 {
 	m_hSPIFile = CreateFile(_T("SPI1:"),GENERIC_READ | GENERIC_WRITE,FILE_SHARE_READ, NULL,OPEN_EXISTING, FILE_FLAG_WRITE_THROUGH, 0);
@@ -277,10 +712,13 @@ bool CInterfaceSPI::Init()
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Starts spi monitor thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceSPI::StartSPIMonitorThread( void )
 {
 	m_bDoSPIMonitorThread=true;
@@ -304,9 +742,13 @@ void CInterfaceSPI::StartSPIMonitorThread( void )
 	m_pcwtSPIMonitorThread->ResumeThread();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Stops spi monitor thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceSPI::StopSPIMonitorThread( void )
 {
 	if(m_bDoSPIMonitorThread)
@@ -326,9 +768,18 @@ void CInterfaceSPI::StopSPIMonitorThread( void )
 	}
 	
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Cspi monitor thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CSPIMonitorThread( LPVOID pc )
 {
 	try
@@ -359,10 +810,15 @@ static UINT CSPIMonitorThread( LPVOID pc )
 	return TRUE;
 }
 
+/**********************************************************************************************//**
+ * Spi monitor data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 DWORD CInterfaceSPI::SPIMonitorData(void) 
 {
 	CeSetThreadPriority(m_pcwtSPIMonitorThread->m_hThread,130);
@@ -1691,12 +2147,26 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Resets the spo2 value
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceSPI::ResetSPO2Value()
 {
 	EnterCriticalSection(&getModel()->getDATAHANDLER()->csSPO2DataBuffer);
 	m_iLastValSPO2=0;
 	LeaveCriticalSection(&getModel()->getDATAHANDLER()->csSPO2DataBuffer);
 }
+
+/**********************************************************************************************//**
+ * Resets the co2 value
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CInterfaceSPI::ResetCO2Value()
 {
@@ -1705,10 +2175,29 @@ void CInterfaceSPI::ResetCO2Value()
 	LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCO2DataBuffer);
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is mechanical breath
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if mechanical breath, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceSPI::isMechanicalBreath()
 {
 	return m_bMechanicalATZ;
 }
+
+/**********************************************************************************************//**
+ * Check upper pressure limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	eActiveVentMode	The active vent mode.
+ * \param	iMaxPressureVal	Zero-based index of the maximum pressure value.
+ **************************************************************************************************/
 
 void CInterfaceSPI::checkUpperPressureLimit(eVentMode eActiveVentMode, SHORT iMaxPressureVal)
 {
@@ -1846,6 +2335,16 @@ void CInterfaceSPI::checkUpperPressureLimit(eVentMode eActiveVentMode, SHORT iMa
 	}
 }
 
+/**********************************************************************************************//**
+ * Check lower pressure limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	eActiveVentMode	The active vent mode.
+ * \param	iMinPressureVal	Zero-based index of the minimum pressure value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::checkLowerPressureLimit(eVentMode eActiveVentMode, SHORT iMinPressureVal)
 {
 	eAlarmLimitState statePEEPmin = getModel()->getALARMHANDLER()->getAlimitState_PEEPminLimit();
@@ -1965,6 +2464,13 @@ void CInterfaceSPI::checkLowerPressureLimit(eVentMode eActiveVentMode, SHORT iMi
 	}
 }
 
+/**********************************************************************************************//**
+ * Resets the pressure alarm delay
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceSPI::resetPressureAlarmDelay()
 {
 	m_bHighPressureAlarmPending=false;
@@ -1975,11 +2481,13 @@ void CInterfaceSPI::resetPressureAlarmDelay()
 	m_dwWaittimeDelayPEEP_UG=0;
 }
 
+/**********************************************************************************************//**
+ * Starts spi communication thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceSPI::StartSPICommunicationThread( void )
 {
 	m_bDoSPICommunicationThread=true;
@@ -2004,9 +2512,13 @@ void CInterfaceSPI::StartSPICommunicationThread( void )
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Stops spi communication thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceSPI::StopSPICommunicationThread( void )
 {
 	if(m_bDoSPICommunicationThread)
@@ -2025,9 +2537,18 @@ void CInterfaceSPI::StopSPICommunicationThread( void )
 	}
 	
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Cspi communication thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CSPICommunicationThread( LPVOID pc )
 {
 	try
@@ -2057,10 +2578,15 @@ static UINT CSPICommunicationThread( LPVOID pc )
 	return TRUE;
 }
 
+/**********************************************************************************************//**
+ * Spi communication data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 DWORD CInterfaceSPI::SPICommunicationData(void) 
 {
 	CeSetThreadPriority(m_pcwtSPICommunicationThread->m_hThread,130);
@@ -2127,9 +2653,6 @@ DWORD CInterfaceSPI::SPICommunicationData(void)
 	return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 //WORD CInterfaceSPI::ReadNSPIdata(BYTE* pCommand,WORD wcommandSize, WORD wOffset)	//monitor data
 //{
 //	WORD wRes=0;
@@ -2216,10 +2739,21 @@ DWORD CInterfaceSPI::SPICommunicationData(void)
 //	return wRes;
 //}
 
+/**********************************************************************************************//**
+ * Reads nsp idata
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pCommand		If non-null, the command.
+ * \param 		  	wcommandSize	Size of the wcommand.
+ * \param [in,out]	pBuffer			If non-null, the buffer.
+ * \param 		  	wBufSize		Size of the buffer.
+ * \param 		  	wOffset			The offset.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CInterfaceSPI::ReadNSPIdata(BYTE* pCommand,WORD wcommandSize, BYTE* pBuffer,WORD wBufSize, WORD wOffset)	//monitor data
 {
 	bool bResult=false;
@@ -2271,10 +2805,17 @@ bool CInterfaceSPI::ReadNSPIdata(BYTE* pCommand,WORD wcommandSize, BYTE* pBuffer
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Reads nspi pfv block
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pBuffer	If non-null, the buffer.
+ *
+ * \return	The nspi pfv block.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 UINT CInterfaceSPI::ReadNSPIPFVblock(BYTE *pBuffer)	//monitor data;
 {
 	UINT bufSize=0;
@@ -2336,10 +2877,19 @@ UINT CInterfaceSPI::ReadNSPIPFVblock(BYTE *pBuffer)	//monitor data;
 	return bufSize;
 }
 
-const float PI						=3.1416f;
-// **************************************************************************
-// 
-// **************************************************************************
+const float PI						=3.1416f;   ///< The pi
+
+/**********************************************************************************************//**
+ * Simulate nspi block
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pBuffer	If non-null, the buffer.
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CInterfaceSPI::SimulateNSPIblock(BYTE *pBuffer)	//monitor data;
 {
 	DWORD bufSize=0;
@@ -2594,9 +3144,18 @@ DWORD CInterfaceSPI::SimulateNSPIblock(BYTE *pBuffer)	//monitor data;
 	return bufSize;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads nspi avg block
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pBuffer	If non-null, the buffer.
+ * \param 		  	bufSize	Size of the buffer.
+ *
+ * \return	The nspi avg block.
+ **************************************************************************************************/
+
 DWORD CInterfaceSPI::ReadNSPIAVGblock(BYTE *pBuffer,WORD bufSize)	//monitor data;
 {
 	DWORD dwResult=0;
@@ -2651,9 +3210,18 @@ DWORD CInterfaceSPI::ReadNSPIAVGblock(BYTE *pBuffer,WORD bufSize)	//monitor data
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads nspi atz block
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pBuffer	If non-null, the buffer.
+ * \param 		  	bufSize	Size of the buffer.
+ *
+ * \return	The nspi atz block.
+ **************************************************************************************************/
+
 DWORD CInterfaceSPI::ReadNSPIATZblock(BYTE *pBuffer,WORD bufSize)	//monitor data;
 {
 	DWORD dwResult=0;
@@ -2711,34 +3279,15 @@ DWORD CInterfaceSPI::ReadNSPIATZblock(BYTE *pBuffer,WORD bufSize)	//monitor data
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//BYTE CInterfaceSPI::setBitOfByte(BYTE x, unsigned int n)
-//{
-//	x = x | (1 << n);
-//
-//	return x;
-//}
-//
-//WORD CInterfaceSPI::setBitOfWord(WORD x, unsigned int n)
-//{
-//	x = x | (1 << n);
-//
-//	return x;
-//}
-//
-//int CInterfaceSPI::SetBit(int x, unsigned int n)
-//{
-//	//x = x | (1 << n);
-//	x = x | n;
-//
-//	return x;
-//}
+/**********************************************************************************************//**
+ * Determines if we can check alive byte
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CInterfaceSPI::check_ALIVE_BYTE()
 {
 	BOOL bRes=TRUE;
@@ -2762,6 +3311,13 @@ BOOL CInterfaceSPI::check_ALIVE_BYTE()
 	return bRes;
 }
 
+/**********************************************************************************************//**
+ * Increment alive
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceSPI::IncrementAlive()
 {
 	if(m_byAlive<254)
@@ -2769,9 +3325,21 @@ void CInterfaceSPI::IncrementAlive()
 	else
 		m_byAlive=1;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Writes a nspi data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pCommand		If non-null, the command.
+ * \param 		  	wcommandSize	Size of the wcommand.
+ * \param 		  	wValue			The value.
+ * \param 		  	wOffset			The offset.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CInterfaceSPI::WriteNSPIdata(BYTE* pCommand,WORD wcommandSize,WORD wValue, WORD wOffset)	//submit data
 {
 	BOOL bRes=true;
@@ -2831,10 +3399,6 @@ BOOL CInterfaceSPI::WriteNSPIdata(BYTE* pCommand,WORD wcommandSize,WORD wValue, 
 }
 
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CInterfaceSPI::WriteNSPI(BYTE* pData,WORD wSize, WORD wOffset)
 //{
 //	if(m_hSPIFile==INVALID_HANDLE_VALUE)
@@ -2867,9 +3431,6 @@ BOOL CInterfaceSPI::WriteNSPIdata(BYTE* pCommand,WORD wcommandSize,WORD wValue, 
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CInterfaceSPI::ReadNSPI(BYTE* pData, WORD wSize, WORD wOffset)
 //{
 //	if(m_hSPIFile==INVALID_HANDLE_VALUE)
@@ -2891,19 +3452,12 @@ BOOL CInterfaceSPI::WriteNSPIdata(BYTE* pCommand,WORD wcommandSize,WORD wValue, 
 //}
 
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CInterfaceSPI::IsNewATZ()
 //{
 //	return m_bNewATZ;
 //}
 
 
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CInterfaceSPI::NewMonitorData()
 //{
 //	return m_bMonitorData;
@@ -2913,9 +3467,6 @@ BOOL CInterfaceSPI::WriteNSPIdata(BYTE* pCommand,WORD wcommandSize,WORD wValue, 
 //	m_bMonitorData=false;
 //	m_bNewATZ=false;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CInterfaceSPI::IsTriggeredBreath()
 //{
 //	return m_bTriggeredBreath;
@@ -2924,36 +3475,71 @@ BOOL CInterfaceSPI::WriteNSPIdata(BYTE* pCommand,WORD wcommandSize,WORD wValue, 
 //{
 //	m_bTriggeredBreath=false;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates a new alarm data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceSPI::NewAlarmData()
 {
 	return m_bAlarmData;
 }
+
+/**********************************************************************************************//**
+ * Resets the alarm data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CInterfaceSPI::ResetAlarmData()
 {
 	m_bAlarmData=false;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates a new flowsensor data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceSPI::NewFlowsensorData()
 {
 	return m_bFlowsensorData;
 }
+
+/**********************************************************************************************//**
+ * Resets the flowsensor data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CInterfaceSPI::ResetFlowsensorData()
 {
 	m_bFlowsensorData=false;
 }
 
+/**********************************************************************************************//**
+ * Sends a spi command
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pMessage	   	If non-null, the message.
+ * \param 		  	bIgnoreSPIstate	True to ignore sp istate.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CInterfaceSPI::SendSPICommand(SPISENDMESSAGE* pMessage, bool bIgnoreSPIstate) 
 {
 	
@@ -2984,10 +3570,13 @@ BOOL CInterfaceSPI::SendSPICommand(SPISENDMESSAGE* pMessage, bool bIgnoreSPIstat
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Sends the alarmkey push
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceSPI::Send_ALARMKEY_PUSH()
 {
 #ifndef SIMULATION_NOSPI
@@ -3000,10 +3589,15 @@ void CInterfaceSPI::Send_ALARMKEY_PUSH()
 
 }
 
+/**********************************************************************************************//**
+ * Sends a vent mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	mode	The mode.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceSPI::Send_VENT_MODE(eVentMode mode)
 {
 #ifndef SIMULATION_NOSPI
@@ -3013,15 +3607,17 @@ void CInterfaceSPI::Send_VENT_MODE(eVentMode mode)
 
 	SendSPICommand(pMessage);
 #endif
-
-
-	
-
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval pinsp
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_PARAVAL_PINSP(int val)//newVG
 {
 #ifndef SIMULATION_NOSPI
@@ -3034,9 +3630,15 @@ void CInterfaceSPI::Send_PARAVAL_PINSP(int val)//newVG
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval pmaxvg
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_PARAVAL_PMAXVG(int val)//newVG
 {
 #ifndef SIMULATION_NOSPI
@@ -3049,9 +3651,15 @@ void CInterfaceSPI::Send_PARAVAL_PMAXVG(int val)//newVG
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval p psv
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_PARAVAL_P_PSV(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3064,9 +3672,15 @@ void CInterfaceSPI::Send_PARAVAL_P_PSV(int val)
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval peep
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_PARAVAL_PEEP(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3079,9 +3693,15 @@ void CInterfaceSPI::Send_PARAVAL_PEEP(int val)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval oxy ratio
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_PARAVAL_OXY_RATIO(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3094,9 +3714,15 @@ void CInterfaceSPI::Send_PARAVAL_OXY_RATIO(int val)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval trig schwelle
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_PARAVAL_TRIG_SCHWELLE(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3111,9 +3737,15 @@ void CInterfaceSPI::Send_PARAVAL_TRIG_SCHWELLE(int val)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval risetime
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_PARAVAL_RISETIME(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3128,9 +3760,15 @@ void CInterfaceSPI::Send_PARAVAL_RISETIME(int val)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a flow corfactor neo
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_FLOW_CORFACTOR_NEO(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3141,6 +3779,15 @@ void CInterfaceSPI::Send_FLOW_CORFACTOR_NEO(int val)
 	SendSPICommand(pMessage);
 #endif
 }
+
+/**********************************************************************************************//**
+ * Sends a flow corfactor ped
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
 
 void CInterfaceSPI::Send_FLOW_CORFACTOR_PED(int val)
 {
@@ -3153,11 +3800,15 @@ void CInterfaceSPI::Send_FLOW_CORFACTOR_PED(int val)
 #endif
 }
 
+/**********************************************************************************************//**
+ * Sends a paraval insp flow
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceSPI::Send_PARAVAL_INSP_FLOW(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3171,9 +3822,15 @@ void CInterfaceSPI::Send_PARAVAL_INSP_FLOW(int val)
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval exh flow
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_PARAVAL_EXH_FLOW(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3186,9 +3843,15 @@ void CInterfaceSPI::Send_PARAVAL_EXH_FLOW(int val)
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval apnoe time
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_PARAVAL_APNOE_TIME(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3200,9 +3863,16 @@ void CInterfaceSPI::Send_PARAVAL_APNOE_TIME(int val)
 #endif
 	
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sends a paraval backup
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_PARAVAL_BACKUP(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3214,10 +3884,15 @@ void CInterfaceSPI::Send_PARAVAL_BACKUP(int val)
 #endif
 }
 
+/**********************************************************************************************//**
+ * Sends a paraval insp time
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceSPI::Send_PARAVAL_INSP_TIME(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3230,9 +3905,15 @@ void CInterfaceSPI::Send_PARAVAL_INSP_TIME(int val)
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a hardware configuration
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	wHardwareConfig	The hardware configuration.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_HARDWARE_CONFIG(WORD wHardwareConfig)
 {
 #ifndef SIMULATION_NOSPI
@@ -3245,9 +3926,15 @@ void CInterfaceSPI::Send_HARDWARE_CONFIG(WORD wHardwareConfig)
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a mode option 1
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	wMode	The mode.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_MODE_OPTION1(WORD wMode)
 {
 #ifndef SIMULATION_NOSPI
@@ -3261,10 +3948,15 @@ void CInterfaceSPI::Send_MODE_OPTION1(WORD wMode)
 
 }
 
+/**********************************************************************************************//**
+ * Sends a paraval exh time
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceSPI::Send_PARAVAL_EXH_TIME(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3277,9 +3969,15 @@ void CInterfaceSPI::Send_PARAVAL_EXH_TIME(int val)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval hf ampl
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_PARAVAL_HF_AMPL(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3298,9 +3996,16 @@ void CInterfaceSPI::Send_PARAVAL_HF_AMPL(int val)
 #endif
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sends a paraval hf frequency
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_PARAVAL_HF_FREQ(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3312,9 +4017,16 @@ void CInterfaceSPI::Send_PARAVAL_HF_FREQ(int val)
 #endif
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sends a paraval hf pmitt
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_PARAVAL_HF_PMITT(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3327,9 +4039,15 @@ void CInterfaceSPI::Send_PARAVAL_HF_PMITT(int val)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval hf pmeanrec
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_PARAVAL_HF_PMEANREC(int val)
 {
 	/*SPISENDMESSAGE* pMessage = new SPISENDMESSAGE();
@@ -3338,9 +4056,16 @@ void CInterfaceSPI::Send_PARAVAL_HF_PMEANREC(int val)
 
 	SendSPICommand(pMessage);*/
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sends a paraval hf frequency record
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_PARAVAL_HF_FREQ_REC(int val)
 {
 	/*SPISENDMESSAGE* pMessage = new SPISENDMESSAGE();
@@ -3349,9 +4074,16 @@ void CInterfaceSPI::Send_PARAVAL_HF_FREQ_REC(int val)
 
 	SendSPICommand(pMessage);*/
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sends a paraval hf itime record
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_PARAVAL_HF_ITIME_REC(int val)
 {
 	/*SPISENDMESSAGE* pMessage = new SPISENDMESSAGE();
@@ -3361,9 +4093,6 @@ void CInterfaceSPI::Send_PARAVAL_HF_ITIME_REC(int val)
 	SendSPICommand(pMessage);*/
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 //void CInterfaceSPI::Send_PARAVAL_HF_IERATIO(int val)
 //{
 //	SPISENDMESSAGE* pMessage = new SPISENDMESSAGE();
@@ -3373,10 +4102,15 @@ void CInterfaceSPI::Send_PARAVAL_HF_ITIME_REC(int val)
 //	SendSPICommand(pMessage);
 //}
 
+/**********************************************************************************************//**
+ * Sends a kommando
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceSPI::Send_KOMMANDO(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3389,9 +4123,15 @@ void CInterfaceSPI::Send_KOMMANDO(int val)
 #endif
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends the flowsens cmnd
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_FLOWSENS_CMND(int val)
 {
 	//Send_KOMMANDO(val);
@@ -3406,9 +4146,15 @@ void CInterfaceSPI::Send_FLOWSENS_CMND(int val)
 #endif
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval volume limit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_PARAVAL_VOLUME_LIMIT(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3425,9 +4171,15 @@ void CInterfaceSPI::Send_PARAVAL_VOLUME_LIMIT(int val)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval volume garant
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_PARAVAL_VOLUME_GARANT(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3444,11 +4196,15 @@ void CInterfaceSPI::Send_PARAVAL_VOLUME_GARANT(int val)
 
 }
 
+/**********************************************************************************************//**
+ * Sends an abort criterionpsv
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceSPI::Send_ABORT_CRITERIONPSV(int val)
 {
 #ifndef SIMULATION_NOSPI
@@ -3461,15 +4217,18 @@ void CInterfaceSPI::Send_ABORT_CRITERIONPSV(int val)
 
 }
 
+/**********************************************************************************************//**
+ * Gets messure data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The messure data.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 int CInterfaceSPI::GetMessureData()
 {
 	int iResult=0;
-		
-	
 
 	/*if(m_bDemoMode)
 	{
@@ -3489,9 +4248,15 @@ int CInterfaceSPI::GetMessureData()
 	return iResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads spi data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The spi data.
+ **************************************************************************************************/
+
 int CInterfaceSPI::ReadSPIData()
 {
 	int iResult=0;
@@ -4880,10 +5645,15 @@ int CInterfaceSPI::ReadSPIData()
 //
 //}
 
+/**********************************************************************************************//**
+ * Reads p prox ADC
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The p prox ADC.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 int CInterfaceSPI::Read_P_PROX_ADC()
 {
 	int iResult=-1;
@@ -4916,9 +5686,16 @@ int CInterfaceSPI::Read_P_PROX_ADC()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads drm 1 ADC
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The drm 1 ADC.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_DRM_1_ADC()
 {
 	int iResult=-1;
@@ -4950,9 +5727,16 @@ int CInterfaceSPI::Read_DRM_1_ADC()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads drm 2 ADC
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The drm 2 ADC.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_DRM_2_ADC()
 {
 	int iResult=-1;
@@ -4986,9 +5770,16 @@ int CInterfaceSPI::Read_DRM_2_ADC()
 	
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads drm 3 ADC
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The drm 3 ADC.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_DRM_3_ADC()
 {
 	int iResult=-1;
@@ -5022,9 +5813,7 @@ int CInterfaceSPI::Read_DRM_3_ADC()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_DMS_ADC()
 //{
 //	int iResult=-1;
@@ -5056,9 +5845,7 @@ int CInterfaceSPI::Read_DRM_3_ADC()
 //
 //	return iResult;
 //}
-// **************************************************************************
-// //newVG
-// **************************************************************************
+
 //int CInterfaceSPI::Read_Batt_stat()
 //{
 //	int iResult=-1;
@@ -5089,9 +5876,16 @@ int CInterfaceSPI::Read_DRM_3_ADC()
 //	}
 //	return iResult;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads oxy 1 ADC
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The oxy 1 ADC.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_OXY1_ADC()
 {
 	int iResult=-1;
@@ -5124,9 +5918,16 @@ int CInterfaceSPI::Read_OXY1_ADC()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads oxy 2 ADC
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The oxy 2 ADC.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_OXY2_ADC()
 {
 	int iResult=-1;
@@ -5160,9 +5961,15 @@ int CInterfaceSPI::Read_OXY2_ADC()
 	return iResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads the status
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The status.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_STATUS()
 {
 	int iResult=-1;
@@ -5201,9 +6008,16 @@ int CInterfaceSPI::Read_STATUS()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads atz p peak
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The atz p peak.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_ATZ_P_Peak()
 {
 	int iResult=-1;
@@ -5236,9 +6050,16 @@ int CInterfaceSPI::Read_ATZ_P_Peak()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads the checksum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The checksum.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_CHECKSUM()
 {
 	int iResult=-1;
@@ -5270,9 +6091,16 @@ int CInterfaceSPI::Read_CHECKSUM()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads version 1
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The version 1.
+ **************************************************************************************************/
+
 WORD CInterfaceSPI::Read_VERSION1()
 {
 	WORD iResult=0xFF;
@@ -5304,9 +6132,16 @@ WORD CInterfaceSPI::Read_VERSION1()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads version 2
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The version 2.
+ **************************************************************************************************/
+
 WORD CInterfaceSPI::Read_VERSION2()
 {
 	WORD iResult=0xFF;
@@ -5337,9 +6172,16 @@ WORD CInterfaceSPI::Read_VERSION2()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads vcc 24 blend ADC
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The vcc 24 blend ADC.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_VCC_24_BLEND_ADC()
 {
 	int iResult=-1;
@@ -5370,9 +6212,16 @@ int CInterfaceSPI::Read_VCC_24_BLEND_ADC()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads vcc 5 ADC
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The vcc 5 ADC.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_VCC_5_ADC()
 {
 	int iResult=-1;
@@ -5402,9 +6251,7 @@ int CInterfaceSPI::Read_VCC_5_ADC()
 	}
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_PARA_P_PSV()
 //{
 //	int iResult=-1;
@@ -5435,9 +6282,7 @@ int CInterfaceSPI::Read_VCC_5_ADC()
 //
 //	return iResult;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_PARA_APNOE_TIME()
 //{
 //	int iResult=-1;
@@ -5468,9 +6313,7 @@ int CInterfaceSPI::Read_VCC_5_ADC()
 //
 //	return iResult;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_PARA_BACKUP()
 //{
 //	int iResult=-1;
@@ -5500,9 +6343,7 @@ int CInterfaceSPI::Read_VCC_5_ADC()
 //
 //	return iResult;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_PARA_INSP_TIME()
 //{
 //	int iResult=-1;
@@ -5532,9 +6373,7 @@ int CInterfaceSPI::Read_VCC_5_ADC()
 //
 //	return iResult;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_MODE_OPTION()
 //{
 //	int iResult=-1;
@@ -5565,9 +6404,7 @@ int CInterfaceSPI::Read_VCC_5_ADC()
 //
 //	return iResult;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_PARA_EXH_TIME()
 //{
 //	int iResult=-1;
@@ -5597,9 +6434,7 @@ int CInterfaceSPI::Read_VCC_5_ADC()
 //
 //	return iResult;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_PARA_P_INSP()
 //{
 //	int iResult=-1;
@@ -5629,9 +6464,7 @@ int CInterfaceSPI::Read_VCC_5_ADC()
 //
 //	return iResult;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_PARA_PEEP()
 //{
 //	int iResult=-1;
@@ -5661,9 +6494,15 @@ int CInterfaceSPI::Read_VCC_5_ADC()
 //	return iResult;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads vent mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The vent mode.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_VENT_MODE()
 {
 	int iResult=-1;
@@ -5693,9 +6532,7 @@ int CInterfaceSPI::Read_VENT_MODE()
 	}
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_PARA_OXY_RATIO()
 //{
 //	int iResult=-1;
@@ -5725,9 +6562,7 @@ int CInterfaceSPI::Read_VENT_MODE()
 //
 //	return iResult;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_PARA_VOLUME_LIMIT()
 //{
 //	int iResult=-1;
@@ -5757,9 +6592,7 @@ int CInterfaceSPI::Read_VENT_MODE()
 //
 //	return iResult;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_PARA_VOLUME_GARANT()
 //{
 //	int iResult=-1;
@@ -5789,9 +6622,7 @@ int CInterfaceSPI::Read_VENT_MODE()
 //
 //	return iResult;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_PARA_FLOW_INSP()
 //{
 //	int iResult=-1;
@@ -5821,9 +6652,7 @@ int CInterfaceSPI::Read_VENT_MODE()
 //
 //	return iResult;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_PARA_FLOW_EXH()
 //{
 //	int iResult=-1;
@@ -5853,9 +6682,16 @@ int CInterfaceSPI::Read_VENT_MODE()
 //
 //	return iResult;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads calendar press scale
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The calendar press scale.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_CAL_PRESS_SCALE()
 {
 	int iResult=-1;
@@ -5885,9 +6721,16 @@ int CInterfaceSPI::Read_CAL_PRESS_SCALE()
 	}
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads calendar press offset
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The calendar press offset.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_CAL_PRESS_OFFSET()
 {
 	int iResult=-1;
@@ -5918,9 +6761,7 @@ int CInterfaceSPI::Read_CAL_PRESS_OFFSET()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_P_DELTA_MAX()
 //{
 //	int iResult=-1;
@@ -5950,9 +6791,7 @@ int CInterfaceSPI::Read_CAL_PRESS_OFFSET()
 //
 //	return iResult;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_PARA_HF_AMPLITUDE()
 //{
 //	int iResult=-1;
@@ -5982,9 +6821,7 @@ int CInterfaceSPI::Read_CAL_PRESS_OFFSET()
 //
 //	return iResult;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_PARA_HF_FREQ()
 //{
 //	int iResult=-1;
@@ -6015,9 +6852,7 @@ int CInterfaceSPI::Read_CAL_PRESS_OFFSET()
 //
 //	return iResult;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_PARA_HF_MEAN_AIRWAY_PRESS()
 //{
 //	int iResult=-1;
@@ -6048,9 +6883,15 @@ int CInterfaceSPI::Read_CAL_PRESS_OFFSET()
 //	return iResult;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads the kommando
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The kommando.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_KOMMANDO()
 {
 	int iResult=-1;
@@ -6083,9 +6924,15 @@ int CInterfaceSPI::Read_KOMMANDO()
 	return iResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads flowsens cmnd
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The flowsens cmnd.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_FLOWSENS_CMND()
 {
 	int iResult=-1;
@@ -6118,9 +6965,16 @@ int CInterfaceSPI::Read_FLOWSENS_CMND()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads status proxsensor
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The status proxsensor.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_STATUS_PROXSENSOR()
 {
 	int iResult=-1;
@@ -6153,9 +7007,16 @@ int CInterfaceSPI::Read_STATUS_PROXSENSOR()
 	return iResult;
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads status flowsensor
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The status flowsensor.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_STATUS_FLOWSENSOR()
 {
 	int iResult=-1;
@@ -6186,9 +7047,16 @@ int CInterfaceSPI::Read_STATUS_FLOWSENSOR()
 	return iResult;
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads DAC flow insp
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The DAC flow insp.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_DAC_FLOW_INSP()
 {
 	int iResult=-1;
@@ -6220,9 +7088,16 @@ int CInterfaceSPI::Read_DAC_FLOW_INSP()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads DAC flow exh
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The DAC flow exh.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_DAC_FLOW_EXH()
 {
 	int iResult=-1;
@@ -6252,9 +7127,16 @@ int CInterfaceSPI::Read_DAC_FLOW_EXH()
 	}
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads flow insp ADC
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The flow insp ADC.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_FLOW_INSP_ADC()
 {
 	int iResult=-1;
@@ -6286,9 +7168,16 @@ int CInterfaceSPI::Read_FLOW_INSP_ADC()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads flow exh ADC
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The flow exh ADC.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_FLOW_EXH_ADC()
 {
 	int iResult=-1;
@@ -6319,9 +7208,7 @@ int CInterfaceSPI::Read_FLOW_EXH_ADC()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_FLOW()
 //{
 //	int iResult=-1;
@@ -6352,9 +7239,16 @@ int CInterfaceSPI::Read_FLOW_EXH_ADC()
 //
 //	return iResult;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads syst offset flow insp
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The syst offset flow insp.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_SYST_OFFSET_FLOW_INSP()
 {
 	int iResult=-1;
@@ -6386,9 +7280,16 @@ int CInterfaceSPI::Read_SYST_OFFSET_FLOW_INSP()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads syst offset flow exh
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The syst offset flow exh.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_SYST_OFFSET_FLOW_EXH()
 {
 	int iResult=-1;
@@ -6419,9 +7320,16 @@ int CInterfaceSPI::Read_SYST_OFFSET_FLOW_EXH()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads syst scale flow insp
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The syst scale flow insp.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_SYST_SCALE_FLOW_INSP()
 {
 	int iResult=-1;
@@ -6453,9 +7361,16 @@ int CInterfaceSPI::Read_SYST_SCALE_FLOW_INSP()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads syst scale flow exh
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The syst scale flow exh.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_SYST_SCALE_FLOW_EXH()
 {
 	int iResult=-1;
@@ -6487,9 +7402,16 @@ int CInterfaceSPI::Read_SYST_SCALE_FLOW_EXH()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads flowcal development a
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The flowcal development a.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_FLOWCAL_DEV_A()
 {
 	int iResult=-1;
@@ -6520,9 +7442,16 @@ int CInterfaceSPI::Read_FLOWCAL_DEV_A()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads flowcal development b
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The flowcal development b.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_FLOWCAL_DEV_B()
 {
 	int iResult=-1;
@@ -6555,9 +7484,15 @@ int CInterfaceSPI::Read_FLOWCAL_DEV_B()
 	return iResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads autoflow corr
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The autoflow corr.
+ **************************************************************************************************/
+
 BYTE CInterfaceSPI::Read_AUTOFLOW_CORR()
 {
 	BYTE iResult=0;
@@ -6589,9 +7524,16 @@ BYTE CInterfaceSPI::Read_AUTOFLOW_CORR()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads oxy actual
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The oxy actual.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_OXY_ACTUAL()
 {
 	int iResult=-1;
@@ -6623,9 +7565,16 @@ int CInterfaceSPI::Read_OXY_ACTUAL()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads oxy default
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The oxy default.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_OXY_DEFAULT()
 {
 	int iResult=-1;
@@ -6657,9 +7606,15 @@ int CInterfaceSPI::Read_OXY_DEFAULT()
 	return iResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads status 2
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The status 2.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_STATUS_2()
 {
 	int iResult=-1;
@@ -6692,9 +7647,7 @@ int CInterfaceSPI::Read_STATUS_2()
 	return iResult;
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
 //int CInterfaceSPI::Read_PARA_TRIG_SCHWELLE()
 //{
 //	int iResult=-1;
@@ -6726,10 +7679,15 @@ int CInterfaceSPI::Read_STATUS_2()
 //	return iResult;
 //}
 
+/**********************************************************************************************//**
+ * Reads flow corfactor neo
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The flow corfactor neo.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 int CInterfaceSPI::Read_FLOW_CORFACTOR_NEO()
 {
 	int iResult=-1;
@@ -6761,6 +7719,15 @@ int CInterfaceSPI::Read_FLOW_CORFACTOR_NEO()
 	return iResult;
 }
 
+/**********************************************************************************************//**
+ * Reads flow corfactor ped
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The flow corfactor ped.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_FLOW_CORFACTOR_PED()
 {
 	int iResult=-1;
@@ -6791,9 +7758,14 @@ int CInterfaceSPI::Read_FLOW_CORFACTOR_PED()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sends the shutdown
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceSPI::send_Shutdown()
 {
 	SPISENDMESSAGE* pMessage = new SPISENDMESSAGE();
@@ -6802,9 +7774,16 @@ void CInterfaceSPI::send_Shutdown()
 
 	SendSPICommand(pMessage);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sends an alive byte
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_ALIVE_BYTE(int val)
 {
 	SPISENDMESSAGE* pMessage = new SPISENDMESSAGE();
@@ -6813,6 +7792,16 @@ void CInterfaceSPI::Send_ALIVE_BYTE(int val)
 
 	SendSPICommand(pMessage,true);
 }
+
+/**********************************************************************************************//**
+ * Reads alive byte
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The alive byte.
+ **************************************************************************************************/
+
 int CInterfaceSPI::Read_ALIVE_BYTE()
 {
 	int iResult=-1;
@@ -6849,9 +7838,15 @@ int CInterfaceSPI::Read_ALIVE_BYTE()
 	return iResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a mode option 2
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	wMode	The mode.
+ **************************************************************************************************/
+
 void CInterfaceSPI::Send_MODE_OPTION2(WORD wMode)
 {
 #ifndef SIMULATION_NOSPI
@@ -6865,11 +7860,15 @@ void CInterfaceSPI::Send_MODE_OPTION2(WORD wMode)
 
 }
 
+/**********************************************************************************************//**
+ * Gets driver information
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The driver information.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 CStringW CInterfaceSPI::GetDriverInfo()
 {
 	CStringW szDrive;
@@ -6898,25 +7897,25 @@ CStringW CInterfaceSPI::GetDriverInfo()
 
 }
 
-//************************************
-// Method:    activateMANBREATH
-// FullName:  CInterfaceSPI::activateMANBREATH
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Activates the manbreath
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceSPI::activateMANBREATH()
 {
 	m_bManBreathRunning=true;
 }
 
-//************************************
-// Method:    deactivateMANBREATH
-// FullName:  CInterfaceSPI::deactivateMANBREATH
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Deactivate manbreath
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceSPI::deactivateMANBREATH()
 {
 	if(m_bManBreathRunning==true)
@@ -6926,6 +7925,15 @@ void CInterfaceSPI::deactivateMANBREATH()
 
 	m_bManBreathRunning=false;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is sp irunning
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if sp irunning, false if not.
+ **************************************************************************************************/
 
 bool CInterfaceSPI::isSPIrunning()
 {

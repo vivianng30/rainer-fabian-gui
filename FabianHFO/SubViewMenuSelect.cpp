@@ -5,9 +5,31 @@
 #include "FabianHFO.h"
 #include "SubViewMenuSelect.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 //global font objects
@@ -25,10 +47,24 @@ extern HFONT g_hf19AcuMed;
 extern HFONT g_hf21AcuBold;
 extern HFONT g_hf23AcuBold;
 
-
-// CSubViewMenuSelect
+/**********************************************************************************************//**
+ * CSubViewMenuSelect
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CSubViewMenuSelect, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CSubViewMenuSelect class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewMenuSelect::CSubViewMenuSelect()
 {
@@ -127,6 +163,13 @@ CSubViewMenuSelect::CSubViewMenuSelect()
 	//m_bCO2FeatureAvailable=getModel()->getDATAHANDLER()->isCO2LicenseAvailable();
 	m_bCO2FeatureAvailable=true;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CSubViewMenuSelect class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewMenuSelect::~CSubViewMenuSelect()
 {
@@ -290,22 +333,36 @@ BEGIN_MESSAGE_MAP(CSubViewMenuSelect, CWnd)
 	ON_BN_CLICKED(IDC_BTNMNU_NETWORK, &CSubViewMenuSelect::OnBnClickedNetwork)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CSubViewMenuSelect message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
 
-
-// CSubViewMenuSelect message handlers
-
-// **************************************************************************
-// 
-// **************************************************************************
 CMVModel *CSubViewMenuSelect::getModel()
 {
 	if(m_pModel==NULL)
 		m_pModel=CMVModel::GetInstance();
 	return m_pModel;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates a window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewMenuSelect::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext)
 {
 	if (!Create(pParentWnd, rc, nID, pContext))
@@ -317,9 +374,20 @@ bool CSubViewMenuSelect::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CC
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSubViewMenuSelect::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -696,9 +764,15 @@ BOOL CSubViewMenuSelect::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCrea
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets one button depressed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CSubViewMenuSelect::SetOneButtonDepressed(int btnID)
 {
 	POSITION pos;
@@ -734,9 +808,13 @@ void CSubViewMenuSelect::SetOneButtonDepressed(int btnID)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets all button unpressed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewMenuSelect::SetAllButtonUnpressed()
 {
 	POSITION pos;
@@ -755,9 +833,15 @@ void CSubViewMenuSelect::SetAllButtonUnpressed()
 		GetParent()->PostMessage(WM_SET_SETUPTIMER);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets one button focused
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CSubViewMenuSelect::SetOneButtonFocused(int btnID)
 {
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
@@ -768,9 +852,13 @@ void CSubViewMenuSelect::SetOneButtonFocused(int btnID)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets next button focused
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewMenuSelect::SetNextButtonFocused()
 {
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
@@ -781,9 +869,13 @@ void CSubViewMenuSelect::SetNextButtonFocused()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets previous button focused
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewMenuSelect::SetPrevButtonFocused()
 {
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
@@ -794,126 +886,162 @@ void CSubViewMenuSelect::SetPrevButtonFocused()
 	}
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked calibration action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewMenuSelect::OnBnClickedCalibration()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_MENU_CALIBRATION);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked display action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewMenuSelect::OnBnClickedDisplay()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_MENU_DISPLAY);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked ventilation action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewMenuSelect::OnBnClickedVentilation()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_MENU_VENTILATION);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked patientdata action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewMenuSelect::OnBnClickedPatientdata()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_MENU_PATIENTDATA);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked language action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewMenuSelect::OnBnClickedLanguage()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_MENU_LANGUAGE);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked date action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewMenuSelect::OnBnClickedDate()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_MENU_DATETIME);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked information action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewMenuSelect::OnBnClickedInfo()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_MENU_INFO);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked service action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewMenuSelect::OnBnClickedService()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_MENU_SERVICE);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked tools action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewMenuSelect::OnBnClickedTools()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_MENU_TOOLS);
 }
-// **************************************************************************
-// 
-// **************************************************************************
-//void CSubViewMenuSelect::OnBnClickedHelp()
-//{
-//	if(GetParent())
-//		GetParent()->PostMessage(WM_MENU_HELP);
-//}
-// **************************************************************************
-// 
-// **************************************************************************
-//void CSubViewMenuSelect::OnBnClickedCO2()
-//{
-//	if(GetParent())
-//		GetParent()->PostMessage(WM_MENU_CO2);
-//}
 
-// **************************************************************************
-// 
-// **************************************************************************
-//void CSubViewMenuSelect::OnBnClickedSPO2()
-//{
-//	if(GetParent())
-//		GetParent()->PostMessage(WM_MENU_SPO2);
-//}
+/**********************************************************************************************//**
+ * Executes the button clicked video action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewMenuSelect::OnBnClickedVideo()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_MENU_VIDEO);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked network action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewMenuSelect::OnBnClickedNetwork()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_MENU_NETWORK);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CSubViewMenuSelect::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -933,9 +1061,17 @@ LRESULT CSubViewMenuSelect::WindowProc(UINT message, WPARAM wParam, LPARAM lPara
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSubViewMenuSelect::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -957,9 +1093,16 @@ BOOL CSubViewMenuSelect::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ * \param	view 	The view.
+ **************************************************************************************************/
+
 void CSubViewMenuSelect::Show(bool bShow , eMenuView view)
 {
 	if(bShow)
@@ -1054,9 +1197,13 @@ void CSubViewMenuSelect::Show(bool bShow , eMenuView view)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewMenuSelect::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -1065,15 +1212,13 @@ void CSubViewMenuSelect::OnPaint()
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CSubViewMenuSelect::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewMenuSelect::OnDestroy()
 {
 	KillTimer(CHANGETIMER);

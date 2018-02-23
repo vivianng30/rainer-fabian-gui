@@ -11,15 +11,41 @@ extern HFONT g_hf14AcuBold;
 extern HFONT g_hf31AcuBold;
 extern HFONT g_hf8AcuBold;
 
-// CParaBtn_ITIME_REC
+/**********************************************************************************************//**
+ * CParaBtn_ITIME_REC
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CParaBtn_ITIME_REC, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaBtn_ITIME_REC class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	btn		   	The button.
+ * \param	nOffset	   	The offset.
+ * \param	bScrollOver	True to scroll over.
+ **************************************************************************************************/
 
 CParaBtn_ITIME_REC::CParaBtn_ITIME_REC(BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_ITIME_REC class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_ITIME_REC::~CParaBtn_ITIME_REC()
 {
@@ -38,12 +64,15 @@ BEGIN_MESSAGE_MAP(CParaBtn_ITIME_REC, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CParaBtn_ITIME_REC message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
-
-// CParaBtn_ITIME_REC message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CParaBtn_ITIME_REC::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -235,6 +264,16 @@ void CParaBtn_ITIME_REC::Draw(int nState)
 	}
 }
 
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_ITIME_REC::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
@@ -331,6 +370,17 @@ void CParaBtn_ITIME_REC::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 	m_bLMouseButtonDown = false;
 }
+
+/**********************************************************************************************//**
+ * Executes the l button up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CParaBtn_ITIME_REC::OnLButtonUp(UINT nFlags, CPoint point) 
 {
 	if( m_bLMouseButtonDown )

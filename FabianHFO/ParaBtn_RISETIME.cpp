@@ -10,15 +10,41 @@ extern HFONT g_hf7AcuNorm;
 extern HFONT g_hf9AcuBold;
 extern HFONT g_hf31AcuBold;
 
-// CParaBtn_RISETIME
+/**********************************************************************************************//**
+ * CParaBtn_RISETIME
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CParaBtn_RISETIME, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaBtn_RISETIME class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	btn		   	The button.
+ * \param	nOffset	   	The offset.
+ * \param	bScrollOver	True to scroll over.
+ **************************************************************************************************/
 
 CParaBtn_RISETIME::CParaBtn_RISETIME(BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_RISETIME class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_RISETIME::~CParaBtn_RISETIME()
 {
@@ -36,12 +62,15 @@ BEGIN_MESSAGE_MAP(CParaBtn_RISETIME, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CParaBtn_RISETIME message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
-
-// CParaBtn_RISETIME message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CParaBtn_RISETIME::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -226,8 +255,16 @@ void CParaBtn_RISETIME::Draw(int nState)
 	}
 }
 
-
-
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_RISETIME::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {

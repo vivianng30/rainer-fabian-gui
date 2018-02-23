@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	ViewFullscreenMsg.cpp.
+ *
+ * Implements the view fullscreen message class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "ViewFullscreenMsg.h"
 #include "stdafx.h"
@@ -6,16 +12,44 @@
 #include "globDefs.h"
 #include "MVViewHandler.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 //extern CLangAdmin* g_pGlobalLanguageStrings;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CViewFullscreenMsg class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iViewID	Identifier for the view.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 CViewFullscreenMsg::CViewFullscreenMsg(int iViewID):
 CMVView(iViewID)
 {
@@ -31,9 +65,13 @@ CMVView(iViewID)
 	m_eViewState=getModel()->getVIEWHANDLER()->getViewState();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Finalizes an instance of the CViewFullscreenMsg class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CViewFullscreenMsg::~CViewFullscreenMsg(void)
 {
 	//delete m_pcLogo;
@@ -59,10 +97,15 @@ BEGIN_MESSAGE_MAP(CViewFullscreenMsg, CMVView)
 	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * Creates the view
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewFullscreenMsg::CreateView()
 {
 	//RECT rcLd={0,0,800,580};
@@ -80,9 +123,20 @@ bool CViewFullscreenMsg::CreateView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CViewFullscreenMsg::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 
@@ -121,9 +175,15 @@ BOOL CViewFullscreenMsg::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCrea
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewFullscreenMsg::Initialize()
 {
 	bool result=false;
@@ -161,27 +221,35 @@ bool CViewFullscreenMsg::Initialize()
 	return result;
 }
 
+/**********************************************************************************************//**
+ * Opens this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewFullscreenMsg::Open()
 {
 }
 
+/**********************************************************************************************//**
+ * Closes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewFullscreenMsg::Close()
 {
 }
 
+/**********************************************************************************************//**
+ * Shows this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewFullscreenMsg::Show()
 {
 	this->ShowWindow(SW_SHOW);
@@ -191,23 +259,25 @@ void CViewFullscreenMsg::Show()
 
 }
 
+/**********************************************************************************************//**
+ * Hides this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewFullscreenMsg::Hide()
 {
 	this->ShowWindow(SW_HIDE);
 }
 
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-
-
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewFullscreenMsg::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -215,18 +285,13 @@ void CViewFullscreenMsg::OnPaint()
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CViewFullscreenMsg::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CViewFullscreenMsg::OnDestroy()
 {
 	KillTimer(STARTUPTIMER);
@@ -264,9 +329,15 @@ void CViewFullscreenMsg::OnDestroy()
 	CMVView::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CViewFullscreenMsg::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==STARTUPTIMER)
@@ -277,11 +348,13 @@ void CViewFullscreenMsg::OnTimer(UINT_PTR nIDEvent)
 	CMVView::OnTimer(nIDEvent);
 }
 
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewFullscreenMsg::Draw()
 {
 
@@ -672,10 +745,15 @@ void CViewFullscreenMsg::Draw()
 	DeleteDC(hdcMem);
 }
 
+/**********************************************************************************************//**
+ * Notifies an event
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewFullscreenMsg::NotifyEvent(CMVEvent* pEvent)
 {
 	//csView.Lock();
@@ -732,11 +810,18 @@ void CViewFullscreenMsg::NotifyEvent(CMVEvent* pEvent)
 	//csView.Unlock();
 }
 
-
-//void CViewFullscreenMsg::NotifyViewStateChanged()
-//{
-//	int i=0;
-//}
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
 LRESULT CViewFullscreenMsg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {

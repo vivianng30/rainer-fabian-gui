@@ -27,9 +27,6 @@ CInterfaceAcuLink_ETHERNET::~CInterfaceAcuLink_ETHERNET()
 
 
 // CInterfaceAcuLink_EXTERNAL message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 bool CInterfaceAcuLink_ETHERNET::init()
 {
 	bool bRes=false;
@@ -64,21 +61,11 @@ bool CInterfaceAcuLink_ETHERNET::init()
 	return bRes;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CInterfaceAcuLink_ETHERNET::deinit()
 {
 
 	return true;
 }
-
-//HINSTANCE CInterfaceAcuLink_ETHERNET::isAcuLink()
-//{
-//	return _hAcuLink;
-//}
-
-
 
 
 

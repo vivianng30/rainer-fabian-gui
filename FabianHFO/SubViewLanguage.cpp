@@ -5,9 +5,39 @@
 #include "FabianHFO.h"
 #include "SubViewLanguage.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines maxlang
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 #define MAXLANG	7
 
@@ -33,10 +63,24 @@ extern HFONT g_hf33AcuBold;
 extern HFONT g_hf43AcuBold;
 extern HFONT g_hf53AcuBold;
 
-
-// CSubViewLanguage
+/**********************************************************************************************//**
+ * CSubViewLanguage
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CSubViewLanguage, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CSubViewLanguage class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewLanguage::CSubViewLanguage()
 {
@@ -89,6 +133,13 @@ CSubViewLanguage::CSubViewLanguage()
 
 	m_bSDCARDfont=false;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CSubViewLanguage class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewLanguage::~CSubViewLanguage()
 {
@@ -145,13 +196,15 @@ BEGIN_MESSAGE_MAP(CSubViewLanguage, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SETUP_NEXTDW, &CSubViewLanguage::OnBnClickedNextDw)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CSubViewLanguage message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
 
-
-// CSubViewLanguage message handlers
-
-// **************************************************************************
-// 
-// **************************************************************************
 CMVModel *CSubViewLanguage::getModel()
 {
 	if(m_pModel==NULL)
@@ -159,9 +212,20 @@ CMVModel *CSubViewLanguage::getModel()
 	return m_pModel;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates a window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewLanguage::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext)
 {
 	if (!Create(pParentWnd, rc, nID, pContext))
@@ -171,9 +235,21 @@ bool CSubViewLanguage::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCre
 
 	return true;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSubViewLanguage::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -447,7 +523,14 @@ BOOL CSubViewLanguage::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 	}
 }
 
-
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
 
 void CSubViewLanguage::Show(bool bShow)
 {
@@ -472,6 +555,14 @@ void CSubViewLanguage::Show(bool bShow)
 	}
 	
 }
+
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewLanguage::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -480,15 +571,13 @@ void CSubViewLanguage::OnPaint()
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CSubViewLanguage::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewLanguage::OnDestroy()
 {
 	m_bExit=true;
@@ -533,10 +622,17 @@ void CSubViewLanguage::OnDestroy()
 
 }
 
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CSubViewLanguage::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -585,6 +681,13 @@ BOOL CSubViewLanguage::PreTranslateMessage(MSG* pMsg)
 	}
 	return CWnd::PreTranslateMessage(pMsg);
 }
+
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewLanguage::Draw()
 {
@@ -687,9 +790,15 @@ void CSubViewLanguage::Draw()
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets one button depressed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CSubViewLanguage::SetOneButtonDepressed(int btnID)
 {
 	POSITION pos;
@@ -730,9 +839,15 @@ void CSubViewLanguage::SetOneButtonDepressed(int btnID)
 	Draw();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets selected position
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	csLang	The create struct language.
+ **************************************************************************************************/
+
 void CSubViewLanguage::SetSelectedPos(CStringW csLang)
 {
 	CStringW cs = _T("");
@@ -760,9 +875,16 @@ void CSubViewLanguage::SetSelectedPos(CStringW csLang)
 		}
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets focused position
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CSubViewLanguage::SetFocusedPos(int btnID)
 {
 	POSITION pos;
@@ -811,9 +933,15 @@ void CSubViewLanguage::SetFocusedPos(int btnID)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets one button focused
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CSubViewLanguage::SetOneButtonFocused(int btnID)
 {
 	POSITION pos;
@@ -847,9 +975,13 @@ void CSubViewLanguage::SetOneButtonFocused(int btnID)
 	Draw();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets next button focused
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewLanguage::SetNextButtonFocused()
 {
 	POSITION pos;
@@ -936,9 +1068,13 @@ void CSubViewLanguage::SetNextButtonFocused()
 	Draw();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets previous button focused
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewLanguage::SetPrevButtonFocused()
 {
 	POSITION pos;
@@ -1012,9 +1148,13 @@ void CSubViewLanguage::SetPrevButtonFocused()
 	Draw();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked language 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewLanguage::OnBnClickedLang1()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_1);
@@ -1030,9 +1170,14 @@ void CSubViewLanguage::OnBnClickedLang1()
 	else
 		SetOneButtonDepressed(IDC_BTN_SETUP_1);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked language 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewLanguage::OnBnClickedLang2()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_2);
@@ -1048,9 +1193,14 @@ void CSubViewLanguage::OnBnClickedLang2()
 	else
 		SetOneButtonDepressed(IDC_BTN_SETUP_2);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked language 3 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewLanguage::OnBnClickedLang3()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_3);
@@ -1066,9 +1216,14 @@ void CSubViewLanguage::OnBnClickedLang3()
 	else
 		SetOneButtonDepressed(IDC_BTN_SETUP_3);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked language 4 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewLanguage::OnBnClickedLang4()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_4);
@@ -1084,9 +1239,14 @@ void CSubViewLanguage::OnBnClickedLang4()
 	else
 		SetOneButtonDepressed(IDC_BTN_SETUP_4);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked language 5 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewLanguage::OnBnClickedLang5()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_5);
@@ -1102,9 +1262,14 @@ void CSubViewLanguage::OnBnClickedLang5()
 	else
 		SetOneButtonDepressed(IDC_BTN_SETUP_5);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked language 6 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewLanguage::OnBnClickedLang6()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_6);
@@ -1120,9 +1285,14 @@ void CSubViewLanguage::OnBnClickedLang6()
 	else
 		SetOneButtonDepressed(IDC_BTN_SETUP_6);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked language 7 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewLanguage::OnBnClickedLang7()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_7);
@@ -1139,6 +1309,13 @@ void CSubViewLanguage::OnBnClickedLang7()
 		SetOneButtonDepressed(IDC_BTN_SETUP_7);
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked next up action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewLanguage::OnBnClickedNextUp()
 {
 	eBtnState eState = GetCurrentBtnState();
@@ -1152,6 +1329,14 @@ void CSubViewLanguage::OnBnClickedNextUp()
 
 	
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked next double word action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewLanguage::OnBnClickedNextDw()
 {
 	eBtnState eState = GetCurrentBtnState();
@@ -1162,9 +1347,15 @@ void CSubViewLanguage::OnBnClickedNextDw()
 		SetOneButtonFocused(IDC_BTN_SETUP_1);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets current button state
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The current button state.
+ **************************************************************************************************/
+
 eBtnState CSubViewLanguage::GetCurrentBtnState()
 {
 	POSITION pos;
@@ -1187,9 +1378,17 @@ eBtnState CSubViewLanguage::GetCurrentBtnState()
 	return BS_NONE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets button state
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iID	Zero-based index of the identifier.
+ *
+ * \return	The button state.
+ **************************************************************************************************/
+
 eBtnState CSubViewLanguage::GetBtnState(int iID)
 {
 	POSITION pos;
@@ -1212,9 +1411,15 @@ eBtnState CSubViewLanguage::GetBtnState(int iID)
 	return BS_NONE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets a language
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CSubViewLanguage::SetLanguage(int btnID)
 {
 	POSITION pos;
@@ -1248,9 +1453,15 @@ void CSubViewLanguage::SetLanguage(int btnID)
 	} while (pos != NULL);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reorganize btns
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	forward	True to forward.
+ **************************************************************************************************/
+
 void CSubViewLanguage::ReorganizeBtns(bool forward)
 {
 	// evtl Häckchen setzen etc  !!!!
@@ -1341,9 +1552,13 @@ void CSubViewLanguage::ReorganizeBtns(bool forward)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Starts load language thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewLanguage::StartLoadLanguageThread( void )
 {
 	m_bDoLoadLanguageThread=true;
@@ -1367,9 +1582,13 @@ void CSubViewLanguage::StartLoadLanguageThread( void )
 	m_pcwtLoadLanguageThread->ResumeThread();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Stops load language thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewLanguage::StopLoadLanguageThread( void )
 {
 	if(m_bDoLoadLanguageThread)
@@ -1392,9 +1611,18 @@ void CSubViewLanguage::StopLoadLanguageThread( void )
 	}
 	
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Loads language thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	The language thread.
+ **************************************************************************************************/
+
 static UINT CLoadLanguageThread( LPVOID pc )
 {
 	try
@@ -1423,9 +1651,16 @@ static UINT CLoadLanguageThread( LPVOID pc )
 	//((CSubViewLanguage*)pc)->LoadLanguage();
 	return TRUE;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Loads the language
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The language.
+ **************************************************************************************************/
+
 DWORD CSubViewLanguage::LoadLanguage(void) 
 {
 	/*DWORD dwDiff = 0;
@@ -1499,10 +1734,15 @@ DWORD CSubViewLanguage::LoadLanguage(void)
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Creates window hourglass
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CSubViewLanguage::CreateWndHourglass()
 {
 	if(m_pWndHourglass==NULL)
@@ -1517,6 +1757,16 @@ bool CSubViewLanguage::CreateWndHourglass()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window hourglass
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewLanguage::DestroyWndHourglass()
 {
 	if(m_pWndHourglass)
@@ -1528,6 +1778,15 @@ bool CSubViewLanguage::DestroyWndHourglass()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window hourglass
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
 
 void CSubViewLanguage::ShowWndHourglass(bool bShow)
 {
@@ -1545,9 +1804,13 @@ void CSubViewLanguage::ShowWndHourglass(bool bShow)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Notifies the language changed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewLanguage::NotifyLanguageChanged()
 {
 	try

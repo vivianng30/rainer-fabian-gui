@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	ParaBtn_PMAX.cpp.
+ *
+ * Implements the para button pmax class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "ParaBtn_PMAX.h"
 #include "globDefs.h"
@@ -8,11 +14,28 @@ extern HFONT g_hf21AcuBold;
 extern HFONT g_hf31AcuBold;
 extern HFONT g_hf8AcuBold;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaBtn_PMAX class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	btn		   	The button.
+ * \param	nOffset	   	The offset.
+ * \param	bScrollOver	True to scroll over.
+ **************************************************************************************************/
 
 CParaBtn_PMAX::CParaBtn_PMAX(BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_PMAX class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_PMAX::~CParaBtn_PMAX(void)
 {
@@ -31,6 +54,15 @@ BEGIN_MESSAGE_MAP(CParaBtn_PMAX, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * Sets a value
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	v	   	A fVALUE to process.
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
 
 void CParaBtn_PMAX::SetValue(fVALUE v, bool bRedraw) 
 {
@@ -44,9 +76,15 @@ void CParaBtn_PMAX::SetValue(fVALUE v, bool bRedraw)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CParaBtn_PMAX::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -296,8 +334,16 @@ void CParaBtn_PMAX::Draw(int nState)
 	}
 }
 
-
-
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_PMAX::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
@@ -444,6 +490,16 @@ void CParaBtn_PMAX::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 	m_bLMouseButtonDown = false;
 }
+
+/**********************************************************************************************//**
+ * Executes the l button up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CParaBtn_PMAX::OnLButtonUp(UINT nFlags, CPoint point) 
 {

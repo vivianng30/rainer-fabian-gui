@@ -11,6 +11,13 @@ extern CEvent g_eventNewAlarmData;
 // CThreadAlarm
 CThreadAlarm* CThreadAlarm::theThreadAlarm=0;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CThreadAlarm class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CThreadAlarm::CThreadAlarm()
 {
 	m_pModel = NULL;
@@ -22,15 +29,13 @@ CThreadAlarm::CThreadAlarm()
 	m_bCheckAlarmData=false;
 }
 
-//************************************
-// Method:    ~CThreadAlarm
-// FullName:  CThreadAlarm::~CThreadAlarm
-// Access:    protected 
-// Returns:   
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Finalizes an instance of the CThreadAlarm class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CThreadAlarm::~CThreadAlarm()
 {
 	stopAlarmThread();
@@ -46,14 +51,16 @@ CThreadAlarm::~CThreadAlarm()
 		}
 	}
 }
-//=============================================================================
-/**
- * @brief Get the instance of Alarm thread (singleton).
+
+/**********************************************************************************************//**
+ * Gets the instance
  *
- * @return the instance of Alarm thread
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  *
- **/
-//=============================================================================
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
+
 CThreadAlarm* CThreadAlarm::getInstance()
 {
 	if(theThreadAlarm == 0)
@@ -63,11 +70,13 @@ CThreadAlarm* CThreadAlarm::getInstance()
 	return theThreadAlarm;
 }
 
-//=============================================================================
-/**
- * @brief Destroys the instance of Alarm thread (singleton).
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadAlarm::destroyInstance()
 {
 	if(theThreadAlarm != NULL)
@@ -76,14 +85,16 @@ void CThreadAlarm::destroyInstance()
 		theThreadAlarm = NULL;
 	}
 }
-//=============================================================================
-/**
- * @brief Get the instance of the model (singleton).
+
+/**********************************************************************************************//**
+ * Gets the model
  *
- * @return the instance of the model
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  *
- **/
-//=============================================================================
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CThreadAlarm::getModel()
 {
 	if(m_pModel==NULL)
@@ -91,11 +102,13 @@ CMVModel *CThreadAlarm::getModel()
 	return m_pModel;
 }
 
+/**********************************************************************************************//**
+ * Starts alarm thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// CThreadMonitor message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CThreadAlarm::startAlarmThread( void )
 {
 	m_bDoAlarmThread=true;
@@ -119,16 +132,13 @@ void CThreadAlarm::startAlarmThread( void )
 	m_pcwtAlarmThread->ResumeThread();
 }
 
-//************************************
-// Method:    stopAlarmThread
-// FullName:  CThreadAlarm::stopAlarmThread
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Stops alarm thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadAlarm::stopAlarmThread( void )
 {
 	if(m_bDoAlarmThread)
@@ -147,9 +157,17 @@ void CThreadAlarm::stopAlarmThread( void )
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Alarm thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT AlarmThread( LPVOID pc )
 {
 	try
@@ -178,9 +196,16 @@ static UINT AlarmThread( LPVOID pc )
 	//((CThreadAlarm*)pc)->AlarmData();
 	return TRUE;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Alarm data
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CThreadAlarm::AlarmData(void) 
 {
 	CeSetThreadPriority(m_pcwtAlarmThread->m_hThread,130);
@@ -224,6 +249,14 @@ DWORD CThreadAlarm::AlarmData(void)
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Sets check alarm data
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
 
 void CThreadAlarm::setCheckAlarmData(bool bState)
 {

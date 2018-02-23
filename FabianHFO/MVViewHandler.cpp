@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	MVViewHandler.cpp.
+ *
+ * Implements the mv view handler class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "MVViewHandler.h"
 #include "globDefs.h"
@@ -5,10 +11,13 @@
 
 CMVViewHandler* CMVViewHandler::theViewHandler=0;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CMVViewHandler class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 CMVViewHandler::CMVViewHandler()
 {
 	//getModel()->AttachObserver(this);
@@ -65,9 +74,13 @@ CMVViewHandler::CMVViewHandler()
 	m_ePrevViewSubState=VSS_NONE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Finalizes an instance of the CMVViewHandler class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CMVViewHandler::~CMVViewHandler(void)
 {
 	//CloseNebulizerView();
@@ -106,9 +119,15 @@ CMVViewHandler::~CMVViewHandler(void)
 	m_vCurrentFocusedView=NULL;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CMVViewHandler::getModel()
 {
 	if(m_pModel==NULL)
@@ -116,20 +135,28 @@ CMVModel *CMVViewHandler::getModel()
 	return m_pModel;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::DestroyInstance()
 {
 	delete theViewHandler;
 	theViewHandler = NULL;
 }
 
+/**********************************************************************************************//**
+ * Gets the instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 CMVViewHandler* CMVViewHandler::GetInstance()
 {
 	if(theViewHandler == 0)
@@ -139,9 +166,13 @@ CMVViewHandler* CMVViewHandler::GetInstance()
 	return theViewHandler;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::Init()
 {
 
@@ -149,11 +180,17 @@ void CMVViewHandler::Init()
 	SetPrimaryActiveView(m_vStartup);
 }
 
+/**********************************************************************************************//**
+ * Opens trend view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bRedraw	True to redraw.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 bool CMVViewHandler::OpenTrendView(bool bRedraw)
 {
 	bool result = false;
@@ -174,9 +211,15 @@ bool CMVViewHandler::OpenTrendView(bool bRedraw)
 	return result;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Closes trend view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::CloseTrendView()
 {
 	EnterCriticalSection(&csViewTrend);
@@ -202,9 +245,15 @@ bool CMVViewHandler::CloseTrendView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Opens pattern data view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::OpenPatDataView()
 {
 	bool result = false;
@@ -224,9 +273,16 @@ bool CMVViewHandler::OpenPatDataView()
 
 	return result;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Closes pattern data view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::ClosePatDataView()
 {
 
@@ -253,9 +309,15 @@ bool CMVViewHandler::ClosePatDataView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Opens fullscreen message view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::OpenFullscreenMsgView()
 {
 	bool result = false;
@@ -275,6 +337,16 @@ bool CMVViewHandler::OpenFullscreenMsgView()
 
 	return result;
 }
+
+/**********************************************************************************************//**
+ * Closes fullscreen message view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::CloseFullscreenMsgView()
 {
 	EnterCriticalSection(&csViewFullscreenMsg);
@@ -300,11 +372,15 @@ bool CMVViewHandler::CloseFullscreenMsgView()
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Opens startup view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 bool CMVViewHandler::OpenStartupView()
 {
 	bool result = false;
@@ -322,6 +398,15 @@ bool CMVViewHandler::OpenStartupView()
 
 	return result;
 }
+
+/**********************************************************************************************//**
+ * Closes startup view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CMVViewHandler::CloseStartupView()
 {
@@ -345,9 +430,15 @@ bool CMVViewHandler::CloseStartupView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Opens shutdown view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::OpenShutdownView()
 {
 	bool result = false;
@@ -365,6 +456,15 @@ bool CMVViewHandler::OpenShutdownView()
 
 	return result;
 }
+
+/**********************************************************************************************//**
+ * Closes shutdown view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CMVViewHandler::CloseShutdownView()
 {
@@ -390,9 +490,6 @@ bool CMVViewHandler::CloseShutdownView()
 }
 
 
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CMVViewHandler::OpenNebulizerView()
 //{
 //	bool result = false;
@@ -437,9 +534,15 @@ bool CMVViewHandler::CloseShutdownView()
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Opens system alarm view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::OpenSystemAlarmView()
 {
 	bool result = false;
@@ -459,9 +562,15 @@ bool CMVViewHandler::OpenSystemAlarmView()
 	return result;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Closes system alarm view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::CloseSystemAlarmView()
 {
 	//rku cs1
@@ -488,9 +597,6 @@ bool CMVViewHandler::CloseSystemAlarmView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CMVViewHandler::OpenSetupView()
 //{
 //	bool result = false;
@@ -522,9 +628,17 @@ bool CMVViewHandler::CloseSystemAlarmView()
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Opens menu view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bRedraw	True to redraw.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::OpenMenuView(bool bRedraw)
 {
 	bool result = false;
@@ -543,6 +657,15 @@ bool CMVViewHandler::OpenMenuView(bool bRedraw)
 
 	return result;
 }
+
+/**********************************************************************************************//**
+ * Closes menu view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CMVViewHandler::CloseMenuView()
 {
@@ -570,9 +693,17 @@ bool CMVViewHandler::CloseMenuView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Opens service view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bRedraw	True to redraw.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::OpenServiceView(bool bRedraw)
 {
 	bool result = false;
@@ -592,9 +723,15 @@ bool CMVViewHandler::OpenServiceView(bool bRedraw)
 	return result;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Closes service view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::CloseServiceView()
 {
 	//rku cs1
@@ -621,9 +758,6 @@ bool CMVViewHandler::CloseServiceView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CMVViewHandler::OpenCalibrationView()
 //{
 //	bool result = false;
@@ -639,9 +773,7 @@ bool CMVViewHandler::CloseServiceView()
 //
 //	return result;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //bool CMVViewHandler::CloseCalibrationView()
 //{
 //	if(m_vCalibration)
@@ -655,9 +787,15 @@ bool CMVViewHandler::CloseServiceView()
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Opens log view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::OpenLogView()
 {
 	bool result = false;
@@ -675,9 +813,16 @@ bool CMVViewHandler::OpenLogView()
 	LeaveCriticalSection(&csViewLog);
 	return result;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Closes log view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::CloseLogView()
 {
 	//rku cs1
@@ -703,9 +848,15 @@ bool CMVViewHandler::CloseLogView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Opens numeric view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::OpenNumericView()
 {
 	bool result = false;
@@ -724,9 +875,16 @@ bool CMVViewHandler::OpenNumericView()
 	LeaveCriticalSection(&csViewNumeric);
 	return result;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Closes numeric view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::CloseNumericView()
 {
 	//rku cs1
@@ -754,9 +912,15 @@ bool CMVViewHandler::CloseNumericView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Opens para button view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::OpenParaBtnView()
 {
 	bool result = false;
@@ -774,9 +938,16 @@ bool CMVViewHandler::OpenParaBtnView()
 	LeaveCriticalSection(&csViewParaBtn);
 	return result;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Closes para button view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::CloseParaBtnView()
 {
 	EnterCriticalSection(&csViewParaBtn);
@@ -803,9 +974,15 @@ bool CMVViewHandler::CloseParaBtnView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Opens diagramm view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::OpenDiagrammView()
 {
 	bool result = false;
@@ -824,6 +1001,16 @@ bool CMVViewHandler::OpenDiagrammView()
 
 	return result;
 }
+
+/**********************************************************************************************//**
+ * Closes diagramm view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::CloseDiagrammView()
 {
 	//rku cs1
@@ -850,9 +1037,16 @@ bool CMVViewHandler::CloseDiagrammView()
 
 	return true;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Opens dtb field view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::OpenDTBFieldView()
 {
 	bool result = false;
@@ -871,9 +1065,16 @@ bool CMVViewHandler::OpenDTBFieldView()
 
 	return result;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Closes dtb field view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::CloseDTBFieldView()
 {
 	EnterCriticalSection(&csViewDTBField);
@@ -900,9 +1101,15 @@ bool CMVViewHandler::CloseDTBFieldView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Opens alarm limits view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::OpenAlarmLimitsView()
 {
 	bool result = false;
@@ -922,9 +1129,16 @@ bool CMVViewHandler::OpenAlarmLimitsView()
 
 	return result;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Closes alarm limits view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVViewHandler::CloseAlarmLimitsView()
 {
 	EnterCriticalSection(&csViewAlarmLimits);
@@ -951,21 +1165,17 @@ bool CMVViewHandler::CloseAlarmLimitsView()
 	return true;
 }
 
-/**=================================================================================================
- * \fn void CMVViewHandler::DrawViews(bool bRedraw)
+/**********************************************************************************************//**
+ * Draw views
  *
- * \brief Draw the different views
- * 
- * Depended on view to be drawn the previous views will be closed, depended views will be created.
+ * \author	Rainer Kühner
+ * \date	22.02.2018
  *
- * \author Rainer
- * \date 19 Nov 2015
- *
- * \param bRedraw true to redraw.
- *===============================================================================================**/
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CMVViewHandler::DrawViews(bool bRedraw)
 {
-	
 	switch(getViewState())
 	{
 	case VS_SHUTDOWN:
@@ -1031,9 +1241,13 @@ void CMVViewHandler::DrawViews(bool bRedraw)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw view shutdown
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::drawView_SHUTDOWN()
 {
 	//closeNebulizer();
@@ -1060,9 +1274,14 @@ void CMVViewHandler::drawView_SHUTDOWN()
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->SetFocus();
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw view sysfail
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::drawView_SYSFAIL()
 {
 	//closeNebulizer();
@@ -1088,9 +1307,14 @@ void CMVViewHandler::drawView_SYSFAIL()
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->SetFocus();
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw view battery
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::drawView_BATTERY()
 {
 	//closeNebulizer();
@@ -1116,9 +1340,14 @@ void CMVViewHandler::drawView_BATTERY()
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->SetFocus();
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw view patdata
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::drawView_PATDATA()
 {
 	//closeNebulizer();
@@ -1146,9 +1375,16 @@ void CMVViewHandler::drawView_PATDATA()
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->SetFocus();
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw view trend
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CMVViewHandler::drawView_TREND(bool bRedraw)
 {
 	//closeNebulizer();
@@ -1175,9 +1411,16 @@ void CMVViewHandler::drawView_TREND(bool bRedraw)
 		AfxGetApp()->GetMainWnd()->SetFocus();
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw view para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CMVViewHandler::drawView_PARA(bool bRedraw)
 {
 	//closeNebulizer();
@@ -1232,9 +1475,14 @@ void CMVViewHandler::drawView_PARA(bool bRedraw)
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->SetFocus();
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw view graph
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::drawView_GRAPH()
 {
 	//closeNebulizer();
@@ -1260,9 +1508,16 @@ void CMVViewHandler::drawView_GRAPH()
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->SetFocus();
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw view service
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CMVViewHandler::drawView_SERVICE(bool bRedraw)
 {
 	//closeNebulizer();
@@ -1288,9 +1543,14 @@ void CMVViewHandler::drawView_SERVICE(bool bRedraw)
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_SETFOCUS_PIMARYVIEW);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw view alarm system
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::drawView_ALARM_SYS()
 {
 	//closeNebulizer();
@@ -1316,9 +1576,16 @@ void CMVViewHandler::drawView_ALARM_SYS()
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_SETFOCUS_PIMARYVIEW);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw view setup
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CMVViewHandler::drawView_SETUP(bool bRedraw)
 {
 	//closeNebulizer();
@@ -1345,9 +1612,16 @@ void CMVViewHandler::drawView_SETUP(bool bRedraw)
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_SETFOCUS_PIMARYVIEW);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw view alarm limit
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CMVViewHandler::drawView_ALARM_LIMIT(bool bRedraw)
 {
 	//closeNebulizer();
@@ -1386,17 +1660,19 @@ void CMVViewHandler::drawView_ALARM_LIMIT(bool bRedraw)
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_SETFOCUS_PIMARYVIEW);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * View state changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::viewStateChanged()
 {
 	DrawViews(false);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 //void CMVViewHandler::VentModeChanged()
 //{
 //	//theApp.getLog()->WriteLine(_T("CMVViewHandler::NotifyVentModeChanged"));
@@ -1405,9 +1681,16 @@ void CMVViewHandler::viewStateChanged()
 //	//SetCurrentFocusedView(GetPrimaryActiveView());
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets ppsv value
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iValPPSV	Zero-based index of the value ppsv.
+ * \param	bSend   	True to send.
+ **************************************************************************************************/
+
 void CMVViewHandler::setPpsvValue(int iValPPSV,bool bSend)
 {
 	//rku cs1
@@ -1416,6 +1699,17 @@ void CMVViewHandler::setPpsvValue(int iValPPSV,bool bSend)
 		m_vParaBtn->setPpsvValue(iValPPSV,bSend);
 	LeaveCriticalSection(&csViewParaBtn);
 }
+
+/**********************************************************************************************//**
+ * Sets pee pvalue
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iValPEEP	Zero-based index of the value peep.
+ * \param	bSend   	True to send.
+ **************************************************************************************************/
+
 void CMVViewHandler::setPEEPvalue(int iValPEEP,bool bSend)
 {
 	//rku cs1
@@ -1425,6 +1719,15 @@ void CMVViewHandler::setPEEPvalue(int iValPEEP,bool bSend)
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
+/**********************************************************************************************//**
+ * Sets pmean difference
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iValPmean	Zero-based index of the value pmean.
+ * \param	bSend	 	True to send.
+ **************************************************************************************************/
 
 void CMVViewHandler::setPmeanDifference(int iValPmean,bool bSend)//PMAN1
 {
@@ -1434,6 +1737,17 @@ void CMVViewHandler::setPmeanDifference(int iValPmean,bool bSend)//PMAN1
 		m_vParaBtn->setPmeanDiff(iValPmean,bSend);
 	LeaveCriticalSection(&csViewParaBtn);
 }
+
+/**********************************************************************************************//**
+ * Sets pmean record difference
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iValPmeanRec	Zero-based index of the value pmean record.
+ * \param	bSend			True to send.
+ **************************************************************************************************/
+
 void CMVViewHandler::setPmeanRecDifference(int iValPmeanRec,bool bSend)//PMAN1
 {
 	//rku cs1
@@ -1443,10 +1757,15 @@ void CMVViewHandler::setPmeanRecDifference(int iValPmeanRec,bool bSend)//PMAN1
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
+/**********************************************************************************************//**
+ * Updates the co 2 information data described by resetAvailable
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	resetAvailable	True if reset available.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CMVViewHandler::UpdateCO2InfoData(bool resetAvailable)
 {
 	//rku cs1
@@ -1466,34 +1785,63 @@ void CMVViewHandler::UpdateCO2InfoData(bool resetAvailable)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 //void CMVViewHandler::CO2PumpOn()
 //{
 //	if(m_vDiagramm)
 //		m_vDiagramm->CO2PumpOn();
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets primary active view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the primary active view.
+ **************************************************************************************************/
+
 CMVView* CMVViewHandler::GetPrimaryActiveView()
 {
 	return m_vPrimaryActiveView;
 }
+
+/**********************************************************************************************//**
+ * Sets primary active view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pView	If non-null, the view.
+ **************************************************************************************************/
+
 void CMVViewHandler::SetPrimaryActiveView(CMVView *pView)
 {
 	m_vPrimaryActiveView=pView;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets current focused view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the current focused view.
+ **************************************************************************************************/
+
 CMVView* CMVViewHandler::GetCurrentFocusedView()
 {
 	return m_vCurrentFocusedView;
 }
+
+/**********************************************************************************************//**
+ * Sets current focused view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pView	If non-null, the view.
+ **************************************************************************************************/
+
 void CMVViewHandler::SetCurrentFocusedView(CMVView *pView)
 {
 	//DEBUGMSG(TRUE, (TEXT("CMVViewHandler::SetCurrentFocusedView()\r\n")));
@@ -1505,10 +1853,13 @@ void CMVViewHandler::SetCurrentFocusedView(CMVView *pView)
 		getModel()->NotifyViewFocusChanged(0);
 }
 
+/**********************************************************************************************//**
+ * Updates the service view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CMVViewHandler::UpdateServiceView()
 {
 	if(GetPrimaryActiveView()!=NULL)
@@ -1533,9 +1884,13 @@ void CMVViewHandler::UpdateServiceView()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets focus to primary view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::SetFocusToPrimaryView()
 {
 	if(GetPrimaryActiveView()!=NULL)
@@ -1718,9 +2073,13 @@ void CMVViewHandler::SetFocusToPrimaryView()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets view vkup
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::SetViewVKUP()
 {
 	switch(getViewState())
@@ -1792,9 +2151,14 @@ void CMVViewHandler::SetViewVKUP()
 		break;
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets view vkdown
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::SetViewVKDOWN()
 {
 	switch(getViewState())
@@ -1868,9 +2232,15 @@ void CMVViewHandler::SetViewVKDOWN()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Check current view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iViewID	Identifier for the view.
+ **************************************************************************************************/
+
 void CMVViewHandler::CheckCurrentView(int iViewID)
 {
 	switch(getViewState())
@@ -1971,6 +2341,13 @@ void CMVViewHandler::CheckCurrentView(int iViewID)
 	
 }
 
+/**********************************************************************************************//**
+ * Sets next focus
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::SetNextFocus()
 {
 	if(GetCurrentFocusedView()!=NULL)
@@ -1979,6 +2356,13 @@ void CMVViewHandler::SetNextFocus()
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets previous focus
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::SetPrevFocus()
 {
 	if(GetCurrentFocusedView()!=NULL)
@@ -1986,6 +2370,13 @@ void CMVViewHandler::SetPrevFocus()
 		GetCurrentFocusedView()->PostMessage(WM_SETPREVFOCUS);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets focus to next view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMVViewHandler::SetFocusToNextView()
 {
@@ -2033,6 +2424,14 @@ void CMVViewHandler::SetFocusToNextView()
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets focus to previous view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::SetFocusToPrevView()
 {
 	switch(getViewState())
@@ -2077,9 +2476,16 @@ void CMVViewHandler::SetFocusToPrevView()
 		break;
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets oxy hourglass
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CMVViewHandler::SetOxyHourglass(bool state)
 {
 	if(state)
@@ -2098,11 +2504,15 @@ void CMVViewHandler::SetOxyHourglass(bool state)
 	}
 }
 
+/**********************************************************************************************//**
+ * Stops a diagramm
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bStopFreeze	True to stop freeze.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CMVViewHandler::StopDiagramm(bool bStopFreeze)
 {
 	EnterCriticalSection(&csViewDiagramm);
@@ -2111,9 +2521,13 @@ void CMVViewHandler::StopDiagramm(bool bStopFreeze)
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets a limittimer
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::SetALIMITTIMER()
 {
 	EnterCriticalSection(&csViewAlarmLimits);
@@ -2122,11 +2536,15 @@ void CMVViewHandler::SetALIMITTIMER()
 	LeaveCriticalSection(&csViewAlarmLimits);
 }
 
+/**********************************************************************************************//**
+ * Sets cpap backup
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CMVViewHandler::SetCPAPBackup(bool bState)
 {
 	if(bState)
@@ -2144,9 +2562,16 @@ void CMVViewHandler::SetCPAPBackup(bool bState)
 		LeaveCriticalSection(&csViewDTBField);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets ps vapnoe
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
+
 void CMVViewHandler::setPSVapnoe(bool bState)
 {
 	if(bState)
@@ -2175,6 +2600,15 @@ void CMVViewHandler::setPSVapnoe(bool bState)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets maintenance flag
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
+
 void CMVViewHandler::setMaintenanceFlag(bool bState)
 {
 	EnterCriticalSection(&csViewDTBField);
@@ -2191,9 +2625,13 @@ void CMVViewHandler::setMaintenanceFlag(bool bState)
 	LeaveCriticalSection(&csViewDTBField);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets triggered breath
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::SetTriggeredBreath()
 {
 	EnterCriticalSection(&csViewParaBtn);
@@ -2202,9 +2640,15 @@ void CMVViewHandler::SetTriggeredBreath()
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets pric orunning
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CMVViewHandler::setPRICOrunning(bool state)
 {
 	if(state)
@@ -2239,9 +2683,13 @@ void CMVViewHandler::setPRICOrunning(bool state)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets SI qdata
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::setSIQdata()
 {
 	EnterCriticalSection(&csViewDiagramm);
@@ -2250,9 +2698,13 @@ void CMVViewHandler::setSIQdata()
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw measured fi o 2 value
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::drawMeasuredFiO2Value()
 {
 	EnterCriticalSection(&csViewDiagramm);
@@ -2261,9 +2713,13 @@ void CMVViewHandler::drawMeasuredFiO2Value()
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw fo tsteps
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::drawFOTsteps()
 {
 	EnterCriticalSection(&csViewDiagramm);
@@ -2272,10 +2728,13 @@ void CMVViewHandler::drawFOTsteps()
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
+/**********************************************************************************************//**
+ * Updates the limit data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CMVViewHandler::UpdateLimitData()
 {
 	EnterCriticalSection(&csViewDiagramm);
@@ -2283,6 +2742,13 @@ void CMVViewHandler::UpdateLimitData()
 		m_vDiagramm->PostMessage(WM_UPDATELIMITDATA);
 	LeaveCriticalSection(&csViewDiagramm);
 }
+
+/**********************************************************************************************//**
+ * 2 flush changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMVViewHandler::O2FlushChanged()
 {
@@ -2292,6 +2758,15 @@ void CMVViewHandler::O2FlushChanged()
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
+/**********************************************************************************************//**
+ * Hfpmeanrec flush changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CMVViewHandler::HFPMEANRECFlushChanged(int iVal)
 {
 	EnterCriticalSection(&csViewParaBtn);
@@ -2300,6 +2775,12 @@ void CMVViewHandler::HFPMEANRECFlushChanged(int iVal)
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
+/**********************************************************************************************//**
+ * Para data changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMVViewHandler::paraDataChanged()
 {
@@ -2308,6 +2789,13 @@ void CMVViewHandler::paraDataChanged()
 		m_vParaBtn->PostMessage(WM_SHOWPARABTN);
 	LeaveCriticalSection(&csViewParaBtn);
 }
+
+/**********************************************************************************************//**
+ * Lung record state changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMVViewHandler::lungRecStateChanged()
 {
@@ -2318,6 +2806,13 @@ void CMVViewHandler::lungRecStateChanged()
 	}*/
 }
 
+/**********************************************************************************************//**
+ * Itime changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::ITIMEChanged()
 {
 	EnterCriticalSection(&csViewParaBtn);
@@ -2325,6 +2820,14 @@ void CMVViewHandler::ITIMEChanged()
 		m_vParaBtn->PostMessage(WM_ITIME_CHANGED);
 	LeaveCriticalSection(&csViewParaBtn);
 }
+
+/**********************************************************************************************//**
+ * Etime changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::ETIMEChanged()
 {
 	EnterCriticalSection(&csViewParaBtn);
@@ -2332,6 +2835,14 @@ void CMVViewHandler::ETIMEChanged()
 		m_vParaBtn->PostMessage(WM_ETIME_CHANGED);
 	LeaveCriticalSection(&csViewParaBtn);
 }
+
+/**********************************************************************************************//**
+ * Bpm changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::BPMChanged()
 {
 	EnterCriticalSection(&csViewParaBtn);
@@ -2340,9 +2851,13 @@ void CMVViewHandler::BPMChanged()
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Refresh o 2 flush
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::refreshO2Flush()
 {
 	EnterCriticalSection(&csViewParaBtn);
@@ -2359,9 +2874,15 @@ void CMVViewHandler::refreshO2Flush()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets fo trunning
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CMVViewHandler::setFOTrunning(bool state)
 {
 	EnterCriticalSection(&csViewDiagramm);
@@ -2374,9 +2895,14 @@ void CMVViewHandler::setFOTrunning(bool state)
 	}
 	LeaveCriticalSection(&csViewDiagramm);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Redraw information
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::redrawINFO()
 {
 	EnterCriticalSection(&csViewDiagramm);
@@ -2384,6 +2910,16 @@ void CMVViewHandler::redrawINFO()
 		m_vDTBField->PostMessage(WM_DTB_REFRESH_INFO);
 	LeaveCriticalSection(&csViewDiagramm);
 }
+
+/**********************************************************************************************//**
+ * Draw fo ttime
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iCountFOTimer	Zero-based index of the count fo timer.
+ **************************************************************************************************/
+
 void CMVViewHandler::drawFOTtime(BYTE iCountFOTimer)
 {
 	EnterCriticalSection(&csViewDiagramm);
@@ -2391,6 +2927,14 @@ void CMVViewHandler::drawFOTtime(BYTE iCountFOTimer)
 		m_vDiagramm->PostMessage(WM_DRAW_FOT_TIME,iCountFOTimer);
 	LeaveCriticalSection(&csViewDiagramm);
 }
+
+/**********************************************************************************************//**
+ * Redraw fo tmenu
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::redrawFOTmenu()
 {
 	EnterCriticalSection(&csViewDiagramm);
@@ -2398,6 +2942,13 @@ void CMVViewHandler::redrawFOTmenu()
 		m_vDiagramm->PostMessage(WM_REDRAW_FOT_STATE);
 	LeaveCriticalSection(&csViewDiagramm);
 }
+
+/**********************************************************************************************//**
+ * Check fo talarms
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMVViewHandler::checkFOTalarms()
 {
@@ -2407,9 +2958,13 @@ void CMVViewHandler::checkFOTalarms()
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Updates the fot pmean para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::updateFOTPmeanPara()
 {
 	EnterCriticalSection(&csViewDiagramm);
@@ -2417,6 +2972,13 @@ void CMVViewHandler::updateFOTPmeanPara()
 		m_vDiagramm->PostMessage(WM_FOT_UPDATE_PMEAN);
 	LeaveCriticalSection(&csViewDiagramm);
 }
+
+/**********************************************************************************************//**
+ * Updates the fotpeep para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMVViewHandler::updateFOTPEEPPara()
 {
@@ -2426,9 +2988,13 @@ void CMVViewHandler::updateFOTPEEPPara()
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Redraw graph
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::redrawGraph()
 {
 	EnterCriticalSection(&csViewDiagramm);
@@ -2437,9 +3003,15 @@ void CMVViewHandler::redrawGraph()
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw o 2 flush time
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iO2FlushTime	The o 2 flush time.
+ **************************************************************************************************/
+
 void CMVViewHandler::DrawO2FlushTime(int iO2FlushTime)
 {
 	if(VS_PARA==getViewState())
@@ -2498,10 +3070,15 @@ void CMVViewHandler::DrawO2FlushTime(int iO2FlushTime)
 	}
 }
 
+/**********************************************************************************************//**
+ * Draw count down start time
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iCountDown	Zero-based index of the count down.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CMVViewHandler::DrawCountDownStartTime(int iCountDown)
 {
 	EnterCriticalSection(&csViewDTBField);
@@ -2510,6 +3087,14 @@ void CMVViewHandler::DrawCountDownStartTime(int iCountDown)
 	LeaveCriticalSection(&csViewDTBField);
 
 }
+
+/**********************************************************************************************//**
+ * Stops count down start time
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::StopCountDownStartTime()
 {
 	EnterCriticalSection(&csViewDTBField);
@@ -2518,9 +3103,15 @@ void CMVViewHandler::StopCountDownStartTime()
 	LeaveCriticalSection(&csViewDTBField);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw count down alarm silent
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iCountDown	Zero-based index of the count down.
+ **************************************************************************************************/
+
 void CMVViewHandler::DrawCountDownAlarmSilent(int iCountDown)
 {
 	EnterCriticalSection(&csViewDTBField);
@@ -2528,6 +3119,14 @@ void CMVViewHandler::DrawCountDownAlarmSilent(int iCountDown)
 		m_vDTBField->SetTimeAlarmSilent(iCountDown);
 	LeaveCriticalSection(&csViewDTBField);
 }
+
+/**********************************************************************************************//**
+ * Stops count down alarm silent
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::StopCountDownAlarmSilent()
 {
 	EnterCriticalSection(&csViewDTBField);
@@ -2536,9 +3135,15 @@ void CMVViewHandler::StopCountDownAlarmSilent()
 	LeaveCriticalSection(&csViewDTBField);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw count time until stop
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iCountDown	Zero-based index of the count down.
+ **************************************************************************************************/
+
 void CMVViewHandler::DrawCountTimeUntilStop(int iCountDown)
 {
 	EnterCriticalSection(&csViewDTBField);
@@ -2546,6 +3151,14 @@ void CMVViewHandler::DrawCountTimeUntilStop(int iCountDown)
 		m_vDTBField->SetTimeUntilStopVent(iCountDown);
 	LeaveCriticalSection(&csViewDTBField);
 }
+
+/**********************************************************************************************//**
+ * Stops count time until stop
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::StopCountTimeUntilStop()
 {
 	EnterCriticalSection(&csViewDTBField);
@@ -2553,9 +3166,16 @@ void CMVViewHandler::StopCountTimeUntilStop()
 		m_vDTBField->PostMessage(WM_STOPTIMEUNTILSTOPVENT);
 	LeaveCriticalSection(&csViewDTBField);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw count time until off
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iCountDown	Zero-based index of the count down.
+ **************************************************************************************************/
+
 void CMVViewHandler::DrawCountTimeUntilOff(int iCountDown)
 {
 	EnterCriticalSection(&csViewDTBField);
@@ -2563,6 +3183,14 @@ void CMVViewHandler::DrawCountTimeUntilOff(int iCountDown)
 		m_vDTBField->SetTimeUntilTurnOff(iCountDown);
 	LeaveCriticalSection(&csViewDTBField);
 }
+
+/**********************************************************************************************//**
+ * Stops count time until off
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::StopCountTimeUntilOff()
 {
 	EnterCriticalSection(&csViewDTBField);
@@ -2571,9 +3199,13 @@ void CMVViewHandler::StopCountTimeUntilOff()
 	LeaveCriticalSection(&csViewDTBField);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Stops a video
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::StopVideo()
 {
 	EnterCriticalSection(&csViewMenu);
@@ -2582,20 +3214,28 @@ void CMVViewHandler::StopVideo()
 	LeaveCriticalSection(&csViewMenu);
 }
 
+/**********************************************************************************************//**
+ * Redraw current views
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CMVViewHandler::RedrawCurViews()
 {
 	DrawViews(true);
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets view state
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The view state.
+ **************************************************************************************************/
+
 eViewState CMVViewHandler::getViewState()
 {
 	eViewState state=VS_NONE;
@@ -2606,6 +3246,17 @@ eViewState CMVViewHandler::getViewState()
 	//DEBUGMSG(TRUE, (TEXT("GetViewState %d\r\n"),(int)m_eViewState));
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Sets view state
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	state   	The state.
+ * \param	substate	The substate.
+ **************************************************************************************************/
+
 void CMVViewHandler::setViewState(eViewState state,eViewSubState substate)
 {
 	setPrevViewState(state,substate);
@@ -2622,6 +3273,15 @@ void CMVViewHandler::setViewState(eViewState state,eViewSubState substate)
 	theApp.getLog()->WriteLine(viewState);
 }
 
+/**********************************************************************************************//**
+ * Gets view sub state
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The view sub state.
+ **************************************************************************************************/
+
 eViewSubState CMVViewHandler::getViewSubState()
 {
 	eViewSubState state=VSS_NONE;
@@ -2632,6 +3292,15 @@ eViewSubState CMVViewHandler::getViewSubState()
 	return state;
 }
 
+/**********************************************************************************************//**
+ * Gets the previous view state
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The previous view state.
+ **************************************************************************************************/
+
 eViewState CMVViewHandler::getPrevViewState()
 {
 	eViewState state=VS_NONE;
@@ -2641,6 +3310,16 @@ eViewState CMVViewHandler::getPrevViewState()
 
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Sets previous view state
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	state   	The state.
+ * \param	substate	The substate.
+ **************************************************************************************************/
 
 void CMVViewHandler::setPrevViewState(eViewState state,eViewSubState substate)
 {
@@ -2658,6 +3337,15 @@ void CMVViewHandler::setPrevViewState(eViewState state,eViewSubState substate)
 	LeaveCriticalSection(&csViewState);
 }
 
+/**********************************************************************************************//**
+ * Gets the previous view sub state
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The previous view sub state.
+ **************************************************************************************************/
+
 eViewSubState CMVViewHandler::getPrevViewSubState()
 {
 	eViewSubState state=VSS_NONE;
@@ -2667,6 +3355,15 @@ eViewSubState CMVViewHandler::getPrevViewSubState()
 
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Gets the previous graph state
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The previous graph state.
+ **************************************************************************************************/
 
 eViewState CMVViewHandler::getPrevGraphState()
 {
@@ -2678,6 +3375,13 @@ eViewState CMVViewHandler::getPrevGraphState()
 	return state;
 }
 
+/**********************************************************************************************//**
+ * Sets previous graph state
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVViewHandler::setPrevGraphState()
 {
 	EnterCriticalSection(&csViewState);
@@ -2685,6 +3389,15 @@ void CMVViewHandler::setPrevGraphState()
 	m_ePrevGraphSubState = m_eViewSubState;
 	LeaveCriticalSection(&csViewState);
 }
+
+/**********************************************************************************************//**
+ * Gets the previous graph sub state
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The previous graph sub state.
+ **************************************************************************************************/
 
 eViewSubState CMVViewHandler::getPrevGraphSubState()
 {
@@ -2695,6 +3408,17 @@ eViewSubState CMVViewHandler::getPrevGraphSubState()
 
 	return state;
 }
+
+/**********************************************************************************************//**
+ * Change view state
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	state	   	The state.
+ * \param	substate   	The substate.
+ * \param	bStopFreeze	True to stop freeze.
+ **************************************************************************************************/
 
 void CMVViewHandler::changeViewState(eViewState state,eViewSubState substate,bool bStopFreeze)
 {
@@ -2715,6 +3439,13 @@ void CMVViewHandler::changeViewState(eViewState state,eViewSubState substate,boo
 	getModel()->notifyViewStateChanged();
 	
 }
+
+/**********************************************************************************************//**
+ * Change to previous view state
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMVViewHandler::changeToPrevViewState()
 {
@@ -2756,6 +3487,15 @@ void CMVViewHandler::changeToPrevViewState()
 		changeViewState(ePrevGraphState,ePrevGraphSubState);
 	}
 }
+
+/**********************************************************************************************//**
+ * Determine if we can change view state alarm dependend
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if we can change view state alarm dependend, false if not.
+ **************************************************************************************************/
 
 bool CMVViewHandler::canChangeViewStateAlarmDependend()
 {

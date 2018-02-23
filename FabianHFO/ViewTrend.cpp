@@ -12,15 +12,37 @@
 
 
 using namespace std;
-// Define a template class vector of int
+/** Define a template class vector of int */
 typedef vector<int, allocator<int> > IntVector ;
 
-//Define an iterator for template class vector of strings
+/** Define an iterator for template class vector of strings */
 typedef IntVector::iterator IntVectorIt ;
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 
@@ -28,6 +50,15 @@ typedef IntVector::iterator IntVectorIt ;
 WORD* CViewTrend::m_pBufferTrend1=NULL;
 WORD* CViewTrend::m_pBufferTrend2=NULL;
 WORD* CViewTrend::m_pBufferTrend3=NULL;
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CViewTrend class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	ViewID	Identifier for the view.
+ **************************************************************************************************/
 
 CViewTrend::CViewTrend(int ViewID):
 CMVView(ViewID)
@@ -92,6 +123,13 @@ CMVView(ViewID)
 	m_lXo=0;
 	m_lYo=0;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CViewTrend class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CViewTrend::~CViewTrend(void)
 {
@@ -171,10 +209,15 @@ BEGIN_MESSAGE_MAP(CViewTrend, CMVView)
 	ON_WM_PAINT()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * Creates the view
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewTrend::CreateView()
 {
 	RECT rcLd={0,48,605,540};
@@ -192,9 +235,20 @@ bool CViewTrend::CreateView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CViewTrend::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -234,7 +288,14 @@ BOOL CViewTrend::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContex
 		return 0;
 }
 
-
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CViewTrend::Initialize()
 {
@@ -340,9 +401,13 @@ bool CViewTrend::Initialize()
 	return result;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw trends
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewTrend::DrawTrends()
 {
 	DEBUGMSG(TRUE, (TEXT("DrawTrends\r\n")));
@@ -358,9 +423,16 @@ void CViewTrend::DrawTrends()
 	Sleep(0);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Loads trend data
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	type 	The type.
+ * \param	trend	The trend.
+ **************************************************************************************************/
+
 void CViewTrend::loadTrendData(BYTE type, eTrend trend)
 {
 	Sleep(0);
@@ -565,6 +637,13 @@ void CViewTrend::loadTrendData(BYTE type, eTrend trend)
 	}
 }
 
+/**********************************************************************************************//**
+ * Loads all trend data
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewTrend::loadAllTrendData()
 {
 	DEBUGMSG(TRUE, (TEXT("loadAllTrendData\r\n")));
@@ -579,9 +658,6 @@ void CViewTrend::loadAllTrendData()
 	LeaveCriticalSection(&getModel()->getDATAHANDLER()->csTrend);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 //void CViewTrend::NewTestData()
 //{
 //	//m_rbufTREND
@@ -702,9 +778,17 @@ void CViewTrend::loadAllTrendData()
 //	}
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets name of trend type
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	type	The type.
+ *
+ * \return	The name of trend type.
+ **************************************************************************************************/
+
 CStringW CViewTrend::GetNameOfTrendType(UINT type) 
 {
 	switch(type)
@@ -799,9 +883,17 @@ CStringW CViewTrend::GetNameOfTrendType(UINT type)
 	return _T("");
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets maximum scale of trend type
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	type	The type.
+ *
+ * \return	The maximum scale of trend type.
+ **************************************************************************************************/
+
 int CViewTrend::GetMaxScaleOfTrendType(UINT type)
 {
 	//DEBUGMSG(TRUE, (TEXT("GetMaxScaleOfTrendType\r\n")));
@@ -898,9 +990,17 @@ int CViewTrend::GetMaxScaleOfTrendType(UINT type)
 	return iYscale;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets unit of trend type
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	type	The type.
+ *
+ * \return	The unit of trend type.
+ **************************************************************************************************/
+
 CStringW CViewTrend::GetUnitOfTrendType(UINT type) 
 {
 	CStringW szUnit = _T("");
@@ -1059,7 +1159,14 @@ CStringW CViewTrend::GetUnitOfTrendType(UINT type)
 	return szUnit;
 }
 
-
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
 
 void CViewTrend::Show(bool bRedraw)
 {
@@ -1091,6 +1198,13 @@ void CViewTrend::Show(bool bRedraw)
 	}
 }
 
+/**********************************************************************************************//**
+ * Hides this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewTrend::Hide()
 {
 	ShowWndMenuTrend(false);
@@ -1102,10 +1216,15 @@ void CViewTrend::Hide()
 	this->ShowWindow(SW_HIDE);
 }
 
+/**********************************************************************************************//**
+ * Destroys the window trend timeaxis
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewTrend::DestroyWndTrendTimeaxis()
 {
 	if(m_pWndTrendTimeaxis)
@@ -1117,9 +1236,16 @@ bool CViewTrend::DestroyWndTrendTimeaxis()
 
 	return true;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates window trend timeaxis
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewTrend::CreateWndTrendTimeaxis()
 {
 	DEBUGMSG(TRUE, (TEXT("CreateWndTrendTimeaxis\r\n")));
@@ -1140,9 +1266,15 @@ bool CViewTrend::CreateWndTrendTimeaxis()
 	return false;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows the window trend timeaxis
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewTrend::ShowWndTrendTimeaxis(bool bShow)
 {
 	if(m_pWndTrendTimeaxis)
@@ -1151,9 +1283,15 @@ void CViewTrend::ShowWndTrendTimeaxis(bool bShow)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the window menu trend
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewTrend::DestroyWndMenuTrend()
 {
 	if(m_pWndMenuTrend)
@@ -1165,9 +1303,16 @@ bool CViewTrend::DestroyWndMenuTrend()
 
 	return true;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates window menu trend
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewTrend::CreateWndMenuTrend()
 {
 	// **********************************************************************
@@ -1186,9 +1331,15 @@ bool CViewTrend::CreateWndMenuTrend()
 	return false;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows the window menu trend
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewTrend::ShowWndMenuTrend(bool bShow)
 {
 	DEBUGMSG(TRUE, (TEXT("ShowWndMenuTrend\r\n")));
@@ -1198,9 +1349,15 @@ void CViewTrend::ShowWndMenuTrend(bool bShow)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the window menu trendtype
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewTrend::DestroyWndMenuTrendtype()
 {
 	if(m_pWndMenuTrendtype)
@@ -1221,9 +1378,18 @@ bool CViewTrend::DestroyWndMenuTrendtype()
 
 	return true;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates window menu trendtype
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bSelTrend	The selected trend.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewTrend::CreateWndMenuTrendtype(UINT bSelTrend)
 {
 	if(m_pWndMenuTrendtype==NULL && m_lX>-1)
@@ -1244,9 +1410,17 @@ bool CViewTrend::CreateWndMenuTrendtype(UINT bSelTrend)
 	return false;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows the window menu trendtype
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	  	True to show, false to hide.
+ * \param	iTrendType	Type of the trend.
+ * \param	bSelTrend 	The selected trend.
+ **************************************************************************************************/
+
 void CViewTrend::ShowWndMenuTrendtype(bool bShow, UINT iTrendType, UINT bSelTrend)
 {
 	if(m_pWndMenuTrendtype)
@@ -1255,11 +1429,13 @@ void CViewTrend::ShowWndMenuTrendtype(bool bShow, UINT iTrendType, UINT bSelTren
 	}
 }
 
-// **************************************************************************
-//
-// Line diagram
-//
-// **************************************************************************
+/**********************************************************************************************//**
+ * Deletes the trend 1 diagram
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewTrend::DeleteTrend1Diagram(void)
 {
 	DEBUGMSG(TRUE, (TEXT("DeleteTrend1Diagram\r\n")));
@@ -1271,6 +1447,15 @@ void CViewTrend::DeleteTrend1Diagram(void)
 	}
 }
 
+/**********************************************************************************************//**
+ * Shows the trend 1 diagram
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewTrend::ShowTrend1Diagram(bool bShow)
 {
 	DEBUGMSG(TRUE, (TEXT("ShowTrend1Diagram\r\n")));
@@ -1280,11 +1465,13 @@ void CViewTrend::ShowTrend1Diagram(bool bShow)
 	}
 }
 
-// **************************************************************************
-//
-// Line diagram
-//
-// **************************************************************************
+/**********************************************************************************************//**
+ * Deletes the trend 2 diagram
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewTrend::DeleteTrend2Diagram(void)
 {
 	DEBUGMSG(TRUE, (TEXT("DeleteTrend2Diagram\r\n")));
@@ -1296,6 +1483,15 @@ void CViewTrend::DeleteTrend2Diagram(void)
 	}
 }
 
+/**********************************************************************************************//**
+ * Shows the trend 2 diagram
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewTrend::ShowTrend2Diagram(bool bShow)
 {
 	DEBUGMSG(TRUE, (TEXT("ShowTrend2Diagram\r\n")));
@@ -1305,12 +1501,13 @@ void CViewTrend::ShowTrend2Diagram(bool bShow)
 	}
 }
 
+/**********************************************************************************************//**
+ * Deletes the trend 3 diagram
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-//
-// Line diagram
-//
-// **************************************************************************
 void CViewTrend::DeleteTrend3Diagram(void)
 {
 	DEBUGMSG(TRUE, (TEXT("DeleteTrend3Diagram\r\n")));
@@ -1322,6 +1519,15 @@ void CViewTrend::DeleteTrend3Diagram(void)
 	}
 }
 
+/**********************************************************************************************//**
+ * Shows the trend 3 diagram
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewTrend::ShowTrend3Diagram(bool bShow)
 {
 	DEBUGMSG(TRUE, (TEXT("ShowTrend3Diagram\r\n")));
@@ -1331,9 +1537,15 @@ void CViewTrend::ShowTrend3Diagram(bool bShow)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Notifies an event
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
+
 void CViewTrend::NotifyEvent(CMVEvent* pEvent)
 {
 	if(m_bLoadDataRunning)
@@ -1593,6 +1805,19 @@ void CViewTrend::NotifyEvent(CMVEvent* pEvent)
 	}
 }
 
+/**********************************************************************************************//**
+ * Creates trend 1 diagram
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	x	   	The x coordinate.
+ * \param	y	   	The y coordinate.
+ * \param	nWidth 	The width.
+ * \param	nHeight	The height.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CViewTrend::CreateTrend1Diagram(int x, int y, int nWidth, int nHeight)
 {
@@ -1628,8 +1853,19 @@ bool CViewTrend::CreateTrend1Diagram(int x, int y, int nWidth, int nHeight)
 	return result;
 }
 
-
-
+/**********************************************************************************************//**
+ * Creates trend 2 diagram
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	x	   	The x coordinate.
+ * \param	y	   	The y coordinate.
+ * \param	nWidth 	The width.
+ * \param	nHeight	The height.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CViewTrend::CreateTrend2Diagram(int x, int y, int nWidth, int nHeight)
 {
@@ -1661,6 +1897,19 @@ bool CViewTrend::CreateTrend2Diagram(int x, int y, int nWidth, int nHeight)
 	return result;
 }
 
+/**********************************************************************************************//**
+ * Creates trend 3 diagram
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	x	   	The x coordinate.
+ * \param	y	   	The y coordinate.
+ * \param	nWidth 	The width.
+ * \param	nHeight	The height.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CViewTrend::CreateTrend3Diagram(int x, int y, int nWidth, int nHeight)
 {
@@ -1692,16 +1941,13 @@ bool CViewTrend::CreateTrend3Diagram(int x, int y, int nWidth, int nHeight)
 	return result;
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CViewTrend::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
 void CViewTrend::OnDestroy()
 {
 	m_bExit=true;
@@ -1728,8 +1974,16 @@ void CViewTrend::OnDestroy()
 		DeleteDC(m_hdcStatic);
 }
 
-
-
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 BOOL CViewTrend::PreTranslateMessage(MSG* pMsg) 
 {
@@ -1765,9 +2019,15 @@ BOOL CViewTrend::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CViewTrend::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==STARTTREND_TIMER)
@@ -1781,6 +2041,18 @@ void CViewTrend::OnTimer(UINT_PTR nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
 LRESULT CViewTrend::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
@@ -2796,9 +3068,15 @@ LRESULT CViewTrend::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Determines if we can increase time span
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewTrend::IncreaseTimeSpan()
 {
 	bool bEnd=false;
@@ -2821,9 +3099,15 @@ bool CViewTrend::IncreaseTimeSpan()
 	return bEnd;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Determines if we can decrease time span
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewTrend::DecreaseTimeSpan()
 {
 	bool bEnd=false;
@@ -2845,9 +3129,16 @@ bool CViewTrend::DecreaseTimeSpan()
 
 	return bEnd;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw cursor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iTrend	Zero-based index of the trend.
+ **************************************************************************************************/
+
 void CViewTrend::DrawCursor(int iTrend)
 {
 	if(m_bExit)
@@ -2930,34 +3221,53 @@ void CViewTrend::DrawCursor(int iTrend)
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets next focus
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewTrend::SetNextFocus()
 {
 	return false;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets previous focus
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewTrend::SetPrevFocus()
 {
 	return false;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets view focus
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewTrend::SetViewFocus()
 {
 	this->SetFocus();
 }
 
+/**********************************************************************************************//**
+ * Creates a new trend type 1
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewTrend::newTrendType1()
 {
 	if(m_bExit)
@@ -3016,9 +3326,14 @@ void CViewTrend::newTrendType1()
 		break;
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates a new trend type 2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewTrend::newTrendType2()
 {
 	if(m_bExit)
@@ -3079,9 +3394,14 @@ void CViewTrend::newTrendType2()
 	}
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates a new trend type 3
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewTrend::newTrendType3()
 {
 	if(m_bExit)
@@ -3141,9 +3461,16 @@ void CViewTrend::newTrendType3()
 		break;
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates a new trend type
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	type	The type.
+ **************************************************************************************************/
+
 void CViewTrend::newTrendType(UINT type)
 {
 	CString szText=_T("");
@@ -3293,10 +3620,13 @@ void CViewTrend::newTrendType(UINT type)
 	PostMessage(WM_LOAD_TREND);
 }
 
+/**********************************************************************************************//**
+ * Draw trend 1
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewTrend::DrawTrend1()
 {
 	if(m_bExit)
@@ -3491,9 +3821,14 @@ void CViewTrend::DrawTrend1()
 
 	//DEBUGMSG(TRUE, (TEXT("end DrawTrend1\r\n")));
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw trend 2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewTrend::DrawTrend2()
 {
 	if(m_bExit)
@@ -3694,9 +4029,14 @@ void CViewTrend::DrawTrend2()
 	//DEBUGMSG(TRUE, (TEXT("end DrawTrend2\r\n")));
 	
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw trend 3
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewTrend::DrawTrend3()
 {
 	if(m_bExit)
@@ -3893,24 +4233,28 @@ void CViewTrend::DrawTrend3()
 	//DEBUGMSG(TRUE, (TEXT("end DrawTrend3\r\n")));
 }
 
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewTrend::OnPaint() 
 {
 	CPaintDC dc(this);
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
 
+/**********************************************************************************************//**
+ * Creates window hourglass
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewTrend::CreateWndHourglass()
 {
 	if(m_pWndHourglass==NULL)
@@ -3925,6 +4269,16 @@ bool CViewTrend::CreateWndHourglass()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window hourglass
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewTrend::DestroyWndHourglass()
 {
 	if(m_pWndHourglass)
@@ -3936,6 +4290,15 @@ bool CViewTrend::DestroyWndHourglass()
 	return false;
 }
 
+/**********************************************************************************************//**
+ * Shows the window hourglass
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewTrend::ShowWndHourglass(bool bShow)
 {
 	if(m_pWndHourglass)
@@ -3944,9 +4307,15 @@ void CViewTrend::ShowWndHourglass(bool bShow)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets one button depressed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CViewTrend::SetOneButtonDepressed(int btnID)
 {
 	if(m_bLoadDataRunning)
@@ -3987,9 +4356,13 @@ void CViewTrend::SetOneButtonDepressed(int btnID)
 		GetParent()->PostMessage(WM_SET_SETUPTIMER);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets all button unpressed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewTrend::SetAllButtonUnpressed()
 {
 	if(m_bExit)

@@ -1,6 +1,19 @@
+/**********************************************************************************************//**
+ * \file	InterfaceCO2_CAPNOSTAT.cpp.
+ *
+ * Implements the interface co 2 capnostat class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "InterfaceCO2_CAPNOSTAT.h"
 #include "MVModel.h"
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CInterfaceCO2_CAPNOSTAT class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 CInterfaceCO2_CAPNOSTAT::CInterfaceCO2_CAPNOSTAT()
 {
@@ -62,35 +75,27 @@ CInterfaceCO2_CAPNOSTAT::CInterfaceCO2_CAPNOSTAT()
 	fwDataCode=0;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CInterfaceCO2_CAPNOSTAT class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 CInterfaceCO2_CAPNOSTAT::~CInterfaceCO2_CAPNOSTAT()
 {
 }
 
-//=============================================================================
-/**
- * @brief Get the instance of the model (singleton).
+/**********************************************************************************************//**
+ * Initializes this instance
  *
- * @return the instance of the model
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- **/
-//=============================================================================
-//CMVModel *CInterfaceCO2_CAPNOSTAT::getModel()
-//{
-//	if(m_pModel==NULL)
-//		m_pModel=CMVModel::GetInstance();
-//	return m_pModel;
-//}
-
-//int CInterfaceCO2_CAPNOSTAT::ShowError (LONG lError, LPCTSTR lptszMessage)
-//{
-//	// Generate a message text
-//	TCHAR tszMessage[256];
-//	wsprintf(tszMessage,_T("%s\n(error code %d)"), lptszMessage, lError);
-//
-//	// Display message-box and return with an error-code
-//	::MessageBox(0,tszMessage,_T("Listener"), MB_ICONSTOP|MB_OK);
-//	return 1;
-//}
+ * \param	com	The com.
+ *
+ * \return	An int.
+ **************************************************************************************************/
 
 int CInterfaceCO2_CAPNOSTAT::Init(BYTE com)
 {
@@ -177,15 +182,15 @@ int CInterfaceCO2_CAPNOSTAT::Init(BYTE com)
 	return 0;
 }
 
-//************************************
-// Method:    Deinit
-// FullName:  CInterfaceCO2_CAPNOSTAT::Deinit
-// Access:    public 
-// Returns:   int
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Gets the deinit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CInterfaceCO2_CAPNOSTAT::Deinit()
 {
 	m_bStartup=false;
@@ -232,6 +237,13 @@ int CInterfaceCO2_CAPNOSTAT::Deinit()
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Startup sequenz
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::StartupSequenz()
 {
 	//DEBUGMSG(TRUE, (TEXT("CInterfaceCO2_CAPNOSTAT::StartupSequenz\r\n")));
@@ -243,6 +255,13 @@ void CInterfaceCO2_CAPNOSTAT::StartupSequenz()
 	//DEBUGMSG(TRUE, (TEXT("CInterfaceCO2_CAPNOSTAT::StartupSequenz2\r\n")));
 	//getModel()->setCO2inprogress(false);
 }
+
+/**********************************************************************************************//**
+ * Initializes the sequenz
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CInterfaceCO2_CAPNOSTAT::InitializeSequenz()
 {
@@ -296,6 +315,23 @@ void CInterfaceCO2_CAPNOSTAT::InitializeSequenz()
 	//getModel()->setCO2inprogress(false);
 }
 
+/**********************************************************************************************//**
+ * Sends a co2 command
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	CO2_command	The co 2 command.
+ * \param	Anzahlbytes	The anzahlbytes.
+ * \param	byte0	   	The byte 0.
+ * \param	byte1	   	The first byte.
+ * \param	byte2	   	The second byte.
+ * \param	byte3	   	The third byte.
+ * \param	byte4	   	The fourth byte.
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CInterfaceCO2_CAPNOSTAT::SendCO2Command(BYTE CO2_command, BYTE Anzahlbytes, BYTE byte0, BYTE byte1, BYTE byte2, BYTE byte3, BYTE byte4) 
 {
 	//if(getModel()->getDATAHANDLER()->IsCO2interfaceEnabled())
@@ -319,6 +355,16 @@ DWORD CInterfaceCO2_CAPNOSTAT::SendCO2Command(BYTE CO2_command, BYTE Anzahlbytes
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Adds a checksum to 'buf'
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	num	Number of.
+ * \param	buf	The buffer.
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::AddChecksum(short num, BYTE buf[])
 {
 	char checksum;
@@ -330,6 +376,18 @@ void CInterfaceCO2_CAPNOSTAT::AddChecksum(short num, BYTE buf[])
 	buf[num]=checksum;
 	//return checksum;
 }
+
+/**********************************************************************************************//**
+ * Queries if a checksum is valid
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	lpBuf	If non-null, the buffer.
+ * \param 		  	num  	Number of.
+ *
+ * \return	True if the checksum is valid, false if not.
+ **************************************************************************************************/
 
 BOOL CInterfaceCO2_CAPNOSTAT::IsChecksumValid(BYTE *lpBuf, short num)
 {
@@ -349,6 +407,18 @@ BOOL CInterfaceCO2_CAPNOSTAT::IsChecksumValid(BYTE *lpBuf, short num)
 	else return FALSE; // invalid checksum
 }
 
+/**********************************************************************************************//**
+ * Gets a checksum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param 		  	Anzahlbytes	The anzahlbytes.
+ * \param [in,out]	buf		   	If non-null, the buffer.
+ *
+ * \return	The checksum.
+ **************************************************************************************************/
+
 BYTE CInterfaceCO2_CAPNOSTAT::GetChecksum(BYTE Anzahlbytes, BYTE *buf)
 {
 	BYTE checksum;
@@ -360,10 +430,13 @@ BYTE CInterfaceCO2_CAPNOSTAT::GetChecksum(BYTE Anzahlbytes, BYTE *buf)
 	return checksum;
 }
 
+/**********************************************************************************************//**
+ * Sends the stop continous mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceCO2_CAPNOSTAT::Send_StopContinousMode()
 {
 	SendCO2Command(CO2_CAPNOSTAT_CMD_STOPCONTINUOUS,0x01);
@@ -374,37 +447,63 @@ void CInterfaceCO2_CAPNOSTAT::Send_StopContinousMode()
 	m_iBPM=0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends the co2 waveform data mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::Send_CO2WaveformDataMode()
 {
 	SendCO2Command(CO2_CAPNOSTAT_CMD_CO2_WAVEFORMDATAMODE,0x02,0x00);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends the capnostat zero
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::Send_CapnostatZero()
 {
 	SendCO2Command(CO2_CAPNOSTAT_CMD_CAPNOSTAT_ZERO,0x01);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Zero calibration
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::zeroCalibration()
 {
 	Send_CapnostatZero();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads baro pressure
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::Read_BaroPressure()
 {
 	SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x02,CO2_CAPNOSTAT_ISB_BAROMETRIC_PRESSURE);
 }
+
+/**********************************************************************************************//**
+ * Sends a baro pressure
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::Send_BaroPressure(SHORT val)
 {
 	BYTE byDB1=(val/128) & 0x7F;
@@ -412,13 +511,27 @@ void CInterfaceCO2_CAPNOSTAT::Send_BaroPressure(SHORT val)
 	SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x04,CO2_CAPNOSTAT_ISB_BAROMETRIC_PRESSURE,byDB1,byDB2);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads gas temperature
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::Read_GasTemperature()
 {
 	SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x02,CO2_CAPNOSTAT_ISB_GASTEMPERATURE);
 }
+
+/**********************************************************************************************//**
+ * Sends the gas temperature
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::Send_GasTemperature(SHORT val)
 {
 	BYTE byDB1=(val/128) & 0x7F;
@@ -426,73 +539,159 @@ void CInterfaceCO2_CAPNOSTAT::Send_GasTemperature(SHORT val)
 	SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x04,CO2_CAPNOSTAT_ISB_GASTEMPERATURE,byDB1,byDB2);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads etco2 time period
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::Read_ETCO2TimePeriod()
 {
 	SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x02,CO2_CAPNOSTAT_ISB_ETCO2_TIMEPERIOD);
 }
+
+/**********************************************************************************************//**
+ * Sends an etco2 time period
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::Send_ETCO2TimePeriod(BYTE val)
 {
 	SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x03,CO2_CAPNOSTAT_ISB_ETCO2_TIMEPERIOD,val);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads no breath detected timeout
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::Read_NoBreathDetectedTimeout()
 {
 	SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x02,CO2_CAPNOSTAT_ISB_NOBREATHDETECTED_TIMEOUT);
 }
+
+/**********************************************************************************************//**
+ * Sends a no breath detected timeout
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::Send_NoBreathDetectedTimeout(BYTE val)
 {
 	SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x03,CO2_CAPNOSTAT_ISB_NOBREATHDETECTED_TIMEOUT,val);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads current co2 units
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::Read_CurrentCO2Units()
 {
 	SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x02,CO2_CAPNOSTAT_ISB_CURRENT_CO2UNITS);
 }
+
+/**********************************************************************************************//**
+ * Sends a current co2 units
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::Send_CurrentCO2Units(BYTE val)
 {
 	SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x03,CO2_CAPNOSTAT_ISB_CURRENT_CO2UNITS,val);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads sleep mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::Read_SleepMode()
 {
 	SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x02,CO2_CAPNOSTAT_ISB_SLEEPMODE);
 }
+
+/**********************************************************************************************//**
+ * Sends a sleep mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::Send_SleepMode(BYTE val)
 {
 	SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x03,CO2_CAPNOSTAT_ISB_SLEEPMODE,val);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads zero gas type
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::Read_ZeroGasType()
 {
 	SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x02,CO2_CAPNOSTAT_ISB_ZEROGASTYPE);
 }
+
+/**********************************************************************************************//**
+ * Sends a zero gas type
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::Send_ZeroGasType(BYTE val)
 {
 	SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x03,CO2_CAPNOSTAT_ISB_ZEROGASTYPE,val);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads gas compensation
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::Read_GasCompensation()
 {
 	SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x02,CO2_CAPNOSTAT_ISB_GAS_COMPENSATIONS);
 }
+
+/**********************************************************************************************//**
+ * Sends the gas compensation
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	byO2Compensation	The by o 2 compensation.
+ * \param	byBalanceGas		The by balance gas.
+ * \param	iAnestAgent			Zero-based index of the anest agent.
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::Send_GasCompensation(BYTE byO2Compensation, BYTE byBalanceGas, SHORT iAnestAgent)
 {
 	BYTE byDB3=(iAnestAgent/128) & 0x7F;
@@ -500,9 +699,13 @@ void CInterfaceCO2_CAPNOSTAT::Send_GasCompensation(BYTE byO2Compensation, BYTE b
 	SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x06,CO2_CAPNOSTAT_ISB_GAS_COMPENSATIONS,byO2Compensation,byBalanceGas,byDB3,byDB4);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Check module state
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::CheckModuleState()
 {
 	BYTE cmd=m_byConfigBuffer[m_iConfigBufferCnt];
@@ -526,9 +729,15 @@ void CInterfaceCO2_CAPNOSTAT::CheckModuleState()
 	CheckLastCO2Cmd();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Performs the message action
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceCO2_CAPNOSTAT::PerformMsg()
 {
 	bool bResult = true;
@@ -1011,10 +1220,15 @@ bool CInterfaceCO2_CAPNOSTAT::PerformMsg()
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Executes the interpolation wave operation
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iTempfaWaveBuf	Buffer for tempfa wave data.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceCO2_CAPNOSTAT::doInterpolationWave(SHORT iTempfaWaveBuf)
 {
 	if(false==getModel()->getSPI()->isSPIrunning())
@@ -1043,9 +1257,16 @@ void CInterfaceCO2_CAPNOSTAT::doInterpolationWave(SHORT iTempfaWaveBuf)
 	//DEBUGMSG(TRUE, (TEXT("%d\r\n"),m_cLastCO2WaveVal));
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the event action
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	eEvent	The event.
+ * \param	eError	The error.
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::OnEvent(EEvent eEvent, EError eError)
 {
 	/*int i;
@@ -1193,10 +1414,18 @@ void CInterfaceCO2_CAPNOSTAT::OnEvent(EEvent eEvent, EError eError)
 	return;
 }
 
+/**********************************************************************************************//**
+ * Validates the message
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pData	If non-null, the data.
+ * \param 		  	iLen 	Zero-based index of the length.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CInterfaceCO2_CAPNOSTAT::ValidateMessage(BYTE* pData, size_t iLen)
 {
 	bool bResult=false;
@@ -1219,9 +1448,16 @@ bool CInterfaceCO2_CAPNOSTAT::ValidateMessage(BYTE* pData, size_t iLen)
 	return bResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Change co2 unit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	unitNew	The unit new.
+ * \param	unitOld	The unit old.
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::changeCO2Unit(eCO2unit unitNew,eCO2unit unitOld)
 {
 	m_cfgCO2UNITS=unitNew;
@@ -1297,9 +1533,17 @@ void CInterfaceCO2_CAPNOSTAT::changeCO2Unit(eCO2unit unitNew,eCO2unit unitOld)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets gas compensation
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	byO2Compensation	The by o 2 compensation.
+ * \param	byBalanceGas		The by balance gas.
+ * \param	iAnestAgent			Zero-based index of the anest agent.
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::set_GasCompensation(BYTE byO2Compensation, BYTE byBalanceGas, SHORT iAnestAgent)
 {
 	Send_GasCompensation(byO2Compensation, byBalanceGas, iAnestAgent);
@@ -1309,27 +1553,53 @@ void CInterfaceCO2_CAPNOSTAT::set_GasCompensation(BYTE byO2Compensation, BYTE by
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,(int)byO2Compensation);
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets gas compensation
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::get_GasCompensation()
 {
 	Read_GasCompensation();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets baro pressure
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::set_BaroPressure(SHORT val)
 {
 	Send_BaroPressure(val);
 	
 }
+
+/**********************************************************************************************//**
+ * Gets baro pressure
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::get_BaroPressure()
 {
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Resets the state bytes
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::resetStateBytes()
 {
 	EnterCriticalSection(&csErrorDataCO2);
@@ -1337,6 +1607,16 @@ void CInterfaceCO2_CAPNOSTAT::resetStateBytes()
 	m_byExtendedStateBytes=0xFF;
 	LeaveCriticalSection(&csErrorDataCO2);
 }
+
+/**********************************************************************************************//**
+ * Sets state bytes
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::setStateBytes(BYTE state)
 {
 	EnterCriticalSection(&csErrorDataCO2);
@@ -1383,6 +1663,16 @@ void CInterfaceCO2_CAPNOSTAT::setStateBytes(BYTE state)
 	
 	LeaveCriticalSection(&csErrorDataCO2);
 }
+
+/**********************************************************************************************//**
+ * Gets state bytes
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The state bytes.
+ **************************************************************************************************/
+
 BYTE CInterfaceCO2_CAPNOSTAT::getStateBytes()
 {
 	EnterCriticalSection(&csErrorDataCO2);
@@ -1390,6 +1680,16 @@ BYTE CInterfaceCO2_CAPNOSTAT::getStateBytes()
 	LeaveCriticalSection(&csErrorDataCO2);
 	return byTemp;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is state ok
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if state ok, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2_CAPNOSTAT::isStateOk()
 {
 	EnterCriticalSection(&csErrorDataCO2);
@@ -1429,9 +1729,15 @@ bool CInterfaceCO2_CAPNOSTAT::isStateOk()
 	return bRes;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets extended state bytes
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::setExtendedStateBytes(BYTE state)
 {
 	/*EnterCriticalSection(&csErrorDataCO2);
@@ -1448,6 +1754,16 @@ void CInterfaceCO2_CAPNOSTAT::setExtendedStateBytes(BYTE state)
 
 	LeaveCriticalSection(&csErrorDataCO2);*/
 }
+
+/**********************************************************************************************//**
+ * Gets extended state bytes
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The extended state bytes.
+ **************************************************************************************************/
+
 BYTE CInterfaceCO2_CAPNOSTAT::getExtendedStateBytes()
 {
 	EnterCriticalSection(&csErrorDataCO2);
@@ -1455,6 +1771,16 @@ BYTE CInterfaceCO2_CAPNOSTAT::getExtendedStateBytes()
 	LeaveCriticalSection(&csErrorDataCO2);
 	return byTemp;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is extended state ok
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if extended state ok, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2_CAPNOSTAT::isExtendedStateOk()
 {
 	EnterCriticalSection(&csErrorDataCO2);
@@ -1490,36 +1816,83 @@ bool CInterfaceCO2_CAPNOSTAT::isExtendedStateOk()
 	return bRes;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Query if this instance is pump on
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if pump on, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2_CAPNOSTAT::isPumpOn()
 {
 	return m_bPumpStateOn;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Query if this instance is co2 value valid
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if the co2 value is valid, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2_CAPNOSTAT::isCO2ValueValid()
 {
 	return m_bCO2ValueValid;
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is etco2 value valid
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if the etco2 value is valid, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2_CAPNOSTAT::isETCO2ValueValid()
 {
 	return m_bETCO2ValueValid;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is frequency value valid
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if the frequency value is valid, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2_CAPNOSTAT::isFreqValueValid()
 {
 	return m_bFreqValuevalid;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is fico2 value valid
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if the fico2 value is valid, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2_CAPNOSTAT::isFICO2ValueValid()
 {
 	return m_bFICO2ValueValid;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets the configuration
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::set_Configuration()
 {
 	Send_StopContinousMode();
@@ -1561,6 +1934,15 @@ void CInterfaceCO2_CAPNOSTAT::set_Configuration()
 		getModuleVersion();
 }
 
+/**********************************************************************************************//**
+ * Sets standby mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CInterfaceCO2_CAPNOSTAT::set_StandbyMode(bool state)
 {
 	bool bChanged=false;
@@ -1580,36 +1962,41 @@ void CInterfaceCO2_CAPNOSTAT::set_StandbyMode(bool state)
 	if(bChanged)
 		g_eventCO2Data.SetEvent();
 }
+
+/**********************************************************************************************//**
+ * Gets standby mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceCO2_CAPNOSTAT::get_StandbyMode()
 {
 	return m_bStandby;
 }
 
-//CString CInterfaceCO2_CAPNOSTAT::get_ModuleVersion()
-//{
-//	return m_szVersion;
-//}
+/**********************************************************************************************//**
+ * Gets module version
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CInterfaceCO2_CAPNOSTAT::getModuleVersion()
 {
 	SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SOFTWARE_REVISION,0x02,0x00);
 }
 
-//void CInterfaceCO2_CAPNOSTAT::retryConnection()
-//{
-//	DEBUGMSG(TRUE, (TEXT("CInterfaceCO2_CAPNOSTAT::retryConnection()\r\n")));
-//	Deinit();
-//	Init(m_com);
-//	//getModuleVersion();
-//}
-
+/**********************************************************************************************//**
+ * Sets restart breath algorithm
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CInterfaceCO2_CAPNOSTAT::set_restartBreathAlgorithm()
 {
 	//SendCO2Command(xxx,0x02,0x00);
 }
-
-//void CInterfaceCO2_CAPNOSTAT::startWriteBuffer()
-//{
-//	m_bStartWriteBuffer=true;
-//}

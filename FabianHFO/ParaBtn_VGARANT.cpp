@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	ParaBtn_VGARANT.cpp.
+ *
+ * Implements the para button vgarant class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "ParaBtn_VGARANT.h"
 #include "globDefs.h"
@@ -8,11 +14,29 @@ extern HFONT g_hf31AcuBold;
 extern HFONT g_hf8AcuBold;
 extern HFONT g_hf23AcuBold;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaBtn_VGARANT class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	btn		   	The button.
+ * \param	nOffset	   	The offset.
+ * \param	bScrollOver	True to scroll over.
+ **************************************************************************************************/
+
 CParaBtn_VGARANT::CParaBtn_VGARANT(BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 	m_bOff=true;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_VGARANT class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_VGARANT::~CParaBtn_VGARANT(void)
 {
@@ -31,11 +55,15 @@ BEGIN_MESSAGE_MAP(CParaBtn_VGARANT, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CParaBtn_VGARANT::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -209,6 +237,16 @@ void CParaBtn_VGARANT::Draw(int nState)
 	}
 }
 
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_VGARANT::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {

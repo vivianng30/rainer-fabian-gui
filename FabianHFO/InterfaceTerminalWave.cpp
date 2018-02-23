@@ -7,15 +7,37 @@
 #include "MVModel.h"
 #include "MVViewHandler.h"
 
-// CInterfaceTerminalWave
+/**********************************************************************************************//**
+ * CInterfaceTerminalWave
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CInterfaceTerminalWave, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CInterfaceTerminalWave class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CInterfaceTerminalWave::CInterfaceTerminalWave():
 CInterfaceTerminal()
 {
 
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CInterfaceTerminalWave class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CInterfaceTerminalWave::~CInterfaceTerminalWave()
 {
@@ -25,9 +47,14 @@ CInterfaceTerminalWave::~CInterfaceTerminalWave()
 //BEGIN_MESSAGE_MAP(CInterfaceTerminalWave, CInterfaceTerminal)
 //END_MESSAGE_MAP()
 
-
-
-// CInterfaceTerminalWave message handlers
+/**********************************************************************************************//**
+ * CInterfaceTerminalWave message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CInterfaceTerminalWave::Init()
 {
@@ -41,6 +68,15 @@ bool CInterfaceTerminalWave::Init()
 
 	return 0;
 }
+
+/**********************************************************************************************//**
+ * Opens the com
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CInterfaceTerminalWave::OpenCOM()
 {
@@ -85,6 +121,16 @@ bool CInterfaceTerminalWave::OpenCOM()
 	return bRes;
 
 }
+
+/**********************************************************************************************//**
+ * Executes the event action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	eEvent	The event.
+ * \param	eError	The error.
+ **************************************************************************************************/
 
 void CInterfaceTerminalWave::OnEvent(EEvent eEvent, EError eError)
 {

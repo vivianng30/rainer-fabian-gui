@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	ParaBtn_TRIGGER.cpp.
+ *
+ * Implements the para button trigger class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "ParaBtn_TRIGGER.h"
 #include "globDefs.h"
@@ -7,16 +13,65 @@ extern HFONT g_hf14AcuBold;
 extern HFONT g_hf31AcuBold;
 extern HFONT g_hf8AcuBold;
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtsubbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTSUBBTNDW			0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaBtn_TRIGGER class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	btn		   	The button.
+ * \param	nOffset	   	The offset.
+ * \param	bScrollOver	True to scroll over.
+ **************************************************************************************************/
 
 CParaBtn_TRIGGER::CParaBtn_TRIGGER(BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 	
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_TRIGGER class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_TRIGGER::~CParaBtn_TRIGGER(void)
 {
@@ -35,11 +90,15 @@ BEGIN_MESSAGE_MAP(CParaBtn_TRIGGER, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CParaBtn_TRIGGER::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -169,7 +228,16 @@ void CParaBtn_TRIGGER::Draw(int nState)
 	}
 }
 
-
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_TRIGGER::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
@@ -244,6 +312,13 @@ void CParaBtn_TRIGGER::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	m_bLMouseButtonDown = false;
 }
 
+/**********************************************************************************************//**
+ * Triggers this instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CParaBtn_TRIGGER::Trigger()
 {
 
@@ -256,6 +331,15 @@ void CParaBtn_TRIGGER::Trigger()
 	}
 	
 }
+
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
 
 void CParaBtn_TRIGGER::OnTimer(UINT_PTR nIDEvent)
 {

@@ -25,7 +25,12 @@ CInterfaceAcuLink* CInterfaceAcuLink::theAcuLinkInterface=0;
 HINSTANCE CInterfaceAcuLink::_hAcuLink=NULL;
 int	CInterfaceAcuLink::fiLinkType=ACL_LT_NONE;
 
-
+/**********************************************************************************************//**
+ * Initializes a new instance of the CInterfaceAcuLink class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 CInterfaceAcuLink::CInterfaceAcuLink(void)
 {
@@ -36,14 +41,29 @@ CInterfaceAcuLink::CInterfaceAcuLink(void)
 	m_iVersion=0;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CInterfaceAcuLink class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 CInterfaceAcuLink::~CInterfaceAcuLink(void)
 {
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets an instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iLinkType	Type of the link.
+ *
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
+
 CInterfaceAcuLink* CInterfaceAcuLink::getInstance(BYTE iLinkType)
 {
 	if(theAcuLinkInterface == 0)
@@ -74,9 +94,13 @@ CInterfaceAcuLink* CInterfaceAcuLink::getInstance(BYTE iLinkType)
 	return theAcuLinkInterface;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceAcuLink::destroyInstance()
 {
 	if(theAcuLinkInterface != NULL)
@@ -86,16 +110,16 @@ void CInterfaceAcuLink::destroyInstance()
 	}
 }
 
+/**********************************************************************************************//**
+ * Fill measurement data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceAcuLink::fillMeasurementData()
 {
-	//DEBUGMSG(TRUE, (TEXT("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\n")));
-	
-		eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
+	eVentMode eActiveVentMode=getModel()->getVMODEHANDLER()->getCurrentActiveMode();
 	switch(eActiveVentMode)
 	{
 	case VM_IPPV:
@@ -156,6 +180,15 @@ void CInterfaceAcuLink::fillMeasurementData()
 	}
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is co2active
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if co 2active, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceAcuLink::isCO2active()
 {
 	bool bCO2module=false;
@@ -168,6 +201,16 @@ bool CInterfaceAcuLink::isCO2active()
 	}
 	return bCO2module;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is spo2active
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if spo 2active, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceAcuLink::isSPO2active()
 {
 	bool bSPO2module=false;
@@ -177,6 +220,14 @@ bool CInterfaceAcuLink::isSPO2active()
 	}
 	return bSPO2module;
 }
+
+/**********************************************************************************************//**
+ * Sends the measurement data ippv
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceAcuLink::sendMeasurementDataIPPV()
 {
 	setMeasurementData(ALINK_MSMNT_P_PEAK,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_P_PEAK));
@@ -253,6 +304,14 @@ void CInterfaceAcuLink::sendMeasurementDataIPPV()
 		setMeasurementData(ALINK_MSMNT_VTEKG,ALINK_NOTVALID);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sends the measurement data sippv
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceAcuLink::sendMeasurementDataSIPPV()
 {
 	setMeasurementData(ALINK_MSMNT_P_PEAK,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_P_PEAK));
@@ -328,6 +387,13 @@ void CInterfaceAcuLink::sendMeasurementDataSIPPV()
 		setMeasurementData(ALINK_MSMNT_VTEKG,ALINK_NOTVALID);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sends the measurement data psv
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CInterfaceAcuLink::sendMeasurementDataPSV()
 {
@@ -407,6 +473,14 @@ void CInterfaceAcuLink::sendMeasurementDataPSV()
 		setMeasurementData(ALINK_MSMNT_VTEKG,ALINK_NOTVALID);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sends the measurement data simv
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceAcuLink::sendMeasurementDataSIMV()
 {
 	setMeasurementData(ALINK_MSMNT_P_PEAK,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_P_PEAK));
@@ -489,6 +563,14 @@ void CInterfaceAcuLink::sendMeasurementDataSIMV()
 		setMeasurementData(ALINK_MSMNT_VTEKG,ALINK_NOTVALID);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sends the measurement data simvpsv
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceAcuLink::sendMeasurementDataSIMVPSV()
 {
 	setMeasurementData(ALINK_MSMNT_P_PEAK,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_P_PEAK));
@@ -574,6 +656,14 @@ void CInterfaceAcuLink::sendMeasurementDataSIMVPSV()
 		setMeasurementData(ALINK_MSMNT_VTEKG,ALINK_NOTVALID);
 	}	
 }
+
+/**********************************************************************************************//**
+ * Sends the measurement data cpap
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceAcuLink::sendMeasurementDataCPAP()
 {
 	setMeasurementData(ALINK_MSMNT_P_PEAK,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_P_PEAK));
@@ -659,6 +749,14 @@ void CInterfaceAcuLink::sendMeasurementDataCPAP()
 		setMeasurementData(ALINK_MSMNT_VTEKG,ALINK_NOTVALID);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sends the measurement data duopap
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceAcuLink::sendMeasurementDataDUOPAP()
 {
 	setMeasurementData(ALINK_MSMNT_P_PEAK,getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_P_PEAK));
@@ -727,6 +825,14 @@ void CInterfaceAcuLink::sendMeasurementDataDUOPAP()
 	setMeasurementData(ALINK_MSMNT_RSBI,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_VTEKG,ALINK_NOTVALID);
 }
+
+/**********************************************************************************************//**
+ * Sends the measurement data ncpap
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceAcuLink::sendMeasurementDataNCPAP()
 {
 	setMeasurementData(ALINK_MSMNT_P_PEAK,ALINK_NOTVALID);
@@ -795,6 +901,14 @@ void CInterfaceAcuLink::sendMeasurementDataNCPAP()
 	setMeasurementData(ALINK_MSMNT_RSBI,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_VTEKG,ALINK_NOTVALID);
 }
+
+/**********************************************************************************************//**
+ * Sends the measurement data therapie
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceAcuLink::sendMeasurementDataTHERAPIE()
 {
 	setMeasurementData(ALINK_MSMNT_P_PEAK,ALINK_NOTVALID);
@@ -864,6 +978,14 @@ void CInterfaceAcuLink::sendMeasurementDataTHERAPIE()
 	setMeasurementData(ALINK_MSMNT_RSBI,ALINK_NOTVALID);
 	setMeasurementData(ALINK_MSMNT_VTEKG,ALINK_NOTVALID);
 }
+
+/**********************************************************************************************//**
+ * Sends the measurement data hfo
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceAcuLink::sendMeasurementDataHFO()
 {
 	//AmplitudeCorrectionFactor
@@ -951,6 +1073,14 @@ void CInterfaceAcuLink::sendMeasurementDataHFO()
 		setMeasurementData(ALINK_MSMNT_VTEKG,ALINK_NOTVALID);
 	}
 }
+
+/**********************************************************************************************//**
+ * Clears the alarm array
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceAcuLink::clearAlarmArray()
 {
 	setAlarmData(ALINK_ALARM_PatAl_Apnoe,0);
@@ -1032,9 +1162,17 @@ void CInterfaceAcuLink::clearAlarmArray()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets link type
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iLinkType	Type of the link.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CInterfaceAcuLink::setLinkType(int iLinkType)
 {
 	fiLinkType=iLinkType;
@@ -1042,10 +1180,15 @@ int CInterfaceAcuLink::setLinkType(int iLinkType)
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Gets acu link error
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The acu link error.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 UINT CInterfaceAcuLink::getAcuLinkError()
 {
 	//if(pGetAclError)
@@ -1056,9 +1199,17 @@ UINT CInterfaceAcuLink::getAcuLinkError()
 	return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets net port
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	uiPort	The port.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CInterfaceAcuLink::setNetPort(UINT uiPort)
 {
 	/*if(pSetNetPortFunc)
@@ -1067,9 +1218,17 @@ int CInterfaceAcuLink::setNetPort(UINT uiPort)
 	return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets a language
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	uiLang	The language.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CInterfaceAcuLink::setLanguage(UINT uiLang)
 {
 	/*if(pSetLanguageFunc)
@@ -1077,9 +1236,19 @@ int CInterfaceAcuLink::setLanguage(UINT uiLang)
 
 	return 0;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets graph data v 3
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iValVolume  	Zero-based index of the value volume.
+ * \param	iValPressure	Zero-based index of the value pressure.
+ * \param	iValFlow		Zero-based index of the value flow.
+ * \param	iValCO2			Zero-based index of the value co 2.
+ **************************************************************************************************/
+
 void CInterfaceAcuLink::setGraphDataV3(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2)
 {
 	//WaveRecord rWaveRecord
@@ -1099,6 +1268,20 @@ void CInterfaceAcuLink::setGraphDataV3(SHORT iValVolume ,SHORT iValPressure ,SHO
 	//	}
 	//}
 }
+
+/**********************************************************************************************//**
+ * Sets graph data v 4
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iValVolume  	Zero-based index of the value volume.
+ * \param	iValPressure	Zero-based index of the value pressure.
+ * \param	iValFlow		Zero-based index of the value flow.
+ * \param	iValCO2			Zero-based index of the value co 2.
+ * \param	iValSPO2		Zero-based index of the value spo 2.
+ **************************************************************************************************/
+
 void CInterfaceAcuLink::setGraphDataV4(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2, SHORT iValSPO2)
 {
 	//WaveRecord rWaveRecord

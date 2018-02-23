@@ -1,9 +1,19 @@
+/**********************************************************************************************//**
+ * \file	Interface.cpp.
+ *
+ * Implements the interface class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "Interface.h"
 #include "MVModel.h"
 
-
-
+/**********************************************************************************************//**
+ * Initializes a new instance of the CInterface class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 CInterface::CInterface(void)
 {
@@ -11,13 +21,26 @@ CInterface::CInterface(void)
 
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CInterface class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 CInterface::~CInterface(void)
 {
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CInterface::getModel()
 {
 	if(m_pModel==NULL)
@@ -25,11 +48,18 @@ CMVModel *CInterface::getModel()
 	return m_pModel;
 }
 
+/**********************************************************************************************//**
+ * Query if 'oldTickCount' is safe tick count delay expired
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	oldTickCount	Number of old ticks.
+ * \param	delay			The delay.
+ *
+ * \return	True if safe tick count delay expired, false if not.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 	Time measurement
-// **************************************************************************
-//rkuTICKCOUNT
 bool CInterface::isSafeTickCountDelayExpired(DWORD oldTickCount, UINT delay)////used to check if old tick count plus delay is still lower than actual tickCount, (dwLastTickCount+DELAY<getTickCount64())
 {
 	bool bExpired=false;

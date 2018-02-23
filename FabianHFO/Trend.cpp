@@ -5,13 +5,26 @@
 #include "FabianHFO.h"
 #include "Trend.h"
 
-//CircularBuffer<BYTE> CTrend::m_rbufByteTrend(MAXSIZE_TREND_BUFFER);
-//CircularBuffer<BYTE> CTrend::m_rbufByteTrend(512);
-
-//#define IDS_CONFIG_DATA_FILE _T("\\FFSDISK\\test1.dat")
+/**********************************************************************************************//**
+ * Initializes a new instance of the Trend class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ * \param	parameter3	The third parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_SERIAL(CTrend,CObject,1)
-// CTrend
+
+/**********************************************************************************************//**
+ * CTrend
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CTrend::CTrend()
 {
 	m_dtTimestamp.SetStatus(COleDateTime::null);
@@ -28,6 +41,14 @@ CTrend::CTrend()
 	}
 
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CTrend class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CTrend::~CTrend(void)
 {
 	if (m_wBuffer != NULL) {
@@ -35,6 +56,15 @@ CTrend::~CTrend(void)
 		//m_wBuffer=NULL;
 	}
 }
+
+/**********************************************************************************************//**
+ * Serialize this instance to the given stream
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	ar	The archive.
+ **************************************************************************************************/
 
 void CTrend::Serialize(CArchive& ar)
 {
@@ -70,8 +100,17 @@ void CTrend::Serialize(CArchive& ar)
 	}
 }
 
-
-
+/**********************************************************************************************//**
+ * Writes a buffer
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	val		   	The value.
+ * \param	dtTimestamp	The dt timestamp.
+ *
+ * \return	A WORD.
+ **************************************************************************************************/
 
 WORD CTrend::WriteBuffer(WORD val, COleDateTime dtTimestamp)
 {
@@ -89,10 +128,30 @@ WORD CTrend::WriteBuffer(WORD val, COleDateTime dtTimestamp)
 	return m_wBufCount;
 }
 
+/**********************************************************************************************//**
+ * Gets buffer value
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	pos	The position.
+ *
+ * \return	The buffer value.
+ **************************************************************************************************/
+
 WORD CTrend::GetBufferValue(UINT pos)
 {
 	return m_wBuffer[pos];
 }
+
+/**********************************************************************************************//**
+ * Gets the timestamp
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The timestamp.
+ **************************************************************************************************/
 
 COleDateTime CTrend::GetTimestamp()
 {
@@ -111,6 +170,16 @@ COleDateTime CTrend::GetTimestamp()
 //	CStringW szTime2 = m_dtTimestamp.Format(LOCALE_NOUSEROVERRIDE,LANG_USER_DEFAULT);
 //	DEBUGMSG(TRUE, (TEXT("SetTimestamp1 %s\r\n"),szTime2));
 //}
+
+/**********************************************************************************************//**
+ * Sets a timestamp
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	timestamp	The timestamp.
+ **************************************************************************************************/
+
 void CTrend::SetTimestamp(COleDateTime timestamp)
 {
 	m_dtTimestamp=timestamp;
@@ -118,15 +187,40 @@ void CTrend::SetTimestamp(COleDateTime timestamp)
 	//DEBUGMSG(TRUE, (TEXT("SetTimestamp2 %s\r\n"),szTime));
 }
 
+/**********************************************************************************************//**
+ * Gets buffer count
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The buffer count.
+ **************************************************************************************************/
 
 WORD CTrend::GetBufferCount()
 {
 	return m_wBufCount;
 }
+
+/**********************************************************************************************//**
+ * Sets buffer count
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	count	Number of.
+ **************************************************************************************************/
+
 void CTrend::SetBufferCount(WORD count)
 {
 	m_wBufCount=count;
 }
+
+/**********************************************************************************************//**
+ * Resets the buffer
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CTrend::ResetBuffer()
 {

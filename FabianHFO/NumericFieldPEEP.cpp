@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldPEEP.h"
 
-
-// CNumericFieldPEEP
+/**********************************************************************************************//**
+ * CNumericFieldPEEP
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldPEEP, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldPEEP class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldPEEP::CNumericFieldPEEP(eNumericSize size):
 CNumericField(size)
@@ -25,6 +41,13 @@ CNumericField(size)
 	}
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldPEEP class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CNumericFieldPEEP::~CNumericFieldPEEP()
 {
 }
@@ -36,26 +59,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldPEEP, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldPEEP message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldPEEP message handlers
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericFieldPEEP::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CNumericFieldPEEP::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldPEEP::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -139,10 +169,6 @@ bool CNumericFieldPEEP::drawData(bool bData, bool bFrames, bool bText, bool bLim
 	return bReturn;
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldPEEP::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -162,9 +188,17 @@ bool CNumericFieldPEEP::drawData(bool bData, bool bFrames, bool bText, bool bLim
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldPEEP::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -219,10 +253,17 @@ bool CNumericFieldPEEP::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldPEEP::drawLimits(CDC* pDC)
 {
 	HDC hdc = *pDC;

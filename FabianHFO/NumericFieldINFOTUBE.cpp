@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldINFOTUBE.h"
 
-
-// CNumericFieldINFOTUBE
+/**********************************************************************************************//**
+ * CNumericFieldINFOTUBE
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldINFOTUBE, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldINFOTUBE class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldINFOTUBE::CNumericFieldINFOTUBE(eNumericSize size):
 CNumericField(size)
@@ -21,6 +37,13 @@ CNumericField(size)
 	//m_pcNumInfoBot		= new CBmp(theApp.m_hInstance,m_hDC,	IDB_NUM_INFO_BOT);
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldINFOTUBE class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CNumericFieldINFOTUBE::~CNumericFieldINFOTUBE()
 {
 }
@@ -32,17 +55,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldINFOTUBE, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldINFOTUBE message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldINFOTUBE message handlers
 void CNumericFieldINFOTUBE::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldINFOTUBE::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -85,10 +124,17 @@ bool CNumericFieldINFOTUBE::drawData(bool bData, bool bFrames, bool bText, bool 
 	return bReturn;
 }
 
+/**********************************************************************************************//**
+ * Draw frames
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldINFOTUBE::drawFrames(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -115,9 +161,17 @@ bool CNumericFieldINFOTUBE::drawFrames(CDC* pDC)
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldINFOTUBE::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -154,10 +208,17 @@ bool CNumericFieldINFOTUBE::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldINFOTUBE::drawLimits(CDC* pDC)
 {
 	return true;

@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	MVModel.cpp.
+ *
+ * Implements the mv model class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "MVModel.h"
 //#include "acuLink.h"
@@ -8,6 +14,12 @@
 
 //#include "acuLinkLib.h"
 
+/**********************************************************************************************//**
+ * A macro that defines volgaranty delay
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 #define VOLGARANTY_DELAY 2000
 
@@ -48,22 +60,132 @@ CAlarmMgmtHandler*  CMVModel::ALARMHANDLER=NULL;
 CConfiguration* CMVModel::CONFIG=NULL;
 CLanguage* CMVModel::LANGUAGE=NULL;
 
+/**********************************************************************************************//**
+ * A macro that defines malloc
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	x	A void to process.
+ **************************************************************************************************/
 
 #define MALLOC(x) HeapAlloc(GetProcessHeap(), 0, (x))
+
+/**********************************************************************************************//**
+ * A macro that defines free
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	x	A void to process.
+ **************************************************************************************************/
+
 #define FREE(x) HeapFree(GetProcessHeap(), 0, (x))
 
 CList <CModelObserver*, CModelObserver*> CMVModel::m_ObserverList(10);
 
+/**********************************************************************************************//**
+ * Notifies the calculate alarm limit
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CModelObserver::NotifyCalculateAlarmLimit(){}
+
+/**********************************************************************************************//**
+ * Notifies the alarm limit changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CModelObserver::NotifyAlarmLimitChanged(){}
+
+/**********************************************************************************************//**
+ * Notifies the data changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CModelObserver::NotifyDataChanged(){}
+
+/**********************************************************************************************//**
+ * Notifies the exspiration data changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CModelObserver::NotifyExspirationDataChanged(){}
+
+/**********************************************************************************************//**
+ * Notifies the view state changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CModelObserver::NotifyViewStateChanged(){}
+
+/**********************************************************************************************//**
+ * Notifies the vent mode changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CModelObserver::NotifyVentModeChanged(){}
+
+/**********************************************************************************************//**
+ * Notifies the language changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CModelObserver::NotifyLanguageChanged(){}
+
+/**********************************************************************************************//**
+ * Notifies an event
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
+
 void CModelObserver::NotifyEvent(CMVEvent* pEvent){}
+
+/**********************************************************************************************//**
+ * Notifies a para button event
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
+
 void CModelObserver::NotifyParaBtnEvent(CMVEvent* pEvent){}
+
+/**********************************************************************************************//**
+ * Notifies a view focus changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iViewID	Identifier for the view.
+ **************************************************************************************************/
+
 void CModelObserver::NotifyViewFocusChanged(int iViewID){}
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CMVModel class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CMVModel::CMVModel(void)
 {
@@ -153,9 +275,13 @@ CMVModel::CMVModel(void)
 	//m_bI2Cinitialized=false;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Finalizes an instance of the CMVModel class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CMVModel::~CMVModel(void)
 {
 	if(LANGUAGE)
@@ -174,9 +300,15 @@ CMVModel::~CMVModel(void)
 	DeleteCriticalSection(&m_csSerial);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
+
 CMVModel* CMVModel::GetInstance()
 {
 	if(theModel == 0)
@@ -186,9 +318,13 @@ CMVModel* CMVModel::GetInstance()
 	return theModel;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::DestroyInstance()
 {
 	if(theModel != NULL)
@@ -197,6 +333,16 @@ void CMVModel::DestroyInstance()
 		theModel = NULL;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets alarm thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the alarm thread.
+ **************************************************************************************************/
+
 CThreadAlarm *CMVModel::getAlarmThread()
 {
 	if(ALARMTHR==NULL)
@@ -205,6 +351,16 @@ CThreadAlarm *CMVModel::getAlarmThread()
 	}
 	return ALARMTHR;
 }
+
+/**********************************************************************************************//**
+ * Gets flowsensor thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the flowsensor thread.
+ **************************************************************************************************/
+
 CThreadFlowsensor *CMVModel::getFlowsensorThread()
 {
 	if(FLOWSENSORTHR==NULL)
@@ -213,6 +369,16 @@ CThreadFlowsensor *CMVModel::getFlowsensorThread()
 	}
 	return FLOWSENSORTHR;
 }
+
+/**********************************************************************************************//**
+ * Gets exspiration thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the exspiration thread.
+ **************************************************************************************************/
+
 CThreadExspiration *CMVModel::getExspirationThread()
 {
 	if(EXSPIRATIONTHR==NULL)
@@ -221,6 +387,16 @@ CThreadExspiration *CMVModel::getExspirationThread()
 	}
 	return EXSPIRATIONTHR;
 }
+
+/**********************************************************************************************//**
+ * Gets prico thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the prico thread.
+ **************************************************************************************************/
+
 CThreadPRICO *CMVModel::getPRICOThread()
 {
 	if(PRICOTHR==NULL)
@@ -231,6 +407,16 @@ CThreadPRICO *CMVModel::getPRICOThread()
 	}
 	return PRICOTHR;
 }
+
+/**********************************************************************************************//**
+ * Gets fot thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the fot thread.
+ **************************************************************************************************/
+
 CThreadFOT *CMVModel::getFOTThread()
 {
 	if(FOTTHR==NULL)
@@ -242,6 +428,16 @@ CThreadFOT *CMVModel::getFOTThread()
 	}
 	return FOTTHR;
 }
+
+/**********************************************************************************************//**
+ * Gets monitor thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the monitor thread.
+ **************************************************************************************************/
+
 CThreadMonitor *CMVModel::getMonitorThread()
 {
 	if(MONITORTHR==NULL)
@@ -251,6 +447,15 @@ CThreadMonitor *CMVModel::getMonitorThread()
 	return MONITORTHR;
 }
 
+/**********************************************************************************************//**
+ * Vmodehandler, called when the get vmode
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the vmodehandler.
+ **************************************************************************************************/
+
 CVentModeHandler *CMVModel::getVMODEHANDLER()
 {
 	if(MODEHANDLER==NULL)
@@ -259,6 +464,16 @@ CVentModeHandler *CMVModel::getVMODEHANDLER()
 	}
 	return MODEHANDLER;
 }
+
+/**********************************************************************************************//**
+ * Datahandler, called when the get data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the datahandler.
+ **************************************************************************************************/
+
 CDataHandler *CMVModel::getDATAHANDLER()
 {
 	if(DATAHANDLER==NULL)
@@ -268,6 +483,15 @@ CDataHandler *CMVModel::getDATAHANDLER()
 	return DATAHANDLER;
 }
 
+/**********************************************************************************************//**
+ * Gets the configuration
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the configuration.
+ **************************************************************************************************/
+
 CConfiguration *CMVModel::getCONFIG()
 {
 	if(CONFIG==NULL)
@@ -276,6 +500,16 @@ CConfiguration *CMVModel::getCONFIG()
 	}
 	return CONFIG;
 }
+
+/**********************************************************************************************//**
+ * Gets the language
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the language.
+ **************************************************************************************************/
+
 CLanguage *CMVModel::getLANGUAGE()
 { 
 	if(LANGUAGE==NULL)
@@ -284,6 +518,16 @@ CLanguage *CMVModel::getLANGUAGE()
 	}
 	return LANGUAGE;
 }
+
+/**********************************************************************************************//**
+ * Gets the terminal
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the terminal.
+ **************************************************************************************************/
+
 CInterfaceTerminal *CMVModel::getTERMINAL()
 { 
 	if(TERMINAL==NULL)
@@ -299,6 +543,16 @@ CInterfaceTerminal *CMVModel::getTERMINAL()
 	}
 	return TERMINAL;
 }
+
+/**********************************************************************************************//**
+ * Gets aculink
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the aculink.
+ **************************************************************************************************/
+
 CInterfaceAcuLink *CMVModel::getAcuLink()
 { 
 	if(ACULINK==NULL)
@@ -307,6 +561,16 @@ CInterfaceAcuLink *CMVModel::getAcuLink()
 	}
 	return ACULINK;
 }
+
+/**********************************************************************************************//**
+ * Gets etco2
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the etco2.
+ **************************************************************************************************/
+
 CInterfaceCO2 *CMVModel::getETCO2()
 { 
 	EnterCriticalSection(&m_csETCO2);
@@ -318,6 +582,16 @@ CInterfaceCO2 *CMVModel::getETCO2()
 	
 	return ETCO2;
 }
+
+/**********************************************************************************************//**
+ * Gets spo2
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the spo2.
+ **************************************************************************************************/
+
 CInterfaceSPO2 *CMVModel::getSPO2()
 { 
 	EnterCriticalSection(&m_csSPO2);
@@ -330,6 +604,15 @@ CInterfaceSPO2 *CMVModel::getSPO2()
 	return SPO2;
 }
 
+/**********************************************************************************************//**
+ * Gets the serial
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the serial.
+ **************************************************************************************************/
+
 CInterfaceSerial *CMVModel::getSERIAL()
 { 
 	EnterCriticalSection(&m_csSerial);
@@ -341,6 +624,16 @@ CInterfaceSerial *CMVModel::getSERIAL()
 	
 	return SERIAL;
 }
+
+/**********************************************************************************************//**
+ * Gets the spi
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the spi.
+ **************************************************************************************************/
+
 CInterfaceSPI *CMVModel::getSPI()
 {
 	if(SPI==NULL)
@@ -349,6 +642,16 @@ CInterfaceSPI *CMVModel::getSPI()
 	}
 	return SPI;
 }
+
+/**********************************************************************************************//**
+ * Gets the pif
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the pif.
+ **************************************************************************************************/
+
 CInterfaceFSBus *CMVModel::getPIF()
 { 
 	if(PIF==NULL)
@@ -357,6 +660,16 @@ CInterfaceFSBus *CMVModel::getPIF()
 	}
 	return PIF;
 }
+
+/**********************************************************************************************//**
+ * Gets the dio
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the dio.
+ **************************************************************************************************/
+
 CInterfaceDIO *CMVModel::getDIO()
 { 
 	if(DIO==NULL /*&& !m_bDIOerror*/)
@@ -365,6 +678,16 @@ CInterfaceDIO *CMVModel::getDIO()
 	}
 	return DIO;
 }
+
+/**********************************************************************************************//**
+ * Gets i2c
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the i2c.
+ **************************************************************************************************/
+
 CInterfaceI2C *CMVModel::getI2C()
 { 
 	EnterCriticalSection(&m_csI2C);
@@ -375,6 +698,16 @@ CInterfaceI2C *CMVModel::getI2C()
 	LeaveCriticalSection(&m_csI2C);
 	return I2C;
 }
+
+/**********************************************************************************************//**
+ * Gets the sound
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the sound.
+ **************************************************************************************************/
+
 CSoundPlayer *CMVModel::getSOUND()
 { 
 	if(SOUND==NULL)
@@ -383,6 +716,16 @@ CSoundPlayer *CMVModel::getSOUND()
 	}
 	return SOUND;
 }
+
+/**********************************************************************************************//**
+ * get the alarmhandler
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else a larmhandler.
+ **************************************************************************************************/
+
 CAlarmMgmtHandler* CMVModel::getALARMHANDLER()
 { 
 	if(ALARMHANDLER==NULL)
@@ -392,10 +735,16 @@ CAlarmMgmtHandler* CMVModel::getALARMHANDLER()
 	return ALARMHANDLER;
 }
 
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	szFontName 	Name of the font.
+ * \param	wLanguageID	Identifier for the language.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 {
 	theApp.getLog()->WriteLine(_T("#M:001"));
@@ -675,6 +1024,12 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 //	return bTemp;
 //}
 
+/**********************************************************************************************//**
+ * Initializes the terminal
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMVModel::initTerminal()
 {
@@ -690,6 +1045,13 @@ void CMVModel::initTerminal()
 	}
 }
 
+/**********************************************************************************************//**
+ * Deinit terminal
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::deinitTerminal()
 {
 	if(TERMINAL)
@@ -700,10 +1062,25 @@ void CMVModel::deinitTerminal()
 	TERMINAL=NULL;
 }
 
+/**********************************************************************************************//**
+ * Initializes the prico thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::initPRICOthread()
 {
 	PRICOTHR=CThreadPRICO::getInstance();
 }
+
+/**********************************************************************************************//**
+ * Deinit prico thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::deinitPRICOthread()
 {
 	bool bPRICOrunning=false;
@@ -727,10 +1104,25 @@ void CMVModel::deinitPRICOthread()
 	}
 }
 
+/**********************************************************************************************//**
+ * Initializes the fot thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::initFOTthread()
 {
 	FOTTHR=CThreadFOT::getInstance();
 }
+
+/**********************************************************************************************//**
+ * Deinit fot thread
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::deinitFOTthread()
 {
 	if(FOTTHR)
@@ -739,6 +1131,14 @@ void CMVModel::deinitFOTthread()
 		FOTTHR=NULL;
 	}
 }
+
+/**********************************************************************************************//**
+ * Initializes the serial controller
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::initSerialController()
 {
 	EnterCriticalSection(&m_csSerial);
@@ -758,6 +1158,13 @@ void CMVModel::initSerialController()
 	LeaveCriticalSection(&m_csSerial);
 }
 
+/**********************************************************************************************//**
+ * Starts the threads
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::startThreads()
 {
 	if(getMonitorThread())
@@ -769,6 +1176,14 @@ void CMVModel::startThreads()
 	if(getExspirationThread())
 		getExspirationThread()->startExspirationThread();
 }
+
+/**********************************************************************************************//**
+ * Writes the vent range to log
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::writeVentRangeToLog()
 {
 	if(getCONFIG()->GetVentRange()==NEONATAL)
@@ -776,6 +1191,14 @@ void CMVModel::writeVentRangeToLog()
 	else
 		theApp.getLog()->WriteLine(_T("### PEDIATRIC MODE"));
 }
+
+/**********************************************************************************************//**
+ * Writes altitude to log
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::writeALTITUDEToLog()
 {
 	WORD iAltitude=getI2C()->ReadConfigWord(ALTITUDE_16);
@@ -783,6 +1206,14 @@ void CMVModel::writeALTITUDEToLog()
 	szAlt.Format(_T("### ALTITUDE %d"), iAltitude);
 	theApp.getLog()->WriteLine(szAlt);
 }
+
+/**********************************************************************************************//**
+ * Writes the leakcompensation to log
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::writeLEAKCOMPENSATIONToLog()
 {
 	eLeakCompensation eLeakCompOff=getCONFIG()->getLeakCompensation();
@@ -810,6 +1241,14 @@ void CMVModel::writeLEAKCOMPENSATIONToLog()
 		break;
 	}
 }	
+
+/**********************************************************************************************//**
+ * Writes the bias flow state to log
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::writeBIASFlowStateToLog()
 {
 	if(getCONFIG()->isBiasFlowActive())
@@ -821,12 +1260,28 @@ void CMVModel::writeBIASFlowStateToLog()
 		theApp.getLog()->WriteLine(_T("### BiasFlow disabled"));
 	}
 }
+
+/**********************************************************************************************//**
+ * Writes the configuration version to log
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::writeConfigVersionToLog()
 {
 	CStringW szConfigVersion=_T("");
 	szConfigVersion.Format(_T("### Config-Version %d"), getCONFIG()->getConfigVersion());
 	theApp.getLog()->WriteLine(szConfigVersion);
 }
+
+/**********************************************************************************************//**
+ * Writes the kernel version to log
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::writeKernelVersionToLog()
 {
 	CString csKernel=_T("");
@@ -850,6 +1305,14 @@ void CMVModel::writeKernelVersionToLog()
 //	szSerial.Format(_T("### Serial3 %s"), regSerial3.ReadString(_T("Dll"), _T("unknown")));
 //	theApp.getLog()->WriteLine(szSerial);
 //}
+
+/**********************************************************************************************//**
+ * Writes the mainboard version to log
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::writeMainboardVersionToLog()
 {
 	BYTE iMainVersion=getCONFIG()->GetMainBoardVersion();
@@ -859,6 +1322,16 @@ void CMVModel::writeMainboardVersionToLog()
 	szMB.Format(_T("***MAINBOARD  %d.%d, "), iMajor,iMinor);
 	theApp.getLog()->WriteLine(szMB);
 }
+
+/**********************************************************************************************//**
+ * Initializes the aculink
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVModel::initAcuLink()
 {
 	CStringW szLicenseFile=_T("ML");
@@ -919,6 +1392,13 @@ bool CMVModel::initAcuLink()
 	}
 }
 
+/**********************************************************************************************//**
+ * Check unique identifier
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::checkUniqueID()
 {
 	bool bFalseID=false;
@@ -948,6 +1428,13 @@ void CMVModel::checkUniqueID()
 	}
 }
 
+/**********************************************************************************************//**
+ * Writes the uniqueid to log
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::writeUniqueIDtoLog()
 {
 	if(m_szUniqueID==_T(""))
@@ -964,6 +1451,14 @@ void CMVModel::writeUniqueIDtoLog()
 	}
 	
 }
+
+/**********************************************************************************************//**
+ * Sets network address as unique identifier
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::setNetworkAddressAsUniqueID()
 {
 	theApp.getLog()->WriteLine(_T("#HFO:0225"));
@@ -1003,7 +1498,14 @@ void CMVModel::setNetworkAddressAsUniqueID()
 	}*/
 }
 
-
+/**********************************************************************************************//**
+ * get the Viewhandler
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the viewhandler.
+ **************************************************************************************************/
 
 CMVViewHandler *CMVModel::getVIEWHANDLER()
 {
@@ -1015,9 +1517,13 @@ CMVViewHandler *CMVModel::getVIEWHANDLER()
 	return VIEWHANDLER;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Deinits this instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::Deinit()
 {
 	m_ObserverList.RemoveAll();
@@ -1186,14 +1692,14 @@ void CMVModel::Deinit()
 	}
 	CONFIG=NULL;
 }
-//=============================================================================
-/**
- * @brief Initialize etCO2 module (singleton).
+
+/**********************************************************************************************//**
+ * Initializes the co2module
  *
- * 
- *
- **/
-//=============================================================================
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::initCO2module()
 {
 	if(getCONFIG()->getCO2module()!=CO2MODULE_NONE)
@@ -1253,6 +1759,14 @@ void CMVModel::initCO2module()
 	
 	logCO2module();
 }
+
+/**********************************************************************************************//**
+ * Logs co2module
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::logCO2module()
 {
 	switch(getCONFIG()->getCO2module())
@@ -1275,7 +1789,12 @@ void CMVModel::logCO2module()
 	}
 }
 
-
+/**********************************************************************************************//**
+ * Deinit co2module
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMVModel::DeinitCO2module()
 {
@@ -1288,6 +1807,15 @@ void CMVModel::DeinitCO2module()
 	}
 
 } 
+
+/**********************************************************************************************//**
+ * Sets co2inprogress
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
 
 void CMVModel::setCO2inprogress(bool bState)
 {
@@ -1302,72 +1830,30 @@ void CMVModel::setCO2inprogress(bool bState)
 		DEBUGMSG(TRUE, (TEXT("setCO2inprogress false\r\n")));
 	}
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is co2inprogress
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if co 2inprogress, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::isCO2inprogress()
 {
 	return m_bCO2inprogress;
 }
 
+/**********************************************************************************************//**
+ * Initializes the spo2module
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bReinit	True to reinitialize.
+ **************************************************************************************************/
 
-//=============================================================================
-/**
- * @brief Initialize Inbiolab module (singleton).
- *
- * 
- *
- **/
-//=============================================================================
-//void CMVModel::InitInbiolabModule()
-//{
-//	//DEBUGMSG(TRUE, (TEXT("CMVModel::InitSPO2module()\r\n")));
-//	if(INBIOLAB==NULL /*&& getCONFIG()->getSPO2module()!=SPO2MODULE_NONE*/)
-//	{
-//		//DEBUGMSG(TRUE, (TEXT("CMVModel::InitSPO2module() 1\r\n")));
-//		INBIOLAB=CInterfaceCOMport::GetInstance(COMMODULE_INBIOLAB);
-//
-//		if(INBIOLAB->Init(9)==0)
-//		{
-//			//DEBUGMSG(TRUE, (TEXT("CMVModel::InitSPO2module() 2\r\n")));
-//			//m_bInbiolabInitialized=true;
-//		}
-//		else
-//		{
-//			getDATAHANDLER()->setCOMErrorCode(ERRC_USB_SPO2_INIT);
-//		}
-//	}
-//	else
-//	{
-//		//DEBUGMSG(TRUE, (TEXT("CMVModel::InitSPO2module() 3\r\n")));
-//		INBIOLAB=NULL;
-//		//m_bInbiolabInitialized=false;
-//	}
-//}
-//void CMVModel::DeinitInbiolabModule()
-//{
-//	//m_bInbiolabInitialized=false;
-//	//DEBUGMSG(TRUE, (TEXT("CMVModel::DeinitSPO2module()\r\n")));
-//
-//	if(INBIOLAB)
-//	{
-//		//DEBUGMSG(TRUE, (TEXT("CMVModel::DeinitSPO2module() 1\r\n")));
-//		GetInbiolabModule()->Deinit();
-//		//DEBUGMSG(TRUE, (TEXT("CMVModel::DeinitSPO2module() 2\r\n")));
-//
-//		INBIOLAB->DestroyInstance();
-//		INBIOLAB=NULL;
-//	}
-//}
-//bool CMVModel::isInbiolabInitialized()
-//{
-//	return m_bInbiolabInitialized;
-//}
-//=============================================================================
-/**
- * @brief Initialize SpO2 module (singleton).
- *
- * 
- *
- **/
-//=============================================================================
 void CMVModel::initSPO2module(bool bReinit)
 {
 	if(getCONFIG()->getSPO2module()!=SPO2MODULE_NONE)
@@ -1397,6 +1883,14 @@ void CMVModel::initSPO2module(bool bReinit)
 	if(!bReinit)
 		logSPO2module();
 }
+
+/**********************************************************************************************//**
+ * Logs spo2module
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::logSPO2module()
 {
 	switch(getCONFIG()->getSPO2module())
@@ -1414,6 +1908,16 @@ void CMVModel::logSPO2module()
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Deinit spo2module
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bReinit	True to reinitialize.
+ **************************************************************************************************/
+
 void CMVModel::DeinitSPO2module(bool bReinit)
 {
 	m_bSPO2running=false;
@@ -1426,39 +1930,108 @@ void CMVModel::DeinitSPO2module(bool bReinit)
 	}
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is spo2running
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if spo 2running, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::isSPO2running()
 {
 	return m_bSPO2running;
 }
+
+/**********************************************************************************************//**
+ * Gets language identifier
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The language identifier.
+ **************************************************************************************************/
 
 WORD CMVModel::GetLanguageID()
 {
 	return m_wLanguageID;
 }
 
+/**********************************************************************************************//**
+ * Sets language identifier
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	id	The identifier.
+ **************************************************************************************************/
+
 void CMVModel::SetLanguageID(WORD id)
 {
 	m_wLanguageID=id;
 }
 
+/**********************************************************************************************//**
+ * Gets font face
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The font face.
+ **************************************************************************************************/
+
 CStringW CMVModel::GetFontFace()
 {
 	return m_szFontName;
 }
+
+/**********************************************************************************************//**
+ * Sets font face
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	name	The name.
+ **************************************************************************************************/
+
 void CMVModel::SetFontFace(CStringW name)
 {
 	m_szFontName=name;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is o2cal flag
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if o 2cal flag, false if not.
+ **************************************************************************************************/
 
 bool CMVModel::IsO2calFlag()
 {
 	return m_bO2calFlag;
 }
 
+/**********************************************************************************************//**
+ * Sets o2cal flag
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::SetO2calFlag()
 {
 	m_bO2calFlag=true;
 }
+
+/**********************************************************************************************//**
+ * Deletes the o2cal flag
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMVModel::DeleteO2calFlag()
 {
@@ -1472,37 +2045,83 @@ void CMVModel::DeleteO2calFlag()
 	}	
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is flowsensor flag
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if flowsensor flag, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::IsFlowsensorFlag()
 {
 	return m_bFlowsensor;
 }
+
+/**********************************************************************************************//**
+ * Deletes the flowsensor flag
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMVModel::DeleteFlowsensorFlag()
 {
 	m_bFlowsensor=false;
 }
 
+/**********************************************************************************************//**
+ * Gets main version
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The main version.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 CStringW CMVModel::GetMainVersion()
 {
 	return m_szVersion;
 }
+
+/**********************************************************************************************//**
+ * Gets build version
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The build version.
+ **************************************************************************************************/
 
 CStringW CMVModel::GetBuildVersion()
 {
 	return m_szBuildVersion;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets vent run state
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The vent run state.
+ **************************************************************************************************/
+
 eRunState CMVModel::GetVentRunState()
 {
 	return m_eVentRunState;
 }
+
+/**********************************************************************************************//**
+ * Sets vent run state
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CMVModel::SetVentRunState(eRunState state)
 {
 	m_eVentRunState=state;
@@ -1585,9 +2204,15 @@ void CMVModel::SetVentRunState(eRunState state)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Attach observer
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pObserver	If non-null, the observer.
+ **************************************************************************************************/
+
 void CMVModel::AttachObserver(CModelObserver* pObserver)
 {
 	EnterCriticalSection(&m_csObservers);
@@ -1595,9 +2220,15 @@ void CMVModel::AttachObserver(CModelObserver* pObserver)
 	LeaveCriticalSection(&m_csObservers);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Detach observer
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pObserver	If non-null, the observer.
+ **************************************************************************************************/
+
 void CMVModel::DetachObserver(CModelObserver* pObserver)
 {
 	EnterCriticalSection(&m_csObservers);
@@ -1614,14 +2245,15 @@ void CMVModel::DetachObserver(CModelObserver* pObserver)
 	LeaveCriticalSection(&m_csObservers);
 }
 
-//************************************
-// Method:    triggerInfoTextEvent
-// FullName:  CMVModel::triggerInfoTextEvent
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: CMVEvent * pEvent
-//************************************
+/**********************************************************************************************//**
+ * Trigger information text event
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
+
 void CMVModel::triggerInfoTextEvent(CMVEvent* pEvent)
 {
 	CMVEventInfotext* pUIEvent = (CMVEventInfotext*)pEvent;
@@ -1642,14 +2274,15 @@ void CMVModel::triggerInfoTextEvent(CMVEvent* pEvent)
 	}
 }
 
-//************************************
-// Method:    triggerControlEvent
-// FullName:  CMVModel::triggerControlEvent
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: CMVEvent * pEvent
-//************************************
+/**********************************************************************************************//**
+ * Trigger control event
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
+
 void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 {
 	CMVEventControl* pCtrlEvent = (CMVEventControl*)pEvent;
@@ -2163,14 +2796,15 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 	}
 }
 
-//************************************
-// Method:    triggerUIevent
-// FullName:  CMVModel::triggerUIevent
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: CMVEvent * pEvent
-//************************************
+/**********************************************************************************************//**
+ * Trigger ui event
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
+
 void CMVModel::triggerUIevent(CMVEvent* pEvent)
 {
 	CMVEventUI* pUIEvent = (CMVEventUI*)pEvent;
@@ -2932,14 +3566,15 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 	}
 }
 
-//************************************
-// Method:    triggerMatrixEvent
-// FullName:  CMVModel::triggerMatrixEvent
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: CMVEvent * pEvent
-//************************************
+/**********************************************************************************************//**
+ * Trigger matrix event
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
+
 void CMVModel::triggerMatrixEvent(CMVEvent* pEvent)
 {
 	if(getVIEWHANDLER()->getViewState()==VS_STARTUP || getVIEWHANDLER()->getViewState()==VS_PATDATA)
@@ -3361,14 +3996,15 @@ void CMVModel::triggerMatrixEvent(CMVEvent* pEvent)
 	}
 }
 
-//************************************
-// Method:    triggerAlarmEvent
-// FullName:  CMVModel::triggerAlarmEvent
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: CMVEvent * pEvent
-//************************************
+/**********************************************************************************************//**
+ * Trigger alarm event
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
+
 void CMVModel::triggerAlarmEvent(CMVEvent* pEvent)
 {
 	CMVEventAlarm* pUIEvent = (CMVEventAlarm*)pEvent;
@@ -3488,14 +4124,15 @@ void CMVModel::triggerAlarmEvent(CMVEvent* pEvent)
 	}
 }
 
-//************************************
-// Method:    triggerDataEvent
-// FullName:  CMVModel::triggerDataEvent
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: CMVEvent * pEvent
-//************************************
+/**********************************************************************************************//**
+ * Trigger data event
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
+
 void CMVModel::triggerDataEvent(CMVEvent* pEvent)
 {
 	CStringW eventData = _T("");
@@ -3520,16 +4157,18 @@ void CMVModel::triggerDataEvent(CMVEvent* pEvent)
 		break;
 	}
 }
-//************************************
-// Method:    triggerEvent
-// FullName:  CMVModel::triggerEvent
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: CMVEvent * pEvent
-// Parameter: int btnID
-// Parameter: int iGroupId
-//************************************
+
+/**********************************************************************************************//**
+ * Trigger event
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pEvent  	If non-null, the event.
+ * \param 		  	btnID   	Identifier for the button.
+ * \param 		  	iGroupId	Identifier for the group.
+ **************************************************************************************************/
+
 void CMVModel::triggerEvent(CMVEvent* pEvent, int btnID, int iGroupId)
 {
 	EnterCriticalSection(&m_csTrigger);
@@ -3572,10 +4211,17 @@ void CMVModel::triggerEvent(CMVEvent* pEvent, int btnID, int iGroupId)
 	
 }
 
+/**********************************************************************************************//**
+ * Httoi the given value
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value	The value.
+ *
+ * \return	An int.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 int CMVModel::_httoi(const TCHAR *value)
 {
 	struct CHexMap
@@ -3621,24 +4267,41 @@ int CMVModel::_httoi(const TCHAR *value)
 	return result;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets alimit state calculating
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CMVModel::SetAlimitStateCalculating(bool state)
 {
 	m_bCalculateAlarmlimitRunning=true;
 }
+
+/**********************************************************************************************//**
+ * Calculates the alarmlimit running
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVModel::CalculateAlarmlimitRunning()
 {
 	return m_bCalculateAlarmlimitRunning;
 }
 
+/**********************************************************************************************//**
+ * Change language
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CMVModel::ChangeLanguage()
 {
 	EnterCriticalSection(&m_csObservers);
@@ -3658,7 +4321,12 @@ void CMVModel::ChangeLanguage()
 	LeaveCriticalSection(&m_csObservers);
 }
 
-
+/**********************************************************************************************//**
+ * Notifies the view state changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMVModel::notifyViewStateChanged()
 {
@@ -3685,15 +4353,13 @@ void CMVModel::notifyViewStateChanged()
 	LeaveCriticalSection(&m_csObservers);
 }
 
+/**********************************************************************************************//**
+ * Notifies the vent mode changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-//************************************
-// Method:    notifyVentModeChanged
-// FullName:  CMVModel::notifyVentModeChanged
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
 void CMVModel::notifyVentModeChanged()
 {
 	EnterCriticalSection(&m_csObservers);
@@ -3719,14 +4385,15 @@ void CMVModel::notifyVentModeChanged()
 	LeaveCriticalSection(&m_csObservers);
 }
 
-//************************************
-// Method:    NotifyEvent
-// FullName:  CMVModel::NotifyEvent
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: CMVEvent * pEvent
-//************************************
+/**********************************************************************************************//**
+ * Notifies an event
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
+
 void CMVModel::NotifyEvent(CMVEvent* pEvent)
 {
 	try
@@ -3755,14 +4422,15 @@ void CMVModel::NotifyEvent(CMVEvent* pEvent)
 	
 }
 
-//************************************
-// Method:    NotifyParaBtnEvent
-// FullName:  CMVModel::NotifyParaBtnEvent
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: CMVEvent * pEvent
-//************************************
+/**********************************************************************************************//**
+ * Notifies a para button event
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
+
 void CMVModel::NotifyParaBtnEvent(CMVEvent* pEvent)
 {
 	EnterCriticalSection(&m_csObservers);
@@ -3787,13 +4455,13 @@ void CMVModel::NotifyParaBtnEvent(CMVEvent* pEvent)
 
 }
 
-//************************************
-// Method:    NotifyExspirationStart
-// FullName:  CMVModel::NotifyExspirationStart
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Notifies the exspiration start
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::NotifyExspirationStart()
 {
 	try
@@ -3820,13 +4488,13 @@ void CMVModel::NotifyExspirationStart()
 	}
 }
 
-//************************************
-// Method:    NotifyMonitorData
-// FullName:  CMVModel::NotifyMonitorData
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Notifies the monitor data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::NotifyMonitorData()
 {
 	try
@@ -3853,13 +4521,13 @@ void CMVModel::NotifyMonitorData()
 	}
 }
 
-//************************************
-// Method:    NotifyNewAlarmlimitData
-// FullName:  CMVModel::NotifyNewAlarmlimitData
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Notifies the new alarmlimit data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::NotifyNewAlarmlimitData()
 {
 	try
@@ -3887,13 +4555,13 @@ void CMVModel::NotifyNewAlarmlimitData()
 	}
 }
 
-//************************************
-// Method:    NotifyCalculateAlarmlimitData
-// FullName:  CMVModel::NotifyCalculateAlarmlimitData
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Notifies the calculate alarmlimit data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::NotifyCalculateAlarmlimitData()
 {
 	try
@@ -3921,14 +4589,17 @@ void CMVModel::NotifyCalculateAlarmlimitData()
 	}
 }
 
-//************************************
-// Method:    GetLanguageString
-// FullName:  CMVModel::GetLanguageString
-// Access:    public 
-// Returns:   CStringW
-// Qualifier:
-// Parameter: int nID
-//************************************
+/**********************************************************************************************//**
+ * Gets language string
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nID	The identifier.
+ *
+ * \return	The language string.
+ **************************************************************************************************/
+
 CStringW CMVModel::GetLanguageString(int nID) 
 {
 	EnterCriticalSection(&m_csLangString);
@@ -3938,14 +4609,15 @@ CStringW CMVModel::GetLanguageString(int nID)
 	return szTemp;
 }
 
-//************************************
-// Method:    NotifyViewFocusChanged
-// FullName:  CMVModel::NotifyViewFocusChanged
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: int iViewID
-//************************************
+/**********************************************************************************************//**
+ * Notifies a view focus changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iViewID	Identifier for the view.
+ **************************************************************************************************/
+
 void CMVModel::NotifyViewFocusChanged(int iViewID)
 {
 	try
@@ -3972,14 +4644,13 @@ void CMVModel::NotifyViewFocusChanged(int iViewID)
 	}
 }
 
+/**********************************************************************************************//**
+ * Check alarm data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-//************************************
-// Method:    CheckAlarmData
-// FullName:  CMVModel::CheckAlarmData
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
 void CMVModel::CheckAlarmData() 
 {
 	if(isSPIavailabel())
@@ -3995,13 +4666,13 @@ void CMVModel::CheckAlarmData()
 	}
 }
 
-//************************************
-// Method:    CheckFlowsensorData
-// FullName:  CMVModel::CheckFlowsensorData
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Check flowsensor data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::CheckFlowsensorData() 
 {
 	if(true==isSPIavailabel())
@@ -4016,14 +4687,17 @@ void CMVModel::CheckFlowsensorData()
 	}	
 }
 
-//************************************
-// Method:    ParseFlowsensorAlarmStateBytes
-// FullName:  CMVModel::ParseFlowsensorAlarmStateBytes
-// Access:    public 
-// Returns:   int
-// Qualifier:
-// Parameter: int iState
-//************************************
+/**********************************************************************************************//**
+ * Parse flowsensor alarm state bytes
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iState	Zero-based index of the state.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CMVModel::ParseFlowsensorAlarmStateBytes(int iState)
 {
 	int iChanged=0;
@@ -4265,38 +4939,45 @@ int CMVModel::ParseFlowsensorAlarmStateBytes(int iState)
 	return iChanged;
 }
 
-//************************************
-// Method:    IsSPIDisconnection
-// FullName:  CMVModel::IsSPIDisconnection
-// Access:    public 
-// Returns:   bool
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Query if this instance is spi disconnection
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if spi disconnection, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::IsSPIDisconnection()
 {
 	return m_bSPIDisconnection;
 }
 
-//************************************
-// Method:    IsSPI_TUBE_OCCLUSION
-// FullName:  CMVModel::IsSPI_TUBE_OCCLUSION
-// Access:    public 
-// Returns:   bool
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Query if this instance is spi tube occlusion
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if spi tube occlusion, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::IsSPI_TUBE_OCCLUSION()
 {
 	return m_bSPI_TUBE_OCCLUSION;
 }
 
-//************************************
-// Method:    ParseAlarmStateBytes
-// FullName:  CMVModel::ParseAlarmStateBytes
-// Access:    public 
-// Returns:   bool
-// Qualifier:
-// Parameter: int iAlarmState
-//************************************
+/**********************************************************************************************//**
+ * Parse alarm state bytes
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iAlarmState	State of the alarm.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVModel::ParseAlarmStateBytes(int iAlarmState)
 {
 	SHORT byTemp = iAlarmState;
@@ -4801,38 +5482,43 @@ bool CMVModel::ParseAlarmStateBytes(int iAlarmState)
 	
 }
 
-//************************************
-// Method:    GetVlimittedFlag
-// FullName:  CMVModel::GetVlimittedFlag
-// Access:    public 
-// Returns:   bool
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Gets vlimitted flag
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVModel::GetVlimittedFlag()
 {
 	return m_bVlimitted;
 }
 
-//************************************
-// Method:    getVGarantyAlarmFlag
-// FullName:  CMVModel::getVGarantyAlarmFlag
-// Access:    public 
-// Returns:   eVolumeGuarantyAlarm
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Gets vgaranty alarm flag
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The v garanty alarm flag.
+ **************************************************************************************************/
+
 eVolumeGuarantyAlarm CMVModel::getVGarantyAlarmFlag()
 {
 	return m_eVGaranty;
 }
 
-//************************************
-// Method:    SetSERIALavailability
-// FullName:  CMVModel::SetSERIALavailability
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: bool state
-//************************************
+/**********************************************************************************************//**
+ * Sets seria lavailable
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CMVModel::setSERIALavailable(bool state)
 {
 	m_bSERIALavailability=state;
@@ -4847,25 +5533,30 @@ void CMVModel::setSERIALavailable(bool state)
 		//DEBUGMSG(TRUE, (TEXT("### SetSERIALavailability false ###\r\n")));
 	}
 }
-//************************************
-// Method:    IsSERIALavailabel
-// FullName:  CMVModel::IsSERIALavailabel
-// Access:    public 
-// Returns:   bool
-// Qualifier:
-//************************************
+
+/**********************************************************************************************//**
+ * Query if this instance is seria lavailable
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if seria lavailable, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::isSERIALavailable()
 {
 	return m_bSERIALavailability;
 }
-//************************************
-// Method:    SetSPIavailability
-// FullName:  CMVModel::SetSPIavailability
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: bool state
-//************************************
+
+/**********************************************************************************************//**
+ * Sets sp iavailability
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CMVModel::setSPIavailability(bool state)
 {
 	if(state!=m_bSPIavailability)
@@ -4881,45 +5572,29 @@ void CMVModel::setSPIavailability(bool state)
 	}
 	m_bSPIavailability=state;
 }
-//************************************
-// Method:    IsSPIavailabel
-// FullName:  CMVModel::IsSPIavailabel
-// Access:    public 
-// Returns:   bool
-// Qualifier:
-//************************************
+
+/**********************************************************************************************//**
+ * Query if this instance is sp iavailabel
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if sp iavailabel, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::isSPIavailabel()
 {
 	return m_bSPIavailability;
 }
 
-//************************************
-// Method:    SetCheckSPIavailability
-// FullName:  CMVModel::SetCheckSPIavailability
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: bool state
-//************************************
-//void CMVModel::SetCheckSPIavailability(bool state)
-//{
-//	m_bCheckSPIavailability=state;
-//	
-//}
-
-//************************************
-// Method:    CheckSPIavailability
-// FullName:  CMVModel::CheckSPIavailability
-// Access:    public 
-// Returns:   bool
-// Qualifier:
-//************************************
-//bool CMVModel::CheckSPIavailability()
-//{
-//	return m_bCheckSPIavailability;
-//}
-
-
+/**********************************************************************************************//**
+ * Reinitializes the serial
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CMVModel::reinitSERIAL()
 {
@@ -4952,49 +5627,99 @@ bool CMVModel::reinitSERIAL()
 	return bRes;
 }
 
+/**********************************************************************************************//**
+ * Sets di oavailability
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CMVModel::SetDIOavailability(bool state)
 {
 	m_bDIOavailability=state;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is dio availability
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if di oavailability, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::IsDIOavailability()
 {
 	return m_bDIOavailability;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets pif availability
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CMVModel::SetPIFavailability(bool state)
 {
 	m_bPIFavailability=state;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is pif availability
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if pi favailability, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::IsPIFavailability()
 {
 	return m_bPIFavailability;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets aculink availability
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CMVModel::SetAcuLinkAvailability(bool state)
 {
 	m_bAcuLinkAvailability=state;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is acu link availability
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if acu link availability, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::IsAcuLinkAvailability()
 {
 	return m_bAcuLinkAvailability;
 }
 
+/**********************************************************************************************//**
+ * Resets the exhal valv calibration mode
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 bool CMVModel::ResetExhalValvCalMode()
 {
 	bool bRes=false;
@@ -5012,14 +5737,13 @@ bool CMVModel::ResetExhalValvCalMode()
 	return bRes;
 }
 
+/**********************************************************************************************//**
+ * Activates the o2 flush
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-//************************************
-// Method:    activateO2Flush
-// FullName:  CMVModel::activateO2Flush
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
 void CMVModel::activateO2Flush()
 {
 	EnterCriticalSection(&m_csO2Flush);
@@ -5050,13 +5774,13 @@ void CMVModel::activateO2Flush()
 		AfxGetApp()->GetMainWnd()->SetFocus();
 }
 
-//************************************
-// Method:    deactivateO2Flush
-// FullName:  CMVModel::deactivateO2Flush
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Deactivate o2 flush
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::deactivateO2Flush()
 {
 	EnterCriticalSection(&m_csO2Flush);
@@ -5071,13 +5795,15 @@ void CMVModel::deactivateO2Flush()
 		AfxGetApp()->GetMainWnd()->SetFocus();
 }
 
-//************************************
-// Method:    isO2FlushActive
-// FullName:  CMVModel::isO2FlushActive
-// Access:    public 
-// Returns:   bool
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Queries if the o2 flush is active
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if the o 2 flush is active, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::isO2FlushActive()
 {
 	bool bState=false;
@@ -5087,13 +5813,13 @@ bool CMVModel::isO2FlushActive()
 	return bState;
 }
 
-//************************************
-// Method:    activateMANBREATH
-// FullName:  CMVModel::activateMANBREATH
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Activates the manbreath
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::activateMANBREATH()
 {
 	theApp.getLog()->WriteLine(_T("***MATZ on"));
@@ -5103,13 +5829,13 @@ void CMVModel::activateMANBREATH()
 	Send_MODE_OPTION1(true,false);
 }
 
-//************************************
-// Method:    deactivateMANBREATH
-// FullName:  CMVModel::deactivateMANBREATH
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Deactivate manbreath
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::deactivateMANBREATH()
 {
 	theApp.getLog()->WriteLine(_T("***MATZ off"));
@@ -5126,42 +5852,84 @@ void CMVModel::deactivateMANBREATH()
 	Send_MODE_OPTION1(true,false);
 }
 
-//************************************
-// Method:    isMANBREATHrunning
-// FullName:  CMVModel::isMANBREATHrunning
-// Access:    public 
-// Returns:   bool
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Query if this instance is manbreath running
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if manbreat hrunning, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::isMANBREATHrunning()
 {
 	return m_bMANBREATHrunning;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets count down alarm silent
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iCount	Number of.
+ **************************************************************************************************/
+
 void CMVModel::SetCountDownAlarmSilent(int iCount)
 {
 	m_iCountDownAlarmSilent=iCount;
 }
+
+/**********************************************************************************************//**
+ * Gets count down alarm silent
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The count down alarm silent.
+ **************************************************************************************************/
+
 int CMVModel::GetCountDownAlarmSilent()
 {
 	return m_iCountDownAlarmSilent;
 }
+
+/**********************************************************************************************//**
+ * Stops count down alarm silent
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::StopCountDownAlarmSilent()
 {
 	m_iCountDownAlarmSilent=0;
 	getVIEWHANDLER()->StopCountDownAlarmSilent();
 }
+
+/**********************************************************************************************//**
+ * Draw count down alarm silent
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iCountDownAlarmSilent	Zero-based index of the count down alarm silent.
+ **************************************************************************************************/
+
 void CMVModel::DrawCountDownAlarmSilent(int iCountDownAlarmSilent)
 {
 	getVIEWHANDLER()->DrawCountDownAlarmSilent(iCountDownAlarmSilent);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets active alarm delay
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bDelay	True to delay.
+ **************************************************************************************************/
+
 void CMVModel::setActiveAlarmDelay(bool bDelay)
 {
 	/*if(bDelay)
@@ -5175,57 +5943,133 @@ void CMVModel::setActiveAlarmDelay(bool bDelay)
 	m_bActiveAlarmDelay=bDelay;
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is active alarm delay
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if active alarm delay, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::isActiveAlarmDelay()
 {
 	return m_bActiveAlarmDelay;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets state calibration view
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CMVModel::SetStateCalibrationView(bool state)
 {
 	m_bCalibrationViewActive=state;
 }
+
+/**********************************************************************************************//**
+ * Queries if the calibration view is active
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if the calibration view is active, false if not.
+ **************************************************************************************************/
 
 bool CMVModel::IsCalibrationViewActive()
 {
 	return m_bCalibrationViewActive;
 }
 
+/**********************************************************************************************//**
+ * Starts an installer
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::StartInstaller()
 {
 	m_bInstaller=true;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is installer
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if installer, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::IsInstaller()
 {
 	return m_bInstaller;
 }
 
+/**********************************************************************************************//**
+ * Sets accu turnoff
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMVModel::SetAccuTurnoff()
 {
 	m_bAccuTurnOff=true;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is accu turnoff
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if accu turnoff, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::IsAccuTurnoff()
 {
 	return m_bAccuTurnOff;
 }
 
-//void CMVModel::Quit()
-//{
-//	m_bExit=true;
-//}
-
-
+/**********************************************************************************************//**
+ * Enables the pattern alarm o2dependend
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMVModel::EnablePatAlarmO2dependend()
 {
 	m_bPatAlarmO2dependendEnabled=true;
 }
+
+/**********************************************************************************************//**
+ * Disables the pattern alarm o2dependend
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::DisablePatAlarmO2dependend()
 {
 	m_bPatAlarmO2dependendEnabled=false;
 }
+
+/**********************************************************************************************//**
+ * Queries if the pattern alarm o2dependend is enabled
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if the pattern alarm o 2dependend is enabled, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::IsPatAlarmO2dependendEnabled()
 {
 	return m_bPatAlarmO2dependendEnabled;
@@ -5241,15 +6085,45 @@ bool CMVModel::IsPatAlarmO2dependendEnabled()
 //	return m_bMainthreadPending;
 //}
 
+/**********************************************************************************************//**
+ * Sets video running
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
+
 void CMVModel::SetVideoRunning(bool bState)
 {
 	m_bVideoRunning=bState;
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is video running
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if video running, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::IsVideoRunning()
 {
 	return m_bVideoRunning;
 }
+
+/**********************************************************************************************//**
+ * Sends a mode option 1
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bSPI   	True to spi.
+ * \param	bSerial	True to serial.
+ *
+ * \return	A WORD.
+ **************************************************************************************************/
 
 WORD CMVModel::Send_MODE_OPTION1(bool bSPI,bool bSerial)
 {
@@ -5405,6 +6279,18 @@ WORD CMVModel::Send_MODE_OPTION1(bool bSPI,bool bSerial)
 
 	return wMode;
 }
+
+/**********************************************************************************************//**
+ * Sends a mode option 2
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bSPI   	True to spi.
+ * \param	bSerial	True to serial.
+ *
+ * \return	A WORD.
+ **************************************************************************************************/
 
 WORD CMVModel::Send_MODE_OPTION2(bool bSPI,bool bSerial)
 {
@@ -5563,9 +6449,15 @@ WORD CMVModel::Send_MODE_OPTION2(bool bSPI,bool bSerial)
 	return wMode;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a vent mode
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	mode	The mode.
+ **************************************************************************************************/
+
 void CMVModel::Send_VENT_MODE(eVentMode mode)
 {
 	//DEBUGMSG(TRUE, (TEXT("CMVModel::Send_VENT_MODE start\r\n")));
@@ -6570,6 +7462,15 @@ void CMVModel::Send_VENT_MODE(eVentMode mode)
 	}
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is vent mode initialized
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if vent mode initialized, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::isVentModeInitialized()
 {
 	bool bInitialized=false;
@@ -6581,6 +7482,13 @@ bool CMVModel::isVentModeInitialized()
 	return bInitialized;
 }
 
+/**********************************************************************************************//**
+ * Sets vent mode initialized
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::setVentModeInitialized()
 {
 	EnterCriticalSection(&m_csVentModeInit);
@@ -6588,9 +7496,17 @@ void CMVModel::setVentModeInitialized()
 	LeaveCriticalSection(&m_csVentModeInit);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a para volume limit
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
+
 void CMVModel::Send_PARA_VOLUME_LIMIT(int iVal, bool bSerial, bool bSPI)
 {
 	/*if(bSerial)
@@ -6613,6 +7529,16 @@ void CMVModel::Send_PARA_VOLUME_LIMIT(int iVal, bool bSerial, bool bSPI)
 
 }
 
+/**********************************************************************************************//**
+ * Sends a para volume garant
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
 
 void CMVModel::Send_PARA_VOLUME_GARANT(int iVal, bool bSerial, bool bSPI)
 {
@@ -6635,6 +7561,17 @@ void CMVModel::Send_PARA_VOLUME_GARANT(int iVal, bool bSerial, bool bSPI)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sends a para trig schwelle
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
+
 void CMVModel::Send_PARA_TRIG_SCHWELLE(int iVal, bool bSerial, bool bSPI)
 {
 	if(bSerial)
@@ -6650,6 +7587,17 @@ void CMVModel::Send_PARA_TRIG_SCHWELLE(int iVal, bool bSerial, bool bSPI)
 	if(getAcuLink()!=NULL)
 		getAcuLink()->setParaData(ALINK_SETT_TRIG_SCHWELLE,iVal);
 }
+
+/**********************************************************************************************//**
+ * Sends a para risetime
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
 
 void CMVModel::Send_PARA_RISETIME(int iVal, bool bSerial, bool bSPI)
 {
@@ -6691,6 +7639,17 @@ void CMVModel::Send_PARA_RISETIME(int iVal, bool bSerial, bool bSPI)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sends a para peep
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
+
 void CMVModel::Send_PARA_PEEP(int iVal, bool bSerial, bool bSPI)
 {
 	if(bSerial)
@@ -6706,6 +7665,17 @@ void CMVModel::Send_PARA_PEEP(int iVal, bool bSerial, bool bSPI)
 	if(getAcuLink()!=NULL)
 		getAcuLink()->setParaData(ALINK_SETT_PEEP,iVal);
 }
+
+/**********************************************************************************************//**
+ * Sends a para ppsv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
 
 void CMVModel::Send_PARA_P_PSV(int iVal, bool bSerial, bool bSPI)
 {
@@ -6723,6 +7693,17 @@ void CMVModel::Send_PARA_P_PSV(int iVal, bool bSerial, bool bSPI)
 		getAcuLink()->setParaData(ALINK_SETT_P_PSV,iVal);
 }
 
+/**********************************************************************************************//**
+ * Sends a para pinsp
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
+
 void CMVModel::Send_PARA_PINSP(int iVal, bool bSerial, bool bSPI)//newVG
 {
 	if(bSerial)
@@ -6739,6 +7720,17 @@ void CMVModel::Send_PARA_PINSP(int iVal, bool bSerial, bool bSPI)//newVG
 		getAcuLink()->setParaData(ALINK_SETT_P_INSP,iVal);
 }
 
+/**********************************************************************************************//**
+ * Sends a para pmaxvg
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
+
 void CMVModel::Send_PARA_PMAXVG(int iVal, bool bSerial, bool bSPI)//newVG
 {
 	if(bSerial)
@@ -6754,6 +7746,17 @@ void CMVModel::Send_PARA_PMAXVG(int iVal, bool bSerial, bool bSPI)//newVG
 	if(getAcuLink()!=NULL)
 		getAcuLink()->setParaData(ALINK_SETT_P_INSP,iVal);
 }
+
+/**********************************************************************************************//**
+ * Sends a para oxy ratio
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
 
 void CMVModel::Send_PARA_OXY_RATIO(SHORT iVal, bool bSerial, bool bSPI)
 {
@@ -6776,6 +7779,17 @@ void CMVModel::Send_PARA_OXY_RATIO(SHORT iVal, bool bSerial, bool bSPI)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sends a para insp time
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
+
 void CMVModel::Send_PARA_INSP_TIME(int iVal, bool bSerial, bool bSPI)
 {
 	if(bSerial)
@@ -6793,6 +7807,17 @@ void CMVModel::Send_PARA_INSP_TIME(int iVal, bool bSerial, bool bSPI)
 		getAcuLink()->setParaData(ALINK_SETT_INSP_TIME,iVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sends a para insp flow
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
 
 void CMVModel::Send_PARA_INSP_FLOW(int iVal, bool bSerial, bool bSPI)
 {
@@ -6837,6 +7862,17 @@ void CMVModel::Send_PARA_INSP_FLOW(int iVal, bool bSerial, bool bSPI)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sends a para hf pmitt
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
+
 void CMVModel::Send_PARA_HF_PMITT(int iVal, bool bSerial, bool bSPI)
 {
 	if(bSerial)
@@ -6852,6 +7888,17 @@ void CMVModel::Send_PARA_HF_PMITT(int iVal, bool bSerial, bool bSPI)
 	if(getAcuLink()!=NULL)
 		getAcuLink()->setParaData(ALINK_SETT_HF_PMITT,iVal);
 }
+
+/**********************************************************************************************//**
+ * Sends a para hf pmeanrec
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
 
 void CMVModel::Send_PARA_HF_PMEANREC(int iVal, bool bSerial, bool bSPI)
 {
@@ -6869,6 +7916,17 @@ void CMVModel::Send_PARA_HF_PMEANREC(int iVal, bool bSerial, bool bSPI)
 		getAcuLink()->setParaData(ALINK_SETT_HF_PMEANREC,iVal);
 }
 
+/**********************************************************************************************//**
+ * Sends a para hf itime record
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
+
 void  CMVModel::Send_PARA_HF_ITIME_REC(int iVal, bool bSerial, bool bSPI)
 {
 	if(bSerial)
@@ -6884,6 +7942,18 @@ void  CMVModel::Send_PARA_HF_ITIME_REC(int iVal, bool bSerial, bool bSPI)
 	if(getAcuLink()!=NULL)
 		getAcuLink()->setParaData(ALINK_SETT_INSP_TIME,iVal);
 }
+
+/**********************************************************************************************//**
+ * Sends a para hf frequency record
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
+
 void  CMVModel::Send_PARA_HF_FREQ_REC(int iVal, bool bSerial, bool bSPI)
 {
 	if(bSerial)
@@ -6902,6 +7972,17 @@ void  CMVModel::Send_PARA_HF_FREQ_REC(int iVal, bool bSerial, bool bSPI)
 		getAcuLink()->setParaData(ALINK_SETT_EXH_TIME,iETIME/100);
 }
 
+/**********************************************************************************************//**
+ * Sends a para hf frequency
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
+
 void CMVModel::Send_PARA_HF_FREQ(int iVal, bool bSerial, bool bSPI)
 {
 	if(bSerial)
@@ -6917,6 +7998,18 @@ void CMVModel::Send_PARA_HF_FREQ(int iVal, bool bSerial, bool bSPI)
 	if(getAcuLink()!=NULL)
 		getAcuLink()->setParaData(ALINK_SETT_HF_FREQ,iVal);
 }
+
+/**********************************************************************************************//**
+ * Sends a para hf ampl
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
+
 void CMVModel::Send_PARA_HF_AMPL(int iVal, bool bSerial, bool bSPI)
 {
 	if(bSerial)
@@ -6932,6 +8025,17 @@ void CMVModel::Send_PARA_HF_AMPL(int iVal, bool bSerial, bool bSPI)
 	if(getAcuLink()!=NULL)
 		getAcuLink()->setParaData(ALINK_SETT_HF_AMPL,iVal);
 }
+
+/**********************************************************************************************//**
+ * Sends a para exh time
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
 
 void CMVModel::Send_PARA_EXH_TIME(int iVal, bool bSerial, bool bSPI)
 {
@@ -6949,6 +8053,17 @@ void CMVModel::Send_PARA_EXH_TIME(int iVal, bool bSerial, bool bSPI)
 		getAcuLink()->setParaData(ALINK_SETT_EXH_TIME,iVal);
 }
 
+/**********************************************************************************************//**
+ * Sends a para exh flow
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
+
 void CMVModel::Send_PARA_EXH_FLOW(int iVal, bool bSerial, bool bSPI)
 {
 	if(bSerial)
@@ -6965,6 +8080,17 @@ void CMVModel::Send_PARA_EXH_FLOW(int iVal, bool bSerial, bool bSPI)
 		getAcuLink()->setParaData(ALINK_SETT_EXH_FLOW,iVal);
 }
 
+/**********************************************************************************************//**
+ * Sends a para backup
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
+
 void CMVModel::Send_PARA_BACKUP(int iVal, bool bSerial, bool bSPI)
 {
 	if(bSerial)
@@ -6980,6 +8106,17 @@ void CMVModel::Send_PARA_BACKUP(int iVal, bool bSerial, bool bSPI)
 		getAcuLink()->setParaData(ALINK_SETT_BACKUP,iVal);
 
 }
+
+/**********************************************************************************************//**
+ * Sends a para apnoe time
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
 
 void CMVModel::Send_PARA_APNOE_TIME(int iVal, bool bSerial, bool bSPI)
 {
@@ -7001,6 +8138,17 @@ void CMVModel::Send_PARA_APNOE_TIME(int iVal, bool bSerial, bool bSPI)
 			getAcuLink()->setParaData(ALINK_SETT_APNOE_TIME,ALINK_OFF);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sends an oxy corr
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
 
 void CMVModel::Send_OXY_CORR(int iVal, bool bSerial, bool bSPI)
 {
@@ -7034,6 +8182,17 @@ void CMVModel::Send_OXY_CORR(int iVal, bool bSerial, bool bSPI)
 //		getAcuLink()->setParaData(ALINK_SETT_FILTER_VOLGARANTY,iVal);
 //}
 
+/**********************************************************************************************//**
+ * Sends an abort criterionpsv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal   	Zero-based index of the value.
+ * \param	bSerial	True to serial.
+ * \param	bSPI   	True to spi.
+ **************************************************************************************************/
+
 void CMVModel::Send_ABORT_CRITERIONPSV(int iVal, bool bSerial, bool bSPI)
 {
 	if(bSerial)
@@ -7050,9 +8209,18 @@ void CMVModel::Send_ABORT_CRITERIONPSV(int iVal, bool bSerial, bool bSPI)
 		getAcuLink()->setParaData(ALINK_SETT_ABORT_CRITERIONPSV,iVal);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets bit of byte
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	x	The x coordinate.
+ * \param	n	An int to process.
+ *
+ * \return	A BYTE.
+ **************************************************************************************************/
+
 BYTE CMVModel::setBitOfByte(BYTE x, unsigned int n)
 {
 	x = x | (1 << n);
@@ -7060,12 +8228,37 @@ BYTE CMVModel::setBitOfByte(BYTE x, unsigned int n)
 	return x;
 }
 
+/**********************************************************************************************//**
+ * Sets bit of word
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	x	A WORD to process.
+ * \param	n	An int to process.
+ *
+ * \return	A WORD.
+ **************************************************************************************************/
+
 WORD CMVModel::setBitOfWord(WORD x, unsigned int n)
 {
 	x = x | (1 << n);
 
 	return x;
 }
+
+/**********************************************************************************************//**
+ * Sets a bit
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	x	The x coordinate.
+ * \param	n	An int to process.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CMVModel::SetBit(int x, unsigned int n)
 {
 	//x = x | (1 << n);
@@ -7073,6 +8266,15 @@ int CMVModel::SetBit(int x, unsigned int n)
 
 	return x;
 }
+
+/**********************************************************************************************//**
+ * Gets adapter information
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The adapter information.
+ **************************************************************************************************/
 
 int CMVModel::GetAdapterInfo()
 {
@@ -7151,38 +8353,72 @@ int CMVModel::GetAdapterInfo()
 	return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets unique identifier
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The unique identifier.
+ **************************************************************************************************/
+
 CStringA CMVModel::GetUniqueID()
 {
 	return m_szUniqueID;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets psvapnoe
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
+
 void CMVModel::setPSVapnoe(bool bState)
 {
 	getDATAHANDLER()->setPSVapnoe(bState);
 	getVIEWHANDLER()->setPSVapnoe(bState);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets load hospital settings failed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVModel::getLoadHospitalSettingsFailed()
 {
 	return m_bLoadHospitalSettingsFailed;
 }
 
+/**********************************************************************************************//**
+ * Sets load hospital settings failed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	failed	True if failed.
+ **************************************************************************************************/
+
 void CMVModel::setLoadHospitalSettingsFailed(bool failed)
 {
 	m_bLoadHospitalSettingsFailed=failed;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Saves the hospital settings
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVModel::SaveHospitalSettings()
 {
 	//load from xml-file from ffsdiks to fram and reload ( config ...)
@@ -7221,9 +8457,15 @@ bool CMVModel::SaveHospitalSettings()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Loads hospital settings
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVModel::LoadHospitalSettings()
 {
 	//load from xml-file from ffsdiks to fram and reload ( config ...)
@@ -7299,31 +8541,72 @@ bool CMVModel::LoadHospitalSettings()
 	//	return false;
 }
 
+/**********************************************************************************************//**
+ * Sends the test data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CMVModel::sendTestData()
 {
 	//test serial
 	//GetTERMINAL()->sendTestData();
 }
+
+/**********************************************************************************************//**
+ * Sends the terminal measurment data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CMVModel::sendTerminalMeasurmentData()
 {
 	//test serial
 	//GetTERMINAL()->sendTestMeasurmentData();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets ventilation range changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
+
 void CMVModel::setVentilationRangeChanged(bool bState)
 {
 	m_bVentilationRangeChanged=bState;
 }
+
+/**********************************************************************************************//**
+ * Gets ventilation range changed
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CMVModel::getVentilationRangeChanged()
 {
 	return m_bVentilationRangeChanged ;
 }
 
-//rkuTICKCOUNT
+/**********************************************************************************************//**
+ * Query if 'oldTickCount' is safe tick count delay expired
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	oldTickCount	Number of old ticks.
+ * \param	delay			The delay.
+ *
+ * \return	True if safe tick count delay expired, false if not.
+ **************************************************************************************************/
+
 bool CMVModel::isSafeTickCountDelayExpired(DWORD oldTickCount, UINT delay)////used to check if old tick count plus delay is still lower than actual tickCount, (dwLastTickCount+DELAY<getTickCount64())
 {
 	bool bExpired=false;
@@ -7349,13 +8632,12 @@ bool CMVModel::isSafeTickCountDelayExpired(DWORD oldTickCount, UINT delay)////us
 }
 
 /**********************************************************************************************//**
- * @fn	void CMVModel::isMaintenanceNeeded()
+ * Is maintenance needed
  *
- * @brief	Check if maintenance is needed.
- *
- * @author	Rainer Kuehner
- * @date	23.03.2016
+ * \author	Rainer Kühner
+ * \date	22.02.2018
  **************************************************************************************************/
+
 void CMVModel::isMaintenanceNeeded()
 {
 	COleDateTime dtNextServiceDate=getCONFIG()->getNextServiceDate();
@@ -7382,9 +8664,8 @@ void CMVModel::isMaintenanceNeeded()
 		getVIEWHANDLER()->setMaintenanceFlag(false);
 	}
 }
-// **************************************************************************
+
 // Test FMEA
-// **************************************************************************
 //void CMVModel::closeInterface()
 //{
 //	/*if(PIF)

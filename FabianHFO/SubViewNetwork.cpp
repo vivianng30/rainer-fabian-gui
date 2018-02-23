@@ -8,10 +8,40 @@
 #include "TlsRegistry.h"
 //#include "DlgMessageBox.h"
 
+/**********************************************************************************************//**
+ * A macro that defines timechange
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define TIMECHANGE	600
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 //global font objects
@@ -36,9 +66,24 @@ extern HFONT g_hf33AcuBold;
 extern HFONT g_hf43AcuBold;
 extern HFONT g_hf53AcuBold;
 
-// CSubViewNetwork
+/**********************************************************************************************//**
+ * CSubViewNetwork
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CSubViewNetwork, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CSubViewNetwork class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewNetwork::CSubViewNetwork()
 {
@@ -93,6 +138,13 @@ CSubViewNetwork::CSubViewNetwork()
 	
 	
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CSubViewNetwork class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewNetwork::~CSubViewNetwork()
 {
@@ -152,12 +204,15 @@ BEGIN_MESSAGE_MAP(CSubViewNetwork, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SETUP_DT_OK, &CSubViewNetwork::OnBnClickedSetWave)*/
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CSubViewNetwork message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
 
-
-// CSubViewNetwork message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 CMVModel *CSubViewNetwork::getModel()
 {
 	if(m_pModel==NULL)
@@ -165,9 +220,20 @@ CMVModel *CSubViewNetwork::getModel()
 	return m_pModel;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates a window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewNetwork::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext)
 {
 	if (!Create(pParentWnd, rc, nID, pContext))
@@ -180,9 +246,20 @@ bool CSubViewNetwork::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCrea
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSubViewNetwork::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -349,9 +426,13 @@ BOOL CSubViewNetwork::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateC
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewNetwork::Initialize()
 {
 	/*if(m_iPDMSProtocol!=VUELINK)
@@ -386,9 +467,15 @@ void CSubViewNetwork::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CSubViewNetwork::Show(bool bShow)
 {
 	if(bShow)
@@ -405,15 +492,13 @@ void CSubViewNetwork::Show(bool bShow)
 	}
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CSubViewNetwork::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewNetwork::OnDestroy()
 {
 	m_bExit=true;
@@ -429,9 +514,13 @@ void CSubViewNetwork::OnDestroy()
 		DeleteDC(m_hDC);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewNetwork::Draw()
 {
 	RECT rcCl;

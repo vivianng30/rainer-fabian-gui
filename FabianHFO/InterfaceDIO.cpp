@@ -11,18 +11,56 @@ extern "C" BOOL InterruptInitialize(DWORD idInt, HANDLE hEvent, LPVOID pvData, D
 extern "C" VOID InterruptDone( DWORD idInt ); 
 extern "C" VOID InterruptDisable( DWORD idInt ); 
 
-// EXTERN INTERRUPTS NetDCUX ///////////////////////////////////////////////////////////
+
 #define SYSINTR_FIRMWARE    (8+8)
+
+/**********************************************************************************************//**
+ * A macro that defines sysintr pifirq
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define SYSINTR_PIFIRQ      (SYSINTR_FIRMWARE+15)
+
+/**********************************************************************************************//**
+ * A macro that defines sysintr extio
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define SYSINTR_EXTIO       (SYSINTR_FIRMWARE+16)
 
-/////////////////////////////////////////////////////////////////////////////////////////
+
 #define TRIGGER_EDGE	1	// NetDCU6 only (extern interrupts via dio port pins)
+
+/**********************************************************************************************//**
+ * A macro that defines trigger level
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define TRIGGER_LEVEL	2	// NetDCUX
+
+/**********************************************************************************************//**
+ * A macro that defines trigger
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define TRIGGER TRIGGER_EDGE
 
 CInterfaceDIO* CInterfaceDIO::theDIOInterface=0;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CInterfaceDIO class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 CInterfaceDIO::CInterfaceDIO(void)
 {
@@ -33,6 +71,13 @@ CInterfaceDIO::CInterfaceDIO(void)
 	InitializeCriticalSection(&csIFDIO);
 	
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CInterfaceDIO class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 CInterfaceDIO::~CInterfaceDIO(void)
 {
@@ -47,9 +92,15 @@ CInterfaceDIO::~CInterfaceDIO(void)
 		CloseHandle(m_hIsrEvent);*/
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
+
 CInterfaceDIO* CInterfaceDIO::GetInstance()
 {
 	if(theDIOInterface == 0)
@@ -60,18 +111,28 @@ CInterfaceDIO* CInterfaceDIO::GetInstance()
 	return theDIOInterface;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceDIO::DestroyInstance()
 {
 	delete theDIOInterface;
 	theDIOInterface = NULL;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CInterfaceDIO::Init()
 {
 	m_hDIO=CreateFile(_T("DIO1:"),GENERIC_READ|GENERIC_WRITE,0,NULL, OPEN_EXISTING,0,NULL);
@@ -81,9 +142,19 @@ BOOL CInterfaceDIO::Init()
 	return true;
 }
 
-// **************************************************************************
-// Read/write
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads a pin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pbyData	If non-null, information describing the pby.
+ * \param 		  	nPort  	The port.
+ * \param 		  	chPin  	The pin.
+ *
+ * \return	The pin.
+ **************************************************************************************************/
+
 DWORD CInterfaceDIO::ReadPin (BYTE* pbyData,int nPort,BYTE chPin)
 {
 	DWORD dwReturn=1;
@@ -102,6 +173,18 @@ DWORD CInterfaceDIO::ReadPin (BYTE* pbyData,int nPort,BYTE chPin)
 
 	return dwReturn;
 }
+
+/**********************************************************************************************//**
+ * Reads a pin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	nPort	The port.
+ * \param	chPin	The pin.
+ *
+ * \return	The pin.
+ **************************************************************************************************/
 
 BYTE CInterfaceDIO::ReadPin (int nPort,BYTE chPin)
 {
@@ -122,9 +205,17 @@ BYTE CInterfaceDIO::ReadPin (int nPort,BYTE chPin)
 	return pbyData;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Writes a pin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	chPin	The pin.
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CInterfaceDIO::WritePin (BYTE chPin)
 {
 	DWORD dwReturn=1;
@@ -148,6 +239,17 @@ DWORD CInterfaceDIO::WritePin (BYTE chPin)
 
 	return dwReturn;
 }
+
+/**********************************************************************************************//**
+ * Clears the pin described by chPin
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	chPin	The pin.
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
 
 DWORD CInterfaceDIO::ClearPin (BYTE chPin)
 {
@@ -173,9 +275,17 @@ DWORD CInterfaceDIO::ClearPin (BYTE chPin)
 	return dwReturn;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Reads the given pby data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pbyData	If non-null, the pby data to read.
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CInterfaceDIO::Read (/*int nPort,*/BYTE* pbyData)
 {	
 	DWORD dwRead;
@@ -193,6 +303,17 @@ DWORD CInterfaceDIO::Read (/*int nPort,*/BYTE* pbyData)
 		dwReturn=0;
 	return dwReturn;
 }
+
+/**********************************************************************************************//**
+ * Reads 3 bit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pbyData	If non-null, information describing the pby.
+ *
+ * \return	The 3 bit.
+ **************************************************************************************************/
 
 DWORD CInterfaceDIO::Read3Bit (/*int nPort,*/BYTE* pbyData)
 {	
@@ -214,9 +335,17 @@ DWORD CInterfaceDIO::Read3Bit (/*int nPort,*/BYTE* pbyData)
 	return dwReturn;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Writes the given by data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	byData	The by data to write.
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CInterfaceDIO::Write (/*int nPort,*/BYTE byData)
 {	
 	DWORD dwWritten;
@@ -234,6 +363,19 @@ DWORD CInterfaceDIO::Write (/*int nPort,*/BYTE byData)
 		dwReturn=0;
 	return dwReturn;
 }
+
+/**********************************************************************************************//**
+ * Writes a 3 bit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bPin11	True to pin 11.
+ * \param	bPin13	True to pin 13.
+ * \param	bPin15	True to pin 15.
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
 
 DWORD CInterfaceDIO::Write3Bit (bool bPin11,bool bPin13,bool bPin15)
 {

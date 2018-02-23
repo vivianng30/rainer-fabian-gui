@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	ParaData.cpp.
+ *
+ * Implements the para data class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "ParaData.h"
 #include "MVModel.h"
@@ -5,6 +11,12 @@
 
 CParaData* CParaData::theData=0;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaData class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaData::CParaData(void)
 {
@@ -525,13 +537,26 @@ CParaData::CParaData(void)
 	m_byFOTFreq=0;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaData class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CParaData::~CParaData(void)
 {
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CParaData::getModel()
 {
 	if(m_pModel==NULL)
@@ -539,10 +564,15 @@ CMVModel *CParaData::getModel()
 	return m_pModel;
 }
 
+/**********************************************************************************************//**
+ * Gets the instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 CParaData* CParaData::GetInstance()
 {
 	if(theData == 0)
@@ -552,9 +582,13 @@ CParaData* CParaData::GetInstance()
 	return theData;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CParaData::DestroyInstance()
 {
 	if(theData != NULL)
@@ -564,6 +598,12 @@ void CParaData::DestroyInstance()
 	}
 }
 
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CParaData::Init()
 {
@@ -727,9 +767,13 @@ void CParaData::Init()
 	checkIErelation();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Loads the limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CParaData::loadLimits()
 {
 	CTlsRegistry regLimit(_T("HKCU\\Software\\FabianHFO\\WorkState\\Limits"),true);	
@@ -1040,9 +1084,13 @@ void CParaData::loadLimits()
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Check i erelation
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CParaData::checkIErelation()
 {
 	if(getModel()->getCONFIG()->GetIERelationMode()==RM_SET_ItoBPM)
@@ -1381,18 +1429,30 @@ void CParaData::checkIErelation()
 		}
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets para data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pData	If non-null, the data.
+ **************************************************************************************************/
+
 void CParaData::GetParaData(PARA_DATA* pData)
 {
 	memcpy(pData,&m_data,sizeof(PARA_DATA));
 }
 
+/**********************************************************************************************//**
+ * Sets data from mode
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	mode	The mode.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CParaData::SetDataFromMode(eVentMode mode)
 {
 	switch(mode)
@@ -1734,9 +1794,15 @@ void CParaData::SetDataFromMode(eVentMode mode)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets maximum para data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pData	If non-null, the data.
+ **************************************************************************************************/
+
 void CParaData::GetMaxParaData(PARA_DATA* pData)
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -1744,6 +1810,16 @@ void CParaData::GetMaxParaData(PARA_DATA* pData)
 	else
 		memcpy(pData,&m_dataMaxRange_PEDIATRIC,sizeof(PARA_DATA));
 }
+
+/**********************************************************************************************//**
+ * Sets maximum para data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pData	If non-null, the data.
+ **************************************************************************************************/
+
 void CParaData::SetMaxParaData(PARA_DATA* pData)
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -1751,9 +1827,16 @@ void CParaData::SetMaxParaData(PARA_DATA* pData)
 	else
 		memcpy(&m_dataMaxRange_PEDIATRIC,pData,sizeof(PARA_DATA));
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets minimum para data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pData	If non-null, the data.
+ **************************************************************************************************/
+
 void CParaData::GetMinParaData(PARA_DATA* pData)
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -1761,6 +1844,16 @@ void CParaData::GetMinParaData(PARA_DATA* pData)
 	else
 		memcpy(pData,&m_dataMinRange_PEDIATRIC,sizeof(PARA_DATA));
 }
+
+/**********************************************************************************************//**
+ * Sets minimum para data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pData	If non-null, the data.
+ **************************************************************************************************/
+
 void CParaData::SetMinParaData(PARA_DATA* pData)
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -1769,14 +1862,31 @@ void CParaData::SetMinParaData(PARA_DATA* pData)
 		memcpy(&m_dataMinRange_PEDIATRIC,pData,sizeof(PARA_DATA));
 }
 
+/**********************************************************************************************//**
+ * Gets backup para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The backup para.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 BYTE CParaData::GetBackupPara()
 {
 	return m_data.m_iParaDataBackup;
 }
+
+/**********************************************************************************************//**
+ * Sets backup para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetBackupPara(BYTE value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataBackup=value;
@@ -1791,14 +1901,33 @@ void CParaData::SetBackupPara(BYTE value, bool bSend, bool bConfig)
 	}
 	
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets cpap para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The cpap para.
+ **************************************************************************************************/
+
 SHORT CParaData::GetCPAPPara()
 {
 	return GetPEEPPara_IPPV();
 	//return m_data.m_iParaDataCPAP;
 }
+
+/**********************************************************************************************//**
+ * Sets cpap para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetCPAPPara(SHORT value, bool bSend, bool bConfig)
 {
 	//m_data.m_iParaDataCPAP=value;
@@ -1817,13 +1946,31 @@ void CParaData::SetCPAPPara(SHORT value, bool bSend, bool bConfig)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets cpapnmode para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The cpapnmode para.
+ **************************************************************************************************/
+
 SHORT CParaData::GetCPAPNMODEPara()
 {
 	return m_data.m_iParaDataCPAP_NMODE;
 }
+
+/**********************************************************************************************//**
+ * Sets cpapnmode para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetCPAPNMODEPara(SHORT value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataCPAP_NMODE=value;
@@ -1839,13 +1986,31 @@ void CParaData::SetCPAPNMODEPara(SHORT value, bool bSend, bool bConfig)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets p manual hfo para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The p manual hfo para.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPManualHFOPara()
 {
 	return m_data.m_iParaDataPManual_HFO;
 }
+
+/**********************************************************************************************//**
+ * Sets p manual hfo para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetPManualHFOPara(SHORT value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataPManual_HFO=value;
@@ -1860,14 +2025,32 @@ void CParaData::SetPManualHFOPara(SHORT value, bool bSend, bool bConfig)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets p manual cpap para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The p manual cpap para.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPManualCPAPPara()
 {
 	return GetPINSPPara_IPPV();
 	//return m_data.m_iParaDataPManual_CPAP;
 }
+
+/**********************************************************************************************//**
+ * Sets p manual cpap para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetPManualCPAPPara(SHORT value, bool bSend, bool bConfig)
 {
 	SetPINSPPara_IPPV(value, false, bConfig);
@@ -1883,13 +2066,31 @@ void CParaData::SetPManualCPAPPara(SHORT value, bool bSend, bool bConfig)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets p manual nmode para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The p manual nmode para.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPManualNMODEPara()
 {
 	return m_data.m_iParaDataPManual_NMODE;
 }
+
+/**********************************************************************************************//**
+ * Sets p manual nmode para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetPManualNMODEPara(SHORT value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataPManual_NMODE=value;
@@ -1904,13 +2105,29 @@ void CParaData::SetPManualNMODEPara(SHORT value, bool bSend, bool bConfig)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets pinsp para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The pinsp para trigger.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPINSPPara_TRIGGER()
 {
 	return m_data.m_iParaDataPInsp_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Gets pinsp para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The pinsp para ippv.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPINSPPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -1920,10 +2137,28 @@ SHORT CParaData::GetPINSPPara_IPPV()
 #endif
 }
 
+/**********************************************************************************************//**
+ * Gets pmax volume g para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The pmax volume g para trigger.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPmaxVolGPara_TRIGGER()
 {
 	return m_data.m_iParaDataPmaxVolG_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Gets pmax volume g para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The pmax volume g para ippv.
+ **************************************************************************************************/
 
 SHORT CParaData::GetPmaxVolGPara_IPPV()
 {
@@ -1934,7 +2169,16 @@ SHORT CParaData::GetPmaxVolGPara_IPPV()
 #endif
 }
 
-
+/**********************************************************************************************//**
+ * Sets pmax volume g para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	val	   	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
 
 void CParaData::SetPmaxVolGPara_TRIGGER(SHORT val, bool bSend, bool bConfig)
 {
@@ -1953,6 +2197,17 @@ void CParaData::SetPmaxVolGPara_TRIGGER(SHORT val, bool bSend, bool bConfig)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets pmax volume g para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	val	   	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
 
 void CParaData::SetPmaxVolGPara_IPPV(SHORT val, bool bSend, bool bConfig)
 {
@@ -1989,6 +2244,18 @@ void CParaData::SetPmaxVolGPara_IPPV(SHORT val, bool bSend, bool bConfig)
 #endif
 	
 }
+
+/**********************************************************************************************//**
+ * Sets pinsp para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	val	   	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetPINSPPara_TRIGGER(SHORT val, bool bSend, bool bConfig)
 {
 	//m_data.m_iParaDataPInsp=(val/5)*5;
@@ -2006,6 +2273,18 @@ void CParaData::SetPINSPPara_TRIGGER(SHORT val, bool bSend, bool bConfig)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets pinsp para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	val	   	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetPINSPPara_IPPV(SHORT val, bool bSend, bool bConfig)
 {
 #ifdef BACKUP_VENTILATION
@@ -2041,13 +2320,32 @@ void CParaData::SetPINSPPara_IPPV(SHORT val, bool bSend, bool bConfig)
 #endif
 	
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets ppsv para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The ppsv para.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPpsvPara()
 {
 	return m_data.m_iParaDataPpsv;
 }
+
+/**********************************************************************************************//**
+ * Sets ppsv para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetPpsvPara(SHORT value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataPpsv=value;
@@ -2064,13 +2362,31 @@ void CParaData::SetPpsvPara(SHORT value, bool bSend, bool bConfig)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets o 2 para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The o 2 para.
+ **************************************************************************************************/
+
 BYTE CParaData::GetO2Para()
 {
 	return m_data.m_iParaDataO2;
 }
+
+/**********************************************************************************************//**
+ * Sets o 2 para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetO2Para(BYTE value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataO2=value;
@@ -2087,13 +2403,30 @@ void CParaData::SetO2Para(BYTE value, bool bSend, bool bConfig)
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets o 2 flush para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The o 2 flush para.
+ **************************************************************************************************/
+
 BYTE CParaData::GetO2FlushPara()
 {
 	return m_data.m_iParaDataO2Flush;
 }
+
+/**********************************************************************************************//**
+ * Sets o 2 flush para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetO2FlushPara(BYTE value, bool bConfig)
 {
 	m_data.m_iParaDataO2Flush=value;
@@ -2113,13 +2446,32 @@ void CParaData::SetO2FlushPara(BYTE value, bool bConfig)
 	}
 	
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets trigger para convert
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The trigger para convert.
+ **************************************************************************************************/
+
 BYTE CParaData::GetTriggerPara_CONV()
 {
 	return m_data.m_iParaDataTrigger_CONV;
 }
+
+/**********************************************************************************************//**
+ * Sets trigger para convert
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetTriggerPara_CONV(BYTE value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataTrigger_CONV=value;
@@ -2134,12 +2486,31 @@ void CParaData::SetTriggerPara_CONV(BYTE value, bool bSend, bool bConfig)
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets trigger para cpap
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The trigger para cpap.
+ **************************************************************************************************/
 
-// **************************************************************************
 BYTE CParaData::GetTriggerPara_CPAP()
 {
 	return m_data.m_iParaDataTrigger_CPAP;
 }
+
+/**********************************************************************************************//**
+ * Sets trigger para cpap
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetTriggerPara_CPAP(BYTE value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataTrigger_CPAP=value;
@@ -2153,11 +2524,32 @@ void CParaData::SetTriggerPara_CPAP(BYTE value, bool bSend, bool bConfig)
 		}
 	}
 }
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets trigger para duopap
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The trigger para duopap.
+ **************************************************************************************************/
+
 BYTE CParaData::GetTriggerPara_DUOPAP()
 {
 	return m_data.m_iParaDataTrigger_DUOPAP;
 }
+
+/**********************************************************************************************//**
+ * Sets trigger para duopap
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetTriggerPara_DUOPAP(BYTE value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataTrigger_DUOPAP=value;
@@ -2171,11 +2563,32 @@ void CParaData::SetTriggerPara_DUOPAP(BYTE value, bool bSend, bool bConfig)
 		}
 	}
 }
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets trigger para ncpap
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The trigger para ncpap.
+ **************************************************************************************************/
+
 BYTE CParaData::GetTriggerPara_NCPAP()
 {
 	return m_data.m_iParaDataTrigger_NCPAP;
 }
+
+/**********************************************************************************************//**
+ * Sets trigger para ncpap
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetTriggerPara_NCPAP(BYTE value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataTrigger_NCPAP=value;
@@ -2189,13 +2602,32 @@ void CParaData::SetTriggerPara_NCPAP(BYTE value, bool bSend, bool bConfig)
 		}
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets eflow para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The eflow para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetEFLOWPara_TRIGGER()
 {
 	return m_data.m_iParaDataEFlow_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Sets eflow para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetEFLOWPara_TRIGGER(WORD value, bool bSend, bool bConfig)
 {
 	//DEBUGMSG(TRUE, (TEXT("set SetEFLOWPara_TRIGGER %d\r\n"),value));
@@ -2213,6 +2645,15 @@ void CParaData::SetEFLOWPara_TRIGGER(WORD value, bool bSend, bool bConfig)
 	
 }
 
+/**********************************************************************************************//**
+ * Gets eflow para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The eflow para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetEFLOWPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -2222,6 +2663,18 @@ WORD CParaData::GetEFLOWPara_IPPV()
 #endif
 	
 }
+
+/**********************************************************************************************//**
+ * Sets eflow para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetEFLOWPara_IPPV(WORD value, bool bSend, bool bConfig)
 {
 #ifdef BACKUP_VENTILATION
@@ -2253,13 +2706,31 @@ void CParaData::SetEFLOWPara_IPPV(WORD value, bool bSend, bool bConfig)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets therapie flow para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The therapie flow para.
+ **************************************************************************************************/
+
 WORD CParaData::GetTherapieFLOWPara()
 {
 	return m_data.m_iParaDataTherapieFlow;
 }
+
+/**********************************************************************************************//**
+ * Sets therapie flow para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetTherapieFLOWPara(WORD value, bool bSend, bool bConfig)
 {
 	DEBUGMSG(TRUE, (TEXT("set SetTherapieFLOWPara %d\r\n"),value));
@@ -2277,13 +2748,31 @@ void CParaData::SetTherapieFLOWPara(WORD value, bool bSend, bool bConfig)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets flowmin para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The flowmin para.
+ **************************************************************************************************/
+
 WORD CParaData::GetFlowminPara()
 {
 	return m_data.m_iParaDataFlowMin;
 }
+
+/**********************************************************************************************//**
+ * Sets flowmin para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetFlowminPara(WORD value, bool bSend, bool bConfig)
 {
 	DEBUGMSG(TRUE, (TEXT("set SetFlowminPara %d\r\n"),value));
@@ -2300,13 +2789,32 @@ void CParaData::SetFlowminPara(WORD value, bool bSend, bool bConfig)
 	}
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets peep para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The peep para trigger.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPEEPPara_TRIGGER()
 {
 	return m_data.m_iParaDataPEEP_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Sets peep para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetPEEPPara_TRIGGER(SHORT value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataPEEP_TRIGGER=value;
@@ -2322,6 +2830,15 @@ void CParaData::SetPEEPPara_TRIGGER(SHORT value, bool bSend, bool bConfig)
 	
 }
 
+/**********************************************************************************************//**
+ * Gets peep para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The peep para ippv.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPEEPPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -2331,6 +2848,18 @@ SHORT CParaData::GetPEEPPara_IPPV()
 #endif
 	
 }
+
+/**********************************************************************************************//**
+ * Sets peep para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetPEEPPara_IPPV(SHORT value, bool bSend, bool bConfig)
 {
 #ifdef BACKUP_VENTILATION
@@ -2357,9 +2886,16 @@ void CParaData::SetPEEPPara_IPPV(SHORT value, bool bSend, bool bConfig)
 	}
 #endif
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets bpm para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The bpm para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetBPMPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -2368,6 +2904,18 @@ WORD CParaData::GetBPMPara_IPPV()
 	return m_data.m_iParaDataBPM_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Sets bpm para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetBPMPara_IPPV(WORD value, bool bSend, bool bConfig)
 {
 #ifdef BACKUP_VENTILATION
@@ -2397,10 +2945,31 @@ void CParaData::SetBPMPara_IPPV(WORD value, bool bSend, bool bConfig)
 #endif
 }
 
+/**********************************************************************************************//**
+ * Gets bpm para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The bpm para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetBPMPara_TRIGGER()
 {
 	return m_data.m_iParaDataBPM_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Sets bpm para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetBPMPara_TRIGGER(WORD value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataBPM_TRIGGER=value;
@@ -2417,13 +2986,31 @@ void CParaData::SetBPMPara_TRIGGER(WORD value, bool bSend, bool bConfig)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets bpmnmode para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The bpmnmode para.
+ **************************************************************************************************/
+
 WORD CParaData::GetBPMNMODEPara()
 {
 	return m_data.m_iParaDataBPM_NMODE;
 }
+
+/**********************************************************************************************//**
+ * Sets bpmnmode para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetBPMNMODEPara(WORD value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataBPM_NMODE=value;
@@ -2440,13 +3027,31 @@ void CParaData::SetBPMNMODEPara(WORD value, bool bSend, bool bConfig)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets hf frequency para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hf frequency para.
+ **************************************************************************************************/
+
 BYTE CParaData::GetHFFreqPara()
 {
 	return m_data.m_iParaDataHFFreq;
 }
+
+/**********************************************************************************************//**
+ * Sets hf frequency para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetHFFreqPara(BYTE value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataHFFreq=value;
@@ -2461,13 +3066,32 @@ void CParaData::SetHFFreqPara(BYTE value, bool bSend, bool bConfig)
 	}
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets hfampl para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hfampl para.
+ **************************************************************************************************/
+
 WORD CParaData::GetHFAMPLPara()
 {
 	return m_data.m_iParaDataHFAMPL;
 }
+
+/**********************************************************************************************//**
+ * Sets hfampl para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetHFAMPLPara(WORD value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataHFAMPL=value;
@@ -2483,13 +3107,31 @@ void CParaData::SetHFAMPLPara(WORD value, bool bSend, bool bConfig)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets hfamp lmax para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hfamp lmax para.
+ **************************************************************************************************/
+
 WORD CParaData::GetHFAMPLmaxPara()
 {
 	return m_data.m_iParaDataHFAMPLmax;
 }
+
+/**********************************************************************************************//**
+ * Sets hfamp lmax para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetHFAMPLmaxPara(WORD value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataHFAMPLmax=value;
@@ -2505,13 +3147,31 @@ void CParaData::SetHFAMPLmaxPara(WORD value, bool bSend, bool bConfig)
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets IE ratio para hfo
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The IE ratio para hfo.
+ **************************************************************************************************/
+
 eRatioIE CParaData::GetIERatioParaHFO()
 {
 	return m_data.m_iParaDataIERatio;
 }
+
+/**********************************************************************************************//**
+ * Sets IE ratio para hfo
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	ratio  	The ratio.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetIERatioParaHFO(eRatioIE ratio, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataIERatio=ratio;
@@ -2526,13 +3186,32 @@ void CParaData::SetIERatioParaHFO(eRatioIE ratio, bool bSend, bool bConfig)
 	}
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets hfp mean para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hfp mean para.
+ **************************************************************************************************/
+
 WORD CParaData::GetHFPMeanPara()
 {
 	return m_data.m_iParaDataHFPmean;
 }
+
+/**********************************************************************************************//**
+ * Sets hfp mean para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetHFPMeanPara(WORD value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataHFPmean=value;
@@ -2548,13 +3227,31 @@ void CParaData::SetHFPMeanPara(WORD value, bool bSend, bool bConfig)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets i time record para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i time record para.
+ **************************************************************************************************/
+
 WORD CParaData::GetITimeRecPara()
 {
 	return m_data.m_iParaDataITIME_REC;
 }
+
+/**********************************************************************************************//**
+ * Sets i time record para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetITimeRecPara(WORD value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataITIME_REC=value;
@@ -2571,13 +3268,31 @@ void CParaData::SetITimeRecPara(WORD value, bool bSend, bool bConfig)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets frequency record para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The frequency record para.
+ **************************************************************************************************/
+
 WORD CParaData::GetFreqRecPara()
 {
 	return m_data.m_iParaDataFREQ_REC;
 }
+
+/**********************************************************************************************//**
+ * Sets frequency record para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetFreqRecPara(WORD value, bool bSend, bool bConfig)
 {
 	//if(value==0 && bSend)//PMAN1
@@ -2602,13 +3317,32 @@ void CParaData::SetFreqRecPara(WORD value, bool bSend, bool bConfig)
 	}
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets hfp mean record para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hfp mean record para.
+ **************************************************************************************************/
+
 WORD CParaData::GetHFPMeanRecPara()
 {
 	return m_data.m_iParaDataPMEAN_REC;
 }
+
+/**********************************************************************************************//**
+ * Sets hfp mean record para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetHFPMeanRecPara(WORD value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataPMEAN_REC=value;
@@ -2625,13 +3359,31 @@ void CParaData::SetHFPMeanRecPara(WORD value, bool bSend, bool bConfig)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets i time para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i time para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetITimePara_TRIGGER()
 {
 	return m_data.m_iParaDataITime_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Sets i time para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetITimePara_TRIGGER(WORD value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataITime_TRIGGER=value;
@@ -2647,6 +3399,15 @@ void CParaData::SetITimePara_TRIGGER(WORD value, bool bSend, bool bConfig)
 	}	
 }
 
+/**********************************************************************************************//**
+ * Gets i time para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i time para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetITimePara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -2655,6 +3416,18 @@ WORD CParaData::GetITimePara_IPPV()
 	return m_data.m_iParaDataITime_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Sets i time para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetITimePara_IPPV(WORD value, bool bSend, bool bConfig)
 {
 #ifdef BACKUP_VENTILATION
@@ -2683,13 +3456,32 @@ void CParaData::SetITimePara_IPPV(WORD value, bool bSend, bool bConfig)
 	}
 #endif
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets i time nmode para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i time nmode para.
+ **************************************************************************************************/
+
 WORD CParaData::GetITimeNMODEPara()
 {
 	return m_data.m_iParaDataITime_NMODE;
 }
+
+/**********************************************************************************************//**
+ * Sets i time nmode para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetITimeNMODEPara(WORD value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataITime_NMODE=value;
@@ -2706,13 +3498,32 @@ void CParaData::SetITimeNMODEPara(WORD value, bool bSend, bool bConfig)
 
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets etime para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The etime para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetETIMEPara_TRIGGER()
 {
 	return m_data.m_iParaDataETime_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Sets etime para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetETIMEPara_TRIGGER(WORD value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataETime_TRIGGER=value;
@@ -2729,6 +3540,15 @@ void CParaData::SetETIMEPara_TRIGGER(WORD value, bool bSend, bool bConfig)
 	
 }
 
+/**********************************************************************************************//**
+ * Gets etime para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The etime para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetETIMEPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -2738,6 +3558,18 @@ WORD CParaData::GetETIMEPara_IPPV()
 #endif
 	
 }
+
+/**********************************************************************************************//**
+ * Sets etime para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetETIMEPara_IPPV(WORD value, bool bSend, bool bConfig)
 {
 #ifdef BACKUP_VENTILATION
@@ -2767,10 +3599,31 @@ void CParaData::SetETIMEPara_IPPV(WORD value, bool bSend, bool bConfig)
 #endif
 }
 
+/**********************************************************************************************//**
+ * Gets etimenmode para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The etimenmode para.
+ **************************************************************************************************/
+
 WORD CParaData::GetETIMENMODEPara()
 {
 	return m_data.m_iParaDataETime_NMODE;
 }
+
+/**********************************************************************************************//**
+ * Sets etimenmode para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetETIMENMODEPara(WORD value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataETime_NMODE=value;
@@ -2787,13 +3640,31 @@ void CParaData::SetETIMENMODEPara(WORD value, bool bSend, bool bConfig)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets i flow para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i flow para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetIFlowPara_TRIGGER()
 {
 	return m_data.m_iParaDataIFlow_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Sets i flow para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetIFlowPara_TRIGGER(WORD value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataIFlow_TRIGGER=value;
@@ -2809,6 +3680,15 @@ void CParaData::SetIFlowPara_TRIGGER(WORD value, bool bSend, bool bConfig)
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets i flow para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i flow para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetIFlowPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -2818,6 +3698,18 @@ WORD CParaData::GetIFlowPara_IPPV()
 #endif
 	
 }
+
+/**********************************************************************************************//**
+ * Sets i flow para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetIFlowPara_IPPV(WORD value, bool bSend, bool bConfig)
 {
 #ifdef BACKUP_VENTILATION
@@ -2846,13 +3738,32 @@ void CParaData::SetIFlowPara_IPPV(WORD value, bool bSend, bool bConfig)
 	}
 #endif
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets hf flow para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hf flow para.
+ **************************************************************************************************/
+
 WORD CParaData::GetHFFlowPara()
 {
 	return m_data.m_iParaDataHFFlow;
 }
+
+/**********************************************************************************************//**
+ * Sets hf flow para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetHFFlowPara(WORD value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataHFFlow=value;
@@ -2870,13 +3781,31 @@ void CParaData::SetHFFlowPara(WORD value, bool bSend, bool bConfig)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets risetime para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The risetime para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetRisetimePara_TRIGGER()
 {
 	return m_data.m_iParaDataRisetime_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Sets risetime para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetRisetimePara_TRIGGER(WORD value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataRisetime_TRIGGER=value;
@@ -2892,6 +3821,15 @@ void CParaData::SetRisetimePara_TRIGGER(WORD value, bool bSend, bool bConfig)
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets risetime para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The risetime para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetRisetimePara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -2901,6 +3839,18 @@ WORD CParaData::GetRisetimePara_IPPV()
 #endif
 	
 }
+
+/**********************************************************************************************//**
+ * Sets risetime para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetRisetimePara_IPPV(WORD value, bool bSend, bool bConfig)
 {
 #ifdef BACKUP_VENTILATION
@@ -2929,13 +3879,30 @@ void CParaData::SetRisetimePara_IPPV(WORD value, bool bSend, bool bConfig)
 	}
 #endif
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets v limit parameter trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The v limit parameter trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetVLimitParam_TRIGGER()
 {
 	return m_data.m_iParaDataVLimit_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Gets v limit parameter ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The v limit parameter ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetVLimitParam_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -2944,6 +3911,19 @@ WORD CParaData::GetVLimitParam_IPPV()
 	return m_data.m_iParaDataVLimit_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Sets v limit parameter trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	val	   	The value.
+ * \param	bOn	   	True to on.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetVLimitParam_TRIGGER(WORD val, bool bOn ,bool bSend, bool bConfig)
 {
 	bool bStateChanged=false;
@@ -2976,6 +3956,18 @@ void CParaData::SetVLimitParam_TRIGGER(WORD val, bool bOn ,bool bSend, bool bCon
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets v limit parameter ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	val	   	The value.
+ * \param	bOn	   	True to on.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
 
 void CParaData::SetVLimitParam_IPPV(WORD val, bool bOn ,bool bSend, bool bConfig)
 {
@@ -3042,10 +4034,28 @@ void CParaData::SetVLimitParam_IPPV(WORD val, bool bOn ,bool bSend, bool bConfig
 #endif
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is v limit parameter on trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if v limit parameter on trigger, false if not.
+ **************************************************************************************************/
+
 bool CParaData::IsVLimitParamOn_TRIGGER()
 {
 	return m_data.m_bParaDataVLimitOn_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is v limit parameter on ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if v limit parameter on ippv, false if not.
+ **************************************************************************************************/
 
 bool CParaData::IsVLimitParamOn_IPPV()
 {
@@ -3056,13 +4066,29 @@ bool CParaData::IsVLimitParamOn_IPPV()
 #endif
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets v garant para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The v garant para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetVGarantPara_TRIGGER()
 {
 	return m_data.m_iParaDataVGarant_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Gets v garant para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The v garant para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetVGarantPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -3071,6 +4097,18 @@ WORD CParaData::GetVGarantPara_IPPV()
 	return m_data.m_iParaDataVGarant_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Sets v garant state trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bOn	   	True to on.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetVGarantState_TRIGGER(bool bOn,bool bSend,bool bConfig)
 {
 	m_data.m_bParaDataVGarantOn_TRIGGER=bOn;
@@ -3086,6 +4124,18 @@ void CParaData::SetVGarantState_TRIGGER(bool bOn,bool bSend,bool bConfig)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets v garant para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	val	   	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetVGarantPara_TRIGGER(WORD val,bool bSend,bool bConfig)
 {
 	m_data.m_iParaDataVGarant_TRIGGER=val;
@@ -3101,6 +4151,18 @@ void CParaData::SetVGarantPara_TRIGGER(WORD val,bool bSend,bool bConfig)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets v garant state ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bOn	   	True to on.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetVGarantState_IPPV(bool bOn,bool bSend,bool bConfig)
 {
 #ifdef BACKUP_VENTILATION
@@ -3132,6 +4194,18 @@ void CParaData::SetVGarantState_IPPV(bool bOn,bool bSend,bool bConfig)
 
 #endif
 }
+
+/**********************************************************************************************//**
+ * Sets v garant para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	val	   	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetVGarantPara_IPPV(WORD val,bool bSend,bool bConfig)
 {
 	DEBUGMSG(TRUE, (TEXT("SetVGarantParam IPPV\r\n")));
@@ -3175,10 +4249,28 @@ void CParaData::SetVGarantPara_IPPV(WORD val,bool bSend,bool bConfig)
 #endif
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is v garant state on trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if v garant state on trigger, false if not.
+ **************************************************************************************************/
+
 bool CParaData::IsVGarantStateOn_TRIGGER()
 {
 	return m_data.m_bParaDataVGarantOn_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is v garant state on ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if v garant state on ippv, false if not.
+ **************************************************************************************************/
 
 bool CParaData::IsVGarantStateOn_IPPV()
 {
@@ -3189,13 +4281,31 @@ bool CParaData::IsVGarantStateOn_IPPV()
 #endif
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets hfv garant para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hfv garant para.
+ **************************************************************************************************/
+
 WORD CParaData::GetHFVGarantPara()
 {
 	return m_data.m_iParaDataVGarant_HFO;
 }
+
+/**********************************************************************************************//**
+ * Sets hfv garant state
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bOn	   	True to on.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetHFVGarantState(bool bOn,bool bSend,bool bConfig)
 {
 	m_data.m_bParaDataVGarantOn_HFO=bOn;
@@ -3211,6 +4321,18 @@ void CParaData::SetHFVGarantState(bool bOn,bool bSend,bool bConfig)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets hfv garant para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	val	   	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::SetHFVGarantPara(WORD val,bool bSend,bool bConfig)
 {
 	/*bool bStateChanged=false;
@@ -3272,24 +4394,59 @@ void CParaData::SetHFVGarantPara(WORD val,bool bSend,bool bConfig)
 	}
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is hfv garant state on
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if hfv garant state on, false if not.
+ **************************************************************************************************/
+
 bool CParaData::IsHFVGarantStateOn()
 {
 	return m_data.m_bParaDataVGarantOn_HFO;
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets byte fo tconv amplitude para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The byte fo tconv amplitude para.
+ **************************************************************************************************/
 
 BYTE CParaData::getByteFOTconv_AMPLITUDEPara()
 {
 	return m_byFOTAmp;
 }
+
+/**********************************************************************************************//**
+ * Gets fo tconv amplitude para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo tconv amplitude para.
+ **************************************************************************************************/
+
 WORD CParaData::getFOTconv_AMPLITUDEPara()
 {
 	return m_data.m_iParaDataFOTconv_AMPLITUDE;
 }
+
+/**********************************************************************************************//**
+ * Sets fo tconv amplitude para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	ampl   	The ampl.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::setFOTconv_AMPLITUDEPara(WORD ampl, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataFOTconv_AMPLITUDE=ampl;
@@ -3341,14 +4498,46 @@ void CParaData::setFOTconv_AMPLITUDEPara(WORD ampl, bool bSend, bool bConfig)
 		}*/
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets byte fo tconv frequency para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The byte fo tconv frequency para.
+ **************************************************************************************************/
+
 BYTE CParaData::getByteFOTconv_FREQPara()
 {
 	return m_byFOTFreq;
 }
+
+/**********************************************************************************************//**
+ * Gets fo tconv frequency para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo tconv frequency para.
+ **************************************************************************************************/
+
 BYTE CParaData::getFOTconv_FREQPara()
 {
 	return m_data.m_iParaDataFOTconv_FREQ;
 }
+
+/**********************************************************************************************//**
+ * Sets fo tconv frequency para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::setFOTconv_FREQPara(BYTE value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataFOTconv_FREQ=value;
@@ -3395,13 +4584,32 @@ void CParaData::setFOTconv_FREQPara(BYTE value, bool bSend, bool bConfig)
 		
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets fo tconv peepstart para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo tconv peepstart para.
+ **************************************************************************************************/
+
 WORD CParaData::getFOTconv_PEEPSTARTPara()
 {
 	return m_data.m_iParaDataFOTconv_PEEPSTART;
 }
+
+/**********************************************************************************************//**
+ * Sets fo tconv peepstart para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::setFOTconv_PEEPSTARTPara(WORD value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataFOTconv_PEEPSTART=value;
@@ -3416,13 +4624,31 @@ void CParaData::setFOTconv_PEEPSTARTPara(WORD value, bool bSend, bool bConfig)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets fo tconv peepend para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo tconv peepend para.
+ **************************************************************************************************/
+
 WORD CParaData::getFOTconv_PEEPENDPara()
 {
 	return m_data.m_iParaDataFOTconv_PEEPEND;
 }
+
+/**********************************************************************************************//**
+ * Sets fo tconv peepend para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::setFOTconv_PEEPENDPara(WORD value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataFOTconv_PEEPEND=value;
@@ -3437,13 +4663,31 @@ void CParaData::setFOTconv_PEEPENDPara(WORD value, bool bSend, bool bConfig)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets fo tconv steps para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo tconv steps para.
+ **************************************************************************************************/
+
 BYTE CParaData::getFOTconv_STEPSPara()
 {
 	return m_data.m_iParaDataFOTconv_STEPS;
 }
+
+/**********************************************************************************************//**
+ * Sets fo tconv steps para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::setFOTconv_STEPSPara(BYTE value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataFOTconv_STEPS=value;
@@ -3460,13 +4704,31 @@ void CParaData::setFOTconv_STEPSPara(BYTE value, bool bSend, bool bConfig)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets fo thfo amplitude para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo thfo amplitude para.
+ **************************************************************************************************/
+
 WORD CParaData::getFOThfo_AMPLITUDEPara()
 {
 	return m_data.m_iParaDataFOThfo_AMPLITUDE;
 }
+
+/**********************************************************************************************//**
+ * Sets fo thfo amplitude para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	ampl   	The ampl.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::setFOThfo_AMPLITUDEPara(WORD ampl, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataFOThfo_AMPLITUDE=ampl;
@@ -3482,13 +4744,32 @@ void CParaData::setFOThfo_AMPLITUDEPara(WORD ampl, bool bSend, bool bConfig)
 		}*/
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets fo thfo frequency para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo thfo frequency para.
+ **************************************************************************************************/
+
 BYTE CParaData::getFOThfo_FREQPara()
 {
 	return m_data.m_iParaDataFOThfo_FREQ;
 }
+
+/**********************************************************************************************//**
+ * Sets fo thfo frequency para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::setFOThfo_FREQPara(BYTE value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataFOThfo_FREQ=value;
@@ -3502,13 +4783,32 @@ void CParaData::setFOThfo_FREQPara(BYTE value, bool bSend, bool bConfig)
 		}*/
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets fo thfo pmeanstart para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo thfo pmeanstart para.
+ **************************************************************************************************/
+
 WORD CParaData::getFOThfo_PMEANSTARTPara()
 {
 	return m_data.m_iParaDataFOThfo_PMEANSTART;
 }
+
+/**********************************************************************************************//**
+ * Sets fo thfo pmeanstart para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::setFOThfo_PMEANSTARTPara(WORD value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataFOThfo_PMEANSTART=value;
@@ -3523,13 +4823,31 @@ void CParaData::setFOThfo_PMEANSTARTPara(WORD value, bool bSend, bool bConfig)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets fo thfo pmeanend para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo thfo pmeanend para.
+ **************************************************************************************************/
+
 WORD CParaData::getFOThfo_PMEANENDPara()
 {
 	return m_data.m_iParaDataFOThfo_PMEANEND;
 }
+
+/**********************************************************************************************//**
+ * Sets fo thfo pmeanend para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::setFOThfo_PMEANENDPara(WORD value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataFOThfo_PMEANEND=value;
@@ -3544,13 +4862,31 @@ void CParaData::setFOThfo_PMEANENDPara(WORD value, bool bSend, bool bConfig)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets fo thfo steps para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo thfo steps para.
+ **************************************************************************************************/
+
 BYTE CParaData::getFOThfo_STEPSPara()
 {
 	return m_data.m_iParaDataFOThfo_STEPS;
 }
+
+/**********************************************************************************************//**
+ * Sets fo thfo steps para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	value  	The value.
+ * \param	bSend  	True to send.
+ * \param	bConfig	True to configuration.
+ **************************************************************************************************/
+
 void CParaData::setFOThfo_STEPSPara(BYTE value, bool bSend, bool bConfig)
 {
 	m_data.m_iParaDataFOThfo_STEPS=value;
@@ -3567,10 +4903,15 @@ void CParaData::setFOThfo_STEPSPara(BYTE value, bool bSend, bool bConfig)
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets backup maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The backup maximum para.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 BYTE CParaData::GetBackupMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3580,9 +4921,15 @@ BYTE CParaData::GetBackupMaxPara()
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets cpap maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The cpap maximum para.
+ **************************************************************************************************/
+
 SHORT CParaData::GetCPAPMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3591,9 +4938,15 @@ SHORT CParaData::GetCPAPMaxPara()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataCPAP;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets cpapnmode maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The cpapnmode maximum para.
+ **************************************************************************************************/
+
 SHORT CParaData::GetCPAPNMODEMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3602,9 +4955,15 @@ SHORT CParaData::GetCPAPNMODEMaxPara()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataCPAP_NMODE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets pinsp maximum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The pinsp maximum para ippv.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPINSPMaxPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -3620,6 +4979,16 @@ SHORT CParaData::GetPINSPMaxPara_IPPV()
 #endif
 	
 }
+
+/**********************************************************************************************//**
+ * Gets pinsp maximum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The pinsp maximum para trigger.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPINSPMaxPara_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3628,9 +4997,15 @@ SHORT CParaData::GetPINSPMaxPara_TRIGGER()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataPInsp_TRIGGER;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets pmax maximum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The pmax maximum para ippv.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPMAXMaxPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -3646,6 +5021,16 @@ SHORT CParaData::GetPMAXMaxPara_IPPV()
 #endif
 
 }
+
+/**********************************************************************************************//**
+ * Gets pmax maximum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The pmax maximum para trigger.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPMAXMaxPara_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3654,9 +5039,15 @@ SHORT CParaData::GetPMAXMaxPara_TRIGGER()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataPmaxVolG_TRIGGER;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets ppsv maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The ppsv maximum para.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPpsvMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3665,10 +5056,15 @@ SHORT CParaData::GetPpsvMaxPara()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataPpsv;
 }
 
+/**********************************************************************************************//**
+ * Gets hf frequency maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hf frequency maximum para.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 BYTE CParaData::GetHFFreqMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3676,9 +5072,16 @@ BYTE CParaData::GetHFFreqMaxPara()
 	else
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataHFFreq;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets hfampl maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hfampl maximum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetHFAMPLMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3691,22 +5094,45 @@ WORD CParaData::GetHFAMPLMaxPara()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets hf ampl maximum para neonatal
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CParaData::SetHFAmplMaxParaNEONATAL(WORD iVal)
 {
 	m_dataMaxRange_NEONATAL.m_iParaDataHFAMPL=iVal;
 	m_dataMaxRange_NEONATAL.m_iParaDataHFAMPLmax=iVal;
 }
+
+/**********************************************************************************************//**
+ * Sets hf ampl maximum para pediatric
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CParaData::SetHFAmplMaxParaPEDIATRIC(WORD iVal)
 {
 	m_dataMaxRange_PEDIATRIC.m_iParaDataHFAMPL=iVal;
 	m_dataMaxRange_PEDIATRIC.m_iParaDataHFAMPLmax=iVal;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets hfp mean maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hfp mean maximum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetHFPMeanMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3715,6 +5141,15 @@ WORD CParaData::GetHFPMeanMaxPara()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataHFPmean;
 }
 
+/**********************************************************************************************//**
+ * Gets fo tconv amplitude maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo tconv amplitude maximum para.
+ **************************************************************************************************/
+
 WORD CParaData::getFOTconv_AMPLITUDEMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3722,6 +5157,16 @@ WORD CParaData::getFOTconv_AMPLITUDEMaxPara()
 	else
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataFOTconv_AMPLITUDE;
 }
+
+/**********************************************************************************************//**
+ * Gets fo tconv frequency maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo tconv frequency maximum para.
+ **************************************************************************************************/
+
 BYTE CParaData::getFOTconv_FREQMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3729,6 +5174,16 @@ BYTE CParaData::getFOTconv_FREQMaxPara()
 	else
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataFOTconv_FREQ;
 }
+
+/**********************************************************************************************//**
+ * Gets fo tconv steps maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo tconv steps maximum para.
+ **************************************************************************************************/
+
 BYTE CParaData::getFOTconv_STEPSMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3736,6 +5191,15 @@ BYTE CParaData::getFOTconv_STEPSMaxPara()
 	else
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataFOTconv_STEPS;
 }
+
+/**********************************************************************************************//**
+ * Gets fo thfo steps maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo thfo steps maximum para.
+ **************************************************************************************************/
 
 BYTE CParaData::getFOThfo_STEPSMaxPara()
 {
@@ -3758,6 +5222,16 @@ BYTE CParaData::getFOThfo_STEPSMaxPara()
 //	else
 //		return m_dataMaxRange_PEDIATRIC.m_iParaDataFOThfo_PMEANEND;
 //}
+
+/**********************************************************************************************//**
+ * Gets fo thfo amplitude maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo thfo amplitude maximum para.
+ **************************************************************************************************/
+
 WORD CParaData::getFOThfo_AMPLITUDEMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3765,6 +5239,16 @@ WORD CParaData::getFOThfo_AMPLITUDEMaxPara()
 	else
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataFOThfo_AMPLITUDE;
 }
+
+/**********************************************************************************************//**
+ * Gets fo thfo frequency maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo thfo frequency maximum para.
+ **************************************************************************************************/
+
 BYTE CParaData::getFOThfo_FREQMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3772,9 +5256,16 @@ BYTE CParaData::getFOThfo_FREQMaxPara()
 	else
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataFOThfo_FREQ;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets i time record maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i time record maximum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetITimeRecMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3782,9 +5273,16 @@ WORD CParaData::GetITimeRecMaxPara()
 	else
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataITIME_REC;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets frequency record maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The frequency record maximum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetFreqRecMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3792,9 +5290,16 @@ WORD CParaData::GetFreqRecMaxPara()
 	else
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataFREQ_REC;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets hfp mean record maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hfp mean record maximum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetHFPMeanRecMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3803,10 +5308,15 @@ WORD CParaData::GetHFPMeanRecMaxPara()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataPMEAN_REC;
 }
 
+/**********************************************************************************************//**
+ * Gets IE ratio maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The IE ratio maximum para.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 eRatioIE CParaData::GetIERatioMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3815,10 +5325,15 @@ eRatioIE CParaData::GetIERatioMaxPara()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataIERatio;
 }
 
+/**********************************************************************************************//**
+ * Gets p manual maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The p manual maximum para.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 SHORT CParaData::GetPManualMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3827,9 +5342,15 @@ SHORT CParaData::GetPManualMaxPara()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataPManual_HFO;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets p manual nmode maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The p manual nmode maximum para.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPManualNMODEMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3838,9 +5359,15 @@ SHORT CParaData::GetPManualNMODEMaxPara()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataPManual_NMODE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets o 2 maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The o 2 maximum para.
+ **************************************************************************************************/
+
 BYTE CParaData::GetO2MaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3849,9 +5376,15 @@ BYTE CParaData::GetO2MaxPara()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataO2;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets o 2 flush maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The o 2 flush maximum para.
+ **************************************************************************************************/
+
 BYTE CParaData::GetO2FlushMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3860,9 +5393,15 @@ BYTE CParaData::GetO2FlushMaxPara()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataO2Flush;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets trigger convert maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The trigger convert maximum para.
+ **************************************************************************************************/
+
 BYTE CParaData::GetTriggerCONVMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3870,6 +5409,16 @@ BYTE CParaData::GetTriggerCONVMaxPara()
 	else
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataTrigger_CONV;
 }
+
+/**********************************************************************************************//**
+ * Gets trigger cpap maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The trigger cpap maximum para.
+ **************************************************************************************************/
+
 BYTE CParaData::GetTriggerCPAPMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3877,6 +5426,16 @@ BYTE CParaData::GetTriggerCPAPMaxPara()
 	else
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataTrigger_CPAP;
 }
+
+/**********************************************************************************************//**
+ * Gets trigger duopap maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The trigger duopap maximum para.
+ **************************************************************************************************/
+
 BYTE CParaData::GetTriggerDUOPAPMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3884,6 +5443,16 @@ BYTE CParaData::GetTriggerDUOPAPMaxPara()
 	else
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataTrigger_DUOPAP;
 }
+
+/**********************************************************************************************//**
+ * Gets trigger ncpap maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The trigger ncpap maximum para.
+ **************************************************************************************************/
+
 BYTE CParaData::GetTriggerNCPAPMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3891,9 +5460,16 @@ BYTE CParaData::GetTriggerNCPAPMaxPara()
 	else
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataTrigger_NCPAP;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets eflow maximum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The eflow maximum para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetEFLOWMaxPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -3908,6 +5484,16 @@ WORD CParaData::GetEFLOWMaxPara_IPPV()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataEFlow_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets eflow maximum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The eflow maximum para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetEFLOWMaxPara_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3916,9 +5502,15 @@ WORD CParaData::GetEFLOWMaxPara_TRIGGER()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataEFlow_TRIGGER;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets therapie flow maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The therapie flow maximum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetTherapieFlowMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3927,9 +5519,15 @@ WORD CParaData::GetTherapieFlowMaxPara()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataTherapieFlow;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets flowmin maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The flowmin maximum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetFlowminMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3938,9 +5536,15 @@ WORD CParaData::GetFlowminMaxPara()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataFlowMin;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets peep maximum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The peep maximum para ippv.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPEEPMaxPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -3955,6 +5559,16 @@ SHORT CParaData::GetPEEPMaxPara_IPPV()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataPEEP_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets peep maximum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The peep maximum para trigger.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPEEPMaxPara_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -3963,9 +5577,15 @@ SHORT CParaData::GetPEEPMaxPara_TRIGGER()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataPEEP_TRIGGER;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets bpm maximum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The bpm maximum para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetBPMMaxPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -3988,6 +5608,16 @@ WORD CParaData::GetBPMMaxPara_IPPV()
 	}
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets bpm maximum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The bpm maximum para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetBPMMaxPara_TRIGGER()
 {
 	bool bSIMVmode=false;
@@ -4013,10 +5643,15 @@ WORD CParaData::GetBPMMaxPara_TRIGGER()
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets bpmnmode maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The bpmnmode maximum para.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 WORD CParaData::GetBPMNMODEMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4025,9 +5660,15 @@ WORD CParaData::GetBPMNMODEMaxPara()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataBPM_NMODE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets i time maximum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i time maximum para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetITimeMaxPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -4042,6 +5683,16 @@ WORD CParaData::GetITimeMaxPara_IPPV()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataITime_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets i time maximum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i time maximum para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetITimeMaxPara_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4050,9 +5701,15 @@ WORD CParaData::GetITimeMaxPara_TRIGGER()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataITime_TRIGGER;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets i time nmode maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i time nmode maximum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetITimeNMODEMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4061,9 +5718,15 @@ WORD CParaData::GetITimeNMODEMaxPara()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataITime_NMODE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets etime maximum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The etime maximum para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetETIMEMaxPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -4086,6 +5749,16 @@ WORD CParaData::GetETIMEMaxPara_IPPV()
 	}
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets etime maximum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The etime maximum para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetETIMEMaxPara_TRIGGER()
 {
 	bool bSIMVmode=false;
@@ -4112,10 +5785,15 @@ WORD CParaData::GetETIMEMaxPara_TRIGGER()
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets etimenmode maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The etimenmode maximum para.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 WORD CParaData::GetETIMENMODEMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4124,9 +5802,15 @@ WORD CParaData::GetETIMENMODEMaxPara()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataETime_NMODE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets risetime maximum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The risetime maximum para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetRisetimeMaxPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -4141,6 +5825,16 @@ WORD CParaData::GetRisetimeMaxPara_IPPV()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataRisetime_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets risetime maximum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The risetime maximum para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetRisetimeMaxPara_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4149,9 +5843,15 @@ WORD CParaData::GetRisetimeMaxPara_TRIGGER()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataRisetime_TRIGGER;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets i flow maximum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i flow maximum para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetIFlowMaxPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -4166,6 +5866,16 @@ WORD CParaData::GetIFlowMaxPara_IPPV()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataIFlow_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets i flow maximum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i flow maximum para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetIFlowMaxPara_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4173,9 +5883,16 @@ WORD CParaData::GetIFlowMaxPara_TRIGGER()
 	else
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataIFlow_TRIGGER;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets hf flow maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hf flow maximum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetHFFlowMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4184,9 +5901,15 @@ WORD CParaData::GetHFFlowMaxPara()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataHFFlow;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets v limit maximum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The v limit maximum para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetVLimitMaxPara_IPPV()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4194,6 +5917,16 @@ WORD CParaData::GetVLimitMaxPara_IPPV()
 	else
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataVLimit_IPPV;
 }
+
+/**********************************************************************************************//**
+ * Gets v limit maximum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The v limit maximum para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetVLimitMaxPara_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4202,9 +5935,15 @@ WORD CParaData::GetVLimitMaxPara_TRIGGER()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataVLimit_TRIGGER;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets v garant maximum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The v garant maximum para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetVGarantMaxPara_IPPV()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4212,6 +5951,16 @@ WORD CParaData::GetVGarantMaxPara_IPPV()
 	else
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataVGarant_IPPV;
 }
+
+/**********************************************************************************************//**
+ * Gets v garant maximum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The v garant maximum para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetVGarantMaxPara_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4220,9 +5969,15 @@ WORD CParaData::GetVGarantMaxPara_TRIGGER()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataVGarant_TRIGGER;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets hfv garant maximum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hfv garant maximum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetHFVGarantMaxPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4231,11 +5986,15 @@ WORD CParaData::GetHFVGarantMaxPara()
 		return m_dataMaxRange_PEDIATRIC.m_iParaDataVGarant_HFO;
 }
 
+/**********************************************************************************************//**
+ * Gets backup minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The backup minimum para.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 BYTE CParaData::GetBackupMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4244,9 +6003,15 @@ BYTE CParaData::GetBackupMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataBackup;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets cpap minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The cpap minimum para.
+ **************************************************************************************************/
+
 SHORT CParaData::GetCPAPMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4255,9 +6020,15 @@ SHORT CParaData::GetCPAPMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataCPAP;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets cpapnmode minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The cpapnmode minimum para.
+ **************************************************************************************************/
+
 SHORT CParaData::GetCPAPNMODEMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4266,9 +6037,15 @@ SHORT CParaData::GetCPAPNMODEMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataCPAP_NMODE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets pinsp minimum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The pinsp minimum para ippv.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPINSPMinPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -4283,6 +6060,16 @@ SHORT CParaData::GetPINSPMinPara_IPPV()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataPInsp_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets pinsp minimum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The pinsp minimum para trigger.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPINSPMinPara_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4291,9 +6078,15 @@ SHORT CParaData::GetPINSPMinPara_TRIGGER()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataPInsp_TRIGGER;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets pmax minimum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The pmax minimum para ippv.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPMAXMinPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -4308,6 +6101,16 @@ SHORT CParaData::GetPMAXMinPara_IPPV()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataPmaxVolG_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets pmax minimum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The pmax minimum para trigger.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPMAXMinPara_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4315,9 +6118,16 @@ SHORT CParaData::GetPMAXMinPara_TRIGGER()
 	else
 		return m_dataMinRange_PEDIATRIC.m_iParaDataPmaxVolG_TRIGGER;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets ppsv minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The ppsv minimum para.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPpsvMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4326,9 +6136,15 @@ SHORT CParaData::GetPpsvMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataPpsv;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets hf frequency minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hf frequency minimum para.
+ **************************************************************************************************/
+
 BYTE CParaData::GetHFFreqMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4336,9 +6152,16 @@ BYTE CParaData::GetHFFreqMinPara()
 	else
 		return m_dataMinRange_PEDIATRIC.m_iParaDataHFFreq;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets hfampl minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hfampl minimum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetHFAMPLMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4347,10 +6170,15 @@ WORD CParaData::GetHFAMPLMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataHFAMPL;
 }
 
+/**********************************************************************************************//**
+ * Gets hfp mean minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hfp mean minimum para.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 WORD CParaData::GetHFPMeanMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4359,6 +6187,15 @@ WORD CParaData::GetHFPMeanMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataHFPmean;
 }
 
+/**********************************************************************************************//**
+ * Gets fo tconv amplitude minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo tconv amplitude minimum para.
+ **************************************************************************************************/
+
 WORD CParaData::getFOTconv_AMPLITUDEMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4366,6 +6203,16 @@ WORD CParaData::getFOTconv_AMPLITUDEMinPara()
 	else
 		return m_dataMinRange_PEDIATRIC.m_iParaDataFOTconv_AMPLITUDE;
 }
+
+/**********************************************************************************************//**
+ * Gets fo tconv frequency minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo tconv frequency minimum para.
+ **************************************************************************************************/
+
 BYTE CParaData::getFOTconv_FREQMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4373,6 +6220,16 @@ BYTE CParaData::getFOTconv_FREQMinPara()
 	else
 		return m_dataMinRange_PEDIATRIC.m_iParaDataFOTconv_FREQ;
 }
+
+/**********************************************************************************************//**
+ * Gets fo tconv steps minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo tconv steps minimum para.
+ **************************************************************************************************/
+
 BYTE CParaData::getFOTconv_STEPSMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4380,6 +6237,16 @@ BYTE CParaData::getFOTconv_STEPSMinPara()
 	else
 		return m_dataMinRange_PEDIATRIC.m_iParaDataFOTconv_STEPS;
 }
+
+/**********************************************************************************************//**
+ * Gets fo thfo steps minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo thfo steps minimum para.
+ **************************************************************************************************/
+
 BYTE CParaData::getFOThfo_STEPSMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4401,6 +6268,16 @@ BYTE CParaData::getFOThfo_STEPSMinPara()
 //	else
 //		return m_dataMinRange_PEDIATRIC.m_iParaDataFOThfo_PMEANEND;
 //}
+
+/**********************************************************************************************//**
+ * Gets fo thfo amplitude minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo thfo amplitude minimum para.
+ **************************************************************************************************/
+
 WORD CParaData::getFOThfo_AMPLITUDEMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4408,6 +6285,16 @@ WORD CParaData::getFOThfo_AMPLITUDEMinPara()
 	else
 		return m_dataMinRange_PEDIATRIC.m_iParaDataFOThfo_AMPLITUDE;
 }
+
+/**********************************************************************************************//**
+ * Gets fo thfo frequency minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The fo thfo frequency minimum para.
+ **************************************************************************************************/
+
 BYTE CParaData::getFOThfo_FREQMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4415,9 +6302,16 @@ BYTE CParaData::getFOThfo_FREQMinPara()
 	else
 		return m_dataMinRange_PEDIATRIC.m_iParaDataFOThfo_FREQ;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets i time record minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i time record minimum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetITimeRecMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4425,9 +6319,16 @@ WORD CParaData::GetITimeRecMinPara()
 	else
 		return m_dataMinRange_PEDIATRIC.m_iParaDataITIME_REC;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets frequency record minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The frequency record minimum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetFreqRecMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4435,9 +6336,16 @@ WORD CParaData::GetFreqRecMinPara()
 	else
 		return m_dataMinRange_PEDIATRIC.m_iParaDataFREQ_REC;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets hfp mean record minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hfp mean record minimum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetHFPMeanRecMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4446,9 +6354,15 @@ WORD CParaData::GetHFPMeanRecMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataPMEAN_REC;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets IE ratio minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The IE ratio minimum para.
+ **************************************************************************************************/
+
 eRatioIE CParaData::GetIERatioMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4457,10 +6371,15 @@ eRatioIE CParaData::GetIERatioMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataIERatio;
 }
 
+/**********************************************************************************************//**
+ * Gets p manual minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The p manual minimum para.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 SHORT CParaData::GetPManualMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4469,9 +6388,15 @@ SHORT CParaData::GetPManualMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataPManual_HFO;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets p manual nmode minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The p manual nmode minimum para.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPManualNMODEMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4480,9 +6405,15 @@ SHORT CParaData::GetPManualNMODEMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataPManual_NMODE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets o 2 minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The o 2 minimum para.
+ **************************************************************************************************/
+
 BYTE CParaData::GetO2MinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4491,9 +6422,15 @@ BYTE CParaData::GetO2MinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataO2;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets o 2 flush minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The o 2 flush minimum para.
+ **************************************************************************************************/
+
 BYTE CParaData::GetO2FlushMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4502,9 +6439,15 @@ BYTE CParaData::GetO2FlushMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataO2Flush;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets trigger convert minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The trigger convert minimum para.
+ **************************************************************************************************/
+
 BYTE CParaData::GetTriggerCONVMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4513,6 +6456,15 @@ BYTE CParaData::GetTriggerCONVMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataTrigger_CONV;
 }
 
+/**********************************************************************************************//**
+ * Gets trigger cpap minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The trigger cpap minimum para.
+ **************************************************************************************************/
+
 BYTE CParaData::GetTriggerCPAPMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4520,9 +6472,16 @@ BYTE CParaData::GetTriggerCPAPMinPara()
 	else
 		return m_dataMinRange_PEDIATRIC.m_iParaDataTrigger_CPAP;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets trigger duopap minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The trigger duopap minimum para.
+ **************************************************************************************************/
+
 BYTE CParaData::GetTriggerDUOPAPMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4531,6 +6490,15 @@ BYTE CParaData::GetTriggerDUOPAPMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataTrigger_DUOPAP;
 }
 
+/**********************************************************************************************//**
+ * Gets trigger ncpap minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The trigger ncpap minimum para.
+ **************************************************************************************************/
+
 BYTE CParaData::GetTriggerNCPAPMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4538,9 +6506,16 @@ BYTE CParaData::GetTriggerNCPAPMinPara()
 	else
 		return m_dataMinRange_PEDIATRIC.m_iParaDataTrigger_NCPAP;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets therapie flow minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The therapie flow minimum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetTherapieFlowMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4549,10 +6524,15 @@ WORD CParaData::GetTherapieFlowMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataTherapieFlow;
 }
 
+/**********************************************************************************************//**
+ * Gets eflow minimum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The eflow minimum para ippv.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 WORD CParaData::GetEFLOWMinPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -4567,6 +6547,16 @@ WORD CParaData::GetEFLOWMinPara_IPPV()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataEFlow_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets eflow minimum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The eflow minimum para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetEFLOWMinPara_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4575,9 +6565,15 @@ WORD CParaData::GetEFLOWMinPara_TRIGGER()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataEFlow_TRIGGER;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets flowmin minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The flowmin minimum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetFlowminMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4586,9 +6582,15 @@ WORD CParaData::GetFlowminMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataFlowMin;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets peep minimum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The peep minimum para ippv.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPEEPMinPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -4603,6 +6605,16 @@ SHORT CParaData::GetPEEPMinPara_IPPV()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataPEEP_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets peep minimum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The peep minimum para trigger.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPEEPMinPara_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4610,6 +6622,16 @@ SHORT CParaData::GetPEEPMinPara_TRIGGER()
 	else
 		return m_dataMinRange_PEDIATRIC.m_iParaDataPEEP_TRIGGER;
 }
+
+/**********************************************************************************************//**
+ * Gets peep minimum para risetime
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The peep minimum para risetime.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPEEPMinPara_RISETIME()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4617,9 +6639,16 @@ SHORT CParaData::GetPEEPMinPara_RISETIME()
 	else
 		return m_dataMinRange_PEDIATRIC.m_iParaDataPEEP_RISETIME;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets bpm minimum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The bpm minimum para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetBPMMinPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -4642,6 +6671,16 @@ WORD CParaData::GetBPMMinPara_IPPV()
 	}
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets bpm minimum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The bpm minimum para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetBPMMinPara_TRIGGER()
 {
 	bool bSIMVmode=false;
@@ -4666,9 +6705,16 @@ WORD CParaData::GetBPMMinPara_TRIGGER()
 			return m_dataMinRange_PEDIATRIC.m_iParaDataBPM_TRIGGER;
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets bpmnmode minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The bpmnmode minimum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetBPMNMODEMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4677,9 +6723,15 @@ WORD CParaData::GetBPMNMODEMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataBPM_NMODE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets i time minimum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i time minimum para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetITimeMinPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -4695,6 +6747,16 @@ WORD CParaData::GetITimeMinPara_IPPV()
 #endif
 	
 }
+
+/**********************************************************************************************//**
+ * Gets i time minimum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i time minimum para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetITimeMinPara_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4703,9 +6765,15 @@ WORD CParaData::GetITimeMinPara_TRIGGER()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataITime_TRIGGER;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets i time nmode minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i time nmode minimum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetITimeNMODEMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4714,9 +6782,15 @@ WORD CParaData::GetITimeNMODEMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataITime_NMODE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets etime minimum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The etime minimum para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetETIMEMinPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -4739,6 +6813,16 @@ WORD CParaData::GetETIMEMinPara_IPPV()
 	}
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets etime minimum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The etime minimum para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetETIMEMinPara_TRIGGER()
 {
 	bool bSIMVmode=false;
@@ -4763,9 +6847,16 @@ WORD CParaData::GetETIMEMinPara_TRIGGER()
 			return m_dataMinRange_PEDIATRIC.m_iParaDataETime_TRIGGER;
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets etimenmode minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The etimenmode minimum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetETIMENMODEMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4774,9 +6865,15 @@ WORD CParaData::GetETIMENMODEMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataETime_NMODE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets i flow minimum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i flow minimum para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetIFlowMinPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -4791,6 +6888,16 @@ WORD CParaData::GetIFlowMinPara_IPPV()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataIFlow_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets i flow minimum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i flow minimum para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetIFlowMinPara_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4798,9 +6905,16 @@ WORD CParaData::GetIFlowMinPara_TRIGGER()
 	else
 		return m_dataMinRange_PEDIATRIC.m_iParaDataIFlow_TRIGGER;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets hf flow minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hf flow minimum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetHFFlowMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4809,9 +6923,15 @@ WORD CParaData::GetHFFlowMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataHFFlow;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets risetime minimum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The risetime minimum para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetRisetimeMinPara_IPPV()
 {
 #ifdef BACKUP_VENTILATION
@@ -4826,6 +6946,16 @@ WORD CParaData::GetRisetimeMinPara_IPPV()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataRisetime_TRIGGER;
 #endif
 }
+
+/**********************************************************************************************//**
+ * Gets risetime minimum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The risetime minimum para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetRisetimeMinPara_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4834,9 +6964,15 @@ WORD CParaData::GetRisetimeMinPara_TRIGGER()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataRisetime_TRIGGER;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets v limit minimum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The v limit minimum para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetVLimitMinPara_IPPV()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4844,6 +6980,16 @@ WORD CParaData::GetVLimitMinPara_IPPV()
 	else
 		return m_dataMinRange_PEDIATRIC.m_iParaDataVLimit_IPPV;
 }
+
+/**********************************************************************************************//**
+ * Gets v limit minimum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The v limit minimum para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetVLimitMinPara_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4852,9 +6998,15 @@ WORD CParaData::GetVLimitMinPara_TRIGGER()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataVLimit_TRIGGER;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets v garant minimum para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The v garant minimum para ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetVGarantMinPara_IPPV()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4867,6 +7019,16 @@ WORD CParaData::GetVGarantMinPara_IPPV()
 	else
 		return m_dataMinRange_PEDIATRIC.m_iParaDataVGarant_IPPV;
 }
+
+/**********************************************************************************************//**
+ * Gets v garant minimum para trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The v garant minimum para trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetVGarantMinPara_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4880,9 +7042,15 @@ WORD CParaData::GetVGarantMinPara_TRIGGER()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataVGarant_TRIGGER;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets hfv garant minimum para
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hfv garant minimum para.
+ **************************************************************************************************/
+
 WORD CParaData::GetHFVGarantMinPara()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4891,10 +7059,15 @@ WORD CParaData::GetHFVGarantMinPara()
 		return m_dataMinRange_PEDIATRIC.m_iParaDataVGarant_HFO;
 }
 
+/**********************************************************************************************//**
+ * Gets p manual maximum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The p manual maximum key.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 SHORT CParaData::GetPManualMaxKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4902,9 +7075,16 @@ SHORT CParaData::GetPManualMaxKey()
 	else
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataPManual_HFO;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets p manual nmode maximum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The p manual nmode maximum key.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPManualNMODEMaxKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4912,9 +7092,16 @@ SHORT CParaData::GetPManualNMODEMaxKey()
 	else
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataPManual_NMODE;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets p manual minimum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The p manual minimum key.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPManualMinKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4922,9 +7109,16 @@ SHORT CParaData::GetPManualMinKey()
 	else
 		return m_dataKeyMin_PEDIATRIC.m_iParaDataPManual_HFO;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets p manual nmode minimum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The p manual nmode minimum key.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPManualNMODEMinKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4932,9 +7126,16 @@ SHORT CParaData::GetPManualNMODEMinKey()
 	else
 		return m_dataKeyMin_PEDIATRIC.m_iParaDataPManual_NMODE;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets therapie flow maximum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The therapie flow maximum key.
+ **************************************************************************************************/
+
 WORD CParaData::GetTherapieFlowMaxKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4942,6 +7143,16 @@ WORD CParaData::GetTherapieFlowMaxKey()
 	else
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataTherapieFlow;
 }
+
+/**********************************************************************************************//**
+ * Gets therapie flow minimum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The therapie flow minimum key.
+ **************************************************************************************************/
+
 SHORT CParaData::GetTherapieFlowMinKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4949,9 +7160,16 @@ SHORT CParaData::GetTherapieFlowMinKey()
 	else
 		return m_dataKeyMin_PEDIATRIC.m_iParaDataTherapieFlow;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets cpap maximum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The cpap maximum key.
+ **************************************************************************************************/
+
 SHORT CParaData::GetCPAPMaxKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4959,9 +7177,16 @@ SHORT CParaData::GetCPAPMaxKey()
 	else
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataCPAP;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets cpapnmode maximum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The cpapnmode maximum key.
+ **************************************************************************************************/
+
 SHORT CParaData::GetCPAPNMODEMaxKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4969,9 +7194,16 @@ SHORT CParaData::GetCPAPNMODEMaxKey()
 	else
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataCPAP_NMODE;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets p insp maximum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The p insp maximum key.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPInspMaxKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4979,9 +7211,16 @@ SHORT CParaData::GetPInspMaxKey()
 	else
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataPInsp_TRIGGER;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets i flow maximum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i flow maximum key.
+ **************************************************************************************************/
+
 WORD CParaData::GetIFlowMaxKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4989,9 +7228,16 @@ WORD CParaData::GetIFlowMaxKey()
 	else
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataIFlow_TRIGGER;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets e flow maximum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The e flow maximum key.
+ **************************************************************************************************/
+
 WORD CParaData::GetEFlowMaxKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -4999,9 +7245,16 @@ WORD CParaData::GetEFlowMaxKey()
 	else
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataEFlow_TRIGGER;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets vlimit maximum key ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The vlimit maximum key ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetVlimitMaxKey_IPPV()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -5009,6 +7262,16 @@ WORD CParaData::GetVlimitMaxKey_IPPV()
 	else
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataVLimit_IPPV;
 }
+
+/**********************************************************************************************//**
+ * Gets vlimit maximum key trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The vlimit maximum key trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetVlimitMaxKey_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -5016,9 +7279,16 @@ WORD CParaData::GetVlimitMaxKey_TRIGGER()
 	else
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataVLimit_TRIGGER;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets vgarant maximum key ippv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The vgarant maximum key ippv.
+ **************************************************************************************************/
+
 WORD CParaData::GetVgarantMaxKey_IPPV()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -5026,6 +7296,16 @@ WORD CParaData::GetVgarantMaxKey_IPPV()
 	else
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataVGarant_IPPV;
 }
+
+/**********************************************************************************************//**
+ * Gets vgarant maximum key trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The vgarant maximum key trigger.
+ **************************************************************************************************/
+
 WORD CParaData::GetVgarantMaxKey_TRIGGER()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -5033,9 +7313,16 @@ WORD CParaData::GetVgarantMaxKey_TRIGGER()
 	else
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataVGarant_TRIGGER;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets hf vgarant maximum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hf vgarant maximum key.
+ **************************************************************************************************/
+
 WORD CParaData::GetHFVgarantMaxKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -5043,9 +7330,16 @@ WORD CParaData::GetHFVgarantMaxKey()
 	else
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataVGarant_HFO;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets ppsv maximum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The ppsv maximum key.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPpsvMaxKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -5054,9 +7348,15 @@ SHORT CParaData::GetPpsvMaxKey()
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataPpsv;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets peep maximum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The peep maximum key.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPEEPMaxKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -5065,10 +7365,15 @@ SHORT CParaData::GetPEEPMaxKey()
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataPEEP_TRIGGER;
 }
 
+/**********************************************************************************************//**
+ * Gets hfp mean maximum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hfp mean maximum key.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 WORD CParaData::GetHFPMeanMaxKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -5077,9 +7382,15 @@ WORD CParaData::GetHFPMeanMaxKey()
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataHFPmean;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets i time record maximum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The i time record maximum key.
+ **************************************************************************************************/
+
 WORD CParaData::GetITimeRecMaxKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -5087,9 +7398,16 @@ WORD CParaData::GetITimeRecMaxKey()
 	else
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataITIME_REC;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets frequency record maximum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The frequency record maximum key.
+ **************************************************************************************************/
+
 WORD CParaData::GetFreqRecMaxKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -5097,9 +7415,16 @@ WORD CParaData::GetFreqRecMaxKey()
 	else
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataFREQ_REC;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets hfp mean record maximum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The hfp mean record maximum key.
+ **************************************************************************************************/
+
 WORD CParaData::GetHFPMeanRecMaxKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -5107,9 +7432,7 @@ WORD CParaData::GetHFPMeanRecMaxKey()
 	else
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataPMEAN_REC;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
 //WORD CParaData::GetHFampMaxKey()
 //{
 //	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -5121,9 +7444,16 @@ WORD CParaData::GetHFPMeanRecMaxKey()
 //		return m_dataKeyMax_PEDIATRIC.m_iParaDataHFAMPL;
 //	}
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets h ffreq maximum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The h ffreq maximum key.
+ **************************************************************************************************/
+
 BYTE CParaData::GetHFfreqMaxKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -5132,10 +7462,15 @@ BYTE CParaData::GetHFfreqMaxKey()
 		return m_dataKeyMax_PEDIATRIC.m_iParaDataHFFreq;
 }
 
+/**********************************************************************************************//**
+ * Gets cpap minimum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The cpap minimum key.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 SHORT CParaData::GetCPAPMinKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -5143,9 +7478,16 @@ SHORT CParaData::GetCPAPMinKey()
 	else
 		return m_dataKeyMin_PEDIATRIC.m_iParaDataCPAP;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets cpapnmode minimum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The cpapnmode minimum key.
+ **************************************************************************************************/
+
 SHORT CParaData::GetCPAPNMODEMinKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -5153,9 +7495,16 @@ SHORT CParaData::GetCPAPNMODEMinKey()
 	else
 		return m_dataKeyMin_PEDIATRIC.m_iParaDataCPAP_NMODE;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets p insp minimum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The p insp minimum key.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPInspMinKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -5163,9 +7512,16 @@ SHORT CParaData::GetPInspMinKey()
 	else
 		return m_dataKeyMin_PEDIATRIC.m_iParaDataPInsp_TRIGGER;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets ppsv minimum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The ppsv minimum key.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPpsvMinKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
@@ -5174,9 +7530,15 @@ SHORT CParaData::GetPpsvMinKey()
 		return m_dataKeyMin_PEDIATRIC.m_iParaDataPpsv;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets peep minimum key
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	The peep minimum key.
+ **************************************************************************************************/
+
 SHORT CParaData::GetPEEPMinKey()
 {
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)

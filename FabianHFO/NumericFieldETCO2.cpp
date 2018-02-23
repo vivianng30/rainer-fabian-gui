@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldETCO2.h"
 
-
-// CNumericFieldETCO2
+/**********************************************************************************************//**
+ * CNumericFieldETCO2
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldETCO2, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldETCO2 class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldETCO2::CNumericFieldETCO2(eNumericSize size):
 CNumericField(size)
@@ -38,6 +54,13 @@ CNumericField(size)
 	}
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldETCO2 class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CNumericFieldETCO2::~CNumericFieldETCO2()
 {
 }
@@ -49,26 +72,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldETCO2, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldETCO2 message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldETCO2 message handlers
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericFieldETCO2::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CNumericFieldETCO2::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldETCO2::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -161,9 +191,6 @@ bool CNumericFieldETCO2::drawData(bool bData, bool bFrames, bool bText, bool bLi
 }
 
 
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldETCO2::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -183,9 +210,17 @@ bool CNumericFieldETCO2::drawData(bool bData, bool bFrames, bool bText, bool bLi
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldETCO2::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -259,10 +294,17 @@ bool CNumericFieldETCO2::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldETCO2::drawLimits(CDC* pDC)
 {
 	HDC hdc = *pDC;

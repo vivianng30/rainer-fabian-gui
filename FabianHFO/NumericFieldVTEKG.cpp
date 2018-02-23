@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldVTEKG.h"
 
-
-// CNumericFieldVTEKG
+/**********************************************************************************************//**
+ * CNumericFieldVTEKG
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldVTEKG, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldVTEKG class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldVTEKG::CNumericFieldVTEKG(eNumericSize size):
 CNumericField(size)
@@ -26,6 +42,12 @@ CNumericField(size)
 	m_szUnit=_T("[ml/kg]");
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldVTEKG class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CNumericFieldVTEKG::~CNumericFieldVTEKG()
 {
@@ -38,18 +60,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldVTEKG, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
-
-// CNumericFieldVTEKG message handlers
+/**********************************************************************************************//**
+ * CNumericFieldVTEKG message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CNumericFieldVTEKG::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldVTEKG::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -145,10 +182,6 @@ bool CNumericFieldVTEKG::drawData(bool bData, bool bFrames, bool bText, bool bLi
 	return bReturn;
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldVTEKG::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -168,9 +201,17 @@ bool CNumericFieldVTEKG::drawData(bool bData, bool bFrames, bool bText, bool bLi
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldVTEKG::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -278,10 +319,17 @@ bool CNumericFieldVTEKG::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldVTEKG::drawLimits(CDC* pDC)
 {
 	return true;

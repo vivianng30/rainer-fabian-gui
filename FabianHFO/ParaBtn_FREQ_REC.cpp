@@ -12,15 +12,41 @@ extern HFONT g_hf31AcuBold;
 extern HFONT g_hf8AcuBold;
 extern HFONT g_hf23AcuBold;
 
-// CParaBtn_FREQ_REC
+/**********************************************************************************************//**
+ * CParaBtn_FREQ_REC
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CParaBtn_FREQ_REC, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaBtn_FREQ_REC class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	btn		   	The button.
+ * \param	nOffset	   	The offset.
+ * \param	bScrollOver	True to scroll over.
+ **************************************************************************************************/
 
 CParaBtn_FREQ_REC::CParaBtn_FREQ_REC(BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_FREQ_REC class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_FREQ_REC::~CParaBtn_FREQ_REC()
 {
@@ -39,12 +65,15 @@ BEGIN_MESSAGE_MAP(CParaBtn_FREQ_REC, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CParaBtn_FREQ_REC message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
-
-// CParaBtn_FREQ_REC message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CParaBtn_FREQ_REC::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -288,6 +317,16 @@ void CParaBtn_FREQ_REC::Draw(int nState)
 	}
 }
 
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_FREQ_REC::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
@@ -469,6 +508,15 @@ void CParaBtn_FREQ_REC::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	m_bLMouseButtonDown = false;
 }
 
+/**********************************************************************************************//**
+ * Executes the l button up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CParaBtn_FREQ_REC::OnLButtonUp(UINT nFlags, CPoint point) 
 {

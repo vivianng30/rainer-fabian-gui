@@ -1,7 +1,20 @@
+/**********************************************************************************************//**
+ * \file	InterfaceMasimoSPO2.cpp.
+ *
+ * Implements the interface masimo spo 2 class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "InterfaceMasimoSPO2.h"
 #include "MVModel.h"
 #include "MVViewHandler.h"
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CInterfaceMasimoSPO2 class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 CInterfaceMasimoSPO2::CInterfaceMasimoSPO2(void)
 {
@@ -78,9 +91,27 @@ CInterfaceMasimoSPO2::CInterfaceMasimoSPO2(void)
 	m_bCheck_tWaveformMode=false;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CInterfaceMasimoSPO2 class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 CInterfaceMasimoSPO2::~CInterfaceMasimoSPO2(void)
 {
 }
+
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	com	The com.
+ *
+ * \return	An int.
+ **************************************************************************************************/
 
 int CInterfaceMasimoSPO2::Init(BYTE com)
 {
@@ -129,6 +160,17 @@ int CInterfaceMasimoSPO2::Init(BYTE com)
 
 	return 0;
 }
+
+/**********************************************************************************************//**
+ * Deinits
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bReinit	True to reinitialize.
+ *
+ * \return	An int.
+ **************************************************************************************************/
 
 int CInterfaceMasimoSPO2::Deinit(bool bReinit)
 {
@@ -197,6 +239,15 @@ int CInterfaceMasimoSPO2::Deinit(bool bReinit)
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Opens the com
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceMasimoSPO2::OpenCOM()
 {
 	bool bRes=false;
@@ -235,6 +286,18 @@ bool CInterfaceMasimoSPO2::OpenCOM()
 
 }
 
+/**********************************************************************************************//**
+ * Shows the error
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	lError			The error.
+ * \param	lptszMessage	Message describing the lptsz.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CInterfaceMasimoSPO2::ShowError (LONG lError, LPCTSTR lptszMessage)
 {
 	// Generate a message text
@@ -252,6 +315,13 @@ int CInterfaceMasimoSPO2::ShowError (LONG lError, LPCTSTR lptszMessage)
 //	
 //	setBoardMode(SPO2_MASIMO_HOSTCMD_BOARDMODE_NORMAL);
 //}
+
+/**********************************************************************************************//**
+ * Initializes the sequenz
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CInterfaceMasimoSPO2::InitializeSequenz()
 {
@@ -290,13 +360,26 @@ void CInterfaceMasimoSPO2::InitializeSequenz()
 	startSPO2checkThread();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Check module state
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceMasimoSPO2::checkModuleState()
 {
 	checkLastSpO2Cmd();
 }
+
+/**********************************************************************************************//**
+ * Performs the message action
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CInterfaceMasimoSPO2::PerformMsg()
 {
@@ -600,10 +683,26 @@ bool CInterfaceMasimoSPO2::PerformMsg()
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Gets exception 2
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The exception 2.
+ **************************************************************************************************/
+
 SHORT CInterfaceMasimoSPO2::get_EXCEPTION2()
 {
 	return m_iEXCEPTIONS2;
 }
+
+/**********************************************************************************************//**
+ * Check sensorfailure
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CInterfaceMasimoSPO2::checkSENSORFAILURE()
 {
@@ -617,6 +716,14 @@ void CInterfaceMasimoSPO2::checkSENSORFAILURE()
 		}*/
 	}
 }
+
+/**********************************************************************************************//**
+ * Check exceptions 2
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceMasimoSPO2::checkEXCEPTIONS2()
 {
 	bool bCheckSensor=false;
@@ -780,6 +887,15 @@ void CInterfaceMasimoSPO2::checkEXCEPTIONS2()
 		g_eventSPO2Data.SetEvent();
 }
 
+/**********************************************************************************************//**
+ * Executes the interpolation w0 operation
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iTempfaWaveBuf	Buffer for temp wave data.
+ **************************************************************************************************/
+
 void CInterfaceMasimoSPO2::doInterpolationW0(SHORT iTempfaWaveBuf)
 {
 	SHORT iDiff=((iTempfaWaveBuf-m_cLastWaveValW0)/16);
@@ -810,6 +926,16 @@ void CInterfaceMasimoSPO2::doInterpolationW0(SHORT iTempfaWaveBuf)
 
 	m_cLastWaveValW0=iTempfaWaveBuf;
 }
+
+/**********************************************************************************************//**
+ * Executes the event action
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	eEvent	The event.
+ * \param	eError	The error.
+ **************************************************************************************************/
 
 void CInterfaceMasimoSPO2::OnEvent(EEvent eEvent, EError eError)
 {
@@ -968,9 +1094,6 @@ void CInterfaceMasimoSPO2::OnEvent(EEvent eEvent, EError eError)
 	return;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 //void CInterfaceMasimoSPO2::setModuleConfig(BYTE byte0, BYTE byte1, BYTE byte2, BYTE byte3, BYTE byte4, BYTE byte5, BYTE byte6)
 //{
 //	/*BYTE byte2=LOBYTE(value);
@@ -982,9 +1105,23 @@ void CInterfaceMasimoSPO2::OnEvent(EEvent eEvent, EError eError)
 //	//SendSPO2Command(cmd,byte0);
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a spo2 command
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	byte0	The byte 0.
+ * \param	byte1	The first byte.
+ * \param	byte2	The second byte.
+ * \param	byte3	The third byte.
+ * \param	byte4	The fourth byte.
+ * \param	byte5	The fifth byte.
+ * \param	byte6	The byte 6.
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CInterfaceMasimoSPO2::SendSPO2Command(BYTE byte0, BYTE byte1, BYTE byte2, BYTE byte3, BYTE byte4, BYTE byte5, BYTE byte6) 
 {
 	//if(getModel()->getDATAHANDLER()->IsCO2interfaceEnabled())
@@ -1090,6 +1227,15 @@ DWORD CInterfaceMasimoSPO2::SendSPO2Command(BYTE byte0, BYTE byte1, BYTE byte2, 
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Sets board mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	byte	The byte.
+ **************************************************************************************************/
+
 void CInterfaceMasimoSPO2::setBoardMode(BYTE byte)
 {
 	m_cfgBoardMode=byte;
@@ -1098,6 +1244,18 @@ void CInterfaceMasimoSPO2::setBoardMode(BYTE byte)
 	//timer??????
 	m_bCheck_BoardMode=true;
 }
+
+/**********************************************************************************************//**
+ * Sets digital waveform configuration wc0
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	waveSource  	The wave source.
+ * \param	waveScaling 	The wave scaling.
+ * \param	waveDataSize	Size of the wave data.
+ **************************************************************************************************/
+
 void CInterfaceMasimoSPO2::setDigitalWaveformConfiguration_WC0(WORD waveSource, BYTE waveScaling, BYTE waveDataSize)
 {
 	m_cfgDigitalWaveformConfiguration_WC0=0;
@@ -1110,6 +1268,18 @@ void CInterfaceMasimoSPO2::setDigitalWaveformConfiguration_WC0(WORD waveSource, 
 	m_bCheck_DigitalWaveformConfigurationWC0=true;
 	
 }
+
+/**********************************************************************************************//**
+ * Sets digital waveform configuration wc1
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	waveSource  	The wave source.
+ * \param	waveScaling 	The wave scaling.
+ * \param	waveDataSize	Size of the wave data.
+ **************************************************************************************************/
+
 void CInterfaceMasimoSPO2::setDigitalWaveformConfiguration_WC1(WORD waveSource, BYTE waveScaling, BYTE waveDataSize)
 {
 	m_cfgDigitalWaveformConfiguration_WC1=0;
@@ -1122,6 +1292,14 @@ void CInterfaceMasimoSPO2::setDigitalWaveformConfiguration_WC1(WORD waveSource, 
 	m_bCheck_DigitalWaveformConfigurationWC0=true;
 
 }
+
+/**********************************************************************************************//**
+ * Sends the digital waveform configurations
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceMasimoSPO2::sendDigitalWaveformConfigurations()
 {
 	setDigitalWaveformConfiguration_WC0(SPO2_MASIMO_HOSTCMD_WAVEFORM_SOURCE_RAWIR, SPO2_MASIMO_HOSTCMD_WAVEFORM_SCALING_CONTINUOUS_AUTO, SPO2_MASIMO_HOSTCMD_WAVEFORM_DATASIZE_8BIT);
@@ -1129,6 +1307,16 @@ void CInterfaceMasimoSPO2::sendDigitalWaveformConfigurations()
 
 	SendSPO2Command(SPO2_MASIMO_HOSTCMD_WAVEFORMCONFIG, m_cfgDigitalWaveformConfiguration_WC0,m_cfgDigitalWaveformConfiguration_WC1);
 }
+
+/**********************************************************************************************//**
+ * Sets spo2 averaging time
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	byte	The byte.
+ **************************************************************************************************/
+
 void CInterfaceMasimoSPO2::setSpO2AveragingTime(BYTE byte)
 {
 	m_cfgSpO2AveragingTime=byte;
@@ -1138,6 +1326,18 @@ void CInterfaceMasimoSPO2::setSpO2AveragingTime(BYTE byte)
 	m_bCheck_SpO2AveragingTime=true;
 	
 }
+
+/**********************************************************************************************//**
+ * Sets algorithm mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bit0	True to bit 0.
+ * \param	bit1	True to bit 1.
+ * \param	bit2	True to bit 2.
+ **************************************************************************************************/
+
 void CInterfaceMasimoSPO2::setAlgorithmMode(bool bit0, bool bit1, bool bit2)
 {
 	m_cfgAlgorithmMode=0;
@@ -1153,6 +1353,16 @@ void CInterfaceMasimoSPO2::setAlgorithmMode(bool bit0, bool bit1, bool bit2)
 
 	m_bCheck_AlgorithmMode=true;
 }
+
+/**********************************************************************************************//**
+ * Sets waveform mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	byte	The byte.
+ **************************************************************************************************/
+
 void CInterfaceMasimoSPO2::setWaveformMode(BYTE byte)
 {
 	m_cfgWaveformMode=byte;
@@ -1161,10 +1371,29 @@ void CInterfaceMasimoSPO2::setWaveformMode(BYTE byte)
 	//timer??????
 	m_bCheck_tWaveformMode=true;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is state ok
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if state ok, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceMasimoSPO2::isStateOk()
 {
 	return m_bProcessing;
 }
+
+/**********************************************************************************************//**
+ * Sets fast sat on
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bFastSATon	True to fast sat on.
+ **************************************************************************************************/
 
 void CInterfaceMasimoSPO2::set_FastSATon(bool bFastSATon)
 {
@@ -1191,6 +1420,16 @@ void CInterfaceMasimoSPO2::set_FastSATon(bool bFastSATon)
 
 	getModel()->getCONFIG()->setFastSATon(m_bFastSATon);
 }
+
+/**********************************************************************************************//**
+ * Sets sensitivity mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	mode	The mode.
+ **************************************************************************************************/
+
 void CInterfaceMasimoSPO2::set_SensitivityMode(eSPO2sensitivitymode mode)
 {
 	m_eSPO2SensitivityMode=mode;
@@ -1217,6 +1456,15 @@ void CInterfaceMasimoSPO2::set_SensitivityMode(eSPO2sensitivitymode mode)
 	getModel()->getCONFIG()->setSensitivityMode(m_eSPO2SensitivityMode);
 }
 
+/**********************************************************************************************//**
+ * Sets spo2averaging time
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	avtime	The avtime.
+ **************************************************************************************************/
+
 void CInterfaceMasimoSPO2::set_SPO2averagingTime(eSPO2averagingtime avtime)
 {
 	m_eSPO2averagingTime=avtime;
@@ -1226,6 +1474,15 @@ void CInterfaceMasimoSPO2::set_SPO2averagingTime(eSPO2averagingtime avtime)
 	getModel()->getCONFIG()->setSPO2averagingTime(m_eSPO2averagingTime);
 }
 
+/**********************************************************************************************//**
+ * Sets spo2alarm delay
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	delay	The delay.
+ **************************************************************************************************/
+
 void CInterfaceMasimoSPO2::set_SPO2alarmDelay(eSPO2alarmdelay delay)
 {
 	m_eSPO2alarmdelay=delay;
@@ -1233,15 +1490,42 @@ void CInterfaceMasimoSPO2::set_SPO2alarmDelay(eSPO2alarmdelay delay)
 	getModel()->getCONFIG()->setSPO2alarmDelay(m_eSPO2alarmdelay);
 }
 
+/**********************************************************************************************//**
+ * Gets product identifier
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The product identifier.
+ **************************************************************************************************/
+
 WORD CInterfaceMasimoSPO2::get_ProductID()
 {
 	return m_iProductID;
 }
 
+/**********************************************************************************************//**
+ * Gets version mcu
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The version mcu.
+ **************************************************************************************************/
+
 WORD CInterfaceMasimoSPO2::get_VersionMCU()
 {
 	return m_iVersionMCU;
 }
+
+/**********************************************************************************************//**
+ * Gets version DSP
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The version DSP.
+ **************************************************************************************************/
 
 WORD CInterfaceMasimoSPO2::get_VersionDSP()
 {

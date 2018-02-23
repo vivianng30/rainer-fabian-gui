@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldFICO2.h"
 
-
-// CNumericFieldFICO2
+/**********************************************************************************************//**
+ * CNumericFieldFICO2
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldFICO2, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldFICO2 class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldFICO2::CNumericFieldFICO2(eNumericSize size):
 CNumericField(size)
@@ -38,6 +54,13 @@ CNumericField(size)
 	}
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldFICO2 class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CNumericFieldFICO2::~CNumericFieldFICO2()
 {
 }
@@ -49,26 +72,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldFICO2, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldFICO2 message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldFICO2 message handlers
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericFieldFICO2::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CNumericFieldFICO2::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldFICO2::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -161,9 +191,6 @@ bool CNumericFieldFICO2::drawData(bool bData, bool bFrames, bool bText, bool bLi
 }
 
 
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldFICO2::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -183,9 +210,17 @@ bool CNumericFieldFICO2::drawData(bool bData, bool bFrames, bool bText, bool bLi
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldFICO2::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -259,10 +294,17 @@ bool CNumericFieldFICO2::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldFICO2::drawLimits(CDC* pDC)
 {
 	HDC hdc = *pDC;

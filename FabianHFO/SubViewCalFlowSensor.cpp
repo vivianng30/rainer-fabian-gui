@@ -8,8 +8,31 @@
 #include "MenuBtn.h"
 #include "DlgMessageBox.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 //global font objects
@@ -35,10 +58,33 @@ extern HFONT g_hf43AcuBold;
 extern HFONT g_hf53AcuBold;
 extern HFONT g_hf70Bold;
 
+/**********************************************************************************************//**
+ * A macro that defines timechange
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define TIMECHANGE	50
-// CSubViewCalFlowSensor
+
+/**********************************************************************************************//**
+ * CSubViewCalFlowSensor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CSubViewCalFlowSensor, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CSubViewCalFlowSensor class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewCalFlowSensor::CSubViewCalFlowSensor()
 {
@@ -164,6 +210,13 @@ CSubViewCalFlowSensor::CSubViewCalFlowSensor()
 
 	m_iBodyweight=0;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CSubViewCalFlowSensor class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewCalFlowSensor::~CSubViewCalFlowSensor()
 {
@@ -313,12 +366,15 @@ BEGIN_MESSAGE_MAP(CSubViewCalFlowSensor, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SETUP_BODYWEIGHT, &CSubViewCalFlowSensor::OnBnClickedBodyweight)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CSubViewCalFlowSensor message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
 
-
-// CSubViewCalFlowSensor message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 CMVModel *CSubViewCalFlowSensor::getModel()
 {
 	if(m_pModel==NULL)
@@ -326,9 +382,20 @@ CMVModel *CSubViewCalFlowSensor::getModel()
 	return m_pModel;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates a window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewCalFlowSensor::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext)
 {
 	if (!Create(pParentWnd, rc, nID, pContext))
@@ -339,9 +406,20 @@ bool CSubViewCalFlowSensor::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID,
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSubViewCalFlowSensor::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -483,6 +561,12 @@ BOOL CSubViewCalFlowSensor::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CC
 		return 0;
 }
 
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewCalFlowSensor::Init()
 {
@@ -794,12 +878,25 @@ void CSubViewCalFlowSensor::Init()
 	
 }
 
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewCalFlowSensor::OnPaint()
 {
 	CPaintDC dc(this);
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
+
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewCalFlowSensor::OnDestroy()
 {
@@ -843,9 +940,15 @@ void CSubViewCalFlowSensor::OnDestroy()
 		DeleteObject(m_hbmpTmp);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CSubViewCalFlowSensor::Show(BOOL bShow) 
 {
 	if(this->IsWindowVisible() == bShow)
@@ -862,19 +965,32 @@ void CSubViewCalFlowSensor::Show(BOOL bShow)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets flow sensor text
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	szTextTop	The text top.
+ * \param	szTextBot	The text bottom.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewCalFlowSensor::SetFlowSensorText(CStringW szTextTop, CStringW szTextBot)
 {
 	m_szTextFlowSensorTop=szTextTop;
 	m_szTextFlowSensorBot=szTextBot;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Refresh flow sensor text
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	szTextTop	The text top.
+ * \param	szTextBot	The text bottom.
+ **************************************************************************************************/
+
 void CSubViewCalFlowSensor::RefreshFlowSensorText(CStringW szTextTop, CStringW szTextBot)
 {
 	if(m_bExit)
@@ -886,11 +1002,18 @@ void CSubViewCalFlowSensor::RefreshFlowSensorText(CStringW szTextTop, CStringW s
 	DrawFlowSensor(false,true);
 }
 
+/**********************************************************************************************//**
+ * Sets flow sensor values
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iHval	Zero-based index of the hval.
+ * \param	iLval	Zero-based index of the lval.
+ * \param	iHdac	Zero-based index of the hdac.
+ * \param	iLdac	Zero-based index of the ldac.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewCalFlowSensor::SetFlowSensorValues(int iHval,int iLval,int iHdac,int iLdac)
 {
 	if(m_bExit)
@@ -901,9 +1024,19 @@ void CSubViewCalFlowSensor::SetFlowSensorValues(int iHval,int iLval,int iHdac,in
 	m_iFlowHDAC=iHdac;
 	m_iFlowLDAC=iLdac;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Refresh flow sensor values
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iHval	Zero-based index of the hval.
+ * \param	iLval	Zero-based index of the lval.
+ * \param	iHdac	Zero-based index of the hdac.
+ * \param	iLdac	Zero-based index of the ldac.
+ **************************************************************************************************/
+
 void CSubViewCalFlowSensor::RefreshFlowSensorValues(int iHval,int iLval,int iHdac,int iLdac)
 {
 	if(m_bExit)
@@ -916,10 +1049,16 @@ void CSubViewCalFlowSensor::RefreshFlowSensorValues(int iHval,int iLval,int iHda
 	DrawFlowSensor(false,true);
 }
 
+/**********************************************************************************************//**
+ * Draw flow sensor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bStatic	True to static.
+ * \param	bText  	True to text.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewCalFlowSensor::DrawFlowSensor(bool bStatic, bool bText)
 {
 	if(m_bExit)
@@ -1076,10 +1215,13 @@ void CSubViewCalFlowSensor::DrawFlowSensor(bool bStatic, bool bText)
 
 }
 
+/**********************************************************************************************//**
+ * Draw static
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewCalFlowSensor::DrawStatic()
 {
 	if(m_bExit)
@@ -1182,9 +1324,13 @@ void CSubViewCalFlowSensor::DrawStatic()
 	SetTextColor(m_hdcStatic,nPrevTxtColor);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw calibration text
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewCalFlowSensor::DrawCalText()
 {
 	if(m_bExit)
@@ -1300,10 +1446,15 @@ void CSubViewCalFlowSensor::DrawCalText()
 	SetTextColor(m_hdcTmp,nPrevTxtColor);
 }
 
+/**********************************************************************************************//**
+ * Sets calibration ok
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bCalibrated	True if calibrated.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewCalFlowSensor::SetCalibrationOk(bool bCalibrated)
 {
 	if(m_bExit)
@@ -1349,9 +1500,16 @@ void CSubViewCalFlowSensor::SetCalibrationOk(bool bCalibrated)
 	DrawFlowSensor(false,true);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets calibration state
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	state  	The state.
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CSubViewCalFlowSensor::SetCalState(eFlowSensCalibrationstate state,bool bRedraw)
 {
 	if(m_bExit)
@@ -1458,9 +1616,20 @@ void CSubViewCalFlowSensor::SetCalState(eFlowSensCalibrationstate state,bool bRe
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Check flow sensor state
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bRedraw			True to redraw.
+ * \param	bWrite			True to write.
+ * \param	bCalibrating	True to calibrating.
+ * \param	bDrawError  	True to draw error.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewCalFlowSensor::CheckFlowSensorState(bool bRedraw, bool bWrite, bool bCalibrating, bool bDrawError)
 {
 	if(m_bExit)
@@ -1528,9 +1697,15 @@ bool CSubViewCalFlowSensor::CheckFlowSensorState(bool bRedraw, bool bWrite, bool
 	return bRes;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets calibration running
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CSubViewCalFlowSensor::SetCalRunning(bool state)
 {
 	if(m_bExit)
@@ -1551,9 +1726,15 @@ void CSubViewCalFlowSensor::SetCalRunning(bool state)
 	m_bCalRunning=state;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CSubViewCalFlowSensor::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==FLOWSENS_VALUE)
@@ -1582,7 +1763,18 @@ void CSubViewCalFlowSensor::OnTimer(UINT_PTR nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
-
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
 LRESULT CSubViewCalFlowSensor::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -1728,9 +1920,15 @@ LRESULT CSubViewCalFlowSensor::WindowProc(UINT message, WPARAM wParam, LPARAM lP
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows the neo ped message
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CSubViewCalFlowSensor::showNeoPedMessage(int btnID)
 {
 	SetOneButtonPreset_NeoPed(btnID);
@@ -1769,6 +1967,16 @@ void CSubViewCalFlowSensor::showNeoPedMessage(int btnID)
 	}
 	
 }
+
+/**********************************************************************************************//**
+ * Sets one button depressed neo ped
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CSubViewCalFlowSensor::SetOneButtonDepressed_NeoPed(int btnID)
 {
 	if(btnID==IDC_BTN_NEO)
@@ -1790,6 +1998,16 @@ void CSubViewCalFlowSensor::SetOneButtonDepressed_NeoPed(int btnID)
 	getModel()->getDATAHANDLER()->setBodyweight(0,true);
 	m_pbtnBodyweight->RefreshText(_T("--"));
 }
+
+/**********************************************************************************************//**
+ * Sets one button preset neo ped
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CSubViewCalFlowSensor::SetOneButtonPreset_NeoPed(int btnID)
 {
 
@@ -1804,9 +2022,15 @@ void CSubViewCalFlowSensor::SetOneButtonPreset_NeoPed(int btnID)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows the flow btns
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	disable	True to disable, false to enable.
+ **************************************************************************************************/
+
 void CSubViewCalFlowSensor::ShowFlowBtns(bool disable)
 {
 	if(m_bExit)
@@ -1919,10 +2143,13 @@ void CSubViewCalFlowSensor::ShowFlowBtns(bool disable)
 	}
 }
 
+/**********************************************************************************************//**
+ * Starts flow sensor check thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewCalFlowSensor::StartFlowSensorCheckThread()
 {
 	m_bDoFlowCheck=true;
@@ -1944,6 +2171,14 @@ void CSubViewCalFlowSensor::StartFlowSensorCheckThread()
 	m_pcwtCheckFlow->m_bAutoDelete = FALSE; 
 	m_pcwtCheckFlow->ResumeThread();
 }
+
+/**********************************************************************************************//**
+ * Stops flow sensor check thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewCalFlowSensor::StopFlowSensorCheckThread()
 {
 	if(m_bDoFlowCheck)
@@ -1960,11 +2195,32 @@ void CSubViewCalFlowSensor::StopFlowSensorCheckThread()
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Check flow sensor thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CCheckFlowSensorThread( LPVOID pc )
 {
 	((CSubViewCalFlowSensor*)pc)->CheckFlowSensor();
 	return TRUE;
 }
+
+/**********************************************************************************************//**
+ * Check flow sensor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
 
 DWORD CSubViewCalFlowSensor::CheckFlowSensor()
 {
@@ -2089,6 +2345,14 @@ DWORD CSubViewCalFlowSensor::CheckFlowSensor()
 
 	return 0;
 }
+
+/**********************************************************************************************//**
+ * Resets the flow calibration alarms
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewCalFlowSensor::resetFlowCalAlarms()
 {
 	getModel()->getALARMHANDLER()->setCalibrationSilent();
@@ -2107,6 +2371,14 @@ void CSubViewCalFlowSensor::resetFlowCalAlarms()
 		getModel()->getALARMHANDLER()->deleteAlarm(AL_Sens_FLOW_SENSOR_NOTCONNECTED);
 	}
 }
+
+/**********************************************************************************************//**
+ * Calibrate flow sensor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewCalFlowSensor::CalibrateFlowSensor()
 {
 	if(m_bExit)
@@ -2169,15 +2441,29 @@ void CSubViewCalFlowSensor::CalibrateFlowSensor()
 	}
 }
 
+/**********************************************************************************************//**
+ * Queries if the calibration is active
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if the calibration is active, false if not.
+ **************************************************************************************************/
+
 bool CSubViewCalFlowSensor::IsCalibrationActive()
 {
 	return m_bCalActive;
 }
 
+/**********************************************************************************************//**
+ * Sets one button depressed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewCalFlowSensor::SetOneButtonDepressed(int btnID)
 {
 	POSITION pos;
@@ -2213,9 +2499,13 @@ void CSubViewCalFlowSensor::SetOneButtonDepressed(int btnID)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets all button unpressed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewCalFlowSensor::SetAllButtonUnpressed()
 {
 	POSITION pos;
@@ -2234,31 +2524,51 @@ void CSubViewCalFlowSensor::SetAllButtonUnpressed()
 		GetParent()->PostMessage(WM_SET_SETUPTIMER);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked co 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewCalFlowSensor::OnBnClickedCO2()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_MENU_CO2);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked spo 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewCalFlowSensor::OnBnClickedSPO2()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_MENU_SPO2);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked o 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewCalFlowSensor::OnBnClickedO2()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_MENU_O2);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked bodyweight action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewCalFlowSensor::OnBnClickedBodyweight()
 {
@@ -2272,6 +2582,17 @@ void CSubViewCalFlowSensor::OnBnClickedBodyweight()
 		getModel()->getDATAHANDLER()->setBodyweight(m_iBodyweight,true);
 	}
 }
+
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 BOOL CSubViewCalFlowSensor::PreTranslateMessage(MSG* pMsg) 
 {

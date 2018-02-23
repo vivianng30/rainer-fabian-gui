@@ -7,8 +7,31 @@
 #include "DlgMessageBox.h"
 #include "TlsFile.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 //global font objects
@@ -33,8 +56,24 @@ extern HFONT g_hf33AcuBold;
 extern HFONT g_hf43AcuBold;
 extern HFONT g_hf53AcuBold;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the SubViewVentilation class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CSubViewVentilation, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CSubViewVentilation class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewVentilation::CSubViewVentilation()
 {
@@ -114,6 +153,13 @@ CSubViewVentilation::CSubViewVentilation()
 
 	m_dwLastSetupTimer=0;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CSubViewVentilation class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewVentilation::~CSubViewVentilation()
 {
@@ -232,14 +278,15 @@ BEGIN_MESSAGE_MAP(CSubViewVentilation, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SETUP_HOSPITAL, &CSubViewVentilation::OnBnClickedHospital)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CSubViewVentilation message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
 
-
-// CSubViewVentilation message handlers
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 CMVModel *CSubViewVentilation::getModel()
 {
 	if(m_pModel==NULL)
@@ -247,9 +294,20 @@ CMVModel *CSubViewVentilation::getModel()
 	return m_pModel;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates a window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewVentilation::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext)
 {
 	if (!Create(pParentWnd, rc, nID, pContext))
@@ -260,9 +318,20 @@ bool CSubViewVentilation::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, C
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSubViewVentilation::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -734,14 +803,15 @@ BOOL CSubViewVentilation::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCre
 		return 0;
 }
 
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
 
-
-
-
-
-/***************************************************************************/
-//     
-//**************************************************************************/
 void CSubViewVentilation::Show(bool bShow)
 {
 	if(bShow)
@@ -762,15 +832,13 @@ void CSubViewVentilation::Show(bool bShow)
 	}
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CSubViewVentilation::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewVentilation::OnDestroy()
 {
 	if(m_pDlg)
@@ -794,11 +862,13 @@ void CSubViewVentilation::OnDestroy()
 		DeleteDC(m_hDC);
 }
 
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewVentilation::Draw()
 {
 	RECT rcCl;
@@ -1013,12 +1083,13 @@ void CSubViewVentilation::Draw()
 	DeleteDC(hdcMem);
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked defaults action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-
-
-/***************************************************************************/
-//     
-//**************************************************************************/
 void CSubViewVentilation::OnBnClickedDefaults()
 {
 	m_iCurPara=IDC_BTN_SETUP_DEFAULTS;
@@ -1057,9 +1128,13 @@ void CSubViewVentilation::OnBnClickedDefaults()
 	Draw();
 }
 
-/***************************************************************************/
-//     
-//**************************************************************************/
+/**********************************************************************************************//**
+ * Executes the button clicked hospital action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewVentilation::OnBnClickedHospital()
 {
 	m_iCurPara=IDC_BTN_SETUP_HOSPITAL;
@@ -1107,9 +1182,19 @@ void CSubViewVentilation::OnBnClickedHospital()
 	Invalidate(TRUE);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CSubViewVentilation::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	//int iID = 0;
@@ -1144,63 +1229,159 @@ LRESULT CSubViewVentilation::WindowProc(UINT message, WPARAM wParam, LPARAM lPar
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked mode iterator action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewVentilation::OnBnClickedModeIT()
 {
 	SetButtonClicked(IDC_BTN_SETUP_FUNCITIME);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked leak component action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewVentilation::OnBnClickedLeakComp()
 {
 	SetButtonClicked(IDC_BTN_SETUP_LEAKCOMP);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked manager breath time action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewVentilation::OnBnClickedManBreathTime()
 {
 	SetButtonClicked(IDC_BTN_SETUP_MANBREATHTIME);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked pattern alarm delay action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewVentilation::OnBnClickedPatAlarmDelay()
 {
 	SetButtonClicked(IDC_BTN_SETUP_PATALARMDELAY);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked volume trigger action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewVentilation::OnBnClickedVolumeTrigger()
 {
 	SetButtonClicked(IDC_BTN_SETUP_VOLUMETRIG);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked pps vas delta peep value action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewVentilation::OnBnClickedPPSVasDeltaPEEPValue()
 {
 	SetButtonClicked(IDC_BTN_SETUP_PPSVABSOLUTE);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked bt bfor vt action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewVentilation::OnBnClickedBTBforVT()
 {
 	SetButtonClicked(IDC_BTN_SETUP_BTBVT);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked tube set action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewVentilation::OnBnClickedTubeSet()
 {
 	SetButtonClicked(IDC_BTN_SETUP_TUBESET);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked pressure unit action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewVentilation::OnBnClickedPressureUnit()
 {
 	SetButtonClicked(IDC_BTN_SETUP_PRESSUREUNIT);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked e flow action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewVentilation::OnBnClickedEFlow()
 {
 	SetButtonClicked(IDC_BTN_SETUP_EFLOW);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked automatic oxy calendar action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewVentilation::OnBnClickedAutoOxyCal()
 {
 	SetButtonClicked(IDC_BTN_SETUP_AUTOOXYCAL);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked hfo manager breath action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewVentilation::OnBnClickedHFOManBreath()
 {
 	SetButtonClicked(IDC_BTN_SETUP_HFOMANBREATH);
 }
 
+/**********************************************************************************************//**
+ * Sets button clicked
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewVentilation::SetButtonClicked(int btnID)
 {
 	if(m_iCurPara==btnID)
@@ -1220,9 +1401,15 @@ void CSubViewVentilation::SetButtonClicked(int btnID)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets one button depressed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CSubViewVentilation::SetOneButtonDepressed(int btnID)
 {
 	POSITION pos;
@@ -1260,9 +1447,15 @@ void CSubViewVentilation::SetOneButtonDepressed(int btnID)
 		GetParent()->PostMessage(WM_SET_SETUPTIMER);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets one button focused
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CSubViewVentilation::SetOneButtonFocused(int btnID)
 {
 	POSITION pos;
@@ -1303,9 +1496,13 @@ void CSubViewVentilation::SetOneButtonFocused(int btnID)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Opens settings view
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewVentilation::OpenSettingsView()
 {
 	if(GetParent())
@@ -1324,10 +1521,13 @@ void CSubViewVentilation::OpenSettingsView()
 
 }
 
+/**********************************************************************************************//**
+ * Sets next button focused
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewVentilation::SetNextButtonFocused()
 {
 	POSITION pos;
@@ -1376,10 +1576,13 @@ void CSubViewVentilation::SetNextButtonFocused()
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets previous button focused
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewVentilation::SetPrevButtonFocused()
 {
 	POSITION pos;
@@ -1428,10 +1631,15 @@ void CSubViewVentilation::SetPrevButtonFocused()
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets current button state
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The current button state.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 eBtnState CSubViewVentilation::GetCurrentBtnState()
 {
 	POSITION pos;
@@ -1454,9 +1662,17 @@ eBtnState CSubViewVentilation::GetCurrentBtnState()
 	return BS_NONE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSubViewVentilation::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)

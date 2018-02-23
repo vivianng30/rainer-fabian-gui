@@ -11,6 +11,13 @@ extern CEvent g_eventNewFlowsensorData;
 // CThreadFlowsensor
 CThreadFlowsensor* CThreadFlowsensor::theThreadFlowsensor=0;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CThreadFlowsensor class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CThreadFlowsensor::CThreadFlowsensor()
 {
 	m_pModel = NULL;
@@ -22,15 +29,13 @@ CThreadFlowsensor::CThreadFlowsensor()
 	m_bCheckFlowsensorData=false;
 }
 
-//************************************
-// Method:    ~CThreadFlowsensor
-// FullName:  CThreadFlowsensor::~CThreadFlowsensor
-// Access:    protected 
-// Returns:   
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Finalizes an instance of the CThreadFlowsensor class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CThreadFlowsensor::~CThreadFlowsensor()
 {
 	stopFlowsensorThread();
@@ -46,14 +51,16 @@ CThreadFlowsensor::~CThreadFlowsensor()
 		}
 	}
 }
-//=============================================================================
-/**
- * @brief Get the instance of Flowsensor thread (singleton).
+
+/**********************************************************************************************//**
+ * Gets the instance
  *
- * @return the instance of Flowsensor thread
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  *
- **/
-//=============================================================================
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
+
 CThreadFlowsensor* CThreadFlowsensor::getInstance()
 {
 	if(theThreadFlowsensor == 0)
@@ -63,11 +70,13 @@ CThreadFlowsensor* CThreadFlowsensor::getInstance()
 	return theThreadFlowsensor;
 }
 
-//=============================================================================
-/**
- * @brief Destroys the instance of Flowsensor thread (singleton).
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFlowsensor::destroyInstance()
 {
 	if(theThreadFlowsensor != NULL)
@@ -76,14 +85,16 @@ void CThreadFlowsensor::destroyInstance()
 		theThreadFlowsensor = NULL;
 	}
 }
-//=============================================================================
-/**
- * @brief Get the instance of the model (singleton).
+
+/**********************************************************************************************//**
+ * Gets the model
  *
- * @return the instance of the model
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  *
- **/
-//=============================================================================
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CThreadFlowsensor::getModel()
 {
 	if(m_pModel==NULL)
@@ -91,11 +102,13 @@ CMVModel *CThreadFlowsensor::getModel()
 	return m_pModel;
 }
 
+/**********************************************************************************************//**
+ * Starts flowsensor thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// CThreadMonitor message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CThreadFlowsensor::startFlowsensorThread( void )
 {
 	m_bDoFlowsensorThread=true;
@@ -119,16 +132,13 @@ void CThreadFlowsensor::startFlowsensorThread( void )
 	m_pcwtFlowsensorThread->ResumeThread();
 }
 
-//************************************
-// Method:    stopFlowsensorThread
-// FullName:  CThreadFlowsensor::stopFlowsensorThread
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Stops flowsensor thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFlowsensor::stopFlowsensorThread( void )
 {
 	if(m_bDoFlowsensorThread)
@@ -147,9 +157,17 @@ void CThreadFlowsensor::stopFlowsensorThread( void )
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Flowsensor thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT FlowsensorThread( LPVOID pc )
 {
 	try
@@ -178,9 +196,16 @@ static UINT FlowsensorThread( LPVOID pc )
 	//((CThreadFlowsensor*)pc)->FlowsensorData();
 	return TRUE;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Flowsensor data
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CThreadFlowsensor::FlowsensorData(void) 
 {
 	CeSetThreadPriority(m_pcwtFlowsensorThread->m_hThread,130);
@@ -225,6 +250,15 @@ DWORD CThreadFlowsensor::FlowsensorData(void)
 
 	return 0;
 }
+
+/**********************************************************************************************//**
+ * Sets check flowsensor data
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
 
 void CThreadFlowsensor::setCheckFlowsensorData(bool bState)
 {

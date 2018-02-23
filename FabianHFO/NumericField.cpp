@@ -6,9 +6,26 @@
 #include "NumericField.h"
 #include "WuLine.h"
 
-// CNumericField
+/**********************************************************************************************//**
+ * CNumericField
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericField, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericField class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericField::CNumericField(eNumericSize size)
 {
@@ -46,21 +63,14 @@ CNumericField::CNumericField(eNumericSize size)
 	m_lYo				= 0;
 
 	m_bCursorField=false;
-	//m_pnbFieldData=NULL;
-
-	//eType=eType;
-	//bHiAlarmLimit=bShowHiAlarmLimit;
-	//bLoAlarmLimit=bShowLoAlarmLimit;
-	//eSize=NUMERICSIZE_0;
-	//numName[0]=0x0000;
-	//numNameNote[0]=0x0000;
-	//numUnit[0]=0x0000;
-	//iNumValue=0;//
-	//bHiAlarmLimit=false;
-	//enumStateHiAlarmLimit=AL_OFF;
-	//enumStateLoAlarmLimit=AL_OFF;
-	//iLoAlarmLimit=0;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericField class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CNumericField::~CNumericField()
 {
@@ -74,13 +84,15 @@ BEGIN_MESSAGE_MAP(CNumericField, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericField message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
 
-
-// CNumericField message handlers
-
-// **************************************************************************
-// 
-// **************************************************************************
 CMVModel *CNumericField::getModel()
 {
 	if(m_pModel==NULL)
@@ -88,9 +100,20 @@ CMVModel *CNumericField::getModel()
 	return m_pModel;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CNumericField::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -152,96 +175,45 @@ BOOL CNumericField::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateCon
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets cursor field
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CNumericField::setCursorField(bool state)
 {
 	m_bCursorField=state;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is cursor field
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if cursor field, false if not.
+ **************************************************************************************************/
+
 bool CNumericField::isCursorField()
 {
 	return m_bCursorField;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//void CNumericField::setFieldData(LPNUMERICBLOCK pnbData)
-//{
-//	m_nbFieldData.eType=pnbData->eType;
-//	m_nbFieldData.eSize=pnbData->eSize;
-//	_tcscpy_s(m_nbFieldData.numName,_countof(m_nbFieldData.numName),pnbData->numName);
-//	_tcscpy_s(m_nbFieldData.numNameNote,_countof(m_nbFieldData.numNameNote),pnbData->numNameNote);
-//	_tcscpy_s(m_nbFieldData.numUnit,_countof(m_nbFieldData.numUnit),pnbData->numUnit);
-//	m_nbFieldData.iNumValue=pnbData->iNumValue;//
-//	m_nbFieldData.bHiAlarmLimit=pnbData->bHiAlarmLimit;
-//	m_nbFieldData.enumStateHiAlarmLimit=pnbData->enumStateHiAlarmLimit;
-//	m_nbFieldData.iHiAlarmLimit=pnbData->iHiAlarmLimit;
-//	m_nbFieldData.bLoAlarmLimit=pnbData->bLoAlarmLimit;
-//	m_nbFieldData.enumStateHiAlarmLimit=pnbData->enumStateHiAlarmLimit;
-//	m_nbFieldData.iLoAlarmLimit=pnbData->iLoAlarmLimit;
-//
-//
-//}
-//void CNumericField::setFieldType(eNumericType eType, eNumericSize eSize)
-//{
-//	m_nbFieldData.eType=eType;
-//	m_nbFieldData.eSize=eSize;
-//
-//	//getModel()->getDATAHANDLER()->fillNumericField(m_nbFieldData.eType, &m_nbFieldData.eType);
-//	//
-//}
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
-//void CNumericField::setLimits(bool	bShowHiAlarmLimit, eAlarmLimitState	enumStateHiLimit,int iHiLimitValue,bool	bShowLoAlarmLimit,eAlarmLimitState enumStateLoLimit,int iLoLimitValue, bool bRedraw)
-//{
-//	m_nbFieldData.bHiAlarmLimit=bShowHiAlarmLimit;
-//	m_nbFieldData.enumStateHiAlarmLimit=enumStateHiLimit;
-//	m_nbFieldData.iHiAlarmLimit=iHiLimitValue;
-//	m_nbFieldData.bLoAlarmLimit=bShowLoAlarmLimit;
-//	m_nbFieldData.enumStateLoAlarmLimit=enumStateLoLimit;
-//	m_nbFieldData.iLoAlarmLimit=iLoLimitValue;
-//
-//	if(bRedraw)
-//	{
-//		drawData(true,false, false, true,true);
-//	}
-//}
-
-// **************************************************************************
-// 
-// **************************************************************************
-//void CNumericField::setLimitsValue(eAlarmLimitState enumStateHiLimit,int iHiLimitValue,eAlarmLimitState enumStateLoLimit,int iLoLimitValue, bool bRedraw)
-//{
-//	m_pnbFieldData->enumStateHiAlarmLimit=enumStateHiLimit;
-//	m_pnbFieldData->iHiAlarmLimit=iHiLimitValue;
-//	m_pnbFieldData->enumStateLoAlarmLimit=enumStateLoLimit;
-//	m_pnbFieldData->iLoAlarmLimit=iLoLimitValue;
-//
-//	if(bRedraw)
-//	{
-//		drawData(true,false, false, true,true);
-//	}
-//}
-// **************************************************************************
-// 
-// **************************************************************************
-//void CNumericField::setNumericValue(INT iVal, bool bRedraw)
-//{
-//	m_pnbFieldData->iNumValue=iVal;
-//
-//	if(bRedraw)
-//	{
-//		drawData(true,false, false, false,true);
-//	}
-//}
-
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CNumericField::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -263,15 +235,13 @@ BOOL CNumericField::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericField::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CNumericField::OnDestroy() 
 {
 	if(m_pcNumInfoTop)
@@ -331,16 +301,18 @@ void CNumericField::OnDestroy()
 		DeleteObject(m_hbmpStatic);
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
-//void CNumericField::deinit()
-//{
-//	DestroyWindow();
-//}
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw frames
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericField::drawFrames(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -381,6 +353,15 @@ bool CNumericField::drawFrames(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw high limit
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CNumericField::drawHighLimit(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -417,6 +398,15 @@ void CNumericField::drawHighLimit(CDC* pDC)
 
 	penLine.DeleteObject();
 }
+
+/**********************************************************************************************//**
+ * Draw low limit
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
 
 void CNumericField::drawLowLimit(CDC* pDC)
 {

@@ -10,14 +10,51 @@
 extern HFONT g_hf6AcuNorm;
 extern HFONT g_hf7AcuNorm;
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
-
-// CDiagramm
+/**********************************************************************************************//**
+ * CDiagramm
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CDiagramm, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CDiagramm class
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ **************************************************************************************************/
 
 CDiagramm::CDiagramm()
 {
@@ -171,15 +208,26 @@ CDiagramm::CDiagramm()
 
 }
 
-
+/**********************************************************************************************//**
+ * Finalizes an instance of the CDiagramm class
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ **************************************************************************************************/
 
 CDiagramm::~CDiagramm()
 {
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CDiagramm::getModel()
 {
 	if(m_pModel==NULL)
@@ -197,13 +245,20 @@ BEGIN_MESSAGE_MAP(CDiagramm, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CDiagramm-Meldungshandler
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CDiagramm-Meldungshandler
-
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CDiagramm::Create(CWnd* pParentWnd, const RECT &rc, UINT nID, CCreateContext* pContext) 
 {
 	//m_iGraphX=rc.left;
@@ -347,9 +402,15 @@ BOOL CDiagramm::Create(CWnd* pParentWnd, const RECT &rc, UINT nID, CCreateContex
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CDiagramm::Show(BOOL bShow) 
 {
 	if(m_bExit)
@@ -366,9 +427,13 @@ void CDiagramm::Show(BOOL bShow)
 		SetWindowPos(NULL,0,0,0,0,SWP_NOSIZE|SWP_NOMOVE|SWP_HIDEWINDOW);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDiagramm::OnPaint() 
 {
 	if(m_bFREEZE)
@@ -379,15 +444,13 @@ void CDiagramm::OnPaint()
 	BitBlt(dc.m_hDC, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcStatic, 0, 0, SRCCOPY);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CDiagramm::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDiagramm::OnDestroy() 
 {
 	m_bExit=true;
@@ -447,17 +510,20 @@ void CDiagramm::OnDestroy()
 }
 
 
-// **************************************************************************
-// 
-// **************************************************************************
 //int CDiagramm::GetDiagrammType()
 //{
 //	return m_iDiagrammType;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets diagramm type
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	iType	Zero-based index of the type.
+ **************************************************************************************************/
+
 void CDiagramm::SetDiagrammType(int iType)
 {
 	if(m_bExit)
@@ -798,20 +864,33 @@ void CDiagramm::SetDiagrammType(int iType)
 	}
 }
 
-// **************************************************************************
-// 	
-//				
-//				
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets current graph pen color
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	The current graph pen color.
+ **************************************************************************************************/
+
 COLORREF CDiagramm::getCurGraphPenColor()
 {
 	return m_crCurrentGraphPenColor;
 }
-// **************************************************************************
-// SetColorScheme set the color scheme for the graph	
-//				There are 8 colorschemes in total but default colour scheme is the
-//				same as as the WHITE colorscheme (which is really grey)
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets color scheme
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	Scheme		   	The scheme.
+ * \param	crGraphPenColor	The carriage return graph pen color.
+ * \param	bRedraw		   	True to redraw.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CDiagramm::SetColorScheme(int Scheme, COLORREF crGraphPenColor, BOOL bRedraw)
 {
 	if(m_bExit)
@@ -976,22 +1055,27 @@ int CDiagramm::SetColorScheme(int Scheme, COLORREF crGraphPenColor, BOOL bRedraw
 	return iPrevColorScheme;
 }
 
+/**********************************************************************************************//**
+ * Sets x coordinate axis scale
+ *
+ * This sets the min
+ * and max values of the x-axis (of the plotting area)
+ *  			It also sets what proportion of the x-range is denoted by one pixel a.ka. PixelsPerX It
+ *  			also caluclates where the x-origin (the x==0) point lies along the x-axis - if x does not
+ *  			pass through zero the x-origin gidline is shown at the top or bottom of the graph. (the x-
+ *  			origin point on screen is stored in the m_iOriginX parameter as
+ *  			 an offset from the LHS of the (total) graph 26/2/2005 - The autofit parameter is always
+ *  			 TRUE as scrolling is not yet implemented.
+ *  			 
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	min				   	The minimum.
+ * \param	max				   	The maximum.
+ * \param	bRedraw			   	True to redraw.
+ * \param	bRedrawDiagrammData	True to redraw diagramm data.
+ **************************************************************************************************/
 
-
-
-
-// **************************************************************************
-// This sets the min and max values of the x-axis (of the plotting area)
-//				It also sets what proportion of the x-range is denoted by one pixel
-//				a.ka. PixelsPerX
-//				It also caluclates where the x-origin (the x==0) point lies along
-//				the x-axis - if x does not pass through zero the x-origin gidline is shown
-//				at the top or bottom of the graph.
-//				(the x-origin point on screen is stored in the m_iOriginX parameter as 
-//				 an offset from the LHS of the (total) graph
-//				 26/2/2005 - The autofit parameter is always TRUE as scrolling is not yet
-//				 implemented.
-// **************************************************************************
 void CDiagramm::SetXAxisScale(double min, double max, BOOL bRedraw,bool bRedrawDiagrammData)
 {
 	if(m_bExit)
@@ -1145,28 +1229,43 @@ void CDiagramm::SetXAxisScale(double min, double max, BOOL bRedraw,bool bRedrawD
 	}
 }
 
+/**********************************************************************************************//**
+ * Get y coordinate pixels of diagramm
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	The y coordinate pixels of diagramm.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 int CDiagramm::GetYPixelsOfDiagramm()
 {
 	return m_iGraphHeight-(m_bmargin+m_tmargin);
 }
 
-// **************************************************************************
-// This sets the min and max values of the y-axis (of the plotting area)
-//				It also sets what proportion of the grapgh axis pixels represents 1Y
-//				(PixelsPerY =plotheightinpixels/yrange)
-//				It also caluclates where the y-origin (the y==0) point lies along
-//				the y-axis - if y does not pass through zero the y-origin gidline is shown
-//				at the left or right of the graph (this can be overridden by using the SetYLineAtLeft()
-//				function.
-//				(the y-origin point on screen is stored in the m_iOriginY parameter as 
-//				an offset from the bottom of the (total) graph
-//				The autofit parameter is always TRUE as scrolling is not yet
-//				implemented.
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets y coordinate axis scale
+ *
+ * This sets the min
+ * and max values of the y-axis (of the plotting area)
+ *  			It also sets what proportion of the grapgh axis pixels represents 1Y (PixelsPerY
+ *  			=plotheightinpixels/yrange)
+ *  			It also caluclates where the y-origin (the y==0) point lies along the y-axis - if y does
+ *  			not pass through zero the y-origin gidline is shown at the left or right of the graph
+ *  			(this can be overridden by using the SetYLineAtLeft()
+ *  			function. (the y-origin point on screen is stored in the m_iOriginY parameter as an
+ *  			offset from the bottom of the (total) graph The autofit parameter is always TRUE as
+ *  			scrolling is not yet implemented.
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	min				   	The minimum.
+ * \param	max				   	The maximum.
+ * \param	bRedraw			   	True to redraw.
+ * \param	bRedrawDiagrammData	True to redraw diagramm data.
+ **************************************************************************************************/
+
 void CDiagramm::SetYAxisScale(double min, double max, BOOL bRedraw,bool bRedrawDiagrammData)
 {
 	if(m_bExit)
@@ -1382,18 +1481,22 @@ void CDiagramm::SetYAxisScale(double min, double max, BOOL bRedraw,bool bRedrawD
 	
 }
 
+/**********************************************************************************************//**
+ * Paints the graph
+ *
+ * This paints the
+ * entire graph on to the holding window's
+ *  			client area;
+ *  			It does it in steps starting from the background and working forward. As the graph is NOT
+ *  			a window object in it's own right, it uses the display context of the holding window. If
+ *  			it has not been given a pointer to the holding window, it will not paint. Any CGraph
+ *  			routine that paints to the screen, checks the window pointer first. The last thing to be
+ *  			painted is the plotting of the function data (if any)
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// This paints the entire graph on to the holding window's
-//				client area;
-//				It does it in steps starting from the background and working forward.
-//				As the graph is NOT a window object in it's own right, it uses the
-//				display context of the holding window. If it has not been given a 
-//				pointer to the holding window, it will not paint.
-//				Any CGraph routine that paints to the screen, checks the window pointer
-//				first.
-//				The last thing to be painted is the plotting of the function data (if any)
-// **************************************************************************
 void CDiagramm::PaintGraph()
 {
 	if(m_bExit)
@@ -1558,10 +1661,19 @@ void CDiagramm::PaintGraph()
 	
 }
 
-// **************************************************************************
-// Draws the state "autoscale" on the top right side of the graph
-//				if autoscale state is set.
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw autoscale state
+ *
+ * Draws the state
+ * "autoscale" on the top right side of the graph
+ *  			if autoscale state is set.
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CDiagramm::DrawAutoscaleState(CDC* pDC)
 {
 	if(m_bExit)
@@ -1603,13 +1715,21 @@ void CDiagramm::DrawAutoscaleState(CDC* pDC)
 	//DeleteObject(brush);
 }
 
-// **************************************************************************
-// The grid comprises two parts - the rectangle drawn around the plotting area
-//				and the vertical&horizontal gridlines.
-//				The outline rectangle is always drawn, the drawing of the gidlines
-//				is contrlled by the m_bShowGrid member parameter using the ShowGrid function.
-//				The grid color is  m_crGridColor.
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw grid
+ *
+ * The grid comprises
+ * two parts - the rectangle drawn around the plotting area
+ *  			and the vertical&horizontal gridlines. The outline rectangle is always drawn, the drawing
+ *  			of the gidlines is contrlled by the m_bShowGrid member parameter using the ShowGrid
+ *  			function. The grid color is  m_crGridColor.
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CDiagramm::DrawGrid(CDC* pDC)
 {
 	if(m_bExit)
@@ -1700,15 +1820,22 @@ void CDiagramm::DrawGrid(CDC* pDC)
 
 }
 
-// **************************************************************************
-// DrawTicks does two things - it draws the x & Y axis lines and it also
-//				draws the little 'tick' lines.
-//				The axis lines are always shown but the 'ticks' are controlled by the
-//				m_bShowTicks member (using the ShowTicks function);
-//				The length of the ticks are set by the #define in the header file
-//				the axis lines and ticks use the same color (m_crXTickColor for
-//				the x-axis and m_crYTickColor for the y-axis)
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw ticks
+ *
+ * DrawTicks does two
+ * things - it draws the x & Y axis lines and it also
+ *  			draws the little 'tick' lines. The axis lines are always shown but the 'ticks' are
+ *  			controlled by the m_bShowTicks member (using the ShowTicks function);
+ *  			The length of the ticks are set by the #define in the header file the axis lines and
+ *  			ticks use the same color (m_crXTickColor for the x-axis and m_crYTickColor for the y-axis)
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CDiagramm::DrawTicks(CDC* pDC)
 {
 	if(m_bExit)
@@ -1857,9 +1984,15 @@ void CDiagramm::DrawTicks(CDC* pDC)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw cursor
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CDiagramm::DrawCursor(bool state)
 {
 	if(m_bExit)
@@ -1931,13 +2064,20 @@ void CDiagramm::DrawCursor(bool state)
 	SelectObject(dc.m_hDC,hpenprevClient);
 }
 
+/**********************************************************************************************//**
+ * Calculates the data area
+ *
+ * This function
+ * calculates the actual plotting area of the graph
+ *  			this is the graph area minus the top,bottom,left & right margins Returns: CRect with the
+ *  			plotting area (in client area co-ords)
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The calculated data area.
+ **************************************************************************************************/
 
-// **************************************************************************
-// This function calculates the actual plotting area of the graph
-//				this is the graph area minus the top,bottom,left & right margins
-//				Returns:
-//				CRect with the plotting area (in client area co-ords)
-// **************************************************************************
 CRect CDiagramm::CalcDataArea()
 {
 	CRect dataarea;
@@ -1948,52 +2088,21 @@ CRect CDiagramm::CalcDataArea()
 	return dataarea;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//int CDiagramm::GetRightPixelsOfXAxis()
-//{
-//	UINT Graphright=m_iGraphX+m_iGraphWidth;
-//	int iXpixelsRight=Graphright-m_rmargin-m_iOriginX-1;
-//
-//	return iXpixelsRight;
-//}
+/**********************************************************************************************//**
+ * Calculates the x coordinate axis grid and ticks
+ *
+ * This calculates
+ * the positions of the vertical gridlines of the plot area.
+ *  			This is also used for x-axis ticks as the ticks line up with the gridlines. How many they
+ *  			are is determined by the G_NUMTICKSANDGRID  define in the header file Return: a double
+ *  			denoting the x-asis grid spacing
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The calculated x coordinate axis grid and ticks.
+ **************************************************************************************************/
 
-// **************************************************************************
-// This function calculates the actual plotting area of the graph
-//				this is the graph area minus the top,bottom,left & right margins
-//				Returns:
-//				CRect with the plotting area (in client area co-ords)
-// **************************************************************************
-//int CDiagramm::GetDataAreaWidth()
-//{
-//	int iWidth = m_iGraphWidth-m_rmargin-m_lmargin-1;
-//
-//	return iWidth;
-//}
-
-// **************************************************************************
-// This function calculates the actual plotting area of the graph
-//				this is the graph area minus the top,bottom,left & right margins
-//				Returns:
-//				CRect with the plotting area (in client area co-ords)
-// **************************************************************************
-//int CDiagramm::GetDataAreaHight()
-//{
-//	int iHight = m_iGraphHeight-m_bmargin-m_tmargin-1;
-//
-//	return iHight;
-//}
-
-// **************************************************************************
-// This calculates the positions of the vertical gridlines of the plot area.
-//				This is also used for x-axis ticks as the ticks line up with
-//				the gridlines.
-//				How many they are is determined by the G_NUMTICKSANDGRID  define
-//				in the header file
-//				Return:
-//				a double denoting the x-asis grid spacing
-// **************************************************************************
 double CDiagramm::CalcXAxisGridAndTicks()
 {
 	//the placing of the ticks co-incide with gridlines
@@ -2024,15 +2133,21 @@ double CDiagramm::CalcXAxisGridAndTicks()
 
 }
 
-// **************************************************************************
-// This calculates the positions of the vertical gridlines of the plot area.
-//				This is also used for x-axis ticks as the ticks line up with
-//				the gridlines.
-//				How many they are is determined by the G_NUMTICKSANDGRID  define
-//				in the header file
-//				Return:
-//				a double denoting the x-asis grid spacing
-// **************************************************************************
+/**********************************************************************************************//**
+ * Calculates the x coordinate axis numerics
+ *
+ * This calculates
+ * the positions of the vertical gridlines of the plot area.
+ *  			This is also used for x-axis ticks as the ticks line up with the gridlines. How many they
+ *  			are is determined by the G_NUMTICKSANDGRID  define in the header file Return: a double
+ *  			denoting the x-asis grid spacing
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The calculated x coordinate axis numerics.
+ **************************************************************************************************/
+
 double CDiagramm::CalcXAxisNumerics()
 {
 	//the placing of the ticks co-incide with gridlines
@@ -2063,9 +2178,15 @@ double CDiagramm::CalcXAxisNumerics()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Calculates the x coordinate axis tick grid space
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	The calculated x coordinate axis tick grid space.
+ **************************************************************************************************/
+
 double CDiagramm::CalculateXAxisTickGridSpace()
 {
 	double result =0;
@@ -2154,9 +2275,15 @@ double CDiagramm::CalculateXAxisTickGridSpace()
 	return result;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Calculates the y coordinate axis tick grid space
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	The calculated y coordinate axis tick grid space.
+ **************************************************************************************************/
+
 double CDiagramm::CalculateYAxisTickGridSpace()
 {
 	double result =0;
@@ -2293,10 +2420,15 @@ double CDiagramm::CalculateYAxisTickGridSpace()
 	return result;
 }
 
+/**********************************************************************************************//**
+ * Calculates the x coordinate axis numeric space
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	The calculated x coordinate axis numeric space.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 double CDiagramm::CalculateXAxisNumericSpace()
 {
 	double dDiff=m_dXAxisMax-m_dXAxisMin;
@@ -2387,9 +2519,15 @@ double CDiagramm::CalculateXAxisNumericSpace()
 	return result;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Calculates the y coordinate axis numeric space
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	The calculated y coordinate axis numeric space.
+ **************************************************************************************************/
+
 double CDiagramm::CalculateYAxisNumericSpace()
 {
 	double result =0;
@@ -2540,84 +2678,124 @@ double CDiagramm::CalculateYAxisNumericSpace()
 	return result;
 }
 
+/**********************************************************************************************//**
+ * Sets x coordinate axis tick space
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	dXTickSpace	The x coordinate tick space.
+ **************************************************************************************************/
 
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CDiagramm::SetXAxisTickSpace(double dXTickSpace)
 {
 	m_dXTickSpace=dXTickSpace;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Get x coordinate axis tick space
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	The x coordinate axis tick space.
+ **************************************************************************************************/
+
 double CDiagramm::GetXAxisTickSpace()
 {
 	return m_dXTickSpace;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets x coordinate axis numeric space
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	dXNumericSpace	The x coordinate numeric space.
+ **************************************************************************************************/
+
 void CDiagramm::SetXAxisNumericSpace(double dXNumericSpace)
 {
 	m_dXNumericSpace=dXNumericSpace;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Get x coordinate axis numeric space
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	The x coordinate axis numeric space.
+ **************************************************************************************************/
+
 double CDiagramm::GetXAxisNumericSpace()
 {
 	return m_dXNumericSpace;
 }
 
+/**********************************************************************************************//**
+ * Sets y coordinate axis tick space
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	dYTickSpace	The y coordinate tick space.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CDiagramm::SetYAxisTickSpace(double dYTickSpace)
 {
 	m_dYTickSpace=dYTickSpace;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 //double CDiagramm::GetYAxisTickSpace()
 //{
 //	return m_dYTickSpace;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets y coordinate axis numeric space
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	dYNumericSpace	The y coordinate numeric space.
+ **************************************************************************************************/
+
 void CDiagramm::SetYAxisNumericSpace(double dYNumericSpace)
 {
 	m_dYNumericSpace=dYNumericSpace;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Get y coordinate axis numeric space
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	The y coordinate axis numeric space.
+ **************************************************************************************************/
+
 double CDiagramm::GetYAxisNumericSpace()
 {
 	return m_dYNumericSpace;
 }
 
+/**********************************************************************************************//**
+ * Calculates the y coordinate axis grid and ticks
+ *
+ * This calculates
+ * the positions of the horizontal gridlines of the plot area.
+ *  			This is also used for y-axis ticks as the ticks line up with the gridlines. How many they
+ *  			are is determined by the G_NUMTICKSANDGRID  define in the header file Return: A double
+ *  			denoting the howizontal gridline spacing
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The calculated y coordinate axis grid and ticks.
+ **************************************************************************************************/
 
-// **************************************************************************
-// This calculates the positions of the horizontal gridlines of the plot area.
-//				This is also used for y-axis ticks as the ticks line up with
-//				the gridlines.
-//				How many they are is determined by the G_NUMTICKSANDGRID  define
-//				in the header file
-//				Return:
-//				A double denoting the howizontal gridline spacing
-// **************************************************************************
 double CDiagramm::CalcYAxisGridAndTicks()
 {
 	////the placing of the ticks co-incide with gridlines
@@ -2667,15 +2845,21 @@ double CDiagramm::CalcYAxisGridAndTicks()
 	return result;
 }
 
-// **************************************************************************
-// This calculates the positions of the horizontal gridlines of the plot area.
-//				This is also used for y-axis ticks as the ticks line up with
-//				the gridlines.
-//				How many they are is determined by the G_NUMTICKSANDGRID  define
-//				in the header file
-//				Return:
-//				A double denoting the howizontal gridline spacing
-// **************************************************************************
+/**********************************************************************************************//**
+ * Calculates the y coordinate axis numerics
+ *
+ * This calculates
+ * the positions of the horizontal gridlines of the plot area.
+ *  			This is also used for y-axis ticks as the ticks line up with the gridlines. How many they
+ *  			are is determined by the G_NUMTICKSANDGRID  define in the header file Return: A double
+ *  			denoting the howizontal gridline spacing
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The calculated y coordinate axis numerics.
+ **************************************************************************************************/
+
 double CDiagramm::CalcYAxisNumerics()
 {
 	////the placing of the ticks co-incide with gridlines
@@ -2726,12 +2910,19 @@ double CDiagramm::CalcYAxisNumerics()
 	return result;
 }
 
+/**********************************************************************************************//**
+ * Draw x coordinate legend
+ *
+ * The Xaxis legend
+ * is drawn below the plotting area
+ *  			below the x-axis scale numbers
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// The Xaxis legend is drawn below the plotting area
-//				below the x-axis scale numbers
-// **************************************************************************
 void CDiagramm::DrawXLegend(CDC* pDC)
 {
 	if(m_bExit)
@@ -2803,10 +2994,19 @@ void CDiagramm::DrawXLegend(CDC* pDC)
 	//DeleteObject(brush);
 }
 
-// **************************************************************************
-// The Y legend is drawn at the LHS of the plot area between the yaxis max 
-//				and yaxis min scale
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw y coordinate legend
+ *
+ * The Y legend is
+ * drawn at the LHS of the plot area between the yaxis max
+ *  			and yaxis min scale
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CDiagramm::DrawYLegend(CDC* pDC)
 {
 	if(m_bExit)
@@ -2862,10 +3062,19 @@ void CDiagramm::DrawYLegend(CDC* pDC)
 
 }
 
-// **************************************************************************
-// The X axis scale numbers are drawm directly below the plot area.
-//				Three numbers are drawn, min, middle and max scaling
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw x coordinate axis numbers
+ *
+ * The X axis scale
+ * numbers are drawm directly below the plot area.
+ *  			Three numbers are drawn, min, middle and max scaling
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CDiagramm::DrawXAxisNumbers(CDC* pDC)
 {
 	if(m_bExit)
@@ -3138,11 +3347,19 @@ void CDiagramm::DrawXAxisNumbers(CDC* pDC)
 	//DeleteObject(brush);
 }
 
-// **************************************************************************
-// The Y axis scale is drawn on the LHS of the plot area.
-//				Only two numbers are drawn - min and max to allow for the Y-axis
-//				legend.
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw y coordinate axis numbers
+ *
+ * The Y axis scale
+ * is drawn on the LHS of the plot area.
+ *  			Only two numbers are drawn - min and max to allow for the Y-axis legend.
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CDiagramm::DrawYAxisNumbers(CDC* pDC)
 {
 	if(m_bExit)
@@ -3235,118 +3452,51 @@ void CDiagramm::DrawYAxisNumbers(CDC* pDC)
 	//DeleteObject(brush);
 }
 
+/**********************************************************************************************//**
+ * Sets default x coordinate legend
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ **************************************************************************************************/
 
-
-
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CDiagramm::SetDefaultXLegend()
 {
 	m_szXLegendText="";
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets default y coordinate legend
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDiagramm::SetDefaultYLegend()
 {
 	m_szYLegendText="";
 }
 
-// **************************************************************************
-// Sets the X axis legend text
-// **************************************************************************
-//void CDiagramm::SetXLegendText(CStringW XText)
-//{
-//	CDC* pDCStatic=CDC::FromHandle(m_hdcStatic);
-//	m_szXLegendText=XText;
-//	DrawXLegend(pDCStatic);
-//}
+/**********************************************************************************************//**
+ * Converts this instance to a graph coordinates
+ *
+ * ConvertToGraphCoords (double x, double y) will take the
+ *  			result of some calculation as given by x and y and return where they should be plotted on
+ *  			the graph. As we are can only plot a whole pixel the return value is of type LONG (as
+ *  			apposed to double). The Y-pixel is in the HIWORD and x-pixel in the LOWORD of the return.
+ *  			Note that depending on the scale of the graph, the return coords of a single pixel could
+ *  			be one of many. For example: if the x axis is 400 pixels wide, but is scaled to represent
+ *  			1000, then each pixel represent 2.5 in the real world. So to pixel 398 represent the real
+ *  			world values of 995 to 996.5 inc.
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	x	The x coordinate.
+ * \param	y	The y coordinate.
+ *
+ * \return	The given data converted to a graph coordinates.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// Sets the Y axis legend text
-// **************************************************************************
-//void CDiagramm::SetYLegendText(CStringW YText)
-//{
-//	CDC* pDCStatic=CDC::FromHandle(m_hdcStatic);
-//	m_szYLegendText=YText;
-//	DrawYLegend(pDCStatic);
-//}
-
-
-
-
-// **************************************************************************
-// The Y axis line can be forced to the LHS of the 
-//				plot area using this function
-// **************************************************************************
-//void CDiagramm::SetYLineAtLeft(BOOL AtLeft)
-//{
-//	BOOL bprevious=m_bYLineAtLeft;
-//	m_bYLineAtLeft=AtLeft;
-//	//if there is a change in the Y line position then we will have to
-//	//redraw the graph
-//	if (m_bYLineAtLeft != bprevious)
-//	{
-//		PaintGraph();
-//	}
-//}
-
-// **************************************************************************
-// This switches the grid on or off as set by the bShow parameter
-//				The graph is repainted to match
-// **************************************************************************
-//void CDiagramm::ShowGrid(BOOL bShow)
-//{
-//	//this is public function
-//	//show the graph grid if bShow==TRUE
-//	//or vice-versa
-//	BOOL bprevious=m_bShowGrid;
-//	m_bShowGrid=bShow;
-//	//if there is a change then repaint
-//	if (m_bShowGrid !=bprevious)
-//	{
-//		PaintGraph();
-//	}
-//}
-
-// **************************************************************************
-// This switches the x and y axis 'ticks' on or off as set by the
-//				bShow parameter
-// **************************************************************************
-//void CDiagramm::ShowTicks(BOOL bShow)
-//{
-//	//this is public function
-//	//show the graph grid if bShow==TRUE
-//	//or vice-versa
-//	BOOL bprevious=m_bShowTicks;
-//	m_bShowTicks=bShow;
-//	//if there is a change then repaint
-//	if (m_bShowTicks!=bprevious)
-//	{
-//		PaintGraph();
-//	}
-//
-//}
-
-// **************************************************************************
-// ConvertToGraphCoords (double x, double y) will take the	
-//				result of some calculation as given by x and y and return where				
-//				they should be plotted on the graph.				
-//				As we are can only plot a whole pixel the return value is of	
-//				type LONG (as apposed to double).						
-//				The Y-pixel is in the HIWORD and x-pixel in the LOWORD of the	
-//				return.													
-//				Note that depending on the scale of the graph, the return coords	
-//				of a single pixel could be one of many.						
-//				For example: if the x axis is 400 pixels wide, but is scaled to		
-//				represent 1000, then each pixel represent 2.5 in the real world.	
-//				So to pixel 398 represent the real world values of 995 to 996.5 inc.
-// **************************************************************************
 LONG CDiagramm::ConvertToGraphCoords(double x, double y)
 {
 
@@ -3378,17 +3528,25 @@ LONG CDiagramm::ConvertToGraphCoords(double x, double y)
 	return result;
 }
 
+/**********************************************************************************************//**
+ * Executes the function operation
+ *
+ * The user fills in
+ * a G_FUNCTIONSTRUCT relevant to a function and passes
+ *  			a pointer to it to this function. The pointer to this G_FUNCTIONSTRUCT is saved in a
+ *  			member variable This function does some preliminary stuff  and if there are no obvious
+ *  			problems it then calls the PaintGraph function.
+ * 
+ *  			Returns: FALSE if there are no problems
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pFunctionParams	If non-null, options for controlling the function.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// The user fills in a G_FUNCTIONSTRUCT relevant to a function and passes	
-//				a pointer to it to this function.				
-//				The pointer to this G_FUNCTIONSTRUCT is saved in a member variable
-//				This function does some preliminary stuff  and if there are no	
-//				obvious problems it then calls the PaintGraph function.			
-//
-//				Returns:								
-//				FALSE if there are no problems
-// **************************************************************************
 BOOL CDiagramm::DoFunction(G_FUNCTIONSTRUCT_LD *pFunctionParams)
 {
 	if(m_bExit)
@@ -3405,11 +3563,19 @@ BOOL CDiagramm::DoFunction(G_FUNCTIONSTRUCT_LD *pFunctionParams)
 	return TRUE;
 }
 
+/**********************************************************************************************//**
+ * Clears the function described by bRedraw
+ *
+ * This resets the
+ * G_FUNCTIONSTRUCT member pointer
+ *  	The graph is repainteed (cleared)
+ *  	
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
 
-// **************************************************************************
-// This resets the G_FUNCTIONSTRUCT member pointer		
-//		The graph is repainteed (cleared)
-// **************************************************************************
 void CDiagramm::ClearFunction(bool bRedraw)
 {
 	if(m_bExit)
@@ -3422,13 +3588,18 @@ void CDiagramm::ClearFunction(bool bRedraw)
 	}
 }
 
+/**********************************************************************************************//**
+ * Draw function
+ *
+ * This is called
+ * from within the PaintGraph routine to draw
+ *  			the actual function onto the graph. This functions just switches the FunctionType member
+ *  			specified in the G_FUNCTIONSTRUCT and calls the appropriate routine.
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// This is called from within the PaintGraph routine to draw	
-//				the actual function onto the graph.				
-//				This functions just switches the FunctionType member specified in the
-//				G_FUNCTIONSTRUCT and calls the appropriate routine.
-// **************************************************************************
 void CDiagramm::DrawFunction()
 {
 	if(m_bExit)
@@ -3458,38 +3629,22 @@ void CDiagramm::DrawFunction()
 	}
 }
 
-// **************************************************************************
-// This has many similarities with the other functions - however		
-//				there is no need to calculate Y  in the sane way as in the other function
-//				as it is given.											
-//				a particular x point on the graph is also given - we place the	
-//				given y value at the given x point							
-//				Other:														
-//				a. We will not bother plotting  if x < the graph scale XMin or > XMax
-//				b. Only dot, bar and line will be acceptable for the chart type. Any other
-//				will default to bar. However be aware that line is only suitable if the	
-//				x-values are in sequence.						
-//				c. The usual y constraints apply
-// **************************************************************************
-//void CDiagramm::setChartType(UINT chartType)
-//{
-//	if(chartType!=m_pFunctionParams->ChartType)
-//		m_pFunctionParams->ChartType=chartType;
-//}
+/**********************************************************************************************//**
+ * Executes the plot xy loop points operation
+ *
+ * This has many
+ * similarities with the other functions - however
+ *  			there is no need to calculate Y  in the sane way as in the other function as it is given.
+ *  			a particular x point on the graph is also given - we place the given y value at the given
+ *  			x point Other: a. We will not bother plotting  if x < the graph scale XMin or > XMax b.
+ *  			Only dot, bar and line will be acceptable for the chart type. Any other will default to
+ *  			bar. However be aware that line is only suitable if the x-values are in sequence. c. The
+ *  			usual y constraints apply
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// This has many similarities with the other functions - however		
-//				there is no need to calculate Y  in the sane way as in the other function
-//				as it is given.											
-//				a particular x point on the graph is also given - we place the	
-//				given y value at the given x point							
-//				Other:														
-//				a. We will not bother plotting  if x < the graph scale XMin or > XMax
-//				b. Only dot, bar and line will be acceptable for the chart type. Any other
-//				will default to bar. However be aware that line is only suitable if the	
-//				x-values are in sequence.						
-//				c. The usual y constraints apply
-// **************************************************************************
 void CDiagramm::DoPlotXYLoopPoints()
 {
 	if(m_bExit)
@@ -3612,19 +3767,22 @@ void CDiagramm::DoPlotXYLoopPoints()
 	}//SWITCH
 }
 
-// **************************************************************************
-// This has many similarities with the other functions - however		
-//				there is no need to calculate Y  in the sane way as in the other function
-//				as it is given.											
-//				a particular x point on the graph is also given - we place the	
-//				given y value at the given x point							
-//				Other:														
-//				a. We will not bother plotting  if x < the graph scale XMin or > XMax
-//				b. Only dot, bar and line will be acceptable for the chart type. Any other
-//				will default to bar. However be aware that line is only suitable if the	
-//				x-values are in sequence.						
-//				c. The usual y constraints apply
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the plot saved loop points operation
+ *
+ * This has many
+ * similarities with the other functions - however
+ *  			there is no need to calculate Y  in the sane way as in the other function as it is given.
+ *  			a particular x point on the graph is also given - we place the given y value at the given
+ *  			x point Other: a. We will not bother plotting  if x < the graph scale XMin or > XMax b.
+ *  			Only dot, bar and line will be acceptable for the chart type. Any other will default to
+ *  			bar. However be aware that line is only suitable if the x-values are in sequence. c. The
+ *  			usual y constraints apply
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CDiagramm::DoPlotSavedLoopPoints()
 {
 	if(m_bExit)
@@ -3678,25 +3836,6 @@ void CDiagramm::DoPlotSavedLoopPoints()
 
 			   m_bFirstpoint=FALSE;
 
-			  /* if(x>m_dMaxX)
-			   {
-				   m_dMaxX=x;
-			   }
-			   if(x<m_dMinX)
-			   {
-				   m_dMinX=x;
-			   }*/
-			  /* if(y>m_dMaxY)
-			   {
-				   m_dMaxY=y;
-			   }*/
-			   
-			   
-			   //if(y<m_dMaxY)//rku, check FOTGRAPH
-			   //{
-				  // m_dMaxY=y;
-			   //}
-			   //neu
 			   if(y>m_dMaxY)
 			   {
 				   m_dMaxY=y;
@@ -3791,19 +3930,22 @@ void CDiagramm::DoPlotSavedLoopPoints()
 	}//SWITCH
 }
 
-// **************************************************************************
-// This has many similarities with the other functions - however		
-//				there is no need to calculate Y  in the sane way as in the other function
-//				as it is given.											
-//				a particular x point on the graph is also given - we place the	
-//				given y value at the given x point							
-//				Other:														
-//				a. We will not bother plotting  if x < the graph scale XMin or > XMax
-//				b. Only dot, bar and line will be acceptable for the chart type. Any other
-//				will default to bar. However be aware that line is only suitable if the	
-//				x-values are in sequence.						
-//				c. The usual y constraints apply
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the plot xy points operation
+ *
+ * This has many
+ * similarities with the other functions - however
+ *  			there is no need to calculate Y  in the sane way as in the other function as it is given.
+ *  			a particular x point on the graph is also given - we place the given y value at the given
+ *  			x point Other: a. We will not bother plotting  if x < the graph scale XMin or > XMax b.
+ *  			Only dot, bar and line will be acceptable for the chart type. Any other will default to
+ *  			bar. However be aware that line is only suitable if the x-values are in sequence. c. The
+ *  			usual y constraints apply
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CDiagramm::DoPlotXYPoints()
 {
 	if(m_bExit)
@@ -3832,8 +3974,6 @@ void CDiagramm::DoPlotXYPoints()
 	xstart=LOWORD(result);//the left hand side of the graph plot area on screen
 	ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
 
-	/*UINT Graphbottom=m_iGraphY+m_iGraphHeight;
-	UINT Graphright=m_iGraphX+m_iGraphWidth;*/
 
 	switch(m_pFunctionParams->ChartType)
 	{
@@ -3931,22 +4071,22 @@ void CDiagramm::DoPlotXYPoints()
 	}//SWITCH
 }
 
+/**********************************************************************************************//**
+ * Executes the plot y coordinate points operation
+ *
+ * This has many
+ * similarities with the other functions - however
+ *  			there is no need to calculate Y  in the sane way as in the other function as it is given.
+ *  			a particular x point on the graph is also given - we place the given y value at the given
+ *  			x point Other: a. We will not bother plotting  if x < the graph scale XMin or > XMax b.
+ *  			Only dot, bar and line will be acceptable for the chart type. Any other will default to
+ *  			bar. However be aware that line is only suitable if the x-values are in sequence. c. The
+ *  			usual y constraints apply
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
-
-
-// **************************************************************************
-// This has many similarities with the other functions - however		
-//				there is no need to calculate Y  in the sane way as in the other function
-//				as it is given.											
-//				a particular x point on the graph is also given - we place the	
-//				given y value at the given x point							
-//				Other:														
-//				a. We will not bother plotting  if x < the graph scale XMin or > XMax
-//				b. Only dot, bar and line will be acceptable for the chart type. Any other
-//				will default to bar. However be aware that line is only suitable if the	
-//				x-values are in sequence.						
-//				c. The usual y constraints apply
-// **************************************************************************
 void CDiagramm::DoPlotYPoints()
 {
 	if(m_bExit)
@@ -4253,15 +4393,6 @@ void CDiagramm::DoPlotYPoints()
 
 				double y=m_pFunctionParams->pItems[count].pPlotXYItems.y/m_pFunctionParams->dYfactor;
 
-				/*if(y>m_dMaxYcomplete)
-				{
-					m_dMaxYcomplete=y;
-				}
-				if(y<m_dMinYcomplete)
-				{
-					m_dMinYcomplete=y;
-				}*/
-
 				if(y>m_dMaxY)
 				{
 					m_dMaxY=y;
@@ -4404,9 +4535,13 @@ void CDiagramm::DoPlotYPoints()
 	}//SWITCH
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Refresh line chart
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDiagramm::RefreshLineChart()
 {
 	if(m_bExit)
@@ -4788,9 +4923,14 @@ void CDiagramm::RefreshLineChart()
 	penLimit.DeleteObject();
 	penGarant.DeleteObject();
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Refresh filled chart
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ **************************************************************************************************/
+
 void CDiagramm::RefreshFilledChart()
 {
 	if(m_bExit)
@@ -5235,6 +5375,12 @@ void CDiagramm::RefreshFilledChart()
 
 }
 
+/**********************************************************************************************//**
+ * Check automatic scale x coordinate yincrease
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ **************************************************************************************************/
 
 void CDiagramm::CheckAutoScaleXYincrease()
 {
@@ -5400,6 +5546,13 @@ void CDiagramm::CheckAutoScaleXYincrease()
 	
 	
 }
+
+/**********************************************************************************************//**
+ * Check automatic scale x coordinate ydecrease
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ **************************************************************************************************/
 
 void CDiagramm::CheckAutoScaleXYdecrease()
 {
@@ -5580,12 +5733,18 @@ void CDiagramm::CheckAutoScaleXYdecrease()
 	
 }
 
+/**********************************************************************************************//**
+ * Scale to next possible x coordinate value
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	dMaxX			   	The maximum x coordinate.
+ * \param	dMinX			   	The minimum x coordinate.
+ * \param	bRedraw			   	True to redraw.
+ * \param	bRedrawDiagrammData	True to redraw diagramm data.
+ **************************************************************************************************/
 
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CDiagramm::ScaleToNextPossibleXValue(double dMaxX, double dMinX, bool bRedraw,bool bRedrawDiagrammData)
 {
 	if(m_bExit)
@@ -5627,9 +5786,18 @@ void CDiagramm::ScaleToNextPossibleXValue(double dMaxX, double dMinX, bool bRedr
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Scale to next possible y coordinate value
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	dMaxY			   	The maximum y coordinate.
+ * \param	dMinY			   	The minimum y coordinate.
+ * \param	bRedraw			   	True to redraw.
+ * \param	bRedrawDiagrammData	True to redraw diagramm data.
+ **************************************************************************************************/
+
 void CDiagramm::ScaleToNextPossibleYValue(double dMaxY, double dMinY, bool bRedraw,bool bRedrawDiagrammData)
 {
 	if(m_bExit)
@@ -5684,24 +5852,13 @@ void CDiagramm::ScaleToNextPossibleYValue(double dMaxY, double dMinY, bool bRedr
 	}
 }
 
+/**********************************************************************************************//**
+ * Check automatic scale y coordinate
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
-//void CDiagramm::resetAutoScaleX()
-//{
-//	m_dMaxX=0;
-//	m_dMinX=0;
-//}
-//void CDiagramm::resetAutoScaleY()
-//{
-//	m_dMaxY=0;
-//	m_dMinY=0;
-//}
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CDiagramm::CheckAutoScaleY()
 {
 	if(m_bExit)
@@ -5823,6 +5980,17 @@ void CDiagramm::CheckAutoScaleY()
 	
 }
 
+/**********************************************************************************************//**
+ * Gets negative yoffset
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	dwMaxY	The maximum y coordinate.
+ *
+ * \return	The negative yoffset.
+ **************************************************************************************************/
+
 double CDiagramm::GetNegativeYoffset(double dwMaxY)
 {
 	double result =CTlsFloat::Round((dwMaxY/(GetYPixelsOfDiagramm()-10))*(-10), 1);
@@ -5830,11 +5998,15 @@ double CDiagramm::GetNegativeYoffset(double dwMaxY)
 	return result;
 }
 
+/**********************************************************************************************//**
+ * Increase x coordinate scale
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	bRedrawDiagrammData	True to redraw diagramm data.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CDiagramm::IncreaseXScale(bool bRedrawDiagrammData)
 {
 	if(m_bExit)
@@ -5928,10 +6100,15 @@ void CDiagramm::IncreaseXScale(bool bRedrawDiagrammData)
 	}
 }
 
+/**********************************************************************************************//**
+ * Increase y coordinate scale
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	bRedrawDiagrammData	True to redraw diagramm data.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CDiagramm::IncreaseYScale(bool bRedrawDiagrammData)
 {
 	if(m_bExit)
@@ -6088,12 +6265,15 @@ void CDiagramm::IncreaseYScale(bool bRedrawDiagrammData)
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets higher x coordinate axis maximum
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	The calculated higher x coordinate axis maximum.
+ **************************************************************************************************/
 
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 double CDiagramm::GetHigherXAxisMax()
 {
 	double dHigherAxisMax=0;
@@ -6273,6 +6453,17 @@ double CDiagramm::GetHigherXAxisMax()
 
 }
 
+/**********************************************************************************************//**
+ * Get x coordinate axis maximum pressure
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	dMaxX	The maximum x coordinate.
+ *
+ * \return	The x coordinate axis maximum pressure.
+ **************************************************************************************************/
+
 double CDiagramm::GetXAxisMaxPressure(double dMaxX)
 {
 	double dAxisMax=0;
@@ -6390,6 +6581,16 @@ double CDiagramm::GetXAxisMaxPressure(double dMaxX)
 	return dAxisMax;
 }
 
+/**********************************************************************************************//**
+ * Get x coordinate axis minimum pressure
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	dMinX	The minimum x coordinate.
+ *
+ * \return	The x coordinate axis minimum pressure.
+ **************************************************************************************************/
 
 double CDiagramm::GetXAxisMinPressure(double dMinX)
 {
@@ -6470,7 +6671,16 @@ double CDiagramm::GetXAxisMinPressure(double dMinX)
 	return dAxisMin;
 }
 
-
+/**********************************************************************************************//**
+ * Get y coordinate axis maximum pressure
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	dMaxY	The maximum y coordinate.
+ *
+ * \return	The y coordinate axis maximum pressure.
+ **************************************************************************************************/
 
 double CDiagramm::GetYAxisMaxPressure(double dMaxY)
 {
@@ -6604,6 +6814,16 @@ double CDiagramm::GetYAxisMaxPressure(double dMaxY)
 	return dAxisMax;
 }
 
+/**********************************************************************************************//**
+ * Get y coordinate axis minimum pressure
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	dMinY	The minimum y coordinate.
+ *
+ * \return	The y coordinate axis minimum pressure.
+ **************************************************************************************************/
 
 double CDiagramm::GetYAxisMinPressure(double dMinY)
 {
@@ -6684,10 +6904,15 @@ double CDiagramm::GetYAxisMinPressure(double dMinY)
 	return dAxisMin;
 }
 
+/**********************************************************************************************//**
+ * Gets higher y coordinate axis maximum
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	The calculated higher y coordinate axis maximum.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 double CDiagramm::GetHigherYAxisMax()
 {
 	double dHigherAxisMax=0;
@@ -7177,6 +7402,15 @@ double CDiagramm::GetHigherYAxisMax()
 
 }
 
+/**********************************************************************************************//**
+ * Gets higher y coordinate axis minimum
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	The calculated higher y coordinate axis minimum.
+ **************************************************************************************************/
+
 double CDiagramm::GetHigherYAxisMin()
 {
 	double dHigherAxisMin=0;
@@ -7290,10 +7524,15 @@ double CDiagramm::GetHigherYAxisMin()
 
 }
 
+/**********************************************************************************************//**
+ * Determines if we can increase x coordinate scale to next value
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CDiagramm::IncreaseXScaleToNextValue()
 {
 	if(m_bExit)
@@ -7340,9 +7579,15 @@ bool CDiagramm::IncreaseXScaleToNextValue()
 	return bResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Determines if we can increase y coordinate scale to next value
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDiagramm::IncreaseYScaleToNextValue()
 {
 	if(m_bExit)
@@ -7451,9 +7696,18 @@ bool CDiagramm::IncreaseYScaleToNextValue()
 	return bResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Decrease x coordinate scale
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	bTry			   	True to try.
+ * \param	bRedrawDiagrammData	True to redraw diagramm data.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDiagramm::DecreaseXScale(bool bTry, bool bRedrawDiagrammData)
 {
 	if(m_bExit)
@@ -7850,9 +8104,17 @@ bool CDiagramm::DecreaseXScale(bool bTry, bool bRedrawDiagrammData)
 	return bRes;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Decrease y coordinate scale to next value
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	bRedrawDiagrammData	True to redraw diagramm data.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDiagramm::DecreaseYScaleToNextValue(bool bRedrawDiagrammData)
 {
 	if(m_bExit)
@@ -8045,9 +8307,15 @@ bool CDiagramm::DecreaseYScaleToNextValue(bool bRedrawDiagrammData)
 	return bResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the next higher x coordinate axis maximum
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	The calculated next higher x coordinate axis maximum.
+ **************************************************************************************************/
+
 double CDiagramm::GetNextHigherXAxisMax()
 {
 	double dHigherAxisMax=0;
@@ -8296,9 +8564,15 @@ double CDiagramm::GetNextHigherXAxisMax()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the next higher y coordinate axis maximum
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	The calculated next higher y coordinate axis maximum.
+ **************************************************************************************************/
+
 double CDiagramm::GetNextHigherYAxisMax()
 {
 	double dHigherAxisMax=0;
@@ -8677,11 +8951,15 @@ double CDiagramm::GetNextHigherYAxisMax()
 
 }
 
+/**********************************************************************************************//**
+ * Gets the next lower y coordinate axis maximum
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	The calculated next lower y coordinate axis maximum.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 double CDiagramm::GetNextLowerYAxisMax()
 {
 	double dLowerAxisMax=0;
@@ -9020,6 +9298,15 @@ double CDiagramm::GetNextLowerYAxisMax()
 
 }
 
+/**********************************************************************************************//**
+ * Gets the next higher y coordinate axis minimum
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	The calculated next higher y coordinate axis minimum.
+ **************************************************************************************************/
+
 double CDiagramm::GetNextHigherYAxisMin()
 {
 	double dHigherAxisMin=0;
@@ -9122,126 +9409,15 @@ double CDiagramm::GetNextHigherYAxisMin()
 	return dHigherAxisMin;
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
-//bool CDiagramm::CanDecreaseXScale()
-//{
-//	bool bRes=false;
-//
-//	if(!m_pFunctionParams)
-//	{
-//		return false;
-//	}
-//	double dLowerAxisMax=0;
-//	double dHigherAxisMin=0;
-//
-//	switch(m_iDiagrammType)
-//	{
-//	case PRESSURE_VOLUME_LOOP:
-//	case VOLUME_FLOW_LOOP:
-//	case VOLUME_FLOW_HF_LOOP:
-//	//case PRESSURE_HF_GRAPH:
-//		{
-//			if(m_dXAxisMax>200)
-//			{
-//				dLowerAxisMax=m_dXAxisMax-200;
-//			}
-//			else if(m_dXAxisMax>150)
-//			{
-//				dLowerAxisMax=m_dXAxisMax-150;
-//			}
-//			else if(m_dXAxisMax>100)
-//			{
-//				dLowerAxisMax=m_dXAxisMax-100;
-//			}
-//			else if(m_dXAxisMax>40)
-//			{
-//				dLowerAxisMax=m_dXAxisMax-20;
-//			}
-//			else if(m_dXAxisMax>20)
-//			{
-//				dLowerAxisMax=m_dXAxisMax-10;
-//			}
-//			else if(m_dXAxisMax>10)
-//			{
-//				dLowerAxisMax=10;
-//			}
-//			else
-//			{
-//				dLowerAxisMax=5;
-//			}
-//
-//			if(dLowerAxisMax<m_pFunctionParams->xMin || dLowerAxisMax==0)
-//				dLowerAxisMax=m_pFunctionParams->xMin;
-//
-//			if(		m_dMaxX<dLowerAxisMax
-//				&&	m_dXAxisMax>dLowerAxisMax)
-//			{
-//				bRes=true;
-//			}
-//		}
-//		break;
-//	case PRESSURE_VOLUME_HF_LOOP:
-//		{
-//			if(m_dXAxisMax>200)
-//			{
-//				dLowerAxisMax=m_dXAxisMax-200;
-//			}
-//			else if(m_dXAxisMax>150)
-//			{
-//				dLowerAxisMax=m_dXAxisMax-150;
-//			}
-//			else if(m_dXAxisMax>100)
-//			{
-//				dLowerAxisMax=m_dXAxisMax-100;
-//			}
-//			else if(m_dXAxisMax>40)
-//			{
-//				dLowerAxisMax=m_dXAxisMax-20;
-//			}
-//			else if(m_dXAxisMax>20)
-//			{
-//				dLowerAxisMax=m_dXAxisMax-10;
-//			}
-//			else if(m_dXAxisMax>10)
-//			{
-//				dLowerAxisMax=10;
-//			}
-//			else
-//			{
-//				dLowerAxisMax=5;
-//			}
-//
-//			if(dLowerAxisMax<m_pFunctionParams->xMin || dLowerAxisMax==0)
-//				dLowerAxisMax=m_pFunctionParams->xMin;
-//
-//			if(		m_dMaxX<dLowerAxisMax
-//				&&	m_dXAxisMax>dLowerAxisMax)
-//			{
-//				bRes=true;
-//			}
-//
-//
-//			dHigherAxisMin=m_dXAxisMin+10;
-//
-//			if(dHigherAxisMin<m_pFunctionParams->xMin || dHigherAxisMin>=0)
-//				dHigherAxisMin=GetNegativeYoffset(m_dXAxisMax);
-//
-//			if(		m_dMinX>dHigherAxisMin
-//				&&	m_dXAxisMax>dHigherAxisMin)
-//			{
-//				bRes=true;
-//			}
-//		}
-//		break;
-//	default:
-//		{
-//		}
-//		break;
-//	}
-//	return bRes;
-//}
+
+/**********************************************************************************************//**
+ * Determine if we can decrease y coordinate scale
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	True if we can decrease y coordinate scale, false if not.
+ **************************************************************************************************/
 
 bool CDiagramm::CanDecreaseYScale()
 {
@@ -9637,116 +9813,24 @@ bool CDiagramm::CanDecreaseYScale()
 	return bRes;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//bool CDiagramm::CanDecreaseYScaleHF(int dMaxY, int dMinY)
-//{
-//	bool bRes=false;
-//
-//	if(!m_pFunctionParams)
-//	{
-//		return false;
-//	}
-//
-//	double dLowerAxisMax=0;
-//	double dHigherAxisMin=0;
-//
-//	int iTempMaxY=dMaxY+((dMaxY/100)*10);
-//
-//
-//	switch(m_iDiagrammType)
-//	{
-//	case PRESSURE_HF_GRAPH:
-//		{
-//			if(m_dYAxisMax>200)
-//			{
-//				dLowerAxisMax=m_dYAxisMax-200;
-//			}
-//			else if(m_dYAxisMax>150)
-//			{
-//				dLowerAxisMax=m_dYAxisMax-150;
-//			}
-//			else if(m_dYAxisMax>100)
-//			{
-//				dLowerAxisMax=m_dYAxisMax-100;
-//			}
-//			else if(m_dYAxisMax>40)
-//			{
-//				dLowerAxisMax=m_dYAxisMax-20;
-//			}
-//			else if(m_dYAxisMax>20)
-//			{
-//				dLowerAxisMax=m_dYAxisMax-10;
-//			}
-//			else if(m_dYAxisMax>10)
-//			{
-//				dLowerAxisMax=10;
-//			}
-//			else
-//			{
-//				dLowerAxisMax=5;
-//			}
-//
-//			if(		iTempMaxY<dLowerAxisMax
-//				&&	m_dYAxisMax>dLowerAxisMax)
-//			{
-//				bRes=true;
-//			}
-//		}
-//		break;
-//	}
-//	return bRes;
-//}
+/**********************************************************************************************//**
+ * Plot point array
+ *
+ * Each Function e.g.
+ * DoSineX,DoPlotXY, etc, calls this function as
+ *  			they calculate each point so that each point can be drawn on the Takes: UINT x, UNIT y -
+ *  			the graph co-ord of the point just calculeted (current point). UINT prevx, UINT prevy -
+ *  			the co-ords of the previous point This routine checks what type of plot (line, dot, or
+ *  			bar) is required and calls the appropriate routine
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pts			If non-null, the points.
+ * \param 		  	iSize   	Zero-based index of the size.
+ * \param 		  	copyPlot	True to copy plot.
+ **************************************************************************************************/
 
-
-
-
-
-
-
-// **************************************************************************
-// Each Function e.g. DoSineX,DoPlotXY, etc, calls this function as
-//				they calculate each point so that each point can be drawn on the
-//				Takes:												
-//				UINT x, UNIT y - the graph co-ord of the point just calculeted
-//				(current point).										
-//				UINT prevx, UINT prevy - the co-ords of the previous point		
-//				This routine checks what type of plot (line, dot, or bar) is
-//				required and calls the appropriate routine
-// **************************************************************************
-//void CDiagramm::PlotPoints(UINT x, UINT y, UINT prevx, UINT prevy)
-//{
-//	//here we check the chart type and plot the points accordingly
-//	//we need to constarin the Y values to keep them within the
-//	//plot area;
-//
-//	switch(m_pFunctionParams->ChartType)
-//	{
-//	case G_LINECHART:
-//		{
-//			DrawConnectLine(prevx,prevy,x,y);
-//			break;
-//		}
-//	default:
-//		{
-//			break;
-//		}
-//	}//SWITCH
-//
-//	return;
-//}
-
-// **************************************************************************
-// Each Function e.g. DoSineX,DoPlotXY, etc, calls this function as
-//				they calculate each point so that each point can be drawn on the
-//				Takes:												
-//				UINT x, UNIT y - the graph co-ord of the point just calculeted
-//				(current point).										
-//				UINT prevx, UINT prevy - the co-ords of the previous point		
-//				This routine checks what type of plot (line, dot, or bar) is
-//				required and calls the appropriate routine
-// **************************************************************************
 void CDiagramm::PlotPointArray(CPoint *pts, int iSize, bool copyPlot)
 {
 	if(m_bExit)
@@ -9791,47 +9875,20 @@ void CDiagramm::PlotPointArray(CPoint *pts, int iSize, bool copyPlot)
 	return;
 }
 
+/**********************************************************************************************//**
+ * Draw connect line
+ *
+ * For the line chat
+ * type, this routine draws a line between previous
+ *  			point (FROM) and current point (TO)
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pts  	If non-null, the points.
+ * \param 		  	iSize	Zero-based index of the size.
+ **************************************************************************************************/
 
-//void CDiagramm::PlotLongPointArray(CPoint *pts, int iSize, bool copyPlot)
-//{
-//	if(m_bExit)
-//		return;
-//	//here we check the chart type and plot the points accordingly
-//	//we need to constarin the Y values to keep them within the
-//	//plot area;
-//
-//	switch(m_pFunctionParams->ChartType)
-//	{
-//	case G_LINECHART_REFRESH:
-//	case G_LINECHART:
-//		{
-//			DrawLongConnectLine(pts,iSize);
-//			break;
-//		}
-//	case G_LOOPCHART:
-//		{
-//			DrawConnectLoop(pts,iSize,copyPlot);
-//			break;
-//		}
-//	case G_FILLEDCHART_REFRESH:
-//	case G_FILLEDCHART:
-//		{
-//			DrawLongFilledLine(pts,iSize);
-//			break;
-//		}
-//	default:
-//		{
-//			break;
-//		}
-//	}//SWITCH
-//
-//	return;
-//}
-
-// **************************************************************************
-// For the line chat type, this routine draws a line between previous	
-//				point (FROM) and current point (TO)
-// **************************************************************************
 void CDiagramm::DrawConnectLine(CPoint *pts, int iSize)
 {
 	if(m_bExit)
@@ -9939,12 +9996,21 @@ void CDiagramm::DrawConnectLine(CPoint *pts, int iSize)
 	penGarant.DeleteObject();
 }
 
+/**********************************************************************************************//**
+ * Draw connect loop
+ *
+ * For the line chat
+ * type, this routine draws a line between previous
+ *  			point (FROM) and current point (TO)
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pts		 	If non-null, the points.
+ * \param 		  	iSize	 	Zero-based index of the size.
+ * \param 		  	levelPlot	True to level plot.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// For the line chat type, this routine draws a line between previous	
-//				point (FROM) and current point (TO)
-// **************************************************************************
 void CDiagramm::DrawConnectLoop(CPoint *pts, int iSize, bool levelPlot)
 {
 	if(m_bExit)
@@ -10017,10 +10083,21 @@ void CDiagramm::DrawConnectLoop(CPoint *pts, int iSize, bool levelPlot)
 	//brush.DeleteObject();//rkuNEWFIX
 }
 
-// **************************************************************************
-// For the line chat type, this routine draws a line between previous	
-//				point (FROM) and current point (TO)
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw fot loop
+ *
+ * For the line chat
+ * type, this routine draws a line between previous
+ *  			point (FROM) and current point (TO)
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pts		 	If non-null, the points.
+ * \param 		  	iSize	 	Zero-based index of the size.
+ * \param 		  	levelPlot	True to level plot.
+ **************************************************************************************************/
+
 void CDiagramm::DrawFOTLoop(CPoint *pts, int iSize, bool levelPlot)
 {
 	if(m_bExit)
@@ -10060,10 +10137,20 @@ void CDiagramm::DrawFOTLoop(CPoint *pts, int iSize, bool levelPlot)
 	//brush.DeleteObject();//rkuNEWFIX
 }
 
-// **************************************************************************
-// For the line chat type, this routine draws a line between previous	
-//				point (FROM) and current point (TO)
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw filled line
+ *
+ * For the line chat
+ * type, this routine draws a line between previous
+ *  			point (FROM) and current point (TO)
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pts  	If non-null, the points.
+ * \param 		  	iSize	Zero-based index of the size.
+ **************************************************************************************************/
+
 void CDiagramm::DrawFilledLine(CPoint *pts, int iSize)
 {
 	if(m_bExit)
@@ -10172,14 +10259,22 @@ void CDiagramm::DrawFilledLine(CPoint *pts, int iSize)
 	//brush.DeleteObject();//rkuNEWFIX
 }
 
-// **************************************************************************
-// This function makes sure that a value of Y plot valuestays within
-//				stays within the plot area.						
-//				Input:												
-//				double Y value									
-//				Returns:											
-//				double y constrained to the plotting area
-// **************************************************************************
+/**********************************************************************************************//**
+ * Constrain y coordinate
+ *
+ * This function
+ * makes sure that a value of Y plot valuestays within
+ *  			stays within the plot area. Input: double Y value Returns: double y constrained to the
+ *  			plotting area
+ *  			
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	y	The y coordinate.
+ *
+ * \return	A double.
+ **************************************************************************************************/
+
 double CDiagramm::ConstrainY(double y)
 {
 	if ( (y < m_dYAxisMax) && (y > m_dYAxisMin))
@@ -10197,18 +10292,15 @@ double CDiagramm::ConstrainY(double y)
 	return y; //should never get here???
 }
 
+/**********************************************************************************************//**
+ * Ignore autofit
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
-//void CDiagramm::SetAutofit(bool state)
-//{
-//	m_bAutofit=state;
-//}
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CDiagramm::IgnoreAutofit(bool state)
 {
 	if(m_bAutofit)
@@ -10226,10 +10318,15 @@ void CDiagramm::IgnoreAutofit(bool state)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets triggered breath
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CDiagramm::SetTriggeredBreath(bool state)
 {
 	m_bTriggeredBreath=state;
@@ -10244,34 +10341,29 @@ void CDiagramm::SetTriggeredBreath(bool state)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//void CDiagramm::SetPreviousLoopBreath(bool state)
-//{
-//	m_bPreviousLoopBreath=state;
-//
-//	if(state)
-//	{
-//		m_crCurrentGraphPenColor=RGB(140,140,140);
-//	}
-//	else
-//	{
-//		m_crCurrentGraphPenColor=m_crStaticGraphPenColor;
-//	}
-//}
+/**********************************************************************************************//**
+ * Executes the set focus action
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param [in,out]	pOldWnd	If non-null, the old window.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CDiagramm::OnSetFocus(CWnd* pOldWnd)
 {
 	CWnd::OnSetFocus(pOldWnd);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the kill focus action
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param [in,out]	pNewWnd	If non-null, the new window.
+ **************************************************************************************************/
+
 void CDiagramm::OnKillFocus(CWnd* pNewWnd)
 {
 	CWnd::OnKillFocus(pNewWnd);
@@ -10286,11 +10378,17 @@ void CDiagramm::OnKillFocus(CWnd* pNewWnd)
 	}
 }
 
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CDiagramm::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -10565,12 +10663,30 @@ BOOL CDiagramm::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-
+/**********************************************************************************************//**
+ * Sets a freeze
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
 void CDiagramm::SetFreeze(bool state) 
 {
 	m_bFREEZE=state;
 }
+
+/**********************************************************************************************//**
+ * Sets hfo volume garanty
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	drawState 	True to draw state.
+ * \param	iValueHigh	Zero-based index of the value high.
+ * \param	iValueLow 	Zero-based index of the value low.
+ **************************************************************************************************/
 
 void CDiagramm::SetHFOVolumeGaranty(bool drawState, double iValueHigh, double iValueLow)
 {
@@ -10663,6 +10779,16 @@ void CDiagramm::SetHFOVolumeGaranty(bool drawState, double iValueHigh, double iV
 	
 }
 
+/**********************************************************************************************//**
+ * Sets volume garanty
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	drawState	True to draw state.
+ * \param	iValue   	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CDiagramm::SetVolumeGaranty(bool drawState, double iValue)
 {
 	m_bDrawVolumeGaranty=drawState;
@@ -10708,6 +10834,16 @@ void CDiagramm::SetVolumeGaranty(bool drawState, double iValue)
 		m_iVolumeGaranty=0;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets volume limit
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	drawState	True to draw state.
+ * \param	iLimit   	Zero-based index of the limit.
+ **************************************************************************************************/
 
 void CDiagramm::SetVolumeLimit(bool drawState, double iLimit)
 {
@@ -10755,6 +10891,15 @@ void CDiagramm::SetVolumeLimit(bool drawState, double iLimit)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets trigger threshold
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	dTrigThreshold	The trig threshold.
+ **************************************************************************************************/
+
 void CDiagramm::SetTriggerThreshold(double dTrigThreshold)
 {
 	if(dTrigThreshold==0)
@@ -10788,6 +10933,12 @@ void CDiagramm::SetTriggerThreshold(double dTrigThreshold)
 	
 }
 
+/**********************************************************************************************//**
+ * Next breath
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ **************************************************************************************************/
 
 void CDiagramm::NextBreath()
 {
@@ -10814,32 +10965,14 @@ void CDiagramm::NextBreath()
 		DrawCursor(m_bDrawCursor);
 }
 
-
-//void CDiagramm::SetFirstpoint(bool state, UINT prevx)
-//{
-//	m_bFirstpoint=state;
-//	if(state==false)
-//		m_prevx=prevx;
-//}
-
-
-//UINT CDiagramm::GetPrevXval()
-//{
-//	return m_prevx;
-//}
-
-//void CDiagramm::BnClickedXup()
-//{
-//	MoveXup();
-//
-//	
-//}
-//void CDiagramm::BnClickedXdown()
-//{
-//	MoveXdown();
-//
-//
-//}
+/**********************************************************************************************//**
+ * Determines if we can move xup
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CDiagramm::MoveXup()
 {
@@ -10895,6 +11028,16 @@ bool CDiagramm::MoveXup()
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Determines if we can move xdown
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDiagramm::MoveXdown()
 {
 	if(m_bExit)
@@ -10953,6 +11096,16 @@ bool CDiagramm::MoveXdown()
 	return true;
 
 }
+
+/**********************************************************************************************//**
+ * Determines if we can move yleft
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDiagramm::MoveYleft()
 {
 	if(m_bExit)
@@ -11010,6 +11163,16 @@ bool CDiagramm::MoveYleft()
 	return true;
 	
 }
+
+/**********************************************************************************************//**
+ * Determines if we can move yright
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CDiagramm::MoveYright()
 {
 	if(m_bExit)
@@ -11066,7 +11229,18 @@ bool CDiagramm::MoveYright()
 	
 }
 
-//rkuTICKCOUNT
+/**********************************************************************************************//**
+ * Query if 'oldTickCount' is safe tick count delay expired
+ *
+ * \author	Rainer Kühner
+ * \date	20.02.2018
+ *
+ * \param	oldTickCount	Number of old ticks.
+ * \param	delay			The delay.
+ *
+ * \return	True if safe tick count delay expired, false if not.
+ **************************************************************************************************/
+
 bool CDiagramm::isSafeTickCountDelayExpired(DWORD oldTickCount, UINT delay)////used to check if old tick count plus delay is still lower than actual tickCount, (dwLastTickCount+DELAY<getTickCount64())
 {
 	bool bExpired=false;

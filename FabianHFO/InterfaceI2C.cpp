@@ -15,58 +15,220 @@ extern CEvent g_eventI2Cdone;
 //  Handle communication operations on DIO interface
 // 
 /*- Preprocessor directives and compiler switches -------------------------*/
+
+/**********************************************************************************************//**
+ * A macro that defines ni 2 cshare
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define NI2CSHARE  FILE_SHARE_WRITE		          // Share mode
+
+/**********************************************************************************************//**
+ * A macro that defines ni 2 caccess
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define NI2CACCESS (GENERIC_READ | GENERIC_WRITE) // Access mode
 
+/**********************************************************************************************//**
+ * A macro that defines 2 c ioctl
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	device	The device.
+ * \param	code  	The code.
+ * \param	inbuf 	The inbuf.
+ * \param	inlen 	The inlen.
+ * \param	outbuf	The outbuf.
+ * \param	outlen	The outlen.
+ * \param	actual	The actual.
+ **************************************************************************************************/
 
 #define I2C_IOCTL(device, code, inbuf, inlen, outbuf, outlen, actual) \
 	DeviceIoControl(device, code, inbuf, inlen, outbuf, outlen, actual, NULL)
+
+/**********************************************************************************************//**
+ * A macro that defines 2 c waittime
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 #define I2C_WAITTIME	20
 
 CRITICAL_SECTION CInterfaceI2C::m_csI2C;
 
+/**********************************************************************************************//**
+ * MPC23016 COMMANDS ////////////////////////////////////////////////////////PCA9555x ???
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
-
-
-// **************************************************************************
-// MPC23016 COMMANDS ////////////////////////////////////////////////////////
-// PCA9555x ???
 #define GP0_ACCESS		0
+
+/**********************************************************************************************//**
+ * A macro that defines gp 1 access
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define GP1_ACCESS		1
+
+/**********************************************************************************************//**
+ * A macro that defines gp 1 olat
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define GP1_OLAT		3
+
+/**********************************************************************************************//**
+ * A macro that defines gp 0 ipol
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define GP0_IPOL		4
+
+/**********************************************************************************************//**
+ * A macro that defines gp 1 ipol
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define GP1_IPOL		5
+
+/**********************************************************************************************//**
+ * A macro that defines gp 0 dir
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define GP0_DIR			6
+
+/**********************************************************************************************//**
+ * A macro that defines gp 1 dir
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define GP1_DIR			7
 
-//Maiboard 4.x
+/**********************************************************************************************//**
+ * Maiboard 4.x
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define IOCON			0x0a
+
+/**********************************************************************************************//**
+ * A macro that defines iodira
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define IODIRA			0x00
+
+/**********************************************************************************************//**
+ * A macro that defines iodirb
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define IODIRB			0x01
+
+/**********************************************************************************************//**
+ * A macro that defines ipola
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define IPOLA			0x02
+
+/**********************************************************************************************//**
+ * A macro that defines ipolb
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define IPOLB			0x03
+
+/**********************************************************************************************//**
+ * A macro that defines gpioa
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define GPIOA			0x12
+
+/**********************************************************************************************//**
+ * A macro that defines gpiob
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define GPIOB			0x13
+
+/**********************************************************************************************//**
+ * A macro that defines olata
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define OLATA			0x14
+
+/**********************************************************************************************//**
+ * A macro that defines olatb
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define OLATB			0x15
 
-////MCP23016 //////////////////////////////////////////////////////////////////
+////MCP23016 
 ////FM24CL64
 //#define DEVICE_ADDRESS_MCP 0x20<<1  // A0...A2 ground
 //#define DEVICE_ADDRESS_FRAM1 0x80<<1  // Bit7..4=devicetype=1010b, Bit3..1=address select bits, Bit0 = read/write Bit -> 1=read, 0=write
 
 #define MAXFRAMADDRESS	0x1FFF
 
-/////////////////////////////////////////////////////////////////////////////
 // Device list
-NI2C_MSG_HEADER scan_msg = {0, 0x00, 0x0000};
+NI2C_MSG_HEADER scan_msg = {0, 0x00, 0x0000};   ///< Message describing the scan
 //NI2C_MSG_HEADER scan_msgMCP = {0, 0x00, 0x0000};
 //NI2C_MSG_HEADER scan_msgFRAM1 = {0, 0x00, 0x0000};
 
 
 
 CInterfaceI2C* CInterfaceI2C::theI2CInterface=0;
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CInterfaceI2C class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 CInterfaceI2C::CInterfaceI2C(void)
 {
@@ -125,6 +287,13 @@ CInterfaceI2C::CInterfaceI2C(void)
 	
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CInterfaceI2C class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 CInterfaceI2C::~CInterfaceI2C(void)
 {
 	m_eMCPstate=MCP_NONE;
@@ -152,9 +321,15 @@ CInterfaceI2C::~CInterfaceI2C(void)
 	DeleteCriticalSection(&m_csI2C);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
+
 CInterfaceI2C* CInterfaceI2C::GetInstance()
 {
 	if(theI2CInterface == 0)
@@ -164,9 +339,13 @@ CInterfaceI2C* CInterfaceI2C::GetInstance()
 	return theI2CInterface;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceI2C::DestroyInstance()
 {
 	if(theI2CInterface != NULL)
@@ -176,11 +355,17 @@ void CInterfaceI2C::DestroyInstance()
 	}
 }
 
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bStartup	True to startup.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 bool CInterfaceI2C::Init(bool bStartup)
 {
 	bool bRes=true;
@@ -235,9 +420,15 @@ bool CInterfaceI2C::Init(bool bStartup)
 	return bRes;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Deinits this instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceI2C::Deinit()
 {
 	m_eMCPstate=MCP_NONE;
@@ -267,6 +458,15 @@ bool CInterfaceI2C::Deinit()
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Scans for device mcp
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bStartup	True to startup.
+ **************************************************************************************************/
+
 void CInterfaceI2C::scanForDeviceMCP(bool bStartup)
 {
 	if(ScanForDevice(DEVICE_ADDRESS_MCP,bStartup))
@@ -287,10 +487,18 @@ void CInterfaceI2C::scanForDeviceMCP(bool bStartup)
 	}
 }
 
+/**********************************************************************************************//**
+ * Scans for device
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bDeviceAddress	The device address.
+ * \param	bStartup	  	True to startup.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CInterfaceI2C::ScanForDevice(BYTE bDeviceAddress,bool bStartup)
 {
 
@@ -323,6 +531,16 @@ bool CInterfaceI2C::ScanForDevice(BYTE bDeviceAddress,bool bStartup)
 	
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Initializes the mcp controler picture
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceI2C::InitMCP_ControlerPIC()
 {
 
@@ -341,9 +559,16 @@ bool CInterfaceI2C::InitMCP_ControlerPIC()
 
 	return bResult;
 }
-// **************************************************************************
-// MB3.1
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Initializes the mcp controler picture megabytes 3
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceI2C::InitMCP_ControlerPIC_MB3()
 {
 	BYTE b0=0xff;
@@ -403,10 +628,16 @@ bool CInterfaceI2C::InitMCP_ControlerPIC_MB3()
 
 	return true;
 }
- 
-// **************************************************************************
-// MB4
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Initializes the mcp controler picture megabytes 4
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceI2C::InitMCP_ControlerPIC_MB4()
 {
 	BYTE b0=0xff;
@@ -466,6 +697,16 @@ bool CInterfaceI2C::InitMCP_ControlerPIC_MB4()
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Initializes the mcp hfo picture
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceI2C::InitMCP_HfoPIC()
 {
 	bool bResult=false;
@@ -483,6 +724,15 @@ bool CInterfaceI2C::InitMCP_HfoPIC()
 
 	return bResult;
 }
+
+/**********************************************************************************************//**
+ * Initializes the mcp hfo picture megabytes 3
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CInterfaceI2C::InitMCP_HfoPIC_MB3()
 {
@@ -543,6 +793,16 @@ bool CInterfaceI2C::InitMCP_HfoPIC_MB3()
 	return true;
 
 }
+
+/**********************************************************************************************//**
+ * Initializes the mcp hfo picture megabytes 4
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceI2C::InitMCP_HfoPIC_MB4()
 {
 	BYTE b0=0xff;
@@ -670,6 +930,13 @@ bool CInterfaceI2C::InitMCP_HfoPIC_MB4()
 //	return true;
 //}
 
+/**********************************************************************************************//**
+ * Sets mcp watchdog
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceI2C::SetMCPwatchdog()
 {
 	if(m_eMCPstate!=MCP_NONE)
@@ -698,23 +965,70 @@ void CInterfaceI2C::SetMCPwatchdog()
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets byte mcp watchdog
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The byte mcp watchdog.
+ **************************************************************************************************/
+
 BYTE CInterfaceI2C::GetByteMCPwatchdog()
 {
 	return m_chReturn1;
 }
 
+/**********************************************************************************************//**
+ * Sets mcp state
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CInterfaceI2C::SetMCPstate(eMCPstate state)
 {
 	m_eMCPstate=state;
 }
+
+/**********************************************************************************************//**
+ * Gets mcp state
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The mcp state.
+ **************************************************************************************************/
+
 eMCPstate CInterfaceI2C::GetMCPstate()
 {
 	return m_eMCPstate;
 }
+
+/**********************************************************************************************//**
+ * Sets fram state
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CInterfaceI2C::SetFRAMstate(bool state)
 {
 	m_bFRAM=state;
 }
+
+/**********************************************************************************************//**
+ * Sets accustate
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
 void CInterfaceI2C::SetACCUstate(bool state)
 {
@@ -724,11 +1038,29 @@ void CInterfaceI2C::SetACCUstate(bool state)
 	else
 		theApp.getLog()->WriteLine(_T("***CInterfaceI2C::SetACCUstate false"));*/
 }
+
+/**********************************************************************************************//**
+ * Gets accustate
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceI2C::GetACCUstate()
 {
 	return m_bACCU;
 }
 
+/**********************************************************************************************//**
+ * Determines if we can erase 64 fram
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CInterfaceI2C::Erase64FRAM()
 {
@@ -805,6 +1137,14 @@ bool CInterfaceI2C::Erase64FRAM()
 	return bReturn;
 }
 
+/**********************************************************************************************//**
+ * Sets fram default factory values
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CInterfaceI2C::SetFRAMDefaultFactoryValues()
 {
@@ -954,6 +1294,14 @@ bool CInterfaceI2C::SetFRAMDefaultFactoryValues()
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Sets fram default factory configuration
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CInterfaceI2C::SetFRAMDefaultFactoryConfig()
 {
@@ -1117,10 +1465,19 @@ bool CInterfaceI2C::SetFRAMDefaultFactoryConfig()
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Sets register 8
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	chDevAddr	The development address.
+ * \param	chReg	 	The register.
+ * \param	chValue  	The value.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// Set one register
-// **************************************************************************
 bool CInterfaceI2C::SetRegister8(BYTE chDevAddr, BYTE chReg, BYTE chValue)
 {
 	bool bReturn=false;
@@ -1160,9 +1517,18 @@ bool CInterfaceI2C::SetRegister8(BYTE chDevAddr, BYTE chReg, BYTE chValue)
 	return bReturn;
 }
 
-//***************************************************************************
-// Read one/two register
-//***************************************************************************
+/**********************************************************************************************//**
+ * Gets register 8
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	chDevAddr	The development address.
+ * \param	chReg	 	The register.
+ *
+ * \return	The register 8.
+ **************************************************************************************************/
+
 BYTE CInterfaceI2C::GetRegister8(BYTE chDevAddr, BYTE chReg)
 {
 
@@ -1198,6 +1564,20 @@ BYTE CInterfaceI2C::GetRegister8(BYTE chDevAddr, BYTE chReg)
 	Sleep(1);
 	return m_chReturn1;
 }
+
+/**********************************************************************************************//**
+ * Gets register 16
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	chDevAddr	The development address.
+ * \param	chReg1   	The first register.
+ * \param	chReg2   	The second register.
+ *
+ * \return	The register 16.
+ **************************************************************************************************/
+
 WORD CInterfaceI2C::GetRegister16(BYTE chDevAddr, BYTE chReg1, BYTE chReg2)
 {
 	SHORT sValue=0;
@@ -1238,9 +1618,19 @@ WORD CInterfaceI2C::GetRegister16(BYTE chDevAddr, BYTE chReg1, BYTE chReg2)
 	return sValue; 
 }
 
-//***************************************************************************
-// Set one register of config FRAM
-//***************************************************************************
+/**********************************************************************************************//**
+ * Sets configuration register 8
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	chDevAddr	The development address.
+ * \param	wReg	 	The register.
+ * \param	cValue   	The value.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceI2C::SetConfigRegister8(BYTE chDevAddr, WORD wReg, BYTE cValue)
 {
 	bool bReturn=false;
@@ -1279,6 +1669,19 @@ bool CInterfaceI2C::SetConfigRegister8(BYTE chDevAddr, WORD wReg, BYTE cValue)
 	Sleep(1);
 	return bReturn;
 }
+
+/**********************************************************************************************//**
+ * Gets configuration register 8
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	chDevAddr	The development address.
+ * \param	wReg	 	The register.
+ *
+ * \return	The configuration register 8.
+ **************************************************************************************************/
+
 BYTE CInterfaceI2C::GetConfigRegister8(BYTE chDevAddr, WORD wReg)
 {
 	
@@ -1314,9 +1717,20 @@ BYTE CInterfaceI2C::GetConfigRegister8(BYTE chDevAddr, WORD wReg)
 	Sleep(1);
 	return m_chReturn1;
 }
-//***************************************************************************
-// Set two register of config FRAM
-//***************************************************************************
+
+/**********************************************************************************************//**
+ * Sets configuration register 16
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	chDevAddr	The development address.
+ * \param	wReg	 	The register.
+ * \param	wValue   	The value.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceI2C::SetConfigRegister16(BYTE chDevAddr, WORD wReg, SHORT wValue)
 {
 	bool bReturn=false;
@@ -1356,6 +1770,20 @@ bool CInterfaceI2C::SetConfigRegister16(BYTE chDevAddr, WORD wReg, SHORT wValue)
 	Sleep(1);
 	return bReturn;
 }
+
+/**********************************************************************************************//**
+ * Gets configuration register 16
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	chDevAddr   	The development address.
+ * \param	wReg			The register.
+ * \param	bIgnoreAlarm	True to ignore alarm.
+ *
+ * \return	The configuration register 16.
+ **************************************************************************************************/
+
 SHORT CInterfaceI2C::GetConfigRegister16(BYTE chDevAddr, WORD wReg, bool bIgnoreAlarm)
 {
 	//NI2C_MSG_HEADER msg[2];               /* One write, one read message */
@@ -1399,12 +1827,19 @@ SHORT CInterfaceI2C::GetConfigRegister16(BYTE chDevAddr, WORD wReg, bool bIgnore
 	return sValue;
 }
 
+/**********************************************************************************************//**
+ * Sets byte fram register
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	chDevAddr	The development address.
+ * \param	wReg	 	The register.
+ * \param	chValue  	The value.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-
-// **************************************************************************
-// FRAM read / write
-// **************************************************************************
 bool CInterfaceI2C::SetByteFRAMRegister(BYTE chDevAddr, WORD wReg, BYTE chValue)
 {
 	bool bReturn=false;
@@ -1443,6 +1878,19 @@ bool CInterfaceI2C::SetByteFRAMRegister(BYTE chDevAddr, WORD wReg, BYTE chValue)
 	Sleep(0);
 	return bReturn;
 }
+
+/**********************************************************************************************//**
+ * Gets byte fram register
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	chDevAddr	The development address.
+ * \param	wReg	 	The register.
+ *
+ * \return	The byte fram register.
+ **************************************************************************************************/
+
 BYTE CInterfaceI2C::GetByteFRAMRegister(BYTE chDevAddr, WORD wReg)
 {
 
@@ -1483,11 +1931,17 @@ BYTE CInterfaceI2C::GetByteFRAMRegister(BYTE chDevAddr, WORD wReg)
 
 }
 
+/**********************************************************************************************//**
+ * Reads configuration byte
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	wReg	The register.
+ *
+ * \return	The configuration byte.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// FRAM config settings IO handling
-// **************************************************************************
 BYTE CInterfaceI2C::ReadConfigByte(WORD wReg)
 {
 	
@@ -1501,6 +1955,19 @@ BYTE CInterfaceI2C::ReadConfigByte(WORD wReg)
 	LeaveCriticalSection(&m_csI2C);
 	return byRes;
 }
+
+/**********************************************************************************************//**
+ * Writes a configuration byte
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	wReg 	The register.
+ * \param	bData	The data.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceI2C::WriteConfigByte(WORD wReg, BYTE bData)
 {
 	if(!m_bFRAM)
@@ -1515,6 +1982,17 @@ bool CInterfaceI2C::WriteConfigByte(WORD wReg, BYTE bData)
 	return bRes;
 }
 
+/**********************************************************************************************//**
+ * Reads configuration word
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	wReg	The register.
+ *
+ * \return	The configuration word.
+ **************************************************************************************************/
+
 SHORT CInterfaceI2C::ReadConfigWord(WORD wReg)
 {
 	if(!m_bFRAM)
@@ -1526,6 +2004,19 @@ SHORT CInterfaceI2C::ReadConfigWord(WORD wReg)
 	LeaveCriticalSection(&m_csI2C);
 	return sh;
 }
+
+/**********************************************************************************************//**
+ * Writes a configuration word
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	wReg 	The register.
+ * \param	wData	The data.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceI2C::WriteConfigWord(WORD wReg, SHORT wData)
 {
 	if(!m_bFRAM)
@@ -1548,6 +2039,18 @@ bool CInterfaceI2C::WriteConfigWord(WORD wReg, SHORT wData)
 //	return GetConfigRegisterBytes(m_hI2C,scan_msg.chDevAddr,wReg,pBuffer,bufSize);
 //	//return GetConfigRegister16(m_hI2C,scan_msg.chDevAddr,wReg);
 //}
+
+/**********************************************************************************************//**
+ * Reads accu word
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	wReg	The register.
+ *
+ * \return	The accu word.
+ **************************************************************************************************/
+
 SHORT CInterfaceI2C::ReadAccuWord(WORD wReg)
 {
 	if(!m_bACCU)
@@ -1560,6 +2063,19 @@ SHORT CInterfaceI2C::ReadAccuWord(WORD wReg)
 	LeaveCriticalSection(&m_csI2C);
 	return sh;
 }
+
+/**********************************************************************************************//**
+ * Writes an accu word
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	wReg 	The register.
+ * \param	wData	The data.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceI2C::WriteAccuWord(WORD wReg, SHORT wData)
 {
 	if(!m_bACCU)
@@ -1572,9 +2088,6 @@ bool CInterfaceI2C::WriteAccuWord(WORD wReg, SHORT wData)
 	return res;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 //WORD CInterfaceI2C::ReadWordMCP()
 //{
 //	scan_msg.chDevAddr=DEVICE_ADDRESS_MCP;
@@ -1588,9 +2101,16 @@ bool CInterfaceI2C::WriteAccuWord(WORD wReg, SHORT wData)
 //	// Port0    /////////////////////////////////////////////////////////////
 //	return GetRegister8(m_hI2C,scan_msg.chDevAddr,GP0_ACCESS);
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Reads the mcp
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The mcp.
+ **************************************************************************************************/
+
 WORD CInterfaceI2C::ReadMCP(void)
 {
 	BYTE b0=LOBYTE(m_wUseForUDP);
@@ -1620,6 +2140,16 @@ WORD CInterfaceI2C::ReadMCP(void)
 	LeaveCriticalSection(&m_csI2C);
 	return byRes2;
 }
+
+/**********************************************************************************************//**
+ * Reads mcp port 0
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The mcp port 0.
+ **************************************************************************************************/
+
 BYTE CInterfaceI2C::ReadMCP_Port0(void)
 {
 	scan_msg.chDevAddr=DEVICE_ADDRESS_MCP;
@@ -1630,6 +2160,16 @@ BYTE CInterfaceI2C::ReadMCP_Port0(void)
 	LeaveCriticalSection(&m_csI2C);
 	return byRes;
 }
+
+/**********************************************************************************************//**
+ * Reads mcp port 1
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The mcp port 1.
+ **************************************************************************************************/
+
 BYTE CInterfaceI2C::ReadMCP_Port1(void)
 {
 	scan_msg.chDevAddr=DEVICE_ADDRESS_MCP;
@@ -1661,10 +2201,15 @@ BYTE CInterfaceI2C::ReadMCP_Port1(void)
 //	return bRes;
 //}
 
+/**********************************************************************************************//**
+ * Gets driver information
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The driver information.
+ **************************************************************************************************/
 
-// **************************************************************************
-// treiberversionen auslesen
-// **************************************************************************
 CStringW CInterfaceI2C::GetDriverInfo()
 {
 	CStringW szDrive;
@@ -1693,10 +2238,13 @@ CStringW CInterfaceI2C::GetDriverInfo()
 
 }
 
+/**********************************************************************************************//**
+ * Starts i2c thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceI2C::StartI2CThread( void )
 {
 	m_bDoI2CThread=true;
@@ -1720,9 +2268,13 @@ void CInterfaceI2C::StartI2CThread( void )
 	m_pcwtI2CThread->ResumeThread();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Stops i2c thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceI2C::StopI2CThread( void )
 {
 	if(m_bDoI2CThread)
@@ -1748,10 +2300,17 @@ void CInterfaceI2C::StopI2CThread( void )
 
 }
 
-//#####################################SendThread########################################
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * i2c thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CI2CThread( LPVOID pc )
 {
 	try
@@ -1782,9 +2341,15 @@ static UINT CI2CThread( LPVOID pc )
 	return TRUE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * i2c data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CInterfaceI2C::I2CData(void) 
 {
 	//CeSetThreadPriority(m_pcwtI2CThread->m_hThread,WATCHDOGPRIO);
@@ -2235,6 +2800,14 @@ DWORD CInterfaceI2C::I2CData(void)
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Reinitializes the i2c
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CInterfaceI2C::ReinitI2C()
 {
@@ -2318,51 +2891,116 @@ bool CInterfaceI2C::ReinitI2C()
 	return bRes;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets i2c mcp availability
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CInterfaceI2C::SetI2C_MCPavailability(BOOL state)
 {
 	m_bI2C_MCPavailability=state;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is i2c mcp availability
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if i2c mcp availability, false if not.
+ **************************************************************************************************/
+
 BOOL CInterfaceI2C::IsI2C_MCPavailability()
 {
 	return m_bI2C_MCPavailability;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets i2c fram availability
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CInterfaceI2C::SetI2C_FRAMavailability(BOOL state)
 {
 	m_bI2C_FRAMavailability=state;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is i2c fram availability
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if i2c fram availability, false if not.
+ **************************************************************************************************/
+
 BOOL CInterfaceI2C::IsI2C_FRAMavailability()
 {
 	return m_bI2C_FRAMavailability;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets i2c accumulate uavailability
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CInterfaceI2C::SetI2C_ACCUavailability(BOOL state)
 {
 	m_bI2C_ACCUavailability=state;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is i2c accumulate uavailability
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if i2c accumulate uavailability, false if not.
+ **************************************************************************************************/
+
 BOOL CInterfaceI2C::IsI2C_ACCUavailability()
 {
 	return m_bI2C_ACCUavailability;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Resets the i2cerror
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceI2C::ResetI2Cerror()
 {
 	m_dwLastI2CError=0;
 	m_bI2CError=false;
 	m_bAlarmSet=false;
 }
+
+/**********************************************************************************************//**
+ * Sets i2cerror
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iAdresse	Zero-based index of the adresse.
+ * \param	bStartup	True to startup.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceI2C::SetI2Cerror(BYTE iAdresse,bool bStartup)
 {
 	bool bPending=false;
@@ -2423,25 +3061,72 @@ bool CInterfaceI2C::SetI2Cerror(BYTE iAdresse,bool bStartup)
 	return bPending;
 }
 
+/**********************************************************************************************//**
+ * Sets i2c error code
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bit	The bit.
+ **************************************************************************************************/
+
 void CInterfaceI2C::SetI2CErrorCode(int bit)
 {
 	m_iI2CErrorCodeBits=SetBit(m_iI2CErrorCodeBits,bit);
 }
+
+/**********************************************************************************************//**
+ * Deletes the i2c error code described by bit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bit	The bit.
+ **************************************************************************************************/
+
 void CInterfaceI2C::DeleteI2CErrorCode(int bit)
 {
 	m_iI2CErrorCodeBits=DeleteBit(m_iI2CErrorCodeBits,bit);
 }
+
+/**********************************************************************************************//**
+ * Deletes the i2c error code
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceI2C::DeleteI2CErrorCode()
 {
 	m_iI2CErrorCodeBits=0;
 }
+
+/**********************************************************************************************//**
+ * Gets i2c error code
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The i2c error code.
+ **************************************************************************************************/
+
 int CInterfaceI2C::GetI2CErrorCode()
 {
 	return m_iI2CErrorCodeBits;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets a bit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	x	The x coordinate.
+ * \param	n	An int to process.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CInterfaceI2C::SetBit(int x, unsigned int n)
 {
 	//x = x | (1 << n);
@@ -2449,6 +3134,19 @@ int CInterfaceI2C::SetBit(int x, unsigned int n)
 
 	return x;
 }
+
+/**********************************************************************************************//**
+ * Deletes the bit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	x	The x coordinate.
+ * \param	n	An int to process.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CInterfaceI2C::DeleteBit(int x, unsigned int n)
 {
 	//x = x & ~(1 << n);

@@ -5,9 +5,23 @@
 #include "FabianHFO.h"
 #include "ViewMenu.h"
 
+/**********************************************************************************************//**
+ * A macro that defines menumodechange
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define MENUMODECHANGE	45000
 
-// CViewMenu
+/**********************************************************************************************//**
+ * CViewMenu
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iViewID	Identifier for the view.
+ **************************************************************************************************/
 
 CViewMenu::CViewMenu(int iViewID):
 CMVView(iViewID)
@@ -66,6 +80,12 @@ CMVView(iViewID)
 	m_bVideoRunning=false;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CViewMenu class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CViewMenu::~CViewMenu()
 {
@@ -79,12 +99,15 @@ BEGIN_MESSAGE_MAP(CViewMenu, CMVView)
 	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CViewMenue message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CViewMenue message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewMenu::CreateView()
 {
 	//RECT rcLd={5,50,570,535};
@@ -100,9 +123,20 @@ bool CViewMenu::CreateView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CViewMenu::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -133,9 +167,15 @@ BOOL CViewMenu::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::Initialize()
 {
 	bool result=CreateWndMenuMenu();
@@ -156,19 +196,25 @@ bool CViewMenu::Initialize()
 
 }
 
+/**********************************************************************************************//**
+ * Opens this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewMenu::Open()
 {
 	PostMessage(WM_SET_SETUPTIMER);
 }
 
+/**********************************************************************************************//**
+ * Closes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewMenu::Close()
 {
 	if(getModel()->getCONFIG()->IsAutoScreenlockActive())
@@ -183,11 +229,15 @@ void CViewMenu::Close()
 	}
 }
 
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewMenu::Show(bool bRedraw)
 {
 	if(m_bExit)
@@ -534,10 +584,15 @@ void CViewMenu::Show(bool bRedraw)
 	PostMessage(WM_SET_SETUPTIMER);
 }
 
+/**********************************************************************************************//**
+ * Shows the menu
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	menu	The menu.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewMenu::ShowMenu(eMenuView menu)
 {
 	if(m_bExit)
@@ -708,9 +763,13 @@ void CViewMenu::ShowMenu(eMenuView menu)
 	PostMessage(WM_SET_SETUPTIMER);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Hides this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewMenu::Hide()
 {
 	this->ShowWindow(SW_HIDE);
@@ -732,9 +791,14 @@ void CViewMenu::Hide()
 
 	ShowWndMenuMenu(false,_T(""),true,false);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewMenu::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -745,15 +809,13 @@ void CViewMenu::OnPaint()
 	// CMVView::OnPaint() soll zum Zeichnen von Meldungen nicht aufgerufen werden.
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CViewMenu::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewMenu::OnDestroy()
 {
 	m_bExit=true;
@@ -828,9 +890,15 @@ void CViewMenu::OnDestroy()
 	CMVView::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CViewMenu::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==SETUPTIMER)
@@ -857,9 +925,13 @@ void CViewMenu::OnTimer(UINT_PTR nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets view focus
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewMenu::SetViewFocus()
 {
 	if(m_bExit)
@@ -1127,10 +1199,15 @@ void CViewMenu::SetViewFocus()
 
 }
 
+/**********************************************************************************************//**
+ * Notifies an event
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewMenu::NotifyEvent(CMVEvent* pEvent)
 {
 	if(m_bExit)
@@ -1387,9 +1464,13 @@ void CViewMenu::NotifyEvent(CMVEvent* pEvent)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Opens menu select
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewMenu::OpenMenuSelect()
 {
 	if(m_bExit)
@@ -1442,9 +1523,13 @@ void CViewMenu::OpenMenuSelect()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Language changed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewMenu::LanguageChanged()
 {
 	if(m_bExit)
@@ -1569,9 +1654,14 @@ void CViewMenu::LanguageChanged()
 
 	PostMessage(WM_SET_SETUPTIMER);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Notifies the language changed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewMenu::NotifyLanguageChanged()
 {
 	if(m_bExit)
@@ -1582,9 +1672,19 @@ void CViewMenu::NotifyLanguageChanged()
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CViewMenu::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -1877,9 +1977,13 @@ LRESULT CViewMenu::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Stops a video
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewMenu::StopVideo()
 {
 	if(m_bVideoRunning)
@@ -1891,9 +1995,16 @@ void CViewMenu::StopVideo()
 		SetTimer(SETUPTIMER, MENUMODECHANGE, NULL);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Opens settings view
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
+
 void CViewMenu::OpenSettingsView(UINT viewFlag)
 {
 	if(m_bExit)
@@ -2186,9 +2297,15 @@ void CViewMenu::OpenSettingsView(UINT viewFlag)
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Closes settings view
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
+
 void CViewMenu::CloseSettingsView(UINT viewFlag)
 {
 	if(m_bExit)
@@ -2314,6 +2431,13 @@ void CViewMenu::CloseSettingsView(UINT viewFlag)
 
 }
 
+/**********************************************************************************************//**
+ * Destroys the settings view
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewMenu::DestroySettingsView()
 {
 	if(m_viewFlag==0)
@@ -2437,9 +2561,15 @@ void CViewMenu::DestroySettingsView()
 	PostMessage(WM_SET_SETUPTIMER);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates window menu
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndMenuMenu()
 {
 	if(m_pWndMenuMenu==NULL && m_lX>-1)
@@ -2459,6 +2589,16 @@ bool CViewMenu::CreateWndMenuMenu()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window menu
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroyWndMenuMenu()
 {
 	if(m_pWndMenuMenu)
@@ -2469,6 +2609,18 @@ bool CViewMenu::DestroyWndMenuMenu()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window menu
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow		  	True to show, false to hide.
+ * \param	txt			  	The text.
+ * \param	bMenuBtnOpen  	True to menu button open.
+ * \param	bMenuBtnReturn	True to menu button return.
+ **************************************************************************************************/
 
 void CViewMenu::ShowWndMenuMenu(bool bShow, CStringW txt, bool bMenuBtnOpen, bool bMenuBtnReturn)
 {
@@ -2486,9 +2638,15 @@ void CViewMenu::ShowWndMenuMenu(bool bShow, CStringW txt, bool bMenuBtnOpen, boo
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates sub view menu
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateSubViewMenu()
 {
 	if(m_pcSubViewMenu==NULL)
@@ -2505,6 +2663,16 @@ bool CViewMenu::CreateSubViewMenu()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the sub view menu
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroySubViewMenu()
 {
 	if(m_pcSubViewMenu)
@@ -2515,6 +2683,16 @@ bool CViewMenu::DestroySubViewMenu()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the sub view menu
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowSubViewMenu(bool bShow)
 {
 	if(m_pcSubViewMenu)
@@ -2526,10 +2704,15 @@ void CViewMenu::ShowSubViewMenu(bool bShow)
 
 }
 
+/**********************************************************************************************//**
+ * Creates sub view flow sensor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewMenu::CreateSubViewFlowSensor()
 {
 	if(m_pcSubViewFlowSensor==NULL)
@@ -2546,6 +2729,16 @@ bool CViewMenu::CreateSubViewFlowSensor()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the sub view flow sensor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowSubViewFlowSensor(bool show)
 {
 	if(m_pcSubViewFlowSensor)
@@ -2553,6 +2746,16 @@ void CViewMenu::ShowSubViewFlowSensor(bool show)
 
 
 }
+
+/**********************************************************************************************//**
+ * Destroys the sub view flow sensor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroySubViewFlowSensor()
 {
 	if(m_pcSubViewFlowSensor)
@@ -2564,10 +2767,15 @@ bool CViewMenu::DestroySubViewFlowSensor()
 	return false;
 }
 
+/**********************************************************************************************//**
+ * Creates sub view display
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewMenu::CreateSubViewDisplay()
 {
 	if(m_pcSubViewDisplay==NULL)
@@ -2584,6 +2792,16 @@ bool CViewMenu::CreateSubViewDisplay()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the sub view display
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroySubViewDisplay()
 {
 	if(m_pcSubViewDisplay)
@@ -2594,6 +2812,16 @@ bool CViewMenu::DestroySubViewDisplay()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the sub view display
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowSubViewDisplay(bool show)
 {
 	if(m_pcSubViewDisplay)
@@ -2605,10 +2833,15 @@ void CViewMenu::ShowSubViewDisplay(bool show)
 
 }
 
+/**********************************************************************************************//**
+ * Creates sub view language
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewMenu::CreateSubViewLanguage()
 {
 	if(m_pcSubViewLanguage==NULL)
@@ -2625,6 +2858,16 @@ bool CViewMenu::CreateSubViewLanguage()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the sub view language
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroySubViewLanguage()
 {
 	if(m_pcSubViewLanguage)
@@ -2635,6 +2878,16 @@ bool CViewMenu::DestroySubViewLanguage()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the sub view language
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowSubViewLanguage(bool show)
 {
 	if(m_pcSubViewLanguage)
@@ -2646,9 +2899,15 @@ void CViewMenu::ShowSubViewLanguage(bool show)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates sub view date time
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateSubViewDateTime()
 {
 	if(m_pcSubViewDateTime==NULL)
@@ -2666,6 +2925,14 @@ bool CViewMenu::CreateSubViewDateTime()
 	return false;
 }
 
+/**********************************************************************************************//**
+ * Destroys the sub view date time
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CViewMenu::DestroySubViewDateTime()
 {
@@ -2677,6 +2944,16 @@ bool CViewMenu::DestroySubViewDateTime()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the sub view date time
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowSubViewDateTime(bool show)
 {
 	if(m_pcSubViewDateTime)
@@ -2688,9 +2965,15 @@ void CViewMenu::ShowSubViewDateTime(bool show)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates sub view ventilation
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateSubViewVentilation()
 {
 	if(m_pcSubViewVentilation==NULL)
@@ -2707,6 +2990,16 @@ bool CViewMenu::CreateSubViewVentilation()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the sub view ventilation
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroySubViewVentilation()
 {
 	if(m_pcSubViewVentilation)
@@ -2717,6 +3010,16 @@ bool CViewMenu::DestroySubViewVentilation()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the sub view ventilation
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowSubViewVentilation(bool show)
 {
 	if(m_pcSubViewVentilation)
@@ -2728,9 +3031,15 @@ void CViewMenu::ShowSubViewVentilation(bool show)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates sub view patient
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateSubViewPatient()
 {
 	if(m_pcSubViewPatient==NULL)
@@ -2747,6 +3056,16 @@ bool CViewMenu::CreateSubViewPatient()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the sub view patient
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroySubViewPatient()
 {
 	if(m_pcSubViewPatient)
@@ -2757,6 +3076,16 @@ bool CViewMenu::DestroySubViewPatient()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the sub view patient
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowSubViewPatient(bool show)
 {
 	if(m_pcSubViewPatient)
@@ -2768,9 +3097,15 @@ void CViewMenu::ShowSubViewPatient(bool show)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates sub view system
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateSubViewSystem()
 {
 	if(m_pcSubViewSystem==NULL)
@@ -2787,6 +3122,16 @@ bool CViewMenu::CreateSubViewSystem()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the sub view system
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroySubViewSystem()
 {
 	if(m_pcSubViewSystem)
@@ -2797,6 +3142,16 @@ bool CViewMenu::DestroySubViewSystem()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the sub view system
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowSubViewSystem(bool show)
 {
 	if(m_pcSubViewSystem)
@@ -2808,10 +3163,15 @@ void CViewMenu::ShowSubViewSystem(bool show)
 
 }
 
+/**********************************************************************************************//**
+ * Creates sub view service
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewMenu::CreateSubViewService()
 {
 	if(m_pcSubViewService==NULL)
@@ -2829,6 +3189,16 @@ bool CViewMenu::CreateSubViewService()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the sub view service
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroySubViewService()
 {
 	if(m_pcSubViewService)
@@ -2839,6 +3209,16 @@ bool CViewMenu::DestroySubViewService()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the sub view service
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowSubViewService(bool show)
 {
 	if(m_pcSubViewService)
@@ -2850,10 +3230,15 @@ void CViewMenu::ShowSubViewService(bool show)
 
 }
 
+/**********************************************************************************************//**
+ * Creates sub view tools
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewMenu::CreateSubViewTools()
 {
 	if(m_pcSubViewTools==NULL)
@@ -2871,6 +3256,16 @@ bool CViewMenu::CreateSubViewTools()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the sub view tools
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroySubViewTools()
 {
 	if(m_pcSubViewTools)
@@ -2881,6 +3276,16 @@ bool CViewMenu::DestroySubViewTools()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the sub view tools
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowSubViewTools(bool show)
 {
 	if(m_pcSubViewTools)
@@ -2892,9 +3297,15 @@ void CViewMenu::ShowSubViewTools(bool show)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates sub view video
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateSubViewVideo()
 {
 	if(m_pcSubViewVideo==NULL)
@@ -2912,6 +3323,16 @@ bool CViewMenu::CreateSubViewVideo()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the sub view video
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroySubViewVideo()
 {
 	if(m_pcSubViewVideo)
@@ -2922,6 +3343,16 @@ bool CViewMenu::DestroySubViewVideo()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the sub view video
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowSubViewVideo(bool show)
 {
 	if(m_pcSubViewVideo)
@@ -2933,9 +3364,15 @@ void CViewMenu::ShowSubViewVideo(bool show)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates sub view network
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateSubViewNetwork()
 {
 	if(m_pcSubViewNetwork==NULL)
@@ -2953,6 +3390,16 @@ bool CViewMenu::CreateSubViewNetwork()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the sub view network
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroySubViewNetwork()
 {
 	if(m_pcSubViewNetwork)
@@ -2963,6 +3410,16 @@ bool CViewMenu::DestroySubViewNetwork()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the sub view network
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowSubViewNetwork(bool show)
 {
 	if(m_pcSubViewNetwork)
@@ -2973,9 +3430,16 @@ void CViewMenu::ShowSubViewNetwork(bool show)
 	}
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates sub view oxy sensor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateSubViewOxySensor()
 {
 	if(m_pcSubViewOxySensor==NULL)
@@ -2992,11 +3456,31 @@ bool CViewMenu::CreateSubViewOxySensor()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the sub view oxy sensor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowSubViewOxySensor(bool show)
 {
 	if(m_pcSubViewOxySensor)
 		m_pcSubViewOxySensor->Show(show);
 }
+
+/**********************************************************************************************//**
+ * Destroys the sub view oxy sensor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroySubViewOxySensor()
 {
 	if(m_pcSubViewOxySensor)
@@ -3007,9 +3491,16 @@ bool CViewMenu::DestroySubViewOxySensor()
 	}
 	return false;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates sub view co 2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateSubViewCO2()
 {
 	if(m_pcSubViewCO2==NULL)
@@ -3027,6 +3518,16 @@ bool CViewMenu::CreateSubViewCO2()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the sub view co 2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroySubViewCO2()
 {
 	if(m_pcSubViewCO2)
@@ -3037,6 +3538,16 @@ bool CViewMenu::DestroySubViewCO2()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the sub view co 2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowSubViewCO2(bool show)
 {
 	if(m_pcSubViewCO2)
@@ -3048,9 +3559,15 @@ void CViewMenu::ShowSubViewCO2(bool show)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates sub view spo 2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateSubViewSPO2()
 {
 	if(m_pcSubViewSPO2==NULL)
@@ -3068,6 +3585,16 @@ bool CViewMenu::CreateSubViewSPO2()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the sub view spo 2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroySubViewSPO2()
 {
 	if(m_pcSubViewSPO2)
@@ -3078,6 +3605,16 @@ bool CViewMenu::DestroySubViewSPO2()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the sub view spo 2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowSubViewSPO2(bool show)
 {
 	if(m_pcSubViewSPO2)
@@ -3089,9 +3626,17 @@ void CViewMenu::ShowSubViewSPO2(bool show)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the erase bkgnd action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CViewMenu::OnEraseBkgnd(CDC* pDC)
 {
 	CBrush cbrBack(BACKGND);
@@ -3109,10 +3654,17 @@ BOOL CViewMenu::OnEraseBkgnd(CDC* pDC)
 	//return CMVView::OnEraseBkgnd(pDC);
 }
 
+/**********************************************************************************************//**
+ * Creates window sub setting screenlocktime
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewMenu::CreateWndSubSettingScreenlocktime(UINT viewFlag)
 {
 	if(m_pcWndSubScreenlocktime==NULL)
@@ -3129,6 +3681,16 @@ bool CViewMenu::CreateWndSubSettingScreenlocktime(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window sub setting screenlocktime
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroyWndSubSettingScreenlocktime()
 {
 	if(m_pcWndSubScreenlocktime)
@@ -3139,6 +3701,16 @@ bool CViewMenu::DestroyWndSubSettingScreenlocktime()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting screenlocktime
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingScreenlocktime(bool show)
 {
 	if(m_pcWndSubScreenlocktime)
@@ -3148,10 +3720,15 @@ void CViewMenu::ShowWndSubSettingScreenlocktime(bool show)
 	}
 }
 
+/**********************************************************************************************//**
+ * Destroys the window sub setting vent range
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewMenu::DestroyWndSubSettingVentRange()
 {
 	if(m_pcWndSubVentRange)
@@ -3162,6 +3739,18 @@ bool CViewMenu::DestroyWndSubSettingVentRange()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting vent range
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingVentRange(UINT viewFlag)
 {
 	if(m_pcWndSubVentRange==NULL)
@@ -3178,6 +3767,16 @@ bool CViewMenu::CreateWndSubSettingVentRange(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting vent range
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingVentRange(bool show)
 {
 	if(m_pcWndSubVentRange)
@@ -3187,9 +3786,15 @@ void CViewMenu::ShowWndSubSettingVentRange(bool show)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the window sub setting ratio itime
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroyWndSubSettingRatioItime()
 {
 	if(m_pcWndSubRatioItime)
@@ -3200,6 +3805,18 @@ bool CViewMenu::DestroyWndSubSettingRatioItime()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting ratio itime
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingRatioItime(UINT viewFlag)
 {
 	if(m_pcWndSubRatioItime==NULL)
@@ -3216,6 +3833,16 @@ bool CViewMenu::CreateWndSubSettingRatioItime(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting ratio itime
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingRatioItime(bool show)
 {
 	if(m_pcWndSubRatioItime)
@@ -3225,47 +3852,15 @@ void CViewMenu::ShowWndSubSettingRatioItime(bool show)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//bool CViewMenu::DestroyWndSubSettingFlushtime()
-//{
-//	if(m_pcWndSubFlushtime)
-//	{
-//		m_pcWndSubFlushtime->DestroyWindow();
-//		delete m_pcWndSubFlushtime;
-//		m_pcWndSubFlushtime=NULL;
-//	}
-//	return false;
-//}
-//bool CViewMenu::CreateWndSubSettingFlushtime(UINT viewFlag)
-//{
-//	if(m_pcWndSubFlushtime==NULL)
-//	{
-//		m_pcWndSubFlushtime = new CWndSubSettingsFlushtime(viewFlag);
-//		//RECT rcLd={m_lX,m_lY,m_lX+m_lCx,m_lY+m_lCy};
-//
-//		RECT rcLd={0,0,800,510};
-//		//RECT rcLd={0,0,565,485};
-//		if(m_pcWndSubFlushtime->CreateWnd(this,rcLd,IDC_VIEW_SETUP_FLUSHTIME))
-//		{
-//			return true;
-//		}
-//	}
-//	return false;
-//}
-//void CViewMenu::ShowWndSubSettingFlushtime(bool show)
-//{
-//	if(m_pcWndSubFlushtime)
-//	{
-//		m_pcWndSubFlushtime->Show(show);
-//		m_pcWndSubFlushtime->SetFocus();
-//	}
-//}
+/**********************************************************************************************//**
+ * Destroys the window sub setting manbreath time
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewMenu::DestroyWndSubSettingManbreathTime()
 {
 	if(m_pcWndSubManbreathTime)
@@ -3276,6 +3871,18 @@ bool CViewMenu::DestroyWndSubSettingManbreathTime()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting manbreath time
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingManbreathTime(UINT viewFlag)
 {
 	if(m_pcWndSubManbreathTime==NULL)
@@ -3292,6 +3899,16 @@ bool CViewMenu::CreateWndSubSettingManbreathTime(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting manbreath time
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingManbreathTime(bool show)
 {
 	if(m_pcWndSubManbreathTime)
@@ -3301,9 +3918,15 @@ void CViewMenu::ShowWndSubSettingManbreathTime(bool show)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the window sub setting sub pattern alarm delay
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroyWndSubSettingSubPatAlarmDelay()
 {
 	if(m_pcWndSubPatAlarmDelay)
@@ -3314,6 +3937,18 @@ bool CViewMenu::DestroyWndSubSettingSubPatAlarmDelay()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting sub pattern alarm delay
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingSubPatAlarmDelay(UINT viewFlag)
 {
 	if(m_pcWndSubPatAlarmDelay==NULL)
@@ -3329,6 +3964,16 @@ bool CViewMenu::CreateWndSubSettingSubPatAlarmDelay(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting sub pattern alarm delay
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingSubPatAlarmDelay(bool show)
 {
 	if(m_pcWndSubPatAlarmDelay)
@@ -3338,85 +3983,15 @@ void CViewMenu::ShowWndSubSettingSubPatAlarmDelay(bool show)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//bool CViewMenu::DestroyWndSubSettingVlimitVgarant()
-//{
-//	if(m_pcWndSubVlimitVgarant)
-//	{
-//		m_pcWndSubVlimitVgarant->DestroyWindow();
-//		delete m_pcWndSubVlimitVgarant;
-//		m_pcWndSubVlimitVgarant=NULL;
-//	}
-//	return false;
-//}
-//bool CViewMenu::CreateWndSubSettingVlimitVgarant(UINT viewFlag)
-//{
-//	if(m_pcWndSubVlimitVgarant==NULL)
-//	{
-//		m_pcWndSubVlimitVgarant = new CWndSubSettingsVlimitVgarant(viewFlag);
-//		//RECT rcLd={m_lX,m_lY,m_lX+m_lCx,m_lY+m_lCy};
-//
-//		RECT rcLd={0,0,800,510};
-//		//RECT rcLd={0,0,565,485};
-//		if(m_pcWndSubVlimitVgarant->CreateWnd(this,rcLd,IDC_VIEW_SETUP_VLIMITVGARANT))
-//		{
-//			return true;
-//		}
-//	}
-//	return false;
-//}
-//void CViewMenu::ShowWndSubSettingVlimitVgarant(bool show)
-//{
-//	if(m_pcWndSubVlimitVgarant)
-//	{
-//		m_pcWndSubVlimitVgarant->Show(show);
-//		m_pcWndSubVlimitVgarant->SetFocus();
-//	}
-//}
+/**********************************************************************************************//**
+ * Destroys the window sub setting ppsv absolute
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
-//bool CViewMenu::DestroyWndSubSettingSubPminDelay()
-//{
-//	if(m_pcWndSubPminDelay)
-//	{
-//		m_pcWndSubPminDelay->DestroyWindow();
-//		delete m_pcWndSubPminDelay;
-//		m_pcWndSubPminDelay=NULL;
-//	}
-//	return false;
-//}
-//bool CViewMenu::CreateWndSubSettingSubPminDelay(UINT viewFlag)
-//{
-//	if(m_pcWndSubPminDelay==NULL)
-//	{
-//		m_pcWndSubPminDelay = new CWndSubSettingsPminDelay(viewFlag);
-//		//RECT m_pcWndSubManbreathTime={m_lX,m_lY,m_lX+m_lCx,m_lY+m_lCy};
-//
-//		RECT rcLd={0,0,800,510};
-//		//RECT rcLd={0,0,565,485};
-//		if(m_pcWndSubPminDelay->CreateWnd(this,rcLd,IDC_VIEW_SETUP_PMINDELAY))
-//		{
-//			return true;
-//		}
-//	}
-//	return false;
-//}
-//void CViewMenu::ShowWndSubSettingSubPminDelay(bool show)
-//{
-//	if(m_pcWndSubPminDelay)
-//	{
-//		m_pcWndSubPminDelay->Show(show);
-//		m_pcWndSubPminDelay->SetFocus();
-//	}
-//}
-
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewMenu::DestroyWndSubSettingPpsvAbsolute()
 {
 	if(m_pcWndSubPpsvAbsolute)
@@ -3427,6 +4002,18 @@ bool CViewMenu::DestroyWndSubSettingPpsvAbsolute()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting ppsv absolute
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingPpsvAbsolute(UINT viewFlag)
 {
 	if(m_pcWndSubPpsvAbsolute==NULL)
@@ -3443,6 +4030,16 @@ bool CViewMenu::CreateWndSubSettingPpsvAbsolute(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting ppsv absolute
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingPpsvAbsolute(bool show)
 {
 	if(m_pcWndSubPpsvAbsolute)
@@ -3451,9 +4048,16 @@ void CViewMenu::ShowWndSubSettingPpsvAbsolute(bool show)
 		m_pcWndSubPpsvAbsolute->SetFocus();
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Destroys the window sub setting bt bfor vt
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroyWndSubSettingBTBforVT()
 {
 	if(m_pcWndSubBTBforVT)
@@ -3464,6 +4068,18 @@ bool CViewMenu::DestroyWndSubSettingBTBforVT()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting bt bfor vt
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingBTBforVT(UINT viewFlag)
 {
 	if(m_pcWndSubBTBforVT==NULL)
@@ -3480,6 +4096,16 @@ bool CViewMenu::CreateWndSubSettingBTBforVT(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting bt bfor vt
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingBTBforVT(bool show)
 {
 	if(m_pcWndSubBTBforVT)
@@ -3488,9 +4114,16 @@ void CViewMenu::ShowWndSubSettingBTBforVT(bool show)
 		m_pcWndSubBTBforVT->SetFocus();
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Destroys the window sub setting volume trigger
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroyWndSubSettingVolTrigger()
 {
 	if(m_pcWndSubVolTrigger)
@@ -3501,6 +4134,18 @@ bool CViewMenu::DestroyWndSubSettingVolTrigger()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting volume trigger
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingVolTrigger(UINT viewFlag)
 {
 	if(m_pcWndSubVolTrigger==NULL)
@@ -3517,6 +4162,16 @@ bool CViewMenu::CreateWndSubSettingVolTrigger(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting volume trigger
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingVolTrigger(bool show)
 {
 	if(m_pcWndSubVolTrigger)
@@ -3526,9 +4181,15 @@ void CViewMenu::ShowWndSubSettingVolTrigger(bool show)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the window sub setting tubeset
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroyWndSubSettingTubeset()
 {
 	if(m_pcWndSubTubeset)
@@ -3539,6 +4200,18 @@ bool CViewMenu::DestroyWndSubSettingTubeset()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting tubeset
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingTubeset(UINT viewFlag)
 {
 	if(m_pcWndSubTubeset==NULL)
@@ -3555,6 +4228,16 @@ bool CViewMenu::CreateWndSubSettingTubeset(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting tubeset
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingTubeset(bool show)
 {
 	if(m_pcWndSubTubeset)
@@ -3564,86 +4247,15 @@ void CViewMenu::ShowWndSubSettingTubeset(bool show)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//bool CViewMenu::DestroyWndSubSettingVolgarFilter()
-//{
-//	if(m_pcWndSubVolgarFilter)
-//	{
-//		m_pcWndSubVolgarFilter->DestroyWindow();
-//		delete m_pcWndSubVolgarFilter;
-//		m_pcWndSubVolgarFilter=NULL;
-//	}
-//	return false;
-//}
-//bool CViewMenu::CreateWndSubSettingVolgarFilter(UINT viewFlag)
-//{
-//	if(m_pcWndSubVolgarFilter==NULL)
-//	{
-//		m_pcWndSubVolgarFilter = new CWndSubSettingsVolgarFilter(viewFlag);
-//		//RECT rcLd={m_lX,m_lY,m_lX+m_lCx,m_lY+m_lCy};
-//
-//		RECT rcLd={0,0,800,510};
-//		//RECT rcLd={0,0,565,485};
-//		if(m_pcWndSubVolgarFilter->CreateWnd(this,rcLd,IDC_VIEW_SETUP_VOLGARFILTER))
-//		{
-//			return true;
-//		}
-//	}
-//	return false;
-//}
-//void CViewMenu::ShowWndSubSettingVolgarFilter(bool show)
-//{
-//	if(m_pcWndSubVolgarFilter)
-//	{
-//		m_pcWndSubVolgarFilter->Show(show);
-//		m_pcWndSubVolgarFilter->SetFocus();
-//	}
-//}
+/**********************************************************************************************//**
+ * Destroys the window sub setting e flow
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
-//bool CViewMenu::DestroyWndSubSettingAbortPSV()
-//{
-//	if(m_pcWndSubAbortPSV)
-//	{
-//		m_pcWndSubAbortPSV->DestroyWindow();
-//		delete m_pcWndSubAbortPSV;
-//		m_pcWndSubAbortPSV=NULL;
-//	}
-//	return false;
-//}
-//bool CViewMenu::CreateWndSubSettingAbortPSV(UINT viewFlag)
-//{
-//	if(m_pcWndSubAbortPSV==NULL)
-//	{
-//		m_pcWndSubAbortPSV = new CWndSubSettingsAbortPSV(viewFlag);
-//		//RECT rcLd={m_lX,m_lY,m_lX+m_lCx,m_lY+m_lCy};
-//
-//		RECT rcLd={0,0,800,510};
-//		//RECT rcLd={0,0,565,485};
-//		if(m_pcWndSubAbortPSV->CreateWnd(this,rcLd,IDC_VIEW_SETUP_ABORTPSV))
-//		{
-//			return true;
-//		}
-//	}
-//	return false;
-//}
-//void CViewMenu::ShowWndSubSettingAbortPSV(bool show)
-//{
-//	if(m_pcWndSubAbortPSV)
-//	{
-//		m_pcWndSubAbortPSV->Show(show);
-//		m_pcWndSubAbortPSV->SetFocus();
-//	}
-//}
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewMenu::DestroyWndSubSettingEFlow()
 {
 	if(m_pcWndSubEFlow)
@@ -3654,6 +4266,18 @@ bool CViewMenu::DestroyWndSubSettingEFlow()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting e flow
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingEFlow(UINT viewFlag)
 {
 	if(m_pcWndSubEFlow==NULL)
@@ -3670,6 +4294,16 @@ bool CViewMenu::CreateWndSubSettingEFlow(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting e flow
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingEFlow(bool show)
 {
 	if(m_pcWndSubEFlow)
@@ -3678,9 +4312,16 @@ void CViewMenu::ShowWndSubSettingEFlow(bool show)
 		m_pcWndSubEFlow->SetFocus();
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Destroys the window sub setting automatic oxy calendar
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroyWndSubSettingAutoOxyCal()
 {
 	if(m_pcWndSubAutoOxyCal)
@@ -3691,6 +4332,18 @@ bool CViewMenu::DestroyWndSubSettingAutoOxyCal()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting automatic oxy calendar
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingAutoOxyCal(UINT viewFlag)
 {
 	if(m_pcWndSubAutoOxyCal==NULL)
@@ -3707,6 +4360,16 @@ bool CViewMenu::CreateWndSubSettingAutoOxyCal(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting automatic oxy calendar
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingAutoOxyCal(bool show)
 {
 	if(m_pcWndSubAutoOxyCal)
@@ -3716,86 +4379,15 @@ void CViewMenu::ShowWndSubSettingAutoOxyCal(bool show)
 	}
 }
 
+/**********************************************************************************************//**
+ * Destroys the window sub setting hfo manager breath
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
-//bool CViewMenu::DestroyWndSubSettingPatData()
-//{
-//	if(m_pcWndSubPatData)
-//	{
-//		m_pcWndSubPatData->DestroyWindow();
-//		delete m_pcWndSubPatData;
-//		m_pcWndSubPatData=NULL;
-//	}
-//	return false;
-//}
-//bool CViewMenu::CreateWndSubSettingPatData(UINT viewFlag)
-//{
-//	if(m_pcWndSubPatData==NULL)
-//	{
-//		m_pcWndSubPatData = new CWndSubSettingsPatDataStartup(viewFlag);
-//		//RECT rcLd={m_lX,m_lY,m_lX+m_lCx,m_lY+m_lCy};
-//
-//		RECT rcLd={0,0,800,510};
-//		//RECT rcLd={0,0,565,485};
-//		if(m_pcWndSubPatData->CreateWnd(this,rcLd,IDC_VIEW_SETUP_PATDATA))
-//		{
-//			return true;
-//		}
-//	}
-//	return false;
-//}
-//void CViewMenu::ShowWndSubSettingPatData(bool show)
-//{
-//	if(m_pcWndSubPatData)
-//	{
-//		m_pcWndSubPatData->Show(show);
-//		m_pcWndSubPatData->SetFocus();
-//	}
-//}
-
-// **************************************************************************
-// 
-// **************************************************************************
-//bool CViewMenu::DestroyWndSubSettingTriggerSound()
-//{
-//	if(m_pcWndSubTriggerSound)
-//	{
-//		m_pcWndSubTriggerSound->DestroyWindow();
-//		delete m_pcWndSubTriggerSound;
-//		m_pcWndSubTriggerSound=NULL;
-//	}
-//	return false;
-//}
-//bool CViewMenu::CreateWndSubSettingTriggerSound(UINT viewFlag)
-//{
-//	if(m_pcWndSubTriggerSound==NULL)
-//	{
-//		m_pcWndSubTriggerSound = new CWndSubSettingsTriggerBeep(viewFlag);
-//		//RECT rcLd={m_lX,m_lY,m_lX+m_lCx,m_lY+m_lCy};
-//
-//		RECT rcLd={0,0,800,510};
-//		//RECT rcLd={0,0,565,485};
-//		if(m_pcWndSubTriggerSound->CreateWnd(this,rcLd,IDC_VIEW_SETUP_TRIGGERBEEP))
-//		{
-//			return true;
-//		}
-//	}
-//	return false;
-//}
-//void CViewMenu::ShowWndSubSettingTriggerSound(bool show)
-//{
-//	if(m_pcWndSubTriggerSound)
-//	{
-//		m_pcWndSubTriggerSound->Show(show);
-//		m_pcWndSubTriggerSound->SetFocus();
-//	}
-//}
-
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewMenu::DestroyWndSubSettingHFOManBreath()
 {
 	if(m_pcWndSubHFOManBreath)
@@ -3806,6 +4398,18 @@ bool CViewMenu::DestroyWndSubSettingHFOManBreath()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting hfo manager breath
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingHFOManBreath(UINT viewFlag)
 {
 	if(m_pcWndSubHFOManBreath==NULL)
@@ -3822,6 +4426,16 @@ bool CViewMenu::CreateWndSubSettingHFOManBreath(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting hfo manager breath
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingHFOManBreath(bool show)
 {
 	if(m_pcWndSubHFOManBreath)
@@ -3830,9 +4444,16 @@ void CViewMenu::ShowWndSubSettingHFOManBreath(bool show)
 		m_pcWndSubHFOManBreath->SetFocus();
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Destroys the window sub setting spo 2sensitivity
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroyWndSubSettingSPO2sensitivity()
 {
 	if(m_pcWndSubSPO2sensitivity)
@@ -3843,6 +4464,18 @@ bool CViewMenu::DestroyWndSubSettingSPO2sensitivity()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting spo 2sensitivity
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingSPO2sensitivity(UINT viewFlag)
 {
 	if(m_pcWndSubSPO2sensitivity==NULL)
@@ -3859,6 +4492,16 @@ bool CViewMenu::CreateWndSubSettingSPO2sensitivity(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting spo 2sensitivity
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingSPO2sensitivity(bool show)
 {
 	if(m_pcWndSubSPO2sensitivity)
@@ -3867,46 +4510,16 @@ void CViewMenu::ShowWndSubSettingSPO2sensitivity(bool show)
 		m_pcWndSubSPO2sensitivity->SetFocus();
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
-//bool CViewMenu::DestroyWndSubSettingSPO2siqlimit()
-//{
-//	if(m_pcWndSubSPO2siqlimit)
-//	{
-//		m_pcWndSubSPO2siqlimit->DestroyWindow();
-//		delete m_pcWndSubSPO2siqlimit;
-//		m_pcWndSubSPO2siqlimit=NULL;
-//	}
-//	return false;
-//}
-//bool CViewMenu::CreateWndSubSettingSPO2siqlimit(UINT viewFlag)
-//{
-//	if(m_pcWndSubSPO2siqlimit==NULL)
-//	{
-//		m_pcWndSubSPO2siqlimit = new CWndSubSettingsSPO2siqlimit(viewFlag);
-//		//RECT rcLd={m_lX,m_lY,m_lX+m_lCx,m_lY+m_lCy};
-//
-//		RECT rcLd={0,0,800,510};
-//		//RECT rcLd={0,0,565,485};
-//		if(m_pcWndSubSPO2siqlimit->CreateWnd(this,rcLd,IDC_VIEW_SETUP_SPO2SIQLIMIT))
-//		{
-//			return true;
-//		}
-//	}
-//	return false;
-//}
-//void CViewMenu::ShowWndSubSettingSPO2siqlimit(bool show)
-//{
-//	if(m_pcWndSubSPO2siqlimit)
-//	{
-//		m_pcWndSubSPO2siqlimit->Show(show);
-//		m_pcWndSubSPO2siqlimit->SetFocus();
-//	}
-//}
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Destroys the window sub setting spo 2averagingtime
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroyWndSubSettingSPO2averagingtime()
 {
 	if(m_pcWndSubSPO2averagingtime)
@@ -3917,6 +4530,18 @@ bool CViewMenu::DestroyWndSubSettingSPO2averagingtime()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting spo 2averagingtime
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingSPO2averagingtime(UINT viewFlag)
 {
 	if(m_pcWndSubSPO2averagingtime==NULL)
@@ -3933,6 +4558,16 @@ bool CViewMenu::CreateWndSubSettingSPO2averagingtime(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting spo 2averagingtime
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingSPO2averagingtime(bool show)
 {
 	if(m_pcWndSubSPO2averagingtime)
@@ -3942,9 +4577,15 @@ void CViewMenu::ShowWndSubSettingSPO2averagingtime(bool show)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the window sub setting spo 2alarmdelay
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroyWndSubSettingSPO2alarmdelay()
 {
 	if(m_pcWndSubSPO2alarmdelay)
@@ -3955,6 +4596,18 @@ bool CViewMenu::DestroyWndSubSettingSPO2alarmdelay()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting spo 2alarmdelay
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingSPO2alarmdelay(UINT viewFlag)
 {
 	if(m_pcWndSubSPO2alarmdelay==NULL)
@@ -3971,6 +4624,16 @@ bool CViewMenu::CreateWndSubSettingSPO2alarmdelay(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting spo 2alarmdelay
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingSPO2alarmdelay(bool show)
 {
 	if(m_pcWndSubSPO2alarmdelay)
@@ -3980,9 +4643,15 @@ void CViewMenu::ShowWndSubSettingSPO2alarmdelay(bool show)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the window sub setting spo 2 module
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroyWndSubSettingSPO2Module()
 {
 	if(m_pcWndSubSPO2Module)
@@ -3994,6 +4663,18 @@ bool CViewMenu::DestroyWndSubSettingSPO2Module()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting spo 2 module
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingSPO2Module(UINT viewFlag)
 {
 	if(m_pcWndSubSPO2Module==NULL)
@@ -4010,6 +4691,16 @@ bool CViewMenu::CreateWndSubSettingSPO2Module(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting spo 2 module
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingSPO2Module(bool show)
 {
 	if(m_pcWndSubSPO2Module)
@@ -4019,9 +4710,15 @@ void CViewMenu::ShowWndSubSettingSPO2Module(bool show)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the window sub setting co 2 module
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroyWndSubSettingCO2Module()
 {
 	if(m_pcWndSubCO2Module)
@@ -4033,6 +4730,18 @@ bool CViewMenu::DestroyWndSubSettingCO2Module()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting co 2 module
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingCO2Module(UINT viewFlag)
 {
 	if(m_pcWndSubCO2Module==NULL)
@@ -4049,6 +4758,16 @@ bool CViewMenu::CreateWndSubSettingCO2Module(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting co 2 module
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingCO2Module(bool show)
 {
 	if(m_pcWndSubCO2Module)
@@ -4057,9 +4776,16 @@ void CViewMenu::ShowWndSubSettingCO2Module(bool show)
 		m_pcWndSubCO2Module->SetFocus();
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Destroys the window sub setting leak component
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroyWndSubSettingLeakComp()
 {
 	if(m_pcWndSubLeakComp)
@@ -4070,6 +4796,18 @@ bool CViewMenu::DestroyWndSubSettingLeakComp()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting leak component
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingLeakComp(UINT viewFlag)
 {
 	if(m_pcWndSubLeakComp==NULL)
@@ -4084,6 +4822,16 @@ bool CViewMenu::CreateWndSubSettingLeakComp(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting leak component
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingLeakComp(bool show)
 {
 	if(m_pcWndSubLeakComp)
@@ -4092,9 +4840,16 @@ void CViewMenu::ShowWndSubSettingLeakComp(bool show)
 		m_pcWndSubLeakComp->SetFocus();
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Destroys the window sub setting co 2 units
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroyWndSubSettingCO2Units()
 {
 	if(m_pcWndSubCO2Units)
@@ -4105,6 +4860,18 @@ bool CViewMenu::DestroyWndSubSettingCO2Units()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting co 2 units
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingCO2Units(UINT viewFlag)
 {
 	if(m_pcWndSubCO2Units==NULL)
@@ -4121,6 +4888,16 @@ bool CViewMenu::CreateWndSubSettingCO2Units(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting co 2 units
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingCO2Units(bool show)
 {
 	if(m_pcWndSubCO2Units)
@@ -4130,9 +4907,15 @@ void CViewMenu::ShowWndSubSettingCO2Units(bool show)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the window sub setting baro pressure
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroyWndSubSettingBaroPressure()
 {
 	if(m_pcWndSubBaroPressure)
@@ -4143,6 +4926,18 @@ bool CViewMenu::DestroyWndSubSettingBaroPressure()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting baro pressure
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingBaroPressure(UINT viewFlag)
 {
 	if(m_pcWndSubBaroPressure==NULL)
@@ -4159,6 +4954,16 @@ bool CViewMenu::CreateWndSubSettingBaroPressure(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting baro pressure
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingBaroPressure(bool show)
 {
 	if(m_pcWndSubBaroPressure)
@@ -4168,9 +4973,15 @@ void CViewMenu::ShowWndSubSettingBaroPressure(bool show)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the window sub setting automatic on pump
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroyWndSubSettingAutoOnPump()
 {
 	if(m_pcWndSubAutoOnPump)
@@ -4181,6 +4992,18 @@ bool CViewMenu::DestroyWndSubSettingAutoOnPump()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting automatic on pump
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingAutoOnPump(UINT viewFlag)
 {
 	if(m_pcWndSubAutoOnPump==NULL)
@@ -4197,6 +5020,16 @@ bool CViewMenu::CreateWndSubSettingAutoOnPump(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting automatic on pump
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingAutoOnPump(bool show)
 {
 	if(m_pcWndSubAutoOnPump)
@@ -4206,9 +5039,15 @@ void CViewMenu::ShowWndSubSettingAutoOnPump(bool show)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the window sub setting pressure unit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::DestroyWndSubSettingPressureUnit()
 {
 	if(m_pcWndSubPressureUnit)
@@ -4219,6 +5058,18 @@ bool CViewMenu::DestroyWndSubSettingPressureUnit()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Creates window sub setting pressure unit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewMenu::CreateWndSubSettingPressureUnit(UINT viewFlag)
 {
 	if(m_pcWndSubPressureUnit==NULL)
@@ -4235,6 +5086,16 @@ bool CViewMenu::CreateWndSubSettingPressureUnit(UINT viewFlag)
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window sub setting pressure unit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewMenu::ShowWndSubSettingPressureUnit(bool show)
 {
 	if(m_pcWndSubPressureUnit)
@@ -4244,78 +5105,7 @@ void CViewMenu::ShowWndSubSettingPressureUnit(bool show)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//bool CViewMenu::DestroyWndSubSettingVlimitSound()
-//{
-//	if(m_pcWndSubVlimitSound)
-//	{
-//		m_pcWndSubVlimitSound->DestroyWindow();
-//		delete m_pcWndSubVlimitSound;
-//		m_pcWndSubVlimitSound=NULL;
-//	}
-//	return false;
-//}
-//bool CViewMenu::CreateWndSubSettingVlimitSound(UINT viewFlag)
-//{
-//	if(m_pcWndSubVlimitSound==NULL)
-//	{
-//		m_pcWndSubVlimitSound = new CWndSubSettingsVlimitSound(viewFlag);
-//		//RECT rcLd={m_lX,m_lY,m_lX+m_lCx,m_lY+m_lCy};
-//
-//		RECT rcLd={0,0,800,510};
-//		//RECT rcLd={0,0,565,485};
-//		if(m_pcWndSubVlimitSound->CreateWnd(this,rcLd,IDC_VIEW_SETUP_VLIMITSOUND))
-//		{
-//			return true;
-//		}
-//	}
-//	return false;
-//}
-//void CViewMenu::ShowWndSubSettingVlimitSound(bool show)
-//{
-//	if(m_pcWndSubVlimitSound)
-//	{
-//		m_pcWndSubVlimitSound->Show(show);
-//		m_pcWndSubVlimitSound->SetFocus();
-//	}
-//}
+/**********************************************************************************************//**
+// End of ViewMenu.cpp
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
-//bool CViewMenu::DestroyWndSubSettingBackupSound()
-//{
-//	if(m_pcWndSubBackupSound)
-//	{
-//		m_pcWndSubBackupSound->DestroyWindow();
-//		delete m_pcWndSubBackupSound;
-//		m_pcWndSubBackupSound=NULL;
-//	}
-//	return false;
-//}
-//bool CViewMenu::CreateWndSubSettingBackupSound(UINT viewFlag)
-//{
-//	if(m_pcWndSubBackupSound==NULL)
-//	{
-//		m_pcWndSubBackupSound = new CWndSubSettingsBackupSound(viewFlag);
-//		//RECT rcLd={m_lX,m_lY,m_lX+m_lCx,m_lY+m_lCy};
-//
-//		RECT rcLd={0,0,800,510};
-//		//RECT rcLd={0,0,565,485};
-//		if(m_pcWndSubBackupSound->CreateWnd(this,rcLd,IDC_VIEW_SETUP_BACKUPSOUND))
-//		{
-//			return true;
-//		}
-//	}
-//	return false;
-//}
-//void CViewMenu::ShowWndSubSettingBackupSound(bool show)
-//{
-//	if(m_pcWndSubBackupSound)
-//	{
-//		m_pcWndSubBackupSound->Show(show);
-//		m_pcWndSubBackupSound->SetFocus();
-//	}
-//}

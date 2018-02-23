@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldCOMPLIANCE.h"
 
-
-// CNumericFieldCOMPLIANCE
+/**********************************************************************************************//**
+ * CNumericFieldCOMPLIANCE
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldCOMPLIANCE, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldCOMPLIANCE class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldCOMPLIANCE::CNumericFieldCOMPLIANCE(eNumericSize size):
 CNumericField(size)
@@ -25,6 +41,13 @@ CNumericField(size)
 	}
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldCOMPLIANCE class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CNumericFieldCOMPLIANCE::~CNumericFieldCOMPLIANCE()
 {
 }
@@ -36,27 +59,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldCOMPLIANCE, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldCOMPLIANCE message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldCOMPLIANCE message handlers
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericFieldCOMPLIANCE::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CNumericFieldCOMPLIANCE::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldCOMPLIANCE::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -154,10 +183,6 @@ bool CNumericFieldCOMPLIANCE::drawData(bool bData, bool bFrames, bool bText, boo
 	return bReturn;
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldCOMPLIANCE::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -177,9 +202,17 @@ bool CNumericFieldCOMPLIANCE::drawData(bool bData, bool bFrames, bool bText, boo
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldCOMPLIANCE::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -234,13 +267,19 @@ bool CNumericFieldCOMPLIANCE::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldCOMPLIANCE::drawLimits(CDC* pDC)
 {
-	
 	return true;
 }
 

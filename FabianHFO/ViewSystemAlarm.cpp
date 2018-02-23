@@ -7,14 +7,42 @@
 #include "LangAdmin.h"
 #include "globDefs.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes a new instance of the CViewSystemAlarm class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iViewID	Identifier for the view.
+ **************************************************************************************************/
+
 CViewSystemAlarm::CViewSystemAlarm(int iViewID):
 CMVView(iViewID)
 {
@@ -44,9 +72,13 @@ CMVView(iViewID)
 	m_bDrawO2SensorBtn=false;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Finalizes an instance of the CViewSystemAlarm class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CViewSystemAlarm::~CViewSystemAlarm(void)
 {
 
@@ -101,10 +133,15 @@ BEGIN_MESSAGE_MAP(CViewSystemAlarm, CMVView)
 	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * Creates the view
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewSystemAlarm::CreateView()
 {
 	//RECT rcLd={0,0,800,580};
@@ -121,9 +158,20 @@ bool CViewSystemAlarm::CreateView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CViewSystemAlarm::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 
@@ -167,9 +215,15 @@ BOOL CViewSystemAlarm::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewSystemAlarm::Initialize()
 {
 	bool result=false;
@@ -224,42 +278,60 @@ bool CViewSystemAlarm::Initialize()
 	return result;
 }
 
+/**********************************************************************************************//**
+ * Opens this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewSystemAlarm::Open()
 {
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Closes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewSystemAlarm::Close()
 {
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewSystemAlarm::Show()
 {
 	this->ShowWindow(SW_SHOW);
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Hides this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewSystemAlarm::Hide()
 {
 	this->ShowWindow(SW_HIDE);
 }
 
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewSystemAlarm::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -267,18 +339,13 @@ void CViewSystemAlarm::OnPaint()
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CViewSystemAlarm::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CViewSystemAlarm::OnDestroy()
 {
 	KillTimer(SYSALARMTIMER);
@@ -290,17 +357,25 @@ void CViewSystemAlarm::OnDestroy()
 	CMVView::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Refresh alarm states
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewSystemAlarm::RefreshAlarmStates()
 {
 	DrawAlarms();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw alarms
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewSystemAlarm::DrawAlarms()
 {
 	RECT rc={0,0,m_lX,m_lY};
@@ -867,6 +942,15 @@ void CViewSystemAlarm::DrawAlarms()
 	
 }
 
+/**********************************************************************************************//**
+ * Draw picture
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ **************************************************************************************************/
+
 void CViewSystemAlarm::DrawPic(HDC hdc)
 {
 	//HDC hdc = *pDC;
@@ -883,6 +967,17 @@ void CViewSystemAlarm::DrawPic(HDC hdc)
 	
 }
 
+/**********************************************************************************************//**
+ * Draw alarm clock active
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ * \param	nX 	The n x coordinate.
+ * \param	nY 	The n y coordinate.
+ **************************************************************************************************/
+
 void CViewSystemAlarm::DrawAlarmClockActive(HDC hdc, int nX, int nY)
 {
 	//HDC hdc = *pDC;
@@ -892,6 +987,17 @@ void CViewSystemAlarm::DrawAlarmClockActive(HDC hdc, int nX, int nY)
 	
 }
 
+/**********************************************************************************************//**
+ * Draw alarm clock inactive
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ * \param	nX 	The n x coordinate.
+ * \param	nY 	The n y coordinate.
+ **************************************************************************************************/
+
 void CViewSystemAlarm::DrawAlarmClockInactive(HDC hdc, int nX, int nY)
 {
 	//HDC hdc = *pDC;
@@ -900,6 +1006,15 @@ void CViewSystemAlarm::DrawAlarmClockInactive(HDC hdc, int nX, int nY)
 		m_pcAClockGrey->Draw(hdc,nX,nY);
 
 }
+
+/**********************************************************************************************//**
+ * Draw checkpoints
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ **************************************************************************************************/
 
 void CViewSystemAlarm::DrawCheckpoints(HDC hdc)
 {
@@ -1436,9 +1551,7 @@ void CViewSystemAlarm::DrawCheckpoints(HDC hdc)
 	penGrey.DeleteObject();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+
 //bool CViewSystemAlarm::CreateWndAlarmLog()
 //{
 //	if(m_pWndAlarmLog==NULL)
@@ -1478,10 +1591,15 @@ void CViewSystemAlarm::DrawCheckpoints(HDC hdc)
 //
 //}
 
+/**********************************************************************************************//**
+ * Notifies an event
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewSystemAlarm::NotifyEvent(CMVEvent* pEvent)
 {
 	switch(pEvent->GetET())
@@ -1527,9 +1645,19 @@ void CViewSystemAlarm::NotifyEvent(CMVEvent* pEvent)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CViewSystemAlarm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -1597,9 +1725,15 @@ LRESULT CViewSystemAlarm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam 
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CViewSystemAlarm::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==SYSALARMTIMER)

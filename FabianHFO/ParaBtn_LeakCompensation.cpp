@@ -10,15 +10,41 @@
 extern HFONT g_hf7AcuBold;
 extern HFONT g_hf11AcuBold;
 
-// CParaBtn_LeakCompensation
+/**********************************************************************************************//**
+ * CParaBtn_LeakCompensation
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CParaBtn_LeakCompensation, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaBtn_LeakCompensation class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	btn		   	The button.
+ * \param	nOffset	   	The offset.
+ * \param	bScrollOver	True to scroll over.
+ **************************************************************************************************/
 
 CParaBtn_LeakCompensation::CParaBtn_LeakCompensation(BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_LeakCompensation class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_LeakCompensation::~CParaBtn_LeakCompensation()
 {
@@ -34,9 +60,19 @@ BEGIN_MESSAGE_MAP(CParaBtn_LeakCompensation, CWnd)
 	ON_WM_KILLFOCUS()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CParaBtn_LeakCompensation message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	dwStyle   	The style.
+ * \param 		  	v		  	A fVALUE to process.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CParaBtn_LeakCompensation message handlers
 BOOL CParaBtn_LeakCompensation::Create(CWnd* pParentWnd,DWORD dwStyle, fVALUE v) 
 {
 	SIZE sz;
@@ -65,7 +101,15 @@ BOOL CParaBtn_LeakCompensation::Create(CWnd* pParentWnd,DWORD dwStyle, fVALUE v)
 	return 0;
 }
 
-// CParaBtn_PCurve message handlers
+/**********************************************************************************************//**
+ * CParaBtn_PCurve message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CParaBtn_LeakCompensation::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -187,8 +231,16 @@ void CParaBtn_LeakCompensation::Draw(int nState)
 	}
 }
 
-
-
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_LeakCompensation::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {

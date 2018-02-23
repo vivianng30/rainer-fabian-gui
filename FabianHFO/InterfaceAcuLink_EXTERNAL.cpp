@@ -38,14 +38,24 @@ LPSETUINTDLLFUNC CInterfaceAcuLink_EXTERNAL::pSetLanguageFunc=0;
 LPSETUINTDLLFUNC CInterfaceAcuLink_EXTERNAL::pSetShutdownFunc=0;
 LPGETUINTDLLFUNC CInterfaceAcuLink_EXTERNAL::pCheckShutdownFunc=0;
 
-
-// CInterfaceAcuLink_EXTERNAL
-
+/**********************************************************************************************//**
+ * CInterfaceAcuLink_EXTERNAL
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 CInterfaceAcuLink_EXTERNAL::CInterfaceAcuLink_EXTERNAL()
 {
 	m_iVersion=0;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CInterfaceAcuLink_EXTERNAL class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 CInterfaceAcuLink_EXTERNAL::~CInterfaceAcuLink_EXTERNAL()
 {
@@ -57,12 +67,15 @@ CInterfaceAcuLink_EXTERNAL::~CInterfaceAcuLink_EXTERNAL()
 	}
 }
 
+/**********************************************************************************************//**
+ * CInterfaceAcuLink_EXTERNAL message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CInterfaceAcuLink_EXTERNAL message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 bool CInterfaceAcuLink_EXTERNAL::init()
 {
 	m_szVersionExe=_T("");
@@ -327,19 +340,29 @@ bool CInterfaceAcuLink_EXTERNAL::init()
 	return bRes;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Deinits this instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceAcuLink_EXTERNAL::deinit()
 {
 
 	return true;
 }
 
-//HINSTANCE CInterfaceAcuLink_EXTERNAL::isAcuLink()
-//{
-//	return _hAcuLink;
-//}
+/**********************************************************************************************//**
+ * Sets a shutdown
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	uiVal	The value.
+ **************************************************************************************************/
 
 void CInterfaceAcuLink_EXTERNAL::setShutdown(UINT uiVal)
 {
@@ -352,11 +375,32 @@ void CInterfaceAcuLink_EXTERNAL::setShutdown(UINT uiVal)
 		((*pSetShutdownFunc)(uiVal));
 }
 
+/**********************************************************************************************//**
+ * Sets producer started
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
+
 void CInterfaceAcuLink_EXTERNAL::setProducerStarted(bool bState)
 {
 	if(pSetProducerStarted)
 		((*pSetProducerStarted)(bState));
 }
+
+/**********************************************************************************************//**
+ * Sets graph data v 3
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iValVolume  	Zero-based index of the value volume.
+ * \param	iValPressure	Zero-based index of the value pressure.
+ * \param	iValFlow		Zero-based index of the value flow.
+ * \param	iValCO2			Zero-based index of the value co 2.
+ **************************************************************************************************/
 
 void CInterfaceAcuLink_EXTERNAL::setGraphDataV3(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2)
 {
@@ -377,6 +421,20 @@ void CInterfaceAcuLink_EXTERNAL::setGraphDataV3(SHORT iValVolume ,SHORT iValPres
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets graph data v 4
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iValVolume  	Zero-based index of the value volume.
+ * \param	iValPressure	Zero-based index of the value pressure.
+ * \param	iValFlow		Zero-based index of the value flow.
+ * \param	iValCO2			Zero-based index of the value co 2.
+ * \param	iValSPO2		Zero-based index of the value spo 2.
+ **************************************************************************************************/
+
 void CInterfaceAcuLink_EXTERNAL::setGraphDataV4(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2, SHORT iValSPO2)
 {
 	//WaveRecord rWaveRecord
@@ -396,6 +454,18 @@ void CInterfaceAcuLink_EXTERNAL::setGraphDataV4(SHORT iValVolume ,SHORT iValPres
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets a language
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	uiLang	The language.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CInterfaceAcuLink_EXTERNAL::setLanguage(UINT uiLang)
 {
 	if(pSetLanguageFunc)
@@ -403,6 +473,17 @@ int CInterfaceAcuLink_EXTERNAL::setLanguage(UINT uiLang)
 
 	return 0;
 }
+
+/**********************************************************************************************//**
+ * Sets net port
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	uiPort	The port.
+ *
+ * \return	An int.
+ **************************************************************************************************/
 
 int CInterfaceAcuLink_EXTERNAL::setNetPort(UINT uiPort)
 {
@@ -412,6 +493,17 @@ int CInterfaceAcuLink_EXTERNAL::setNetPort(UINT uiPort)
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Sets link type
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iLinkType	Type of the link.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CInterfaceAcuLink_EXTERNAL::setLinkType(int iLinkType)
 {
 	if(pSetLinkTypeFunc)
@@ -420,6 +512,17 @@ int CInterfaceAcuLink_EXTERNAL::setLinkType(int iLinkType)
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Sets measurement data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	idx   	Zero-based index of the.
+ * \param	iValue	Zero-based index of the value.
+ *
+ * \return	An int.
+ **************************************************************************************************/
 
 int CInterfaceAcuLink_EXTERNAL::setMeasurementData(int idx, int iValue)
 {
@@ -429,6 +532,16 @@ int CInterfaceAcuLink_EXTERNAL::setMeasurementData(int idx, int iValue)
 
 	return 0;
 }
+
+/**********************************************************************************************//**
+ * Sets para data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	index	Zero-based index of the.
+ * \param	val  	The value.
+ **************************************************************************************************/
 
 void CInterfaceAcuLink_EXTERNAL::setParaData(UINT index, int val)
 {
@@ -441,20 +554,60 @@ void CInterfaceAcuLink_EXTERNAL::setParaData(UINT index, int val)
 	Sleep(0);
 }
 
+/**********************************************************************************************//**
+ * Sets alarm data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	index	Zero-based index of the.
+ * \param	val  	The value.
+ **************************************************************************************************/
+
 void CInterfaceAcuLink_EXTERNAL::setAlarmData(UINT index, int val)
 {
 	if(pSetAlarmData)
 		((*pSetAlarmData)(index, val));
 	Sleep(0);
 }
+
+/**********************************************************************************************//**
+ * Gets executable version
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The executable version.
+ **************************************************************************************************/
+
 CString CInterfaceAcuLink_EXTERNAL::getExeVersion()
 {
 	return m_szVersionExe;
 }
+
+/**********************************************************************************************//**
+ * Gets DLL version
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The DLL version.
+ **************************************************************************************************/
+
 CString CInterfaceAcuLink_EXTERNAL::getDllVersion()
 {
 	return m_szVersionDll;
 }
+
+/**********************************************************************************************//**
+ * Gets acu link error
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The acu link error.
+ **************************************************************************************************/
+
 UINT CInterfaceAcuLink_EXTERNAL::getAcuLinkError()
 {
 	//if(pGetAclError)
@@ -463,6 +616,16 @@ UINT CInterfaceAcuLink_EXTERNAL::getAcuLinkError()
 	//}
 	return 0;
 }
+
+/**********************************************************************************************//**
+ * Sends the measurement data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CInterfaceAcuLink_EXTERNAL::sendMeasurementData()
 {
 	fillMeasurementData();

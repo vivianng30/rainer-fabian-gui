@@ -11,15 +11,41 @@ extern HFONT g_hf8AcuNorm;
 extern HFONT g_hf14AcuBold;
 extern HFONT g_hf31AcuBold;
 
-// CParaBtn_FLOW
+/**********************************************************************************************//**
+ * CParaBtn_FLOW
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CParaBtn_FLOW, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaBtn_FLOW class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	btn		   	The button.
+ * \param	nOffset	   	The offset.
+ * \param	bScrollOver	True to scroll over.
+ **************************************************************************************************/
 
 CParaBtn_FLOW::CParaBtn_FLOW(BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_FLOW class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_FLOW::~CParaBtn_FLOW()
 {
@@ -38,9 +64,15 @@ BEGIN_MESSAGE_MAP(CParaBtn_FLOW, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CParaBtn_FLOW message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
-
-// CParaBtn_FLOW message handlers
 void CParaBtn_FLOW::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -205,6 +237,16 @@ void CParaBtn_FLOW::Draw(int nState)
 	}
 }
 
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_FLOW::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {

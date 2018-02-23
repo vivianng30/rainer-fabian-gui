@@ -6,8 +6,31 @@
 #include "DlgProxPressure60.h"
 #include "colour.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 extern HFONT g_hf14AcuMed;
@@ -17,12 +40,35 @@ extern HFONT g_hf9AcuBold;
 extern HFONT g_hf21AcuBold;
 extern HFONT g_hf33AcuBold;
 
+/**********************************************************************************************//**
+ * A macro that defines timechange
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define TIMECHANGE	600
 
-
-// CDlgProxPressure60 dialog
+/**********************************************************************************************//**
+ * CDlgProxPressure60 dialog
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CDlgProxPressure60, CDialog)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CDlgProxPressure60 class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pParent	If non-null, the parent.
+ **************************************************************************************************/
 
 CDlgProxPressure60::CDlgProxPressure60(CWnd* pParent /*=NULL*/)
 	: CDialog(CDlgProxPressure60::IDD, pParent)
@@ -80,6 +126,13 @@ CDlgProxPressure60::CDlgProxPressure60(CWnd* pParent /*=NULL*/)
 
 	m_dwLastSetupTimer=0;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CDlgProxPressure60 class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 CDlgProxPressure60::~CDlgProxPressure60()
 {
@@ -159,6 +212,15 @@ CDlgProxPressure60::~CDlgProxPressure60()
 	DeleteObject(m_hfont);
 }
 
+/**********************************************************************************************//**
+ * Exchanges data to/from the controls in this dialog
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pDX	If non-null, an object that manages the data exchange operation.
+ **************************************************************************************************/
+
 void CDlgProxPressure60::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -177,14 +239,30 @@ BEGIN_MESSAGE_MAP(CDlgProxPressure60, CDialog)
 	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CDlgProxPressure60 message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
 
-// CDlgProxPressure60 message handlers
 CMVModel *CDlgProxPressure60::getModel()
 {
 	if(m_pModel==NULL)
 		m_pModel=CMVModel::GetInstance();
 	return m_pModel;
 }
+
+/**********************************************************************************************//**
+ * Initializes this dialog and the controls within it
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 BOOL CDlgProxPressure60::OnInitDialog() 
 {
@@ -347,11 +425,26 @@ BOOL CDlgProxPressure60::OnInitDialog()
 	return TRUE;
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked cancel action
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CDlgProxPressure60::OnBnClickedCancel()
 {
 	KillTimer(PROXPRESSURECALTIMER);
 	OnCancel();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked save action
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CDlgProxPressure60::OnBnClickedSave()
 {
 	setProcPressureCal60();
@@ -363,6 +456,14 @@ void CDlgProxPressure60::OnBnClickedSave()
 //{
 //	
 //}
+
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CDlgProxPressure60::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -371,6 +472,14 @@ void CDlgProxPressure60::OnPaint()
 
 	Draw();
 }
+
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CDlgProxPressure60::Draw()
 {
 	RECT rcCl;
@@ -498,6 +607,22 @@ void CDlgProxPressure60::Draw()
 	DeleteObject(hBmpMem);
 	DeleteDC(hdcMem);
 }
+
+/**********************************************************************************************//**
+ * Creates font handle
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pDC				If non-null, the device-context.
+ * \param 		  	nPixHeight  	Height of the pix.
+ * \param [in,out]	pszFacename 	If non-null, the facename.
+ * \param 		  	lFontWeight 	The font weight.
+ * \param 		  	iOrientation	Zero-based index of the orientation.
+ *
+ * \return	The new font handle.
+ **************************************************************************************************/
+
 HFONT CDlgProxPressure60::CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation) 
 {
 	// Standard settings
@@ -523,6 +648,16 @@ HFONT CDlgProxPressure60::CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszF
 
 	return CreateFontIndirect( &lf );
 }
+
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CDlgProxPressure60::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==CHANGETIMER)
@@ -613,6 +748,19 @@ void CDlgProxPressure60::OnTimer(UINT_PTR nIDEvent)
 	CDialog::OnTimer(nIDEvent);
 }
 
+/**********************************************************************************************//**
+ * Executes the control color action
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pDC		 	If non-null, the device-context.
+ * \param [in,out]	pWnd	 	If non-null, the window.
+ * \param 		  	nCtlColor	The control color.
+ *
+ * \return	The handle of the brush.
+ **************************************************************************************************/
+
 HBRUSH CDlgProxPressure60::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
@@ -633,9 +781,18 @@ HBRUSH CDlgProxPressure60::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	} 
 	return hbr;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CDlgProxPressure60::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -752,9 +909,20 @@ BOOL CDlgProxPressure60::PreTranslateMessage(MSG* pMsg)
 	}
 	return CWnd::PreTranslateMessage(pMsg);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CDlgProxPressure60::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -893,6 +1061,14 @@ LRESULT CDlgProxPressure60::WindowProc(UINT message, WPARAM wParam, LPARAM lPara
 	}
 	return CWnd::WindowProc(message, wParam, lParam);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked value action
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CDlgProxPressure60::OnBnClickedValue()
 {
 	//SetOneButtonDepressed(IDC_BTN_SETUP_YEAR);
@@ -906,6 +1082,13 @@ void CDlgProxPressure60::OnBnClickedValue()
 		setProcPressureCal60();
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets proc pressure calibration 60
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CDlgProxPressure60::setProcPressureCal60()
 {

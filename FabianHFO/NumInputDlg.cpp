@@ -5,11 +5,37 @@
 #include "FabianHFO.h"
 #include "NumInputDlg.h"
 
+/**********************************************************************************************//**
+ * A macro that defines focustimer
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 #define FOCUSTIMER			WM_USER + 0x6000
 
-// CNumInputDlg dialog
+/**********************************************************************************************//**
+ * CNumInputDlg dialog
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumInputDlg, CDialog)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumInputDlg class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pParent 	If non-null, the parent.
+ * \param 		  	opTime  	The operation time.
+ * \param [in,out]	inputNum	The input number.
+ **************************************************************************************************/
 
 CNumInputDlg::CNumInputDlg(CWnd* pParent /*=NULL*/,eOpTime opTime, UINT& inputNum)
 	: CDialog(CNumInputDlg::IDD, pParent)
@@ -26,11 +52,27 @@ CNumInputDlg::CNumInputDlg(CWnd* pParent /*=NULL*/,eOpTime opTime, UINT& inputNu
 	m_hfontButton=NULL;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumInputDlg class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CNumInputDlg::~CNumInputDlg()
 {
 	DeleteObject(m_hfont);
 	DeleteObject(m_hfontButton);
 }
+
+/**********************************************************************************************//**
+ * Exchanges data to/from the controls in this dialog
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDX	If non-null, an object that manages the data exchange operation.
+ **************************************************************************************************/
 
 void CNumInputDlg::DoDataExchange(CDataExchange* pDX)
 {
@@ -73,8 +115,15 @@ BEGIN_MESSAGE_MAP(CNumInputDlg, CDialog)
 	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumInputDlg message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// CNumInputDlg message handlers
 BOOL CNumInputDlg::OnInitDialog() 
 {
 	CDialog::OnInitDialog();
@@ -161,10 +210,16 @@ BOOL CNumInputDlg::OnInitDialog()
 	return TRUE;   // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
-// CNumInputDlg message handlers
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * CNumInputDlg message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CNumInputDlg::getModel()
 {
 	if(m_pModel==NULL)
@@ -195,9 +250,22 @@ CMVModel *CNumInputDlg::getModel()
 //	}
 //	return CWnd::PreTranslateMessage(pMsg);
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates font handle
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC				If non-null, the device-context.
+ * \param 		  	nPixHeight  	Height of the pix.
+ * \param [in,out]	pszFacename 	If non-null, the facename.
+ * \param 		  	lFontWeight 	The font weight.
+ * \param 		  	iOrientation	Zero-based index of the orientation.
+ *
+ * \return	The new font handle.
+ **************************************************************************************************/
+
 HFONT CNumInputDlg::CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation) 
 {
 	// Standard settings
@@ -223,60 +291,145 @@ HFONT CNumInputDlg::CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacenam
 
 	return CreateFontIndirect( &lf );
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked button 0 action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CNumInputDlg::OnBnClickedButton0()
 {
 	Key('0');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked button 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CNumInputDlg::OnBnClickedButton1()
 {
 	Key('1');
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked button 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CNumInputDlg::OnBnClickedButton2()
 {
 	Key('2');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked button 3 action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CNumInputDlg::OnBnClickedButton3()
 {
 	Key('3');
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked button 4 action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CNumInputDlg::OnBnClickedButton4()
 {
 	Key('4');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked button 5 action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CNumInputDlg::OnBnClickedButton5()
 {
 	Key('5');
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked button 6 action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CNumInputDlg::OnBnClickedButton6()
 {
 	Key('6');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked button 7 action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CNumInputDlg::OnBnClickedButton7()
 {
 	Key('7');
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked button 8 action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CNumInputDlg::OnBnClickedButton8()
 {
 	Key('8');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked button 9 action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CNumInputDlg::OnBnClickedButton9()
 {
 	Key('9');
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked button delete action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CNumInputDlg::OnBnClickedButtonDel()
 {
 	Key(-1);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked ok action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CNumInputDlg::OnBnClickedOk()
 {
@@ -289,11 +442,27 @@ void CNumInputDlg::OnBnClickedOk()
 
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked cancel action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CNumInputDlg::OnBnClickedCancel()
 {
 	// TODO: Add your control notification handler code here
 	OnCancel();
 }
+
+/**********************************************************************************************//**
+ * Keys
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	c	An int to process.
+ **************************************************************************************************/
 
 void CNumInputDlg::Key(int c)
 {
@@ -314,10 +483,28 @@ void CNumInputDlg::Key(int c)
 	}
 
 }
+
+/**********************************************************************************************//**
+ * Executes the en setfocus edit 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CNumInputDlg::OnEnSetfocusEdit1()
 {
 	m_ebpFocused=&m_ebString1;
 }
+
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CNumInputDlg::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==FOCUSTIMER)
@@ -332,15 +519,13 @@ void CNumInputDlg::OnTimer(UINT_PTR nIDEvent)
 	CDialog::OnTimer(nIDEvent);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumInputDlg::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CNumInputDlg::OnDestroy()
 {
 	KillTimer(FOCUSTIMER);

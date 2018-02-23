@@ -12,6 +12,13 @@
 
 extern CEvent g_eventFOT;
 
+/**********************************************************************************************//**
+ * A macro that defines minimum fotmeasurements
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define MINIMUM_FOTMEASUREMENTS 250
 
 PBUFFOTvent* CThreadFOT::m_pbufFOTventilation=NULL;
@@ -19,13 +26,12 @@ PBUFFOTcalc* CThreadFOT::m_pbufFOTdisplay=NULL;
 CThreadFOT* CThreadFOT::theThreadFOT=0;
 
 /**********************************************************************************************//**
- * @fn	CThreadFOT::CThreadFOT()
+ * Initializes a new instance of the CThreadFOT class
  *
- * @brief	CThreadFOT.
- *
- * @author	Rainer Kuehner
- * @date	12.10.2016
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  **************************************************************************************************/
+
 CThreadFOT::CThreadFOT()
 {
 	InitializeCriticalSection(&csFOTthread);
@@ -92,13 +98,12 @@ CThreadFOT::CThreadFOT()
 }
 
 /**********************************************************************************************//**
- * @fn	CThreadFOT::~CThreadFOT()
+ * Finalizes an instance of the CThreadFOT class
  *
- * @brief	Destructor.
- *
- * @author	Rainer Kuehner
- * @date	12.10.2016
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  **************************************************************************************************/
+
 CThreadFOT::~CThreadFOT()
 {
 	stopFOTThread();
@@ -141,15 +146,14 @@ CThreadFOT::~CThreadFOT()
 }
 
 /**********************************************************************************************//**
- * @fn	CThreadFOT* CThreadFOT::getInstance()
+ * Gets the instance
  *
- * @brief	CThreadFOT message handlers.
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  *
- * @author	Rainer Kuehner
- * @date	12.10.2016
- *
- * @return	null if it fails, else the instance.
+ * \return	Null if it fails, else the instance.
  **************************************************************************************************/
+
 CThreadFOT* CThreadFOT::getInstance()
 {
 	if(theThreadFOT == 0)
@@ -161,13 +165,12 @@ CThreadFOT* CThreadFOT::getInstance()
 }
 
 /**********************************************************************************************//**
- * @fn	void CThreadFOT::destroyInstance()
+ * Destroys the instance
  *
- * @brief	Destroys the instance.
- *
- * @author	Rainer Kuehner
- * @date	12.10.2016
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  **************************************************************************************************/
+
 void CThreadFOT::destroyInstance()
 {
 	if(theThreadFOT != NULL)
@@ -178,15 +181,14 @@ void CThreadFOT::destroyInstance()
 }
 
 /**********************************************************************************************//**
- * @fn	CMVModel *CThreadFOT::getModel()
+ * Gets the model
  *
- * @brief	Gets the model.
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  *
- * @author	Rainer Kuehner
- * @date	12.10.2016
- *
- * @return	null if it fails, else the model.
+ * \return	Null if it fails, else the model.
  **************************************************************************************************/
+
 CMVModel *CThreadFOT::getModel()
 {
 	if(m_pModel==NULL)
@@ -198,7 +200,14 @@ CMVModel *CThreadFOT::getModel()
 //{
 //	return m_bFOTrunning;
 //}
- 
+
+/**********************************************************************************************//**
+ * Loads hfo tvalues
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::loadHFO_FOTvalues()
 {
 	DEBUGMSG(TRUE, (TEXT("loadHFO_FOTvalues\r\n")));
@@ -206,6 +215,16 @@ void CThreadFOT::loadHFO_FOTvalues()
 	m_iFOToriginHFFreqPara=getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara();
 	m_iFOToriginHFAMPLPara=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLPara();
 }
+
+/**********************************************************************************************//**
+ * Gets date last sequence
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The date last sequence.
+ **************************************************************************************************/
+
 CString CThreadFOT::getDateLastSequence()
 {
 	CString szDate=_T("");
@@ -216,6 +235,13 @@ CString CThreadFOT::getDateLastSequence()
 
 	return szDate;
 }
+
+/**********************************************************************************************//**
+ * Sets date last sequence
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CThreadFOT::setDateLastSequence()
 {
@@ -249,12 +275,27 @@ void CThreadFOT::setDateLastSequence()
 	LeaveCriticalSection(&csFOTdate);
 }
 
+/**********************************************************************************************//**
+ * Resets the date last sequence
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::resetDateLastSequence()
 {
 	EnterCriticalSection(&csFOTdate);
 	m_szLastCalculation=_T("--");
 	LeaveCriticalSection(&csFOTdate);
 }
+
+/**********************************************************************************************//**
+ * Starts a fot
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::startFOT()
 {
 	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
@@ -266,6 +307,14 @@ void CThreadFOT::startFOT()
 		startFOTconventional();
 	}
 }
+
+/**********************************************************************************************//**
+ * Stops a fot
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::stopFOT()
 {
 	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
@@ -279,6 +328,13 @@ void CThreadFOT::stopFOT()
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_TXT_STOP_FOT);
 }
+
+/**********************************************************************************************//**
+ * Starts fo toscillation
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CThreadFOT::startFOToscillation()
 {
@@ -298,12 +354,28 @@ void CThreadFOT::startFOToscillation()
 		getModel()->getDATAHANDLER()->SetHFAMPLParadata(getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_AMPLITUDEPara(), true);
 	}
 }
+
+/**********************************************************************************************//**
+ * Change to fot convert vent mode
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::changeToFOTConvVentMode()
 {
 	DEBUGMSG(TRUE, (TEXT("changeToFOTConvVentMode\r\n")));
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_CONTROL_START_FOT_CONVENTIONAL);
 }
+
+/**********************************************************************************************//**
+ * Restore fot convert vent mode
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::restoreFOTConvVentMode()
 {
 	DEBUGMSG(TRUE, (TEXT("restoreFOTConvVentMode\r\n")));
@@ -315,6 +387,13 @@ void CThreadFOT::restoreFOTConvVentMode()
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_CONTROL_STOP_FOT_CONVENTIONAL);
 }
+
+/**********************************************************************************************//**
+ * Restore fothfo vent mode
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CThreadFOT::restoreFOTHFOVentMode()
 {
@@ -342,6 +421,13 @@ void CThreadFOT::restoreFOTHFOVentMode()
 		getModel()->getALARMHANDLER()->resetVgAutoTurnedOff_FOT();
 	}
 }
+
+/**********************************************************************************************//**
+ * Starts fo tconventional
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CThreadFOT::startFOTconventional()
 {
@@ -389,6 +475,14 @@ void CThreadFOT::startFOTconventional()
 
 	startFOTThread();
 }
+
+/**********************************************************************************************//**
+ * Stops fo tconventional
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::stopFOTconventional()
 {
 	theApp.getLog()->WriteLine(_T("#FOT: stop CONVENTIONAL"));
@@ -400,6 +494,12 @@ void CThreadFOT::stopFOTconventional()
 	m_bFOTconvRunning=false;
 }
 
+/**********************************************************************************************//**
+ * Starts fo thfo
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CThreadFOT::startFOThfo()
 {
@@ -438,10 +538,28 @@ void CThreadFOT::startFOThfo()
 	
 	startFOTThread();
 }
+
+/**********************************************************************************************//**
+ * Gets origin hfampl para
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The origin hfampl para.
+ **************************************************************************************************/
+
 WORD CThreadFOT::getOriginHFAMPLPara()
 {
 	return m_iFOToriginHFAMPLPara;
 }
+
+/**********************************************************************************************//**
+ * Stops fo thfo
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::stopFOThfo()
 {
 	theApp.getLog()->WriteLine(_T("#FOT: stop HFO"));
@@ -452,6 +570,16 @@ void CThreadFOT::stopFOThfo()
 
 	stopFOTThread();
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is fo trunning
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if fo trunning, false if not.
+ **************************************************************************************************/
+
 bool CThreadFOT::isFOTrunning()
 {
 	if(m_bFOTconvRunning)
@@ -461,6 +589,14 @@ bool CThreadFOT::isFOTrunning()
 	else
 		return false;
 }
+
+/**********************************************************************************************//**
+ * Calculates the para fotconv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::calcParaFOTCONV()
 {
 	DEBUGMSG(TRUE, (TEXT("calcParaFOTCONV\r\n")));
@@ -543,6 +679,15 @@ void CThreadFOT::calcParaFOTCONV()
 
 }
 
+/**********************************************************************************************//**
+ * Sets decrease para fotconv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bIncreaseSeq	True to increase sequence.
+ **************************************************************************************************/
+
 void CThreadFOT::setDecreaseParaFOTCONV(bool bIncreaseSeq)
 {
 	DEBUGMSG(TRUE, (TEXT("CThreadFOT::setDecreaseParaFOTCONV()\r\n")));
@@ -585,6 +730,13 @@ void CThreadFOT::setDecreaseParaFOTCONV(bool bIncreaseSeq)
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_PARABN_FOT);
 }
+
+/**********************************************************************************************//**
+ * Calculates the decrease para fotconv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CThreadFOT::calcDecreaseParaFOTCONV()
 {
@@ -670,6 +822,15 @@ void CThreadFOT::calcDecreaseParaFOTCONV()
 
 }
 
+/**********************************************************************************************//**
+ * Sets para fotconv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bRetry	True to retry.
+ **************************************************************************************************/
+
 void CThreadFOT::setParaFOTCONV(bool bRetry)
 {
 	DEBUGMSG(TRUE, (TEXT("setParaFOTCONV()\r\n")));
@@ -719,6 +880,13 @@ void CThreadFOT::setParaFOTCONV(bool bRetry)
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_PARABN_FOT);
 }
+
+/**********************************************************************************************//**
+ * Calculates the decrease para fothfo
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CThreadFOT::calcDecreaseParaFOTHFO()
 {
@@ -772,6 +940,14 @@ void CThreadFOT::calcDecreaseParaFOTHFO()
 
 	}
 }
+
+/**********************************************************************************************//**
+ * Calculates the para fothfo
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::calcParaFOTHFO()
 {
 	DEBUGMSG(TRUE, (TEXT("calcParaFOTHFO\r\n")));
@@ -814,6 +990,16 @@ void CThreadFOT::calcParaFOTHFO()
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets decrease para fothfo
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bIncreaseSeq	True to increase sequence.
+ **************************************************************************************************/
+
 void CThreadFOT::setDecreaseParaFOTHFO(bool bIncreaseSeq)
 {
 	DEBUGMSG(TRUE, (TEXT("setDecreaseParaFOTHFO\r\n")));
@@ -829,6 +1015,16 @@ void CThreadFOT::setDecreaseParaFOTHFO(bool bIncreaseSeq)
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_PARABN_FOT);
 }
+
+/**********************************************************************************************//**
+ * Sets para fothfo
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bRetry	True to retry.
+ **************************************************************************************************/
+
 void CThreadFOT::setParaFOTHFO(bool bRetry)
 {
 	DEBUGMSG(TRUE, (TEXT("setParaFOTHFO\r\n")));
@@ -852,43 +1048,139 @@ void CThreadFOT::setParaFOTHFO(bool bRetry)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_PARABN_FOT);
 }
 
+/**********************************************************************************************//**
+ * Gets current fotpeep
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The current fotpeep.
+ **************************************************************************************************/
 
 WORD CThreadFOT::getCurrentFOTPEEP()
 {
 	return m_icurFOTPEEP;
 }
+
+/**********************************************************************************************//**
+ * Gets current fothf pmean
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The current fothf pmean.
+ **************************************************************************************************/
+
 WORD CThreadFOT::getCurrentFOTHFPmean()
 {
 	return m_icurFOTHFPmean;
 }
+
+/**********************************************************************************************//**
+ * Gets fothf pmean step
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The fothf pmean step.
+ **************************************************************************************************/
+
 WORD CThreadFOT::getFOTHFPmeanStep()
 {
 	return m_iFOTHFPmeanStep;
 }
+
+/**********************************************************************************************//**
+ * Gets fotpeep step
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The fotpeep step.
+ **************************************************************************************************/
+
 WORD CThreadFOT::getFOTPEEPStep()
 {
 	return m_iFOTPEEPStep;
 }
+
+/**********************************************************************************************//**
+ * Gets fo torigin pinsp para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The fo torigin pinsp para ippv.
+ **************************************************************************************************/
+
 SHORT CThreadFOT::getFOToriginPINSPPara_IPPV()
 {
 	return m_iFOToriginPINSPPara_IPPV;
 }
+
+/**********************************************************************************************//**
+ * Gets fo torigin pmaxvg para ippv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The fo torigin pmaxvg para ippv.
+ **************************************************************************************************/
+
 SHORT CThreadFOT::getFOToriginPMAXVGPara_IPPV()
 {
 	return m_iFOToriginPMAXVGPara_IPPV;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is fo torigin v gstate on
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if fo torigin v gstate on, false if not.
+ **************************************************************************************************/
+
 bool CThreadFOT::isFOToriginVGstateOn()
 {
 	return m_iFOToriginVGstate;
 }
+
+/**********************************************************************************************//**
+ * Gets fo torigin difference peep pinsp
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The fo torigin difference peep pinsp.
+ **************************************************************************************************/
+
 SHORT CThreadFOT::getFOToriginDiffPEEP_PINSP()
 {
 	return m_iFOToriginDiffPEEP_PINSP;
 }
+
+/**********************************************************************************************//**
+ * Gets fo torigin difference peep pmaxvg
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The fo torigin difference peep pmaxvg.
+ **************************************************************************************************/
+
 SHORT CThreadFOT::getFOToriginDiffPEEP_PMAXVG()
 {
 	return m_iFOToriginDiffPEEP_PMAXVG;
 }
+
+/**********************************************************************************************//**
+ * Starts a calculation
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::startCalculation()
 {
 	DEBUGMSG(TRUE, (TEXT("CThreadFOT::startCalculation()\r\n")));
@@ -903,6 +1195,14 @@ void CThreadFOT::startCalculation()
 		calculateFOTdata(getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_FREQPara(),getCurrentFOTHFPmean());
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the step operation
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::runStep()
 {
 	setFOTstate(FOT_STARTSTEP);
@@ -923,6 +1223,14 @@ void CThreadFOT::runStep()
 	//}
 	
 }
+
+/**********************************************************************************************//**
+ * Continue sequence
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::continueSequence()	
 {
 	DEBUGMSG(TRUE, (TEXT("continueSequence\r\n")));
@@ -948,6 +1256,14 @@ void CThreadFOT::continueSequence()
 	//	DEBUGMSG(TRUE, (TEXT("ERROR CThreadFOT::continueWithSequence() %d\r\n"),(int)getFOTstate()));
 	//}
 }
+
+/**********************************************************************************************//**
+ * Decrease sequence
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::decreaseSequence()
 {
 	if(getFOTstate()==FOT_WAITCONTINUE)
@@ -986,6 +1302,14 @@ void CThreadFOT::decreaseSequence()
 	}
 
 }
+
+/**********************************************************************************************//**
+ * Repeat sequence
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::repeatSequence()
 {
 	resetRetryERROR();
@@ -1038,6 +1362,13 @@ void CThreadFOT::repeatSequence()
 	
 }
 
+/**********************************************************************************************//**
+ * Resets the last display buffer
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::resetLastDisplayBuf()
 {
 	EnterCriticalSection(&csFOTcalcBuffer);
@@ -1046,10 +1377,28 @@ void CThreadFOT::resetLastDisplayBuf()
 	LeaveCriticalSection(&csFOTcalcBuffer);
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is decreasing sequence
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if decreasing sequence, false if not.
+ **************************************************************************************************/
+
 bool CThreadFOT::isDecreasingSequence()
 {
 	return m_bDecreasing;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is next sequence
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if next sequence, false if not.
+ **************************************************************************************************/
 
 bool CThreadFOT::isNextSequence()
 {
@@ -1072,6 +1421,15 @@ bool CThreadFOT::isNextSequence()
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Gets current fo tsequence
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The current fo tsequence.
+ **************************************************************************************************/
+
 BYTE CThreadFOT::getCurFOTsequence()
 {
 	BYTE seq=0;
@@ -1080,6 +1438,13 @@ BYTE CThreadFOT::getCurFOTsequence()
 	LeaveCriticalSection(&csFOTsequence);
 	return seq;
 }
+
+/**********************************************************************************************//**
+ * Increase fo tsequence
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CThreadFOT::increaseFOTsequence()
 {
@@ -1092,12 +1457,28 @@ void CThreadFOT::increaseFOTsequence()
 	m_iFOTdisplaySequence++;
 	}
 
+/**********************************************************************************************//**
+ * Resets the fo tsequence
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::resetFOTsequence()
 {
 	EnterCriticalSection(&csFOTsequence);
 	m_iFOTsequence=0;
 	LeaveCriticalSection(&csFOTsequence);
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is acquire fot data
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if acquire fot data, false if not.
+ **************************************************************************************************/
 
 bool CThreadFOT::isAcquireFOTData()
 {
@@ -1122,6 +1503,15 @@ bool CThreadFOT::isAcquireFOTData()
 //	return bTemp;
 //}
 
+/**********************************************************************************************//**
+ * Sets a retry
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	error	The error.
+ **************************************************************************************************/
+
 void CThreadFOT::setRetry(eRetryError error)
 {
 	EnterCriticalSection(&csFOTvalidData);
@@ -1130,6 +1520,15 @@ void CThreadFOT::setRetry(eRetryError error)
 	
 	setFOTstate(FOT_RETRY);
 }
+
+/**********************************************************************************************//**
+ * Gets retry error
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The retry error.
+ **************************************************************************************************/
 
 eRetryError CThreadFOT::getRetryERROR()
 {
@@ -1140,12 +1539,28 @@ eRetryError CThreadFOT::getRetryERROR()
 	return error;
 }
 
+/**********************************************************************************************//**
+ * Resets the retry error
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::resetRetryERROR()
 {
 	EnterCriticalSection(&csFOTvalidData);
 	m_eRetryError=RETRY_NONE;
 	LeaveCriticalSection(&csFOTvalidData);
 }
+
+/**********************************************************************************************//**
+ * Sets fo tstate
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	feState	State of the fe.
+ **************************************************************************************************/
 
 void CThreadFOT::setFOTstate(SequenceStatesFOT feState)
 {
@@ -1158,6 +1573,16 @@ void CThreadFOT::setFOTstate(SequenceStatesFOT feState)
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_REDRAW_FOT_STATE);
 }
+
+/**********************************************************************************************//**
+ * Gets fo tstate
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The fo tstate.
+ **************************************************************************************************/
+
 SequenceStatesFOT CThreadFOT::getFOTstate()
 {
 	SequenceStatesFOT feState=FOT_OFF;
@@ -1167,6 +1592,15 @@ SequenceStatesFOT CThreadFOT::getFOTstate()
 	return feState;
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is fot data valid
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if the fot data is valid, false if not.
+ **************************************************************************************************/
+
 bool CThreadFOT::isFOTDataValid()
 {
 	bool bTemp=false;
@@ -1175,6 +1609,17 @@ bool CThreadFOT::isFOTDataValid()
 	LeaveCriticalSection(&csFOTvalidData);
 	return bTemp;
 }
+
+/**********************************************************************************************//**
+ * Sets fot data valid
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	validData	True to valid data.
+ * \param	error	 	The error.
+ **************************************************************************************************/
+
 void CThreadFOT::setFOTDataValid(bool validData, eRetryError error)
 {
 	EnterCriticalSection(&csFOTvalidData);
@@ -1182,6 +1627,14 @@ void CThreadFOT::setFOTDataValid(bool validData, eRetryError error)
 	m_eRetryError=error;
 	LeaveCriticalSection(&csFOTvalidData);
 }
+
+/**********************************************************************************************//**
+ * Check fo tvalid measurement data
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::checkFOTvalidMeasurementData()
 {
 	//DEBUGMSG(TRUE, (TEXT("checkFOTvalidMeasurementData\r\n")));
@@ -1230,17 +1683,17 @@ void CThreadFOT::checkFOTvalidMeasurementData()
 		}
 	}
 }
+
 /**********************************************************************************************//**
- * @fn	void CThreadFOT::writeFOTventdataBuffer(int iPRESSURE, double iFlow)
+ * Writes a fo tventdata buffer
  *
- * @brief	Writes a fotventdata buffer.
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  *
- * @author	Rainer Kuehner
- * @date	12.10.2016
- *
- * @param	iPRESSURE	Zero-based index of the pressure.
- * @param	iFlow	 	Zero-based index of the flow.
+ * \param	iPRESSURE	Zero-based index of the pressure.
+ * \param	iFlow	 	Zero-based index of the flow.
  **************************************************************************************************/
+
 void CThreadFOT::writeFOTventdataBuffer(int iPRESSURE, double iFlow)
 {
 	EnterCriticalSection(&csFOTventBuffer);
@@ -1261,12 +1714,10 @@ void CThreadFOT::writeFOTventdataBuffer(int iPRESSURE, double iFlow)
 }
 
 /**********************************************************************************************//**
- * @fn	void CThreadFOT::resetFOTventdataBuffer()
+ * Resets the fo tventdata buffer
  *
- * @brief	Resets the fotventdata buffer.
- *
- * @author	Rainer Kuehner
- * @date	12.10.2016
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  **************************************************************************************************/
 
 void CThreadFOT::resetFOTventdataBuffer()
@@ -1287,13 +1738,12 @@ void CThreadFOT::resetFOTventdataBuffer()
 }
 
 /**********************************************************************************************//**
- * @fn	void CThreadFOT::resetFOTcalculateBuffer()
+ * Resets the fo tdisplay buffer
  *
- * @brief	Resets the fotcalculate buffer.
- *
- * @author	Rainer Kuehner
- * @date	24.10.2016
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  **************************************************************************************************/
+
 void CThreadFOT::resetFOTdisplayBuffer()
 {
 	DEBUGMSG(TRUE, (TEXT("CThreadFOT::resetFOTdisplayBuffer() m_iCountFOTdisplay\r\n")));
@@ -1310,6 +1760,16 @@ void CThreadFOT::resetFOTdisplayBuffer()
 	m_iFOTdisplaySequence=0;
 	resetDateLastSequence();
 }
+
+/**********************************************************************************************//**
+ * Gets buffer size fo tdisplay
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The buffer size fo tdisplay.
+ **************************************************************************************************/
+
 BYTE CThreadFOT::getBufSizeFOTdisplay()
 {
 	BYTE buf=0;
@@ -1318,6 +1778,16 @@ BYTE CThreadFOT::getBufSizeFOTdisplay()
 	LeaveCriticalSection(&csFOTcalcBuffer);
 	return buf;
 }
+
+/**********************************************************************************************//**
+ * Calculates the fo tdata
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	i_osc_freq 	Zero-based index of the osc frequency.
+ * \param	curPressure	The current pressure.
+ **************************************************************************************************/
 
 void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 {
@@ -1516,8 +1986,13 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 	}
 }
 
+/**********************************************************************************************//**
+ * Starts fot thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
- 
 void CThreadFOT::startFOTThread( void )
 {
 	startThread();
@@ -1541,6 +2016,13 @@ void CThreadFOT::startFOTThread( void )
 	m_pcwtFOTThread->ResumeThread();
 }
 
+/**********************************************************************************************//**
+ * Stops fot thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::stopFOTThread( void )
 {
 	if(doThread())
@@ -1562,6 +2044,14 @@ void CThreadFOT::stopFOTThread( void )
 	}
 }
 
+/**********************************************************************************************//**
+ * Executes the thread operation
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CThreadFOT::doThread()
 {
@@ -1571,18 +2061,45 @@ bool CThreadFOT::doThread()
 	LeaveCriticalSection(&csFOTthread);
 	return bRes;
 }
+
+/**********************************************************************************************//**
+ * Starts a thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::startThread()
 {
 	EnterCriticalSection(&csFOTthread);
 	m_bDoFOTThread=true;
 	LeaveCriticalSection(&csFOTthread);
 }
+
+/**********************************************************************************************//**
+ * Stops a thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadFOT::stopThread()
 {
 	EnterCriticalSection(&csFOTthread);
 	m_bDoFOTThread=false;
 	LeaveCriticalSection(&csFOTthread);
 }
+
+/**********************************************************************************************//**
+ * Fot thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
 
 static UINT FOTThread( LPVOID pc )
 {
@@ -1612,6 +2129,15 @@ static UINT FOTThread( LPVOID pc )
 	//((CThreadFOT*)pc)->FOTData();
 	return TRUE;
 }
+
+/**********************************************************************************************//**
+ * Fot data
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
 
 DWORD CThreadFOT::FOTData(void) 
 {
@@ -1853,11 +2379,19 @@ DWORD CThreadFOT::FOTData(void)
 	return 0;
 }
 
-// **************************************************************************
-// FOT algorythm
-// **************************************************************************
+/**********************************************************************************************//**
+ * fnTranspose function: matrix "pp_A" (format is pointer of pointer [pp]) with rows "n_rows_A"
+ * and cols "n_cols_A", transposed into matrix "pp_A_Transpose".
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pp_A		  	If non-null, a.
+ * \param 		  	n_rows_A	  	The rows a.
+ * \param 		  	n_cols_A	  	The cols a.
+ * \param [in,out]	pp_A_Transpose	If non-null, a transpose.
+ **************************************************************************************************/
 
-// fnTranspose function: matrix "pp_A" (format is pointer of pointer [pp]) with rows "n_rows_A" and cols "n_cols_A", transposed into matrix "pp_A_Transpose".
 void CThreadFOT::fnTranspose(double **pp_A,int n_rows_A,int n_cols_A,double **pp_A_Transpose)
 {
 	for (int i = 0; i < n_rows_A; i++)
@@ -1865,7 +2399,21 @@ void CThreadFOT::fnTranspose(double **pp_A,int n_rows_A,int n_cols_A,double **pp
 			pp_A_Transpose[j][i] = pp_A[i][j];
 }
 
-// fnMultiplication function: matrix multiplication of matrix "pp_A" with a matrix "pp_B". Result is matrix "pp_C".
+/**********************************************************************************************//**
+ * fnMultiplication function: matrix multiplication of matrix "pp_A" with a matrix "pp_B".
+ * Result is matrix "pp_C".
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pp_A		If non-null, a.
+ * \param 		  	n_rows_A	The rows a.
+ * \param 		  	n_cols_A	The cols a.
+ * \param [in,out]	pp_B		If non-null, the b.
+ * \param 		  	n_cols_B	The cols b.
+ * \param [in,out]	pp_C		If non-null, the c.
+ **************************************************************************************************/
+
 void CThreadFOT::fnMultiplication(double **pp_A,int n_rows_A,int n_cols_A, double **pp_B, int n_cols_B, double **pp_C)
 {
 	/*for (int i = 0; i < n_rows_A; i++)
@@ -1882,7 +2430,20 @@ void CThreadFOT::fnMultiplication(double **pp_A,int n_rows_A,int n_cols_A, doubl
 		}
 }
 
-// fnMinor function: creation of minor matrix "pp_Minor" for square matrix "pp_A" of order "n_order_A", and indices of matrix ppA "row_skip", "col_skip".
+/**********************************************************************************************//**
+ * fnMinor function: creation of minor matrix "pp_Minor" for square matrix "pp_A" of order
+ * "n_order_A", and indices of matrix ppA "row_skip", "col_skip".
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pp_A	 	If non-null, a.
+ * \param 		  	n_order_A	The order a.
+ * \param 		  	row_skip 	The row skip.
+ * \param 		  	col_skip 	The col skip.
+ * \param [in,out]	pp_Minor 	If non-null, the minor.
+ **************************************************************************************************/
+
 void CThreadFOT::fnMinor(double** pp_A,int n_order_A,int row_skip,int col_skip,double** pp_Minor)
 {
 	int row=0; 
@@ -1901,8 +2462,19 @@ void CThreadFOT::fnMinor(double** pp_A,int n_order_A,int row_skip,int col_skip,d
 	}
 }
 
-// fnDeterminant: calculation of determinant of square matrix "pp_A" of order "n_order_A". Variable "result" is return for the determinant.
-// WARNING - RECURSIVE FUNCTION
+/**********************************************************************************************//**
+ * fnDeterminant: calculation of determinant of square matrix "pp_A" of order "n_order_A".
+ * Variable "result" is return for the determinant. WARNING - RECURSIVE FUNCTION
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pp_A	 	If non-null, a.
+ * \param 		  	n_order_A	The order a.
+ *
+ * \return	A double.
+ **************************************************************************************************/
+
 double CThreadFOT::fnDeterminant(double **pp_A,int n_order_A)
 {
 	double result = 0.0;
@@ -1938,7 +2510,17 @@ double CThreadFOT::fnDeterminant(double **pp_A,int n_order_A)
 	return result;
 }
 
-// fnCoFactor: calculation of cofactor matrix "pp_CoFactor" for matrix "pp_A"
+/**********************************************************************************************//**
+ * fnCoFactor: calculation of cofactor matrix "pp_CoFactor" for matrix "pp_A"
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pp_A	   	If non-null, a.
+ * \param 		  	n_order_A  	The order a.
+ * \param [in,out]	pp_CoFactor	If non-null, the co factor.
+ **************************************************************************************************/
+
 void CThreadFOT::fnCofactor(double **pp_A,int n_order_A,double **pp_CoFactor)
 {
 	// create Minor
@@ -1962,7 +2544,18 @@ void CThreadFOT::fnCofactor(double **pp_A,int n_order_A,double **pp_CoFactor)
 		delete [] pp_Minor;  pp_Minor = 0;
 }
 
-// fnMatrixInverse function: calculation of the matrix inverse of matrix "pp_A" of order, "pp_A_inv".
+/**********************************************************************************************//**
+ * fnMatrixInverse function: calculation of the matrix inverse of matrix "pp_A" of order,
+ * "pp_A_inv".
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pp_A	 	If non-null, a.
+ * \param 		  	n_order_A	The order a.
+ * \param [in,out]	pp_A_inv 	If non-null, a inverse.
+ **************************************************************************************************/
+
 void CThreadFOT::fnInverse(double **pp_A,int n_order_A,double **pp_A_inv)
 {
 	// inverse algorithm is analytical
@@ -1986,6 +2579,17 @@ void CThreadFOT::fnInverse(double **pp_A,int n_order_A,double **pp_A_inv)
 	delete [] pp_CoFactor;  pp_CoFactor = 0;
 }
 
+/**********************************************************************************************//**
+ * Construct fourier
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param 		  	i_osc_freq   	Zero-based index of the osc frequency.
+ * \param 		  	i_sample_freq	Zero-based index of the sample frequency.
+ * \param [in,out]	pp_Fourier   	If non-null, the fourier.
+ **************************************************************************************************/
+
 void CThreadFOT::fnConstructFourier(int i_osc_freq,int i_sample_freq,double** pp_Fourier)
 {
 	// Construct Fourier matrix
@@ -2001,6 +2605,18 @@ void CThreadFOT::fnConstructFourier(int i_osc_freq,int i_sample_freq,double** pp
 		pp_Fourier[i][2] = std::sin(2*3.14*i_osc_freq*i/i_sample_freq)*(-1);
 	}
 }
+
+/**********************************************************************************************//**
+ * Construct pseudo inverse
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param 		  	i_osc_freq			Zero-based index of the osc frequency.
+ * \param 		  	i_sample_freq   	Zero-based index of the sample frequency.
+ * \param [in,out]	pp_Fourier			If non-null, the fourier.
+ * \param [in,out]	pp_PseudoInverse	If non-null, the pseudo inverse.
+ **************************************************************************************************/
 
 void CThreadFOT::fnConstructPseudoInverse(int i_osc_freq,int i_sample_freq,double** pp_Fourier,double** pp_PseudoInverse)
 {
@@ -2066,6 +2682,21 @@ void CThreadFOT::fnConstructPseudoInverse(int i_osc_freq,int i_sample_freq,doubl
 
 	//--------------------------------------------------------------
 }
+
+/**********************************************************************************************//**
+ * Calculates the z coordinate
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pp_Fourier			If non-null, the fourier.
+ * \param [in,out]	pp_PseudoInverse	If non-null, the pseudo inverse.
+ * \param [in,out]	pp_Flow				If non-null, the flow.
+ * \param [in,out]	pp_Pressure			If non-null, the pressure.
+ * \param 		  	i_osc_freq			Zero-based index of the osc frequency.
+ * \param 		  	i_sample_freq   	Zero-based index of the sample frequency.
+ * \param [in,out]	pOut				If non-null, the out.
+ **************************************************************************************************/
 
 void CThreadFOT::fnCalcZ(double** pp_Fourier, double** pp_PseudoInverse,double** pp_Flow,double** pp_Pressure,int i_osc_freq,int i_sample_freq,double *pOut)
 {
@@ -2180,6 +2811,3 @@ void CThreadFOT::fnCalcZ(double** pp_Fourier, double** pp_PseudoInverse,double**
 		delete [] pp_SP[i];
 	delete [] pp_SP;
 }
-// **************************************************************************
-// END FOT algorythm
-// **************************************************************************

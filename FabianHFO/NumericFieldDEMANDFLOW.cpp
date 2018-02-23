@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldDEMANDFLOW.h"
 
-
-// CNumericFieldDEMANDFLOW
+/**********************************************************************************************//**
+ * CNumericFieldDEMANDFLOW
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldDEMANDFLOW, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldDEMANDFLOW class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldDEMANDFLOW::CNumericFieldDEMANDFLOW(eNumericSize size):
 CNumericField(size)
@@ -17,6 +33,13 @@ CNumericField(size)
 	m_szNameNote=_T("");
 	m_szUnit=_T("[")+getModel()->GetLanguageString(IDS_UNIT_LMIN)+_T("]");
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldDEMANDFLOW class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CNumericFieldDEMANDFLOW::~CNumericFieldDEMANDFLOW()
 {
@@ -29,26 +52,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldDEMANDFLOW, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldDEMANDFLOW message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldDEMANDFLOW message handlers
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericFieldDEMANDFLOW::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CNumericFieldDEMANDFLOW::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldDEMANDFLOW::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -132,9 +162,6 @@ bool CNumericFieldDEMANDFLOW::drawData(bool bData, bool bFrames, bool bText, boo
 }
 
 
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldDEMANDFLOW::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -154,9 +181,17 @@ bool CNumericFieldDEMANDFLOW::drawData(bool bData, bool bFrames, bool bText, boo
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldDEMANDFLOW::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -215,10 +250,17 @@ bool CNumericFieldDEMANDFLOW::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldDEMANDFLOW::drawLimits(CDC* pDC)
 {
 	

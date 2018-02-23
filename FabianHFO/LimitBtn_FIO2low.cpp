@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	LimitBtn_FIO2low.cpp.
+ *
+ * Implements the limit button fio 2low class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "LimitBtn_FIO2low.h"
 #include "globDefs.h"
@@ -9,11 +15,30 @@ extern HFONT g_hf14AcuBold;
 extern HFONT g_hf31AcuBold;
 extern HFONT g_hf31AcuBoldNum;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CLimitBtn_FIO2low class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	parent	   	If non-null, the parent.
+ * \param 		  	btn		   	The button.
+ * \param 		  	nOffset	   	The offset.
+ * \param 		  	bScrollOver	True to scroll over.
+ **************************************************************************************************/
+
 CLimitBtn_FIO2low::CLimitBtn_FIO2low(CWndDataSPO2 *parent, BTN btn, int nOffset,bool bScrollOver):
 CLimitBtn(parent,btn,nOffset,bScrollOver)
 {
 	
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CLimitBtn_FIO2low class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CLimitBtn_FIO2low::~CLimitBtn_FIO2low(void)
 {
@@ -32,9 +57,14 @@ BEGIN_MESSAGE_MAP(CLimitBtn_FIO2low, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
-
-
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
 void CLimitBtn_FIO2low::Draw(int nState)
 {
@@ -88,6 +118,17 @@ void CLimitBtn_FIO2low::Draw(int nState)
 		SelectObject(m_hDC,hPrevFont);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CLimitBtn_FIO2low::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {

@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldHFOVTE.h"
 
-
-// CNumericFieldHFOVTE
+/**********************************************************************************************//**
+ * CNumericFieldHFOVTE
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldHFOVTE, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldHFOVTE class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldHFOVTE::CNumericFieldHFOVTE(eNumericSize size):
 CNumericField(size)
@@ -17,6 +33,13 @@ CNumericField(size)
 	m_szNameNote=getModel()->GetLanguageString(IDS_PARA_TE) + _T(" ") + getModel()->GetLanguageString(IDS_PARA_HFO);
 	m_szUnit=_T("[")+getModel()->GetLanguageString(IDS_UNIT_MILLILITER)+_T("]");
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldHFOVTE class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CNumericFieldHFOVTE::~CNumericFieldHFOVTE()
 {
@@ -29,27 +52,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldHFOVTE, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldHFOVTE message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldHFOVTE message handlers
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericFieldHFOVTE::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CNumericFieldHFOVTE::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldHFOVTE::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -131,9 +160,6 @@ bool CNumericFieldHFOVTE::drawData(bool bData, bool bFrames, bool bText, bool bL
 }
 
 
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldHFOVTE::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -153,9 +179,17 @@ bool CNumericFieldHFOVTE::drawData(bool bData, bool bFrames, bool bText, bool bL
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldHFOVTE::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -229,10 +263,17 @@ bool CNumericFieldHFOVTE::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldHFOVTE::drawLimits(CDC* pDC)
 {
 	

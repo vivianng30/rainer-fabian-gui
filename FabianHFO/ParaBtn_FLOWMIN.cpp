@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	ParaBtn_FLOWMIN.cpp.
+ *
+ * Implements the para button flowmin class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "ParaBtn_FLOWMIN.h"
 #include "globDefs.h"
@@ -8,11 +14,28 @@ extern HFONT g_hf14AcuBold;
 extern HFONT g_hf31AcuBold;
 extern HFONT g_hf8AcuBold;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaBtn_FLOWMIN class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	btn		   	The button.
+ * \param	nOffset	   	The offset.
+ * \param	bScrollOver	True to scroll over.
+ **************************************************************************************************/
 
 CParaBtn_FLOWMIN::CParaBtn_FLOWMIN(BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_FLOWMIN class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_FLOWMIN::~CParaBtn_FLOWMIN(void)
 {
@@ -31,8 +54,14 @@ BEGIN_MESSAGE_MAP(CParaBtn_FLOWMIN, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
-
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
 void CParaBtn_FLOWMIN::Draw(int nState)
 {
@@ -141,6 +170,16 @@ void CParaBtn_FLOWMIN::Draw(int nState)
 	}
 }
 
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_FLOWMIN::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {

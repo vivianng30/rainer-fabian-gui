@@ -6,11 +6,36 @@
 #include "PasswordDlg.h"
 #include "colour.h"
 
-// CPasswordDlg dialog
+/**********************************************************************************************//**
+ * CPasswordDlg dialog
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define FOCUSTIMER			WM_USER + 0x6000
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the PasswordDlg class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CPasswordDlg, CDialog)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CPasswordDlg class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParent	If non-null, the parent.
+ * \param 		  	module 	The module.
+ **************************************************************************************************/
 
 CPasswordDlg::CPasswordDlg(CWnd* pParent /*=NULL*/,eModule module)
 	: CDialog(CPasswordDlg::IDD, pParent)
@@ -29,11 +54,27 @@ CPasswordDlg::CPasswordDlg(CWnd* pParent /*=NULL*/,eModule module)
 	m_hfontButton=NULL;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CPasswordDlg class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CPasswordDlg::~CPasswordDlg()
 {
 	DeleteObject(m_hfont);
 	DeleteObject(m_hfontButton);
 }
+
+/**********************************************************************************************//**
+ * Exchanges data to/from the controls in this dialog
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDX	If non-null, an object that manages the data exchange operation.
+ **************************************************************************************************/
 
 void CPasswordDlg::DoDataExchange(CDataExchange* pDX)
 {
@@ -105,6 +146,15 @@ BEGIN_MESSAGE_MAP(CPasswordDlg, CDialog)
 	ON_WM_TIMER()
 	ON_WM_DESTROY()
 END_MESSAGE_MAP()
+
+/**********************************************************************************************//**
+ * Initializes this dialog and the controls within it
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 BOOL CPasswordDlg::OnInitDialog() 
 {
@@ -255,10 +305,16 @@ BOOL CPasswordDlg::OnInitDialog()
 	return TRUE;   // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
-// CPasswordDlg message handlers
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * CPasswordDlg message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CPasswordDlg::getModel()
 {
 	if(m_pModel==NULL)
@@ -266,9 +322,21 @@ CMVModel *CPasswordDlg::getModel()
 	return m_pModel;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates font handle
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC				If non-null, the device-context.
+ * \param 		  	nPixHeight  	Height of the pix.
+ * \param [in,out]	pszFacename 	If non-null, the facename.
+ * \param 		  	lFontWeight 	The font weight.
+ * \param 		  	iOrientation	Zero-based index of the orientation.
+ *
+ * \return	The new font handle.
+ **************************************************************************************************/
+
 HFONT CPasswordDlg::CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation) 
 {
 	// Standard settings
@@ -295,10 +363,24 @@ HFONT CPasswordDlg::CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacenam
 	return CreateFontIndirect( &lf );
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked cancel action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CPasswordDlg::OnBnClickedCancel()
 {
 	OnCancel();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked ok action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CPasswordDlg::OnBnClickedOk()
 {
@@ -358,90 +440,218 @@ void CPasswordDlg::OnBnClickedOk()
 	}
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked button 0 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CPasswordDlg::OnBnClickedButton0()
 {
 	Key('0');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked button 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CPasswordDlg::OnBnClickedButton1()
 {
 	Key('1');
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked button 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CPasswordDlg::OnBnClickedButton2()
 {
 	Key('2');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked button 3 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CPasswordDlg::OnBnClickedButton3()
 {
 	Key('3');
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked button 4 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CPasswordDlg::OnBnClickedButton4()
 {
 	Key('4');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked button 5 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CPasswordDlg::OnBnClickedButton5()
 {
 	Key('5');
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked button 6 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CPasswordDlg::OnBnClickedButton6()
 {
 	Key('6');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked button 7 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CPasswordDlg::OnBnClickedButton7()
 {
 	Key('7');
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked button 8 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CPasswordDlg::OnBnClickedButton8()
 {
 	Key('8');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked button 9 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CPasswordDlg::OnBnClickedButton9()
 {
 	Key('9');
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked buttona action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CPasswordDlg::OnBnClickedButtona()
 {
 	Key('A');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked buttonb action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CPasswordDlg::OnBnClickedButtonb()
 {
 	Key('B');
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked buttonc action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CPasswordDlg::OnBnClickedButtonc()
 {
 	Key('C');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked buttond action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CPasswordDlg::OnBnClickedButtond()
 {
 	Key('D');
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked buttone action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CPasswordDlg::OnBnClickedButtone()
 {
 	Key('E');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked buttonf action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CPasswordDlg::OnBnClickedButtonf()
 {
 	Key('F');
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked button delete action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CPasswordDlg::OnBnClickedButtonDel()
 {
 	Key(-1);
 }
+
+/**********************************************************************************************//**
+ * Keys
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	c	An int to process.
+ **************************************************************************************************/
 
 void CPasswordDlg::Key(int c)
 {
@@ -544,31 +754,75 @@ void CPasswordDlg::Key(int c)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the en setfocus edit 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CPasswordDlg::OnEnSetfocusEdit1()
 {
 	m_ebpFocused=&m_ebHexString1;
 }
+
+/**********************************************************************************************//**
+ * Executes the en setfocus edit 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CPasswordDlg::OnEnSetfocusEdit2()
 {
 	m_ebpFocused=&m_ebHexString2;
 }
 
+/**********************************************************************************************//**
+ * Executes the en setfocus edit 3 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CPasswordDlg::OnEnSetfocusEdit3()
 {
 	m_ebpFocused=&m_ebHexString3;
 }
+
+/**********************************************************************************************//**
+ * Executes the en setfocus edit 4 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CPasswordDlg::OnEnSetfocusEdit4()
 {
 	m_ebpFocused=&m_ebHexString4;
 }
 
+/**********************************************************************************************//**
+ * Executes the en setfocus edit 5 action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CPasswordDlg::OnEnSetfocusEdit5()
 {
 	m_ebpFocused=&m_ebHexString5;
 }
 
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
 
 void CPasswordDlg::OnTimer(UINT_PTR nIDEvent)
 {
@@ -581,15 +835,13 @@ void CPasswordDlg::OnTimer(UINT_PTR nIDEvent)
 	CDialog::OnTimer(nIDEvent);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CPasswordDlg::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CPasswordDlg::OnDestroy()
 {
 	KillTimer(FOCUSTIMER);
@@ -597,6 +849,16 @@ void CPasswordDlg::OnDestroy()
 	CDialog::OnDestroy();
 }
 
+/**********************************************************************************************//**
+ * Encrypt key
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	module	The module.
+ *
+ * \return	A CString.
+ **************************************************************************************************/
 
 CString CPasswordDlg::encryptKey(eModule module)
 {
@@ -666,6 +928,18 @@ CString CPasswordDlg::encryptKey(eModule module)
 	}
 	return szEncryptedFormattedKey;
 }
+
+/**********************************************************************************************//**
+ * Encrypt demo key
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	module	The module.
+ *
+ * \return	A CString.
+ **************************************************************************************************/
+
 CString CPasswordDlg::encryptDemoKey(eModule module)
 {
 	CString szEncryptedFormattedKey=_T("");

@@ -11,9 +11,28 @@ extern HFONT g_hf7AcuNorm;
 extern HFONT g_hf7AcuBold;
 extern HFONT g_hf31AcuBold;
 
-// CParaBtn_PCurve
+/**********************************************************************************************//**
+ * CParaBtn_PCurve
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CParaBtn_PCurve, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaBtn_PCurve class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	btn		   	The button.
+ * \param	nOffset	   	The offset.
+ * \param	bScrollOver	True to scroll over.
+ **************************************************************************************************/
 
 CParaBtn_PCurve::CParaBtn_PCurve(BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
@@ -22,6 +41,13 @@ CParaBtn(btn,nOffset,bScrollOver)
 	m_pcLinear= NULL;
 	m_pcAutoflow= NULL;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_PCurve class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_PCurve::~CParaBtn_PCurve()
 {
@@ -47,7 +73,19 @@ BEGIN_MESSAGE_MAP(CParaBtn_PCurve, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-// CParaBtn-Meldungshandler
+/**********************************************************************************************//**
+ * CParaBtn-Meldungshandler
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	dwStyle   	The style.
+ * \param 		  	v		  	A fVALUE to process.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CParaBtn_PCurve::Create(CWnd* pParentWnd,DWORD dwStyle, fVALUE v) 
 {
 	SIZE sz;
@@ -81,7 +119,15 @@ BOOL CParaBtn_PCurve::Create(CWnd* pParentWnd,DWORD dwStyle, fVALUE v)
 	return 0;
 }
 
-// CParaBtn_PCurve message handlers
+/**********************************************************************************************//**
+ * CParaBtn_PCurve message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CParaBtn_PCurve::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -237,8 +283,16 @@ void CParaBtn_PCurve::Draw(int nState)
 	}
 }
 
-
-
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_PCurve::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {

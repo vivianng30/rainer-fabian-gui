@@ -16,11 +16,30 @@ extern HFONT g_hf31AcuBold;
 
 CViewParaBtn* CParaBtn_ETIME::VIEWPARAPTN=0;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaBtn_ETIME class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	parent	   	If non-null, the parent.
+ * \param 		  	btn		   	The button.
+ * \param 		  	nOffset	   	The offset.
+ * \param 		  	bScrollOver	True to scroll over.
+ **************************************************************************************************/
+
 CParaBtn_ETIME::CParaBtn_ETIME(CViewParaBtn* parent, BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 	VIEWPARAPTN=parent;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_ETIME class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_ETIME::~CParaBtn_ETIME(void)
 {
@@ -39,10 +58,15 @@ BEGIN_MESSAGE_MAP(CParaBtn_ETIME, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CParaBtn_ETIME::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -268,6 +292,16 @@ void CParaBtn_ETIME::Draw(int nState)
 	}
 }
 
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_ETIME::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {

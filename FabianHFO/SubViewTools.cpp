@@ -8,8 +8,31 @@
 #include "DlgMessageBox.h"
 #include "TlsLogfile.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 //global font objects
@@ -34,9 +57,24 @@ extern HFONT g_hf33AcuBold;
 extern HFONT g_hf43AcuBold;
 extern HFONT g_hf53AcuBold;
 
-// CSubViewTools
+/**********************************************************************************************//**
+ * CSubViewTools
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CSubViewTools, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CSubViewTools class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewTools::CSubViewTools()
 {
@@ -85,6 +123,13 @@ CSubViewTools::CSubViewTools()
 	m_bSavingTrendToUSB=getModel()->getDATAHANDLER()->IsSavingTrendToUSBactiv();
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CSubViewTools class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CSubViewTools::~CSubViewTools()
 {
 	delete m_pcRegionTopLeCorner;
@@ -124,23 +169,36 @@ BEGIN_MESSAGE_MAP(CSubViewTools, CWnd)
 	ON_BN_CLICKED(IDC_BTN_DEVICEINFO, &CSubViewTools::OnBnClickedDevInfoToUSB)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CSubViewTools message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
 
-
-// CSubViewTools message handlers
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 CMVModel *CSubViewTools::getModel()
 {
 	if(m_pModel==NULL)
 		m_pModel=CMVModel::GetInstance();
 	return m_pModel;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates a window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewTools::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext)
 {
 	if (!Create(pParentWnd, rc, nID, pContext))
@@ -153,9 +211,20 @@ bool CSubViewTools::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSubViewTools::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -185,9 +254,13 @@ BOOL CSubViewTools::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateCon
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewTools::Initialize()
 {
 	CClientDC dc(this);
@@ -308,9 +381,15 @@ void CSubViewTools::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CSubViewTools::Show(bool bShow)
 {
 	if(bShow)
@@ -332,15 +411,13 @@ void CSubViewTools::Show(bool bShow)
 	}
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CSubViewTools::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewTools::OnDestroy()
 {
 	m_bExit=true;
@@ -381,9 +458,13 @@ void CSubViewTools::OnDestroy()
 		DeleteDC(m_hDC);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewTools::Draw()
 {
 	RECT rcCl;
@@ -616,9 +697,16 @@ void CSubViewTools::Draw()
 	DeleteDC(hdcMem);
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CSubViewTools::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==USBCHECKTIMER)
@@ -646,6 +734,12 @@ void CSubViewTools::OnTimer(UINT_PTR nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked log to USB action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewTools::OnBnClickedLogToUSB()
 {
@@ -822,6 +916,14 @@ void CSubViewTools::OnBnClickedLogToUSB()
 			GetParent()->PostMessage(WM_SET_SETUPTIMER);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked trend to USB action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewTools::OnBnClickedTrendToUSB()
 {
 	if(GetParent())
@@ -868,6 +970,13 @@ void CSubViewTools::OnBnClickedTrendToUSB()
 	}
 	
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked development information to USB action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewTools::OnBnClickedDevInfoToUSB()
 {
@@ -1305,9 +1414,13 @@ void CSubViewTools::OnBnClickedDevInfoToUSB()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Starts wait trend USB thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewTools::StartWaitTrendUSBThread( void )
 {
 	m_bDoWaitTrendUSBThread=true;
@@ -1330,16 +1443,13 @@ void CSubViewTools::StartWaitTrendUSBThread( void )
 	m_pcwtWaitTrendUSBThread->ResumeThread();
 }
 
-//************************************
-// Method:    StopWaitTrendUSBThread
-// FullName:  CSubViewTools::StopWaitTrendUSBThread
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Stops wait trend USB thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewTools::StopWaitTrendUSBThread( void )
 {
 	if(m_bDoWaitTrendUSBThread && m_pcwtWaitTrendUSBThread!=NULL)
@@ -1358,16 +1468,18 @@ void CSubViewTools::StopWaitTrendUSBThread( void )
 	}
 	
 }
-//************************************
-// Method:    CWaitTrendUSBThread
-// FullName:  CWaitTrendUSBThread
-// Access:    public static 
-// Returns:   UINT
-// Qualifier:
-// Parameter: LPVOID pc
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * Wait trend USB thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CWaitTrendUSBThread( LPVOID pc )
 {
 	try
@@ -1396,16 +1508,16 @@ static UINT CWaitTrendUSBThread( LPVOID pc )
 	//((CSubViewTools*)pc)->WaitTrendUSB();
 	return TRUE;
 }
-//************************************
-// Method:    WaitTrendUSB
-// FullName:  CSubViewTools::WaitTrendUSB
-// Access:    protected 
-// Returns:   DWORD
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * Wait trend USB
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CSubViewTools::WaitTrendUSB(void) 
 {
 	do
@@ -1444,9 +1556,15 @@ DWORD CSubViewTools::WaitTrendUSB(void)
 	return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates window hourglass
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewTools::CreateWndHourglass()
 {
 	if(m_pWndHourglass==NULL)
@@ -1462,6 +1580,16 @@ bool CSubViewTools::CreateWndHourglass()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window hourglass
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewTools::DestroyWndHourglass()
 {
 	if(m_pWndHourglass)
@@ -1473,6 +1601,15 @@ bool CSubViewTools::DestroyWndHourglass()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window hourglass
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
 
 void CSubViewTools::ShowWndHourglass(bool bShow)
 {

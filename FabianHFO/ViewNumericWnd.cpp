@@ -344,6 +344,13 @@ void CViewNumericWnd::ShowWndNumHFO()
 	LeaveCriticalSection(&csNumWnd);
 }
 
+/**********************************************************************************************//**
+ * Shows the window number flowoffconv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewNumericWnd::ShowWndNumFLOWOFFCONV()
 {
 	if(getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCONV()>1)
@@ -381,6 +388,14 @@ void CViewNumericWnd::ShowWndNumFLOWOFFCONV()
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
+
+/**********************************************************************************************//**
+ * Shows the window number flowoffcpap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewNumericWnd::ShowWndNumFLOWOFFCPAP()
 {
 	if(getModel()->getDATAHANDLER()->getCountNumericFLOWOFFCPAP()>1)
@@ -418,6 +433,14 @@ void CViewNumericWnd::ShowWndNumFLOWOFFCPAP()
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
+
+/**********************************************************************************************//**
+ * Shows the window number flowoffhfo
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewNumericWnd::ShowWndNumFLOWOFFHFO()
 {
 	if(getModel()->getDATAHANDLER()->getCountNumericFLOWOFFHFO()>1)
@@ -641,9 +664,14 @@ void CViewNumericWnd::ShowWndNumSIMVPSV()
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Shows the window number psv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewNumericWnd::ShowWndNumPSV()
 {
 	if(getModel()->getDATAHANDLER()->getCountNumericPSV()>1)
@@ -681,9 +709,14 @@ void CViewNumericWnd::ShowWndNumPSV()
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Shows the window number cpap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewNumericWnd::ShowWndNumCPAP()
 {
 	if(getModel()->getDATAHANDLER()->getCountNumericCPAP()>1)
@@ -721,9 +754,14 @@ void CViewNumericWnd::ShowWndNumCPAP()
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Shows the window number duopap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewNumericWnd::ShowWndNumDUOPAP()
 {
 	if(getModel()->getDATAHANDLER()->getCountNumericDUOPAP()>1)
@@ -761,9 +799,14 @@ void CViewNumericWnd::ShowWndNumDUOPAP()
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Shows the window number ncpap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewNumericWnd::ShowWndNumNCPAP()
 {
 	if(getModel()->getDATAHANDLER()->getCountNumericNCPAP()>1)
@@ -801,9 +844,14 @@ void CViewNumericWnd::ShowWndNumNCPAP()
 	}
 	LeaveCriticalSection(&csNumWnd);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Shows the window number therapy
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewNumericWnd::ShowWndNumTHERAPY()
 {
 	if(getModel()->getDATAHANDLER()->getCountNumericTHERAPY()>1)
@@ -842,19 +890,28 @@ void CViewNumericWnd::ShowWndNumTHERAPY()
 	LeaveCriticalSection(&csNumWnd);
 }
 
+/**********************************************************************************************//**
+ * Hides the number window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewNumericWnd::HideNumWnd()
 {
 	deleteWndNumConfig();
 }
 
+/**********************************************************************************************//**
+ * Shows the number window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	eBlock			  	The block.
+ * \param	bChangeCurNumBlock	True to change current number block.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewNumericWnd::ShowNumWnd(eNumBlock eBlock,bool bChangeCurNumBlock)
 {
 	DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::ShowNumWnd() start\r\n")));
@@ -942,11 +999,15 @@ void CViewNumericWnd::ShowNumWnd(eNumBlock eBlock,bool bChangeCurNumBlock)
 	DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::ShowNumWnd() end\r\n")));
 }
 
+/**********************************************************************************************//**
+ * Sets numeric block
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bChangeCurNumBlock	True to change current number block.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 {
 	//DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::SetNumericBlock() start\r\n")));
@@ -1019,6 +1080,15 @@ void CViewNumericWnd::SetNumericBlock(bool bChangeCurNumBlock)
 	//DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::SetNumericBlock() end\r\n")));
 }
 
+/**********************************************************************************************//**
+ * Sets numeric block ippv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	An eNumBlock.
+ **************************************************************************************************/
+
 eNumBlock CViewNumericWnd::SetNumericBlock_IPPV()
 {
 	eNumBlock eBlock=NUMB_IPPV;
@@ -1050,6 +1120,16 @@ eNumBlock CViewNumericWnd::SetNumericBlock_IPPV()
 
 	return eBlock;
 }
+
+/**********************************************************************************************//**
+ * Sets numeric block simv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	An eNumBlock.
+ **************************************************************************************************/
+
 eNumBlock CViewNumericWnd::SetNumericBlock_SIMV()
 {
 	eNumBlock eBlock=NUMB_SIMV;
@@ -1081,6 +1161,16 @@ eNumBlock CViewNumericWnd::SetNumericBlock_SIMV()
 
 	return eBlock;
 }
+
+/**********************************************************************************************//**
+ * Sets numeric block simvpsv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	An eNumBlock.
+ **************************************************************************************************/
+
 eNumBlock CViewNumericWnd::SetNumericBlock_SIMVPSV()
 {
 	eNumBlock eBlock=NUMB_SIMVPSV;
@@ -1112,6 +1202,16 @@ eNumBlock CViewNumericWnd::SetNumericBlock_SIMVPSV()
 
 	return eBlock;
 }
+
+/**********************************************************************************************//**
+ * Sets numeric block sippv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	An eNumBlock.
+ **************************************************************************************************/
+
 eNumBlock CViewNumericWnd::SetNumericBlock_SIPPV()
 {
 	eNumBlock eBlock=NUMB_SIPPV;
@@ -1143,6 +1243,16 @@ eNumBlock CViewNumericWnd::SetNumericBlock_SIPPV()
 
 	return eBlock;
 }
+
+/**********************************************************************************************//**
+ * Sets numeric block psv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	An eNumBlock.
+ **************************************************************************************************/
+
 eNumBlock CViewNumericWnd::SetNumericBlock_PSV()
 {
 	eNumBlock eBlock=NUMB_PSV;
@@ -1174,6 +1284,16 @@ eNumBlock CViewNumericWnd::SetNumericBlock_PSV()
 
 	return eBlock;
 }
+
+/**********************************************************************************************//**
+ * Sets numeric block cpap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	An eNumBlock.
+ **************************************************************************************************/
+
 eNumBlock CViewNumericWnd::SetNumericBlock_CPAP()
 {
 	eNumBlock eBlock=NUMB_CPAP;
@@ -1205,6 +1325,16 @@ eNumBlock CViewNumericWnd::SetNumericBlock_CPAP()
 
 	return eBlock;
 }
+
+/**********************************************************************************************//**
+ * Sets numeric block hfo
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	An eNumBlock.
+ **************************************************************************************************/
+
 eNumBlock CViewNumericWnd::SetNumericBlock_HFO()
 {
 	eNumBlock eBlock=NUMB_HFO;
@@ -1236,6 +1366,16 @@ eNumBlock CViewNumericWnd::SetNumericBlock_HFO()
 
 	return eBlock;
 }
+
+/**********************************************************************************************//**
+ * Sets numeric block ncpap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	An eNumBlock.
+ **************************************************************************************************/
+
 eNumBlock CViewNumericWnd::SetNumericBlock_NCPAP()
 {
 	eNumBlock eBlock=NUMB_NCPAP;
@@ -1252,6 +1392,16 @@ eNumBlock CViewNumericWnd::SetNumericBlock_NCPAP()
 
 	return eBlock;
 }
+
+/**********************************************************************************************//**
+ * Sets numeric block duopap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	An eNumBlock.
+ **************************************************************************************************/
+
 eNumBlock CViewNumericWnd::SetNumericBlock_DUOPAP()
 {
 	eNumBlock eBlock=NUMB_DUOPAP;
@@ -1268,6 +1418,16 @@ eNumBlock CViewNumericWnd::SetNumericBlock_DUOPAP()
 
 	return eBlock;
 }
+
+/**********************************************************************************************//**
+ * Sets numeric block therapie
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	An eNumBlock.
+ **************************************************************************************************/
+
 eNumBlock CViewNumericWnd::SetNumericBlock_THERAPIE()
 {
 	eNumBlock eBlock=NUMB_THERAPY;
@@ -1285,9 +1445,15 @@ eNumBlock CViewNumericWnd::SetNumericBlock_THERAPIE()
 	return eBlock;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Notifies an event
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
+
 void CViewNumericWnd::NotifyEvent(CMVEvent* pEvent)
 {
 	if(m_bExit)
@@ -1349,16 +1515,15 @@ void CViewNumericWnd::NotifyEvent(CMVEvent* pEvent)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//void CViewNumericWnd::ShowNextNumericWnd()
-//{
-//
-//}
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw graph cursor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iDiagrmm	Zero-based index of the diagrmm.
+ **************************************************************************************************/
+
 void CViewNumericWnd::DrawGraphCursor(int iDiagrmm)
 {
 	bool bMoveXscale=false;
@@ -1403,9 +1568,13 @@ void CViewNumericWnd::DrawGraphCursor(int iDiagrmm)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Deletes the graph cursor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewNumericWnd::DeleteGraphCursor()
 {
 	try
@@ -1423,10 +1592,15 @@ void CViewNumericWnd::DeleteGraphCursor()
 	}
 }
 
+/**********************************************************************************************//**
+ * Notifies a para button event
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewNumericWnd::NotifyParaBtnEvent(CMVEvent* pEvent)
 {
 	if(m_bExit)
@@ -1573,9 +1747,13 @@ void CViewNumericWnd::NotifyParaBtnEvent(CMVEvent* pEvent)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Notifies the view state changed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewNumericWnd::NotifyViewStateChanged()
 {
 	if(m_bExit)
@@ -1627,6 +1805,13 @@ void CViewNumericWnd::NotifyViewStateChanged()
 	}
 }
 
+/**********************************************************************************************//**
+ * Notifies the vent mode changed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewNumericWnd::NotifyVentModeChanged()
 {
 	DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::NotifyVentModeChanged()\r\n")));
@@ -1657,9 +1842,13 @@ void CViewNumericWnd::NotifyVentModeChanged()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Calculates the alarm limit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewNumericWnd::CalculateAlarmLimit()
 {
 	if(m_bExit)
@@ -1668,9 +1857,13 @@ void CViewNumericWnd::CalculateAlarmLimit()
 	redrawNumerics(true,true,true,true,false);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Notifies the calculate alarm limit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewNumericWnd::NotifyCalculateAlarmLimit()
 {
 	if(m_bExit)
@@ -1679,9 +1872,13 @@ void CViewNumericWnd::NotifyCalculateAlarmLimit()
 	PostMessage(WM_CALCULATE_ALARMLIMIT);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Redraw alarm limits
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewNumericWnd::RedrawAlarmLimits()
 {
 	if(m_bExit)
@@ -1690,9 +1887,13 @@ void CViewNumericWnd::RedrawAlarmLimits()
 	redrawNumerics(true,true,true,true,false);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Notifies the alarm limit changed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewNumericWnd::NotifyAlarmLimitChanged()
 {
 	if(m_bExit)
@@ -1701,9 +1902,13 @@ void CViewNumericWnd::NotifyAlarmLimitChanged()
 	PostMessage(WM_ALIMIT_CHANGED);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Notifies the data changed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewNumericWnd::NotifyDataChanged()
 {
 	if(m_bExit)
@@ -1712,9 +1917,13 @@ void CViewNumericWnd::NotifyDataChanged()
 	PostMessage(WM_DATA_CHANGED);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Notifies the exspiration data changed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewNumericWnd::NotifyExspirationDataChanged()
 {
 	if(m_bExit)
@@ -1723,11 +1932,19 @@ void CViewNumericWnd::NotifyExspirationDataChanged()
 	PostMessage(WM_EXSPIRATION);
 }
 
-// **************************************************************************
-//
-// 
-//
-// **************************************************************************
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CViewNumericWnd::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -1802,6 +2019,19 @@ LRESULT CViewNumericWnd::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
+/**********************************************************************************************//**
+ * Redraw numerics
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ **************************************************************************************************/
+
 void CViewNumericWnd::redrawNumerics(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csNumWnd);
@@ -1829,16 +2059,13 @@ void CViewNumericWnd::redrawNumerics(bool bData, bool bFrames, bool bText, bool 
 	LeaveCriticalSection(&csNumWnd);
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CViewNumericWnd::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CViewNumericWnd::OnDestroy()
 {
 	m_bExit=true;
@@ -1850,6 +2077,12 @@ void CViewNumericWnd::OnDestroy()
 	CMVView::OnDestroy();
 }
 
+/**********************************************************************************************//**
+ * Button menu numeric
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CViewNumericWnd::BnMenuNUMERIC()
 {
@@ -1867,6 +2100,15 @@ void CViewNumericWnd::BnMenuNUMERIC()
 
 	AfxGetApp()->GetMainWnd()->SetFocus();
 }
+
+/**********************************************************************************************//**
+ * Sets next numeric block
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CViewNumericWnd::SetNextNumericBlock()
 {

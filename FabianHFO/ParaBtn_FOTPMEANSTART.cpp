@@ -11,13 +11,29 @@ extern HFONT g_hf14AcuBold;
 extern HFONT g_hf31AcuBold;
 extern HFONT g_hf7AcuBold;
 
-// CParaBtn_FOTPMEANSTART
+/**********************************************************************************************//**
+ * CParaBtn_FOTPMEANSTART
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	btn		   	The button.
+ * \param	nOffset	   	The offset.
+ * \param	bScrollOver	True to scroll over.
+ **************************************************************************************************/
 
 CParaBtn_FOTPMEANSTART::CParaBtn_FOTPMEANSTART(BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_FOTPMEANSTART class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_FOTPMEANSTART::~CParaBtn_FOTPMEANSTART()
 {
@@ -33,9 +49,15 @@ BEGIN_MESSAGE_MAP(CParaBtn_FOTPMEANSTART, CButton)
 	ON_WM_KILLFOCUS()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CParaBtn_FOTPMEANSTART message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
-
-// CParaBtn_FOTPMEANSTART message handlers
 void CParaBtn_FOTPMEANSTART::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -205,7 +227,16 @@ void CParaBtn_FOTPMEANSTART::Draw(int nState)
 	}
 }
 
-
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_FOTPMEANSTART::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {

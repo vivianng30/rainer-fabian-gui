@@ -6,8 +6,31 @@
 #include "SubViewSPO2.h"
 #include "DlgMessageBox.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 //global font objects
@@ -31,10 +54,24 @@ extern HFONT g_hf33AcuBold;
 extern HFONT g_hf43AcuBold;
 extern HFONT g_hf53AcuBold;
 
-
-// CSubViewSPO2
+/**********************************************************************************************//**
+ * CSubViewSPO2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CSubViewSPO2, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CSubViewSPO2 class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewSPO2::CSubViewSPO2()
 {
@@ -125,6 +162,13 @@ CSubViewSPO2::CSubViewSPO2()
 	
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CSubViewSPO2 class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CSubViewSPO2::~CSubViewSPO2()
 {
 	delete m_pcModuleEnabled;
@@ -182,23 +226,36 @@ BEGIN_MESSAGE_MAP(CSubViewSPO2, CWnd)
 	ON_MESSAGE(WM_BITMAPSLIDER_MOVING, OnMyMessage)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CSubViewSPO2 message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
 
-
-// CSubViewSPO2 message handlers
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 CMVModel *CSubViewSPO2::getModel()
 {
 	if(m_pModel==NULL)
 		m_pModel=CMVModel::GetInstance();
 	return m_pModel;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates a window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewSPO2::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext)
 {
 	if (!Create(pParentWnd, rc, nID, pContext))
@@ -210,9 +267,20 @@ bool CSubViewSPO2::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateC
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSubViewSPO2::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -559,11 +627,15 @@ BOOL CSubViewSPO2::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateCont
 		return 0;
 }
 
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewSPO2::Show(bool bShow)
 {
 	if(bShow)
@@ -591,15 +663,13 @@ void CSubViewSPO2::Show(bool bShow)
 	}
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CSubViewSPO2::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewSPO2::OnDestroy()
 {
 	KillTimer(TIMER_SENSORSTATE);
@@ -626,9 +696,13 @@ void CSubViewSPO2::OnDestroy()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewSPO2::Draw()
 {
 	RECT rcCl;
@@ -918,9 +992,16 @@ void CSubViewSPO2::Draw()
 	DeleteDC(hdcMem);
 
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CSubViewSPO2::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==TIMER_SENSORSTATE)
@@ -968,9 +1049,19 @@ void CSubViewSPO2::OnTimer(UINT_PTR nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CSubViewSPO2::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	//int iID = 0;
@@ -1020,58 +1111,76 @@ LRESULT CSubViewSPO2::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked spo2module action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewSPO2::OnBnClickedSPO2module()
 {
 	SetButtonClicked(IDC_BTN_SETUP_SPO2MODULE);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked spo2averaging action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewSPO2::OnBnClickedSPO2averaging()
 {
 	SetButtonClicked(IDC_BTN_SETUP_SPO2AVERAGING);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//void CSubViewSPO2::OnBnClickedSIQlimit()
-//{
-//	SetButtonClicked(IDC_BTN_SETUP_SPO2SIQLIMIT);
-//}
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked spo2alarmdelay action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewSPO2::OnBnClickedSPO2alarmdelay()
 {
 	SetButtonClicked(IDC_BTN_SETUP_SPO2ALARMDELAY);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked sensitivity mode action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewSPO2::OnBnClickedSensitivityMode()
 {
 	SetButtonClicked(IDC_BTN_SETUP_SENSITIVITYMODE);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked fast sat action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewSPO2::OnBnClickedFastSAT()
 {
 	if(getModel()->getSPO2()!=NULL)
 		getModel()->getSPO2()->set_FastSATon(m_bFastSATon);
 }
 
+/**********************************************************************************************//**
+ * Sets button clicked
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewSPO2::SetButtonClicked(int btnID)
 {
 	if(m_iCurPara==btnID)
@@ -1091,9 +1200,15 @@ void CSubViewSPO2::SetButtonClicked(int btnID)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets one button depressed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CSubViewSPO2::SetOneButtonDepressed(int btnID)
 {
 	POSITION pos;
@@ -1131,9 +1246,15 @@ void CSubViewSPO2::SetOneButtonDepressed(int btnID)
 		GetParent()->PostMessage(WM_SET_SETUPTIMER);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets one button focused
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CSubViewSPO2::SetOneButtonFocused(int btnID)
 {
 	POSITION pos;
@@ -1173,9 +1294,14 @@ void CSubViewSPO2::SetOneButtonFocused(int btnID)
 			GetParent()->PostMessage(WM_SET_SETUPTIMER);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Opens settings view
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewSPO2::OpenSettingsView()
 {
 	if(GetParent())
@@ -1185,9 +1311,13 @@ void CSubViewSPO2::OpenSettingsView()
 		GetParent()->PostMessage(WM_OPEN_SETTING,m_iCurPara);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets next button focused
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewSPO2::SetNextButtonFocused()
 {
 	POSITION pos;
@@ -1232,9 +1362,13 @@ void CSubViewSPO2::SetNextButtonFocused()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets previous button focused
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewSPO2::SetPrevButtonFocused()
 {
 	POSITION pos;
@@ -1281,9 +1415,15 @@ void CSubViewSPO2::SetPrevButtonFocused()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets current button state
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The current button state.
+ **************************************************************************************************/
+
 eBtnState CSubViewSPO2::GetCurrentBtnState()
 {
 	POSITION pos;
@@ -1304,9 +1444,17 @@ eBtnState CSubViewSPO2::GetCurrentBtnState()
 	return BS_NONE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSubViewSPO2::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -1433,6 +1581,19 @@ BOOL CSubViewSPO2::PreTranslateMessage(MSG* pMsg)
 	}
 	return CWnd::PreTranslateMessage(pMsg);
 }
+
+/**********************************************************************************************//**
+ * Executes my message action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	wParam	The wParam field of the message.
+ * \param	lParam	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CSubViewSPO2::OnMyMessage(WPARAM wParam, LPARAM lParam)
 {
 	switch(wParam)

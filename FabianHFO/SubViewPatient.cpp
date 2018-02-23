@@ -7,8 +7,31 @@
 #include "DlgMessageBox.h"
 #include "MVViewHandler.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 //global font objects
@@ -32,10 +55,24 @@ extern HFONT g_hf33AcuBold;
 extern HFONT g_hf43AcuBold;
 extern HFONT g_hf53AcuBold;
 
-
-// CSubViewPatient
+/**********************************************************************************************//**
+ * CSubViewPatient
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CSubViewPatient, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CSubViewPatient class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewPatient::CSubViewPatient()
 {
@@ -84,6 +121,13 @@ CSubViewPatient::CSubViewPatient()
 
 	m_dwLastSetupTimer=0;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CSubViewPatient class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewPatient::~CSubViewPatient()
 {
@@ -151,13 +195,15 @@ BEGIN_MESSAGE_MAP(CSubViewPatient, CWnd)
 	ON_EN_SETFOCUS(IDC_EDIT_SETUP_REMARK, &CSubViewPatient::OnSetFocusEditRemark)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CSubViewPatient message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
 
-
-// CSubViewPatient message handlers
-
-// **************************************************************************
-// 
-// **************************************************************************
 CMVModel *CSubViewPatient::getModel()
 {
 	if(m_pModel==NULL)
@@ -165,9 +211,20 @@ CMVModel *CSubViewPatient::getModel()
 	return m_pModel;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates a window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewPatient::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext)
 {
 	if (!Create(pParentWnd, rc, nID, pContext))
@@ -180,9 +237,20 @@ bool CSubViewPatient::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCrea
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSubViewPatient::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -225,6 +293,13 @@ BOOL CSubViewPatient::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateC
 	else
 		return 0;
 }
+
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewPatient::Initialize()
 {
@@ -415,6 +490,13 @@ void CSubViewPatient::Initialize()
 
 }
 
+/**********************************************************************************************//**
+ * Executes the set focus edit remark action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewPatient::OnSetFocusEditRemark()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()!=VS_PATDATA)
@@ -425,6 +507,14 @@ void CSubViewPatient::OnSetFocusEditRemark()
 	if(m_pcWndKeyboard)
 		m_pcWndKeyboard->SetEditWnd(m_pEditRemark,KR_NONE,IDC_EDIT_SETUP_REMARK);
 }
+
+/**********************************************************************************************//**
+ * Executes the set focus edit name action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewPatient::OnSetFocusEditName()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()!=VS_PATDATA)
@@ -436,6 +526,14 @@ void CSubViewPatient::OnSetFocusEditName()
 		m_pcWndKeyboard->SetEditWnd(m_pEditName,KR_NONE,IDC_EDIT_SETUP_NAME);
 	//m_pEdit=m_pEditName;
 }
+
+/**********************************************************************************************//**
+ * Executes the set focus edit firts name action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewPatient::OnSetFocusEditFirtsName()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()!=VS_PATDATA)
@@ -447,6 +545,14 @@ void CSubViewPatient::OnSetFocusEditFirtsName()
 		m_pcWndKeyboard->SetEditWnd(m_pEditFirstname,KR_NONE,IDC_EDIT_SETUP_FIRSTNAME);
 	//m_pEdit=m_pEditFirstname;
 }
+
+/**********************************************************************************************//**
+ * Executes the set focus edit pers identifier action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewPatient::OnSetFocusEditPersID()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()!=VS_PATDATA)
@@ -459,6 +565,14 @@ void CSubViewPatient::OnSetFocusEditPersID()
 
 	//m_pEdit=m_pEditPersID;
 }
+
+/**********************************************************************************************//**
+ * Executes the set focus edit birth day action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewPatient::OnSetFocusEditBirthDay()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()!=VS_PATDATA)
@@ -471,6 +585,14 @@ void CSubViewPatient::OnSetFocusEditBirthDay()
 	if(m_pcWndKeyboard)
 		m_pcWndKeyboard->SetEditWnd(m_pEditBirthDay,KR_DAYS,IDC_EDIT_SETUP_BIRTHDAY);
 }
+
+/**********************************************************************************************//**
+ * Executes the set focus edit birth month action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewPatient::OnSetFocusEditBirthMonth()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()!=VS_PATDATA)
@@ -481,6 +603,14 @@ void CSubViewPatient::OnSetFocusEditBirthMonth()
 	if(m_pcWndKeyboard)
 		m_pcWndKeyboard->SetEditWnd(m_pEditBirthMonth,KR_MONTH,IDC_EDIT_SETUP_BIRTHMONTH);
 }
+
+/**********************************************************************************************//**
+ * Executes the set focus edit birth year action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewPatient::OnSetFocusEditBirthYear()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()!=VS_PATDATA)
@@ -491,6 +621,14 @@ void CSubViewPatient::OnSetFocusEditBirthYear()
 	if(m_pcWndKeyboard)
 		m_pcWndKeyboard->SetEditWnd(m_pEditBirthYear,KR_YEAR,IDC_EDIT_SETUP_BIRTHYEAR);
 }
+
+/**********************************************************************************************//**
+ * Executes the set focus edit weight action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewPatient::OnSetFocusEditWeight()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()!=VS_PATDATA)
@@ -504,7 +642,14 @@ void CSubViewPatient::OnSetFocusEditWeight()
 
 }
 
-
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
 
 void CSubViewPatient::Show(bool bShow)
 {
@@ -532,6 +677,19 @@ void CSubViewPatient::Show(bool bShow)
 
 	
 }
+
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
 LRESULT CSubViewPatient::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
@@ -1095,6 +1253,15 @@ LRESULT CSubViewPatient::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
+/**********************************************************************************************//**
+ * Executes the set focus action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pOldWnd	If non-null, the old window.
+ **************************************************************************************************/
+
 void CSubViewPatient::OnSetFocus(CWnd* pOldWnd)
 {
 	CWnd::OnSetFocus(pOldWnd);
@@ -1115,24 +1282,13 @@ void CSubViewPatient::OnSetFocus(CWnd* pOldWnd)
 	
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-//void CSubViewPatient::OnPaint()
-//{
-//	CPaintDC dc(this); // device context for painting
-//	// TODO: Fügen Sie hier Ihren Meldungsbehandlungscode ein.
-//	// CWnd::OnPaint() soll zum Zeichnen von Meldungen nicht aufgerufen werden.
-//	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
-//}
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CSubViewPatient::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CSubViewPatient::OnDestroy()
 {
 	if(m_pDlg)
@@ -1156,7 +1312,12 @@ void CSubViewPatient::OnDestroy()
 		DeleteDC(m_hDC);
 }
 
-
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewPatient::Draw()
 {
@@ -1475,9 +1636,15 @@ void CSubViewPatient::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates window keyboard
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewPatient::CreateWndKeyboard()
 {
 	if(m_pcWndKeyboard==NULL)
@@ -1500,6 +1667,16 @@ bool CSubViewPatient::CreateWndKeyboard()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window keyboard
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewPatient::DestroyWndKeyboard()
 {
 	if(m_pcWndKeyboard)
@@ -1510,6 +1687,16 @@ bool CSubViewPatient::DestroyWndKeyboard()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window keyboard
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CSubViewPatient::ShowWndKeyboard(bool show)
 {
 	if(m_pcWndKeyboard)
@@ -1518,6 +1705,12 @@ void CSubViewPatient::ShowWndKeyboard(bool show)
 
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked today action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewPatient::OnBnClickedToday()
 {
@@ -1542,6 +1735,13 @@ void CSubViewPatient::OnBnClickedToday()
 	PatientDataChanged();
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked reset action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewPatient::OnBnClickedReset()
 {
 	getModel()->getCONFIG()->SetPatientData(_T(""), _T(""), 0, 0, _T(""), _T(""));
@@ -1562,6 +1762,13 @@ void CSubViewPatient::OnBnClickedReset()
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_NUMERIC);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked apply action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewPatient::OnBnClickedApply()
 {
@@ -1816,6 +2023,13 @@ void CSubViewPatient::OnBnClickedApply()
 	
 }
 
+/**********************************************************************************************//**
+ * Patient data changed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewPatient::PatientDataChanged()
 {
 	if(m_bPatientDataChanged==true)
@@ -1837,6 +2051,13 @@ void CSubViewPatient::PatientDataChanged()
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked change action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSubViewPatient::OnBnClickedChange()
 {

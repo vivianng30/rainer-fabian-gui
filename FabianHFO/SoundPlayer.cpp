@@ -5,38 +5,54 @@
 #include "FabianHFO.h"
 #include "SoundPlayer.h"
 #include "MVModel.h"
-//#include "Library/TlsRegistry.h"
 
-//#include <mmsystem.h>
+/**********************************************************************************************//**
+ * A macro that defines mask sigbit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 #define MASK_SIGBIT	0x10
 
 CSoundPlayer* CSoundPlayer::theSoundPlayer=0;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CSoundPlayer class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CSoundPlayer::CSoundPlayer(void)
 {
-	
-
-	//m_eAlarmVolume=getModel()->getCONFIG()->GetAlarmVolume();
-	//m_eAlarmVolume=ALARMMEDIUM;
 	m_byVolume=ALARMMEDIUM;
 	m_byAlarm=0;
 	m_bySignal=0;
 
 	m_pModel = NULL;
-
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CSoundPlayer class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSoundPlayer::~CSoundPlayer(void)
 {
-	
-
-	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CSoundPlayer::getModel()
 {
 	if(m_pModel==NULL)
@@ -44,9 +60,15 @@ CMVModel *CSoundPlayer::getModel()
 	return m_pModel;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
+
 CSoundPlayer* CSoundPlayer::GetInstance()
 {
 	if(theSoundPlayer == 0)
@@ -56,9 +78,13 @@ CSoundPlayer* CSoundPlayer::GetInstance()
 	return theSoundPlayer;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSoundPlayer::DestroyInstance()
 {
 
@@ -69,7 +95,12 @@ void CSoundPlayer::DestroyInstance()
 	}
 }
 
-
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CSoundPlayer::Init()
 {
@@ -82,6 +113,15 @@ void CSoundPlayer::Init()
 	m_byVolume=(BYTE)getModel()->getCONFIG()->GetAlarmVolume();
 }
 
+/**********************************************************************************************//**
+ * Sets system sound
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	sound	The sound.
+ * \param	loop 	True to loop.
+ **************************************************************************************************/
 
 void CSoundPlayer::SetSystemSound(eSystemSound sound, bool loop)
 {
@@ -112,6 +152,15 @@ void CSoundPlayer::SetSystemSound(eSystemSound sound, bool loop)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarm volume
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
 
 void CSoundPlayer::SetAlarmVolume(eAlarmLoudness state)
 {
@@ -156,17 +205,29 @@ void CSoundPlayer::SetAlarmVolume(eAlarmLoudness state)
 	getModel()->getCONFIG()->SetAlarmVolume(state);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets alarm volume
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The alarm volume.
+ **************************************************************************************************/
+
 eAlarmLoudness CSoundPlayer::GetAlarmVolume()
 {
 	return (eAlarmLoudness)m_byVolume;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets pif sound
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	sound	The sound.
+ **************************************************************************************************/
+
 void CSoundPlayer::SetPIFSound(ePIFSound sound)
 {
 	BYTE data[1];

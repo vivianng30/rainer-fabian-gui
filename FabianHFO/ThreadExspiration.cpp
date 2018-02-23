@@ -11,6 +11,13 @@ extern CEvent g_eventExspiration;
 // CThreadExspiration
 CThreadExspiration* CThreadExspiration::theThreadExspiration=0;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CThreadExspiration class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CThreadExspiration::CThreadExspiration()
 {
 	m_pModel = NULL;
@@ -22,15 +29,13 @@ CThreadExspiration::CThreadExspiration()
 
 }
 
-//************************************
-// Method:    ~CThreadExspiration
-// FullName:  CThreadExspiration::~CThreadExspiration
-// Access:    protected 
-// Returns:   
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Finalizes an instance of the CThreadExspiration class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CThreadExspiration::~CThreadExspiration()
 {
 	stopExspirationThread();
@@ -46,14 +51,16 @@ CThreadExspiration::~CThreadExspiration()
 		}
 	}
 }
-//=============================================================================
-/**
- * @brief Get the instance of CThreadExspiration thread (singleton).
+
+/**********************************************************************************************//**
+ * Gets the instance
  *
- * @return the instance of CThreadExspiration thread
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  *
- **/
-//=============================================================================
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
+
 CThreadExspiration* CThreadExspiration::getInstance()
 {
 	if(theThreadExspiration == 0)
@@ -63,11 +70,13 @@ CThreadExspiration* CThreadExspiration::getInstance()
 	return theThreadExspiration;
 }
 
-//=============================================================================
-/**
- * @brief Destroys the instance of Flowsensor thread (singleton).
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadExspiration::destroyInstance()
 {
 	if(theThreadExspiration != NULL)
@@ -76,14 +85,16 @@ void CThreadExspiration::destroyInstance()
 		theThreadExspiration = NULL;
 	}
 }
-//=============================================================================
-/**
- * @brief Get the instance of the model (singleton).
+
+/**********************************************************************************************//**
+ * Gets the model
  *
- * @return the instance of the model
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  *
- **/
-//=============================================================================
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CThreadExspiration::getModel()
 {
 	if(m_pModel==NULL)
@@ -91,11 +102,13 @@ CMVModel *CThreadExspiration::getModel()
 	return m_pModel;
 }
 
+/**********************************************************************************************//**
+ * Starts exspiration thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// CThreadMonitor message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CThreadExspiration::startExspirationThread( void )
 {
 	m_bDoExspirationThread=true;
@@ -119,16 +132,13 @@ void CThreadExspiration::startExspirationThread( void )
 	m_pcwtExspirationThread->ResumeThread();
 }
 
-//************************************
-// Method:    stopExspirationThread
-// FullName:  CThreadExspiration::stopExspirationThread
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Stops exspiration thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadExspiration::stopExspirationThread( void )
 {
 	if(m_bDoExspirationThread)
@@ -147,9 +157,17 @@ void CThreadExspiration::stopExspirationThread( void )
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Exspiration thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT ExspirationThread( LPVOID pc )
 {
 	try
@@ -178,14 +196,16 @@ static UINT ExspirationThread( LPVOID pc )
 	//((CThreadExspiration*)pc)->Exspirationstart();
 	return TRUE;
 }
-//************************************
-// Method:    Exspirationstart
-// FullName:  CThreadExspiration::Exspirationstart
-// Access:    private 
-// Returns:   DWORD
-// Qualifier:
-// Parameter: void
-//************************************
+
+/**********************************************************************************************//**
+ * Gets the exspirationstart
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CThreadExspiration::Exspirationstart(void) 
 {
 	CeSetThreadPriority(m_pcwtExspirationThread->m_hThread,130);

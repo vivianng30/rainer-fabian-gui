@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldINFOPATAL.h"
 
-
-// CNumericFieldINFOPATAL
+/**********************************************************************************************//**
+ * CNumericFieldINFOPATAL
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldINFOPATAL, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldINFOPATAL class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldINFOPATAL::CNumericFieldINFOPATAL(eNumericSize size):
 CNumericField(size)
@@ -24,6 +40,13 @@ CNumericField(size)
 	//m_pcNumInfoBot		= new CBmp(theApp.m_hInstance,m_hDC,	IDB_NUM_INFO_BOT);
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldINFOPATAL class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CNumericFieldINFOPATAL::~CNumericFieldINFOPATAL()
 {
 }
@@ -35,17 +58,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldINFOPATAL, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldINFOPATAL message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldINFOPATAL message handlers
 void CNumericFieldINFOPATAL::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldINFOPATAL::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -89,10 +128,17 @@ bool CNumericFieldINFOPATAL::drawData(bool bData, bool bFrames, bool bText, bool
 	return bReturn;
 }
 
+/**********************************************************************************************//**
+ * Draw frames
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldINFOPATAL::drawFrames(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -119,9 +165,17 @@ bool CNumericFieldINFOPATAL::drawFrames(CDC* pDC)
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldINFOPATAL::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -144,10 +198,17 @@ bool CNumericFieldINFOPATAL::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldINFOPATAL::drawLimits(CDC* pDC)
 {
 	return true;

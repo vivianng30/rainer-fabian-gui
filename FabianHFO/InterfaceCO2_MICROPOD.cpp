@@ -1,7 +1,19 @@
+/**********************************************************************************************//**
+ * \file	InterfaceCO2_MICROPOD.cpp.
+ *
+ * Implements the interface co 2 micropod class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "InterfaceCO2_MICROPOD.h"
 #include "MVModel.h"
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CInterfaceCO2_MICROPOD class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 CInterfaceCO2_MICROPOD::CInterfaceCO2_MICROPOD(void)
 {
@@ -95,32 +107,25 @@ CInterfaceCO2_MICROPOD::CInterfaceCO2_MICROPOD(void)
 	fwDataCode=0;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CInterfaceCO2_MICROPOD class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 CInterfaceCO2_MICROPOD::~CInterfaceCO2_MICROPOD(void)
 {
 	DeleteCriticalSection(&csLastCalCheck);
 }
 
-//int CInterfaceCO2_MICROPOD::ShowError (LONG lError, LPCTSTR lptszMessage)
-//{
-//	// Generate a message text
-//	TCHAR tszMessage[256];
-//	wsprintf(tszMessage,_T("#HFO:0111: %s (code %d)"), lptszMessage, lError);
-//
-//	theApp.getLog()->WriteLine(tszMessage);
-//	// Display message-box and return with an error-code
-//	//::MessageBox(0,tszMessage,_T("Listener"), MB_ICONSTOP|MB_OK);
-//	return 1;
-//}
+/**********************************************************************************************//**
+ * Turn off
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
-//************************************
-// Method:    turnOff
-// FullName:  CInterfaceCO2_MICROPOD::turnOff
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
 void CInterfaceCO2_MICROPOD::turnOff()
 {
 	stopETCO2checkThread();
@@ -129,6 +134,17 @@ void CInterfaceCO2_MICROPOD::turnOff()
 	StopListener(-1);
 	Close();
 }
+
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	com	The com.
+ *
+ * \return	An int.
+ **************************************************************************************************/
 
 int CInterfaceCO2_MICROPOD::Init(BYTE com)
 {
@@ -190,15 +206,15 @@ int CInterfaceCO2_MICROPOD::Init(BYTE com)
 	return 0;
 }
 
-//************************************
-// Method:    Deinit
-// FullName:  CInterfaceCO2_MICROPOD::Deinit
-// Access:    public 
-// Returns:   int
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Gets the deinit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CInterfaceCO2_MICROPOD::Deinit()
 {
 	m_bStartup=false;
@@ -254,12 +270,26 @@ int CInterfaceCO2_MICROPOD::Deinit()
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Startup sequenz
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::StartupSequenz()
 {
 	//DEBUGMSG(TRUE, (TEXT("CInterfaceCO2_MICROPOD::StartupSequenz\r\n")));
 	StartListener();
 	getModuleVersion();
 }
+
+/**********************************************************************************************//**
+ * Initializes the sequenz
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CInterfaceCO2_MICROPOD::InitializeSequenz()
 {
@@ -341,9 +371,13 @@ void CInterfaceCO2_MICROPOD::InitializeSequenz()
 	//getModel()->setCO2inprogress(false);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Check module state
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::CheckModuleState()
 {
 	
@@ -393,6 +427,15 @@ void CInterfaceCO2_MICROPOD::CheckModuleState()
 	//DEBUGMSG(TRUE, (TEXT("CheckLastCO2Cmd\r\n")));
 	CheckLastCO2Cmd();
 }
+
+/**********************************************************************************************//**
+ * Performs the message action
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CInterfaceCO2_MICROPOD::PerformMsg()
 {
@@ -1368,8 +1411,15 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 	return bResult;
 }
 
-
-
+/**********************************************************************************************//**
+ * Executes the event action
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	eEvent	The event.
+ * \param	eError	The error.
+ **************************************************************************************************/
 
 void CInterfaceCO2_MICROPOD::OnEvent(EEvent eEvent, EError eError)
 {
@@ -1609,9 +1659,15 @@ void CInterfaceCO2_MICROPOD::OnEvent(EEvent eEvent, EError eError)
 	return;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the interpolation wave operation
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iTempfaWaveBuf	Buffer for temp wave data.
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::doInterpolationWave(SHORT iTempfaWaveBuf)
 {
 	if(false==getModel()->getSPI()->isSPIrunning())
@@ -1631,9 +1687,6 @@ void CInterfaceCO2_MICROPOD::doInterpolationWave(SHORT iTempfaWaveBuf)
 	m_cLastCO2WaveVal=iTempfaWaveBuf;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CInterfaceCO2_MICROPOD::ValidateMessage(BYTE* pData, size_t iLen)
 //{
 //	bool bResult=false;
@@ -1718,9 +1771,16 @@ void CInterfaceCO2_MICROPOD::doInterpolationWave(SHORT iTempfaWaveBuf)
 //	return bResult;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Change co2 unit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	unitNew	The unit new.
+ * \param	unitOld	The unit old.
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::changeCO2Unit(eCO2unit unitNew,eCO2unit unitOld)
 {
 	int iAlimitETCO2max=getModel()->getALARMHANDLER()->getAlimitETCO2max();
@@ -1812,9 +1872,17 @@ void CInterfaceCO2_MICROPOD::changeCO2Unit(eCO2unit unitNew,eCO2unit unitOld)
 	getBreathMessage();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets gas compensation
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	byO2Compensation	The by o2 compensation.
+ * \param	byBalanceGas		The by balance gas.
+ * \param	iAnestAgent			Zero-based index of the anest agent.
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::set_GasCompensation(BYTE byO2Compensation, BYTE byBalanceGas, SHORT iAnestAgent)
 {
 	if(getModel()->getAcuLink()!=NULL)
@@ -1822,27 +1890,55 @@ void CInterfaceCO2_MICROPOD::set_GasCompensation(BYTE byO2Compensation, BYTE byB
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2,ALINK_NOTVALID);
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets gas compensation
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::get_GasCompensation()
 {
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets patient mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::set_PatientMode(BYTE val)
 {
 	m_cfgPATIENTMODE=val;
 	setModuleConfig(CO2_MICROPOD_MODULECONFIG_PATIENTMODE, val);
 }
+
+/**********************************************************************************************//**
+ * Gets patient mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::get_PatientMode()
 {
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets measurement mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::set_MeasurementMode(BYTE val)
 {
 	m_cfgMEASUREMODE=val;
@@ -1864,14 +1960,28 @@ void CInterfaceCO2_MICROPOD::set_MeasurementMode(BYTE val)
 	//set_restartBreathAlgorithm();
 	
 }
+
+/**********************************************************************************************//**
+ * Gets measurement mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::get_MeasurementMode()
 {
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets baro pressure
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::set_BaroPressure(SHORT val)
 {
 	/*if(getModel()->getAcuLink()!=NULL)
@@ -1879,37 +1989,62 @@ void CInterfaceCO2_MICROPOD::set_BaroPressure(SHORT val)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_BAROPRESSURE_CO2,(int)val);
 	}*/
 }
+
+/**********************************************************************************************//**
+ * Gets baro pressure
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::get_BaroPressure()
 {
 	SendCO2Command(CO2_MICROPOD_HOSTCMD_GETAMBIENTPRESSURE,0x01);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets remain time to calibration
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::getRemainTimeToCal()
 {
 	SendCO2Command(CO2_MICROPOD_HOSTCMD_GETMAXTOCAL,0x01);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the last calibration date
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::get_LastCalDate()
 {
 	SendCO2Command(CO2_MICROPOD_HOSTCMD_GETCALDATE,0x01);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets service hrs
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::getServiceHrs()
 {
 	SendCO2Command(CO2_MICROPOD_HOSTCMD_GETSERVICEHOURS,0x01);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Resets the state bytes
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::resetStateBytes()
 {
 	EnterCriticalSection(&csErrorDataCO2);
@@ -1917,12 +2052,32 @@ void CInterfaceCO2_MICROPOD::resetStateBytes()
 	m_byExtendedStateBytes=0xFF;
 	LeaveCriticalSection(&csErrorDataCO2);
 }
+
+/**********************************************************************************************//**
+ * Sets state bytes
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::setStateBytes(BYTE state)
 {
 	EnterCriticalSection(&csErrorDataCO2);
 	m_byStateBytes=state;	
 	LeaveCriticalSection(&csErrorDataCO2);
 }
+
+/**********************************************************************************************//**
+ * Gets state bytes
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The state bytes.
+ **************************************************************************************************/
+
 BYTE CInterfaceCO2_MICROPOD::getStateBytes()
 {
 	EnterCriticalSection(&csErrorDataCO2);
@@ -1930,6 +2085,16 @@ BYTE CInterfaceCO2_MICROPOD::getStateBytes()
 	LeaveCriticalSection(&csErrorDataCO2);
 	return byTemp;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is state ok
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if state ok, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2_MICROPOD::isStateOk()
 {
 	//EnterCriticalSection(&csErrorDataCO2);
@@ -1971,15 +2136,31 @@ bool CInterfaceCO2_MICROPOD::isStateOk()
 	return bRes;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets extended state bytes
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::setExtendedStateBytes(BYTE state)
 {
 	EnterCriticalSection(&csErrorDataCO2);
 	m_byExtendedStateBytes=state;
 	LeaveCriticalSection(&csErrorDataCO2);
 }
+
+/**********************************************************************************************//**
+ * Gets extended state bytes
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The extended state bytes.
+ **************************************************************************************************/
+
 BYTE CInterfaceCO2_MICROPOD::getExtendedStateBytes()
 {
 	EnterCriticalSection(&csErrorDataCO2);
@@ -1987,6 +2168,16 @@ BYTE CInterfaceCO2_MICROPOD::getExtendedStateBytes()
 	LeaveCriticalSection(&csErrorDataCO2);
 	return byTemp;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is extended state ok
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if extended state ok, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2_MICROPOD::isExtendedStateOk()
 {
 	/*EnterCriticalSection(&csErrorDataCO2);
@@ -2022,9 +2213,25 @@ bool CInterfaceCO2_MICROPOD::isExtendedStateOk()
 	return bRes;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a co2 command
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	CO2_command	The co 2 command.
+ * \param	Anzahlbytes	The anzahlbytes.
+ * \param	byte0	   	The byte 0.
+ * \param	byte1	   	The first byte.
+ * \param	byte2	   	The second byte.
+ * \param	byte3	   	The third byte.
+ * \param	byte4	   	The fourth byte.
+ * \param	byte5	   	The fifth byte.
+ * \param	byte6	   	The byte 6.
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CInterfaceCO2_MICROPOD::SendCO2Command(BYTE CO2_command, BYTE Anzahlbytes, BYTE byte0, BYTE byte1, BYTE byte2, BYTE byte3, BYTE byte4, BYTE byte5, BYTE byte6) 
 {
 	//if(getModel()->getDATAHANDLER()->IsCO2interfaceEnabled())
@@ -2097,90 +2304,205 @@ DWORD CInterfaceCO2_MICROPOD::SendCO2Command(BYTE CO2_command, BYTE Anzahlbytes,
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Sets module configuration
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	byte0	The byte 0.
+ * \param	value	The value.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceCO2_MICROPOD::setModuleConfig(BYTE byte0, WORD value)
 {
 	BYTE byte2=LOBYTE(value);
 	BYTE byte1=HIBYTE(value);
 	SendCO2Command(CO2_MICROPOD_HOSTCMD_SETMODULECONFIG,0x04,byte0, byte1, byte2);
 }
+
+/**********************************************************************************************//**
+ * Gets module configuration
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	byte0	The byte 0.
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::getModuleConfig(BYTE byte0)
 {
 	SendCO2Command(CO2_MICROPOD_HOSTCMD_GETMODULCONFIG,0x02,byte0);
 }
 
+/**********************************************************************************************//**
+ * Sets module setup
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	byte0	The byte 0.
+ * \param	byte1	The first byte.
+ * \param	byte2	The second byte.
+ * \param	byte3	The third byte.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceCO2_MICROPOD::setModuleSetup(BYTE byte0, BYTE byte1, BYTE byte2, BYTE byte3)
 {
 	SendCO2Command(CO2_MICROPOD_HOSTCMD_SETMODULESETUP,0x05,byte0, byte1, byte2, byte3);
 }
+
+/**********************************************************************************************//**
+ * Gets module setup
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CInterfaceCO2_MICROPOD::getModuleSetup()
 {
 	SendCO2Command(CO2_MICROPOD_HOSTCMD_GETMODULESETUP,0x01);
 }
 
+/**********************************************************************************************//**
+ * Gets module version
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::getModuleVersion()
 {
 	SendCO2Command(CO2_MICROPOD_HOSTCMD_GETVERSION,0x01);
 }
+
+/**********************************************************************************************//**
+ * Gets breath message
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CInterfaceCO2_MICROPOD::getBreathMessage()
 {
 	SendCO2Command(CO2_MICROPOD_HOSTCMD_GETBREATHMSG,0x01);
 }
 
+/**********************************************************************************************//**
+ * Gets extended state
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::getExtendedState()
 {
 	SendCO2Command(CO2_MICROPOD_HOSTCMD_GETEXTSTATE,0x01);
 }
 
+/**********************************************************************************************//**
+ * Gets operating mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::getOperatingMode()
 {
 	SendCO2Command(CO2_MICROPOD_HOSTCMD_GETOPMODE,0x01);
 }
+
+/**********************************************************************************************//**
+ * Sets operating mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	byte0	The byte 0.
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::setOperatingMode(BYTE byte0)
 {
 	SendCO2Command(CO2_MICROPOD_HOSTCMD_CHANGEOPMODE,0x02,byte0);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Query if this instance is pump on
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if pump on, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2_MICROPOD::isPumpOn()
 {
 	return m_bPumpStateOn;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Query if this instance is co2 value valid
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if the co2 value is valid, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2_MICROPOD::isCO2ValueValid()
 {
 	return m_bCO2ValueValid;
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is etco2 value valid
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if the etco2 value is valid, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2_MICROPOD::isETCO2ValueValid()
 {
 	return m_bETCO2ValueValid;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is frequency value valid
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if the frequency value is valid, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2_MICROPOD::isFreqValueValid()
 {
 	return m_bFreqValuevalid;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is fico2 value valid
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if the fico2 value is valid, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2_MICROPOD::isFICO2ValueValid()
 {
 	return m_bFICO2ValueValid;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets the configuration
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::set_Configuration()
 {
 	//m_iAmbientPressure=getModel()->getCONFIG()->GetCO2BaroPressure();
@@ -2234,6 +2556,14 @@ void CInterfaceCO2_MICROPOD::set_Configuration()
 	getServiceHrs();
 }
 
+/**********************************************************************************************//**
+ * Sets standby mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
 void CInterfaceCO2_MICROPOD::set_StandbyMode(bool state)
 {
@@ -2254,15 +2584,29 @@ void CInterfaceCO2_MICROPOD::set_StandbyMode(bool state)
 	if(bChanged)
 		g_eventCO2Data.SetEvent();
 }
+
+/**********************************************************************************************//**
+ * Gets standby mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceCO2_MICROPOD::get_StandbyMode()
 {
 	return m_bStandby;
 }
 
-//CString CInterfaceCO2_MICROPOD::get_ModuleVersion()
-//{
-//	return m_szVersion;
-//}
+/**********************************************************************************************//**
+ * Sets pump state on
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bGetExState	True to get ex state.
+ **************************************************************************************************/
 
 void CInterfaceCO2_MICROPOD::set_PumpStateOn(bool bGetExState)
 {
@@ -2270,6 +2614,16 @@ void CInterfaceCO2_MICROPOD::set_PumpStateOn(bool bGetExState)
 	if(bGetExState)
 		getExtendedState();
 }
+
+/**********************************************************************************************//**
+ * Sets pump state off
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bGetExState	True to get ex state.
+ **************************************************************************************************/
+
 void CInterfaceCO2_MICROPOD::set_PumpStateOff(bool bGetExState)
 {
 	DEBUGMSG(TRUE, (TEXT("set_PumpStateOff\r\n")));
@@ -2278,56 +2632,98 @@ void CInterfaceCO2_MICROPOD::set_PumpStateOff(bool bGetExState)
 		getExtendedState();
 }
 
-//void CInterfaceCO2_MICROPOD::set_apnoeSignaled()
-//{
-//	restartBreathAlgorithm();
-//}
+/**********************************************************************************************//**
+ * Sets restart breath algorithm
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CInterfaceCO2_MICROPOD::set_restartBreathAlgorithm()
 {
 	SendCO2Command(CO2_MICROPOD_HOSTCMD_RESTARTBREATHALG,0x01);
 }
 
-//void CInterfaceCO2_MICROPOD::retryConnection()
-//{
-//	DEBUGMSG(TRUE, (TEXT("CInterfaceCO2_MICROPOD::retryConnection()\r\n")));
-//	//Deinit();
-//	//Init(m_com);
-//	if(AfxGetApp())
-//		AfxGetApp()->GetMainWnd()->PostMessage(WM_RETRYCO2);
-//	//getModuleVersion();
-//}
+/**********************************************************************************************//**
+ * Query if this instance is calibration due
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if calibration due, false if not.
+ **************************************************************************************************/
 
 bool CInterfaceCO2_MICROPOD::isCalibrationDue()
 {
 	return m_bCalibrationIsDue;
 }
 
+/**********************************************************************************************//**
+ * Gets maximum operation hrs calibration
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The maximum operation hrs calibration.
+ **************************************************************************************************/
+
 int CInterfaceCO2_MICROPOD::get_MaxOpHRSCalibration()
 {
 	return m_iMaxOpHRSCalibration;
 }
+
+/**********************************************************************************************//**
+ * Gets calibration date time
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The calibration date time.
+ **************************************************************************************************/
 
 COleDateTime CInterfaceCO2_MICROPOD::get_CalibrationDateTime()
 {
 	return m_dtCalibrationDateTime;
 }
 
+/**********************************************************************************************//**
+ * Gets remain service hrs
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The remain service hrs.
+ **************************************************************************************************/
+
 int CInterfaceCO2_MICROPOD::get_RemainServiceHrs()
 {
 	return m_iRemainServiceHrs;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is service due
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if service due, false if not.
+ **************************************************************************************************/
 
 bool CInterfaceCO2_MICROPOD::isServiceDue()
 {
 	return m_bServiceIsDue;
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is system date ok
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if system date ok, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2_MICROPOD::isSystemDateOk()
 {
 	return m_bSystemDateOk;
 }
-//void CInterfaceCO2_MICROPOD::startWriteBuffer()
-//{
-//	m_bStartWriteBuffer=true;
-//}

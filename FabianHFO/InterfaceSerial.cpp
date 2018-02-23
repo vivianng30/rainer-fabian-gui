@@ -1,10 +1,14 @@
+/**********************************************************************************************//**
+ * \file	InterfaceSerial.cpp.
+ *
+ * Implements the interface serial class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "InterfaceSerial.h"
 #include "MVModel.h"
 #include "acuLink.h"
 
-//extern CEvent g_eventAcknowledge;
-//extern CEvent g_eventCOMCheckData;
 extern CEvent g_eventCOM;
 
 extern CEvent g_evBLENDER_VERSION;	//H
@@ -20,10 +24,23 @@ extern CEvent g_evCOM_M_DEMAND_FLOW;	 //b
 extern CEvent g_evBLENDER_STATUS; //l
 extern CEvent eventDoTestTimerFunctions;
 
+/**********************************************************************************************//**
+ * A macro that defines errorcnt check
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define ERRORCNT_CHECK	1
 
 CInterfaceSerial* CInterfaceSerial::theSerialInterface=0;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CInterfaceSerial class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 CInterfaceSerial::CInterfaceSerial(void)
 {
@@ -90,14 +107,27 @@ CInterfaceSerial::CInterfaceSerial(void)
 	m_szCtrlVersion=_T("0.0.0");
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CInterfaceSerial class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 CInterfaceSerial::~CInterfaceSerial(void)
 {
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
+
 CInterfaceSerial* CInterfaceSerial::GetInstance()
 {
 	if(theSerialInterface == 0)
@@ -107,9 +137,13 @@ CInterfaceSerial* CInterfaceSerial::GetInstance()
 	return theSerialInterface;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceSerial::DestroyInstance()
 {
 	if(theSerialInterface != NULL)
@@ -119,10 +153,15 @@ void CInterfaceSerial::DestroyInstance()
 	}
 }
 
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CInterfaceSerial::Init()
 {
 	InitializeCriticalSection(&csMSGSend);
@@ -269,15 +308,15 @@ bool CInterfaceSerial::Init()
 	
 }
 
-//************************************
-// Method:    Deinit
-// FullName:  CInterfaceSerial::Deinit
-// Access:    public 
-// Returns:   bool
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Deinits this instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceSerial::Deinit()
 {
 	getModel()->setSERIALavailable(FALSE);
@@ -335,9 +374,15 @@ bool CInterfaceSerial::Deinit()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Query if this instance is available
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if available, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceSerial::IsAvailable()
 {
 	if (m_comPort.m_hCommPort==INVALID_HANDLE_VALUE)
@@ -350,18 +395,27 @@ bool CInterfaceSerial::IsAvailable()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Flushes the buffer
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CInterfaceSerial::FlushBuffer()
 {
 	return m_comPort.FlushBuffer();
 }
 
+/**********************************************************************************************//**
+ * Starts serial thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceSerial::StartSerialThread( void )
 {
 	startReceiveThread();
@@ -435,16 +489,13 @@ void CInterfaceSerial::StartSerialThread( void )
 	//DEBUGMSG(TRUE, (TEXT("StartSerialThread7\r\n")));
 }
 
-//************************************
-// Method:    StopSerialThread
-// FullName:  CInterfaceSerial::StopSerialThread
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Stops serial thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceSerial::StopSerialThread( void )
 {
 	if(doSendThread())
@@ -509,15 +560,14 @@ void CInterfaceSerial::StopSerialThread( void )
 }
 
 /**********************************************************************************************//**
- * @fn	bool CInterfaceSerial::doReceiveThread()
+ * Executes the receive thread operation
  *
- * @brief	Executes the receive thread operation.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * @author	Rainer Kuehner
- * @date	19.04.2016
- *
- * @return	true if it succeeds, false if it fails.
+ * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
+
 bool CInterfaceSerial::doReceiveThread()
 {
 	bool bRes=false;
@@ -526,12 +576,28 @@ bool CInterfaceSerial::doReceiveThread()
 	LeaveCriticalSection(&csReceiveThread);
 	return bRes;
 }
+
+/**********************************************************************************************//**
+ * Starts receive thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceSerial::startReceiveThread()
 {
 	EnterCriticalSection(&csReceiveThread);
 	m_bDoReceiveThread=true;
 	LeaveCriticalSection(&csReceiveThread);
 }
+
+/**********************************************************************************************//**
+ * Stops receive thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceSerial::stopReceiveThread()
 {
 	EnterCriticalSection(&csReceiveThread);
@@ -540,15 +606,14 @@ void CInterfaceSerial::stopReceiveThread()
 }
 
 /**********************************************************************************************//**
- * @fn	bool CInterfaceSerial::doSendThread()
+ * Executes the send thread operation
  *
- * @brief	Executes the send thread operation.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * @author	Rainer Kuehner
- * @date	19.04.2016
- *
- * @return	true if it succeeds, false if it fails.
+ * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
+
 bool CInterfaceSerial::doSendThread()
 {
 	bool bRes=false;
@@ -557,12 +622,28 @@ bool CInterfaceSerial::doSendThread()
 	LeaveCriticalSection(&csSendThread);
 	return bRes;
 }
+
+/**********************************************************************************************//**
+ * Starts send thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceSerial::startSendThread()
 {
 	EnterCriticalSection(&csSendThread);
 	m_bDoSendThread=true;
 	LeaveCriticalSection(&csSendThread);
 }
+
+/**********************************************************************************************//**
+ * Stops send thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceSerial::stopSendThread()
 {
 	EnterCriticalSection(&csSendThread);
@@ -571,15 +652,14 @@ void CInterfaceSerial::stopSendThread()
 }
 
 /**********************************************************************************************//**
- * @fn	bool CInterfaceSerial::doCheckThread()
+ * Executes the check thread operation
  *
- * @brief	Executes the check thread operation.
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- * @author	Rainer Kuehner
- * @date	19.04.2016
- *
- * @return	true if it succeeds, false if it fails.
+ * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
+
 bool CInterfaceSerial::doCheckThread()
 {
 	bool bRes=false;
@@ -588,12 +668,28 @@ bool CInterfaceSerial::doCheckThread()
 	LeaveCriticalSection(&csCheckThread);
 	return bRes;
 }
+
+/**********************************************************************************************//**
+ * Starts check thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceSerial::startCheckThread()
 {
 	EnterCriticalSection(&csCheckThread);
 	m_bDoCheckThread=true;
 	LeaveCriticalSection(&csCheckThread);
 }
+
+/**********************************************************************************************//**
+ * Stops check thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceSerial::stopCheckThread()
 {
 	EnterCriticalSection(&csCheckThread);
@@ -602,16 +698,18 @@ void CInterfaceSerial::stopCheckThread()
 }
 
 //#####################################CheckThread########################################
-//************************************
-// Method:    CSerialCheckThread
-// FullName:  CSerialCheckThread
-// Access:    public static 
-// Returns:   UINT
-// Qualifier:
-// Parameter: LPVOID pc
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * Serial check thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CSerialCheckThread( LPVOID pc )
 {
 	try
@@ -642,16 +740,15 @@ static UINT CSerialCheckThread( LPVOID pc )
 	return TRUE;
 }
 
-//************************************
-// Method:    CheckSerialData
-// FullName:  CInterfaceSerial::CheckSerialData
-// Access:    protected 
-// Returns:   DWORD
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Check serial data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CInterfaceSerial::CheckSerialData(void) 
 {
 	WORD iCnt=0;
@@ -1363,33 +1460,32 @@ DWORD CInterfaceSerial::CheckSerialData(void)
 //	
 //}
 
-//#####################################ReceiveThread########################################
-//************************************
-// Method:    CSerialReceiveThread
-// FullName:  CSerialReceiveThread
-// Access:    public static 
-// Returns:   UINT
-// Qualifier:
-// Parameter: LPVOID pc
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Serial receive thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CSerialReceiveThread( LPVOID pc )
 {
 	((CInterfaceSerial*)pc)->ReceiveSerialData();
 	return TRUE;
 }
 
-//************************************
-// Method:    ReceiveSerialData
-// FullName:  CInterfaceSerial::ReceiveSerialData
-// Access:    protected 
-// Returns:   DWORD
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Receive serial data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CInterfaceSerial::ReceiveSerialData(void) 
 {
 	CeSetThreadPriority(m_pcwtSerialReceiveThread->m_hThread,130);
@@ -1438,17 +1534,17 @@ DWORD CInterfaceSerial::ReceiveSerialData(void)
 	return 0;
 }
 
-//#####################################SendThread########################################
-//************************************
-// Method:    CSerialSendThread
-// FullName:  CSerialSendThread
-// Access:    public static 
-// Returns:   UINT
-// Qualifier:
-// Parameter: LPVOID pc
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Serial send thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CSerialSendThread( LPVOID pc )
 {
 	try
@@ -1479,16 +1575,15 @@ static UINT CSerialSendThread( LPVOID pc )
 	return TRUE;
 }
 
-//************************************
-// Method:    SendSerialData
-// FullName:  CInterfaceSerial::SendSerialData
-// Access:    protected 
-// Returns:   DWORD
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Sends the serial data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CInterfaceSerial::SendSerialData(void) 
 {
 	CeSetThreadPriority(m_pcwtSerialSendThread->m_hThread,130);
@@ -1644,11 +1739,18 @@ DWORD CInterfaceSerial::SendSerialData(void)
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Sends a serial command
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	data		  	The data.
+ * \param	bIgnorCOMstate	True to ignor co mstate.
+ *
+ * \return	A BYTE.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 BYTE CInterfaceSerial::sendSerialCommand(CStringW data, bool bIgnorCOMstate) 
 {
 	BYTE chReturn=0;
@@ -1776,12 +1878,13 @@ BYTE CInterfaceSerial::sendSerialCommand(CStringW data, bool bIgnorCOMstate)
 	return chReturn;
 }
 
+/**********************************************************************************************//**
+ * Sends the start manager breath
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceSerial::Send_START_MAN_BREATH()
 {
 	TCHAR psz[MAX_PATH];
@@ -1790,9 +1893,14 @@ void CInterfaceSerial::Send_START_MAN_BREATH()
 		theApp.getLog()->WriteLine(_T("START_MAN_BREATH"));
 	//DEBUGMSG(TRUE, (TEXT("Send_START_MAN_BREATH\r\n")));
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sends the stop manager breath
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_STOP_MAN_BREATH()
 {
 	TCHAR psz[MAX_PATH];
@@ -1801,9 +1909,15 @@ void CInterfaceSerial::Send_STOP_MAN_BREATH()
 		theApp.getLog()->WriteLine(_T("STOP_MAN_BREATH"));
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a hardware configuration
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	wHardwareConfig	The hardware configuration.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_HARDWARE_CONFIG(WORD wHardwareConfig)
 {
 	TCHAR psz[MAX_PATH];
@@ -1812,10 +1926,15 @@ void CInterfaceSerial::Send_HARDWARE_CONFIG(WORD wHardwareConfig)
 		theApp.getLog()->WriteLine(psz);
 }
 
+/**********************************************************************************************//**
+ * Sends a mode option 1
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	wMode	The mode.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceSerial::Send_MODE_OPTION1(WORD wMode)
 {
 	TCHAR psz[MAX_PATH];
@@ -1824,9 +1943,15 @@ void CInterfaceSerial::Send_MODE_OPTION1(WORD wMode)
 		theApp.getLog()->WriteLine(psz);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a vent mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	mode	The mode.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_VENT_MODE(eVentMode mode)
 {
 	TCHAR psz[MAX_PATH];
@@ -1836,11 +1961,15 @@ void CInterfaceSerial::Send_VENT_MODE(eVentMode mode)
 
 }
 
+/**********************************************************************************************//**
+ * Sends a paraval pinsp
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceSerial::Send_PARAVAL_PINSP(int val)//newVG
 {
 	TCHAR psz[MAX_PATH];
@@ -1855,9 +1984,15 @@ void CInterfaceSerial::Send_PARAVAL_PINSP(int val)//newVG
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_PINSP %d\r\n"),val));
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval pmaxvg
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_PARAVAL_PMAXVG(int val)//newVG
 {
 	TCHAR psz[MAX_PATH];
@@ -1868,9 +2003,15 @@ void CInterfaceSerial::Send_PARAVAL_PMAXVG(int val)//newVG
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_PMAXVG %d\r\n"),val));
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval p psv
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_PARAVAL_P_PSV(int val)
 {
 	TCHAR psz[MAX_PATH];
@@ -1881,9 +2022,15 @@ void CInterfaceSerial::Send_PARAVAL_P_PSV(int val)
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_P_PSV %d\r\n"),val));
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval peep
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_PARAVAL_PEEP(int val)
 {
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_PEEP %d\r\n"),val));
@@ -1893,9 +2040,15 @@ void CInterfaceSerial::Send_PARAVAL_PEEP(int val)
 		theApp.getLog()->WriteLine(psz);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval oxy ratio
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_PARAVAL_OXY_RATIO(int val)
 {
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_OXY_RATIO %d\r\n"),val));
@@ -1905,9 +2058,15 @@ void CInterfaceSerial::Send_PARAVAL_OXY_RATIO(int val)
 		theApp.getLog()->WriteLine(psz);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval insp flow
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_PARAVAL_INSP_FLOW(int val)
 {
 	TCHAR psz[MAX_PATH];
@@ -1918,9 +2077,15 @@ void CInterfaceSerial::Send_PARAVAL_INSP_FLOW(int val)
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_INSP_FLOW %d\r\n"),val));
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval risetime
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_PARAVAL_RISETIME(int val)
 {
 	TCHAR psz[MAX_PATH];
@@ -1932,9 +2097,15 @@ void CInterfaceSerial::Send_PARAVAL_RISETIME(int val)
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_RISETIME %d\r\n"),val));
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval exh flow
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_PARAVAL_EXH_FLOW(int val)
 {
 	TCHAR psz[MAX_PATH];
@@ -1945,9 +2116,15 @@ void CInterfaceSerial::Send_PARAVAL_EXH_FLOW(int val)
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_EXH_FLOW %d\r\n"),val));
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval insp time
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_PARAVAL_INSP_TIME(int val)
 {
 	TCHAR psz[MAX_PATH];
@@ -1956,10 +2133,15 @@ void CInterfaceSerial::Send_PARAVAL_INSP_TIME(int val)
 		theApp.getLog()->WriteLine(psz);
 }
 
+/**********************************************************************************************//**
+ * Sends a paraval exh time
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceSerial::Send_PARAVAL_EXH_TIME(int val)
 {
 	TCHAR psz[MAX_PATH];
@@ -1968,9 +2150,15 @@ void CInterfaceSerial::Send_PARAVAL_EXH_TIME(int val)
 		theApp.getLog()->WriteLine(psz);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval hf ampl
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_PARAVAL_HF_AMPL(int val)
 {
 	//AmplitudeCorrectionFactor
@@ -1986,9 +2174,16 @@ void CInterfaceSerial::Send_PARAVAL_HF_AMPL(int val)
 		theApp.getLog()->WriteLine(psz);
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_AMPL %d\r\n"),val));
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sends a paraval hf frequency
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_PARAVAL_HF_FREQ(int val)
 {
 	TCHAR psz[MAX_PATH];
@@ -1997,9 +2192,16 @@ void CInterfaceSerial::Send_PARAVAL_HF_FREQ(int val)
 		theApp.getLog()->WriteLine(psz);
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_FREQ %d\r\n"),val));
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sends a paraval hf pmitt
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_PARAVAL_HF_PMITT(int val)
 {
 	TCHAR psz[MAX_PATH];
@@ -2009,9 +2211,15 @@ void CInterfaceSerial::Send_PARAVAL_HF_PMITT(int val)
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_PMITT %d\r\n"),val));
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval hf pmeanrec
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_PARAVAL_HF_PMEANREC(int val)
 {
 	TCHAR psz[MAX_PATH];
@@ -2020,9 +2228,16 @@ void CInterfaceSerial::Send_PARAVAL_HF_PMEANREC(int val)
 		theApp.getLog()->WriteLine(psz);
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_PMEANREC %d\r\n"),val));
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sends a paraval hf frequency record
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_PARAVAL_HF_FREQ_REC(int val)
 {
 	int iETIME=getModel()->getDATAHANDLER()->GetHF_ETIME_REC(val);
@@ -2031,9 +2246,16 @@ void CInterfaceSerial::Send_PARAVAL_HF_FREQ_REC(int val)
 
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_FREQ_REC %d\r\n"),val));
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sends a paraval hf itime record
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_PARAVAL_HF_ITIME_REC(int val)
 {
 	Send_PARAVAL_INSP_TIME(val);
@@ -2041,9 +2263,15 @@ void CInterfaceSerial::Send_PARAVAL_HF_ITIME_REC(int val)
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_ITIME_REC %d\r\n"),val));
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends an exponent valve
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_EXP_VALVE(int val)
 {
 	TCHAR psz[MAX_PATH];
@@ -2051,9 +2279,16 @@ void CInterfaceSerial::Send_EXP_VALVE(int val)
 	if(0==sendSerialCommand(psz))
 		theApp.getLog()->WriteLine(psz);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sends an open valve
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_OPEN_VALVE(int val)
 {
 	TCHAR psz[MAX_PATH];
@@ -2062,9 +2297,6 @@ void CInterfaceSerial::Send_OPEN_VALVE(int val)
 		theApp.getLog()->WriteLine(psz);
 }
 
-//// **************************************************************************
-//// 
-//// **************************************************************************
 //void CInterfaceSerial::Send_SET_FG_BIT(int val) //newVG
 //{
 //	TCHAR psz[MAX_PATH];
@@ -2072,9 +2304,7 @@ void CInterfaceSerial::Send_OPEN_VALVE(int val)
 //	if(0==sendSerialCommand(psz))
 //		theApp.getLog()->WriteLine(psz);
 //}
-//// **************************************************************************
-//// 
-//// **************************************************************************
+
 //void CInterfaceSerial::Send_CLEAR_FG_BIT(int val) //newVG
 //{
 //	TCHAR psz[MAX_PATH];
@@ -2083,9 +2313,15 @@ void CInterfaceSerial::Send_OPEN_VALVE(int val)
 //		theApp.getLog()->WriteLine(psz);
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a calendar press prox
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_CAL_PRESS_PROX(int val)
 {
 	TCHAR psz[MAX_PATH];
@@ -2094,10 +2330,15 @@ void CInterfaceSerial::Send_CAL_PRESS_PROX(int val)
 		theApp.getLog()->WriteLine(psz);
 }
 
+/**********************************************************************************************//**
+ * Sends an oxygen corr
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceSerial::Send_OXYGEN_CORR(int val)
 {
 	TCHAR psz[MAX_PATH];
@@ -2106,9 +2347,15 @@ void CInterfaceSerial::Send_OXYGEN_CORR(int val)
 	sendSerialCommand(psz);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends an autoflow corr
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_AUTOFLOW_CORR(BYTE val)
 {
 	TCHAR psz[MAX_PATH];
@@ -2117,9 +2364,15 @@ void CInterfaceSerial::Send_AUTOFLOW_CORR(BYTE val)
 	sendSerialCommand(psz);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a volume corr
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_VOLUME_CORR(BYTE val)
 {
 	TCHAR psz[MAX_PATH];
@@ -2128,9 +2381,15 @@ void CInterfaceSerial::Send_VOLUME_CORR(BYTE val)
 	sendSerialCommand(psz);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a paraval apnoe time
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_PARAVAL_APNOE_TIME(int val)
 {
 	TCHAR psz[MAX_PATH];
@@ -2140,9 +2399,15 @@ void CInterfaceSerial::Send_PARAVAL_APNOE_TIME(int val)
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_APNOE_TIME %d\r\n"),val));
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a mode option 2
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	wMode	The mode.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_MODE_OPTION2(WORD wMode)
 {
 	TCHAR psz[MAX_PATH];
@@ -2151,9 +2416,15 @@ void CInterfaceSerial::Send_MODE_OPTION2(WORD wMode)
 		theApp.getLog()->WriteLine(psz);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a fo tconv amp frequency
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceSerial::Send_FOTconv_AMP_FREQ(int val)
 {
 
@@ -2180,9 +2451,15 @@ void CInterfaceSerial::Send_FOTconv_AMP_FREQ(int val)
 	//DEBUGMSG(TRUE, (TEXT("Send_FOT_AMP_FREQ %d\r\n"),val));
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets m status byte
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CInterfaceSerial::GetM_StatusByte()
 {
 	BOOL bResult=FALSE;
@@ -2213,9 +2490,17 @@ BOOL CInterfaceSerial::GetM_StatusByte()
 	return bResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets m checksum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bIgnorCOMstate	True to ignor co mstate.
+ *
+ * \return	The m checksum.
+ **************************************************************************************************/
+
 int CInterfaceSerial::GetM_CHECKSUM(bool bIgnorCOMstate)
 {
 	int iResult=0;
@@ -2247,9 +2532,15 @@ int CInterfaceSerial::GetM_CHECKSUM(bool bIgnorCOMstate)
 	return iResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets m insp flow
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The m insp flow.
+ **************************************************************************************************/
+
 int CInterfaceSerial::GetM_INSP_FLOW()
 {
 	int iResult=0;
@@ -2281,9 +2572,16 @@ int CInterfaceSerial::GetM_INSP_FLOW()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets m exponent flow
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The m exponent flow.
+ **************************************************************************************************/
+
 int CInterfaceSerial::GetM_EXP_FLOW()
 {
 	int iResult=0;
@@ -2316,9 +2614,15 @@ int CInterfaceSerial::GetM_EXP_FLOW()
 	return iResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets m demand flow
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The m demand flow.
+ **************************************************************************************************/
+
 int CInterfaceSerial::GetM_DEMAND_FLOW()
 {
 	int iResult=0;
@@ -2351,9 +2655,15 @@ int CInterfaceSerial::GetM_DEMAND_FLOW()
 	return iResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets m calendar press scale
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The m calendar press scale.
+ **************************************************************************************************/
+
 int CInterfaceSerial::GetM_CAL_PRESS_SCALE()
 {
 	int iResult=0;
@@ -2385,9 +2695,16 @@ int CInterfaceSerial::GetM_CAL_PRESS_SCALE()
 
 	return iResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets m calendar press offset
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The m calendar press offset.
+ **************************************************************************************************/
+
 int CInterfaceSerial::GetM_CAL_PRESS_OFFSET()
 {
 	int iResult=0;
@@ -2418,9 +2735,15 @@ int CInterfaceSerial::GetM_CAL_PRESS_OFFSET()
 	return iResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets m version
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The m version.
+ **************************************************************************************************/
+
 CStringW CInterfaceSerial::GetM_VERSION()
 {
 	CStringW szResult=_T("0.0.0");
@@ -2449,9 +2772,15 @@ CStringW CInterfaceSerial::GetM_VERSION()
 	return szResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets hfo version
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The hfo version.
+ **************************************************************************************************/
+
 CStringW CInterfaceSerial::GetHFO_VERSION()
 {
 	CStringW szResult=_T("0.0.0");
@@ -2492,9 +2821,15 @@ CStringW CInterfaceSerial::GetHFO_VERSION()
 	return szResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets blender version
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The blender version.
+ **************************************************************************************************/
+
 CStringW CInterfaceSerial::GetBLENDER_VERSION()
 {
 	CStringW szResult=_T("0.0");
@@ -2524,9 +2859,15 @@ CStringW CInterfaceSerial::GetBLENDER_VERSION()
 	return szResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets blender status byte
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CInterfaceSerial::GetBLENDER_StatusByte()
 {
 	BOOL bResult=FALSE;
@@ -2553,9 +2894,16 @@ BOOL CInterfaceSerial::GetBLENDER_StatusByte()
 
 	return bResult;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets hfo checksum
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The hfo checksum.
+ **************************************************************************************************/
+
 int CInterfaceSerial::GetHFO_CHECKSUM()
 {
 	int iResult=0;
@@ -2600,6 +2948,7 @@ int CInterfaceSerial::GetHFO_CHECKSUM()
 
 	return iResult;
 }
+
 //int CInterfaceSerial::resetCOMerror(eCOMerror error)
 //{
 //	int iResult=0;
@@ -2787,9 +3136,17 @@ int CInterfaceSerial::GetHFO_CHECKSUM()
 //	}
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Parse controller command
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bl	The bl.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 {
 	bool bResult = true;
@@ -4186,6 +4543,15 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is serial disconnection
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if serial disconnection, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceSerial::IsSerialDisconnection()
 {
 	return m_bSerialDisconnection;
@@ -4199,14 +4565,32 @@ bool CInterfaceSerial::IsSerialDisconnection()
 //{
 //	return m_bSerialINSPIRATIONTUBE;
 //}
+
+/**********************************************************************************************//**
+ * Query if this instance is serial tube occlusion
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if serial tube occlusion, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceSerial::IsSerial_TUBE_OCCLUSION()
 {
 	return m_bSerialTUBE_OCCLUSION;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Check blender status bits
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bl	The bl.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceSerial::CheckBlenderStatusBits(CTlsBlob bl)
 {
 	//int iLen = bl.GetBufferLen();
@@ -4227,10 +4611,17 @@ bool CInterfaceSerial::CheckBlenderStatusBits(CTlsBlob bl)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Check status bits
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bl	The bl.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CInterfaceSerial::CheckStatusBits(CTlsBlob bl)
 {
 	//int iLen = bl.GetBufferLen();
@@ -4387,11 +4778,17 @@ bool CInterfaceSerial::CheckStatusBits(CTlsBlob bl)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Gets com value
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bl	The bl.
+ *
+ * \return	The com value.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 int CInterfaceSerial::GetCOMValue(CTlsBlob bl)
 {
 	CStringW sToken = bl.GetString();
@@ -4403,13 +4800,12 @@ int CInterfaceSerial::GetCOMValue(CTlsBlob bl)
 	return iRes;
 }
 
-//TEST LOCK SERIAL
-//void CInterfaceSerial::lockTest()
-//{
-//	EnterCriticalSection(&csTestLock);
-//
-//	//LeaveCriticalSection(&csTestLock);
-//}
+/**********************************************************************************************//**
+ * Resets the error count check thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 void CInterfaceSerial::resetErrorCountCheckThread()//newSerialAlarm
 {

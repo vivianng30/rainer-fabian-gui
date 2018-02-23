@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldMVEXP.h"
 
-
-// CNumericFieldMVEXP
+/**********************************************************************************************//**
+ * CNumericFieldMVEXP
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldMVEXP, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldMVEXP class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldMVEXP::CNumericFieldMVEXP(eNumericSize size):
 CNumericField(size)
@@ -25,6 +41,13 @@ CNumericField(size)
 	}
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldMVEXP class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CNumericFieldMVEXP::~CNumericFieldMVEXP()
 {
 }
@@ -36,27 +59,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldMVEXP, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldMVEXP message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldMVEXP message handlers
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericFieldMVEXP::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CNumericFieldMVEXP::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldMVEXP::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -154,10 +183,6 @@ bool CNumericFieldMVEXP::drawData(bool bData, bool bFrames, bool bText, bool bLi
 	return bReturn;
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldMVEXP::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -177,9 +202,17 @@ bool CNumericFieldMVEXP::drawData(bool bData, bool bFrames, bool bText, bool bLi
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldMVEXP::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -253,10 +286,17 @@ bool CNumericFieldMVEXP::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldMVEXP::drawLimits(CDC* pDC)
 {
 	HDC hdc = *pDC;

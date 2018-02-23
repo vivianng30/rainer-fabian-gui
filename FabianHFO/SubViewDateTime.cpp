@@ -5,15 +5,67 @@
 #include "FabianHFO.h"
 #include "SubViewDateTime.h"
 
+/**********************************************************************************************//**
+ * A macro that defines timechange
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define TIMECHANGE	600
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
+/**********************************************************************************************//**
+ * A macro that defines color calbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_CALBTNUP				RGB(181,178,181)
+
+/**********************************************************************************************//**
+ * A macro that defines color calbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_CALBTNDW				RGB(0,191,0)
+
+/**********************************************************************************************//**
+ * A macro that defines color calbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_CALBTNFC				RGB(85,95,255)
 
 //global font objects
@@ -37,11 +89,24 @@ extern HFONT g_hf33AcuBold;
 extern HFONT g_hf43AcuBold;
 extern HFONT g_hf53AcuBold;
 
-
-
-// CSubViewDateTime
+/**********************************************************************************************//**
+ * CSubViewDateTime
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CSubViewDateTime, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CSubViewDateTime class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewDateTime::CSubViewDateTime()
 {
@@ -120,6 +185,13 @@ CSubViewDateTime::CSubViewDateTime()
 
 	m_dwLastSetupTimer=0;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CSubViewDateTime class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CSubViewDateTime::~CSubViewDateTime()
 {
@@ -225,22 +297,36 @@ BEGIN_MESSAGE_MAP(CSubViewDateTime, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SETUP_HOUR, &CSubViewDateTime::OnBnClickedHour)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CSubViewDateTime message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
 
-
-// CSubViewDateTime message handlers
-
-// **************************************************************************
-// 
-// **************************************************************************
 CMVModel *CSubViewDateTime::getModel()
 {
 	if(m_pModel==NULL)
 		m_pModel=CMVModel::GetInstance();
 	return m_pModel;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates a window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CSubViewDateTime::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext)
 {
 	if (!Create(pParentWnd, rc, nID, pContext))
@@ -250,9 +336,20 @@ bool CSubViewDateTime::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCre
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSubViewDateTime::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -589,8 +686,6 @@ BOOL CSubViewDateTime::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 }
 
 //#define TIME_REG _T("Time Zones")
-
-
 //void CSubViewDateTime::TimeZoneInfoToTimeZoneInformation( TIME_ZONE_INFORMATION& TimeZoneInfo1 , const TIME_ZONE_INFO& TimeZoneInfo2 )
 //{
 //	TimeZoneInfo1.Bias = TimeZoneInfo2.Bias ;
@@ -726,6 +821,13 @@ BOOL CSubViewDateTime::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 //	return;
 //}
 
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewDateTime::Draw()
 {
 	//Test();
@@ -850,9 +952,15 @@ void CSubViewDateTime::Draw()
 	UpdateWindow();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets current button state
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The current button state.
+ **************************************************************************************************/
+
 eBtnState CSubViewDateTime::GetCurrentBtnState()
 {
 	POSITION pos;
@@ -875,9 +983,17 @@ eBtnState CSubViewDateTime::GetCurrentBtnState()
 	return BS_NONE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets button state
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iID	Zero-based index of the identifier.
+ *
+ * \return	The button state.
+ **************************************************************************************************/
+
 eBtnState CSubViewDateTime::GetBtnState(int iID)
 {
 	POSITION pos;
@@ -900,9 +1016,15 @@ eBtnState CSubViewDateTime::GetBtnState(int iID)
 	return BS_NONE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets one button depressed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CSubViewDateTime::SetOneButtonDepressed(int btnID)
 {
 	POSITION pos;
@@ -939,9 +1061,13 @@ void CSubViewDateTime::SetOneButtonDepressed(int btnID)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets all button unpressed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewDateTime::SetAllButtonUnpressed()
 {
 	POSITION pos;
@@ -973,9 +1099,15 @@ void CSubViewDateTime::SetAllButtonUnpressed()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets one button focused
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CSubViewDateTime::SetOneButtonFocused(int btnID)
 {
 	POSITION pos;
@@ -1013,9 +1145,13 @@ void CSubViewDateTime::SetOneButtonFocused(int btnID)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets next button focused
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewDateTime::SetNextButtonFocused()
 {
 	POSITION pos;
@@ -1060,10 +1196,13 @@ void CSubViewDateTime::SetNextButtonFocused()
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets previous button focused
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewDateTime::SetPrevButtonFocused()
 {
 	POSITION pos;
@@ -1106,9 +1245,17 @@ void CSubViewDateTime::SetPrevButtonFocused()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets month string
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iMonth	Zero-based index of the month.
+ *
+ * \return	The month string.
+ **************************************************************************************************/
+
 CStringW CSubViewDateTime::GetMonthString(int iMonth)
 {
 	switch(iMonth)
@@ -1155,9 +1302,13 @@ CStringW CSubViewDateTime::GetMonthString(int iMonth)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked day action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewDateTime::OnBnClickedDay()
 {
 	if(GetBtnState(IDC_BTN_SETUP_DAY)==BS_UP)
@@ -1168,9 +1319,13 @@ void CSubViewDateTime::OnBnClickedDay()
 		SetOneButtonFocused(IDC_BTN_SETUP_DAY);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked month action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewDateTime::OnBnClickedMonth()
 {
 	if(GetBtnState(IDC_BTN_SETUP_MONTH)==BS_UP)
@@ -1180,9 +1335,14 @@ void CSubViewDateTime::OnBnClickedMonth()
 	else if(GetBtnState(IDC_BTN_SETUP_MONTH)==BS_DOWN)
 		SetOneButtonFocused(IDC_BTN_SETUP_MONTH);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked year action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewDateTime::OnBnClickedYear()
 {
 	//SetOneButtonDepressed(IDC_BTN_SETUP_YEAR);
@@ -1193,9 +1353,14 @@ void CSubViewDateTime::OnBnClickedYear()
 	else if(GetBtnState(IDC_BTN_SETUP_YEAR)==BS_DOWN)
 		SetOneButtonFocused(IDC_BTN_SETUP_YEAR);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked minute action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewDateTime::OnBnClickedMinute()
 {
 	//SetOneButtonDepressed(IDC_BTN_SETUP_MINUTE);
@@ -1206,9 +1371,14 @@ void CSubViewDateTime::OnBnClickedMinute()
 	else if(GetBtnState(IDC_BTN_SETUP_MINUTE)==BS_DOWN)
 		SetOneButtonFocused(IDC_BTN_SETUP_MINUTE);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked hour action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewDateTime::OnBnClickedHour()
 {
 	//SetOneButtonDepressed(IDC_BTN_SETUP_HOUR);
@@ -1220,10 +1390,19 @@ void CSubViewDateTime::OnBnClickedHour()
 		SetOneButtonFocused(IDC_BTN_SETUP_HOUR);
 }
 
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 LRESULT CSubViewDateTime::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -1711,9 +1890,13 @@ LRESULT CSubViewDateTime::WindowProc(UINT message, WPARAM wParam, LPARAM lParam 
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked set date time action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewDateTime::OnBnClickedSetDateTime()
 {
 	SetAllButtonUnpressed();
@@ -1888,9 +2071,15 @@ void CSubViewDateTime::OnBnClickedSetDateTime()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CSubViewDateTime::Show(bool bShow)
 {
 	if(bShow)
@@ -1904,24 +2093,27 @@ void CSubViewDateTime::Show(bool bShow)
 		ShowWindow(SW_HIDE);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewDateTime::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CSubViewDateTime::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CSubViewDateTime::OnDestroy()
 {
 	KillTimer(CHANGETIMER);
@@ -1939,9 +2131,15 @@ void CSubViewDateTime::OnDestroy()
 		DeleteDC(m_hDC);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CSubViewDateTime::OnTimer(UINT_PTR nIDEvent)
 {
 	CStringW strDate;
@@ -2317,9 +2515,17 @@ void CSubViewDateTime::OnTimer(UINT_PTR nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSubViewDateTime::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -2685,10 +2891,13 @@ BOOL CSubViewDateTime::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
+/**********************************************************************************************//**
+ * Date time changed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CSubViewDateTime::DateTimeChanged()
 {
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))

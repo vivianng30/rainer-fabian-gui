@@ -13,12 +13,29 @@ extern HFONT g_hf8AcuBold;
 extern HFONT g_hf23AcuBold;
 extern HFONT g_hf17AcuBold;
 
-// CParaBtn_HFFLOW
+/**********************************************************************************************//**
+ * CParaBtn_HFFLOW
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	btn		   	The button.
+ * \param	nOffset	   	The offset.
+ * \param	bScrollOver	True to scroll over.
+ **************************************************************************************************/
+
 CParaBtn_HFFLOW::CParaBtn_HFFLOW(BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 	//m_bOff=true;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_HFFLOW class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_HFFLOW::~CParaBtn_HFFLOW(void)
 {
@@ -37,12 +54,15 @@ BEGIN_MESSAGE_MAP(CParaBtn_HFFLOW, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CParaBtn_HFFLOW message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
-
-// CParaBtn_HFFLOW message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CParaBtn_HFFLOW::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -229,7 +249,16 @@ void CParaBtn_HFFLOW::Draw(int nState)
 	}
 }
 
-
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_HFFLOW::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {

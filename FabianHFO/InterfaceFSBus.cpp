@@ -8,6 +8,13 @@
 
 CInterfaceFSBus* CInterfaceFSBus::theFSBusInterface=0;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CInterfaceFSBus class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 CInterfaceFSBus::CInterfaceFSBus(void)
 {
 	m_bDoPIFThread=false;
@@ -16,6 +23,13 @@ CInterfaceFSBus::CInterfaceFSBus(void)
 
 	//m_iCnt=0;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CInterfaceFSBus class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 CInterfaceFSBus::~CInterfaceFSBus(void)
 {
@@ -27,9 +41,15 @@ CInterfaceFSBus::~CInterfaceFSBus(void)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
+
 CInterfaceFSBus* CInterfaceFSBus::GetInstance()
 {
 	if(theFSBusInterface == 0)
@@ -40,18 +60,28 @@ CInterfaceFSBus* CInterfaceFSBus::GetInstance()
 	return theFSBusInterface;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceFSBus::DestroyInstance()
 {
 	delete theFSBusInterface;
 	theFSBusInterface = NULL;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CInterfaceFSBus::Init()
 {
 	m_hPIF = CreateFile( _T("PIF1:"),
@@ -64,15 +94,19 @@ BOOL CInterfaceFSBus::Init()
 	}
 
 	return true;
-
-	//test fmea
-	//return(FALSE);
 }
 
+/**********************************************************************************************//**
+ * Sends a data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	data	If non-null, the data.
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 DWORD CInterfaceFSBus::SendData(unsigned char* data)
 {
 	if(m_hPIF==INVALID_HANDLE_VALUE)
@@ -91,9 +125,18 @@ DWORD CInterfaceFSBus::SendData(unsigned char* data)
 	return dwBytesWrite;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sends a data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pData		  	If non-null, the data.
+ * \param 		  	dwBytesToWrite	The bytes to write.
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CInterfaceFSBus::SendData(BYTE*  pData, DWORD dwBytesToWrite)
 {
 	if(m_hPIF==INVALID_HANDLE_VALUE)
@@ -116,9 +159,6 @@ DWORD CInterfaceFSBus::SendData(BYTE*  pData, DWORD dwBytesToWrite)
 	return dwBytesWritten;
 }
 
-// **************************************************************************
-// 	Write address/data to FS-BUS
-// **************************************************************************
 //DWORD CInterfaceFSBus::SendPIFData(PARINTFRW* cData)
 //{
 //	if(m_hPIF==INVALID_HANDLE_VALUE)
@@ -137,9 +177,6 @@ DWORD CInterfaceFSBus::SendData(BYTE*  pData, DWORD dwBytesToWrite)
 //	return dwBytesReturend;
 //}
 
-// **************************************************************************
-// Read data from FS-BUS without Address
-// **************************************************************************
 //DWORD CInterfaceFSBus::ReadData(unsigned char* data)
 //{
 //	if(m_hPIF==INVALID_HANDLE_VALUE)
@@ -156,9 +193,6 @@ DWORD CInterfaceFSBus::SendData(BYTE*  pData, DWORD dwBytesToWrite)
 //	return dwRead;
 //}
 
-// **************************************************************************
-// Read data from FS-BUS without Address
-// **************************************************************************
 //DWORD CInterfaceFSBus::ReadData(BYTE*  pData, DWORD dwBytesToRead)
 //{
 //	if(m_hPIF==INVALID_HANDLE_VALUE)
@@ -175,9 +209,6 @@ DWORD CInterfaceFSBus::SendData(BYTE*  pData, DWORD dwBytesToWrite)
 //	return dwRead;
 //}
 
-// **************************************************************************
-// Read 1 Byte from FS-BUS
-// **************************************************************************
 //DWORD CInterfaceFSBus::ReadPIFData(PARINTFRW* cData)
 //{
 //	if(m_hPIF==INVALID_HANDLE_VALUE)
@@ -197,10 +228,15 @@ DWORD CInterfaceFSBus::SendData(BYTE*  pData, DWORD dwBytesToWrite)
 //	return dwBytesReturend;
 //}
 
+/**********************************************************************************************//**
+ * Gets driver information
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The driver information.
+ **************************************************************************************************/
 
-// **************************************************************************
-// treiberversionen auslesen
-// **************************************************************************
 CStringW CInterfaceFSBus::GetDriverInfo()
 {
 	CStringW szDrive;

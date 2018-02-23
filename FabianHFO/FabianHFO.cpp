@@ -10,6 +10,14 @@
 //#include <exception>
 
 #ifdef _DEBUG
+
+/**********************************************************************************************//**
+ * A macro that defines new
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 #define new DEBUG_NEW
 #endif
 
@@ -29,8 +37,13 @@ END_MESSAGE_MAP()
 //	}
 //};
 
+/**********************************************************************************************//**
+ * CFabianHFOApp construction
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
-// CFabianHFOApp construction
 CFabianHFOApp::CFabianHFOApp()
 	: CWinApp()
 {
@@ -87,37 +100,84 @@ CFabianHFOApp::CFabianHFOApp()
 	}
 }
 
-//
-// Destructor
-//
+/**********************************************************************************************//**
+ * Destructor
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 CFabianHFOApp::~CFabianHFOApp()
 {
 	delete log;
 	log=NULL;
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is net dcu 9
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if net dcu 9, false if not.
+ **************************************************************************************************/
+
 bool CFabianHFOApp::IsNetDCU9()
 {
 	return m_bNetDCU9;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is net dcu 11
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if net dcu 11, false if not.
+ **************************************************************************************************/
+
 bool CFabianHFOApp::IsNetDCU11()
 {
 	return m_bNetDCU11;
 }
 
+/**********************************************************************************************//**
+ * Gets exit state
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CFabianHFOApp::GetEXITState()
 {
 	return m_bEXITState;
 }
+
+/**********************************************************************************************//**
+ * Sets exit state
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CFabianHFOApp::SetEXITState()
 {
 	m_bEXITState=true;
 }
 
 // The one and only CFabianHFOApp object
-CFabianHFOApp theApp;
+CFabianHFOApp theApp;   ///< the application
 
-// CFabianHFOApp initialization
+/**********************************************************************************************//**
+ * CFabianHFOApp initialization
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 BOOL CFabianHFOApp::InitInstance()
 {
@@ -151,6 +211,13 @@ BOOL CFabianHFOApp::InitInstance()
 	return TRUE;
 }
 
+/**********************************************************************************************//**
+ * Opens the log
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CFabianHFOApp::OpenLog()
 {
 	if(log==NULL)
@@ -168,12 +235,29 @@ void CFabianHFOApp::OpenLog()
 		log = new Logfile(aPathLog);
 	}
 }
+
+/**********************************************************************************************//**
+ * Closes the log
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CFabianHFOApp::CloseLog()
 {
 	log->Exit();
 	//delete log;
 	//log=NULL;
 }
+
+/**********************************************************************************************//**
+ * Gets the log
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	Null if it fails, else the log.
+ **************************************************************************************************/
 
 Logfile *CFabianHFOApp::getLog()
 {
@@ -194,6 +278,18 @@ Logfile *CFabianHFOApp::getLog()
 	return log;
 }
 
+/**********************************************************************************************//**
+ * Writes a log error
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	lError			The error.
+ * \param	lptszMessage	Message describing the lptsz.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CFabianHFOApp::writeLogError (LONG lError, LPCTSTR lptszMessage)
 {
 	// Generate a message text
@@ -204,6 +300,16 @@ int CFabianHFOApp::writeLogError (LONG lError, LPCTSTR lptszMessage)
 	
 	return 1;
 }
+
+/**********************************************************************************************//**
+ * Reports an exception
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	lpszFunction	The function.
+ **************************************************************************************************/
+
 void CFabianHFOApp::ReportException(CString lpszFunction)
 {
 	// Retrieve the system error message for the last-error code
@@ -237,6 +343,15 @@ void CFabianHFOApp::ReportException(CString lpszFunction)
 //	}
 //}
 
+/**********************************************************************************************//**
+ * Sets automatic screenlock active
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CFabianHFOApp::SetAutoScreenlockActive(bool state)
 {
 	m_bAutoScreenLockActive=state;
@@ -249,10 +364,29 @@ void CFabianHFOApp::SetAutoScreenlockActive(bool state)
 		log->WriteLine(_T("**** auto screenlock disabled ****"));
 	}
 }
+
+/**********************************************************************************************//**
+ * Queries if the automatic screenlock is active
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if the automatic screenlock is active, false if not.
+ **************************************************************************************************/
+
 bool CFabianHFOApp::IsAutoScreenlockActive()
 {
 	return m_bAutoScreenLockActive;
 }
+
+/**********************************************************************************************//**
+ * Sets a screenlock
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
 void CFabianHFOApp::SetScreenlock(bool state)
 {
@@ -268,6 +402,16 @@ void CFabianHFOApp::SetScreenlock(bool state)
 		DEBUGMSG(TRUE, (TEXT("screenlock disabled\r\n")));
 	}
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is screenlock
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if screenlock, false if not.
+ **************************************************************************************************/
+
 bool CFabianHFOApp::IsScreenlock()
 {
 	return m_bScreenLock;
@@ -295,7 +439,16 @@ bool CFabianHFOApp::IsScreenlock()
 //
 //}
 
-
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 BOOL CFabianHFOApp::PreTranslateMessage(MSG* pMsg) 
 {
@@ -410,8 +563,18 @@ BOOL CFabianHFOApp::PreTranslateMessage(MSG* pMsg)
 	return CWinApp::PreTranslateMessage(pMsg);
 }
 
+/**********************************************************************************************//**
+ * rkuTICKCOUNT
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	oldTickCount	Number of old ticks.
+ * \param	delay			The delay.
+ *
+ * \return	True if safe tick count delay expired, false if not.
+ **************************************************************************************************/
 
-//rkuTICKCOUNT
 bool CFabianHFOApp::isSafeTickCountDelayExpired(DWORD oldTickCount, UINT delay)////used to check if old tick count plus delay is still lower than actual tickCount, (dwLastTickCount+DELAY<getTickCount64())
 {
 	bool bExpired=false;

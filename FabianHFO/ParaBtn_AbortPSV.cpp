@@ -11,15 +11,41 @@ extern HFONT g_hf7AcuNorm;
 extern HFONT g_hf7AcuBold;
 extern HFONT g_hf31AcuBold;
 
-// CParaBtn_AbortPSV
+/**********************************************************************************************//**
+ * CParaBtn_AbortPSV
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CParaBtn_AbortPSV, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaBtn_AbortPSV class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	btn		   	The button.
+ * \param	nOffset	   	The offset.
+ * \param	bScrollOver	True to scroll over.
+ **************************************************************************************************/
 
 CParaBtn_AbortPSV::CParaBtn_AbortPSV(BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_AbortPSV class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_AbortPSV::~CParaBtn_AbortPSV()
 {
@@ -37,9 +63,15 @@ BEGIN_MESSAGE_MAP(CParaBtn_AbortPSV, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CParaBtn_AbortPSV message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
-
-// CParaBtn_AbortPSV message handlers
 void CParaBtn_AbortPSV::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -138,8 +170,16 @@ void CParaBtn_AbortPSV::Draw(int nState)
 	}
 }
 
-
-
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_AbortPSV::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {

@@ -9,10 +9,15 @@
 
 #include "TlsDevice.h"
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CViewService class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iViewID	Identifier for the view.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 CViewService::CViewService(int iViewID):
 CMVView(iViewID)
 {
@@ -35,9 +40,13 @@ CMVView(iViewID)
 	m_eCurServiceWnd=SERVICE_MENU;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Finalizes an instance of the CViewService class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CViewService::~CViewService(void)
 {
 	DeleteCriticalSection(&csServiceWnd);
@@ -51,10 +60,15 @@ BEGIN_MESSAGE_MAP(CViewService, CMVView)
 	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * Creates the view
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewService::CreateView()
 {
 	//RECT rcLd={5,50,790,535};
@@ -70,9 +84,20 @@ bool CViewService::CreateView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CViewService::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -104,9 +129,15 @@ BOOL CViewService::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateCont
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::Initialize()
 {
 	theApp.getLog()->WriteLine(_T("*** Service mode started ***"));
@@ -118,9 +149,15 @@ bool CViewService::Initialize()
 	return result;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates window service menu
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::CreateWndServiceMenu()
 {
 	if(m_pWndServiceMenu==NULL)
@@ -136,6 +173,16 @@ bool CViewService::CreateWndServiceMenu()
 
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window service menu
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewService::ShowWndServiceMenu(bool bShow)
 {
 	if(m_pWndServiceMenu)
@@ -147,6 +194,15 @@ void CViewService::ShowWndServiceMenu(bool bShow)
 
 
 }
+
+/**********************************************************************************************//**
+ * Destroys the window service menu
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CViewService::DestroyWndServiceMenu()
 {
@@ -161,10 +217,15 @@ bool CViewService::DestroyWndServiceMenu()
 	return false;
 }
 
+/**********************************************************************************************//**
+ * Creates window maintenance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewService::CreateWndMaintenance()
 {
 	if(m_pcWndMaintenance==NULL)
@@ -181,6 +242,16 @@ bool CViewService::CreateWndMaintenance()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window maintenance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::DestroyWndMaintenance()
 {
 	if(m_pcWndMaintenance)
@@ -191,6 +262,16 @@ bool CViewService::DestroyWndMaintenance()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window maintenance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewService::ShowWndMaintenance(bool show)
 {
 	if(m_pcWndMaintenance)
@@ -200,9 +281,16 @@ void CViewService::ShowWndMaintenance(bool show)
 	}
 	setCurServiceWnd(SERVICE_MAINTENANCE);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates window system
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::CreateWndSystem()
 {
 	if(m_pcWndSystem==NULL)
@@ -219,6 +307,16 @@ bool CViewService::CreateWndSystem()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window system
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::DestroyWndSystem()
 {
 	if(m_pcWndSystem)
@@ -231,6 +329,16 @@ bool CViewService::DestroyWndSystem()
 
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window system
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewService::ShowWndSystem(bool show)
 {
 	if(m_pcWndSystem)
@@ -241,10 +349,15 @@ void CViewService::ShowWndSystem(bool show)
 	setCurServiceWnd(SERVICE_SYS);
 }
 
+/**********************************************************************************************//**
+ * Creates window display
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewService::CreateWndDisplay()
 {
 	if(m_pcWndDisplay==NULL)
@@ -261,6 +374,16 @@ bool CViewService::CreateWndDisplay()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window display
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::DestroyWndDisplay()
 {
 	if(m_pcWndDisplay)
@@ -273,6 +396,16 @@ bool CViewService::DestroyWndDisplay()
 
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window display
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewService::ShowWndDisplay(bool show)
 {
 	if(m_pcWndDisplay)
@@ -283,9 +416,15 @@ void CViewService::ShowWndDisplay(bool show)
 	setCurServiceWnd(SERVICE_DISPL);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates window settings
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::CreateWndSettings()
 {
 	if(m_pcWndSettings==NULL)
@@ -302,6 +441,16 @@ bool CViewService::CreateWndSettings()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window settings
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::DestroyWndSettings()
 {
 	if(m_pcWndSettings)
@@ -314,6 +463,16 @@ bool CViewService::DestroyWndSettings()
 
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window settings
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewService::ShowWndSettings(bool show)
 {
 	if(m_pcWndSettings)
@@ -324,9 +483,15 @@ void CViewService::ShowWndSettings(bool show)
 	setCurServiceWnd(SERVICE_SETTINGS);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates window calibration
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::CreateWndCalibration()
 {
 	if(m_pcWndCalibration==NULL)
@@ -343,6 +508,16 @@ bool CViewService::CreateWndCalibration()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window calibration
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::DestroyWndCalibration()
 {
 	if(m_pcWndCalibration)
@@ -355,6 +530,16 @@ bool CViewService::DestroyWndCalibration()
 
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window calibration
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewService::ShowWndCalibration(bool show)
 {
 	if(m_pcWndCalibration)
@@ -365,9 +550,15 @@ void CViewService::ShowWndCalibration(bool show)
 	setCurServiceWnd(SERVICE_CAL);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates window flowboard
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::CreateWndFlowboard()
 {
 	if(m_pcWndFlowboard==NULL)
@@ -384,6 +575,16 @@ bool CViewService::CreateWndFlowboard()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window flowboard
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::DestroyWndFlowboard()
 {
 	if(m_pcWndFlowboard)
@@ -396,6 +597,16 @@ bool CViewService::DestroyWndFlowboard()
 
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window flowboard
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewService::ShowWndFlowboard(bool show)
 {
 	if(m_pcWndFlowboard)
@@ -406,9 +617,15 @@ void CViewService::ShowWndFlowboard(bool show)
 	setCurServiceWnd(SERVICE_FLOW);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates window accuboard
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::CreateWndAccuboard()
 {
 	if(m_pcWndAccuboard==NULL)
@@ -425,6 +642,16 @@ bool CViewService::CreateWndAccuboard()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window accuboard
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::DestroyWndAccuboard()
 {
 	if(m_pcWndAccuboard)
@@ -437,6 +664,16 @@ bool CViewService::DestroyWndAccuboard()
 
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window accuboard
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewService::ShowWndAccuboard(bool show)
 {
 	if(m_pcWndAccuboard)
@@ -447,9 +684,15 @@ void CViewService::ShowWndAccuboard(bool show)
 	setCurServiceWnd(SERVICE_ACCU);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates window interfaces
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::CreateWndInterfaces()
 {
 	if(m_pcWndInterfaces==NULL)
@@ -466,6 +709,16 @@ bool CViewService::CreateWndInterfaces()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window interfaces
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::DestroyWndInterfaces()
 {
 	if(m_pcWndInterfaces)
@@ -478,6 +731,16 @@ bool CViewService::DestroyWndInterfaces()
 
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window interfaces
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewService::ShowWndInterfaces(bool show)
 {
 	if(m_pcWndInterfaces)
@@ -488,9 +751,15 @@ void CViewService::ShowWndInterfaces(bool show)
 	setCurServiceWnd(SERVICE_IF);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates window network
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::CreateWndNetwork()
 {
 	if(m_pcWndNetwork==NULL)
@@ -507,6 +776,16 @@ bool CViewService::CreateWndNetwork()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window network
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::DestroyWndNetwork()
 {
 	if(m_pcWndNetwork)
@@ -519,6 +798,16 @@ bool CViewService::DestroyWndNetwork()
 
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window network
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewService::ShowWndNetwork(bool show)
 {
 	if(m_pcWndNetwork)
@@ -529,9 +818,15 @@ void CViewService::ShowWndNetwork(bool show)
 	setCurServiceWnd(SERVICE_NETWORK);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates window licensing
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::CreateWndLicensing()
 {
 	if(m_pcWndLicensing==NULL)
@@ -548,6 +843,16 @@ bool CViewService::CreateWndLicensing()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window licensing
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::DestroyWndLicensing()
 {
 	try
@@ -569,6 +874,16 @@ bool CViewService::DestroyWndLicensing()
 
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window licensing
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewService::ShowWndLicensing(bool show)
 {
 	if(m_pcWndLicensing)
@@ -579,10 +894,15 @@ void CViewService::ShowWndLicensing(bool show)
 	setCurServiceWnd(SERVICE_LICENSING);
 }
 
+/**********************************************************************************************//**
+ * Creates window valves
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewService::CreateWndValves()
 {
 	if(m_pcWndValves==NULL)
@@ -599,6 +919,16 @@ bool CViewService::CreateWndValves()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window valves
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::DestroyWndValves()
 {
 	if(m_pcWndValves)
@@ -611,6 +941,16 @@ bool CViewService::DestroyWndValves()
 
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window valves
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewService::ShowWndValves(bool show)
 {
 	if(m_pcWndValves)
@@ -621,9 +961,15 @@ void CViewService::ShowWndValves(bool show)
 	setCurServiceWnd(SERVICE_VALV);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates window monitor picture
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::CreateWndMonitorPIC()
 {
 	if(m_pcWndMonitorPIC==NULL)
@@ -640,6 +986,16 @@ bool CViewService::CreateWndMonitorPIC()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window monitor picture
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::DestroyWndMonitorPIC()
 {
 	if(m_pcWndMonitorPIC)
@@ -652,6 +1008,16 @@ bool CViewService::DestroyWndMonitorPIC()
 
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window monitor picture
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewService::ShowWndMonitorPIC(bool show)
 {
 	if(m_pcWndMonitorPIC)
@@ -662,26 +1028,40 @@ void CViewService::ShowWndMonitorPIC(bool show)
 	setCurServiceWnd(SERVICE_MON);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Opens this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewService::Open()
 {
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Closes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewService::Close()
 {
 
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CViewService::Show(bool bRedraw)
 {
 	if(bRedraw)
@@ -768,18 +1148,25 @@ void CViewService::Show(bool bRedraw)
 	this->ShowWindow(SW_SHOW);
 }
 
+/**********************************************************************************************//**
+ * Hides this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewService::Hide()
 {
 	this->ShowWindow(SW_HIDE);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewService::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -790,9 +1177,13 @@ void CViewService::OnPaint()
 	// CMVView::OnPaint() soll zum Zeichnen von Meldungen nicht aufgerufen werden.
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets view focus
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewService::SetViewFocus()
 {
 	switch(getCurServiceWnd())
@@ -884,9 +1275,15 @@ void CViewService::SetViewFocus()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Notifies an event
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
+
 void CViewService::NotifyEvent(CMVEvent* pEvent)
 {
 	switch(pEvent->GetET())
@@ -1098,16 +1495,13 @@ void CViewService::NotifyEvent(CMVEvent* pEvent)
 	}
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CViewService::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CViewService::OnDestroy()
 {
 	if(AfxGetApp())
@@ -1135,18 +1529,46 @@ void CViewService::OnDestroy()
 	CMVView::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets previous focus
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::SetPrevFocus()
 {
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Sets next focus
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewService::SetNextFocus()
 {
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
 LRESULT CViewService::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
@@ -1300,12 +1722,30 @@ LRESULT CViewService::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
+/**********************************************************************************************//**
+ * Sets current service window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	serviceWnd	The service window.
+ **************************************************************************************************/
+
 void CViewService::setCurServiceWnd(eServiceView serviceWnd)
 {
 	EnterCriticalSection(&csServiceWnd);
 	m_eCurServiceWnd=serviceWnd;
 	LeaveCriticalSection(&csServiceWnd);
 }
+
+/**********************************************************************************************//**
+ * Gets current service window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The current service window.
+ **************************************************************************************************/
 
 eServiceView CViewService::getCurServiceWnd()
 {

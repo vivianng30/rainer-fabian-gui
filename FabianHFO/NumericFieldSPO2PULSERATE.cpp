@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldSPO2PULSERATE.h"
 
-
-// CNumericFieldSPO2PULSERATE
+/**********************************************************************************************//**
+ * CNumericFieldSPO2PULSERATE
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldSPO2PULSERATE, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldSPO2PULSERATE class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldSPO2PULSERATE::CNumericFieldSPO2PULSERATE(eNumericSize size):
 CNumericField(size)
@@ -18,6 +34,13 @@ CNumericField(size)
 	m_szNameNote=_T("");
 	m_szUnit=_T("[")+getModel()->GetLanguageString(IDS_UNIT_BPM)+_T("]");
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldSPO2PULSERATE class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CNumericFieldSPO2PULSERATE::~CNumericFieldSPO2PULSERATE()
 {
@@ -30,27 +53,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldSPO2PULSERATE, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldSPO2PULSERATE message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldSPO2PULSERATE message handlers
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericFieldSPO2PULSERATE::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CNumericFieldSPO2PULSERATE::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldSPO2PULSERATE::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -135,10 +164,6 @@ bool CNumericFieldSPO2PULSERATE::drawData(bool bData, bool bFrames, bool bText, 
 	return bReturn;
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldSPO2PULSERATE::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -158,9 +183,17 @@ bool CNumericFieldSPO2PULSERATE::drawData(bool bData, bool bFrames, bool bText, 
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldSPO2PULSERATE::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -234,10 +267,17 @@ bool CNumericFieldSPO2PULSERATE::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldSPO2PULSERATE::drawLimits(CDC* pDC)
 {
 	HDC hdc = *pDC;

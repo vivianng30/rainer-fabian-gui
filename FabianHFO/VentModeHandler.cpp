@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	VentModeHandler.cpp.
+ *
+ * Implements the vent mode handler class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "VentModeHandler.h"
 #include "MVModel.h"
@@ -5,23 +11,38 @@
 
 CVentModeHandler* CVentModeHandler::theVentModeHandler=0;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CVentModeHandler class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CVentModeHandler::CVentModeHandler(void)
 {
 	m_pModel = NULL;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CVentModeHandler class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CVentModeHandler::~CVentModeHandler(void)
 {
 }
 
-//=============================================================================
-/**
- * @brief Get the instance of vent mode handler (singleton).
+/**********************************************************************************************//**
+ * Gets the instance
  *
- * @return the instance of data handler
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  *
- **/
-//=============================================================================
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
+
 CVentModeHandler* CVentModeHandler::getInstance()
 {
 	if(theVentModeHandler == 0)
@@ -31,11 +52,13 @@ CVentModeHandler* CVentModeHandler::getInstance()
 	return theVentModeHandler;
 }
 
-//=============================================================================
-/**
- * @brief Destroys the instance of vent mode handler (singleton).
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CVentModeHandler::destroyInstance()
 {
 	if(theVentModeHandler != NULL)
@@ -45,13 +68,13 @@ void CVentModeHandler::destroyInstance()
 	}
 }
 
-//************************************
-// Method:    setIPPV
-// FullName:  CVentModeHandler::setIPPV
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Sets the ippv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CVentModeHandler::setIPPV()
 {
 	if(getModel()->getCONFIG()->GetCurMode()!=VM_IPPV)
@@ -110,13 +133,13 @@ void CVentModeHandler::setIPPV()
 	}
 }
 
-//************************************
-// Method:    setSIPPV
-// FullName:  CVentModeHandler::setSIPPV
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Sets the sippv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CVentModeHandler::setSIPPV()
 {
 	if(getModel()->getCONFIG()->GetCurMode()!=VM_SIPPV)
@@ -176,13 +199,14 @@ void CVentModeHandler::setSIPPV()
 			AfxGetApp()->GetMainWnd()->SetFocus();
 	}
 }
-//************************************
-// Method:    setSIMV
-// FullName:  CVentModeHandler::setSIMV
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+
+/**********************************************************************************************//**
+ * Sets the simv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CVentModeHandler::setSIMV()
 {
 	if(getModel()->getCONFIG()->GetCurMode()!=VM_SIMV)
@@ -243,13 +267,14 @@ void CVentModeHandler::setSIMV()
 			AfxGetApp()->GetMainWnd()->SetFocus();
 	}
 }
-//************************************
-// Method:    setSIMVPSV
-// FullName:  CVentModeHandler::setSIMVPSV
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+
+/**********************************************************************************************//**
+ * Sets the simvpsv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CVentModeHandler::setSIMVPSV()
 {
 	if(getModel()->getCONFIG()->GetCurMode()!=VM_SIMVPSV)
@@ -309,13 +334,14 @@ void CVentModeHandler::setSIMVPSV()
 			AfxGetApp()->GetMainWnd()->SetFocus();
 	}
 }
-//************************************
-// Method:    setPSV
-// FullName:  CVentModeHandler::setPSV
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+
+/**********************************************************************************************//**
+ * Sets the psv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CVentModeHandler::setPSV()
 {
 	if(getModel()->getCONFIG()->GetCurMode()!=VM_PSV)
@@ -376,13 +402,14 @@ void CVentModeHandler::setPSV()
 			AfxGetApp()->GetMainWnd()->SetFocus();
 	}
 }
-//************************************
-// Method:    setHFO
-// FullName:  CVentModeHandler::setHFO
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+
+/**********************************************************************************************//**
+ * Sets the hfo
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CVentModeHandler::setHFO()
 {
 	if(getModel()->getCONFIG()->GetCurMode()!=VM_HFO)
@@ -434,13 +461,14 @@ void CVentModeHandler::setHFO()
 			AfxGetApp()->GetMainWnd()->SetFocus();
 	}
 }
-//************************************
-// Method:    setCPAP
-// FullName:  CVentModeHandler::setCPAP
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+
+/**********************************************************************************************//**
+ * Sets the cpap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CVentModeHandler::setCPAP()
 {
 	if(getModel()->getCONFIG()->GetCurMode()!=VM_CPAP)
@@ -498,13 +526,14 @@ void CVentModeHandler::setCPAP()
 			AfxGetApp()->GetMainWnd()->SetFocus();
 	}
 }
-//************************************
-// Method:    setNCPAP
-// FullName:  CVentModeHandler::setNCPAP
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+
+/**********************************************************************************************//**
+ * Sets the ncpap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CVentModeHandler::setNCPAP()
 {
 	if(getModel()->getCONFIG()->GetCurMode()!=VM_NCPAP)
@@ -574,13 +603,14 @@ void CVentModeHandler::setNCPAP()
 			AfxGetApp()->GetMainWnd()->SetFocus();
 	}
 }
-//************************************
-// Method:    setDUOPAP
-// FullName:  CVentModeHandler::setDUOPAP
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+
+/**********************************************************************************************//**
+ * Sets the duopap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CVentModeHandler::setDUOPAP()
 {
 	if(getModel()->getCONFIG()->GetCurMode()!=VM_DUOPAP)
@@ -653,13 +683,13 @@ void CVentModeHandler::setDUOPAP()
 	}
 }
 
-//************************************
-// Method:    setTHERAPIE
-// FullName:  CVentModeHandler::setTHERAPIE
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Sets the therapie
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CVentModeHandler::setTHERAPIE()
 {
 	if(getModel()->getCONFIG()->GetCurMode()!=VM_THERAPIE)
@@ -705,14 +735,16 @@ void CVentModeHandler::setTHERAPIE()
 			AfxGetApp()->GetMainWnd()->SetFocus();
 	}
 }
-//=============================================================================
-/**
- * @brief Get the instance of the model (singleton).
+
+/**********************************************************************************************//**
+ * Gets the model
  *
- * @return the instance of the model
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  *
- **/
-//=============================================================================
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CVentModeHandler::getModel()
 {
 	if(m_pModel==NULL)
@@ -720,15 +752,19 @@ CMVModel *CVentModeHandler::getModel()
 	return m_pModel;
 }
 
-//************************************
-// Method:    changeVentMode
-// FullName:  CVentModeHandler::changeVentMode
-// Access:    public 
-// Returns:   bool
-// Qualifier:
-// Parameter: eVentMode state
-// Parameter: int iSetAlarmSilent
-//************************************
+/**********************************************************************************************//**
+ * Change vent mode
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	state		   	The state.
+ * \param	iSetAlarmSilent	Zero-based index of the set alarm silent.
+ * \param	bStopFOT	   	True to stop fot.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CVentModeHandler::changeVentMode(eVentMode state, int iSetAlarmSilent, bool bStopFOT)
 {
 	if(bStopFOT && getModel()->getDATAHANDLER()->isFOTLicenseAvailable() && getModel()->getFOTThread())
@@ -828,13 +864,13 @@ bool CVentModeHandler::changeVentMode(eVentMode state, int iSetAlarmSilent, bool
 	return true;
 }
 
-//************************************
-// Method:    changeToPrevMode
-// FullName:  CVentModeHandler::changeToPrevMode
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
+/**********************************************************************************************//**
+ * Change to previous mode
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CVentModeHandler::changeToPrevMode()
 {
 	switch(getModel()->getCONFIG()->GetPrevMode())
@@ -999,6 +1035,15 @@ void CVentModeHandler::changeToPrevMode()
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets current active mode
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The current active mode.
+ **************************************************************************************************/
+
 eVentMode CVentModeHandler::getCurrentActiveMode()
 {
 	eVentMode eActive=VM_NONE;
@@ -1008,6 +1053,16 @@ eVentMode CVentModeHandler::getCurrentActiveMode()
 		eActive=getModel()->getCONFIG()->GetPrevMode();
 	return eActive;
 }
+
+/**********************************************************************************************//**
+ * Determines if we can active mode is ncpap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CVentModeHandler::activeModeIsNCPAP()
 {
 	if(getCurrentActiveMode()==VM_NCPAP)
@@ -1015,6 +1070,16 @@ bool CVentModeHandler::activeModeIsNCPAP()
 	else
 		return false;
 }
+
+/**********************************************************************************************//**
+ * Determines if we can active mode is duopap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CVentModeHandler::activeModeIsDUOPAP()
 {
 	if(getCurrentActiveMode()==VM_DUOPAP)
@@ -1022,6 +1087,16 @@ bool CVentModeHandler::activeModeIsDUOPAP()
 	else
 		return false;
 }
+
+/**********************************************************************************************//**
+ * Determines if we can active mode is therapy
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CVentModeHandler::activeModeIsTHERAPY()
 {
 	if(getCurrentActiveMode()==VM_THERAPIE)
@@ -1029,6 +1104,16 @@ bool CVentModeHandler::activeModeIsTHERAPY()
 	else
 		return false;
 }
+
+/**********************************************************************************************//**
+ * Determines if we can active mode is cpap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CVentModeHandler::activeModeIsCPAP()
 {
 	if(getCurrentActiveMode()==VM_CPAP)
@@ -1036,6 +1121,16 @@ bool CVentModeHandler::activeModeIsCPAP()
 	else
 		return false;
 }
+
+/**********************************************************************************************//**
+ * Determines if we can active mode is ippv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CVentModeHandler::activeModeIsIPPV()
 {
 	if(getCurrentActiveMode()==VM_IPPV)
@@ -1043,6 +1138,15 @@ bool CVentModeHandler::activeModeIsIPPV()
 	else
 		return false;
 }
+
+/**********************************************************************************************//**
+ * Determines if we can active mode is sippv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CVentModeHandler::activeModeIsSIPPV()
 {
@@ -1052,6 +1156,15 @@ bool CVentModeHandler::activeModeIsSIPPV()
 		return false;
 }
 
+/**********************************************************************************************//**
+ * Determines if we can active mode is simv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CVentModeHandler::activeModeIsSIMV()
 {
 	if(getCurrentActiveMode()==VM_SIMV)
@@ -1060,6 +1173,15 @@ bool CVentModeHandler::activeModeIsSIMV()
 		return false;
 }
 
+/**********************************************************************************************//**
+ * Determines if we can active mode is hfo
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CVentModeHandler::activeModeIsHFO()
 {
 	if(getCurrentActiveMode()==VM_HFO)
@@ -1067,6 +1189,16 @@ bool CVentModeHandler::activeModeIsHFO()
 	else
 		return false;
 }
+
+/**********************************************************************************************//**
+ * Determines if we can active mode has psv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CVentModeHandler::activeModeHasPSV()
 {
 	if(		getCurrentActiveMode()==VM_PSV
@@ -1075,6 +1207,16 @@ bool CVentModeHandler::activeModeHasPSV()
 	else
 		return false;
 }
+
+/**********************************************************************************************//**
+ * Determines if we can active mode is view model psv
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CVentModeHandler::activeModeIsVM_PSV()
 {
 	if(getCurrentActiveMode()==VM_PSV)
@@ -1082,6 +1224,16 @@ bool CVentModeHandler::activeModeIsVM_PSV()
 	else
 		return false;
 }
+
+/**********************************************************************************************//**
+ * Determines if we can mode is ps vmode
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CVentModeHandler::modeIsPSVmode()
 {
 	if(getModel()->getCONFIG()->GetCurMode()==VM_PSV)
@@ -1095,6 +1247,15 @@ bool CVentModeHandler::modeIsPSVmode()
 	else
 		return false;
 }
+
+/**********************************************************************************************//**
+ * Determines if we can view mode is any nmode
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CVentModeHandler::viewModeIsAnyNMODE()
 {
@@ -1112,6 +1273,15 @@ bool CVentModeHandler::viewModeIsAnyNMODE()
 		return false;
 }
 
+/**********************************************************************************************//**
+ * Determines if we can active mode is nmode
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CVentModeHandler::activeModeIsNMODE()
 {
 	eVentMode eActive=getCurrentActiveMode();
@@ -1122,6 +1292,16 @@ bool CVentModeHandler::activeModeIsNMODE()
 	else
 		return false;
 }
+
+/**********************************************************************************************//**
+ * Determines if we can current mode is conventional mode
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CVentModeHandler::curModeIsConventionalMode()
 {
 	bool bResult = false;
@@ -1143,6 +1323,16 @@ bool CVentModeHandler::curModeIsConventionalMode()
 
 	return bResult;
 }
+
+/**********************************************************************************************//**
+ * Determines if we can current mode is volume support mode
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CVentModeHandler::curModeIsVolumeSupportMode()
 {
 	bool bResult = false;
@@ -1167,6 +1357,15 @@ bool CVentModeHandler::curModeIsVolumeSupportMode()
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Determines if we can current mode is convert trigger mode
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CVentModeHandler::curModeIsCONVTriggerMode()
 {
 	bool bResult = false;
@@ -1187,6 +1386,15 @@ bool CVentModeHandler::curModeIsCONVTriggerMode()
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Determines if we can current mode is convert trigger preset mode
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CVentModeHandler::curModeIsCONVTriggerPresetMode()
 {
 	bool bResult = false;
@@ -1203,6 +1411,15 @@ bool CVentModeHandler::curModeIsCONVTriggerPresetMode()
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Determines if we can active mode is convert trigger
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CVentModeHandler::activeModeIsCONVTrigger()
 {
 	bool bResult = false;
@@ -1218,6 +1435,15 @@ bool CVentModeHandler::activeModeIsCONVTrigger()
 	return bResult;
 }
 
+/**********************************************************************************************//**
+ * Determines if we can active mode is nmode trigger
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CVentModeHandler::activeModeIsNMODETrigger()
 {
 	bool bResult = false;
@@ -1232,6 +1458,15 @@ bool CVentModeHandler::activeModeIsNMODETrigger()
 
 	return bResult;
 }
+
+/**********************************************************************************************//**
+ * Determines if we can active mode is trigger
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CVentModeHandler::activeModeIsTrigger()
 {

@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldSPACE.h"
 
-
-// CNumericFieldSPACE
+/**********************************************************************************************//**
+ * CNumericFieldSPACE
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldSPACE, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldSPACE class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldSPACE::CNumericFieldSPACE(eNumericSize size):
 CNumericField(size)
@@ -17,6 +33,13 @@ CNumericField(size)
 	m_szNameNote=_T("");
 	m_szUnit=_T("");
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldSPACE class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CNumericFieldSPACE::~CNumericFieldSPACE()
 {
@@ -29,17 +52,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldSPACE, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldSPACE message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldSPACE message handlers
 void CNumericFieldSPACE::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldSPACE::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -77,10 +116,17 @@ bool CNumericFieldSPACE::drawData(bool bData, bool bFrames, bool bText, bool bLi
 	return bReturn;
 }
 
+/**********************************************************************************************//**
+ * Draw frames
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldSPACE::drawFrames(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -134,19 +180,34 @@ bool CNumericFieldSPACE::drawFrames(CDC* pDC)
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldSPACE::drawStaticText(CDC* pDC)
 {
 
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldSPACE::drawLimits(CDC* pDC)
 {
 	

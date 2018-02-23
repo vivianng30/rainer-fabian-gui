@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldMECHANIC.h"
 
-
-// CNumericFieldMECHANIC
+/**********************************************************************************************//**
+ * CNumericFieldMECHANIC
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldMECHANIC, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldMECHANIC class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldMECHANIC::CNumericFieldMECHANIC(eNumericSize size):
 CNumericField(size)
@@ -49,6 +65,13 @@ CNumericField(size)
 	m_szUnit=_T("");
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldMECHANIC class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CNumericFieldMECHANIC::~CNumericFieldMECHANIC()
 {
 }
@@ -60,27 +83,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldMECHANIC, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldMECHANIC message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldMECHANIC message handlers
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericFieldMECHANIC::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CNumericFieldMECHANIC::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldMECHANIC::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -232,10 +261,6 @@ bool CNumericFieldMECHANIC::drawData(bool bData, bool bFrames, bool bText, bool 
 	return bReturn;
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldMECHANIC::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -255,9 +280,17 @@ bool CNumericFieldMECHANIC::drawData(bool bData, bool bFrames, bool bText, bool 
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldMECHANIC::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -336,10 +369,17 @@ bool CNumericFieldMECHANIC::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldMECHANIC::drawLimits(CDC* pDC)
 {
 	

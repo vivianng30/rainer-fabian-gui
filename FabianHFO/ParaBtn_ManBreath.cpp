@@ -11,15 +11,41 @@ extern HFONT g_hf7AcuNorm;
 extern HFONT g_hf7AcuBold;
 extern HFONT g_hf31AcuBold;
 
-// CParaBtn_ManBreath
+/**********************************************************************************************//**
+ * CParaBtn_ManBreath
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CParaBtn_ManBreath, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaBtn_ManBreath class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	btn		   	The button.
+ * \param	nOffset	   	The offset.
+ * \param	bScrollOver	True to scroll over.
+ **************************************************************************************************/
 
 CParaBtn_ManBreath::CParaBtn_ManBreath(BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_ManBreath class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_ManBreath::~CParaBtn_ManBreath()
 {
@@ -37,9 +63,15 @@ BEGIN_MESSAGE_MAP(CParaBtn_ManBreath, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CParaBtn_ManBreath message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
-
-// CParaBtn_ManBreath message handlers
 void CParaBtn_ManBreath::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -137,8 +169,16 @@ void CParaBtn_ManBreath::Draw(int nState)
 	}
 }
 
-
-
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_ManBreath::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {

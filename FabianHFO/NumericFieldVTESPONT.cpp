@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldVTESPONT.h"
 
-
-// CNumericFieldVTESPONT
+/**********************************************************************************************//**
+ * CNumericFieldVTESPONT
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldVTESPONT, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldVTESPONT class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldVTESPONT::CNumericFieldVTESPONT(eNumericSize size):
 CNumericField(size)
@@ -17,6 +33,13 @@ CNumericField(size)
 	m_szNameNote=getModel()->GetLanguageString(IDS_PARA_TE) + _T(" ") + getModel()->GetLanguageString(IDS_PARA_PAT);
 	m_szUnit=_T("[")+getModel()->GetLanguageString(IDS_UNIT_MILLILITER)+_T("]");
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldVTESPONT class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CNumericFieldVTESPONT::~CNumericFieldVTESPONT()
 {
@@ -29,27 +52,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldVTESPONT, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldVTESPONT message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldVTESPONT message handlers
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericFieldVTESPONT::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CNumericFieldVTESPONT::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldVTESPONT::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -136,9 +165,6 @@ bool CNumericFieldVTESPONT::drawData(bool bData, bool bFrames, bool bText, bool 
 }
 
 
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldVTESPONT::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -158,9 +184,17 @@ bool CNumericFieldVTESPONT::drawData(bool bData, bool bFrames, bool bText, bool 
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldVTESPONT::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -234,10 +268,17 @@ bool CNumericFieldVTESPONT::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldVTESPONT::drawLimits(CDC* pDC)
 {
 	

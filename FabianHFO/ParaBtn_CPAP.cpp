@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	ParaBtn_CPAP.cpp.
+ *
+ * Implements the para button cpap class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "ParaBtn_CPAP.h"
 #include "globDefs.h"
@@ -7,11 +13,29 @@ extern HFONT g_hf7AcuNorm;
 extern HFONT g_hf14AcuBold;
 extern HFONT g_hf31AcuBold;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaBtn_CPAP class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	btn		   	The button.
+ * \param	nOffset	   	The offset.
+ * \param	bScrollOver	True to scroll over.
+ **************************************************************************************************/
+
 CParaBtn_CPAP::CParaBtn_CPAP(BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_CPAP class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_CPAP::~CParaBtn_CPAP(void)
 {
@@ -30,7 +54,14 @@ BEGIN_MESSAGE_MAP(CParaBtn_CPAP, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
 void CParaBtn_CPAP::Draw(int nState)
 {
@@ -204,7 +235,16 @@ void CParaBtn_CPAP::Draw(int nState)
 	}
 }
 
-
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_CPAP::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
@@ -515,6 +555,16 @@ void CParaBtn_CPAP::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 	m_bLMouseButtonDown = false;
 }
+
+/**********************************************************************************************//**
+ * Executes the l button up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CParaBtn_CPAP::OnLButtonUp(UINT nFlags, CPoint point) 
 {

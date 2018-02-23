@@ -17,8 +17,13 @@ CInterfaceCO2* CInterfaceCO2::theETCO2Interface=0;
 BYTE CInterfaceCO2::m_iCO2module=0;
 CList<LPCO2MSG, LPCO2MSG>  CInterfaceCO2::MSGSendETCO2;
 
+/**********************************************************************************************//**
+ * CInterfaceCO2
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
-// CInterfaceCO2
 CInterfaceCO2::CInterfaceCO2()
 {
 	InitializeCriticalSection(&csMSGSendETCO2);
@@ -76,6 +81,13 @@ CInterfaceCO2::CInterfaceCO2()
 
 	
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CInterfaceCO2 class
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
 CInterfaceCO2::~CInterfaceCO2()
 {
@@ -152,6 +164,18 @@ CInterfaceCO2::~CInterfaceCO2()
 	DeleteCriticalSection(&csErrorDataCO2);
 }
 
+/**********************************************************************************************//**
+ * Shows the error
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	lError			The error.
+ * \param	lptszMessage	Message describing the lptsz.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CInterfaceCO2::ShowError (LONG lError, LPCTSTR lptszMessage)
 {
 	// Generate a message text
@@ -163,13 +187,32 @@ int CInterfaceCO2::ShowError (LONG lError, LPCTSTR lptszMessage)
 	//::MessageBox(0,tszMessage,_T("Listener"), MB_ICONSTOP|MB_OK);
 	return 1;
 }
+
+/**********************************************************************************************//**
+ * Gets module version
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The module version.
+ **************************************************************************************************/
+
 CString CInterfaceCO2::get_ModuleVersion()
 {
 	return m_szVersion;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets an instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	iCO2module	Zero-based index of the co2module.
+ *
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
+
 CInterfaceCO2* CInterfaceCO2::GetInstance(BYTE iCO2module)
 {
 	if(theETCO2Interface == 0)
@@ -183,9 +226,13 @@ CInterfaceCO2* CInterfaceCO2::GetInstance(BYTE iCO2module)
 	return theETCO2Interface;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2::DestroyInstance()
 {
 	if(theETCO2Interface != NULL)
@@ -195,151 +242,430 @@ void CInterfaceCO2::DestroyInstance()
 	}
 }
 
-//=============================================================================
-/**
- * @brief Get the instance of the model (singleton).
+/**********************************************************************************************//**
+ * Gets maximum operation hrs calibration
  *
- * @return the instance of the model
+ * \author	Rainer Kühner
+ * \date	21.02.2018
  *
- **/
-//=============================================================================
-//CMVModel *CInterfaceCO2::getModel()
-//{
-//	if(m_pModel==NULL)
-//		m_pModel=CMVModel::GetInstance();
-//	return m_pModel;
-//}
+ * \return	The maximum operation hrs calibration.
+ **************************************************************************************************/
+
 int CInterfaceCO2::get_MaxOpHRSCalibration()
 {
 	return 0;
 }
+
+/**********************************************************************************************//**
+ * Gets remain service hrs
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	The remain service hrs.
+ **************************************************************************************************/
+
 int CInterfaceCO2::get_RemainServiceHrs()
 {
 	return 0;
 }
+
+ /**********************************************************************************************//**
+  * Gets calibration date time
+  *
+  * \author	Rainer Kühner
+  * \date	21.02.2018
+  *
+  * \return	The calibration date time.
+  **************************************************************************************************/
+
  COleDateTime CInterfaceCO2::get_CalibrationDateTime()
 {
 	COleDateTime dtTimeLastTrend;
 	return dtTimeLastTrend;
 }
+
+/**********************************************************************************************//**
+ * Gets the last calibration date
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2::get_LastCalDate()
 {
 
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is pump on
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if pump on, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2::isPumpOn()
 {
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is co2 value valid
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if the co2 value is valid, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2::isCO2ValueValid()
 {
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is etco2 value valid
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if the etco2 value is valid, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2::isETCO2ValueValid()
 {
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is frequency value valid
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if the frequency value is valid, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2::isFreqValueValid()
 {
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is fico2 value valid
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if the fico2 value is valid, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2::isFICO2ValueValid()
 {
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Change co2 unit
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	unitNew	The unit new.
+ * \param	unitOld	The unit old.
+ **************************************************************************************************/
+
 void CInterfaceCO2::changeCO2Unit(eCO2unit unitNew,eCO2unit unitOld)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Check module state
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2::CheckModuleState()
 {
 
 }
+
+/**********************************************************************************************//**
+ * Turn off
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2::turnOff()
 {
 
 }
+
+/**********************************************************************************************//**
+ * Sets gas compensation
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	byO2Compensation	The by o 2 compensation.
+ * \param	byBalanceGas		The by balance gas.
+ * \param	iAnestAgent			Zero-based index of the anest agent.
+ **************************************************************************************************/
+
 void CInterfaceCO2::set_GasCompensation(BYTE byO2Compensation, BYTE byBalanceGas, SHORT iAnestAgent)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Gets gas compensation
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2::get_GasCompensation()
 {
 
 }
+
+/**********************************************************************************************//**
+ * Sets baro pressure
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceCO2::set_BaroPressure(SHORT val)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Gets baro pressure
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2::get_BaroPressure()
 {
 
 }
+
+/**********************************************************************************************//**
+ * Sets patient mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceCO2::set_PatientMode(BYTE val)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Gets patient mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2::get_PatientMode()
 {
 
 }
+
+/**********************************************************************************************//**
+ * Sets measurement mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CInterfaceCO2::set_MeasurementMode(BYTE val)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Gets measurement mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2::get_MeasurementMode()
 {
 
 }
+
+/**********************************************************************************************//**
+ * Sets pump state on
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bGetExState	True to get ex state.
+ **************************************************************************************************/
+
 void CInterfaceCO2::set_PumpStateOn(bool bGetExState)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Sets pump state off
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	bGetExState	True to get ex state.
+ **************************************************************************************************/
+
 void CInterfaceCO2::set_PumpStateOff(bool bGetExState)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Sets the configuration
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2::set_Configuration()
 {
 
 }
+
+/**********************************************************************************************//**
+ * Sets standby mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CInterfaceCO2::set_StandbyMode(bool state)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Gets standby mode
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceCO2::get_StandbyMode()
 {
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Sets restart breath algorithm
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2::set_restartBreathAlgorithm()
 {
 
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is calibration due
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if calibration due, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2::isCalibrationDue()
 {
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is service due
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if service due, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2::isServiceDue()
 {
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is system date ok
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	True if system date ok, false if not.
+ **************************************************************************************************/
+
 bool CInterfaceCO2::isSystemDateOk()
 {
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Retry connection
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2::retryConnection()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_RETRYCO2);
 }
+
+/**********************************************************************************************//**
+ * Zero calibration
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2::zeroCalibration()
 
 {
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Starts etco2 thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2::startETCO2Thread(void)
 {
 	//###########send thread####################
@@ -383,16 +709,13 @@ void CInterfaceCO2::startETCO2Thread(void)
 	m_pcwtETCO2InitThread->ResumeThread();
 }
 
-//************************************
-// Method:    stopETCO2Thread
-// FullName:  CInterfaceCO2::stopETCO2Thread
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Stops etco2 thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2::stopETCO2Thread(void)
 {
 	if(m_bDoETCO2SendThread)
@@ -459,10 +782,13 @@ void CInterfaceCO2::stopETCO2Thread(void)
 	}*/
 }
 
+/**********************************************************************************************//**
+ * Starts etco2check thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CInterfaceCO2::startETCO2checkThread(void)
 {
 	//###########check thread####################
@@ -486,16 +812,13 @@ void CInterfaceCO2::startETCO2checkThread(void)
 	m_pcwtETCO2checkThread->ResumeThread();
 }
 
-//************************************
-// Method:    stopETCO2checkThread
-// FullName:  CInterfaceCO2::stopETCO2checkThread
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Stops etco2check thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2::stopETCO2checkThread(void)
 {
 	if(m_bDoETCO2checkThread)
@@ -517,17 +840,17 @@ void CInterfaceCO2::stopETCO2checkThread(void)
 	}
 }
 
-//#####################################SendThread########################################
-//************************************
-// Method:    CETCO2SendThread
-// FullName:  CETCO2SendThread
-// Access:    public static 
-// Returns:   UINT
-// Qualifier:
-// Parameter: LPVOID pc
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * etco2 send thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CETCO2SendThread( LPVOID pc )
 {
 	try
@@ -558,16 +881,15 @@ static UINT CETCO2SendThread( LPVOID pc )
 	return TRUE;
 }
 
-//************************************
-// Method:    SendETCO2Data
-// FullName:  CInterfaceCO2::SendETCO2Data
-// Access:    protected 
-// Returns:   DWORD
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Sends the etco2 data
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CInterfaceCO2::SendETCO2Data(void) 
 {
 	CeSetThreadPriority(m_pcwtETCO2SendThread->m_hThread,130);
@@ -617,16 +939,18 @@ DWORD CInterfaceCO2::SendETCO2Data(void)
 
 
 //#####################################CheckThread########################################
-//************************************
-// Method:    CETCO2checkThread
-// FullName:  CETCO2checkThread
-// Access:    public static 
-// Returns:   UINT
-// Qualifier:
-// Parameter: LPVOID pc
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * etco2check thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CETCO2checkThread( LPVOID pc )
 {
 	try
@@ -657,16 +981,15 @@ static UINT CETCO2checkThread( LPVOID pc )
 	return TRUE;
 }
 
-//************************************
-// Method:    ETCO2check
-// FullName:  CInterfaceCO2::ETCO2check
-// Access:    protected 
-// Returns:   DWORD
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Etco2check
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CInterfaceCO2::ETCO2check(void) 
 {
 	CeSetThreadPriority(m_pcwtETCO2checkThread->m_hThread,130);
@@ -693,17 +1016,17 @@ DWORD CInterfaceCO2::ETCO2check(void)
 	return 0;
 }
 
-//#############################################################################
-//************************************
-// Method:    CETCO2InitThread
-// FullName:  CETCO2InitThread
-// Access:    public static 
-// Returns:   UINT
-// Qualifier:
-// Parameter: LPVOID pc
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * etco2 initialize thread
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CETCO2InitThread( LPVOID pc )
 {
 	try
@@ -734,16 +1057,15 @@ static UINT CETCO2InitThread( LPVOID pc )
 	return TRUE;
 }
 
-//************************************
-// Method:    ETCO2Init
-// FullName:  CInterfaceCO2::ETCO2Init
-// Access:    protected 
-// Returns:   DWORD
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Etco2 initialize
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CInterfaceCO2::ETCO2Init(void) 
 {
 	CeSetThreadPriority(m_pcwtETCO2InitThread->m_hThread,130);
@@ -801,9 +1123,15 @@ DWORD CInterfaceCO2::ETCO2Init(void)
 	return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Send this message
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ *
+ * \param	msg	The message.
+ **************************************************************************************************/
+
 void CInterfaceCO2::send(LPCO2MSG msg)
 {
 	EnterCriticalSection(&csMSGSendETCO2);
@@ -827,9 +1155,13 @@ void CInterfaceCO2::send(LPCO2MSG msg)
 	*/
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Updates the last co2 command
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2::UpdateLastCO2Cmd()
 {
 	EnterCriticalSection(&csUpdateDataCO2);
@@ -838,6 +1170,14 @@ void CInterfaceCO2::UpdateLastCO2Cmd()
 
 
 }
+
+/**********************************************************************************************//**
+ * Check last co2 command
+ *
+ * \author	Rainer Kühner
+ * \date	21.02.2018
+ **************************************************************************************************/
+
 void CInterfaceCO2::CheckLastCO2Cmd()
 {
 	EnterCriticalSection(&csUpdateDataCO2);
@@ -910,12 +1250,3 @@ void CInterfaceCO2::CheckLastCO2Cmd()
 	}
 }
 
-//bool CInterfaceCO2::IsConnected()
-//{
-//	return m_bConnected;
-//}
-
-//bool CInterfaceCO2::writeBufferStarted()
-//{
-//	return m_bStartWriteBuffer;
-//}

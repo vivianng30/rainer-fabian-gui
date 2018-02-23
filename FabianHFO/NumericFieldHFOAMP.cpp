@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldHFOAMP.h"
 
-
-// CNumericFieldHFOAMP
+/**********************************************************************************************//**
+ * CNumericFieldHFOAMP
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldHFOAMP, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldHFOAMP class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldHFOAMP::CNumericFieldHFOAMP(eNumericSize size):
 CNumericField(size)
@@ -25,6 +41,13 @@ CNumericField(size)
 	}
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldHFOAMP class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CNumericFieldHFOAMP::~CNumericFieldHFOAMP()
 {
 }
@@ -36,27 +59,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldHFOAMP, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldHFOAMP message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldHFOAMP message handlers
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericFieldHFOAMP::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CNumericFieldHFOAMP::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldHFOAMP::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -138,9 +167,6 @@ bool CNumericFieldHFOAMP::drawData(bool bData, bool bFrames, bool bText, bool bL
 }
 
 
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldHFOAMP::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -160,9 +186,17 @@ bool CNumericFieldHFOAMP::drawData(bool bData, bool bFrames, bool bText, bool bL
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldHFOAMP::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -236,10 +270,17 @@ bool CNumericFieldHFOAMP::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldHFOAMP::drawLimits(CDC* pDC)
 {
 

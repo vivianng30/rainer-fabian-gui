@@ -12,18 +12,65 @@ extern HFONT g_hf31AcuBold;
 extern HFONT g_hf8AcuBold;
 extern HFONT g_hf23AcuBold;
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtsubbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTSUBBTNDW			0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
-// CParaBtn_TRIGGERNMODE
+/**********************************************************************************************//**
+ * CParaBtn_TRIGGERNMODE
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	btn		   	The button.
+ * \param	nOffset	   	The offset.
+ * \param	bScrollOver	True to scroll over.
+ **************************************************************************************************/
 
 CParaBtn_TRIGGERNMODE::CParaBtn_TRIGGERNMODE(BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_TRIGGERNMODE class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_TRIGGERNMODE::~CParaBtn_TRIGGERNMODE()
 {
@@ -43,13 +90,15 @@ BEGIN_MESSAGE_MAP(CParaBtn_TRIGGERNMODE, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CParaBtn_TRIGGERNMODE message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
-
-// CParaBtn_TRIGGERNMODE message handlers
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CParaBtn_TRIGGERNMODE::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -192,7 +241,16 @@ void CParaBtn_TRIGGERNMODE::Draw(int nState)
 	}
 }
 
-
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_TRIGGERNMODE::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
@@ -267,6 +325,13 @@ void CParaBtn_TRIGGERNMODE::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	m_bLMouseButtonDown = false;
 }
 
+/**********************************************************************************************//**
+ * Triggers this instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CParaBtn_TRIGGERNMODE::Trigger()
 {
 
@@ -279,6 +344,15 @@ void CParaBtn_TRIGGERNMODE::Trigger()
 	}
 
 }
+
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
 
 void CParaBtn_TRIGGERNMODE::OnTimer(UINT_PTR nIDEvent)
 {

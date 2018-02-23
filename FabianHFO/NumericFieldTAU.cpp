@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldTAU.h"
 
-
-// CNumericFieldTAU
+/**********************************************************************************************//**
+ * CNumericFieldTAU
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldTAU, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldTAU class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldTAU::CNumericFieldTAU(eNumericSize size):
 CNumericField(size)
@@ -25,6 +41,13 @@ CNumericField(size)
 	
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldTAU class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CNumericFieldTAU::~CNumericFieldTAU()
 {
 }
@@ -36,27 +59,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldTAU, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldTAU message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldTAU message handlers
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericFieldTAU::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CNumericFieldTAU::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldTAU::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -155,10 +184,6 @@ bool CNumericFieldTAU::drawData(bool bData, bool bFrames, bool bText, bool bLimi
 	return bReturn;
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldTAU::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -178,9 +203,17 @@ bool CNumericFieldTAU::drawData(bool bData, bool bFrames, bool bText, bool bLimi
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldTAU::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -235,10 +268,17 @@ bool CNumericFieldTAU::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldTAU::drawLimits(CDC* pDC)
 {
 	

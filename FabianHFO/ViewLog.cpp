@@ -7,18 +7,15 @@
 #include "LangAdmin.h"
 #include "globDefs.h"
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CViewLog class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iViewID	Identifier for the view.
+ **************************************************************************************************/
 
-
-
-//global font objects
-//extern HFONT g_hf15AcuMed;
-
-//extern CLangAdmin* g_pGlobalLanguageStrings;
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 CViewLog::CViewLog(int iViewID):
 CMVView(iViewID)
 {
@@ -31,9 +28,13 @@ CMVView(iViewID)
 	m_pWndAlarmLog=NULL;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Finalizes an instance of the CViewLog class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CViewLog::~CViewLog(void)
 {
 	
@@ -45,10 +46,15 @@ BEGIN_MESSAGE_MAP(CViewLog, CMVView)
 	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * Creates the view
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewLog::CreateView()
 {
 	RECT rcLd={6,220,600,535};
@@ -62,9 +68,21 @@ bool CViewLog::CreateView()
 
 	return true;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CViewLog::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 
@@ -98,9 +116,15 @@ BOOL CViewLog::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewLog::Initialize()
 {
 	CreateWndAlarmLog();
@@ -184,6 +208,20 @@ bool CViewLog::Initialize()
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CViewLog::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -213,9 +251,15 @@ LRESULT CViewLog::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates window alarm log
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewLog::CreateWndAlarmLog()
 {
 	if(m_pWndAlarmLog==NULL)
@@ -238,6 +282,16 @@ bool CViewLog::CreateWndAlarmLog()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window alarm log
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewLog::DestroyWndAlarmLog()
 {
 	if(m_pWndAlarmLog)
@@ -248,6 +302,16 @@ bool CViewLog::DestroyWndAlarmLog()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window alarm log
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewLog::ShowWndAlarmLog(bool show)
 {
 	m_pWndAlarmLog->Show(show);
@@ -255,180 +319,37 @@ void CViewLog::ShowWndAlarmLog(bool show)
 
 }
 
-//http://www.codeproject.com/KB/combobox/logcontrol.aspx
+/**********************************************************************************************//**
+ * Opens this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-
-//http://www.codeproject.com/KB/combobox/hscroll_listbox.aspx
-//int CViewLog::AddString(LPCTSTR s)
-//{
-//	int result = pListBox->AddString(s);
-//	if(result < 0)
-//		return result;
-//	updateWidth(s);
-//	return result;
-//}
-//
-//
-//int CViewLog::InsertString(int i, LPCTSTR s)
-//{
-//	int result = pListBox->InsertString(i, s);
-//	if(result < 0)
-//		return result;
-//	updateWidth(s);
-//	return result;
-//}
-//
-//void CViewLog::updateWidth(LPCTSTR s)
-//{
-//	//CClientDC dc(this);
-//	CDC *pDC = pListBox->GetDC();
-//
-//	CFont * f = pListBox->GetFont();
-//	pDC->SelectObject(f);
-//
-//	CSize sz = pDC->GetTextExtent(s, _tcslen(s));
-//	sz.cx += 3 * ::GetSystemMetrics(SM_CXBORDER);
-//	if(sz.cx > width)
-//	{ /* extend */
-//		width = sz.cx;
-//		pListBox->SetHorizontalExtent(width);
-//	} /* extend */
-//}
-//
-//void CViewLog::ResetContent()
-//{
-//	pListBox->ResetContent();
-//	width = 0;
-//}
-//
-//int CViewLog::DeleteString(int n)
-//{
-//	int result = pListBox->DeleteString(n);
-//	if(result < 0)
-//		return result;
-//	//CClientDC dc(this);
-//	CDC *pDC = pListBox->GetDC();
-//
-//	CFont * f = pListBox->GetFont();
-//	pDC->SelectObject(f);
-//
-//	width = 0;
-//	for(int i = 0; i < pListBox->GetCount(); i++)
-//	{ /* scan strings */
-//		CStringW s;
-//		pListBox->GetText(i, s);
-//		CSize sz = pDC->GetTextExtent(s);
-//		sz.cx += 3 * ::GetSystemMetrics(SM_CXBORDER);
-//		if(sz.cx > width)
-//			width = sz.cx;
-//	} /* scan strings */
-//	pListBox->SetHorizontalExtent(width);
-//	return result;
-//}
-
-
-
-//void CViewLog::SetHorizontalExtent(/*CListBox& ListBox*/)
-//{
-//	int nMaxTextWidth = 0;
-//
-//	CDC *pDC = pListBox->GetDC();
-//
-//	if (pDC)
-//	{
-//		CFont *pOldFont = pDC->SelectObject(pListBox->GetFont());
-//
-//		CStringW Text;
-//		const int nItems = pListBox->GetCount();
-//
-//		for (int i = 0; i < nItems; i++)
-//		{
-//			pListBox->GetText(i, Text);
-//
-//			Text += "X";  // otherwise item may be clipped.
-//
-//			const int nTextWidth = pDC->GetTextExtent(Text).cx;
-//
-//			if (nTextWidth > nMaxTextWidth)
-//			{
-//				nMaxTextWidth = nTextWidth;
-//			}
-//		}
-//
-//		pDC->SelectObject(pOldFont);
-//
-//		VERIFY(pListBox->ReleaseDC(pDC) != 0);
-//	}
-//	else
-//	{
-//		ASSERT(FALSE);
-//	}
-//
-//	pListBox->SetHorizontalExtent(nMaxTextWidth);
-//}
-
-
-// **************************************************************************
-// 
-// **************************************************************************
-//bool CViewLog::CreateWndMenuCalibration()
-//{
-//	// **********************************************************************
-//	// Init. line diagram
-//	if(m_pWndMenuCalibration==NULL && m_lX>-1)
-//	{
-//
-//
-//		m_pWndMenuCalibration = new CWndMenuCalibration(this);
-//		RECT rcLd={0,550,800,600};
-//
-//		//RECT rcLd={477,0,640,435};
-//		if(m_pWndMenuCalibration->Create(AfxGetApp()->GetMainWnd(),rcLd,IDC_VIEW_CALMENU))
-//		{
-//
-//			m_pWndMenuCalibration->Init();
-//
-//
-//			return true;
-//		}
-//
-//
-//	}
-//	return false;
-//}
-
-// **************************************************************************
-// 
-// **************************************************************************
-//void CViewLog::ShowWndMenuCalibration(bool bShow)
-//{
-//	if(m_pWndMenuCalibration)
-//	{
-//		m_pWndMenuCalibration->Show(bShow);
-//	}
-//}
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewLog::Open()
 {
 	ShowWndAlarmLog(true);
 }
 
+/**********************************************************************************************//**
+ * Closes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewLog::Close()
 {
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewLog::Show()
 {
 	this->ShowWindow(SW_SHOW);
@@ -438,10 +359,13 @@ void CViewLog::Show()
 
 }
 
+/**********************************************************************************************//**
+ * Hides this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewLog::Hide()
 {
 	this->ShowWindow(SW_HIDE);
@@ -449,12 +373,13 @@ void CViewLog::Hide()
 	ShowWndAlarmLog(false);
 }
 
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewLog::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -462,18 +387,13 @@ void CViewLog::OnPaint()
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CViewLog::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CViewLog::OnDestroy()
 {
 	DestroyWndAlarmLog();

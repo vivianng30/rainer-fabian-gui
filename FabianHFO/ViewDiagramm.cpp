@@ -38,15 +38,45 @@ CRITICAL_SECTION CViewDiagramm::csLPFS_FUNCTIONSTRUCT;
 extern CEvent g_eventGraphData;
 
 using namespace std;
-// Define a template class vector of int
+/** Define a template class vector of int */
 typedef vector<int, allocator<int> > IntVector ;
 
-//Define an iterator for template class vector of strings
+/** Define an iterator for template class vector of strings */
 typedef IntVector::iterator IntVectorIt ;
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines time paratimer
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 #define TIME_PARATIMER 45000
 
@@ -72,8 +102,26 @@ LPG_FUNCTIONSTRUCT_LD CViewDiagramm::m_lpfsVolumeFlow;
 
 LPG_PLOTITEMSSTRUCT_LD CViewDiagramm::m_pPlotItems;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the ViewDiagramm class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CViewDiagramm, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CViewDiagramm class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	ViewID	Identifier for the view.
+ **************************************************************************************************/
 
 CViewDiagramm::CViewDiagramm(int ViewID):
 CMVView(ViewID)
@@ -372,6 +420,13 @@ CMVView(ViewID)
 	m_szGraph3=_T("");
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CViewDiagramm class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CViewDiagramm::~CViewDiagramm()
 {
 	EnterCriticalSection(&csSPIReadInBuffer);
@@ -518,13 +573,15 @@ BEGIN_MESSAGE_MAP(CViewDiagramm, CMVView)
 	ON_BN_CLICKED(IDC_BTN_SELGRAPH_1, &CViewDiagramm::OnBnClickedNextGraph)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CViewDiagramm-Meldungshandler
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CViewDiagramm-Meldungshandler
-
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewDiagramm::CreateView()
 {
 	//RECT rcLd={0,48,605,212};
@@ -555,9 +612,20 @@ bool CViewDiagramm::CreateView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CViewDiagramm::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -588,6 +656,15 @@ BOOL CViewDiagramm::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateCon
 	else
 		return 0;
 }
+
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CViewDiagramm::Initialize()
 {
@@ -633,9 +710,20 @@ bool CViewDiagramm::Initialize()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates window data co2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	x	   	The x coordinate.
+ * \param	y	   	The y coordinate.
+ * \param	nWidth 	The width.
+ * \param	nHeight	The height.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::CreateWndDataCO2(int x, int y, int nWidth, int nHeight)
 {
 	if(isExit())
@@ -662,9 +750,21 @@ bool CViewDiagramm::CreateWndDataCO2(int x, int y, int nWidth, int nHeight)
 	
 	return result;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates window graph co2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	x	   	The x coordinate.
+ * \param	y	   	The y coordinate.
+ * \param	nWidth 	The width.
+ * \param	nHeight	The height.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::CreateWndGraphCO2(int x, int y, int nWidth, int nHeight)
 {
 	if(isExit())
@@ -853,9 +953,20 @@ bool CViewDiagramm::CreateWndGraphCO2(int x, int y, int nWidth, int nHeight)
 	return result;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates window data fot
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	x	   	The x coordinate.
+ * \param	y	   	The y coordinate.
+ * \param	nWidth 	The width.
+ * \param	nHeight	The height.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::CreateWndDataFOT(int x, int y, int nWidth, int nHeight)
 {
 	if(isExit())
@@ -883,21 +994,21 @@ bool CViewDiagramm::CreateWndDataFOT(int x, int y, int nWidth, int nHeight)
 	return result;
 }
 
-/**=================================================================================================
- * \fn bool CViewDiagramm::CreateWndGraphFOT(int x, int y, int nWidth, int nHeight)
+
+/**********************************************************************************************//**
+ * Creates window graph fot
  *
- * \brief Creates window graph fot.
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  *
- * \author Rainer
- * \date 28 Jan 2016
+ * \param	x	   	The x coordinate.
+ * \param	y	   	The y coordinate.
+ * \param	nWidth 	The width.
+ * \param	nHeight	The height.
  *
- * \param x		  The x coordinate.
- * \param y		  The y coordinate.
- * \param nWidth  The width.
- * \param nHeight The height.
- *
- * \return true if it succeeds, false if it fails.
- *===============================================================================================**/
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::CreateWndGraphFOT(int x, int y, int nWidth, int nHeight)
 {
 	if(isExit())
@@ -979,9 +1090,20 @@ bool CViewDiagramm::CreateWndGraphFOT(int x, int y, int nWidth, int nHeight)
 	return result;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates window data spo2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	x	   	The x coordinate.
+ * \param	y	   	The y coordinate.
+ * \param	nWidth 	The width.
+ * \param	nHeight	The height.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::CreateWndDataSPO2(int x, int y, int nWidth, int nHeight)
 {
 	if(isExit())
@@ -1009,9 +1131,21 @@ bool CViewDiagramm::CreateWndDataSPO2(int x, int y, int nWidth, int nHeight)
 	
 	return result;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates window graph spo2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	x	   	The x coordinate.
+ * \param	y	   	The y coordinate.
+ * \param	nWidth 	The width.
+ * \param	nHeight	The height.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::CreateWndGraphSPO2(int x, int y, int nWidth, int nHeight)
 {
 	if(isExit())
@@ -1104,9 +1238,20 @@ bool CViewDiagramm::CreateWndGraphSPO2(int x, int y, int nWidth, int nHeight)
 	return result;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates window graph pressure
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	x	   	The x coordinate.
+ * \param	y	   	The y coordinate.
+ * \param	nWidth 	The width.
+ * \param	nHeight	The height.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::CreateWndGraphPressure(int x, int y, int nWidth, int nHeight)
 {
 	if(isExit())
@@ -1403,6 +1548,21 @@ bool CViewDiagramm::CreateWndGraphPressure(int x, int y, int nWidth, int nHeight
 
 	return result;
 }
+
+/**********************************************************************************************//**
+ * Creates window graph volume
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	x	   	The x coordinate.
+ * \param	y	   	The y coordinate.
+ * \param	nWidth 	The width.
+ * \param	nHeight	The height.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::CreateWndGraphVolume(int x, int y, int nWidth, int nHeight)
 {
 	if(isExit())
@@ -1606,6 +1766,21 @@ bool CViewDiagramm::CreateWndGraphVolume(int x, int y, int nWidth, int nHeight)
 
 	return result;
 }
+
+/**********************************************************************************************//**
+ * Creates window graph flow
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	x	   	The x coordinate.
+ * \param	y	   	The y coordinate.
+ * \param	nWidth 	The width.
+ * \param	nHeight	The height.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::CreateWndGraphFlow(int x, int y, int nWidth, int nHeight)
 {
 	if(isExit())
@@ -1797,6 +1972,21 @@ bool CViewDiagramm::CreateWndGraphFlow(int x, int y, int nWidth, int nHeight)
 
 	return result;
 }
+
+/**********************************************************************************************//**
+ * Creates window loop pressure volume
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	x	   	The x coordinate.
+ * \param	y	   	The y coordinate.
+ * \param	nWidth 	The width.
+ * \param	nHeight	The height.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::CreateWndLoopPressureVolume(int x, int y, int nWidth, int nHeight)
 {
 	if(isExit())
@@ -1963,6 +2153,21 @@ bool CViewDiagramm::CreateWndLoopPressureVolume(int x, int y, int nWidth, int nH
 
 	return result;
 }
+
+/**********************************************************************************************//**
+ * Creates window loop volume flow
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	x	   	The x coordinate.
+ * \param	y	   	The y coordinate.
+ * \param	nWidth 	The width.
+ * \param	nHeight	The height.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::CreateWndLoopVolumeFlow(int x, int y, int nWidth, int nHeight)
 {
 	if(isExit())
@@ -2081,9 +2286,15 @@ bool CViewDiagramm::CreateWndLoopVolumeFlow(int x, int y, int nWidth, int nHeigh
 	return result;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the window data co2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::DestroyWndDataCO2()
 {
 	m_bDataCO2IsActive=false;
@@ -2098,9 +2309,16 @@ bool CViewDiagramm::DestroyWndDataCO2()
 	LeaveCriticalSection(&csDrawDataCO2);
 	return true;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Destroys the window data fot
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::DestroyWndDataFOT()
 {
 	m_bDataFOTIsActive=false;
@@ -2115,6 +2333,16 @@ bool CViewDiagramm::DestroyWndDataFOT()
 	LeaveCriticalSection(&csDrawDataFOT);
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window graph fot
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::DestroyWndGraphFOT()
 {
 	m_bLoopFOTIsActive=false;
@@ -2130,9 +2358,16 @@ bool CViewDiagramm::DestroyWndGraphFOT()
 
 	return true;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Destroys the window data spo2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::DestroyWndDataSPO2()
 {
 	m_bDataSPO2IsActive=false;
@@ -2148,6 +2383,16 @@ bool CViewDiagramm::DestroyWndDataSPO2()
 	LeaveCriticalSection(&csDrawDataSPO2);
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window graph spo2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::DestroyWndGraphSPO2()
 {
 	m_bGraphSPO2IsActive=false;
@@ -2162,9 +2407,16 @@ bool CViewDiagramm::DestroyWndGraphSPO2()
 	LeaveCriticalSection(&csDiagrammSPO2);
 	return true;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Destroys the window graph co2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::DestroyWndGraphCO2()
 {
 	m_bGraphCO2IsActive=false;
@@ -2179,6 +2431,16 @@ bool CViewDiagramm::DestroyWndGraphCO2()
 	LeaveCriticalSection(&csDiagrammCO2);
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window graph pressure
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::DestroyWndGraphPressure()
 {
 	m_bGraphPressureIsActive=false;
@@ -2193,6 +2455,16 @@ bool CViewDiagramm::DestroyWndGraphPressure()
 	LeaveCriticalSection(&csDiagrammPRESSURE);
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window graph volume
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::DestroyWndGraphVolume()
 {
 	m_bGraphVolumeIsActive=false;
@@ -2207,6 +2479,16 @@ bool CViewDiagramm::DestroyWndGraphVolume()
 	LeaveCriticalSection(&csDiagrammVOLUME);
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window graph flow
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::DestroyWndGraphFlow()
 {
 	m_bGraphFlowIsActive=false;
@@ -2221,6 +2503,16 @@ bool CViewDiagramm::DestroyWndGraphFlow()
 	LeaveCriticalSection(&csDiagrammFLOW);
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window loop pressure volume
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::DestroyWndLoopPressureVolume()
 {
 	m_bLoopPressureVolumeIsActive=false;
@@ -2235,6 +2527,16 @@ bool CViewDiagramm::DestroyWndLoopPressureVolume()
 	LeaveCriticalSection(&csDiagrammLOOP);
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window loop volume flow
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::DestroyWndLoopVolumeFlow()
 {
 	m_bLoopVolumeFlowIsActive=false;
@@ -2250,11 +2552,15 @@ bool CViewDiagramm::DestroyWndLoopVolumeFlow()
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Shows the window data fot
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewDiagramm::ShowWndDataFOT(bool bShow)
 {
 	if(isExit())
@@ -2275,9 +2581,16 @@ void CViewDiagramm::ShowWndDataFOT(bool bShow)
 	}
 	LeaveCriticalSection(&csDrawDataFOT);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Shows the window data spo2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewDiagramm::ShowWndDataSPO2(bool bShow)
 {
 	if(isExit())
@@ -2299,10 +2612,15 @@ void CViewDiagramm::ShowWndDataSPO2(bool bShow)
 	
 }
 
+/**********************************************************************************************//**
+ * Shows the window data co2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewDiagramm::ShowWndDataCO2(bool bShow)
 {
 	if(isExit())
@@ -2323,9 +2641,16 @@ void CViewDiagramm::ShowWndDataCO2(bool bShow)
 	LeaveCriticalSection(&csDrawDataCO2);
 	
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Shows the window graph fot
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewDiagramm::ShowWndGraphFOT(bool bShow)
 {
 	if(isExit())
@@ -2346,9 +2671,16 @@ void CViewDiagramm::ShowWndGraphFOT(bool bShow)
 	LeaveCriticalSection(&csDiagrammFOT);
 	
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Shows the window graph spo2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewDiagramm::ShowWndGraphSPO2(bool bShow)
 {
 	if(isExit())
@@ -2368,9 +2700,16 @@ void CViewDiagramm::ShowWndGraphSPO2(bool bShow)
 	}
 	LeaveCriticalSection(&csDiagrammSPO2);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Shows the window graph co2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewDiagramm::ShowWndGraphCO2(bool bShow)
 {
 	if(isExit())
@@ -2390,6 +2729,16 @@ void CViewDiagramm::ShowWndGraphCO2(bool bShow)
 	}
 	LeaveCriticalSection(&csDiagrammCO2);
 }
+
+/**********************************************************************************************//**
+ * Shows the window graph pressure
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewDiagramm::ShowWndGraphPressure(bool bShow)
 {
 	if(isExit())
@@ -2409,6 +2758,16 @@ void CViewDiagramm::ShowWndGraphPressure(bool bShow)
 	}
 	LeaveCriticalSection(&csDiagrammPRESSURE);
 }
+
+/**********************************************************************************************//**
+ * Shows the window graph volume
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewDiagramm::ShowWndGraphVolume(bool bShow)
 {
 	if(isExit())
@@ -2428,6 +2787,16 @@ void CViewDiagramm::ShowWndGraphVolume(bool bShow)
 	}
 	LeaveCriticalSection(&csDiagrammVOLUME);
 }
+
+/**********************************************************************************************//**
+ * Shows the window graph flow
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewDiagramm::ShowWndGraphFlow(bool bShow)
 {
 	if(isExit())
@@ -2447,6 +2816,16 @@ void CViewDiagramm::ShowWndGraphFlow(bool bShow)
 	}
 	LeaveCriticalSection(&csDiagrammFLOW);
 }
+
+/**********************************************************************************************//**
+ * Shows the window loop pressure volume
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewDiagramm::ShowWndLoopPressureVolume(bool bShow)
 {
 	if(isExit())
@@ -2466,6 +2845,16 @@ void CViewDiagramm::ShowWndLoopPressureVolume(bool bShow)
 	}
 	LeaveCriticalSection(&csDiagrammLOOP);
 }
+
+/**********************************************************************************************//**
+ * Shows the window loop volume flow
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewDiagramm::ShowWndLoopVolumeFlow(bool bShow)
 {
 	if(isExit())
@@ -2486,6 +2875,15 @@ void CViewDiagramm::ShowWndLoopVolumeFlow(bool bShow)
 	LeaveCriticalSection(&csDiagrammLOOP);
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is v limit state on
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if v limit state on, false if not.
+ **************************************************************************************************/
+
 bool CViewDiagramm::IsVLimitStateOn()
 {
 	bool bRes=false;
@@ -2494,6 +2892,15 @@ bool CViewDiagramm::IsVLimitStateOn()
 
 	return bRes;
 }
+
+/**********************************************************************************************//**
+ * Determines if we can draw hfov garanty line
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CViewDiagramm::drawHFOVGarantyLine()
 {
@@ -2519,6 +2926,14 @@ bool CViewDiagramm::drawHFOVGarantyLine()
 	return bRes;
 }
 
+/**********************************************************************************************//**
+ * Determines if we can draw v garanty line
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CViewDiagramm::drawVGarantyLine()
 {
@@ -2539,9 +2954,15 @@ bool CViewDiagramm::drawVGarantyLine()
 	return bRes;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Stops a diagramm
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bStopFreeze	True to stop freeze.
+ **************************************************************************************************/
+
 void CViewDiagramm::StopDiagramm(bool bStopFreeze)
 {
 	if(!m_bFreeze || bStopFreeze)
@@ -2558,20 +2979,30 @@ void CViewDiagramm::StopDiagramm(bool bStopFreeze)
 	}
 }
 
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bNextGraph	True to next graph.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewDiagramm::Show(bool bNextGraph)
 {
 	DEBUGMSG(TRUE, (TEXT("CViewDiagramm::Show\r\n")));
 	drawView(bNextGraph);
 }
 
+/**********************************************************************************************//**
+ * Draw view
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bNextGraph	True to next graph.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewDiagramm::drawView(bool bNextGraph)
 {
 	if(isExit())
@@ -2664,10 +3095,13 @@ void CViewDiagramm::drawView(bool bNextGraph)
 	}
 }
 
+/**********************************************************************************************//**
+ * Draw paraview
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewDiagramm::drawParaview()
 {
 	if(isExit())
@@ -2783,9 +3217,16 @@ void CViewDiagramm::drawParaview()
 	DestroyWndMenuGraphs();
 	UpdateWindow();
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw graphview
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bNextGraph	True to next graph.
+ **************************************************************************************************/
+
 void CViewDiagramm::drawGraphview(bool bNextGraph)
 {
 	if(isExit())
@@ -3495,6 +3936,12 @@ void CViewDiagramm::drawGraphview(bool bNextGraph)
 	UpdateWindow();
 }
 
+/**********************************************************************************************//**
+ * Hides this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CViewDiagramm::Hide()
 {
@@ -3502,6 +3949,13 @@ void CViewDiagramm::Hide()
 
 	this->ShowWindow(SW_HIDE);
 }
+
+/**********************************************************************************************//**
+ * Resets the spo2 diagramm
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CViewDiagramm::resetSPO2Diagramm()
 {
@@ -3514,6 +3968,14 @@ void CViewDiagramm::resetSPO2Diagramm()
 	}
 	LeaveCriticalSection(&csDiagrammSPO2);
 }
+
+/**********************************************************************************************//**
+ * Resets the co2 diagramm
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::resetCO2Diagramm()
 {
 	EnterCriticalSection(&csDiagrammCO2);
@@ -3526,6 +3988,14 @@ void CViewDiagramm::resetCO2Diagramm()
 	}
 	LeaveCriticalSection(&csDiagrammCO2);
 }
+
+/**********************************************************************************************//**
+ * Resets the pressure diagramm
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::resetPressureDiagramm()
 {
 	EnterCriticalSection(&csDiagrammPRESSURE);
@@ -3536,6 +4006,14 @@ void CViewDiagramm::resetPressureDiagramm()
 	}
 	LeaveCriticalSection(&csDiagrammPRESSURE);
 }
+
+/**********************************************************************************************//**
+ * Resets the flow diagramm
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::resetFlowDiagramm()
 {
 	EnterCriticalSection(&csDiagrammFLOW);
@@ -3548,6 +4026,13 @@ void CViewDiagramm::resetFlowDiagramm()
 	LeaveCriticalSection(&csDiagrammFLOW);
 }
 
+/**********************************************************************************************//**
+ * Resets the volume diagramm
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::resetVolumeDiagramm()
 {
 	EnterCriticalSection(&csDiagrammVOLUME);
@@ -3559,6 +4044,12 @@ void CViewDiagramm::resetVolumeDiagramm()
 	LeaveCriticalSection(&csDiagrammVOLUME);
 }
 
+/**********************************************************************************************//**
+ * Resets all diagramms
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CViewDiagramm::resetAllDiagramms()
 {
@@ -3619,11 +4110,15 @@ void CViewDiagramm::resetAllDiagramms()
 	LeaveCriticalSection(&csDiagrammLOOP);
 }
 
+/**********************************************************************************************//**
+ * Sets next focus
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewDiagramm::SetNextFocus()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()==VS_GRAPH)
@@ -3804,9 +4299,16 @@ bool CViewDiagramm::SetNextFocus()
 	
 	return false;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets previous focus
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::SetPrevFocus()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()==VS_GRAPH)
@@ -4002,9 +4504,13 @@ bool CViewDiagramm::SetPrevFocus()
 	return false;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets view focus
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::SetViewFocus()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()==VS_GRAPH)
@@ -4106,9 +4612,13 @@ void CViewDiagramm::SetViewFocus()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked next graph action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::OnBnClickedNextGraph()
 {
 	if(m_iCurrentLineDiagramm==IDC_LINEDIAGRAM_PRESSURE)
@@ -4131,15 +4641,13 @@ void CViewDiagramm::OnBnClickedNextGraph()
 		AfxGetApp()->GetMainWnd()->SetFocus();
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CViewDiagramm::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::OnDestroy()
 {
 	setExit();
@@ -4177,10 +4685,17 @@ void CViewDiagramm::OnDestroy()
 	CMVView::OnDestroy();
 }
 
+/**********************************************************************************************//**
+ * Executes the erase bkgnd action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CViewDiagramm::OnEraseBkgnd(CDC* pDC)
 {
 	CBrush cbrBack(BACKGND);
@@ -4192,9 +4707,17 @@ BOOL CViewDiagramm::OnEraseBkgnd(CDC* pDC)
 	return TRUE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CViewDiagramm::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -4291,9 +4814,19 @@ BOOL CViewDiagramm::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CViewDiagramm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -5308,9 +5841,15 @@ LRESULT CViewDiagramm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Calculates the hfo volume garanty
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::CalculateHFOVolGaranty()
 {
 	bool bRes=true;
@@ -5330,9 +5869,15 @@ bool CViewDiagramm::CalculateHFOVolGaranty()
 	return bRes;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Redraw diagramm data
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iDiagrammID	Identifier for the diagramm.
+ **************************************************************************************************/
+
 void CViewDiagramm::RedrawDiagrammData(int iDiagrammID)
 {
 	if(false==doThread())
@@ -5400,9 +5945,15 @@ void CViewDiagramm::RedrawDiagrammData(int iDiagrammID)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the window menu graphs
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::DestroyWndMenuGraphs()
 {
 	//rku check1
@@ -5418,9 +5969,15 @@ bool CViewDiagramm::DestroyWndMenuGraphs()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates window menu graphs
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::CreateWndMenuGraphs()
 {
 	if(isExit())
@@ -5445,9 +6002,15 @@ bool CViewDiagramm::CreateWndMenuGraphs()
 	return false;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows the window menu graphs
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewDiagramm::ShowWndMenuGraphs(bool bShow)
 {
 	if(isExit())
@@ -5462,9 +6025,13 @@ void CViewDiagramm::ShowWndMenuGraphs(bool bShow)
 	LeaveCriticalSection(&csMenuGraphs);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Notifies the vent mode changed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::NotifyVentModeChanged()
 {
 	DEBUGMSG(TRUE, (TEXT("CViewDiagramm::NotifyVentModeChanged()\r\n")));
@@ -5665,17 +6232,27 @@ void CViewDiagramm::NotifyVentModeChanged()
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Notifies the data changed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::NotifyDataChanged()
 {
 	PostMessage(WM_DATA_CHANGED);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Notifies an event
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
+
 void CViewDiagramm::NotifyEvent(CMVEvent* pEvent)
 {
 	switch(pEvent->GetET())
@@ -7422,35 +7999,13 @@ void CViewDiagramm::NotifyEvent(CMVEvent* pEvent)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//void CViewDiagramm::increaseXScaleToNextValue_FOTLOOP()
-//{
-//	EnterCriticalSection(&csDiagrammFOT);
-//	if(m_pLoopFOT)
-//	{
-//		/*if(m_pLoopFOT->IncreaseXScaleToNextValue())
-//		{
-//			if(getModel()->getDATAHANDLER()->IsGraphFreezed())
-//			{
-//				setRedrawDiagram(REDRAW_FOT);
-//			}
-//		}
-//		else*/
-//		{
-//			if(AfxGetApp())
-//				AfxGetApp()->GetMainWnd()->PostMessage(WM_SCALE_LIMIT);
-//		}
-//	}
-//	LeaveCriticalSection(&csDiagrammFOT);
-//
-//	DrawCursor(m_iCurFocusedWnd);
-//	PostMessage(WM_SET_GRAPHTIMER);
-//}
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Increase x coordinate scale to next value pressurevolume
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::increaseXScaleToNextValue_PRESSUREVOLUME()
 {
 	EnterCriticalSection(&csDiagrammLOOP);
@@ -7474,9 +8029,14 @@ void CViewDiagramm::increaseXScaleToNextValue_PRESSUREVOLUME()
 	DrawCursor(m_iCurFocusedWnd);
 	PostMessage(WM_SET_GRAPHTIMER);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Increase x coordinate scale to next value volumeflow
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::increaseXScaleToNextValue_VOLUMEFLOW()
 {
 	EnterCriticalSection(&csDiagrammLOOP);
@@ -7500,35 +8060,14 @@ void CViewDiagramm::increaseXScaleToNextValue_VOLUMEFLOW()
 	DrawCursor(m_iCurFocusedWnd);
 	PostMessage(WM_SET_GRAPHTIMER);
 }
-// **************************************************************************
-// 
-// **************************************************************************
-//void CViewDiagramm::decreaseXScale_FOTLOOP()
-//{
-//	EnterCriticalSection(&csDiagrammFOT);
-//	if(m_pLoopFOT)
-//	{
-//		/*if(m_pLoopFOT->DecreaseXScale(false,false))
-//		{
-//			if(getModel()->getDATAHANDLER()->IsGraphFreezed())
-//			{
-//				setRedrawDiagram(REDRAW_FOT);
-//			}
-//		}
-//		else*/
-//		{
-//			if(AfxGetApp())
-//				AfxGetApp()->GetMainWnd()->PostMessage(WM_SCALE_LIMIT);
-//		}
-//	}
-//	LeaveCriticalSection(&csDiagrammFOT);
-//
-//	DrawCursor(m_iCurFocusedWnd);
-//	PostMessage(WM_SET_GRAPHTIMER);
-//}
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Decrease x coordinate scale pressurevolume
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::decreaseXScale_PRESSUREVOLUME()
 {
 	EnterCriticalSection(&csDiagrammLOOP);
@@ -7552,9 +8091,14 @@ void CViewDiagramm::decreaseXScale_PRESSUREVOLUME()
 	DrawCursor(m_iCurFocusedWnd);
 	PostMessage(WM_SET_GRAPHTIMER);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Decrease x coordinate scale volumeflow
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::decreaseXScale_VOLUMEFLOW()
 {
 	EnterCriticalSection(&csDiagrammLOOP);
@@ -7578,9 +8122,14 @@ void CViewDiagramm::decreaseXScale_VOLUMEFLOW()
 	DrawCursor(m_iCurFocusedWnd);
 	PostMessage(WM_SET_GRAPHTIMER);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Decrease y coordinate scale to next value pressurevolume
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::decreaseYScaleToNextValue_PRESSUREVOLUME()
 {
 	EnterCriticalSection(&csDiagrammLOOP);
@@ -7601,9 +8150,14 @@ void CViewDiagramm::decreaseYScaleToNextValue_PRESSUREVOLUME()
 	}
 	LeaveCriticalSection(&csDiagrammLOOP);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Decrease y coordinate scale to next value volumeflow
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::decreaseYScaleToNextValue_VOLUMEFLOW()
 {
 	EnterCriticalSection(&csDiagrammLOOP);
@@ -7624,9 +8178,14 @@ void CViewDiagramm::decreaseYScaleToNextValue_VOLUMEFLOW()
 	}
 	LeaveCriticalSection(&csDiagrammLOOP);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Decrease y coordinate scale to next value spo2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::decreaseYScaleToNextValue_SPO2()
 {
 	EnterCriticalSection(&csDiagrammSPO2);
@@ -7644,9 +8203,14 @@ void CViewDiagramm::decreaseYScaleToNextValue_SPO2()
 	}
 	LeaveCriticalSection(&csDiagrammSPO2);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Decrease y coordinate scale to next value co2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::decreaseYScaleToNextValue_CO2()
 {
 	EnterCriticalSection(&csDiagrammCO2);
@@ -7664,9 +8228,14 @@ void CViewDiagramm::decreaseYScaleToNextValue_CO2()
 	}
 	LeaveCriticalSection(&csDiagrammCO2);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Decrease y coordinate scale to next value pressure
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::decreaseYScaleToNextValue_PRESSURE()
 {
 	EnterCriticalSection(&csDiagrammPRESSURE);
@@ -7684,9 +8253,14 @@ void CViewDiagramm::decreaseYScaleToNextValue_PRESSURE()
 	}
 	LeaveCriticalSection(&csDiagrammPRESSURE);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Decrease y coordinate scale to next value flow
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::decreaseYScaleToNextValue_FLOW()
 {
 	EnterCriticalSection(&csDiagrammFLOW);
@@ -7704,9 +8278,14 @@ void CViewDiagramm::decreaseYScaleToNextValue_FLOW()
 	}
 	LeaveCriticalSection(&csDiagrammFLOW);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Decrease y coordinate scale to next value volume
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::decreaseYScaleToNextValue_VOLUME()
 {
 	EnterCriticalSection(&csDiagrammVOLUME);
@@ -7725,50 +8304,13 @@ void CViewDiagramm::decreaseYScaleToNextValue_VOLUME()
 	LeaveCriticalSection(&csDiagrammVOLUME);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//void CViewDiagramm::decreaseYScaleToNextValue_FOTLOOP()
-//{
-//	EnterCriticalSection(&csDiagrammFOT);
-//	if(m_pLoopFOT)
-//	{
-//		/*if(m_pLoopFOT->DecreaseYScaleToNextValue())
-//		{
-//			setRedrawDiagram(REDRAW_VOLUMEGRAPH);
-//		}
-//		else
-//		{
-//			if(AfxGetApp())
-//				AfxGetApp()->GetMainWnd()->PostMessage(WM_SCALE_LIMIT);
-//		}*/
-//	}
-//	LeaveCriticalSection(&csDiagrammFOT);
-//}
+/**********************************************************************************************//**
+ * Increase y coordinate scale to next value spo2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
-//void CViewDiagramm::increaseYScaleToNextValue_FOTLOOP()
-//{
-//	EnterCriticalSection(&csDiagrammFOT);
-//	if(m_pLoopFOT)
-//	{
-//		/*if(m_pLoopFOT->IncreaseYScaleToNextValue())
-//		{
-//			setRedrawDiagram(REDRAW_SPO2GRAPH);
-//		}
-//		else
-//		{
-//			if(AfxGetApp())
-//				AfxGetApp()->GetMainWnd()->PostMessage(WM_SCALE_LIMIT);
-//		}*/
-//	}
-//	LeaveCriticalSection(&csDiagrammFOT);
-//}
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewDiagramm::increaseYScaleToNextValue_SPO2()
 {
 	EnterCriticalSection(&csDiagrammSPO2);
@@ -7786,9 +8328,14 @@ void CViewDiagramm::increaseYScaleToNextValue_SPO2()
 	}
 	LeaveCriticalSection(&csDiagrammSPO2);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Increase y coordinate scale to next value co2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::increaseYScaleToNextValue_CO2()
 {
 	EnterCriticalSection(&csDiagrammCO2);
@@ -7806,9 +8353,14 @@ void CViewDiagramm::increaseYScaleToNextValue_CO2()
 	}
 	LeaveCriticalSection(&csDiagrammCO2);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Increase y coordinate scale to next value pressurevolume
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::increaseYScaleToNextValue_PRESSUREVOLUME()
 {
 	EnterCriticalSection(&csDiagrammLOOP);
@@ -7829,9 +8381,14 @@ void CViewDiagramm::increaseYScaleToNextValue_PRESSUREVOLUME()
 	}
 	LeaveCriticalSection(&csDiagrammLOOP);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Increase y coordinate scale to next value volumeflow
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::increaseYScaleToNextValue_VOLUMEFLOW()
 {
 	EnterCriticalSection(&csDiagrammLOOP);
@@ -7852,9 +8409,14 @@ void CViewDiagramm::increaseYScaleToNextValue_VOLUMEFLOW()
 	}
 	LeaveCriticalSection(&csDiagrammLOOP);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Increase y coordinate scale to next value pressure
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::increaseYScaleToNextValue_PRESSURE()
 {
 	EnterCriticalSection(&csDiagrammPRESSURE);
@@ -7873,9 +8435,13 @@ void CViewDiagramm::increaseYScaleToNextValue_PRESSURE()
 	LeaveCriticalSection(&csDiagrammPRESSURE);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Increase y coordinate scale to next value flow
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::increaseYScaleToNextValue_FLOW()
 {
 	EnterCriticalSection(&csDiagrammFLOW);
@@ -7893,9 +8459,14 @@ void CViewDiagramm::increaseYScaleToNextValue_FLOW()
 	}
 	LeaveCriticalSection(&csDiagrammFLOW);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Increase y coordinate scale to next value volume
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::increaseYScaleToNextValue_VOLUME()
 {
 	EnterCriticalSection(&csDiagrammVOLUME);
@@ -7914,9 +8485,13 @@ void CViewDiagramm::increaseYScaleToNextValue_VOLUME()
 	LeaveCriticalSection(&csDiagrammVOLUME);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Starts graph thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::StartGraphThread( void )
 {
 	//DEBUGMSG(TRUE, (TEXT("StartGraphThread\r\n")));
@@ -7940,16 +8515,13 @@ void CViewDiagramm::StartGraphThread( void )
 	}
 }
 
-//************************************
-// Method:    StopGraphThread
-// FullName:  CViewDiagramm::StopGraphThread
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/17: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Stops graph thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::StopGraphThread( void )
 {
 	try
@@ -7999,6 +8571,15 @@ void CViewDiagramm::StopGraphThread( void )
 	
 }
 
+/**********************************************************************************************//**
+ * Executes the thread operation
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::doThread()
 {
 	bool bRes=false;
@@ -8007,18 +8588,43 @@ bool CViewDiagramm::doThread()
 	LeaveCriticalSection(&csDoThread);
 	return bRes;
 }
+
+/**********************************************************************************************//**
+ * Starts a thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::startThread()
 {
 	EnterCriticalSection(&csDoThread);
 	m_bDoThread=true;
 	LeaveCriticalSection(&csDoThread);
 }
+
+/**********************************************************************************************//**
+ * Stops a thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::stopThread()
 {
 	EnterCriticalSection(&csDoThread);
 	m_bDoThread=false;
 	LeaveCriticalSection(&csDoThread);
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is exit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if exit, false if not.
+ **************************************************************************************************/
 
 bool CViewDiagramm::isExit()
 {
@@ -8028,22 +8634,32 @@ bool CViewDiagramm::isExit()
 	LeaveCriticalSection(&csExit);
 	return bRes;
 }
+
+/**********************************************************************************************//**
+ * Sets the exit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::setExit()
 {
 	EnterCriticalSection(&csExit);
 	m_bExit=true;
 	LeaveCriticalSection(&csExit);
 }
-//************************************
-// Method:    CGraphThread
-// FullName:  CGraphThread
-// Access:    public static 
-// Returns:   UINT
-// Qualifier:
-// Parameter: LPVOID pc
-//
-// 2015/06/17: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * Graph thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CGraphThread( LPVOID pc )
 {	
 	try
@@ -8073,15 +8689,15 @@ static UINT CGraphThread( LPVOID pc )
 	return TRUE;
 }
 
-//************************************
-// Method:    DrawDiagramm
-// FullName:  CViewDiagramm::DrawDiagramm
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/17: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Draw diagramm
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 UINT CViewDiagramm::DrawDiagramm()
 {
 	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
@@ -8349,6 +8965,16 @@ UINT CViewDiagramm::DrawDiagramm()
 	DEBUGMSG(TRUE, (TEXT("xxxxxxxxxxxxxxx end thread\r\n")));
 	return 0;//rku APPERR
 }
+
+/**********************************************************************************************//**
+ * Determines if we can check for redraw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::checkForRedraw()
 {
 	bool bRefresh=false;
@@ -8452,6 +9078,16 @@ bool CViewDiagramm::checkForRedraw()
 
 	return bRefresh;
 }
+
+/**********************************************************************************************//**
+ * Determines if we can check for scale
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::checkForScale()
 {
 	bool bCheck=false;
@@ -8503,6 +9139,16 @@ bool CViewDiagramm::checkForScale()
 	}
 	return bCheck;
 }
+
+/**********************************************************************************************//**
+ * Determines if we can check for reset diagramms
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::checkForResetDiagramms()
 {
 	bool bReset=false;
@@ -8535,9 +9181,16 @@ bool CViewDiagramm::checkForResetDiagramms()
 	}
 	return bReset;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Calculates the spi items to draw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The calculated spi items to draw.
+ **************************************************************************************************/
+
 UINT CViewDiagramm::CalculateSPIItemsToDraw()
 {
 	//if(false==doThread() || isExit()) //rku  not necessary here
@@ -8684,11 +9337,15 @@ UINT CViewDiagramm::CalculateSPIItemsToDraw()
 	return iNumItems;
 }
 
+/**********************************************************************************************//**
+ * Gets current items to merge
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The current items to merge.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 int CViewDiagramm::GetCurrentItemsToMerge()
 {
 	int iItems=0;
@@ -8770,9 +9427,13 @@ int CViewDiagramm::GetCurrentItemsToMerge()
 	return iItems;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Copies the current breath to saved breath
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::CopyCurBreathToSavedBreath()
 {
 	EnterCriticalSection(&getModel()->getDATAHANDLER()->csSavedBreath);
@@ -8820,13 +9481,17 @@ void CViewDiagramm::CopyCurBreathToSavedBreath()
 	LeaveCriticalSection(&csCurrentBreath);
 }
 
+/**********************************************************************************************//**
+ * Draw pressure graph
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iNumItems	Number of items.
+ *
+ * \return	An int.
+ **************************************************************************************************/
 
-
-
-// **************************************************************************
-// Draws the pressure graph
-//				Depending on speed and size of SPI data
-// **************************************************************************
 int CViewDiagramm::drawPressureGraph(int iNumItems)
 {
 	int iCurrentXtimeval=getCurrentXtimevalGraphs();
@@ -9022,10 +9687,17 @@ int CViewDiagramm::drawPressureGraph(int iNumItems)
 	return iCurrentXtimeval;
 }
 
-// **************************************************************************
-// Draws the flow graph
-//				Depending on speed and size of SPI data
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw flow graph
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iNumItems	Number of items.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CViewDiagramm::drawFlowGraph(int iNumItems)
 {
 	int iCurrentXtimeval=getCurrentXtimevalGraphs();
@@ -9202,10 +9874,18 @@ int CViewDiagramm::drawFlowGraph(int iNumItems)
 
 	return iCurrentXtimeval;
 }
-// **************************************************************************
-// Draws the volume graph
-//				Depending on speed and size of SPI data
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw volume graph
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iNumItems	Number of items.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CViewDiagramm::drawVolumeGraph(int iNumItems)
 {
 	int iCurrentXtimeval=getCurrentXtimevalGraphs();
@@ -9407,10 +10087,17 @@ int CViewDiagramm::drawVolumeGraph(int iNumItems)
 	return iCurrentXtimeval;
 }
 
-// **************************************************************************
-// Draws the CO2 graph
-//				Depending on speed and size of SPI data
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw co2 graph
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iNumItems	Number of items.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CViewDiagramm::drawCO2Graph(int iNumItems)
 {
 	int iCurrentXtimeval=getCurrentXtimevalGraphs();
@@ -9586,12 +10273,17 @@ int CViewDiagramm::drawCO2Graph(int iNumItems)
 	return iCurrentXtimeval;
 }
 
+/**********************************************************************************************//**
+ * Draw spo2 graph
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iNumItems	Number of items.
+ *
+ * \return	An int.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// Draws the SPO2 graph
-//				Depending on speed and size of SPI data
-// **************************************************************************
 int CViewDiagramm::drawSPO2Graph(int iNumItems)
 {
 	int iCurrentXtimeval=getCurrentXtimevalGraphs();
@@ -9756,6 +10448,14 @@ int CViewDiagramm::drawSPO2Graph(int iNumItems)
 	return iCurrentXtimeval;
 }
 
+/**********************************************************************************************//**
+ * Draw loops
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iNumItems	Number of items.
+ **************************************************************************************************/
 
 void CViewDiagramm::DrawLoops(int iNumItems)
 {
@@ -9962,7 +10662,12 @@ void CViewDiagramm::DrawLoops(int iNumItems)
 	//DEBUGMSG(TRUE, (TEXT("unlock 31\r\n")));
 }
 
-
+/**********************************************************************************************//**
+ * Draw saved pressure volume loop
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CViewDiagramm::drawSavedPressureVolumeLoop()
 {
@@ -10011,6 +10716,14 @@ void CViewDiagramm::drawSavedPressureVolumeLoop()
 	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	//DEBUGMSG(TRUE, (TEXT("unlock 32\r\n")));
 }
+
+/**********************************************************************************************//**
+ * Draw saved volume flow loop
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::drawSavedVolumeFlowLoop()
 {
 	int iSizeSavedBreath=getModel()->getDATAHANDLER()->getSizeSavedBreath();
@@ -10059,11 +10772,15 @@ void CViewDiagramm::drawSavedVolumeFlowLoop()
 	//DEBUGMSG(TRUE, (TEXT("unlock 33\r\n")));
 }
 
+/**********************************************************************************************//**
+ * Redraw pressure graph
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 int CViewDiagramm::redrawPressureGraph()
 {
 	int iCurrentXtimeval=getCurrentXtimevalGraphs();
@@ -10240,9 +10957,16 @@ int CViewDiagramm::redrawPressureGraph()
 
 	return iCurrentXtimeval;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Redraw flow graph
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CViewDiagramm::redrawFlowGraph()
 {
 	int iCurrentXtimeval=getCurrentXtimevalGraphs();
@@ -10426,9 +11150,16 @@ int CViewDiagramm::redrawFlowGraph()
 
 	return iCurrentXtimeval;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Redraw volume graph
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CViewDiagramm::redrawVolumeGraph()
 {
 	int iCurrentXtimeval=getCurrentXtimevalGraphs();
@@ -10617,9 +11348,15 @@ int CViewDiagramm::redrawVolumeGraph()
 	return iCurrentXtimeval;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Redraw co2 graph
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CViewDiagramm::redrawCO2Graph()
 {
 	int iCurrentXtimeval=getCurrentXtimevalGraphs();
@@ -10784,16 +11521,15 @@ int CViewDiagramm::redrawCO2Graph()
 	return iCurrentXtimeval;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
-//int CViewDiagramm::redrawFOTLoop()
-//{
-//	return 0;
-//}
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Redraw spo2 graph
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CViewDiagramm::redrawSPO2Graph()
 {
 	int iCurrentXtimeval=getCurrentXtimevalGraphs();
@@ -10945,9 +11681,13 @@ int CViewDiagramm::redrawSPO2Graph()
 	return iCurrentXtimeval;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Refresh last breath of pressure volume loop
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::refreshLastBreathOfPressureVolumeLoop()
 {
 	int iSizeCurrentBreath=getSizeCurrentBreath();
@@ -11000,6 +11740,14 @@ void CViewDiagramm::refreshLastBreathOfPressureVolumeLoop()
 	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	//DEBUGMSG(TRUE, (TEXT("unlock 39\r\n")));
 }
+
+/**********************************************************************************************//**
+ * Refresh last breath of volume flow loop
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::refreshLastBreathOfVolumeFlowLoop()
 {
 	int iSizeCurrentBreath=getSizeCurrentBreath();
@@ -11054,9 +11802,14 @@ void CViewDiagramm::refreshLastBreathOfVolumeFlowLoop()
 	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	//DEBUGMSG(TRUE, (TEXT("unlock 40\r\n")));
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Redraw pressure volume loop
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::redrawPressureVolumeLoop()
 {
 	if(m_pLoopPressureVolume==NULL || false==doThread())
@@ -11200,9 +11953,14 @@ void CViewDiagramm::redrawPressureVolumeLoop()
 	//DEBUGMSG(TRUE, (TEXT("unlock 50\r\n")));
 	LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Redraw volume flow loop
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::redrawVolumeFlowLoop()
 {
 	if(m_pLoopVolumeFlow==NULL || false==doThread())
@@ -11348,6 +12106,13 @@ void CViewDiagramm::redrawVolumeFlowLoop()
 	LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
 }
 
+/**********************************************************************************************//**
+ * Draw fot steps
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::drawFOTsteps()
 {
 	if(m_pLoopFOT==NULL || false==doThread())
@@ -11415,18 +12180,32 @@ void CViewDiagramm::drawFOTsteps()
 	LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 	//DEBUGMSG(TRUE, (TEXT("unlock 52\r\n")));
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets current xtimeval graphs
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CViewDiagramm::setCurrentXtimevalGraphs(int iVal)
 {
 	EnterCriticalSection(&csXValue);
 	m_iCurrentXvalGraphs=iVal;
 	LeaveCriticalSection(&csXValue);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets current xtimeval graphs
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The current xtimeval graphs.
+ **************************************************************************************************/
+
 int CViewDiagramm::getCurrentXtimevalGraphs()
 {
 	EnterCriticalSection(&csXValue);
@@ -11434,9 +12213,14 @@ int CViewDiagramm::getCurrentXtimevalGraphs()
 	LeaveCriticalSection(&csXValue);
 	return iTemp;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Resets the current xtimeval graphs
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::resetCurrentXtimevalGraphs()
 {
 	//DEBUGMSG(TRUE, (TEXT("resetCurrentXtimevalGraphs\r\n")));
@@ -11446,20 +12230,15 @@ void CViewDiagramm::resetCurrentXtimevalGraphs()
 	
 }
 
-// **************************************************************************
-// Gets the speed of the graph
-//				Output:												
-//				UINT m_iGraphSpeed		
-//				possible Values:
-//				G_SPEED_500MS
-//				G_SPEED_1SEC
-//				G_SPEED_2750MS
-//				G_SPEED_5700MS
-//				G_SPEED_10SEC
-//				G_SPEED_20SEC
-//				G_SPEED_40SEC
-//				G_SPEED_60SEC
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets graph speed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The graph speed.
+ **************************************************************************************************/
+
 UINT CViewDiagramm::getGraphSpeed()
 {
 	EnterCriticalSection(&csSpeed);
@@ -11469,19 +12248,15 @@ UINT CViewDiagramm::getGraphSpeed()
 	return speed;
 }
 
-// **************************************************************************
-// Sets the speed of the graph
-//				Input:												
-//				UINT iSpeed		
-//				possible Values:
-//				G_SPEED_500MS
-//				G_SPEED_1SEC
-//				G_SPEED_2750MS
-//				G_SPEED_5700MS
-//				G_SPEED_10SEC
-//				G_SPEED_30SEC
-//				G_SPEED_60SEC
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets graph speed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	speed	The speed.
+ **************************************************************************************************/
+
 void CViewDiagramm::setGraphSpeed(UINT speed)
 {
 	EnterCriticalSection(&csSpeed);
@@ -11491,9 +12266,13 @@ void CViewDiagramm::setGraphSpeed(UINT speed)
 	SetXAxisTimeTickSpaceOfDiagramms();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets x coordinate axis time tick space of diagramms
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::SetXAxisTimeTickSpaceOfDiagramms()
 {
 	int iXTickSpace=GetXAxisTimeTickSpace();
@@ -11534,9 +12313,15 @@ void CViewDiagramm::SetXAxisTimeTickSpaceOfDiagramms()
 	LeaveCriticalSection(&csDiagrammFLOW);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Get x coordinate axis time tick space
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The x coordinate axis time tick space.
+ **************************************************************************************************/
+
 int CViewDiagramm::GetXAxisTimeTickSpace()
 {
 	int iXTickSpace=1000;
@@ -11616,11 +12401,13 @@ int CViewDiagramm::GetXAxisTimeTickSpace()
 	return iXTickSpace;
 }
 
+/**********************************************************************************************//**
+ * Decrease graph speed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// Sets the next lower speed of the graph, minimum is 60 sec
-//				for the whole dataarea, m_iGraphSpeed == G_SPEED_60SEC (==7)
-// **************************************************************************
 void CViewDiagramm::DecreaseGraphSpeed()
 {
 	if(!m_bFreeze)
@@ -11650,10 +12437,14 @@ void CViewDiagramm::DecreaseGraphSpeed()
 		}
 	}
 }
-// **************************************************************************
-// Sets the next higher speed of the graph, maximum is 500 msec
-//				for the whole dataarea, m_iGraphSpeed == G_SPEED_500MS (==0)	
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Increase graph speed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::IncreaseGraphSpeed()
 {
 	if(!m_bFreeze)
@@ -11683,9 +12474,15 @@ void CViewDiagramm::IncreaseGraphSpeed()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Updates the time axis described by bRedraw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CViewDiagramm::UpdateTimeAxis(bool bRedraw)
 {
 	int iXmin=0;
@@ -11737,9 +12534,15 @@ void CViewDiagramm::UpdateTimeAxis(bool bRedraw)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets time axis maximum scale
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The time axis maximum scale.
+ **************************************************************************************************/
+
 int CViewDiagramm::GetTimeAxisMaxScale()
 {
 	int iXmax=0;
@@ -11821,9 +12624,15 @@ int CViewDiagramm::GetTimeAxisMaxScale()
 	return iXmax;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw cursor
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iDiagramm	Zero-based index of the diagramm.
+ **************************************************************************************************/
+
 void CViewDiagramm::DrawCursor(int iDiagramm)
 {
 	m_bGraphSelected=false;
@@ -12212,9 +13021,15 @@ void CViewDiagramm::DrawCursor(int iDiagramm)
 	m_iCurFocusedWnd=iDiagramm;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CViewDiagramm::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==PARATIMER)
@@ -12243,17 +13058,27 @@ void CViewDiagramm::OnTimer(UINT_PTR nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Saves the loops
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::SaveLoops()
 {
 	CopyCurBreathToSavedBreath();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Notifies a para button event
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
+
 void CViewDiagramm::NotifyParaBtnEvent(CMVEvent* pEvent)
 {
 	switch(pEvent->GetET())
@@ -12696,17 +13521,27 @@ void CViewDiagramm::NotifyParaBtnEvent(CMVEvent* pEvent)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Notifies the alarm limit changed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::NotifyAlarmLimitChanged()
 {
 	PostMessage(WM_ALIMIT_CHANGED);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Updates the co2 information data described by resetAvailable
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	resetAvailable	True if reset available.
+ **************************************************************************************************/
+
 void CViewDiagramm::UpdateCO2InfoData(bool resetAvailable)
 {
 	if(isExit())
@@ -12719,9 +13554,14 @@ void CViewDiagramm::UpdateCO2InfoData(bool resetAvailable)
 	}
 	LeaveCriticalSection(&csDrawDataCO2);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw measured fio2 value
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::drawMeasuredFiO2Value()
 {
 	if(isExit())
@@ -12733,65 +13573,14 @@ void CViewDiagramm::drawMeasuredFiO2Value()
 	}
 	LeaveCriticalSection(&csDrawDataSPO2);
 }
-// **************************************************************************
-// 
-// **************************************************************************
-//void CViewDiagramm::setFIO2LOWvalue(BYTE iFIO2LOWvalue)
-//{
-//	if(isExit())
-//		return;
-//	EnterCriticalSection(&csDrawDataSPO2);
-//	if(m_pDataSPO2 && m_bDataSPO2IsActive)
-//	{
-//		m_pDataSPO2->setFIO2LOWvalue(iFIO2LOWvalue);	
-//	}
-//	LeaveCriticalSection(&csDrawDataSPO2);
-//}
-// **************************************************************************
-// 
-// **************************************************************************
-//void CViewDiagramm::setFIO2HIGHvalue(BYTE iFIO2HIGHvalue)
-//{
-//	if(isExit())
-//		return;
-//	EnterCriticalSection(&csDrawDataSPO2);
-//	if(m_pDataSPO2 && m_bDataSPO2IsActive)
-//	{
-//		m_pDataSPO2->setFIO2HIGHvalue(iFIO2HIGHvalue);
-//	}
-//	LeaveCriticalSection(&csDrawDataSPO2);
-//}
-// **************************************************************************
-// 
-// **************************************************************************
-//void CViewDiagramm::setSPO2LOWvalue(BYTE iSPO2LOWvalue)
-//{
-//	if(isExit())
-//		return;
-//	EnterCriticalSection(&csDrawDataSPO2);
-//	if(m_pDataSPO2 && m_bDataSPO2IsActive)
-//	{
-//		m_pDataSPO2->setSPO2LOWvalue(iSPO2LOWvalue);
-//	}
-//	LeaveCriticalSection(&csDrawDataSPO2);
-//}
-// **************************************************************************
-// 
-// **************************************************************************
-//void CViewDiagramm::setSPO2HIGHvalue(BYTE iSPO2HIGHvalue)
-//{
-//	if(isExit())
-//		return;
-//	EnterCriticalSection(&csDrawDataSPO2);
-//	if(m_pDataSPO2 && m_bDataSPO2IsActive)
-//	{
-//		m_pDataSPO2->setSPO2HIGHvalue(iSPO2HIGHvalue);
-//	}
-//	LeaveCriticalSection(&csDrawDataSPO2);
-//}
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Updates the limit data
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::UpdateLimitData()
 {
 	if(isExit())
@@ -12803,9 +13592,16 @@ void CViewDiagramm::UpdateLimitData()
 	}
 	LeaveCriticalSection(&csDrawDataSPO2);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets prico running
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CViewDiagramm::setPRICOrunning(bool state)
 {
 	if(isExit())
@@ -12818,9 +13614,14 @@ void CViewDiagramm::setPRICOrunning(bool state)
 	}
 	LeaveCriticalSection(&csDrawDataSPO2);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw SIQ of spo2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::drawSIQofSPO2()
 {
 	if(isExit() || getModel()->getVIEWHANDLER()->getViewSubState()!=VSS_GRAPH_SPO2GRAPHS)
@@ -12973,6 +13774,15 @@ void CViewDiagramm::drawSIQofSPO2()
 	penAlarm.DeleteObject();//rkuNEWFIX
 }
 
+/**********************************************************************************************//**
+ * Draw 15 siq
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ **************************************************************************************************/
+
 void CViewDiagramm::draw15SIQ(HDC hdc)
 {
 	//HDC hdc = *pDC;
@@ -12988,6 +13798,16 @@ void CViewDiagramm::draw15SIQ(HDC hdc)
 	SelectObject(hdc, hPrevBrush);	
 	SelectObject(hdc, hPrevPen);
 }
+
+/**********************************************************************************************//**
+ * Draw 30 siq
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ **************************************************************************************************/
+
 void CViewDiagramm::draw30SIQ(HDC hdc)
 {
 	//HDC hdc = *pDC;
@@ -13003,6 +13823,16 @@ void CViewDiagramm::draw30SIQ(HDC hdc)
 	SelectObject(hdc, hPrevBrush);	
 	SelectObject(hdc, hPrevPen);
 }
+
+/**********************************************************************************************//**
+ * Draw 45 siq
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ **************************************************************************************************/
+
 void CViewDiagramm::draw45SIQ(HDC hdc)
 {
 	//HDC hdc = *pDC;
@@ -13018,6 +13848,16 @@ void CViewDiagramm::draw45SIQ(HDC hdc)
 	SelectObject(hdc, hPrevBrush);	
 	SelectObject(hdc, hPrevPen);
 }
+
+/**********************************************************************************************//**
+ * Draw 60 siq
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ **************************************************************************************************/
+
 void CViewDiagramm::draw60SIQ(HDC hdc)
 {
 	//HDC hdc = *pDC;
@@ -13033,6 +13873,16 @@ void CViewDiagramm::draw60SIQ(HDC hdc)
 	SelectObject(hdc, hPrevBrush);	
 	SelectObject(hdc, hPrevPen);
 }
+
+/**********************************************************************************************//**
+ * Draw 75 siq
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ **************************************************************************************************/
+
 void CViewDiagramm::draw75SIQ(HDC hdc)
 {
 	//HDC hdc = *pDC;
@@ -13048,6 +13898,16 @@ void CViewDiagramm::draw75SIQ(HDC hdc)
 	SelectObject(hdc, hPrevBrush);	
 	SelectObject(hdc, hPrevPen);
 }
+
+/**********************************************************************************************//**
+ * Draw 90 siq
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ **************************************************************************************************/
+
 void CViewDiagramm::draw90SIQ(HDC hdc)
 {
 	//HDC hdc = *pDC;
@@ -13063,6 +13923,16 @@ void CViewDiagramm::draw90SIQ(HDC hdc)
 	SelectObject(hdc, hPrevBrush);	
 	SelectObject(hdc, hPrevPen);
 }
+
+/**********************************************************************************************//**
+ * Draw 100 siq
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ **************************************************************************************************/
+
 void CViewDiagramm::draw100SIQ(HDC hdc)
 {
 	//HDC hdc = *pDC;
@@ -13078,6 +13948,18 @@ void CViewDiagramm::draw100SIQ(HDC hdc)
 	SelectObject(hdc, hPrevBrush);	
 	SelectObject(hdc, hPrevPen);
 }
+
+/**********************************************************************************************//**
+ * Draw graph text
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bGraph1   	True to graph 1.
+ * \param	bGraph2   	True to graph 2.
+ * \param	bGraph3   	True to graph 3.
+ * \param	bSIQofSPO2	True to SI qof spo 2.
+ **************************************************************************************************/
 
 void CViewDiagramm::drawGraphTXT(bool bGraph1, bool bGraph2, bool bGraph3, bool bSIQofSPO2)
 {
@@ -13338,18 +14220,57 @@ void CViewDiagramm::drawGraphTXT(bool bGraph1, bool bGraph2, bool bGraph3, bool 
 	DeleteDC(hdcMem);
 
 }
+
+/**********************************************************************************************//**
+ * Sets text graph 1
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	szText	The text.
+ **************************************************************************************************/
+
 void CViewDiagramm::setTextGraph1(CString szText)
 {
 	m_szGraph1=szText;
 }
+
+/**********************************************************************************************//**
+ * Sets text graph 2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	szText	The text.
+ **************************************************************************************************/
+
 void CViewDiagramm::setTextGraph2(CString szText)
 {
 	m_szGraph2=szText;
 }
+
+/**********************************************************************************************//**
+ * Sets text graph 3
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	szText	The text.
+ **************************************************************************************************/
+
 void CViewDiagramm::setTextGraph3(CString szText)
 {
 	m_szGraph3=szText;
 }
+
+/**********************************************************************************************//**
+ * Sets draw volume limit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
 
 void CViewDiagramm::setDrawVolLimit(bool bState)
 {
@@ -13357,6 +14278,16 @@ void CViewDiagramm::setDrawVolLimit(bool bState)
 	m_bDrawVolumeLimit=bState;
 	LeaveCriticalSection(&csVolLimit);
 }
+
+/**********************************************************************************************//**
+ * Gets draw volume limit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::getDrawVolLimit()
 {
 	EnterCriticalSection(&csVolLimit);
@@ -13364,12 +14295,32 @@ bool CViewDiagramm::getDrawVolLimit()
 	LeaveCriticalSection(&csVolLimit);
 	return bVL;
 }
+
+/**********************************************************************************************//**
+ * Sets value volume limit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CViewDiagramm::setValueVolLimit(double val)
 {
 	EnterCriticalSection(&csVolLimit);
 	m_dbValueVolumeLimit=val;
 	LeaveCriticalSection(&csVolLimit);
 }
+
+/**********************************************************************************************//**
+ * Gets value volume limit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The value volume limit.
+ **************************************************************************************************/
+
 double CViewDiagramm::getValueVolLimit()
 {
 	EnterCriticalSection(&csVolLimit);
@@ -13378,12 +14329,31 @@ double CViewDiagramm::getValueVolLimit()
 	return dbVal;
 }
 
+/**********************************************************************************************//**
+ * Sets draw volume garanty
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
+
 void CViewDiagramm::setDrawVolGaranty(bool bState)
 {
 	EnterCriticalSection(&csVolGarant);
 	m_bDrawVolumeGaranty=bState;
 	LeaveCriticalSection(&csVolGarant);
 }
+
+/**********************************************************************************************//**
+ * Gets draw volume garanty
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::getDrawVolGaranty()
 {
 	EnterCriticalSection(&csVolGarant);
@@ -13391,12 +14361,32 @@ bool CViewDiagramm::getDrawVolGaranty()
 	LeaveCriticalSection(&csVolGarant);
 	return bVG;
 }
+
+/**********************************************************************************************//**
+ * Sets value volume garanty
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CViewDiagramm::setValueVolGaranty(double val)
 {
 	EnterCriticalSection(&csVolGarant);
 	m_dbValueVolumeGaranty=val;
 	LeaveCriticalSection(&csVolGarant);
 }
+
+/**********************************************************************************************//**
+ * Gets value volume garanty
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The value volume garanty.
+ **************************************************************************************************/
+
 double CViewDiagramm::getValueVolGaranty()
 {
 	EnterCriticalSection(&csVolGarant);
@@ -13405,6 +14395,14 @@ double CViewDiagramm::getValueVolGaranty()
 	return dbVal;
 }
 
+/**********************************************************************************************//**
+ * Sets draw hfo volume garanty
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bState	True to state.
+ **************************************************************************************************/
 
 void CViewDiagramm::setDrawHFOVolGaranty(bool bState)
 {
@@ -13412,6 +14410,16 @@ void CViewDiagramm::setDrawHFOVolGaranty(bool bState)
 	m_bDrawHFOVolumeGaranty=bState;
 	LeaveCriticalSection(&csVolGarant);
 }
+
+/**********************************************************************************************//**
+ * Gets draw hfo volume garanty
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::getDrawHFOVolGaranty()
 {
 	EnterCriticalSection(&csVolGarant);
@@ -13419,12 +14427,32 @@ bool CViewDiagramm::getDrawHFOVolGaranty()
 	LeaveCriticalSection(&csVolGarant);
 	return bVG;
 }
+
+/**********************************************************************************************//**
+ * Sets value volume garanty high
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CViewDiagramm::setValueVolGarantyHigh(double val)
 {
 	EnterCriticalSection(&csVolGarant);
 	m_dbHFOValueVolumeGarantyHigh=val;
 	LeaveCriticalSection(&csVolGarant);
 }
+
+/**********************************************************************************************//**
+ * Gets value volume garanty high
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The value volume garanty high.
+ **************************************************************************************************/
+
 double CViewDiagramm::getValueVolGarantyHigh()
 {
 	EnterCriticalSection(&csVolGarant);
@@ -13433,12 +14461,31 @@ double CViewDiagramm::getValueVolGarantyHigh()
 	return dbVal;
 }
 
+/**********************************************************************************************//**
+ * Sets value volume garanty low
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	val	The value.
+ **************************************************************************************************/
+
 void CViewDiagramm::setValueVolGarantyLow(double val)
 {
 	EnterCriticalSection(&csVolGarant);
 	m_dbHFOValueVolumeGarantyLow=val;
 	LeaveCriticalSection(&csVolGarant);
 }
+
+/**********************************************************************************************//**
+ * Gets value volume garanty low
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The value volume garanty low.
+ **************************************************************************************************/
+
 double CViewDiagramm::getValueVolGarantyLow()
 {
 	EnterCriticalSection(&csVolGarant);
@@ -13466,12 +14513,30 @@ double CViewDiagramm::getValueVolGarantyLow()
 //	LeaveCriticalSection(&csThreadAccess);
 //	return bReset;
 //}
+
+/**********************************************************************************************//**
+ * Sets update ring buffer copy
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::setUpdateRingBufCopy()
 {
 	EnterCriticalSection(&csThreadAccess);
 	m_bUpdateRingBufCopy=true;
 	LeaveCriticalSection(&csThreadAccess);
 }
+
+/**********************************************************************************************//**
+ * Gets update ring buffer copy
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewDiagramm::getUpdateRingBufCopy()
 {
 	EnterCriticalSection(&csThreadAccess);
@@ -13479,12 +14544,29 @@ bool CViewDiagramm::getUpdateRingBufCopy()
 	LeaveCriticalSection(&csThreadAccess);
 	return bState;
 }
+
+/**********************************************************************************************//**
+ * Deletes the update ring buffer copy
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::deleteUpdateRingBufCopy()
 {
 	EnterCriticalSection(&csThreadAccess);
 	m_bUpdateRingBufCopy=false;
 	LeaveCriticalSection(&csThreadAccess);
 }
+
+/**********************************************************************************************//**
+ * Sets size read in buffer spi
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iSPIdata	Zero-based index of the sp idata.
+ **************************************************************************************************/
 
 void CViewDiagramm::setSizeReadInBufferSPI(int iSPIdata)
 {
@@ -13496,6 +14578,16 @@ void CViewDiagramm::setSizeReadInBufferSPI(int iSPIdata)
 	m_iSizeReadInBufferSPI=iSPIdata;
 	LeaveCriticalSection(&csThreadAccess);
 }
+
+/**********************************************************************************************//**
+ * Gets size read in buffer spi
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The size read in buffer spi.
+ **************************************************************************************************/
+
 int CViewDiagramm::getSizeReadInBufferSPI()
 {
 	EnterCriticalSection(&csThreadAccess);
@@ -13504,12 +14596,29 @@ int CViewDiagramm::getSizeReadInBufferSPI()
 	return iSize;
 }
 
+/**********************************************************************************************//**
+ * Resets the redraw diagram
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::resetRedrawDiagram()
 {
 	EnterCriticalSection(&csRedrawDiagram);
 	m_iDiagramToRedraw = 0;
 	LeaveCriticalSection(&csRedrawDiagram);
 }
+
+/**********************************************************************************************//**
+ * Sets redraw diagram
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	diagram	The diagram.
+ **************************************************************************************************/
+
 void CViewDiagramm::setRedrawDiagram(WORD diagram)
 {
 	//DEBUGMSG(TRUE, (TEXT("setRedrawDiagram\r\n")));
@@ -13517,6 +14626,16 @@ void CViewDiagramm::setRedrawDiagram(WORD diagram)
 	m_iDiagramToRedraw = m_iDiagramToRedraw | diagram;
 	LeaveCriticalSection(&csRedrawDiagram);
 }
+
+/**********************************************************************************************//**
+ * Gets redraw diagram
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The redraw diagram.
+ **************************************************************************************************/
+
 WORD CViewDiagramm::getRedrawDiagram()
 {
 	EnterCriticalSection(&csRedrawDiagram);
@@ -13525,12 +14644,30 @@ WORD CViewDiagramm::getRedrawDiagram()
 	return toRedraw;
 }
 
+/**********************************************************************************************//**
+ * Sets size current breath
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iSizeBreath	Zero-based index of the size breath.
+ **************************************************************************************************/
+
 void CViewDiagramm::setSizeCurrentBreath(int iSizeBreath)
 {
 	EnterCriticalSection(&csThreadAccess);
 	m_iSizeCurrentBreath=iSizeBreath;
 	LeaveCriticalSection(&csThreadAccess);
 }
+
+/**********************************************************************************************//**
+ * Gets size current breath
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The size current breath.
+ **************************************************************************************************/
 
 int CViewDiagramm::getSizeCurrentBreath()
 {
@@ -13539,6 +14676,15 @@ int CViewDiagramm::getSizeCurrentBreath()
 	LeaveCriticalSection(&csThreadAccess);
 	return iSizeBreath;
 }
+
+/**********************************************************************************************//**
+ * Sets fot time
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iCountFOTimer	Zero-based index of the count fo timer.
+ **************************************************************************************************/
 
 void CViewDiagramm::setFOTtime(BYTE iCountFOTimer)
 {
@@ -13559,6 +14705,15 @@ void CViewDiagramm::setFOTtime(BYTE iCountFOTimer)
 //	LeaveCriticalSection(&csDrawDataFOT);
 //}
 
+/**********************************************************************************************//**
+ * Sets fot running
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CViewDiagramm::setFOTrunning(bool state)
 {
 	EnterCriticalSection(&csDrawDataFOT);
@@ -13568,9 +14723,14 @@ void CViewDiagramm::setFOTrunning(bool state)
 	}
 	LeaveCriticalSection(&csDrawDataFOT);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Updates the fot pmean para
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewDiagramm::updateFOTPmeanPara()
 {
 	EnterCriticalSection(&csDrawDataFOT);
@@ -13580,6 +14740,13 @@ void CViewDiagramm::updateFOTPmeanPara()
 	}
 	LeaveCriticalSection(&csDrawDataFOT);
 }
+
+/**********************************************************************************************//**
+ * Updates the fotpeep para
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CViewDiagramm::updateFOTPEEPPara()
 {

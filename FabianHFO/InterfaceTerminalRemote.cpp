@@ -1,16 +1,55 @@
-// InterfaceTerminalRemote.cpp : implementation file
-//
-
+//=============================================================================
+/** 
+* \file InterfaceTerminalRemote.cpp
+* \brief Functions data exchange for research only!.
+* \author Rainer Kuehner
+* \date 2013-01-21 Creation of file
+*
+*	SOM|NBF|CMD|DATA0|...|DATAn|CKS
+*	message header-0x02
+*	NBF: number of bytes to follow this byte, including the checksum
+*	CMD: command byte
+*	DATA byte 0 ... DATA byte n - data bytes 0 thru n
+*	CKS: checksum, is computed by adding the data bytes using unsigned modulo 256 arithmetic, beginning with NBF,CMD,DATAbyte 0...DATAbyte n
+*
+*       Copyright (c) 2013 Ing.Buero Rainer Kuehner
+*                      Illerkirchberg
+*
+**/
+//=============================================================================
 #include "stdafx.h"
 #include "FabianHFO.h"
 #include "InterfaceTerminalRemote.h"
 #include "MVModel.h"
 #include "MVViewHandler.h"
 
-// CInterfaceTerminalRemote
+/**********************************************************************************************//**
+ * CInterfaceTerminalRemote
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 #define TERMINAL_NOTVALID -32765	//value NOTVALID
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the InterfaceTerminalRemote class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
+
 IMPLEMENT_DYNAMIC(CInterfaceTerminalRemote, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CInterfaceTerminalRemote class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CInterfaceTerminalRemote::CInterfaceTerminalRemote():
 CInterfaceTerminal()
@@ -31,6 +70,13 @@ CInterfaceTerminal()
 	fwRecvDataCode=0;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CInterfaceTerminalRemote class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CInterfaceTerminalRemote::~CInterfaceTerminalRemote()
 {
 }
@@ -38,9 +84,14 @@ CInterfaceTerminalRemote::~CInterfaceTerminalRemote()
 //BEGIN_MESSAGE_MAP(CInterfaceTerminalRemote, CInterfaceTerminal)
 //END_MESSAGE_MAP()
 
-
-
-// CInterfaceTerminalRemote message handlers
+/**********************************************************************************************//**
+ * CInterfaceTerminalRemote message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CInterfaceTerminalRemote::Init()
 {
@@ -162,6 +213,15 @@ bool CInterfaceTerminalRemote::Init()
 
 }
 
+/**********************************************************************************************//**
+ * Opens the com
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CInterfaceTerminalRemote::OpenCOM()
 {
 	bool bRes=false;
@@ -204,6 +264,16 @@ bool CInterfaceTerminalRemote::OpenCOM()
 	}
 	return bRes;
 }
+
+/**********************************************************************************************//**
+ * Executes the event action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	eEvent	The event.
+ * \param	eError	The error.
+ **************************************************************************************************/
 
 void CInterfaceTerminalRemote::OnEvent(EEvent eEvent, EError eError)
 {
@@ -344,6 +414,15 @@ void CInterfaceTerminalRemote::OnEvent(EEvent eEvent, EError eError)
 
 	return;
 }
+
+/**********************************************************************************************//**
+ * Performs the message action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CInterfaceTerminalRemote::PerformMsg()
 {
@@ -1218,6 +1297,13 @@ bool CInterfaceTerminalRemote::PerformMsg()
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Sends the messurement data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::sendMessurementData()
 {
 	//DEBUGMSG(TRUE, (TEXT("sendMessurementData1\r\n")));
@@ -1553,6 +1639,15 @@ void CInterfaceTerminalRemote::sendMessurementData()
 
 }
 
+/**********************************************************************************************//**
+ * Sends a data command
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	command	The command.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::sendData_Cmd(BYTE command)
 {
 	LPTERMINALMSG msg = new TERMINALMSG;
@@ -1579,6 +1674,15 @@ void CInterfaceTerminalRemote::sendData_Cmd(BYTE command)
 
 }
 
+/**********************************************************************************************//**
+ * Sends a data short
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	command	The command.
+ * \param	val	   	The value.
+ **************************************************************************************************/
 
 void CInterfaceTerminalRemote::sendData_SHORT(BYTE command, SHORT val) 
 {
@@ -1605,6 +1709,16 @@ void CInterfaceTerminalRemote::sendData_SHORT(BYTE command, SHORT val)
 	send(msg);
 #endif
 }
+
+/**********************************************************************************************//**
+ * Sends a data byte
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	command	The command.
+ * \param	val	   	The value.
+ **************************************************************************************************/
 
 void CInterfaceTerminalRemote::sendData_BYTE(BYTE command, BYTE val) 
 {
@@ -1638,6 +1752,15 @@ void CInterfaceTerminalRemote::sendData_BYTE(BYTE command, BYTE val)
 #endif
 }
 
+/**********************************************************************************************//**
+ * Sets leak compensation
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setLeakCompensation(BYTE iVal)
 {
 	if(iVal<LC_LOW || iVal>LC_HIGH)
@@ -1651,6 +1774,16 @@ void CInterfaceTerminalRemote::setLeakCompensation(BYTE iVal)
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter hfo flow
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_HFOFlow(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -1684,6 +1817,16 @@ void CInterfaceTerminalRemote::setParam_HFOFlow(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter hfo frequency recruitment
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_HFOFreqRec(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -1723,6 +1866,16 @@ void CInterfaceTerminalRemote::setParam_HFOFreqRec(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter pinsp
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_PINSP(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -1784,6 +1937,16 @@ void CInterfaceTerminalRemote::setParam_PINSP(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets vent mode
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setVentMode(BYTE state)
 {
 	if(state>VM_NONE && state<VM_SERVICE)
@@ -1872,6 +2035,16 @@ void CInterfaceTerminalRemote::setVentMode(BYTE state)
 	else
 		sendData_Cmd(TERM_PARAM_NOSUPPORT);
 }
+
+/**********************************************************************************************//**
+ * Sets pressure rise control
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::set_PressureRiseCtrl(BYTE iVal)
 {
 	if(iVal<CURVE_IFLOW || iVal>CURVE_AUTOFLOW)
@@ -1887,6 +2060,16 @@ void CInterfaceTerminalRemote::set_PressureRiseCtrl(BYTE iVal)
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets manbreath running
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::set_MANBREATHrunning(BYTE iVal)
 {
 	if(iVal<0 || iVal>1)
@@ -1931,6 +2114,16 @@ void CInterfaceTerminalRemote::set_MANBREATHrunning(BYTE iVal)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter IE ratio hfo
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_IERatioHFO(BYTE iVal)
 {
 	if(iVal<RIE_1_3 || iVal>RIE_1_1)
@@ -1962,6 +2155,16 @@ void CInterfaceTerminalRemote::setParam_IERatioHFO(BYTE iVal)
 		
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets vent range
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setVentRange(BYTE iVal)
 {
 	if(iVal<NEONATAL || iVal>PEDIATRIC)
@@ -1973,6 +2176,16 @@ void CInterfaceTerminalRemote::setVentRange(BYTE iVal)
 		getModel()->getCONFIG()->SetVentRange(iVal);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter eflow
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_EFlow(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -2033,6 +2246,16 @@ void CInterfaceTerminalRemote::setParam_EFlow(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter itime
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_ITime(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -2147,6 +2370,16 @@ void CInterfaceTerminalRemote::setParam_ITime(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter etime
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_ETime(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -2237,6 +2470,16 @@ void CInterfaceTerminalRemote::setParam_ETime(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter rise time
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_RiseTime(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -2309,6 +2552,16 @@ void CInterfaceTerminalRemote::setParam_RiseTime(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter abort criterion psv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_AbortCriterionPSV(BYTE iVal)
 {
 	if(iVal>MAX_ABORTCRITERION_PSV)
@@ -2327,6 +2580,16 @@ void CInterfaceTerminalRemote::setParam_AbortCriterionPSV(BYTE iVal)
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter vgarant
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_VGarant(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -2411,6 +2674,16 @@ void CInterfaceTerminalRemote::setParam_VGarant(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets state prico
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setState_PRICO(BYTE iVal)
 {
 	if(getModel()->getCONFIG()->getSPO2module()==SPO2MODULE_MASIMO)
@@ -2448,6 +2721,16 @@ void CInterfaceTerminalRemote::setState_PRICO(BYTE iVal)
 		sendData_Cmd(TERM_PARAM_NOSUPPORT);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter fio2 high
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_FIO2HIGH(BYTE iVal)
 {
 	if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
@@ -2479,6 +2762,16 @@ void CInterfaceTerminalRemote::setParam_FIO2HIGH(BYTE iVal)
 	}
 	
 }
+
+/**********************************************************************************************//**
+ * Sets parameter fio2 low
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_FIO2LOW(BYTE iVal)
 {
 	if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
@@ -2509,6 +2802,16 @@ void CInterfaceTerminalRemote::setParam_FIO2LOW(BYTE iVal)
 		sendData_Cmd(TERM_PARAM_NOSUPPORT);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter spo2 high
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_SPO2HIGH(BYTE iVal)
 {
 	if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
@@ -2544,6 +2847,16 @@ void CInterfaceTerminalRemote::setParam_SPO2HIGH(BYTE iVal)
 		sendData_Cmd(TERM_PARAM_NOSUPPORT);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter spo2 low
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_SPO2LOW(BYTE iVal)
 {
 	if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
@@ -2584,6 +2897,16 @@ void CInterfaceTerminalRemote::setParam_SPO2LOW(BYTE iVal)
 		sendData_Cmd(TERM_PARAM_NOSUPPORT);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter o2 flush
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_O2_FLUSH(BYTE iVal)
 {
 	fVALUE fv;
@@ -2651,6 +2974,16 @@ void CInterfaceTerminalRemote::setParam_O2_FLUSH(BYTE iVal)
 //		break;
 //	}
 //}
+
+/**********************************************************************************************//**
+ * Sets parameter itime recruitment
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_ITimeRec(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -2690,6 +3023,16 @@ void CInterfaceTerminalRemote::setParam_ITimeRec(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter backup
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_Backup(BYTE iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -2723,6 +3066,16 @@ void CInterfaceTerminalRemote::setParam_Backup(BYTE iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter pmanual
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_PManual(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -2809,6 +3162,16 @@ void CInterfaceTerminalRemote::setParam_PManual(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter cpap
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_CPAP(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -2867,6 +3230,16 @@ void CInterfaceTerminalRemote::setParam_CPAP(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter flowmin
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_Flowmin(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -2900,6 +3273,16 @@ void CInterfaceTerminalRemote::setParam_Flowmin(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter trigger
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_Trigger(BYTE iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -3009,6 +3392,16 @@ void CInterfaceTerminalRemote::setParam_Trigger(BYTE iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter therapy flow
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_TherapieFlow(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -3042,6 +3435,16 @@ void CInterfaceTerminalRemote::setParam_TherapieFlow(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter vlimit
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_VLimit(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -3102,6 +3505,16 @@ void CInterfaceTerminalRemote::setParam_VLimit(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter iflow
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_IFlow(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -3162,6 +3575,16 @@ void CInterfaceTerminalRemote::setParam_IFlow(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter fio2
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_FiO2(BYTE iVal)
 {
 	fVALUE fv;
@@ -3186,6 +3609,16 @@ void CInterfaceTerminalRemote::setParam_FiO2(BYTE iVal)
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets vent run state
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setVent_RunState(BYTE iVal)
 {
 	bool bTriggerVENT_STOPPED=false;
@@ -3230,6 +3663,16 @@ void CInterfaceTerminalRemote::setVent_RunState(BYTE iVal)
 		getModel()->triggerEvent(&eventCtrl);
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets state vlimit
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setState_VLimit(BYTE iVal)
 {
 	if(false==getModel()->getDATAHANDLER()->isVLIMITLicenseAvailable())
@@ -3271,6 +3714,16 @@ void CInterfaceTerminalRemote::setState_VLimit(BYTE iVal)
 	}
 	
 }
+
+/**********************************************************************************************//**
+ * Sets state vgarant
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setState_VGarant(BYTE iVal)
 {
 	if(false==getModel()->getDATAHANDLER()->isVGUARANTLicenseAvailable())
@@ -3311,6 +3764,16 @@ void CInterfaceTerminalRemote::setState_VGarant(BYTE iVal)
 		
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter hf frequency
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_HFFreq(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -3345,6 +3808,16 @@ void CInterfaceTerminalRemote::setParam_HFFreq(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter hf pmean recruitment
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_HFPMeanRec(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -3379,6 +3852,16 @@ void CInterfaceTerminalRemote::setParam_HFPMeanRec(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter hf pmean
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_HFPMean(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -3413,6 +3896,16 @@ void CInterfaceTerminalRemote::setParam_HFPMean(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter hf amp
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_HFAmpl(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -3447,6 +3940,16 @@ void CInterfaceTerminalRemote::setParam_HFAmpl(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter hf amp maximum
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_HFAmplMax(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -3480,6 +3983,16 @@ void CInterfaceTerminalRemote::setParam_HFAmplMax(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter bpm
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_BPM(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -3569,6 +4082,16 @@ void CInterfaceTerminalRemote::setParam_BPM(WORD iVal)
 
 	
 }
+
+/**********************************************************************************************//**
+ * Sets parameter ppsv
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_PPSV(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -3646,6 +4169,16 @@ void CInterfaceTerminalRemote::setParam_PPSV(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets parameter peep
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::setParam_PEEP(WORD iVal)
 {
 	switch(getModel()->getCONFIG()->GetCurMode())
@@ -3721,6 +4254,14 @@ void CInterfaceTerminalRemote::setParam_PEEP(WORD iVal)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Sends the mode option 1
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CInterfaceTerminalRemote::sendModeOption1()
 {
 	SHORT wMode=0;
@@ -3856,6 +4397,13 @@ void CInterfaceTerminalRemote::sendModeOption1()
 	
 	sendData_SHORT(TERMINAL_MODE_OPTION1, wMode);
 }
+
+/**********************************************************************************************//**
+ * Sends the mode option 2
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 void CInterfaceTerminalRemote::sendModeOption2()
 {

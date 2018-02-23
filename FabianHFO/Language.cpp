@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	Language.cpp.
+ *
+ * Implements the language class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "Language.h"
 #include "FabianHFO.h"
@@ -7,6 +13,13 @@
 
 CLanguage* CLanguage::theLang=0;
 extern CLangAdmin* g_pGlobalLanguageStrings;
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CLanguage class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CLanguage::CLanguage(void)
 {
@@ -189,6 +202,13 @@ CLanguage::CLanguage(void)
 	}
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CLanguage class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 CLanguage::~CLanguage(void)
 {
 	m_pcsLangFiles->RemoveAll();
@@ -197,9 +217,15 @@ CLanguage::~CLanguage(void)
 	m_pcLangAdmin.Close();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CLanguage::getModel()
 {
 	if(m_pModel==NULL)
@@ -207,9 +233,15 @@ CMVModel *CLanguage::getModel()
 	return m_pModel;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
+
 CLanguage* CLanguage::GetInstance()
 {
 	if(theLang == 0)
@@ -221,9 +253,13 @@ CLanguage* CLanguage::GetInstance()
 	return theLang;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CLanguage::DestroyInstance()
 {
 	if(theLang != NULL)
@@ -235,9 +271,13 @@ void CLanguage::DestroyInstance()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
 void CLanguage::Init()
 {
 	//m_pcLangAdmin=new CLangAdmin();
@@ -279,6 +319,15 @@ void CLanguage::Init()
 
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is XML language file
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	True if XML language file, false if not.
+ **************************************************************************************************/
+
 bool CLanguage::IsXMLLangFile()
 {
 	if(m_pcsLangFiles->GetSize()>0)
@@ -287,6 +336,17 @@ bool CLanguage::IsXMLLangFile()
 		return false;
 }
 
+/**********************************************************************************************//**
+ * Gets language file name
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	iPos	Zero-based index of the position.
+ *
+ * \return	The language file name.
+ **************************************************************************************************/
+
 CStringW CLanguage::GetLangFileName(int iPos)
 {
 	if(m_pcsLangFiles->GetSize()>=iPos+1)
@@ -294,6 +354,17 @@ CStringW CLanguage::GetLangFileName(int iPos)
 	else
 		return LANGFILE_ENGLISH;
 }
+
+/**********************************************************************************************//**
+ * Gets language file identifier
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	szName	The name.
+ *
+ * \return	The language file identifier.
+ **************************************************************************************************/
 
 int CLanguage::GetLangFileID(CStringW szName)
 {
@@ -307,30 +378,53 @@ int CLanguage::GetLangFileID(CStringW szName)
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Gets language files
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \return	Null if it fails, else the language files.
+ **************************************************************************************************/
+
 CStringList* CLanguage::GetLangFiles()
 {
 	return m_pcLangAdmin.GetLangFiles();
 }
+
+/**********************************************************************************************//**
+ * Loads a language
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	csLang	The create struct language.
+ * \param	bExt  	True to extent.
+ *
+ * \return	The language.
+ **************************************************************************************************/
 
 DWORD CLanguage::LoadLang(CStringW csLang, bool bExt)
 {
 	return m_pcLangAdmin.LoadLang(csLang,bExt);
 }
 
-//CConfiguration *CLanguage::getCONFIG()
-//{
-//	if(m_pConfig==NULL)
-//		m_pConfig=CConfiguration::GetInstance();
-//	return m_pConfig;
-//}
 
 
-// **************************************************************************
-//
-// Language-Library
-//
-// **************************************************************************
-static CStringW CS_ERROR=_T("- - -");
+
+static CStringW CS_ERROR=_T("- - -");   ///< The create struct error
+
+/**********************************************************************************************//**
+ * Gets language string
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nID	The identifier.
+ *
+ * \return	The language string.
+ **************************************************************************************************/
+
 CStringW CLanguage::GetLanguageString(int nID)
 {
 	CStringW cs=_T("");

@@ -1,14 +1,67 @@
+/**********************************************************************************************//**
+ * \file	ViewAlarmLimit.cpp.
+ *
+ * Implements the view alarm limit class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "ViewAlarmLimit.h"
 #include "LangAdmin.h"
 #include "globDefs.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x0000BF00
+
+/**********************************************************************************************//**
+ * A macro that defines color txtsubbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTSUBBTNDW			0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00FF5F55
 
+/**********************************************************************************************//**
+ * A macro that defines timemodechange
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 #define TIMEMODECHANGE	45000
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CViewAlarmLimit class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	ViewID	Identifier for the view.
+ **************************************************************************************************/
 
 CViewAlarmLimit::CViewAlarmLimit(int ViewID):
 CMVView(ViewID)
@@ -71,6 +124,13 @@ CMVView(ViewID)
 
 	m_bExit=false;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CViewAlarmLimit class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CViewAlarmLimit::~CViewAlarmLimit(void)
 {
@@ -210,11 +270,15 @@ BEGIN_MESSAGE_MAP(CViewAlarmLimit, CMVView)
 	ON_BN_CLICKED(IDC_BTN_ALIMIT_DELAY, &CViewAlarmLimit::OnBnClickedValue)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * Creates the view
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewAlarmLimit::CreateView()
 {
 	RECT rcLd={610,0,800,550};
@@ -231,9 +295,20 @@ bool CViewAlarmLimit::CreateView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CViewAlarmLimit::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 
@@ -283,9 +358,16 @@ BOOL CViewAlarmLimit::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateC
 	else
 		return 0;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewAlarmLimit::Initialize()
 {
 	bool result = false;
@@ -1235,14 +1317,16 @@ bool CViewAlarmLimit::Initialize()
 	return result;
 }
 
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bFrames	True to frames.
+ * \param	bLabel 	True to label.
+ **************************************************************************************************/
 
-
-
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewAlarmLimit::DrawData(bool bFrames, bool bLabel/*, bool bDrawPEEPauto, bool bDrawPMAXauto*/)
 {
 	if(m_bExit)
@@ -1286,9 +1370,15 @@ void CViewAlarmLimit::DrawData(bool bFrames, bool bLabel/*, bool bDrawPEEPauto, 
 	DeleteDC(hdcMem);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw frames
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::DrawFrames(CDC* pDC)
 {
 	if(m_bExit)
@@ -1369,6 +1459,15 @@ void CViewAlarmLimit::DrawFrames(CDC* pDC)
 	SelectObject(hdc, hPrevPen);
 }
 
+/**********************************************************************************************//**
+ * Draw frame etco 2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::drawFrameETCO2(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -1385,6 +1484,16 @@ void CViewAlarmLimit::drawFrameETCO2(CDC* pDC)
 		m_pcAlarmlimitPara2->Draw(hdc,0,156);	//FICO2
 
 }
+
+/**********************************************************************************************//**
+ * Draw frame spo 2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::drawFrameSPO2(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -1401,6 +1510,16 @@ void CViewAlarmLimit::drawFrameSPO2(CDC* pDC)
 	if(m_pcAlarmlimitPara1)
 		m_pcAlarmlimitPara1->Draw(hdc,0,321);	//SIQ
 }
+
+/**********************************************************************************************//**
+ * Draw frame therapie
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::drawFrameTHERAPIE(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -1410,6 +1529,16 @@ void CViewAlarmLimit::drawFrameTHERAPIE(CDC* pDC)
 	if(m_pcNumInfoBot)
 		m_pcNumInfoBot->Draw(hdc,0,90);
 }
+
+/**********************************************************************************************//**
+ * Draw frame hfo
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::drawFrameHFO(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -1435,6 +1564,15 @@ void CViewAlarmLimit::drawFrameHFO(CDC* pDC)
 			m_pcAlarmlimitPara1->Draw(hdc,0,376);	//Leak HFO
 	}
 }
+
+/**********************************************************************************************//**
+ * Draw frame cpap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
 
 void CViewAlarmLimit::drawFrameCPAP(CDC* pDC)
 {
@@ -1464,6 +1602,15 @@ void CViewAlarmLimit::drawFrameCPAP(CDC* pDC)
 
 }
 
+/**********************************************************************************************//**
+ * Draw frame ncpap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::drawFrameNCPAP(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -1488,6 +1635,15 @@ void CViewAlarmLimit::drawFrameNCPAP(CDC* pDC)
 			m_pcAlarmlimitPara1->Draw(hdc,0,321);	//Apnea
 	}
 }
+
+/**********************************************************************************************//**
+ * Draw frame duopap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
 
 void CViewAlarmLimit::drawFrameDUOPAP(CDC* pDC)
 {
@@ -1551,6 +1707,15 @@ void CViewAlarmLimit::drawFrameDUOPAP(CDC* pDC)
 	}
 }
 
+/**********************************************************************************************//**
+ * Draw frame conventional
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::drawFrameCONVENTIONAL(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -1599,9 +1764,16 @@ void CViewAlarmLimit::drawFrameCONVENTIONAL(CDC* pDC)
 		}
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw label
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::DrawLabel(CDC* pDC)
 {
 	if(m_bExit)
@@ -1620,6 +1792,15 @@ void CViewAlarmLimit::DrawLabel(CDC* pDC)
 		drawLabel_VENTILATION(pDC);
 	}
 }
+
+/**********************************************************************************************//**
+ * Draw label etco 2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
 
 void CViewAlarmLimit::drawLabel_ETCO2(CDC* pDC)
 {
@@ -1757,6 +1938,16 @@ void CViewAlarmLimit::drawLabel_ETCO2(CDC* pDC)
 	SetBkMode(hdc,nBkMode);
 	SelectObject(hdc,hPrevFont);
 }
+
+/**********************************************************************************************//**
+ * Draw label spo 2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::drawLabel_SPO2(CDC* pDC)
 {
 	if(m_bExit)
@@ -1841,6 +2032,16 @@ void CViewAlarmLimit::drawLabel_SPO2(CDC* pDC)
 	SetBkMode(hdc,nBkMode);
 	SelectObject(hdc,hPrevFont);
 }
+
+/**********************************************************************************************//**
+ * Draw label ventilation
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::drawLabel_VENTILATION(CDC* pDC)
 {
 	if(m_bExit)
@@ -1871,6 +2072,15 @@ void CViewAlarmLimit::drawLabel_VENTILATION(CDC* pDC)
 		drawLabel_CONVENTIONAL(pDC);
 	}
 }
+
+/**********************************************************************************************//**
+ * Draw label hfo
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
 
 void CViewAlarmLimit::drawLabel_HFO(CDC* pDC)
 {
@@ -2055,6 +2265,15 @@ void CViewAlarmLimit::drawLabel_HFO(CDC* pDC)
 	SelectObject(hdc,hPrevFont);
 }
 
+/**********************************************************************************************//**
+ * Draw label cpap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::drawLabel_CPAP(CDC* pDC)
 {
 	if(m_bExit)
@@ -2201,6 +2420,15 @@ void CViewAlarmLimit::drawLabel_CPAP(CDC* pDC)
 	SelectObject(hdc,hPrevFont);
 }
 
+/**********************************************************************************************//**
+ * Draw label ncpap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::drawLabel_NCPAP(CDC* pDC)
 {
 	if(m_bExit)
@@ -2300,6 +2528,15 @@ void CViewAlarmLimit::drawLabel_NCPAP(CDC* pDC)
 	SetBkMode(hdc,nBkMode);
 	SelectObject(hdc,hPrevFont);
 }
+
+/**********************************************************************************************//**
+ * Draw label duopap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
 
 void CViewAlarmLimit::drawLabel_DUOPAP(CDC* pDC)
 {
@@ -2460,6 +2697,15 @@ void CViewAlarmLimit::drawLabel_DUOPAP(CDC* pDC)
 	SetBkMode(hdc,nBkMode);
 	SelectObject(hdc,hPrevFont);
 }
+
+/**********************************************************************************************//**
+ * Draw label conventional
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
 
 void CViewAlarmLimit::drawLabel_CONVENTIONAL(CDC* pDC)
 {
@@ -2678,6 +2924,15 @@ void CViewAlarmLimit::drawLabel_CONVENTIONAL(CDC* pDC)
 	SelectObject(hdc,hPrevFont);
 }
 
+/**********************************************************************************************//**
+ * Draw data et co 2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::DrawData_etCO2(HDC hdc)
 {
 	RECT rc={0,0,m_lX,m_lY};
@@ -2781,6 +3036,16 @@ void CViewAlarmLimit::DrawData_etCO2(HDC hdc)
 	SetBkMode(hdc,nBkMode);
 	SelectObject(hdc,hPrevFont);
 }
+
+/**********************************************************************************************//**
+ * Draw data sp o 2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::DrawData_SpO2(HDC hdc)
 {
 	//HDC hdc = *pDC;
@@ -2853,6 +3118,16 @@ void CViewAlarmLimit::DrawData_SpO2(HDC hdc)
 	SetBkMode(hdc,nBkMode);
 	SelectObject(hdc,hPrevFont);
 }
+
+/**********************************************************************************************//**
+ * Draw data vent
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::DrawData_Vent(HDC hdc)
 {
 	if(m_eCurVentMode==VM_THERAPIE)
@@ -2881,9 +3156,15 @@ void CViewAlarmLimit::DrawData_Vent(HDC hdc)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data ventilation hfo
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::drawDataVentilation_HFO(HDC hdc)
 {
 	RECT rc={0,0,m_lX,m_lY};
@@ -2966,6 +3247,15 @@ void CViewAlarmLimit::drawDataVentilation_HFO(HDC hdc)
 	SelectObject(hdc,hbrprev);
 	SelectObject(hdc,hpenprev);
 }
+
+/**********************************************************************************************//**
+ * Draw data ventilation cpap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ **************************************************************************************************/
 
 void CViewAlarmLimit::drawDataVentilation_CPAP(HDC hdc)
 {
@@ -3086,6 +3376,15 @@ void CViewAlarmLimit::drawDataVentilation_CPAP(HDC hdc)
 	SelectObject(hdc,hpenprev);
 }
 
+/**********************************************************************************************//**
+ * Draw data ventilation ncpap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::drawDataVentilation_NCPAP(HDC hdc)
 {
 	RECT rc={0,0,m_lX,m_lY};
@@ -3182,6 +3481,15 @@ void CViewAlarmLimit::drawDataVentilation_NCPAP(HDC hdc)
 	SelectObject(hdc,hbrprev);
 	SelectObject(hdc,hpenprev);
 }
+
+/**********************************************************************************************//**
+ * Draw data ventilation duopap
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ **************************************************************************************************/
 
 void CViewAlarmLimit::drawDataVentilation_DUOPAP(HDC hdc)
 {
@@ -3316,6 +3624,15 @@ void CViewAlarmLimit::drawDataVentilation_DUOPAP(HDC hdc)
 	SelectObject(hdc,hpenprev);
 }
 
+/**********************************************************************************************//**
+ * Draw data ventilation conventional
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	hdc	The hdc.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::drawDataVentilation_CONVENTIONAL(HDC hdc)
 {
 	RECT rc={0,0,m_lX,m_lY};
@@ -3407,9 +3724,16 @@ void CViewAlarmLimit::drawDataVentilation_CONVENTIONAL(HDC hdc)
 	SelectObject(hdc,hbrprev);
 	SelectObject(hdc,hpenprev);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates window menu alarm limits
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewAlarmLimit::CreateWndMenuAlarmLimits()
 {
 	// **********************************************************************
@@ -3431,9 +3755,16 @@ bool CViewAlarmLimit::CreateWndMenuAlarmLimits()
 	}
 	return false;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Shows the window menu alarm limits
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::ShowWndMenuAlarmLimits(bool bShow)
 {
 	if(m_pWndMenuAlarmLimits)
@@ -3442,27 +3773,37 @@ void CViewAlarmLimit::ShowWndMenuAlarmLimits(bool bShow)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Opens this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewAlarmLimit::Open()
 {
 	
 }
 
+/**********************************************************************************************//**
+ * Closes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewAlarmLimit::Close()
 {
 	
 }
 
+/**********************************************************************************************//**
+ * Shows this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewAlarmLimit::Show()
 {
 	this->ShowWindow(SW_SHOW);
@@ -3472,16 +3813,24 @@ void CViewAlarmLimit::Show()
 	SetViewFocus();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Hides this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewAlarmLimit::Hide()
 {
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewAlarmLimit::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -3489,9 +3838,17 @@ void CViewAlarmLimit::OnPaint()
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CViewAlarmLimit::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -3534,9 +3891,15 @@ BOOL CViewAlarmLimit::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Query if this instance is button depressed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if button depressed, false if not.
+ **************************************************************************************************/
+
 bool CViewAlarmLimit::IsButtonDepressed()
 {
 	bool bResult = false;
@@ -3676,9 +4039,15 @@ bool CViewAlarmLimit::IsButtonDepressed()
 	return bResult;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Notifies an event
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pEvent	If non-null, the event.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::NotifyEvent(CMVEvent* pEvent)
 {
 	if(m_bExit)
@@ -3892,6 +4261,14 @@ void CViewAlarmLimit::NotifyEvent(CMVEvent* pEvent)
 		theApp.ReportException(_T("CViewAlarmLimit::NotifyEvent"));
 	}
 }
+
+/**********************************************************************************************//**
+ * Notifies the vent mode changed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewAlarmLimit::NotifyVentModeChanged()
 {
 	DEBUGMSG(TRUE, (TEXT("CViewAlarmLimit::NotifyVentModeChanged()\r\n")));
@@ -3926,6 +4303,13 @@ void CViewAlarmLimit::NotifyVentModeChanged()
 	}
 }
 
+/**********************************************************************************************//**
+ * Redraw view
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewAlarmLimit::RedrawView()
 {
 	
@@ -3942,6 +4326,13 @@ void CViewAlarmLimit::RedrawView()
 	if(m_pWndMenuAlarmLimits)
 		m_pWndMenuAlarmLimits->PostMessage(WM_ALIMIT_REFRESH);
 }
+
+/**********************************************************************************************//**
+ * Shows a limit buttons
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CViewAlarmLimit::showALimitButtons()
 {
@@ -4327,10 +4718,10 @@ void CViewAlarmLimit::showALimitButtons()
 }
 
 /**********************************************************************************************//**
- * Shows alarm limit buttons ippv.
+ * Shows a limit buttons ippv
  *
- * \author	Rainer
- * \date	10.07.2017
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  **************************************************************************************************/
 
 void CViewAlarmLimit::showALimitButtons_IPPV()
@@ -4393,10 +4784,10 @@ void CViewAlarmLimit::showALimitButtons_IPPV()
 }
 
 /**********************************************************************************************//**
- * Shows alarm limit buttons sippv.
+ * Shows a limit buttons sippv
  *
- * \author	Rainer
- * \date	10.07.2017
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  **************************************************************************************************/
 
 void CViewAlarmLimit::showALimitButtons_SIPPV()
@@ -4455,10 +4846,10 @@ void CViewAlarmLimit::showALimitButtons_SIPPV()
 }
 
 /**********************************************************************************************//**
- * Shows alarm limit buttons simv.
+ * Shows a limit buttons simv
  *
- * \author	Rainer
- * \date	10.07.2017
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  **************************************************************************************************/
 
 void CViewAlarmLimit::showALimitButtons_SIMV()
@@ -4533,10 +4924,10 @@ void CViewAlarmLimit::showALimitButtons_SIMV()
 }
 
 /**********************************************************************************************//**
- * Shows alarm limit buttons simvpsv.
+ * Shows a limit buttons simvpsv
  *
- * \author	Rainer
- * \date	10.07.2017
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  **************************************************************************************************/
 
 void CViewAlarmLimit::showALimitButtons_SIMVPSV()
@@ -4611,10 +5002,10 @@ void CViewAlarmLimit::showALimitButtons_SIMVPSV()
 }
 
 /**********************************************************************************************//**
- * Shows alarm limit buttons psv.
+ * Shows a limit buttons psv
  *
- * \author	Rainer
- * \date	10.07.2017
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  **************************************************************************************************/
 
 void CViewAlarmLimit::showALimitButtons_PSV()
@@ -4688,10 +5079,10 @@ void CViewAlarmLimit::showALimitButtons_PSV()
 }
 
 /**********************************************************************************************//**
- * Shows alarm limit buttons cpap.
+ * Shows a limit buttons cpap
  *
- * \author	Rainer
- * \date	10.07.2017
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  **************************************************************************************************/
 
 void CViewAlarmLimit::showALimitButtons_CPAP()
@@ -4779,10 +5170,10 @@ void CViewAlarmLimit::showALimitButtons_CPAP()
 }
 
 /**********************************************************************************************//**
- * Shows alarm limit buttons ncpap.
+ * Shows a limit buttons ncpap
  *
- * \author	Rainer
- * \date	10.07.2017
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  **************************************************************************************************/
 
 void CViewAlarmLimit::showALimitButtons_NCPAP()
@@ -4831,10 +5222,10 @@ void CViewAlarmLimit::showALimitButtons_NCPAP()
 }
 
 /**********************************************************************************************//**
- * Shows alarm limit buttons duopap.
+ * Shows a limit buttons duopap
  *
- * \author	Rainer
- * \date	10.07.2017
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  **************************************************************************************************/
 
 void CViewAlarmLimit::showALimitButtons_DUOPAP()
@@ -4884,10 +5275,10 @@ void CViewAlarmLimit::showALimitButtons_DUOPAP()
 }
 
 /**********************************************************************************************//**
- * Shows alarm limit buttons hfo.
+ * Shows a limit buttons hfo
  *
- * \author	Rainer
- * \date	10.07.2017
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  **************************************************************************************************/
 
 void CViewAlarmLimit::showALimitButtons_HFO()
@@ -4948,10 +5339,10 @@ if(m_pcAlarmLimit_DCO2lo)
 }
 
 /**********************************************************************************************//**
- * Shows alarm limit buttons therapie.
+ * Shows a limit buttons therapie
  *
- * \author	Rainer
- * \date	10.07.2017
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  **************************************************************************************************/
 
 void CViewAlarmLimit::showALimitButtons_THERAPIE()
@@ -4960,10 +5351,10 @@ void CViewAlarmLimit::showALimitButtons_THERAPIE()
 }
 
 /**********************************************************************************************//**
- * Notifies a para button event.
+ * Notifies a para button event
  *
- * \author	Rainer
- * \date	10.07.2017
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  *
  * \param [in,out]	pEvent	If non-null, the event.
  **************************************************************************************************/
@@ -5200,6 +5591,15 @@ void CViewAlarmLimit::NotifyParaBtnEvent(CMVEvent* pEvent)
 		RefreshAlarmStates();
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is actice patient alarm limit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if actice patient alarm limit, false if not.
+ **************************************************************************************************/
+
 bool CViewAlarmLimit::isActicePatientAlarmLimit()
 {
 	bool bRes=false;
@@ -5237,9 +5637,13 @@ bool CViewAlarmLimit::isActicePatientAlarmLimit()
 	return bRes;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Refresh alarm states
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewAlarmLimit::RefreshAlarmStates()
 {
 	//DEBUGMSG(TRUE, (TEXT("RedrawView() RefreshAlarmStates:%d\r\n"),(int)m_eCurALimitNumeric));
@@ -5727,9 +6131,15 @@ void CViewAlarmLimit::RefreshAlarmStates()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CViewAlarmLimit::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==ALIMITTIMER)
@@ -5750,15 +6160,13 @@ void CViewAlarmLimit::OnTimer(UINT_PTR nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CViewAlarmLimit::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewAlarmLimit::OnDestroy()
 {
 	m_bExit=true;
@@ -5780,11 +6188,30 @@ void CViewAlarmLimit::OnDestroy()
 		DeleteObject(m_hbmpStatic);
 }
 
+/**********************************************************************************************//**
+ * Draw automatic state
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewAlarmLimit::DrawAutoState()
 {
 	DrawData(true, true);
 }
 
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
 LRESULT CViewAlarmLimit::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
@@ -6222,6 +6649,12 @@ LRESULT CViewAlarmLimit::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
+/**********************************************************************************************//**
+ * Notifies the exspiration data changed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CViewAlarmLimit::NotifyExspirationDataChanged()
 {
@@ -6238,6 +6671,13 @@ void CViewAlarmLimit::NotifyExspirationDataChanged()
 	}
 }
 
+/**********************************************************************************************//**
+ * Notifies the data changed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewAlarmLimit::NotifyDataChanged()
 {
 	if(m_bExit)
@@ -6253,9 +6693,13 @@ void CViewAlarmLimit::NotifyDataChanged()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Redraw alarm limits
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewAlarmLimit::RedrawAlarmLimits()
 {
 	if(m_bExit)
@@ -6383,9 +6827,13 @@ void CViewAlarmLimit::RedrawAlarmLimits()
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Notifies the alarm limit changed
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewAlarmLimit::NotifyAlarmLimitChanged()
 {
 	if(m_bExit)
@@ -6401,9 +6849,13 @@ void CViewAlarmLimit::NotifyAlarmLimitChanged()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Calculates the alarm limit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewAlarmLimit::CalculateAlarmLimit()
 {
 	if(m_bExit)
@@ -6523,9 +6975,13 @@ void CViewAlarmLimit::CalculateAlarmLimit()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Notifies the calculate alarm limit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewAlarmLimit::NotifyCalculateAlarmLimit()
 {
 	if(m_bExit)
@@ -6541,12 +6997,13 @@ void CViewAlarmLimit::NotifyCalculateAlarmLimit()
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets view focus
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewAlarmLimit::SetViewFocus()
 {
 	if(m_bExit)
@@ -7223,6 +7680,15 @@ void CViewAlarmLimit::SetViewFocus()
 	PostMessage(WM_SET_ALIMITTIMER);
 }
 
+/**********************************************************************************************//**
+ * Sets next focus
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewAlarmLimit::SetNextFocus()
 {
 	if(m_bExit)
@@ -7246,6 +7712,16 @@ bool CViewAlarmLimit::SetNextFocus()
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets previous focus
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewAlarmLimit::SetPrevFocus()
 {
 	if(m_bExit)
@@ -7272,6 +7748,13 @@ bool CViewAlarmLimit::SetPrevFocus()
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked value action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewAlarmLimit::OnBnClickedValue()
 {
 	if(m_pbtnValueDelay->GetState()==BS_UP)
@@ -7284,6 +7767,13 @@ void CViewAlarmLimit::OnBnClickedValue()
 		getModel()->getCONFIG()->SetCurPminAlarmDelay(m_iValueDelay);
 	}
 }
+
+/**********************************************************************************************//**
+ * Check alarm state
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CViewAlarmLimit::checkAlarmState()
 {

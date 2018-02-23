@@ -11,10 +11,16 @@
 
 extern CEvent g_eventPRICO;
 
-//CircularBuffer<SHORT> CThreadPRICO::m_piCircBufSpO2(MAXSIZE_SPO2PRICO_BUFFER); 
 
 // CThreadPRICO
 CThreadPRICO* CThreadPRICO::theThreadPRICO=0;
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CThreadPRICO class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 CThreadPRICO::CThreadPRICO()
 {
@@ -58,15 +64,13 @@ CThreadPRICO::CThreadPRICO()
 	m_bSPO2checkFlag=FALSE;
 }
 
-//************************************
-// Method:    ~CThreadPRICO
-// FullName:  CThreadPRICO::~CThreadPRICO
-// Access:    protected 
-// Returns:   
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Finalizes an instance of the CThreadPRICO class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CThreadPRICO::~CThreadPRICO()
 {
 	stopPRICOThread();
@@ -96,14 +100,16 @@ CThreadPRICO::~CThreadPRICO()
 	DeleteCriticalSection(&csPRICOstate);
 	DeleteCriticalSection(&csPRICOthread);
 }
-//=============================================================================
-/**
- * @brief Get the instance of PRICO thread (singleton).
+
+/**********************************************************************************************//**
+ * Gets the instance
  *
- * @return the instance of PRICO thread
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  *
- **/
-//=============================================================================
+ * \return	Null if it fails, else the instance.
+ **************************************************************************************************/
+
 CThreadPRICO* CThreadPRICO::getInstance()
 {
 	if(theThreadPRICO == 0)
@@ -113,11 +119,13 @@ CThreadPRICO* CThreadPRICO::getInstance()
 	return theThreadPRICO;
 }
 
-//=============================================================================
-/**
- * @brief Destroys the instance of PRICO thread (singleton).
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Destroys the instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadPRICO::destroyInstance()
 {
 	if(theThreadPRICO != NULL)
@@ -126,14 +134,16 @@ void CThreadPRICO::destroyInstance()
 		theThreadPRICO = NULL;
 	}
 }
-//=============================================================================
-/**
- * @brief Get the instance of the model (singleton).
+
+/**********************************************************************************************//**
+ * Gets the model
  *
- * @return the instance of the model
+ * \author	Rainer Kühner
+ * \date	23.02.2018
  *
- **/
-//=============================================================================
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CThreadPRICO::getModel()
 {
 	if(m_pModel==NULL)
@@ -141,11 +151,13 @@ CMVModel *CThreadPRICO::getModel()
 	return m_pModel;
 }
 
+/**********************************************************************************************//**
+ * Starts prico thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// CThreadPRICO message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CThreadPRICO::startPRICOThread( void )
 {
 	startThread();
@@ -169,16 +181,13 @@ void CThreadPRICO::startPRICOThread( void )
 	m_pcwtPRICOThread->ResumeThread();
 }
 
-//************************************
-// Method:    stopPRICOThread
-// FullName:  CThreadPRICO::stopPRICOThread
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Stops prico thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadPRICO::stopPRICOThread( void )
 {
 	if(doThread())
@@ -201,6 +210,15 @@ void CThreadPRICO::stopPRICOThread( void )
 	
 }
 
+/**********************************************************************************************//**
+ * Executes the thread operation
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CThreadPRICO::doThread()
 {
 	bool bRes=false;
@@ -209,21 +227,46 @@ bool CThreadPRICO::doThread()
 	LeaveCriticalSection(&csPRICOthread);
 	return bRes;
 }
+
+/**********************************************************************************************//**
+ * Starts a thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadPRICO::startThread()
 {
 	EnterCriticalSection(&csPRICOthread);
 	m_bDoPRICOThread=true;
 	LeaveCriticalSection(&csPRICOthread);
 }
+
+/**********************************************************************************************//**
+ * Stops a thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadPRICO::stopThread()
 {
 	EnterCriticalSection(&csPRICOthread);
 	m_bDoPRICOThread=false;
 	LeaveCriticalSection(&csPRICOthread);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Prico thread
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT PRICOThread( LPVOID pc )
 {
 	try
@@ -252,9 +295,16 @@ static UINT PRICOThread( LPVOID pc )
 	//((CThreadPRICO*)pc)->PRICOData();
 	return TRUE;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Prico data
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CThreadPRICO::PRICOData(void) 
 {
 	CeSetThreadPriority(m_pcwtPRICOThread->m_hThread,256);
@@ -508,6 +558,13 @@ DWORD CThreadPRICO::PRICOData(void)
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Resets the circ buffer spo2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadPRICO::resetCircBufSpO2()
 {
 	EnterCriticalSection(&csPRICOactspo2);
@@ -544,6 +601,16 @@ void CThreadPRICO::resetCircBufSpO2()
 //	return iWindow;
 //	
 //}
+
+/**********************************************************************************************//**
+ * Calculates the fio2
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The calculated fio2.
+ **************************************************************************************************/
+
 SHORT CThreadPRICO::calcFiO2(/*int iAvgSpO2*/)
 {
 	DWORD dwStart=GetTickCount();
@@ -707,7 +774,12 @@ SHORT CThreadPRICO::calcFiO2(/*int iAvgSpO2*/)
 	
 }
 
-
+/**********************************************************************************************//**
+ * Starts pric oalgorithm
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
 void CThreadPRICO::startPRICOalgorithm()
 {
@@ -717,6 +789,13 @@ void CThreadPRICO::startPRICOalgorithm()
 	LeaveCriticalSection(&csPRICOstate);
 }
 
+/**********************************************************************************************//**
+ * Stops pric oalgorithm
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadPRICO::stopPRICOalgorithm()
 {
 	DEBUGMSG(TRUE, (TEXT("CThreadPRICO::stopPRICO\r\n")));
@@ -724,6 +803,15 @@ void CThreadPRICO::stopPRICOalgorithm()
 	m_bPRICOrunning=false;
 	LeaveCriticalSection(&csPRICOstate);
 }
+
+/**********************************************************************************************//**
+ * Query if this instance is pric oalgorithm running
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if pric oalgorithm running, false if not.
+ **************************************************************************************************/
 
 bool CThreadPRICO::isPRICOalgorithmRunning()
 {
@@ -751,10 +839,30 @@ bool CThreadPRICO::isPRICOalgorithmRunning()
 //	LeaveCriticalSection(&csPRICOactoxy);
 //	return value;
 //}
+
+/**********************************************************************************************//**
+ * Sets startup oxy value
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CThreadPRICO::setStartupOxyValue(SHORT value)
 {
 	setCalculatedOxyValue(value);
 }
+
+/**********************************************************************************************//**
+ * Sets calculated oxy value
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CThreadPRICO::setCalculatedOxyValue(SHORT value)
 {
 	EnterCriticalSection(&csPRICOcalcFiO2);
@@ -766,6 +874,15 @@ void CThreadPRICO::setCalculatedOxyValue(SHORT value)
 	theApp.getLog()->WriteLine(szO2);
 }
 
+/**********************************************************************************************//**
+ * Gets calculated oxy value
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The calculated oxy value.
+ **************************************************************************************************/
+
 SHORT CThreadPRICO::getCalculatedOxyValue()
 {
 	EnterCriticalSection(&csPRICOcalcFiO2);
@@ -773,6 +890,15 @@ SHORT CThreadPRICO::getCalculatedOxyValue()
 	LeaveCriticalSection(&csPRICOcalcFiO2);
 	return value;
 }
+
+/**********************************************************************************************//**
+ * Sets measured spo2 value
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iValue	Zero-based index of the value.
+ **************************************************************************************************/
 
 void CThreadPRICO::setMeasuredSpO2Value(SHORT iValue)
 {
@@ -829,12 +955,28 @@ void CThreadPRICO::setMeasuredSpO2Value(SHORT iValue)
 			m_bSPO2checkFlag=FALSE;
 	}
 }
+
+/**********************************************************************************************//**
+ * Zero delay
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadPRICO::zeroDelay()
 {
 	EnterCriticalSection(&csPRICOcntdown);
 	m_iCntDelay=0;
 	LeaveCriticalSection(&csPRICOcntdown);
 }
+
+/**********************************************************************************************//**
+ * Decrease delay
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadPRICO::decreaseDelay()
 {
 	EnterCriticalSection(&csPRICOcntdown);
@@ -842,12 +984,30 @@ void CThreadPRICO::decreaseDelay()
 		m_iCntDelay--;
 	LeaveCriticalSection(&csPRICOcntdown);
 }
+
+/**********************************************************************************************//**
+ * Resets the delay
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CThreadPRICO::resetDelay()
 {
 	EnterCriticalSection(&csPRICOcntdown);
 	m_iCntDelay=30;
 	LeaveCriticalSection(&csPRICOcntdown);
 }
+
+/**********************************************************************************************//**
+ * Gets the delay
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The delay.
+ **************************************************************************************************/
+
 BYTE CThreadPRICO::getDelay()
 {
 	BYTE res=0;
@@ -905,12 +1065,31 @@ BYTE CThreadPRICO::getDelay()
 //	LeaveCriticalSection(&csPRICOactspo2);
 //	return iCnt;
 //}
+
+/**********************************************************************************************//**
+ * Sets high spo2 pric olimit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CThreadPRICO::setHighSpO2PRICOlimit(SHORT value)
 {
 	EnterCriticalSection(&csPRICOSpO2limit);
 	m_iHighSpO2PRICOlimit=value;
 	LeaveCriticalSection(&csPRICOSpO2limit);
 }
+
+/**********************************************************************************************//**
+ * Gets high spo2 pric olimit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The high sp o 2 pric olimit.
+ **************************************************************************************************/
 
 SHORT CThreadPRICO::getHighSpO2PRICOlimit()
 {
@@ -920,12 +1099,30 @@ SHORT CThreadPRICO::getHighSpO2PRICOlimit()
 	return value;
 }
 
+/**********************************************************************************************//**
+ * Sets low spo2 pric olimit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CThreadPRICO::setLowSpO2PRICOlimit(SHORT value)
 {
 	EnterCriticalSection(&csPRICOSpO2limit);
 	m_iLowSpO2PRICOlimit=value;
 	LeaveCriticalSection(&csPRICOSpO2limit);
 }
+
+/**********************************************************************************************//**
+ * Gets low spo2 pric olimit
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	The low sp o 2 pric olimit.
+ **************************************************************************************************/
 
 SHORT CThreadPRICO::getLowSpO2PRICOlimit()
 {
@@ -937,7 +1134,6 @@ SHORT CThreadPRICO::getLowSpO2PRICOlimit()
 
 
 
-/**********************************************************************************************/
 //code from TOM
 //int fnUpdate(int iCurHiTarget, int iCurLoTarget,int iCurFiO2,int* piSpO2,int iWindow)
 //{
@@ -1047,18 +1243,6 @@ SHORT CThreadPRICO::getLowSpO2PRICOlimit()
 //}
 
 
-
-
-
-// ========================================================================== 
-//   main.cpp                                                    				
-//  (c) 2015, C.E.E. Zonneveld                                                
-
-//   Description:                                                              
-//   Translation of Tom's Algorithm 							
-// ==========================================================================
-//#include <cmath>
-//
 //int fnUpdate(int iCurHiTarget, int iCurLoTarget,int iCurFiO2,int* piSpO2,int iWindow)
 //{
 //	// Future Targets, used for the prediction part of the algorithm
@@ -1188,14 +1372,3 @@ SHORT CThreadPRICO::getLowSpO2PRICOlimit()
 //	delete[] piSpO2;	piSpO2 	= 0;							// Get rid of SpO2 pointer array
 //}
 
-
-
-//	if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
-//	{
-//		if(getModel()->getPRICOThread()->isPRICOrunning())
-//		{
-//			EnterCriticalSection(&csAlarmList);
-//			getModel()->getPRICOThread()->setAlarmStates(m_pAlarmlist);
-//			LeaveCriticalSection(&csAlarmList);
-//		}
-//	}

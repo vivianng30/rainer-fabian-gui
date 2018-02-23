@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "NumericFieldOXY.h"
 
-
-// CNumericFieldOXY
+/**********************************************************************************************//**
+ * CNumericFieldOXY
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CNumericFieldOXY, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CNumericFieldOXY class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	size	The size.
+ **************************************************************************************************/
 
 CNumericFieldOXY::CNumericFieldOXY(eNumericSize size):
 CNumericField(size)
@@ -17,6 +33,13 @@ CNumericField(size)
 	m_szNameNote=_T("2");
 	m_szUnit=_T("[")+getModel()->GetLanguageString(IDS_UNIT_PERCENT)+_T("]");
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CNumericFieldOXY class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CNumericFieldOXY::~CNumericFieldOXY()
 {
@@ -29,27 +52,33 @@ BEGIN_MESSAGE_MAP(CNumericFieldOXY, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CNumericFieldOXY message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
-
-// CNumericFieldOXY message handlers
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CNumericFieldOXY::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CNumericFieldOXY::OnDestroy() 
 {
 	CNumericField::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldOXY::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	EnterCriticalSection(&csDraw);
@@ -153,10 +182,6 @@ bool CNumericFieldOXY::drawData(bool bData, bool bFrames, bool bText, bool bLimi
 	return bReturn;
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 //bool CNumericFieldOXY::drawFrames(CDC* pDC)
 //{
 //	HDC hdc = *pDC;
@@ -176,9 +201,17 @@ bool CNumericFieldOXY::drawData(bool bData, bool bFrames, bool bText, bool bLimi
 //	return true;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CNumericFieldOXY::drawStaticText(CDC* pDC)
 {
 	HDC hdc = *pDC;
@@ -252,10 +285,17 @@ bool CNumericFieldOXY::drawStaticText(CDC* pDC)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CNumericFieldOXY::drawLimits(CDC* pDC)
 {
 	

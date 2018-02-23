@@ -35,7 +35,7 @@ CAlarmLimitPtr CAlarmConditionHandler::ALIMIT_MAPMIN=NULL;
 /**********************************************************************************************//**
  * Default constructor
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -51,7 +51,7 @@ CAlarmConditionHandler::CAlarmConditionHandler()
 /**********************************************************************************************//**
  * Destructor
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -134,9 +134,9 @@ CAlarmConditionHandler::~CAlarmConditionHandler(void)
 }
 
 /**********************************************************************************************//**
- * Gets the model
+ * Gets the model, singleton
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \return	Null if it fails, else the model.
@@ -152,7 +152,7 @@ CMVModel *CAlarmConditionHandler::getModel()
 /**********************************************************************************************//**
  * Initializes the alarm limit list
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -216,7 +216,7 @@ void CAlarmConditionHandler::initAlarmLimitList()
 /**********************************************************************************************//**
  * Vent mode changed
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -339,9 +339,9 @@ void CAlarmConditionHandler::ventModeChanged()
 }
 
 /**********************************************************************************************//**
- * Sets alarm limit values spo 2
+ * Sets alarm limit values spo2
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -374,7 +374,7 @@ void CAlarmConditionHandler::setAlarmLimitValues_SPO2()
 /**********************************************************************************************//**
  * Sets alarm limit values hfo
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -434,7 +434,7 @@ void CAlarmConditionHandler::setAlarmLimitValues_HFO()
 /**********************************************************************************************//**
  * Sets alarm limit values default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -492,7 +492,7 @@ void CAlarmConditionHandler::setAlarmLimitValues_DEFAULT()
 /**********************************************************************************************//**
  * Sets alarm limit values cpap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -533,7 +533,7 @@ void CAlarmConditionHandler::setAlarmLimitValues_CPAP()
 /**********************************************************************************************//**
  * Sets alarm limit values ncpap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -568,7 +568,7 @@ void CAlarmConditionHandler::setAlarmLimitValues_NCPAP()
 /**********************************************************************************************//**
  * Sets alarm limit values duopap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -603,7 +603,7 @@ void CAlarmConditionHandler::setAlarmLimitValues_DUOPAP()
 /**********************************************************************************************//**
  * Sets alarm limit ranges default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -801,7 +801,7 @@ void CAlarmConditionHandler::setAlarmLimitRanges_DEFAULT()
 /**********************************************************************************************//**
  * Sets alarm limit ranges hfo
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -1049,7 +1049,7 @@ void CAlarmConditionHandler::setAlarmLimitRanges_HFO()
 /**********************************************************************************************//**
  * Sets alarm limit ranges cpap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -1192,7 +1192,7 @@ void CAlarmConditionHandler::setAlarmLimitRanges_CPAP()
 /**********************************************************************************************//**
  * Sets alarm limit ranges nmode
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -1237,9 +1237,9 @@ void CAlarmConditionHandler::setAlarmLimitRanges_NMODE()
 }
 
 /**********************************************************************************************//**
- * Sets alarm limit ranges etco 2
+ * Sets alarm limit ranges etco2
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -1382,9 +1382,9 @@ void CAlarmConditionHandler::setAlarmLimitRanges_ETCO2()
 }
 
 /**********************************************************************************************//**
- * Sets alarm limit ranges spo 2
+ * Sets alarm limit ranges spo2
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -1505,12 +1505,12 @@ void CAlarmConditionHandler::setAlarmLimitRanges_SPO2()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state m vmax limit
+ * Gets alimit state mvmax limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state m vmax limit.
+ * \return	The alimit state mvmax limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_MVmaxLimit()
@@ -1519,12 +1519,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_MVmaxLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state m vmin limit
+ * Gets alimit state mvmin limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state m vmin limit.
+ * \return	The alimit state mvmin limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_MVminLimit()
@@ -1533,12 +1533,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_MVminLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state pi pmax limit
+ * Gets alimit state pipmax limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state pi pmax limit.
+ * \return	The alimit state pipmax limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_PIPmaxLimit()
@@ -1547,12 +1547,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_PIPmaxLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state pi pmin limit
+ * Gets alimit state pipmin limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state pi pmin limit.
+ * \return	The alimit state pipmin limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_PIPminLimit()
@@ -1561,12 +1561,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_PIPminLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state pee pmin limit
+ * Gets alimit state peepmin limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state pee pmin limit.
+ * \return	The alimit state peepmin limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_PEEPminLimit()
@@ -1575,12 +1575,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_PEEPminLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state bp mmax limit
+ * Gets alimit state bpmmax limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state bp mmax limit.
+ * \return	The alimit state bpmmax limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_BPMmaxLimit()
@@ -1591,7 +1591,7 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_BPMmaxLimit()
 /**********************************************************************************************//**
  * Gets alimit state leakmax limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \return	The alimit state leakmax limit.
@@ -1605,7 +1605,7 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_LeakmaxLimit()
 /**********************************************************************************************//**
  * Gets alimit state apnoe limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \return	The alimit state apnoe limit.
@@ -1617,12 +1617,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_ApnoeLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state ma pmax limit
+ * Gets alimit state mapmax limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state ma pmax limit.
+ * \return	The alimit state mapmax limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_MAPmaxLimit()
@@ -1631,12 +1631,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_MAPmaxLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state ma pmin limit
+ * Gets alimit state mapmin limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state ma pmin limit.
+ * \return	The alimit state mapmin limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_MAPminLimit()
@@ -1645,12 +1645,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_MAPminLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state dco 2max limit
+ * Gets alimit state dco2max limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state dco 2max limit.
+ * \return	The alimit state dco2max limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_DCO2maxLimit()
@@ -1659,12 +1659,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_DCO2maxLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state dco 2min limit
+ * Gets alimit state dco2min limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state dco 2min limit.
+ * \return	The alimit state dco2min limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_DCO2minLimit()
@@ -1673,12 +1673,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_DCO2minLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state etco 2max limit
+ * Gets alimit state etco2max limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state etco 2max limit.
+ * \return	The alimit state etco2max limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_ETCO2maxLimit()
@@ -1687,12 +1687,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_ETCO2maxLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state etco 2min limit
+ * Gets alimit state etco2min limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state etco 2min limit.
+ * \return	The alimit state etco2min limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_ETCO2minLimit()
@@ -1701,12 +1701,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_ETCO2minLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state fico 2max limit
+ * Gets alimit state fico2max limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state fico 2max limit.
+ * \return	The alimit state fico2max limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_FICO2maxLimit()
@@ -1715,12 +1715,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_FICO2maxLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state fico 2min limit
+ * Gets alimit state fico2min limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state fico 2min limit.
+ * \return	The alimit state fico2min limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_FICO2minLimit()
@@ -1729,12 +1729,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_FICO2minLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state spo 2max limit
+ * Gets alimit state spo2max limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state spo 2max limit.
+ * \return	The alimit state spo2max limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_SPO2maxLimit()
@@ -1743,12 +1743,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_SPO2maxLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state spo 2min limit
+ * Gets alimit state spo2min limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state spo 2min limit.
+ * \return	The alimit state spo2min limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_SPO2minLimit()
@@ -1757,12 +1757,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_SPO2minLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state pulse ratemax limit
+ * Gets alimit state pulseratemax limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state pulse ratemax limit.
+ * \return	The alimit state pulseratemax limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_PulseRatemaxLimit()
@@ -1771,12 +1771,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_PulseRatemaxLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state pulse ratemin limit
+ * Gets alimit state pulseratemin limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state pulse ratemin limit.
+ * \return	The alimit state pulseratemin limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_PulseRateminLimit()
@@ -1785,12 +1785,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_PulseRateminLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state spo 2 p imin limit
+ * Gets alimit state spo2 pimin limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state spo 2 p imin limit.
+ * \return	The alimit state spo2 pimin limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_SPO2_PIminLimit()
@@ -1799,12 +1799,12 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_SPO2_PIminLimit()
 }
 
 /**********************************************************************************************//**
- * Gets alimit state spo 2 SI qmin limit
+ * Gets alimit state spo2 SIqmin limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit state spo 2 SI qmin limit.
+ * \return	The alimit state spo2 SIqmin limit.
  **************************************************************************************************/
 
 eAlarmLimitState CAlarmConditionHandler::getAlimitState_SPO2_SIQminLimit()
@@ -1815,7 +1815,7 @@ eAlarmLimitState CAlarmConditionHandler::getAlimitState_SPO2_SIQminLimit()
 /**********************************************************************************************//**
  * Sets alimit apnoe
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -1837,7 +1837,7 @@ void CAlarmConditionHandler::setAlimitApnoe(int value)
 /**********************************************************************************************//**
  * Sets alimit apnoe hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -1857,7 +1857,7 @@ void CAlarmConditionHandler::setAlimitApnoeHF(int value)
 /**********************************************************************************************//**
  * Sets alimit apnoe default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -1875,9 +1875,9 @@ void CAlarmConditionHandler::setAlimitApnoeDefault(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit bp mmax
+ * Sets alimit bpmmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -1897,9 +1897,9 @@ void CAlarmConditionHandler::setAlimitBPMmax(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit bp mmax hf
+ * Sets alimit bpmmax hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -1916,9 +1916,9 @@ void CAlarmConditionHandler::setAlimitBPMmaxHF(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit bp mmax default
+ * Sets alimit bpmmax default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -1937,7 +1937,7 @@ void CAlarmConditionHandler::setAlimitBPMmaxDefault(int value)
 /**********************************************************************************************//**
  * Sets alimit leakmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -1959,7 +1959,7 @@ void CAlarmConditionHandler::setAlimitLeakmax(int value)
 /**********************************************************************************************//**
  * Sets alimit leakmax hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -1978,7 +1978,7 @@ void CAlarmConditionHandler::setAlimitLeakmaxHF(int value)
 /**********************************************************************************************//**
  * Sets alimit leakmax default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -1995,9 +1995,9 @@ void CAlarmConditionHandler::setAlimitLeakmaxDefault(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit m vmax
+ * Sets alimit mvmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2017,9 +2017,9 @@ void CAlarmConditionHandler::setAlimitMVmax(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit m vmax hf
+ * Sets alimit mvmax hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2054,9 +2054,9 @@ void CAlarmConditionHandler::setAlimitMVmaxHF(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit m vmax default
+ * Sets alimit mvmax default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2091,9 +2091,9 @@ void CAlarmConditionHandler::setAlimitMVmaxDefault(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit m vmin
+ * Sets alimit mvmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2113,9 +2113,9 @@ void CAlarmConditionHandler::setAlimitMVmin(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit m vmin hf
+ * Sets alimit mvmin hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2154,9 +2154,9 @@ void CAlarmConditionHandler::setAlimitMVminHF(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit m vmin default
+ * Sets alimit mvmin default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2194,9 +2194,9 @@ void CAlarmConditionHandler::setAlimitMVminDefault(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit pee pmin
+ * Sets alimit peepmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2232,9 +2232,9 @@ void CAlarmConditionHandler::setAlimitPEEPmin(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit pee pmin cpap
+ * Sets alimit peepmin cpap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2252,9 +2252,9 @@ void CAlarmConditionHandler::setAlimitPEEPminCpap(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit pee pmin ncpap
+ * Sets alimit peepmin ncpap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2272,9 +2272,9 @@ void CAlarmConditionHandler::setAlimitPEEPminNCPAP(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit pee pmin duopap
+ * Sets alimit peepmin duopap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2292,9 +2292,9 @@ void CAlarmConditionHandler::setAlimitPEEPminDUOPAP(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit pee pmin default
+ * Sets alimit peepmin default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2322,9 +2322,9 @@ void CAlarmConditionHandler::setAlimitPEEPminDefault(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit pi pmax
+ * Sets alimit pipmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2360,9 +2360,9 @@ void CAlarmConditionHandler::setAlimitPIPmax(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit pi pmax hf
+ * Sets alimit pipmax hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2380,9 +2380,9 @@ void CAlarmConditionHandler::setAlimitPIPmaxHF(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit pi pmax cpap
+ * Sets alimit pipmax cpap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2400,9 +2400,9 @@ void CAlarmConditionHandler::setAlimitPIPmaxCpap(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit pi pmax ncpap
+ * Sets alimit pipmax ncpap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2420,9 +2420,9 @@ void CAlarmConditionHandler::setAlimitPIPmaxNCPAP(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit pi pmax duopap
+ * Sets alimit pipmax duopap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2440,9 +2440,9 @@ void CAlarmConditionHandler::setAlimitPIPmaxDUOPAP(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit pi pmax default
+ * Sets alimit pipmax default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2463,9 +2463,9 @@ void CAlarmConditionHandler::setAlimitPIPmaxDefault(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit pi pmin
+ * Sets alimit pipmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2497,9 +2497,9 @@ void CAlarmConditionHandler::setAlimitPIPmin(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit pi pmin default
+ * Sets alimit pipmin default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2527,9 +2527,9 @@ void CAlarmConditionHandler::setAlimitPIPminDefault(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit ma pmax
+ * Sets alimit mapmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2545,9 +2545,9 @@ void CAlarmConditionHandler::setAlimitMAPmax(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit ma pmax hf
+ * Sets alimit mapmax hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2569,9 +2569,9 @@ void CAlarmConditionHandler::setAlimitMAPmaxHF(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit ma pmin
+ * Sets alimit mapmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2587,9 +2587,9 @@ void CAlarmConditionHandler::setAlimitMAPmin(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit ma pmin hf
+ * Sets alimit mapmin hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2610,9 +2610,9 @@ void CAlarmConditionHandler::setAlimitMAPminHF(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit dco 2max
+ * Sets alimit dco2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2628,9 +2628,9 @@ void CAlarmConditionHandler::setAlimitDCO2max(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit dco 2max hf
+ * Sets alimit dco2max hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2664,9 +2664,9 @@ void CAlarmConditionHandler::setAlimitDCO2maxHF(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit dco 2min
+ * Sets alimit dco2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2682,9 +2682,9 @@ void CAlarmConditionHandler::setAlimitDCO2min(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit dco 2min hf
+ * Sets alimit dco2min hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2718,9 +2718,9 @@ void CAlarmConditionHandler::setAlimitDCO2minHF(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit etco 2max
+ * Sets alimit etco2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2740,9 +2740,9 @@ void CAlarmConditionHandler::setAlimitETCO2max(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit etco 2max hf
+ * Sets alimit etco2max hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2760,9 +2760,9 @@ void CAlarmConditionHandler::setAlimitETCO2maxHF(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit etco 2max default
+ * Sets alimit etco2max default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2780,9 +2780,9 @@ void CAlarmConditionHandler::setAlimitETCO2maxDefault(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit etco 2min
+ * Sets alimit etco2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2802,9 +2802,9 @@ void CAlarmConditionHandler::setAlimitETCO2min(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit etco 2min hf
+ * Sets alimit etco2min hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2822,9 +2822,9 @@ void CAlarmConditionHandler::setAlimitETCO2minHF(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit etco 2min default
+ * Sets alimit etco2min default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2842,9 +2842,9 @@ void CAlarmConditionHandler::setAlimitETCO2minDefault(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit fico 2max
+ * Sets alimit fico2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2864,9 +2864,9 @@ void CAlarmConditionHandler::setAlimitFICO2max(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit fico 2max hf
+ * Sets alimit fico2max hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2884,9 +2884,9 @@ void CAlarmConditionHandler::setAlimitFICO2maxHF(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit fico 2max default
+ * Sets alimit fico2max default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2904,9 +2904,9 @@ void CAlarmConditionHandler::setAlimitFICO2maxDefault(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit fico 2min
+ * Sets alimit fico2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2926,9 +2926,9 @@ void CAlarmConditionHandler::setAlimitFICO2min(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit fico 2min hf
+ * Sets alimit fico2min hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2946,9 +2946,9 @@ void CAlarmConditionHandler::setAlimitFICO2minHF(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit fico 2min default
+ * Sets alimit fico2min default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2966,9 +2966,9 @@ void CAlarmConditionHandler::setAlimitFICO2minDefault(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit spo 2max
+ * Sets alimit spo2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -2980,9 +2980,9 @@ void CAlarmConditionHandler::setAlimitSPO2max(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit spo 2max default
+ * Sets alimit spo2max default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -3000,9 +3000,9 @@ void CAlarmConditionHandler::setAlimitSPO2maxDefault(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit spo 2min
+ * Sets alimit spo2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -3014,9 +3014,9 @@ void CAlarmConditionHandler::setAlimitSPO2min(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit spo 2min default
+ * Sets alimit spo2min default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -3034,9 +3034,9 @@ void CAlarmConditionHandler::setAlimitSPO2minDefault(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit pulse ratemax
+ * Sets alimit pulseratemax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -3048,9 +3048,9 @@ void CAlarmConditionHandler::setAlimitPulseRatemax(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit pulse ratemax default
+ * Sets alimit pulseratemax default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -3070,9 +3070,9 @@ void CAlarmConditionHandler::setAlimitPulseRatemaxDefault(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit pulse ratemin
+ * Sets alimit pulseratemin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -3084,9 +3084,9 @@ void CAlarmConditionHandler::setAlimitPulseRatemin(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit pulse ratemin default
+ * Sets alimit pulseratemin default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -3105,9 +3105,9 @@ void CAlarmConditionHandler::setAlimitPulseRateminDefault(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit spo 2 p imin
+ * Sets alimit spo2 pimin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -3119,9 +3119,9 @@ void CAlarmConditionHandler::setAlimitSPO2_PImin(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit spo 2 p imin default
+ * Sets alimit spo2 pimin default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -3138,9 +3138,9 @@ void CAlarmConditionHandler::setAlimitSPO2_PIminDefault(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit spo 2 SI qmin
+ * Sets alimit spo2 SIqmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -3152,9 +3152,9 @@ void CAlarmConditionHandler::setAlimitSPO2_SIQmin(int value)
 }
 
 /**********************************************************************************************//**
- * Sets alimit spo 2 SI qmin default
+ * Sets alimit spo2 SIqmin default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -3173,7 +3173,7 @@ void CAlarmConditionHandler::setAlimitSPO2_SIQminDefault(int value)
 /**********************************************************************************************//**
  * Sets alimits minimum maximum range cpap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -3189,7 +3189,7 @@ void CAlarmConditionHandler::setAlimitsMinMaxRangeCpap()
 /**********************************************************************************************//**
  * Sets alimits minimum maximum range ncpap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -3205,7 +3205,7 @@ void CAlarmConditionHandler::setAlimitsMinMaxRangeNCPAP()
 /**********************************************************************************************//**
  * Sets alimits minimum maximum range duopap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -3221,7 +3221,7 @@ void CAlarmConditionHandler::setAlimitsMinMaxRangeDUOPAP()
 /**********************************************************************************************//**
  * Sets alimits minimum maximum range pressure
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -3252,12 +3252,12 @@ void CAlarmConditionHandler::setAlimitsMinMaxRangePressure()
 }
 
 /**********************************************************************************************//**
- * Gets alimit m vmin
+ * Gets alimit mvmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit m vmin.
+ * \return	The alimit mvmin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMVmin()
@@ -3266,12 +3266,12 @@ int CAlarmConditionHandler::getAlimitMVmin()
 }
 
 /**********************************************************************************************//**
- * Gets alimit m vmax
+ * Gets alimit mvmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit m vmax.
+ * \return	The alimit mvmax.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMVmax()
@@ -3280,12 +3280,12 @@ int CAlarmConditionHandler::getAlimitMVmax()
 }
 
 /**********************************************************************************************//**
- * Gets alimit pi pmax
+ * Gets alimit pipmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit pi pmax.
+ * \return	The alimit pipmax.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitPIPmax()
@@ -3294,12 +3294,12 @@ int CAlarmConditionHandler::getAlimitPIPmax()
 }
 
 /**********************************************************************************************//**
- * Gets alimit pi pmin
+ * Gets alimit pipmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit pi pmin.
+ * \return	The alimit pipmin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitPIPmin()
@@ -3308,12 +3308,12 @@ int CAlarmConditionHandler::getAlimitPIPmin()
 }
 
 /**********************************************************************************************//**
- * Gets alimit pee pmin
+ * Gets alimit peepmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit pee pmin.
+ * \return	The alimit peepmin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitPEEPmin()
@@ -3324,7 +3324,7 @@ int CAlarmConditionHandler::getAlimitPEEPmin()
 /**********************************************************************************************//**
  * Gets alimit leakmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \return	The alimit leakmax.
@@ -3336,12 +3336,12 @@ int CAlarmConditionHandler::getAlimitLeakmax()
 }
 
 /**********************************************************************************************//**
- * Gets alimit bp mmax
+ * Gets alimit bpmmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit bp mmax.
+ * \return	The alimit bpmmax.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitBPMmax()
@@ -3352,7 +3352,7 @@ int CAlarmConditionHandler::getAlimitBPMmax()
 /**********************************************************************************************//**
  * Gets alimit apnoe
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \return	The alimit apnoe.
@@ -3364,12 +3364,12 @@ int CAlarmConditionHandler::getAlimitApnoe()
 }
 
 /**********************************************************************************************//**
- * Gets alimit ma pmax
+ * Gets alimit mapmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit ma pmax.
+ * \return	The alimit mapmax.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMAPmax()
@@ -3378,12 +3378,12 @@ int CAlarmConditionHandler::getAlimitMAPmax()
 }
 
 /**********************************************************************************************//**
- * Gets alimit ma pmin
+ * Gets alimit mapmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit ma pmin.
+ * \return	The alimit mapmin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMAPmin()
@@ -3392,12 +3392,12 @@ int CAlarmConditionHandler::getAlimitMAPmin()
 }
 
 /**********************************************************************************************//**
- * Gets alimit dco 2min
+ * Gets alimit dco2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit dco 2min.
+ * \return	The alimit dco2min.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitDCO2min()
@@ -3406,12 +3406,12 @@ int CAlarmConditionHandler::getAlimitDCO2min()
 }
 
 /**********************************************************************************************//**
- * Gets alimit dco 2max
+ * Gets alimit dco2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit dco 2max.
+ * \return	The alimit dco2max.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitDCO2max()
@@ -3420,12 +3420,12 @@ int CAlarmConditionHandler::getAlimitDCO2max()
 }
 
 /**********************************************************************************************//**
- * Gets alimit etco 2min
+ * Gets alimit etco2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit etco 2min.
+ * \return	The alimit etco2min.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitETCO2min()
@@ -3434,12 +3434,12 @@ int CAlarmConditionHandler::getAlimitETCO2min()
 }
 
 /**********************************************************************************************//**
- * Gets alimit etco 2max
+ * Gets alimit etco2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit etco 2max.
+ * \return	The alimit etco2max.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitETCO2max()
@@ -3448,12 +3448,12 @@ int CAlarmConditionHandler::getAlimitETCO2max()
 }
 
 /**********************************************************************************************//**
- * Gets alimit fico 2min
+ * Gets alimit fico2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit fico 2min.
+ * \return	The alimit fico2min.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitFICO2min()
@@ -3462,12 +3462,12 @@ int CAlarmConditionHandler::getAlimitFICO2min()
 }
 
 /**********************************************************************************************//**
- * Gets alimit fico 2max
+ * Gets alimit fico2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit fico 2max.
+ * \return	The alimit fico2max.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitFICO2max()
@@ -3476,12 +3476,12 @@ int CAlarmConditionHandler::getAlimitFICO2max()
 }
 
 /**********************************************************************************************//**
- * Gets alimit spo 2max
+ * Gets alimit spo2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit spo 2max.
+ * \return	The alimit spo2max.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitSPO2max()
@@ -3490,12 +3490,12 @@ int CAlarmConditionHandler::getAlimitSPO2max()
 }
 
 /**********************************************************************************************//**
- * Gets alimit spo 2min
+ * Gets alimit spo2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit spo 2min.
+ * \return	The alimit spo2min.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitSPO2min()
@@ -3504,12 +3504,12 @@ int CAlarmConditionHandler::getAlimitSPO2min()
 }
 
 /**********************************************************************************************//**
- * Gets alimit pulse ratemax
+ * Gets alimit pulseratemax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit pulse ratemax.
+ * \return	The alimit pulseratemax.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitPulseRatemax()
@@ -3518,12 +3518,12 @@ int CAlarmConditionHandler::getAlimitPulseRatemax()
 }
 
 /**********************************************************************************************//**
- * Gets alimit pulse ratemin
+ * Gets alimit pulseratemin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit pulse ratemin.
+ * \return	The alimit pulseratemin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitPulseRatemin()
@@ -3532,12 +3532,12 @@ int CAlarmConditionHandler::getAlimitPulseRatemin()
 }
 
 /**********************************************************************************************//**
- * Gets alimit spo 2 p imin
+ * Gets alimit spo2 pimin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit spo 2 p imin.
+ * \return	The alimit spo2 pimin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitSPO2_PImin()
@@ -3546,12 +3546,12 @@ int CAlarmConditionHandler::getAlimitSPO2_PImin()
 }
 
 /**********************************************************************************************//**
- * Gets alimit spo 2 SI qmin
+ * Gets alimit spo2 SIQmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit spo 2 SI qmin.
+ * \return	The alimit spo2 SIQmin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitSPO2_SIQmin()
@@ -3560,9 +3560,9 @@ int CAlarmConditionHandler::getAlimitSPO2_SIQmin()
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range pi pmax
+ * Sets alimit maximum range pipmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3574,9 +3574,9 @@ void CAlarmConditionHandler::setAlimitMaxRangePIPmax(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range pi pmax
+ * Sets alimit minimum range pipmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3588,9 +3588,9 @@ void CAlarmConditionHandler::setAlimitMinRangePIPmax(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range pi pmin
+ * Sets alimit maximum range pipmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3602,9 +3602,9 @@ void CAlarmConditionHandler::setAlimitMaxRangePIPmin(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range pi pmin
+ * Sets alimit minimum range pipmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3617,9 +3617,9 @@ void CAlarmConditionHandler::setAlimitMinRangePIPmin(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range pee pmin
+ * Sets alimit maximum range peepmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3632,9 +3632,9 @@ void CAlarmConditionHandler::setAlimitMaxRangePEEPmin(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range pee pmin
+ * Sets alimit minimum range peepmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3646,9 +3646,9 @@ void CAlarmConditionHandler::setAlimitMinRangePEEPmin(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range m vmin
+ * Sets alimit maximum range mvmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3660,9 +3660,9 @@ void CAlarmConditionHandler::setAlimitMaxRangeMVmin(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range m vmin
+ * Sets alimit minimum range mvmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3674,9 +3674,9 @@ void CAlarmConditionHandler::setAlimitMinRangeMVmin(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range m vmax
+ * Sets alimit maximum range mvmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3688,9 +3688,9 @@ void CAlarmConditionHandler::setAlimitMaxRangeMVmax(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range m vmax
+ * Sets alimit minimum range mvmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3704,7 +3704,7 @@ void CAlarmConditionHandler::setAlimitMinRangeMVmax(int iRangeVal)
 /**********************************************************************************************//**
  * Sets alimit maximum range leakmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3718,7 +3718,7 @@ void CAlarmConditionHandler::setAlimitMaxRangeLeakmax(int iRangeVal)
 /**********************************************************************************************//**
  * Sets alimit minimum range leakmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3730,9 +3730,9 @@ void CAlarmConditionHandler::setAlimitMinRangeLeakmax(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range bp mmax
+ * Sets alimit maximum range bpmmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3744,9 +3744,9 @@ void CAlarmConditionHandler::setAlimitMaxRangeBPMmax(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range bp mmax
+ * Sets alimit minimum range bpmmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3760,7 +3760,7 @@ void CAlarmConditionHandler::setAlimitMinRangeBPMmax(int iRangeVal)
 /**********************************************************************************************//**
  * Sets alimit maximum range apnoe
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3774,7 +3774,7 @@ void CAlarmConditionHandler::setAlimitMaxRangeApnoe(int iRangeVal)
 /**********************************************************************************************//**
  * Sets alimit minimum range apnoe
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3786,9 +3786,9 @@ void CAlarmConditionHandler::setAlimitMinRangeApnoe(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range ma pmax
+ * Sets alimit maximum range mapmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3800,9 +3800,9 @@ void CAlarmConditionHandler::setAlimitMaxRangeMAPmax(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range ma pmax
+ * Sets alimit minimum range mapmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3814,9 +3814,9 @@ void CAlarmConditionHandler::setAlimitMinRangeMAPmax(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range ma pmin
+ * Sets alimit maximum range mapmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3828,9 +3828,9 @@ void CAlarmConditionHandler::setAlimitMaxRangeMAPmin(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range ma pmin
+ * Sets alimit minimum range mapmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3842,9 +3842,9 @@ void CAlarmConditionHandler::setAlimitMinRangeMAPmin(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range dco 2min
+ * Sets alimit maximum range dco2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3856,9 +3856,9 @@ void CAlarmConditionHandler::setAlimitMaxRangeDCO2min(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range dco 2min
+ * Sets alimit minimum range dco2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3870,9 +3870,9 @@ void CAlarmConditionHandler::setAlimitMinRangeDCO2min(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range dco 2max
+ * Sets alimit maximum range dco2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3884,9 +3884,9 @@ void CAlarmConditionHandler::setAlimitMaxRangeDCO2max(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range dco 2max
+ * Sets alimit minimum range dco2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3898,9 +3898,9 @@ void CAlarmConditionHandler::setAlimitMinRangeDCO2max(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range etco 2min
+ * Sets alimit maximum range etco2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3912,9 +3912,9 @@ void CAlarmConditionHandler::setAlimitMaxRangeETCO2min(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range etco 2min
+ * Sets alimit minimum range etco2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3926,9 +3926,9 @@ void CAlarmConditionHandler::setAlimitMinRangeETCO2min(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range etco 2max
+ * Sets alimit maximum range etco2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3940,9 +3940,9 @@ void CAlarmConditionHandler::setAlimitMaxRangeETCO2max(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range etco 2max
+ * Sets alimit minimum range etco2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3954,9 +3954,9 @@ void CAlarmConditionHandler::setAlimitMinRangeETCO2max(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range fico 2min
+ * Sets alimit maximum range fico2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3968,9 +3968,9 @@ void CAlarmConditionHandler::setAlimitMaxRangeFICO2min(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range fico 2min
+ * Sets alimit minimum range fico2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3982,9 +3982,9 @@ void CAlarmConditionHandler::setAlimitMinRangeFICO2min(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range fico 2max
+ * Sets alimit maximum range fico2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -3996,9 +3996,9 @@ void CAlarmConditionHandler::setAlimitMaxRangeFICO2max(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range fico 2max
+ * Sets alimit minimum range fico2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -4010,9 +4010,9 @@ void CAlarmConditionHandler::setAlimitMinRangeFICO2max(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range spo 2max
+ * Sets alimit maximum range spo2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -4024,9 +4024,9 @@ void CAlarmConditionHandler::setAlimitMaxRangeSPO2max(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range spo 2max
+ * Sets alimit minimum range spo2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -4038,9 +4038,9 @@ void CAlarmConditionHandler::setAlimitMinRangeSPO2max(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range spo 2min
+ * Sets alimit maximum range spo2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -4052,9 +4052,9 @@ void CAlarmConditionHandler::setAlimitMaxRangeSPO2min(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range spo 2min
+ * Sets alimit minimum range spo2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -4066,9 +4066,9 @@ void CAlarmConditionHandler::setAlimitMinRangeSPO2min(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range pulse ratemin
+ * Sets alimit maximum range pulseratemin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -4080,9 +4080,9 @@ void CAlarmConditionHandler::setAlimitMaxRangePulseRatemin(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range pulse ratemin
+ * Sets alimit minimum range pulseratemin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -4094,9 +4094,9 @@ void CAlarmConditionHandler::setAlimitMinRangePulseRatemin(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range pulse ratemax
+ * Sets alimit minimum range pulseratemax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -4108,9 +4108,9 @@ void CAlarmConditionHandler::setAlimitMinRangePulseRatemax(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range pulse ratemax
+ * Sets alimit maximum range pulseratemax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -4122,9 +4122,9 @@ void CAlarmConditionHandler::setAlimitMaxRangePulseRatemax(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range spo 2 p imin
+ * Sets alimit maximum range spo2 pimin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -4136,9 +4136,9 @@ void CAlarmConditionHandler::setAlimitMaxRangeSPO2_PImin(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range spo 2 p imin
+ * Sets alimit minimum range spo2 pimin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -4150,9 +4150,9 @@ void CAlarmConditionHandler::setAlimitMinRangeSPO2_PImin(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit maximum range spo 2 SI qmin
+ * Sets alimit maximum range spo2 SIQmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -4164,9 +4164,9 @@ void CAlarmConditionHandler::setAlimitMaxRangeSPO2_SIQmin(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Sets alimit minimum range spo 2 SI qmin
+ * Sets alimit minimum range spo2 SIQmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	iRangeVal	Zero-based index of the range value.
@@ -4178,12 +4178,12 @@ void CAlarmConditionHandler::setAlimitMinRangeSPO2_SIQmin(int iRangeVal)
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range pi pmax
+ * Gets alimit maximum range pipmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range pi pmax.
+ * \return	The alimit maximum range pipmax.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangePIPmax()
@@ -4192,12 +4192,12 @@ int CAlarmConditionHandler::getAlimitMaxRangePIPmax()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range pi pmax
+ * Gets alimit minimum range pipmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range pi pmax.
+ * \return	The alimit minimum range pipmax.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangePIPmax()
@@ -4206,12 +4206,12 @@ int CAlarmConditionHandler::getAlimitMinRangePIPmax()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range pi pmin
+ * Gets alimit maximum range pipmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range pi pmin.
+ * \return	The alimit maximum range pipmin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangePIPmin()
@@ -4220,12 +4220,12 @@ int CAlarmConditionHandler::getAlimitMaxRangePIPmin()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range pi pmin
+ * Gets alimit minimum range pipmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range pi pmin.
+ * \return	The alimit minimum range pipmin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangePIPmin()
@@ -4234,12 +4234,12 @@ int CAlarmConditionHandler::getAlimitMinRangePIPmin()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range pee pmin
+ * Gets alimit maximum range peepmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range pee pmin.
+ * \return	The alimit maximum range peepmin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangePEEPmin()
@@ -4248,12 +4248,12 @@ int CAlarmConditionHandler::getAlimitMaxRangePEEPmin()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range pee pmin
+ * Gets alimit minimum range peepmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range pee pmin.
+ * \return	The alimit minimum range peepmin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangePEEPmin()
@@ -4262,12 +4262,12 @@ int CAlarmConditionHandler::getAlimitMinRangePEEPmin()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range m vmin
+ * Gets alimit maximum range mvmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range m vmin.
+ * \return	The alimit maximum range mvmin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangeMVmin()
@@ -4276,12 +4276,12 @@ int CAlarmConditionHandler::getAlimitMaxRangeMVmin()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range m vmin
+ * Gets alimit minimum range mvmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range m vmin.
+ * \return	The alimit minimum range mvmin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangeMVmin()
@@ -4290,12 +4290,12 @@ int CAlarmConditionHandler::getAlimitMinRangeMVmin()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range m vmax
+ * Gets alimit maximum range mvmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range m vmax.
+ * \return	The alimit maximum range mvmax.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangeMVmax()
@@ -4304,12 +4304,12 @@ int CAlarmConditionHandler::getAlimitMaxRangeMVmax()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range m vmax
+ * Gets alimit minimum range mvmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range m vmax.
+ * \return	The alimit minimum range mvmax.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangeMVmax()
@@ -4320,7 +4320,7 @@ int CAlarmConditionHandler::getAlimitMinRangeMVmax()
 /**********************************************************************************************//**
  * Gets alimit maximum range leakmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \return	The alimit maximum range leakmax.
@@ -4334,7 +4334,7 @@ int CAlarmConditionHandler::getAlimitMaxRangeLeakmax()
 /**********************************************************************************************//**
  * Gets alimit minimum range leakmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \return	The alimit minimum range leakmax.
@@ -4346,12 +4346,12 @@ int CAlarmConditionHandler::getAlimitMinRangeLeakmax()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range bp mmax
+ * Gets alimit maximum range bpmmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range bp mmax.
+ * \return	The alimit maximum range bpmmax.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangeBPMmax()
@@ -4360,12 +4360,12 @@ int CAlarmConditionHandler::getAlimitMaxRangeBPMmax()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range bp mmax
+ * Gets alimit minimum range bpmmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range bp mmax.
+ * \return	The alimit minimum range bpmmax.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangeBPMmax()
@@ -4376,7 +4376,7 @@ int CAlarmConditionHandler::getAlimitMinRangeBPMmax()
 /**********************************************************************************************//**
  * Gets alimit maximum range apnoe
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \return	The alimit maximum range apnoe.
@@ -4390,7 +4390,7 @@ int CAlarmConditionHandler::getAlimitMaxRangeApnoe()
 /**********************************************************************************************//**
  * Gets alimit minimum range apnoe
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \return	The alimit minimum range apnoe.
@@ -4402,12 +4402,12 @@ int CAlarmConditionHandler::getAlimitMinRangeApnoe()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range ma pmax
+ * Gets alimit maximum range mapmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range ma pmax.
+ * \return	The alimit maximum range mapmax.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangeMAPmax()
@@ -4416,12 +4416,12 @@ int CAlarmConditionHandler::getAlimitMaxRangeMAPmax()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range ma pmax
+ * Gets alimit minimum range mapmax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range ma pmax.
+ * \return	The alimit minimum range mapmax.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangeMAPmax()
@@ -4430,12 +4430,12 @@ int CAlarmConditionHandler::getAlimitMinRangeMAPmax()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range ma pmin
+ * Gets alimit maximum range mapmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range ma pmin.
+ * \return	The alimit maximum range mapmin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangeMAPmin()
@@ -4444,12 +4444,12 @@ int CAlarmConditionHandler::getAlimitMaxRangeMAPmin()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range ma pmin
+ * Gets alimit minimum range mapmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range ma pmin.
+ * \return	The alimit minimum range mapmin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangeMAPmin()
@@ -4458,12 +4458,12 @@ int CAlarmConditionHandler::getAlimitMinRangeMAPmin()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range dco 2min
+ * Gets alimit maximum range dco2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range dco 2min.
+ * \return	The alimit maximum range dco2min.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangeDCO2min()
@@ -4472,12 +4472,12 @@ int CAlarmConditionHandler::getAlimitMaxRangeDCO2min()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range dco 2min
+ * Gets alimit minimum range dco2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range dco 2min.
+ * \return	The alimit minimum range dco2min.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangeDCO2min()
@@ -4486,12 +4486,12 @@ int CAlarmConditionHandler::getAlimitMinRangeDCO2min()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range dco 2max
+ * Gets alimit maximum range dco2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range dco 2max.
+ * \return	The alimit maximum range dco2max.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangeDCO2max()
@@ -4500,12 +4500,12 @@ int CAlarmConditionHandler::getAlimitMaxRangeDCO2max()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range dco 2max
+ * Gets alimit minimum range dco2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range dco 2max.
+ * \return	The alimit minimum range dco2max.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangeDCO2max()
@@ -4514,12 +4514,12 @@ int CAlarmConditionHandler::getAlimitMinRangeDCO2max()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range etco 2min
+ * Gets alimit maximum range etco2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range etco 2min.
+ * \return	The alimit maximum range etco2min.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangeETCO2min()
@@ -4528,12 +4528,12 @@ int CAlarmConditionHandler::getAlimitMaxRangeETCO2min()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range etco 2min
+ * Gets alimit minimum range etco2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range etco 2min.
+ * \return	The alimit minimum range etco2min.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangeETCO2min()
@@ -4542,12 +4542,12 @@ int CAlarmConditionHandler::getAlimitMinRangeETCO2min()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range etco 2max
+ * Gets alimit maximum range etco2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range etco 2max.
+ * \return	The alimit maximum range etco2max.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangeETCO2max()
@@ -4601,12 +4601,12 @@ int CAlarmConditionHandler::getAlimitMaxRangeETCO2max()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range etco 2max
+ * Gets alimit minimum range etco2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range etco 2max.
+ * \return	The alimit minimum range etco2max.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangeETCO2max()
@@ -4615,12 +4615,12 @@ int CAlarmConditionHandler::getAlimitMinRangeETCO2max()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range fico 2min
+ * Gets alimit maximum range fico2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range fico 2min.
+ * \return	The alimit maximum range fico2min.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangeFICO2min()
@@ -4629,12 +4629,12 @@ int CAlarmConditionHandler::getAlimitMaxRangeFICO2min()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range fico 2min
+ * Gets alimit minimum range fico2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range fico 2min.
+ * \return	The alimit minimum range fico2min.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangeFICO2min()
@@ -4643,12 +4643,12 @@ int CAlarmConditionHandler::getAlimitMinRangeFICO2min()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range fico 2max
+ * Gets alimit maximum range fico2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range fico 2max.
+ * \return	The alimit maximum range fico2max.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangeFICO2max()
@@ -4704,12 +4704,12 @@ int CAlarmConditionHandler::getAlimitMaxRangeFICO2max()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range fico 2max
+ * Gets alimit minimum range fico2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range fico 2max.
+ * \return	The alimit minimum range fico2max.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangeFICO2max()
@@ -4718,12 +4718,12 @@ int CAlarmConditionHandler::getAlimitMinRangeFICO2max()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range spo 2max
+ * Gets alimit maximum range spo2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range spo 2max.
+ * \return	The alimit maximum range spo2max.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangeSPO2max()
@@ -4732,12 +4732,12 @@ int CAlarmConditionHandler::getAlimitMaxRangeSPO2max()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range spo 2max
+ * Gets alimit minimum range spo2max
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range spo 2max.
+ * \return	The alimit minimum range spo2max.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangeSPO2max()
@@ -4746,12 +4746,12 @@ int CAlarmConditionHandler::getAlimitMinRangeSPO2max()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range spo 2min
+ * Gets alimit maximum range spo2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range spo 2min.
+ * \return	The alimit maximum range spo2min.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangeSPO2min()
@@ -4760,12 +4760,12 @@ int CAlarmConditionHandler::getAlimitMaxRangeSPO2min()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range spo 2min
+ * Gets alimit minimum range spo2min
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range spo 2min.
+ * \return	The alimit minimum range spo2min.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangeSPO2min()
@@ -4774,12 +4774,12 @@ int CAlarmConditionHandler::getAlimitMinRangeSPO2min()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range pulse ratemax
+ * Gets alimit minimum range pulseratemax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range pulse ratemax.
+ * \return	The alimit minimum range pulseratemax.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangePulseRatemax()
@@ -4788,12 +4788,12 @@ int CAlarmConditionHandler::getAlimitMinRangePulseRatemax()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range pulse ratemax
+ * Gets alimit maximum range pulseratemax
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range pulse ratemax.
+ * \return	The alimit maximum range pulseratemax.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangePulseRatemax()
@@ -4802,12 +4802,12 @@ int CAlarmConditionHandler::getAlimitMaxRangePulseRatemax()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range pulse ratemin
+ * Gets alimit minimum range pulseratemin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range pulse ratemin.
+ * \return	The alimit minimum range pulseratemin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangePulseRatemin()
@@ -4816,12 +4816,12 @@ int CAlarmConditionHandler::getAlimitMinRangePulseRatemin()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range pulse ratemin
+ * Gets alimit maximum range pulseratemin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range pulse ratemin.
+ * \return	The alimit maximum range pulseratemin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangePulseRatemin()
@@ -4830,12 +4830,12 @@ int CAlarmConditionHandler::getAlimitMaxRangePulseRatemin()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range spo 2 p imin
+ * Gets alimit maximum range spo2 pimin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range spo 2 p imin.
+ * \return	The alimit maximum range spo2 pimin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangeSPO2_PImin()
@@ -4844,12 +4844,12 @@ int CAlarmConditionHandler::getAlimitMaxRangeSPO2_PImin()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range spo 2 p imin
+ * Gets alimit minimum range spo2 pimin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range spo 2 p imin.
+ * \return	The alimit minimum range spo2 pimin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangeSPO2_PImin()
@@ -4858,12 +4858,12 @@ int CAlarmConditionHandler::getAlimitMinRangeSPO2_PImin()
 }
 
 /**********************************************************************************************//**
- * Gets alimit maximum range spo 2 SI qmin
+ * Gets alimit maximum range spo2 SIQmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit maximum range spo 2 SI qmin.
+ * \return	The alimit maximum range spo2 SIQmin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMaxRangeSPO2_SIQmin()
@@ -4872,12 +4872,12 @@ int CAlarmConditionHandler::getAlimitMaxRangeSPO2_SIQmin()
 }
 
 /**********************************************************************************************//**
- * Gets alimit minimum range spo 2 SI qmin
+ * Gets alimit minimum range spo2 SIQmin
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alimit minimum range spo 2 SI qmin.
+ * \return	The alimit minimum range spo2 SIQmin.
  **************************************************************************************************/
 
 int CAlarmConditionHandler::getAlimitMinRangeSPO2_SIQmin()
@@ -4888,7 +4888,7 @@ int CAlarmConditionHandler::getAlimitMinRangeSPO2_SIQmin()
 /**********************************************************************************************//**
  * Sets alimit state apnoe limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -4933,7 +4933,7 @@ void CAlarmConditionHandler::setAlimitState_ApnoeLimit(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Sets alimit state apnoe hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -4949,7 +4949,7 @@ void CAlarmConditionHandler::setAlimitStateApnoeHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Sets alimit state apnoe default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -4963,9 +4963,9 @@ void CAlarmConditionHandler::setAlimitStateApnoeDefault(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state bp mmax limit
+ * Sets alimit state bpmmax limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5008,9 +5008,9 @@ void CAlarmConditionHandler::setAlimitState_BPMmaxLimit(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state bp mmax hf
+ * Sets alimit state bpmmax hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5024,9 +5024,9 @@ void CAlarmConditionHandler::setAlimitStateBPMmaxHF(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state bp mmax default
+ * Sets alimit state bpmmax default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5042,7 +5042,7 @@ void CAlarmConditionHandler::setAlimitStateBPMmaxDefault(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Sets alimit state leakmax limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5087,7 +5087,7 @@ void CAlarmConditionHandler::setAlimitState_LeakmaxLimit(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Sets alimit state leakmax hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5103,7 +5103,7 @@ void CAlarmConditionHandler::setAlimitStateLeakmaxHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Sets alimit state leakmax default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5117,9 +5117,9 @@ void CAlarmConditionHandler::setAlimitStateLeakmaxDefault(eAlarmLimitState state
 }
 
 /**********************************************************************************************//**
- * Sets alimit state m vmax limit
+ * Sets alimit state mvmax limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5162,9 +5162,9 @@ void CAlarmConditionHandler::setAlimitState_MVmaxLimit(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state m vmax hf
+ * Sets alimit state mvmax hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5178,9 +5178,9 @@ void CAlarmConditionHandler::setAlimitStateMVmaxHF(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state m vmax default
+ * Sets alimit state mvmax default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5194,9 +5194,9 @@ void CAlarmConditionHandler::setAlimitStateMVmaxDefault(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state m vmin limit
+ * Sets alimit state mvmin limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5243,9 +5243,9 @@ void CAlarmConditionHandler::setAlimitState_MVminLimit(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state m vmin hf
+ * Sets alimit state mvmin hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5259,9 +5259,9 @@ void CAlarmConditionHandler::setAlimitStateMVminHF(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state m vmin default
+ * Sets alimit state mvmin default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5275,9 +5275,9 @@ void CAlarmConditionHandler::setAlimitStateMVminDefault(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state pee pmin limit
+ * Sets alimit state peepmin limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5336,9 +5336,9 @@ void CAlarmConditionHandler::setAlimitState_PEEPminLimit(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state pee pmin cpap
+ * Sets alimit state peepmin cpap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5352,9 +5352,9 @@ void CAlarmConditionHandler::setAlimitStatePEEPminCpap(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state pee pmin ncpap
+ * Sets alimit state peepmin ncpap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5368,9 +5368,9 @@ void CAlarmConditionHandler::setAlimitStatePEEPminNCPAP(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state pee pmin duopap
+ * Sets alimit state peepmin duopap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5384,9 +5384,9 @@ void CAlarmConditionHandler::setAlimitStatePEEPminDUOPAP(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state pee pmin default
+ * Sets alimit state peepmin default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5400,9 +5400,9 @@ void CAlarmConditionHandler::setAlimitStatePEEPminDefault(eAlarmLimitState state
 }
 
 /**********************************************************************************************//**
- * Sets alimit state pi pmin limit
+ * Sets alimit state pipmin limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5461,9 +5461,9 @@ void CAlarmConditionHandler::setAlimitState_PIPminLimit(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state pi pmin default
+ * Sets alimit state pipmin default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5477,9 +5477,9 @@ void CAlarmConditionHandler::setAlimitStatePIPminDefault(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state pi pmax limit
+ * Sets alimit state pipmax limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5538,9 +5538,9 @@ void CAlarmConditionHandler::setAlimitState_PIPmaxLimit(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state pi pmax hf
+ * Sets alimit state pipmax hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5554,9 +5554,9 @@ void CAlarmConditionHandler::setAlimitStatePIPmaxHF(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state pi pmax cpap
+ * Sets alimit state pipmax cpap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5570,9 +5570,9 @@ void CAlarmConditionHandler::setAlimitStatePIPmaxCpap(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state pi pmax ncpap
+ * Sets alimit state pipmax ncpap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5586,9 +5586,9 @@ void CAlarmConditionHandler::setAlimitStatePIPmaxNCPAP(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state pi pmax duopap
+ * Sets alimit state pipmax duopap
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5602,9 +5602,9 @@ void CAlarmConditionHandler::setAlimitStatePIPmaxDUOPAP(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state pi pmax default
+ * Sets alimit state pipmax default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5618,9 +5618,9 @@ void CAlarmConditionHandler::setAlimitStatePIPmaxDefault(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state ma pmax limit
+ * Sets alimit state mapmax limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5660,9 +5660,9 @@ void CAlarmConditionHandler::setAlimitState_MAPmaxLimit(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state ma pmax hf
+ * Sets alimit state mapmax hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5676,9 +5676,9 @@ void CAlarmConditionHandler::setAlimitStateMAPmaxHF(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state ma pmin limit
+ * Sets alimit state mapmin limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5718,9 +5718,9 @@ void CAlarmConditionHandler::setAlimitState_MAPminLimit(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state ma pmin hf
+ * Sets alimit state mapmin hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5734,9 +5734,9 @@ void CAlarmConditionHandler::setAlimitStateMAPminHF(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state dco 2max limit
+ * Sets alimit state dco2max limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5776,9 +5776,9 @@ void CAlarmConditionHandler::setAlimitState_DCO2maxLimit(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state dco 2max hf
+ * Sets alimit state dco2max hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5792,9 +5792,9 @@ void CAlarmConditionHandler::setAlimitStateDCO2maxHF(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state dco 2min limit
+ * Sets alimit state dco2min limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5834,9 +5834,9 @@ void CAlarmConditionHandler::setAlimitState_DCO2minLimit(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state dco 2min hf
+ * Sets alimit state dco2min hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5850,9 +5850,9 @@ void CAlarmConditionHandler::setAlimitStateDCO2minHF(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state etco 2max limit
+ * Sets alimit state etco2max limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5895,9 +5895,9 @@ void CAlarmConditionHandler::setAlimitState_ETCO2maxLimit(eAlarmLimitState state
 }
 
 /**********************************************************************************************//**
- * Sets alimit state etco 2max hf
+ * Sets alimit state etco2max hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5911,9 +5911,9 @@ void CAlarmConditionHandler::setAlimitStateETCO2maxHF(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state etco 2max default
+ * Sets alimit state etco2max default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5927,9 +5927,9 @@ void CAlarmConditionHandler::setAlimitStateETCO2maxDefault(eAlarmLimitState stat
 }
 
 /**********************************************************************************************//**
- * Sets alimit state etco 2min limit
+ * Sets alimit state etco2min limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5972,9 +5972,9 @@ void CAlarmConditionHandler::setAlimitState_ETCO2minLimit(eAlarmLimitState state
 }
 
 /**********************************************************************************************//**
- * Sets alimit state etco 2min hf
+ * Sets alimit state etco2min hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5988,9 +5988,9 @@ void CAlarmConditionHandler::setAlimitStateETCO2minHF(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state etco 2min default
+ * Sets alimit state etco2min default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6004,9 +6004,9 @@ void CAlarmConditionHandler::setAlimitStateETCO2minDefault(eAlarmLimitState stat
 }
 
 /**********************************************************************************************//**
- * Sets alimit state fico 2max limit
+ * Sets alimit state fico2max limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6049,9 +6049,9 @@ void CAlarmConditionHandler::setAlimitState_FICO2maxLimit(eAlarmLimitState state
 }
 
 /**********************************************************************************************//**
- * Sets alimit state fico 2max hf
+ * Sets alimit state fico2max hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6065,9 +6065,9 @@ void CAlarmConditionHandler::setAlimitStateFICO2maxHF(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state fico 2max default
+ * Sets alimit state fico2max default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6081,9 +6081,9 @@ void CAlarmConditionHandler::setAlimitStateFICO2maxDefault(eAlarmLimitState stat
 }
 
 /**********************************************************************************************//**
- * Sets alimit state fico 2min limit
+ * Sets alimit state fico2min limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6126,9 +6126,9 @@ void CAlarmConditionHandler::setAlimitState_FICO2minLimit(eAlarmLimitState state
 }
 
 /**********************************************************************************************//**
- * Sets alimit state fico 2min hf
+ * Sets alimit state fico2min hf
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6142,9 +6142,9 @@ void CAlarmConditionHandler::setAlimitStateFICO2minHF(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state fico 2min default
+ * Sets alimit state fico2min default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6158,9 +6158,9 @@ void CAlarmConditionHandler::setAlimitStateFICO2minDefault(eAlarmLimitState stat
 }
 
 /**********************************************************************************************//**
- * Sets alimit state spo 2max limit
+ * Sets alimit state spo2max limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6195,9 +6195,9 @@ void CAlarmConditionHandler::setAlimitState_SPO2maxLimit(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state spo 2max default
+ * Sets alimit state spo2max default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6211,9 +6211,9 @@ void CAlarmConditionHandler::setAlimitStateSPO2maxDefault(eAlarmLimitState state
 }
 
 /**********************************************************************************************//**
- * Sets alimit state spo 2min limit
+ * Sets alimit state spo2min limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6248,9 +6248,9 @@ void CAlarmConditionHandler::setAlimitState_SPO2minLimit(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Sets alimit state spo 2min default
+ * Sets alimit state spo2min default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6264,9 +6264,9 @@ void CAlarmConditionHandler::setAlimitStateSPO2minDefault(eAlarmLimitState state
 }
 
 /**********************************************************************************************//**
- * Sets alimit state pulse ratemax limit
+ * Sets alimit state pulseratemax limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6301,9 +6301,9 @@ void CAlarmConditionHandler::setAlimitState_PulseRatemaxLimit(eAlarmLimitState s
 }
 
 /**********************************************************************************************//**
- * Sets alimit state pulse ratemax default
+ * Sets alimit state pulseratemax default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6317,9 +6317,9 @@ void CAlarmConditionHandler::setAlimitStatePulseRatemaxDefault(eAlarmLimitState 
 }
 
 /**********************************************************************************************//**
- * Sets alimit state pulse ratemin limit
+ * Sets alimit state pulseratemin limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6354,9 +6354,9 @@ void CAlarmConditionHandler::setAlimitState_PulseRateminLimit(eAlarmLimitState s
 }
 
 /**********************************************************************************************//**
- * Sets alimit state pulse ratemin default
+ * Sets alimit state pulseratemin default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6370,9 +6370,9 @@ void CAlarmConditionHandler::setAlimitStatePulseRateminDefault(eAlarmLimitState 
 }
 
 /**********************************************************************************************//**
- * Sets alimit state spo 2 p imin limit
+ * Sets alimit state spo2 pimin limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6407,9 +6407,9 @@ void CAlarmConditionHandler::setAlimitState_SPO2_PIminLimit(eAlarmLimitState sta
 }
 
 /**********************************************************************************************//**
- * Sets alimit state spo 2 p imin default
+ * Sets alimit state spo2 pimin default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6423,9 +6423,9 @@ void CAlarmConditionHandler::setAlimitStateSPO2_PIminDefault(eAlarmLimitState st
 }
 
 /**********************************************************************************************//**
- * Sets alimit state spo 2 SI qmin limit
+ * Sets alimit state spo2 SIQmin limit
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6460,9 +6460,9 @@ void CAlarmConditionHandler::setAlimitState_SPO2_SIQminLimit(eAlarmLimitState st
 }
 
 /**********************************************************************************************//**
- * Sets alimit state spo 2 SI qmin default
+ * Sets alimit state spo2 SIQmin default
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -6478,7 +6478,7 @@ void CAlarmConditionHandler::setAlimitStateSPO2_SIQminDefault(eAlarmLimitState s
 /**********************************************************************************************//**
  * Sets alimit state calculated
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 

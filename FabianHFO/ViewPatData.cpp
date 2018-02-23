@@ -8,20 +8,28 @@
 #include "globDefs.h"
 #include "TlsRegistry.h"
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CViewPatData class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	iViewID	Identifier for the view.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 CViewPatData::CViewPatData(int iViewID):
 CMVView(iViewID)
 {
 	m_pcWndPatient=NULL;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Finalizes an instance of the CViewPatData class
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 CViewPatData::~CViewPatData(void)
 {
 }
@@ -33,10 +41,15 @@ BEGIN_MESSAGE_MAP(CViewPatData, CMVView)
 	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * Creates the view
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CViewPatData::CreateView()
 {
 	//RECT rcLd={5,50,790,535};
@@ -52,9 +65,20 @@ bool CViewPatData::CreateView()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CViewPatData::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 
@@ -88,6 +112,19 @@ BOOL CViewPatData::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateCont
 		return 0;
 }
 
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CViewPatData::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -116,9 +153,16 @@ LRESULT CViewPatData::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	}
 	return CWnd::WindowProc(message, wParam, lParam);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewPatData::Initialize()
 {
 	bool result=false;
@@ -126,25 +170,35 @@ bool CViewPatData::Initialize()
 	return result;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Opens this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewPatData::Open()
 {
 }
 
+/**********************************************************************************************//**
+ * Closes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewPatData::Close()
 {
 }
 
+/**********************************************************************************************//**
+ * Shows this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewPatData::Show()
 {
 	//bool result=false;
@@ -157,18 +211,25 @@ void CViewPatData::Show()
 	this->ShowWindow(SW_SHOW);
 }
 
+/**********************************************************************************************//**
+ * Hides this instance
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CViewPatData::Hide()
 {
 	this->ShowWindow(SW_HIDE);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
+
 void CViewPatData::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -176,25 +237,27 @@ void CViewPatData::OnPaint()
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ **************************************************************************************************/
 
-
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CViewPatData::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CViewPatData::OnDestroy()
 {
 	CMVView::OnDestroy();
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates window patient
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewPatData::CreateWndPatient()
 {
 	if(m_pcWndPatient==NULL)
@@ -217,6 +280,16 @@ bool CViewPatData::CreateWndPatient()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window patient
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CViewPatData::DestroyWndPatient()
 {
 	if(m_pcWndPatient)
@@ -227,6 +300,16 @@ bool CViewPatData::DestroyWndPatient()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window patient
+ *
+ * \author	Rainer Kühner
+ * \date	23.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CViewPatData::ShowWndPatient(bool show)
 {
 	m_pcWndPatient->Show(show);
@@ -234,61 +317,3 @@ void CViewPatData::ShowWndPatient(bool show)
 	m_pcWndPatient->SetFocus();
 }
 
-
-// **************************************************************************
-// 
-// **************************************************************************
-//void CViewPatData::Draw()
-//{
-//
-//	RECT rc={0,0,m_lX,m_lY};
-//	//RECT rcCl;
-//	//GetClientRect(&rcCl);
-//
-//	CClientDC dc(this);
-//	HDC hdcMem=CreateCompatibleDC(dc.m_hDC);
-//	HBITMAP hBmpMem=CreateCompatibleBitmap(dc.m_hDC,m_lX,m_lY);
-//	HBITMAP hBmpMemPrev=(HBITMAP)SelectObject(hdcMem,hBmpMem);
-//
-//	int bc=SetBkColor(hdcMem,BACKGND);
-//	int nBkMode=SetBkMode(hdcMem,TRANSPARENT);
-//
-//	HFONT hPrevFont=(HFONT)SelectObject(hdcMem,g_hf8AcuBold);
-//
-//	int tc=SetTextColor(hdcMem,0x0000000);
-//
-//	CBrush cbrBack(BACKGND);
-//	HBRUSH hPrevBrush=(HBRUSH)SelectObject(hdcMem,(HBRUSH)cbrBack);
-//	HPEN hPrevPen=(HPEN)SelectObject(m_hDC, (HPEN)GetStockObject(NULL_PEN));
-//	//HPEN hPrevPen=(HPEN)SelectObject(hdcMem, (HPEN)penEll);
-//	
-//	Rectangle(hdcMem, 0, 0, m_lX, m_lY);
-//
-//
-//
-//
-//
-//
-//
-//	
-//	
-//
-//	dc.BitBlt(x,y,m_lX,m_lY,CDC::FromHandle(hdcMem),0,0,SRCCOPY);
-//	
-//	SelectObject(hdcMem, hPrevBrush);	
-//	SelectObject(hdcMem, hPrevPen);
-//
-//
-//	SetTextColor(hdcMem,tc);
-//	SetBkColor(hdcMem,bc);
-//	SetBkMode(hdcMem,nBkMode);
-//
-//	SelectObject(hdcMem,hBmpMemPrev);
-//	DeleteObject(hBmpMem);
-//
-//	DeleteObject(cbrBack);
-//	DeleteObject(cbrEll);
-//	DeleteObject(penEll);
-//
-//	DeleteDC(hdcMem);
-//}

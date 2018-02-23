@@ -4,7 +4,7 @@
  * \brief	An alarm condition handler.
  * The alarm condition handler handles states and limits of the alarms limits.
  *
- * \author	Rainer
+ * \author	Rainer Kühner
  * \date	19.02.2018
  * 			
  **************************************************************************************************/

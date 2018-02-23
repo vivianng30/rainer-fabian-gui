@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	ParaBtn_PEEP.cpp.
+ *
+ * Implements the para button peep class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "ParaBtn_PEEP.h"
 #include "globDefs.h"
@@ -11,11 +17,30 @@ extern HFONT g_hf8AcuBold;
 
 CViewParaBtn* CParaBtn_PEEP::VIEWPARAPTN=0;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaBtn_PEEP class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param [in,out]	parent	   	If non-null, the parent.
+ * \param 		  	btn		   	The button.
+ * \param 		  	nOffset	   	The offset.
+ * \param 		  	bScrollOver	True to scroll over.
+ **************************************************************************************************/
+
 CParaBtn_PEEP::CParaBtn_PEEP(CViewParaBtn* parent, BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
 {
 	VIEWPARAPTN=parent;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn_PEEP class
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
 
 CParaBtn_PEEP::~CParaBtn_PEEP(void)
 {
@@ -34,8 +59,14 @@ BEGIN_MESSAGE_MAP(CParaBtn_PEEP, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
-
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
 void CParaBtn_PEEP::Draw(int nState)
 {
@@ -204,10 +235,16 @@ void CParaBtn_PEEP::Draw(int nState)
 	}
 }
 
-
-
-
-
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CParaBtn_PEEP::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
@@ -524,6 +561,15 @@ void CParaBtn_PEEP::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	m_bLMouseButtonDown = false;
 }
 
+/**********************************************************************************************//**
+ * Executes the l button up action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CParaBtn_PEEP::OnLButtonUp(UINT nFlags, CPoint point) 
 {
