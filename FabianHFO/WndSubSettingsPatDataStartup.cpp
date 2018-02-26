@@ -5,10 +5,26 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsPatDataStartup.h"
 
-
-// CWndSubSettingsPatDataStartup
+/**********************************************************************************************//**
+ * CWndSubSettingsPatDataStartup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsPatDataStartup, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsPatDataStartup class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsPatDataStartup::CWndSubSettingsPatDataStartup(UINT viewFlag):
 CWndSubSettings(viewFlag)
@@ -16,6 +32,13 @@ CWndSubSettings(viewFlag)
 	m_bAskStartup=false;
 	m_slider=NULL;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsPatDataStartup class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsPatDataStartup::~CWndSubSettingsPatDataStartup()
 {
@@ -36,12 +59,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsPatDataStartup, CWnd)
 	//ON_BN_CLICKED(IDC_BTN_SETUP_7, &CWndSubSettingsAutoOxyCal::OnBnClicked7)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsPatDataStartup message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsPatDataStartup message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsPatDataStartup::Initialize()
 {
 	CClientDC dc(this);
@@ -74,9 +98,13 @@ void CWndSubSettingsPatDataStartup::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsPatDataStartup::Draw()
 {
 	RECT rcCl;
@@ -160,9 +188,17 @@ void CWndSubSettingsPatDataStartup::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsPatDataStartup::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -223,9 +259,6 @@ BOOL CWndSubSettingsPatDataStartup::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 //void CWndSubSettingsPatDataStartup::SetAskStartup(UINT btn)
 //{
 //	switch(btn)
@@ -245,20 +278,30 @@ BOOL CWndSubSettingsPatDataStartup::PreTranslateMessage(MSG* pMsg)
 //	getModel()->getCONFIG()->SetVentRange(m_iVentRange);
 //}
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsPatDataStartup::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CWndSubSettingsPatDataStartup::OnDestroy()
 {
 	CWndSubSettings::OnDestroy();
 }
+
+/**********************************************************************************************//**
+ * Executes my message action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	wParam	The wParam field of the message.
+ * \param	lParam	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndSubSettingsPatDataStartup::OnMyMessage(WPARAM wParam, LPARAM lParam)
 {
 	switch(wParam)

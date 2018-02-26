@@ -1,8 +1,14 @@
+/**********************************************************************************************//**
+ * \file	WndNumConfig.h.
+ *
+ * Declares the window number configuration class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndNumeric.h"
 #include "NumericField.h"
 
-// CWndNumConfig
+// CWndNumConfig. 
 
 class CWndNumConfig : public CWndNumeric
 {

@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	NumericFieldVTEMANDSPONT.h.
+ *
+ * Declares the numeric field vtemandspont class
+ **************************************************************************************************/
+
 #pragma once
 #include "NumericField.h"
 

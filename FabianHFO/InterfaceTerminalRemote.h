@@ -1,3 +1,14 @@
+//=============================================================================
+/** 
+* \class CInterfaceTerminalRemote
+* 		 
+* \brief Interface for remote terminal interface.
+* 		 
+* \author Rainer Kuehner
+* \date 2017-10-23 Creation of file
+*
+**/
+//=============================================================================
 #pragma once
 #include "InterfaceTerminal.h"
 

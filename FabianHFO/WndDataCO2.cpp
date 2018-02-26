@@ -7,13 +7,51 @@
 
 extern CEvent g_eventCO2Data;
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
-// CWndDataCO2
+/**********************************************************************************************//**
+ * CWndDataCO2
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndDataCO2, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndDataCO2 class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndDataCO2::CWndDataCO2()
 {
@@ -95,6 +133,13 @@ CWndDataCO2::CWndDataCO2()
 	m_sliderPassword=NULL;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndDataCO2 class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CWndDataCO2::~CWndDataCO2()
 {
 	if(m_pcResetTime)
@@ -133,6 +178,15 @@ CWndDataCO2::~CWndDataCO2()
 	DeleteCriticalSection(&csValues);
 }
 
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CWndDataCO2::getModel()
 {
 	if(m_pModel==NULL)
@@ -148,12 +202,20 @@ BEGIN_MESSAGE_MAP(CWndDataCO2, CWnd)
 	ON_BN_CLICKED(IDC_BTN_CO2_RESETTIME, &CWndDataCO2::OnBnClickedResetTimer)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndDataCO2 message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CWndDataCO2 message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CWndDataCO2::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	bool bRes=false;
@@ -208,6 +270,13 @@ BOOL CWndDataCO2::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 
 	return bRes;
 }
+
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndDataCO2::Init()
 {
@@ -293,6 +362,15 @@ void CWndDataCO2::Init()
 	StartCO2DataThread();
 }
 
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CWndDataCO2::Show(bool bShow)
 {
 	if(bShow)
@@ -305,6 +383,19 @@ void CWndDataCO2::Show(bool bShow)
 		SetWindowPos(NULL,0,0,0,0,SWP_NOSIZE|SWP_NOMOVE|SWP_HIDEWINDOW);
 	}
 }
+
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
 LRESULT CWndDataCO2::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
@@ -333,6 +424,14 @@ LRESULT CWndDataCO2::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	}
 	return CWnd::WindowProc(message, wParam, lParam);
 }
+
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataCO2::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -340,15 +439,13 @@ void CWndDataCO2::OnPaint()
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndDataCO2::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataCO2::OnDestroy()
 {
 	StopCO2DataThread();
@@ -381,6 +478,16 @@ void CWndDataCO2::OnDestroy()
 	if(m_hDC)
 		DeleteDC(m_hDC);
 }
+
+/**********************************************************************************************//**
+ * Updates the messure data described by bLimits
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bLimits	True to limits.
+ **************************************************************************************************/
+
 void CWndDataCO2::UpdateMessureData(bool bLimits)
 {
 	if(bLimits)
@@ -389,6 +496,15 @@ void CWndDataCO2::UpdateMessureData(bool bLimits)
 		PostMessage(WM_REDRAW_CO2WND_DATA);//Draw(false,false);
 	//Draw(bLimits,bLimits);
 }
+
+/**********************************************************************************************//**
+ * Updates the information data described by resetAvailable
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	resetAvailable	True if reset available.
+ **************************************************************************************************/
 
 void CWndDataCO2::UpdateInfoData(bool resetAvailable)
 {
@@ -413,7 +529,15 @@ void CWndDataCO2::UpdateInfoData(bool resetAvailable)
 	//Draw(true,false);
 }
 
-
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bStatic	True to static.
+ * \param	bLimits	True to limits.
+ **************************************************************************************************/
 
 void CWndDataCO2::Draw(bool bStatic, bool bLimits)
 {
@@ -540,6 +664,13 @@ void CWndDataCO2::Draw(bool bStatic, bool bLimits)
 	DeleteObject(hBmpMem);
 	DeleteDC(hdcMem);
 }
+
+/**********************************************************************************************//**
+ * Draw static
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndDataCO2::DrawStatic()
 {
@@ -1003,9 +1134,15 @@ void CWndDataCO2::DrawStatic()
 	SelectObject(m_hdcStatic,hPrevFont);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Determines if we can draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CWndDataCO2::DrawLimits()
 {
 	CDC* pDCStatic=CDC::FromHandle(m_hdcStatic);
@@ -1102,10 +1239,13 @@ bool CWndDataCO2::DrawLimits()
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Starts co 2 data thread
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-/***************************************************************************/
-//     Purpose: 
-//**************************************************************************/
 void CWndDataCO2::StartCO2DataThread( void )
 {
 	startThread();
@@ -1127,16 +1267,14 @@ void CWndDataCO2::StartCO2DataThread( void )
 	m_pcwtCO2DataThread->m_bAutoDelete = FALSE; 
 	m_pcwtCO2DataThread->ResumeThread();
 }
-//************************************
-// Method:    StopCO2DataThread
-// FullName:  CWndDataCO2::StopCO2DataThread
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * Stops co 2 data thread
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataCO2::StopCO2DataThread( void )
 {
 	if(doThread())
@@ -1156,6 +1294,15 @@ void CWndDataCO2::StopCO2DataThread( void )
 	}
 }
 
+/**********************************************************************************************//**
+ * Executes the thread operation
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CWndDataCO2::doThread()
 {
 	bool bRes=false;
@@ -1164,12 +1311,28 @@ bool CWndDataCO2::doThread()
 	LeaveCriticalSection(&csDoThread);
 	return bRes;
 }
+
+/**********************************************************************************************//**
+ * Starts a thread
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataCO2::startThread()
 {
 	EnterCriticalSection(&csDoThread);
 	m_bDoThread=true;
 	LeaveCriticalSection(&csDoThread);
 }
+
+/**********************************************************************************************//**
+ * Stops a thread
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataCO2::stopThread()
 {
 	EnterCriticalSection(&csDoThread);
@@ -1177,16 +1340,17 @@ void CWndDataCO2::stopThread()
 	LeaveCriticalSection(&csDoThread);
 }
 
-//************************************
-// Method:    CCO2DataThread
-// FullName:  CCO2DataThread
-// Access:    public static 
-// Returns:   UINT
-// Qualifier:
-// Parameter: LPVOID pc
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Cco 2 data thread
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CCO2DataThread( LPVOID pc )
 {
 	try
@@ -1216,16 +1380,15 @@ static UINT CCO2DataThread( LPVOID pc )
 	return TRUE;
 }
 
-//************************************
-// Method:    CO2Data
-// FullName:  CWndDataCO2::CO2Data
-// Access:    private 
-// Returns:   DWORD
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Co 2 data
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CWndDataCO2::CO2Data(void) 
 {
 	CeSetThreadPriority(m_pcwtCO2DataThread->m_hThread,256);
@@ -1343,6 +1506,18 @@ DWORD CWndDataCO2::CO2Data(void)
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Executes my message action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	wParam	The wParam field of the message.
+ * \param	lParam	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndDataCO2::OnMyMessage(WPARAM wParam, LPARAM lParam)
 {
 	switch(wParam)
@@ -1422,6 +1597,12 @@ LRESULT CWndDataCO2::OnMyMessage(WPARAM wParam, LPARAM lParam)
 	return 1;
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked reset timer action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndDataCO2::OnBnClickedResetTimer()
 {

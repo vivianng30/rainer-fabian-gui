@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	BitmapSlider.h.
+ *
+ * Declares the bitmap slider class
+ **************************************************************************************************/
+
 #if !defined(AFX_BITMAPSLIDER_H__BED36788_B60C_4C9E_AC56_FE430B93A0FD__INCLUDED_)
 #define AFX_BITMAPSLIDER_H__BED36788_B60C_4C9E_AC56_FE430B93A0FD__INCLUDED_
 

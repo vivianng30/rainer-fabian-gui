@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndServiceNetwork.h.
+ *
+ * Declares the window service network class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndService.h"
 #include "BitmapSlider.h"

@@ -1,3 +1,12 @@
+/**********************************************************************************************//**
+ * \class	CNumericField
+ *
+ * \brief	Base class for numeric fields.
+ * 			
+ * \author Rainer Kuehner
+ * \date 2017-11-14 Insert comments
+ * 			
+ **************************************************************************************************/
 #include "Bmp.h"
 #pragma once
 #include "globdefs.h"

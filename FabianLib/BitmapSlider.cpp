@@ -5,11 +5,25 @@
 #include "BitmapSlider.h"
 
 #ifdef _DEBUG
+
+/**********************************************************************************************//**
+ * A macro that defines new
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define new DEBUG_NEW
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static char THIS_FILE[] = __FILE__; ///< this file[]
 #endif
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the CBitmapSlider class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CBitmapSlider::CBitmapSlider():
 m_nMax(100),m_nMin(0),m_nPos(0),m_nPage(20),m_nWidth(0),m_nHeight(0),m_nThumbWidth(0),m_nThumbHeight(0),m_nMarginLeft(0),m_nMarginRight(0),m_nMarginTop(0),m_nMarginBottom(0),
@@ -18,6 +32,13 @@ m_bThumb(FALSE),m_bChannel(FALSE),m_bLButtonDown(FALSE),m_bFocus(FALSE),m_bFocus
 {
 
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CBitmapSlider class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CBitmapSlider::~CBitmapSlider()
 {
@@ -40,8 +61,16 @@ BEGIN_MESSAGE_MAP(CBitmapSlider, CStatic)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
-// CBitmapSlider message handlers
+/**********************************************************************************************//**
+ * Executes the erase bkgnd action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 BOOL CBitmapSlider::OnEraseBkgnd(CDC* pDC) 
 {	
@@ -49,8 +78,13 @@ BOOL CBitmapSlider::OnEraseBkgnd(CDC* pDC)
 	return TRUE;
 }
 
-// Draw channel and thumb
-//
+/**********************************************************************************************//**
+ * Draw channel and thumb
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CBitmapSlider::OnPaint() 
 {
 	CPaintDC dcOrigin(this);
@@ -192,15 +226,22 @@ void CBitmapSlider::OnPaint()
 	dcMem.DeleteDC();
 }
 
-// Sets the maximum range for the slider.
-//
-// Parameters:
-//		[IN]	nMax
-//				Maximum position for the slider.
-//		[IN]	bRedraw
-//				TRUE to redraw after the range is set.
-//				FALSE to only change maximum position.
-//
+/**********************************************************************************************//**
+ * Sets the maximum range for the slider.
+ * 
+ * Parameters:
+ *  	[IN]	nMax
+ *  			Maximum position for the slider.
+ *  	[IN]	bRedraw
+ *  			TRUE to redraw after the range is set. FALSE to only change maximum position.
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nMax   	The maximum.
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CBitmapSlider::SetRangeMax(int nMax, BOOL bRedraw)
 {
 	m_nMax = nMax;
@@ -211,15 +252,22 @@ void CBitmapSlider::SetRangeMax(int nMax, BOOL bRedraw)
 	}
 }
 
-// Sets the minimum range for the slider.
-//
-// Parameters:
-//		[IN]	nMin
-//				Minimum position for the slider.
-//		[IN]	bRedraw
-//				TRUE to redraw after the range is set.
-//				FALSE to only change minimum position.
-//
+/**********************************************************************************************//**
+ * Sets the minimum range for the slider.
+ * 
+ * Parameters:
+ *  	[IN]	nMin
+ *  			Minimum position for the slider.
+ *  	[IN]	bRedraw
+ *  			TRUE to redraw after the range is set. FALSE to only change minimum position.
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nMin   	The minimum.
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CBitmapSlider::SetRangeMin(int nMin, BOOL bRedraw)
 {
 	m_nMin = nMin;
@@ -230,29 +278,44 @@ void CBitmapSlider::SetRangeMin(int nMin, BOOL bRedraw)
 	}
 }
 
-// Sets the range (minimum and maximum positions) for the slider.
-//
-// Parameters:
-//		[IN]	nMin
-//				Minimum position for the slider.
-//		[IN]	nMax
-//				Maximum position for the slider.
-//		[IN]	bRedraw
-//				TRUE to redraw after the range is set.
-//				FALSE to only change the range.
-//
+/**********************************************************************************************//**
+ * Sets the range (minimum and maximum positions) for the slider.
+ * 
+ * Parameters:
+ *  	[IN]	nMin
+ *  			Minimum position for the slider.
+ *  	[IN]	nMax
+ *  			Maximum position for the slider.
+ *  	[IN]	bRedraw
+ *  			TRUE to redraw after the range is set. FALSE to only change the range.
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nMin   	The minimum.
+ * \param	nMax   	The maximum.
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CBitmapSlider::SetRange(int nMin, int nMax, BOOL bRedraw)
 {
 	SetRangeMin( nMin, FALSE );
 	SetRangeMax( nMax, bRedraw );
 }
 
-// Sets the current position of the slider.
-//
-// Parameters:
-//		[IN]	nPos
-//				Specifies the new slider position.
-//
+/**********************************************************************************************//**
+ * Sets the current position of the slider.
+ * 
+ * Parameters:
+ *  	[IN]	nPos
+ *  			Specifies the new slider position.
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nPos	The position.
+ **************************************************************************************************/
+
 void CBitmapSlider::SetPos(int nPos)
 {
 	m_nPos = nPos;
@@ -267,15 +330,24 @@ void CBitmapSlider::SetPos(int nPos)
 	UpdateWindow();
 }
 
-// Sets the size of the page for a control.
-//
-// Parameters:
-//		[IN]	nSize
-//				The new page size of the control.
-//
-// Return value:
-//		The previous page size.
-//
+/**********************************************************************************************//**
+ * Sets the size of the page for a control.
+ * 
+ * Parameters:
+ *  	[IN]	nSize
+ *  			The new page size of the control.
+ * 
+ * Return value:
+ *  	The previous page size.
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nSize	The size.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CBitmapSlider::SetPageSize(int nSize)
 {
 	int nRet = m_nPage;
@@ -285,8 +357,18 @@ int CBitmapSlider::SetPageSize(int nSize)
 	return nRet;
 }
 
-// Sets the left, top, right, and bottom margins for a control
-//
+/**********************************************************************************************//**
+ * Sets the left, top, right, and bottom margins for a control
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nLeft  	The left.
+ * \param	nTop   	The top.
+ * \param	nRight 	The right.
+ * \param	nBottom	The bottom.
+ **************************************************************************************************/
+
 void CBitmapSlider::SetMargin(int nLeft, int nTop, int nRight, int nBottom )
 {
 	SetMarginLeft( nLeft );
@@ -295,12 +377,18 @@ void CBitmapSlider::SetMargin(int nLeft, int nTop, int nRight, int nBottom )
 	SetMarginBottom( nBottom );
 }
 
-// Enables or disables control.
-//
-//		[IN]	bEnable
-//				TRUE to enable control.
-//				FALSE to disable control.
-//
+/**********************************************************************************************//**
+ * Enables or disables control.
+ * 
+ *  	[IN]	bEnable
+ *  			TRUE to enable control. FALSE to disable control.
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bEnable	True to enable, false to disable.
+ **************************************************************************************************/
+
 void CBitmapSlider::Enable(BOOL bEnable)
 {
 	m_bEnable = bEnable;
@@ -316,16 +404,22 @@ void CBitmapSlider::Enable(BOOL bEnable)
 	UpdateWindow();
 }
 
-// Specify whether draw focus rectangle or not.
-//
-//		[IN]	bDraw
-//				TRUE to draw focus rectangle.
-//				FALSE to hide focus rectangle.
-//
-//		[IN]	bRedraw
-//				TRUE to redraw status is changed.
-//				FALSE to only change the status.
-//
+/**********************************************************************************************//**
+ * Specify whether draw focus rectangle or not.
+ * 
+ *  	[IN]	bDraw
+ *  			TRUE to draw focus rectangle. FALSE to hide focus rectangle.
+ * 
+ *  	[IN]	bRedraw
+ *  			TRUE to redraw status is changed. FALSE to only change the status.
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bDraw  	True to draw.
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CBitmapSlider::DrawFocusRect(BOOL bDraw, BOOL bRedraw)
 {
 	m_bDrawFocusRect = bDraw;
@@ -337,31 +431,42 @@ void CBitmapSlider::DrawFocusRect(BOOL bDraw, BOOL bRedraw)
 	}
 }
 
-// Load bitmaps for a channel
-//
-// Parameters:
-//		[IN]	nChannelID
-//				ID number of the bitmap resource of the channel.
-//		[IN]	nActiveID
-//				ID number of the bitmap resource of the active channel.
-//		[IN]	bTransparent
-//				TRUE to apply transparency effect.
-//				FALSE to display normal bitmap.
-//		[IN]	clrpTransColor
-//				RGB color to treat as transparent.
-//		[IN]	iTransPixelX
-//				Logical x-coordinate of a point.
-//				It's color will be treated as transparent.
-//		[IN]	iTransPixelY
-//				Logical y-coordinate of a point.
-//				It's color will be treated as transparent.
-//
-// Return value:
-//		TRUE
-//			Function succeedes.
-//		FALSE
-//			Function failes to load bitmaps.
-//
+/**********************************************************************************************//**
+ * Load bitmaps for a channel
+ * 
+ * Parameters:
+ *  	[IN]	nChannelID
+ *  			ID number of the bitmap resource of the channel.
+ *  	[IN]	nActiveID
+ *  			ID number of the bitmap resource of the active channel.
+ *  	[IN]	bTransparent
+ *  			TRUE to apply transparency effect. FALSE to display normal bitmap.
+ *  	[IN]	clrpTransColor
+ *  			RGB color to treat as transparent.
+ *  	[IN]	iTransPixelX
+ *  			Logical x-coordinate of a point. It's color will be treated as transparent.
+ *  	[IN]	iTransPixelY
+ *  			Logical y-coordinate of a point. It's color will be treated as transparent.
+ * 
+ * Return value:
+ *  	TRUE
+ *  		Function succeedes.
+ *  	FALSE
+ *  		Function failes to load bitmaps.
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nChannelID	  	Identifier for the channel.
+ * \param	nActiveID	  	Identifier for the active.
+ * \param	bTransparent  	True to transparent.
+ * \param	clrpTransColor	The clrp transaction color.
+ * \param	iTransPixelX  	Zero-based index of the transaction pixel x coordinate.
+ * \param	iTransPixelY  	Zero-based index of the transaction pixel y coordinate.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CBitmapSlider::SetBitmapChannel(
 	UINT nChannelID, UINT nActiveID , BOOL bTransparent,
 	COLORREF clrpTransColor, int iTransPixelX, int iTransPixelY )
@@ -445,31 +550,42 @@ BOOL CBitmapSlider::SetBitmapChannel(
 	return TRUE;
 }
 
-// Load bitmaps for a thumb
-//
-// Parameters:
-//		[IN]	nThumbID
-//				ID number of the bitmap resource of the thumb
-//		[IN]	nActiveID
-//				ID number of the bitmap resource of the active thumb
-//		[IN]	bTransparent
-//				TRUE to apply transparency effect
-//				FALSE to display normal bitmap
-//		[IN]	clrpTransColor
-//				RGB color to treat as transparent
-//		[IN]	iTransPixelX
-//				Logical x-coordinate of a point.
-//				It's color will be treated as transparent
-//		[IN]	iTransPixelY
-//				Logical y-coordinate of a point.
-//				It's color will be treated as transparent
-//
-// Return value:
-//		TRUE
-//			Function succeedes.
-//		FALSE
-//			Function failes to load bitmaps.
-//
+/**********************************************************************************************//**
+ * Load bitmaps for a thumb
+ * 
+ * Parameters:
+ *  	[IN]	nThumbID
+ *  			ID number of the bitmap resource of the thumb
+ *  	[IN]	nActiveID
+ *  			ID number of the bitmap resource of the active thumb
+ *  	[IN]	bTransparent
+ *  			TRUE to apply transparency effect FALSE to display normal bitmap
+ *  	[IN]	clrpTransColor
+ *  			RGB color to treat as transparent
+ *  	[IN]	iTransPixelX
+ *  			Logical x-coordinate of a point. It's color will be treated as transparent
+ *  	[IN]	iTransPixelY
+ *  			Logical y-coordinate of a point. It's color will be treated as transparent
+ * 
+ * Return value:
+ *  	TRUE
+ *  		Function succeedes.
+ *  	FALSE
+ *  		Function failes to load bitmaps.
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nThumbID	  	Identifier for the thumb.
+ * \param	nActiveID	  	Identifier for the active.
+ * \param	bTransparent  	True to transparent.
+ * \param	clrpTransColor	The clrp transaction color.
+ * \param	iTransPixelX  	Zero-based index of the transaction pixel x coordinate.
+ * \param	iTransPixelY  	Zero-based index of the transaction pixel y coordinate.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CBitmapSlider::SetBitmapThumb(
 	UINT nThumbID, UINT nActiveID, BOOL bTransparent,
 	COLORREF clrpTransColor, int iTransPixelX, int iTransPixelY )
@@ -562,10 +678,18 @@ BOOL CBitmapSlider::SetBitmapThumb(
 	return TRUE;
 }
 
-// OnLButtonDown
-//
-// Dragging is started
-//
+/**********************************************************************************************//**
+ * OnLButtonDown
+ * 
+ * Dragging is started
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CBitmapSlider::OnLButtonDown(UINT nFlags, CPoint point) 
 {
 	if( !m_bEnable )
@@ -601,10 +725,18 @@ void CBitmapSlider::OnLButtonDown(UINT nFlags, CPoint point)
 	CStatic::OnLButtonDown(nFlags, point);
 }
 
-// OnMouseMove
-//
-// During dragging
-//
+/**********************************************************************************************//**
+ * OnMouseMove
+ * 
+ * During dragging
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CBitmapSlider::OnMouseMove(UINT nFlags, CPoint point) 
 {
 	if( !m_bLButtonDown || !m_bEnable )
@@ -647,10 +779,18 @@ void CBitmapSlider::OnMouseMove(UINT nFlags, CPoint point)
 	CStatic::OnMouseMove(nFlags, point);
 }
 
-// OnLButtonUp
-//
-// Dragging is finished
-//
+/**********************************************************************************************//**
+ * OnLButtonUp
+ * 
+ * Dragging is finished
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CBitmapSlider::OnLButtonUp(UINT nFlags, CPoint point) 
 {
 	if( !m_bEnable )
@@ -669,8 +809,17 @@ void CBitmapSlider::OnLButtonUp(UINT nFlags, CPoint point)
 	CStatic::OnLButtonUp(nFlags, point);
 }
 
-// Calculate point of thumb from position value
-//
+/**********************************************************************************************//**
+ * Calculate point of thumb from position value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nPos	The position.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CBitmapSlider::Pos2Pixel(int nPos)
 {
 	if( m_bVertical ) {
@@ -691,8 +840,17 @@ int CBitmapSlider::Pos2Pixel(int nPos)
 	}
 }
 
-// Calculate position value from point of mouse
-//
+/**********************************************************************************************//**
+ * Calculate position value from point of mouse
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nPixel	The pixel.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CBitmapSlider::Pixel2Pos(int nPixel)
 {
 	if( m_bVertical ) {
@@ -715,8 +873,20 @@ int CBitmapSlider::Pixel2Pos(int nPixel)
 	}
 }
 
-// Copy background image to bitmap
-//
+/**********************************************************************************************//**
+ * Copy background image to bitmap
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pDC	   	If non-null, the device-context.
+ * \param 		  	nXSrc  	The x coordinate source.
+ * \param 		  	nYSrc  	The y coordinate source.
+ * \param 		  	nWidth 	The width.
+ * \param 		  	nHeight	The height.
+ * \param [in,out]	pBmDst 	If non-null, the bm destination.
+ **************************************************************************************************/
+
 void CBitmapSlider::CopyBackground(
 	CDC *pDC, int nXSrc, int nYSrc, int nWidth, int nHeight, CBitmap *pBmDst)
 {
@@ -734,8 +904,20 @@ void CBitmapSlider::CopyBackground(
 	memDC.DeleteDC();
 }
 
-// Restore background image from bitmap
-//
+/**********************************************************************************************//**
+ * Restore background image from bitmap
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pDC	   	If non-null, the device-context.
+ * \param 		  	nXDst  	The x coordinate destination.
+ * \param 		  	nYDst  	The y coordinate destination.
+ * \param 		  	nWidth 	The width.
+ * \param 		  	nHeight	The height.
+ * \param [in,out]	pBmSrc 	If non-null, the bm source.
+ **************************************************************************************************/
+
 void CBitmapSlider::RestoreBackground(
 	CDC *pDC, int nXDst, int nYDst, int nWidth, int nHeight, CBitmap *pBmSrc)
 {
@@ -750,10 +932,26 @@ void CBitmapSlider::RestoreBackground(
 	memDC.DeleteDC();
 }
 
-// DrawBitmap
-//
-// It's for code readability
-//
+/**********************************************************************************************//**
+ * DrawBitmap
+ * 
+ * It's for code readability
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pDC				If non-null, the device-context.
+ * \param 		  	xStart			The start.
+ * \param 		  	yStart			The start.
+ * \param 		  	wWidth			The width.
+ * \param 		  	wHeight			The height.
+ * \param [in,out]	pTmpDC			If non-null, the temporary device-context.
+ * \param 		  	xSource			Source for the.
+ * \param 		  	ySource			Source for the.
+ * \param [in,out]	bmMask			If non-null, the bm mask.
+ * \param 		  	bTransparent	True to transparent.
+ **************************************************************************************************/
+
 void CBitmapSlider::DrawBitmap(
 	CDC *pDC, int xStart, int yStart, int wWidth, int wHeight,
 	CDC *pTmpDC, int xSource, int ySource, CBitmap *bmMask, BOOL bTransparent )
@@ -773,13 +971,23 @@ void CBitmapSlider::DrawBitmap(
 	}
 }
 
-// PrepareMask
-//
-// "Drawing Transparent Bitmap with ease with on the fly masks in MFC"
-// By Raja Segar
-//
-// I changed default clrpTransColor value from NULL(black) to 0xFF000000(not RGB color)
-//
+/**********************************************************************************************//**
+ * PrepareMask
+ * 
+ * "Drawing Transparent Bitmap with ease with on the fly masks in MFC" By Raja Segar
+ * 
+ * I changed default clrpTransColor value from NULL(black) to 0xFF000000(not RGB color)
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pBmpSource	  	If non-null, the bitmap source.
+ * \param [in,out]	pBmpMask	  	If non-null, the bitmap mask.
+ * \param 		  	clrpTransColor	The clrp transaction color.
+ * \param 		  	iTransPixelX  	Zero-based index of the transaction pixel x coordinate.
+ * \param 		  	iTransPixelY  	Zero-based index of the transaction pixel y coordinate.
+ **************************************************************************************************/
+
 void CBitmapSlider::PrepareMask(
 	CBitmap *pBmpSource, CBitmap *pBmpMask,
 	COLORREF clrpTransColor, int iTransPixelX, int iTransPixelY)
@@ -854,11 +1062,25 @@ void CBitmapSlider::PrepareMask(
 	hdcDst.DeleteDC();
 }
 
-// DrawTransparentBitmap
-//
-// "Drawing Transparent Bitmap with ease with on the fly masks in MFC"
-// By Raja Segar
-//
+/**********************************************************************************************//**
+ * DrawTransparentBitmap
+ * 
+ * "Drawing Transparent Bitmap with ease with on the fly masks in MFC" By Raja Segar
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pDC	   	If non-null, the device-context.
+ * \param 		  	xStart 	The start.
+ * \param 		  	yStart 	The start.
+ * \param 		  	wWidth 	The width.
+ * \param 		  	wHeight	The height.
+ * \param [in,out]	pTmpDC 	If non-null, the temporary device-context.
+ * \param 		  	xSource	Source for the.
+ * \param 		  	ySource	Source for the.
+ * \param [in,out]	bmMask 	If non-null, the bm mask.
+ **************************************************************************************************/
+
 void CBitmapSlider::DrawTransparentBitmap(
 	CDC *pDC, int xStart, int yStart, int wWidth, int wHeight,
 	CDC *pTmpDC, int xSource, int ySource, CBitmap *bmMask )
@@ -887,8 +1109,15 @@ void CBitmapSlider::DrawTransparentBitmap(
 	hdcMem.DeleteDC();
 }
 
-// To get keyboard input
-//
+/**********************************************************************************************//**
+ * To get keyboard input
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 UINT CBitmapSlider::OnGetDlgCode() 
 {
 	if( GetKeyState(VK_TAB) >= 0 ) {
@@ -899,8 +1128,17 @@ UINT CBitmapSlider::OnGetDlgCode()
 	return CStatic::OnGetDlgCode();
 }
 
-// Handling keyboard input
-//
+/**********************************************************************************************//**
+ * Handling keyboard input
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
+
 void CBitmapSlider::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
 	if( !m_bEnable )
@@ -959,8 +1197,15 @@ void CBitmapSlider::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	CStatic::OnKeyDown(nChar, nRepCnt, nFlags);
 }
 
-// Control looses its focus
-//
+/**********************************************************************************************//**
+ * Control looses its focus
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pNewWnd	If non-null, the new window.
+ **************************************************************************************************/
+
 void CBitmapSlider::OnKillFocus(CWnd* pNewWnd) 
 {
 	CStatic::OnKillFocus(pNewWnd);
@@ -970,8 +1215,15 @@ void CBitmapSlider::OnKillFocus(CWnd* pNewWnd)
 	UpdateWindow();
 }
 
-// This control gains its focus
-//
+/**********************************************************************************************//**
+ * This control gains its focus
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pOldWnd	If non-null, the old window.
+ **************************************************************************************************/
+
 void CBitmapSlider::OnSetFocus(CWnd* pOldWnd) 
 {
 	CStatic::OnSetFocus(pOldWnd);
@@ -981,17 +1233,19 @@ void CBitmapSlider::OnSetFocus(CWnd* pOldWnd)
 	UpdateWindow();
 }
 
-// Release resources
-//
-//************************************
-// Method:    OnDestroy
-// FullName:  CBitmapSlider::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Release resources
+ * 
+ * ************************************ Method:    OnDestroy FullName:  CBitmapSlider::OnDestroy
+ * Access:    protected Returns:   void Qualifier:
+ * 
+ * 2015/06/19: checked for correct closing of window
+ * ************************************
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CBitmapSlider::OnDestroy() 
 {
 	

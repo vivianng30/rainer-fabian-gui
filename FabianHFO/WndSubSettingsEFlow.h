@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsEFlow.h.
+ *
+ * Declares the window sub settings e flow class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 #include "DTUpDwnBtn.h"

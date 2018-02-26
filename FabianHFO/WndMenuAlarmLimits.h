@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndMenuAlarmLimits.h.
+ *
+ * Declares the window menu alarm limits class
+ **************************************************************************************************/
+
 #pragma once
 #include "AlarmBtn.h"
 #include "PushBtn.h"

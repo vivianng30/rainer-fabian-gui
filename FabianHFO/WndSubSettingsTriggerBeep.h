@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsTriggerBeep.h.
+ *
+ * Declares the window sub settings trigger beep class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 #include "BitmapSlider.h"

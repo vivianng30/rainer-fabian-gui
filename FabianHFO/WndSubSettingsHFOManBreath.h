@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsHFOManBreath.h.
+ *
+ * Declares the window sub settings hfo manager breath class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 #include "BitmapSlider.h"

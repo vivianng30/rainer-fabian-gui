@@ -1,3 +1,14 @@
+/**********************************************************************************************//**
+* \class CInterfaceCO2_MICROPOD
+* 		 
+* \brief Base class for CO2 MICROPOD interface.
+* 		 
+* \author Rainer Kuehner
+* \date 2018-02-26 Creation of file
+*
+* Implements the object as singleton.
+*
+ **************************************************************************************************/
 #pragma once
 #include "InterfaceCO2.h"
 

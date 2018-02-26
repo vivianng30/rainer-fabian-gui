@@ -1,27 +1,21 @@
-// ChildView.h : interface of the CChildView class
-//
-
+/**********************************************************************************************//**
+ * \class	CChildView
+ *
+ * \brief	Base class for child views.
+ *
+ * \author	Rainer
+ * \date	18.10.2017
+ * 			
+ **************************************************************************************************/
 
 #pragma once
 
-/**********************************************************************************************//**
- * CChildView window.
- *
- * \author	Rainer Kühner
- * \date	11.07.2017
- **************************************************************************************************/
 
 class CChildView : public CWnd
 {
 // Construction
 public:
 
-	/**********************************************************************************************//**
-	 * Default constructor.
-	 *
-	 * \author	Rainer Kühner
-	 * \date	11.07.2017
-	 **************************************************************************************************/
 
 	CChildView();
 
@@ -34,28 +28,12 @@ public:
 // Overrides
 	protected:
 
-	/**********************************************************************************************//**
-	 * Pre create window.
-	 *
-	 * \author	Rainer Kühner
-	 * \date	11.07.2017
-	 *
-	 * \param [in,out]	cs	The create struct.
-	 *
-	 * \return	True if it succeeds, false if it fails.
-	 **************************************************************************************************/
 
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
 // Implementation
 public:
 
-	/**********************************************************************************************//**
-	 * Destructor.
-	 *
-	 * \author	Rainer Kühner
-	 * \date	11.07.2017
-	 **************************************************************************************************/
 
 	virtual ~CChildView();
 
@@ -65,26 +43,9 @@ private:
 	// Generated message map functions
 protected:
 
-	/**********************************************************************************************//**
-	 * Paints this window.
-	 *
-	 * \author	Rainer Kühner
-	 * \date	11.07.2017
-	 **************************************************************************************************/
-
 	afx_msg void OnPaint();
 
-	/**********************************************************************************************//**
-	 * Executes the erase bkgnd action.
-	 *
-	 * \author	Rainer Kühner
-	 * \date	11.07.2017
-	 *
-	 * \param [in,out]	pDC	If non-null, the device-context.
-	 *
-	 * \return	True if it succeeds, false if it fails.
-	 **************************************************************************************************/
-
+	
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);

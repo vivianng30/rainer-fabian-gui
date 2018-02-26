@@ -5,10 +5,24 @@
 #include "FabianHFO.h"
 #include "WndServiceFlowboard.h"
 
-
-// CWndServiceFlowboard
+/**********************************************************************************************//**
+ * CWndServiceFlowboard
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndServiceFlowboard, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndServiceFlowboard class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndServiceFlowboard::CWndServiceFlowboard():
 CWndService()
@@ -34,6 +48,13 @@ CWndService()
 	m_iBLENDERstate=0;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndServiceFlowboard class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CWndServiceFlowboard::~CWndServiceFlowboard()
 {
 }
@@ -44,9 +65,13 @@ BEGIN_MESSAGE_MAP(CWndServiceFlowboard, CWnd)
 	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndServiceFlowboard message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndServiceFlowboard message handlers
 void CWndServiceFlowboard::Init()
 {
 	CClientDC dc(this);
@@ -89,6 +114,13 @@ void CWndServiceFlowboard::Init()
 	SetTimer(SERVICETIMER, 800, NULL);
 
 }
+
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceFlowboard::Draw()
 {
@@ -448,16 +480,13 @@ void CWndServiceFlowboard::Draw()
 	DeleteDC(hdcMem);
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndServiceFlowboard::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CWndServiceFlowboard::OnDestroy()
 {
 	KillTimer(SERVICETIMER);
@@ -465,10 +494,15 @@ void CWndServiceFlowboard::OnDestroy()
 	CWndService::OnDestroy();	
 }
 
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndServiceFlowboard::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==SERVICETIMER)

@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsScreenlocktime.h.
+ *
+ * Declares the window sub settings screenlocktime class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 

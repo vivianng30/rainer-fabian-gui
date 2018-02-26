@@ -12,9 +12,24 @@
 
 extern "C" BOOL WINAPI TouchCalibrate( void );
 
-// CWndServiceDisplay
+/**********************************************************************************************//**
+ * CWndServiceDisplay
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndServiceDisplay, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndServiceDisplay class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndServiceDisplay::CWndServiceDisplay():
 CWndService()
@@ -37,6 +52,13 @@ CWndService()
 
 	m_pDlg = NULL;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndServiceDisplay class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndServiceDisplay::~CWndServiceDisplay()
 {
@@ -76,9 +98,13 @@ BEGIN_MESSAGE_MAP(CWndServiceDisplay, CWnd)
 	//ON_WM_HSCROLL()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndServiceDisplay message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndServiceDisplay message handlers
 void CWndServiceDisplay::Init()
 {
 	CClientDC dc(this);
@@ -174,6 +200,13 @@ void CWndServiceDisplay::Init()
 	m_pcMenuBack->ShowWindow(SW_SHOW);
 }
 
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceDisplay::Draw()
 {
 	RECT rcCl;
@@ -263,17 +296,13 @@ void CWndServiceDisplay::Draw()
 	DeleteDC(hdcMem);
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndServiceDisplay::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CWndServiceDisplay::OnDestroy()
 {
 	if(m_pDlg)
@@ -300,6 +329,12 @@ void CWndServiceDisplay::OnDestroy()
 //	CWnd::OnHScroll(nSBCode, nPos, pScrollBar);
 //}
 
+/**********************************************************************************************//**
+ * Executes the button clicked calibrate action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceDisplay::OnBnClickedCalibrate()
 {
@@ -324,21 +359,43 @@ void CWndServiceDisplay::OnBnClickedCalibrate()
 	Draw();
 }
 
-
+/**********************************************************************************************//**
+ * Button clicked increase
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceDisplay::BnClickedIncrease()
 {
 	getModel()->getDATAHANDLER()->IncreaseContrast();
 }
 
+/**********************************************************************************************//**
+ * Button clicked decrease
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceDisplay::BnClickedDecrease()
 {
 	getModel()->getDATAHANDLER()->DecreaseContrast();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndServiceDisplay::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)

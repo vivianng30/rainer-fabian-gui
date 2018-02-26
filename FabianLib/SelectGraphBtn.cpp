@@ -6,10 +6,29 @@
 #include "FabianHFO.h"
 #include "globDefs.h"
 
-
-// CSelectGraphBtn
+/**********************************************************************************************//**
+ * CSelectGraphBtn
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CSelectGraphBtn, CButton)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CSelectGraphBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn 	The button.
+ * \param	crUp	The carriage return up.
+ * \param	crDw	The carriage return double-word.
+ * \param	crFc	The carriage return fc.
+ **************************************************************************************************/
 
 CSelectGraphBtn::CSelectGraphBtn(BTN btn,COLORREF crUp,COLORREF crDw,COLORREF crFc)
 {
@@ -42,6 +61,13 @@ CSelectGraphBtn::CSelectGraphBtn(BTN btn,COLORREF crUp,COLORREF crDw,COLORREF cr
 	//m_pViewHandler = CMVViewHandler::GetInstance();
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CSelectGraphBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CSelectGraphBtn::~CSelectGraphBtn()
 {
 	//m_pViewHandler=NULL;
@@ -67,8 +93,20 @@ BEGIN_MESSAGE_MAP(CSelectGraphBtn, CButton)
 	//ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CSelectGraphBtn-Meldungshandler
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	hFont	  	The font.
+ * \param 		  	nXOffset  	The x coordinate offset.
+ * \param 		  	dwStyle   	The style.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// CSelectGraphBtn-Meldungshandler
 BOOL CSelectGraphBtn::Create(CWnd* pParentWnd, HFONT hFont, int nXOffset, DWORD	dwStyle) 
 {
 	SIZE sz;
@@ -95,39 +133,96 @@ BOOL CSelectGraphBtn::Create(CWnd* pParentWnd, HFONT hFont, int nXOffset, DWORD	
 	return 0;
 }
 
-
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	If non-null, the text.
+ * \param 		  	nNbr   	Number of.
+ **************************************************************************************************/
 
 void CSelectGraphBtn::SetText(TCHAR* pszText, int nNbr) 
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),pszText);
 	m_nNbr=nNbr;
 }
+
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText	The text.
+ * \param 		  	nNbr  	Number of.
+ **************************************************************************************************/
+
 void CSelectGraphBtn::SetText(CStringW& szText, int nNbr) 
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),szText);
 	m_nNbr=nNbr;
 }
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText	The text.
+ * \param 		  	nNbr  	Number of.
+ **************************************************************************************************/
+
 void CSelectGraphBtn::RefreshText(CStringW& szText, int nNbr) 
 {
 	SetText(szText,nNbr);
 	Invalidate();
 	UpdateWindow();
 } 
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	If non-null, the text.
+ * \param 		  	nNbr   	Number of.
+ **************************************************************************************************/
+
 void CSelectGraphBtn::RefreshText(TCHAR* pszText, int nNbr) 
 {
 	SetText(pszText,nNbr);
 	Invalidate();
 	UpdateWindow();
 } 
+
+/**********************************************************************************************//**
+ * Sets a character
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	t	A TCHAR to process.
+ **************************************************************************************************/
+
 void CSelectGraphBtn::SetChar(TCHAR t) 
 {
 	m_pszText[0]=t;
 	m_pszText[1]=0x0000;
 }
 
-// **************************************************************************
-// Painting
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw item
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	lpDrawItemStruct	The draw item structure.
+ **************************************************************************************************/
+
 void CSelectGraphBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
 	//	Rectangle(lpDrawItemStruct->hDC,0,0,m_rcClient.right,m_rcClient.bottom);
@@ -162,6 +257,15 @@ void CSelectGraphBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
 void CSelectGraphBtn::Draw(int nState/*,TCHAR* psz*/)
 {
@@ -287,6 +391,19 @@ void CSelectGraphBtn::Draw(int nState/*,TCHAR* psz*/)
 	}
 }
 
+/**********************************************************************************************//**
+ * Draw rotated text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pDC			If non-null, the device-context.
+ * \param 		  	str			The string.
+ * \param 		  	rect		The rectangle.
+ * \param 		  	angle   	The angle.
+ * \param 		  	nOptions	Options for controlling the operation.
+ **************************************************************************************************/
+
 void CSelectGraphBtn::DrawRotatedText(CDC* pDC, const CStringW str, CRect rect, double angle, UINT nOptions)
 {
 	// convert angle to radian
@@ -312,6 +429,18 @@ void CSelectGraphBtn::DrawRotatedText(CDC* pDC, const CStringW str, CRect rect, 
 		nOptions, rect, str, NULL);
 }
 
+/**********************************************************************************************//**
+ * Sets the bitmaps
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pcBmpUp		 	If non-null, the PC bitmap up.
+ * \param [in,out]	pcBmpDown	 	If non-null, the PC bitmap down.
+ * \param [in,out]	pcBmpDisabled	If non-null, the PC bitmap disabled.
+ * \param [in,out]	pcBmpFocus   	If non-null, the PC bitmap focus.
+ **************************************************************************************************/
+
 void CSelectGraphBtn::SetBitmaps(CBmp* pcBmpUp,CBmp* pcBmpDown,CBmp* pcBmpDisabled,CBmp* pcBmpFocus)
 {
 	if(m_btn.pcBmpUp!=pcBmpUp)
@@ -325,7 +454,16 @@ void CSelectGraphBtn::SetBitmaps(CBmp* pcBmpUp,CBmp* pcBmpDown,CBmp* pcBmpDisabl
 	}
 }
 
-
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CSelectGraphBtn::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {

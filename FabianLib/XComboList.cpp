@@ -17,15 +17,23 @@
 
 
 #ifdef _DEBUG
+
+/**********************************************************************************************//**
+ * A macro that defines new
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define new DEBUG_NEW
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static char THIS_FILE[] = __FILE__; ///< this file[]
 #endif
 
-UINT NEAR WM_XCOMBOLIST_VK_RETURN = ::RegisterWindowMessage(_T("WM_XCOMBOLIST_VK_RETURN"));
-UINT NEAR WM_XCOMBOLIST_VK_ESCAPE = ::RegisterWindowMessage(_T("WM_XCOMBOLIST_VK_ESCAPE"));
-UINT NEAR WM_XCOMBOLIST_KEYDOWN   = ::RegisterWindowMessage(_T("WM_XCOMBOLIST_KEYDOWN"));
-UINT NEAR WM_XCOMBOLIST_LBUTTONUP = ::RegisterWindowMessage(_T("WM_XCOMBOLIST_LBUTTONUP"));
+UINT NEAR WM_XCOMBOLIST_VK_RETURN = ::RegisterWindowMessage(_T("WM_XCOMBOLIST_VK_RETURN")); ///< The windows message xcombolist vk return
+UINT NEAR WM_XCOMBOLIST_VK_ESCAPE = ::RegisterWindowMessage(_T("WM_XCOMBOLIST_VK_ESCAPE")); ///< The windows message xcombolist vk escape
+UINT NEAR WM_XCOMBOLIST_KEYDOWN   = ::RegisterWindowMessage(_T("WM_XCOMBOLIST_KEYDOWN"));   ///< The windows message xcombolist keydown
+UINT NEAR WM_XCOMBOLIST_LBUTTONUP = ::RegisterWindowMessage(_T("WM_XCOMBOLIST_LBUTTONUP")); ///< The windows message xcombolist lbuttonup
 
 BEGIN_MESSAGE_MAP(CXComboList, CWnd)
 	//{{AFX_MSG_MAP(CXComboList)
@@ -37,8 +45,15 @@ BEGIN_MESSAGE_MAP(CXComboList, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-///////////////////////////////////////////////////////////////////////////////
-// ctor
+/**********************************************************************************************//**
+ * Initializes a new instance of the CXComboList class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParent	If non-null, the parent.
+ **************************************************************************************************/
+
 CXComboList::CXComboList(CWnd *pParent)
 {
 	m_pParent = pParent;
@@ -47,12 +62,24 @@ CXComboList::CXComboList(CWnd *pParent)
 	m_bFirstTime = TRUE;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CXComboList class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CXComboList::~CXComboList()
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// SetActive
+/**********************************************************************************************//**
+ * Sets the active
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CXComboList::SetActive(/*int nScrollBarWidth*/)
 {
 	if (!::IsWindow(m_ListBox.m_hWnd))
@@ -124,16 +151,34 @@ void CXComboList::SetActive(/*int nScrollBarWidth*/)
 	}
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// GetScrollBarCtrl
+/**********************************************************************************************//**
+ * Gets scroll bar control
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nBar	The bar.
+ *
+ * \return	Null if it fails, else the scroll bar control.
+ **************************************************************************************************/
+
 CScrollBar* CXComboList::GetScrollBarCtrl(int nBar)
 {
 	UNUSED_ALWAYS(nBar);
 	return &m_wndSBVert;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// SendRegisteredMessage
+/**********************************************************************************************//**
+ * Sends a registered message
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nMsg  	The message.
+ * \param	wParam	The wParam field of the message.
+ * \param	lParam	The lParam field of the message.
+ **************************************************************************************************/
+
 void CXComboList::SendRegisteredMessage(UINT nMsg, WPARAM wParam, LPARAM lParam)
 {
 	CWnd *pWnd = m_pParent;
@@ -141,16 +186,33 @@ void CXComboList::SendRegisteredMessage(UINT nMsg, WPARAM wParam, LPARAM lParam)
 		pWnd->SendMessage(nMsg, wParam, lParam);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// OnLButtonDown
+/**********************************************************************************************//**
+ * Executes the l button down action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CXComboList::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	SendRegisteredMessage(WM_XCOMBOLIST_LBUTTONUP, 0, 0);
 	CWnd::OnLButtonUp(nFlags, point);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// PreTranslateMessage
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CXComboList::PreTranslateMessage(MSG* pMsg)
 {
 	switch (pMsg->message)
@@ -260,8 +322,15 @@ BOOL CXComboList::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// OnKillFocus
+/**********************************************************************************************//**
+ * Executes the kill focus action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pNewWnd	If non-null, the new window.
+ **************************************************************************************************/
+
 void CXComboList::OnKillFocus(CWnd* pNewWnd)
 {
 	CWnd::OnKillFocus(pNewWnd);
@@ -273,8 +342,17 @@ void CXComboList::OnKillFocus(CWnd* pNewWnd)
 	}
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// OnCreate
+/**********************************************************************************************//**
+ * Called when this window is created
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	lpCreateStruct	The create structure.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
 int CXComboList::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CWnd::OnCreate(lpCreateStruct) == -1)
@@ -305,8 +383,17 @@ int CXComboList::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// OnVScroll
+/**********************************************************************************************//**
+ * Executes the v scroll action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param 		  	nSBCode   	The sb code.
+ * \param 		  	nPos	  	The position.
+ * \param [in,out]	parameter3	If non-null, the third parameter.
+ **************************************************************************************************/
+
 void CXComboList::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar*)
 {
 	if (!::IsWindow(m_ListBox.m_hWnd))
@@ -362,23 +449,36 @@ void CXComboList::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar*)
 	m_wndSBVert.SetScrollInfo(&si);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// OnDestroy
-//************************************
-// Method:    OnDestroy
-// FullName:  CXComboList::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CXComboList::OnDestroy()
 {
 	if (::IsWindow(m_ListBox.m_hWnd))
 		m_ListBox.DestroyWindow();
 	CWnd::OnDestroy();
 }
+
+/**********************************************************************************************//**
+ * Adds an item
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	lpszItem	The item.
+ * \param	bg			The background.
+ * \param	fg			The foreground.
+ * \param	hal			The HAL.
+ * \param	val			The value.
+ * \param	active  	True to active.
+ * \param	res			The resource.
+ *
+ * \return	An int.
+ **************************************************************************************************/
 
 int CXComboList::AddItem(CStringW lpszItem,
 			COLORREF bg,	  COLORREF fg,
@@ -389,6 +489,23 @@ int CXComboList::AddItem(CStringW lpszItem,
 
 	return iTemp;
 }
+
+/**********************************************************************************************//**
+ * Adds a head
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	lpszItem	The item.
+ * \param	bg			The background.
+ * \param	fg			The foreground.
+ * \param	hal			The HAL.
+ * \param	val			The value.
+ * \param	active  	True to active.
+ * \param	res			The resource.
+ *
+ * \return	An int.
+ **************************************************************************************************/
 
 int CXComboList::AddHead(LPCTSTR lpszItem,
 			COLORREF bg,	  COLORREF fg,
@@ -402,6 +519,12 @@ int CXComboList::AddHead(LPCTSTR lpszItem,
 	return iTemp;
 }
 
+/**********************************************************************************************//**
+ * Sets horizontal extent
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CXComboList::SetHorizontalExtent(/*CListBox& ListBox*/)
 {
@@ -444,10 +567,26 @@ void CXComboList::SetHorizontalExtent(/*CListBox& ListBox*/)
 
 }
 
+/**********************************************************************************************//**
+ * Deletes the string described by idx
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	idx	Zero-based index of the.
+ **************************************************************************************************/
+
 void CXComboList::DeleteString(int idx)
 {
 	m_ListBox.DeleteString(idx);
 };
+
+/**********************************************************************************************//**
+ * Invalidate list box
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CXComboList::InvalidateListBox()
 {

@@ -48,32 +48,121 @@
 #include "globDefs.h"
 
 #ifdef _DEBUG
+
+/**********************************************************************************************//**
+ * A macro that defines new
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define new DEBUG_NEW
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static char THIS_FILE[] = __FILE__; ///< this file[]
 #endif
 
-///////////////////////////////////////////////////////////////////////////////
-// some definitions
+/**********************************************************************************************//**
+ * /////////////////////////////////////////////////////////////////////////////
+ *  some definitions
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define DATE_BOX_WIDTH		18
+
+/**********************************************************************************************//**
+ * A macro that defines date box height
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define DATE_BOX_HEIGHT		14
+
+/**********************************************************************************************//**
+ * A macro that defines date box xpos
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define DATE_BOX_XPOS		67
+
+/**********************************************************************************************//**
+ * A macro that defines date box ypos
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define DATE_BOX_YPOS		43
-//#define SECOND_HAND_LENGTH	35.0
-//#define MINUTE_HAND_LENGTH	39.0
-//#define HOUR_HAND_LENGTH	28.0
+
+/**********************************************************************************************//**
+ * #define SECOND_HAND_LENGTH	35.0
+ * #define MINUTE_HAND_LENGTH	39.0
+ * #define HOUR_HAND_LENGTH	28.0
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 #define SECOND_HAND_LENGTH	17.0
+
+/**********************************************************************************************//**
+ * A macro that defines minute hand length
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define MINUTE_HAND_LENGTH	17.0
+
+/**********************************************************************************************//**
+ * A macro that defines hour hand length
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define HOUR_HAND_LENGTH	11.0
 
+/**********************************************************************************************//**
+ * A macro that defines second hand color
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define SECOND_HAND_COLOR	RGB(220,20,60)
+
+/**********************************************************************************************//**
+ * A macro that defines minute hand color
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define MINUTE_HAND_COLOR	RGB(0,0,0)
+
+/**********************************************************************************************//**
+ * A macro that defines hour hand color
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define HOUR_HAND_COLOR		RGB(0,0,0)
+
+/**********************************************************************************************//**
+ * A macro that defines pi
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define PI					3.1415926535
 
-///////////////////////////////////////////////////////////////////////////////
-// CXAnalogClock
 
 BEGIN_MESSAGE_MAP(CXAnalogClock, CStatic)
 	//{{AFX_MSG_MAP(CXAnalogClock)
@@ -85,8 +174,13 @@ BEGIN_MESSAGE_MAP(CXAnalogClock, CStatic)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-///////////////////////////////////////////////////////////////////////////////
-// ctor
+/**********************************************************************************************//**
+ * Initializes a new instance of the CXAnalogClock class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CXAnalogClock::CXAnalogClock()
 {
 	m_nPrevMinute     = -1;
@@ -115,14 +209,24 @@ CXAnalogClock::CXAnalogClock()
 	m_iPrevDay=GetDay();
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// dtor
+/**********************************************************************************************//**
+ * Finalizes an instance of the CXAnalogClock class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CXAnalogClock::~CXAnalogClock()
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// PreSubclassWindow
+/**********************************************************************************************//**
+ * Pre subclass window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CXAnalogClock::PreSubclassWindow()
 {
 	CClientDC dc(NULL);
@@ -131,8 +235,15 @@ void CXAnalogClock::PreSubclassWindow()
 	CStatic::PreSubclassWindow();
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// GetWindowSize
+/**********************************************************************************************//**
+ * Gets window size
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The window size.
+ **************************************************************************************************/
+
 CSize CXAnalogClock::GetWindowSize()
 {
 	CClientDC dc(NULL);
@@ -141,8 +252,15 @@ CSize CXAnalogClock::GetWindowSize()
 	return m_cdcClockFace.m_sizeBitmap;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// LoadBitmaps
+/**********************************************************************************************//**
+ * Loads the bitmaps
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CXAnalogClock::LoadBitmaps(CDC *pDC)
 {
 	if ((m_nFaceBitmapId == 0) /*|| (m_nDateBitmapId == 0)*/)
@@ -162,8 +280,13 @@ void CXAnalogClock::LoadBitmaps(CDC *pDC)
 		VERIFY(m_cdcPrevious.LoadBitmap(m_nFaceBitmapId, pDC));
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// OnPaint
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CXAnalogClock::OnPaint()
 {
 	if ((m_nFaceBitmapId == 0) /*|| (m_nDateBitmapId == 0)*/)
@@ -253,8 +376,17 @@ void CXAnalogClock::OnPaint()
 	// Do not call CStatic::OnPaint() for painting messages
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// ConvertToDegrees
+/**********************************************************************************************//**
+ * Converts a dTime to the degrees
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	dTime	The time.
+ *
+ * \return	The given data converted to the degrees.
+ **************************************************************************************************/
+
 float CXAnalogClock::ConvertToDegrees(float dTime)
 {
 	float degrees = (float)(90. - dTime * 6.0);
@@ -263,8 +395,6 @@ float CXAnalogClock::ConvertToDegrees(float dTime)
 	return degrees;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// PaintDate
 //void CXAnalogClock::PaintDate(CDC *pDC)
 //{
 //	LOGFONT lf;
@@ -318,8 +448,15 @@ float CXAnalogClock::ConvertToDegrees(float dTime)
 //	}
 //}
 
-///////////////////////////////////////////////////////////////////////////////
-// PaintMinuteAndHourHands
+/**********************************************************************************************//**
+ * Paints the minute and hour hands described by pDC
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CXAnalogClock::PaintMinuteAndHourHands(CDC *pDC)
 {
 	///////////////////////////////////////////////////////////////////////////
@@ -407,8 +544,15 @@ void CXAnalogClock::PaintMinuteAndHourHands(CDC *pDC)
 	}
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// PaintSecondHand
+/**********************************************************************************************//**
+ * Paints the second hand described by pDC
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ **************************************************************************************************/
+
 void CXAnalogClock::PaintSecondHand(CDC *pDC)
 {
 	if (m_bShowSecondHand)
@@ -435,15 +579,31 @@ void CXAnalogClock::PaintSecondHand(CDC *pDC)
 	}
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// OnEraseBkgnd
+/**********************************************************************************************//**
+ * Executes the erase bkgnd action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CXAnalogClock::OnEraseBkgnd(CDC* pDC)
 {
 	return CStatic::OnEraseBkgnd(pDC);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// OnTimer
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CXAnalogClock::OnTimer(UINT nIDEvent)
 {
 	if (!m_bUseSystemTime)
@@ -464,8 +624,13 @@ void CXAnalogClock::OnTimer(UINT nIDEvent)
 	CStatic::OnTimer(nIDEvent);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Run
+/**********************************************************************************************//**
+ * Runs this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CXAnalogClock::Run()
 {
 	m_nPrevMinute = -1;
@@ -475,32 +640,58 @@ void CXAnalogClock::Run()
 	m_bStopped = FALSE;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Stop
+/**********************************************************************************************//**
+ * Stops this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CXAnalogClock::Stop()
 {
 	KillTimer(1);
 	m_bStopped = TRUE;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// GetSecond
+/**********************************************************************************************//**
+ * Gets the second
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The second.
+ **************************************************************************************************/
+
 int CXAnalogClock::GetSecond()
 {
 	//return m_time.GetSecond();
 	return m_dtTime.GetSecond();
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// GetMinute
+/**********************************************************************************************//**
+ * Gets the minute
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The minute.
+ **************************************************************************************************/
+
 int CXAnalogClock::GetMinute()
 {
 	//return m_time.GetMinute();
 	return m_dtTime.GetMinute();
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// GetHour
+/**********************************************************************************************//**
+ * Gets the hour
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The hour.
+ **************************************************************************************************/
+
 int CXAnalogClock::GetHour()
 {
 	//int hour = m_time.GetHour();
@@ -510,8 +701,15 @@ int CXAnalogClock::GetHour()
 	return hour;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// GetDay
+/**********************************************************************************************//**
+ * Gets the day
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The day.
+ **************************************************************************************************/
+
 int CXAnalogClock::GetDay()
 {
 	//int day = m_time.GetDay();
@@ -519,24 +717,29 @@ int CXAnalogClock::GetDay()
 	return day;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// PreTranslateMessage
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CXAnalogClock::PreTranslateMessage(MSG* pMsg)
 {
 	return CStatic::PreTranslateMessage(pMsg);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// OnDestroy
-//************************************
-// Method:    OnDestroy
-// FullName:  CXAnalogClock::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CXAnalogClock::OnDestroy() 
 {
 	Stop();

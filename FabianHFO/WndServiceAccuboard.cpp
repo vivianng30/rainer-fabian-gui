@@ -6,10 +6,24 @@
 #include "WndServiceAccuboard.h"
 #include "DlgMessageBox.h"
 
-
-// CWndServiceAccuboard
+/**********************************************************************************************//**
+ * CWndServiceAccuboard
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndServiceAccuboard, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndServiceAccuboard class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndServiceAccuboard::CWndServiceAccuboard():
 CWndService()
@@ -38,6 +52,13 @@ CWndService()
 	m_pDlg = NULL;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndServiceAccuboard class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CWndServiceAccuboard::~CWndServiceAccuboard()
 {
 	delete m_pcUp;
@@ -57,9 +78,13 @@ BEGIN_MESSAGE_MAP(CWndServiceAccuboard, CWnd)
 	ON_BN_CLICKED(IDC_BTN_ACCU_TEST, &CWndServiceAccuboard::OnBnClickedAccuTest)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndServiceAccuboard message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndServiceAccuboard message handlers
 void CWndServiceAccuboard::Init()
 {
 	CClientDC dc(this);
@@ -128,6 +153,16 @@ void CWndServiceAccuboard::Init()
 	SetTimer(SERVICETIMER, 2000, NULL);
 
 }
+
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CWndServiceAccuboard::Show(bool bShow)
 {
 	if(bShow)
@@ -144,6 +179,14 @@ void CWndServiceAccuboard::Show(bool bShow)
 
 
 }
+
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceAccuboard::Draw()
 {
 	RECT rcCl;
@@ -509,15 +552,13 @@ void CWndServiceAccuboard::Draw()
 	DeleteDC(hdcMem);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndServiceAccuboard::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceAccuboard::OnDestroy()
 {
 	KillTimer(SERVICETIMER);
@@ -531,9 +572,15 @@ void CWndServiceAccuboard::OnDestroy()
 	CWndService::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CWndServiceAccuboard::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==SERVICETIMER)
@@ -594,9 +641,13 @@ void CWndServiceAccuboard::OnTimer(UINT_PTR nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked accu test action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceAccuboard::OnBnClickedAccuTest()
 {
 	//int iRes=0;

@@ -1,4 +1,14 @@
-
+//=============================================================================
+/** 
+* \class CLimitBtn_SPO2low
+* 		 
+* \brief Button for limit of SpO2 low value.
+* 		 
+* \author Rainer Kuehner
+* \date 2017-10-23 Creation of file
+*
+**/
+//=============================================================================
 #pragma once
 #include "LimitBtn.h"
 

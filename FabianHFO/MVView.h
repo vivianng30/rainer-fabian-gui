@@ -1,3 +1,14 @@
+//=============================================================================
+/** 
+* \class CMVView
+* 		 
+* \brief Base class of views.
+* 		 
+* \author Rainer Kuehner
+* \date 2017-10-23 Creation of file
+*
+**/
+//=============================================================================
 #pragma once
 #include "MVModel.h"
 #include "globDefs.h"

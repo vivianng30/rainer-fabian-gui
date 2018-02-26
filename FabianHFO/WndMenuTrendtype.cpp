@@ -1,13 +1,40 @@
+/**********************************************************************************************//**
+ * \file	WndMenuTrendtype.cpp.
+ *
+ * Implements the window menu trendtype class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "WndMenuTrendtype.h"
 #include "FabianHFO.h"
 #include "LangAdmin.h"
 #include "globDefs.h"
 
-
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 
@@ -16,11 +43,26 @@
 
 //extern CLangAdmin* g_pGlobalLanguageStrings;
 
-
-
-// CWndMenuTrendtype
+/**********************************************************************************************//**
+ * CWndMenuTrendtype
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndMenuTrendtype, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndMenuTrendtype class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	parentView	If non-null, the parent view.
+ **************************************************************************************************/
 
 CWndMenuTrendtype::CWndMenuTrendtype(CMVView *parentView)
 {
@@ -61,6 +103,13 @@ CWndMenuTrendtype::CWndMenuTrendtype(CMVView *parentView)
 
 	m_pModel = NULL;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndMenuTrendtype class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndMenuTrendtype::~CWndMenuTrendtype()
 {
@@ -107,9 +156,15 @@ CWndMenuTrendtype::~CWndMenuTrendtype()
 	m_pcMenu_Dw=NULL;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CWndMenuTrendtype::getModel()
 {
 	if(m_pModel==NULL)
@@ -125,12 +180,20 @@ BEGIN_MESSAGE_MAP(CWndMenuTrendtype, CWnd)
 	//ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndMenuTrendtype message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param 		  	bSelTrend 	The selected trend.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CWndMenuTrendtype message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CWndMenuTrendtype::Create(CWnd* pParentWnd, const RECT rc, UINT nID, UINT bSelTrend) 
 {
 	m_lX=rc.right-rc.left;
@@ -206,10 +269,13 @@ BOOL CWndMenuTrendtype::Create(CWnd* pParentWnd, const RECT rc, UINT nID, UINT b
 		return 0;
 }
 
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndMenuTrendtype::Init()
 {
 	CClientDC dc(this);
@@ -479,9 +545,15 @@ void CWndMenuTrendtype::Init()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets one button depressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CWndMenuTrendtype::SetOneButtonDepressed(int btnID)
 {
 	POSITION pos;
@@ -512,9 +584,13 @@ void CWndMenuTrendtype::SetOneButtonDepressed(int btnID)
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets all button unpressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuTrendtype::SetAllButtonUnpressed()
 {
 	POSITION pos;
@@ -538,9 +614,17 @@ void CWndMenuTrendtype::SetAllButtonUnpressed()
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bShow	  	True to show, false to hide.
+ * \param	iTrendType	Type of the trend.
+ * \param	bSelTrend 	The selected trend.
+ **************************************************************************************************/
+
 void CWndMenuTrendtype::Show(BOOL bShow, UINT iTrendType, UINT bSelTrend)
 {
 	m_iCurBtnSelTrend=bSelTrend;
@@ -642,6 +726,13 @@ void CWndMenuTrendtype::Show(BOOL bShow, UINT iTrendType, UINT bSelTrend)
 	Draw();
 }
 
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuTrendtype::Draw()
 {
 	RECT rcCl;
@@ -725,9 +816,13 @@ void CWndMenuTrendtype::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows the menu button
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuTrendtype::ShowMenuBtn()
 {
 	/*m_pcMenu1->ShowWindow(SW_SHOW);
@@ -738,11 +833,13 @@ void CWndMenuTrendtype::ShowMenuBtn()
 
 }
 
+/**********************************************************************************************//**
+ * Hides the menu button
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndMenuTrendtype::HideMenuBtn()
 {
 	/*m_pcMenu1->ShowWindow(SW_HIDE);
@@ -751,9 +848,20 @@ void CWndMenuTrendtype::HideMenuBtn()
 	m_pcMenu4->ShowWindow(SW_HIDE);
 	m_pcMenu5->ShowWindow(SW_HIDE);*/
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndMenuTrendtype::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -877,12 +985,13 @@ LRESULT CWndMenuTrendtype::WindowProc(UINT message, WPARAM wParam, LPARAM lParam
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndMenuTrendtype::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -893,15 +1002,13 @@ void CWndMenuTrendtype::OnPaint()
 	// CMVView::OnPaint() soll zum Zeichnen von Meldungen nicht aufgerufen werden.
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndMenuTrendtype::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuTrendtype::OnDestroy() 
 {
 	m_plMenuBtn.RemoveAll();

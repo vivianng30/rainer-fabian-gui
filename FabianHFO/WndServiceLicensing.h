@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndServiceLicensing.h.
+ *
+ * Declares the window service licensing class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndService.h"
 //#include "BitmapSlider.h"

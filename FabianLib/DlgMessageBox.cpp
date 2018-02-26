@@ -6,8 +6,31 @@
 #include "DlgMessageBox.h"
 #include "colour.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 extern HFONT g_hf14AcuMed;
@@ -15,9 +38,31 @@ extern HFONT g_hf11AcuBold;
 extern HFONT g_hf17AcuBold;
 extern HFONT g_hf9AcuBold;
 
-// CDlgMessageBox dialog
+/**********************************************************************************************//**
+ * CDlgMessageBox dialog
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CDlgMessageBox, CDialog)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CDlgMessageBox class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParent   	If non-null, the parent.
+ * \param 		  	sCaption  	The caption.
+ * \param 		  	sText	  	The text.
+ * \param 		  	iFlags	  	Zero-based index of the flags.
+ * \param 		  	iRESSOURCE	Zero-based index of the ressource.
+ * \param 		  	iHelpID   	Identifier for the help.
+ **************************************************************************************************/
 
 CDlgMessageBox::CDlgMessageBox(CWnd* pParent /*=NULL*/,CStringW sCaption, CStringW sText, UINT iFlags, UINT iRESSOURCE, UINT iHelpID)
 	: CDialog(CDlgMessageBox::IDD, pParent)
@@ -51,6 +96,13 @@ CDlgMessageBox::CDlgMessageBox(CWnd* pParent /*=NULL*/,CStringW sCaption, CStrin
 	m_pcBtnDwn=NULL;
 	m_pcBtnDis=NULL;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CDlgMessageBox class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CDlgMessageBox::~CDlgMessageBox()
 {
@@ -92,15 +144,30 @@ CDlgMessageBox::~CDlgMessageBox()
 	m_pcBtnDis=NULL;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CDlgMessageBox::getModel()
 {
 	if(m_pModel==NULL)
 		m_pModel=CMVModel::GetInstance();
 	return m_pModel;
 }
+
+/**********************************************************************************************//**
+ * Exchanges data to/from the controls in this dialog
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pDX	If non-null, an object that manages the data exchange operation.
+ **************************************************************************************************/
 
 void CDlgMessageBox::DoDataExchange(CDataExchange* pDX)
 {
@@ -118,6 +185,14 @@ BEGIN_MESSAGE_MAP(CDlgMessageBox, CDialog)
 	ON_WM_PAINT()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * Initializes this dialog and the controls within it
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 BOOL CDlgMessageBox::OnInitDialog() 
 {
@@ -287,11 +362,24 @@ BOOL CDlgMessageBox::OnInitDialog()
 	return TRUE;   // return TRUE unless you set the focus to a control
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked ok action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CDlgMessageBox::OnBnClickedOk()
 {
 	OnOK();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked cancel action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CDlgMessageBox::OnBnClickedCancel()
 {
@@ -303,19 +391,37 @@ void CDlgMessageBox::OnBnClickedCancel()
 //	EndDialog(IDRETRY);
 //}
 
+/**********************************************************************************************//**
+ * Executes the button clicked yes action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CDlgMessageBox::OnBnClickedYes()
 {
 	EndDialog(IDYES);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked no action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CDlgMessageBox::OnBnClickedNo()
 {
 	EndDialog(IDNO);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CDlgMessageBox::Draw()
 {
 	RECT rcCl;
@@ -401,6 +507,14 @@ void CDlgMessageBox::Draw()
 	DeleteDC(hdcMem);
 
 }
+
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CDlgMessageBox::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting

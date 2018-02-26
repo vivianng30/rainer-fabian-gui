@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsCO2Module.h.
+ *
+ * Declares the window sub settings co 2 module class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 #include "BitmapSlider.h"

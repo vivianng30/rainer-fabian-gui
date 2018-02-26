@@ -10,7 +10,28 @@
 
 extern HFONT g_hf8AcuBold;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the TrendScaleBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
+
 IMPLEMENT_DYNAMIC(CTrendScaleBtn, CButton)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CTrendScaleBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn			The button.
+ * \param	cr			The carriage return.
+ * \param	bTwoLine	True to two line.
+ **************************************************************************************************/
 
 CTrendScaleBtn::CTrendScaleBtn(BTN btn,COLORREF cr, bool bTwoLine)
 {
@@ -46,6 +67,13 @@ CTrendScaleBtn::CTrendScaleBtn(BTN btn,COLORREF cr, bool bTwoLine)
 
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CTrendScaleBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CTrendScaleBtn::~CTrendScaleBtn()
 {
 
@@ -66,8 +94,20 @@ BEGIN_MESSAGE_MAP(CTrendScaleBtn, CButton)
 	//ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CTrendScaleBtn-Meldungshandler
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	hFont	  	The font.
+ * \param 		  	nXOffset  	The x coordinate offset.
+ * \param 		  	dwStyle   	The style.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// CTrendScaleBtn-Meldungshandler
 BOOL CTrendScaleBtn::Create(CWnd* pParentWnd, HFONT hFont, int nXOffset, DWORD	dwStyle) 
 {
 	SIZE sz;
@@ -93,6 +133,16 @@ BOOL CTrendScaleBtn::Create(CWnd* pParentWnd, HFONT hFont, int nXOffset, DWORD	d
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszTextTop   	If non-null, the text top.
+ * \param [in,out]	pszTextBottom	If non-null, the text bottom.
+ * \param 		  	nNbr		 	Number of.
+ **************************************************************************************************/
 
 void CTrendScaleBtn::SetText(TCHAR* pszTextTop,TCHAR* pszTextBottom,int nNbr)
 {
@@ -101,12 +151,36 @@ void CTrendScaleBtn::SetText(TCHAR* pszTextTop,TCHAR* pszTextBottom,int nNbr)
 	_tcscpy_s(m_pszTextBottom,_countof(m_pszTextBottom),pszTextBottom);
 	m_nNbr=nNbr;
 }
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszTextTop   	If non-null, the text top.
+ * \param [in,out]	pszTextBottom	If non-null, the text bottom.
+ * \param 		  	nNbr		 	Number of.
+ **************************************************************************************************/
+
 void CTrendScaleBtn::RefreshText(TCHAR* pszTextTop,TCHAR* pszTextBottom,int nNbr)
 {
 	SetText(pszTextTop,pszTextBottom,nNbr);
 	Invalidate();
 	UpdateWindow();
 }
+
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszTextTop   	The text top.
+ * \param [in,out]	pszTextBottom	The text bottom.
+ * \param 		  	nNbr		 	Number of.
+ **************************************************************************************************/
+
 void CTrendScaleBtn::SetText(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr)
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),pszTextTop);
@@ -114,39 +188,112 @@ void CTrendScaleBtn::SetText(CStringW& pszTextTop,CStringW& pszTextBottom,int nN
 	_tcscpy_s(m_pszTextBottom,_countof(m_pszTextBottom),pszTextBottom);
 	m_nNbr=nNbr;
 }
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszTextTop   	The text top.
+ * \param [in,out]	pszTextBottom	The text bottom.
+ * \param 		  	nNbr		 	Number of.
+ **************************************************************************************************/
+
 void CTrendScaleBtn::RefreshText(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr)
 {
 	SetText(pszTextTop,pszTextBottom,nNbr);
 	Invalidate();
 	UpdateWindow();
 }
+
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	If non-null, the text.
+ * \param 		  	nNbr   	Number of.
+ **************************************************************************************************/
+
 void CTrendScaleBtn::SetText(TCHAR* pszText, int nNbr) 
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),pszText);
 	m_nNbr=nNbr;
 }
+
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText	The text.
+ * \param 		  	nNbr  	Number of.
+ **************************************************************************************************/
+
 void CTrendScaleBtn::SetText(CStringW& szText, int nNbr) 
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),szText);
 	m_nNbr=nNbr;
 }
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText	The text.
+ * \param 		  	nNbr  	Number of.
+ **************************************************************************************************/
+
 void CTrendScaleBtn::RefreshText(CStringW& szText, int nNbr) 
 {
 	SetText(szText,nNbr);
 	Invalidate();
 	UpdateWindow();
 } 
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	If non-null, the text.
+ * \param 		  	nNbr   	Number of.
+ **************************************************************************************************/
+
 void CTrendScaleBtn::RefreshText(TCHAR* pszText, int nNbr) 
 {
 	SetText(pszText,nNbr);
 	Invalidate();
 	UpdateWindow();
 } 
+
+/**********************************************************************************************//**
+ * Sets a character
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	t	A TCHAR to process.
+ **************************************************************************************************/
+
 void CTrendScaleBtn::SetChar(TCHAR t) 
 {
 	m_pszText[0]=t;
 	m_pszText[1]=0x0000;
 }
+
+/**********************************************************************************************//**
+ * Draw direct up
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CTrendScaleBtn::DrawDirectUp()
 {
@@ -159,9 +306,15 @@ void CTrendScaleBtn::DrawDirectUp()
 	BitBlt(dc.m_hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);
 }
 
-// **************************************************************************
-// Painting
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw item
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	lpDrawItemStruct	The draw item structure.
+ **************************************************************************************************/
+
 void CTrendScaleBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
 	
@@ -231,6 +384,15 @@ void CTrendScaleBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	//	}
 	//}
 }
+
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
 void CTrendScaleBtn::Draw(int nState/*,TCHAR* psz*/)
 {
@@ -343,6 +505,18 @@ void CTrendScaleBtn::Draw(int nState/*,TCHAR* psz*/)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets the bitmaps
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pcBmpUp		 	If non-null, the PC bitmap up.
+ * \param [in,out]	pcBmpDown	 	If non-null, the PC bitmap down.
+ * \param [in,out]	pcBmpDisabled	If non-null, the PC bitmap disabled.
+ * \param [in,out]	pcBmpFocus   	If non-null, the PC bitmap focus.
+ **************************************************************************************************/
+
 void CTrendScaleBtn::SetBitmaps(CBmp* pcBmpUp,CBmp* pcBmpDown,CBmp* pcBmpDisabled,CBmp* pcBmpFocus)
 {
 	if(m_btn.pcBmpUp!=pcBmpUp)
@@ -360,10 +534,17 @@ void CTrendScaleBtn::SetBitmaps(CBmp* pcBmpUp,CBmp* pcBmpDown,CBmp* pcBmpDisable
 	}
 }
 
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// Button states
-// **************************************************************************
 BOOL CTrendScaleBtn::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)

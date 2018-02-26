@@ -7,9 +7,24 @@
 
 extern HFONT g_hf11AcuBold;
 
-// CWndWaitHourglass
+/**********************************************************************************************//**
+ * CWndWaitHourglass
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndWaitHourglass, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndWaitHourglass class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndWaitHourglass::CWndWaitHourglass()
 {
@@ -38,6 +53,13 @@ CWndWaitHourglass::CWndWaitHourglass()
 	m_bDoWaitThread=false;
 	m_hThreadWait=INVALID_HANDLE_VALUE;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndWaitHourglass class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndWaitHourglass::~CWndWaitHourglass()
 {
@@ -68,16 +90,28 @@ BEGIN_MESSAGE_MAP(CWndWaitHourglass, CWnd)
 	//ON_WM_TIMER()
 END_MESSAGE_MAP()
 
-
-
-// CWndWaitHourglass message handlers
-
-
+/**********************************************************************************************//**
+ * CWndWaitHourglass message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	szText	The text.
+ **************************************************************************************************/
 
 void CWndWaitHourglass::SetMessage(CStringW szText)
 {
 	m_szMessage=szText;
 }
+
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
 
 void CWndWaitHourglass::Show(BOOL bShow)
 {
@@ -96,9 +130,20 @@ void CWndWaitHourglass::Show(BOOL bShow)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param 		  	szMessage 	The message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndWaitHourglass::Create(CWnd* pParentWnd, const RECT rc, UINT nID,CString szMessage) 
 {
 	m_lX=rc.right-rc.left;
@@ -149,9 +194,13 @@ BOOL CWndWaitHourglass::Create(CWnd* pParentWnd, const RECT rc, UINT nID,CString
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Starts wait thread
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndWaitHourglass::startWaitThread()
 {
 	//KillTimer(HOURGLASSTIMER);
@@ -177,9 +226,13 @@ void CWndWaitHourglass::startWaitThread()
 	m_pcwtWaitThread->ResumeThread();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Stops wait thread
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndWaitHourglass::stopWaitThread()
 {
 	//KillTimer(HOURGLASSTIMER);
@@ -198,16 +251,17 @@ void CWndWaitHourglass::stopWaitThread()
 	}
 }
 
-//************************************
-// Method:    CWaitThread
-// FullName:  CWaitThread
-// Access:    public static 
-// Returns:   UINT
-// Qualifier:
-// Parameter: LPVOID pc
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Wait thread
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CWaitThread( LPVOID pc )
 {
 	try
@@ -237,16 +291,15 @@ static UINT CWaitThread( LPVOID pc )
 	return TRUE;
 }
 
-//************************************
-// Method:    WaitHourglass
-// FullName:  CWndWaitHourglass::WaitHourglass
-// Access:    private 
-// Returns:   DWORD
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Wait hourglass
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CWndWaitHourglass::WaitHourglass(void) 
 {
 	CClientDC dc(this);
@@ -336,15 +389,13 @@ DWORD CWndWaitHourglass::WaitHourglass(void)
 	return 0;
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndWaitHourglass::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndWaitHourglass::OnDestroy()
 {
 	stopWaitThread();
@@ -370,19 +421,19 @@ void CWndWaitHourglass::OnDestroy()
 		DeleteDC(m_hDC);
 }
 
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndWaitHourglass::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 	// TODO: Fügen Sie hier Ihren Meldungsbehandlungscode ein.
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
-// **************************************************************************
-// 
-// **************************************************************************
 //void CWndWaitHourglass::OnTimer(UINT_PTR nIDEvent)
 //{
 //	CClientDC dc(this);
@@ -474,9 +525,15 @@ void CWndWaitHourglass::OnPaint()
 //
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CWndWaitHourglass::getModel()
 {
 	if(m_pModel==NULL)

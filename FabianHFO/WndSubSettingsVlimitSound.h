@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsVlimitSound.h.
+ *
+ * Declares the window sub settings vlimit sound class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 #include "BitmapSlider.h"

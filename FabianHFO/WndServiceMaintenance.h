@@ -1,4 +1,9 @@
-//pro, created
+/**********************************************************************************************//**
+ * \file	WndServiceMaintenance.h.
+ *
+ * Declares the window service maintenance class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndService.h"
 #include "KbrdBtn.h"

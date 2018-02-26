@@ -45,10 +45,26 @@
 #include "NumericFieldSPACE.h"
 #include "NumericFieldINFOFLOWOFF.h"
 
-
-// CWndNumConfig
+/**********************************************************************************************//**
+ * CWndNumConfig
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndNumConfig, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndNumConfig class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pbufNumeric	If non-null, the pbuf numeric.
+ **************************************************************************************************/
 
 CWndNumConfig::CWndNumConfig(NUMERICINI* pbufNumeric):
 CWndNumeric()
@@ -59,6 +75,13 @@ CWndNumeric()
 	m_iSizeComplete=0;
 	m_iCurrentNumPositionYaxes=0;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndNumConfig class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndNumConfig::~CWndNumConfig()
 {
@@ -81,16 +104,26 @@ BEGIN_MESSAGE_MAP(CWndNumConfig, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumConfig::OnPaint() 
 {
 	CPaintDC dc(this);
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
 
-// CWndNumConfig message handlers
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * CWndNumConfig message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumConfig::init() 
 {
 	if(m_bExit)
@@ -140,15 +173,14 @@ void CWndNumConfig::init()
 
 	}
 }
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndNumConfig::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumConfig::OnDestroy() 
 {
 	m_bExit=true;
@@ -176,9 +208,15 @@ void CWndNumConfig::OnDestroy()
 	CWndNumeric::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates numeric fields
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	block	The block.
+ **************************************************************************************************/
+
 void CWndNumConfig::createNumericFields(BYTE block)
 {
 	if(m_bExit)
@@ -240,6 +278,18 @@ void CWndNumConfig::createNumericFields(BYTE block)
 		break;
 	}
 }
+
+/**********************************************************************************************//**
+ * Gets bottom number position yaxes
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	numSize	Number of sizes.
+ *
+ * \return	The bottom number position yaxes.
+ **************************************************************************************************/
+
 SHORT CWndNumConfig::getBottomNumPositionYaxes(eNumericSize numSize)
 {
 	SHORT iBottom=0;
@@ -264,6 +314,19 @@ SHORT CWndNumConfig::getBottomNumPositionYaxes(eNumericSize numSize)
 	}
 	return iBottom;
 }
+
+/**********************************************************************************************//**
+ * Creates new numeric field
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	numType	Number of types.
+ * \param	numSize	Number of sizes.
+ *
+ * \return	Null if it fails, else the new new numeric field.
+ **************************************************************************************************/
+
 CNumericField* CWndNumConfig::createNewNumericField(eNumericType numType, eNumericSize numSize)
 {
 	CNumericField *pNumField=NULL;
@@ -471,6 +534,13 @@ CNumericField* CWndNumConfig::createNewNumericField(eNumericType numType, eNumer
 	return pNumField;
 }
 
+/**********************************************************************************************//**
+ * Creates numeric field 1
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumConfig::createNumericField1()
 {
 	bool bCursorField=false;
@@ -512,6 +582,14 @@ void CWndNumConfig::createNumericField1()
 	LeaveCriticalSection(&csDraw);
 	m_iCurrentNumPositionYaxes=(SHORT)rcLd.bottom;
 }
+
+/**********************************************************************************************//**
+ * Creates numeric field 2
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumConfig::createNumericField2()
 {
 	bool bCursorField=false;
@@ -553,6 +631,14 @@ void CWndNumConfig::createNumericField2()
 	LeaveCriticalSection(&csDraw);
 	m_iCurrentNumPositionYaxes=(SHORT)rcLd.bottom;
 }
+
+/**********************************************************************************************//**
+ * Creates numeric field 3
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumConfig::createNumericField3()
 {
 	bool bCursorField=false;
@@ -594,6 +680,14 @@ void CWndNumConfig::createNumericField3()
 	LeaveCriticalSection(&csDraw);
 	m_iCurrentNumPositionYaxes=(SHORT)rcLd.bottom;
 }
+
+/**********************************************************************************************//**
+ * Creates numeric field 4
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumConfig::createNumericField4()
 {
 	bool bCursorField=false;
@@ -635,6 +729,14 @@ void CWndNumConfig::createNumericField4()
 	LeaveCriticalSection(&csDraw);
 	m_iCurrentNumPositionYaxes=(SHORT)rcLd.bottom;
 }
+
+/**********************************************************************************************//**
+ * Creates numeric field 5
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumConfig::createNumericField5()
 {
 	bool bCursorField=false;
@@ -676,6 +778,14 @@ void CWndNumConfig::createNumericField5()
 	LeaveCriticalSection(&csDraw);
 	m_iCurrentNumPositionYaxes=(SHORT)rcLd.bottom;
 }
+
+/**********************************************************************************************//**
+ * Creates numeric field 6
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumConfig::createNumericField6()
 {
 	bool bCursorField=false;
@@ -717,6 +827,14 @@ void CWndNumConfig::createNumericField6()
 	LeaveCriticalSection(&csDraw);
 	m_iCurrentNumPositionYaxes=(SHORT)rcLd.bottom;
 }
+
+/**********************************************************************************************//**
+ * Creates numeric field 7
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumConfig::createNumericField7()
 {
 	bool bCursorField=false;
@@ -758,6 +876,14 @@ void CWndNumConfig::createNumericField7()
 	LeaveCriticalSection(&csDraw);
 	m_iCurrentNumPositionYaxes=(SHORT)rcLd.bottom;
 }
+
+/**********************************************************************************************//**
+ * Creates numeric field 8
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumConfig::createNumericField8()
 {
 	bool bCursorField=false;
@@ -799,9 +925,18 @@ void CWndNumConfig::createNumericField8()
 	LeaveCriticalSection(&csDraw);
 	m_iCurrentNumPositionYaxes=(SHORT)rcLd.bottom;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets graph cursor
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bDraw	   	True to draw.
+ * \param	bMoveXscale	True to move xscale.
+ * \param	bMoveYscale	True to move yscale.
+ **************************************************************************************************/
+
 void CWndNumConfig::SetGraphCursor(bool bDraw, bool bMoveXscale, bool bMoveYscale)
 {
 	bool bRedraw=false;
@@ -823,9 +958,22 @@ void CWndNumConfig::SetGraphCursor(bool bDraw, bool bMoveXscale, bool bMoveYscal
 		
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw data
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bData	  	True to data.
+ * \param	bFrames   	True to frames.
+ * \param	bText	  	True to text.
+ * \param	bLimits   	True to limits.
+ * \param	bFlowmeter	True to flowmeter.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CWndNumConfig::DrawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
 {
 	if(m_bExit)
@@ -863,17 +1011,32 @@ bool CWndNumConfig::DrawData(bool bData, bool bFrames, bool bText, bool bLimits,
 
 	return bReturn;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draw frames
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CWndNumConfig::DrawFrames(CDC* pDC)
 {
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Determines if we can draw cursor
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CWndNumConfig::drawCursor()
 {
 	if(m_bExit)
@@ -1036,18 +1199,33 @@ bool CWndNumConfig::drawCursor()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw static text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CWndNumConfig::DrawStaticText(CDC* pDC)
 {
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Draw limits
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pDC	If non-null, the device-context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CWndNumConfig::DrawLimits(CDC* pDC)
 {
 	return true;

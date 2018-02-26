@@ -6,11 +6,33 @@
 #include "WndSetupPatient.h"
 #include "DlgMessageBox.h"
 #include "MVViewHandler.h"
-//Timer
-//#define CLOCKTIMER	0x05
+
+/**********************************************************************************************//**
+ * Timer
+ * #define CLOCKTIMER	0x05
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 //global font objects
@@ -43,10 +65,24 @@ extern HFONT g_hf70Bold;
 
 //extern CLangAdmin* g_pGlobalLanguageStrings;
 
-
-// CWndSetupPatient
+/**********************************************************************************************//**
+ * CWndSetupPatient
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSetupPatient, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSetupPatient class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSetupPatient::CWndSetupPatient()
 {
@@ -100,6 +136,13 @@ CWndSetupPatient::CWndSetupPatient()
 	m_bChangeMode=false;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSetupPatient class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CWndSetupPatient::~CWndSetupPatient()
 {
 	delete m_pEditName;
@@ -147,9 +190,15 @@ CWndSetupPatient::~CWndSetupPatient()
 	m_pcAply=NULL;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CWndSetupPatient::getModel()
 {
 	if(m_pModel==NULL)
@@ -173,13 +222,20 @@ BEGIN_MESSAGE_MAP(CWndSetupPatient, CWnd)
 	ON_EN_SETFOCUS(IDC_EDIT_SETUP_REMARK, &CWndSetupPatient::OnSetFocusEditRemark)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSetupPatient-Meldungshandler
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CWndSetupPatient-Meldungshandler
-
-// **************************************************************************
-// 
-// **************************************************************************
 bool CWndSetupPatient::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext)
 {
 	//m_pParentWnd=pParentWnd;
@@ -196,9 +252,20 @@ bool CWndSetupPatient::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCre
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSetupPatient::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 
@@ -247,6 +314,13 @@ BOOL CWndSetupPatient::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 	else
 		return 0;
 }
+
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndSetupPatient::Initialize()
 {
@@ -436,6 +510,13 @@ void CWndSetupPatient::Initialize()
 
 }
 
+/**********************************************************************************************//**
+ * Executes the set focus edit remark action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupPatient::OnSetFocusEditRemark()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()!=VS_PATDATA)
@@ -446,6 +527,14 @@ void CWndSetupPatient::OnSetFocusEditRemark()
 	if(m_pcWndKeyboard)
 		m_pcWndKeyboard->SetEditWnd(m_pEditRemark,KR_NONE,IDC_EDIT_SETUP_REMARK);
 }
+
+/**********************************************************************************************//**
+ * Executes the set focus edit name action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupPatient::OnSetFocusEditName()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()!=VS_PATDATA)
@@ -457,6 +546,14 @@ void CWndSetupPatient::OnSetFocusEditName()
 		m_pcWndKeyboard->SetEditWnd(m_pEditName,KR_NONE,IDC_EDIT_SETUP_NAME);
 	//m_pEdit=m_pEditName;
 }
+
+/**********************************************************************************************//**
+ * Executes the set focus edit firts name action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupPatient::OnSetFocusEditFirtsName()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()!=VS_PATDATA)
@@ -468,6 +565,14 @@ void CWndSetupPatient::OnSetFocusEditFirtsName()
 		m_pcWndKeyboard->SetEditWnd(m_pEditFirstname,KR_NONE,IDC_EDIT_SETUP_FIRSTNAME);
 	//m_pEdit=m_pEditFirstname;
 }
+
+/**********************************************************************************************//**
+ * Executes the set focus edit pers identifier action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupPatient::OnSetFocusEditPersID()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()!=VS_PATDATA)
@@ -479,6 +584,14 @@ void CWndSetupPatient::OnSetFocusEditPersID()
 		m_pcWndKeyboard->SetEditWnd(m_pEditPersID,KR_NONE,IDC_EDIT_SETUP_PERSID);
 	//m_pEdit=m_pEditPersID;
 }
+
+/**********************************************************************************************//**
+ * Executes the set focus edit birth day action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupPatient::OnSetFocusEditBirthDay()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()!=VS_PATDATA)
@@ -491,6 +604,14 @@ void CWndSetupPatient::OnSetFocusEditBirthDay()
 	if(m_pcWndKeyboard)
 		m_pcWndKeyboard->SetEditWnd(m_pEditBirthDay,KR_DAYS,IDC_EDIT_SETUP_BIRTHDAY);
 }
+
+/**********************************************************************************************//**
+ * Executes the set focus edit birth month action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupPatient::OnSetFocusEditBirthMonth()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()!=VS_PATDATA)
@@ -501,6 +622,14 @@ void CWndSetupPatient::OnSetFocusEditBirthMonth()
 	if(m_pcWndKeyboard)
 		m_pcWndKeyboard->SetEditWnd(m_pEditBirthMonth,KR_MONTH,IDC_EDIT_SETUP_BIRTHMONTH);
 }
+
+/**********************************************************************************************//**
+ * Executes the set focus edit birth year action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupPatient::OnSetFocusEditBirthYear()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()!=VS_PATDATA)
@@ -511,6 +640,14 @@ void CWndSetupPatient::OnSetFocusEditBirthYear()
 	if(m_pcWndKeyboard)
 		m_pcWndKeyboard->SetEditWnd(m_pEditBirthYear,KR_YEAR,IDC_EDIT_SETUP_BIRTHYEAR);
 }
+
+/**********************************************************************************************//**
+ * Executes the set focus edit weight action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupPatient::OnSetFocusEditWeight()
 {
 	if(getModel()->getVIEWHANDLER()->getViewState()!=VS_PATDATA)
@@ -524,7 +661,14 @@ void CWndSetupPatient::OnSetFocusEditWeight()
 
 }
 
-
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
 
 void CWndSetupPatient::Show(bool bShow)
 {
@@ -551,6 +695,19 @@ void CWndSetupPatient::Show(bool bShow)
 
 	
 }
+
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
 LRESULT CWndSetupPatient::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
@@ -1086,6 +1243,15 @@ LRESULT CWndSetupPatient::WindowProc(UINT message, WPARAM wParam, LPARAM lParam 
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
+/**********************************************************************************************//**
+ * Executes the set focus action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pOldWnd	If non-null, the old window.
+ **************************************************************************************************/
+
 void CWndSetupPatient::OnSetFocus(CWnd* pOldWnd)
 {
 	CWnd::OnSetFocus(pOldWnd);
@@ -1121,15 +1287,13 @@ void CWndSetupPatient::OnSetFocus(CWnd* pOldWnd)
 //	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 //}
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSetupPatient::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupPatient::OnDestroy()
 {
 	if(m_pDlg)
@@ -1153,7 +1317,12 @@ void CWndSetupPatient::OnDestroy()
 		DeleteDC(m_hDC);
 }
 
-
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndSetupPatient::Draw()
 {
@@ -1471,10 +1640,15 @@ void CWndSetupPatient::Draw()
 
 }
 
+/**********************************************************************************************//**
+ * Creates window keyboard
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CWndSetupPatient::CreateWndKeyboard()
 {
 	if(m_pcWndKeyboard==NULL)
@@ -1497,6 +1671,16 @@ bool CWndSetupPatient::CreateWndKeyboard()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Destroys the window keyboard
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CWndSetupPatient::DestroyWndKeyboard()
 {
 	if(m_pcWndKeyboard)
@@ -1507,6 +1691,16 @@ bool CWndSetupPatient::DestroyWndKeyboard()
 	}
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Shows the window keyboard
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	show	True to show, false to hide.
+ **************************************************************************************************/
+
 void CWndSetupPatient::ShowWndKeyboard(bool show)
 {
 	if(m_pcWndKeyboard)
@@ -1515,6 +1709,12 @@ void CWndSetupPatient::ShowWndKeyboard(bool show)
 
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked today action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndSetupPatient::OnBnClickedToday()
 {
@@ -1538,6 +1738,13 @@ void CWndSetupPatient::OnBnClickedToday()
 
 	PatientDataChanged();
 }
+
+/**********************************************************************************************//**
+ * Button clicked reset
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndSetupPatient::BnClickedReset()
 {
@@ -1564,6 +1771,13 @@ void CWndSetupPatient::BnClickedReset()
 
 	
 }
+
+/**********************************************************************************************//**
+ * Button clicked apply
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndSetupPatient::BnClickedApply()
 {
@@ -1815,6 +2029,13 @@ void CWndSetupPatient::BnClickedApply()
 	
 }
 
+/**********************************************************************************************//**
+ * Patient data changed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupPatient::PatientDataChanged()
 {
 	if(m_bPatientDataChanged==true)
@@ -1832,6 +2053,13 @@ void CWndSetupPatient::PatientDataChanged()
 			GetParent()->PostMessage(WM_SET_SETUPTIMER);
 	}
 }
+
+/**********************************************************************************************//**
+ * Button clicked change
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndSetupPatient::BnClickedChange()
 {

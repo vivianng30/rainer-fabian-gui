@@ -10,10 +10,24 @@
 #include "PasswordDlg.h"
 #include "DlgMessageBox.h"
 
-
-// CWndServiceLicensing
+/**********************************************************************************************//**
+ * CWndServiceLicensing
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndServiceLicensing, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndServiceLicensing class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndServiceLicensing::CWndServiceLicensing():
 CWndService()
@@ -78,6 +92,13 @@ CWndService()
 	m_szEncryptedFormattedFOTKey=_T("");
 	m_szEncryptedFormattedNIVTRIGGERKey=_T("");
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndServiceLicensing class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndServiceLicensing::~CWndServiceLicensing()
 {
@@ -157,6 +178,12 @@ BEGIN_MESSAGE_MAP(CWndServiceLicensing, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SERVICE_PRICO_DELKEY, &CWndServiceLicensing::OnBnClickedDelPRICO)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceLicensing::Init()
 {
@@ -987,6 +1014,13 @@ void CWndServiceLicensing::Init()
 	m_pcMenuBack->ShowWindow(SW_SHOW);
 }
 
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceLicensing::Draw()
 {
 	RECT rcCl;
@@ -1598,6 +1632,13 @@ void CWndServiceLicensing::Draw()
 	DeleteDC(hdcMem);
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked delete nivtrigger action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceLicensing::OnBnClickedDelNIVTRIGGER()
 {
 	CDlgMessageBox box(this,_T("Delete NIVTRIGGER license?"),_T("This will delete the license of the NIVTRIGGER module. Continue?"),MB_YESNO,IDB_MSG_STOP);
@@ -1632,6 +1673,13 @@ void CWndServiceLicensing::OnBnClickedDelNIVTRIGGER()
 	Draw();
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked delete fot action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceLicensing::OnBnClickedDelFOT()
 {
 	CDlgMessageBox box(this,_T("Delete FOT license?"),_T("This will delete the license of the FOT module.  FOT module will be disabled! Continue?"),MB_YESNO,IDB_MSG_STOP);
@@ -1663,6 +1711,14 @@ void CWndServiceLicensing::OnBnClickedDelFOT()
 	UpdateWindow();
 	Draw();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked delete hfo action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceLicensing::OnBnClickedDelHFO()
 {
 	CDlgMessageBox box(this,_T("Delete HFO license?"),_T("This will delete the license of the HFO module. HFO module will be disabled! Continue?"),MB_YESNO,IDB_MSG_STOP);
@@ -1702,6 +1758,12 @@ void CWndServiceLicensing::OnBnClickedDelHFO()
 	Draw();
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked delete nmode action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceLicensing::OnBnClickedDelNMODE()
 {
@@ -1733,6 +1795,14 @@ void CWndServiceLicensing::OnBnClickedDelNMODE()
 	UpdateWindow();
 	Draw();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked delete vguaranty action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceLicensing::OnBnClickedDelVGUARANTY()
 {
 	CDlgMessageBox box(this,_T("Delete Volumen guaranty license?"),_T("This will delete the license of the Volumen guaranty module. Volumen guaranty module will be disabled! Continue?"),MB_YESNO,IDB_MSG_STOP);
@@ -1762,6 +1832,14 @@ void CWndServiceLicensing::OnBnClickedDelVGUARANTY()
 	UpdateWindow();
 	Draw();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked delete vlimit action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceLicensing::OnBnClickedDelVLIMIT()
 {
 	CDlgMessageBox box(this,_T("Delete Volumen limit license?"),_T("This will delete the license of the Volumen limit module. Volumen limit module will be disabled! Continue?"),MB_YESNO,IDB_MSG_STOP);
@@ -1793,6 +1871,12 @@ void CWndServiceLicensing::OnBnClickedDelVLIMIT()
 	Draw();
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked delete trends action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceLicensing::OnBnClickedDelTRENDS()
 {
@@ -1828,6 +1912,13 @@ void CWndServiceLicensing::OnBnClickedDelTRENDS()
 	Draw();
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked delete therapy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceLicensing::OnBnClickedDelTHERAPY()
 {
 	CDlgMessageBox box(this,_T("Delete O2 Therapy license?"),_T("This will delete the license of the O2 Therapy module. O2 Therapy module will be disabled! Continue?"),MB_YESNO,IDB_MSG_STOP);
@@ -1859,6 +1950,13 @@ void CWndServiceLicensing::OnBnClickedDelTHERAPY()
 	Draw();
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked delete prico action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceLicensing::OnBnClickedDelPRICO()
 {
 	CDlgMessageBox box(this,_T("Delete PRICO license?"),_T("This will delete the license of the PRICO module. PRICO module will be disabled! Continue?"),MB_YESNO,IDB_MSG_STOP);
@@ -1889,6 +1987,13 @@ void CWndServiceLicensing::OnBnClickedDelPRICO()
 	UpdateWindow();
 	Draw();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked delete lungrec action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceLicensing::OnBnClickedDelLUNGREC()
 {
@@ -1922,6 +2027,13 @@ void CWndServiceLicensing::OnBnClickedDelLUNGREC()
 	Draw();
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked activate nivtrigger action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceLicensing::OnBnClickedActivateNIVTRIGGER()
 {
 	CPasswordDlg pwDlg(this,MOD_NIVTRIGGER);
@@ -1946,6 +2058,13 @@ void CWndServiceLicensing::OnBnClickedActivateNIVTRIGGER()
 	Draw();
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked activate fot action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceLicensing::OnBnClickedActivateFOT()
 {
 	CPasswordDlg pwDlg(this,MOD_FOT);
@@ -1969,6 +2088,13 @@ void CWndServiceLicensing::OnBnClickedActivateFOT()
 	UpdateWindow();
 	Draw();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked activate hfo action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceLicensing::OnBnClickedActivateHFO()
 {
@@ -1995,6 +2121,13 @@ void CWndServiceLicensing::OnBnClickedActivateHFO()
 	Draw();
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked activate nmode action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceLicensing::OnBnClickedActivateNMODE()
 {
 	CPasswordDlg pwDlg(this,MOD_NMODE);
@@ -2019,6 +2152,14 @@ void CWndServiceLicensing::OnBnClickedActivateNMODE()
 	UpdateWindow();
 	Draw();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked activate vguaranty action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceLicensing::OnBnClickedActivateVGUARANTY()
 {
 	CPasswordDlg pwDlg(this,MOD_VGUARANTY);
@@ -2042,6 +2183,14 @@ void CWndServiceLicensing::OnBnClickedActivateVGUARANTY()
 	UpdateWindow();
 	Draw();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked activate vlimit action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceLicensing::OnBnClickedActivateVLIMIT()
 {
 	CPasswordDlg pwDlg(this,MOD_VLIMIT);
@@ -2065,6 +2214,13 @@ void CWndServiceLicensing::OnBnClickedActivateVLIMIT()
 	UpdateWindow();
 	Draw();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked activate trends action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceLicensing::OnBnClickedActivateTRENDS()
 {
@@ -2090,6 +2246,13 @@ void CWndServiceLicensing::OnBnClickedActivateTRENDS()
 	Draw();
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked activate therapy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceLicensing::OnBnClickedActivateTHERAPY()
 {
 	CPasswordDlg pwDlg(this,MOD_THERAPY);
@@ -2112,6 +2275,13 @@ void CWndServiceLicensing::OnBnClickedActivateTHERAPY()
 	UpdateWindow();
 	Draw();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked activate prico action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceLicensing::OnBnClickedActivatePRICO()
 {
@@ -2136,6 +2306,13 @@ void CWndServiceLicensing::OnBnClickedActivatePRICO()
 	UpdateWindow();
 	Draw();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked activate lungrec action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceLicensing::OnBnClickedActivateLUNGREC()
 {
@@ -2172,15 +2349,13 @@ void CWndServiceLicensing::OnBnClickedActivateLUNGREC()
 	Draw();
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndServiceLicensing::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceLicensing::OnDestroy()
 {
 	if(m_pDlg)

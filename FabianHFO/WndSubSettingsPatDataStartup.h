@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsPatDataStartup.h.
+ *
+ * Declares the window sub settings pattern data startup class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 #include "BitmapSlider.h"

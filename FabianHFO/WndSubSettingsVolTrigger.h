@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsVolTrigger.h.
+ *
+ * Declares the window sub settings volume trigger class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 

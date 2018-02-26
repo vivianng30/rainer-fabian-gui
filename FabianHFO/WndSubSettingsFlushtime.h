@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsFlushtime.h.
+ *
+ * Declares the window sub settings flushtime class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 

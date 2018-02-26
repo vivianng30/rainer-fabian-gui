@@ -924,7 +924,13 @@ char const* CRijndael::sm_szErrorMsg2 = "Data not multiple of Block Size";
 //Null chain
 char const* CRijndael::sm_chain0 = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
 
-//CONSTRUCTOR
+/**********************************************************************************************//**
+ * Initializes a new instance of the CRijndael class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CRijndael::CRijndael() : m_bKeyInit(false)
 {
 	m_Ke[0][0]=0x0000;
@@ -939,16 +945,34 @@ CRijndael::CRijndael() : m_bKeyInit(false)
 	t[0]=0x0000;
 }
 
-//DESTRUCTOR
+/**********************************************************************************************//**
+ * Finalizes an instance of the CRijndael class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CRijndael::~CRijndael()
 {
 }
 
-//Expand a user-supplied key material into a session key.
-// key        - The 128/192/256-bit user-key to use.
-// chain      - initial chain block for CBC and CFB modes.
-// keylength  - 16, 24 or 32 bytes
-// blockSize  - The block size in bytes of this Rijndael (16, 24 or 32 bytes).
+/**********************************************************************************************//**
+ * Expand a user-supplied key material into a session key.
+ *  key        - The 128/192/256-bit user-key to use. chain      - initial chain block for CBC
+ *  and CFB modes. keylength  - 16, 24 or 32 bytes blockSize  - The block size in bytes of this
+ *  Rijndael (16, 24 or 32 bytes).
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \exception	exception	Thrown when an exception error condition occurs.
+ *
+ * \param	key		 	The key.
+ * \param	chain	 	The chain.
+ * \param	keylength	The keylength.
+ * \param	blockSize	Size of the block.
+ **************************************************************************************************/
+
 void CRijndael::MakeKey(char const* key, char const* chain, int keylength, int blockSize)
 {
 	if(NULL == key)
@@ -1052,10 +1076,21 @@ void CRijndael::MakeKey(char const* key, char const* chain, int keylength, int b
 	m_bKeyInit = true;
 }
 
-//Convenience method to encrypt exactly one block of plaintext, assuming
-//Rijndael's default block size (128-bit).
-// in         - The plaintext
-// result     - The ciphertext generated from a plaintext using the key
+/**********************************************************************************************//**
+ * Convenience method to encrypt exactly one block of plaintext, assuming Rijndael's default
+ * block size (128-bit).
+ *  in         - The plaintext result     - The ciphertext generated from a plaintext using the
+ *  key
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \exception	exception	Thrown when an exception error condition occurs.
+ *
+ * \param 	   	in	  	The in.
+ * \param [out]	result	If non-null, the result.
+ **************************************************************************************************/
+
 void CRijndael::DefEncryptBlock(char const* in, char* result)
 {
 	if(false==m_bKeyInit)
@@ -1127,10 +1162,21 @@ void CRijndael::DefEncryptBlock(char const* in, char* result)
 	result[15] = sm_S[t2 & 0xFF] ^ tt;
 }
 
-//Convenience method to decrypt exactly one block of plaintext, assuming
-//Rijndael's default block size (128-bit).
-// in         - The ciphertext.
-// result     - The plaintext generated from a ciphertext using the session key.
+/**********************************************************************************************//**
+ * Convenience method to decrypt exactly one block of plaintext, assuming Rijndael's default
+ * block size (128-bit).
+ *  in         - The ciphertext. result     - The plaintext generated from a ciphertext using
+ *  the session key.
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \exception	exception	Thrown when an exception error condition occurs.
+ *
+ * \param 	   	in	  	The in.
+ * \param [out]	result	If non-null, the result.
+ **************************************************************************************************/
+
 void CRijndael::DefDecryptBlock(char const* in, char* result)
 {
 	if(false==m_bKeyInit)
@@ -1201,9 +1247,20 @@ void CRijndael::DefDecryptBlock(char const* in, char* result)
 	result[15] = sm_Si[ t0 & 0xFF] ^ tt;
 }
 
-//Encrypt exactly one block of plaintext.
-// in           - The plaintext.
-// result       - The ciphertext generated from a plaintext using the key.
+/**********************************************************************************************//**
+ * Encrypt exactly one block of plaintext.
+ *  in           - The plaintext. result       - The ciphertext generated from a plaintext using
+ *  the key.
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \exception	exception	Thrown when an exception error condition occurs.
+ *
+ * \param 	   	in	  	The in.
+ * \param [out]	result	If non-null, the result.
+ **************************************************************************************************/
+
 void CRijndael::EncryptBlock(char const* in, char* result)
 {
 	if(false==m_bKeyInit)
@@ -1251,9 +1308,20 @@ void CRijndael::EncryptBlock(char const* in, char* result)
 	}
 }
 
-//Decrypt exactly one block of ciphertext.
-// in         - The ciphertext.
-// result     - The plaintext generated from a ciphertext using the session key.
+/**********************************************************************************************//**
+ * Decrypt exactly one block of ciphertext.
+ *  in         - The ciphertext. result     - The plaintext generated from a ciphertext using
+ *  the session key.
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \exception	exception	Thrown when an exception error condition occurs.
+ *
+ * \param 	   	in	  	The in.
+ * \param [out]	result	If non-null, the result.
+ **************************************************************************************************/
+
 void CRijndael::DecryptBlock(char const* in, char* result)
 {
 	if(false==m_bKeyInit)
@@ -1301,6 +1369,20 @@ void CRijndael::DecryptBlock(char const* in, char* result)
 	}
 }
 
+/**********************************************************************************************//**
+ * Encrypts
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \exception	exception	Thrown when an exception error condition occurs.
+ *
+ * \param 	   	in	  	The in.
+ * \param [out]	result	If non-null, the result.
+ * \param 	   	n	  	A size_t to process.
+ * \param 	   	iMode 	Zero-based index of the mode.
+ **************************************************************************************************/
+
 void CRijndael::Encrypt(char const* in, char* result, size_t n, int iMode)
 {
 	if(false==m_bKeyInit)
@@ -1343,6 +1425,20 @@ void CRijndael::Encrypt(char const* in, char* result, size_t n, int iMode)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Decrypts
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \exception	exception	Thrown when an exception error condition occurs.
+ *
+ * \param 	   	in	  	The in.
+ * \param [out]	result	If non-null, the result.
+ * \param 	   	n	  	A size_t to process.
+ * \param 	   	iMode 	Zero-based index of the mode.
+ **************************************************************************************************/
 
 void CRijndael::Decrypt(char const* in, char* result, size_t n, int iMode)
 {

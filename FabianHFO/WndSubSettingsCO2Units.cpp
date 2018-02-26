@@ -5,17 +5,39 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsCO2Units.h"
 
-
-
-// CWndSubSettingsCO2Units
+/**********************************************************************************************//**
+ * CWndSubSettingsCO2Units
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsCO2Units, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsCO2Units class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsCO2Units::CWndSubSettingsCO2Units(UINT viewFlag):
 CWndSubSettings(viewFlag)
 {
 	m_eCO2units=CO2_UNIT_MMHG;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsCO2Units class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsCO2Units::~CWndSubSettingsCO2Units()
 {
@@ -34,12 +56,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsCO2Units, CWnd)
 	//ON_BN_CLICKED(IDC_BTN_SETUP_7, &CWndSubSettingsAutoOxyCal::OnBnClicked7)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsCO2Units message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsCO2Units message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsCO2Units::Initialize()
 {
 	CClientDC dc(this);
@@ -83,9 +106,13 @@ void CWndSubSettingsCO2Units::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsCO2Units::Draw()
 {
 	RECT rcCl;
@@ -197,9 +224,17 @@ void CWndSubSettingsCO2Units::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsCO2Units::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -265,9 +300,15 @@ BOOL CWndSubSettingsCO2Units::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets co 2 units
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn	The button.
+ **************************************************************************************************/
+
 void CWndSubSettingsCO2Units::SetCO2Units(UINT btn)
 {
 	switch(btn)
@@ -292,9 +333,13 @@ void CWndSubSettingsCO2Units::SetCO2Units(UINT btn)
 	getModel()->getCONFIG()->SetCO2unit(m_eCO2units);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsCO2Units::OnBnClicked1()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_1);
@@ -306,9 +351,14 @@ void CWndSubSettingsCO2Units::OnBnClicked1()
 		SetCO2Units(IDC_BTN_SETUP_1);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsCO2Units::OnBnClicked2()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_2);
@@ -320,9 +370,14 @@ void CWndSubSettingsCO2Units::OnBnClicked2()
 		SetCO2Units(IDC_BTN_SETUP_2);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 3 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsCO2Units::OnBnClicked3()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_3);
@@ -335,15 +390,13 @@ void CWndSubSettingsCO2Units::OnBnClicked3()
 	}
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsCO2Units::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsCO2Units::OnDestroy()
 {
 	CWndSubSettings::OnDestroy();

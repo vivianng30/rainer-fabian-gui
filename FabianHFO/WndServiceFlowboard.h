@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndServiceFlowboard.h.
+ *
+ * Declares the window service flowboard class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndService.h"
 #include "KbrdBtn.h"

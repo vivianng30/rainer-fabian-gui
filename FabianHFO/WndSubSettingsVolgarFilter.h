@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsVolgarFilter.h.
+ *
+ * Declares the window sub settings volgar filter class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 #include "DTUpDwnBtn.h"

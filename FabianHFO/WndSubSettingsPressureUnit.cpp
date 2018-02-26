@@ -5,16 +5,39 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsPressureUnit.h"
 
-
-// CWndSubSettingsPressureUnit
+/**********************************************************************************************//**
+ * CWndSubSettingsPressureUnit
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsPressureUnit, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsPressureUnit class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsPressureUnit::CWndSubSettingsPressureUnit(UINT viewFlag):
 CWndSubSettings(viewFlag)
 {
 	m_ePressureUnit=PUNIT_MBAR;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsPressureUnit class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsPressureUnit::~CWndSubSettingsPressureUnit()
 {
@@ -33,12 +56,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsPressureUnit, CWnd)
 	//ON_BN_CLICKED(IDC_BTN_SETUP_7, &CWndSubSettingsAutoOxyCal::OnBnClicked7)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsPressureUnit message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsPressureUnit message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsPressureUnit::Initialize()
 {
 	CClientDC dc(this);
@@ -74,9 +98,13 @@ void CWndSubSettingsPressureUnit::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsPressureUnit::Draw()
 {
 	RECT rcCl;
@@ -158,9 +186,17 @@ void CWndSubSettingsPressureUnit::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsPressureUnit::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -226,9 +262,15 @@ BOOL CWndSubSettingsPressureUnit::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets a unit
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn	The button.
+ **************************************************************************************************/
+
 void CWndSubSettingsPressureUnit::SetUnit(UINT btn)
 {
 	switch(btn)
@@ -248,9 +290,13 @@ void CWndSubSettingsPressureUnit::SetUnit(UINT btn)
 	getModel()->getCONFIG()->SetPressureUnit(m_ePressureUnit);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsPressureUnit::OnBnClicked1()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_1);
@@ -262,9 +308,14 @@ void CWndSubSettingsPressureUnit::OnBnClicked1()
 		SetUnit(IDC_BTN_SETUP_1);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsPressureUnit::OnBnClicked2()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_2);
@@ -276,15 +327,14 @@ void CWndSubSettingsPressureUnit::OnBnClicked2()
 		SetUnit(IDC_BTN_SETUP_2);
 	}
 }
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsPressureUnit::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsPressureUnit::OnDestroy()
 {
 	CWndSubSettings::OnDestroy();

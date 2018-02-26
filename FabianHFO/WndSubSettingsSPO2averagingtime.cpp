@@ -5,16 +5,39 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsSPO2averagingtime.h"
 
-
-// CWndSubSettingsSPO2averagingtime
+/**********************************************************************************************//**
+ * CWndSubSettingsSPO2averagingtime
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsSPO2averagingtime, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsSPO2averagingtime class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsSPO2averagingtime::CWndSubSettingsSPO2averagingtime(UINT viewFlag):
 CWndSubSettings(viewFlag)
 {
 	m_eSPO2averagingTime=SPO2_AVERAGING_8;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsSPO2averagingtime class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsSPO2averagingtime::~CWndSubSettingsSPO2averagingtime()
 {
@@ -33,13 +56,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsSPO2averagingtime, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SETUP_7, &CWndSubSettingsSPO2averagingtime::OnBnClicked7)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsSPO2averagingtime message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsSPO2averagingtime message handlers
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsSPO2averagingtime::Initialize()
 {
 	CClientDC dc(this);
@@ -122,9 +145,13 @@ void CWndSubSettingsSPO2averagingtime::Initialize()
 		GetParent()->PostMessage(WM_SET_SETUPTIMER);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsSPO2averagingtime::Draw()
 {
 	RECT rcCl;
@@ -227,9 +254,17 @@ void CWndSubSettingsSPO2averagingtime::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsSPO2averagingtime::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -295,9 +330,15 @@ BOOL CWndSubSettingsSPO2averagingtime::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets averaging time
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn	The button.
+ **************************************************************************************************/
+
 void CWndSubSettingsSPO2averagingtime::SetAveragingTime(UINT btn)
 {
 	switch(btn)
@@ -343,9 +384,13 @@ void CWndSubSettingsSPO2averagingtime::SetAveragingTime(UINT btn)
 		getModel()->getSPO2()->set_SPO2averagingTime(m_eSPO2averagingTime);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsSPO2averagingtime::OnBnClicked1()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_1);
@@ -357,9 +402,14 @@ void CWndSubSettingsSPO2averagingtime::OnBnClicked1()
 		SetAveragingTime(IDC_BTN_SETUP_1);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsSPO2averagingtime::OnBnClicked2()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_2);
@@ -371,9 +421,14 @@ void CWndSubSettingsSPO2averagingtime::OnBnClicked2()
 		SetAveragingTime(IDC_BTN_SETUP_2);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 3 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsSPO2averagingtime::OnBnClicked3()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_3);
@@ -385,9 +440,14 @@ void CWndSubSettingsSPO2averagingtime::OnBnClicked3()
 		SetAveragingTime(IDC_BTN_SETUP_3);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 4 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsSPO2averagingtime::OnBnClicked4()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_4);
@@ -399,9 +459,14 @@ void CWndSubSettingsSPO2averagingtime::OnBnClicked4()
 		SetAveragingTime(IDC_BTN_SETUP_4);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 5 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsSPO2averagingtime::OnBnClicked5()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_5);
@@ -413,9 +478,14 @@ void CWndSubSettingsSPO2averagingtime::OnBnClicked5()
 		SetAveragingTime(IDC_BTN_SETUP_5);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 6 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsSPO2averagingtime::OnBnClicked6()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_6);
@@ -427,9 +497,14 @@ void CWndSubSettingsSPO2averagingtime::OnBnClicked6()
 		SetAveragingTime(IDC_BTN_SETUP_6);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 7 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsSPO2averagingtime::OnBnClicked7()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_7);
@@ -441,15 +516,14 @@ void CWndSubSettingsSPO2averagingtime::OnBnClicked7()
 		SetAveragingTime(IDC_BTN_SETUP_7);
 	}
 }
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsSPO2averagingtime::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsSPO2averagingtime::OnDestroy()
 {
 	CWndSubSettings::OnDestroy();

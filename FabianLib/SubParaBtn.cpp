@@ -16,9 +16,28 @@ extern HFONT g_hf10AcuBold;
 extern HFONT g_hf11AcuBold;
 extern HFONT g_hf13AcuBold;
 
-// CSubParaBtn
+/**********************************************************************************************//**
+ * CSubParaBtn
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CSubParaBtn, CButton)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CSubParaBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn		   	The button.
+ * \param	nOffset	   	The offset.
+ * \param	bScrollOver	True to scroll over.
+ **************************************************************************************************/
 
 CSubParaBtn::CSubParaBtn(BTN btn, int nOffset,bool bScrollOver):
 CParaBtn(btn,nOffset,bScrollOver)
@@ -42,6 +61,13 @@ CParaBtn(btn,nOffset,bScrollOver)
 
 	m_bCalRunning=false;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CSubParaBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CSubParaBtn::~CSubParaBtn()
 {
@@ -96,6 +122,19 @@ BEGIN_MESSAGE_MAP(CSubParaBtn, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	dwStyle   	The style.
+ * \param 		  	v		  	A fVALUE to process.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSubParaBtn::Create(CWnd* pParentWnd,DWORD dwStyle, fVALUE v) 
 {
 	SIZE sz;
@@ -134,6 +173,16 @@ BOOL CSubParaBtn::Create(CWnd* pParentWnd,DWORD dwStyle, fVALUE v)
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Sets para value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	v	   	An int to process.
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CSubParaBtn::SetParaValue(int v,bool bRedraw)
 {
 	//bool bRedraw=false;
@@ -148,6 +197,14 @@ void CSubParaBtn::SetParaValue(int v,bool bRedraw)
 
 }
 
+/**********************************************************************************************//**
+ * Refresh button
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bTempValue	True to temporary value.
+ **************************************************************************************************/
 
 void CSubParaBtn::RefreshBtn(bool bTempValue)
 {
@@ -159,9 +216,16 @@ void CSubParaBtn::RefreshBtn(bool bTempValue)
 	Draw(BTN_DW_UP);
 	BitBlt(dc.m_hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);
 }
-// **************************************************************************
-// Painting
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CSubParaBtn::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -226,6 +290,15 @@ void CSubParaBtn::Draw(int nState)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Draw subpara i e
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
 void CSubParaBtn::DrawSUBPARA_I_E(int nState)
 {
@@ -354,6 +427,16 @@ void CSubParaBtn::DrawSUBPARA_I_E(int nState)
 	SelectObject(m_hDC,hPrevFont);
 
 }
+
+/**********************************************************************************************//**
+ * Draw subpara trigger
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CSubParaBtn::DrawSUBPARA_TRIGGER(int nState)
 {
 	if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
@@ -379,6 +462,16 @@ void CSubParaBtn::DrawSUBPARA_TRIGGER(int nState)
 		DrawSUBPARA_TRIGGER_DEFAULT(nState);
 	}
 }
+
+/**********************************************************************************************//**
+ * Draw subpara trigger duopap
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CSubParaBtn::DrawSUBPARA_TRIGGER_DUOPAP(int nState)
 {
 	int nTxtColorSubBtn=GetTextColorStateDependend(nState);
@@ -548,6 +641,16 @@ void CSubParaBtn::DrawSUBPARA_TRIGGER_DUOPAP(int nState)
 	SetBkMode(m_hDC,nBkMode);
 	SelectObject(m_hDC,hPrevFont);
 }
+
+/**********************************************************************************************//**
+ * Draw subpara trigger ncpap
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CSubParaBtn::DrawSUBPARA_TRIGGER_NCPAP(int nState)
 {
 	int nTxtColorSubBtn=GetTextColorStateDependend(nState);
@@ -617,6 +720,16 @@ void CSubParaBtn::DrawSUBPARA_TRIGGER_NCPAP(int nState)
 	SetBkMode(m_hDC,nBkMode);
 	SelectObject(m_hDC,hPrevFont);
 }
+
+/**********************************************************************************************//**
+ * Draw subpara trigger cpap
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CSubParaBtn::DrawSUBPARA_TRIGGER_CPAP(int nState)
 {
 	int nTxtColorSubBtn=GetTextColorStateDependend(nState);
@@ -676,6 +789,16 @@ void CSubParaBtn::DrawSUBPARA_TRIGGER_CPAP(int nState)
 	SetBkMode(m_hDC,nBkMode);
 	SelectObject(m_hDC,hPrevFont);
 }
+
+/**********************************************************************************************//**
+ * Draw subpara trigger default
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CSubParaBtn::DrawSUBPARA_TRIGGER_DEFAULT(int nState)
 {
 	int nTxtColorSubBtn=GetTextColorStateDependend(nState);
@@ -786,6 +909,15 @@ void CSubParaBtn::DrawSUBPARA_TRIGGER_DEFAULT(int nState)
 	SetBkMode(m_hDC,nBkMode);
 	SelectObject(m_hDC,hPrevFont);
 }
+
+/**********************************************************************************************//**
+ * Draw subpara o 2 real
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
 void CSubParaBtn::DrawSUBPARA_O2REAL(int nState)
 {
@@ -969,6 +1101,16 @@ void CSubParaBtn::DrawSUBPARA_O2REAL(int nState)
 	SelectObject(m_hDC,hPrevFont);
 
 }
+
+/**********************************************************************************************//**
+ * Draw subpara o 2 flush
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CSubParaBtn::DrawSUBPARA_O2FLUSH(int nState)
 {
 	int nTxtColorSubBtn=GetTextColorStateDependend(nState);
@@ -1081,6 +1223,15 @@ void CSubParaBtn::DrawSUBPARA_O2FLUSH(int nState)
 
 }
 
+/**********************************************************************************************//**
+ * Draw subpara biasflow
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CSubParaBtn::DrawSUBPARA_BIASFLOW(int nState)
 {
 	int nTxtColorSubBtn=GetTextColorStateDependend(nState);
@@ -1129,6 +1280,16 @@ void CSubParaBtn::DrawSUBPARA_BIASFLOW(int nState)
 	SelectObject(m_hDC,hPrevFont);
 
 }
+
+/**********************************************************************************************//**
+ * Draw subpara psvtime
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CSubParaBtn::DrawSUBPARA_PSVTIME(int nState)
 {
 	int nTxtColorSubBtn=GetTextColorStateDependend(nState);
@@ -1181,6 +1342,16 @@ void CSubParaBtn::DrawSUBPARA_PSVTIME(int nState)
 	SelectObject(m_hDC,hPrevFont);
 
 }
+
+/**********************************************************************************************//**
+ * Draw subpara demflow
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CSubParaBtn::DrawSUBPARA_DEMFLOW(int nState)
 {
 	int nTxtColorSubBtn=GetTextColorStateDependend(nState);
@@ -1226,6 +1397,16 @@ void CSubParaBtn::DrawSUBPARA_DEMFLOW(int nState)
 	SetBkMode(m_hDC,nBkMode);
 	SelectObject(m_hDC,hPrevFont);
 }
+
+/**********************************************************************************************//**
+ * Draw subpara bpm
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CSubParaBtn::DrawSUBPARA_BPM(int nState)
 {
 	int nTxtColorSubBtn=GetTextColorStateDependend(nState);
@@ -1272,6 +1453,16 @@ void CSubParaBtn::DrawSUBPARA_BPM(int nState)
 	SelectObject(m_hDC,hPrevFont);
 
 }
+
+/**********************************************************************************************//**
+ * Draw subpara etime
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CSubParaBtn::DrawSUBPARA_ETIME(int nState)
 {
 	int nTxtColorSubBtn=GetTextColorStateDependend(nState);
@@ -1368,6 +1559,16 @@ void CSubParaBtn::DrawSUBPARA_ETIME(int nState)
 	SelectObject(m_hDC,hPrevFont);
 
 }
+
+/**********************************************************************************************//**
+ * Draw subpara leakcomp
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CSubParaBtn::DrawSUBPARA_LEAKCOMP(int nState)
 {
 	int nTxtColorSubBtn=GetTextColorStateDependend(nState);
@@ -1439,6 +1640,15 @@ void CSubParaBtn::DrawSUBPARA_LEAKCOMP(int nState)
 
 }
 
+/**********************************************************************************************//**
+ * Draw default
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CSubParaBtn::DrawDEFAULT(int nState)
 {
 	int nTxtColorSubBtn=GetTextColorStateDependend(nState);
@@ -1466,6 +1676,17 @@ void CSubParaBtn::DrawDEFAULT(int nState)
 
 }
 
+/**********************************************************************************************//**
+ * Gets text color state dependend
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ *
+ * \return	The text color state dependend.
+ **************************************************************************************************/
+
 int CSubParaBtn::GetTextColorStateDependend(int nState)
 {
 	switch(nState)
@@ -1485,38 +1706,104 @@ int CSubParaBtn::GetTextColorStateDependend(int nState)
 		break;
 	}
 }
-// **************************************************************************
-// "Button" is very slow - this code permforms speed up - but
-//              use of double click is not possible any more
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the l button double clock action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CSubParaBtn::OnLButtonDblClk(UINT nFlags, CPoint point) 
 {
 	CParaBtn::OnLButtonDblClk(nFlags, point);
 }
+
+/**********************************************************************************************//**
+ * Executes the l button down action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CSubParaBtn::OnLButtonDown(UINT nFlags, CPoint point) 
 {
 	CParaBtn::OnLButtonDown(nFlags, point);
 }
 
+/**********************************************************************************************//**
+ * Executes the l button up action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CSubParaBtn::OnLButtonUp(UINT nFlags, CPoint point) 
 {
 	CParaBtn::OnLButtonUp(nFlags, point);
 }
+
+/**********************************************************************************************//**
+ * Executes the key down action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
+
 void CSubParaBtn::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
 	CParaBtn::OnKeyDown(nChar,nRepCnt,nFlags);
 }
+
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CSubParaBtn::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
 	CParaBtn::OnKeyUp(nChar,nRepCnt,nFlags);
 }
 
+/**********************************************************************************************//**
+ * Executes the kill focus action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pNewWnd	If non-null, the new window.
+ **************************************************************************************************/
+
 void CSubParaBtn::OnKillFocus(CWnd* pNewWnd)
 {
 	CParaBtn::OnKillFocus(pNewWnd);
 }
+
+/**********************************************************************************************//**
+ * Trigger breath
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CSubParaBtn::TriggerBreath()
 {
@@ -1525,6 +1812,15 @@ void CSubParaBtn::TriggerBreath()
 
 	RefreshBtn();
 }
+
+/**********************************************************************************************//**
+ * Sets timer running
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
 void CSubParaBtn::SetTimerRunning(bool state)
 {
@@ -1544,6 +1840,15 @@ void CSubParaBtn::SetTimerRunning(bool state)
 
 	
 }
+
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
 
 void CSubParaBtn::OnTimer(UINT_PTR nIDEvent)
 {
@@ -1567,9 +1872,17 @@ void CSubParaBtn::OnTimer(UINT_PTR nIDEvent)
 	}
 }
 
-// **************************************************************************
-// Button states
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSubParaBtn::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)

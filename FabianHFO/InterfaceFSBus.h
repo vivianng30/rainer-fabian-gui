@@ -1,4 +1,14 @@
-
+//=============================================================================
+/** 
+* \class CInterfaceFSBus
+* 		 
+* \brief Interface for parallel bus (FS bus).
+* 		 
+* \author Rainer Kuehner
+* \date 2017-10-23 Creation of file
+*
+**/
+//=============================================================================
 
 
 #pragma once

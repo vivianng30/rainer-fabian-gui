@@ -8,9 +8,24 @@
 #include "TlsFile.h"
 #include "NumInputDlg.h"
 
-// CWndServiceSystem
+/**********************************************************************************************//**
+ * CWndServiceSystem
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndServiceSystem, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndServiceSystem class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndServiceSystem::CWndServiceSystem():
 CWndService()
@@ -63,6 +78,13 @@ CWndService()
 	m_eHFRevision=getModel()->getCONFIG()->getHFModuleRevision();
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndServiceSystem class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CWndServiceSystem::~CWndServiceSystem()
 {
 	/*if(m_sliderPassword)
@@ -98,9 +120,13 @@ BEGIN_MESSAGE_MAP(CWndServiceSystem, CWnd)
 	ON_MESSAGE(WM_BITMAPSLIDER_MOVING, OnMyMessage)*/
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndServiceSystem message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndServiceSystem message handlers
 void CWndServiceSystem::Init()
 {
 	CClientDC dc(this);
@@ -202,17 +228,13 @@ void CWndServiceSystem::Init()
 	SetTimer(SERVICETIMER, 1000, NULL);
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndServiceSystem::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CWndServiceSystem::OnDestroy()
 {
 	KillTimer(SERVICETIMER);
@@ -428,6 +450,12 @@ void CWndServiceSystem::OnDestroy()
 //	Draw();
 //}
 
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceSystem::Draw()
 {
@@ -922,7 +950,15 @@ void CWndServiceSystem::Draw()
 	DeleteDC(hdcMem);
 }
 
-/***************************************************************************/
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CWndServiceSystem::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==SERVICETIMER)

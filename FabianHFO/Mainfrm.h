@@ -1,6 +1,17 @@
-// MainFrm.h : interface of the CMainFrame class
-//
-
+//=============================================================================
+/** 
+* \class CMainFrame
+* 		 
+* \brief Main frame of MVC.
+* 		 
+* \author Rainer Kuehner
+* \date 2017-10-23 Creation of file
+*
+* The main frame handles all windows messages, 
+* global fonts and values, timer thread, watchdog thread, oxy calibration thread.
+*
+**/
+//=============================================================================
 
 #pragma once
 

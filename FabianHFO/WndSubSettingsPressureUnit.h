@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsPressureUnit.h.
+ *
+ * Declares the window sub settings pressure unit class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 

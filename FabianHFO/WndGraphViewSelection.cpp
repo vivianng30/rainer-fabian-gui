@@ -8,12 +8,53 @@
 #include "globDefs.h"
 #include "MVViewHandler.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
-// CWndGraphViewSelection
+
+/**********************************************************************************************//**
+ * CWndGraphViewSelection
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndGraphViewSelection, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndGraphViewSelection class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	parentView	If non-null, the parent view.
+ **************************************************************************************************/
 
 CWndGraphViewSelection::CWndGraphViewSelection(CMVView *parentView)
 {
@@ -59,6 +100,13 @@ CWndGraphViewSelection::CWndGraphViewSelection(CMVView *parentView)
 
 	m_pModel = NULL;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndGraphViewSelection class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndGraphViewSelection::~CWndGraphViewSelection()
 {
@@ -113,9 +161,15 @@ CWndGraphViewSelection::~CWndGraphViewSelection()
 	m_pcMenu_Trend_Dis=NULL;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CWndGraphViewSelection::getModel()
 {
 	if(m_pModel==NULL)
@@ -129,12 +183,20 @@ BEGIN_MESSAGE_MAP(CWndGraphViewSelection, CWnd)
 	//ON_WM_KILLFOCUS()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndGraphViewSelection message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CWndGraphViewSelection message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CWndGraphViewSelection::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -340,17 +402,27 @@ BOOL CWndGraphViewSelection::Create(CWnd* pParentWnd, const RECT rc, UINT nID, C
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndGraphViewSelection::Init()
 {
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets one button depressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CWndGraphViewSelection::SetOneButtonDepressed(int btnID)
 {
 	POSITION pos;
@@ -381,9 +453,13 @@ void CWndGraphViewSelection::SetOneButtonDepressed(int btnID)
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets all button unpressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndGraphViewSelection::SetAllButtonUnpressed()
 {
 	POSITION pos;
@@ -406,9 +482,15 @@ void CWndGraphViewSelection::SetAllButtonUnpressed()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CWndGraphViewSelection::Show(BOOL bShow)
 {
 	if(bShow==true)
@@ -643,9 +725,19 @@ void CWndGraphViewSelection::Show(BOOL bShow)
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndGraphViewSelection::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -734,9 +826,13 @@ LRESULT CWndGraphViewSelection::WindowProc(UINT message, WPARAM wParam, LPARAM l
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndGraphViewSelection::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -747,15 +843,13 @@ void CWndGraphViewSelection::OnPaint()
 	// CMVView::OnPaint() soll zum Zeichnen von Meldungen nicht aufgerufen werden.
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndGraphViewSelection::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndGraphViewSelection::OnDestroy() 
 {
 	m_plMenuBtn.RemoveAll();

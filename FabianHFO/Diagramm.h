@@ -1,3 +1,17 @@
+//=============================================================================
+/** 
+* \class CDiagramm
+* 		 
+* \brief CDiagramm draws the wave and loop diagrams.
+* 		 
+* \author Rainer Kuehner
+* \date 2013-01-21 Creation of file
+*
+* The diagram are drawn depending of type.
+*
+**/
+//=============================================================================
+
 #pragma once
 
 #include "MVModel.h"

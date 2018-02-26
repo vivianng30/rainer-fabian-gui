@@ -5,16 +5,39 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsSPO2sensitivity.h"
 
-
-// CWndSubSettingsSPO2sensitivity
+/**********************************************************************************************//**
+ * CWndSubSettingsSPO2sensitivity
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsSPO2sensitivity, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsSPO2sensitivity class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsSPO2sensitivity::CWndSubSettingsSPO2sensitivity(UINT viewFlag):
 CWndSubSettings(viewFlag)
 {
 	m_eSensitivityMode=SPO2_SENSITIVITY_NORMAL;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsSPO2sensitivity class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsSPO2sensitivity::~CWndSubSettingsSPO2sensitivity()
 {
@@ -33,13 +56,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsSPO2sensitivity, CWnd)
 	//ON_BN_CLICKED(IDC_BTN_SETUP_7, &CWndSubSettingsAutoOxyCal::OnBnClicked7)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsSPO2sensitivity message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsSPO2sensitivity message handlers
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsSPO2sensitivity::Initialize()
 {
 	CClientDC dc(this);
@@ -86,9 +109,13 @@ void CWndSubSettingsSPO2sensitivity::Initialize()
 		GetParent()->PostMessage(WM_SET_SETUPTIMER);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsSPO2sensitivity::Draw()
 {
 	RECT rcCl;
@@ -179,9 +206,17 @@ void CWndSubSettingsSPO2sensitivity::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsSPO2sensitivity::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -247,9 +282,15 @@ BOOL CWndSubSettingsSPO2sensitivity::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets sensitivity mode
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn	The button.
+ **************************************************************************************************/
+
 void CWndSubSettingsSPO2sensitivity::SetSensitivityMode(UINT btn)
 {
 	switch(btn)
@@ -275,9 +316,13 @@ void CWndSubSettingsSPO2sensitivity::SetSensitivityMode(UINT btn)
 		getModel()->getSPO2()->set_SensitivityMode(m_eSensitivityMode);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsSPO2sensitivity::OnBnClicked1()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_1);
@@ -289,9 +334,14 @@ void CWndSubSettingsSPO2sensitivity::OnBnClicked1()
 		SetSensitivityMode(IDC_BTN_SETUP_1);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsSPO2sensitivity::OnBnClicked2()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_2);
@@ -303,9 +353,14 @@ void CWndSubSettingsSPO2sensitivity::OnBnClicked2()
 		SetSensitivityMode(IDC_BTN_SETUP_2);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 3 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsSPO2sensitivity::OnBnClicked3()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_3);
@@ -317,15 +372,14 @@ void CWndSubSettingsSPO2sensitivity::OnBnClicked3()
 		SetSensitivityMode(IDC_BTN_SETUP_3);
 	}
 }
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsSPO2sensitivity::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsSPO2sensitivity::OnDestroy()
 {
 	CWndSubSettings::OnDestroy();

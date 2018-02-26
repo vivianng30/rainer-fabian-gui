@@ -4,15 +4,39 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsLeakComp.h"
 
-
+/**********************************************************************************************//**
+ * Initializes a new instance of the WndSubSettingsLeakComp class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsLeakComp, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsLeakComp class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsLeakComp::CWndSubSettingsLeakComp(UINT viewFlag):
 CWndSubSettings(viewFlag)
 {
 	m_eLeakCompensation=LC_MIDDLE;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsLeakComp class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsLeakComp::~CWndSubSettingsLeakComp()
 {
@@ -31,12 +55,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsLeakComp, CWnd)
 	//ON_BN_CLICKED(IDC_BTN_SETUP_7, &CWndSubSettingsAutoOxyCal::OnBnClicked7)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsLeakComp message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsLeakComp message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsLeakComp::Initialize()
 {
 	CClientDC dc(this);
@@ -89,9 +114,13 @@ void CWndSubSettingsLeakComp::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsLeakComp::Draw()
 {
 	RECT rcCl;
@@ -176,9 +205,17 @@ void CWndSubSettingsLeakComp::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsLeakComp::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -244,9 +281,15 @@ BOOL CWndSubSettingsLeakComp::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets leak component off
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn	The button.
+ **************************************************************************************************/
+
 void CWndSubSettingsLeakComp::setLeakCompOff(UINT btn)
 {
 	switch(btn)
@@ -276,9 +319,13 @@ void CWndSubSettingsLeakComp::setLeakCompOff(UINT btn)
 	getModel()->getCONFIG()->setLeakCompensation(m_eLeakCompensation);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsLeakComp::OnBnClicked1()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_1);
@@ -290,9 +337,14 @@ void CWndSubSettingsLeakComp::OnBnClicked1()
 		setLeakCompOff(IDC_BTN_SETUP_1);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsLeakComp::OnBnClicked2()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_2);
@@ -304,9 +356,14 @@ void CWndSubSettingsLeakComp::OnBnClicked2()
 		setLeakCompOff(IDC_BTN_SETUP_2);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 3 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsLeakComp::OnBnClicked3()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_3);
@@ -318,9 +375,6 @@ void CWndSubSettingsLeakComp::OnBnClicked3()
 		setLeakCompOff(IDC_BTN_SETUP_3);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
 //void CWndSubSettingsLeakComp::OnBnClicked4()
 //{
 //	eBtnState eState = GetBtnState(IDC_BTN_SETUP_4);
@@ -332,9 +386,14 @@ void CWndSubSettingsLeakComp::OnBnClicked3()
 //		setLeakCompOff(IDC_BTN_SETUP_4);
 //	}
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsLeakComp::OnDestroy()
 {
 	CWndSubSettings::OnDestroy();

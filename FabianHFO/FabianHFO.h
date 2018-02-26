@@ -1,5 +1,17 @@
-// FabianHFO.h : main header file for the FabianHFO application
-//
+//=============================================================================
+/** 
+* \class CFabianHFOApp
+* 		 
+* \brief The fabianHFO application.
+* 		 
+* \author Rainer Kuehner
+* \date 2013-01-21 Creation of file
+*
+* The data controller handles all internal data and send commands to its associated 
+* views to change the view's presentation of the model.
+*
+**/
+//=============================================================================
 #pragma once
 
 #ifndef __AFXWIN_H__

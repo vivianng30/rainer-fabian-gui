@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	SubViewVentilation.h.
+ *
+ * Declares the sub view ventilation class
+ **************************************************************************************************/
+
 #pragma once
 #include "SelectSetupBtn.h"
 #include "globDefs.h"

@@ -6,9 +6,14 @@
 #include "Logfile.h"
 #include "TlsFile.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**********************************************************************************************//**
+ * Initializes a new instance of the Logfile class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	svDateiname	The sv dateiname.
+ **************************************************************************************************/
 
 Logfile::Logfile(const char * svDateiname)
 {
@@ -49,6 +54,15 @@ Logfile::Logfile(const char * svDateiname)
 	m_bExit=false;
 }
 
+/**********************************************************************************************//**
+ * Opens this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool Logfile::Open()
 {
 	stream = _wfopen(m_Filename,L"a+");
@@ -58,6 +72,15 @@ bool Logfile::Open()
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Closes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool Logfile::Close()
 {
@@ -70,11 +93,25 @@ bool Logfile::Close()
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Exits this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void Logfile::Exit()
 {
 	m_bExit=true;
 	StopLogfileThread();
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the Logfile class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 Logfile::~Logfile()
 {
@@ -107,6 +144,15 @@ Logfile::~Logfile()
 	DeleteCriticalSection(&csLog);
 
 }
+
+/**********************************************************************************************//**
+ * Determines if we can check file size
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool Logfile::CheckFileSize()
 {
@@ -169,7 +215,16 @@ bool Logfile::CheckFileSize()
 	return false;
 }
 
-
+/**********************************************************************************************//**
+ * Writes a plain line
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	inhalt	The inhalt.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool Logfile::WritePlainLine(CStringW inhalt)
 {
@@ -179,6 +234,13 @@ bool Logfile::WritePlainLine(CStringW inhalt)
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Writes the date
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void Logfile::writeDate()
 {
@@ -196,6 +258,15 @@ void Logfile::writeDate()
 		WritePlainLine(m_Logfile->svLastDatum);
 	}
 }
+
+/**********************************************************************************************//**
+ * Determines if we can check date
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool Logfile::CheckDate()
 {
@@ -223,6 +294,17 @@ bool Logfile::CheckDate()
 
 	return bChanged;
 }
+
+/**********************************************************************************************//**
+ * Writes a line
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	inhalt	The inhalt.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool Logfile::WriteLine(CStringW inhalt)
 {
@@ -293,6 +375,15 @@ bool Logfile::WriteLine(CStringW inhalt)
 //	return temp;
 //}
 
+/**********************************************************************************************//**
+ * Gets file pattern
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The file pattern.
+ **************************************************************************************************/
+
 CString Logfile::GetFilePattern()
 {
 	if (m_Logfile)
@@ -316,11 +407,13 @@ CString Logfile::GetFilePattern()
 	return L"";
 }
 
+/**********************************************************************************************//**
+ * Starts logfile thread
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void Logfile::StartLogfileThread( void )
 {
 	
@@ -348,9 +441,13 @@ void Logfile::StartLogfileThread( void )
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Stops logfile thread
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void Logfile::StopLogfileThread( void )
 {
 	if(m_bDoWriteLogfile)
@@ -372,19 +469,32 @@ void Logfile::StopLogfileThread( void )
 
 }
 
-//#####################################LogThread########################################
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Writes a log thread
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CWriteLogThread( LPVOID pc )
 {
 	((Logfile*)pc)->writeLogfile();
 	return TRUE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Writes the logfile
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD Logfile::writeLogfile(void) 
 {
 	CeSetThreadPriority(m_pcwtWriteLogThread->m_hThread,250);//PRICO04

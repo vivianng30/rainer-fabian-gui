@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsPatAlarmDelay.h.
+ *
+ * Declares the window sub settings pattern alarm delay class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 #include "DTUpDwnBtn.h"

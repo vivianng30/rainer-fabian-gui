@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndTrendTimeaxis.cpp.
+ *
+ * Implements the window trend timeaxis class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "WndTrendTimeaxis.h"
 #include "FabianHFO.h"
@@ -12,11 +18,26 @@ extern HFONT g_hf8AcuBold;
 
 //extern CLangAdmin* g_pGlobalLanguageStrings;
 
-
-
-// CWndTrendTimeaxis
+/**********************************************************************************************//**
+ * CWndTrendTimeaxis
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndTrendTimeaxis, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndTrendTimeaxis class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	parentView	If non-null, the parent view.
+ **************************************************************************************************/
 
 CWndTrendTimeaxis::CWndTrendTimeaxis(CMVView *parentView)
 {
@@ -46,15 +67,28 @@ CWndTrendTimeaxis::CWndTrendTimeaxis(CMVView *parentView)
 	m_pModel = NULL;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndTrendTimeaxis class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CWndTrendTimeaxis::~CWndTrendTimeaxis()
 {
 	delete m_pcTimeAxis;
 	m_pcTimeAxis=NULL;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CWndTrendTimeaxis::getModel()
 {
 	if(m_pModel==NULL)
@@ -67,12 +101,20 @@ BEGIN_MESSAGE_MAP(CWndTrendTimeaxis, CWnd)
 	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndMenuTrendtype message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CWndMenuTrendtype message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CWndTrendTimeaxis::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -105,9 +147,13 @@ BOOL CWndTrendTimeaxis::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreat
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndTrendTimeaxis::Init()
 {
 	CClientDC dc(this);
@@ -123,10 +169,15 @@ void CWndTrendTimeaxis::Init()
 
 }
 
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndTrendTimeaxis::Show(BOOL bShow)
 {
 	if(this->IsWindowVisible() == bShow)
@@ -144,18 +195,13 @@ void CWndTrendTimeaxis::Show(BOOL bShow)
 		this->ShowWindow(SW_HIDE);
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndTrendTimeaxis::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CWndTrendTimeaxis::OnDestroy() 
 {
 	CWnd::OnDestroy();
@@ -168,6 +214,18 @@ void CWndTrendTimeaxis::OnDestroy()
 	if(m_hDC)
 		DeleteDC(m_hDC);
 }
+
+/**********************************************************************************************//**
+ * Sets time range
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	dtStartTime	The dt start time.
+ * \param	dtEndTime  	The dt end time.
+ * \param	iOffset	   	Zero-based index of the offset.
+ * \param	iTimeSpan  	Zero-based index of the time span.
+ **************************************************************************************************/
 
 void CWndTrendTimeaxis::SetTimeRange(COleDateTime dtStartTime, COleDateTime dtEndTime,int iOffset, int iTimeSpan)
 {
@@ -197,6 +255,13 @@ void CWndTrendTimeaxis::SetTimeRange(COleDateTime dtStartTime, COleDateTime dtEn
 //
 //	Draw();
 //}
+
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndTrendTimeaxis::Draw()
 {
@@ -298,9 +363,17 @@ void CWndTrendTimeaxis::Draw()
 	DeleteDC(hdcMem);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndTrendTimeaxis::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)

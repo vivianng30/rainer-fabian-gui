@@ -4,19 +4,65 @@
 #include "stdafx.h"
 #include "UDBtn.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtsubbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTSUBBTNDW			0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
-
-// CUDBtn
+/**********************************************************************************************//**
+ * CUDBtn
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CUDBtn, CButton)
 
-// **************************************************************************
-// De-, constructio
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes a new instance of the CUDBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn		   	The button.
+ * \param	nOffset	   	The offset.
+ * \param	bScrollOver	True to scroll over.
+ **************************************************************************************************/
+
 CUDBtn::CUDBtn(BTN btn, int nOffset, bool bScrollOver)
 {
 	m_kUp					= VK_UP;//up dw revers
@@ -61,6 +107,13 @@ CUDBtn::CUDBtn(BTN btn, int nOffset, bool bScrollOver)
 	m_bScrollOver=bScrollOver;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CUDBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CUDBtn::~CUDBtn()
 {
 	if(m_hDC)
@@ -79,11 +132,20 @@ BEGIN_MESSAGE_MAP(CUDBtn, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
-// CUDBtn message handlers
-// **************************************************************************
-// Creation
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	hFontText 	The font text.
+ * \param 		  	hFontValue	The font value.
+ * \param 		  	v		  	A VALUE to process.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CUDBtn::Create(CWnd* pParentWnd, HFONT hFontText, HFONT hFontValue,VALUE v) 
 {
 	SIZE sz;
@@ -120,6 +182,16 @@ BOOL CUDBtn::Create(CWnd* pParentWnd, HFONT hFontText, HFONT hFontValue,VALUE v)
 //	return Create(pParentWnd,hFont,v);
 //}
 
+/**********************************************************************************************//**
+ * Sets the colors
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	cr		 	The carriage return.
+ * \param	crDisabel	The carriage return disabel.
+ **************************************************************************************************/
+
 void CUDBtn::SetColors(COLORREF cr, COLORREF crDisabel)
 {
 	m_btncr.crTxtUp			= cr;
@@ -127,6 +199,16 @@ void CUDBtn::SetColors(COLORREF cr, COLORREF crDisabel)
 	m_btncr.crTxtDisabled	= crDisabel;		
 	m_btncr.crTxtFocus		= cr;
 }
+
+/**********************************************************************************************//**
+ * Sets a value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	v	   	A VALUE to process.
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
 
 void CUDBtn::SetValue(VALUE v, bool bRedraw) 
 {
@@ -165,6 +247,17 @@ void CUDBtn::SetValue(VALUE v, bool bRedraw)
 //	}	
 //}
 
+/**********************************************************************************************//**
+ * Disables the text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bDisable	True to disable, false to enable.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CUDBtn::DisableText(bool bDisable)
 {
 	m_bDisableText=bDisable;
@@ -173,16 +266,45 @@ bool CUDBtn::DisableText(bool bDisable)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText  	If non-null, the text.
+ * \param 		  	bTextOnly	True to text only.
+ **************************************************************************************************/
+
 void CUDBtn::SetText(TCHAR* pszText,bool bTextOnly) 
 {
 	_tcscpy(m_pszText,pszText);
 	m_bTextOnly=bTextOnly;
 }
+
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText   	The text.
+ * \param 		  	bTextOnly	True to text only.
+ **************************************************************************************************/
+
 void CUDBtn::SetText(CStringW& szText,bool bTextOnly) 
 {
 	_tcscpy(m_pszText,szText);
 	m_bTextOnly=bTextOnly;
 }
+
+/**********************************************************************************************//**
+ * Draw direct down
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CUDBtn::DrawDirectDown(void)
 {
 	CClientDC dc(this);
@@ -190,6 +312,13 @@ void CUDBtn::DrawDirectDown(void)
 	Draw(BTN_DW_DW);
 	BitBlt(dc.m_hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);
 }
+
+/**********************************************************************************************//**
+ * Draw direct
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CUDBtn::DrawDirect(void)
 {
@@ -211,6 +340,15 @@ void CUDBtn::DrawDirect(void)
 	//	RETAILMSG(1, (_T("State %d\n\r"),i));
 }
 
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText   	The text.
+ * \param 		  	bTextOnly	True to text only.
+ **************************************************************************************************/
 
 void CUDBtn::RefreshText(CStringW& szText,bool bTextOnly) 
 {
@@ -219,6 +357,18 @@ void CUDBtn::RefreshText(CStringW& szText,bool bTextOnly)
 	UpdateWindow();
 }
 
+/**********************************************************************************************//**
+ * Sets the limits
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nLower	The lower.
+ * \param	nUpper	The upper.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CUDBtn::SetLimits(int nLower,int nUpper)
 {
 	m_v.nLowerLimit=nLower;
@@ -226,9 +376,15 @@ bool CUDBtn::SetLimits(int nLower,int nUpper)
 	return true;
 }
 
-// **************************************************************************
-// Painting
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw item
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	lpDrawItemStruct	The draw item structure.
+ **************************************************************************************************/
+
 void CUDBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
 	if (lpDrawItemStruct->itemState & ODS_SELECTED)
@@ -268,6 +424,15 @@ void CUDBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		}
 	}	
 }
+
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
 void CUDBtn::Draw(int nState)
 {
@@ -376,10 +541,16 @@ void CUDBtn::Draw(int nState)
 	}
 }
 
-// **************************************************************************
-// "Button" is very slow - this code permforms speed up - but
-//              use of double click is not possible any more
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the l button double clock action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CUDBtn::OnLButtonDblClk(UINT nFlags, CPoint point) 
 {
 	DWORD lParam;
@@ -390,9 +561,17 @@ void CUDBtn::OnLButtonDblClk(UINT nFlags, CPoint point)
 	CButton::OnLButtonDblClk(nFlags, point);
 }
 
-// **************************************************************************
-// Button states
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CUDBtn::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -500,9 +679,17 @@ BOOL CUDBtn::PreTranslateMessage(MSG* pMsg)
 	return CButton::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// Get the button "value" and sta
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets a button
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pnValue	If non-null, the pn value.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CUDBtn::GetButton(int* pnValue) 
 {
 	if(pnValue)
@@ -512,15 +699,32 @@ bool CUDBtn::GetButton(int* pnValue)
 	return m_bButtonIsActive;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets ud keys
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	kUP   	The up.
+ * \param	kDown 	The down.
+ * \param	kSpace	The space.
+ **************************************************************************************************/
+
 void CUDBtn::SetUDKeys(WORD kUP, WORD kDown, WORD kSpace)
 {
 	m_kUp=kUP;
 	m_kDown=kDown;
 	m_kSpace=kSpace;
 }
+
+/**********************************************************************************************//**
+ * Executes the kill focus action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pNewWnd	If non-null, the new window.
+ **************************************************************************************************/
 
 void CUDBtn::OnKillFocus(CWnd* pNewWnd)
 {

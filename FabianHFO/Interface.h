@@ -1,3 +1,14 @@
+//=============================================================================
+/** 
+* \class CInterface
+* 		 
+* \brief Base class for interfaces.
+* 		 
+* \author Rainer Kuehner
+* \date 2017-10-23 Creation of file
+*
+**/
+//=============================================================================
 #pragma once
 
 #include "afxwin.h"

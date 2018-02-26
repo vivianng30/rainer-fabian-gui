@@ -5,14 +5,51 @@
 #include "FabianHFO.h"
 #include "WndNumeric.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
-// CWndNumeric
+/**********************************************************************************************//**
+ * CWndNumeric
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndNumeric, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndNumeric class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndNumeric::CWndNumeric()
 {
@@ -121,6 +158,13 @@ CWndNumeric::CWndNumeric()
 	m_valueFlowInsp=374;
 	m_valueFlowExsp=374;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndNumeric class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndNumeric::~CWndNumeric()
 {
@@ -315,9 +359,15 @@ CWndNumeric::~CWndNumeric()
 	DeleteCriticalSection(&csDraw);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CWndNumeric::getModel()
 {
 	if(m_pModel==NULL)
@@ -342,21 +392,13 @@ BEGIN_MESSAGE_MAP(CWndNumeric, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndNumAv message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-
-
-
-// CWndNumAv message handlers
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndNumeric::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CWndNumeric::OnDestroy() 
 {
 	CWnd::OnDestroy();
@@ -376,9 +418,20 @@ void CWndNumeric::OnDestroy()
 		DeleteObject(m_hbmpStatic);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndNumeric::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -611,6 +664,18 @@ BOOL CWndNumeric::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 //{
 //	return getModel()->getDATAHANDLER()->isGraphCursor();
 //}
+
+/**********************************************************************************************//**
+ * Sets graph cursor
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bDraw	   	True to draw.
+ * \param	bMoveXscale	True to move xscale.
+ * \param	bMoveYscale	True to move yscale.
+ **************************************************************************************************/
+
 void CWndNumeric::SetGraphCursor(bool bDraw, bool bMoveXscale, bool bMoveYscale)
 {
 	bool bRedraw=false;
@@ -629,6 +694,14 @@ void CWndNumeric::SetGraphCursor(bool bDraw, bool bMoveXscale, bool bMoveYscale)
 		DrawData(true,true, true, true,true);
 
 }
+
+/**********************************************************************************************//**
+ * Refresh limits
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumeric::refreshLimits()
 {
 	DrawData(true,false, false, true,true);
@@ -650,10 +723,6 @@ void CWndNumeric::refreshLimits()
 //}
 
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 //void CWndNumeric::SetLables(WNDNUM_LABELS* pwnl)
 //{
 //	////memcpy(&m_wnl,pwnl,sizeof(WNDNUM_LABELS));
@@ -694,9 +763,7 @@ void CWndNumeric::refreshLimits()
 //	//m_wnl.szNameNote9=pwnl->szNameNote9;
 //	//m_wnl.szUnit9=pwnl->szUnit9;
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //void CWndNumeric::SetValues(WNDNUM_VALUES* pwnv, bool bRedraw)
 //{
 //	memcpy(&m_wnv,pwnv,sizeof(WNDNUM_VALUES));
@@ -711,9 +778,7 @@ void CWndNumeric::refreshLimits()
 //{
 //	DrawData(true,false, false, false,true);
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //void CWndNumeric::SetPmax(int iPmax, bool bRedraw)
 //{
 //	m_wnv.iPmax=iPmax;
@@ -723,28 +788,34 @@ void CWndNumeric::refreshLimits()
 //	}
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+
 //void CWndNumeric::GetValues(WNDNUM_VALUES* pwnv)
 //{
 //	memcpy(pwnv,&m_wnv,sizeof(WNDNUM_VALUES));
 //}
 
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndNumeric::OnPaint() 
 {
 	CPaintDC dc(this);
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CWndNumeric::Show(bool bShow) 
 {
 	/*if(this->IsWindowVisible() == bShow)
@@ -764,6 +835,16 @@ void CWndNumeric::Show(bool bShow)
 		SetWindowPos(NULL,0,0,0,0,SWP_NOSIZE|SWP_NOMOVE|SWP_HIDEWINDOW);
 }
 
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 BOOL CWndNumeric::PreTranslateMessage(MSG* pMsg) 
 {
@@ -786,50 +867,122 @@ BOOL CWndNumeric::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked cursor up action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndNumeric::OnBnClickedCursorUp()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_CURSOR_UP);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked cursor dwn action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumeric::OnBnClickedCursorDwn()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_CURSOR_DOWN);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked cursor left action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumeric::OnBnClickedCursorLeft()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_CURSOR_LEFT);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked cursor right action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumeric::OnBnClickedCursorRight()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_CURSOR_RIGHT);
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked move x coordinate up action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumeric::OnBnClickedMoveXUp()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_CURSOR_MOVEXUP);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked move x coordinate down action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumeric::OnBnClickedMoveXDown()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_CURSOR_MOVEXDOWN);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked move y coordinate left action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumeric::OnBnClickedMoveYLeft()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_CURSOR_MOVEYLEFT);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked move y coordinate right action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndNumeric::OnBnClickedMoveYRight()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_CURSOR_MOVEYRIGHT);
 }
 
-//rkuTICKCOUNT
+/**********************************************************************************************//**
+ * rkuTICKCOUNT
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	oldTickCount	Number of old ticks.
+ * \param	delay			The delay.
+ *
+ * \return	True if safe tick count delay expired, false if not.
+ **************************************************************************************************/
+
 bool CWndNumeric::isSafeTickCountDelayExpired(DWORD oldTickCount, UINT delay)////used to check if old tick count plus delay is still lower than actual tickCount, (dwLastTickCount+DELAY<getTickCount64())
 {
 	bool bExpired=false;

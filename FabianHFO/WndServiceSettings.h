@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndServiceSettings.h.
+ *
+ * Declares the window service settings class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndService.h"
 #include "BitmapSlider.h"

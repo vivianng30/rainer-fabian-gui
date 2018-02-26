@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsVlimitVgarant.h.
+ *
+ * Declares the window sub settings vlimit vgarant class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 

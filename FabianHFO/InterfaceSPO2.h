@@ -1,3 +1,14 @@
+//=============================================================================
+/** 
+* \class CInterfaceSPO2
+* 		 
+* \brief Interface base class for SPO2 interfaces.
+* 		 
+* \author Rainer Kuehner
+* \date 2017-10-23 Creation of file
+*
+**/
+//=============================================================================
 #pragma once
 #include "interface.h"
 #include "globDefs.h"

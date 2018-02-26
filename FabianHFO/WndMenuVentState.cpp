@@ -7,10 +7,31 @@
 #include "LangAdmin.h"
 #include "globDefs.h"
 
-
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 
@@ -19,11 +40,26 @@
 
 //extern CLangAdmin* g_pGlobalLanguageStrings;
 
-
-
-// CWndMenuVentState
+/**********************************************************************************************//**
+ * CWndMenuVentState
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndMenuVentState, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndMenuVentState class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	parentView	If non-null, the parent view.
+ **************************************************************************************************/
 
 CWndMenuVentState::CWndMenuVentState(CMVView *parentView)
 {
@@ -58,6 +94,13 @@ CWndMenuVentState::CWndMenuVentState(CMVView *parentView)
 	m_pModel = NULL;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndMenuVentState class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CWndMenuVentState::~CWndMenuVentState()
 {
 	delete m_pcMenuIPPV;
@@ -91,9 +134,15 @@ CWndMenuVentState::~CWndMenuVentState()
 	m_pcMenu_Dis=NULL;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CWndMenuVentState::getModel()
 {
 	if(m_pModel==NULL)
@@ -107,12 +156,20 @@ BEGIN_MESSAGE_MAP(CWndMenuVentState, CWnd)
 	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndMenuVentState message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CWndMenuVentState message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CWndMenuVentState::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -144,9 +201,13 @@ BOOL CWndMenuVentState::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreat
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuVentState::Init()
 {
 	CClientDC dc(this);
@@ -357,9 +418,15 @@ void CWndMenuVentState::Init()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CWndMenuVentState::Show(BOOL bShow)
 {
 	if(bShow==TRUE)
@@ -403,9 +470,13 @@ void CWndMenuVentState::Show(BOOL bShow)
 		this->ShowWindow(SW_HIDE);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows the menu button
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuVentState::ShowMenuBtn()
 {
 	//m_pcMenuNumeric->ShowWindow(SW_SHOW);
@@ -619,9 +690,13 @@ void CWndMenuVentState::ShowMenuBtn()
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Hides the menu button
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuVentState::HideMenuBtn()
 {
 	if(m_pcMenuIPPV)
@@ -648,9 +723,19 @@ void CWndMenuVentState::HideMenuBtn()
 	/*m_pcMenu10->ShowWindow(SW_HIDE);*/
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndMenuVentState::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -729,10 +814,15 @@ LRESULT CWndMenuVentState::WindowProc(UINT message, WPARAM wParam, LPARAM lParam
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
+/**********************************************************************************************//**
+ * Sets one button depressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndMenuVentState::SetOneButtonDepressed(int btnID)
 {
 	//DEBUGMSG(TRUE, (TEXT("CWndMenuVentState::SetOneButtonDepressed start\r\n")));
@@ -768,6 +858,15 @@ void CWndMenuVentState::SetOneButtonDepressed(int btnID)
 	
 }
 
+/**********************************************************************************************//**
+ * Sets one button preset
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CWndMenuVentState::SetOneButtonPreset(int btnID)
 {
 	POSITION pos;
@@ -801,9 +900,13 @@ void CWndMenuVentState::SetOneButtonPreset(int btnID)
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Resets the button presetstate
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuVentState::ResetButtonPresetstate()
 {
 	POSITION pos;
@@ -829,9 +932,6 @@ void CWndMenuVentState::ResetButtonPresetstate()
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 //void CWndMenuVentState::SetButton(int btnID)
 //{
 //	POSITION pos;
@@ -862,9 +962,16 @@ void CWndMenuVentState::ResetButtonPresetstate()
 //	}
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets button state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ * \param	state	The state.
+ **************************************************************************************************/
+
 void CWndMenuVentState::SetButtonState(int btnID, CPresetMenuBtn::eBtnState state)
 {
 	POSITION pos;
@@ -896,9 +1003,13 @@ void CWndMenuVentState::SetButtonState(int btnID, CPresetMenuBtn::eBtnState stat
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets all button unpressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuVentState::SetAllButtonUnpressed()
 {
 	POSITION pos;
@@ -922,9 +1033,13 @@ void CWndMenuVentState::SetAllButtonUnpressed()
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuVentState::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -935,15 +1050,13 @@ void CWndMenuVentState::OnPaint()
 	// CMVView::OnPaint() soll zum Zeichnen von Meldungen nicht aufgerufen werden.
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndMenuVentState::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuVentState::OnDestroy() 
 {
 	m_plMenuBtn.RemoveAll();
@@ -959,9 +1072,17 @@ void CWndMenuVentState::OnDestroy()
 		DeleteDC(m_hDC);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndMenuVentState::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)

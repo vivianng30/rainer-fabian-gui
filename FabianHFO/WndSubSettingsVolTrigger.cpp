@@ -5,11 +5,26 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsVolTrigger.h"
 
-
-
-// CWndSubSettingsVolTrigger
+/**********************************************************************************************//**
+ * CWndSubSettingsVolTrigger
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsVolTrigger, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsVolTrigger class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsVolTrigger::CWndSubSettingsVolTrigger(UINT viewFlag):
 CWndSubSettings(viewFlag)
@@ -18,6 +33,13 @@ CWndSubSettings(viewFlag)
 	m_eTriggerType=TRIGGER_FLOW;
 	m_bOnlyPressureTrigger=false;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsVolTrigger class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsVolTrigger::~CWndSubSettingsVolTrigger()
 {
@@ -36,12 +58,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsVolTrigger, CWnd)
 	//ON_BN_CLICKED(IDC_BTN_SETUP_7, &CWndSubSettingsAutoOxyCal::OnBnClicked7)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsVolTrigger message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsVolTrigger message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsVolTrigger::Initialize()
 {
 	CClientDC dc(this);
@@ -125,9 +148,13 @@ void CWndSubSettingsVolTrigger::Initialize()
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsVolTrigger::Draw()
 {
 	RECT rcCl;
@@ -222,9 +249,17 @@ void CWndSubSettingsVolTrigger::Draw()
 	DeleteDC(hdcMem);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsVolTrigger::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -292,9 +327,15 @@ BOOL CWndSubSettingsVolTrigger::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets trigger type
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn	The button.
+ **************************************************************************************************/
+
 void CWndSubSettingsVolTrigger::setTriggerType(UINT btn)
 {
 	switch(btn)
@@ -319,10 +360,13 @@ void CWndSubSettingsVolTrigger::setTriggerType(UINT btn)
 	getModel()->getDATAHANDLER()->setTriggerOptionCONV(m_eTriggerType);
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsVolTrigger::OnBnClicked1()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_1);
@@ -334,9 +378,14 @@ void CWndSubSettingsVolTrigger::OnBnClicked1()
 		setTriggerType(IDC_BTN_SETUP_1);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsVolTrigger::OnBnClicked2()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_2);
@@ -348,6 +397,14 @@ void CWndSubSettingsVolTrigger::OnBnClicked2()
 		setTriggerType(IDC_BTN_SETUP_2);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 3 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsVolTrigger::OnBnClicked3()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_3);
@@ -359,15 +416,14 @@ void CWndSubSettingsVolTrigger::OnBnClicked3()
 		setTriggerType(IDC_BTN_SETUP_3);
 	}
 }
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsVolTrigger::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsVolTrigger::OnDestroy()
 {
 	CWndSubSettings::OnDestroy();

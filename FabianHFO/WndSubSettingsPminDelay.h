@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsPminDelay.h.
+ *
+ * Declares the window sub settings pmin delay class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 #include "DTUpDwnBtn.h"

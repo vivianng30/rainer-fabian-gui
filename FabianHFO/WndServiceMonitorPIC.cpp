@@ -5,9 +5,24 @@
 #include "FabianHFO.h"
 #include "WndServiceMonitorPIC.h"
 
-// CWndServiceMonitorPIC
+/**********************************************************************************************//**
+ * CWndServiceMonitorPIC
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndServiceMonitorPIC, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndServiceMonitorPIC class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndServiceMonitorPIC::CWndServiceMonitorPIC():
 CWndService()
@@ -49,6 +64,13 @@ CWndService()
 	
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndServiceMonitorPIC class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CWndServiceMonitorPIC::~CWndServiceMonitorPIC()
 {
 }
@@ -59,15 +81,26 @@ BEGIN_MESSAGE_MAP(CWndServiceMonitorPIC, CWnd)
 	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndServiceMonitorPIC message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndServiceMonitorPIC message handlers
 void CWndServiceMonitorPIC::Init()
 {
 	m_pcMenuBack->ShowWindow(SW_SHOW);
 
 	SetTimer(SERVICETIMER, 500, NULL);
 }
+
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceMonitorPIC::Draw()
 {
@@ -541,16 +574,13 @@ void CWndServiceMonitorPIC::Draw()
 	DeleteDC(hdcMem);
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndServiceMonitorPIC::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CWndServiceMonitorPIC::OnDestroy()
 {
 	KillTimer(SERVICETIMER);
@@ -558,9 +588,15 @@ void CWndServiceMonitorPIC::OnDestroy()
 	CWndService::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CWndServiceMonitorPIC::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==SERVICETIMER)

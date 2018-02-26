@@ -7,10 +7,31 @@
 #include "LangAdmin.h"
 #include "globDefs.h"
 
-
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 
@@ -19,11 +40,26 @@
 
 //extern CLangAdmin* g_pGlobalLanguageStrings;
 
-
-
-// CWndMenuSelectNum
+/**********************************************************************************************//**
+ * CWndMenuSelectNum
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndMenuSelectNum, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndMenuSelectNum class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	parentView	If non-null, the parent view.
+ **************************************************************************************************/
 
 CWndMenuSelectNum::CWndMenuSelectNum(CMVView *parentView)
 {
@@ -48,6 +84,13 @@ CWndMenuSelectNum::CWndMenuSelectNum(CMVView *parentView)
 
 	m_pcMenuNum=NULL;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndMenuSelectNum class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndMenuSelectNum::~CWndMenuSelectNum()
 {
@@ -80,9 +123,15 @@ CWndMenuSelectNum::~CWndMenuSelectNum()
 	//m_pcNumeric_Fc=NULL;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CWndMenuSelectNum::getModel()
 {
 	if(m_pModel==NULL)
@@ -101,12 +150,20 @@ BEGIN_MESSAGE_MAP(CWndMenuSelectNum, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SETUP5, &CWndMenuSelectNum::OnBnClickedMenu5)*/
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndMenuSetup message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CWndMenuSetup message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CWndMenuSelectNum::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -137,10 +194,13 @@ BOOL CWndMenuSelectNum::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreat
 		return 0;
 }
 
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndMenuSelectNum::Init()
 {
 	CClientDC dc(this);
@@ -265,9 +325,15 @@ void CWndMenuSelectNum::Init()
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CWndMenuSelectNum::Show(BOOL bShow)
 {
 
@@ -277,9 +343,13 @@ void CWndMenuSelectNum::Show(BOOL bShow)
 		this->ShowWindow(SW_HIDE);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows the menu button
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuSelectNum::ShowMenuBtn()
 {
 	if(m_pcMenuNum)
@@ -319,18 +389,32 @@ void CWndMenuSelectNum::ShowMenuBtn()
 
 }
 
+/**********************************************************************************************//**
+ * Hides the menu button
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndMenuSelectNum::HideMenuBtn()
 {
 	if(m_pcMenuNum)
 		m_pcMenuNum->ShowWindow(SW_HIDE);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndMenuSelectNum::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -379,15 +463,20 @@ LRESULT CWndMenuSelectNum::WindowProc(UINT message, WPARAM wParam, LPARAM lParam
 //{
 //	
 //}
+
+/**********************************************************************************************//**
+ * Button clicked numeric
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuSelectNum::BnClickedNumeric()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_NUMERIC);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 //void CWndMenuSelectNum::SetOneButtonDepressed(int btnID)
 //{
 //	POSITION pos;
@@ -410,9 +499,6 @@ void CWndMenuSelectNum::BnClickedNumeric()
 //	}
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
 //void CWndMenuSelectNum::SetAllButtonUnpressed()
 //{
 //	POSITION pos;
@@ -428,9 +514,13 @@ void CWndMenuSelectNum::BnClickedNumeric()
 //	}
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuSelectNum::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -441,15 +531,13 @@ void CWndMenuSelectNum::OnPaint()
 	// CMVView::OnPaint() soll zum Zeichnen von Meldungen nicht aufgerufen werden.
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndMenuSelectNum::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuSelectNum::OnDestroy() 
 {
 	CWnd::OnDestroy();

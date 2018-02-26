@@ -5,10 +5,24 @@
 #include "FabianHFO.h"
 #include "WndServiceValves.h"
 
-
-// CWndServiceValves
+/**********************************************************************************************//**
+ * CWndServiceValves
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndServiceValves, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndServiceValves class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndServiceValves::CWndServiceValves():
 CWndService()
@@ -23,6 +37,13 @@ CWndService()
 	m_iFlow=0;
 	m_iPaw=0;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndServiceValves class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndServiceValves::~CWndServiceValves()
 {
@@ -68,9 +89,13 @@ BEGIN_MESSAGE_MAP(CWndServiceValves, CWnd)
 	ON_BN_CLICKED(IDC_BTN_OPVALV_CLOSE, &CWndServiceValves::OnBnClickedOpValveClose)*/
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndServiceValves message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndServiceValves message handlers
 void CWndServiceValves::Init()
 {
 	CClientDC dc(this);
@@ -474,6 +499,13 @@ void CWndServiceValves::Init()
 	SetTimer(SERVICETIMER, 500, NULL);
 
 }
+
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceValves::Draw()
 {
@@ -954,21 +986,26 @@ void CWndServiceValves::Draw()
 	DeleteDC(hdcMem);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndServiceValves::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceValves::OnDestroy()
 {
 	KillTimer(SERVICETIMER);
 
 	CWndService::OnDestroy();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked ventil burn action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceValves::OnBnClickedVentilBurn()
 {
@@ -1220,6 +1257,19 @@ void CWndServiceValves::OnBnClickedVentilBurn()
 //	getModel()->getSERIAL()->Send_OPEN_VALVE(511);
 //}
 
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndServiceValves::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -1250,10 +1300,15 @@ LRESULT CWndServiceValves::WindowProc(UINT message, WPARAM wParam, LPARAM lParam
 	return CWndService::WindowProc(message, wParam, lParam);
 }
 
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndServiceValves::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==SERVICETIMER)

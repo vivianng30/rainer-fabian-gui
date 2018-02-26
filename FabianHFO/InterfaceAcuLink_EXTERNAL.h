@@ -1,3 +1,14 @@
+//=============================================================================
+/** 
+* \class CInterfaceAcuLink_EXTERNAL
+* 		 
+* \brief Interface for external aculink implementation.
+* 		 
+* \author Rainer Kuehner
+* \date 2017-10-23 Creation of file
+*
+**/
+//=============================================================================
 #pragma once
 #include "InterfaceAcuLink.h"
 #include "AcuLink_DLL.h"

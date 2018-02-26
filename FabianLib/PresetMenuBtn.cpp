@@ -6,15 +6,28 @@
 #include "PresetMenuBtn.h"
 #include "globDefs.h"
 
-// CPresetMenuBtn
+/**********************************************************************************************//**
+ * CPresetMenuBtn
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CPresetMenuBtn, CBtn)
 
-/////////////////////////////////////////////////////////////////////////////
-// CPresetMenuBtn
-// **************************************************************************
-// De-, construction
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes a new instance of the CPresetMenuBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn	The button.
+ * \param	cr 	The carriage return.
+ **************************************************************************************************/
+
 CPresetMenuBtn::CPresetMenuBtn(BTN btn,COLORREF cr) : CBtn(btn,cr),m_eBtnState(UP)
 {
 	// Init state
@@ -29,6 +42,13 @@ CPresetMenuBtn::CPresetMenuBtn(BTN btn,COLORREF cr) : CBtn(btn,cr),m_eBtnState(U
 
 	m_bTwoLine=false;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CPresetMenuBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CPresetMenuBtn::~CPresetMenuBtn()
 {
@@ -45,11 +65,13 @@ BEGIN_MESSAGE_MAP(CPresetMenuBtn, CButton)
 	//ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
-// CPresetMenuBtn message handlers
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw direct up
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CPresetMenuBtn::DrawDirectUp(void)
 {
 	CClientDC dc(this);
@@ -59,7 +81,14 @@ void CPresetMenuBtn::DrawDirectUp(void)
 	BitBlt(dc.m_hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);
 }
 
-
+/**********************************************************************************************//**
+ * Draw item
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	lpDrawItemStruct	The draw item structure.
+ **************************************************************************************************/
 
 void CPresetMenuBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
@@ -126,6 +155,16 @@ void CPresetMenuBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState  	The state.
+ * \param	nAddInfo	Information describing the add.
+ **************************************************************************************************/
 
 void CPresetMenuBtn::Draw(int nState,int nAddInfo)
 {
@@ -221,6 +260,17 @@ void CPresetMenuBtn::Draw(int nState,int nAddInfo)
 	SelectObject(m_hDC,hPrevFont);
 
 }
+
+/**********************************************************************************************//**
+ * Executes the l button down action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CPresetMenuBtn::OnLButtonDown(UINT nFlags, CPoint point) 
 {
 	if( !m_bLMouseButtonDown )
@@ -239,6 +289,16 @@ void CPresetMenuBtn::OnLButtonDown(UINT nFlags, CPoint point)
 	}
 }
 
+/**********************************************************************************************//**
+ * Executes the l button up action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CPresetMenuBtn::OnLButtonUp(UINT nFlags, CPoint point) 
 {
 	if( m_bLMouseButtonDown )
@@ -253,12 +313,30 @@ void CPresetMenuBtn::OnLButtonUp(UINT nFlags, CPoint point)
 
 }
 
-
+/**********************************************************************************************//**
+ * Gets button state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The button state.
+ **************************************************************************************************/
 
 CPresetMenuBtn::eBtnState CPresetMenuBtn::GetBtnState()
 {
 	return m_eBtnState;
 }
+
+/**********************************************************************************************//**
+ * Sets button state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state		  	The state.
+ * \param	bReleaseButton	True to release button.
+ **************************************************************************************************/
+
 void CPresetMenuBtn::SetBtnState(eBtnState state, bool bReleaseButton)
 {
 	//if( state != m_eBtnState )
@@ -282,10 +360,16 @@ void CPresetMenuBtn::SetBtnState(eBtnState state, bool bReleaseButton)
 	//}
 }
 
-// **************************************************************************
-// Button is very slow - this code permforms speed up - but
-//              use of double click is not possible any more
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the l button double clock action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CPresetMenuBtn::OnLButtonDblClk(UINT nFlags, CPoint point) 
 {
 	DWORD lParam;
@@ -296,9 +380,16 @@ void CPresetMenuBtn::OnLButtonDblClk(UINT nFlags, CPoint point)
 	CButton::OnLButtonDblClk(nFlags, point);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	If non-null, the text.
+ * \param 		  	nNbr   	Number of.
+ **************************************************************************************************/
+
 void CPresetMenuBtn::SetText(TCHAR* pszText,/*TCHAR* pszTextDown,*/int nNbr) 
 {
 	_tcscpy(m_pszText,pszText);
@@ -306,12 +397,32 @@ void CPresetMenuBtn::SetText(TCHAR* pszText,/*TCHAR* pszTextDown,*/int nNbr)
 	m_nNbr=nNbr;
 }
 
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	If non-null, the text.
+ * \param 		  	nNbr   	Number of.
+ **************************************************************************************************/
+
 void CPresetMenuBtn::RefreshText(TCHAR* pszText,/*TCHAR* pszTextDown,*/int nNbr) 
 {
 	SetText(pszText,/*pszTextDown,*/nNbr);
 	Invalidate();
 	UpdateWindow();
 }
+
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	The text.
+ * \param 		  	nNbr   	Number of.
+ **************************************************************************************************/
 
 void CPresetMenuBtn::SetText(CStringW& pszText,/*CStringW& pszTextDown,*/int nNbr) 
 {
@@ -321,12 +432,33 @@ void CPresetMenuBtn::SetText(CStringW& pszText,/*CStringW& pszTextDown,*/int nNb
 	m_bTwoLine=false;
 }
 
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	The text.
+ * \param 		  	nNbr   	Number of.
+ **************************************************************************************************/
+
 void CPresetMenuBtn::RefreshText(CStringW& pszText,/*CStringW& pszTextDown,*/int nNbr) 
 {
 	SetText(pszText,/*pszTextDown,*/nNbr);
 	Invalidate();
 	UpdateWindow();
 }
+
+/**********************************************************************************************//**
+ * Sets text two lines
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszTextTop   	The text top.
+ * \param [in,out]	pszTextBottom	The text bottom.
+ * \param 		  	nNbr		 	Number of.
+ **************************************************************************************************/
 
 void CPresetMenuBtn::SetTextTwoLines(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr)
 {
@@ -336,15 +468,33 @@ void CPresetMenuBtn::SetTextTwoLines(CStringW& pszTextTop,CStringW& pszTextBotto
 	m_bTwoLine=true;
 }
 
+/**********************************************************************************************//**
+ * Refresh text two lines
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszTextTop   	The text top.
+ * \param [in,out]	pszTextBottom	The text bottom.
+ * \param 		  	nNbr		 	Number of.
+ **************************************************************************************************/
+
 void CPresetMenuBtn::RefreshTextTwoLines(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr)
 {
 	SetTextTwoLines(pszTextTop,pszTextBottom,nNbr);
 	Invalidate();
 	UpdateWindow();
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Gets button identifier
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The button identifier.
+ **************************************************************************************************/
+
 int CPresetMenuBtn::GetBtnId()
 {
 	return m_btn.wID;

@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndMenuVentState.h.
+ *
+ * Declares the window menu vent state class
+ **************************************************************************************************/
+
 #pragma once
 #include "PresetMenuBtn.h"
 //#include "MenuBtn.h"

@@ -1,5 +1,18 @@
+/**********************************************************************************************//**
+ * \file	AlarmLimitList.cpp.
+ *
+ * Implements the alarm limit list class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "AlarmLimitList.h"
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CAlarmLimitList class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CAlarmLimitList::CAlarmLimitList(void)
 {
@@ -12,10 +25,29 @@ CAlarmLimitList::CAlarmLimitList(void)
 	}
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CAlarmLimitList class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CAlarmLimitList::~CAlarmLimitList(void)
 {
 	DeleteCriticalSection(&csAlimitListLock);
 }
+
+/**********************************************************************************************//**
+ * Array indexer operator
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	i	Zero-based index of the.
+ *
+ * \return	The indexed value.
+ **************************************************************************************************/
+
 CAlarmLimitPtr CAlarmLimitList::operator[](int i)
 {
 	if( i < 0 || i >= NUMALARMLIMITS)
@@ -27,6 +59,14 @@ CAlarmLimitPtr CAlarmLimitList::operator[](int i)
 	return m_bufAlarmLimitArray[i];
 }
 
+/**********************************************************************************************//**
+ * Gets the count
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The count.
+ **************************************************************************************************/
 
 int CAlarmLimitList::getCount()
 {
@@ -35,10 +75,34 @@ int CAlarmLimitList::getCount()
 	LeaveCriticalSection(&csAlimitListLock);
 	return iCnt;
 }
+
+/**********************************************************************************************//**
+ * Gets alarm limit
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	enAlarmLimit	The en alarm limit.
+ *
+ * \return	The alarm limit.
+ **************************************************************************************************/
+
 CAlarmLimitPtr CAlarmLimitList::getAlarmLimit(eAlarmLimits enAlarmLimit)
 {
 	return (enAlarmLimit >= 0 && enAlarmLimit < m_count)? m_bufAlarmLimitArray[enAlarmLimit] : NULL;
 }
+
+/**********************************************************************************************//**
+ * Searches for the first alarm limit
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	enAlarmLimit	The en alarm limit.
+ *
+ * \return	The found alarm limit.
+ **************************************************************************************************/
+
 int CAlarmLimitList::searchAlarmLimit(eAlarmLimits enAlarmLimit)
 {
 	EnterCriticalSection(&csAlimitListLock);
@@ -53,6 +117,17 @@ int CAlarmLimitList::searchAlarmLimit(eAlarmLimits enAlarmLimit)
 	LeaveCriticalSection(&csAlimitListLock);
 	return PSEUDO;//not found
 }
+
+/**********************************************************************************************//**
+ * Appends an alarm limit
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	alarmLimit	The alarm limit.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CAlarmLimitList::appendAlarmLimit(CAlarmLimitPtr alarmLimit)
 {
@@ -71,15 +146,17 @@ bool CAlarmLimitList::appendAlarmLimit(CAlarmLimitPtr alarmLimit)
 	return bResult;
 }
 
-//*****************************************************************
-// Method:    getCurValue
-// FullName:  CAlarmLimitList::getCurValue
-// Access:    public 
-// Returns:   int
-// Qualifier: returns -1 if limit doesn't exist in queue,
-//			  else the current value
-// Parameter: eAlarmLimits enAlarmLimit
-//*****************************************************************
+/**********************************************************************************************//**
+ * Gets current value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	enAlarmLimit	The en alarm limit.
+ *
+ * \return	The current value.
+ **************************************************************************************************/
+
 int CAlarmLimitList::getCurValue(eAlarmLimits enAlarmLimit)
 {
 	int iResult=PSEUDO;
@@ -98,6 +175,19 @@ int CAlarmLimitList::getCurValue(eAlarmLimits enAlarmLimit)
 	}
 	return iResult;
 }
+
+/**********************************************************************************************//**
+ * Sets current value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	enAlarmLimit	The en alarm limit.
+ * \param	iVal			Zero-based index of the value.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmLimitList::setCurValue(eAlarmLimits enAlarmLimit,int iVal)
 {
 	bool bResult=false;
@@ -118,15 +208,17 @@ bool CAlarmLimitList::setCurValue(eAlarmLimits enAlarmLimit,int iVal)
 	return bResult;
 }
 
-//*****************************************************************
-// Method:    getMaxValue
-// FullName:  CAlarmLimitList::getMaxValue
-// Access:    public 
-// Returns:   int
-// Qualifier: returns -1 if limit doesn't exist in queue,
-//			  else the maximum value
-// Parameter: eAlarmLimits enAlarmLimit
-//*****************************************************************
+/**********************************************************************************************//**
+ * Gets maximum value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	enAlarmLimit	The en alarm limit.
+ *
+ * \return	The maximum value.
+ **************************************************************************************************/
+
 int CAlarmLimitList::getMaxValue(eAlarmLimits enAlarmLimit)
 {
 	int iResult=PSEUDO;
@@ -145,6 +237,19 @@ int CAlarmLimitList::getMaxValue(eAlarmLimits enAlarmLimit)
 	}
 	return iResult;
 }
+
+/**********************************************************************************************//**
+ * Sets maximum value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	enAlarmLimit	The en alarm limit.
+ * \param	iVal			Zero-based index of the value.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmLimitList::setMaxValue(eAlarmLimits enAlarmLimit,int iVal)
 {
 	bool bResult=false;
@@ -165,15 +270,17 @@ bool CAlarmLimitList::setMaxValue(eAlarmLimits enAlarmLimit,int iVal)
 	return bResult;
 }
 
-//*****************************************************************
-// Method:    getMinValue
-// FullName:  CAlarmLimitList::getMinValue
-// Access:    public 
-// Returns:   int
-// Qualifier: returns -1 if limit doesn't exist in queue,
-//			  else the minimum value
-// Parameter: eAlarmLimits enAlarmLimit
-//*****************************************************************
+/**********************************************************************************************//**
+ * Gets minimum value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	enAlarmLimit	The en alarm limit.
+ *
+ * \return	The minimum value.
+ **************************************************************************************************/
+
 int CAlarmLimitList::getMinValue(eAlarmLimits enAlarmLimit)
 {
 	int iResult=PSEUDO;
@@ -192,6 +299,19 @@ int CAlarmLimitList::getMinValue(eAlarmLimits enAlarmLimit)
 	}
 	return iResult;
 }
+
+/**********************************************************************************************//**
+ * Sets minimum value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	enAlarmLimit	The en alarm limit.
+ * \param	iVal			Zero-based index of the value.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmLimitList::setMinValue(eAlarmLimits enAlarmLimit,int iVal)
 {
 	bool bResult=false;
@@ -212,15 +332,17 @@ bool CAlarmLimitList::setMinValue(eAlarmLimits enAlarmLimit,int iVal)
 	return bResult;
 }
 
-//*****************************************************************
-// Method:    getLimitState
-// FullName:  CAlarmLimitList::getLimitState
-// Access:    public 
-// Returns:   eAlarmLimitState
-// Qualifier: returns AL_OFF if limit doesn't exist in queue,
-//			  else the current state
-// Parameter: eAlarmLimits enAlarmLimit
-//*****************************************************************
+/**********************************************************************************************//**
+ * Gets limit state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	enAlarmLimit	The en alarm limit.
+ *
+ * \return	The limit state.
+ **************************************************************************************************/
+
 eAlarmLimitState CAlarmLimitList::getLimitState(eAlarmLimits enAlarmLimit)
 {
 	eAlarmLimitState eResult=AL_OFF;
@@ -239,6 +361,19 @@ eAlarmLimitState CAlarmLimitList::getLimitState(eAlarmLimits enAlarmLimit)
 	}
 	return eResult;
 }
+
+/**********************************************************************************************//**
+ * Sets limit state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	enAlarmLimit	The en alarm limit.
+ * \param	eState			The state.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CAlarmLimitList::setLimitState(eAlarmLimits enAlarmLimit,eAlarmLimitState eState)
 {
 	bool bResult=false;

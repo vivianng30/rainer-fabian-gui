@@ -5,16 +5,32 @@
 #include "FabianHFO.h"
 #include "LangAdmin.h"
 
+/**********************************************************************************************//**
+ * A macro that defines Maximum Language files
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-/***** Preprocessor ********************************************************/
 #define MAX_LANG_FILES	32
+
+/**********************************************************************************************//**
+ * A macro that defines Language Extent
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define LANG_EXT		_T(".lang")
 
 //extern int  OutputMessage (TCHAR *pFormat, ...);
 
-// CLangAdmin
-
-
+/**********************************************************************************************//**
+ * CLangAdmin
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CLangAdmin::CLangAdmin()
 {
@@ -27,6 +43,13 @@ CLangAdmin::CLangAdmin()
 
 	m_tLineBuffer[0]=0x0000;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CLangAdmin class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CLangAdmin::~CLangAdmin()
 {
@@ -42,12 +65,26 @@ CLangAdmin::~CLangAdmin()
 	
 	DeleteCriticalSection(&csList);
 }
+
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CLangAdmin::Init()
 {
 	m_pcStringTable=new CList<STRINGTABLELINE,STRINGTABLELINE&>;
 	m_pcsFileNames=new CStringList();
 }
 
+/**********************************************************************************************//**
+ * Closes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CLangAdmin::Close()
 {
@@ -58,11 +95,17 @@ void CLangAdmin::Close()
 	
 }
 
+/**********************************************************************************************//**
+ * CLangAdmin-Memberfunktionen
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	dwLangFolderStringID	Identifier for the language folder string.
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
 
-// CLangAdmin-Memberfunktionen
-// **************************************************************************
-// List of available langs	
-// **************************************************************************
 DWORD CLangAdmin::EnumLang( DWORD dwLangFolderStringID )
 {
 	// Enum avaiable languages
@@ -124,6 +167,16 @@ DWORD CLangAdmin::EnumLang( DWORD dwLangFolderStringID )
 
 
 // *** BubbleSort ***
+
+/**********************************************************************************************//**
+ * Bubble sort
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	slStrings	If non-null, the sl strings.
+ **************************************************************************************************/
+
 void CLangAdmin::BubbleSort(CStringList *slStrings)
 // Sorts the string list alphabetically
 // Parameter slStrings String list to sort
@@ -155,14 +208,32 @@ void CLangAdmin::BubbleSort(CStringList *slStrings)
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets language files
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the language files.
+ **************************************************************************************************/
+
 CStringList* CLangAdmin::GetLangFiles(void)
 {
 	return m_pcsFileNames;
 }
 
-// **************************************************************************
-// Change language	
-// **************************************************************************
+/**********************************************************************************************//**
+ * Loads a language
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	csLang	The create struct language.
+ * \param	bExt  	True to extent.
+ *
+ * \return	The language.
+ **************************************************************************************************/
+
 DWORD CLangAdmin::LoadLang(CStringW csLang, bool bExt)
 {
 	EnterCriticalSection(&csList);
@@ -204,9 +275,17 @@ DWORD CLangAdmin::LoadLang(CStringW csLang, bool bExt)
 	return 1;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Check unicode
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	cf	The cf.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CLangAdmin::CheckUnicode( CFile& cf )
 {
 	TCHAR p;
@@ -219,9 +298,17 @@ bool CLangAdmin::CheckUnicode( CFile& cf )
 	return false;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Eocs the given p
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	p	If non-null, a TCHAR to process.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool EOC(TCHAR* p)
 {
 	if(*p=='#')
@@ -229,6 +316,18 @@ bool EOC(TCHAR* p)
 			return true;
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Eols the given p
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	p	If non-null, a TCHAR to process.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool EOL(TCHAR* p)
 {
 	if(*p==0x000A)
@@ -236,6 +335,18 @@ bool EOL(TCHAR* p)
 			return true;
 	return false;
 }
+
+/**********************************************************************************************//**
+ * Gets string line
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	cf	The cf.
+ *
+ * \return	The string line.
+ **************************************************************************************************/
+
 DWORD CLangAdmin::GetStringLine( CFile& cf)
 {
 	//////////////////////////////////////////////////////////////////////////////////
@@ -313,9 +424,17 @@ DWORD CLangAdmin::GetStringLine( CFile& cf)
 	return LANGADM_ERROR;
 }
 
-// **************************************************************************
-// Get string from list by ID		
-// **************************************************************************
+/**********************************************************************************************//**
+ * Searches for the first string
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nID	The identifier.
+ *
+ * \return	The found string.
+ **************************************************************************************************/
+
 CStringW& CLangAdmin::FindString( int nID )
 {
 	EnterCriticalSection(&csList);

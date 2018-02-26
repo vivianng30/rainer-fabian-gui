@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndServiceAccuboard.h.
+ *
+ * Declares the window service accuboard class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndService.h"
 #include "KbrdBtn.h"

@@ -1,3 +1,16 @@
+//=============================================================================
+/** 
+* \class CInterfaceAcuLink
+* 		 
+* \brief Base class for different acuLink interfaces.
+* 		 
+* \author Rainer Kuehner
+* \date 2017-10-23 Creation of file
+*
+* Implements the object as singleton.
+*
+**/
+//=============================================================================
 #pragma once
 #include "interface.h"
 #include "globDefs.h"

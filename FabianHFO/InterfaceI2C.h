@@ -1,3 +1,14 @@
+//=============================================================================
+/** 
+* \class CInterfaceI2C
+* 		 
+* \brief Interface for I2C bus.
+* 		 
+* \author Rainer Kuehner
+* \date 2017-10-23 Creation of file
+*
+**/
+//=============================================================================
 #pragma once
 #include "interface.h"
 #include "globDefs.h"

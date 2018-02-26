@@ -6,17 +6,39 @@
 #include "WndSubSettingsVlimitVgarant.h"
 #include "DlgMessageBox.h"
 
-
-
-// CWndSubSettingsVlimitVgarant
+/**********************************************************************************************//**
+ * CWndSubSettingsVlimitVgarant
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsVlimitVgarant, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsVlimitVgarant class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsVlimitVgarant::CWndSubSettingsVlimitVgarant(UINT viewFlag):
 CWndSubSettings(viewFlag)
 {
 	m_eVControl=VCTRL_VLIMIT;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsVlimitVgarant class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsVlimitVgarant::~CWndSubSettingsVlimitVgarant()
 {
@@ -35,12 +57,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsVlimitVgarant, CWnd)
 	//ON_BN_CLICKED(IDC_BTN_SETUP_7, &CWndSubSettingsAutoOxyCal::OnBnClicked7)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsVlimitVgarant message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsVlimitVgarant message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsVlimitVgarant::Initialize()
 {
 	CClientDC dc(this);
@@ -82,9 +105,13 @@ void CWndSubSettingsVlimitVgarant::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsVlimitVgarant::Draw()
 {
 	RECT rcCl;
@@ -165,11 +192,17 @@ void CWndSubSettingsVlimitVgarant::Draw()
 
 }
 
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsVlimitVgarant::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -236,11 +269,15 @@ BOOL CWndSubSettingsVlimitVgarant::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Sets a control
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn	The button.
+ **************************************************************************************************/
+
 void CWndSubSettingsVlimitVgarant::SetControl(UINT btn)
 {
 	/*switch(btn)
@@ -288,11 +325,13 @@ void CWndSubSettingsVlimitVgarant::SetControl(UINT btn)
 	}*/
 }
 
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Executes the button clicked 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsVlimitVgarant::OnBnClicked1()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_1);
@@ -304,11 +343,14 @@ void CWndSubSettingsVlimitVgarant::OnBnClicked1()
 		SetControl(IDC_BTN_SETUP_1);
 	}
 }
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
+
+/**********************************************************************************************//**
+ * Executes the button clicked 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsVlimitVgarant::OnBnClicked2()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_2);
@@ -321,15 +363,13 @@ void CWndSubSettingsVlimitVgarant::OnBnClicked2()
 	}
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsVlimitVgarant::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsVlimitVgarant::OnDestroy()
 {
 	CWndSubSettings::OnDestroy();

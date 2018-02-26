@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndGraphViewSelection.h.
+ *
+ * Declares the window graph view selection class
+ **************************************************************************************************/
+
 #pragma once
 #include "MenuBtn.h"
 #include "PushBtn.h"

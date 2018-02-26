@@ -5,16 +5,39 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsScreenlocktime.h"
 
-
-// CWndSubSettingsScreenlocktime
+/**********************************************************************************************//**
+ * CWndSubSettingsScreenlocktime
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsScreenlocktime, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsScreenlocktime class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsScreenlocktime::CWndSubSettingsScreenlocktime(UINT viewFlag):
 CWndSubSettings(viewFlag)
 {
 	m_eAutoSreenlock=ASL_60;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsScreenlocktime class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsScreenlocktime::~CWndSubSettingsScreenlocktime()
 {
@@ -33,12 +56,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsScreenlocktime, CWnd)
 	//ON_BN_CLICKED(IDC_BTN_SETUP_7, &CWndSubSettingsScreenlocktime::OnBnClicked7)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsScreenlocktime message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsScreenlocktime message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsScreenlocktime::Initialize()
 {
 	CClientDC dc(this);
@@ -100,9 +124,13 @@ void CWndSubSettingsScreenlocktime::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsScreenlocktime::Draw()
 {
 	RECT rcCl;
@@ -211,9 +239,17 @@ void CWndSubSettingsScreenlocktime::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsScreenlocktime::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -279,9 +315,15 @@ BOOL CWndSubSettingsScreenlocktime::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets automatic screenlock time
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn	The button.
+ **************************************************************************************************/
+
 void CWndSubSettingsScreenlocktime::SetAutoScreenlockTime(UINT btn)
 {
 	switch(btn)
@@ -316,9 +358,13 @@ void CWndSubSettingsScreenlocktime::SetAutoScreenlockTime(UINT btn)
 	getModel()->getCONFIG()->SetAutoScreenlockTime(m_eAutoSreenlock);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsScreenlocktime::OnBnClicked1()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_1);
@@ -337,9 +383,14 @@ void CWndSubSettingsScreenlocktime::OnBnClicked1()
 		SetAutoScreenlockTime(IDC_BTN_SETUP_1);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsScreenlocktime::OnBnClicked2()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_2);
@@ -358,9 +409,14 @@ void CWndSubSettingsScreenlocktime::OnBnClicked2()
 		SetAutoScreenlockTime(IDC_BTN_SETUP_2);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 3 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsScreenlocktime::OnBnClicked3()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_3);
@@ -379,9 +435,14 @@ void CWndSubSettingsScreenlocktime::OnBnClicked3()
 		SetAutoScreenlockTime(IDC_BTN_SETUP_3);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 4 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsScreenlocktime::OnBnClicked4()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_4);
@@ -400,9 +461,14 @@ void CWndSubSettingsScreenlocktime::OnBnClicked4()
 		SetAutoScreenlockTime(IDC_BTN_SETUP_4);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 5 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsScreenlocktime::OnBnClicked5()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_5);
@@ -421,15 +487,14 @@ void CWndSubSettingsScreenlocktime::OnBnClicked5()
 		SetAutoScreenlockTime(IDC_BTN_SETUP_5);
 	}
 }
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsScreenlocktime::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsScreenlocktime::OnDestroy()
 {
 	CWndSubSettings::OnDestroy();

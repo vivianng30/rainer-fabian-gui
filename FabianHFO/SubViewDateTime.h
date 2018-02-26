@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	SubViewDateTime.h.
+ *
+ * Declares the sub view date time class
+ **************************************************************************************************/
+
 #pragma once
 #include "DTUpDwnBtn.h"
 #include "SelectSetupBtn.h"

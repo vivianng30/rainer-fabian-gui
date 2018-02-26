@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsAutoOxyCal.h.
+ *
+ * Declares the window sub settings automatic oxy calendar class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 

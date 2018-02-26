@@ -1,3 +1,15 @@
+/**********************************************************************************************//**
+* \class InterfaceCO2
+* 		 
+* \brief Base class for CO2 interfaces.
+* 		 
+* \author Rainer Kuehner
+* \date 2018-02-26 Creation of file
+*
+* Implements the object as singleton.
+*
+ **************************************************************************************************/
+
 #pragma once
 #include "interface.h"
 #include "globDefs.h"

@@ -5,16 +5,28 @@
 #include "MenuBtn.h"
 #include "globDefs.h"
 
-// CMenuBtn
-
+/**********************************************************************************************//**
+ * CMenuBtn
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CMenuBtn, CButton)
 
-/////////////////////////////////////////////////////////////////////////////
-// CMenuBtn
-// **************************************************************************
-// De-, construction
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes a new instance of the CMenuBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn	The button.
+ * \param	cr 	The carriage return.
+ **************************************************************************************************/
+
 CMenuBtn::CMenuBtn(BTN btn,COLORREF cr) : CBtn(btn,cr)
 {
 	// Init state
@@ -28,6 +40,13 @@ CMenuBtn::CMenuBtn(BTN btn,COLORREF cr) : CBtn(btn,cr)
 	m_pszTextDown[0]=0x0000;
 	
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CMenuBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CMenuBtn::~CMenuBtn()
 {
@@ -43,11 +62,14 @@ BEGIN_MESSAGE_MAP(CMenuBtn, CButton)
 	//ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
-// CMenuBtn message handlers
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * ///////////////////////////////////////////////////////////////////////////
+ *  CMenuBtn message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CMenuBtn::DrawDirectUp(void)
 {
 	m_bDepressed=false;
@@ -57,6 +79,15 @@ void CMenuBtn::DrawDirectUp(void)
 	Draw(BTN_DW_UP);
 	BitBlt(dc.m_hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);
 }
+
+/**********************************************************************************************//**
+ * Draw item
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	lpDrawItemStruct	The draw item structure.
+ **************************************************************************************************/
 
 void CMenuBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
@@ -115,6 +146,16 @@ void CMenuBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState  	The state.
+ * \param	nAddInfo	Information describing the add.
+ **************************************************************************************************/
 
 void CMenuBtn::Draw(int nState,int nAddInfo)
 {
@@ -221,6 +262,17 @@ void CMenuBtn::Draw(int nState,int nAddInfo)
 	SelectObject(m_hDC,hPrevFont);
 
 }
+
+/**********************************************************************************************//**
+ * Executes the l button down action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CMenuBtn::OnLButtonDown(UINT nFlags, CPoint point) 
 {
 	if( !m_bLMouseButtonDown )
@@ -232,6 +284,16 @@ void CMenuBtn::OnLButtonDown(UINT nFlags, CPoint point)
 		CButton::OnLButtonDown(nFlags, point);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the l button up action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CMenuBtn::OnLButtonUp(UINT nFlags, CPoint point) 
 {
@@ -268,14 +330,31 @@ void CMenuBtn::OnLButtonUp(UINT nFlags, CPoint point)
 //	m_bLMouseButtonDown = false;
 //}
 
-// **************************************************************************
-// Operation methods
-// **************************************************************************
+/**********************************************************************************************//**
+ * Query if this instance is depressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if depressed, false if not.
+ **************************************************************************************************/
+
 bool CMenuBtn::IsDepressed( void )
 {
 	// Return the buttons state
 	return m_bDepressed;
 }
+
+/**********************************************************************************************//**
+ * Depress
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bDown	True to down.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CMenuBtn::Depress(bool bDown)
 {
@@ -290,10 +369,16 @@ bool CMenuBtn::Depress(bool bDown)
 	return m_bDepressed;
 }
 
-// **************************************************************************
-// "Button" is very slow - this code permforms speed up - but
-//              use of double click is not possible any more
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the l button double clock action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CMenuBtn::OnLButtonDblClk(UINT nFlags, CPoint point) 
 {
 	DWORD lParam;
@@ -304,15 +389,34 @@ void CMenuBtn::OnLButtonDblClk(UINT nFlags, CPoint point)
 	CButton::OnLButtonDblClk(nFlags, point);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	   	If non-null, the text.
+ * \param [in,out]	pszTextDown	If non-null, the text down.
+ * \param 		  	nNbr	   	Number of.
+ **************************************************************************************************/
+
 void CMenuBtn::SetText(TCHAR* pszText,TCHAR* pszTextDown,int nNbr) 
 {
 	_tcscpy(m_pszText,pszText);
 	_tcscpy(m_pszTextDown,pszTextDown);
 	m_nNbr=nNbr;
 }
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	   	If non-null, the text.
+ * \param [in,out]	pszTextDown	If non-null, the text down.
+ * \param 		  	nNbr	   	Number of.
+ **************************************************************************************************/
 
 void CMenuBtn::RefreshText(TCHAR* pszText,TCHAR* pszTextDown,int nNbr) 
 {
@@ -321,12 +425,34 @@ void CMenuBtn::RefreshText(TCHAR* pszText,TCHAR* pszTextDown,int nNbr)
 	UpdateWindow();
 }
 
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	   	The text.
+ * \param [in,out]	pszTextDown	The text down.
+ * \param 		  	nNbr	   	Number of.
+ **************************************************************************************************/
+
 void CMenuBtn::SetText(CStringW& pszText,CStringW& pszTextDown,int nNbr) 
 {
 	_tcscpy(m_pszText,pszText);
 	_tcscpy(m_pszTextDown,pszTextDown);
 	m_nNbr=nNbr;
 }
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	   	The text.
+ * \param [in,out]	pszTextDown	The text down.
+ * \param 		  	nNbr	   	Number of.
+ **************************************************************************************************/
 
 void CMenuBtn::RefreshText(CStringW& pszText,CStringW& pszTextDown,int nNbr) 
 {
@@ -335,17 +461,31 @@ void CMenuBtn::RefreshText(CStringW& pszText,CStringW& pszTextDown,int nNbr)
 	UpdateWindow();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets button identifier
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The button identifier.
+ **************************************************************************************************/
+
 int CMenuBtn::GetBtnId()
 {
 	return m_btn.wID;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CMenuBtn::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -374,9 +514,18 @@ BOOL CMenuBtn::PreTranslateMessage(MSG* pMsg)
 	return CButton::PreTranslateMessage(pMsg);
 }
 
+/**********************************************************************************************//**
+ * Query if 'oldTickCount' is safe tick count delay expired
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	oldTickCount	Number of old ticks.
+ * \param	delay			The delay.
+ *
+ * \return	True if safe tick count delay expired, false if not.
+ **************************************************************************************************/
 
-
-//rkuTICKCOUNT
 bool CMenuBtn::isSafeTickCountDelayExpired(DWORD oldTickCount, UINT delay)////used to check if old tick count plus delay is still lower than actual tickCount, (dwLastTickCount+DELAY<getTickCount64())
 {
 	bool bExpired=false;

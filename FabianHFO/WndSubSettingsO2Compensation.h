@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsO2Compensation.h.
+ *
+ * Declares the window sub settings o 2 compensation class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 #include "DTUpDwnBtn.h"

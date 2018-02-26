@@ -36,9 +36,6 @@ END_MESSAGE_MAP()
 
 
 // CWndSubSettingsPpsvAbsolute message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsPpsvAbsolute::Initialize()
 {
 	CClientDC dc(this);
@@ -66,9 +63,6 @@ void CWndSubSettingsPpsvAbsolute::Initialize()
 	//test
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsPpsvAbsolute::Draw()
 {
 	RECT rcCl;
@@ -152,9 +146,6 @@ void CWndSubSettingsPpsvAbsolute::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CWndSubSettingsPpsvAbsolute::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -220,9 +211,6 @@ BOOL CWndSubSettingsPpsvAbsolute::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsPpsvAbsolute::SetPPSVasDeltaPEEPValue(UINT btn)
 {
 	switch(btn)
@@ -242,9 +230,6 @@ void CWndSubSettingsPpsvAbsolute::SetPPSVasDeltaPEEPValue(UINT btn)
 	getModel()->getDATAHANDLER()->setPpsvAsDeltaPEEPValue(m_bPPSVasDeltaPEEPValue);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsPpsvAbsolute::OnBnClicked1()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_1);
@@ -256,9 +241,6 @@ void CWndSubSettingsPpsvAbsolute::OnBnClicked1()
 		SetPPSVasDeltaPEEPValue(IDC_BTN_SETUP_1);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsPpsvAbsolute::OnBnClicked2()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_2);
@@ -270,15 +252,6 @@ void CWndSubSettingsPpsvAbsolute::OnBnClicked2()
 		SetPPSVasDeltaPEEPValue(IDC_BTN_SETUP_2);
 	}
 }
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsPpsvAbsolute::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CWndSubSettingsPpsvAbsolute::OnDestroy()
 {
 	CWndSubSettings::OnDestroy();

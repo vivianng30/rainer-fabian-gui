@@ -5,17 +5,39 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsTubeset.h"
 
-
-
-// CWndSubSettingsTubeset
+/**********************************************************************************************//**
+ * CWndSubSettingsTubeset
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsTubeset, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsTubeset class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsTubeset::CWndSubSettingsTubeset(UINT viewFlag):
 CWndSubSettings(viewFlag)
 {
 	m_eTubeSet=TUBE_MEDIJET;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsTubeset class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsTubeset::~CWndSubSettingsTubeset()
 {
@@ -34,12 +56,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsTubeset, CWnd)
 	//ON_BN_CLICKED(IDC_BTN_SETUP_7, &CWndSubSettingsAutoOxyCal::OnBnClicked7)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsTubeset message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsTubeset message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsTubeset::Initialize()
 {
 	CClientDC dc(this);
@@ -84,9 +107,13 @@ void CWndSubSettingsTubeset::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsTubeset::Draw()
 {
 	RECT rcCl;
@@ -171,9 +198,17 @@ void CWndSubSettingsTubeset::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsTubeset::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -239,9 +274,15 @@ BOOL CWndSubSettingsTubeset::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets tube set
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn	The button.
+ **************************************************************************************************/
+
 void CWndSubSettingsTubeset::SetTubeSet(UINT btn)
 {
 	switch(btn)
@@ -266,9 +307,13 @@ void CWndSubSettingsTubeset::SetTubeSet(UINT btn)
 	getModel()->getDATAHANDLER()->SetTubeSet(m_eTubeSet);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsTubeset::OnBnClicked1()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_1);
@@ -280,9 +325,14 @@ void CWndSubSettingsTubeset::OnBnClicked1()
 		SetTubeSet(IDC_BTN_SETUP_1);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsTubeset::OnBnClicked2()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_2);
@@ -295,9 +345,13 @@ void CWndSubSettingsTubeset::OnBnClicked2()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked 3 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsTubeset::OnBnClicked3()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_3);
@@ -309,15 +363,14 @@ void CWndSubSettingsTubeset::OnBnClicked3()
 		SetTubeSet(IDC_BTN_SETUP_3);
 	}
 }
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsTubeset::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsTubeset::OnDestroy()
 {
 	CWndSubSettings::OnDestroy();

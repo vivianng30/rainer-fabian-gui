@@ -7,14 +7,69 @@
 
 extern CEvent g_eventSPO2Data;
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtsubbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTSUBBTNDW			0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndis
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDIS				0x00828282
-// CWndDataSPO2
+
+/**********************************************************************************************//**
+ * CWndDataSPO2
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndDataSPO2, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndDataSPO2 class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndDataSPO2::CWndDataSPO2()
 {
@@ -81,6 +136,13 @@ CWndDataSPO2::CWndDataSPO2()
 	penLine.CreatePen(PS_SOLID,1,RGB(140,140,140));//rkuNEWFIX
 	penBlueVal.CreatePen(PS_SOLID,2,RGB(0,0,255));//rkuNEWFIX
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndDataSPO2 class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndDataSPO2::~CWndDataSPO2()
 {
@@ -160,6 +222,15 @@ CWndDataSPO2::~CWndDataSPO2()
 	DeleteCriticalSection(&csDoThread);
 }
 
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CWndDataSPO2::getModel()
 {
 	if(m_pModel==NULL)
@@ -173,12 +244,20 @@ BEGIN_MESSAGE_MAP(CWndDataSPO2, CWnd)
 	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndDataSPO2 message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CWndDataSPO2 message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CWndDataSPO2::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	bool bRes=false;
@@ -480,6 +559,13 @@ BOOL CWndDataSPO2::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateCont
 	return bRes;
 }
 
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataSPO2::Init()
 {
 	EnterCriticalSection(&csValues);
@@ -542,6 +628,15 @@ void CWndDataSPO2::Init()
 	}
 }
 
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CWndDataSPO2::Show(bool bShow)
 {
 	if(bShow)
@@ -555,15 +650,13 @@ void CWndDataSPO2::Show(bool bShow)
 	}
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndDataSPO2::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataSPO2::OnDestroy()
 {
 	KillTimer(PICORANGETIMER);
@@ -598,6 +691,13 @@ void CWndDataSPO2::OnDestroy()
 		DeleteDC(m_hDC);
 }
 
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataSPO2::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -606,6 +706,17 @@ void CWndDataSPO2::OnPaint()
 	//DEBUGMSG(TRUE, (TEXT("CWndDataSPO2::OnPaint\r\n")));
 }
 
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bStatic   	True to static.
+ * \param	bValues   	True to values.
+ * \param	bPRICOSpO2	True to prico sp o 2.
+ * \param	bPRICOFiO2	True to prico fi o 2.
+ **************************************************************************************************/
 
 void CWndDataSPO2::Draw(bool bStatic, bool bValues, bool bPRICOSpO2, bool bPRICOFiO2)
 {
@@ -623,6 +734,13 @@ void CWndDataSPO2::Draw(bool bStatic, bool bValues, bool bPRICOSpO2, bool bPRICO
 	if(bPRICOFiO2 && getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
 		drawPRICOFiO2();
 }
+
+/**********************************************************************************************//**
+ * Draw static
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndDataSPO2::DrawStatic()
 {
@@ -957,6 +1075,13 @@ void CWndDataSPO2::DrawStatic()
 	SelectObject(m_hdcStatic,hPrevFont);
 }
 
+/**********************************************************************************************//**
+ * Draw values
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataSPO2::DrawValues()
 {
 	CClientDC dc(this);
@@ -1159,18 +1284,16 @@ void CWndDataSPO2::DrawValues()
 	DeleteDC(hdcMem);
 }
 
-
-
-//=============================================================================
-/**
- * @brief Draws the bargraph for SpO2
+/**********************************************************************************************//**
+ * Draw prico sp o 2
+ * 
+ * This function draws the bargraph for SpO2 range settings and the actual SpO2 value into the
+ * bargraph depending on alarm limit of SPO2.
  *
- *   This function draws the bargraph for SpO2 range settings
- *   and the actual SpO2 value into the bargraph
- *   depending on alarm limit of SPO2.
- *
- **/
-//=============================================================================
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataSPO2::drawPRICOSpO2()
 {
 	//DEBUGMSG(TRUE, (TEXT("drawPRICOSpO2\r\n")));
@@ -1295,9 +1418,13 @@ void CWndDataSPO2::drawPRICOSpO2()
 	DeleteDC(hdcMem);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw prico fi o 2
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataSPO2::drawPRICOFiO2()
 {
 	//DEBUGMSG(TRUE, (TEXT("drawPRICOFiO2\r\n")));
@@ -1403,10 +1530,13 @@ void CWndDataSPO2::drawPRICOFiO2()
 	DeleteDC(hdcMem);
 }
 
+/**********************************************************************************************//**
+ * Starts spo 2 data thread
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-/***************************************************************************/
-//     Purpose: 
-//**************************************************************************/
 void CWndDataSPO2::StartSPO2DataThread( void )
 {
 	startThread();
@@ -1428,16 +1558,14 @@ void CWndDataSPO2::StartSPO2DataThread( void )
 	m_pcwtSPO2DataThread->m_bAutoDelete = FALSE; 
 	m_pcwtSPO2DataThread->ResumeThread();
 }
-//************************************
-// Method:    StopSPO2DataThread
-// FullName:  CWndDataSPO2::StopSPO2DataThread
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * Stops spo 2 data thread
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataSPO2::StopSPO2DataThread( void )
 {
 	if(doThread())
@@ -1456,6 +1584,16 @@ void CWndDataSPO2::StopSPO2DataThread( void )
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the thread operation
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CWndDataSPO2::doThread()
 {
 	bool bRes=false;
@@ -1464,28 +1602,51 @@ bool CWndDataSPO2::doThread()
 	LeaveCriticalSection(&csDoThread);
 	return bRes;
 }
+
+/**********************************************************************************************//**
+ * Starts a thread
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataSPO2::startThread()
 {
 	EnterCriticalSection(&csDoThread);
 	m_bDoThread=true;
 	LeaveCriticalSection(&csDoThread);
 }
+
+/**********************************************************************************************//**
+ * Stops a thread
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataSPO2::stopThread()
 {
 	EnterCriticalSection(&csDoThread);
 	m_bDoThread=false;
 	LeaveCriticalSection(&csDoThread);
 }
-//************************************
-// Method:    CSPO2DataThread
-// FullName:  CSPO2DataThread
-// Access:    public static 
-// Returns:   UINT
-// Qualifier:
-// Parameter: LPVOID pc
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+
+/**********************************************************************************************//**
+ * ************************************
+ *  Method:    CSPO2DataThread FullName:  CSPO2DataThread Access:    public static Returns:
+ *  UINT Qualifier: Parameter: LPVOID pc
+ * 
+ *  2015/06/19: checked for correct closing of thread
+ * ************************************
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	pc	The PC.
+ *
+ * \return	An UINT.
+ **************************************************************************************************/
+
 static UINT CSPO2DataThread( LPVOID pc )
 {
 	try
@@ -1515,16 +1676,15 @@ static UINT CSPO2DataThread( LPVOID pc )
 	return TRUE;
 }
 
-//************************************
-// Method:    SPO2Data
-// FullName:  CWndDataSPO2::SPO2Data
-// Access:    private 
-// Returns:   DWORD
-// Qualifier:
-// Parameter: void
-//
-// 2015/06/19: checked for correct closing of thread
-//************************************
+/**********************************************************************************************//**
+ * Spo 2 data
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	A DWORD.
+ **************************************************************************************************/
+
 DWORD CWndDataSPO2::SPO2Data(void) 
 {
 	CeSetThreadPriority(m_pcwtSPO2DataThread->m_hThread,256);
@@ -1651,16 +1811,27 @@ DWORD CWndDataSPO2::SPO2Data(void)
 	return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw measured fi o 2 value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataSPO2::drawMeasuredFiO2Value()
 {
 	g_eventSPO2Data.SetEvent();
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets fio 2 lower wvalue
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	iFIO2LOWvalue	Zero-based index of the fio 2 lower wvalue.
+ **************************************************************************************************/
+
 void CWndDataSPO2::setFIO2LOWvalue(BYTE iFIO2LOWvalue)
 {
 	EnterCriticalSection(&csValues);
@@ -1676,9 +1847,16 @@ void CWndDataSPO2::setFIO2LOWvalue(BYTE iFIO2LOWvalue)
 		Draw(false, false, false, true);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets fio 2 hig hvalue
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	iFIO2HIGHvalue	Zero-based index of the fio 2 hig hvalue.
+ **************************************************************************************************/
+
 void CWndDataSPO2::setFIO2HIGHvalue(BYTE iFIO2HIGHvalue)
 {
 	EnterCriticalSection(&csValues);
@@ -1695,9 +1873,15 @@ void CWndDataSPO2::setFIO2HIGHvalue(BYTE iFIO2HIGHvalue)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets spo 2 lower wvalue
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	iSPO2LOWvalue	Zero-based index of the spo 2 lower wvalue.
+ **************************************************************************************************/
+
 void CWndDataSPO2::setSPO2LOWvalue(BYTE iSPO2LOWvalue)
 {
 	EnterCriticalSection(&csValues);
@@ -1713,9 +1897,16 @@ void CWndDataSPO2::setSPO2LOWvalue(BYTE iSPO2LOWvalue)
 		Draw(false, false, true, false);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Sets spo 2 hig hvalue
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	iSPO2HIGHvalue	Zero-based index of the spo 2 hig hvalue.
+ **************************************************************************************************/
+
 void CWndDataSPO2::setSPO2HIGHvalue(BYTE iSPO2HIGHvalue)
 {
 	EnterCriticalSection(&csValues);
@@ -1732,9 +1923,15 @@ void CWndDataSPO2::setSPO2HIGHvalue(BYTE iSPO2HIGHvalue)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets pric orunning
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CWndDataSPO2::setPRICOrunning(bool state)
 {
 	if(state==true)
@@ -1743,16 +1940,39 @@ void CWndDataSPO2::setPRICOrunning(bool state)
 		m_pcPRICO_OnOff->Depress(false);
 }
 
+/**********************************************************************************************//**
+ * Enables the pric obtn
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataSPO2::enablePRICObtn()
 {
 	if(m_pcPRICO_OnOff)
 		m_pcPRICO_OnOff->EnableWindow(TRUE);
 }
+
+/**********************************************************************************************//**
+ * Disables the pric obtn
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataSPO2::disablePRICObtn()
 {
 	if(m_pcPRICO_OnOff)
 		m_pcPRICO_OnOff->EnableWindow(FALSE);
 }
+
+/**********************************************************************************************//**
+ * Check pric ostate
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataSPO2::checkPRICOstate()
 {
 	eAlarm curAlarm=getModel()->getALARMHANDLER()->getActiveAlarm();
@@ -1809,6 +2029,12 @@ void CWndDataSPO2::checkPRICOstate()
 		GetParent()->PostMessage(WM_SETVIEWFOCUS);
 }
 
+/**********************************************************************************************//**
+ * Updates the messure data
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndDataSPO2::UpdateMessureData()
 {
@@ -1816,6 +2042,12 @@ void CWndDataSPO2::UpdateMessureData()
 	//Draw(bLimits,bLimits);
 }
 
+/**********************************************************************************************//**
+ * Updates the limit data
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndDataSPO2::UpdateLimitData()
 {
@@ -1856,6 +2088,19 @@ void CWndDataSPO2::UpdateLimitData()
 
 	Draw(false, true, true, false);
 }
+
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
 LRESULT CWndDataSPO2::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
@@ -1951,6 +2196,14 @@ LRESULT CWndDataSPO2::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is limit button depressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if limit button depressed, false if not.
+ **************************************************************************************************/
 
 bool CWndDataSPO2::isLimitBtnDepressed()
 {
@@ -1975,6 +2228,13 @@ bool CWndDataSPO2::isLimitBtnDepressed()
 	return bDepressed;
 }
 
+/**********************************************************************************************//**
+ * Sets all button unpressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataSPO2::SetAllButtonUnpressed()
 {
 	POSITION pos;
@@ -1995,6 +2255,15 @@ void CWndDataSPO2::SetAllButtonUnpressed()
 		theApp.ReportException(_T("CWndDataSPO2::SetAllButtonUnpressed"));
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
 
 void CWndDataSPO2::OnTimer(UINT_PTR nIDEvent)
 {

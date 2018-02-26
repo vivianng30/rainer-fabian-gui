@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	SubViewCalFlowSensor.h.
+ *
+ * Declares the sub view calendar flow sensor class
+ **************************************************************************************************/
+
 #pragma once
 #include "PushBtn.h"
 #include "Bmp.h"

@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsSPO2sensitivity.h.
+ *
+ * Declares the window sub settings spo 2sensitivity class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 

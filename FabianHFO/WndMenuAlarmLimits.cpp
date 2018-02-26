@@ -8,9 +8,31 @@
 #include "globDefs.h"
 #include "MVViewHandler.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 
@@ -20,11 +42,26 @@
 
 //extern CLangAdmin* g_pGlobalLanguageStrings;
 
-
-
-// CWndMenuAlarmLimits
+/**********************************************************************************************//**
+ * CWndMenuAlarmLimits
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndMenuAlarmLimits, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndMenuAlarmLimits class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	parentView	If non-null, the parent view.
+ **************************************************************************************************/
 
 CWndMenuAlarmLimits::CWndMenuAlarmLimits(CMVView *parentView)
 {
@@ -78,6 +115,13 @@ CWndMenuAlarmLimits::CWndMenuAlarmLimits(CMVView *parentView)
 	m_pcNumeric_Up=NULL;
 	m_pcNumeric_Dw=NULL;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndMenuAlarmLimits class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndMenuAlarmLimits::~CWndMenuAlarmLimits()
 {
@@ -137,9 +181,15 @@ CWndMenuAlarmLimits::~CWndMenuAlarmLimits()
 	//m_pcNumeric_Fc=NULL;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CWndMenuAlarmLimits::getModel()
 {
 	if(m_pModel==NULL)
@@ -158,12 +208,20 @@ BEGIN_MESSAGE_MAP(CWndMenuAlarmLimits, CWnd)
 	ON_BN_CLICKED(IDC_BTN_ALARM5, &CWndMenuAlarmLimits::OnBnClickedMenu5)*/
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndMenuAlarmLimits message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CWndMenuAlarmLimits message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CWndMenuAlarmLimits::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -193,9 +251,13 @@ BOOL CWndMenuAlarmLimits::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCre
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuAlarmLimits::Init()
 {
 	CClientDC dc(this);
@@ -438,9 +500,15 @@ void CWndMenuAlarmLimits::Init()
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CWndMenuAlarmLimits::Show(BOOL bShow)
 {
 	if(this->IsWindowVisible() == bShow)
@@ -462,9 +530,13 @@ void CWndMenuAlarmLimits::Show(BOOL bShow)
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows the menu button
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuAlarmLimits::ShowMenuBtn()
 {
 	if(getModel()->getCONFIG()->IsEnableAutolimitActive())
@@ -503,9 +575,13 @@ void CWndMenuAlarmLimits::ShowMenuBtn()
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Hides the menu button
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuAlarmLimits::HideMenuBtn()
 {
 	/*if(m_pcMenu1)
@@ -522,6 +598,18 @@ void CWndMenuAlarmLimits::HideMenuBtn()
 		m_pcMenuNum->ShowWindow(SW_HIDE);
 }
 
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
 LRESULT CWndMenuAlarmLimits::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
@@ -629,6 +717,13 @@ LRESULT CWndMenuAlarmLimits::WindowProc(UINT message, WPARAM wParam, LPARAM lPar
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
+/**********************************************************************************************//**
+ * Refresh current a limit numeric
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuAlarmLimits::refreshCurALimitNumeric()
 {
 	eALimitNumeric eCurALimitNumeric=getModel()->getCONFIG()->getCurALimitNumeric();
@@ -696,12 +791,27 @@ void CWndMenuAlarmLimits::refreshCurALimitNumeric()
 //	/*if(AfxGetApp())
 //		AfxGetApp()->GetMainWnd()->PostMessage(WM_CALCULATE_ALL_AUTOLIMIT);*/
 //}
+
+/**********************************************************************************************//**
+ * Executes the button clicked menu 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuAlarmLimits::OnBnClickedMenu2()
 {
 	/*CMVEventUI event(CMVEventUI::EV_BN_ALIMIT2);
 	getModel()->Trigger(&event);*/
 	m_parentView->PostMessage(WM_ALIMIT_AUTOSET_SINGLE);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked menu 3 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndMenuAlarmLimits::OnBnClickedMenu3()
 {
@@ -736,11 +846,25 @@ void CWndMenuAlarmLimits::OnBnClickedMenu3()
 //		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_RESET_ALARMS);
 //}
 
+/**********************************************************************************************//**
+ * Executes the button clicked menu 5 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuAlarmLimits::OnBnClickedMenu5()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_ALIMIT5);
 }
+
+/**********************************************************************************************//**
+ * Executes the button a limit numeric action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndMenuAlarmLimits::OnBnALimitNumeric()
 {
@@ -819,9 +943,13 @@ void CWndMenuAlarmLimits::OnBnALimitNumeric()
 		m_parentView->PostMessage(WM_EV_ALIMIT_NUMERIC);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuAlarmLimits::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -832,15 +960,13 @@ void CWndMenuAlarmLimits::OnPaint()
 	// CMVView::OnPaint() soll zum Zeichnen von Meldungen nicht aufgerufen werden.
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndMenuAlarmLimits::OnDestroy
-// Access:    protected 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndMenuAlarmLimits::OnDestroy() 
 {
 	CWnd::OnDestroy();

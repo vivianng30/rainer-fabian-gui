@@ -5,11 +5,26 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsBackupSound.h"
 
-
-
-// CWndSubSettingsBackupSound
+/**********************************************************************************************//**
+ * CWndSubSettingsBackupSound
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsBackupSound, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsBackupSound class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsBackupSound::CWndSubSettingsBackupSound(UINT viewFlag):
 CWndSubSettings(viewFlag)
@@ -17,6 +32,13 @@ CWndSubSettings(viewFlag)
 	m_bBeep=false;
 	m_slider=NULL;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsBackupSound class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsBackupSound::~CWndSubSettingsBackupSound()
 {
@@ -31,12 +53,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsBackupSound, CWnd)
 	ON_MESSAGE(WM_BITMAPSLIDER_MOVING, OnMyMessage)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsBackupSound message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsBackupSound message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsBackupSound::Initialize()
 {
 	CClientDC dc(this);
@@ -72,9 +95,13 @@ void CWndSubSettingsBackupSound::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsBackupSound::Draw()
 {
 	RECT rcCl;
@@ -160,9 +187,17 @@ void CWndSubSettingsBackupSound::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsBackupSound::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -225,20 +260,30 @@ BOOL CWndSubSettingsBackupSound::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsBackupSound::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CWndSubSettingsBackupSound::OnDestroy()
 {
 	CWndSubSettings::OnDestroy();
 }
+
+/**********************************************************************************************//**
+ * Executes my message action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	wParam	The wParam field of the message.
+ * \param	lParam	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndSubSettingsBackupSound::OnMyMessage(WPARAM wParam, LPARAM lParam)
 {
 	switch(wParam)

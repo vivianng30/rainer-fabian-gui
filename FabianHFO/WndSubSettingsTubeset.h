@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsTubeset.h.
+ *
+ * Declares the window sub settings tubeset class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 

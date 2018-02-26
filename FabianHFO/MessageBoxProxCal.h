@@ -1,3 +1,12 @@
+/**********************************************************************************************//**
+ * \class	CMessageBoxProxCal
+ *
+ * \brief	Message box for Proxymal Pressure Calibration.
+ * 			
+ * \author	Rainer Kuehner
+ * \date 2017-10-23 Creation of file
+ * 			
+ **************************************************************************************************/
 #pragma once
 #include "afxwin.h"
 #include "MVModel.h"

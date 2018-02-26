@@ -6,9 +6,28 @@
 #include "FabianHFO.h"
 #include "globDefs.h"
 
-// CKbrdBtn
+/**********************************************************************************************//**
+ * CKbrdBtn
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CKbrdBtn, CBtn)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CKbrdBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	btn			The button.
+ * \param 		  	cr			The carriage return.
+ * \param 		  	bTwoLine	True to two line.
+ **************************************************************************************************/
 
 CKbrdBtn::CKbrdBtn(BTN &btn,COLORREF cr, bool bTwoLine) : CBtn(btn,cr)
 {
@@ -42,6 +61,13 @@ CKbrdBtn::CKbrdBtn(BTN &btn,COLORREF cr, bool bTwoLine) : CBtn(btn,cr)
 
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CKbrdBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CKbrdBtn::~CKbrdBtn()
 {
 
@@ -65,8 +91,20 @@ BEGIN_MESSAGE_MAP(CKbrdBtn, CBtn)
 	//ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CKbrdBtn-Meldungshandler
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	hFont	  	The font.
+ * \param 		  	nXOffset  	The x coordinate offset.
+ * \param 		  	dwStyle   	The style.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// CKbrdBtn-Meldungshandler
 BOOL CKbrdBtn::Create(CWnd* pParentWnd, HFONT hFont, int nXOffset, DWORD	dwStyle) 
 {
 	SIZE sz;
@@ -93,6 +131,17 @@ BOOL CKbrdBtn::Create(CWnd* pParentWnd, HFONT hFont, int nXOffset, DWORD	dwStyle
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszTextTop   	The text top.
+ * \param [in,out]	pszTextBottom	The text bottom.
+ * \param 		  	nNbr		 	Number of.
+ **************************************************************************************************/
+
 void CKbrdBtn::SetText(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr)
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),pszTextTop);
@@ -101,6 +150,17 @@ void CKbrdBtn::SetText(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr)
 	m_nNbr=nNbr;
 }
 
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszTextTop   	If non-null, the text top.
+ * \param [in,out]	pszTextBottom	If non-null, the text bottom.
+ * \param 		  	nNbr		 	Number of.
+ **************************************************************************************************/
+
 void CKbrdBtn::SetText(TCHAR* pszTextTop,TCHAR* pszTextBottom,int nNbr)
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),pszTextTop);
@@ -108,55 +168,145 @@ void CKbrdBtn::SetText(TCHAR* pszTextTop,TCHAR* pszTextBottom,int nNbr)
 	_tcscpy_s(m_pszTextBottom,_countof(m_pszText),pszTextBottom);
 	m_nNbr=nNbr;
 }
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszTextTop   	If non-null, the text top.
+ * \param [in,out]	pszTextBottom	If non-null, the text bottom.
+ * \param 		  	nNbr		 	Number of.
+ **************************************************************************************************/
+
 void CKbrdBtn::RefreshText(TCHAR* pszTextTop,TCHAR* pszTextBottom,int nNbr)
 {
 	SetText(pszTextTop,pszTextBottom,nNbr);
 	Invalidate();
 	UpdateWindow();
 }
+
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	If non-null, the text.
+ * \param 		  	nNbr   	Number of.
+ **************************************************************************************************/
+
 void CKbrdBtn::SetText(TCHAR* pszText, int nNbr) 
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),pszText);
 	m_nNbr=nNbr;
 }
+
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText	The text.
+ * \param 		  	nNbr  	Number of.
+ **************************************************************************************************/
+
 void CKbrdBtn::SetText(CStringW& szText, int nNbr) 
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),szText);
 	m_nNbr=nNbr;
 }
 
+/**********************************************************************************************//**
+ * Gets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText	If non-null, the text.
+ **************************************************************************************************/
+
 void CKbrdBtn::GetText(TCHAR* szText)
 {
 	_tcscpy_s(szText,_countof(m_pszText),m_pszText);
 }
+
+/**********************************************************************************************//**
+ * Gets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszTextTop   	If non-null, the text top.
+ * \param [in,out]	pszTextBottom	If non-null, the text bottom.
+ **************************************************************************************************/
+
 void CKbrdBtn::GetText(TCHAR* pszTextTop,TCHAR* pszTextBottom)
 {
 	_tcscpy_s(pszTextTop,_countof(m_pszText),m_pszTextTop);
 	_tcscpy_s(pszTextBottom,_countof(m_pszText),m_pszTextBottom);
 }
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText	The text.
+ * \param 		  	nNbr  	Number of.
+ **************************************************************************************************/
+
 void CKbrdBtn::RefreshText(CStringW& szText, int nNbr) 
 {
 	SetText(szText,nNbr);
 	Invalidate();
 	UpdateWindow();
 } 
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	If non-null, the text.
+ * \param 		  	nNbr   	Number of.
+ **************************************************************************************************/
+
 void CKbrdBtn::RefreshText(TCHAR* pszText, int nNbr) 
 {
 	SetText(pszText,nNbr);
 	Invalidate();
 	UpdateWindow();
 } 
+
+/**********************************************************************************************//**
+ * Sets a character
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	t	A TCHAR to process.
+ **************************************************************************************************/
+
 void CKbrdBtn::SetChar(TCHAR t) 
 {
 	m_pszText[0]=t;
 	m_pszText[1]=0x0000;
 }
 
+/**********************************************************************************************//**
+ * Draw item
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	lpDrawItemStruct	The draw item structure.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// Painting
-// **************************************************************************
 void CKbrdBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
 	//	Rectangle(lpDrawItemStruct->hDC,0,0,m_rcClient.right,m_rcClient.bottom);
@@ -191,6 +341,15 @@ void CKbrdBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
 void CKbrdBtn::Draw(int nState/*,TCHAR* psz*/)
 {
@@ -264,6 +423,18 @@ void CKbrdBtn::Draw(int nState/*,TCHAR* psz*/)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets the bitmaps
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pcBmpUp		 	If non-null, the PC bitmap up.
+ * \param [in,out]	pcBmpDown	 	If non-null, the PC bitmap down.
+ * \param [in,out]	pcBmpDisabled	If non-null, the PC bitmap disabled.
+ * \param [in,out]	pcBmpFocus   	If non-null, the PC bitmap focus.
+ **************************************************************************************************/
+
 void CKbrdBtn::SetBitmaps(CBmp* pcBmpUp,CBmp* pcBmpDown,CBmp* pcBmpDisabled,CBmp* pcBmpFocus)
 {
 	if(m_btn.pcBmpUp!=pcBmpUp)
@@ -277,10 +448,16 @@ void CKbrdBtn::SetBitmaps(CBmp* pcBmpUp,CBmp* pcBmpDown,CBmp* pcBmpDisabled,CBmp
 	}
 }
 
-// **************************************************************************
-// "Button" is very slow - this code permforms speed up - but
-//              use of double click is not possible any more
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the l button double clock action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CKbrdBtn::OnLButtonDblClk(UINT nFlags, CPoint point) 
 {
 	DWORD lParam;
@@ -290,6 +467,16 @@ void CKbrdBtn::OnLButtonDblClk(UINT nFlags, CPoint point)
 	SendMessage(WM_LBUTTONDOWN,nFlags,lParam);
 	CButton::OnLButtonDblClk(nFlags, point);
 }
+
+/**********************************************************************************************//**
+ * Executes the l button down action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CKbrdBtn::OnLButtonDown(UINT nFlags, CPoint point) 
 {
@@ -301,9 +488,15 @@ void CKbrdBtn::OnLButtonDown(UINT nFlags, CPoint point)
 	}
 }
 
-
-
-
+/**********************************************************************************************//**
+ * Executes the l button up action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CKbrdBtn::OnLButtonUp(UINT nFlags, CPoint point) 
 {

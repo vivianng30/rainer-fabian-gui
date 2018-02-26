@@ -6,16 +6,62 @@
 #include "WndSubSettings.h"
 #include "DlgMessageBox.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines maxvalues
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 #define MAXVALUES	7
 
-
-// CSubViewSettings
+/**********************************************************************************************//**
+ * CSubViewSettings
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettings, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettings class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettings::CWndSubSettings(UINT viewFlag)
 {
@@ -68,6 +114,13 @@ CWndSubSettings::CWndSubSettings(UINT viewFlag)
 	m_dwLastSetupTimer=0;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettings class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CWndSubSettings::~CWndSubSettings()
 {
 	/*m_pcBack_Up=NULL;
@@ -91,22 +144,36 @@ BEGIN_MESSAGE_MAP(CWndSubSettings, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SETUP_7, &CWndSubSettings::OnBnClicked7)*/
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettings message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
 
-
-// CWndSubSettings message handlers
-
-// **************************************************************************
-// 
-// **************************************************************************
 CMVModel *CWndSubSettings::getModel()
 {
 	if(m_pModel==NULL)
 		m_pModel=CMVModel::GetInstance();
 	return m_pModel;
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Creates a window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CWndSubSettings::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext)
 {
 	if (!Create(pParentWnd, rc, nID, pContext))
@@ -119,9 +186,20 @@ bool CWndSubSettings::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCrea
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	m_lX=rc.right-rc.left;
@@ -374,9 +452,13 @@ BOOL CWndSubSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateC
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettings::Initialize()
 {
 	//CClientDC dc(this);
@@ -386,9 +468,15 @@ void CWndSubSettings::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CWndSubSettings::Show(bool bShow)
 {
 	if(bShow)
@@ -403,15 +491,13 @@ void CWndSubSettings::Show(bool bShow)
 	}
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettings::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettings::OnDestroy()
 {
 	m_plBtn.RemoveAll();
@@ -467,9 +553,13 @@ void CWndSubSettings::OnDestroy()
 
 }
 
-//// **************************************************************************
-//// 
-//// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettings::Draw()
 {
 	RECT rcCl;
@@ -572,9 +662,19 @@ void CWndSubSettings::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndSubSettings::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -633,9 +733,17 @@ LRESULT CWndSubSettings::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 //	return 1;
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettings::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -685,10 +793,15 @@ BOOL CWndSubSettings::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
+/**********************************************************************************************//**
+ * Sets one button depressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettings::SetOneButtonDepressed(int btnID)
 {
 	 if(m_iNumValues==0)
@@ -733,9 +846,15 @@ void CWndSubSettings::SetOneButtonDepressed(int btnID)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets one button focused
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CWndSubSettings::SetOneButtonFocused(int btnID)
 {
 	if(m_iNumValues==0)
@@ -776,9 +895,13 @@ void CWndSubSettings::SetOneButtonFocused(int btnID)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets next button focused
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettings::SetNextButtonFocused()
 {
 	if(m_iNumValues==0)
@@ -855,10 +978,13 @@ void CWndSubSettings::SetNextButtonFocused()
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets previous button focused
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettings::SetPrevButtonFocused()
 {
 	if(m_iNumValues==0)
@@ -931,9 +1057,15 @@ void CWndSubSettings::SetPrevButtonFocused()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets current button state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The current button state.
+ **************************************************************************************************/
+
 eBtnState CWndSubSettings::GetCurrentBtnState()
 {
 	if(m_iNumValues==0)
@@ -958,9 +1090,17 @@ eBtnState CWndSubSettings::GetCurrentBtnState()
 	return BS_NONE;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets button state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	iID	Zero-based index of the identifier.
+ *
+ * \return	The button state.
+ **************************************************************************************************/
+
 eBtnState CWndSubSettings::GetBtnState(int iID)
 {
 	if(m_iNumValues==0)

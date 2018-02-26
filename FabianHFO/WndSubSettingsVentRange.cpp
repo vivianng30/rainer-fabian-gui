@@ -5,17 +5,39 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsVentRange.h"
 
-
-
-// CWndSubSettingsVentRange
+/**********************************************************************************************//**
+ * CWndSubSettingsVentRange
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsVentRange, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsVentRange class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsVentRange::CWndSubSettingsVentRange(UINT viewFlag):
 CWndSubSettings(viewFlag)
 {
 	m_iVentRange=0;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsVentRange class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsVentRange::~CWndSubSettingsVentRange()
 {
@@ -34,12 +56,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsVentRange, CWnd)
 	//ON_BN_CLICKED(IDC_BTN_SETUP_7, &CWndSubSettingsAutoOxyCal::OnBnClicked7)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsVentRange message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsVentRange message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsVentRange::Initialize()
 {
 	CClientDC dc(this);
@@ -75,9 +98,13 @@ void CWndSubSettingsVentRange::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsVentRange::Draw()
 {
 	RECT rcCl;
@@ -201,9 +228,17 @@ void CWndSubSettingsVentRange::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsVentRange::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -269,9 +304,15 @@ BOOL CWndSubSettingsVentRange::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets vent range
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn	The button.
+ **************************************************************************************************/
+
 void CWndSubSettingsVentRange::SetVentRange(UINT btn)
 {
 	switch(btn)
@@ -291,9 +332,13 @@ void CWndSubSettingsVentRange::SetVentRange(UINT btn)
 	//getModel()->getCONFIG()->SetVentRange(m_iVentRange);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsVentRange::OnBnClicked1()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_1);
@@ -305,9 +350,14 @@ void CWndSubSettingsVentRange::OnBnClicked1()
 		SetVentRange(IDC_BTN_SETUP_1);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsVentRange::OnBnClicked2()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_2);
@@ -319,15 +369,14 @@ void CWndSubSettingsVentRange::OnBnClicked2()
 		SetVentRange(IDC_BTN_SETUP_2);
 	}
 }
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsVentRange::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsVentRange::OnDestroy()
 {
 	getModel()->getCONFIG()->SetVentRange(m_iVentRange);

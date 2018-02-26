@@ -1,3 +1,14 @@
+//=============================================================================
+/** 
+* \class CInterfaceTerminal
+* 		 
+* \brief Interface for terminal interface.
+* 		 
+* \author Rainer Kuehner
+* \date 2017-10-23 Creation of file
+*
+**/
+//=============================================================================
 #pragma once
 #include "interface.h"
 #include "globDefs.h"

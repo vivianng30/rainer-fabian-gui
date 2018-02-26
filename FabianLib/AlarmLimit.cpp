@@ -1,5 +1,24 @@
+/**********************************************************************************************//**
+ * \file	AlarmLimit.cpp.
+ *
+ * Implements the alarm limit class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "AlarmLimit.h"
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CAlarmLimit class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	enAlarmLimit	The en alarm limit.
+ * \param	eLimitState 	State of the limit.
+ * \param	iCurValue   	The current value.
+ * \param	iMax			Zero-based index of the maximum.
+ * \param	iMin			Zero-based index of the minimum.
+ **************************************************************************************************/
 
 CAlarmLimit::CAlarmLimit(eAlarmLimits enAlarmLimit,
 						 eAlarmLimitState eLimitState,
@@ -10,17 +29,41 @@ CAlarmLimit::CAlarmLimit(eAlarmLimits enAlarmLimit,
 {
 	InitializeCriticalSection(&csLimitLock);
 }
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CAlarmLimit class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CAlarmLimit::CAlarmLimit():
 m_enAlarmLimit(LI_MVMAX),m_eLimitState(AL_OFF),m_iCurValue(0),m_iMax(0),m_iMin(0)
 {
 	InitializeCriticalSection(&csLimitLock);
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CAlarmLimit class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CAlarmLimit::~CAlarmLimit(void)
 {
 	DeleteCriticalSection(&csLimitLock);
 }
+
+/**********************************************************************************************//**
+ * Gets alarm limit
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The alarm limit.
+ **************************************************************************************************/
+
 eAlarmLimits CAlarmLimit::getAlarmLimit()
 {
 	EnterCriticalSection(&csLimitLock);
@@ -28,12 +71,32 @@ eAlarmLimits CAlarmLimit::getAlarmLimit()
 	LeaveCriticalSection(&csLimitLock);
 	return alarmLimit;
 }
+
+/**********************************************************************************************//**
+ * Sets alarm limit
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	alarmLimit	The alarm limit.
+ **************************************************************************************************/
+
 void CAlarmLimit::setAlarmLimit(eAlarmLimits alarmLimit)
 {
 	EnterCriticalSection(&csLimitLock);
 	m_enAlarmLimit=alarmLimit;
 	LeaveCriticalSection(&csLimitLock);
 }
+
+/**********************************************************************************************//**
+ * Gets current value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The current value.
+ **************************************************************************************************/
+
 int CAlarmLimit::getCurValue()
 {	
 	EnterCriticalSection(&csLimitLock);
@@ -41,12 +104,31 @@ int CAlarmLimit::getCurValue()
 	LeaveCriticalSection(&csLimitLock);
 	return iVal;
 }
+
+/**********************************************************************************************//**
+ * Sets current value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CAlarmLimit::setCurValue(int iVal)
 {
 	EnterCriticalSection(&csLimitLock);
 	m_iCurValue=iVal;
 	LeaveCriticalSection(&csLimitLock);
 }
+
+/**********************************************************************************************//**
+ * Gets maximum value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The maximum value.
+ **************************************************************************************************/
 
 int CAlarmLimit::getMaxValue()
 {
@@ -58,12 +140,31 @@ int CAlarmLimit::getMaxValue()
 
 	return iVal;
 }
+
+/**********************************************************************************************//**
+ * Sets maximum value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CAlarmLimit::setMaxValue(int iVal)
 {
 	EnterCriticalSection(&csLimitLock);
 	m_iMax=iVal;
 	LeaveCriticalSection(&csLimitLock);
 }
+
+/**********************************************************************************************//**
+ * Gets minimum value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The minimum value.
+ **************************************************************************************************/
 
 int CAlarmLimit::getMinValue()
 {
@@ -75,6 +176,16 @@ int CAlarmLimit::getMinValue()
 
 	return iVal;
 }
+
+/**********************************************************************************************//**
+ * Sets minimum value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	iVal	Zero-based index of the value.
+ **************************************************************************************************/
+
 void CAlarmLimit::setMinValue(int iVal)
 {
 	EnterCriticalSection(&csLimitLock);
@@ -82,9 +193,15 @@ void CAlarmLimit::setMinValue(int iVal)
 	LeaveCriticalSection(&csLimitLock);
 }
 
+/**********************************************************************************************//**
+ * Gets limit state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The limit state.
+ **************************************************************************************************/
 
-
-		
 eAlarmLimitState CAlarmLimit::getLimitState()
 {
 	EnterCriticalSection(&csLimitLock);
@@ -92,6 +209,16 @@ eAlarmLimitState CAlarmLimit::getLimitState()
 	LeaveCriticalSection(&csLimitLock);
 	return eState;
 }
+
+/**********************************************************************************************//**
+ * Sets limit state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	eState	The state.
+ **************************************************************************************************/
+
 void CAlarmLimit::setLimitState(eAlarmLimitState eState)
 {
 	EnterCriticalSection(&csLimitLock);

@@ -5,9 +5,28 @@
 #include "AlarmBtn.h"
 #include "globDefs.h"
 
-// CAlarmBtn
+/**********************************************************************************************//**
+ * CAlarmBtn
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CAlarmBtn, CButton)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CAlarmBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn			The button.
+ * \param	cr			The carriage return.
+ * \param	bTwoLine	True to two line.
+ **************************************************************************************************/
 
 CAlarmBtn::CAlarmBtn(const BTN &btn,COLORREF cr, bool bTwoLine):
 m_hDC(NULL),m_hBmp(NULL),m_hBmpPrev(NULL),m_hFont(NULL),m_nNbr(-1),m_nXOffset(0),m_bTwoLine(false),m_bLMouseButtonDown(false)
@@ -25,6 +44,13 @@ m_hDC(NULL),m_hBmp(NULL),m_hBmpPrev(NULL),m_hFont(NULL),m_nNbr(-1),m_nXOffset(0)
 
 	m_bTwoLine = bTwoLine;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CAlarmBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CAlarmBtn::~CAlarmBtn()
 {
@@ -45,8 +71,20 @@ BEGIN_MESSAGE_MAP(CAlarmBtn, CButton)
 	//ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CAlarmBtn-Meldungshandler
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	hFont	  	The font.
+ * \param 		  	nXOffset  	The x coordinate offset.
+ * \param 		  	dwStyle   	The style.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// CAlarmBtn-Meldungshandler
 BOOL CAlarmBtn::Create(CWnd* pParentWnd, HFONT hFont, int nXOffset, DWORD	dwStyle) 
 {
 	SIZE sz;
@@ -73,6 +111,17 @@ BOOL CAlarmBtn::Create(CWnd* pParentWnd, HFONT hFont, int nXOffset, DWORD	dwStyl
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszTextTop   	If non-null, the text top.
+ * \param [in,out]	pszTextBottom	If non-null, the text bottom.
+ * \param 		  	nNbr		 	Number of.
+ * \param 		  	bRefresh	 	True to refresh.
+ **************************************************************************************************/
 
 void CAlarmBtn::SetText(TCHAR* pszTextTop,TCHAR* pszTextBottom,int nNbr,bool bRefresh)
 {
@@ -86,12 +135,36 @@ void CAlarmBtn::SetText(TCHAR* pszTextTop,TCHAR* pszTextBottom,int nNbr,bool bRe
 		UpdateWindow();
 	}
 }
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszTextTop   	If non-null, the text top.
+ * \param [in,out]	pszTextBottom	If non-null, the text bottom.
+ * \param 		  	nNbr		 	Number of.
+ **************************************************************************************************/
+
 void CAlarmBtn::RefreshText(TCHAR* pszTextTop,TCHAR* pszTextBottom,int nNbr)
 {
 	SetText(pszTextTop,pszTextBottom,nNbr);
 	Invalidate();
 	UpdateWindow();
 }
+
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText 	If non-null, the text.
+ * \param 		  	nNbr		Number of.
+ * \param 		  	bRefresh	True to refresh.
+ **************************************************************************************************/
+
 void CAlarmBtn::SetText(TCHAR* pszText, int nNbr,bool bRefresh) 
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),pszText);
@@ -102,6 +175,18 @@ void CAlarmBtn::SetText(TCHAR* pszText, int nNbr,bool bRefresh)
 		UpdateWindow();
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	pszTextTop   	The text top.
+ * \param	pszTextBottom	The text bottom.
+ * \param	nNbr		 	Number of.
+ * \param	bRefresh	 	True to refresh.
+ **************************************************************************************************/
 
 void CAlarmBtn::SetText(const CStringW& pszTextTop,const CStringW& pszTextBottom,int nNbr,bool bRefresh)
 {
@@ -115,12 +200,36 @@ void CAlarmBtn::SetText(const CStringW& pszTextTop,const CStringW& pszTextBottom
 		UpdateWindow();
 	}
 }
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszTextTop   	The text top.
+ * \param [in,out]	pszTextBottom	The text bottom.
+ * \param 		  	nNbr		 	Number of.
+ **************************************************************************************************/
+
 void CAlarmBtn::RefreshText(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr)
 {
 	SetText(pszTextTop,pszTextBottom,nNbr);
 	Invalidate();
 	UpdateWindow();
 }
+
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	szText  	The text.
+ * \param	nNbr		Number of.
+ * \param	bRefresh	True to refresh.
+ **************************************************************************************************/
+
 void CAlarmBtn::SetText(const CStringW& szText, int nNbr,bool bRefresh) 
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),szText);
@@ -131,29 +240,65 @@ void CAlarmBtn::SetText(const CStringW& szText, int nNbr,bool bRefresh)
 		UpdateWindow();
 	}
 }
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText	The text.
+ * \param 		  	nNbr  	Number of.
+ **************************************************************************************************/
+
 void CAlarmBtn::RefreshText(CStringW& szText, int nNbr) 
 {
 	SetText(szText,nNbr);
 	Invalidate();
 	UpdateWindow();
 } 
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	If non-null, the text.
+ * \param 		  	nNbr   	Number of.
+ **************************************************************************************************/
+
 void CAlarmBtn::RefreshText(TCHAR* pszText, int nNbr) 
 {
 	SetText(pszText,nNbr);
 	Invalidate();
 	UpdateWindow();
 } 
+
+/**********************************************************************************************//**
+ * Sets a character
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	t	A TCHAR to process.
+ **************************************************************************************************/
+
 void CAlarmBtn::SetChar(TCHAR t) 
 {
 	m_pszText[0]=t;
 	m_pszText[1]=0x0000;
 }
 
+/**********************************************************************************************//**
+ * Draw item
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	lpDrawItemStruct	The draw item structure.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// Painting
-// **************************************************************************
 void CAlarmBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
 	if (lpDrawItemStruct->itemState & ODS_SELECTED)
@@ -187,6 +332,15 @@ void CAlarmBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
 void CAlarmBtn::Draw(int nState/*,TCHAR* psz*/)
 {
@@ -269,6 +423,18 @@ void CAlarmBtn::Draw(int nState/*,TCHAR* psz*/)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets the bitmaps
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pcBmpUp		 	If non-null, the PC bitmap up.
+ * \param [in,out]	pcBmpDown	 	If non-null, the PC bitmap down.
+ * \param [in,out]	pcBmpDisabled	If non-null, the PC bitmap disabled.
+ * \param [in,out]	pcBmpFocus   	If non-null, the PC bitmap focus.
+ **************************************************************************************************/
+
 void CAlarmBtn::SetBitmaps(CBmp* pcBmpUp,CBmp* pcBmpDown,CBmp* pcBmpDisabled,CBmp* pcBmpFocus)
 {
 	if(m_btn.pcBmpUp!=pcBmpUp)
@@ -282,10 +448,16 @@ void CAlarmBtn::SetBitmaps(CBmp* pcBmpUp,CBmp* pcBmpDown,CBmp* pcBmpDisabled,CBm
 	}
 }
 
-// **************************************************************************
-// Button is very slow - this code permforms speed up - but
-//              use of double click is not possible any more
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the l button double clock action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CAlarmBtn::OnLButtonDblClk(UINT nFlags, CPoint point) 
 {
 	DWORD lParam;
@@ -295,6 +467,16 @@ void CAlarmBtn::OnLButtonDblClk(UINT nFlags, CPoint point)
 	PostMessage(WM_LBUTTONDOWN,nFlags,lParam);
 	CButton::OnLButtonDblClk(nFlags, point);
 }
+
+/**********************************************************************************************//**
+ * Executes the l button down action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CAlarmBtn::OnLButtonDown(UINT nFlags, CPoint point) 
 {
@@ -307,6 +489,16 @@ void CAlarmBtn::OnLButtonDown(UINT nFlags, CPoint point)
 		CButton::OnLButtonDown(nFlags, point);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the l button up action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CAlarmBtn::OnLButtonUp(UINT nFlags, CPoint point) 
 {

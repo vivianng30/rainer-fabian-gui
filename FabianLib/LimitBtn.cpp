@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	LimitBtn.cpp.
+ *
+ * Implements the limit button class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "LimitBtn.h"
 
@@ -11,8 +17,29 @@
 
 CWndDataSPO2* CLimitBtn::WNDDATASPO2=0;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the LimitBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CLimitBtn, CButton)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CLimitBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	parent	   	If non-null, the parent.
+ * \param [in,out]	btn		   	The button.
+ * \param 		  	nOffset	   	The offset.
+ * \param 		  	bScrollOver	True to scroll over.
+ **************************************************************************************************/
 
 CLimitBtn::CLimitBtn(CWndDataSPO2 *parent, BTN &btn, int nOffset,bool bScrollOver)
 {
@@ -73,6 +100,13 @@ CLimitBtn::CLimitBtn(CWndDataSPO2 *parent, BTN &btn, int nOffset,bool bScrollOve
 	m_bScrollOver=bScrollOver;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CLimitBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CLimitBtn::~CLimitBtn()
 {
 	if(m_hDC)
@@ -84,9 +118,15 @@ CLimitBtn::~CLimitBtn()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CLimitBtn::getModel()
 {
 	if(m_pModel==NULL)
@@ -107,9 +147,19 @@ BEGIN_MESSAGE_MAP(CLimitBtn, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CLimitBtn-Meldungshandler
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	dwStyle   	The style.
+ * \param 		  	v		  	A fVALUE to process.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CLimitBtn-Meldungshandler
 BOOL CLimitBtn::Create(CWnd* pParentWnd,DWORD dwStyle, fVALUE v) 
 {
 	SIZE sz;
@@ -138,7 +188,19 @@ BOOL CLimitBtn::Create(CWnd* pParentWnd,DWORD dwStyle, fVALUE v)
 	return 0;
 }
 
-
+/**********************************************************************************************//**
+ * Sets the bitmaps
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pcBmpUp		 	If non-null, the PC bitmap up.
+ * \param [in,out]	pcBmpDown	 	If non-null, the PC bitmap down.
+ * \param [in,out]	pcBmpDisabled	If non-null, the PC bitmap disabled.
+ * \param [in,out]	pcBmpFocus   	If non-null, the PC bitmap focus.
+ * \param 		  	bSignaled	 	True if signaled.
+ * \param 		  	bRedraw		 	True to redraw.
+ **************************************************************************************************/
 
 void CLimitBtn::SetBitmaps(CBmp* pcBmpUp,CBmp* pcBmpDown,CBmp* pcBmpDisabled,CBmp* pcBmpFocus,bool bSignaled,bool bRedraw)
 {
@@ -157,16 +219,29 @@ void CLimitBtn::SetBitmaps(CBmp* pcBmpUp,CBmp* pcBmpDown,CBmp* pcBmpDisabled,CBm
 	}
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is depressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if depressed, false if not.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// Operation methods
-// **************************************************************************
 bool CLimitBtn::IsDepressed( void )
 {
 	// Return the buttons state
 	return m_bDepressed;
 }
+
+/**********************************************************************************************//**
+ * Depress this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CLimitBtn::Depress()
 {
@@ -213,7 +288,19 @@ bool CLimitBtn::Depress()
 	return m_bDepressed;
 }
 
-
+/**********************************************************************************************//**
+ * Sets the colors
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	crTxtUp			The carriage return text up.
+ * \param	crTxtDown   	The carriage return text down.
+ * \param	crSubTxtDown	The carriage return sub text down.
+ * \param	crTxtFocus  	The carriage return text focus.
+ * \param	crDisabel   	The carriage return disabel.
+ * \param	bRefresh		True to refresh.
+ **************************************************************************************************/
 
 void CLimitBtn::SetColors(COLORREF crTxtUp,COLORREF crTxtDown,COLORREF crSubTxtDown,COLORREF crTxtFocus, COLORREF crDisabel, bool bRefresh)
 {
@@ -230,6 +317,15 @@ void CLimitBtn::SetColors(COLORREF crTxtUp,COLORREF crTxtDown,COLORREF crSubTxtD
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets para value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	v	An int to process.
+ **************************************************************************************************/
+
 void CLimitBtn::SetParaValue(int v)
 {
 	bool bRedraw=false;
@@ -245,6 +341,16 @@ void CLimitBtn::SetParaValue(int v)
 
 }
 
+/**********************************************************************************************//**
+ * Sets a value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	v	   	A fVALUE to process.
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CLimitBtn::SetValue(fVALUE v, bool bRedraw) 
 {
 	memcpy(&m_v,&v,sizeof(fVALUE));
@@ -256,6 +362,13 @@ void CLimitBtn::SetValue(fVALUE v, bool bRedraw)
 		RefreshBtn();
 	}
 }
+
+/**********************************************************************************************//**
+ * Refresh button state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CLimitBtn::RefreshBtnState()
 {
@@ -278,6 +391,13 @@ void CLimitBtn::RefreshBtnState()
 	
 }
 
+/**********************************************************************************************//**
+ * Refresh button
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CLimitBtn::RefreshBtn()
 {
 	CClientDC dc(this);
@@ -294,6 +414,17 @@ void CLimitBtn::RefreshBtn()
 	
 }
 
+/**********************************************************************************************//**
+ * Disables the value text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bDisable	True to disable, false to enable.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CLimitBtn::DisableValueText(bool bDisable)
 {
 	m_bDisableText=bDisable;
@@ -302,24 +433,76 @@ bool CLimitBtn::DisableValueText(bool bDisable)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Sets value text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText  	If non-null, the text.
+ * \param 		  	bTextOnly	True to text only.
+ **************************************************************************************************/
+
 void CLimitBtn::SetValueText(TCHAR* pszText,bool bTextOnly) 
 {
 	_tcscpy_s(m_pszValueText,_countof(m_pszValueText),pszText);
 	m_bTextOnly=bTextOnly;
 }
+
+/**********************************************************************************************//**
+ * Sets value text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText   	The text.
+ * \param 		  	bTextOnly	True to text only.
+ **************************************************************************************************/
+
 void CLimitBtn::SetValueText(CStringW& szText,bool bTextOnly) 
 {
 	_tcscpy_s(m_pszValueText,_countof(m_pszValueText),szText);
 	m_bTextOnly=bTextOnly;
 }
+
+/**********************************************************************************************//**
+ * Sets name text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	If non-null, the text.
+ **************************************************************************************************/
+
 void CLimitBtn::SetNameText(TCHAR* pszText)
 {
 	_tcscpy_s(m_pszNameText,_countof(m_pszNameText),pszText);
 }
+
+/**********************************************************************************************//**
+ * Sets name text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText	The text.
+ **************************************************************************************************/
+
 void CLimitBtn::SetNameText(CStringW& szText)
 {
 	_tcscpy_s(m_pszNameText,_countof(m_pszNameText),szText);
 }
+
+/**********************************************************************************************//**
+ * Sets name note text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText 	If non-null, the text.
+ * \param 		  	bRefresh	True to refresh.
+ **************************************************************************************************/
+
 void CLimitBtn::SetNameNoteText(TCHAR* pszText, bool bRefresh)
 {
 	_tcscpy_s(m_pszNameNoteText,_countof(m_pszNameNoteText),pszText);
@@ -329,6 +512,17 @@ void CLimitBtn::SetNameNoteText(TCHAR* pszText, bool bRefresh)
 		RefreshBtn();
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets name note text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText  	The text.
+ * \param 		  	bRefresh	True to refresh.
+ **************************************************************************************************/
+
 void CLimitBtn::SetNameNoteText(CStringW& szText, bool bRefresh)
 {
 	_tcscpy_s(m_pszNameNoteText,_countof(m_pszNameNoteText),szText);
@@ -338,14 +532,44 @@ void CLimitBtn::SetNameNoteText(CStringW& szText, bool bRefresh)
 		RefreshBtn();
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets unit text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	If non-null, the text.
+ **************************************************************************************************/
+
 void CLimitBtn::SetUnitText(TCHAR* pszText)
 {
 	_tcscpy_s(m_pszUnitText,_countof(m_pszUnitText),pszText);
 }
+
+/**********************************************************************************************//**
+ * Sets unit text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText	The text.
+ **************************************************************************************************/
+
 void CLimitBtn::SetUnitText(CStringW& szText)
 {
 	_tcscpy_s(m_pszUnitText,_countof(m_pszUnitText),szText);
 }
+
+/**********************************************************************************************//**
+ * Refresh value text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText   	The text.
+ * \param 		  	bTextOnly	True to text only.
+ **************************************************************************************************/
 
 void CLimitBtn::RefreshValueText(CStringW& szText,bool bTextOnly) 
 {
@@ -354,12 +578,33 @@ void CLimitBtn::RefreshValueText(CStringW& szText,bool bTextOnly)
 	UpdateWindow();
 }
 
+/**********************************************************************************************//**
+ * Sets the limits
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nLower	The lower.
+ * \param	nUpper	The upper.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CLimitBtn::SetLimits(int nLower,int nUpper)
 {
 	m_v.iLowerLimit=nLower;
 	m_v.iUpperLimit=nUpper;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Draw direct up
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bCheckValueChanged	True if check value changed.
+ **************************************************************************************************/
 
 void CLimitBtn::DrawDirectUp(bool bCheckValueChanged)
 {
@@ -373,9 +618,15 @@ void CLimitBtn::DrawDirectUp(bool bCheckValueChanged)
 	BitBlt(dc.m_hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);
 }
 
-// **************************************************************************
-// Painting
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw item
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	lpDrawItemStruct	The draw item structure.
+ **************************************************************************************************/
+
 void CLimitBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
 	int iID = m_btn.wID;
@@ -435,6 +686,15 @@ void CLimitBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	}	
 }
 
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CLimitBtn::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -488,9 +748,17 @@ void CLimitBtn::Draw(int nState)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CLimitBtn::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -525,9 +793,17 @@ BOOL CLimitBtn::PreTranslateMessage(MSG* pMsg)
 	return CButton::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// Get the button "value" and state
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets a button
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pnValue	If non-null, the pn value.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CLimitBtn::GetButton(int* pnValue) 
 {
 	if(pnValue)
@@ -537,9 +813,17 @@ bool CLimitBtn::GetButton(int* pnValue)
 	return m_bDepressed;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets ud keys
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	kUP   	The up.
+ * \param	kDown 	The down.
+ * \param	kSpace	The space.
+ **************************************************************************************************/
+
 void CLimitBtn::SetUDKeys(WORD kUP, WORD kDown, WORD kSpace)
 {
 	m_kUp=kUP;
@@ -547,18 +831,30 @@ void CLimitBtn::SetUDKeys(WORD kUP, WORD kDown, WORD kSpace)
 	m_kSpace=kSpace;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets button identifier
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The button identifier.
+ **************************************************************************************************/
+
 int CLimitBtn::GetBtnId()
 {
 	return m_btn.wID;
 }
 
-// **************************************************************************
-// Button is very slow - this code permforms speed up - but
-//              use of double click is not possible any more
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the l button double clock action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CLimitBtn::OnLButtonDblClk(UINT nFlags, CPoint point) 
 {
 	DWORD lParam;
@@ -568,6 +864,16 @@ void CLimitBtn::OnLButtonDblClk(UINT nFlags, CPoint point)
 	SendMessage(WM_LBUTTONDOWN,nFlags,lParam);
 	CButton::OnLButtonDblClk(nFlags, point);
 }
+
+/**********************************************************************************************//**
+ * Executes the l button down action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CLimitBtn::OnLButtonDown(UINT nFlags, CPoint point) 
 {
@@ -579,6 +885,16 @@ void CLimitBtn::OnLButtonDown(UINT nFlags, CPoint point)
 		CButton::OnLButtonDown(nFlags, point);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the l button up action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CLimitBtn::OnLButtonUp(UINT nFlags, CPoint point) 
 {
@@ -626,6 +942,18 @@ void CLimitBtn::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 	m_bLMouseButtonDown = false;
 }
+
+/**********************************************************************************************//**
+ * Executes the key down action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
+
 void CLimitBtn::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
 	if( !m_bLMouseButtonDown /*&& !m_bAutoState*/)
@@ -706,6 +1034,17 @@ void CLimitBtn::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 }
 
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
+
 void CLimitBtn::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
 	m_dwPushDelta=GetTickCount();
@@ -737,18 +1076,43 @@ void CLimitBtn::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	
 }
 
+/**********************************************************************************************//**
+ * Executes the kill focus action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pNewWnd	If non-null, the new window.
+ **************************************************************************************************/
+
 void CLimitBtn::OnKillFocus(CWnd* pNewWnd)
 {
 	CButton::OnKillFocus(pNewWnd);
 	Depress();
 }
 
-
+/**********************************************************************************************//**
+ * Query if this instance is off
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if off, false if not.
+ **************************************************************************************************/
 
 bool CLimitBtn::IsOff()
 {
 	return m_bOff;
 }
+
+/**********************************************************************************************//**
+ * Sets off state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
 void CLimitBtn::SetOffState(bool state)
 {
@@ -759,7 +1123,12 @@ void CLimitBtn::SetOffState(bool state)
 	UpdateWindow();
 }
 
-
+/**********************************************************************************************//**
+ * Writes the current value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CLimitBtn::WriteCurrentValue()
 {
@@ -808,10 +1177,18 @@ void CLimitBtn::WriteCurrentValue()
 	}
 }
 
-// **************************************************************************
-// Time measurement
-// **************************************************************************
-//rkuTICKCOUNT
+/**********************************************************************************************//**
+ * Query if 'oldTickCount' is safe tick count delay expired
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	oldTickCount	Number of old ticks.
+ * \param	delay			The delay.
+ *
+ * \return	True if safe tick count delay expired, false if not.
+ **************************************************************************************************/
+
 bool CLimitBtn::isSafeTickCountDelayExpired(DWORD oldTickCount, UINT delay)////used to check if old tick count plus delay is still lower than actual tickCount, (dwLastTickCount+DELAY<getTickCount64())
 {
 	bool bExpired=false;

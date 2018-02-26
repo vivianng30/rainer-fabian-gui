@@ -5,8 +5,31 @@
 #include "FabianHFO.h"
 #include "WndServiceMenu.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 //global font objects
@@ -23,9 +46,25 @@ extern HFONT g_hf17AcuBold;
 extern HFONT g_hf19AcuMed;
 extern HFONT g_hf21AcuBold;
 extern HFONT g_hf23AcuBold;
-// CWndServiceMenu
+
+/**********************************************************************************************//**
+ * CWndServiceMenu
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndServiceMenu, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndServiceMenu class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndServiceMenu::CWndServiceMenu():
 CWndService()
@@ -54,6 +93,13 @@ CWndService()
 	m_pcMenu_BACK_DW=NULL;
 	//m_pcMenu_EXIT_FC=NULL;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndServiceMenu class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndServiceMenu::~CWndServiceMenu()
 {
@@ -122,9 +168,13 @@ BEGIN_MESSAGE_MAP(CWndServiceMenu, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SERVICE_EXIT, &CWndServiceMenu::OnBnClickedBACK)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndServiceMenu message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndServiceMenu message handlers
 void CWndServiceMenu::Init()
 {
 	CClientDC dc(this);
@@ -382,18 +432,13 @@ void CWndServiceMenu::Init()
 
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndServiceMenu::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CWndServiceMenu::OnDestroy()
 {
 	m_plMenuBtn.RemoveAll();
@@ -401,10 +446,15 @@ void CWndServiceMenu::OnDestroy()
 	CWndService::OnDestroy();
 }
 
+/**********************************************************************************************//**
+ * Sets one button depressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndServiceMenu::SetOneButtonDepressed(int btnID)
 {
 
@@ -438,9 +488,13 @@ void CWndServiceMenu::SetOneButtonDepressed(int btnID)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets all button unpressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMenu::SetAllButtonUnpressed()
 {
 	POSITION pos;
@@ -464,9 +518,15 @@ void CWndServiceMenu::SetAllButtonUnpressed()
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets one button focused
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CWndServiceMenu::SetOneButtonFocused(int btnID)
 {
 	//POSITION pos;
@@ -493,9 +553,13 @@ void CWndServiceMenu::SetOneButtonFocused(int btnID)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets next button focused
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMenu::SetNextButtonFocused()
 {
 	//POSITION pos;
@@ -545,10 +609,13 @@ void CWndServiceMenu::SetNextButtonFocused()
 
 }
 
+/**********************************************************************************************//**
+ * Sets previous button focused
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndServiceMenu::SetPrevButtonFocused()
 {
 	//POSITION pos;
@@ -643,10 +710,19 @@ void CWndServiceMenu::SetPrevButtonFocused()
 //	//DeleteDC(hdcMem);
 //}
 
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 LRESULT CWndServiceMenu::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -666,9 +742,17 @@ LRESULT CWndServiceMenu::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndServiceMenu::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -688,74 +772,181 @@ BOOL CWndServiceMenu::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked system action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceMenu::OnBnClickedSystem()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_SERVICE_SYSTEM);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked calibration action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMenu::OnBnClickedCalibration()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_SERVICE_CALIBR);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked flowboard action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMenu::OnBnClickedFlowboard()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_SERVICE_FLOW);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked monitor picture action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMenu::OnBnClickedMonitorPIC()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_SERVICE_MONITOR);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked accuboard action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMenu::OnBnClickedAccuboard()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_SERVICE_ACCU);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked valves action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMenu::OnBnClickedValves()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_SERVICE_VALVES);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked display action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMenu::OnBnClickedDisplay()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_SERVICE_DISPLAY);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked settings action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMenu::OnBnClickedSettings()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_SERVICE_SETTINGS);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked interfaces action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMenu::OnBnClickedInterfaces()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_SERVICE_IF);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked network action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMenu::OnBnClickedNetwork()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_SERVICE_NETWORK);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked licensing action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMenu::OnBnClickedLicensing()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_SERVICE_LICENSING);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked maintenance action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMenu::OnBnClickedMaintenance()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_SERVICE_MAINTENANCE);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked back action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMenu::OnBnClickedBACK()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_NUMERIC);
 }
 
-
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceMenu::OnPaint()
 {

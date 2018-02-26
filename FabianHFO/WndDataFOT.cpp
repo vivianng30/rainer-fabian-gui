@@ -6,15 +6,71 @@
 #include "WndDataFOT.h"
 #include "DlgMessageBox.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtsubbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTSUBBTNDW			0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndis
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDIS				0x00828282
 
-// CWndDataFOT
+/**********************************************************************************************//**
+ * CWndDataFOT
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndDataFOT, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndDataFOT class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	parentView	If non-null, the parent view.
+ **************************************************************************************************/
 
 CWndDataFOT::CWndDataFOT(CMVView *parentView)
 {
@@ -88,9 +144,25 @@ CWndDataFOT::CWndDataFOT(CMVView *parentView)
 	m_bHourglassRun=false;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndDataFOT class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CWndDataFOT::~CWndDataFOT()
 {
 }
+
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
 
 CMVModel *CWndDataFOT::getModel()
 {
@@ -109,9 +181,19 @@ BEGIN_MESSAGE_MAP(CWndDataFOT, CWnd)
 	ON_BN_CLICKED(IDC_BTN_CONTINUE_FOT, &CWndDataFOT::OnBnClickedContinue)
 END_MESSAGE_MAP()
 
-
-
-// CWndDataFOT message handlers
+/**********************************************************************************************//**
+ * CWndDataFOT message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 BOOL CWndDataFOT::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
@@ -645,6 +727,13 @@ BOOL CWndDataFOT::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 	return bRes;
 }
 
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataFOT::Init()
 {
 	/*if(m_bFOTrunning)
@@ -653,6 +742,15 @@ void CWndDataFOT::Init()
 			GetParent()->PostMessage(WM_DRAW_FOTSTEP);
 	}*/
 }
+
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
 
 void CWndDataFOT::Show(bool bShow)
 {
@@ -666,6 +764,13 @@ void CWndDataFOT::Show(bool bShow)
 		SetWindowPos(NULL,0,0,0,0,SWP_NOSIZE|SWP_NOMOVE|SWP_HIDEWINDOW);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndDataFOT::OnDestroy()
 {
@@ -814,12 +919,26 @@ void CWndDataFOT::OnDestroy()
 		DeleteDC(m_hDC);
 }
 
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataFOT::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 	// Do not call CWnd::OnPaint() for painting messages
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
+
+/**********************************************************************************************//**
+ * Draw fo tmenubar
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndDataFOT::drawFOTmenubar()
 {
@@ -956,6 +1075,14 @@ void CWndDataFOT::drawFOTmenubar()
 	}
 }
 
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bStatic	True to static.
+ **************************************************************************************************/
 
 void CWndDataFOT::Draw(bool bStatic)
 {
@@ -1804,6 +1931,13 @@ void CWndDataFOT::Draw(bool bStatic)
 
 }
 
+/**********************************************************************************************//**
+ * Draw pi pmax
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataFOT::drawPIPmax()
 {
 	bool bVGon=false;
@@ -1984,6 +2118,14 @@ void CWndDataFOT::drawPIPmax()
 	DeleteObject(hBmpMem);
 	DeleteDC(hdcMem);
 }
+
+/**********************************************************************************************//**
+ * Draw mbar step
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataFOT::drawMbarStep()
 {
 	RECT rcCl,rc;
@@ -2136,6 +2278,13 @@ void CWndDataFOT::drawMbarStep()
 	DeleteDC(hdcMem);
 }
 
+/**********************************************************************************************//**
+ * Draw hourglass
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataFOT::drawHourglass()
 {
 	RECT rcCl,rc;
@@ -2233,6 +2382,13 @@ void CWndDataFOT::drawHourglass()
 	DeleteDC(hdcMem);
 }
 
+/**********************************************************************************************//**
+ * Draw static
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataFOT::DrawStatic()
 {
 	//RECT rc;
@@ -2307,6 +2463,15 @@ void CWndDataFOT::DrawStatic()
 
 	SelectObject(m_hdcStatic,hPrevFont);
 }
+
+/**********************************************************************************************//**
+ * Sets view focus
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	iBtn	Zero-based index of the button.
+ **************************************************************************************************/
 
 void CWndDataFOT::SetViewFocus(int iBtn)
 {
@@ -2402,9 +2567,15 @@ void CWndDataFOT::SetViewFocus(int iBtn)
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets next focus
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CWndDataFOT::SetNextFocus()
 {
 	CWnd* pFocWnd = CWnd::GetFocus();
@@ -2430,6 +2601,16 @@ bool CWndDataFOT::SetNextFocus()
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets previous focus
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CWndDataFOT::SetPrevFocus()
 {
 	CWnd* pFocWnd = CWnd::GetFocus();
@@ -2452,6 +2633,14 @@ bool CWndDataFOT::SetPrevFocus()
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets startstop depressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataFOT::SetSTARTSTOPDepressed()
 {
 	//m_pcBtnStartStopSeq->Depress(true);
@@ -2459,6 +2648,14 @@ void CWndDataFOT::SetSTARTSTOPDepressed()
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_START_FOT);	
 }
+
+/**********************************************************************************************//**
+ * Sets startstop unpressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataFOT::SetSTARTSTOPUnpressed()
 {
 	//m_pcBtnStartStopSeq->DrawDirectUp();
@@ -2474,6 +2671,13 @@ void CWndDataFOT::SetSTARTSTOPUnpressed()
 //{
 //	m_pcMenuStartStop->SetBtnState(CPresetMenuBtn::PRESET);
 //}
+
+/**********************************************************************************************//**
+ * Shows the fot message
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndDataFOT::showFOTMessage()
 {
@@ -2563,10 +2767,19 @@ void CWndDataFOT::showFOTMessage()
 	}
 }
 
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 LRESULT CWndDataFOT::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -2942,6 +3155,15 @@ LRESULT CWndDataFOT::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 //	return CWnd::PreTranslateMessage(pMsg);
 //}
 
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CWndDataFOT::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==FOT_HORGLASS_TIMER)
@@ -2956,11 +3178,27 @@ void CWndDataFOT::OnTimer(UINT_PTR nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
+/**********************************************************************************************//**
+ * Sets fo ttime
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	iCountFOTimer	Zero-based index of the count fo timer.
+ **************************************************************************************************/
+
 void CWndDataFOT::setFOTtime(BYTE iCountFOTimer)
 {
 	m_iCountFOTimer=iCountFOTimer;
 	Draw(false);
 }
+
+/**********************************************************************************************//**
+ * Updates the fot pmean para
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndDataFOT::updateFOTPmeanPara()
 {
@@ -3033,6 +3271,13 @@ void CWndDataFOT::updateFOTPmeanPara()
 		m_pcPara_FOT_PmeanLow->SetValue(fvPMEANlow, true);
 	
 }
+
+/**********************************************************************************************//**
+ * Updates the fotpeep para
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndDataFOT::updateFOTPEEPPara()
 {
@@ -3110,6 +3355,15 @@ void CWndDataFOT::updateFOTPEEPPara()
 
 }
 
+/**********************************************************************************************//**
+ * Sets fo trunning
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CWndDataFOT::setFOTrunning(bool state)
 {
 	if(m_pcBtnStartStopSeq)
@@ -3186,6 +3440,13 @@ void CWndDataFOT::setFOTrunning(bool state)
 	Draw(false);
 }
 
+/**********************************************************************************************//**
+ * Starts the hourglass
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataFOT::startHourglass()
 {
 	m_bHourglassRun=true;
@@ -3193,12 +3454,26 @@ void CWndDataFOT::startHourglass()
 	SetTimer(FOT_HORGLASS_TIMER, 200, NULL);
 }
 
+/**********************************************************************************************//**
+ * Stops the hourglass
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataFOT::stopHourglass()
 {
 	m_bHourglassRun=false;
 	m_iWaitCount=0;
 	KillTimer(FOT_HORGLASS_TIMER);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked start stop action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndDataFOT::OnBnClickedStartStop()
 {
@@ -3244,16 +3519,40 @@ void CWndDataFOT::OnBnClickedStartStop()
 	/*if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->SetFocus();*/
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked decrease action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataFOT::OnBnClickedDecrease()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_DECREASE_FOT_STEP);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked repeat action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataFOT::OnBnClickedRepeat()
 {
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_REPEAT_FOT_STEP);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked continue action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndDataFOT::OnBnClickedContinue()
 {
 	SequenceStatesFOT curSeq=getModel()->getFOTThread()->getFOTstate();

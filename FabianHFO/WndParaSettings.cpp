@@ -6,10 +6,49 @@
 #include "WndParaSettings.h"
 #include "colour.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtsubbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTSUBBTNDW			0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndis
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDIS				0x00828282
 
 
@@ -42,9 +81,25 @@ extern HFONT g_hf33AcuBold;
 extern HFONT g_hf43AcuBold;
 extern HFONT g_hf53AcuBold;
 extern HFONT g_hf70Bold;
-// CWndParaSettings
+
+/**********************************************************************************************//**
+ * CWndParaSettings
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndParaSettings, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndParaSettings class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndParaSettings::CWndParaSettings()
 {
@@ -102,6 +157,13 @@ CWndParaSettings::CWndParaSettings()
 	m_pcVolumeGuarantee=NULL;
 	m_pcVolumeLimit=NULL;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndParaSettings class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndParaSettings::~CWndParaSettings()
 {
@@ -195,9 +257,15 @@ CWndParaSettings::~CWndParaSettings()
 	m_pcPara_DisB=NULL;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CWndParaSettings::getModel()
 {
 	if(m_pModel==NULL)
@@ -216,12 +284,20 @@ BEGIN_MESSAGE_MAP(CWndParaSettings, CWnd)
 	ON_BN_CLICKED(IDC_BTN_FRESHGAS_EXT, &CWndParaSettings::OnBnClickedFreshgasExt)*/
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndParaSettings message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CWndParaSettings message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 
@@ -816,6 +892,15 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		return 0;
 }
 
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
+
 void CWndParaSettings::Show(bool bShow)
 {
 	m_bBiasFlowConfirmed=false;
@@ -1007,6 +1092,14 @@ void CWndParaSettings::Show(bool bShow)
 		this->ShowWindow(SW_HIDE);
 	}
 }
+
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndParaSettings::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -1015,15 +1108,13 @@ void CWndParaSettings::OnPaint()
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndParaSettings::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndParaSettings::OnDestroy()
 {
 	CWnd::OnDestroy();
@@ -1036,6 +1127,19 @@ void CWndParaSettings::OnDestroy()
 	if(m_hDC)
 		DeleteDC(m_hDC);
 }
+
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
 LRESULT CWndParaSettings::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
@@ -1168,6 +1272,15 @@ LRESULT CWndParaSettings::WindowProc(UINT message, WPARAM wParam, LPARAM lParam 
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
+/**********************************************************************************************//**
+ * Sets view focus
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	iBtn	Zero-based index of the button.
+ **************************************************************************************************/
+
 void CWndParaSettings::SetViewFocus(int iBtn)
 {
 	switch(iBtn)
@@ -1299,9 +1412,15 @@ void CWndParaSettings::SetViewFocus(int iBtn)
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets next focus
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CWndParaSettings::SetNextFocus()
 {
 	CWnd* pFocWnd = CWnd::GetFocus();
@@ -1326,6 +1445,16 @@ bool CWndParaSettings::SetNextFocus()
 
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Sets previous focus
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CWndParaSettings::SetPrevFocus()
 {
 	CWnd* pFocWnd = CWnd::GetFocus();
@@ -1349,9 +1478,13 @@ bool CWndParaSettings::SetPrevFocus()
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndParaSettings::Draw()
 {
 	RECT rcCl;
@@ -1511,9 +1644,6 @@ void CWndParaSettings::Draw()
 	DeleteDC(hdcMem);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
 //void CWndParaSettings::OnBnClickedShowSIMVPSV()
 //{
 //	m_pcSIMVPSV_OFF->Depress(false);
@@ -1522,9 +1652,7 @@ void CWndParaSettings::Draw()
 //{
 //	m_pcSIMVPSV_ON->Depress(false);
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //void CWndParaSettings::OnBnClickedVG()
 //{
 //	m_pcVolumeLimit->Depress(false);
@@ -1538,9 +1666,7 @@ void CWndParaSettings::Draw()
 //	//getModel()->getDATAHANDLER()->SetCurrentVGarantParamData(getModel()->getDATAHANDLER()->GetCurrentVGarantParaData(),false,true);
 //	getModel()->getDATAHANDLER()->SetActiveModeVolumeGarantyState(false,true,true);
 //}
-// **************************************************************************
-// 
-// **************************************************************************
+
 //void CWndParaSettings::OnBnClickedFreshgasInt()
 //{
 //	m_pcFreshgasExt->Depress(false);
@@ -1554,9 +1680,6 @@ void CWndParaSettings::Draw()
 //	getModel()->Send_MODE_OPTION2();
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
 //FRESHGAS
 //void CWndParaSettings::SetAllButtonUnpressed_Freshgas()
 //{
@@ -1564,9 +1687,15 @@ void CWndParaSettings::Draw()
 //	m_pcFreshgasExt->SetBtnState(CPresetMenuBtn::UP);
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Shows the freshgas message
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CWndParaSettings::showFreshgasMessage(int btnID)
 {
 	if(btnID==IDC_BTN_FRESHGAS_INT)
@@ -1583,6 +1712,16 @@ void CWndParaSettings::showFreshgasMessage(int btnID)
 
 	Show(true);
 }
+
+/**********************************************************************************************//**
+ * Sets one button depressed freshgas
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CWndParaSettings::SetOneButtonDepressed_Freshgas(int btnID)
 {
 	m_enumMessage=PARAWARN_NONE;
@@ -1613,6 +1752,16 @@ void CWndParaSettings::SetOneButtonDepressed_Freshgas(int btnID)
 
 	Show(true);
 }
+
+/**********************************************************************************************//**
+ * Sets one button preset freshgas
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CWndParaSettings::SetOneButtonPreset_Freshgas(int btnID)
 {
 	//m_enumMessage=PARAWARN_NONE;
@@ -1635,15 +1784,22 @@ void CWndParaSettings::SetOneButtonPreset_Freshgas(int btnID)
 //{
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
 //VOLUME
 //void CWndParaSettings::SetAllButtonUnpressed_Volume()
 //{
 //	m_pcVolumeGuarantee->SetBtnState(CPresetMenuBtn::UP);
 //	m_pcVolumeLimit->SetBtnState(CPresetMenuBtn::UP);
 //}
+
+/**********************************************************************************************//**
+ * Sets one button depressed volume
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CWndParaSettings::SetOneButtonDepressed_Volume(int btnID)
 {
 	m_enumMessage=PARAWARN_NONE;
@@ -1679,6 +1835,16 @@ void CWndParaSettings::SetOneButtonDepressed_Volume(int btnID)
 
 	Show(true);
 }
+
+/**********************************************************************************************//**
+ * Sets one button preset volume
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CWndParaSettings::SetOneButtonPreset_Volume(int btnID)
 {
 	m_enumMessage=PARAWARN_NONE;
@@ -1705,6 +1871,13 @@ void CWndParaSettings::SetOneButtonPreset_Volume(int btnID)
 //
 //}
 
+/**********************************************************************************************//**
+ * Sets bias flow
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndParaSettings::setBiasFlow()
 {
 	if(getModel()->getCONFIG()->isBiasFlowActive()==true)
@@ -1721,6 +1894,13 @@ void CWndParaSettings::setBiasFlow()
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets vg vl
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndParaSettings::setVG_VL()
 {

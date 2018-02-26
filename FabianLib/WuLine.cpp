@@ -6,6 +6,20 @@
 #include "stdafx.h"
 #include "WuLine.h"
 
+/**********************************************************************************************//**
+ * Draw wu line
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pDC	   	If non-null, the device-context.
+ * \param 		  	X0	   	The x coordinate 0.
+ * \param 		  	Y0	   	The y coordinate 0.
+ * \param 		  	X1	   	The first x value.
+ * \param 		  	Y1	   	The first y value.
+ * \param 		  	clrLine	The colour line.
+ **************************************************************************************************/
+
 void DrawWuLine(CDC *pDC, int X0, int Y0, int X1, int Y1, COLORREF clrLine)
 {
 	/* Make sure the line runs top to bottom */

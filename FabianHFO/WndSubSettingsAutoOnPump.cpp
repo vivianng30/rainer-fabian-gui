@@ -5,17 +5,39 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsAutoOnPump.h"
 
-
-
-// CWndSubSettingsAutoOnPump
+/**********************************************************************************************//**
+ * CWndSubSettingsAutoOnPump
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsAutoOnPump, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsAutoOnPump class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsAutoOnPump::CWndSubSettingsAutoOnPump(UINT viewFlag):
 CWndSubSettings(viewFlag)
 {
 	m_iCO2TimePumpAutoOn=10;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsAutoOnPump class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsAutoOnPump::~CWndSubSettingsAutoOnPump()
 {
@@ -34,12 +56,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsAutoOnPump, CWnd)
 	//ON_BN_CLICKED(IDC_BTN_SETUP_7, &CWndSubSettingsScreenlocktime::OnBnClicked7)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsAutoOnPump message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsAutoOnPump message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsAutoOnPump::Initialize()
 {
 	CClientDC dc(this);
@@ -104,9 +127,13 @@ void CWndSubSettingsAutoOnPump::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsAutoOnPump::Draw()
 {
 	RECT rcCl;
@@ -215,9 +242,17 @@ void CWndSubSettingsAutoOnPump::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsAutoOnPump::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -283,9 +318,15 @@ BOOL CWndSubSettingsAutoOnPump::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets time pump automatic on
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn	The button.
+ **************************************************************************************************/
+
 void CWndSubSettingsAutoOnPump::SetTimePumpAutoOn(UINT btn)
 {
 	switch(btn)
@@ -334,9 +375,13 @@ void CWndSubSettingsAutoOnPump::SetTimePumpAutoOn(UINT btn)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsAutoOnPump::OnBnClicked1()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_1);
@@ -349,9 +394,14 @@ void CWndSubSettingsAutoOnPump::OnBnClicked1()
 		SetTimePumpAutoOn(IDC_BTN_SETUP_1);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsAutoOnPump::OnBnClicked2()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_2);
@@ -364,9 +414,14 @@ void CWndSubSettingsAutoOnPump::OnBnClicked2()
 		SetTimePumpAutoOn(IDC_BTN_SETUP_2);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 3 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsAutoOnPump::OnBnClicked3()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_3);
@@ -379,9 +434,14 @@ void CWndSubSettingsAutoOnPump::OnBnClicked3()
 		SetTimePumpAutoOn(IDC_BTN_SETUP_3);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 4 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsAutoOnPump::OnBnClicked4()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_4);
@@ -395,9 +455,13 @@ void CWndSubSettingsAutoOnPump::OnBnClicked4()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked 5 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsAutoOnPump::OnBnClicked5()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_5);
@@ -411,15 +475,13 @@ void CWndSubSettingsAutoOnPump::OnBnClicked5()
 	}
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsAutoOnPump::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsAutoOnPump::OnDestroy()
 {
 	CWndSubSettings::OnDestroy();

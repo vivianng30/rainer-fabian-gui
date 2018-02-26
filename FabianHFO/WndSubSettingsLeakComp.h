@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsLeakComp.h.
+ *
+ * Declares the window sub settings leak component class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 

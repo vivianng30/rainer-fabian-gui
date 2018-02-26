@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	NumericFieldSPO2PULSERATE.h.
+ *
+ * Declares the numeric field spo 2 pulserate class
+ **************************************************************************************************/
+
 #pragma once
 #include "NumericField.h"
 

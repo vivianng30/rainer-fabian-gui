@@ -5,10 +5,26 @@
 #include "ALimitBtn.h"
 #include "globDefs.h"
 
-
-// CALimitBtn
+/**********************************************************************************************//**
+ * CALimitBtn
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CALimitBtn, CButton)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CALimitBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn	The button.
+ **************************************************************************************************/
 
 CALimitBtn::CALimitBtn(const BTN &btn):
 m_pModel(NULL),m_pcClock_Up(NULL),m_pcClock_Dw(NULL),m_pcClock_Fc(NULL),m_pcClockInactive_Up(NULL),m_pcClockInactive_Dw(NULL),m_pcClockInactive_Fc(NULL),
@@ -32,6 +48,13 @@ m_iLimitRange(NOLIMIT),m_iPrevValue(0),m_bHasFocus(false),m_bDepressed(false),m_
 	m_btncr.crTxtDisabled	= 0x00c0c0c0;;		
 	m_btncr.crTxtFocus		= 0x00000000;	
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CALimitBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CALimitBtn::~CALimitBtn()
 {
@@ -72,9 +95,15 @@ CALimitBtn::~CALimitBtn()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CALimitBtn::getModel()
 {
 	if(m_pModel==NULL)
@@ -95,9 +124,19 @@ BEGIN_MESSAGE_MAP(CALimitBtn, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CALimitBtn-Meldungshandler
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	dwStyle   	The style.
+ * \param [in,out]	v		  	A fALVALUE to process.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CALimitBtn-Meldungshandler
 BOOL CALimitBtn::Create(CWnd* pParentWnd,DWORD dwStyle, fALVALUE &v) 
 {
 	SIZE sz;
@@ -164,16 +203,33 @@ BOOL CALimitBtn::Create(CWnd* pParentWnd,DWORD dwStyle, fALVALUE &v)
 	return 0;
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is depressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if depressed, false if not.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 bool CALimitBtn::IsDepressed( void )
 {
 	// Return the buttons state
 	return m_bDepressed;
 }
 
+/**********************************************************************************************//**
+ * Sets the colors
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	crTxtUp			The carriage return text up.
+ * \param	crTxtDown   	The carriage return text down.
+ * \param	crSubTxtDown	The carriage return sub text down.
+ * \param	crTxtFocus  	The carriage return text focus.
+ * \param	crDisabel   	The carriage return disabel.
+ **************************************************************************************************/
 
 void CALimitBtn::SetColors(COLORREF crTxtUp,COLORREF crTxtDown,COLORREF crSubTxtDown,COLORREF crTxtFocus, COLORREF crDisabel)
 {
@@ -183,6 +239,16 @@ void CALimitBtn::SetColors(COLORREF crTxtUp,COLORREF crTxtDown,COLORREF crSubTxt
 	m_btncr.crTxtFocus		= crTxtFocus;
 	m_btncr.crSubTxtDown	= crSubTxtDown;
 }
+
+/**********************************************************************************************//**
+ * Sets current limit
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	val	   	The value.
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
 
 void CALimitBtn::SetCurLimit(int val, bool bRedraw) 
 {
@@ -194,6 +260,13 @@ void CALimitBtn::SetCurLimit(int val, bool bRedraw)
 		UpdateWindow();
 	}
 }
+
+/**********************************************************************************************//**
+ * Redraws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CALimitBtn::Redraw() 
 {
@@ -217,6 +290,17 @@ void CALimitBtn::Redraw()
 	BitBlt(dc.m_hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);
 }
 
+/**********************************************************************************************//**
+ * Sets absolute limits
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nLower	The lower.
+ * \param	nUpper	The upper.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CALimitBtn::SetAbsoluteLimits(int nLower,int nUpper)
 {
@@ -225,6 +309,15 @@ bool CALimitBtn::SetAbsoluteLimits(int nLower,int nUpper)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Sets an alarm
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state  	The state.
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
 
 void CALimitBtn::setAlarm(eStateOfAlarm state, bool bRedraw)
 {
@@ -237,12 +330,29 @@ void CALimitBtn::setAlarm(eStateOfAlarm state, bool bRedraw)
 	}
 }
 
+/**********************************************************************************************//**
+ * Gets the alarm
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The alarm.
+ **************************************************************************************************/
+
 eStateOfAlarm CALimitBtn::GetAlarm()
 {
 	return m_eAlarm;
 	
 }
 
+/**********************************************************************************************//**
+ * Sets alarm limit state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
 
 void CALimitBtn::SetAlarmLimitState(eAlarmLimitState state)
 {
@@ -267,13 +377,26 @@ void CALimitBtn::SetAlarmLimitState(eAlarmLimitState state)
 	m_bAlarmLimitState=state;
 }
 
+/**********************************************************************************************//**
+ * Sets limit range
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	iLimit	Zero-based index of the limit.
+ **************************************************************************************************/
 
 void CALimitBtn::SetLimitRange(int iLimit)
 {
 	m_iLimitRange=iLimit;
 }
 
-
+/**********************************************************************************************//**
+ * Draw direct up
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CALimitBtn::DrawDirectUp()
 {
@@ -285,6 +408,13 @@ void CALimitBtn::DrawDirectUp()
 	Draw(BTN_DW_UP);
 	BitBlt(dc.m_hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);
 }
+
+/**********************************************************************************************//**
+ * Draw direct down
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CALimitBtn::DrawDirectDown()
 {
@@ -298,11 +428,15 @@ void CALimitBtn::DrawDirectDown()
 	BitBlt(dc.m_hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);
 }
 
+/**********************************************************************************************//**
+ * Draw item
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	lpDrawItemStruct	The draw item structure.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// Painting
-// **************************************************************************
 void CALimitBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
 	if (m_bDepressed && !(lpDrawItemStruct->itemState & ODS_DISABLED))
@@ -358,6 +492,15 @@ void CALimitBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
 void CALimitBtn::Draw(int nState)
 {
@@ -720,11 +863,17 @@ void CALimitBtn::Draw(int nState)
 	SelectObject(m_hDC,hPrevFont);
 }
 
+/**********************************************************************************************//**
+ * Sets ud keys
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	kUP   	The up.
+ * \param	kDown 	The down.
+ * \param	kSpace	The space.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CALimitBtn::SetUDKeys(WORD kUP, WORD kDown, WORD kSpace)
 {
 	m_kUp=kUP;
@@ -732,18 +881,30 @@ void CALimitBtn::SetUDKeys(WORD kUP, WORD kDown, WORD kSpace)
 	m_kSpace=kSpace;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets button identifier
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The button identifier.
+ **************************************************************************************************/
+
 int CALimitBtn::GetBtnId()
 {
 	return m_btn.wID;
 }
 
-// **************************************************************************
-// Button is very slow - this code permforms speed up - but
-//              use of double click is not possible any more
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the l button double clock action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CALimitBtn::OnLButtonDblClk(UINT nFlags, CPoint point) 
 {
 	DWORD lParam;
@@ -753,6 +914,16 @@ void CALimitBtn::OnLButtonDblClk(UINT nFlags, CPoint point)
 	SendMessage(WM_LBUTTONDOWN,nFlags,lParam);
 	CButton::OnLButtonDblClk(nFlags, point);
 }
+
+/**********************************************************************************************//**
+ * Executes the l button down action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CALimitBtn::OnLButtonDown(UINT nFlags, CPoint point) 
 {
@@ -764,6 +935,16 @@ void CALimitBtn::OnLButtonDown(UINT nFlags, CPoint point)
 		getModel()->getCONFIG()->SetLastSelectedALBtns(m_btn.wID);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the l button up action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CALimitBtn::OnLButtonUp(UINT nFlags, CPoint point) 
 {
@@ -786,6 +967,18 @@ void CALimitBtn::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 	m_bLMouseButtonDown = false;
 }
+
+/**********************************************************************************************//**
+ * Executes the key down action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
+
 void CALimitBtn::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
 	if( !m_bLMouseButtonDown )
@@ -814,6 +1007,17 @@ void CALimitBtn::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		CButton::OnKeyDown(nChar,nRepCnt,nFlags);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
 
 void CALimitBtn::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
@@ -2170,6 +2374,15 @@ void CALimitBtn::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	m_bLMouseButtonDown = false;
 }
 
+/**********************************************************************************************//**
+ * Executes the set focus action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pOldWnd	If non-null, the old window.
+ **************************************************************************************************/
+
 void CALimitBtn::OnSetFocus(CWnd* pOldWnd)
 {
 	CButton::OnSetFocus(pOldWnd);
@@ -2178,6 +2391,15 @@ void CALimitBtn::OnSetFocus(CWnd* pOldWnd)
 		GetParent()->PostMessage( WM_ALARMBTN_SETFOCUS, GetDlgCtrlID(), 0);
 	
 }
+
+/**********************************************************************************************//**
+ * Executes the kill focus action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pNewWnd	If non-null, the new window.
+ **************************************************************************************************/
 
 void CALimitBtn::OnKillFocus(CWnd* pNewWnd)
 {
@@ -2621,6 +2843,13 @@ void CALimitBtn::OnKillFocus(CWnd* pNewWnd)
 	}
 }
 
+/**********************************************************************************************//**
+ * Writes the current value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CALimitBtn::WriteCurrentValue()
 {
 	int iID = GetBtnId();
@@ -2934,10 +3163,18 @@ void CALimitBtn::WriteCurrentValue()
 	}
 }
 
-// **************************************************************************
-// Time measurement
-// **************************************************************************
-//rkuTICKCOUNT
+/**********************************************************************************************//**
+ * Query if 'oldTickCount' is safe tick count delay expired
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	oldTickCount	Number of old ticks.
+ * \param	delay			The delay.
+ *
+ * \return	True if safe tick count delay expired, false if not.
+ **************************************************************************************************/
+
 bool CALimitBtn::isSafeTickCountDelayExpired(DWORD oldTickCount, UINT delay)////used to check if old tick count plus delay is still lower than actual tickCount, (dwLastTickCount+DELAY<getTickCount64())
 {
 	bool bExpired=false;

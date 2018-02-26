@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsVentRange.h.
+ *
+ * Declares the window sub settings vent range class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 

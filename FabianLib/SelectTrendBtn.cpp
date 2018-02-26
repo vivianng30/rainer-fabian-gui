@@ -6,10 +6,27 @@
 #include "FabianHFO.h"
 #include "globDefs.h"
 
-
-// CSelectTrendBtn
+/**********************************************************************************************//**
+ * CSelectTrendBtn
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CSelectTrendBtn, CButton)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CSelectTrendBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn	The button.
+ * \param	cr 	The carriage return.
+ **************************************************************************************************/
 
 CSelectTrendBtn::CSelectTrendBtn(BTN btn,COLORREF cr) : CBtn(btn,cr)
 {
@@ -23,6 +40,13 @@ CSelectTrendBtn::CSelectTrendBtn(BTN btn,COLORREF cr) : CBtn(btn,cr)
 	m_bDepressed=false;
 	m_bLoadDataRunning=false;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CSelectTrendBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CSelectTrendBtn::~CSelectTrendBtn()
 {
@@ -39,9 +63,12 @@ BEGIN_MESSAGE_MAP(CSelectTrendBtn, CButton)
 	//ON_WM_KILLFOCUS()
 END_MESSAGE_MAP()
 
-
-// CSelectTrendBtn-Meldungshandler
-
+/**********************************************************************************************//**
+ * CSelectTrendBtn-Meldungshandler
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CSelectTrendBtn::DrawDirectUp(void)
 {
@@ -52,6 +79,15 @@ void CSelectTrendBtn::DrawDirectUp(void)
 	Draw(BTN_DW_UP);
 	BitBlt(dc.m_hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);
 }
+
+/**********************************************************************************************//**
+ * Draw item
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	lpDrawItemStruct	The draw item structure.
+ **************************************************************************************************/
 
 void CSelectTrendBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
@@ -159,6 +195,16 @@ void CSelectTrendBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	//	}
 	//}
 }
+
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState  	The state.
+ * \param	nAddInfo	Information describing the add.
+ **************************************************************************************************/
 
 void CSelectTrendBtn::Draw(int nState,int nAddInfo)
 {
@@ -270,6 +316,17 @@ void CSelectTrendBtn::Draw(int nState,int nAddInfo)
 	SelectObject(m_hDC,hPrevFont);
 
 }
+
+/**********************************************************************************************//**
+ * Executes the l button down action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CSelectTrendBtn::OnLButtonDown(UINT nFlags, CPoint point) 
 {
 	if( !m_bLMouseButtonDown && !m_bLoadDataRunning)
@@ -286,6 +343,16 @@ void CSelectTrendBtn::OnLButtonDown(UINT nFlags, CPoint point)
 	}
 }
 
+/**********************************************************************************************//**
+ * Executes the l button up action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CSelectTrendBtn::OnLButtonUp(UINT nFlags, CPoint point) 
 {
 	if( m_bLMouseButtonDown && !m_bLoadDataRunning)
@@ -297,16 +364,32 @@ void CSelectTrendBtn::OnLButtonUp(UINT nFlags, CPoint point)
 	m_bLMouseButtonDown = false;
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is depressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if depressed, false if not.
+ **************************************************************************************************/
 
-// **************************************************************************
-// Operation methods
-// **************************************************************************
 bool CSelectTrendBtn::IsDepressed( void )
 {
 	// Return the buttons state
 	//return m_bDepressed;
 	return m_bDepressed;
 }
+
+/**********************************************************************************************//**
+ * Depress
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bDown	True to down.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CSelectTrendBtn::Depress(bool bDown)
 {
@@ -321,10 +404,16 @@ bool CSelectTrendBtn::Depress(bool bDown)
 	return m_bDepressed;
 }
 
-// **************************************************************************
-// Button is very slow - this code permforms speed up - but
-//              use of double click is not possible any more
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the l button double clock action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CSelectTrendBtn::OnLButtonDblClk(UINT nFlags, CPoint point) 
 {
 	DWORD lParam;
@@ -335,9 +424,17 @@ void CSelectTrendBtn::OnLButtonDblClk(UINT nFlags, CPoint point)
 	CButton::OnLButtonDblClk(nFlags, point);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	   	If non-null, the text.
+ * \param [in,out]	pszTextDown	If non-null, the text down.
+ * \param 		  	nNbr	   	Number of.
+ **************************************************************************************************/
+
 void CSelectTrendBtn::SetText(TCHAR* pszText,TCHAR* pszTextDown,int nNbr) 
 {
 	_tcscpy(m_pszText,pszText);
@@ -345,18 +442,52 @@ void CSelectTrendBtn::SetText(TCHAR* pszText,TCHAR* pszTextDown,int nNbr)
 	m_nNbr=nNbr;
 }
 
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	   	If non-null, the text.
+ * \param [in,out]	pszTextDown	If non-null, the text down.
+ * \param 		  	nNbr	   	Number of.
+ **************************************************************************************************/
+
 void CSelectTrendBtn::RefreshText(TCHAR* pszText,TCHAR* pszTextDown,int nNbr) 
 {
 	SetText(pszText,pszTextDown,nNbr);
 	Invalidate();
 	UpdateWindow();
 }
+
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	   	The text.
+ * \param [in,out]	pszTextDown	The text down.
+ * \param 		  	nNbr	   	Number of.
+ **************************************************************************************************/
+
 void CSelectTrendBtn::SetText(CStringW& pszText,CStringW& pszTextDown,int nNbr) 
 {
 	_tcscpy(m_pszText,pszText);
 	_tcscpy(m_pszTextDown,pszTextDown);
 	m_nNbr=nNbr;
 }
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	   	The text.
+ * \param [in,out]	pszTextDown	The text down.
+ * \param 		  	nNbr	   	Number of.
+ **************************************************************************************************/
 
 void CSelectTrendBtn::RefreshText(CStringW& pszText,CStringW& pszTextDown,int nNbr) 
 {
@@ -365,20 +496,31 @@ void CSelectTrendBtn::RefreshText(CStringW& pszText,CStringW& pszTextDown,int nN
 	UpdateWindow();
 }
 
+/**********************************************************************************************//**
+ * Gets button identifier
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The button identifier.
+ **************************************************************************************************/
 
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 int CSelectTrendBtn::GetBtnId()
 {
 	return m_btn.wID;
 }
 
-// **************************************************************************
-// Button states
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSelectTrendBtn::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -402,6 +544,14 @@ BOOL CSelectTrendBtn::PreTranslateMessage(MSG* pMsg)
 	return CButton::PreTranslateMessage(pMsg);
 }
 
+/**********************************************************************************************//**
+ * Loads data running
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
 void CSelectTrendBtn::LoadDataRunning(bool state)
 {

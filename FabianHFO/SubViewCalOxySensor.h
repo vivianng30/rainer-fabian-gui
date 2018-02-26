@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	SubViewCalOxySensor.h.
+ *
+ * Declares the sub view calendar oxy sensor class
+ **************************************************************************************************/
+
 #pragma once
 #include "PushBtn.h"
 #include "Bmp.h"

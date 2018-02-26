@@ -6,15 +6,30 @@
 #include "UpDwnBtn.h"
 #include "globDefs.h"
 
-// CUpDwnBtn
+/**********************************************************************************************//**
+ * CUpDwnBtn
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CUpDwnBtn, CButton)
 
-/////////////////////////////////////////////////////////////////////////////
-// CMenuBtn
-// **************************************************************************
-// De-, construction
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes a new instance of the CUpDwnBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn				The button.
+ * \param	cr				The carriage return.
+ * \param	bTwoLine		True to two line.
+ * \param	bVerticalTxt	True to vertical text.
+ **************************************************************************************************/
+
 CUpDwnBtn::CUpDwnBtn(BTN btn,COLORREF cr, bool bTwoLine, bool bVerticalTxt) : CBtn(btn,cr)
 {
 	m_pcBmpFocusDown=NULL;
@@ -31,6 +46,13 @@ CUpDwnBtn::CUpDwnBtn(BTN btn,COLORREF cr, bool bTwoLine, bool bVerticalTxt) : CB
 	m_pszTextDown[0]=0x0000;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CUpDwnBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CUpDwnBtn::~CUpDwnBtn()
 {
 }
@@ -46,11 +68,13 @@ BEGIN_MESSAGE_MAP(CUpDwnBtn, CButton)
 	ON_WM_KILLFOCUS()
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
-// CMenuBtn message handlers
-// **************************************************************************
-// Painting
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw direct up
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CUpDwnBtn::DrawDirectUp(void)
 {
 	m_bButtonIsActive=false;
@@ -61,6 +85,15 @@ void CUpDwnBtn::DrawDirectUp(void)
 	Draw(BTN_DW_UP);
 	BitBlt(dc.m_hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);
 }
+
+/**********************************************************************************************//**
+ * Draw item
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	lpDrawItemStruct	The draw item structure.
+ **************************************************************************************************/
 
 void CUpDwnBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
@@ -100,6 +133,16 @@ void CUpDwnBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState  	The state.
+ * \param	nAddInfo	Information describing the add.
+ **************************************************************************************************/
 
 void CUpDwnBtn::Draw(int nState,int nAddInfo)
 {
@@ -239,6 +282,17 @@ void CUpDwnBtn::Draw(int nState,int nAddInfo)
 	SelectObject(m_hDC,hPrevFont);
 
 }
+
+/**********************************************************************************************//**
+ * Executes the l button down action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CUpDwnBtn::OnLButtonDown(UINT nFlags, CPoint point) 
 {
 	if( !m_bLMouseButtonDown )
@@ -249,6 +303,16 @@ void CUpDwnBtn::OnLButtonDown(UINT nFlags, CPoint point)
 		CButton::OnLButtonDown(nFlags, point);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the l button up action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CUpDwnBtn::OnLButtonUp(UINT nFlags, CPoint point) 
 {
@@ -261,14 +325,30 @@ void CUpDwnBtn::OnLButtonUp(UINT nFlags, CPoint point)
 	m_bLMouseButtonDown = false;
 }
 
+/**********************************************************************************************//**
+ * Query if this instance is depressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if depressed, false if not.
+ **************************************************************************************************/
 
-// **************************************************************************
-// Operation methods
-// **************************************************************************
 bool CUpDwnBtn::IsDepressed( void )
 {
 	return m_bButtonIsActive;
 }
+
+/**********************************************************************************************//**
+ * Depress
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bDown	True to down.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CUpDwnBtn::Depress(bool bDown)
 {
@@ -284,10 +364,17 @@ bool CUpDwnBtn::Depress(bool bDown)
 	return m_bButtonIsActive;
 }
 
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	   	If non-null, the text.
+ * \param [in,out]	pszTextDown	If non-null, the text down.
+ * \param 		  	nNbr	   	Number of.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CUpDwnBtn::SetText(TCHAR* pszText,TCHAR* pszTextDown,int nNbr) 
 {
 	_tcscpy(m_pszText,pszText);
@@ -295,12 +382,35 @@ void CUpDwnBtn::SetText(TCHAR* pszText,TCHAR* pszTextDown,int nNbr)
 	m_nNbr=nNbr;
 }
 
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	   	If non-null, the text.
+ * \param [in,out]	pszTextDown	If non-null, the text down.
+ * \param 		  	nNbr	   	Number of.
+ **************************************************************************************************/
+
 void CUpDwnBtn::RefreshText(TCHAR* pszText,TCHAR* pszTextDown,int nNbr) 
 {
 	SetText(pszText,pszTextDown,nNbr);
 	Invalidate();
 	UpdateWindow();
 }
+
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	   	The text.
+ * \param [in,out]	pszTextDown	The text down.
+ * \param 		  	nNbr	   	Number of.
+ **************************************************************************************************/
+
 void CUpDwnBtn::SetText(CStringW& pszText,CStringW& pszTextDown,int nNbr) 
 {
 	_tcscpy(m_pszText,pszText);
@@ -308,12 +418,36 @@ void CUpDwnBtn::SetText(CStringW& pszText,CStringW& pszTextDown,int nNbr)
 	m_nNbr=nNbr;
 }
 
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	   	The text.
+ * \param [in,out]	pszTextDown	The text down.
+ * \param 		  	nNbr	   	Number of.
+ **************************************************************************************************/
+
 void CUpDwnBtn::RefreshText(CStringW& pszText,CStringW& pszTextDown,int nNbr) 
 {
 	SetText(pszText,pszTextDown,nNbr);
 	Invalidate();
 	UpdateWindow();
 }
+
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszTextTop		 	The text top.
+ * \param [in,out]	pszTextBottom	 	The text bottom.
+ * \param [in,out]	pszTextTopDown   	The text top down.
+ * \param [in,out]	pszTextBottomDown	The text bottom down.
+ * \param 		  	nNbr			 	Number of.
+ **************************************************************************************************/
 
 void CUpDwnBtn::SetText(CStringW& pszTextTop,CStringW& pszTextBottom,CStringW& pszTextTopDown,CStringW& pszTextBottomDown,int nNbr)
 
@@ -325,6 +459,20 @@ void CUpDwnBtn::SetText(CStringW& pszTextTop,CStringW& pszTextBottom,CStringW& p
 	_tcscpy_s(m_pszTextBottomDown,_countof(m_pszText),pszTextBottomDown);
 	m_nNbr=nNbr;
 }
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszTextTop		 	The text top.
+ * \param [in,out]	pszTextBottom	 	The text bottom.
+ * \param [in,out]	pszTextTopDown   	The text top down.
+ * \param [in,out]	pszTextBottomDown	The text bottom down.
+ * \param 		  	nNbr			 	Number of.
+ **************************************************************************************************/
+
 void CUpDwnBtn::RefreshText(CStringW& pszTextTop,CStringW& pszTextBottom,CStringW& pszTextTopDown,CStringW& pszTextBottomDown,int nNbr)
 {
 	SetText(pszTextTop,pszTextBottom,pszTextTopDown,pszTextBottomDown,nNbr);
@@ -332,18 +480,31 @@ void CUpDwnBtn::RefreshText(CStringW& pszTextTop,CStringW& pszTextBottom,CString
 	UpdateWindow();
 }
 
+/**********************************************************************************************//**
+ * Gets button identifier
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The button identifier.
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 int CUpDwnBtn::GetBtnId()
 {
 	return m_btn.wID;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CUpDwnBtn::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -357,7 +518,14 @@ BOOL CUpDwnBtn::PreTranslateMessage(MSG* pMsg)
 	return CButton::PreTranslateMessage(pMsg);
 }
 
-
+/**********************************************************************************************//**
+ * Executes the kill focus action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pNewWnd	If non-null, the new window.
+ **************************************************************************************************/
 
 void CUpDwnBtn::OnKillFocus(CWnd* pNewWnd)
 {

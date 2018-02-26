@@ -1,3 +1,14 @@
+//=============================================================================
+/** 
+* \class CInterfaceMasimoSPO2
+* 		 
+* \brief Interface for MASIMO spo2 module.
+* 		 
+* \author Rainer Kuehner
+* \date 2017-10-23 Creation of file
+*
+**/
+//=============================================================================
 #pragma once
 #include "InterfaceSPO2.h"
 

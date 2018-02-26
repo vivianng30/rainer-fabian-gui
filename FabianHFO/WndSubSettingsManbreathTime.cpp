@@ -5,17 +5,62 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsManbreathTime.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines timechange
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 #define TIMECHANGE	600
 
-
-
-// CWndSubSettingsManbreathTime
+/**********************************************************************************************//**
+ * CWndSubSettingsManbreathTime
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsManbreathTime, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsManbreathTime class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsManbreathTime::CWndSubSettingsManbreathTime(UINT viewFlag):
 CWndSubSettings(viewFlag)
@@ -39,6 +84,13 @@ CWndSubSettings(viewFlag)
 	m_eTimeChanger=TC_OFF;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsManbreathTime class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CWndSubSettingsManbreathTime::~CWndSubSettingsManbreathTime()
 {
 }
@@ -50,13 +102,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsManbreathTime, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SETUP_YEAR, &CWndSubSettingsManbreathTime::OnBnClickedValue)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsManbreathTime message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsManbreathTime message handlers
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsManbreathTime::Initialize()
 {
 	CClientDC dc(this);
@@ -129,9 +181,13 @@ void CWndSubSettingsManbreathTime::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsManbreathTime::Draw()
 {
 	RECT rcCl;
@@ -233,9 +289,17 @@ void CWndSubSettingsManbreathTime::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsManbreathTime::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -332,16 +396,13 @@ BOOL CWndSubSettingsManbreathTime::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsManbreathTime::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CWndSubSettingsManbreathTime::OnDestroy()
 {
 	getModel()->getCONFIG()->SetManBreathTime(m_iValue);
@@ -377,6 +438,13 @@ void CWndSubSettingsManbreathTime::OnDestroy()
 	m_pcStatic_Fc=NULL;
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked value action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsManbreathTime::OnBnClickedValue()
 {
 	//SetOneButtonDepressed(IDC_BTN_SETUP_YEAR);
@@ -391,9 +459,19 @@ void CWndSubSettingsManbreathTime::OnBnClickedValue()
 		GetParent()->PostMessage(WM_SET_SETUPTIMER);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndSubSettingsManbreathTime::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -519,6 +597,14 @@ LRESULT CWndSubSettingsManbreathTime::WindowProc(UINT message, WPARAM wParam, LP
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
 
 void CWndSubSettingsManbreathTime::OnTimer(UINT_PTR nIDEvent)
 {

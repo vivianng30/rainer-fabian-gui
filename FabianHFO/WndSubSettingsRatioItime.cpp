@@ -5,16 +5,39 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsRatioItime.h"
 
-
-// CWndSubSettingsRatioItime
+/**********************************************************************************************//**
+ * CWndSubSettingsRatioItime
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsRatioItime, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsRatioItime class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsRatioItime::CWndSubSettingsRatioItime(UINT viewFlag):
 CWndSubSettings(viewFlag)
 {
 	m_eModeITime=RM_SET_ItoBPM;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsRatioItime class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsRatioItime::~CWndSubSettingsRatioItime()
 {
@@ -33,13 +56,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsRatioItime, CWnd)
 	//ON_BN_CLICKED(IDC_BTN_SETUP_7, &CWndSubSettingsAutoOxyCal::OnBnClicked7)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsRatioItime message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsRatioItime message handlers
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsRatioItime::Initialize()
 {
 	CClientDC dc(this);
@@ -74,9 +97,13 @@ void CWndSubSettingsRatioItime::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsRatioItime::Draw()
 {
 	RECT rcCl;
@@ -160,9 +187,17 @@ void CWndSubSettingsRatioItime::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsRatioItime::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -215,9 +250,15 @@ BOOL CWndSubSettingsRatioItime::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets IE ratio
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn	The button.
+ **************************************************************************************************/
+
 void CWndSubSettingsRatioItime::SetIERatio(UINT btn)
 {
 	switch(btn)
@@ -237,9 +278,13 @@ void CWndSubSettingsRatioItime::SetIERatio(UINT btn)
 	getModel()->getCONFIG()->SetIERelationMode(m_eModeITime);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsRatioItime::OnBnClicked1()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_1);
@@ -251,9 +296,14 @@ void CWndSubSettingsRatioItime::OnBnClicked1()
 		SetIERatio(IDC_BTN_SETUP_1);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsRatioItime::OnBnClicked2()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_2);
@@ -265,15 +315,14 @@ void CWndSubSettingsRatioItime::OnBnClicked2()
 		SetIERatio(IDC_BTN_SETUP_2);
 	}
 }
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsRatioItime::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsRatioItime::OnDestroy()
 {
 	CWndSubSettings::OnDestroy();

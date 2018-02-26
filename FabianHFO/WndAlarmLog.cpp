@@ -35,12 +35,24 @@ extern HFONT g_hf53AcuBold;
 //extern HFONT g_hf80Bold;
 //extern HFONT g_hf90Bold;
 
-//extern CLangAdmin* g_pGlobalLanguageStrings;
-
-
-// CWndAlarmLog
+/**********************************************************************************************//**
+ * CWndAlarmLog
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndAlarmLog, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndAlarmLog class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndAlarmLog::CWndAlarmLog()
 {
@@ -60,6 +72,13 @@ CWndAlarmLog::CWndAlarmLog()
 
 	m_pListBox = NULL;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndAlarmLog class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndAlarmLog::~CWndAlarmLog()
 {
@@ -82,9 +101,15 @@ CWndAlarmLog::~CWndAlarmLog()
 	m_pListBox=NULL;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CWndAlarmLog::getModel()
 {
 	if(m_pModel==NULL)
@@ -99,13 +124,20 @@ BEGIN_MESSAGE_MAP(CWndAlarmLog, CWnd)
 	//ON_WM_TIMER()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndAlarmLog-Meldungshandler
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CWndAlarmLog-Meldungshandler
-
-// **************************************************************************
-// 
-// **************************************************************************
 bool CWndAlarmLog::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext)
 {
 	//RECT rcLd={6,220,600,535};
@@ -120,9 +152,20 @@ bool CWndAlarmLog::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateC
 	return true;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Creates the Window instance that will be represented by this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndAlarmLog::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 
@@ -157,9 +200,17 @@ BOOL CWndAlarmLog::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateCont
 		return 0;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	rc	The rectangle.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CWndAlarmLog::Initialize(const RECT rc)
 {
 	/*RECT rcLd={rc.left+10,rc.top+10,rc.right-10,rc.bottom-10};*/
@@ -331,8 +382,14 @@ bool CWndAlarmLog::Initialize(const RECT rc)
 	return true;
 }
 
-
-
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
 
 void CWndAlarmLog::Show(bool bShow)
 {
@@ -348,6 +405,14 @@ void CWndAlarmLog::Show(bool bShow)
 		SetWindowPos(NULL,0,0,0,0,SWP_NOSIZE|SWP_NOMOVE|SWP_HIDEWINDOW);
 	}
 }
+
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndAlarmLog::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -356,15 +421,13 @@ void CWndAlarmLog::OnPaint()
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndAlarmLog::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndAlarmLog::OnDestroy()
 {
 	m_bExit=true;
@@ -381,6 +444,13 @@ void CWndAlarmLog::OnDestroy()
 	if(m_hDC)
 		DeleteDC(m_hDC);
 }
+
+/**********************************************************************************************//**
+ * Sets horizontal extent
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndAlarmLog::SetHorizontalExtent(/*CListBox& ListBox*/)
 {
@@ -423,6 +493,12 @@ void CWndAlarmLog::SetHorizontalExtent(/*CListBox& ListBox*/)
 
 }
 
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndAlarmLog::Draw()
 {
@@ -485,6 +561,15 @@ void CWndAlarmLog::Draw()
 	//SelectObject(m_hDC,hPrevFont);
 
 }
+
+/**********************************************************************************************//**
+ * Adds a message head
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	sMessage	The message.
+ **************************************************************************************************/
 
 void CWndAlarmLog::AddMessageHead(CStringW sMessage)
 {
@@ -552,6 +637,15 @@ void CWndAlarmLog::AddMessageHead(CStringW sMessage)
 	m_pListBox->InvalidateListBox();
 
 }
+
+/**********************************************************************************************//**
+ * Adds a message tail
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	sMessage	The message.
+ **************************************************************************************************/
 
 void CWndAlarmLog::AddMessageTail(CStringW sMessage)
 {

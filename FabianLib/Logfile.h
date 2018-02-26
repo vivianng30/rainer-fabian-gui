@@ -1,6 +1,14 @@
-// Logfile.h: interface for the Logfile class.
-//
-//////////////////////////////////////////////////////////////////////
+//=============================================================================
+/** 
+* \class Logfile
+* 		 
+* \brief A Logfile.
+* 		 
+* \author Rainer Kuehner
+* \date 2017-10-23 Creation of file
+*
+**/
+//=============================================================================
 
 #if !defined(AFX_LOGFILE_H__72502C54_C715_4FE4_9FFC_C4EB1296C824__INCLUDED_)
 #define AFX_LOGFILE_H__72502C54_C715_4FE4_9FFC_C4EB1296C824__INCLUDED_

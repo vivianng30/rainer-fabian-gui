@@ -5,17 +5,39 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsFlushtime.h"
 
-
-
-// CWndSubSettingsFlushtime
+/**********************************************************************************************//**
+ * CWndSubSettingsFlushtime
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsFlushtime, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsFlushtime class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsFlushtime::CWndSubSettingsFlushtime(UINT viewFlag):
 CWndSubSettings(viewFlag)
 {
 	m_byFlushTime=0;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsFlushtime class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsFlushtime::~CWndSubSettingsFlushtime()
 {
@@ -34,13 +56,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsFlushtime, CWnd)
 	//ON_BN_CLICKED(IDC_BTN_SETUP_7, &CWndSubSettingsAutoOxyCal::OnBnClicked7)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsFlushtime message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsFlushtime message handlers
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsFlushtime::Initialize()
 {
 	CClientDC dc(this);
@@ -86,9 +108,13 @@ void CWndSubSettingsFlushtime::Initialize()
 		GetParent()->PostMessage(WM_SET_SETUPTIMER);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsFlushtime::Draw()
 {
 	RECT rcCl;
@@ -179,9 +205,17 @@ void CWndSubSettingsFlushtime::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsFlushtime::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -247,9 +281,15 @@ BOOL CWndSubSettingsFlushtime::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets flush time
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btn	The button.
+ **************************************************************************************************/
+
 void CWndSubSettingsFlushtime::SetFlushTime(UINT btn)
 {
 	switch(btn)
@@ -274,9 +314,13 @@ void CWndSubSettingsFlushtime::SetFlushTime(UINT btn)
 	getModel()->getDATAHANDLER()->SetCurO2FlushTime(m_byFlushTime);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsFlushtime::OnBnClicked1()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_1);
@@ -288,9 +332,14 @@ void CWndSubSettingsFlushtime::OnBnClicked1()
 		SetFlushTime(IDC_BTN_SETUP_1);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsFlushtime::OnBnClicked2()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_2);
@@ -302,9 +351,14 @@ void CWndSubSettingsFlushtime::OnBnClicked2()
 		SetFlushTime(IDC_BTN_SETUP_2);
 	}
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked 3 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsFlushtime::OnBnClicked3()
 {
 	eBtnState eState = GetBtnState(IDC_BTN_SETUP_3);
@@ -316,15 +370,14 @@ void CWndSubSettingsFlushtime::OnBnClicked3()
 		SetFlushTime(IDC_BTN_SETUP_3);
 	}
 }
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsFlushtime::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsFlushtime::OnDestroy()
 {
 	CWndSubSettings::OnDestroy();

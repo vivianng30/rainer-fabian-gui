@@ -6,10 +6,28 @@
 #include "FabianHFO.h"
 #include "globDefs.h"
 
-
-// CSelectSetupBtn
+/**********************************************************************************************//**
+ * CSelectSetupBtn
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CSelectSetupBtn, CButton)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CSelectSetupBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	btn   	The button.
+ * \param 		  	cr	  	The carriage return.
+ * \param 		  	bValue	True to value.
+ **************************************************************************************************/
 
 CSelectSetupBtn::CSelectSetupBtn(BTN &btn,COLORREF cr,bool bValue)
 {
@@ -66,6 +84,13 @@ CSelectSetupBtn::CSelectSetupBtn(BTN &btn,COLORREF cr,bool bValue)
 	m_bDrawWarning=false;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CSelectSetupBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CSelectSetupBtn::~CSelectSetupBtn()
 {
 	delete m_pbmpFlag;
@@ -103,9 +128,15 @@ CSelectSetupBtn::~CSelectSetupBtn()
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CSelectSetupBtn::getModel()
 {
 	if(m_pModel==NULL)
@@ -121,8 +152,20 @@ BEGIN_MESSAGE_MAP(CSelectSetupBtn, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CSelectSetupBtn-Meldungshandler
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	hFont	  	The font.
+ * \param 		  	nXOffset  	The x coordinate offset.
+ * \param 		  	dwStyle   	The style.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-// CSelectSetupBtn-Meldungshandler
 BOOL CSelectSetupBtn::Create(CWnd* pParentWnd, HFONT hFont, int nXOffset, DWORD	dwStyle) 
 {
 	SIZE sz;
@@ -179,6 +222,15 @@ BOOL CSelectSetupBtn::Create(CWnd* pParentWnd, HFONT hFont, int nXOffset, DWORD	
 //	return m_bDepressed;
 //}
 
+/**********************************************************************************************//**
+ * Loads a flag
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	csFlag	The create struct flag.
+ **************************************************************************************************/
+
 void CSelectSetupBtn::LoadFlag(CStringW csFlag)
 {
 	CStringW cs;
@@ -209,6 +261,15 @@ void CSelectSetupBtn::LoadFlag(CStringW csFlag)
 		FindClose(hFind);
 }
 
+/**********************************************************************************************//**
+ * Draw ok
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CSelectSetupBtn::DrawOK(bool state)
 {
 	bool bRedraw=false;
@@ -221,6 +282,15 @@ void CSelectSetupBtn::DrawOK(bool state)
 	if(bRedraw)
 		Redraw();
 }
+
+/**********************************************************************************************//**
+ * Draw key
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
 void CSelectSetupBtn::DrawKey(bool state)
 {
@@ -235,6 +305,15 @@ void CSelectSetupBtn::DrawKey(bool state)
 		Redraw();
 }
 
+/**********************************************************************************************//**
+ * Draw warning
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CSelectSetupBtn::DrawWarning(bool state)
 {
 	bool bRedraw=false;
@@ -247,11 +326,27 @@ void CSelectSetupBtn::DrawWarning(bool state)
 	if(bRedraw)
 		Redraw();
 }
+
+/**********************************************************************************************//**
+ * Redraws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CSelectSetupBtn::Redraw() 
 {
 	Invalidate();
 	UpdateWindow();
 }
+
+/**********************************************************************************************//**
+ * Draw direct up
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CSelectSetupBtn::DrawDirectUp()
 {
 	CClientDC dc(this);
@@ -263,6 +358,13 @@ void CSelectSetupBtn::DrawDirectUp()
 	Draw(BTN_DW_UP);
 	BitBlt(dc.m_hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);
 }
+
+/**********************************************************************************************//**
+ * Draw direct down
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CSelectSetupBtn::DrawDirectDown()
 {
@@ -279,6 +381,15 @@ void CSelectSetupBtn::DrawDirectDown()
 	BitBlt(dc.m_hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);
 }
 
+/**********************************************************************************************//**
+ * Replace font
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	hFont	The font.
+ **************************************************************************************************/
+
 void CSelectSetupBtn::ReplaceFont(HFONT hFont) 
 {
 	m_hFont=hFont;
@@ -286,60 +397,162 @@ void CSelectSetupBtn::ReplaceFont(HFONT hFont)
 	UpdateWindow();
 }
 
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	If non-null, the text.
+ * \param 		  	nNbr   	Number of.
+ **************************************************************************************************/
+
 void CSelectSetupBtn::SetText(TCHAR* pszText, int nNbr) 
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),pszText);
 	m_nNbr=nNbr;
 }
+
+/**********************************************************************************************//**
+ * Sets a text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText	The text.
+ * \param 		  	nNbr  	Number of.
+ **************************************************************************************************/
+
 void CSelectSetupBtn::SetText(CStringW& szText, int nNbr) 
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),szText);
 	m_nNbr=nNbr;
 }
+
+/**********************************************************************************************//**
+ * Sets value text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	If non-null, the text.
+ * \param 		  	nNbr   	Number of.
+ **************************************************************************************************/
+
 void CSelectSetupBtn::SetValueText(TCHAR* pszText, int nNbr) 
 {
 	_tcscpy_s(m_pszValueText,_countof(m_pszValueText),pszText);
 	m_nNbr=nNbr;
 }
+
+/**********************************************************************************************//**
+ * Sets value text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText	The text.
+ * \param 		  	nNbr  	Number of.
+ **************************************************************************************************/
+
 void CSelectSetupBtn::SetValueText(CStringW& szText, int nNbr) 
 {
 	_tcscpy_s(m_pszValueText,_countof(m_pszValueText),szText);
 	m_nNbr=nNbr;
 }
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText	The text.
+ * \param 		  	nNbr  	Number of.
+ **************************************************************************************************/
+
 void CSelectSetupBtn::RefreshText(CStringW& szText, int nNbr) 
 {
 	SetText(szText,nNbr);
 	Invalidate();
 	UpdateWindow();
 } 
+
+/**********************************************************************************************//**
+ * Refresh text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	If non-null, the text.
+ * \param 		  	nNbr   	Number of.
+ **************************************************************************************************/
+
 void CSelectSetupBtn::RefreshText(TCHAR* pszText, int nNbr) 
 {
 	SetText(pszText,nNbr);
 	Invalidate();
 	UpdateWindow();
 } 
+
+/**********************************************************************************************//**
+ * Refresh value text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText	The text.
+ * \param 		  	nNbr  	Number of.
+ **************************************************************************************************/
+
 void CSelectSetupBtn::RefreshValueText(CStringW& szText, int nNbr) 
 {
 	SetValueText(szText,nNbr);
 	Invalidate();
 	UpdateWindow();
 } 
+
+/**********************************************************************************************//**
+ * Refresh value text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	If non-null, the text.
+ * \param 		  	nNbr   	Number of.
+ **************************************************************************************************/
+
 void CSelectSetupBtn::RefreshValueText(TCHAR* pszText, int nNbr) 
 {
 	SetValueText(pszText,nNbr);
 	Invalidate();
 	UpdateWindow();
 } 
+
+/**********************************************************************************************//**
+ * Sets a character
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	t	A TCHAR to process.
+ **************************************************************************************************/
+
 void CSelectSetupBtn::SetChar(TCHAR t) 
 {
 	m_pszText[0]=t;
 	m_pszText[1]=0x0000;
 }
 
+/**********************************************************************************************//**
+ * Draw item
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	lpDrawItemStruct	The draw item structure.
+ **************************************************************************************************/
 
-// **************************************************************************
-// Painting
-// **************************************************************************
 void CSelectSetupBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
 	if (lpDrawItemStruct->itemState & ODS_DISABLED)
@@ -370,6 +583,15 @@ void CSelectSetupBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 
 }
+
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
 
 void CSelectSetupBtn::Draw(int nState/*,TCHAR* psz*/)
 {
@@ -539,7 +761,17 @@ void CSelectSetupBtn::Draw(int nState/*,TCHAR* psz*/)
 	}
 }
 
-
+/**********************************************************************************************//**
+ * Sets the bitmaps
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pcBmpUp		 	If non-null, the PC bitmap up.
+ * \param [in,out]	pcBmpDown	 	If non-null, the PC bitmap down.
+ * \param [in,out]	pcBmpDisabled	If non-null, the PC bitmap disabled.
+ * \param [in,out]	pcBmpFocus   	If non-null, the PC bitmap focus.
+ **************************************************************************************************/
 
 void CSelectSetupBtn::SetBitmaps(CBmp* pcBmpUp,CBmp* pcBmpDown,CBmp* pcBmpDisabled,CBmp* pcBmpFocus)
 {
@@ -554,7 +786,15 @@ void CSelectSetupBtn::SetBitmaps(CBmp* pcBmpUp,CBmp* pcBmpDown,CBmp* pcBmpDisabl
 	}
 }
 
-
+/**********************************************************************************************//**
+ * Executes the l button double clock action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CSelectSetupBtn::OnLButtonDblClk(UINT nFlags, CPoint point) 
 {
@@ -566,17 +806,28 @@ void CSelectSetupBtn::OnLButtonDblClk(UINT nFlags, CPoint point)
 	CButton::OnLButtonDblClk(nFlags, point);
 }
 
+/**********************************************************************************************//**
+ * Gets button identifier
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The button identifier.
+ **************************************************************************************************/
 
-
-// **************************************************************************
-// 
-// **************************************************************************
 int CSelectSetupBtn::GetBtnId()
 {
 	return m_btn.wID;
 }
 
-
+/**********************************************************************************************//**
+ * Sets a state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
 
 void CSelectSetupBtn::SetState(eBtnState state)
 {
@@ -592,14 +843,32 @@ void CSelectSetupBtn::SetState(eBtnState state)
 	}
 	
 }
+
+/**********************************************************************************************//**
+ * Gets the state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The state.
+ **************************************************************************************************/
+
 eBtnState CSelectSetupBtn::GetState()
 {
 	return m_btnState;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CSelectSetupBtn::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -642,14 +911,42 @@ BOOL CSelectSetupBtn::PreTranslateMessage(MSG* pMsg)
 	return CButton::PreTranslateMessage(pMsg);
 }
 
+/**********************************************************************************************//**
+ * Sets language string
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	szLang	The language.
+ **************************************************************************************************/
+
 void CSelectSetupBtn::SetLangString(CStringW szLang)
 {
 	m_szLanguageString=szLang;
 }
+
+/**********************************************************************************************//**
+ * Gets language string
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The language string.
+ **************************************************************************************************/
+
 CStringW CSelectSetupBtn::GetLangString()
 {
 	return m_szLanguageString;
 }
+
+/**********************************************************************************************//**
+ * Executes the set focus action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pOldWnd	If non-null, the old window.
+ **************************************************************************************************/
 
 void CSelectSetupBtn::OnSetFocus(CWnd* pOldWnd)
 {
@@ -662,6 +959,15 @@ void CSelectSetupBtn::OnSetFocus(CWnd* pOldWnd)
 		Redraw();
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the kill focus action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pNewWnd	If non-null, the new window.
+ **************************************************************************************************/
 
 void CSelectSetupBtn::OnKillFocus(CWnd* pNewWnd)
 {

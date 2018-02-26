@@ -9,10 +9,24 @@
 #include "DlgProxPressure60.h"
 #include <math.h>
 
-
-// CWndServiceCalibration
+/**********************************************************************************************//**
+ * CWndServiceCalibration
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndServiceCalibration, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndServiceCalibration class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndServiceCalibration::CWndServiceCalibration():
 CWndService()
@@ -89,6 +103,13 @@ CWndService()
 	m_iFlow=getModel()->getDATAHANDLER()->PARADATA()->GetFlowminPara();
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndServiceCalibration class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CWndServiceCalibration::~CWndServiceCalibration()
 {
 	if(m_sliderEnableBTPS)
@@ -155,9 +176,13 @@ BEGIN_MESSAGE_MAP(CWndServiceCalibration, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SERVICE_EXHCAL, &CWndServiceCalibration::OnBnClickedExhCal)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndServiceCalibration message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndServiceCalibration message handlers
 void CWndServiceCalibration::Init()
 {
 	CClientDC dc(this);
@@ -379,6 +404,13 @@ void CWndServiceCalibration::Init()
 	SetTimer(SERVICETIMER, 150, NULL);
 
 }
+
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceCalibration::Draw()
 {
@@ -783,16 +815,13 @@ void CWndServiceCalibration::Draw()
 	DeleteDC(hdcMem);
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndServiceCalibration::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CWndServiceCalibration::OnDestroy()
 {
 	KillTimer(SERVICETIMER);
@@ -811,9 +840,15 @@ void CWndServiceCalibration::OnDestroy()
 	CWndService::OnDestroy();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CWndServiceCalibration::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==SERVICETIMER)
@@ -958,6 +993,13 @@ void CWndServiceCalibration::OnTimer(UINT_PTR nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
+/**********************************************************************************************//**
+ * Check vent run state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceCalibration::checkVentRunState()
 {
 	m_iCntCheckVentState++;
@@ -977,10 +1019,13 @@ void CWndServiceCalibration::checkVentRunState()
 	
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked system calendar action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndServiceCalibration::OnBnClickedSysCal()
 {
 	m_bSysCalRunning=!m_bSysCalRunning;
@@ -1040,10 +1085,13 @@ void CWndServiceCalibration::OnBnClickedSysCal()
 	Draw();
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked prox 0 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndServiceCalibration::OnBnClickedProx0()
 {
 	m_bPProx0CalRunning=true;
@@ -1312,6 +1360,14 @@ void CWndServiceCalibration::OnBnClickedProx0()
 			m_pcPProx60->EnableWindow(TRUE);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked prox 60 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceCalibration::OnBnClickedProx60()
 {
 	m_bPProx0CalRunning=true;
@@ -1602,9 +1658,14 @@ void CWndServiceCalibration::OnBnClickedProx60()
 	getModel()->getDATAHANDLER()->SetPINSPParadata_IPPV(600,true);
 	
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked exh calendar action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceCalibration::OnBnClickedExhCal()
 {
 	bool bPRICOrunning=false;
@@ -1662,6 +1723,18 @@ void CWndServiceCalibration::OnBnClickedExhCal()
 	}
 }
 
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
 LRESULT CWndServiceCalibration::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
@@ -1709,6 +1782,18 @@ LRESULT CWndServiceCalibration::WindowProc(UINT message, WPARAM wParam, LPARAM l
 	return CWndService::WindowProc(message, wParam, lParam);
 }
 
+/**********************************************************************************************//**
+ * Executes my message action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	wParam	The wParam field of the message.
+ * \param	lParam	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndServiceCalibration::OnMyMessage(WPARAM wParam, LPARAM lParam)
 {
 	switch(wParam)
@@ -1732,6 +1817,17 @@ LRESULT CWndServiceCalibration::OnMyMessage(WPARAM wParam, LPARAM lParam)
 	}
 	return 1;
 }
+
+/**********************************************************************************************//**
+ * Calculates the correction factor
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	iAltitude	Zero-based index of the altitude.
+ *
+ * \return	The calculated correction factor.
+ **************************************************************************************************/
 
 double CWndServiceCalibration::CalcCorrectionFactor(double iAltitude)
 {

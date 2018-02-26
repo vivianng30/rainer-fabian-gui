@@ -6,13 +6,28 @@
 #include "DTUpDwnBtn.h"
 #include "globDefs.h"
 
-// CDTUpDwnBtn
+/**********************************************************************************************//**
+ * CDTUpDwnBtn
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CDTUpDwnBtn, CButton)
 
-// **************************************************************************
-// De-, construction
-// **************************************************************************
+/**********************************************************************************************//**
+ * Initializes a new instance of the CDTUpDwnBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	btn	The button.
+ * \param 		  	cr 	The carriage return.
+ **************************************************************************************************/
+
 CDTUpDwnBtn::CDTUpDwnBtn(BTN &btn,COLORREF cr) : CBtn(btn,cr)
 {
 	// Init state
@@ -22,6 +37,13 @@ CDTUpDwnBtn::CDTUpDwnBtn(BTN &btn,COLORREF cr) : CBtn(btn,cr)
 	m_pcBmpFocusDown=NULL;
 	//m_pViewHandler = CMVViewHandler::GetInstance();
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CDTUpDwnBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CDTUpDwnBtn::~CDTUpDwnBtn()
 {
@@ -38,11 +60,13 @@ BEGIN_MESSAGE_MAP(CDTUpDwnBtn, CButton)
 	//ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
-// CDTUpDwnBtn message handlers
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draw direct up
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CDTUpDwnBtn::DrawDirectUp(void)
 {
 	CClientDC dc(this);
@@ -51,6 +75,15 @@ void CDTUpDwnBtn::DrawDirectUp(void)
 	Draw(BTN_DW_UP);
 	BitBlt(dc.m_hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);
 }
+
+/**********************************************************************************************//**
+ * Draw item
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	lpDrawItemStruct	The draw item structure.
+ **************************************************************************************************/
 
 void CDTUpDwnBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
@@ -85,6 +118,16 @@ void CDTUpDwnBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState  	The state.
+ * \param	nAddInfo	Information describing the add.
+ **************************************************************************************************/
 
 void CDTUpDwnBtn::Draw(int nState,int nAddInfo)
 {
@@ -141,6 +184,17 @@ void CDTUpDwnBtn::Draw(int nState,int nAddInfo)
 	}
 
 }
+
+/**********************************************************************************************//**
+ * Executes the l button down action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CDTUpDwnBtn::OnLButtonDown(UINT nFlags, CPoint point) 
 {
 	if( !m_bLMouseButtonDown )
@@ -151,6 +205,16 @@ void CDTUpDwnBtn::OnLButtonDown(UINT nFlags, CPoint point)
 		CButton::OnLButtonDown(nFlags, point);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the l button up action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CDTUpDwnBtn::OnLButtonUp(UINT nFlags, CPoint point) 
 {
@@ -187,14 +251,31 @@ void CDTUpDwnBtn::OnLButtonUp(UINT nFlags, CPoint point)
 //	m_bLMouseButtonDown = false;
 //}
 
-// **************************************************************************
-// Operation methods
-// **************************************************************************
+/**********************************************************************************************//**
+ * Query if this instance is depressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if depressed, false if not.
+ **************************************************************************************************/
+
 bool CDTUpDwnBtn::IsDepressed( void )
 {
 	// Return the buttons state
 	return m_bDepressed;
 }
+
+/**********************************************************************************************//**
+ * Depress
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bDown	True to down.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CDTUpDwnBtn::Depress(bool bDown)
 {
@@ -209,10 +290,16 @@ bool CDTUpDwnBtn::Depress(bool bDown)
 	return m_bDepressed;
 }
 
-// **************************************************************************
-// Button is very slow - this code permforms speed up - but
-//              use of double click is not possible any more
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the l button double clock action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CDTUpDwnBtn::OnLButtonDblClk(UINT nFlags, CPoint point) 
 {
 	DWORD lParam;
@@ -223,17 +310,31 @@ void CDTUpDwnBtn::OnLButtonDblClk(UINT nFlags, CPoint point)
 	CButton::OnLButtonDblClk(nFlags, point);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets button identifier
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The button identifier.
+ **************************************************************************************************/
+
 int CDTUpDwnBtn::GetBtnId()
 {
 	return m_btn.wID;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CDTUpDwnBtn::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)

@@ -5,17 +5,62 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsO2Compensation.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines timechange
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 #define TIMECHANGE	600
 
-
-
-// CWndSubSettingsO2Compensation
+/**********************************************************************************************//**
+ * CWndSubSettingsO2Compensation
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsO2Compensation, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsO2Compensation class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsO2Compensation::CWndSubSettingsO2Compensation(UINT viewFlag):
 CWndSubSettings(viewFlag)
@@ -38,6 +83,13 @@ CWndSubSettings(viewFlag)
 	m_iCounter=0;
 	m_eTimeChanger=TC_OFF;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsO2Compensation class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsO2Compensation::~CWndSubSettingsO2Compensation()
 {
@@ -75,13 +127,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsO2Compensation, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SETUP_YEAR, &CWndSubSettingsO2Compensation::OnBnClickedValue)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsO2Compensation message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsO2Compensation message handlers
-
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsO2Compensation::Initialize()
 {
 	CClientDC dc(this);
@@ -154,9 +206,13 @@ void CWndSubSettingsO2Compensation::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsO2Compensation::Draw()
 {
 	RECT rcCl;
@@ -259,9 +315,17 @@ void CWndSubSettingsO2Compensation::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsO2Compensation::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -328,21 +392,25 @@ BOOL CWndSubSettingsO2Compensation::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsO2Compensation::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CWndSubSettingsO2Compensation::OnDestroy()
 {
 	KillTimer(CHANGETIMER);
 	CWndSubSettings::OnDestroy();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked value action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndSubSettingsO2Compensation::OnBnClickedValue()
 {
@@ -358,9 +426,19 @@ void CWndSubSettingsO2Compensation::OnBnClickedValue()
 		GetParent()->PostMessage(WM_SET_SETUPTIMER);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndSubSettingsO2Compensation::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -453,6 +531,14 @@ LRESULT CWndSubSettingsO2Compensation::WindowProc(UINT message, WPARAM wParam, L
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
 
 void CWndSubSettingsO2Compensation::OnTimer(UINT_PTR nIDEvent)
 {

@@ -5,15 +5,62 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsPatAlarmDelay.h"
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
-#define TIMECHANGE	600
-// CWndSubSettingsPatAlarmDelay
+/**********************************************************************************************//**
+ * A macro that defines timechange
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
+#define TIMECHANGE	600
+
+/**********************************************************************************************//**
+ * CWndSubSettingsPatAlarmDelay
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsPatAlarmDelay, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsPatAlarmDelay class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsPatAlarmDelay::CWndSubSettingsPatAlarmDelay(UINT viewFlag):
 CWndSubSettings(viewFlag)
@@ -36,6 +83,13 @@ CWndSubSettings(viewFlag)
 	m_iCounter=0;
 	m_eTimeChanger=TC_OFF;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsPatAlarmDelay class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsPatAlarmDelay::~CWndSubSettingsPatAlarmDelay()
 {
@@ -73,9 +127,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsPatAlarmDelay, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SETUP_YEAR, &CWndSubSettingsPatAlarmDelay::OnBnClickedValue)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsPatAlarmDelay message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsPatAlarmDelay message handlers
 void CWndSubSettingsPatAlarmDelay::Initialize()
 {
 	CClientDC dc(this);
@@ -148,9 +206,13 @@ void CWndSubSettingsPatAlarmDelay::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsPatAlarmDelay::Draw()
 {
 	RECT rcCl;
@@ -253,9 +315,17 @@ void CWndSubSettingsPatAlarmDelay::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsPatAlarmDelay::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -353,16 +423,13 @@ BOOL CWndSubSettingsPatAlarmDelay::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsPatAlarmDelay::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CWndSubSettingsPatAlarmDelay::OnDestroy()
 {
 	getModel()->getCONFIG()->setCurPatientAlarmDelay(m_iValue);
@@ -370,6 +437,13 @@ void CWndSubSettingsPatAlarmDelay::OnDestroy()
 	KillTimer(CHANGETIMER);
 	CWndSubSettings::OnDestroy();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked value action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndSubSettingsPatAlarmDelay::OnBnClickedValue()
 {
@@ -385,9 +459,19 @@ void CWndSubSettingsPatAlarmDelay::OnBnClickedValue()
 		GetParent()->PostMessage(WM_SET_SETUPTIMER);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndSubSettingsPatAlarmDelay::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
@@ -513,6 +597,14 @@ LRESULT CWndSubSettingsPatAlarmDelay::WindowProc(UINT message, WPARAM wParam, LP
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
 
 void CWndSubSettingsPatAlarmDelay::OnTimer(UINT_PTR nIDEvent)
 {

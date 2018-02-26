@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsSPO2averagingtime.h.
+ *
+ * Declares the window sub settings spo 2averagingtime class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 

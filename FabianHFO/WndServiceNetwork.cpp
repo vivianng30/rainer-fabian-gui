@@ -7,9 +7,24 @@
 #include "TlsFile.h"
 #include "TlsRegistry.h"
 
-// CWndServiceNetwork
+/**********************************************************************************************//**
+ * CWndServiceNetwork
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndServiceNetwork, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndServiceNetwork class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndServiceNetwork::CWndServiceNetwork():
 CWndService()
@@ -36,6 +51,13 @@ CWndService()
 	m_sliderTerminalWave=NULL;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndServiceNetwork class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CWndServiceNetwork::~CWndServiceNetwork()
 {
 
@@ -52,7 +74,13 @@ END_MESSAGE_MAP()
 
 // CWndServiceNetwork message handlers
 
-// CWndServiceNursecall message handlers
+/**********************************************************************************************//**
+ * CWndServiceNursecall message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceNetwork::Init()
 {
 	CClientDC dc(this);
@@ -103,6 +131,13 @@ void CWndServiceNetwork::Init()
 
 	
 }
+
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceNetwork::Draw()
 {
@@ -464,15 +499,13 @@ void CWndServiceNetwork::Draw()
 	DeleteDC(hdcMem);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndServiceNetwork::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceNetwork::OnDestroy()
 {
 	CWndService::OnDestroy();
@@ -482,6 +515,17 @@ void CWndServiceNetwork::OnDestroy()
 	m_sliderTerminalWave=NULL;
 }
 
+/**********************************************************************************************//**
+ * Executes my message action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	wParam	The wParam field of the message.
+ * \param	lParam	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
 LRESULT CWndServiceNetwork::OnMyMessage(WPARAM wParam, LPARAM lParam)
 {

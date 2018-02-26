@@ -7,16 +7,67 @@
 #include "TlsFile.h"
 #include "NumInputDlg.h"
 
-// CWndServiceMaintenance
+/**********************************************************************************************//**
+ * CWndServiceMaintenance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 #define TIMECHANGE	600
 
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
+/**********************************************************************************************//**
+ * A macro that defines color calbtnup
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_CALBTNUP				RGB(181,178,181)
+
+/**********************************************************************************************//**
+ * A macro that defines color calbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_CALBTNDW				RGB(0,191,0)
+
+/**********************************************************************************************//**
+ * A macro that defines color calbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_CALBTNFC				RGB(85,95,255)
 
 //global font objects
@@ -41,8 +92,24 @@ extern HFONT g_hf43AcuBold;
 extern HFONT g_hf53AcuBold;
 extern HFONT g_hf70Bold;
 
+/**********************************************************************************************//**
+ * Initializes a new instance of the WndServiceMaintenance class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndServiceMaintenance, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndServiceMaintenance class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndServiceMaintenance::CWndServiceMaintenance():
 CWndService()
@@ -119,6 +186,13 @@ CWndService()
 	m_iDay=0;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndServiceMaintenance class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CWndServiceMaintenance::~CWndServiceMaintenance()
 {
 	
@@ -138,8 +212,12 @@ BEGIN_MESSAGE_MAP(CWndServiceMaintenance, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SETUP_DAY, &CWndServiceMaintenance::OnBnClickedDay)
 END_MESSAGE_MAP()
 
-
-// CWndServiceMaintenance message handlers
+/**********************************************************************************************//**
+ * CWndServiceMaintenance message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceMaintenance::Init()
 {
@@ -472,6 +550,12 @@ void CWndServiceMaintenance::Init()
 	SetTimer(CHANGETIMER, 1000, NULL); //?
 }
 
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceMaintenance::Draw()
 {
@@ -618,6 +702,12 @@ void CWndServiceMaintenance::Draw()
 	DeleteDC(hdcMem);
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceMaintenance::OnDestroy()
 {
@@ -791,6 +881,13 @@ void CWndServiceMaintenance::OnDestroy()
 	CWndService::OnDestroy();
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked reset operation time action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMaintenance::OnBnClickedResetOpTime()
 {
 	UINT iNum=0;
@@ -808,6 +905,13 @@ void CWndServiceMaintenance::OnBnClickedResetOpTime()
 	UpdateWindow();
 	Draw();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked reset operation time battery action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceMaintenance::OnBnClickedResetOpTimeBattery()
 {
@@ -827,6 +931,14 @@ void CWndServiceMaintenance::OnBnClickedResetOpTimeBattery()
 	UpdateWindow();
 	Draw();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked reset operation time hfo action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMaintenance::OnBnClickedResetOpTimeHFO()
 {
 	UINT iNum=0;
@@ -845,6 +957,14 @@ void CWndServiceMaintenance::OnBnClickedResetOpTimeHFO()
 	UpdateWindow();
 	Draw();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked installer action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMaintenance::OnBnClickedInstaller()
 {
 	//if(CTlsFile::Exists(_T("\\Hard Disk\\FabianInstaller.exe")))
@@ -902,11 +1022,15 @@ void CWndServiceMaintenance::OnBnClickedInstaller()
 	}
 }
 
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CWndServiceMaintenance::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==SERVICETIMER)
@@ -1175,6 +1299,18 @@ void CWndServiceMaintenance::OnTimer(UINT_PTR nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
+/**********************************************************************************************//**
+ * Executes my message action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	wParam	The wParam field of the message.
+ * \param	lParam	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndServiceMaintenance::OnMyMessage(WPARAM wParam, LPARAM lParam)
 {
 	switch(wParam)
@@ -1270,6 +1406,17 @@ LRESULT CWndServiceMaintenance::OnMyMessage(WPARAM wParam, LPARAM lParam)
 	return 1;
 }
 
+/**********************************************************************************************//**
+ * Gets month string
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	iMonth	Zero-based index of the month.
+ *
+ * \return	The month string.
+ **************************************************************************************************/
+
 CStringW CWndServiceMaintenance::GetMonthString(int iMonth)
 {
 	switch(iMonth)
@@ -1316,11 +1463,13 @@ CStringW CWndServiceMaintenance::GetMonthString(int iMonth)
 	}
 }
 
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Executes the button clicked day action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMaintenance::OnBnClickedDay()
 {
 	if (m_bServiceDateOn)
@@ -1334,11 +1483,13 @@ void CWndServiceMaintenance::OnBnClickedDay()
 	}	
 }
 
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Executes the button clicked month action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMaintenance::OnBnClickedMonth()
 {
 	if (m_bServiceDateOn)
@@ -1351,11 +1502,14 @@ void CWndServiceMaintenance::OnBnClickedMonth()
 			SetOneButtonFocused(IDC_BTN_SETUP_MONTH);
 	}
 }
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
+
+/**********************************************************************************************//**
+ * Executes the button clicked year action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMaintenance::OnBnClickedYear()
 {
 	if (m_bServiceDateOn)
@@ -1370,12 +1524,19 @@ void CWndServiceMaintenance::OnBnClickedYear()
 	}
 }
 
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
 
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
 LRESULT CWndServiceMaintenance::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 		switch(message)
@@ -1741,11 +1902,13 @@ LRESULT CWndServiceMaintenance::WindowProc(UINT message, WPARAM wParam, LPARAM l
 	return CWnd::WindowProc(message, wParam, lParam);
 }
 
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Executes the button clicked set date action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMaintenance::OnBnClickedSetDate()
 {
 	if(m_bDateChanged==false)
@@ -1792,12 +1955,15 @@ void CWndServiceMaintenance::OnBnClickedSetDate()
 	SetAllButtonUnpressed();
 }
 
+/**********************************************************************************************//**
+ * Gets current button state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The current button state.
+ **************************************************************************************************/
 
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
 eBtnState CWndServiceMaintenance::GetCurrentBtnState()
 {
 	POSITION pos;
@@ -1820,11 +1986,17 @@ eBtnState CWndServiceMaintenance::GetCurrentBtnState()
 	return BS_NONE;
 }
 
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Gets button state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	iID	Zero-based index of the identifier.
+ *
+ * \return	The button state.
+ **************************************************************************************************/
+
 eBtnState CWndServiceMaintenance::GetBtnState(int iID)
 {
 	POSITION pos;
@@ -1847,11 +2019,15 @@ eBtnState CWndServiceMaintenance::GetBtnState(int iID)
 	return BS_NONE;
 }
 
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Sets one button depressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CWndServiceMaintenance::SetOneButtonDepressed(int btnID)
 {
 	POSITION pos;
@@ -1888,11 +2064,13 @@ void CWndServiceMaintenance::SetOneButtonDepressed(int btnID)
 	}
 }
 
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Sets all button unpressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMaintenance::SetAllButtonUnpressed()
 {
 	POSITION pos;
@@ -1924,11 +2102,15 @@ void CWndServiceMaintenance::SetAllButtonUnpressed()
 	}
 }
 
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Sets one button focused
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	btnID	Identifier for the button.
+ **************************************************************************************************/
+
 void CWndServiceMaintenance::SetOneButtonFocused(int btnID)
 {
 		POSITION pos;
@@ -1967,11 +2149,13 @@ void CWndServiceMaintenance::SetOneButtonFocused(int btnID)
 		}
 }
 
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Sets next button focused
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMaintenance::SetNextButtonFocused()
 {
 	POSITION pos;
@@ -2023,11 +2207,13 @@ void CWndServiceMaintenance::SetNextButtonFocused()
 	}
 }
 
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
+/**********************************************************************************************//**
+ * Sets previous button focused
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceMaintenance::SetPrevButtonFocused()
 {
 	POSITION pos;
@@ -2076,12 +2262,13 @@ void CWndServiceMaintenance::SetPrevButtonFocused()
 	}
 }
 
+/**********************************************************************************************//**
+ * Date time changed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
 void CWndServiceMaintenance::DateTimeChanged()
 {
 
@@ -2118,12 +2305,17 @@ void CWndServiceMaintenance::DateTimeChanged()
 	m_bDateChanged=true;
 }
 
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-//=============================================================================
-/**
- * @brief
- **/
-//=============================================================================
 BOOL CWndServiceMaintenance::PreTranslateMessage(MSG* pMsg) 
 {
 	if (m_bServiceDateOn)

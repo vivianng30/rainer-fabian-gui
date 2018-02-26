@@ -1,7 +1,12 @@
 /**********************************************************************************************//**
- * \file	Configuration.h.
+ * \class	CConfiguration
  *
- * Declares the configuration class.
+ * \brief	General configuration class.
+ * 			
+ * \author	Rainer Kuehner
+ * \date	09.03.2016
+ * 			
+ * Loads/Saves configuration values/states from/to FRAM/Registry			
  **************************************************************************************************/
 
 #pragma once

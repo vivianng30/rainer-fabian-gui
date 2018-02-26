@@ -1,3 +1,14 @@
+//=============================================================================
+/** 
+* \class CLimitBtn_FIO2high
+* 		 
+* \brief Button for limit of FiO2 high value.
+* 		 
+* \author Rainer Kuehner
+* \date 2017-10-23 Creation of file
+*
+**/
+//=============================================================================
 #pragma once
 #include "LimitBtn.h"
 

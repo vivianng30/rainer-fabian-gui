@@ -5,11 +5,26 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsHFOManBreath.h"
 
-
-
-// CWndSubSettingsHFOManBreath
+/**********************************************************************************************//**
+ * CWndSubSettingsHFOManBreath
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsHFOManBreath, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsHFOManBreath class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsHFOManBreath::CWndSubSettingsHFOManBreath(UINT viewFlag):
 CWndSubSettings(viewFlag)
@@ -17,6 +32,13 @@ CWndSubSettings(viewFlag)
 	m_bHFOManBreath=false;
 	m_slider=NULL;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsHFOManBreath class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsHFOManBreath::~CWndSubSettingsHFOManBreath()
 {
@@ -30,12 +52,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsHFOManBreath, CWnd)
 	ON_MESSAGE(WM_BITMAPSLIDER_MOVING, OnMyMessage)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsHFOManBreath message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsHFOManBreath message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsHFOManBreath::Initialize()
 {
 	CClientDC dc(this);
@@ -70,9 +93,13 @@ void CWndSubSettingsHFOManBreath::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsHFOManBreath::Draw()
 {
 	RECT rcCl;
@@ -163,9 +190,17 @@ void CWndSubSettingsHFOManBreath::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsHFOManBreath::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -227,20 +262,30 @@ BOOL CWndSubSettingsHFOManBreath::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsHFOManBreath::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
 void CWndSubSettingsHFOManBreath::OnDestroy()
 {
 	CWndSubSettings::OnDestroy();
 }
+
+/**********************************************************************************************//**
+ * Executes my message action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	wParam	The wParam field of the message.
+ * \param	lParam	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndSubSettingsHFOManBreath::OnMyMessage(WPARAM wParam, LPARAM lParam)
 {
 	switch(wParam)

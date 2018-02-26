@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsSPO2alarmdelay.h.
+ *
+ * Declares the window sub settings spo 2alarmdelay class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 

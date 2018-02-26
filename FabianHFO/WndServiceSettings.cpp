@@ -8,13 +8,34 @@
 #include "DlgMessageBox.h"
 #include "TlsRegistry.h"
 
+/**********************************************************************************************//**
+ * A macro that defines ioctl HAL reboot
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define IOCTL_HAL_REBOOT  0x101003C
 extern "C" BOOL KernelIoControl(DWORD,LPVOID,DWORD,LPVOID,DWORD,LPDWORD);
 
-
-// CWndServiceNursecall
+/**********************************************************************************************//**
+ * CWndServiceNursecall
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndServiceSettings, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndServiceSettings class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndServiceSettings::CWndServiceSettings():
 CWndService()
@@ -92,6 +113,13 @@ CWndService()
 
 	
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndServiceSettings class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndServiceSettings::~CWndServiceSettings()
 {
@@ -176,9 +204,13 @@ BEGIN_MESSAGE_MAP(CWndServiceSettings, CWnd)
 	ON_BN_CLICKED(IDC_BTN_REGINSTALLER, &CWndServiceSettings::OnBnClickedRegInstall)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndServiceNursecall message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndServiceNursecall message handlers
 void CWndServiceSettings::Init()
 {
 	CClientDC dc(this);
@@ -467,6 +499,13 @@ void CWndServiceSettings::Init()
 	SetTimer(USBCHECKTIMER,2000,NULL);
 }
 
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceSettings::Draw()
 {
 	RECT rcCl;
@@ -724,15 +763,13 @@ void CWndServiceSettings::Draw()
 	DeleteDC(hdcMem);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndServiceSettings::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceSettings::OnDestroy()
 {
 	if(m_pDlg)
@@ -745,6 +782,19 @@ void CWndServiceSettings::OnDestroy()
 
 	CWndService::OnDestroy();
 }
+
+/**********************************************************************************************//**
+ * Executes my message action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	wParam	The wParam field of the message.
+ * \param	lParam	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndServiceSettings::OnMyMessage(WPARAM wParam, LPARAM lParam)
 {
 	switch(wParam)
@@ -841,6 +891,13 @@ LRESULT CWndServiceSettings::OnMyMessage(WPARAM wParam, LPARAM lParam)
 //	}
 //}
 
+/**********************************************************************************************//**
+ * Executes the button clicked set hospital action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceSettings::OnBnClickedSetHospital()
 {
 	KillTimer(USBCHECKTIMER);
@@ -869,6 +926,14 @@ void CWndServiceSettings::OnBnClickedSetHospital()
 
 	SetTimer(USBCHECKTIMER,2000,NULL);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked delete hospital action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceSettings::OnBnClickedDeleteHospital()
 {
 	KillTimer(USBCHECKTIMER);
@@ -893,6 +958,14 @@ void CWndServiceSettings::OnBnClickedDeleteHospital()
 
 	SetTimer(USBCHECKTIMER,2000,NULL);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked save hospital action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceSettings::OnBnClickedSaveHospital()
 {
 	KillTimer(USBCHECKTIMER);
@@ -937,6 +1010,14 @@ void CWndServiceSettings::OnBnClickedSaveHospital()
 
 	SetTimer(USBCHECKTIMER,2000,NULL);
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked load hospital action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceSettings::OnBnClickedLoadHospital()
 {
 	KillTimer(USBCHECKTIMER);
@@ -985,9 +1066,13 @@ void CWndServiceSettings::OnBnClickedLoadHospital()
 	
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked help factory action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceSettings::OnBnClickedHelpFactory()
 {
 	CDlgMessageBox box(this,_T("Help"),_T(""),MB_OK,0,HLP_0001);
@@ -999,9 +1084,14 @@ void CWndServiceSettings::OnBnClickedHelpFactory()
 	UpdateWindow();
 	Invalidate(TRUE);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked help automatic a l action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceSettings::OnBnClickedHelpAutoAL()
 {
 	CDlgMessageBox box(this,_T("Help"),_T(""),MB_OK,0,HLP_0002);
@@ -1013,9 +1103,14 @@ void CWndServiceSettings::OnBnClickedHelpAutoAL()
 	UpdateWindow();
 	Invalidate(TRUE);
 }
-// **************************************************************************
-// 
-// **************************************************************************
+
+/**********************************************************************************************//**
+ * Executes the button clicked register install action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceSettings::OnBnClickedRegInstall()
 {
 	CDlgMessageBox box2(this,_T("Question"),_T("Do you want to load the REGISTRY settings?"),MB_YESNO,IDB_MSG_STOP);
@@ -1063,9 +1158,13 @@ void CWndServiceSettings::OnBnClickedRegInstall()
 	Invalidate(TRUE);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked erase fram action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceSettings::OnBnClickedEraseFRAM()
 {
 	CDlgMessageBox box(this,_T("Default Factory Configuration"),_T("This will set the system to the default factory configuration and a RESTART will be initiated. Continue?"),MB_YESNO,IDB_MSG_CONFIG);
@@ -1101,6 +1200,14 @@ void CWndServiceSettings::OnBnClickedEraseFRAM()
 	
 
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked restore factory action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceSettings::OnBnClickedRestoreFactory()
 {
 	CDlgMessageBox box(this,getModel()->GetLanguageString(IDS_MSG_CAPTION_FACTORY),getModel()->GetLanguageString(IDS_MSG_FACTORY),MB_YESNO,IDB_MSG_CONFIG);
@@ -1127,6 +1234,13 @@ void CWndServiceSettings::OnBnClickedRestoreFactory()
 	UpdateWindow();
 	Draw();
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked restore hospital action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceSettings::OnBnClickedRestoreHospital()
 {
@@ -1159,9 +1273,15 @@ void CWndServiceSettings::OnBnClickedRestoreHospital()
 	SetTimer(USBCHECKTIMER,2000,NULL);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CWndServiceSettings::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==USBCHECKTIMER)

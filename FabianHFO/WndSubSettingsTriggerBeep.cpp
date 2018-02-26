@@ -5,11 +5,26 @@
 #include "FabianHFO.h"
 #include "WndSubSettingsTriggerBeep.h"
 
-
-
-// CWndSubSettingsTriggerBeep
+/**********************************************************************************************//**
+ * CWndSubSettingsTriggerBeep
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSubSettingsTriggerBeep, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSubSettingsTriggerBeep class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	viewFlag	The view flag.
+ **************************************************************************************************/
 
 CWndSubSettingsTriggerBeep::CWndSubSettingsTriggerBeep(UINT viewFlag):
 CWndSubSettings(viewFlag)
@@ -17,6 +32,13 @@ CWndSubSettings(viewFlag)
 	m_bTriggerBeep=false;
 	m_slider=NULL;
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSubSettingsTriggerBeep class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSubSettingsTriggerBeep::~CWndSubSettingsTriggerBeep()
 {
@@ -37,12 +59,13 @@ BEGIN_MESSAGE_MAP(CWndSubSettingsTriggerBeep, CWnd)
 	//ON_BN_CLICKED(IDC_BTN_SETUP_7, &CWndSubSettingsAutoOxyCal::OnBnClicked7)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSubSettingsTriggerBeep message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndSubSettingsTriggerBeep message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndSubSettingsTriggerBeep::Initialize()
 {
 	CClientDC dc(this);
@@ -76,9 +99,13 @@ void CWndSubSettingsTriggerBeep::Initialize()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsTriggerBeep::Draw()
 {
 	RECT rcCl;
@@ -163,9 +190,17 @@ void CWndSubSettingsTriggerBeep::Draw()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CWndSubSettingsTriggerBeep::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -225,19 +260,30 @@ BOOL CWndSubSettingsTriggerBeep::PreTranslateMessage(MSG* pMsg)
 	return CWnd::PreTranslateMessage(pMsg);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSubSettingsTriggerBeep::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSubSettingsTriggerBeep::OnDestroy()
 {
 	CWndSubSettings::OnDestroy();
 }
+
+/**********************************************************************************************//**
+ * Executes my message action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	wParam	The wParam field of the message.
+ * \param	lParam	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndSubSettingsTriggerBeep::OnMyMessage(WPARAM wParam, LPARAM lParam)
 {
 	switch(wParam)

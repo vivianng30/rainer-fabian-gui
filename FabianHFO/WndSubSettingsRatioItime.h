@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsRatioItime.h.
+ *
+ * Declares the window sub settings ratio itime class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 

@@ -9,10 +9,28 @@
 //#include "../MVViewHandler.h"
 #include "MVViewHandler.h"
 
-
-// CParaBtn
+/**********************************************************************************************//**
+ * CParaBtn
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CParaBtn, CButton)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CParaBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	btn		   	The button.
+ * \param 		  	nOffset	   	The offset.
+ * \param 		  	bScrollOver	True to scroll over.
+ **************************************************************************************************/
 
 CParaBtn::CParaBtn(BTN &btn, int nOffset,bool bScrollOver)
 {
@@ -116,6 +134,13 @@ CParaBtn::CParaBtn(BTN &btn, int nOffset,bool bScrollOver)
 	m_bScrollOver=bScrollOver;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CParaBtn class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CParaBtn::~CParaBtn()
 {
 	//getModel()=NULL;
@@ -214,9 +239,15 @@ CParaBtn::~CParaBtn()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CParaBtn::getModel()
 {
 	if(m_pModel==NULL)
@@ -237,9 +268,19 @@ BEGIN_MESSAGE_MAP(CParaBtn, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CParaBtn-Meldungshandler
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	dwStyle   	The style.
+ * \param 		  	v		  	A fVALUE to process.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CParaBtn-Meldungshandler
 BOOL CParaBtn::Create(CWnd* pParentWnd,DWORD dwStyle, fVALUE v) 
 {
 	SIZE sz;
@@ -294,12 +335,33 @@ BOOL CParaBtn::Create(CWnd* pParentWnd,DWORD dwStyle, fVALUE v)
 	return 0;
 }
 
-
+/**********************************************************************************************//**
+ * Sets a signaled
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bSignaled	True if signaled.
+ **************************************************************************************************/
 
 void CParaBtn::SetSignaled(bool bSignaled)
 {
 	m_bSignaled=bSignaled;
 }
+
+/**********************************************************************************************//**
+ * Sets the bitmaps
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pcBmpUp		 	If non-null, the PC bitmap up.
+ * \param [in,out]	pcBmpDown	 	If non-null, the PC bitmap down.
+ * \param [in,out]	pcBmpDisabled	If non-null, the PC bitmap disabled.
+ * \param [in,out]	pcBmpFocus   	If non-null, the PC bitmap focus.
+ * \param 		  	bSignaled	 	True if signaled.
+ * \param 		  	bRedraw		 	True to redraw.
+ **************************************************************************************************/
 
 void CParaBtn::SetBitmaps(CBmp* pcBmpUp,CBmp* pcBmpDown,CBmp* pcBmpDisabled,CBmp* pcBmpFocus,bool bSignaled,bool bRedraw)
 {
@@ -319,10 +381,28 @@ void CParaBtn::SetBitmaps(CBmp* pcBmpUp,CBmp* pcBmpDown,CBmp* pcBmpDisabled,CBmp
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets key value accepted
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CParaBtn::SetKeyValueAccepted(bool state)
 {
 	m_bKeyValueAccepted=state;
 }
+
+/**********************************************************************************************//**
+ * Sets a warning
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
 void CParaBtn::SetWarning(bool state)
 {
@@ -358,14 +438,29 @@ void CParaBtn::SetWarning(bool state)
 	
 }
 
-// **************************************************************************
-// Operation methods
-// **************************************************************************
+/**********************************************************************************************//**
+ * Query if this instance is depressed
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if depressed, false if not.
+ **************************************************************************************************/
+
 bool CParaBtn::IsDepressed( void )
 {
 	// Return the buttons state
 	return m_bDepressed;
 }
+
+/**********************************************************************************************//**
+ * Depress this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
 bool CParaBtn::Depress()
 {
@@ -885,6 +980,13 @@ bool CParaBtn::Depress()
 	return m_bDepressed;
 }
 
+/**********************************************************************************************//**
+ * Clears the arrows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CParaBtn::ClearArrows()
 {
 	bool bRefresh = false;
@@ -911,6 +1013,16 @@ void CParaBtn::ClearArrows()
 		UpdateWindow();
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets arrow down
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CParaBtn::SetArrowDown(bool state)
 {
 	bool bRefresh = false;
@@ -933,6 +1045,15 @@ void CParaBtn::SetArrowDown(bool state)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets arrow up
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CParaBtn::SetArrowUp(bool state)
 {
 	//int id=m_btn.wID;
@@ -952,6 +1073,15 @@ void CParaBtn::SetArrowUp(bool state)
 		UpdateWindow();
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets alarm arrow down
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
 void CParaBtn::SetAlarmArrowDown(bool state)
 {
@@ -975,6 +1105,15 @@ void CParaBtn::SetAlarmArrowDown(bool state)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets alarm arrow up
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
+
 void CParaBtn::SetAlarmArrowUp(bool state)
 {
 	//int id=m_btn.wID;
@@ -995,6 +1134,19 @@ void CParaBtn::SetAlarmArrowUp(bool state)
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets the colors
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	crTxtUp			The carriage return text up.
+ * \param	crTxtDown   	The carriage return text down.
+ * \param	crSubTxtDown	The carriage return sub text down.
+ * \param	crTxtFocus  	The carriage return text focus.
+ * \param	crDisabel   	The carriage return disabel.
+ * \param	bRefresh		True to refresh.
+ **************************************************************************************************/
 
 void CParaBtn::SetColors(COLORREF crTxtUp,COLORREF crTxtDown,COLORREF crSubTxtDown,COLORREF crTxtFocus, COLORREF crDisabel, bool bRefresh)
 {
@@ -1011,6 +1163,15 @@ void CParaBtn::SetColors(COLORREF crTxtUp,COLORREF crTxtDown,COLORREF crSubTxtDo
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets para value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	v	An int to process.
+ **************************************************************************************************/
+
 void CParaBtn::SetParaValue(int v)
 {
 	bool bRedraw=false;
@@ -1026,6 +1187,16 @@ void CParaBtn::SetParaValue(int v)
 
 }
 
+/**********************************************************************************************//**
+ * Sets a value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	v	   	A fVALUE to process.
+ * \param	bRedraw	True to redraw.
+ **************************************************************************************************/
+
 void CParaBtn::SetValue(fVALUE v, bool bRedraw) 
 {
 	memcpy(&m_v,&v,sizeof(fVALUE));
@@ -1037,6 +1208,13 @@ void CParaBtn::SetValue(fVALUE v, bool bRedraw)
 		RefreshBtn();
 	}
 }
+
+/**********************************************************************************************//**
+ * Refresh button state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CParaBtn::RefreshBtnState()
 {
@@ -1109,6 +1287,13 @@ void CParaBtn::RefreshBtnState()
 	BitBlt(dc.m_hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);*/
 }
 
+/**********************************************************************************************//**
+ * Refresh button
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CParaBtn::RefreshBtn()
 {
 	CClientDC dc(this);
@@ -1165,6 +1350,17 @@ void CParaBtn::RefreshBtn()
 	BitBlt(dc.m_hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);*/
 }
 
+/**********************************************************************************************//**
+ * Disables the value text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bDisable	True to disable, false to enable.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CParaBtn::DisableValueText(bool bDisable)
 {
 	m_bDisableText=bDisable;
@@ -1173,16 +1369,48 @@ bool CParaBtn::DisableValueText(bool bDisable)
 	return true;
 }
 
+/**********************************************************************************************//**
+ * Sets value text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText  	If non-null, the text.
+ * \param 		  	bTextOnly	True to text only.
+ **************************************************************************************************/
+
 void CParaBtn::SetValueText(TCHAR* pszText,bool bTextOnly) 
 {
 	_tcscpy_s(m_pszValueText,_countof(m_pszValueText),pszText);
 	m_bTextOnly=bTextOnly;
 }
+
+/**********************************************************************************************//**
+ * Sets value text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText   	The text.
+ * \param 		  	bTextOnly	True to text only.
+ **************************************************************************************************/
+
 void CParaBtn::SetValueText(CStringW& szText,bool bTextOnly) 
 {
 	_tcscpy_s(m_pszValueText,_countof(m_pszValueText),szText);
 	m_bTextOnly=bTextOnly;
 }
+
+/**********************************************************************************************//**
+ * Sets name text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText 	If non-null, the text.
+ * \param 		  	bRefresh	True to refresh.
+ **************************************************************************************************/
+
 void CParaBtn::SetNameText(TCHAR* pszText, bool bRefresh)
 {
 	_tcscpy_s(m_pszNameText,_countof(m_pszNameText),pszText);
@@ -1191,6 +1419,17 @@ void CParaBtn::SetNameText(TCHAR* pszText, bool bRefresh)
 		RefreshBtn();
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets name text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText  	The text.
+ * \param 		  	bRefresh	True to refresh.
+ **************************************************************************************************/
+
 void CParaBtn::SetNameText(CStringW& szText, bool bRefresh)
 {
 	_tcscpy_s(m_pszNameText,_countof(m_pszNameText),szText);
@@ -1199,6 +1438,17 @@ void CParaBtn::SetNameText(CStringW& szText, bool bRefresh)
 		RefreshBtn();
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets name note text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText 	If non-null, the text.
+ * \param 		  	bRefresh	True to refresh.
+ **************************************************************************************************/
+
 void CParaBtn::SetNameNoteText(TCHAR* pszText, bool bRefresh)
 {
 	_tcscpy_s(m_pszNameNoteText,_countof(m_pszNameNoteText),pszText);
@@ -1208,6 +1458,17 @@ void CParaBtn::SetNameNoteText(TCHAR* pszText, bool bRefresh)
 		RefreshBtn();
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets name note text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText  	The text.
+ * \param 		  	bRefresh	True to refresh.
+ **************************************************************************************************/
+
 void CParaBtn::SetNameNoteText(CStringW& szText, bool bRefresh)
 {
 	_tcscpy_s(m_pszNameNoteText,_countof(m_pszNameNoteText),szText);
@@ -1217,14 +1478,44 @@ void CParaBtn::SetNameNoteText(CStringW& szText, bool bRefresh)
 		RefreshBtn();
 	}
 }
+
+/**********************************************************************************************//**
+ * Sets unit text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pszText	If non-null, the text.
+ **************************************************************************************************/
+
 void CParaBtn::SetUnitText(TCHAR* pszText)
 {
 	_tcscpy_s(m_pszUnitText,_countof(m_pszUnitText),pszText);
 }
+
+/**********************************************************************************************//**
+ * Sets unit text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText	The text.
+ **************************************************************************************************/
+
 void CParaBtn::SetUnitText(CStringW& szText)
 {
 	_tcscpy_s(m_pszUnitText,_countof(m_pszUnitText),szText);
 }
+
+/**********************************************************************************************//**
+ * Refresh value text
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	szText   	The text.
+ * \param 		  	bTextOnly	True to text only.
+ **************************************************************************************************/
 
 void CParaBtn::RefreshValueText(CStringW& szText,bool bTextOnly) 
 {
@@ -1233,12 +1524,33 @@ void CParaBtn::RefreshValueText(CStringW& szText,bool bTextOnly)
 	UpdateWindow();
 }
 
+/**********************************************************************************************//**
+ * Sets the limits
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nLower	The lower.
+ * \param	nUpper	The upper.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CParaBtn::SetLimits(int nLower,int nUpper)
 {
 	m_v.iLowerLimit=nLower;
 	m_v.iUpperLimit=nUpper;
 	return true;
 }
+
+/**********************************************************************************************//**
+ * Draw direct up
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bCheckValueChanged	True if check value changed.
+ **************************************************************************************************/
 
 void CParaBtn::DrawDirectUp(bool bCheckValueChanged)
 {
@@ -1252,9 +1564,16 @@ void CParaBtn::DrawDirectUp(bool bCheckValueChanged)
 	BitBlt(dc.m_hDC,0,0,m_rcClient.right,m_rcClient.bottom,m_hDC,0,0,SRCCOPY);
 }
 
-// **************************************************************************
-// Painting
-// **************************************************************************
+/**********************************************************************************************//**
+ * ************************************************************************** Painting
+ * **************************************************************************
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	lpDrawItemStruct	The draw item structure.
+ **************************************************************************************************/
+
 void CParaBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
 	//int iID = m_btn.wID;
@@ -1314,6 +1633,15 @@ void CParaBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	}	
 }
 
+/**********************************************************************************************//**
+ * Draws
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nState	The state.
+ **************************************************************************************************/
+
 void CParaBtn::Draw(int nState)
 {
 	if(!m_bDisableText)
@@ -1369,9 +1697,17 @@ void CParaBtn::Draw(int nState)
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Translates all messages before they are processed by the main message loop
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pMsg	If non-null, the message.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CParaBtn::PreTranslateMessage(MSG* pMsg) 
 {
 	switch(pMsg->message)
@@ -1395,9 +1731,17 @@ BOOL CParaBtn::PreTranslateMessage(MSG* pMsg)
 	return CButton::PreTranslateMessage(pMsg);
 }
 
-// **************************************************************************
-// Get the button "value" and state
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets a button
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pnValue	If non-null, the pn value.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 bool CParaBtn::GetButton(int* pnValue) 
 {
 	if(pnValue)
@@ -1407,9 +1751,17 @@ bool CParaBtn::GetButton(int* pnValue)
 	return m_bDepressed;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Sets ud keys
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	kUP   	The up.
+ * \param	kDown 	The down.
+ * \param	kSpace	The space.
+ **************************************************************************************************/
+
 void CParaBtn::SetUDKeys(WORD kUP, WORD kDown, WORD kSpace)
 {
 	m_kUp=kUP;
@@ -1417,18 +1769,30 @@ void CParaBtn::SetUDKeys(WORD kUP, WORD kDown, WORD kSpace)
 	m_kSpace=kSpace;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets button identifier
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	The button identifier.
+ **************************************************************************************************/
+
 int CParaBtn::GetBtnId()
 {
 	return m_btn.wID;
 }
 
-// **************************************************************************
-// Button is very slow - this code permforms speed up - but
-//              use of double click is not possible any more
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the l button double clock action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
+
 void CParaBtn::OnLButtonDblClk(UINT nFlags, CPoint point) 
 {
 	DWORD lParam;
@@ -1438,6 +1802,16 @@ void CParaBtn::OnLButtonDblClk(UINT nFlags, CPoint point)
 	SendMessage(WM_LBUTTONDOWN,nFlags,lParam);
 	CButton::OnLButtonDblClk(nFlags, point);
 }
+
+/**********************************************************************************************//**
+ * Executes the l button down action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CParaBtn::OnLButtonDown(UINT nFlags, CPoint point) 
 {
@@ -1449,6 +1823,16 @@ void CParaBtn::OnLButtonDown(UINT nFlags, CPoint point)
 		CButton::OnLButtonDown(nFlags, point);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the l button up action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nFlags	The flags.
+ * \param	point 	The point.
+ **************************************************************************************************/
 
 void CParaBtn::OnLButtonUp(UINT nFlags, CPoint point) 
 {
@@ -1901,6 +2285,18 @@ void CParaBtn::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 	m_bLMouseButtonDown = false;
 }
+
+/**********************************************************************************************//**
+ * Executes the key down action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
+
 void CParaBtn::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
 	if( !m_bLMouseButtonDown /*&& !m_bAutoState*/)
@@ -2388,6 +2784,17 @@ void CParaBtn::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 }
 
+/**********************************************************************************************//**
+ * Executes the key up action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nChar  	The character.
+ * \param	nRepCnt	Number of reps.
+ * \param	nFlags 	The flags.
+ **************************************************************************************************/
+
 void CParaBtn::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
 	m_dwPushDelta=GetTickCount();
@@ -2420,18 +2827,43 @@ void CParaBtn::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	
 }
 
+/**********************************************************************************************//**
+ * Executes the kill focus action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pNewWnd	If non-null, the new window.
+ **************************************************************************************************/
+
 void CParaBtn::OnKillFocus(CWnd* pNewWnd)
 {
 	CButton::OnKillFocus(pNewWnd);
 	Depress();
 }
 
-
+/**********************************************************************************************//**
+ * Query if this instance is off
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	True if off, false if not.
+ **************************************************************************************************/
 
 bool CParaBtn::IsOff()
 {
 	return m_bOff;
 }
+
+/**********************************************************************************************//**
+ * Sets off state
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	state	True to state.
+ **************************************************************************************************/
 
 void CParaBtn::SetOffState(bool state)
 {
@@ -2452,6 +2884,13 @@ void CParaBtn::SetOffState(bool state)
 //		UpdateWindow();
 //	}
 //}
+
+/**********************************************************************************************//**
+ * Writes the current value
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CParaBtn::WriteCurrentValue()
 {
@@ -2843,10 +3282,18 @@ void CParaBtn::WriteCurrentValue()
 	}
 }
 
-// **************************************************************************
-// Time measurement
-// **************************************************************************
-//rkuTICKCOUNT
+/**********************************************************************************************//**
+ * Query if 'oldTickCount' is safe tick count delay expired
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	oldTickCount	Number of old ticks.
+ * \param	delay			The delay.
+ *
+ * \return	True if safe tick count delay expired, false if not.
+ **************************************************************************************************/
+
 bool CParaBtn::isSafeTickCountDelayExpired(DWORD oldTickCount, UINT delay)////used to check if old tick count plus delay is still lower than actual tickCount, (dwLastTickCount+DELAY<getTickCount64())
 {
 	bool bExpired=false;

@@ -1,3 +1,14 @@
+//=============================================================================
+/** 
+* \class CDlgProxPressure60
+* 		 
+* \brief Dialog for proximal pressure calibration.
+* 		 
+* \author Rainer Kuehner
+* \date 2013-01-21 Creation of file
+*
+**/
+//=============================================================================
 #pragma once
 #include "afxwin.h"
 #include "MVModel.h"

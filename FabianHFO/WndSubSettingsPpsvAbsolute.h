@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndSubSettingsPpsvAbsolute.h.
+ *
+ * Declares the window sub settings ppsv absolute class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndSubSettings.h"
 

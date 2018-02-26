@@ -1,17 +1,43 @@
+/**********************************************************************************************//**
+ * \file	WndServiceInterfaces.cpp.
+ *
+ * Implements the window service interfaces class
+ **************************************************************************************************/
+
 #include "StdAfx.h"
 #include "FabianHFO.h"
 #include "WndServiceInterfaces.h"
 #include "DlgMessageBox.h"
 #include "TlsFile.h"
 
+/**********************************************************************************************//**
+ * A macro that defines ioctl HAL reboot
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 #define IOCTL_HAL_REBOOT  0x101003C
 extern "C" BOOL KernelIoControl(DWORD,LPVOID,DWORD,LPVOID,DWORD,LPDWORD);
 
-
-// CWndServiceInterfaces
+/**********************************************************************************************//**
+ * CWndServiceInterfaces
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndServiceInterfaces, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndServiceInterfaces class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndServiceInterfaces::CWndServiceInterfaces():
 CWndService()
@@ -51,6 +77,13 @@ CWndService()
 	m_byI2CWatchdogState=getModel()->getI2C()->ReadMCP_Port0();
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndServiceInterfaces class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CWndServiceInterfaces::~CWndServiceInterfaces()
 {
 	delete m_pcLogfile;
@@ -84,9 +117,13 @@ BEGIN_MESSAGE_MAP(CWndServiceInterfaces, CWnd)
 	//ON_BN_CLICKED(IDC_BTN_ENABLEHFO, &CWndServiceInterfaces::OnBnClickedEnableHFO)
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndServiceInterfaces message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-
-// CWndServiceInterfaces message handlers
 void CWndServiceInterfaces::Init()
 {
 	CClientDC dc(this);
@@ -212,6 +249,13 @@ void CWndServiceInterfaces::Init()
 	SetTimer(SERVICETIMER, 1000, NULL);
 
 }
+
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndServiceInterfaces::Draw()
 {
@@ -493,15 +537,13 @@ void CWndServiceInterfaces::Draw()
 	DeleteDC(hdcMem);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndServiceInterfaces::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceInterfaces::OnDestroy()
 {
 	KillTimer(SERVICETIMER);
@@ -516,9 +558,15 @@ void CWndServiceInterfaces::OnDestroy()
 
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the timer action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	nIDEvent	The identifier event.
+ **************************************************************************************************/
+
 void CWndServiceInterfaces::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==SERVICETIMER)
@@ -557,10 +605,13 @@ void CWndServiceInterfaces::OnTimer(UINT_PTR nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked logfiles action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
-// **************************************************************************
-// 
-// **************************************************************************
 void CWndServiceInterfaces::OnBnClickedLogfiles()
 {
 	CString szMessage=_T("");
@@ -727,9 +778,13 @@ void CWndServiceInterfaces::OnBnClickedLogfiles()
 	}
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Executes the button clicked exit application action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndServiceInterfaces::OnBnClickedExitApp()
 {
 	theApp.getLog()->WriteLine(_T("#HFO:0281"));
@@ -743,9 +798,6 @@ void CWndServiceInterfaces::OnBnClickedExitApp()
 
 
 
-// **************************************************************************
-// 
-// **************************************************************************
 //void CWndServiceInterfaces::OnBnClickedEnableHFO()
 //{
 //	m_bHFOenabled=!m_bHFOenabled;
@@ -761,9 +813,6 @@ void CWndServiceInterfaces::OnBnClickedExitApp()
 //	}
 //}
 
-// **************************************************************************
-// 
-// **************************************************************************
 //void CWndServiceInterfaces::OnBnClickedEraseFRAM()
 //{
 //	CDlgMessageBox box(this,_T("Default Factory Settings"),_T("This will set the system to the default factory settings and a RESTART will be initiated. Continue?"),MB_YESNO,IDB_MSG_CONFIG);

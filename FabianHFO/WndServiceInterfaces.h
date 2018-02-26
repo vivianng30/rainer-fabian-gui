@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndServiceInterfaces.h.
+ *
+ * Declares the window service interfaces class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndService.h"
 #include "KbrdBtn.h"

@@ -6,9 +6,25 @@
 #include "WndService.h"
 
 extern HFONT g_hf14AcuMed;
-// CWndService
+
+/**********************************************************************************************//**
+ * CWndService
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndService, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndService class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndService::CWndService()
 {
@@ -27,6 +43,13 @@ CWndService::CWndService()
 	m_pcMenuBack=NULL;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndService class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 CWndService::~CWndService()
 {
 	delete m_pcNumeric_Up;
@@ -39,9 +62,15 @@ CWndService::~CWndService()
 	m_pcMenuBack=NULL;
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CWndService::getModel()
 {
 	if(m_pModel==NULL)
@@ -55,12 +84,20 @@ BEGIN_MESSAGE_MAP(CWndService, CWnd)
 	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndService message handlers
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-// CWndService message handlers
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CWndService::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 	bool bRes=false;
@@ -119,12 +156,26 @@ BOOL CWndService::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateConte
 	return bRes;
 }
 
+/**********************************************************************************************//**
+ * Initializes this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndService::Init()
 {
 
 }
 
-
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
 
 void CWndService::Show(bool bShow)
 {
@@ -141,6 +192,14 @@ void CWndService::Show(bool bShow)
 
 
 }
+
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndService::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -149,15 +208,13 @@ void CWndService::OnPaint()
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndService::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndService::OnDestroy()
 {
 	CWnd::OnDestroy();
@@ -171,8 +228,12 @@ void CWndService::OnDestroy()
 		DeleteDC(m_hDC);
 }
 
-
-
+/**********************************************************************************************//**
+ * Draws this instance
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndService::Draw()
 {
@@ -180,9 +241,19 @@ void CWndService::Draw()
 	UpdateWindow();
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndService::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)

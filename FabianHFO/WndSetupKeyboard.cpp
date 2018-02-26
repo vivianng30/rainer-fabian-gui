@@ -4,11 +4,33 @@
 #include "stdafx.h"
 #include "FabianHFO.h"
 #include "WndSetupKeyboard.h"
-//Timer
-//#define CLOCKTIMER	0x05
+
+/**********************************************************************************************//**
+ * Timer
+ * #define CLOCKTIMER	0x05
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 #define COLOR_TXTBTNUP				0x00000000
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtndw
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNDW				0x00FFFFFF
+
+/**********************************************************************************************//**
+ * A macro that defines color txtbtnfc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 #define COLOR_TXTBTNFC				0x00000000
 
 //global font objects
@@ -41,10 +63,24 @@ extern HFONT g_hf70Bold;
 
 //extern CLangAdmin* g_pGlobalLanguageStrings;
 
-
-// CWndSetupPatient
+/**********************************************************************************************//**
+ * CWndSetupPatient
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	parameter1	The first parameter.
+ * \param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CWndSetupKeyboard, CWnd)
+
+/**********************************************************************************************//**
+ * Initializes a new instance of the CWndSetupKeyboard class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSetupKeyboard::CWndSetupKeyboard()
 {
@@ -139,6 +175,13 @@ CWndSetupKeyboard::CWndSetupKeyboard()
 	m_pcKbrd_m=NULL;
 
 }
+
+/**********************************************************************************************//**
+ * Finalizes an instance of the CWndSetupKeyboard class
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 CWndSetupKeyboard::~CWndSetupKeyboard()
 {
@@ -293,9 +336,15 @@ CWndSetupKeyboard::~CWndSetupKeyboard()
 	m_pcKbrd_dash=NULL;*/
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Gets the model
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \return	Null if it fails, else the model.
+ **************************************************************************************************/
+
 CMVModel *CWndSetupKeyboard::getModel()
 {
 	if(m_pModel==NULL)
@@ -353,16 +402,20 @@ BEGIN_MESSAGE_MAP(CWndSetupKeyboard, CWnd)
 	ON_BN_CLICKED(IDC_BTN_SETUP_KBRD_m, &CWndSetupKeyboard::OnBnClicked_m)
 	END_MESSAGE_MAP()
 
+/**********************************************************************************************//**
+ * CWndSetupPatient-Meldungshandler
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	pParentWnd	If non-null, the parent window.
+ * \param 		  	rc		  	The rectangle.
+ * \param 		  	nID		  	The identifier.
+ * \param [in,out]	pContext  	If non-null, the context.
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
 
-
-
-
-// CWndSetupPatient-Meldungshandler
-
-
-// **************************************************************************
-// 
-// **************************************************************************
 BOOL CWndSetupKeyboard::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
 {
 
@@ -1153,9 +1206,14 @@ BOOL CWndSetupKeyboard::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreat
 		return 0;
 }
 
-
-
-
+/**********************************************************************************************//**
+ * Shows
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	bShow	True to show, false to hide.
+ **************************************************************************************************/
 
 void CWndSetupKeyboard::Show(bool bShow)
 {
@@ -1175,6 +1233,14 @@ void CWndSetupKeyboard::Show(bool bShow)
 
 
 }
+
+/**********************************************************************************************//**
+ * Paints this window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -1183,15 +1249,13 @@ void CWndSetupKeyboard::OnPaint()
 	BitBlt(dc.m_hDC,0,0,m_lX,m_lY,m_hDC,0,0,SRCCOPY);
 }
 
-//************************************
-// Method:    OnDestroy
-// FullName:  CWndSetupKeyboard::OnDestroy
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//
-// 2015/06/19: checked for correct closing of window
-//************************************
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnDestroy()
 {
 	CWnd::OnDestroy();
@@ -1226,8 +1290,16 @@ void CWndSetupKeyboard::OnDestroy()
 //	CWnd::OnTimer(nIDEvent);
 //}
 
-
-
+/**********************************************************************************************//**
+ * Sets edit window
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param [in,out]	rEdit	If non-null, the edit.
+ * \param 		  	range	The range.
+ * \param 		  	iID  	Zero-based index of the identifier.
+ **************************************************************************************************/
 
 void CWndSetupKeyboard::SetEditWnd(CWnd* rEdit, eKeyRange range, int iID)
 {
@@ -1286,7 +1358,15 @@ void CWndSetupKeyboard::SetEditWnd(CWnd* rEdit, eKeyRange range, int iID)
 //
 //}
 
-//=============================================================================
+/**********************************************************************************************//**
+ * Keys
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	c	An int to process.
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::Key(int c)
 {
 	if(GetParent())
@@ -1418,16 +1498,37 @@ void CWndSetupKeyboard::Key(int c)
 	
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked delete action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndSetupKeyboard::OnBnClickedDel()
 {
 	Key(-1);
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked space action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClickedSpace()
 {
 	Key(' ');
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked shift action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClickedShift()
 {
 	if(GetParent())
@@ -1436,6 +1537,12 @@ void CWndSetupKeyboard::OnBnClickedShift()
 	RedrawButtons();
 }
 
+/**********************************************************************************************//**
+ * Executes the button clicked 1 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndSetupKeyboard::OnBnClicked_1()
 {
@@ -1448,6 +1555,14 @@ void CWndSetupKeyboard::OnBnClicked_1()
 		Key('1');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 2 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_2()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1459,6 +1574,14 @@ void CWndSetupKeyboard::OnBnClicked_2()
 		Key('2');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 3 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_3()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1470,6 +1593,14 @@ void CWndSetupKeyboard::OnBnClicked_3()
 		Key('3');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 4 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_4()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1481,6 +1612,14 @@ void CWndSetupKeyboard::OnBnClicked_4()
 		Key('4');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 5 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_5()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1492,6 +1631,14 @@ void CWndSetupKeyboard::OnBnClicked_5()
 		Key('5');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 6 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_6()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1503,6 +1650,14 @@ void CWndSetupKeyboard::OnBnClicked_6()
 		Key('6');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 7 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_7()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1514,6 +1669,14 @@ void CWndSetupKeyboard::OnBnClicked_7()
 		Key('7');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 8 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_8()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1525,6 +1688,14 @@ void CWndSetupKeyboard::OnBnClicked_8()
 		Key('8');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 9 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_9()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1536,6 +1707,14 @@ void CWndSetupKeyboard::OnBnClicked_9()
 		Key('9');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked 0 action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_0()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1547,6 +1726,14 @@ void CWndSetupKeyboard::OnBnClicked_0()
 		Key('0');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked size action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_sz()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1559,6 +1746,14 @@ void CWndSetupKeyboard::OnBnClicked_sz()
 		Key(0xDF);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked q action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_q()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1570,6 +1765,14 @@ void CWndSetupKeyboard::OnBnClicked_q()
 		Key('q');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked w action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_w()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1581,6 +1784,14 @@ void CWndSetupKeyboard::OnBnClicked_w()
 		Key('w');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked e action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_e()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1592,6 +1803,14 @@ void CWndSetupKeyboard::OnBnClicked_e()
 		Key('e');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked r action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_r()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1603,6 +1822,14 @@ void CWndSetupKeyboard::OnBnClicked_r()
 		Key('r');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked t action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_t()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1614,6 +1841,14 @@ void CWndSetupKeyboard::OnBnClicked_t()
 		Key('t');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked z coordinate action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_z()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1625,6 +1860,14 @@ void CWndSetupKeyboard::OnBnClicked_z()
 		Key('z');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked u action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_u()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1636,6 +1879,14 @@ void CWndSetupKeyboard::OnBnClicked_u()
 		Key('u');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked i action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_i()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1647,6 +1898,14 @@ void CWndSetupKeyboard::OnBnClicked_i()
 		Key('i');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked o action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_o()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1658,6 +1917,14 @@ void CWndSetupKeyboard::OnBnClicked_o()
 		Key('o');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked p action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_p()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1669,6 +1936,14 @@ void CWndSetupKeyboard::OnBnClicked_p()
 		Key('p');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked ue action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_ue()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1682,6 +1957,14 @@ void CWndSetupKeyboard::OnBnClicked_ue()
 		Key(0xFC);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked an action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_a()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1693,6 +1976,14 @@ void CWndSetupKeyboard::OnBnClicked_a()
 		Key('a');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked s action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_s()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1704,6 +1995,14 @@ void CWndSetupKeyboard::OnBnClicked_s()
 		Key('s');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_d()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1715,6 +2014,14 @@ void CWndSetupKeyboard::OnBnClicked_d()
 		Key('d');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked f action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_f()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1726,6 +2033,14 @@ void CWndSetupKeyboard::OnBnClicked_f()
 		Key('f');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked g action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_g()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1737,6 +2052,14 @@ void CWndSetupKeyboard::OnBnClicked_g()
 		Key('g');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked h action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_h()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1748,6 +2071,14 @@ void CWndSetupKeyboard::OnBnClicked_h()
 		Key('h');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked j action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_j()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1759,6 +2090,14 @@ void CWndSetupKeyboard::OnBnClicked_j()
 		Key('j');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked k action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_k()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1770,6 +2109,14 @@ void CWndSetupKeyboard::OnBnClicked_k()
 		Key('k');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked l action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_l()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1781,6 +2128,14 @@ void CWndSetupKeyboard::OnBnClicked_l()
 		Key('l');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked oe action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_oe()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1794,6 +2149,14 @@ void CWndSetupKeyboard::OnBnClicked_oe()
 		Key(0xF6);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked ae action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_ae()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1807,6 +2170,14 @@ void CWndSetupKeyboard::OnBnClicked_ae()
 		Key(0xE4);
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked y coordinate action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_y()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1818,6 +2189,14 @@ void CWndSetupKeyboard::OnBnClicked_y()
 		Key('y');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked x coordinate action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_x()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1829,6 +2208,14 @@ void CWndSetupKeyboard::OnBnClicked_x()
 		Key('x');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked c action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_c()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1840,6 +2227,14 @@ void CWndSetupKeyboard::OnBnClicked_c()
 		Key('c');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked v action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_v()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1851,6 +2246,14 @@ void CWndSetupKeyboard::OnBnClicked_v()
 		Key('v');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked b action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_b()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1862,6 +2265,14 @@ void CWndSetupKeyboard::OnBnClicked_b()
 		Key('b');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked n action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_n()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1873,6 +2284,14 @@ void CWndSetupKeyboard::OnBnClicked_n()
 		Key('n');
 	}
 }
+
+/**********************************************************************************************//**
+ * Executes the button clicked m action
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::OnBnClicked_m()
 {
 	if(m_pcKbrd_Shift->IsDepressed())
@@ -1884,6 +2303,13 @@ void CWndSetupKeyboard::OnBnClicked_m()
 		Key('m');
 	}
 }
+
+/**********************************************************************************************//**
+ * Redraw buttons
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
 
 void CWndSetupKeyboard::RedrawButtons()
 {
@@ -1956,30 +2382,71 @@ void CWndSetupKeyboard::RedrawButtons()
 		m_pEdit->SetFocus();
 }
 
+/**********************************************************************************************//**
+ * Button clicked focus left
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::BnClickedFocusLeft()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_PATIENT_FOCUS_LEFT,m_iID);
 }
+
+/**********************************************************************************************//**
+ * Button clicked focus right
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::BnClickedFocusRight()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_PATIENT_FOCUS_RIGHT,m_iID);
 }
+
+/**********************************************************************************************//**
+ * Button clicked focus up
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::BnClickedFocusUp()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_PATIENT_FOCUS_UP,m_iID);
 }
+
+/**********************************************************************************************//**
+ * Button clicked focus down
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ **************************************************************************************************/
+
 void CWndSetupKeyboard::BnClickedFocusDown()
 {
 	if(GetParent())
 		GetParent()->PostMessage(WM_PATIENT_FOCUS_DOWN,m_iID);
 }
 
-// **************************************************************************
-// 
-// **************************************************************************
+/**********************************************************************************************//**
+ * Window proc
+ *
+ * \author	Rainer Kühner
+ * \date	26.02.2018
+ *
+ * \param	message	The message.
+ * \param	wParam 	The wParam field of the message.
+ * \param	lParam 	The lParam field of the message.
+ *
+ * \return	A LRESULT.
+ **************************************************************************************************/
+
 LRESULT CWndSetupKeyboard::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)

@@ -1,3 +1,9 @@
+/**********************************************************************************************//**
+ * \file	WndServiceDisplay.h.
+ *
+ * Declares the window service display class
+ **************************************************************************************************/
+
 #pragma once
 #include "WndService.h"
 #include "KbrdBtn.h"
