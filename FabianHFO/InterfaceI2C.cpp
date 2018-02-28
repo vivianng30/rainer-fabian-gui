@@ -545,7 +545,7 @@ bool CInterfaceI2C::InitMCP_ControlerPIC()
 {
 
 	bool bResult=false;
-	//if(m_iMainBoard<MAINBOARD_40)
+	//if(m_iMainBoard<MAINBOARD_41)
 	{
 		bResult=InitMCP_ControlerPIC_MB3();
 	}
@@ -710,7 +710,7 @@ bool CInterfaceI2C::InitMCP_ControlerPIC_MB4()
 bool CInterfaceI2C::InitMCP_HfoPIC()
 {
 	bool bResult=false;
-	//if(m_iMainBoard<MAINBOARD_40)
+	//if(m_iMainBoard<MAINBOARD_41)
 	{
 		bResult=InitMCP_HfoPIC_MB3();
 	}
@@ -956,7 +956,7 @@ void CInterfaceI2C::SetMCPwatchdog()
 			m_byGP1_ACCESS = m_byGP1_ACCESS & ~b1;
 		}
 
-		//if(m_iMainBoard<MAINBOARD_40)
+		//if(m_iMainBoard<MAINBOARD_41)
 			SetRegister8(DEVICE_ADDRESS_MCP, GP1_ACCESS, m_byGP1_ACCESS);
 		/*else
 			SetRegister8(DEVICE_ADDRESS_MCP, OLATB, m_byGP1_ACCESS);*/
