@@ -8,9 +8,10 @@
  * @section ver Version history and changelog
  * 
  * @subsection ver5081 Version 5.0.8.1
- * @date 2018-02-28
+ * @date 2018-03-01
  * @verbatim
 	- Mainboard version 4.1 included, MB4.0 deleted
+	- BUG-HFO-027 High PIP fixed
  @endverbatim
  * 
  * @subsection ver5080 Version 5.0.8.0

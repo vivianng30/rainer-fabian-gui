@@ -12554,7 +12554,7 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 
 
 
-	if(eActiveVentMode!=VM_CPAP && eActiveVentMode!=VM_NCPAP)
+	if(eActiveVentMode!=VM_CPAP && eActiveVentMode!=VM_NCPAP && eActiveVentMode!=VM_HFO)
 	{
 		if(statePIPmax==AL_ON || statePIPmax==AL_AUTO)
 		{

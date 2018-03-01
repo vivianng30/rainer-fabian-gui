@@ -2790,21 +2790,15 @@ void CMVViewHandler::paraDataChanged()
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
-/**********************************************************************************************//**
- * Lung record state changed
- *
- * \author	Rainer Kühner
- * \date	22.02.2018
- **************************************************************************************************/
 
-void CMVViewHandler::lungRecStateChanged()
-{
-	/*if(m_vParaBtn)
-	{
-		m_vParaBtn->ShowParaBtn(false);
-		m_vParaBtn->Show();
-	}*/
-}
+//void CMVViewHandler::lungRecStateChanged()
+//{
+//	/*if(m_vParaBtn)
+//	{
+//		m_vParaBtn->ShowParaBtn(false);
+//		m_vParaBtn->Show();
+//	}*/
+//}
 
 /**********************************************************************************************//**
  * Itime changed

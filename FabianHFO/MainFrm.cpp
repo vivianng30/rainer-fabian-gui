@@ -4070,12 +4070,12 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 			break;
-		case WM_LUNGRECSTATE_CHANGED:
+		/*case WM_LUNGRECSTATE_CHANGED:
 			{
 				getModel()->getVIEWHANDLER()->lungRecStateChanged();
 				return 1;
 			}
-			break;
+			break;*/
 		case WM_PARABN_HFAMPL:
 			{
 				CMVEventUI event(CMVEventUI::EV_PARABN_HFAMPL);

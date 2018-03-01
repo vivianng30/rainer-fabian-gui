@@ -169,7 +169,7 @@ public:
 
 	void paraDataChanged();
 
-	void lungRecStateChanged();
+	//void lungRecStateChanged();
 	void ITIMEChanged();
 	void ETIMEChanged();
 	void BPMChanged();

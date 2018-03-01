@@ -15613,7 +15613,7 @@ void CDataHandler::SetCurrentFreqRecPara(WORD val)
 			}
 			SetFreqRecParadata(val);
 
-			if(valOld==0)
+			/*if(valOld==0)
 			{
 				getModel()->getALARMHANDLER()->setAlimitState_PIPmaxLimit(AL_AUTO);
 				if(AfxGetApp())
@@ -15623,7 +15623,7 @@ void CDataHandler::SetCurrentFreqRecPara(WORD val)
 			{
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_LUNGRECSTATE_CHANGED);
-			}
+			}*/
 
 			if(AfxGetApp())
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_PARABN_HFFREQREC);
@@ -15634,7 +15634,7 @@ void CDataHandler::SetCurrentFreqRecPara(WORD val)
 		{
 			WORD valOld=PRESET()->GetFreqRecPara();
 			//if(valOld!=val)
-			{
+			/*{
 				if(valOld==0)
 				{
 					if(AfxGetApp())
@@ -15647,7 +15647,7 @@ void CDataHandler::SetCurrentFreqRecPara(WORD val)
 				}
 
 				
-			}
+			}*/
 			PRESET()->SetFreqRecPara(val,false,false);
 		}
 		break;
