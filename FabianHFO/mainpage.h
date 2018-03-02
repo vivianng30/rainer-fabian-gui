@@ -12,7 +12,7 @@
  * @verbatim
 	- Mainboard version 4.1 included, MB4.0 deleted
 	- BUG-HFO-027 High PIP fixed
-	- BUG-HFO-028 etCO2 alarm layout, freq value from CO2 module will not be displayed anymore
+	- BUG-HFO-028 etCO2 alarm layout, freq value from CO2 module will not be displayed anymore in alarm view
  @endverbatim
  * 
  * @subsection ver5080 Version 5.0.8.0
