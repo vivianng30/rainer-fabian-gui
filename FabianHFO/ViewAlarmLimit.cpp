@@ -744,9 +744,6 @@ bool CViewAlarmLimit::Initialize()
 	btn.wID					= IDC_BTN_ALARM_BPM_HI;	
 	if(m_eCurVentMode==VM_DUOPAP || m_eCurVentMode==VM_NCPAP)
 	{
-		/*btn.poPosition.x		= 100;
-		btn.poPosition.y		= 321;*/
-
 		btn.poPosition.x		= 100;
 		btn.poPosition.y		= 266;
 	}
@@ -760,6 +757,7 @@ bool CViewAlarmLimit::Initialize()
 		btn.poPosition.x		= 100;
 		btn.poPosition.y		= 321;
 	}
+
 	btn.pcBmpUp				= m_pcBtnAlarm_Up;
 	btn.pcBmpDown			= m_pcBtnAlarm_Dw;
 	btn.pcBmpFocus			= m_pcBtnAlarm_Fc;
@@ -802,6 +800,7 @@ bool CViewAlarmLimit::Initialize()
 		btn.poPosition.x		= 100;
 		btn.poPosition.y		= 376;
 	}
+
 	btn.pcBmpUp				= m_pcBtnAlarm_Up;
 	btn.pcBmpDown			= m_pcBtnAlarm_Dw;
 	btn.pcBmpFocus			= m_pcBtnAlarm_Fc;
@@ -1471,11 +1470,11 @@ void CViewAlarmLimit::DrawFrames(CDC* pDC)
 void CViewAlarmLimit::drawFrameETCO2(CDC* pDC)
 {
 	HDC hdc = *pDC;
-	if(m_eCurVentMode!=VM_HFO && getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
-	{
-		if(m_pcAlarmlimitPara1)
-			m_pcAlarmlimitPara1->Draw(hdc,0,266);	//BPM
-	}
+	//if(m_eCurVentMode!=VM_HFO && getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
+	//{
+	//	if(m_pcAlarmlimitPara1)
+	//		m_pcAlarmlimitPara1->Draw(hdc,0,266);	//BPM
+	//}
 
 	if(m_pcAlarmlimitPara2)
 		m_pcAlarmlimitPara2->Draw(hdc,0,46);	//ETCO2
@@ -1821,27 +1820,27 @@ void CViewAlarmLimit::drawLabel_ETCO2(CDC* pDC)
 	rc.right = 210;
 
 
-	if(m_eCurVentMode!=VM_HFO && getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
-	{
-		SelectObject(hdc,g_hf10AcuBold);
+	//if(m_eCurVentMode!=VM_HFO && getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
+	//{
+	//	SelectObject(hdc,g_hf10AcuBold);
 
-		//--------------------BPM-------------------------------------
-		rc.top = 266;//294;
-		rc.bottom = 354;
-		nameText=getModel()->GetLanguageString(IDS_PARA_FREQ);
-		DrawText(hdc,nameText,-1,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
-		CSize sz = pDC->GetTextExtent(nameText);
+	//	//--------------------BPM-------------------------------------
+	//	rc.top = 266;//294;
+	//	rc.bottom = 354;
+	//	nameText=getModel()->GetLanguageString(IDS_PARA_FREQ);
+	//	DrawText(hdc,nameText,-1,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
+	//	CSize sz = pDC->GetTextExtent(nameText);
 
-		SelectObject(hdc,g_hf6AcuNorm);
+	//	SelectObject(hdc,g_hf6AcuNorm);
 
-		rc.top = 267;//295;
-		rc.bottom = 354;
-		rc.left = 15+sz.cx;
-		pDC->DrawText(_T("[")+getModel()->GetLanguageString(IDS_UNIT_BPM)+_T("]"),&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
+	//	rc.top = 267;//295;
+	//	rc.bottom = 354;
+	//	rc.left = 15+sz.cx;
+	//	pDC->DrawText(_T("[")+getModel()->GetLanguageString(IDS_UNIT_BPM)+_T("]"),&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 
-		rc.left = 10;
-		rc.right = 210;
-	}
+	//	rc.left = 10;
+	//	rc.right = 210;
+	//}
 
 	//--------------------ETCO2-------------------------------------
 	SelectObject(hdc,g_hf10AcuBold);
@@ -2945,30 +2944,30 @@ void CViewAlarmLimit::DrawData_etCO2(HDC hdc)
 	rc.left = 15;
 	rc.right = 210;
 
-	if(m_eCurVentMode!=VM_HFO && getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
-	{
-		BYTE iData=0;
-		//--------------------BPM-------------------------------------
-		rc.top = 280;
-		rc.bottom = 315;
-		if(getModel()->getETCO2()!=NULL)
-		{
-			if(getModel()->getETCO2()->isFreqValueValid())
-			{
-				iData = getModel()->getDATAHANDLER()->getAVGMessureDataBPMco2();
-				wsprintf(psz,_T("%d"),iData);
-				DrawText(hdc,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
-			}
-			else
-			{
-				DrawText(hdc,_T("--"),-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
-			}
-		}
-		else
-		{
-			DrawText(hdc,_T("--"),-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
-		}
-	}
+	//if(m_eCurVentMode!=VM_HFO && getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
+	//{
+	//	BYTE iData=0;
+	//	//--------------------BPM-------------------------------------
+	//	rc.top = 280;
+	//	rc.bottom = 315;
+	//	if(getModel()->getETCO2()!=NULL)
+	//	{
+	//		if(getModel()->getETCO2()->isFreqValueValid())
+	//		{
+	//			iData = getModel()->getDATAHANDLER()->getAVGMessureDataBPMco2();
+	//			wsprintf(psz,_T("%d"),iData);
+	//			DrawText(hdc,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
+	//		}
+	//		else
+	//		{
+	//			DrawText(hdc,_T("--"),-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
+	//		}
+	//	}
+	//	else
+	//	{
+	//		DrawText(hdc,_T("--"),-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
+	//	}
+	//}
 
 	//--------------------ETCO2-------------------------------------
 	rc.top = 102;
@@ -4444,13 +4443,13 @@ void CViewAlarmLimit::showALimitButtons()
 			m_pbtnValueDelay->ShowWindow(SW_HIDE);
 		}
 
-		if(m_eCurVentMode!=VM_HFO && getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
+		/*if(m_eCurVentMode!=VM_HFO && getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
 		{
 			if(m_pcAlarmLimit_BPM)
 			{
 				m_pcAlarmLimit_BPM->ShowWindow(SW_SHOW);
 			}
-		}
+		}*/
 
 		if(m_pcAlarmLimit_ETCO2hi)
 		{
