@@ -373,6 +373,21 @@ bool CNumericFieldPPEAK::drawLimits(CDC* pDC)//rku PIPLOW DUOPAP
 		}
 	}
 
+	if(m_eSize==NUMERICSIZE_1)
+	{
+		rc.top = 9;
+		rc.bottom = 59;
+		rc.left = 0;
+		rc.right = 187;
+	}
+	else //if(m_eSize==NUMERICSIZE_2)
+	{
+		rc.top = 58;
+		rc.bottom = 110;
+		rc.left = 0;
+		rc.right = 187;
+	}
+
 	if(eActiveVentMode!=VM_HFO)
 	{
 		if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit() == AL_CALC)
