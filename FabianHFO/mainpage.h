@@ -8,11 +8,12 @@
  * @section ver Version history and changelog
  * 
  * @subsection ver5081 Version 5.0.8.1
- * @date 2018-03-01
+ * @date 2018-03-06
  * @verbatim
 	- Mainboard version 4.1 included, MB4.0 deleted
 	- BUG-HFO-027 High PIP fixed
 	- BUG-HFO-028 etCO2 alarm layout, freq value from CO2 module will not be displayed anymore in alarm view
+	- PIP_low alarm setting in DUOPAP mode - HFO implemented //rku PIPLOW DUOPAP
  @endverbatim
  * 
  * @subsection ver5080 Version 5.0.8.0

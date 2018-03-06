@@ -661,10 +661,15 @@ public:
 	void SetAlarmlimitPEEPminCpap(int value);
 	void SetAlarmlimitStatePEEPminCpap(eAlarmLimitState state);
 
-	int GetAlarmlimitPmaxDUOPAP();
-	eAlarmLimitState GetAlarmlimitStatePmaxDUOPAP();
-	void SetAlarmlimitPmaxDUOPAP(int value);
-	void SetAlarmlimitStatePmaxDUOPAP(eAlarmLimitState state);
+	int GetAlarmlimitPIPmaxDUOPAP();//rku PIPLOW DUOPAP - replace all
+	eAlarmLimitState GetAlarmlimitStatePIPmaxDUOPAP();//rku PIPLOW DUOPAP - replace all
+	void SetAlarmlimitPIPmaxDUOPAP(int value);//rku PIPLOW DUOPAP - replace all
+	void SetAlarmlimitStatePIPmaxDUOPAP(eAlarmLimitState state);//rku PIPLOW DUOPAP - replace all
+
+	int GetAlarmlimitPIPminDUOPAP();//rku PIPLOW DUOPAP
+	eAlarmLimitState GetAlarmlimitStatePIPminDUOPAP();//rku PIPLOW DUOPAP
+	void SetAlarmlimitPIPminDUOPAP(int value);//rku PIPLOW DUOPAP
+	void SetAlarmlimitStatePIPminDUOPAP(eAlarmLimitState state);//rku PIPLOW DUOPAP
 
 	int GetAlarmlimitPmaxNCPAP();
 	eAlarmLimitState GetAlarmlimitStatePmaxNCPAP();
@@ -1213,8 +1218,12 @@ private:
 	int m_iAlarmlimitPEEPminCpap;   ///< The alarmlimit pee pmin cpap
 	int m_iAlarmlimitStatePEEPminCpap;  ///< The alarmlimit state pee pmin cpap
 
-	int m_iAlarmlimitPmaxDUOPAP;	///< The alarmlimit pmax duopap
+	int m_iAlarmlimitPIPmaxDUOPAP;	///< The alarmlimit pmax duopap
 	int m_iAlarmlimitStatePIPmaxDUOPAP; ///< The alarmlimit state pi pmax duopap
+
+	int m_iAlarmlimitPIPminDUOPAP;	///< The alarmlimit pipmin duopap
+	int m_iAlarmlimitStatePIPminDUOPAP; ///< The alarmlimit state pipmin duopap
+
 	int m_iAlarmlimitPEEPminDUOPAP; ///< The alarmlimit pee pmin duopap
 	int m_iAlarmlimitStatePEEPminDUOPAP;	///< The alarmlimit state pee pmin duopap
 

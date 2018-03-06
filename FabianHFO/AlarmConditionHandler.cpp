@@ -312,12 +312,12 @@ void CAlarmConditionHandler::ventModeChanged()
 	else if( eActiveVentMode==VM_DUOPAP)
 	{
 		setAlarmLimitValues_DUOPAP();
-		setAlarmLimitRanges_NMODE();
+		setAlarmLimitRanges_DUOPAP();
 	}
 	else if(eActiveVentMode==VM_NCPAP || eActiveVentMode==VM_THERAPIE)
 	{
 		setAlarmLimitValues_NCPAP();
-		setAlarmLimitRanges_NMODE();
+		setAlarmLimitRanges_NCPAP();
 	}
 	else
 	{
@@ -574,7 +574,8 @@ void CAlarmConditionHandler::setAlarmLimitValues_NCPAP()
 
 void CAlarmConditionHandler::setAlarmLimitValues_DUOPAP()
 {
-	ALIMIT_PIPMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitPmaxDUOPAP());
+	ALIMIT_PIPMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitPIPmaxDUOPAP());
+	ALIMIT_PIPMIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitPIPminDUOPAP());
 	ALIMIT_PEEPMIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitPEEPminDUOPAP());
 	/*ALIMIT_SPO2MAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitSPO2max());
 	ALIMIT_SPO2MIN->setCurValue(getModel()->getCONFIG()->GetAlarmlimitSPO2min());
@@ -589,8 +590,8 @@ void CAlarmConditionHandler::setAlarmLimitValues_DUOPAP()
 	ALIMIT_FREQMAX->setCurValue(getModel()->getCONFIG()->GetAlarmlimitBPMmax());
 	ALIMIT_FREQMAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateBPMmax());
 
-	ALIMIT_PIPMAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStatePmaxDUOPAP());
-	ALIMIT_PIPMIN->setLimitState(AL_OFF);
+	ALIMIT_PIPMAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStatePIPmaxDUOPAP());
+	ALIMIT_PIPMIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStatePIPminDUOPAP());
 	ALIMIT_PEEPMIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStatePEEPminDUOPAP());
 	/*ALIMIT_SPO2MAX->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateSPO2max());
 	ALIMIT_SPO2MIN->setLimitState(getModel()->getCONFIG()->GetAlarmlimitStateSPO2min());
@@ -658,19 +659,30 @@ void CAlarmConditionHandler::setAlarmLimitRanges_DEFAULT()
 			ALIMIT_MVMIN->setMaxValue(iMVmax-100);
 		}
 
+		//rku PIPLOW DUOPAP
 		//Pmax
-		//ALIMIT_PIPMAX->setMaxValue(MAXRANGE_NEONATAL_PMAX);
-		//ALIMIT_PIPMAX->setMinValue(ALIMIT_PEEPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT);
-
-		ALIMIT_PIPMAX->setMaxValue(MAXRANGE_NEONATAL_PMAX);
-		ALIMIT_PIPMAX->setMinValue(ALIMIT_PIPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT);
-
-		ALIMIT_PIPMIN->setMaxValue(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
 		int iCurPEEP=ALIMIT_PEEPMIN->getCurValue();
 		if(iCurPEEP%10!=0)
 		{
 			iCurPEEP+=5;
 		}
+
+		ALIMIT_PIPMAX->setMaxValue(MAXRANGE_NEONATAL_PMAX);
+		
+		if (ALIMIT_PIPMIN->getLimitState()==AL_OFF)
+		{
+			DEBUGMSG(TRUE, (TEXT("1 PIPMAX->setMinValue %d\r\n"),iCurPEEP+DIFF_PMAX_PMIN_LIMIT));
+			ALIMIT_PIPMAX->setMinValue(iCurPEEP+DIFF_PMAX_PMIN_LIMIT);
+		}
+		else
+		{
+			DEBUGMSG(TRUE, (TEXT("2 PIPMAX->setMinValue %d\r\n"),ALIMIT_PIPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT));
+			ALIMIT_PIPMAX->setMinValue(ALIMIT_PIPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT);
+		}
+
+
+		ALIMIT_PIPMIN->setMaxValue(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
+		
 		//DEBUGMSG(TRUE, (TEXT("ALIMIT_PIPMIN->setMinValue %d\r\n"),iCurPEEP));//rku newPIPOFF
 		ALIMIT_PIPMIN->setMinValue(iCurPEEP);
 
@@ -750,26 +762,30 @@ void CAlarmConditionHandler::setAlarmLimitRanges_DEFAULT()
 			ALIMIT_MVMIN->setMaxValue(iMVmax-100);
 		}
 		
+		//rku PIPLOW DUOPAP
 		//Pmax
-		//ALIMIT_PIPMAX->setMaxValue(MAXRANGE_PEDIATRIC_PMAX);
-		//ALIMIT_PIPMAX->setMinValue(ALIMIT_PEEPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT);
-
-		////PEEP
-		//ALIMIT_PEEPMIN->setMaxValue(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
-		//ALIMIT_PEEPMIN->setMinValue(MINRANGE_PEDIATRIC_CPAPPEEPMIN);
-
-		ALIMIT_PIPMAX->setMaxValue(MAXRANGE_PEDIATRIC_PMAX);
-		ALIMIT_PIPMAX->setMinValue(ALIMIT_PIPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT);
-
-		ALIMIT_PIPMIN->setMaxValue(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
 		int iCurPEEP=ALIMIT_PEEPMIN->getCurValue();
 		if(iCurPEEP%10!=0)
 		{
 			iCurPEEP+=5;
 		}
+
+		ALIMIT_PIPMAX->setMaxValue(MAXRANGE_PEDIATRIC_PMAX);
+
+		if (ALIMIT_PIPMIN->getLimitState()==AL_OFF)
+		{
+			ALIMIT_PIPMAX->setMinValue(iCurPEEP+DIFF_PMAX_PMIN_LIMIT);
+		}
+		else
+		{
+			ALIMIT_PIPMAX->setMinValue(ALIMIT_PIPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT);
+		}
+
+
+		ALIMIT_PIPMIN->setMaxValue(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
+
 		//DEBUGMSG(TRUE, (TEXT("ALIMIT_PIPMIN->setMinValue %d\r\n"),iCurPEEP));//rku newPIPOFF
 		ALIMIT_PIPMIN->setMinValue(iCurPEEP);
-		//ALIMIT_PIPMIN->setMinValue(ALIMIT_PEEPMIN->getCurValue());
 
 		//PEEP
 		if (ALIMIT_PIPMIN->getLimitState()==AL_OFF)//rku newPIPOFF
@@ -1190,14 +1206,14 @@ void CAlarmConditionHandler::setAlarmLimitRanges_CPAP()
 }
 
 /**********************************************************************************************//**
- * Sets alarm limit ranges nmode
+ * Sets alarm limit ranges ncpap
  *
  * \author	Rainer Kühner
  * \date	19.02.2018
  **************************************************************************************************/
 
-void CAlarmConditionHandler::setAlarmLimitRanges_NMODE()
-{
+void CAlarmConditionHandler::setAlarmLimitRanges_NCPAP()
+{//rku PIPLOW DUOPAP
 	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
 	{
 		//Pmax
@@ -1236,6 +1252,115 @@ void CAlarmConditionHandler::setAlarmLimitRanges_NMODE()
 	}
 }
 
+/**********************************************************************************************//**
+ * Sets alarm limit ranges duopap
+ *
+ * \author	Rainer Kühner
+ * \date	05.03.2018
+ **************************************************************************************************/
+
+void CAlarmConditionHandler::setAlarmLimitRanges_DUOPAP()//rku PIPLOW DUOPAP
+{
+	if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
+	{
+		//Pmax
+		int iCurPEEP=ALIMIT_PEEPMIN->getCurValue();
+		if(iCurPEEP%10!=0)
+		{
+			iCurPEEP+=5;
+		}
+
+		ALIMIT_PIPMAX->setMaxValue(MAXRANGE_NEONATAL_NMODEMAX);
+
+		if (ALIMIT_PIPMIN->getLimitState()==AL_OFF)
+		{
+			DEBUGMSG(TRUE, (TEXT("3 PIPMAX->setMinValue %d\r\n"),iCurPEEP+DIFF_PMAX_PMIN_LIMIT));
+			ALIMIT_PIPMAX->setMinValue(iCurPEEP+DIFF_PMAX_PMIN_LIMIT);
+		}
+		else
+		{
+			DEBUGMSG(TRUE, (TEXT("4 PIPMAX->setMinValue %d\r\n"),ALIMIT_PIPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT));
+			ALIMIT_PIPMAX->setMinValue(ALIMIT_PIPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT);
+		}
+
+
+		ALIMIT_PIPMIN->setMaxValue(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
+
+		//DEBUGMSG(TRUE, (TEXT("ALIMIT_PIPMIN->setMinValue %d\r\n"),iCurPEEP));//rku newPIPOFF
+		ALIMIT_PIPMIN->setMinValue(iCurPEEP);
+
+		//PEEP
+		if (ALIMIT_PIPMIN->getLimitState()==AL_OFF)//rku newPIPOFF
+		{
+			//DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT));
+			ALIMIT_PEEPMIN->setMaxValue(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
+		}
+		else
+		{
+			//DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),ALIMIT_PIPMIN->getCurValue()));
+			ALIMIT_PEEPMIN->setMaxValue(ALIMIT_PIPMIN->getCurValue());
+		}
+		ALIMIT_PEEPMIN->setMinValue(MINRANGE_NEONATAL_NMODEPEEPMIN);
+
+
+
+
+		//Apnoe
+		ALIMIT_APNOE->setMaxValue(MAXRANGE_NEONATAL_APNOE);
+		ALIMIT_APNOE->setMinValue(MINRANGE_NEONATAL_APNOE);
+
+		//BPM
+		ALIMIT_FREQMAX->setMaxValue(MAXRANGE_NEONATAL_BPMMAX);
+		ALIMIT_FREQMAX->setMinValue(MINRANGE_NEONATAL_BPMMIN);
+	}
+	else
+	{
+		//Pmax
+		int iCurPEEP=ALIMIT_PEEPMIN->getCurValue();
+		if(iCurPEEP%10!=0)
+		{
+			iCurPEEP+=5;
+		}
+
+		ALIMIT_PIPMAX->setMaxValue(MAXRANGE_PEDIATRIC_NMODEMAX);
+
+		if (ALIMIT_PIPMIN->getLimitState()==AL_OFF)
+		{
+			ALIMIT_PIPMAX->setMinValue(iCurPEEP+DIFF_PMAX_PMIN_LIMIT);
+		}
+		else
+		{
+			ALIMIT_PIPMAX->setMinValue(ALIMIT_PIPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT);
+		}
+
+
+		ALIMIT_PIPMIN->setMaxValue(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
+
+		//DEBUGMSG(TRUE, (TEXT("ALIMIT_PIPMIN->setMinValue %d\r\n"),iCurPEEP));//rku newPIPOFF
+		ALIMIT_PIPMIN->setMinValue(iCurPEEP);
+
+		//PEEP
+		if (ALIMIT_PIPMIN->getLimitState()==AL_OFF)//rku newPIPOFF
+		{
+			//DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT));
+			ALIMIT_PEEPMIN->setMaxValue(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
+		}
+		else
+		{
+			//DEBUGMSG(TRUE, (TEXT("ALIMIT_PEEPMIN->setMaxValue %d\r\n"),ALIMIT_PIPMIN->getCurValue()));
+			ALIMIT_PEEPMIN->setMaxValue(ALIMIT_PIPMIN->getCurValue());
+		}
+		ALIMIT_PEEPMIN->setMinValue(MINRANGE_PEDIATRIC_NMODEPEEPMIN);
+
+		//Apnoe
+		ALIMIT_APNOE->setMaxValue(MAXRANGE_PEDIATRIC_APNOE);
+		ALIMIT_APNOE->setMinValue(MINRANGE_PEDIATRIC_APNOE);
+
+		//BPM
+		ALIMIT_FREQMAX->setMaxValue(MAXRANGE_PEDIATRIC_BPMMAX);
+		ALIMIT_FREQMAX->setMinValue(MINRANGE_PEDIATRIC_BPMMIN);
+	}
+}
 /**********************************************************************************************//**
  * Sets alarm limit ranges etco2
  *
@@ -2282,8 +2407,10 @@ void CAlarmConditionHandler::setAlimitPEEPminNCPAP(int value)
 
 void CAlarmConditionHandler::setAlimitPEEPminDUOPAP(int value)
 {
+	//rku PIPLOW DUOPAP
 	ALIMIT_PEEPMIN->setCurValue(value);
-	ALIMIT_PIPMAX->setMinValue(value+DIFF_PMAX_PMIN_LIMIT);
+
+	setAlimitsMinMaxRangeDUOPAP();
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALPEEPminDUOPAP%d,"), value);
@@ -2300,20 +2427,11 @@ void CAlarmConditionHandler::setAlimitPEEPminDUOPAP(int value)
  * \param	value	The value.
  **************************************************************************************************/
 
-void CAlarmConditionHandler::setAlimitPEEPminDefault(int value)
+void CAlarmConditionHandler::setAlimitPEEPminDefault(int value)//rku PIPLOW DUOPAP
 {
 	ALIMIT_PEEPMIN->setCurValue(value);
-	//ALIMIT_PIPMAX->setMinValue(value+DIFF_PMAX_PMIN_LIMIT);
-	int iCurPEEP=ALIMIT_PEEPMIN->getCurValue();
-	if(iCurPEEP%10!=0)
-	{
-		iCurPEEP+=5;
-	}
-	//ALIMIT_PIPMIN->setMinValue(iCurPEEP);
-	setAlimitMinRangePIPmin(iCurPEEP);
 
-	//ALIMIT_PIPMIN->setMinValue(ALIMIT_PEEPMIN->getCurValue());
-
+	setAlimitsMinMaxRangePressure();
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALPEEPmin%d,"), value);
@@ -2430,13 +2548,15 @@ void CAlarmConditionHandler::setAlimitPIPmaxNCPAP(int value)
 
 void CAlarmConditionHandler::setAlimitPIPmaxDUOPAP(int value)
 {
+	//rku PIPLOW DUOPAP
 	ALIMIT_PIPMAX->setCurValue(value);
-	ALIMIT_PEEPMIN->setMaxValue(value-DIFF_PMAX_PMIN_LIMIT);
+
+	setAlimitsMinMaxRangeDUOPAP();
 
 	CStringW sz=_T("");
-	sz.Format(_T("ALPmaxDUOPAP%d,"), value);
+	sz.Format(_T("ALPIPmax%d,"), value);
 	theApp.getLog()->WriteLine(sz);
-	getModel()->getCONFIG()->SetAlarmlimitPmaxDUOPAP(value);
+	getModel()->getCONFIG()->SetAlarmlimitPIPmaxDUOPAP(value);
 }
 
 /**********************************************************************************************//**
@@ -2448,13 +2568,11 @@ void CAlarmConditionHandler::setAlimitPIPmaxDUOPAP(int value)
  * \param	value	The value.
  **************************************************************************************************/
 
-void CAlarmConditionHandler::setAlimitPIPmaxDefault(int value)
+void CAlarmConditionHandler::setAlimitPIPmaxDefault(int value)//rku PIPLOW DUOPAP
 {
 	ALIMIT_PIPMAX->setCurValue(value);
-	//ALIMIT_PEEPMIN->setMaxValue(value-DIFF_PMAX_PMIN_LIMIT);
-	//ALIMIT_PIPMIN->setMaxValue(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
 
-	setAlimitMaxRangePIPmin(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
+	setAlimitsMinMaxRangePressure();
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALPIPmax%d,"), value);
@@ -2489,6 +2607,7 @@ void CAlarmConditionHandler::setAlimitPIPmin(int value)
 	}
 	else if(eActiveVentMode==VM_DUOPAP)
 	{
+		setAlimitPIPminDUOPAP(value);//rku PIPLOW DUOPAP
 	}
 	else
 	{
@@ -2505,20 +2624,11 @@ void CAlarmConditionHandler::setAlimitPIPmin(int value)
  * \param	value	The value.
  **************************************************************************************************/
 
-void CAlarmConditionHandler::setAlimitPIPminDefault(int value)
+void CAlarmConditionHandler::setAlimitPIPminDefault(int value)//rku PIPLOW DUOPAP
 {
 	ALIMIT_PIPMIN->setCurValue(value);
-	//ALIMIT_PEEPMIN->setMaxValue(value-DIFF_PMAX_PMIN_LIMIT);
-	//ALIMIT_PEEPMIN->setMaxValue(ALIMIT_PIPMIN->getCurValue());
 
-	if (ALIMIT_PIPMIN->getLimitState()==AL_OFF)//rku newPIPOFF
-	{
-		setAlimitMaxRangePEEPmin(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
-	}
-	else
-	{
-		setAlimitMaxRangePEEPmin(ALIMIT_PIPMIN->getCurValue());
-	}
+	setAlimitsMinMaxRangePressure();
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALPIPmin%d,"), value);
@@ -2526,6 +2636,17 @@ void CAlarmConditionHandler::setAlimitPIPminDefault(int value)
 	getModel()->getCONFIG()->SetAlarmlimitPIPmin(value);
 }
 
+void CAlarmConditionHandler::setAlimitPIPminDUOPAP(int value)//rku PIPLOW DUOPAP
+{
+	ALIMIT_PIPMIN->setCurValue(value);
+
+	setAlimitsMinMaxRangeDUOPAP();
+
+	CStringW sz=_T("");
+	sz.Format(_T("ALPIPmin%d,"), value);
+	theApp.getLog()->WriteLine(sz);
+	getModel()->getCONFIG()->SetAlarmlimitPIPminDUOPAP(value);
+}
 /**********************************************************************************************//**
  * Sets alimit mapmax
  *
@@ -3211,11 +3332,28 @@ void CAlarmConditionHandler::setAlimitsMinMaxRangeNCPAP()
 
 void CAlarmConditionHandler::setAlimitsMinMaxRangeDUOPAP()
 {
-	int iLI_PIPMAX=ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT;
-	int iLI_PEEPMIN=ALIMIT_PEEPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT;
+	//rku PIPLOW DUOPAP
+	int iCurPEEP=ALIMIT_PEEPMIN->getCurValue();
+	if(iCurPEEP%10!=0)
+	{
+		iCurPEEP+=5;
+	}
 
-	setAlimitMaxRangePEEPmin(iLI_PIPMAX);
-	setAlimitMinRangePIPmax(iLI_PEEPMIN);
+	//rku PIPLOW DUOPAP
+	if (ALIMIT_PIPMIN->getLimitState()==AL_OFF)
+	{
+		setAlimitMinRangePIPmax(iCurPEEP+DIFF_PMAX_PMIN_LIMIT);
+		setAlimitMaxRangePIPmin(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
+		setAlimitMinRangePIPmin(iCurPEEP);
+		setAlimitMaxRangePEEPmin(ALIMIT_PIPMAX->getCurValue()-DIFF_MAPMAX_MAPMIN_LIMIT);
+	}
+	else
+	{
+		setAlimitMinRangePIPmax(ALIMIT_PIPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT);
+		setAlimitMaxRangePIPmin(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
+		setAlimitMinRangePIPmin(iCurPEEP);
+		setAlimitMaxRangePEEPmin(ALIMIT_PIPMIN->getCurValue());
+	}
 }
 
 /**********************************************************************************************//**
@@ -3227,28 +3365,28 @@ void CAlarmConditionHandler::setAlimitsMinMaxRangeDUOPAP()
 
 void CAlarmConditionHandler::setAlimitsMinMaxRangePressure()
 {
-	//DEBUGMSG(TRUE, (TEXT("CAlarmConditionHandler::setAlimitsMinMaxRangePressure\r\n")));
-	//rku PMEANLIMITS ?????????????????
-	int iLI_PIPMAX	=ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT;
-	int iLI_PIPMIN_HI	=ALIMIT_PIPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT;
-	int iLI_PIPMIN_LO	=ALIMIT_PIPMIN->getCurValue();
-	int iLI_PEEPMIN	=ALIMIT_PEEPMIN->getCurValue();
-
-	if(iLI_PEEPMIN%10!=0)
+	//rku PIPLOW DUOPAP
+	int iCurPEEP=ALIMIT_PEEPMIN->getCurValue();
+	if(iCurPEEP%10!=0)
 	{
-		iLI_PEEPMIN+=5;
+		iCurPEEP+=5;
 	}
 
-	setAlimitMinRangePIPmax(iLI_PIPMIN_HI);
-	setAlimitMaxRangePIPmin(iLI_PIPMAX);
-	setAlimitMinRangePIPmin(iLI_PEEPMIN);
-	setAlimitMaxRangePEEPmin(iLI_PIPMIN_LO);
-
-	int iLI_MAPMAX	=ALIMIT_MAPMAX->getCurValue()-DIFF_MAPMAX_MAPMIN_LIMIT;
-	int iLI_MAPMIN	=ALIMIT_MAPMIN->getCurValue()+DIFF_MAPMAX_MAPMIN_LIMIT;
-
-	//setAlimitMinRangeMAPmax(iLI_MAPMIN);
-	//setAlimitMaxRangeMAPmin(iLI_MAPMAX);
+	//rku PIPLOW DUOPAP
+	if (ALIMIT_PIPMIN->getLimitState()==AL_OFF)
+	{
+		setAlimitMinRangePIPmax(iCurPEEP+DIFF_PMAX_PMIN_LIMIT);
+		setAlimitMaxRangePIPmin(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
+		setAlimitMinRangePIPmin(iCurPEEP);
+		setAlimitMaxRangePEEPmin(ALIMIT_PIPMAX->getCurValue()-DIFF_MAPMAX_MAPMIN_LIMIT);
+	}
+	else
+	{
+		setAlimitMinRangePIPmax(ALIMIT_PIPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT);
+		setAlimitMaxRangePIPmin(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
+		setAlimitMinRangePIPmin(iCurPEEP);
+		setAlimitMaxRangePEEPmin(ALIMIT_PIPMIN->getCurValue());
+	}
 }
 
 /**********************************************************************************************//**
@@ -3584,6 +3722,7 @@ void CAlarmConditionHandler::setAlimitMaxRangePIPmax(int iRangeVal)
 
 void CAlarmConditionHandler::setAlimitMinRangePIPmax(int iRangeVal)
 {
+	DEBUGMSG(TRUE, (TEXT("5 PIPMAX->setMinValue %d\r\n"),iRangeVal));
 	ALIMIT_PIPMAX->setMinValue(iRangeVal);
 }
 
@@ -5452,7 +5591,7 @@ void CAlarmConditionHandler::setAlimitState_PIPminLimit(eAlarmLimitState state)
 	}
 	else if(eActiveVentMode==VM_DUOPAP)
 	{
-		
+		setAlimitStatePIPminDUOPAP(state);
 	}
 	else
 	{
@@ -5474,6 +5613,22 @@ void CAlarmConditionHandler::setAlimitStatePIPminDefault(eAlarmLimitState state)
 	ALIMIT_PIPMIN->setLimitState(state);
 	if(state==AL_OFF || state==AL_ON || state==AL_AUTO)
 		getModel()->getCONFIG()->SetAlarmlimitStatePIPmin(state);
+}
+
+/**********************************************************************************************//**
+ * Sets alimit state pipmin duopap
+ *
+ * \author	Rainer Kühner
+ * \date	06.03.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
+void CAlarmConditionHandler::setAlimitStatePIPminDUOPAP(eAlarmLimitState state)//rku PIPLOW DUOPAP
+{
+	ALIMIT_PIPMIN->setLimitState(state);
+	if(state==AL_OFF || state==AL_ON || state==AL_AUTO)
+		getModel()->getCONFIG()->SetAlarmlimitStatePIPminDUOPAP(state);
 }
 
 /**********************************************************************************************//**
@@ -5598,7 +5753,7 @@ void CAlarmConditionHandler::setAlimitStatePIPmaxDUOPAP(eAlarmLimitState state)
 {
 	ALIMIT_PIPMAX->setLimitState(state);
 	if(state==AL_OFF || state==AL_ON || state==AL_AUTO)
-		getModel()->getCONFIG()->SetAlarmlimitStatePmaxDUOPAP(state);
+		getModel()->getCONFIG()->SetAlarmlimitStatePIPmaxDUOPAP(state);
 }
 
 /**********************************************************************************************//**

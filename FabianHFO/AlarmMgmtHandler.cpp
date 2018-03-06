@@ -12566,7 +12566,7 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 		}
 	}
 
-	if(eActiveVentMode!=VM_HFO && eActiveVentMode!=VM_CPAP && bActiveModeIsNMODE==false)
+	if(eActiveVentMode!=VM_HFO && eActiveVentMode!=VM_CPAP && eActiveVentMode!=VM_NCPAP && eActiveVentMode!=VM_THERAPIE)//rku PIPLOW DUOPAP
 	{
 		if(statePIPmin==AL_ON)
 		{
@@ -12867,7 +12867,7 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 	}
 
 	if(		bPIPmin_Alarm 
-		&&	eAlarmStates.eSoA_PIPminLimit!=AS_ACTIVE 
+		&&	eAlarmStates.eSoA_PIPminLimit!=AS_ACTIVE
 		&&	getAlarmSilentState()!=ASTATE_AUTOSILENT
 		&&	getModel()->isActiveAlarmDelay()==false)
 	{
@@ -12880,7 +12880,7 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 	}
 	else if(!bPIPmin_Alarm && eAlarmStates.eSoA_PIPminLimit==AS_ACTIVE)
 	{
-		if(eActiveVentMode!=VM_HFO && eActiveVentMode!=VM_CPAP && bActiveModeIsNMODE==false)
+		if(eActiveVentMode!=VM_HFO && eActiveVentMode!=VM_CPAP && eActiveVentMode!=VM_NCPAP && eActiveVentMode!=VM_THERAPIE)//rku PIPLOW DUOPAP
 			setStateOfAlarm(AL_PatAl_PIPmin,AS_SIGNALED);
 	}
 

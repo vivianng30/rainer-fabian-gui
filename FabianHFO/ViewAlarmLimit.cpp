@@ -554,7 +554,7 @@ bool CViewAlarmLimit::Initialize()
 	////Button------PEEP---------------------------------
 
 	btn.wID					= IDC_BTN_ALARM_PEEP_LO;	
-	if(m_eCurVentMode==VM_NCPAP || m_eCurVentMode==VM_CPAP || m_eCurVentMode==VM_DUOPAP)
+	if(m_eCurVentMode==VM_NCPAP || m_eCurVentMode==VM_CPAP /*|| m_eCurVentMode==VM_DUOPAP*/)//rku PIPLOW DUOPAP
 	{
 		btn.poPosition.x		= 100;
 		btn.poPosition.y		= 211;
@@ -742,7 +742,7 @@ bool CViewAlarmLimit::Initialize()
 	////-------------------------------------------------------------
 	////Button------BPM---------------------------------
 	btn.wID					= IDC_BTN_ALARM_BPM_HI;	
-	if(m_eCurVentMode==VM_DUOPAP || m_eCurVentMode==VM_NCPAP)
+	if(/*m_eCurVentMode==VM_DUOPAP ||*/ m_eCurVentMode==VM_NCPAP)//rku PIPLOW DUOPAP
 	{
 		btn.poPosition.x		= 100;
 		btn.poPosition.y		= 266;
@@ -835,12 +835,12 @@ bool CViewAlarmLimit::Initialize()
 	////-------------------------------------------------------------
 	////Button------Apnoe---------------------------------
 	btn.wID					= IDC_BTN_ALARM_APNOE;	
-	if(m_eCurVentMode==VM_DUOPAP || m_eCurVentMode==VM_NCPAP)
+	if(/*m_eCurVentMode==VM_DUOPAP || */m_eCurVentMode==VM_NCPAP)//rku PIPLOW DUOPAP
 	{
 		btn.poPosition.x		= 100;
 		btn.poPosition.y		= 321;
 	}
-	else if(m_eCurVentMode==VM_CPAP)
+	else if(m_eCurVentMode==VM_DUOPAP || m_eCurVentMode==VM_CPAP)//rku PIPLOW DUOPAP
 	{
 		btn.poPosition.x		= 100;
 		btn.poPosition.y		= 376;
@@ -1645,14 +1645,14 @@ void CViewAlarmLimit::drawFrameNCPAP(CDC* pDC)
  **************************************************************************************************/
 
 void CViewAlarmLimit::drawFrameDUOPAP(CDC* pDC)
-{
+{//rku PIPLOW DUOPAP
 	HDC hdc = *pDC;
 
-	if(m_pcAlarmlimitPara1)
-		m_pcAlarmlimitPara1->Draw(hdc,0,156);	//PIP
+	if(m_pcAlarmlimitPara2)
+		m_pcAlarmlimitPara2->Draw(hdc,0,156);	//PIP
 
 	if(m_pcAlarmlimitPara1)
-		m_pcAlarmlimitPara1->Draw(hdc,0,211);	//PEEP
+		m_pcAlarmlimitPara1->Draw(hdc,0,266);	//PEEP
 
 	bool bShowApnea=true;
 	if(false==getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable())
@@ -1699,10 +1699,10 @@ void CViewAlarmLimit::drawFrameDUOPAP(CDC* pDC)
 	if(bShowApnea)
 	{
 		if(m_pcAlarmlimitPara1)
-			m_pcAlarmlimitPara1->Draw(hdc,0,266);	//BPM
+			m_pcAlarmlimitPara1->Draw(hdc,0,321);	//BPM
 
 		if(m_pcAlarmlimitPara1)
-			m_pcAlarmlimitPara1->Draw(hdc,0,321);	//Apnea
+			m_pcAlarmlimitPara1->Draw(hdc,0,376);	//Apnea
 	}
 }
 
@@ -2538,7 +2538,7 @@ void CViewAlarmLimit::drawLabel_NCPAP(CDC* pDC)
  **************************************************************************************************/
 
 void CViewAlarmLimit::drawLabel_DUOPAP(CDC* pDC)
-{
+{//rku PIPLOW DUOPAP
 	if(m_bExit)
 		return;
 
@@ -2586,8 +2586,8 @@ void CViewAlarmLimit::drawLabel_DUOPAP(CDC* pDC)
 	//--------------------PEEP-------------------------------------
 	rc.left = 10;
 	rc.right = 210;
-	rc.top = 211;
-	rc.bottom = 292;
+	rc.top = 266;
+	rc.bottom = 347;
 
 	nameText=getModel()->GetLanguageString(IDS_PARA_PEEP);
 	DrawText(hdc,nameText,-1,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
@@ -2595,8 +2595,8 @@ void CViewAlarmLimit::drawLabel_DUOPAP(CDC* pDC)
 
 	SelectObject(hdc,g_hf6AcuNorm);
 
-	rc.top = 212;
-	rc.bottom = 292;
+	rc.top = 267;
+	rc.bottom = 347;
 	rc.left = 11+sz3.cx;
 	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
 	{
@@ -2658,8 +2658,8 @@ void CViewAlarmLimit::drawLabel_DUOPAP(CDC* pDC)
 		//---------- BPM -----------------------------
 		rc.left = 10;
 		rc.right = 210;
-		rc.top = 266;
-		rc.bottom = 316;
+		rc.top = 321;
+		rc.bottom = 409;
 
 		nameText=getModel()->GetLanguageString(IDS_PARA_FREQ);
 		DrawText(hdc,nameText,-1,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
@@ -2667,18 +2667,18 @@ void CViewAlarmLimit::drawLabel_DUOPAP(CDC* pDC)
 
 		SelectObject(hdc,g_hf6AcuNorm);
 
-		rc.top = 266;
-		rc.bottom = 316;
+		rc.top = 322;
+		rc.bottom = 409;
 		rc.left = 15+sz.cx;
 		pDC->DrawText(_T("[")+getModel()->GetLanguageString(IDS_UNIT_BPM)+_T("]"),&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 
 		SelectObject(hdc,g_hf10AcuBold);
 
 		//-------------Apnea---------------------
-		rc.top = 321;
-		rc.bottom = 371;
 		rc.left = 10;
 		rc.right = 210;
+		rc.top = 376;
+		rc.bottom = 426;
 		
 		nameText=getModel()->GetLanguageString(IDS_PARA_APNOE);
 		DrawText(hdc,nameText,-1,&rc,DT_VCENTER|DT_SINGLELINE|DT_LEFT);
@@ -2686,8 +2686,8 @@ void CViewAlarmLimit::drawLabel_DUOPAP(CDC* pDC)
 
 		SelectObject(hdc,g_hf6AcuNorm);
 
-		rc.top = 322;
-		rc.bottom = 372;
+		rc.top = 376;
+		rc.bottom = 426;
 		rc.left = 15+sz.cx;
 		pDC->DrawText(_T("[")+getModel()->GetLanguageString(IDS_UNIT_SECONDS)+_T("]"),&rc,DT_VCENTER|DT_SINGLELINE|DT_LEFT);
 	}
@@ -3491,7 +3491,7 @@ void CViewAlarmLimit::drawDataVentilation_NCPAP(HDC hdc)
  **************************************************************************************************/
 
 void CViewAlarmLimit::drawDataVentilation_DUOPAP(HDC hdc)
-{
+{//rku PIPLOW DUOPAP
 	RECT rc={0,0,m_lX,m_lY};
 	TCHAR psz[MAX_PATH];
 
@@ -3501,9 +3501,6 @@ void CViewAlarmLimit::drawDataVentilation_DUOPAP(HDC hdc)
 	HPEN hpenprev=(HPEN)SelectObject(hdc, (HPEN)GetStockObject(NULL_PEN));
 	CBrush cbrBack(RGB(200,200,200));
 	HBRUSH hbrprev=(HBRUSH)SelectObject(hdc,cbrBack);
-
-	rc.left = 15;
-	rc.right = 210;
 
 	//--------------------Pmax-------------------------------------
 	rc.left = 15;
@@ -3515,12 +3512,12 @@ void CViewAlarmLimit::drawDataVentilation_DUOPAP(HDC hdc)
 	wsprintf(psz,_T("%0.0f"), ((double)iData)/10);
 	DrawText(hdc,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 	//--------------------PEEP-------------------------------------
-	rc.top = 228;
-	rc.bottom = 260;//289;
-	iData = getModel()->getDATAHANDLER()->getAVGMessureDataPEEP();
+	rc.top = 283;
+	rc.bottom = 315;
 
-	wsprintf(psz,_T("%0.1f"), ((double)iData)/10);
+	wsprintf(psz,_T("%0.1f"), ((double)getModel()->getDATAHANDLER()->getAVGMessureDataPEEP())/10);
 	DrawText(hdc,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
+
 
 	bool bShowBPM=true;
 
@@ -3568,8 +3565,8 @@ void CViewAlarmLimit::drawDataVentilation_DUOPAP(HDC hdc)
 	if(bShowBPM)
 	{
 		//--------------------BPM-------------------------------------
-		rc.top = 280;
-		rc.bottom = 315;
+		rc.top = 280+55;
+		rc.bottom = 315+55;
 		wsprintf(psz,_T("%d"),getModel()->getDATAHANDLER()->getAVGMessureDataBPM());
 		DrawText(hdc,psz,-1,&rc,DT_BOTTOM|DT_SINGLELINE|DT_LEFT);
 	}
@@ -5233,6 +5230,10 @@ void CViewAlarmLimit::showALimitButtons_DUOPAP()
 	{
 		m_pcAlarmLimit_PIPmax->ShowWindow(SW_SHOW);
 	}
+	if(m_pcAlarmLimit_PIPmin)//rku PIPLOW DUOPAP
+	{
+		m_pcAlarmLimit_PIPmin->ShowWindow(SW_SHOW);
+	}
 
 	if(m_pcAlarmLimit_PEEP)
 	{
@@ -5507,10 +5508,19 @@ void CViewAlarmLimit::NotifyParaBtnEvent(CMVEvent* pEvent)
 							m_pcAlarmLimit_PIPmax->SetAbsoluteLimits(getModel()->getALARMHANDLER()->getAlimitMinRangePIPmax(),
 							getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmax());
 
+						if(m_pcAlarmLimit_PIPmin)
+							m_pcAlarmLimit_PIPmin->SetAbsoluteLimits(getModel()->getALARMHANDLER()->getAlimitMinRangePIPmin(),
+							getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmin());
+
 						if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
 						{
 							if(m_pcAlarmLimit_PIPmax)
 								m_pcAlarmLimit_PIPmax->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitPIPmax(),true);
+						}
+						if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_AUTO)
+						{
+							if(m_pcAlarmLimit_PIPmin)
+								m_pcAlarmLimit_PIPmin->SetCurLimit(getModel()->getALARMHANDLER()->getAlimitPIPmin(),true);
 						}
 
 						bRefresh=true;
@@ -6329,25 +6339,49 @@ LRESULT CViewAlarmLimit::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 			return 1;
 		}
 		break;
-	case WM_PEEP_LO_CHANGED:
+	case WM_PEEP_LO_CHANGED://rku PIPLOW DUOPAP
 		{
 			if(!m_bExit)
 			{
-				if(m_pcAlarmLimit_PIPmax)
-					m_pcAlarmLimit_PIPmax->SetAbsoluteLimits(getModel()->getALARMHANDLER()->getAlimitMinRangePIPmax(),
-					getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmax());
+				if (getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit()==AL_OFF)//rku newPIPOFF
+				{
+					DEBUGMSG(TRUE, (TEXT("WM_PEEP_LO_CHANGED PIPmax: %d %d\r\n"),getModel()->getALARMHANDLER()->getAlimitMinRangePIPmax(),getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmax()));
 
-				if(m_pcAlarmLimit_PIPmin)
-					m_pcAlarmLimit_PIPmin->SetAbsoluteLimits(getModel()->getALARMHANDLER()->getAlimitMinRangePIPmin(),
-					getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmin());
+					if(m_pcAlarmLimit_PIPmax)
+						m_pcAlarmLimit_PIPmax->SetAbsoluteLimits(getModel()->getALARMHANDLER()->getAlimitMinRangePIPmax(),
+						getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmax());
+
+					DEBUGMSG(TRUE, (TEXT("WM_PEEP_LO_CHANGED PIPmin: %d %d\r\n"),getModel()->getALARMHANDLER()->getAlimitMinRangePIPmin(),getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmin()));
+
+					if(m_pcAlarmLimit_PIPmin)
+						m_pcAlarmLimit_PIPmin->SetAbsoluteLimits(getModel()->getALARMHANDLER()->getAlimitMinRangePIPmin(),
+						getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmin());
+				}
+				else
+				{
+					DEBUGMSG(TRUE, (TEXT("WM_PEEP_LO_CHANGED PIPmin: %d %d\r\n"),getModel()->getALARMHANDLER()->getAlimitMinRangePIPmin(),getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmin()));
+
+					if(m_pcAlarmLimit_PIPmin)
+						m_pcAlarmLimit_PIPmin->SetAbsoluteLimits(getModel()->getALARMHANDLER()->getAlimitMinRangePIPmin(),
+						getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmin());
+				}
 			}
 			return 1;
 		}
 		break;
-	case WM_PMAX_HI_CHANGED:
+	case WM_PMAX_HI_CHANGED://rku PIPLOW DUOPAP
 		{
 			if(!m_bExit)
 			{
+				DEBUGMSG(TRUE, (TEXT("WM_PMAX_HI_CHANGED PIPmin: %d %d\r\n"),getModel()->getALARMHANDLER()->getAlimitMinRangePIPmin(),getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmin()));
+
+				
+				if(m_pcAlarmLimit_PIPmin)
+					m_pcAlarmLimit_PIPmin->SetAbsoluteLimits(getModel()->getALARMHANDLER()->getAlimitMinRangePIPmin(),
+					getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmin());
+
+				DEBUGMSG(TRUE, (TEXT("WM_PMAX_HI_CHANGED PEEP: %d %d\r\n"),getModel()->getALARMHANDLER()->getAlimitMinRangePEEPmin(),getModel()->getALARMHANDLER()->getAlimitMaxRangePEEPmin()));
+
 				if(m_pcAlarmLimit_PEEP)
 					m_pcAlarmLimit_PEEP->SetAbsoluteLimits(getModel()->getALARMHANDLER()->getAlimitMinRangePEEPmin(),
 					getModel()->getALARMHANDLER()->getAlimitMaxRangePEEPmin());
@@ -6359,6 +6393,15 @@ LRESULT CViewAlarmLimit::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 		{
 			if(!m_bExit)
 			{
+				DEBUGMSG(TRUE, (TEXT("WM_PMAX_LO_CHANGED PIPmax: %d %d\r\n"),getModel()->getALARMHANDLER()->getAlimitMinRangePIPmax(),getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmax()));
+
+				//rku PIPLOW DUOPAP
+				if(m_pcAlarmLimit_PIPmax)
+					m_pcAlarmLimit_PIPmax->SetAbsoluteLimits(getModel()->getALARMHANDLER()->getAlimitMinRangePIPmax(),
+					getModel()->getALARMHANDLER()->getAlimitMaxRangePIPmax());
+
+				DEBUGMSG(TRUE, (TEXT("WM_PMAX_LO_CHANGED PEEP: %d %d\r\n"),getModel()->getALARMHANDLER()->getAlimitMinRangePEEPmin(),getModel()->getALARMHANDLER()->getAlimitMaxRangePEEPmin()));
+
 				if(m_pcAlarmLimit_PEEP)
 					m_pcAlarmLimit_PEEP->SetAbsoluteLimits(getModel()->getALARMHANDLER()->getAlimitMinRangePEEPmin(),
 					getModel()->getALARMHANDLER()->getAlimitMaxRangePEEPmin());

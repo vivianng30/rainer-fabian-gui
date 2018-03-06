@@ -404,8 +404,12 @@ CConfiguration::CConfiguration()
 	m_iAlarmlimitPEEPminCpap=0;
 	m_iAlarmlimitStatePEEPminCpap=0;
 
-	m_iAlarmlimitPmaxDUOPAP=0;
-	m_iAlarmlimitStatePIPmaxDUOPAP=0;
+	m_iAlarmlimitPIPmaxDUOPAP=0;//rku PIPLOW DUOPAP
+	m_iAlarmlimitStatePIPmaxDUOPAP=0;//rku PIPLOW DUOPAP
+
+	m_iAlarmlimitPIPminDUOPAP=0;
+	m_iAlarmlimitStatePIPminDUOPAP=0;
+
 	m_iAlarmlimitPEEPminDUOPAP=0;
 	m_iAlarmlimitStatePEEPminDUOPAP=0;
 
@@ -856,8 +860,12 @@ void CConfiguration::Init()
 	m_iAlarmlimitPEEPminCpap=0;
 	m_iAlarmlimitStatePEEPminCpap=0;
 
-	m_iAlarmlimitPmaxDUOPAP=0;
-	m_iAlarmlimitStatePIPmaxDUOPAP=0;
+	m_iAlarmlimitPIPmaxDUOPAP=0;//rku PIPLOW DUOPAP
+	m_iAlarmlimitStatePIPmaxDUOPAP=0;//rku PIPLOW DUOPAP
+
+	m_iAlarmlimitPIPminDUOPAP=0;
+	m_iAlarmlimitStatePIPminDUOPAP=0;
+
 	m_iAlarmlimitPEEPminDUOPAP=0;
 	m_iAlarmlimitStatePEEPminDUOPAP=0;
 
@@ -3845,12 +3853,12 @@ void CConfiguration::LoadSettings()
 		m_iAlarmlimitStatePEEPminNCPAP=FACTORY_ALIMIT_STATE_PEEP;
 		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_NCPAP_8,m_iAlarmlimitStatePEEPminNCPAP);
 	}
-	/////////////////////////////////////////////////////////////////////////////////
-	m_iAlarmlimitPmaxDUOPAP=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_PMAX_DUOPAP_16);
-	if(m_iAlarmlimitPmaxDUOPAP<10 || m_iAlarmlimitPmaxDUOPAP>700)
+	///////////////////////////////////////////////////////////////////////////////// 
+	m_iAlarmlimitPIPmaxDUOPAP=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_PMAX_DUOPAP_16);
+	if(m_iAlarmlimitPIPmaxDUOPAP<10 || m_iAlarmlimitPIPmaxDUOPAP>700)
 	{
-		m_iAlarmlimitPmaxDUOPAP=FACTORY_ALIMIT_VAL_PIPMAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_DUOPAP_16,m_iAlarmlimitPmaxDUOPAP);
+		m_iAlarmlimitPIPmaxDUOPAP=FACTORY_ALIMIT_VAL_PIPMAX;
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_DUOPAP_16,m_iAlarmlimitPIPmaxDUOPAP);
 	}
 
 	m_iAlarmlimitStatePIPmaxDUOPAP=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PMAX_DUOPAP_8);
@@ -3858,6 +3866,21 @@ void CConfiguration::LoadSettings()
 	{
 		m_iAlarmlimitStatePIPmaxDUOPAP=FACTORY_ALIMIT_STATE_PIPMAX;
 		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_DUOPAP_8,m_iAlarmlimitStatePIPmaxDUOPAP);
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////rku PIPLOW DUOPAP
+	m_iAlarmlimitPIPminDUOPAP=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_PMIN_DUOPAP_16);
+	if(m_iAlarmlimitPIPminDUOPAP<10 || m_iAlarmlimitPIPminDUOPAP>700)
+	{
+		m_iAlarmlimitPIPminDUOPAP=FACTORY_ALIMIT_VAL_PIPMIN;
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMIN_DUOPAP_16,m_iAlarmlimitPIPminDUOPAP);
+	}
+
+	m_iAlarmlimitStatePIPminDUOPAP=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PMIN_DUOPAP_8);
+	if(m_iAlarmlimitStatePIPminDUOPAP<AL_ON || m_iAlarmlimitStatePIPminDUOPAP>AL_AUTO)
+	{
+		m_iAlarmlimitStatePIPminDUOPAP=FACTORY_ALIMIT_STATE_PIPMIN;
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMIN_DUOPAP_8,m_iAlarmlimitStatePIPminDUOPAP);
 	}
 
 	m_iAlarmlimitPEEPminDUOPAP=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_PEEP_DUOPAP_16);
@@ -14335,35 +14358,35 @@ void CConfiguration::SetAlarmlimitStatePEEPminCpap(eAlarmLimitState state)
 }
 
 /**********************************************************************************************//**
- * Gets alarmlimit pmax duopap
+ * Gets alarmlimit pipmax duopap
  *
  * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alarmlimit pmax duopap.
+ * \return	The alarmlimit pipmax duopap.
  **************************************************************************************************/
 
-int CConfiguration::GetAlarmlimitPmaxDUOPAP()
+int CConfiguration::GetAlarmlimitPIPmaxDUOPAP()
 {
-	return m_iAlarmlimitPmaxDUOPAP;
+	return m_iAlarmlimitPIPmaxDUOPAP;
 }
 
 /**********************************************************************************************//**
- * Gets alarmlimit state pmax duopap
+ * Gets alarmlimit state pipmax duopap
  *
  * \author	Rainer Kühner
  * \date	19.02.2018
  *
- * \return	The alarmlimit state pmax duopap.
+ * \return	The alarmlimit state pipmax duopap.
  **************************************************************************************************/
 
-eAlarmLimitState CConfiguration::GetAlarmlimitStatePmaxDUOPAP()
+eAlarmLimitState CConfiguration::GetAlarmlimitStatePIPmaxDUOPAP()
 {
 	return (eAlarmLimitState)m_iAlarmlimitStatePIPmaxDUOPAP;
 }
 
 /**********************************************************************************************//**
- * Sets alarmlimit pmax duopap
+ * Sets alarmlimit pipmax duopap
  *
  * \author	Rainer Kühner
  * \date	19.02.2018
@@ -14371,9 +14394,9 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePmaxDUOPAP()
  * \param	value	The value.
  **************************************************************************************************/
 
-void CConfiguration::SetAlarmlimitPmaxDUOPAP(int value)
+void CConfiguration::SetAlarmlimitPIPmaxDUOPAP(int value)
 {
-	m_iAlarmlimitPmaxDUOPAP=value;
+	m_iAlarmlimitPIPmaxDUOPAP=value;
 	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_DUOPAP_16, value);
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMAX,value);
@@ -14388,10 +14411,70 @@ void CConfiguration::SetAlarmlimitPmaxDUOPAP(int value)
  * \param	state	The state.
  **************************************************************************************************/
 
-void CConfiguration::SetAlarmlimitStatePmaxDUOPAP(eAlarmLimitState state)
+void CConfiguration::SetAlarmlimitStatePIPmaxDUOPAP(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePIPmaxDUOPAP=(int)state;
 	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_DUOPAP_8, state);
+}
+
+/**********************************************************************************************//**
+ * Gets alarmlimit pipmin duopap
+ *
+ * \author	Rainer Kühner
+ * \date	05.03.2018
+ *
+ * \return	The alarmlimit pipmin duopap.
+ **************************************************************************************************/
+
+int CConfiguration::GetAlarmlimitPIPminDUOPAP()
+{
+	return m_iAlarmlimitPIPminDUOPAP;
+}
+
+/**********************************************************************************************//**
+ * Gets alarmlimit state pipmin duopap
+ *
+ * \author	Rainer Kühner
+ * \date	05.03.2018
+ *
+ * \return	The alarmlimit state pipmin duopap.
+ **************************************************************************************************/
+
+eAlarmLimitState CConfiguration::GetAlarmlimitStatePIPminDUOPAP()
+{
+	return (eAlarmLimitState)m_iAlarmlimitStatePIPminDUOPAP;
+}
+
+/**********************************************************************************************//**
+ * Sets alarmlimit pipmin duopap
+ *
+ * \author	Rainer Kühner
+ * \date	05.03.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
+void CConfiguration::SetAlarmlimitPIPminDUOPAP(int value)
+{
+	m_iAlarmlimitPIPminDUOPAP=value;
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMIN_DUOPAP_16, value);
+	if(getModel()->getAcuLink()!=NULL)
+		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMIN,value);
+}
+
+/**********************************************************************************************//**
+ * Sets alarmlimit state pipmin duopap
+ *
+ * \author	Rainer Kühner
+ * \date	05.03.2018
+ *
+ * \param	state	The state.
+ **************************************************************************************************/
+
+void CConfiguration::SetAlarmlimitStatePIPminDUOPAP(eAlarmLimitState state)
+{
+	m_iAlarmlimitStatePIPminDUOPAP=(int)state;
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMIN_DUOPAP_8, state);
 }
 
 /**********************************************************************************************//**
@@ -15367,7 +15450,7 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		ar<<m_iAlarmlimitStatePmaxNCPAP;
 		ar<<m_iAlarmlimitPEEPminNCPAP;
 		ar<<m_iAlarmlimitStatePEEPminNCPAP;
-		ar<<m_iAlarmlimitPmaxDUOPAP;
+		ar<<m_iAlarmlimitPIPmaxDUOPAP;
 		ar<<m_iAlarmlimitStatePIPmaxDUOPAP;
 		ar<<m_iAlarmlimitPEEPminDUOPAP;
 		ar<<m_iAlarmlimitStatePEEPminDUOPAP;
@@ -15457,6 +15540,8 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		
 		////##################### m_iConfigVersion 3006
 		ar<<(BYTE)m_ePrevTrigger_CONV;
+		ar<<m_iAlarmlimitPIPminDUOPAP;
+		ar<<m_iAlarmlimitStatePIPminDUOPAP;
 	}
 	else
 	{
@@ -15896,8 +15981,8 @@ void CConfiguration::SerializeFile(CArchive& ar)
 			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_NCPAP_8, m_iAlarmlimitStatePEEPminNCPAP);
 
 
-			ar>>m_iAlarmlimitPmaxDUOPAP;
-			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_DUOPAP_16, m_iAlarmlimitPmaxDUOPAP);
+			ar>>m_iAlarmlimitPIPmaxDUOPAP;
+			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_DUOPAP_16, m_iAlarmlimitPIPmaxDUOPAP);
 			ar>>m_iAlarmlimitStatePIPmaxDUOPAP;
 			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_DUOPAP_8, m_iAlarmlimitStatePIPmaxDUOPAP);
 			ar>>m_iAlarmlimitPEEPminDUOPAP;
@@ -16172,6 +16257,11 @@ void CConfiguration::SerializeFile(CArchive& ar)
 			ar>>ePrevTriggerTypeCONV;
 			m_ePrevTrigger_CONV=(eTriggereType)ePrevTriggerTypeCONV;
 			setTriggerOption_CONV(m_ePrevTrigger_CONV);
+
+			ar>>m_iAlarmlimitPIPminDUOPAP;
+			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMIN_DUOPAP_16, m_iAlarmlimitPIPminDUOPAP);
+			ar>>m_iAlarmlimitStatePIPminDUOPAP;
+			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMIN_DUOPAP_8, m_iAlarmlimitStatePIPminDUOPAP);
 		}
 	}
 }

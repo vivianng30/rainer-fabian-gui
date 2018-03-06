@@ -3034,11 +3034,18 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 			}
 
 			if(mode==VM_NCPAP)
+			{
 				getALARMHANDLER()->setAlimitsMinMaxRangeNCPAP();
+			}
 			else if(mode==VM_DUOPAP)
-				getALARMHANDLER()->setAlimitsMinMaxRangeDUOPAP();
+			{
+				//getALARMHANDLER()->setAlimitsMinMaxRangeDUOPAP();
+				getALARMHANDLER()->setAlimitsMinMaxRangePressure();//rku PIPLOW DUOPAP
+			}
 			else
+			{
 				getALARMHANDLER()->setAlimitsMinMaxRangeCpap();
+			}
 			NotifyParaBtnEvent(pEvent);
 		}
 		break;

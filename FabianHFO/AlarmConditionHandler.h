@@ -76,6 +76,7 @@ public:
 
 	void setAlimitState_PIPminLimit(eAlarmLimitState state);
 	void setAlimitStatePIPminDefault(eAlarmLimitState state);
+	void setAlimitStatePIPminDUOPAP(eAlarmLimitState state);
 
 	void setAlimitState_PIPmaxLimit(eAlarmLimitState state);
 	void setAlimitStatePIPmaxHF(eAlarmLimitState state);
@@ -155,7 +156,9 @@ public:
 	void setAlimitPIPmaxNCPAP(int value);
 	void setAlimitPIPmaxDUOPAP(int value);
 	void setAlimitPIPmaxDefault(int value);
+
 	void setAlimitPIPmin(int value);
+	void setAlimitPIPminDUOPAP(int value);
 	void setAlimitPIPminDefault(int value);
 
 	void setAlimitMAPmax(int value);
@@ -329,7 +332,8 @@ protected:
 	void setAlarmLimitRanges_DEFAULT();
 	void setAlarmLimitRanges_HFO();
 	void setAlarmLimitRanges_CPAP();
-	void setAlarmLimitRanges_NMODE();
+	void setAlarmLimitRanges_DUOPAP();//rku PIPLOW DUOPAP
+	void setAlarmLimitRanges_NCPAP();//rku PIPLOW DUOPAP
 	void setAlarmLimitRanges_ETCO2();
 	void setAlarmLimitRanges_SPO2();
 
