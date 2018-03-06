@@ -299,7 +299,7 @@ bool CNumericFieldPPEAK::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldPPEAK::drawLimits(CDC* pDC)
+bool CNumericFieldPPEAK::drawLimits(CDC* pDC)//rku PIPLOW DUOPAP
 {
 	HDC hdc = *pDC;
 	int nBkMode=SetBkMode(hdc,TRANSPARENT);
@@ -313,7 +313,7 @@ bool CNumericFieldPPEAK::drawLimits(CDC* pDC)
 	if(m_eSize==NUMERICSIZE_1)
 	{
 		drawHighLimit(pDC);
-		if(eActiveVentMode!=VM_HFO && eActiveVentMode!=VM_DUOPAP)
+		if(eActiveVentMode!=VM_HFO)
 			drawLowLimit(pDC);
 
 		rc.top = 9;
@@ -348,14 +348,14 @@ bool CNumericFieldPPEAK::drawLimits(CDC* pDC)
 			wsprintf(psz,_T("%0.0f"), CTlsFloat::Round(((double)getModel()->getALARMHANDLER()->getAlimitPIPmax())/10, 0));
 		pDC->DrawText(psz,&rc,DT_TOP|DT_SINGLELINE|DT_RIGHT);
 
-		if(eActiveVentMode!=VM_HFO&& eActiveVentMode!=VM_DUOPAP)
+		/*if(eActiveVentMode!=VM_HFO)
 		{
 			if(getModel()->getALARMHANDLER()->getAlimitPIPmin()==0)
 				wsprintf(psz,_T("%d"), 0);
 			else
 				wsprintf(psz,_T("%0.0f"), CTlsFloat::Round(((double)getModel()->getALARMHANDLER()->getAlimitPIPmin())/10, 0));
 			pDC->DrawText(psz,&rc,DT_BOTTOM|DT_SINGLELINE|DT_RIGHT);
-		}
+		}*/
 		
 
 		if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit() == AL_AUTO)
@@ -372,7 +372,43 @@ bool CNumericFieldPPEAK::drawLimits(CDC* pDC)
 			pDC->DrawText(getModel()->GetLanguageString(IDS_TXT_AUTO),&rc,DT_BOTTOM|DT_SINGLELINE|DT_RIGHT);
 		}
 	}
-	
+
+	if(eActiveVentMode!=VM_HFO)
+	{
+		if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit() == AL_CALC)
+		{
+			SelectObject(hdc,g_hf9AcuBold);
+			pDC->DrawText(getModel()->GetLanguageString(IDS_TXT_AUTO),&rc,DT_BOTTOM|DT_SINGLELINE|DT_RIGHT);
+		}
+		else if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit() == AL_OFF)
+		{
+			SelectObject(hdc,g_hf9AcuBold);
+			pDC->DrawText(getModel()->GetLanguageString(IDS_TXT_OFF),&rc,DT_BOTTOM|DT_SINGLELINE|DT_RIGHT);
+		}
+		else if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit() != AL_OFF)
+		{
+			SelectObject(hdc,g_hf11AcuBoldNum);
+			if(getModel()->getALARMHANDLER()->getAlimitPIPmin()==0)
+				wsprintf(psz,_T("%d"), 0);
+			else
+				wsprintf(psz,_T("%0.0f"), CTlsFloat::Round(((double)getModel()->getALARMHANDLER()->getAlimitPIPmin())/10, 0));
+			pDC->DrawText(psz,&rc,DT_BOTTOM|DT_SINGLELINE|DT_RIGHT);
+
+			if(getModel()->getALARMHANDLER()->getAlimitState_PIPminLimit() == AL_AUTO)
+			{
+				if(m_eSize==NUMERICSIZE_1)
+				{
+					rc.bottom = 39;
+				}
+				else //if(m_eSize==NUMERICSIZE_2)
+				{
+					rc.bottom = 88;
+				}
+				SelectObject(hdc,g_hf9AcuBold);
+				pDC->DrawText(getModel()->GetLanguageString(IDS_TXT_AUTO),&rc,DT_BOTTOM|DT_SINGLELINE|DT_RIGHT);
+			}
+		}
+	}
 
 	SetTextColor(hdc,nPrevTxtColor);
 	SetBkMode(hdc,nBkMode);

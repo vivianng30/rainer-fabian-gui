@@ -2636,6 +2636,15 @@ void CAlarmConditionHandler::setAlimitPIPminDefault(int value)//rku PIPLOW DUOPA
 	getModel()->getCONFIG()->SetAlarmlimitPIPmin(value);
 }
 
+/**********************************************************************************************//**
+ * Sets alimit pi pmin duopap
+ *
+ * \author	Rainer Kühner
+ * \date	06.03.2018
+ *
+ * \param	value	The value.
+ **************************************************************************************************/
+
 void CAlarmConditionHandler::setAlimitPIPminDUOPAP(int value)//rku PIPLOW DUOPAP
 {
 	ALIMIT_PIPMIN->setCurValue(value);

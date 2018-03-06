@@ -9813,8 +9813,20 @@ int CDataHandler::calculateAutoAlarmlimitPIPLOW()
 	else if(eActiveVentMode==VM_NCPAP)
 	{
 	}
-	else if(eActiveVentMode==VM_DUOPAP)
+	else if(eActiveVentMode==VM_DUOPAP)//rku PIPLOW DUOPAP
 	{
+		int iCurPEEP=getModel()->getALARMHANDLER()->getAlimitPEEPmin();
+		if(iCurPEEP%10!=0)
+		{
+			iCurPEEP+=5;
+		}
+		iValue = iCurPEEP+AUTOALARMLIMIT_PIPMIN;
+
+		int iPIPmaxLimit=getModel()->getALARMHANDLER()->getAlimitPIPmax();
+		if(iValue>iPIPmaxLimit-DIFF_PMAX_PMIN_LIMIT)
+		{
+			iValue=iPIPmaxLimit-DIFF_PMAX_PMIN_LIMIT;
+		}
 	}
 	else
 	{
