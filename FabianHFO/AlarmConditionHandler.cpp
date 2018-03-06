@@ -3354,7 +3354,7 @@ void CAlarmConditionHandler::setAlimitsMinMaxRangeDUOPAP()
 		setAlimitMinRangePIPmax(iCurPEEP+DIFF_PMAX_PMIN_LIMIT);
 		setAlimitMaxRangePIPmin(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
 		setAlimitMinRangePIPmin(iCurPEEP);
-		setAlimitMaxRangePEEPmin(ALIMIT_PIPMAX->getCurValue()-DIFF_MAPMAX_MAPMIN_LIMIT);
+		setAlimitMaxRangePEEPmin(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
 	}
 	else
 	{
@@ -3387,7 +3387,7 @@ void CAlarmConditionHandler::setAlimitsMinMaxRangePressure()
 		setAlimitMinRangePIPmax(iCurPEEP+DIFF_PMAX_PMIN_LIMIT);
 		setAlimitMaxRangePIPmin(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
 		setAlimitMinRangePIPmin(iCurPEEP);
-		setAlimitMaxRangePEEPmin(ALIMIT_PIPMAX->getCurValue()-DIFF_MAPMAX_MAPMIN_LIMIT);
+		setAlimitMaxRangePEEPmin(ALIMIT_PIPMAX->getCurValue()-DIFF_PMAX_PMIN_LIMIT);
 	}
 	else
 	{
