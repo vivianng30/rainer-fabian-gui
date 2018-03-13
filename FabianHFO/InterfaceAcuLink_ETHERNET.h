@@ -18,17 +18,13 @@ public:
 	bool init();
 	bool deinit();
 	//HINSTANCE isAcuLink();
-	int sendMeasurementData();
-	int setMeasurementData(int idx, int iValue);
+	int sendAllMeasurementData();
 	void setParaData(UINT index, int val);
 	void setAlarmData(UINT index, int val);
 
-
-
-	
-
 protected:
-	
+	int setMeasurementData(int idx, int iValue);
+
 	
 };
 

@@ -58,12 +58,13 @@ public:
 	int setLanguage(UINT uiLang);
 	int setNetPort(UINT uiPort);
 	int setLinkType(int iLinkType);
-	int sendMeasurementData();
-	int setMeasurementData(int idx, int iValue);
+	int sendAllMeasurementData();
 	void setParaData(UINT index, int val);
 	void setAlarmData(UINT index, int val);
 
 protected:
+	int setMeasurementData(int idx, int iValue);
+
 	static LPSETUINTDLLFUNC pSetShutdownFunc;
 	static LPGETUINTDLLFUNC pCheckShutdownFunc;
 

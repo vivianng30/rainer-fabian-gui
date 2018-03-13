@@ -85,7 +85,7 @@ void CInterfaceAcuLink_ETHERNET::setAlarmData(UINT index, int val)
 {
 	
 }
-int CInterfaceAcuLink_ETHERNET::sendMeasurementData()
+int CInterfaceAcuLink_ETHERNET::sendAllMeasurementData()
 {
 	fillMeasurementData();
 

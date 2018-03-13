@@ -8636,10 +8636,7 @@ void CConfiguration::setSPO2module(BYTE mod, bool bReinit)
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2PIMIN, ALINK_NOTVALID);
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX, ALINK_NOTVALID);
 			getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN, ALINK_NOTVALID);
-			getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_SPO2,ALINK_NOTVALID);
-			getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_SPO2_PI,ALINK_NOTVALID);
-			getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_SPO2_PR,ALINK_NOTVALID);
-			getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_SPO2_SIQ,ALINK_NOTVALID);
+			getModel()->getAcuLink()->sendAllMeasurementData();
 		}
 	}
 	m_bSpO2ConfigInProgress=false;
@@ -8742,9 +8739,7 @@ void CConfiguration::setCO2module(BYTE mod)//CO2RKU
 
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_O2COMPENSATION_CO2, ALINK_NOTVALID);
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_BAROPRESSURE_CO2, ALINK_NOTVALID);
-		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_ETCO2, ALINK_NOTVALID);
-		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_FREQETCO2,ALINK_NOTVALID);//NEWACULINK
-		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_FICO2,ALINK_NOTVALID);//NEWACULINK
+		getModel()->getAcuLink()->sendAllMeasurementData();
 	}
 
 

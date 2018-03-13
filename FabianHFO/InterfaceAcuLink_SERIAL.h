@@ -15,14 +15,15 @@ public:
 	bool deinit();
 	//HINSTANCE isAcuLink();
 	//int sendWaveData();
-	int sendMeasurementData();
-	int setMeasurementData(int idx, int iValue);
+	int sendAllMeasurementData();
 	void setParaData(UINT index, int val);
 	void setAlarmData(UINT index, int val);
 	void setGraphDataV3(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2);
 	void setGraphDataV4(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2, SHORT iValSPO2);
 
 protected:
+	int setMeasurementData(int idx, int iValue);
+
 	int getParaData(int idx);
 	int getAlarmData(int idx);
 	int getMeasurementData(int idx);

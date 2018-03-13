@@ -727,7 +727,7 @@ void CInterfaceAcuLink_SERIAL::sendTestWaveData()
 	}
 
 }
-int CInterfaceAcuLink_SERIAL::sendMeasurementData()//CAcuLinkApp::BuildMsg()
+int CInterfaceAcuLink_SERIAL::sendAllMeasurementData()//CAcuLinkApp::BuildMsg()
 {
 	fillMeasurementData();
 	

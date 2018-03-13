@@ -3508,14 +3508,14 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				{
 					if(iFiO2value<0)
 					{
-						getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_OXY,0);
+						getModel()->getAcuLink()->send_MSMNT_OXY(0);
 					}
 					else
 					{
 						if(getModel()->getDATAHANDLER()->GetOxyCalRunning())
-							getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_OXY,m_iOldOxyValue);
+							getModel()->getAcuLink()->send_MSMNT_OXY(m_iOldOxyValue);
 						else
-							getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_OXY,iFiO2value);
+							getModel()->getAcuLink()->send_MSMNT_OXY(iFiO2value);
 					}
 				}
 
@@ -4827,7 +4827,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				}
 				else if(getModel()->getAcuLink()!=NULL)
 				{
-					getModel()->getAcuLink()->sendMeasurementData();
+					getModel()->getAcuLink()->sendAllMeasurementData();
 				}
 				 
 				
@@ -9195,7 +9195,7 @@ DWORD CMainFrame::DoTimerFunctions(void)
 								if(iCountTerminal==5)
 								{
 									//theApp.getLog()->WriteLine(_T("#W1"));
-									getModel()->getAcuLink()->sendMeasurementData();
+									getModel()->getAcuLink()->sendAllMeasurementData();
 									//theApp.getLog()->WriteLine(_T("#W2"));
 									iCountTerminal=0;
 

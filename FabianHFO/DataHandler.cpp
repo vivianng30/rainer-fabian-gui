@@ -18347,13 +18347,10 @@ void CDataHandler::SetInspFlowData(int valueInsp)
 	setMessureDataAVG(ALINK_MSMNT_IFLOW,valueInsp);
 	setMessureDataBTB(ALINK_MSMNT_IFLOW,valueInsp);
 
-	if(getModel()->getAcuLink()!=NULL)
+	/*if(getModel()->getAcuLink()!=NULL)
 	{
-		if(getModel()->getVMODEHANDLER()->activeModeIsTHERAPY())
-			getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_IFLOW,ALINK_NOTVALID);
-		else
-			getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_IFLOW,valueInsp);
-	}
+		getModel()->getAcuLink()->sendAllMeasurementData();
+	}*/
 	
 }
 
@@ -18371,8 +18368,8 @@ void CDataHandler::SetExpFlowData(int valueExp)
 	setMessureDataAVG(ALINK_MSMNT_EFLOW,valueExp);
 	setMessureDataBTB(ALINK_MSMNT_EFLOW,valueExp);
 
-	if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_EFLOW,valueExp);
+	/*if(getModel()->getAcuLink()!=NULL)
+		getModel()->getAcuLink()->sendAllMeasurementData();*/
 	
 }
 
@@ -18418,8 +18415,8 @@ void CDataHandler::SetDemandFlowData(int valueDem)
 	setMessureDataAVG(ALINK_MSMNT_DEMAND_FLOW,valueDem);
 	setMessureDataBTB(ALINK_MSMNT_DEMAND_FLOW,valueDem);
 
-	if(getModel()->getAcuLink()!=NULL)
-		getModel()->getAcuLink()->setMeasurementData(ALINK_MSMNT_DEMAND_FLOW,valueDem);
+	/*if(getModel()->getAcuLink()!=NULL)
+		getModel()->getAcuLink()->sendAllMeasurementData();*/
 	
 }
 

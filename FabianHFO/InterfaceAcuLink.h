@@ -30,8 +30,7 @@ public:
 	virtual bool deinit()=0;
 
 	//virtual HINSTANCE isAcuLink()=0;
-	virtual int sendMeasurementData()=0;
-	virtual int setMeasurementData(int idx, int iValue)=0;
+	virtual int sendAllMeasurementData()=0;
 	virtual void setParaData(UINT index, int val)=0;
 	virtual void setAlarmData(UINT index, int val)=0;
 
@@ -53,12 +52,15 @@ public:
 
 	
 	void clearAlarmArray();
+	void send_MSMNT_OXY(int iValue);
 
 
 protected:
 	CInterfaceAcuLink(void);
 	virtual ~CInterfaceAcuLink(void);
 
+	virtual int setMeasurementData(int idx, int iValue)=0;
+	
 	bool isCO2active();
 	bool isSPO2active();
 	void fillMeasurementData();

@@ -1075,6 +1075,23 @@ void CInterfaceAcuLink::sendMeasurementDataHFO()
 }
 
 /**********************************************************************************************//**
+ * Sends a msmnt oxy
+ *
+ * \author	Rainer Kühner
+ * \date	13.03.2018
+ *
+ * \param	iValue	Zero-based index of the value.
+ *
+ * \return	An int.
+ **************************************************************************************************/
+
+void CInterfaceAcuLink::send_MSMNT_OXY(int iValue)
+{
+	setMeasurementData(ALINK_MSMNT_OXY,iValue);
+}
+
+
+/**********************************************************************************************//**
  * Clears the alarm array
  *
  * \author	Rainer Kühner

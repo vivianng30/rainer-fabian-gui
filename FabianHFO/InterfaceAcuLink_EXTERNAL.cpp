@@ -626,7 +626,7 @@ UINT CInterfaceAcuLink_EXTERNAL::getAcuLinkError()
  * \return	An int.
  **************************************************************************************************/
 
-int CInterfaceAcuLink_EXTERNAL::sendMeasurementData()
+int CInterfaceAcuLink_EXTERNAL::sendAllMeasurementData()
 {
 	fillMeasurementData();
 

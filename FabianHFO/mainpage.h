@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  * 
+ * @subsection ver5082 Version 5.0.8.2
+ * @date 2018-03-13
+ * @verbatim
+	- acuLink: measurements are send depending on current vent mode, send method protected
+ @endverbatim
+ *
  * @subsection ver5081 Version 5.0.8.1
  * @date 2018-03-06
  * @verbatim
