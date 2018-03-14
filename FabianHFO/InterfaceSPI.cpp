@@ -1913,8 +1913,32 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 							}
 						}
 
-						if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI
-								||getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_WAVE
+						if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI)
+						{
+							if(getModel()->getAcuLink())
+							{
+								if(iCntAcuLinkData>=8)//125Hz
+								{
+									iCntAcuLinkData=0;
+
+									SHORT tempFlow=_pBufData.iValFlow;
+									if(tempFlow>16000)
+										tempFlow=16000;
+									else if(tempFlow<-16000)
+										tempFlow=-16000;
+									if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
+									{
+										getModel()->getAcuLink()->setGraphDataV3(_pBufData.iValVolume,_pBufData.iValPressure,tempFlow*ALINK_FACTOR_FLOW,_pBufData.iValCO2);
+									}
+									else
+									{
+										getModel()->getAcuLink()->setGraphDataV4(_pBufData.iValVolume,_pBufData.iValPressure,tempFlow*ALINK_FACTOR_FLOW,_pBufData.iValCO2,_pBufData.iValSPO2);
+									}	
+								}
+								iCntAcuLinkData++;
+							}
+						}
+						else if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_WAVE
 								|| getModel()->getCONFIG()->GetPDMSprotocol()==ACL_ETHERNET_WAVE)
 						{
 							if(getModel()->getAcuLink())

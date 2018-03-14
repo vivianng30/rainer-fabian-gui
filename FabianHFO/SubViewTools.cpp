@@ -1113,6 +1113,19 @@ void CSubViewTools::OnBnClickedDevInfoToUSB()
 		szToFile.Format(_T("- GUI: %s"), getModel()->GetMainVersion());
 		lfDeviceInfoFile->WriteLine(szToFile,false);
 
+		if(iPDMSProtocol!=ACL_NOPDMS)
+		{
+			szTemp=getModel()->getAcuLink()->getExeVersion();
+			szTemp+= _T(" / ");
+			szTemp+=getModel()->getAcuLink()->getDllVersion();
+			szToFile.Format(_T("- ACULINK version: %s"), szTemp);
+			lfDeviceInfoFile->WriteLine(szToFile,false);
+		}
+		else
+		{
+			lfDeviceInfoFile->WriteLine(_T("- ACULINK version: none"),false);
+		}
+
 		getModel()->getDATAHANDLER()->getMainboardData(&m_dataMainboard);
 		szToFile.Format(_T("- Monitor PIC: %d.%d.%d, Checksum: %X"), 
 			m_dataMainboard.m_iMonitorVersion_x, 
