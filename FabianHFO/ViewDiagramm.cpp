@@ -266,7 +266,7 @@ CMVView(ViewID)
 	m_iPrevXvalVolume=0;
 	m_iPrevXvalFlow=0;
 
-	m_bUpdateRingBufCopy=false;
+	//m_bUpdateRingBufCopy=false;
 	m_iDiagramToRedraw=REDRAW_NONE;
 
 
@@ -8723,34 +8723,10 @@ UINT CViewDiagramm::DrawDiagramm()
 			{
 				if(doThread()==false)
 				{
-					//TEST EXCEPTION
-					//LPG_FUNCTIONSTRUCT_LD m_lpfsTest=NULL;
-					//m_lpfsTest->ChartType=G_FILLEDCHART;
-					/*try
-					{
-						LPG_FUNCTIONSTRUCT_LD m_lpfsTest=NULL;
-						m_lpfsTest->ChartType=G_FILLEDCHART;
-					}
-					catch (CException* e)
-					{
-						TCHAR   szCause[255];
-						e->GetErrorMessage(szCause, 255);
-						
-						CString errorStr=_T("");
-						errorStr.Format(_T("CViewDiagramm1: exception %s"),szCause);
-						
-						theApp.ReportException(errorStr);
-
-						e->Delete();
-					}
-					catch(...)
-					{
-						theApp.ReportException(_T("Unknown CViewDiagramm1"));
-					}*/
 					return 0;
 				}
 
-				if(getUpdateRingBufCopy())
+				/*if(getUpdateRingBufCopy())
 				{
 					deleteUpdateRingBufCopy();
 					getModel()->getDATAHANDLER()->updateCopyDataBuffer();
@@ -8758,56 +8734,14 @@ UINT CViewDiagramm::DrawDiagramm()
 
 				if(doThread()==false)
 				{
-					/*try
-					{
-						LPG_FUNCTIONSTRUCT_LD m_lpfsTest=NULL;
-						m_lpfsTest->ChartType=G_FILLEDCHART;
-					}
-					catch (CException* e)
-					{
-						TCHAR   szCause[255];
-						e->GetErrorMessage(szCause, 255);
-
-						CString errorStr=_T("");
-						errorStr.Format(_T("CViewDiagramm1: exception %s"),szCause);
-
-						theApp.ReportException(errorStr);
-
-						e->Delete();
-					}
-					catch(...)
-					{
-						theApp.ReportException(_T("Unknown CViewDiagramm1"));
-					}*/
 					return 0;
-				}
+				}*/
 
 				checkForResetDiagramms();
 				checkForScale();
 
 				if(doThread()==false)
 				{
-					/*try
-					{
-						LPG_FUNCTIONSTRUCT_LD m_lpfsTest=NULL;
-						m_lpfsTest->ChartType=G_FILLEDCHART;
-					}
-					catch (CException* e)
-					{
-						TCHAR   szCause[255];
-						e->GetErrorMessage(szCause, 255);
-
-						CString errorStr=_T("");
-						errorStr.Format(_T("CViewDiagramm1: exception %s"),szCause);
-
-						theApp.ReportException(errorStr);
-
-						e->Delete();
-					}
-					catch(...)
-					{
-						theApp.ReportException(_T("Unknown CViewDiagramm1"));
-					}*/
 					return 0;
 				}
 
@@ -8815,27 +8749,6 @@ UINT CViewDiagramm::DrawDiagramm()
 
 				if(doThread()==false)
 				{
-					/*try
-					{
-						LPG_FUNCTIONSTRUCT_LD m_lpfsTest=NULL;
-						m_lpfsTest->ChartType=G_FILLEDCHART;
-					}
-					catch (CException* e)
-					{
-						TCHAR   szCause[255];
-						e->GetErrorMessage(szCause, 255);
-
-						CString errorStr=_T("");
-						errorStr.Format(_T("CViewDiagramm1: exception %s"),szCause);
-
-						theApp.ReportException(errorStr);
-
-						e->Delete();
-					}
-					catch(...)
-					{
-						theApp.ReportException(_T("Unknown CViewDiagramm1"));
-					}*/
 					return 0;
 				}
 
@@ -8928,27 +8841,6 @@ UINT CViewDiagramm::DrawDiagramm()
 				}
 				if(doThread()==false)
 				{
-					/*try
-					{
-						LPG_FUNCTIONSTRUCT_LD m_lpfsTest=NULL;
-						m_lpfsTest->ChartType=G_FILLEDCHART;
-					}
-					catch (CException* e)
-					{
-						TCHAR   szCause[255];
-						e->GetErrorMessage(szCause, 255);
-
-						CString errorStr=_T("");
-						errorStr.Format(_T("CViewDiagramm1: exception %s"),szCause);
-
-						theApp.ReportException(errorStr);
-
-						e->Delete();
-					}
-					catch(...)
-					{
-						theApp.ReportException(_T("Unknown CViewDiagramm1"));
-					}*/
 					return 0;
 				}
 			}
@@ -14521,12 +14413,12 @@ double CViewDiagramm::getValueVolGarantyLow()
  * \date	23.02.2018
  **************************************************************************************************/
 
-void CViewDiagramm::setUpdateRingBufCopy()
-{
-	EnterCriticalSection(&csThreadAccess);
-	m_bUpdateRingBufCopy=true;
-	LeaveCriticalSection(&csThreadAccess);
-}
+//void CViewDiagramm::setUpdateRingBufCopy()
+//{
+//	EnterCriticalSection(&csThreadAccess);
+//	m_bUpdateRingBufCopy=true;
+//	LeaveCriticalSection(&csThreadAccess);
+//}
 
 /**********************************************************************************************//**
  * Gets update ring buffer copy
@@ -14537,13 +14429,13 @@ void CViewDiagramm::setUpdateRingBufCopy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CViewDiagramm::getUpdateRingBufCopy()
-{
-	EnterCriticalSection(&csThreadAccess);
-	bool bState=m_bUpdateRingBufCopy;
-	LeaveCriticalSection(&csThreadAccess);
-	return bState;
-}
+//bool CViewDiagramm::getUpdateRingBufCopy()
+//{
+//	EnterCriticalSection(&csThreadAccess);
+//	bool bState=m_bUpdateRingBufCopy;
+//	LeaveCriticalSection(&csThreadAccess);
+//	return bState;
+//}
 
 /**********************************************************************************************//**
  * Deletes the update ring buffer copy
@@ -14552,12 +14444,12 @@ bool CViewDiagramm::getUpdateRingBufCopy()
  * \date	23.02.2018
  **************************************************************************************************/
 
-void CViewDiagramm::deleteUpdateRingBufCopy()
-{
-	EnterCriticalSection(&csThreadAccess);
-	m_bUpdateRingBufCopy=false;
-	LeaveCriticalSection(&csThreadAccess);
-}
+//void CViewDiagramm::deleteUpdateRingBufCopy()
+//{
+//	EnterCriticalSection(&csThreadAccess);
+//	m_bUpdateRingBufCopy=false;
+//	LeaveCriticalSection(&csThreadAccess);
+//}
 
 /**********************************************************************************************//**
  * Sets size read in buffer spi

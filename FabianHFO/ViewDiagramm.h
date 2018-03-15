@@ -416,7 +416,7 @@ protected:
 	WORD m_iDiagramToRedraw;
 
 	bool m_bRefreshLastBreathOfLoops;
-	bool m_bUpdateRingBufCopy;
+	//bool m_bUpdateRingBufCopy;
 
 	bool m_bResetAllDiagramms;
 
