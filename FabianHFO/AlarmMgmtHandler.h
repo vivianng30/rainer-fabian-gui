@@ -496,6 +496,7 @@ public:
 
 	CTlsLoglist* getAlarmLog();
 	void setLogTxt(CStringW sz);
+	void reinitAlarmLog();
 
 	void setSPO2alarmDelay(eSPO2alarmdelay delay);
 

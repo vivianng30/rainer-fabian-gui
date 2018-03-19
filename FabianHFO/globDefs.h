@@ -936,6 +936,7 @@
 
 
 #define WM_START_I2CWATCHDOG				WM_USER + 0x5770
+#define WM_REOPENLOG						WM_USER + 0x5771
 
 #define WM_MENU_O2						WM_USER + 0x5800
 #define WM_MENU_CO2						WM_USER + 0x5801

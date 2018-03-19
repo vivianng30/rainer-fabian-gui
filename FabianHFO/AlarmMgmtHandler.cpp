@@ -731,6 +731,34 @@ CTlsLoglist * CAlarmMgmtHandler::getAlarmLog()
 	}
 }
 
+/**********************************************************************************************//**
+ * Reinitializes the alarm log
+ *
+ * \author	Rainer Kühner
+ * \date	19.03.2018
+ **************************************************************************************************/
+
+void CAlarmMgmtHandler::reinitAlarmLog()
+{
+	if(m_AlarmLogfile)
+	{
+		delete m_AlarmLogfile;
+		m_AlarmLogfile=NULL;
+	}
+
+	CStringA aPathLog = "";
+	CStringW wPathLog = _T("\\sdcard\\");
+	if(CTlsFile::Exists(wPathLog)==true)
+	{
+		aPathLog = "\\sdcard\\Logs\\alarmlog.txt";
+	}
+	else
+	{
+		aPathLog = "\\FFSDISK\\Logs\\alarmlog.txt";
+	}
+
+	m_AlarmLogfile = new Logfile(aPathLog);
+}
 
 /**********************************************************************************************//**
  * Sets log text

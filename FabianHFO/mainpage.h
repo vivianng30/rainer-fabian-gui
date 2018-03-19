@@ -13,6 +13,7 @@
 	- acuLink: measurements are send depending on current vent mode, send method protected
 	- device info: aculink version included
 	- UpdateRingBufCopy in ViewDiagramm deleted
+	- reinit of logs included in case SD card will be unplugged during use
  @endverbatim
  *
  * @subsection ver5081 Version 5.0.8.1

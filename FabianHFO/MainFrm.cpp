@@ -1506,6 +1506,14 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	
 		switch (message)
 		{
+		case WM_REOPENLOG:
+			{
+				theApp.CloseLog();
+				theApp.OpenLog();
+
+				getModel()->getALARMHANDLER()->reinitAlarmLog();
+			}
+			break;
 		case WM_START_I2CWATCHDOG:
 			{
 				//StartI2CWatchdogThread();

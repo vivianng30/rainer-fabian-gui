@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "Logfile.h"
 #include "TlsFile.h"
+#include "globDefs.h"
 
 /**********************************************************************************************//**
  * Initializes a new instance of the Logfile class
@@ -510,17 +511,28 @@ DWORD Logfile::writeLogfile(void)
 		}
 		else
 		{
-			Open();
-			if (m_Logfile->stream != NULL)
+			if(Open())
 			{
-				fputws(msgLog.GetAt(pos),m_Logfile->stream);
-				fputws(L"\n",m_Logfile->stream);
-				msgLog.RemoveAt(pos);
-			}
-			LeaveCriticalSection(&csLog);
+				if (m_Logfile->stream != NULL)
+				{
+					fputws(msgLog.GetAt(pos),m_Logfile->stream);
+					fputws(L"\n",m_Logfile->stream);
+					msgLog.RemoveAt(pos);
+				}
+				LeaveCriticalSection(&csLog);
 
-			CheckFileSize();
-			Close();
+				CheckFileSize();
+				Close();
+			}
+			else
+			{
+				msgLog.RemoveAll();
+				LeaveCriticalSection(&csLog);
+
+				if(AfxGetApp())
+					AfxGetApp()->GetMainWnd()->PostMessage(WM_REOPENLOG);
+			}
+			
 		}
 
 		Sleep(50);

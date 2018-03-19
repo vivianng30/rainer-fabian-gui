@@ -233,6 +233,10 @@ void CFabianHFOApp::OpenLog()
 			aPathLog = "\\FFSDISK\\Logs\\systemlog.txt";
 		}
 		log = new Logfile(aPathLog);
+		log->WriteLine(_T(""));
+		log->WriteLine(_T("*******************"));
+		log->WriteLine(_T("!!!! REOPEN systemlog !!!!"));
+		log->writeDate();
 	}
 }
 
@@ -246,8 +250,9 @@ void CFabianHFOApp::OpenLog()
 void CFabianHFOApp::CloseLog()
 {
 	log->Exit();
-	//delete log;
-	//log=NULL;
+	
+	delete log;
+	log=NULL;
 }
 
 /**********************************************************************************************//**
