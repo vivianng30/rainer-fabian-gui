@@ -11,7 +11,7 @@
  * @date 2018-03-13
  * @verbatim
 	- acuLink: measurements are send depending on current vent mode, send method protected
-	- device info: aculink version included
+	- device info: exact aculink version included
 	- UpdateRingBufCopy in ViewDiagramm deleted
 	- reinit of logs included in case SD card will be unplugged during use
  @endverbatim
