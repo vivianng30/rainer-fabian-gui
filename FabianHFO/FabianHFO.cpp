@@ -53,24 +53,6 @@ CFabianHFOApp::CFabianHFOApp()
 	m_bAutoScreenLockActive=false;
 	m_dwLastAutoScreenTimer=0;
 
-	CStringA aPathLog = "";
-	CStringW wPathLog = _T("\\sdcard\\");
-	if(CTlsFile::Exists(wPathLog)==true)
-	{
-		aPathLog = "\\sdcard\\Logs\\systemlog.txt";
-	}
-	else
-	{
-		aPathLog = "\\FFSDISK\\Logs\\systemlog.txt";
-	}
-
-
-	log = new Logfile(aPathLog);
-	log->WriteLine(_T(""));
-	log->WriteLine(_T("*******************"));
-	log->WriteLine(_T("**** systemlog ****"));
-	log->writeDate();
-
 
 	m_bNetDCU9=false;
 	m_bNetDCU11=false;
@@ -209,6 +191,34 @@ BOOL CFabianHFOApp::InitInstance()
 	pFrame->ShowWindow(SW_SHOW);
 	pFrame->UpdateWindow();
 	return TRUE;
+}
+
+/**********************************************************************************************//**
+ * Initializes the log
+ *
+ * \author	Rainer Kühner
+ * \date	22.03.2018
+ **************************************************************************************************/
+
+void CFabianHFOApp::initLog()
+{
+	CStringA aPathLog = "";
+	CStringW wPathLog = _T("\\sdcard\\");
+	if(CTlsFile::Exists(wPathLog)==true)
+	{
+		aPathLog = "\\sdcard\\Logs\\systemlog.txt";
+	}
+	else
+	{
+		aPathLog = "\\FFSDISK\\Logs\\systemlog.txt";
+	}
+
+
+	log = new Logfile(aPathLog);
+	log->WriteLine(_T(""));
+	log->WriteLine(_T("*******************"));
+	log->WriteLine(_T("**** systemlog ****"));
+	log->writeDate();
 }
 
 /**********************************************************************************************//**

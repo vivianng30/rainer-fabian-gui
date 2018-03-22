@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  * 
+ * @subsection ver5083 Version 5.0.8.3
+ * @date 2018-03-22
+ * @verbatim
+	- log initialization delayed
+ @endverbatim
+ *
  * @subsection ver5082 Version 5.0.8.2
  * @date 2018-03-13
  * @verbatim

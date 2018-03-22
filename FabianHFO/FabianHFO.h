@@ -39,6 +39,7 @@ public:
 	//static void ReportException(CString message);
 	static void ReportException(CString lpszFunction);
 	
+	void initLog();
 	
 	Logfile *getLog();
 	int writeLogError (LONG lError, LPCTSTR lptszMessage);

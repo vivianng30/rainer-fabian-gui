@@ -602,6 +602,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	SetTimer(WATCHDOGTIMER,2000,NULL);
 
+	theApp.initLog();
+
 	CString szLAN=_T("");
 	szLAN.Format(_T("***Init LanguageID %s ID %d***"), m_pszFontName, m_wLanguageID);
 	theApp.getLog()->WriteLine(szLAN);

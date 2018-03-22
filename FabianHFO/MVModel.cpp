@@ -234,7 +234,7 @@ CMVModel::CMVModel(void)
 	m_szBuildVersion = _T("9.0.0.0");
 #else
 	m_szVersion = _T("5.0.8");
-	m_szBuildVersion = _T("5.0.8.2");
+	m_szBuildVersion = _T("5.0.8.3");
 #endif
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO"),true);
