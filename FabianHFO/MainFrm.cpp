@@ -577,7 +577,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 			//m_pcBaby->Draw(dc.m_hDC,390,100);
 	}
 
-
+	theApp.initLog();
 
 	//SHUTDOWN services which listen on a port
 	HANDLE hServiceHTP = GetServiceHandle(_T("HTP0:"),NULL,NULL);
@@ -601,8 +601,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	LoadGlobalAcuFonts(m_wLanguageID);
 	
 	SetTimer(WATCHDOGTIMER,2000,NULL);
-
-	theApp.initLog();
 
 	CString szLAN=_T("");
 	szLAN.Format(_T("***Init LanguageID %s ID %d***"), m_pszFontName, m_wLanguageID);
