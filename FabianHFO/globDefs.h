@@ -52,6 +52,9 @@
 #define NEONATAL			1		
 #define PEDIATRIC			2
 
+#define SYSTEMLOG_ID		1		
+#define ALARMLOG_ID			2
+
 // Modus Messdaten
 #define BREATHTOBREATH		1		
 #define AVARAGE				2
@@ -936,7 +939,8 @@
 
 
 #define WM_START_I2CWATCHDOG				WM_USER + 0x5770
-#define WM_REOPENLOG						WM_USER + 0x5771
+#define WM_REOPENLOG_SYSTEMLOG						WM_USER + 0x5771
+#define WM_REOPENLOG_ALARMLOG						WM_USER + 0x5772
 
 #define WM_MENU_O2						WM_USER + 0x5800
 #define WM_MENU_CO2						WM_USER + 0x5801

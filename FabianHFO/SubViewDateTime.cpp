@@ -2017,7 +2017,7 @@ void CSubViewDateTime::OnBnClickedSetDateTime()
 		if(m_pbtnOk)
 			m_pbtnOk->SetBitmaps(m_pcOkGreen_Up,m_pcOkGreen_Dw,m_pcOkGreen_Up,m_pcOkGreen_Up);
 
-		theApp.getLog()->WriteLine(_T("CSubViewDateTime::OnBnClickedSetDateTime"));
+		theApp.WriteLog(_T("CSubViewDateTime::OnBnClickedSetDateTime"));
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_DELETE_TRENDS);
 
@@ -2043,7 +2043,7 @@ void CSubViewDateTime::OnBnClickedSetDateTime()
 
 			SetLocalTime(&stTime);
 
-			theApp.getLog()->WriteLine(_T("HFO:0290"));
+			theApp.WriteLog(_T("HFO:0290"));
 		}
 
 		if(getModel()->getCONFIG()->getCO2module()!=CO2MODULE_NONE && getModel()->getETCO2()!=NULL)

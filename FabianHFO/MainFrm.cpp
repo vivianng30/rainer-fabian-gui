@@ -506,6 +506,8 @@ CMVModel *CMainFrame::getModel()
 
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
+	theApp.initLog();
+
 	if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
@@ -577,8 +579,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 			//m_pcBaby->Draw(dc.m_hDC,390,100);
 	}
 
-	theApp.initLog();
-
 	//SHUTDOWN services which listen on a port
 	HANDLE hServiceHTP = GetServiceHandle(_T("HTP0:"),NULL,NULL);
 	if(hServiceHTP!=INVALID_HANDLE_VALUE)
@@ -604,7 +604,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CString szLAN=_T("");
 	szLAN.Format(_T("***Init LanguageID %s ID %d***"), m_pszFontName, m_wLanguageID);
-	theApp.getLog()->WriteLine(szLAN);
+	theApp.WriteLog(szLAN);
 		
 	StartI2CWatchdogThread();
 
@@ -636,7 +636,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 				{
 					CString csDel=_T("");
 					csDel.Format(_T("#HFO:0216 %s"), sFile);
-					theApp.getLog()->WriteLine(csDel);
+					theApp.WriteLog(csDel);
 				}
 			}
 
@@ -659,7 +659,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 				{
 					CString csDel=_T("");
 					csDel.Format(_T("#HFO:0216 %s"), sFile);
-					theApp.getLog()->WriteLine(csDel);
+					theApp.WriteLog(csDel);
 				}
 			}
 
@@ -672,14 +672,14 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	{
 		if (CTlsFile::Delete(_T("\\Hard Disk\\netdcu11\\AutoStart.ex_"))==false)
 		{
-			theApp.getLog()->WriteLine(_T("#HFO:0216 AutoStart.ex_"));
+			theApp.WriteLog(_T("#HFO:0216 AutoStart.ex_"));
 		}
 	}
 	else if(CTlsFile::Exists(_T("\\Hard Disk\\netdcu9\\AutoStart.exe")))
 	{
 		if (CTlsFile::Delete(_T("\\Hard Disk\\netdcu9\\AutoStart.ex_"))==false)
 		{
-			theApp.getLog()->WriteLine(_T("#HFO:0216 AutoStart.ex_"));
+			theApp.WriteLog(_T("#HFO:0216 AutoStart.ex_"));
 		}
 	}
 
@@ -819,12 +819,12 @@ WORD CMainFrame::CreateAcuFonts(WORD wLanguageID, bool bSetFaceToModel)
 
 	if(bSDCARDfont)
 	{
-		theApp.getLog()->WriteLine(_T("***SDCARDfont true"));
+		theApp.WriteLog(_T("***SDCARDfont true"));
 		//DEBUGMSG(TRUE, (TEXT("SDCARDfont true\r\n")));
 	}
 	else
 	{
-		theApp.getLog()->WriteLine(_T("***SDCARDfont false"));
+		theApp.WriteLog(_T("***SDCARDfont false"));
 		//DEBUGMSG(TRUE, (TEXT("SDCARDfont false\r\n")));
 	}
 	
@@ -1506,11 +1506,14 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	
 		switch (message)
 		{
-		case WM_REOPENLOG:
+		case WM_REOPENLOG_SYSTEMLOG:
 			{
 				theApp.CloseLog();
 				theApp.OpenLog();
-
+			}
+			break;
+		case WM_REOPENLOG_ALARMLOG:
+			{
 				getModel()->getALARMHANDLER()->reinitAlarmLog();
 			}
 			break;
@@ -1525,70 +1528,70 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		case WM_TERMINAL_IPPV:
 			{
 				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_IPPV))
-					theApp.getLog()->WriteLine(_T("#HFO:T400"));
+					theApp.WriteLog(_T("#HFO:T400"));
 				return 1;
 			}
 			break;
 		case WM_TERMINAL_SIPPV:
 			{
 				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_SIPPV))
-					theApp.getLog()->WriteLine(_T("#HFO:T401"));
+					theApp.WriteLog(_T("#HFO:T401"));
 				return 1;
 			}
 			break;
 		case WM_TERMINAL_SIMV:
 			{
 				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_SIMV))
-					theApp.getLog()->WriteLine(_T("#HFO:T402"));
+					theApp.WriteLog(_T("#HFO:T402"));
 				return 1;
 			}
 			break;
 		case WM_TERMINAL_SIMVPSV:
 			{
 				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_SIMVPSV))
-					theApp.getLog()->WriteLine(_T("#HFO:T403"));
+					theApp.WriteLog(_T("#HFO:T403"));
 				return 1;
 			}
 			break;
 		case WM_TERMINAL_PSV:
 			{
 				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_PSV))
-					theApp.getLog()->WriteLine(_T("#HFO:T404"));
+					theApp.WriteLog(_T("#HFO:T404"));
 				return 1;
 			}
 			break;
 		case WM_TERMINAL_CPAP:
 			{
 				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_CPAP))
-					theApp.getLog()->WriteLine(_T("#HFO:T405"));
+					theApp.WriteLog(_T("#HFO:T405"));
 				return 1;
 			}
 			break;
 		case WM_TERMINAL_NCPAP:
 			{
 				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_NCPAP))
-					theApp.getLog()->WriteLine(_T("#HFO:T406"));
+					theApp.WriteLog(_T("#HFO:T406"));
 				return 1;
 			}
 			break;
 		case WM_TERMINAL_DUOPAP:
 			{
 				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_DUOPAP))
-					theApp.getLog()->WriteLine(_T("#HFO:T407"));
+					theApp.WriteLog(_T("#HFO:T407"));
 				return 1;
 			}
 			break;
 		case WM_TERMINAL_HFO:
 			{
 				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_HFO))
-					theApp.getLog()->WriteLine(_T("#HFO:T408"));
+					theApp.WriteLog(_T("#HFO:T408"));
 				return 1;
 			}
 			break;
 		case WM_TERMINAL_THERAPY:
 			{
 				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_THERAPIE))
-					theApp.getLog()->WriteLine(_T("#HFO:T409"));
+					theApp.WriteLog(_T("#HFO:T409"));
 				return 1;
 			}
 			break;
@@ -1604,7 +1607,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				m_bExit=true;
 
-				theApp.getLog()->WriteLine(L"**** BROADCAST QuitVentilator ****");
+				theApp.WriteLog(L"**** BROADCAST QuitVentilator ****");
 
 				//getModel()->Quit();
 
@@ -1682,7 +1685,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				{
 				case IDC_BTN_MENU_IPPV:
 					{
-						theApp.getLog()->WriteLine(_T("$M20$"));
+						theApp.WriteLog(_T("$M20$"));
 
 						//test fmea
 						//getModel()->closeInterface();
@@ -1753,7 +1756,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					break;
 				case IDC_BTN_MENU_SIPPV:
 					{
-						theApp.getLog()->WriteLine(_T("$M21$"));
+						theApp.WriteLog(_T("$M21$"));
 						CMVEventUI event(CMVEventUI::EV_BN_SIPPV);
 						getModel()->triggerEvent(&event);
 						return 1;
@@ -1761,7 +1764,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					break;
 				case IDC_BTN_MENU_SIMV:
 					{
-						theApp.getLog()->WriteLine(_T("$M22$"));
+						theApp.WriteLog(_T("$M22$"));
 						CMVEventUI event(CMVEventUI::EV_BN_SIMV);
 						getModel()->triggerEvent(&event);
 						return 1;
@@ -1769,7 +1772,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					break;
 				case IDC_BTN_MENU_SIMVPSV:
 					{
-						theApp.getLog()->WriteLine(_T("$M23$"));
+						theApp.WriteLog(_T("$M23$"));
 						CMVEventUI event(CMVEventUI::EV_BN_SIMVPSV);
 						getModel()->triggerEvent(&event);
 						return 1;
@@ -1777,7 +1780,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					break;
 				case IDC_BTN_MENU_PSV:
 					{
-						theApp.getLog()->WriteLine(_T("$M24$"));
+						theApp.WriteLog(_T("$M24$"));
 						CMVEventUI event(CMVEventUI::EV_BN_PSV);
 						getModel()->triggerEvent(&event);
 						return 1;
@@ -1785,7 +1788,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					break;
 				case IDC_BTN_MENU_HFO:
 					{
-						theApp.getLog()->WriteLine(_T("$M25$"));
+						theApp.WriteLog(_T("$M25$"));
 						CMVEventUI event(CMVEventUI::EV_BN_HFO);
 						getModel()->triggerEvent(&event);
 						return 1;
@@ -1793,7 +1796,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					break;
 				case IDC_BTN_MENU_CPAP:
 					{
-						theApp.getLog()->WriteLine(_T("$M26$"));
+						theApp.WriteLog(_T("$M26$"));
 						CMVEventUI event(CMVEventUI::EV_BN_CPAP);
 						getModel()->triggerEvent(&event);
 						return 1;
@@ -1801,7 +1804,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					break;
 				case IDC_BTN_MENU_NCPAP:
 					{
-						theApp.getLog()->WriteLine(_T("$M27$"));
+						theApp.WriteLog(_T("$M27$"));
 						CMVEventUI event(CMVEventUI::EV_BN_NCPAP);
 						getModel()->triggerEvent(&event);
 						return 1;
@@ -1809,7 +1812,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					break;
 				case IDC_BTN_MENU_DUOPAP:
 					{
-						theApp.getLog()->WriteLine(_T("$M28$"));
+						theApp.WriteLog(_T("$M28$"));
 						CMVEventUI event(CMVEventUI::EV_BN_DUOPAP);
 						getModel()->triggerEvent(&event);
 						return 1;
@@ -1817,7 +1820,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					break;
 				case IDC_BTN_MENU_THERAPIE:
 					{
-						theApp.getLog()->WriteLine(_T("$M29$"));
+						theApp.WriteLog(_T("$M29$"));
 						CMVEventUI event(CMVEventUI::EV_BN_THERAPIE);
 						getModel()->triggerEvent(&event);
 						return 1;
@@ -2902,7 +2905,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 						}
 					}
 
-					theApp.getLog()->WriteLine(_T("VgarantAutoTurnedOn WM_FLOWCAL_FINNISHED"));
+					theApp.WriteLog(_T("VgarantAutoTurnedOn WM_FLOWCAL_FINNISHED"));
 					getModel()->getDATAHANDLER()->ChangeVgarantState(VOLUMEGAR_PARA_AUTOENABLED);
 				}
 				else if(getModel()->getALARMHANDLER()->isVlimitAutoTurnedOff_FlowSensor()
@@ -2913,7 +2916,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 						getModel()->getDATAHANDLER()->ChangeVgarantState(VOLUMEGAR_OFF);
 					}
 
-					theApp.getLog()->WriteLine(_T("VlimitAutoTurnedOn WM_FLOWCAL_FINNISHED"));
+					theApp.WriteLog(_T("VlimitAutoTurnedOn WM_FLOWCAL_FINNISHED"));
 
 					if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
 						getModel()->getDATAHANDLER()->SetVLimitParamdata_IPPV(getModel()->getDATAHANDLER()->GetLastVLimitParam(),true,true);
@@ -2938,7 +2941,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		case WM_SERIAL_DELALARM_CHECKSUMCONPIC:
 			{
 				getModel()->getDATAHANDLER()->SetConPICChecksumError(false);
-				theApp.getLog()->WriteLine(_T("Delete AL_SysFail_ChecksumConPIC"));
+				theApp.WriteLog(_T("Delete AL_SysFail_ChecksumConPIC"));
 				getModel()->getALARMHANDLER()->setStateOfAlarm(AL_SysFail_ChecksumConPIC,AS_SIGNALED);
 				return 1;
 			}
@@ -3145,18 +3148,18 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					if(getModel()->getSERIAL()->GetM_CHECKSUM(true)>0)
 					{
 						bCom_ERROR=false;
-						theApp.getLog()->WriteLine(_T("#HFO:0217"));
+						theApp.WriteLog(_T("#HFO:0217"));
 					}
 					else
 					{
 						bCom_ERROR=true;
-						theApp.getLog()->WriteLine(_T("#HFO:0218"));
+						theApp.WriteLog(_T("#HFO:0218"));
 					}
 				}
 				else
 				{
 					bCom_ERROR=true;
-					theApp.getLog()->WriteLine(_T("#HFO:0219"));
+					theApp.WriteLog(_T("#HFO:0219"));
 				}
 
 				if(bCom_ERROR)
@@ -3559,7 +3562,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				if(NULL==getModel()->getPRICOThread())
 					return 1;
-				theApp.getLog()->WriteLine(_T("*** PRICO started"));
+				theApp.WriteLog(_T("*** PRICO started"));
 
 				//SHORT iMessureDataO2=getModel()->getDATAHANDLER()->PARADATA()->GetO2Para()*10;
 				BYTE iMessureDataO2=getModel()->getDATAHANDLER()->PARADATA()->GetO2Para();  //pro, change 3
@@ -3568,20 +3571,20 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 				CString sz=_T("");
 				sz.Format(_T("#PRICO SpO2 low:%d, "), byLowSpO2PRICOlimit);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 				sz.Format(_T("#PRICO SpO2 high:%d, "), byHighSpO2PRICOlimit);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 
 				BYTE byPRICO_FIO2lowRange=getModel()->getDATAHANDLER()->getPRICO_FIO2lowRange();
 				sz.Format(_T("#PRICO FiO2 low:%d, "), byPRICO_FIO2lowRange);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 
 				BYTE byPRICO_FIO2highRange=getModel()->getDATAHANDLER()->getPRICO_FIO2highRange();
 				sz.Format(_T("#PRICO FiO2 high:%d, "), byPRICO_FIO2highRange);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 
 				sz.Format(_T("#PRICO FiO2 measured:%d, "), iMessureDataO2);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 
 				//set the starting FiO2 to the range setting
 				//if(getModel()->getDATAHANDLER()->PARADATA()->GetO2Para()< byPRICO_FIO2lowRange)
@@ -3630,7 +3633,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				getModel()->getVIEWHANDLER()->setPRICOrunning(false);
 
 				getModel()->getPRICOThread()->stopPRICOThread();
-				theApp.getLog()->WriteLine(_T("*** PRICO stopped"));
+				theApp.WriteLog(_T("*** PRICO stopped"));
 
 				if(getModel()->isO2FlushActive()==false)//PRICO04
 				{
@@ -3835,7 +3838,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				int iFiO2=(int)CTlsFloat::Round(((double)getModel()->getDATAHANDLER()->getAppliedFiO2para())/10, 0);
 				CString sz=_T("");
 				sz.Format(_T("*** PRICO: FiO2 at max target: %d"), iFiO2);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 				return 1;
 			}
 			break;
@@ -3846,7 +3849,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				int iFiO2=(int)CTlsFloat::Round(((double)getModel()->getDATAHANDLER()->getAppliedFiO2para())/10, 0);
 				CString sz=_T("");
 				sz.Format(_T("*** PRICO: Lower minimum FiO2 %d"), iFiO2);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 				return 1;
 			}
 			break;
@@ -4669,7 +4672,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case WM_VOLUMEGARANTY_ON:
 			{
-				theApp.getLog()->WriteLine(_T("***VOLUMEGARANTY_ON"));
+				theApp.WriteLog(_T("***VOLUMEGARANTY_ON"));
 
 				WORD iR=getModel()->getDATAHANDLER()->getAVGMessureDataResistance();
 				WORD iC=getModel()->getDATAHANDLER()->getAVGMessureDataCompliance();
@@ -4677,7 +4680,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 				CString szTAU=_T("");
 				szTAU.Format(_T("Tau: %0.2f"), CTlsFloat::Round(((double)iTau), 2));
-				theApp.getLog()->WriteLine(szTAU);
+				theApp.WriteLog(szTAU);
 
 				bool bLimitChanged=false;
 
@@ -4705,7 +4708,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case WM_VOLUMEGARANTY_OFF:
 			{
-				theApp.getLog()->WriteLine(_T("***VOLUMEGARANTY_OFF"));
+				theApp.WriteLog(_T("***VOLUMEGARANTY_OFF"));
 				bool bLimitChanged=false;
 				if(getModel()->getALARMHANDLER()->getAlimitState_PIPmaxLimit()==AL_AUTO)
 				{
@@ -4760,7 +4763,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case WM_VOLUMEGARANTY_PARA_AUTODISABLED:
 			{
-				theApp.getLog()->WriteLine(_T("VGARANTY_AUTODISABLED"));
+				theApp.WriteLog(_T("VGARANTY_AUTODISABLED"));
 				CMVEventUI event(CMVEventUI::EV_PARABN_VOLUMEGARANT_AUTO_OFF);
 				getModel()->triggerEvent(&event);
 				return 1;
@@ -4768,7 +4771,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case WM_VOLUMEGARANTY_PARA_AUTOENABLED:
 			{
-				theApp.getLog()->WriteLine(_T("VGARANTY_AUTOENABLED"));
+				theApp.WriteLog(_T("VGARANTY_AUTOENABLED"));
 				CMVEventUI event(CMVEventUI::EV_PARABN_VOLUMEGARANT_AUTO_ON);
 				getModel()->triggerEvent(&event);
 
@@ -4778,7 +4781,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case WM_VLIMIT_PARA_AUTODISABLED:
 			{
-				theApp.getLog()->WriteLine(_T("VLIMIT_AUTODISABLED"));
+				theApp.WriteLog(_T("VLIMIT_AUTODISABLED"));
 				CMVEventUI event(CMVEventUI::EV_PARABN_VLIMIT_AUTO_OFF);
 				getModel()->triggerEvent(&event);
 				return 1;
@@ -4786,7 +4789,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case WM_VLIMIT_PARA_AUTOENABLED:
 			{
-				theApp.getLog()->WriteLine(_T("VLIMIT_AUTOENABLED"));
+				theApp.WriteLog(_T("VLIMIT_AUTOENABLED"));
 				CMVEventUI event(CMVEventUI::EV_PARABN_VLIMIT_AUTO_ON);
 				getModel()->triggerEvent(&event);
 
@@ -4938,7 +4941,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case WM_CHECK_DATE:
 			{
-				if(theApp.getLog()->CheckDate()) 
+				if(theApp.CheckLogDate()) 
 				{
 					getModel()->isMaintenanceNeeded();
 				}
@@ -5300,7 +5303,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				SetTimer(ACTIVEALARMTIMER,getModel()->getCONFIG()->getCurPatientAlarmDelay()*1000,NULL);
 				CString szTxt=_T("");
 				szTxt.Format(L"#ACTIVEALARMTIMER [%d]",getModel()->getCONFIG()->getCurPatientAlarmDelay());
-				theApp.getLog()->WriteLine(szTxt);
+				theApp.WriteLog(szTxt);
 				return 1;
 			}
 			break;
@@ -5845,57 +5848,57 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					{
 					case VM_IPPV:
 						{
-							theApp.getLog()->WriteLine(_T("### Ventmode VM_IPPV"));
+							theApp.WriteLog(_T("### Ventmode VM_IPPV"));
 						}
 						break;
 					case VM_SIPPV:
 						{
-							theApp.getLog()->WriteLine(_T("### Ventmode VM_SIPPV"));
+							theApp.WriteLog(_T("### Ventmode VM_SIPPV"));
 						}
 						break;
 					case VM_SIMV:
 						{
-							theApp.getLog()->WriteLine(_T("### Ventmode VM_SIMV"));
+							theApp.WriteLog(_T("### Ventmode VM_SIMV"));
 						}
 						break;
 					case VM_SIMVPSV:
 						{
-							theApp.getLog()->WriteLine(_T("### Ventmode VM_SIMVPSV"));
+							theApp.WriteLog(_T("### Ventmode VM_SIMVPSV"));
 						}
 						break;
 					case VM_PSV:
 						{
-							theApp.getLog()->WriteLine(_T("### Ventmode VM_PSV"));
+							theApp.WriteLog(_T("### Ventmode VM_PSV"));
 						}
 						break;
 					case VM_CPAP:
 						{
-							theApp.getLog()->WriteLine(_T("### Ventmode VM_CPAP"));
+							theApp.WriteLog(_T("### Ventmode VM_CPAP"));
 						}
 						break;
 					case VM_NCPAP:
 						{
-							theApp.getLog()->WriteLine(_T("### Ventmode VM_NCPAP"));
+							theApp.WriteLog(_T("### Ventmode VM_NCPAP"));
 						}
 						break;
 					case VM_DUOPAP:
 						{
-							theApp.getLog()->WriteLine(_T("### Ventmode VM_DUOPAP"));
+							theApp.WriteLog(_T("### Ventmode VM_DUOPAP"));
 						}
 						break;
 					case VM_HFO:
 						{
-							theApp.getLog()->WriteLine(_T("### Ventmode VM_HFO"));
+							theApp.WriteLog(_T("### Ventmode VM_HFO"));
 						}
 						break;
 					case VM_THERAPIE:
 						{
-							theApp.getLog()->WriteLine(_T("### Ventmode VM_THERAPIE"));
+							theApp.WriteLog(_T("### Ventmode VM_THERAPIE"));
 						}
 						break;
 					case VM_SERVICE:
 						{
-							theApp.getLog()->WriteLine(_T("### Ventmode VM_SERVICE"));
+							theApp.WriteLog(_T("### Ventmode VM_SERVICE"));
 						}
 						break;
 					}
@@ -6250,7 +6253,7 @@ void CMainFrame::QuitVentilator()
 {
 	m_bExit=true;
 
-	theApp.getLog()->WriteLine(L"**** QuitVentilator ****");
+	theApp.WriteLog(L"**** QuitVentilator ****");
 
 	getModel()->getSOUND()->SetPIFSound(PIF_SHUTDOWN);
 	getModel()->getSPI()->send_Shutdown();
@@ -6287,7 +6290,7 @@ void CMainFrame::QuitVentilator()
 	int iDev=getModel()->getDATAHANDLER()->getOpTimeDeviceMin(true);
 	int iHFO=getModel()->getDATAHANDLER()->getOpTimeHFOMin(true);
 	szOpTime.Format(_T("#OperatingTime [minutes]: battery %d device %d HFO %d#"),iBat, iDev, iHFO);
-	theApp.getLog()->WriteLine(szOpTime);
+	theApp.WriteLog(szOpTime);
 
 	m_bStartInstaller=getModel()->IsInstaller();
 
@@ -6793,7 +6796,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
 	{
 		getModel()->setActiveAlarmDelay(false);
 		KillTimer(ACTIVEALARMTIMER);
-		theApp.getLog()->WriteLine(L"#ACTIVEALARMTIMER [off]");
+		theApp.WriteLog(L"#ACTIVEALARMTIMER [off]");
 	}
 	else if(nIDEvent==ALARMSILENTTIMER)
 	{
@@ -7042,7 +7045,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 				
 				if(getModel() && !m_bMatrxDwn_Alarmsilent)
 				{
-					theApp.getLog()->WriteLine(_T("$M1$"));
+					theApp.WriteLog(_T("$M1$"));
 					m_bMatrxDwn_Alarmsilent=true;
 					if(getModel()->getVIEWHANDLER()->getViewState()!=VS_STARTUP)
 					{
@@ -7070,7 +7073,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 
 				if(getModel() && !m_bMatrxDwn_Graph)
 				{
-					theApp.getLog()->WriteLine(_T("$M2$"));
+					theApp.WriteLog(_T("$M2$"));
 					m_bMatrxDwn_Graph=true;
 					if(getModel()->getVIEWHANDLER()->getViewState()!=VS_STARTUP)
 					{
@@ -7098,7 +7101,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 
 				if(getModel() && !m_bMatrxDwn_OFF)
 				{
-					theApp.getLog()->WriteLine(_T("$M3$"));
+					theApp.WriteLog(_T("$M3$"));
 					m_bMatrxDwn_OFF=true;
 					
 					PostMessage(WM_BN_MATRIX_ONOFF_DOWN);
@@ -7123,7 +7126,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 
 				if(getModel() && !m_bMatrxDwn_STARTSTOP)
 				{
-					theApp.getLog()->WriteLine(_T("$M4$"));
+					theApp.WriteLog(_T("$M4$"));
 					if(getModel()->getVIEWHANDLER()->getViewState()!=VS_STARTUP)
 					{
 						m_bMatrxDwn_STARTSTOP=true;
@@ -7230,7 +7233,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 
 				if(getModel() && !m_bMatrxDwn_ALimits)
 				{
-					theApp.getLog()->WriteLine(_T("$M6$"));
+					theApp.WriteLog(_T("$M6$"));
 					m_bMatrxDwn_ALimits=true;
 					if(getModel()->getVIEWHANDLER()->getViewState()!=VS_STARTUP)
 					{
@@ -7259,7 +7262,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 
 				if(getModel() && !m_bMatrxDwn_O2Flush)
 				{
-					theApp.getLog()->WriteLine(_T("$M7$"));
+					theApp.WriteLog(_T("$M7$"));
 					if(		(getModel()->getVIEWHANDLER()->getViewState()!=VS_STARTUP)
 						&&	(getModel()->getVIEWHANDLER()->getViewState()!=VS_SERVICE))
 					{
@@ -7307,7 +7310,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 
 				if(getModel() && !m_bMatrxDwn_Home)
 				{
-					theApp.getLog()->WriteLine(_T("$M8$"));
+					theApp.WriteLog(_T("$M8$"));
 					m_bMatrxDwn_Home=true;
 					
 					if(getModel()->getVIEWHANDLER()->getViewState()!=VS_STARTUP)
@@ -7336,7 +7339,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 
  				if(getModel() && !m_bMatrxDwn_Menu)
 				{
-					theApp.getLog()->WriteLine(_T("$M9$"));
+					theApp.WriteLog(_T("$M9$"));
 					m_bMatrxDwn_Menu=true;
 					if(getModel()->getVIEWHANDLER()->getViewState()!=VS_STARTUP)
 					{
@@ -7363,7 +7366,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 
 				if(!m_bNebulizerDwn)
 				{
-					theApp.getLog()->WriteLine(_T("$M10$"));
+					theApp.WriteLog(_T("$M10$"));
 					m_bNebulizerDwn=true;
 					
 					PostMessage(WM_BN_MATRIX_NEBULIZER);
@@ -8163,10 +8166,10 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 //
 //		if (WaitForSingleObject(m_pcwtThreadWatchdogThread->m_hThread,1000) == WAIT_TIMEOUT)
 //		{
-//			theApp.getLog()->WriteLine(_T("#THR:018a"));
+//			theApp.WriteLog(_T("#THR:018a"));
 //			if(!TerminateThread(m_pcwtThreadWatchdogThread,0))
 //			{
-//				theApp.getLog()->WriteLine(_T("#THR:018b"));
+//				theApp.WriteLog(_T("#THR:018b"));
 //			}
 //		}
 //	}
@@ -8232,7 +8235,7 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 //				//			DEBUGMSG(TRUE, (TEXT("THREAD ERROR %d\r\n"),i));
 //				//			CStringW sz=_T("");
 //				//			sz.Format(_T("#HFO:0302 #%d"),i);
-//				//			theApp.getLog()->WriteLine(sz);
+//				//			theApp.WriteLog(sz);
 //				//		}
 //				//	}
 //				//}
@@ -8242,7 +8245,7 @@ void CMainFrame::CalculateSingleAutoLimit(eAlarmLimitPara para)
 //		}
 //	}while(m_bDoThreadWatchdogThread);
 //
-//	theApp.getLog()->WriteLine(_T("#THR:1000"));
+//	theApp.WriteLog(_T("#THR:1000"));
 //
 //	return 0;
 //}
@@ -8295,10 +8298,10 @@ void CMainFrame::StopI2CWatchdogThread( void )
 
 		if (WaitForSingleObject(m_pcwtI2CWatchdogThread->m_hThread,1000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:018a"));
+			theApp.WriteLog(_T("#THR:018a"));
 			if(!TerminateThread(m_pcwtI2CWatchdogThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:018b"));
+				theApp.WriteLog(_T("#THR:018b"));
 			}
 		}
 	}
@@ -8422,14 +8425,14 @@ DWORD CMainFrame::SetI2CWatchdog(void)
 				else if(false==m_bWDERRORI2C)
 				{
 					m_bWDERRORI2C=true;
-					theApp.getLog()->WriteLine(_T("#HFO:0221b"));
+					theApp.WriteLog(_T("#HFO:0221b"));
 				}
 			}
 			break;
 		}
 	}while(m_bDoI2CWatchdogThread);
 
-	//theApp.getLog()->WriteLine(_T("#THR:018"));
+	//theApp.WriteLog(_T("#THR:018"));
 
 	return 0;
 }
@@ -8467,7 +8470,7 @@ bool Action(void*)
 		{
 			if(!g_bMainWatchdogPending)
 			{
-				theApp.getLog()->WriteLine(_T("#HFO:0222"));
+				theApp.WriteLog(_T("#HFO:0222"));
 
 				MEMORYSTATUS stat;
 				GlobalMemoryStatus (&stat);
@@ -8475,14 +8478,14 @@ bool Action(void*)
 
 				CString szTemp=_T("");
 				szTemp.Format(_T("%*ld free "),7, stat.dwAvailPhys/1024);
-				theApp.getLog()->WriteLine(szTemp);
+				theApp.WriteLog(szTemp);
 
 
 				g_bMainWatchdogFlag=false;
 			}
 			else
 			{
-				theApp.getLog()->WriteLine(_T("#HFO:999"));
+				theApp.WriteLog(_T("#HFO:999"));
 			}
 			
 		}
@@ -8556,10 +8559,10 @@ void CMainFrame::StopSaveTrendUSBThread( void )
 
 		if (WaitForSingleObject(m_pcwtSaveTrendUSBThread->m_hThread,3000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:021a"));
+			theApp.WriteLog(_T("#THR:021a"));
 			if(!TerminateThread(m_pcwtSaveTrendUSBThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:021b"));
+				theApp.WriteLog(_T("#THR:021b"));
 			}
 		}
 	}
@@ -8636,7 +8639,7 @@ DWORD CMainFrame::SaveTrendUSB(void)
 
 					getModel()->getDATAHANDLER()->SetSavingTrendToUSBactiv();
 
-					theApp.getLog()->WriteLine(_T("*** SerializeAllTrends SaveTrendUSB"));
+					theApp.WriteLog(_T("*** SerializeAllTrends SaveTrendUSB"));
 
 					//rkuNEWFIX
 					//EnterCriticalSection(&getModel()->getDATAHANDLER()->csTrend);
@@ -8696,7 +8699,7 @@ DWORD CMainFrame::SaveTrendUSB(void)
 	}
 	m_bDoSaveTrendUSBThread=false;
 
-	//theApp.getLog()->WriteLine(_T("#THR:021"));
+	//theApp.WriteLog(_T("#THR:021"));
 
 	return 0;
 }
@@ -8746,10 +8749,10 @@ void CMainFrame::StopTimerThread( void )
 
 		if (WaitForSingleObject(m_pcwtTimerThread->m_hThread,3000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:020a"));
+			theApp.WriteLog(_T("#THR:020a"));
 			if(!TerminateThread(m_pcwtTimerThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:020b"));
+				theApp.WriteLog(_T("#THR:020b"));
 			}
 		}
 	}
@@ -9099,13 +9102,13 @@ DWORD CMainFrame::DoTimerFunctions(void)
 									//rkuDEBUGMSG1
 									CString szMem=_T("");
 									szMem.Format(L"MEMORY [%d]",dwMem);
-									//theApp.getLog()->WriteLine(szMem);
+									//theApp.WriteLog(szMem);
 									//DEBUGMSG(TRUE, (szMem));
 									//DEBUGMSG(TRUE, (TEXT("MEMORY %d\r\n"),dwMem));
 
 									if(dwMem<2000)	//rkuNEWFIX		
 									{
-										theApp.getLog()->WriteLine(_T("#HFO:0220 OUTOFMEMORY"));
+										theApp.WriteLog(_T("#HFO:0220 OUTOFMEMORY"));
 										PostMessage(WM_SETALARM_OUTOFMEMORY);
 									}
 									else if(dwMem<3000)		//rkuNEWFIX	
@@ -9114,7 +9117,7 @@ DWORD CMainFrame::DoTimerFunctions(void)
 										{
 											CString szMem=_T("");
 											szMem.Format(L"#HFO:0220 MEMORY [%d]",dwMem);
-											theApp.getLog()->WriteLine(szMem);
+											theApp.WriteLog(szMem);
 										}
 										bPrintMemoryError=false;
 									}
@@ -9138,20 +9141,20 @@ DWORD CMainFrame::DoTimerFunctions(void)
 
 									CString szMem=_T("");
 									szMem.Format(L"MEMORY [%d]",dwMem);
-									theApp.getLog()->WriteLine(szMem);
+									theApp.WriteLog(szMem);
 									DEBUGMSG(TRUE, (szMem));
 									
 								}*/
 								
 								//TEST
 								/*CStringW sz=_T("!!!test !!!test !!!test !!!test !!!test !!!test !!!test !!!test !!!test !!!test !!!test !!!test !!! end");
-								theApp.getLog()->WriteLine(sz);*/
+								theApp.WriteLog(sz);*/
 							}
 							break;
 #if defined(OWN_ACULINK)
 						//case TF_TEST:
 						//	{
-						//		//theApp.getLog()->WriteLine(_T("#T"));
+						//		//theApp.WriteLog(_T("#T"));
 						//		//getModel()->checkVirtualCOM();
 						//		iCountTerminal++;
 
@@ -9170,10 +9173,10 @@ DWORD CMainFrame::DoTimerFunctions(void)
 
 						//			if(dwTestDiff>2000)
 						//			{
-						//				//theApp.getLog()->WriteLine(_T("#TdwDiff#1"));
+						//				//theApp.WriteLog(_T("#TdwDiff#1"));
 						//				CString sz;
 						//				sz.Format(_T("#TdwDiff#1: %d"), dwTestDiff);
-						//				theApp.getLog()->WriteLine(sz);
+						//				theApp.WriteLog(sz);
 						//			}
 						//			
 						//		}
@@ -9190,7 +9193,7 @@ DWORD CMainFrame::DoTimerFunctions(void)
 
 						//		if(dwTestDiff>2000)
 						//		{
-						//			theApp.getLog()->WriteLine(_T("#TdwDiff#2"));
+						//			theApp.WriteLog(_T("#TdwDiff#2"));
 						//		}
 
 						//		
@@ -9202,9 +9205,9 @@ DWORD CMainFrame::DoTimerFunctions(void)
 
 								if(iCountTerminal==5)
 								{
-									//theApp.getLog()->WriteLine(_T("#W1"));
+									//theApp.WriteLog(_T("#W1"));
 									getModel()->getAcuLink()->sendAllMeasurementData();
-									//theApp.getLog()->WriteLine(_T("#W2"));
+									//theApp.WriteLog(_T("#W2"));
 									iCountTerminal=0;
 
 									//DEBUGMSG(TRUE, (TEXT("sendMeasurementData\r\n")));
@@ -9223,10 +9226,10 @@ DWORD CMainFrame::DoTimerFunctions(void)
 
 								//if(dwTestDiff>1000)
 								//{
-								//	//theApp.getLog()->WriteLine(_T("#alink1"));
+								//	//theApp.WriteLog(_T("#alink1"));
 								//	CString sz;
 								//	sz.Format(_T("#alink1: %d"), dwTestDiff);
-								//	theApp.getLog()->WriteLine(sz);
+								//	theApp.WriteLog(sz);
 								//}
 							}
 							break;
@@ -9255,12 +9258,12 @@ DWORD CMainFrame::DoTimerFunctions(void)
 								{
 									CStringW sz=_T("");
 									sz.Format(_T("#HFO:0223 %*ld free %sbytes."),7, stat.dwAvailPhys/1024, divisor);
-									theApp.getLog()->WriteLine(sz);
+									theApp.WriteLog(sz);
 									PostMessage(WM_SETALARM_OUTOFMEMORY);
 								}
 								
 								/*CStringW sz=_T("!!!test !!!test !!!test !!!test !!!test !!!test !!!test !!!test !!!test !!!test !!!test !!!test !!! end");
-								theApp.getLog()->WriteLine(sz);*/
+								theApp.WriteLog(sz);*/
 							}
 							break;
 						case TF_FLOWDATA:
@@ -9291,7 +9294,7 @@ DWORD CMainFrame::DoTimerFunctions(void)
 
 	}while(m_bDoDoTimerFunctionsThread);
 
-	//theApp.getLog()->WriteLine(_T("#THR:020"));
+	//theApp.WriteLog(_T("#THR:020"));
 
 	return 0;
 }
@@ -9344,10 +9347,10 @@ void CMainFrame::StopOxyCalThread( void )
 
 		if (WaitForSingleObject(m_pcwtOxyCalThread->m_hThread,3000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:019a"));
+			theApp.WriteLog(_T("#THR:019a"));
 			if(!TerminateThread(m_pcwtOxyCalThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:019b"));
+				theApp.WriteLog(_T("#THR:019b"));
 			}
 		}
 	}
@@ -9454,7 +9457,7 @@ DWORD CMainFrame::CheckOxyCal(void)
 		{
 		case WAIT_OBJECT_0:
 			{
-				theApp.getLog()->WriteLine(_T("*** O2 cal manual***"));
+				theApp.WriteLog(_T("*** O2 cal manual***"));
 				if(	getModel()->getDATAHANDLER()->GetO2SensorState()==OXYSENS_OFF)
 					break;
 				else if(	m_bO2SensorAutocal==true
@@ -9543,7 +9546,7 @@ DWORD CMainFrame::CheckOxyCal(void)
 					break;
 				}
 
-				theApp.getLog()->WriteLine(_T("*** O2 cal time***"));
+				theApp.WriteLog(_T("*** O2 cal time***"));
 				if(	getModel()->getDATAHANDLER()->GetO2SensorState()==OXYSENS_OFF)
 					break;
 				else if(	getModel()->getDATAHANDLER()->GetO21SensorCalState()==true
@@ -9598,7 +9601,7 @@ DWORD CMainFrame::CheckOxyCal(void)
 
 	m_bDoOxyCalThread=false;
 
-	//theApp.getLog()->WriteLine(_T("#THR:019"));
+	//theApp.WriteLog(_T("#THR:019"));
 
 	return 0;
 }
@@ -9616,7 +9619,7 @@ bool CMainFrame::CalOxySensor21(void)
 {
 	bool bResult=true;
 
-	theApp.getLog()->WriteLine(_T("*** OXY 21 CAL ***"));
+	theApp.WriteLog(_T("*** OXY 21 CAL ***"));
 
 	getModel()->getDATAHANDLER()->SetOxySensorCalState(OS_CALIBRATING);
 	getModel()->getDATAHANDLER()->SetO21SensorCalState(true);
@@ -9750,7 +9753,7 @@ bool CMainFrame::CalOxySensor100(void)
 {
 	bool bResult=true;
 	//O 100% calibration
-	theApp.getLog()->WriteLine(_T("*** OXY 100 CAL***"));
+	theApp.WriteLog(_T("*** OXY 100 CAL***"));
 	
 	getModel()->getDATAHANDLER()->SetOxySensorCalState(OS_CALIBRATING);
 	getModel()->getDATAHANDLER()->SetO100SensorCalState(true);
@@ -10209,10 +10212,10 @@ void CMainFrame::StopDelTrendThread( void )
 
 		if (WaitForSingleObject(m_pcwtDelTrendThread->m_hThread,500) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:022a"));
+			theApp.WriteLog(_T("#THR:022a"));
 			if(!TerminateThread(m_pcwtDelTrendThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:022b"));
+				theApp.WriteLog(_T("#THR:022b"));
 			}
 		}
 	}
@@ -10377,7 +10380,7 @@ bool CMainFrame::DeleteTrendData(CStringW sFolder)
 				if(CTlsFile::DeleteDir(sFile)==false)
 				{
 					DEBUGMSG(TRUE, (TEXT("DeleteTrendData fail1 %s\r\n"),sFile));
-					theApp.getLog()->WriteLine(_T("#HFO:0224"));
+					theApp.WriteLog(_T("#HFO:0224"));
 				}
 				/*else
 				{
@@ -10415,7 +10418,7 @@ void CMainFrame::startAcuLink()
 		PROCESS_INFORMATION pi;
 
 		CreateProcess(_T("\\FFSDISK\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
-		theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_ETHERNET"));
+		theApp.WriteLog(_T("***ACULINK: ACL_LT_ETHERNET"));
 	}
 	else if(		getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_IVOI
 		&&	getModel()->getAcuLink()!=NULL)
@@ -10429,12 +10432,12 @@ void CMainFrame::startAcuLink()
 		if(getModel()->getCONFIG()->GetMainBoardVersion()>=MAINBOARD_30)
 		{
 			CreateProcess(_T("\\FFSDISK\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
-			theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_IVOI COM2"));
+			theApp.WriteLog(_T("***ACULINK: ACL_LT_SERIAL_IVOI COM2"));
 		}
 		else	//MAINBOARD2_1
 		{
 			CreateProcess(_T("\\FFSDISK\\AcuLink.exe"), L"COM1", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
-			theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_IVOI COM1"));
+			theApp.WriteLog(_T("***ACULINK: ACL_LT_SERIAL_IVOI COM1"));
 		}
 	}
 	else if(		getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_ASCII
@@ -10452,12 +10455,12 @@ void CMainFrame::startAcuLink()
 		if(getModel()->getCONFIG()->GetMainBoardVersion()>=MAINBOARD_30)
 		{
 			CreateProcess(_T("\\FFSDISK\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
-			theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_ASCII COM2"));
+			theApp.WriteLog(_T("***ACULINK: ACL_LT_SERIAL_ASCII COM2"));
 		}
 		else	//MAINBOARD2_1
 		{
 			CreateProcess(_T("\\FFSDISK\\AcuLink.exe"), L"COM1", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
-			theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_ASCII COM1"));
+			theApp.WriteLog(_T("***ACULINK: ACL_LT_SERIAL_ASCII COM1"));
 		}
 #endif
 
@@ -10478,12 +10481,12 @@ void CMainFrame::startAcuLink()
 		if(getModel()->getCONFIG()->GetMainBoardVersion()>=MAINBOARD_30)
 		{
 			CreateProcess(_T("\\FFSDISK\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
-			theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_WAVE COM2"));
+			theApp.WriteLog(_T("***ACULINK: ACL_LT_SERIAL_WAVE COM2"));
 		}
 		else	//MAINBOARD2_1
 		{
 			CreateProcess(_T("\\FFSDISK\\AcuLink.exe"), L"COM1", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
-			theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_SERIAL_WAVE COM1"));
+			theApp.WriteLog(_T("***ACULINK: ACL_LT_SERIAL_WAVE COM1"));
 		}
 		
 #endif
@@ -10503,16 +10506,16 @@ void CMainFrame::startAcuLink()
 		PROCESS_INFORMATION pi;
 		CreateProcess(_T("\\FFSDISK\\AcuLink.exe"), L"COM2", NULL, NULL, NULL, 0, NULL, NULL, NULL, &pi);
 		
-		theApp.getLog()->WriteLine(_T("***ACULINK: ACL_LT_ETHERNET_WAVE"));
+		theApp.WriteLog(_T("***ACULINK: ACL_LT_ETHERNET_WAVE"));
 	}
 
 	if(getModel()->getCONFIG()->GetAcuLinkVersion()==ALINKVERS_3)
 	{
-		theApp.getLog()->WriteLine(_T("***ACULINK: version 3.x"));
+		theApp.WriteLog(_T("***ACULINK: version 3.x"));
 	}
 	else
 	{
-		theApp.getLog()->WriteLine(_T("***ACULINK: version 4.x"));
+		theApp.WriteLog(_T("***ACULINK: version 4.x"));
 	}
 
 	if(getModel()->getAcuLink()!=NULL)

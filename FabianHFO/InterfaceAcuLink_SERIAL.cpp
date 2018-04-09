@@ -462,7 +462,7 @@ bool CInterfaceAcuLink_SERIAL::init()
 
 		if (!m_comPort.Open(2,38400))
 		{
-			//theApp.getLog()->WriteLine(_T("#HFO:0009"));
+			//theApp.WriteLog(_T("#HFO:0009"));
 			return false;
 		}
 	}
@@ -473,7 +473,7 @@ bool CInterfaceAcuLink_SERIAL::init()
 
 		if (!m_comPort.Open(2,115200))
 		{
-			//theApp.getLog()->WriteLine(_T("#HFO:0009"));
+			//theApp.WriteLog(_T("#HFO:0009"));
 			return false;
 		}
 	}
@@ -702,7 +702,7 @@ void CInterfaceAcuLink_SERIAL::sendTestWaveData()
 	{
 		CString sz;
 		sz.Format(_T("sendTestData: %d"), dwBytesWRitten);
-		theApp.getLog()->WriteLine(sz);
+		theApp.WriteLog(sz);
 		m_bWriteERROR=false;
 	}*/
 
@@ -721,7 +721,7 @@ void CInterfaceAcuLink_SERIAL::sendTestWaveData()
 		{
 			CString sz;
 			sz.Format(_T("sendTestData: %d"), dwBytesWRitten);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 			m_bShowAcuLinkError=false;
 		}
 	}
@@ -840,7 +840,7 @@ int CInterfaceAcuLink_SERIAL::sendAllMeasurementData()//CAcuLinkApp::BuildMsg()
 			{
 				CString sz;
 				sz.Format(_T("sendAcuLink: %d"), dwBytesWRitten);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 			iCount+=64;
 		}
@@ -853,7 +853,7 @@ int CInterfaceAcuLink_SERIAL::sendAllMeasurementData()//CAcuLinkApp::BuildMsg()
 			{
 				CString sz;
 				sz.Format(_T("sendAcuLink2: %d"), dwBytesWRitten);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 		}
 	}
@@ -862,15 +862,15 @@ int CInterfaceAcuLink_SERIAL::sendAllMeasurementData()//CAcuLinkApp::BuildMsg()
 
 	}
 
-	/*theApp.getLog()->WriteLine(_T("1"));
+	/*theApp.WriteLog(_T("1"));
 	dwBytesWRitten=m_comPort.Write(faSendBuf,idx);
-	theApp.getLog()->WriteLine(_T("2"));
+	theApp.WriteLog(_T("2"));
 
 	if(dwBytesWRitten<idx)
 	{
 		CString sz;
 		sz.Format(_T("sendTestData: %d"), dwBytesWRitten);
-		theApp.getLog()->WriteLine(sz);
+		theApp.WriteLog(sz);
 	}*/
 
 	//for(i = 0; i <= idx; i++)
@@ -885,7 +885,7 @@ int CInterfaceAcuLink_SERIAL::sendAllMeasurementData()//CAcuLinkApp::BuildMsg()
 	//	{
 	//		CString sz;
 	//		sz.Format(_T("sendTestData: %d"), dwBytesWRitten);
-	//		theApp.getLog()->WriteLine(sz);
+	//		theApp.WriteLog(sz);
 	//	}
 	//}
 

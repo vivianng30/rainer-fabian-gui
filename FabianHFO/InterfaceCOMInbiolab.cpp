@@ -127,7 +127,7 @@ int CInterfaceCOMInbiolab::Init(BYTE com)
 
 	if (!m_comPort.Open(dwIndex,115200))
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0009"));
+		theApp.WriteLog(_T("#HFO:0009"));
 		return false;
 	}
 	else
@@ -225,11 +225,11 @@ void CInterfaceCOMInbiolab::StopInbiolabThread( void )
 		if (WaitForSingleObject(m_pcwtSerialReceiveThread->m_hThread,1000) == WAIT_TIMEOUT)
 		{
 			DEBUGMSG(TRUE, (TEXT("TerminateThread 3 !!!!!!!!!!!!!!\r\n")));
-			theApp.getLog()->WriteLine(_T("#THR:002a"));
+			theApp.WriteLog(_T("#THR:002a"));
 
 			if(!TerminateThread(m_pcwtSerialReceiveThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:002b"));
+				theApp.WriteLog(_T("#THR:002b"));
 			}
 
 		}
@@ -1217,7 +1217,7 @@ DWORD CInterfaceCOMInbiolab::ReceiveSerialData(void)
 	}
 
 	DEBUGMSG(TRUE, (TEXT("END ReceiveSerialData\r\n")));
-	theApp.getLog()->WriteLine(_T("#THR:002"));
+	theApp.WriteLog(_T("#THR:002"));
 
 	return 0;
 }
@@ -1352,7 +1352,7 @@ int CInterfaceCOMInbiolab::ShowError (LONG lError, LPCTSTR lptszMessage)
 	TCHAR tszMessage[256];
 	wsprintf(tszMessage,_T("#HFO test: %s (code %d)"), lptszMessage, lError);
 
-	theApp.getLog()->WriteLine(tszMessage);
+	theApp.WriteLog(tszMessage);
 	// Display message-box and return with an error-code
 	//::MessageBox(0,tszMessage,_T("Listener"), MB_ICONSTOP|MB_OK);
 	return 1;

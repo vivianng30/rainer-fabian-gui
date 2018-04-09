@@ -200,7 +200,7 @@ void CThreadPRICO::stopPRICOThread( void )
 		{
 			if(!TerminateThread(m_pcwtPRICOThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:PRICO"));
+				theApp.WriteLog(_T("#THR:PRICO"));
 				/*int err = GetLastError();
 				CStringW temp;
 				temp.Format(L"TerminateThread error ConnectionThread [%d]",err);*/
@@ -344,7 +344,7 @@ DWORD CThreadPRICO::PRICOData(void)
 
 							CString szO2=_T("");
 							szO2.Format(_T("#PRICOALARM FiO2outOfRange: LastApplied %d, Measured %d"), iLastFiO2,iMeasuredOxi);
-							theApp.getLog()->WriteLine(szO2);
+							theApp.WriteLog(szO2);
 						}
 						continue;
 					}
@@ -406,7 +406,7 @@ DWORD CThreadPRICO::PRICOData(void)
 
 								CString szO2=_T("");
 								szO2.Format(_T("#PRICOALARM FiO2:%d, "), iCalcFiO2);
-								theApp.getLog()->WriteLine(szO2);
+								theApp.WriteLog(szO2);
 							}
 						}
 						bHigherAlarmReset=true;
@@ -424,7 +424,7 @@ DWORD CThreadPRICO::PRICOData(void)
 
 							CString szO2=_T("");
 							szO2.Format(_T("#PRICOALARM FiO2:%d, "), iCalcFiO2);
-							theApp.getLog()->WriteLine(szO2);
+							theApp.WriteLog(szO2);
 						}
 						bLowerAlarmReset=true;
 						bHigherAlarmReset=false;
@@ -479,7 +479,7 @@ DWORD CThreadPRICO::PRICOData(void)
 
 								CString szO2=_T("");
 								szO2.Format(_T("#PRICORECOM FiO2:%d, "), iCalcFiO2);
-								theApp.getLog()->WriteLine(szO2);
+								theApp.WriteLog(szO2);
 								DEBUGMSG(TRUE, (TEXT("Lower minimum FiO2 recom\r\n")));
 							}
 						} 
@@ -552,7 +552,7 @@ DWORD CThreadPRICO::PRICOData(void)
 
 	resetCircBufSpO2();
 
-	theApp.getLog()->WriteLine(_T("#THR:PRICO end"));
+	theApp.WriteLog(_T("#THR:PRICO end"));
 	DEBUGMSG(TRUE, (TEXT("CThreadPRICO::PRICOData stop\r\n")));
 
 	return 0;
@@ -754,7 +754,7 @@ SHORT CThreadPRICO::calcFiO2(/*int iAvgSpO2*/)
 
       //CStringW sData = _T("");
       //sData.Format(L"PRICO: %d:%d->%d",m_iAvgSpO2,iPredSpO2,iFiO2Step);
-      ////theApp.getLog()->WriteLine(sData);
+      ////theApp.WriteLog(sData);
       //CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  sData, 1000);
       //getModel()->triggerEvent(&event2);
 
@@ -871,7 +871,7 @@ void CThreadPRICO::setCalculatedOxyValue(SHORT value)
 
 	CString szO2=_T("");
 	szO2.Format(_T("#PRICO FiO2:%d, "), value);
-	theApp.getLog()->WriteLine(szO2);
+	theApp.WriteLog(szO2);
 }
 
 /**********************************************************************************************//**

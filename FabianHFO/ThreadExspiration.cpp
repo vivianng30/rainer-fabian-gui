@@ -148,10 +148,10 @@ void CThreadExspiration::stopExspirationThread( void )
 
 		if (WaitForSingleObject(m_pcwtExspirationThread->m_hThread,1000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:Exspirationa"));
+			theApp.WriteLog(_T("#THR:Exspirationa"));
 			if(!TerminateThread(m_pcwtExspirationThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:Exspirationb"));
+				theApp.WriteLog(_T("#THR:Exspirationb"));
 			}
 		}
 	}
@@ -222,7 +222,7 @@ DWORD CThreadExspiration::Exspirationstart(void)
 		}
 	}while(m_bDoExspirationThread);
 
-	//theApp.getLog()->WriteLine(_T("#THR:026"));
+	//theApp.WriteLog(_T("#THR:026"));
 
 	return 0;
 }

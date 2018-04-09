@@ -765,24 +765,24 @@ void CSubViewTools::OnBnClickedLogToUSB()
 			
 		CString szVersion=_T("Version Controller PIC: ");
 		szVersion+=m_dataMainboard.m_szConductorVersion;
-		theApp.getLog()->WriteLine(szVersion);
+		theApp.WriteLog(szVersion);
 
 		szVersion.Format(_T("Version Monitor PIC: %d.%d.%d"), 
 			m_dataMainboard.m_iMonitorVersion_x, 
 			m_dataMainboard.m_iMonitorVersion_y, 
 			m_dataMainboard.m_iMonitorVersion_z);
-		theApp.getLog()->WriteLine(szVersion);
+		theApp.WriteLog(szVersion);
 		
 		szVersion=_T("Version fabianHFO: ");
 		szVersion+=getModel()->GetBuildVersion();
-		theApp.getLog()->WriteLine(szVersion);
+		theApp.WriteLog(szVersion);
 
 		szVersion=_T("Version Languagefiles: ");
 		szVersion+=getModel()->GetLanguageString(IDS_VERSION_LANGUAGE);
-		theApp.getLog()->WriteLine(szVersion);
+		theApp.WriteLog(szVersion);
 
 		//set flag that log will be copied
-		theApp.getLog()->WriteLine(_T("**** copy logfile to USB via menu ****"));
+		theApp.WriteLog(_T("**** copy logfile to USB via menu ****"));
 
 		getModel()->getALARMHANDLER()->setLogTxt(_T("**** copy logfile to USB via menu ****"));
 		
@@ -888,7 +888,7 @@ void CSubViewTools::OnBnClickedLogToUSB()
 
 		if(bErrorCopy)
 		{
-			theApp.getLog()->WriteLine(_T("#HFO:0263"));
+			theApp.WriteLog(_T("#HFO:0263"));
 			getModel()->getALARMHANDLER()->setLogTxt(_T("ERROR: could not copy file"));
 		}
 		else
@@ -1368,17 +1368,17 @@ void CSubViewTools::OnBnClickedDevInfoToUSB()
 
 		/*CString szVersion=_T("Version Controller PIC: ");
 		szVersion+=m_dataMainboard.m_szConductorVersion;
-		theApp.getLog()->WriteLine(szVersion);
+		theApp.WriteLog(szVersion);
 
 		
 
 		szVersion=_T("Version fabianHFO: ");
 		szVersion+=getModel()->GetBuildVersion();
-		theApp.getLog()->WriteLine(szVersion);
+		theApp.WriteLog(szVersion);
 
 		szVersion=_T("Version Languagefiles: ");
 		szVersion+=getModel()->GetLanguageString(IDS_VERSION_LANGUAGE);
-		theApp.getLog()->WriteLine(szVersion);*/
+		theApp.WriteLog(szVersion);*/
 
 		if(lfDeviceInfoFile)
 		{
@@ -1463,10 +1463,10 @@ void CSubViewTools::StopWaitTrendUSBThread( void )
 
 		if (WaitForSingleObject(m_pcwtWaitTrendUSBThread->m_hThread,1000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:030a"));
+			theApp.WriteLog(_T("#THR:030a"));
 			if(!TerminateThread(m_pcwtWaitTrendUSBThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:030b"));
+				theApp.WriteLog(_T("#THR:030b"));
 			}
 		}
 	}
@@ -1555,7 +1555,7 @@ DWORD CSubViewTools::WaitTrendUSB(void)
 		}
 	}while(m_bDoWaitTrendUSBThread);
 
-	//theApp.getLog()->WriteLine(_T("#THR:030"));
+	//theApp.WriteLog(_T("#THR:030"));
 
 	return 0;
 }

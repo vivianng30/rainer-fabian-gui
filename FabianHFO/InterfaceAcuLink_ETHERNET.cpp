@@ -38,7 +38,7 @@ bool CInterfaceAcuLink_ETHERNET::init()
 
 	//	if (!m_comPort.Open(2,38400))
 	//	{
-	//		//theApp.getLog()->WriteLine(_T("#HFO:0009"));
+	//		//theApp.WriteLog(_T("#HFO:0009"));
 	//		return false;
 	//	}
 	//}
@@ -49,7 +49,7 @@ bool CInterfaceAcuLink_ETHERNET::init()
 
 	//	if (!m_comPort.Open(2,115200))
 	//	{
-	//		//theApp.getLog()->WriteLine(_T("#HFO:0009"));
+	//		//theApp.WriteLog(_T("#HFO:0009"));
 	//		return false;
 	//	}
 	//}

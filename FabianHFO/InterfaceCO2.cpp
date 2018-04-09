@@ -182,7 +182,7 @@ int CInterfaceCO2::ShowError (LONG lError, LPCTSTR lptszMessage)
 	TCHAR tszMessage[256];
 	wsprintf(tszMessage,_T("#HFO:0111: %s (code %d)"), lptszMessage, lError);
 
-	theApp.getLog()->WriteLine(tszMessage);
+	theApp.WriteLog(tszMessage);
 	// Display message-box and return with an error-code
 	//::MessageBox(0,tszMessage,_T("Listener"), MB_ICONSTOP|MB_OK);
 	return 1;
@@ -726,10 +726,10 @@ void CInterfaceCO2::stopETCO2Thread(void)
 
 		if (WaitForSingleObject(m_pcwtETCO2SendThread->m_hThread,500) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:006a"));
+			theApp.WriteLog(_T("#THR:006a"));
 			if(!TerminateThread(m_pcwtETCO2SendThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:006b"));
+				theApp.WriteLog(_T("#THR:006b"));
 			}
 		}
 	}
@@ -740,10 +740,10 @@ void CInterfaceCO2::stopETCO2Thread(void)
 
 		if (WaitForSingleObject(m_pcwtETCO2InitThread->m_hThread,2000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:007a"));
+			theApp.WriteLog(_T("#THR:007a"));
 			if(!TerminateThread(m_pcwtETCO2InitThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:007b"));
+				theApp.WriteLog(_T("#THR:007b"));
 			}
 		}
 	}
@@ -830,10 +830,10 @@ void CInterfaceCO2::stopETCO2checkThread(void)
 		{
 			if (WaitForSingleObject(m_pcwtETCO2checkThread->m_hThread,500) == WAIT_TIMEOUT)
 			{
-				theApp.getLog()->WriteLine(_T("#THR:008a"));
+				theApp.WriteLog(_T("#THR:008a"));
 				if(!TerminateThread(m_pcwtETCO2checkThread,0))
 				{
-					theApp.getLog()->WriteLine(_T("#THR:008b"));
+					theApp.WriteLog(_T("#THR:008b"));
 				}
 			}
 		}
@@ -932,7 +932,7 @@ DWORD CInterfaceCO2::SendETCO2Data(void)
 
 	}while(m_bDoETCO2SendThread);
 
-	//theApp.getLog()->WriteLine(_T("#THR:006"));
+	//theApp.WriteLog(_T("#THR:006"));
 	
 	return 0;
 }
@@ -1011,7 +1011,7 @@ DWORD CInterfaceCO2::ETCO2check(void)
 			CheckModuleState();
 	}while(m_bDoETCO2checkThread);
 
-	//theApp.getLog()->WriteLine(_T("#THR:008"));
+	//theApp.WriteLog(_T("#THR:008"));
 	
 	return 0;
 }
@@ -1118,7 +1118,7 @@ DWORD CInterfaceCO2::ETCO2Init(void)
 		InitializeSequenz();//command 84h
 	}
 
-	//theApp.getLog()->WriteLine(_T("#THR:007"));
+	//theApp.WriteLog(_T("#THR:007"));
 
 	return 0;
 }
@@ -1197,7 +1197,7 @@ void CInterfaceCO2::CheckLastCO2Cmd()
 				m_bFreqValuevalid=false;
 				m_bCO2ValueValid=false;
 				m_bPumpStateOn=true;
-				//theApp.getLog()->WriteLine(_T("###CO2_MODULE_NOTCONNECTED"));
+				//theApp.WriteLog(_T("###CO2_MODULE_NOTCONNECTED"));
 				//theApp.getLog()->SaveLog();
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_CO2_MODULE_NOTCONNECTED);
@@ -1219,7 +1219,7 @@ void CInterfaceCO2::CheckLastCO2Cmd()
 			//{
 			//	DEBUGMSG(TRUE, (TEXT("WM_REINIT_CO2_MODULE\r\n")));
 
-			//	theApp.getLog()->WriteLine(_T("####retryCO2module"));
+			//	theApp.WriteLog(_T("####retryCO2module"));
 			//	theApp.getLog()->SaveLog();
 			//	m_bTryOnceMore=true;
 			//	/*UpdateLastCO2Cmd();

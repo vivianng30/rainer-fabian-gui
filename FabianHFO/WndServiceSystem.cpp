@@ -281,7 +281,7 @@ void CWndServiceSystem::OnDestroy()
 //	Draw();
 //	if(iRes==IDYES)
 //	{
-//		theApp.getLog()->WriteLine(_T("*** Service mode ResetOpTimeDevice() ***"));
+//		theApp.WriteLog(_T("*** Service mode ResetOpTimeDevice() ***"));
 //
 //		getModel()->getDATAHANDLER()->ResetOpTimeDevice();
 //
@@ -322,7 +322,7 @@ void CWndServiceSystem::OnDestroy()
 //	Draw();
 //	if(iRes==IDYES)
 //	{
-//		theApp.getLog()->WriteLine(_T("*** Service mode ResetOpTimeBattery() ***"));
+//		theApp.WriteLog(_T("*** Service mode ResetOpTimeBattery() ***"));
 //		getModel()->getDATAHANDLER()->ResetOpTimeBattery();
 //
 //		UpdateWindow();
@@ -361,7 +361,7 @@ void CWndServiceSystem::OnDestroy()
 //	Draw();
 //	if(iRes==IDYES)
 //	{
-//		theApp.getLog()->WriteLine(_T("*** Service mode ResetOpTimeHFO() ***"));
+//		theApp.WriteLog(_T("*** Service mode ResetOpTimeHFO() ***"));
 //		getModel()->getDATAHANDLER()->ResetOpTimeHFO();
 //
 //		UpdateWindow();
@@ -387,7 +387,7 @@ void CWndServiceSystem::OnDestroy()
 //	//	{
 //	//		//getModel()->StartInstaller();
 //
-//	//		theApp.getLog()->WriteLine(_T("#HFO:0284"));
+//	//		theApp.WriteLog(_T("#HFO:0284"));
 //	//		
 //	//		CString file=_T("\\Hard Disk\\FabianInstaller.exe");
 //	//		PROCESS_INFORMATION pi;
@@ -418,7 +418,7 @@ void CWndServiceSystem::OnDestroy()
 //		{
 //			getModel()->StartInstaller();
 //
-//			theApp.getLog()->WriteLine(_T("#HFO:0284"));
+//			theApp.WriteLog(_T("#HFO:0284"));
 //			getModel()->SetAccuTurnoff();
 //			if(AfxGetApp())
 //				AfxGetApp()->GetMainWnd()->PostMessage(WM_VENT_TURNOFF);
@@ -430,7 +430,7 @@ void CWndServiceSystem::OnDestroy()
 //{
 //	if(m_bAlarmOn)
 //	{
-//		theApp.getLog()->WriteLine(_T("#HFO:0285"));
+//		theApp.WriteLog(_T("#HFO:0285"));
 //		m_bAlarmOn=false;
 //		m_pcAlarm->RefreshText(_T("turn on"));
 //
@@ -439,7 +439,7 @@ void CWndServiceSystem::OnDestroy()
 //	}
 //	else
 //	{
-//		theApp.getLog()->WriteLine(_T("#HFO:0286"));
+//		theApp.WriteLog(_T("#HFO:0286"));
 //		m_bAlarmOn=true;
 //		m_pcAlarm->RefreshText(_T("turn off"));
 //

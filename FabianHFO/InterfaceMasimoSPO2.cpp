@@ -232,7 +232,7 @@ int CInterfaceMasimoSPO2::Deinit(bool bReinit)
 	Close();
 
 	if(!bReinit)
-		theApp.getLog()->WriteLine(_T("#SPO2: DEINIT"));
+		theApp.WriteLog(_T("#SPO2: DEINIT"));
 	//DEBUGMSG(TRUE, (TEXT("#SPO2: DEINIT\r\n")));
 	/*dwEnd=GetTickCount();
 	DEBUGMSG(TRUE, (TEXT("CInterfaceMasimoSPO2::Deinit8 %d\r\n"),dwEnd-dwStart));*/
@@ -280,7 +280,7 @@ bool CInterfaceMasimoSPO2::OpenCOM()
 	}
 
 	DEBUGMSG(TRUE, (TEXT("#SPO2: OpenCOM\r\n")));
-	theApp.getLog()->WriteLine(_T("#SPO2: OpenCOM"));
+	theApp.WriteLog(_T("#SPO2: OpenCOM"));
 
 	return bRes;
 
@@ -304,7 +304,7 @@ int CInterfaceMasimoSPO2::ShowError (LONG lError, LPCTSTR lptszMessage)
 	TCHAR tszMessage[256];
 	wsprintf(tszMessage,_T("#HFO:0111: %s (code %d)"), lptszMessage, lError);
 
-	theApp.getLog()->WriteLine(tszMessage);
+	theApp.WriteLog(tszMessage);
 	// Display message-box and return with an error-code
 	//::MessageBox(0,tszMessage,_T("Listener"), MB_ICONSTOP|MB_OK);
 	return 1;
@@ -400,7 +400,7 @@ bool CInterfaceMasimoSPO2::PerformMsg()
 			DEBUGMSG(TRUE, (TEXT("ERROR seq %d %d\r\n"),fwPrevSequence,fwDataSequence));
 			CStringW sz=_T("");
 			sz.Format(_T("#SPO:1seq %d %d"),fwPrevSequence,fwDataSequence);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 
 			/*if(AfxGetApp())
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_REINIT_SPO2_MODULE);*/
@@ -414,7 +414,7 @@ bool CInterfaceMasimoSPO2::PerformMsg()
 			DEBUGMSG(TRUE, (TEXT("ERROR seq %d %d\r\n"),fwPrevSequence,fwDataSequence));
 			CStringW sz=_T("");
 			sz.Format(_T("#SPO:2seq %d %d"),fwPrevSequence,fwDataSequence);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 
 			/*if(AfxGetApp())
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_REINIT_SPO2_MODULE);*/
@@ -422,7 +422,7 @@ bool CInterfaceMasimoSPO2::PerformMsg()
 		else if(fwDataSequence==SPO2_MASIMO_SLAVECMD_BOARD_FAILURECODES && fwPrevSequence==SPO2_MASIMO_SLAVECMD_BOARD_FAILURECODES)
 		{
 			DEBUGMSG(TRUE, (TEXT("ERROR SPO2_MASIMO_SLAVECMD_BOARD_FAILURECODES\r\n")));
-			theApp.getLog()->WriteLine(_T("#SPO2_MASIMO_SLAVECMD_BOARD_FAILURECODES"));
+			theApp.WriteLog(_T("#SPO2_MASIMO_SLAVECMD_BOARD_FAILURECODES"));
 		}
 		fwPrevSequence=fwDataSequence;
 	}

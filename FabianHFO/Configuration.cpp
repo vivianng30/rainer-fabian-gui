@@ -899,7 +899,7 @@ void CConfiguration::LoadSettings()
 	//if(m_wOldConfigVersion!=m_iConfigVersion)
 	//{
 	//	//do something here if needed regarding different config versions
-	//	//theApp.getLog()->WriteLine(_T("*** OldCOnfig ***"));
+	//	//theApp.WriteLog(_T("*** OldCOnfig ***"));
 	//}
 	regLang.WriteDWORD(_T("ConfigVersion"), m_iConfigVersion);
 
@@ -924,7 +924,7 @@ void CConfiguration::LoadSettings()
 		m_szLanguageID=getModel()->getLANGUAGE()->GetLangFileName(wLanguageID);
 	else
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0055"));
+		theApp.WriteLog(_T("#HFO:0055"));
 		switch(wLanguageID)
 		{
 		case LAN_ENGLISH:
@@ -1172,7 +1172,7 @@ void CConfiguration::LoadSettings()
 			getModel()->getI2C()->WriteConfigByte(CO2CONFIG,CO2MODULE_NONE);
 			m_iCO2module=CO2MODULE_NONE;
 			m_byCO2ModuleTemp=CO2MODULE_NONE;
-			theApp.getLog()->WriteLine(_T("*** CO2 disabled bvy PDMS"));
+			theApp.WriteLog(_T("*** CO2 disabled bvy PDMS"));
 		}
 	}
 
@@ -1203,12 +1203,12 @@ void CConfiguration::LoadSettings()
 	if(getModel()->getI2C()->ReadConfigByte(USENEOPED_8)==0)
 	{
 		m_bUseNeoPed=true;
-		theApp.getLog()->WriteLine(_T("*** Patient range NEO+PED ***"));
+		theApp.WriteLog(_T("*** Patient range NEO+PED ***"));
 	}
 	else
 	{
 		m_bUseNeoPed=false;
-		theApp.getLog()->WriteLine(_T("*** Patient range NEO ***"));
+		theApp.WriteLog(_T("*** Patient range NEO ***"));
 
 		getModel()->getI2C()->WriteConfigByte(VENTRANGE_8, NEONATAL);
 	}
@@ -1497,12 +1497,12 @@ void CConfiguration::LoadSettings()
 	if(getModel()->getI2C()->ReadConfigByte(AUTOSCREENLOCKSTATE_8)==1)
 	{
 		m_bAutoScreenlockActive=true;
-		theApp.getLog()->WriteLine(_T("*** AutoScreenlock enabled"));
+		theApp.WriteLog(_T("*** AutoScreenlock enabled"));
 	}
 	else
 	{
 		m_bAutoScreenlockActive=false;
-		theApp.getLog()->WriteLine(_T("*** AutoScreenlock disabled"));
+		theApp.WriteLog(_T("*** AutoScreenlock disabled"));
 	}
 
 	m_eAutoScreenlocktime=(eAutoScreenlock)getModel()->getI2C()->ReadConfigByte(AUTOSCREENLOCKTIME_8);
@@ -1517,27 +1517,27 @@ void CConfiguration::LoadSettings()
 		{
 		case ASL_20:
 			{
-				theApp.getLog()->WriteLine(_T("*** Screenlock ASL_20"));
+				theApp.WriteLog(_T("*** Screenlock ASL_20"));
 			}
 			break;
 		case ASL_30:
 			{
-				theApp.getLog()->WriteLine(_T("*** Screenlock ASL_30"));
+				theApp.WriteLog(_T("*** Screenlock ASL_30"));
 			}
 			break;
 		case ASL_40:
 			{
-				theApp.getLog()->WriteLine(_T("*** Screenlock ASL_40"));
+				theApp.WriteLog(_T("*** Screenlock ASL_40"));
 			}
 			break;
 		case ASL_50:
 			{
-				theApp.getLog()->WriteLine(_T("*** Screenlock ASL_50"));
+				theApp.WriteLog(_T("*** Screenlock ASL_50"));
 			}
 			break;
 		case ASL_60:
 			{
-				theApp.getLog()->WriteLine(_T("*** Screenlock ASL_60"));
+				theApp.WriteLog(_T("*** Screenlock ASL_60"));
 			}
 			break;
 		}
@@ -1551,34 +1551,34 @@ void CConfiguration::LoadSettings()
 	if(getModel()->getI2C()->ReadConfigByte(SERVICEPSWRDDISABLED_8)==1)
 	{
 		m_bServicePasswordDisabled=true;
-		theApp.getLog()->WriteLine(_T("*** ServicePasswordDisabled==true"));
+		theApp.WriteLog(_T("*** ServicePasswordDisabled==true"));
 	}
 	else
 	{
 		m_bServicePasswordDisabled=false;
-		theApp.getLog()->WriteLine(_T("*** ServicePasswordDisabled==false"));
+		theApp.WriteLog(_T("*** ServicePasswordDisabled==false"));
 	}
 
 	if(getModel()->getI2C()->ReadConfigByte(NURSECALLACTIVE_8)==1)
 	{
 		m_bNursecallActive=true;
-		theApp.getLog()->WriteLine(_T("*** NurscallActive==true"));
+		theApp.WriteLog(_T("*** NurscallActive==true"));
 	}
 	else
 	{
 		m_bNursecallActive=false;
-		theApp.getLog()->WriteLine(_T("*** NurscallActive==false"));
+		theApp.WriteLog(_T("*** NurscallActive==false"));
 	}
 
 	if(getModel()->getI2C()->ReadConfigByte(AUTOALARMLIMIT_8)==0)
 	{
 		m_bEnableAutolimit=true;
-		theApp.getLog()->WriteLine(_T("*** EnableAutolimit==true"));
+		theApp.WriteLog(_T("*** EnableAutolimit==true"));
 	}
 	else
 	{
 		m_bEnableAutolimit=false;
-		theApp.getLog()->WriteLine(_T("*** EnableAutolimit==false"));
+		theApp.WriteLog(_T("*** EnableAutolimit==false"));
 	}
 
 	if(bReorganize)
@@ -1601,12 +1601,12 @@ void CConfiguration::LoadSettings()
 		if(getModel()->getI2C()->ReadConfigByte(USETVEBTB_8)==1)
 		{
 			m_bUseTveBTB=true;
-			theApp.getLog()->WriteLine(_T("*** UseTveBTB==true ***"));
+			theApp.WriteLog(_T("*** UseTveBTB==true ***"));
 		}
 		else
 		{
 			m_bUseTveBTB=false;
-			theApp.getLog()->WriteLine(_T("*** UseTveBTB==false ***"));
+			theApp.WriteLog(_T("*** UseTveBTB==false ***"));
 		}
 
 		//new config (default: UseTveBTB==0==true)
@@ -1625,12 +1625,12 @@ void CConfiguration::LoadSettings()
 		if(getModel()->getI2C()->ReadConfigByte(USETVEBTB_8)==0)
 		{
 			m_bUseTveBTB=true;
-			theApp.getLog()->WriteLine(_T("*** UseTveBTB==true ***"));
+			theApp.WriteLog(_T("*** UseTveBTB==true ***"));
 		}
 		else
 		{
 			m_bUseTveBTB=false;
-			theApp.getLog()->WriteLine(_T("*** UseTveBTB==false ***"));
+			theApp.WriteLog(_T("*** UseTveBTB==false ***"));
 		}
 	}
 
@@ -1682,23 +1682,23 @@ void CConfiguration::LoadSettings()
 	if(getModel()->getI2C()->ReadConfigByte(BTPS_8)==1)
 	{
 		m_bBTPSenable=true;
-		theApp.getLog()->WriteLine(_T("*** BTPS enabled"));
+		theApp.WriteLog(_T("*** BTPS enabled"));
 	}
 	else
 	{
 		m_bBTPSenable=false;
-		theApp.getLog()->WriteLine(_T("*** BTPS disabled"));
+		theApp.WriteLog(_T("*** BTPS disabled"));
 	}
 
 	if(getModel()->getI2C()->ReadConfigByte(FRESHGASEXT_8)==1)
 	{
 		m_bFreshgasExt=true;
-		theApp.getLog()->WriteLine(_T("*** BiasFlow ext"));
+		theApp.WriteLog(_T("*** BiasFlow ext"));
 	}
 	else
 	{
 		m_bFreshgasExt=false;
-		theApp.getLog()->WriteLine(_T("*** BiasFlow int"));
+		theApp.WriteLog(_T("*** BiasFlow int"));
 	}
 
 	if(getModel()->getI2C()->ReadConfigByte(GRAPHAUTOSCALE_8)==1)
@@ -4007,7 +4007,7 @@ void CConfiguration::LoadSettings()
 		iServiceYear=0;
 		iServiceMonth=0;
 		iServiceDay=0;
-		theApp.getLog()->WriteLine(_T("*** ServiceDateOn==false ***"));
+		theApp.WriteLog(_T("*** ServiceDateOn==false ***"));
 		getModel()->getI2C()->WriteConfigWord(SERVICE_YEAR_16, iServiceYear);
 		getModel()->getI2C()->WriteConfigByte(SERVICE_MONTH_8, iServiceMonth);
 		getModel()->getI2C()->WriteConfigByte(SERVICE_DAY_8, iServiceDay);
@@ -4015,7 +4015,7 @@ void CConfiguration::LoadSettings()
 	}
 	else
 	{
-		theApp.getLog()->WriteLine(_T("*** ServiceDateOn==true ***"));
+		theApp.WriteLog(_T("*** ServiceDateOn==true ***"));
 		//status will be 0 (valid)
 	}
 	m_dtNextServiceDate.SetDate(iServiceYear, iServiceMonth, iServiceDay);
@@ -4769,12 +4769,12 @@ void CConfiguration::setUseTveBTB(bool state)
 	m_bUseTveBTB=state;
 	if(m_bUseTveBTB)
 	{
-		theApp.getLog()->WriteLine(_T("*** CConfiguration UseTveBTB==true ***"));
+		theApp.WriteLog(_T("*** CConfiguration UseTveBTB==true ***"));
 		getModel()->getI2C()->WriteConfigByte(USETVEBTB_8, 0);
 	}
 	else
 	{
-		theApp.getLog()->WriteLine(_T("*** CConfiguration UseTveBTB==false ***"));
+		theApp.WriteLog(_T("*** CConfiguration UseTveBTB==false ***"));
 		getModel()->getI2C()->WriteConfigByte(USETVEBTB_8, 1);
 	}
 }
@@ -4807,12 +4807,12 @@ void CConfiguration::setUseNeoPed(bool state)
 	m_bUseNeoPed=state;
 	if(m_bUseNeoPed)
 	{
-		theApp.getLog()->WriteLine(_T("*** Patient range NEO+PED ***"));
+		theApp.WriteLog(_T("*** Patient range NEO+PED ***"));
 		getModel()->getI2C()->WriteConfigByte(USENEOPED_8, 0);
 	}
 	else
 	{
-		theApp.getLog()->WriteLine(_T("*** Patient range NEO ***"));
+		theApp.WriteLog(_T("*** Patient range NEO ***"));
 		getModel()->getI2C()->WriteConfigByte(USENEOPED_8, 1);
 
 		if(GetVentRange()==PEDIATRIC)
@@ -4853,9 +4853,9 @@ void CConfiguration::setBTPS(bool state)
 	{
 		m_bBTPSenable=state;
 		if(m_bBTPSenable)
-			theApp.getLog()->WriteLine(_T("*** CConfiguration BTPS enabled"));
+			theApp.WriteLog(_T("*** CConfiguration BTPS enabled"));
 		else
-			theApp.getLog()->WriteLine(_T("*** CConfiguration BTPS disabled"));
+			theApp.WriteLog(_T("*** CConfiguration BTPS disabled"));
 
 		getModel()->getI2C()->WriteConfigByte(BTPS_8, (BYTE)state);
 
@@ -5256,11 +5256,11 @@ void CConfiguration::setFreshgasExt(bool state)
 	m_bFreshgasExt=state;
 	if(m_bFreshgasExt)
 	{
-		theApp.getLog()->WriteLine(_T("*** BiasFlow extern"));
+		theApp.WriteLog(_T("*** BiasFlow extern"));
 	}
 	else
 	{
-		theApp.getLog()->WriteLine(_T("*** BiasFlow intern"));
+		theApp.WriteLog(_T("*** BiasFlow intern"));
 	}
 
 	if(true==bChanged && getModel()->getFOTThread())
@@ -5872,27 +5872,27 @@ void CConfiguration::SetAutoScreenlockTime(eAutoScreenlock state)
 	{
 	case ASL_20:
 		{
-			theApp.getLog()->WriteLine(_T("*** Screenlock ASL_20"));
+			theApp.WriteLog(_T("*** Screenlock ASL_20"));
 		}
 		break;
 	case ASL_30:
 		{
-			theApp.getLog()->WriteLine(_T("*** Screenlock ASL_30"));
+			theApp.WriteLog(_T("*** Screenlock ASL_30"));
 		}
 		break;
 	case ASL_40:
 		{
-			theApp.getLog()->WriteLine(_T("*** Screenlock ASL_40"));
+			theApp.WriteLog(_T("*** Screenlock ASL_40"));
 		}
 		break;
 	case ASL_50:
 		{
-			theApp.getLog()->WriteLine(_T("*** Screenlock ASL_50"));
+			theApp.WriteLog(_T("*** Screenlock ASL_50"));
 		}
 		break;
 	case ASL_60:
 		{
-			theApp.getLog()->WriteLine(_T("*** Screenlock ASL_60"));
+			theApp.WriteLog(_T("*** Screenlock ASL_60"));
 		}
 		break;
 	}
@@ -5930,40 +5930,40 @@ void CConfiguration::SetAutoScreenlockActive(bool state)
 
 	if(m_bAutoScreenlockActive)
 	{
-		theApp.getLog()->WriteLine(_T("*** AutoScreenlock enabled"));
+		theApp.WriteLog(_T("*** AutoScreenlock enabled"));
 
 		switch(m_eAutoScreenlocktime)
 		{
 		case ASL_20:
 			{
-				theApp.getLog()->WriteLine(_T("*** Screenlock ASL_20"));
+				theApp.WriteLog(_T("*** Screenlock ASL_20"));
 			}
 			break;
 		case ASL_30:
 			{
-				theApp.getLog()->WriteLine(_T("*** Screenlock ASL_30"));
+				theApp.WriteLog(_T("*** Screenlock ASL_30"));
 			}
 			break;
 		case ASL_40:
 			{
-				theApp.getLog()->WriteLine(_T("*** Screenlock ASL_40"));
+				theApp.WriteLog(_T("*** Screenlock ASL_40"));
 			}
 			break;
 		case ASL_50:
 			{
-				theApp.getLog()->WriteLine(_T("*** Screenlock ASL_50"));
+				theApp.WriteLog(_T("*** Screenlock ASL_50"));
 			}
 			break;
 		case ASL_60:
 			{
-				theApp.getLog()->WriteLine(_T("*** Screenlock ASL_60"));
+				theApp.WriteLog(_T("*** Screenlock ASL_60"));
 			}
 			break;
 		}
 	}
 	else
 	{
-		theApp.getLog()->WriteLine(_T("*** AutoScreenlock disabled"));
+		theApp.WriteLog(_T("*** AutoScreenlock disabled"));
 	}
 
 	
@@ -5998,11 +5998,11 @@ void CConfiguration::SetServicePasswordDisabled(bool state)
 	m_bServicePasswordDisabled=state;
 	if(m_bServicePasswordDisabled)
 	{
-		theApp.getLog()->WriteLine(_T("*** ServicePasswordDisabled==true"));
+		theApp.WriteLog(_T("*** ServicePasswordDisabled==true"));
 	}
 	else
 	{
-		theApp.getLog()->WriteLine(_T("*** ServicePasswordDisabled==false"));
+		theApp.WriteLog(_T("*** ServicePasswordDisabled==false"));
 	}
 	getModel()->getI2C()->WriteConfigByte(SERVICEPSWRDDISABLED_8, (BYTE)state);
 }
@@ -6036,9 +6036,9 @@ void CConfiguration::SetNursecallActive(bool state)
 	getModel()->getI2C()->WriteConfigByte(NURSECALLACTIVE_8, (BYTE)state);
 
 	if(m_bNursecallActive)
-		theApp.getLog()->WriteLine(_T("***CConfiguration NurscallActive==true"));
+		theApp.WriteLog(_T("***CConfiguration NurscallActive==true"));
 	else
-		theApp.getLog()->WriteLine(_T("*** CConfiguration NurscallActive==false"));
+		theApp.WriteLog(_T("*** CConfiguration NurscallActive==false"));
 
 	if(AfxGetApp() != NULL)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_SYSTEMSTATE_CHANGED);
@@ -8949,9 +8949,9 @@ int CConfiguration::GetVentRange()
 void CConfiguration::SetVentRange(int range)
 {
 	if(NEONATAL==range)
-		theApp.getLog()->WriteLine(_T("### NEONATAL MODE ###"));
+		theApp.WriteLog(_T("### NEONATAL MODE ###"));
 	else
-		theApp.getLog()->WriteLine(_T("### PEDIATRIC MODE ###"));
+		theApp.WriteLog(_T("### PEDIATRIC MODE ###"));
 
 	bool bCheckSettings=false;
 	if(m_iVentRange!=range)
@@ -15549,7 +15549,7 @@ void CConfiguration::SerializeFile(CArchive& ar)
 			//error different FabianHFO-Version
 			CString sz=_T("");
 			sz.Format(_T("#HFO:0289: %d %d, not possible"), iConfigVersion,m_iConfigVersion);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 
 			getModel()->setLoadHospitalSettingsFailed(true);
 
@@ -15561,7 +15561,7 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		{
 			CString sz=_T("");
 			sz.Format(_T("#HFO:0289: %d %d"), iConfigVersion,m_iConfigVersion);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 		}
 
 		ar>>m_iEthernetPort;
@@ -16789,7 +16789,7 @@ COleDateTime CConfiguration::GetNIVTRIGGERdemoTimestamp()
 		iDemoYear=0;
 		iDemoMonth=0;
 		iDemoDay=0;
-		//theApp.getLog()->WriteLine(_T("*** NIVTRIGGERdemo license false ***"));
+		//theApp.WriteLog(_T("*** NIVTRIGGERdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_NIVTRIGGER_YEAR_16, iDemoYear);
 		getModel()->getI2C()->WriteConfigByte(DEMO_NIVTRIGGER_MONTH_8, iDemoMonth);
 		getModel()->getI2C()->WriteConfigByte(DEMO_NIVTRIGGER_DAY_8, iDemoDay);
@@ -16842,7 +16842,7 @@ void CConfiguration::SetNIVTRIGGERdemoTimestamp(COleDateTime dateTime)
 		dateTime.GetDay(),
 		dateTime.GetMonth(),
 		dateTime.GetYear());
-	theApp.getLog()->WriteLine(szTxt);
+	theApp.WriteLog(szTxt);
 }
 
 /**********************************************************************************************//**
@@ -16874,7 +16874,7 @@ COleDateTime CConfiguration::GetFOTdemoTimestamp()
 		iDemoYear=0;
 		iDemoMonth=0;
 		iDemoDay=0;
-		//theApp.getLog()->WriteLine(_T("*** FOTdemo license false ***"));
+		//theApp.WriteLog(_T("*** FOTdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_FOT_YEAR_16, iDemoYear);
 		getModel()->getI2C()->WriteConfigByte(DEMO_FOT_MONTH_8, iDemoMonth);
 		getModel()->getI2C()->WriteConfigByte(DEMO_FOT_DAY_8, iDemoDay);
@@ -16927,7 +16927,7 @@ void CConfiguration::SetFOTdemoTimestamp(COleDateTime dateTime)
 		dateTime.GetDay(),
 		dateTime.GetMonth(),
 		dateTime.GetYear());
-	theApp.getLog()->WriteLine(szTxt);
+	theApp.WriteLog(szTxt);
 }
 
 /**********************************************************************************************//**
@@ -16952,7 +16952,7 @@ COleDateTime CConfiguration::GetPRICOdemoTimestamp()
 		iDemoYear=0;
 		iDemoMonth=0;
 		iDemoDay=0;
-		//theApp.getLog()->WriteLine(_T("*** PRICOdemo license false ***"));
+		//theApp.WriteLog(_T("*** PRICOdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_PRICO_YEAR_16, iDemoYear);
 		getModel()->getI2C()->WriteConfigByte(DEMO_PRICO_MONTH_8, iDemoMonth);
 		getModel()->getI2C()->WriteConfigByte(DEMO_PRICO_DAY_8, iDemoDay);
@@ -17005,7 +17005,7 @@ void CConfiguration::SetPRICOdemoTimestamp(COleDateTime dateTime)
 		dateTime.GetDay(),
 		dateTime.GetMonth(),
 		dateTime.GetYear());
-	theApp.getLog()->WriteLine(szTxt);
+	theApp.WriteLog(szTxt);
 }
 
 /**********************************************************************************************//**
@@ -17030,7 +17030,7 @@ COleDateTime CConfiguration::GetTHERAPYdemoTimestamp()
 		iDemoYear=0;
 		iDemoMonth=0;
 		iDemoDay=0;
-		//theApp.getLog()->WriteLine(_T("*** THERAPYdemo license false ***"));
+		//theApp.WriteLog(_T("*** THERAPYdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_THERAPY_YEAR_16, iDemoYear);
 		getModel()->getI2C()->WriteConfigByte(DEMO_THERAPY_MONTH_8, iDemoMonth);
 		getModel()->getI2C()->WriteConfigByte(DEMO_THERAPY_DAY_8, iDemoDay);
@@ -17083,7 +17083,7 @@ void CConfiguration::SetTHERAPYdemoTimestamp(COleDateTime dateTime)
 		dateTime.GetDay(),
 		dateTime.GetMonth(),
 		dateTime.GetYear());
-	theApp.getLog()->WriteLine(szTxt);
+	theApp.WriteLog(szTxt);
 }
 
 /**********************************************************************************************//**
@@ -17108,7 +17108,7 @@ COleDateTime CConfiguration::GetTRENDdemoTimestamp()
 		iDemoYear=0;
 		iDemoMonth=0;
 		iDemoDay=0;
-		//theApp.getLog()->WriteLine(_T("*** TRENDdemo license false ***"));
+		//theApp.WriteLog(_T("*** TRENDdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_TREND_YEAR_16, iDemoYear);
 		getModel()->getI2C()->WriteConfigByte(DEMO_TREND_MONTH_8, iDemoMonth);
 		getModel()->getI2C()->WriteConfigByte(DEMO_TREND_DAY_8, iDemoDay);
@@ -17161,7 +17161,7 @@ void CConfiguration::SetTRENDdemoTimestamp(COleDateTime dateTime)
 		dateTime.GetDay(),
 		dateTime.GetMonth(),
 		dateTime.GetYear());
-	theApp.getLog()->WriteLine(szTxt);
+	theApp.WriteLog(szTxt);
 }
 
 /**********************************************************************************************//**
@@ -17186,7 +17186,7 @@ COleDateTime CConfiguration::GetLUNGRECdemoTimestamp()
 		iDemoYear=0;
 		iDemoMonth=0;
 		iDemoDay=0;
-		//theApp.getLog()->WriteLine(_T("*** LUNGRECdemo license false ***"));
+		//theApp.WriteLog(_T("*** LUNGRECdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_LUNGREC_YEAR_16, iDemoYear);
 		getModel()->getI2C()->WriteConfigByte(DEMO_LUNGREC_MONTH_8, iDemoMonth);
 		getModel()->getI2C()->WriteConfigByte(DEMO_LUNGREC_DAY_8, iDemoDay);
@@ -17239,7 +17239,7 @@ void CConfiguration::SetLUNGRECdemoTimestamp(COleDateTime dateTime)
 		dateTime.GetDay(),
 		dateTime.GetMonth(),
 		dateTime.GetYear());
-	theApp.getLog()->WriteLine(szTxt);
+	theApp.WriteLog(szTxt);
 }
 
 /**********************************************************************************************//**
@@ -17264,7 +17264,7 @@ COleDateTime CConfiguration::GetVLIMITdemoTimestamp()
 		iDemoYear=0;
 		iDemoMonth=0;
 		iDemoDay=0;
-		//theApp.getLog()->WriteLine(_T("*** VLIMITdemo license false ***"));
+		//theApp.WriteLog(_T("*** VLIMITdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_VLIMIT_YEAR_16, iDemoYear);
 		getModel()->getI2C()->WriteConfigByte(DEMO_VLIMIT_MONTH_8, iDemoMonth);
 		getModel()->getI2C()->WriteConfigByte(DEMO_VLIMIT_DAY_8, iDemoDay);
@@ -17317,7 +17317,7 @@ void CConfiguration::SetVLIMITdemoTimestamp(COleDateTime dateTime)
 		dateTime.GetDay(),
 		dateTime.GetMonth(),
 		dateTime.GetYear());
-	theApp.getLog()->WriteLine(szTxt);
+	theApp.WriteLog(szTxt);
 }
 
 /**********************************************************************************************//**
@@ -17342,7 +17342,7 @@ COleDateTime CConfiguration::GetVGUARANTYdemoTimestamp()
 		iDemoYear=0;
 		iDemoMonth=0;
 		iDemoDay=0;
-		//theApp.getLog()->WriteLine(_T("*** VGUARANTYdemo license false ***"));
+		//theApp.WriteLog(_T("*** VGUARANTYdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_VGUARANTY_YEAR_16, iDemoYear);
 		getModel()->getI2C()->WriteConfigByte(DEMO_VGUARANTY_MONTH_8, iDemoMonth);
 		getModel()->getI2C()->WriteConfigByte(DEMO_VGUARANTY_DAY_8, iDemoDay);
@@ -17395,7 +17395,7 @@ void CConfiguration::SetVGUARANTYdemoTimestamp(COleDateTime dateTime)
 		dateTime.GetDay(),
 		dateTime.GetMonth(),
 		dateTime.GetYear());
-	theApp.getLog()->WriteLine(szTxt);
+	theApp.WriteLog(szTxt);
 }
 
 /**********************************************************************************************//**
@@ -17420,7 +17420,7 @@ COleDateTime CConfiguration::GetNMODEdemoTimestamp()
 		iDemoYear=0;
 		iDemoMonth=0;
 		iDemoDay=0;
-		//theApp.getLog()->WriteLine(_T("*** NMODEdemo license false ***"));
+		//theApp.WriteLog(_T("*** NMODEdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_NMODE_YEAR_16, iDemoYear);
 		getModel()->getI2C()->WriteConfigByte(DEMO_NMODE_MONTH_8, iDemoMonth);
 		getModel()->getI2C()->WriteConfigByte(DEMO_NMODE_DAY_8, iDemoDay);
@@ -17473,7 +17473,7 @@ void CConfiguration::SetNMODEdemoTimestamp(COleDateTime dateTime)
 		dateTime.GetDay(),
 		dateTime.GetMonth(),
 		dateTime.GetYear());
-	theApp.getLog()->WriteLine(szTxt);
+	theApp.WriteLog(szTxt);
 }
 
 /**********************************************************************************************//**
@@ -17498,7 +17498,7 @@ COleDateTime CConfiguration::GetHFOdemoTimestamp()
 		iDemoYear=0;
 		iDemoMonth=0;
 		iDemoDay=0;
-		//theApp.getLog()->WriteLine(_T("*** HFOdemo license false ***"));
+		//theApp.WriteLog(_T("*** HFOdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_HFO_YEAR_16, iDemoYear);
 		getModel()->getI2C()->WriteConfigByte(DEMO_HFO_MONTH_8, iDemoMonth);
 		getModel()->getI2C()->WriteConfigByte(DEMO_HFO_DAY_8, iDemoDay);
@@ -17552,7 +17552,7 @@ void CConfiguration::SetHFOdemoTimestamp(COleDateTime dateTime)
 		dateTime.GetDay(),
 		dateTime.GetMonth(),
 		dateTime.GetYear());
-	theApp.getLog()->WriteLine(szTxt);
+	theApp.WriteLog(szTxt);
 }
 
 /**********************************************************************************************//**
@@ -17600,7 +17600,7 @@ void CConfiguration::readAmpCorFactor()
 		{
 			dbBufAmpCorFactor[i] = 1;
 
-			theApp.getLog()->WriteLine(_T("### ERROR: AMPCORFACTORINI"));
+			theApp.WriteLog(_T("### ERROR: AMPCORFACTORINI"));
 		}
 	}
 }

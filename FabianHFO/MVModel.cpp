@@ -234,7 +234,7 @@ CMVModel::CMVModel(void)
 	m_szBuildVersion = _T("9.0.0.0");
 #else
 	m_szVersion = _T("5.0.8");
-	m_szBuildVersion = _T("5.0.8.3");
+	m_szBuildVersion = _T("5.0.8.4");
 #endif
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO"),true);
@@ -243,7 +243,7 @@ CMVModel::CMVModel(void)
 	//<major release><minor release><patch level><build number>
 	CString szVersion = _T("fabianHFO ");
 	szVersion+=m_szBuildVersion;
-	theApp.getLog()->WriteLine(szVersion);
+	theApp.WriteLog(szVersion);
 
 	m_bSPO2running=false;
 	m_bCalibrationViewActive=false;
@@ -402,7 +402,7 @@ CThreadPRICO *CMVModel::getPRICOThread()
 	if(PRICOTHR==NULL)
 	{
 		//DEBUGMSG(TRUE, (TEXT("#########CThreadFOT::getPRICOThread()\r\n")));
-		//theApp.getLog()->WriteLine(_T("#ERROR: PRICOTHR"));
+		//theApp.WriteLog(_T("#ERROR: PRICOTHR"));
 		//PRICOTHR=CThreadPRICO::getInstance();
 	}
 	return PRICOTHR;
@@ -423,7 +423,7 @@ CThreadFOT *CMVModel::getFOTThread()
 	{
 		//int iSTop=0;
 		//DEBUGMSG(TRUE, (TEXT("#########CThreadFOT::getInstance()\r\n")));
-		//theApp.getLog()->WriteLine(_T("#ERROR: FOTTHR"));
+		//theApp.WriteLog(_T("#ERROR: FOTTHR"));
 		//FOTTHR=CThreadFOT::getInstance();
 	}
 	return FOTTHR;
@@ -747,7 +747,7 @@ CAlarmMgmtHandler* CMVModel::getALARMHANDLER()
 
 void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 {
-	theApp.getLog()->WriteLine(_T("#M:001"));
+	theApp.WriteLog(_T("#M:001"));
 	m_szFontName=szFontName;
 	m_wLanguageID=wLanguageID;
 
@@ -768,20 +768,20 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	GetAdapterInfo();
 	checkUniqueID();
 	
-	theApp.getLog()->WriteLine(_T("#M:002"));
+	theApp.WriteLog(_T("#M:002"));
 
 #ifndef SIMULATION_VERSION
 	I2C=CInterfaceI2C::GetInstance();
 	if(I2C==NULL)
 	{
-		theApp.getLog()->WriteLine(_T("#ERROR: I2C NULL"));
+		theApp.WriteLog(_T("#ERROR: I2C NULL"));
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_I2C);
 	}
 	else if(I2C->Init(true)==false)
 	{
 		I2C=NULL;
-		theApp.getLog()->WriteLine(_T("#ERROR: I2C INIT"));
+		theApp.WriteLog(_T("#ERROR: I2C INIT"));
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_I2C);
 	}
@@ -793,40 +793,40 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_START_I2CWATCHDOG);
 	//Sleep(0);
 
-	theApp.getLog()->WriteLine(_T("#M:003"));
+	theApp.WriteLog(_T("#M:003"));
 
 	DEBUGMSG(TRUE, (TEXT("#########init interfaceses\r\n")));
 
 	LANGUAGE=CLanguage::GetInstance();
 	CONFIG=CConfiguration::GetInstance();
 
-	theApp.getLog()->WriteLine(_T("#M:004"));
+	theApp.WriteLog(_T("#M:004"));
 
 	ALARMHANDLER = CAlarmMgmtHandler::getInstance();
 
-	theApp.getLog()->WriteLine(_T("#M:005"));
+	theApp.WriteLog(_T("#M:005"));
 
 #ifndef SIMULATION_NOSERIAL
 	SERIAL=CInterfaceSerial::GetInstance();
 #endif
 
-	theApp.getLog()->WriteLine(_T("#M:006"));
+	theApp.WriteLog(_T("#M:006"));
 
 #ifndef SIMULATION_NOSPI
 	SPI=CInterfaceSPI::GetInstance();
 #endif
 	
-	theApp.getLog()->WriteLine(_T("#M:007"));
+	theApp.WriteLog(_T("#M:007"));
 
 	PIF=CInterfaceFSBus::GetInstance();
 	DIO=CInterfaceDIO::GetInstance();
 
-	theApp.getLog()->WriteLine(_T("#M:008"));
+	theApp.WriteLog(_T("#M:008"));
 
 	DEBUGMSG(TRUE, (TEXT("#########getinstance datahandler\r\n")));
 	DATAHANDLER=CDataHandler::getInstance();
 
-	theApp.getLog()->WriteLine(_T("#M:009"));
+	theApp.WriteLog(_T("#M:009"));
 
 	MODEHANDLER=CVentModeHandler::getInstance();
 	MONITORTHR=CThreadMonitor::getInstance();
@@ -835,7 +835,7 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	EXSPIRATIONTHR=CThreadExspiration::getInstance();
 	SOUND=CSoundPlayer::GetInstance();	
 
-	theApp.getLog()->WriteLine(_T("#M:010"));
+	theApp.WriteLog(_T("#M:010"));
 
 	//###################################################
 	//init phase
@@ -845,14 +845,14 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 //#ifndef SIMULATION_VERSION
 //	if(I2C==NULL)
 //	{
-//		theApp.getLog()->WriteLine(_T("#ERROR: I2C NULL"));
+//		theApp.WriteLog(_T("#ERROR: I2C NULL"));
 //		if(AfxGetApp())
 //			AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_I2C);
 //	}
 //	else if(I2C->Init(true)==false)
 //	{
 //		I2C=NULL;
-//		theApp.getLog()->WriteLine(_T("#ERROR: I2C INIT"));
+//		theApp.WriteLog(_T("#ERROR: I2C INIT"));
 //		if(AfxGetApp())
 //			AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_I2C);
 //	}
@@ -861,7 +861,7 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	DEBUGMSG(TRUE, (TEXT("#########init config\r\n")));
 	CONFIG->Init();
 	
-	theApp.getLog()->WriteLine(_T("#M:011"));
+	theApp.WriteLog(_T("#M:011"));
 
 	DEBUGMSG(TRUE, (TEXT("#########init language\r\n")));
 	LANGUAGE->Init();
@@ -879,17 +879,17 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	SOUND->Init();//after PIF init!
 
 	DEBUGMSG(TRUE, (TEXT("#########init datahandler\r\n")));
-	theApp.getLog()->WriteLine(_T("#M:012"));
+	theApp.WriteLog(_T("#M:012"));
 
 	DATAHANDLER->init();
 
 	DEBUGMSG(TRUE, (TEXT("#########init datahandler finished\r\n")));
-	theApp.getLog()->WriteLine(_T("#M:013"));
+	theApp.WriteLog(_T("#M:013"));
 
 	ALARMHANDLER->init();
 
 	DEBUGMSG(TRUE, (TEXT("#########init alarmhandler finished\r\n")));
-	theApp.getLog()->WriteLine(_T("#M:014"));
+	theApp.WriteLog(_T("#M:014"));
 
 	if(DIO->Init())
 	{
@@ -901,7 +901,7 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	}
 
 	DEBUGMSG(TRUE, (TEXT("#########init SPI\r\n")));
-	theApp.getLog()->WriteLine(_T("#M:015"));
+	theApp.WriteLog(_T("#M:015"));
 
 #ifndef SIMULATION_NOSPI
 	if(SPI!=NULL && SPI->Init())
@@ -912,79 +912,79 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	{
 		getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_INIT);
 		setSPIavailability(FALSE);
-		theApp.getLog()->WriteLine(_T("#HFO:0227"));
+		theApp.WriteLog(_T("#HFO:0227"));
 	}
 #endif
 
 	DEBUGMSG(TRUE, (TEXT("#########init acuLink\r\n")));
-	theApp.getLog()->WriteLine(_T("#M:016"));
+	theApp.WriteLog(_T("#M:016"));
 
 	initAcuLink();
 
 	DEBUGMSG(TRUE, (TEXT("#########init SERIAL\r\n")));
-	theApp.getLog()->WriteLine(_T("#M:017"));
+	theApp.WriteLog(_T("#M:017"));
 
 	initSerialController();
 
 	DEBUGMSG(TRUE, (TEXT("#########datahandler start\r\n")));
-	theApp.getLog()->WriteLine(_T("#M:018"));
+	theApp.WriteLog(_T("#M:018"));
 
 	DATAHANDLER->start();//serial must be initialized first, sends down start command to serial PIC (==hardware configuration)
 	
-	theApp.getLog()->WriteLine(_T("#M:019"));
+	theApp.WriteLog(_T("#M:019"));
 	
 	if(VIEWHANDLER==NULL)
 	{
 		VIEWHANDLER=CMVViewHandler::GetInstance();
 	}
 
-	theApp.getLog()->WriteLine(_T("#M:020"));
+	theApp.WriteLog(_T("#M:020"));
 	DEBUGMSG(TRUE, (TEXT("#########init modules\r\n")));
 
 	initCO2module();
 
-	theApp.getLog()->WriteLine(_T("#M:021"));
+	theApp.WriteLog(_T("#M:021"));
 
 	initSPO2module();
 
-	theApp.getLog()->WriteLine(_T("#M:022"));
+	theApp.WriteLog(_T("#M:022"));
 
 	DEBUGMSG(TRUE, (TEXT("#########init PRICO\r\n")));
 	if(getDATAHANDLER()->isPRICOLicenseAvailable()==true)
 	{
-		theApp.getLog()->WriteLine(_T("#M:022.1"));
+		theApp.WriteLog(_T("#M:022.1"));
 		initPRICOthread();
 	}
 	if(getDATAHANDLER()->isFOTLicenseAvailable()==true)
 	{
-		theApp.getLog()->WriteLine(_T("#M:022.2"));
+		theApp.WriteLog(_T("#M:022.2"));
 		getFOTThread()->loadHFO_FOTvalues();
 	}
 	if(getDATAHANDLER()->isLUNGRECLicenseAvailable()==false && getCONFIG()->GetParaDataFREQ_REC()!=0)
 	{
-		theApp.getLog()->WriteLine(_T("#M:022.3"));
+		theApp.WriteLog(_T("#M:022.3"));
 		getCONFIG()->SetParaDataFREQ_REC(FACTORY_HFO_FREQREC);
 	}
 	
 	initTerminal();
-	theApp.getLog()->WriteLine(_T("#M:023"));
+	theApp.WriteLog(_T("#M:023"));
 	
 	
 #ifdef SIMULATION_NOSPI
-	theApp.getLog()->WriteLine(_T("+++SIMULATION_NOSPI+++"));
+	theApp.WriteLog(_T("+++SIMULATION_NOSPI+++"));
 #endif
 #ifdef SIMULATION_VERSION
-	theApp.getLog()->WriteLine(_T("+++SIMULATION_VERSION+++"));
+	theApp.WriteLog(_T("+++SIMULATION_VERSION+++"));
 #endif
 #ifdef SIMULATION_NOSERIAL
-	theApp.getLog()->WriteLine(_T("+++SIMULATION_NOSERIAL+++"));
+	theApp.WriteLog(_T("+++SIMULATION_NOSERIAL+++"));
 #endif
 #ifdef SIMULATION_ENTREK
-	theApp.getLog()->WriteLine(_T("+++SIMULATION_ENTREK+++"));
+	theApp.WriteLog(_T("+++SIMULATION_ENTREK+++"));
 #endif
 
 	DEBUGMSG(TRUE, (TEXT("#########write versions\r\n")));
-	theApp.getLog()->WriteLine(_T("#M:024"));
+	theApp.WriteLog(_T("#M:024"));
 
 	writeMainboardVersionToLog();
 	writeVentRangeToLog();
@@ -994,7 +994,7 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	writeLEAKCOMPENSATIONToLog();
 	writeALTITUDEToLog();
 
-	theApp.getLog()->WriteLine(_T("#M:025"));
+	theApp.WriteLog(_T("#M:025"));
 
 	DEBUGMSG(TRUE, (TEXT("#########start threads\r\n")));
 	startThreads();
@@ -1006,7 +1006,7 @@ void CMVModel::Init(CStringW szFontName, WORD wLanguageID)
 	if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_STARTUP);
 
-	theApp.getLog()->WriteLine(_T("#M:026"));
+	theApp.WriteLog(_T("#M:026"));
 }
 
 //void CMVModel::setI2Cinitialized()
@@ -1187,9 +1187,9 @@ void CMVModel::startThreads()
 void CMVModel::writeVentRangeToLog()
 {
 	if(getCONFIG()->GetVentRange()==NEONATAL)
-		theApp.getLog()->WriteLine(_T("### NEONATAL MODE"));
+		theApp.WriteLog(_T("### NEONATAL MODE"));
 	else
-		theApp.getLog()->WriteLine(_T("### PEDIATRIC MODE"));
+		theApp.WriteLog(_T("### PEDIATRIC MODE"));
 }
 
 /**********************************************************************************************//**
@@ -1204,7 +1204,7 @@ void CMVModel::writeALTITUDEToLog()
 	WORD iAltitude=getI2C()->ReadConfigWord(ALTITUDE_16);
 	CStringW szAlt=_T("");
 	szAlt.Format(_T("### ALTITUDE %d"), iAltitude);
-	theApp.getLog()->WriteLine(szAlt);
+	theApp.WriteLog(szAlt);
 }
 
 /**********************************************************************************************//**
@@ -1221,22 +1221,22 @@ void CMVModel::writeLEAKCOMPENSATIONToLog()
 	{
 	/*case LC_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("### LeakCompensatino disabled"));
+			theApp.WriteLog(_T("### LeakCompensatino disabled"));
 		}
 		break;*/
 	case LC_LOW:
 		{
-			theApp.getLog()->WriteLine(_T("### LeakCompensation low"));
+			theApp.WriteLog(_T("### LeakCompensation low"));
 		}
 		break;
 	case LC_MIDDLE:
 		{
-			theApp.getLog()->WriteLine(_T("### LeakCompensation middle"));
+			theApp.WriteLog(_T("### LeakCompensation middle"));
 		}
 		break;
 	case LC_HIGH:
 		{
-			theApp.getLog()->WriteLine(_T("### LeakCompensation high"));
+			theApp.WriteLog(_T("### LeakCompensation high"));
 		}
 		break;
 	}
@@ -1253,11 +1253,11 @@ void CMVModel::writeBIASFlowStateToLog()
 {
 	if(getCONFIG()->isBiasFlowActive())
 	{
-		theApp.getLog()->WriteLine(_T("### BiasFlow enabled"));
+		theApp.WriteLog(_T("### BiasFlow enabled"));
 	}
 	else
 	{
-		theApp.getLog()->WriteLine(_T("### BiasFlow disabled"));
+		theApp.WriteLog(_T("### BiasFlow disabled"));
 	}
 }
 
@@ -1272,7 +1272,7 @@ void CMVModel::writeConfigVersionToLog()
 {
 	CStringW szConfigVersion=_T("");
 	szConfigVersion.Format(_T("### Config-Version %d"), getCONFIG()->getConfigVersion());
-	theApp.getLog()->WriteLine(szConfigVersion);
+	theApp.WriteLog(szConfigVersion);
 }
 
 /**********************************************************************************************//**
@@ -1286,24 +1286,24 @@ void CMVModel::writeKernelVersionToLog()
 {
 	CString csKernel=_T("");
 	csKernel.Format(_T("### Kernel %s %s %s ###"), getCONFIG()->GetKernelVersion(),getCONFIG()->GetKernelAcuVersion(),getCONFIG()->GetKernelVersionDate());
-	theApp.getLog()->WriteLine(csKernel);
+	theApp.WriteLog(csKernel);
 	csKernel.Format(_T("### BoardSubType %s###"), getCONFIG()->GetBoardSubType());
-	theApp.getLog()->WriteLine(csKernel);
+	theApp.WriteLog(csKernel);
 }
 //void CMVModel::writeSerialBuiltInToLog()
 //{
 //	CTlsRegistry regSerial1(_T("HKLM\\Drivers\\BuiltIn\\Serial1"),true);
 //	CStringW szSerial=_T("");
 //	szSerial.Format(_T("### Serial1 %s"), regSerial1.ReadString(_T("Dll"), _T("unknown")));
-//	theApp.getLog()->WriteLine(szSerial);
+//	theApp.WriteLog(szSerial);
 //
 //	CTlsRegistry regSerial2(_T("HKLM\\Drivers\\BuiltIn\\Serial2"),true);
 //	szSerial.Format(_T("### Serial2 %s"), regSerial2.ReadString(_T("Dll"), _T("unknown")));
-//	theApp.getLog()->WriteLine(szSerial);
+//	theApp.WriteLog(szSerial);
 //
 //	CTlsRegistry regSerial3(_T("HKLM\\Drivers\\BuiltIn\\Serial3"),true);
 //	szSerial.Format(_T("### Serial3 %s"), regSerial3.ReadString(_T("Dll"), _T("unknown")));
-//	theApp.getLog()->WriteLine(szSerial);
+//	theApp.WriteLog(szSerial);
 //}
 
 /**********************************************************************************************//**
@@ -1320,7 +1320,7 @@ void CMVModel::writeMainboardVersionToLog()
 	int iMinor=iMainVersion & 0x000F;
 	CString szMB=_T("");
 	szMB.Format(_T("***MAINBOARD  %d.%d, "), iMajor,iMinor);
-	theApp.getLog()->WriteLine(szMB);
+	theApp.WriteLog(szMB);
 }
 
 /**********************************************************************************************//**
@@ -1360,32 +1360,32 @@ bool CMVModel::initAcuLink()
 	}
 	else
 	{
-		theApp.getLog()->WriteLine(_T("***NO ACULINK***"));
+		theApp.WriteLog(_T("***NO ACULINK***"));
 		SetAcuLinkAvailability(FALSE);
 
 		if(false==CTlsFile::Exists(_T("\\FFSDISK\\AcuLink.exe")))
 		{
-			theApp.getLog()->WriteLine(_T("***ACULINK=no EXE***"));
+			theApp.WriteLog(_T("***ACULINK=no EXE***"));
 		}
 		else if(false==CTlsFile::Exists(_T("\\FFSDISK\\AcuLink_DLL.dll")))
 		{
-			theApp.getLog()->WriteLine(_T("***ACULINK=no DLL***"));
+			theApp.WriteLog(_T("***ACULINK=no DLL***"));
 		}
 		else if(false==CTlsFile::Exists(szFileAcuLink))
 		{
-			theApp.getLog()->WriteLine(_T("***ACULINK=no license***"));
+			theApp.WriteLog(_T("***ACULINK=no license***"));
 		}
 		else if(getCONFIG()->GetPDMSprotocol()==ACL_NOPDMS)
 		{
-			theApp.getLog()->WriteLine(_T("***ACULINK=ACL_NOPDMS***"));
+			theApp.WriteLog(_T("***ACULINK=ACL_NOPDMS***"));
 		}
 		else if(getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_REMOTE)
 		{
-			theApp.getLog()->WriteLine(_T("***ACULINK=ACL_TERMINAL_REMOTE***"));
+			theApp.WriteLog(_T("***ACULINK=ACL_TERMINAL_REMOTE***"));
 		}
 		else if(getCONFIG()->GetPDMSprotocol()==ACL_TERMINAL_WAVE)
 		{
-			theApp.getLog()->WriteLine(_T("***ACULINK=ACL_TERMINAL_WAVE***"));
+			theApp.WriteLog(_T("***ACULINK=ACL_TERMINAL_WAVE***"));
 		}
 
 		return false;
@@ -1422,7 +1422,7 @@ void CMVModel::checkUniqueID()
 
 		CString szDevID=_T("");
 		szDevID.Format(_T("##DEVICE-ID: %s##"), szUniqueID);
-		theApp.getLog()->WriteLine(szDevID);*/
+		theApp.WriteLog(szDevID);*/
 
 		writeUniqueIDtoLog();
 	}
@@ -1439,7 +1439,7 @@ void CMVModel::writeUniqueIDtoLog()
 {
 	if(m_szUniqueID==_T(""))
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0226"));
+		theApp.WriteLog(_T("#HFO:0226"));
 		m_szUniqueID=_T("-ERROR-");
 	}
 	else
@@ -1447,7 +1447,7 @@ void CMVModel::writeUniqueIDtoLog()
 		CString szDevID=_T("");
 		szDevID=m_szUniqueID;
 		szDevID.Format(_T("##DEVICE-ID: %s##"), szDevID);
-		theApp.getLog()->WriteLine(szDevID);
+		theApp.WriteLog(szDevID);
 	}
 	
 }
@@ -1461,13 +1461,13 @@ void CMVModel::writeUniqueIDtoLog()
 
 void CMVModel::setNetworkAddressAsUniqueID()
 {
-	theApp.getLog()->WriteLine(_T("#HFO:0225"));
+	theApp.WriteLog(_T("#HFO:0225"));
 	CTlsRegistry regID(_T("HKLM\\Comm\\dm9ce1\\parms"),true);
 	CString szUniqueID=regID.ReadString(_T("NetworkAddress"), _T(""));
 
 	/*CString szLAN=_T("");
 	szLAN.Format(_T("##NetworkAddress1 %s##"), szUniqueID);
-	theApp.getLog()->WriteLine(szLAN);*/
+	theApp.WriteLog(szLAN);*/
 
 	if(szUniqueID!=_T(""))
 	{
@@ -1488,12 +1488,12 @@ void CMVModel::setNetworkAddressAsUniqueID()
 		/*szUniqueID=m_szUniqueID;
 		szLAN=_T("");
 		szLAN.Format(_T("##NetworkAddress2 %s##"), szUniqueID);
-		theApp.getLog()->WriteLine(szLAN);*/
+		theApp.WriteLog(szLAN);*/
 	}
 
 	/*if(m_szUniqueID==_T(""))
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0226"));
+		theApp.WriteLog(_T("#HFO:0226"));
 		m_szUniqueID=_T("-ERROR-");
 	}*/
 }
@@ -1511,7 +1511,7 @@ CMVViewHandler *CMVModel::getVIEWHANDLER()
 {
 	if(VIEWHANDLER==NULL)
 	{
-		//theApp.getLog()->WriteLine(_T("#ERROR: VIEWHANDLER"));
+		//theApp.WriteLog(_T("#ERROR: VIEWHANDLER"));
 		VIEWHANDLER=CMVViewHandler::GetInstance();
 	}
 	return VIEWHANDLER;
@@ -1773,17 +1773,17 @@ void CMVModel::logCO2module()
 	{
 	case CO2MODULE_NONE:
 		{
-			theApp.getLog()->WriteLine(_T("### CO2MODULE_NONE"));
+			theApp.WriteLog(_T("### CO2MODULE_NONE"));
 		}
 		break;
 	case CO2MODULE_CAPNOSTAT:
 		{
-			theApp.getLog()->WriteLine(_T("### CO2MODULE_CAPNOSTAT"));
+			theApp.WriteLog(_T("### CO2MODULE_CAPNOSTAT"));
 		}
 		break;
 	case CO2MODULE_MICROPOD:
 		{
-			theApp.getLog()->WriteLine(_T("### CO2MODULE_MICROPOD"));
+			theApp.WriteLog(_T("### CO2MODULE_MICROPOD"));
 		}
 		break;
 	}
@@ -1800,7 +1800,7 @@ void CMVModel::DeinitCO2module()
 {
 	if(ETCO2)
 	{
-		theApp.getLog()->WriteLine(_T("#ETCO2 deinit"));
+		theApp.WriteLog(_T("#ETCO2 deinit"));
 		ETCO2->Deinit();
 		ETCO2->DestroyInstance();
 		ETCO2=NULL;
@@ -1897,12 +1897,12 @@ void CMVModel::logSPO2module()
 	{
 	case SPO2MODULE_NONE:
 		{
-			theApp.getLog()->WriteLine(_T("### SPO2MODULE_NONE"));
+			theApp.WriteLog(_T("### SPO2MODULE_NONE"));
 		}
 		break;
 	case SPO2MODULE_MASIMO:
 		{
-			theApp.getLog()->WriteLine(_T("### SPO2MODULE_MASIMO"));
+			theApp.WriteLog(_T("### SPO2MODULE_MASIMO"));
 			DEBUGMSG(TRUE, (TEXT("### SPO2MODULE_MASIMO\r\n")));
 		}
 		break;
@@ -2138,7 +2138,7 @@ void CMVModel::SetVentRunState(eRunState state)
 	case VENT_STOPPED:
 		{
 			bStopPRICO=true;
-			theApp.getLog()->WriteLine(L"***VENT_STOPPED***");
+			theApp.WriteLog(L"***VENT_STOPPED***");
 			if(getCONFIG()->getCO2module()!=CO2MODULE_NONE && getETCO2()!=NULL)
 			{
 				getETCO2()->set_StandbyMode(true);
@@ -2154,7 +2154,7 @@ void CMVModel::SetVentRunState(eRunState state)
 		break;
 	case VENT_RUNNING:
 		{
-			theApp.getLog()->WriteLine(L"***VENT_RUNNING***");
+			theApp.WriteLog(L"***VENT_RUNNING***");
 			if(getCONFIG()->getCO2module()!=CO2MODULE_NONE && getETCO2()!=NULL)
 			{
 				getETCO2()->set_StandbyMode(false);
@@ -2164,7 +2164,7 @@ void CMVModel::SetVentRunState(eRunState state)
 	case VENT_STANDBY:
 		{
 			bStopPRICO=true;
-			theApp.getLog()->WriteLine(L"***VENT_STANDBY***");
+			theApp.WriteLog(L"***VENT_STANDBY***");
 			if(getCONFIG()->getCO2module()!=CO2MODULE_NONE && getETCO2()!=NULL)
 			{
 				getETCO2()->set_StandbyMode(true);
@@ -2308,7 +2308,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 					bVentStateChanged=true;
 
 					if(false==getVMODEHANDLER()->changeVentMode(VM_IPPV,0))
-						theApp.getLog()->WriteLine(_T("#HFO:0299"));
+						theApp.WriteLog(_T("#HFO:0299"));
 				}
 			}
 
@@ -2472,9 +2472,9 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 				getDATAHANDLER()->SetBackupParadata(0,false);
 
 				//DEBUGMSG(TRUE, (TEXT("EV_CONTROL_START_FOT_CONVENTIONAL 2\r\n")));
-				theApp.getLog()->WriteLine(_T("#FOT: CPAP"));
+				theApp.WriteLog(_T("#FOT: CPAP"));
 				if(false==getVMODEHANDLER()->changeVentMode(VM_CPAP,1,false))
-					theApp.getLog()->WriteLine(_T("#HFO:0228"));
+					theApp.WriteLog(_T("#HFO:0228"));
 			}
 			else
 			{
@@ -2510,7 +2510,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 
 				//DEBUGMSG(TRUE, (TEXT("EV_CONTROL_RESTORE_FOT_CONVENTIONAL 1\r\n")));
 				if(false==getVMODEHANDLER()->changeVentMode(m_eVentModePrevFOT,1,false))
-					theApp.getLog()->WriteLine(_T("#HFO:0228fot"));
+					theApp.WriteLog(_T("#HFO:0228fot"));
 				//DEBUGMSG(TRUE, (TEXT("EV_CONTROL_RESTORE_FOT_CONVENTIONAL 2\r\n")));
 
 				getSPI()->resetPressureAlarmDelay();
@@ -2533,7 +2533,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			getDATAHANDLER()->SetExhalValvCalMode(true);
 		
 			if(false==getVMODEHANDLER()->changeVentMode(VM_IPPV,0))
-				theApp.getLog()->WriteLine(_T("#HFO:0228"));
+				theApp.WriteLog(_T("#HFO:0228"));
 
 			getSPI()->resetPressureAlarmDelay();
 			
@@ -2629,7 +2629,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			}
 			if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
 			{
-				theApp.getLog()->WriteLine(_T("#FlowSensor turned off -> VG/VL turned off"));
+				theApp.WriteLog(_T("#FlowSensor turned off -> VG/VL turned off"));
 
 				getDATAHANDLER()->PARADATA()->SetVGarantState_IPPV(false,false,true);
 				getDATAHANDLER()->PRESET()->SetVGarantState_IPPV(false,false,false);
@@ -2657,7 +2657,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
 					{
 						if(false==getVMODEHANDLER()->changeVentMode(VM_SIPPV))
-							theApp.getLog()->WriteLine(_T("#HFO:0230"));
+							theApp.WriteLog(_T("#HFO:0230"));
 						else
 						{
 							getDATAHANDLER()->checkTriggerTubeDependency();
@@ -2671,7 +2671,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 					if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
 					{
 						if(false==getVMODEHANDLER()->changeVentMode(VM_SIMV))
-							theApp.getLog()->WriteLine(_T("#HFO:0230"));
+							theApp.WriteLog(_T("#HFO:0230"));
 						else
 						{
 							getDATAHANDLER()->checkTriggerTubeDependency();
@@ -2749,7 +2749,7 @@ void CMVModel::triggerControlEvent(CMVEvent* pEvent)
 			m_bAutoResetFromPreset = true;
 			
 			if(false==getVMODEHANDLER()->changeVentMode(eMode,0))
-				theApp.getLog()->WriteLine(_T("#HFO:0233"));
+				theApp.WriteLog(_T("#HFO:0233"));
 
 			m_bAutoResetFromPreset = false;
 			
@@ -3405,7 +3405,7 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 			{
 			case VS_SYSFAIL:
 				{
-					theApp.getLog()->WriteLine(_T("$M30$"));
+					theApp.WriteLog(_T("$M30$"));
 					if(getALARMHANDLER()->isActiveAlarmType(AT_SYSFAIL) && getALARMHANDLER()->getAlarmSilentState()==ASTATE_ACTIVE)
 					{
 						if(AfxGetApp())
@@ -3422,7 +3422,7 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 				break;
 			case VS_BATTERY:
 				{
-					theApp.getLog()->WriteLine(_T("$M31$"));
+					theApp.WriteLog(_T("$M31$"));
 					if(		(getALARMHANDLER()->ALARM_Accu_Empty->getAlarmState()==AS_ACTIVE
 						||	getALARMHANDLER()->ALARM_Accu_Defect->getAlarmState()==AS_ACTIVE)
 						 && getALARMHANDLER()->getAlarmSilentState()==ASTATE_ACTIVE)
@@ -3434,7 +3434,7 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 					{
 						getALARMHANDLER()->deleteSignaledAlarms();
 
-						theApp.getLog()->WriteLine(_T("CMVEventUI::EV_BN_NUMERIC -> AL_Accu_Empty"));
+						theApp.WriteLog(_T("CMVEventUI::EV_BN_NUMERIC -> AL_Accu_Empty"));
 						getVIEWHANDLER()->changeViewState(VS_PARA,VSS_GRAPH_SINGLE_LINEGRAPHS);
 
 						if(AfxGetApp())
@@ -3444,19 +3444,19 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 				break;
 			case VS_PATDATA:
 				{
-					theApp.getLog()->WriteLine(_T("$M32$"));
+					theApp.WriteLog(_T("$M32$"));
 					getVIEWHANDLER()->changeViewState(VS_PARA,VSS_GRAPH_SINGLE_LINEGRAPHS);
 				}
 				break;
 			case VS_TREND:
 				{
-					theApp.getLog()->WriteLine(_T("$M33$"));
+					theApp.WriteLog(_T("$M33$"));
 					getVIEWHANDLER()->changeViewState(VS_GRAPH,(eViewSubState)getCONFIG()->GraphGetLastViewState());
 				}
 				break;
 			case VS_ALARM_SYS:
 				{
-					theApp.getLog()->WriteLine(_T("$M34$"));
+					theApp.WriteLog(_T("$M34$"));
 					if(getALARMHANDLER()->isActiveAlarmType(AT_SYSALARM) && getALARMHANDLER()->getAlarmSilentState()==ASTATE_ACTIVE)
 					{
 						if(AfxGetApp())
@@ -3475,17 +3475,17 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 				break;
 			case VS_GRAPH:
 				{
-					theApp.getLog()->WriteLine(_T("$M35$"));
+					theApp.WriteLog(_T("$M35$"));
 				}
 				break;
 			case VS_PARA:
 				{
-					theApp.getLog()->WriteLine(_T("$M36$"));
+					theApp.WriteLog(_T("$M36$"));
 				}
 				break;
 			case VS_SETUP:
 				{
-					theApp.getLog()->WriteLine(_T("$M37$"));
+					theApp.WriteLog(_T("$M37$"));
 					getVIEWHANDLER()->changeToPrevViewState();
 
 					if(AfxGetApp())
@@ -3494,7 +3494,7 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 				break;
 			case VS_ALARM_LIMIT:
 				{
-					theApp.getLog()->WriteLine(_T("$M38$"));
+					theApp.WriteLog(_T("$M38$"));
 					getVIEWHANDLER()->changeToPrevViewState();
 
 					if(AfxGetApp())
@@ -3503,7 +3503,7 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 				break;
 			case VS_SERVICE:
 				{
-					theApp.getLog()->WriteLine(_T("$M39$"));
+					theApp.WriteLog(_T("$M39$"));
 					getDATAHANDLER()->SetVentilBurnRunning(false);
 
 					getALARMHANDLER()->setAutoSilent(false,true,false);
@@ -3520,7 +3520,7 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 	case CMVEventUI::EV_BN_SET_SERVICE_MODE://++++++++++++++++++++++++++++++Service+++++++++++++++++++++++++++++++++++++++++
 		{
 			if(false==getVMODEHANDLER()->changeVentMode(VM_SERVICE,0))
-				theApp.getLog()->WriteLine(_T("#HFO:0235"));
+				theApp.WriteLog(_T("#HFO:0235"));
 			else
 			{
 				getALARMHANDLER()->setAlarmSilent();
@@ -3592,12 +3592,12 @@ void CMVModel::triggerMatrixEvent(CMVEvent* pEvent)
 		{
 		case CMVEventMatrix::EV_BN_MATRIX_STARTSTOP_DOWN:
 			{
-				theApp.getLog()->WriteLine(_T("#HFO:0236"));
+				theApp.WriteLog(_T("#HFO:0236"));
 			}
 			break;
 		case CMVEventMatrix::EV_BN_MATRIX_STARTSTOP_UP:
 			{
-				theApp.getLog()->WriteLine(_T("#HFO:0237"));
+				theApp.WriteLog(_T("#HFO:0237"));
 		}
 			break;
 		default:
@@ -4073,7 +4073,7 @@ void CMVModel::triggerAlarmEvent(CMVEvent* pEvent)
 						{
 							//getVIEWHANDLER()->StopDiagramm();
 
-							theApp.getLog()->WriteLine(_T("CMVEventAlarm::EV_ALARMSTATE_CHANGED -> AL_Accu_Empty"));
+							theApp.WriteLog(_T("CMVEventAlarm::EV_ALARMSTATE_CHANGED -> AL_Accu_Empty"));
 							getVIEWHANDLER()->changeViewState(VS_BATTERY,VSS_NONE);
 						}
 					}
@@ -4086,7 +4086,7 @@ void CMVModel::triggerAlarmEvent(CMVEvent* pEvent)
 						{
 							//getVIEWHANDLER()->StopDiagramm();
 
-							theApp.getLog()->WriteLine(_T("CMVEventAlarm::EV_ALARMSTATE_CHANGED -> AL_Accu_Defect"));
+							theApp.WriteLog(_T("CMVEventAlarm::EV_ALARMSTATE_CHANGED -> AL_Accu_Defect"));
 							getVIEWHANDLER()->changeViewState(VS_BATTERY,VSS_NONE);
 						}
 					}
@@ -4718,7 +4718,7 @@ int CMVModel::ParseFlowsensorAlarmStateBytes(int iState)
 	{
 		if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_ON)
 		{
-			theApp.getLog()->WriteLine(_T("#HFO:0252"));
+			theApp.WriteLog(_T("#HFO:0252"));
 			getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_ON);
 		}
 	}
@@ -4726,12 +4726,12 @@ int CMVModel::ParseFlowsensorAlarmStateBytes(int iState)
 	{
 		if(getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
 		{
-			theApp.getLog()->WriteLine(_T("#HFO:0253"));
+			theApp.WriteLog(_T("#HFO:0253"));
 			getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_MANOFF);
 		}
 		else if(getVMODEHANDLER()->activeModeIsTHERAPY() && getDATAHANDLER()->GetFlowSensorState()!=FLOWSENSOR_AUTOOFF)//rku,PRETRIGGER
 		{
-			theApp.getLog()->WriteLine(_T("#HFO:0254"));
+			theApp.WriteLog(_T("#HFO:0254"));
 			getDATAHANDLER()->SetFlowSensorState(FLOWSENSOR_OFF);
 		}
 	}
@@ -5137,7 +5137,7 @@ bool CMVModel::ParseAlarmStateBytes(int iAlarmState)
 	//	{
 	//		if(true==getDATAHANDLER()->SetAccuSupply(true))
 	//		{
-	//			//theApp.getLog()->WriteLine(_T("SetAccuSupply(true)"), false);
+	//			//theApp.WriteLog(_T("SetAccuSupply(true)"), false);
 	//			if(getALARMHANDLER()->SetAlarm_Accu_POWER(_T("")))
 	//			{
 	//				bRes=true;
@@ -5152,7 +5152,7 @@ bool CMVModel::ParseAlarmStateBytes(int iAlarmState)
 	//		}
 	//		if(true==getDATAHANDLER()->SetAccuSupply(false))
 	//		{
-	//			//theApp.getLog()->WriteLine(_T("SetAccuSupply(false)"), false);
+	//			//theApp.WriteLog(_T("SetAccuSupply(false)"), false);
 	//			bRes=true;
 	//		}
 	//	}
@@ -5536,7 +5536,7 @@ void CMVModel::setSERIALavailable(bool state)
 	}
 	else
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0291"));
+		theApp.WriteLog(_T("#HFO:0291"));
 		//DEBUGMSG(TRUE, (TEXT("### SetSERIALavailability false ###\r\n")));
 	}
 }
@@ -5570,11 +5570,11 @@ void CMVModel::setSPIavailability(bool state)
 	{
 		if(state)
 		{
-			//theApp.getLog()->WriteLine(_T("SPI SetSPIavailability true"));
+			//theApp.WriteLog(_T("SPI SetSPIavailability true"));
 		}
 		else
 		{
-			theApp.getLog()->WriteLine(_T("#HFO:0255"));
+			theApp.WriteLog(_T("#HFO:0255"));
 		}
 	}
 	m_bSPIavailability=state;
@@ -5607,7 +5607,7 @@ bool CMVModel::reinitSERIAL()
 {
 	setSERIALavailable(FALSE);
 
-	theApp.getLog()->WriteLine(_T("CMVModel::ReinitSERIAL()"));
+	theApp.WriteLog(_T("CMVModel::ReinitSERIAL()"));
 
 	EnterCriticalSection(&m_csSerial);
 	bool bRes=TRUE;
@@ -5758,7 +5758,7 @@ void CMVModel::activateO2Flush()
 	LeaveCriticalSection(&m_csO2Flush);
 	
 
-	theApp.getLog()->WriteLine(_T("activateO2Flush"));
+	theApp.WriteLog(_T("activateO2Flush"));
 
 	getVIEWHANDLER()->refreshO2Flush();
 
@@ -5794,7 +5794,7 @@ void CMVModel::deactivateO2Flush()
 	m_bO2FlushActive=false;
 	LeaveCriticalSection(&m_csO2Flush);
 
-	theApp.getLog()->WriteLine(_T("deactivateO2Flush"));
+	theApp.WriteLog(_T("deactivateO2Flush"));
 
 	getVIEWHANDLER()->refreshO2Flush();
 
@@ -5829,7 +5829,7 @@ bool CMVModel::isO2FlushActive()
 
 void CMVModel::activateMANBREATH()
 {
-	theApp.getLog()->WriteLine(_T("***MATZ on"));
+	theApp.WriteLog(_T("***MATZ on"));
 	getSPI()->activateMANBREATH();
 
 	m_bMANBREATHrunning=true;
@@ -5845,7 +5845,7 @@ void CMVModel::activateMANBREATH()
 
 void CMVModel::deactivateMANBREATH()
 {
-	theApp.getLog()->WriteLine(_T("***MATZ off"));
+	theApp.WriteLog(_T("***MATZ off"));
 	getSPI()->deactivateMANBREATH();
 
 	if(getVMODEHANDLER()->activeModeIsNMODE() == false)

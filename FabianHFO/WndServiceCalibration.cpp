@@ -1045,7 +1045,7 @@ void CWndServiceCalibration::OnBnClickedSysCal()
 		if(m_pcExhCal)
 			m_pcExhCal->EnableWindow(FALSE);
 
-		theApp.getLog()->WriteLine(_T("*** Service mode CMD_SYSCALIBRATION ***"));
+		theApp.WriteLog(_T("*** Service mode CMD_SYSCALIBRATION ***"));
 	}
 	else
 	{
@@ -1314,7 +1314,7 @@ void CWndServiceCalibration::OnBnClickedProx0()
 	}
 	
 
-	theApp.getLog()->WriteLine(_T("*** Service mode 0mbar calibrated ***"));
+	theApp.WriteLog(_T("*** Service mode 0mbar calibrated ***"));
 	m_csProxCal=_T("- 0mbar calibrated -");
 
 	m_iPProxMonSCL=getModel()->getSPI()->Read_CAL_PRESS_SCALE();
@@ -1618,7 +1618,7 @@ void CWndServiceCalibration::OnBnClickedProx60()
 		return;
 	}
 
-	theApp.getLog()->WriteLine(_T("*** Service mode 60mbar calibrated ***"));
+	theApp.WriteLog(_T("*** Service mode 60mbar calibrated ***"));
 	m_csProxCal=_T("- 60mbar calibrated -");
 
 	m_iPProxMonSCL=getModel()->getSPI()->Read_CAL_PRESS_SCALE();
@@ -1698,7 +1698,7 @@ void CWndServiceCalibration::OnBnClickedExhCal()
 
 		if(iRes==IDYES)
 		{
-			theApp.getLog()->WriteLine(_T("*** Service mode OnBnClickedExhCal() ***"));
+			theApp.WriteLog(_T("*** Service mode OnBnClickedExhCal() ***"));
 
 			m_pcPProx0->EnableWindow(FALSE);
 			m_pcPProx60->EnableWindow(FALSE);
@@ -1769,7 +1769,7 @@ LRESULT CWndServiceCalibration::WindowProc(UINT message, WPARAM wParam, LPARAM l
 					getModel()->getI2C()->WriteConfigWord(ALTITUDE_16,m_iAltitude);
 					CStringW szAlt=_T("");
 					szAlt.Format(_T("### ALTITUDE %d"), m_iAltitude);
-					theApp.getLog()->WriteLine(szAlt);
+					theApp.WriteLog(szAlt);
 					getModel()->getSPI()->Send_FLOW_CORFACTOR_PED(iCorrFactor*m_iFCOR_PED);					
 					getModel()->getSPI()->Send_FLOW_CORFACTOR_NEO(iCorrFactor*m_iFCOR_NEO);
 					return 1;

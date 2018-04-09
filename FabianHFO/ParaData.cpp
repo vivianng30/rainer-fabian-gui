@@ -1100,7 +1100,7 @@ void CParaData::checkIErelation()
 		{
 			CStringW sz=_T("");
 			sz.Format(_T("#HFO:0257 m_iITime%d m_iBPM%d m_iETime%d."),m_data.m_iParaDataITime_IPPV,m_data.m_iParaDataBPM_IPPV,m_data.m_iParaDataETime_IPPV);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 
 			int iLowerLimitITime=GetITimeMinPara_IPPV();
 			int iUpperLimitITime=GetITimeMaxPara_IPPV();
@@ -1141,7 +1141,7 @@ void CParaData::checkIErelation()
 		{
 			CStringW sz=_T("");
 			sz.Format(_T("#HFO:0258 m_iITime%d m_iBPM%d m_iETime%d."),m_data.m_iParaDataITime_TRIGGER,m_data.m_iParaDataBPM_TRIGGER,m_data.m_iParaDataETime_TRIGGER);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 
 			int iLowerLimitITime=GetITimeMinPara_TRIGGER();
 			int iUpperLimitITime=GetITimeMaxPara_TRIGGER();
@@ -1182,7 +1182,7 @@ void CParaData::checkIErelation()
 		{
 			CStringW sz=_T("");
 			sz.Format(_T("ERROR CParaDataPSV::Init2() RM_SET_ItoBPM SIMV m_iITime%d m_iBPM%d m_iETime%d."),m_data.m_iParaDataITime,m_data.m_iParaDataBPM_SIMV,m_data.m_iParaDataETime_SIMV);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 
 			int iLowerLimitITime=GetITimeMinPara();
 			int iUpperLimitITime=GetITimeMaxPara();
@@ -1223,7 +1223,7 @@ void CParaData::checkIErelation()
 		{
 			CStringW sz=_T("");
 			sz.Format(_T("#HFO:0259 m_iITime%d m_iBPM%d m_iETime%d."),m_data.m_iParaDataITime_NMODE,m_data.m_iParaDataBPM_NMODE,m_data.m_iParaDataETime_NMODE);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 
 			int iLowerLimitITime=GetITimeNMODEMinPara();
 			int iUpperLimitITime=GetITimeNMODEMaxPara();
@@ -1266,7 +1266,7 @@ void CParaData::checkIErelation()
 		{
 			CStringW sz=_T("");
 			sz.Format(_T("#HFO:0294 m_iITime%d m_iBPM%d m_iETime%d."),m_data.m_iParaDataITime_IPPV,m_data.m_iParaDataBPM_IPPV,m_data.m_iParaDataETime_IPPV);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 
 			int iLowerLimitITime=GetITimeMinPara_IPPV();
 			int iUpperLimitITime=GetITimeMaxPara_IPPV();
@@ -1308,7 +1308,7 @@ void CParaData::checkIErelation()
 		{
 			CStringW sz=_T("");
 			sz.Format(_T("#HFO:0295 m_iITime%d m_iBPM%d m_iETime%d."),m_data.m_iParaDataITime_TRIGGER,m_data.m_iParaDataBPM_TRIGGER,m_data.m_iParaDataETime_TRIGGER);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 
 			int iLowerLimitITime=GetITimeMinPara_TRIGGER();
 			int iUpperLimitITime=GetITimeMaxPara_TRIGGER();
@@ -1350,7 +1350,7 @@ void CParaData::checkIErelation()
 		{
 			CStringW sz=_T("");
 			sz.Format(_T("ERROR CParaDataPSV::Init5() RM_SET_ItoE m_iITime%d m_iBPM%d m_iETime%d."),m_data.m_iParaDataITime,m_data.m_iParaDataBPM_SIMV,m_data.m_iParaDataETime_SIMV);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 
 			int iLowerLimitITime=GetITimeMinPara();
 			int iUpperLimitITime=GetITimeMaxPara();
@@ -1392,7 +1392,7 @@ void CParaData::checkIErelation()
 		{
 			CStringW sz=_T("");
 			sz.Format(_T("#HFO:0296 m_iITime%d m_iBPM%d m_iETime%d."),m_data.m_iParaDataITime_NMODE,m_data.m_iParaDataBPM_NMODE,m_data.m_iParaDataETime_NMODE);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 
 			int iLowerLimitITime=GetITimeNMODEMinPara();
 			int iUpperLimitITime=GetITimeNMODEMaxPara();

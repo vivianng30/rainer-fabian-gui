@@ -30,7 +30,7 @@ public:
 
 	//static void copyLogToUSB(bool state);
 
-	Logfile(const char * svDateiname);
+	Logfile(const char * svDateiname, BYTE iLogID);
 	//Logfile(const Logfile& rhs);
 
 	bool Open();
@@ -52,6 +52,7 @@ private:
 
 protected:
 	CString svLastDatum;
+	BYTE m_iLogID;
 
 	CList<CStringW, CStringW&>  msgLog;
 

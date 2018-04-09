@@ -118,13 +118,13 @@ int CInterfaceCO2_CAPNOSTAT::Init(BYTE com)
 	{
 	case 1:
 		{
-			theApp.getLog()->WriteLine(_T("#CO2:open COM1"));
+			theApp.WriteLog(_T("#CO2:open COM1"));
 			lLastError = Open(_T("COM1:"),0,0);
 		}
 		break;
 	case 3:
 		{
-			theApp.getLog()->WriteLine(_T("#CO2:open COM3"));
+			theApp.WriteLog(_T("#CO2:open COM3"));
 			lLastError = Open(_T("COM3:"),0,0);
 		}
 		break;
@@ -1056,7 +1056,7 @@ bool CInterfaceCO2_CAPNOSTAT::PerformMsg()
 								BYTE byte1=HIBYTE(m_cfgGasTemp);
 
 								szError.Format(_T("#HFO:0097: %d, slave: %d"),m_cfgGasTemp,sValue);
-								theApp.getLog()->WriteLine(szError);
+								theApp.WriteLog(szError);
 
 								SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x04,CO2_CAPNOSTAT_ISB_GASTEMPERATURE,byte1, byte2);
 							}
@@ -1070,7 +1070,7 @@ bool CInterfaceCO2_CAPNOSTAT::PerformMsg()
 							if(sValue!=m_cfgPEAKPICK)
 							{
 								szError.Format(_T("#HFO:0098: %d, slave: %d"),m_cfgPEAKPICK,sValue);
-								theApp.getLog()->WriteLine(szError);
+								theApp.WriteLog(szError);
 
 								Send_ETCO2TimePeriod(m_cfgPEAKPICK);
 							}
@@ -1084,7 +1084,7 @@ bool CInterfaceCO2_CAPNOSTAT::PerformMsg()
 							if(sValue!=m_cfgNOBREATHDETECTED)
 							{
 								szError.Format(_T("#HFO:0099: %d, slave: %d"),m_cfgNOBREATHDETECTED,sValue);
-								theApp.getLog()->WriteLine(szError);
+								theApp.WriteLog(szError);
 
 								SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x03,CO2_CAPNOSTAT_ISB_NOBREATHDETECTED_TIMEOUT,m_cfgNOBREATHDETECTED);
 							}
@@ -1098,7 +1098,7 @@ bool CInterfaceCO2_CAPNOSTAT::PerformMsg()
 							if(sValue!=m_cfgCO2UNITS)
 							{
 								szError.Format(_T("#HFO:0100: %d, slave: %d"),m_cfgCO2UNITS,sValue);
-								theApp.getLog()->WriteLine(szError);
+								theApp.WriteLog(szError);
 
 								Send_CurrentCO2Units(m_cfgCO2UNITS);
 							}
@@ -1112,7 +1112,7 @@ bool CInterfaceCO2_CAPNOSTAT::PerformMsg()
 							if(sValue!=m_cfgOPERATINGMODE)
 							{
 								szError.Format(_T("#HFO:0101: %d, slave: %d"),m_cfgOPERATINGMODE,sValue);
-								theApp.getLog()->WriteLine(szError);
+								theApp.WriteLog(szError);
 
 								//Send_SleepMode(m_cfgOPERATINGMODE);
 
@@ -1135,7 +1135,7 @@ bool CInterfaceCO2_CAPNOSTAT::PerformMsg()
 							if(sValue!=m_cfgZEROGASTYPE)
 							{
 								szError.Format(_T("#HFO:0102: %d, slave: %d"),m_cfgZEROGASTYPE,sValue);
-								theApp.getLog()->WriteLine(szError);
+								theApp.WriteLog(szError);
 
 								SendCO2Command(CO2_CAPNOSTAT_CMD_GET_SET_SENSOR_SETTINGS,0x03,CO2_CAPNOSTAT_ISB_ZEROGASTYPE,m_cfgZEROGASTYPE);
 							}
@@ -1149,7 +1149,7 @@ bool CInterfaceCO2_CAPNOSTAT::PerformMsg()
 							if(sValue!=m_cfgGasCompensation)
 							{
 								szError.Format(_T("#HFO:0103: %d, slave: %d"),m_cfgGasCompensation,sValue);
-								theApp.getLog()->WriteLine(szError);
+								theApp.WriteLog(szError);
 
 								if(getModel()->isO2FlushActive())
 									m_cfgGasCompensation=getModel()->getDATAHANDLER()->PARADATA()->GetO2FlushPara();

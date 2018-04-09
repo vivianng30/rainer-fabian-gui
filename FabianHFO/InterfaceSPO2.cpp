@@ -356,11 +356,11 @@ void CInterfaceSPO2::stopSPO2initThread(void)
 
 		if (WaitForSingleObject(m_pcwtSPO2InitThread->m_hThread,2000) == WAIT_TIMEOUT)
 		{
-			//theApp.getLog()->WriteLine(_T("#HFO:0211"));
-			theApp.getLog()->WriteLine(_T("#THR:016a"));
+			//theApp.WriteLog(_T("#HFO:0211"));
+			theApp.WriteLog(_T("#THR:016a"));
 			if(!TerminateThread(m_pcwtSPO2InitThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:016b"));
+				theApp.WriteLog(_T("#THR:016b"));
 			}
 		}
 	}
@@ -413,11 +413,11 @@ void CInterfaceSPO2::stopSPO2sendThread(void)
 
 		if (WaitForSingleObject(m_pcwtSPO2SendThread->m_hThread,500) == WAIT_TIMEOUT)
 		{
-			//theApp.getLog()->WriteLine(_T("#HFO:0210"));
-			theApp.getLog()->WriteLine(_T("#THR:015a"));
+			//theApp.WriteLog(_T("#HFO:0210"));
+			theApp.WriteLog(_T("#THR:015a"));
 			if(!TerminateThread(m_pcwtSPO2SendThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:015b"));
+				theApp.WriteLog(_T("#THR:015b"));
 			}
 		}
 	}
@@ -506,11 +506,11 @@ void CInterfaceSPO2::stopSPO2checkThread(void)
 
 		if (WaitForSingleObject(m_pcwtSPO2checkThread->m_hThread,500) == WAIT_TIMEOUT)
 		{
-			//theApp.getLog()->WriteLine(_T("#HFO:0212"));
-			theApp.getLog()->WriteLine(_T("#THR:017a"));	
+			//theApp.WriteLog(_T("#HFO:0212"));
+			theApp.WriteLog(_T("#THR:017a"));	
 			if(!TerminateThread(m_pcwtSPO2checkThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:017b"));
+				theApp.WriteLog(_T("#THR:017b"));
 			}
 		}
 	}
@@ -598,7 +598,7 @@ DWORD CInterfaceSPO2::SPO2check(void)
 
 	}while(m_bDoSPO2checkThread);
 
-	//theApp.getLog()->WriteLine(_T("#THR:017"));
+	//theApp.WriteLog(_T("#THR:017"));
 	DEBUGMSG(TRUE, (TEXT("#THR:017\r\n")));
 	return 0;
 }
@@ -711,7 +711,7 @@ DWORD CInterfaceSPO2::SendSPO2Data(void)
 
 	}while(m_bDoSPO2SendThread);
 
-	//theApp.getLog()->WriteLine(_T("#THR:015"));
+	//theApp.WriteLog(_T("#THR:015"));
 	DEBUGMSG(TRUE, (TEXT("#THR:015\r\n")));
 	
 	return 0;
@@ -856,7 +856,7 @@ DWORD CInterfaceSPO2::SPO2Init(void)
 		}
 	}while(m_bDoSPO2InitThread && m_bStartup==false);
 
-	//theApp.getLog()->WriteLine(_T("#THR:016"));
+	//theApp.WriteLog(_T("#THR:016"));
 	DEBUGMSG(TRUE, (TEXT("#THR:016\r\n")));
 	//if(m_bStartup)
 	//	InitializeSequenz();//command 84h

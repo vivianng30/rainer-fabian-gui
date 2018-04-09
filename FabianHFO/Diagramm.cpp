@@ -1764,7 +1764,7 @@ void CDiagramm::DrawGrid(CDC* pDC)
 	{
 		//ERROR todo
 		GridSpacing=1;
-		theApp.getLog()->WriteLine(_T("#HFO:0015"));
+		theApp.WriteLog(_T("#HFO:0015"));
 	}
 	int n=1; //for the loop
 	//draw positive xgrids
@@ -5930,7 +5930,7 @@ void CDiagramm::CheckAutoScaleY()
 				DEBUGMSG(TRUE, (TEXT("DIAinc1 y%d\r\n"),m_iDiagrammType));
 				/*CStringW sz=_T("");
 				sz.Format(_T("#DIAinc1 y%d"),m_iDiagrammType);
-				theApp.getLog()->WriteLine(sz);*/
+				theApp.WriteLog(sz);*/
 
 				IncreaseYScale(true);
 
@@ -5947,7 +5947,7 @@ void CDiagramm::CheckAutoScaleY()
 				DEBUGMSG(TRUE, (TEXT("DIAinc2 y%d\r\n"),m_iDiagrammType));
 				/*CStringW sz=_T("");
 				sz.Format(_T("#DIAinc2 y%d"),m_iDiagrammType);
-				theApp.getLog()->WriteLine(sz);*/
+				theApp.WriteLog(sz);*/
 
 				IncreaseYScale(true);
 
@@ -5968,7 +5968,7 @@ void CDiagramm::CheckAutoScaleY()
 					DEBUGMSG(TRUE, (TEXT("DIAdec1 y%d\r\n"),m_iDiagrammType));
 					/*CStringW sz=_T("");
 					sz.Format(_T("#DIAdec1 y%d"),m_iDiagrammType);
-					theApp.getLog()->WriteLine(sz);*/
+					theApp.WriteLog(sz);*/
 
 					DecreaseYScaleToNextValue(true);
 				}

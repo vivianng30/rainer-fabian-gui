@@ -325,7 +325,7 @@ bool CInterfaceAcuLink_EXTERNAL::init()
 
 		CStringW sz=_T("");
 		sz.Format(_T("***Version acuLink: %s %s"), m_szVersionExe, m_szVersionDll);
-		theApp.getLog()->WriteLine(sz);
+		theApp.WriteLog(sz);
 	}
 	else
 	{
@@ -366,7 +366,7 @@ bool CInterfaceAcuLink_EXTERNAL::deinit()
 
 void CInterfaceAcuLink_EXTERNAL::setShutdown(UINT uiVal)
 {
-	//theApp.getLog()->WriteLine(_T("SHUTDOWN CInterfaceAcuLink_EXTERNAL::setShutdown"));
+	//theApp.WriteLog(_T("SHUTDOWN CInterfaceAcuLink_EXTERNAL::setShutdown"));
 	if(getModel()->getCONFIG()->GetPDMSprotocol()==ACL_SERIAL_ASCII)
 	{
 		//do nothing here
@@ -416,7 +416,7 @@ void CInterfaceAcuLink_EXTERNAL::setGraphDataV3(SHORT iValVolume ,SHORT iValPres
 				m_bShowAcuLinkError=false;
 				/*CStringW sz=_T("");
 				sz.Format(_T("ERROR acuLink SetGraphData: %d"), iRet);
-				theApp.getLog()->WriteLine(sz);*/
+				theApp.WriteLog(sz);*/
 			}
 		}
 	}
@@ -449,7 +449,7 @@ void CInterfaceAcuLink_EXTERNAL::setGraphDataV4(SHORT iValVolume ,SHORT iValPres
 				m_bShowAcuLinkError=false;
 				/*CStringW sz=_T("");
 				sz.Format(_T("ERROR acuLink SetGraphData: %d"), iRet);
-				theApp.getLog()->WriteLine(sz);*/
+				theApp.WriteLog(sz);*/
 			}
 		}
 	}

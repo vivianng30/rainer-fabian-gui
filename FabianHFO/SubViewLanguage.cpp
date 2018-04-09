@@ -1598,10 +1598,10 @@ void CSubViewLanguage::StopLoadLanguageThread( void )
 
 		if (WaitForSingleObject(m_pcwtLoadLanguageThread->m_hThread,3000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:029a"));
+			theApp.WriteLog(_T("#THR:029a"));
 			if(!TerminateThread(m_pcwtLoadLanguageThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:029b"));
+				theApp.WriteLog(_T("#THR:029b"));
 				/*int err = GetLastError();
 				CStringW temp;
 				temp.Format(L"TerminateThread error ConnectionThread [%d]",err);*/
@@ -1682,7 +1682,7 @@ DWORD CSubViewLanguage::LoadLanguage(void)
 				{
 					CStringW szLog = _T("#HFO:0214: ");
 					szLog+=m_szLangToLoad;
-					theApp.getLog()->WriteLine(szLog);
+					theApp.WriteLog(szLog);
 					getModel()->getCONFIG()->SetLanguage(LANGFILE_ENGLISH);
 
 					WORD iIdNew=getModel()->getCONFIG()->GetLanguageIDfromName(m_szLangToLoad);
@@ -1729,7 +1729,7 @@ DWORD CSubViewLanguage::LoadLanguage(void)
 		//DestroyWndHourglass();
 	}
 
-	//theApp.getLog()->WriteLine(_T("#THR:029"));
+	//theApp.WriteLog(_T("#THR:029"));
 
 	return 0;
 }

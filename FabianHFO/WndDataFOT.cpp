@@ -1461,7 +1461,7 @@ void CWndDataFOT::Draw(bool bStatic)
 					{
 						szERROR.Format(_T("FOT: ERROR state %d CurFOTseq %d hfo_STEPS %d\r\n"),(int)feFOTstate,getModel()->getFOTThread()->getCurFOTsequence(),getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara());
 						DEBUGMSG(TRUE, (szERROR));
-						theApp.getLog()->WriteLine(szERROR);
+						theApp.WriteLog(szERROR);
 					}
 				}
 			}
@@ -1888,7 +1888,7 @@ void CWndDataFOT::Draw(bool bStatic)
 					{
 						szERROR.Format(_T("FOT: ERROR state %d CurFOTseq %d conv_STEPS %d\r\n"),(int)feFOTstate,getModel()->getFOTThread()->getCurFOTsequence(),getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara());
 						DEBUGMSG(TRUE, (szERROR));
-						theApp.getLog()->WriteLine(szERROR);
+						theApp.WriteLog(szERROR);
 					}
 				}
 			}

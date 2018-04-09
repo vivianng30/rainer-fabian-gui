@@ -140,7 +140,7 @@ BOOL CViewService::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateCont
 
 bool CViewService::Initialize()
 {
-	theApp.getLog()->WriteLine(_T("*** Service mode started ***"));
+	theApp.WriteLog(_T("*** Service mode started ***"));
 
 	bool result=CreateWndServiceMenu();
 	if(result)
@@ -1507,7 +1507,7 @@ void CViewService::OnDestroy()
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_CLEAR_TEXT);
 
-	theApp.getLog()->WriteLine(_T("*** Service mode finished ***"));
+	theApp.WriteLog(_T("*** Service mode finished ***"));
 
 	KillTimer(SERVICETIMER);
 

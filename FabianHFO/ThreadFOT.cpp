@@ -159,7 +159,7 @@ CThreadFOT* CThreadFOT::getInstance()
 	if(theThreadFOT == 0)
 	{
 		theThreadFOT = new CThreadFOT;
-		theApp.getLog()->WriteLine(_T("#########CThreadFOT::getInstance()"));
+		theApp.WriteLog(_T("#########CThreadFOT::getInstance()"));
 	}
 	return theThreadFOT;
 }
@@ -256,7 +256,7 @@ void CThreadFOT::setDateLastSequence()
 	{
 		//m_szLast21Cal=_T("- error -");
 		m_szLastCalculation=getModel()->GetLanguageString(IDS_TXT_UNKNOWN);
-		theApp.getLog()->WriteLine(_T("***last FOT calc: unknown***"));
+		theApp.WriteLog(_T("***last FOT calc: unknown***"));
 	}
 	else
 	{
@@ -270,7 +270,7 @@ void CThreadFOT::setDateLastSequence()
 		CStringW szLastFOTCalc=_T("***last FOTcalc: ");
 		szLastFOTCalc+=m_szLastCalculation;
 		szLastFOTCalc+=_T("***");
-		theApp.getLog()->WriteLine(szLastFOTCalc);
+		theApp.WriteLog(szLastFOTCalc);
 	}
 	LeaveCriticalSection(&csFOTdate);
 }
@@ -434,23 +434,23 @@ void CThreadFOT::startFOTconventional()
 	DEBUGMSG(TRUE, (TEXT("startFOTconventional\r\n")));
 	m_bFOTconvRunning=true;
 	CString szLog=_T("");
-	theApp.getLog()->WriteLine(_T("#FOT: start CONVENTIONAL"));
+	theApp.WriteLog(_T("#FOT: start CONVENTIONAL"));
 	szLog.Format(_T("FOTsteps %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara());
-	theApp.getLog()->WriteLine(szLog);
+	theApp.WriteLog(szLog);
 
 	szLog.Format(_T("PEEPlow %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_PEEPSTARTPara());
-	theApp.getLog()->WriteLine(szLog);
+	theApp.WriteLog(szLog);
 
 	if(getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara()>1)
 	{
 		szLog.Format(_T("PEEPhigh %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_PEEPENDPara());
-		theApp.getLog()->WriteLine(szLog);
+		theApp.WriteLog(szLog);
 	}
 	szLog.Format(_T("FOTamp %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_AMPLITUDEPara());
-	theApp.getLog()->WriteLine(szLog);
+	theApp.WriteLog(szLog);
 
 	szLog.Format(_T("FOTfreq %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_FREQPara());
-	theApp.getLog()->WriteLine(szLog);
+	theApp.WriteLog(szLog);
 	
 	m_iFOToriginPEEPPara_IPPV=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_TRIGGER();
 	m_iFOToriginPMAXVGPara_IPPV=getModel()->getDATAHANDLER()->PARADATA()->GetPmaxVolGPara_IPPV();
@@ -485,7 +485,7 @@ void CThreadFOT::startFOTconventional()
 
 void CThreadFOT::stopFOTconventional()
 {
-	theApp.getLog()->WriteLine(_T("#FOT: stop CONVENTIONAL"));
+	theApp.WriteLog(_T("#FOT: stop CONVENTIONAL"));
 
 	restoreFOTConvVentMode();
 
@@ -506,24 +506,24 @@ void CThreadFOT::startFOThfo()
 	DEBUGMSG(TRUE, (TEXT("startFOThfo\r\n")));
 	m_bFOThfoRunning=true;
 	CString szLog=_T("");
-	theApp.getLog()->WriteLine(_T("#FOT: start HFO"));
+	theApp.WriteLog(_T("#FOT: start HFO"));
 	szLog.Format(_T("FOTsteps %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara());
-	theApp.getLog()->WriteLine(szLog);
+	theApp.WriteLog(szLog);
 
 	szLog.Format(_T("PMEANlow %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_PMEANSTARTPara());
-	theApp.getLog()->WriteLine(szLog);
+	theApp.WriteLog(szLog);
 
 	if(getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara()>1)
 	{
 		szLog.Format(_T("PMEANhigh %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_PMEANENDPara());
-		theApp.getLog()->WriteLine(szLog);
+		theApp.WriteLog(szLog);
 	}
 
 	szLog.Format(_T("FOTamp %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_AMPLITUDEPara());
-	theApp.getLog()->WriteLine(szLog);
+	theApp.WriteLog(szLog);
 
 	szLog.Format(_T("FOTfreq %d\r\n"),getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_FREQPara());
-	theApp.getLog()->WriteLine(szLog);
+	theApp.WriteLog(szLog);
 	 
 
 	m_eFOToriginHFIERatioPara=getModel()->getDATAHANDLER()->PARADATA()->GetIERatioParaHFO();
@@ -562,7 +562,7 @@ WORD CThreadFOT::getOriginHFAMPLPara()
 
 void CThreadFOT::stopFOThfo()
 {
-	theApp.getLog()->WriteLine(_T("#FOT: stop HFO"));
+	theApp.WriteLog(_T("#FOT: stop HFO"));
 
 	restoreFOTHFOVentMode();
 
@@ -617,7 +617,7 @@ void CThreadFOT::calcParaFOTCONV()
 		{
 			//ERROR
 			m_iFOTPEEPStep=0;
-			theApp.getLog()->WriteLine(_T("#HFO:0300"));
+			theApp.WriteLog(_T("#HFO:0300"));
 		}
 		m_iFOTPEEPStep=(m_iFOTPEEPStep/5)*5;
 
@@ -759,7 +759,7 @@ void CThreadFOT::calcDecreaseParaFOTCONV()
 		{
 			//ERROR
 			m_iFOTPEEPStep=0;
-			theApp.getLog()->WriteLine(_T("#HFO:0300"));
+			theApp.WriteLog(_T("#HFO:0300"));
 		}
 		m_iFOTPEEPStep=(m_iFOTPEEPStep/5)*5;
 
@@ -909,7 +909,7 @@ void CThreadFOT::calcDecreaseParaFOTHFO()
 		{
 			//ERROR
 			m_iFOTHFPmeanStep=0;
-			theApp.getLog()->WriteLine(_T("#HFO:0301"));
+			theApp.WriteLog(_T("#HFO:0301"));
 		}
 		m_iFOTHFPmeanStep=(m_iFOTHFPmeanStep/5)*5;
 
@@ -967,7 +967,7 @@ void CThreadFOT::calcParaFOTHFO()
 		{
 			//ERROR
 			m_iFOTHFPmeanStep=0;
-			theApp.getLog()->WriteLine(_T("#HFO:0301"));
+			theApp.WriteLog(_T("#HFO:0301"));
 		}
 		m_iFOTHFPmeanStep=(m_iFOTHFPmeanStep/5)*5;
 
@@ -1943,7 +1943,7 @@ void CThreadFOT::calculateFOTdata(int i_osc_freq,WORD curPressure)
 
 	szLog.Format(_T("#FOTcalc: pressure %d XRS%d %.2f Resistance %.2f"),curPressure, m_iFOTdisplaySequence,m_pbufFOTdisplay[m_iFOTdisplaySequence-1].iYValXRS,p_TotalOut[0]);
 	//DEBUGMSG(TRUE, (szLog));
-	theApp.getLog()->WriteLine(szLog);
+	theApp.WriteLog(szLog);
 	
 	//DWORD dwEnd=GetTickCount();
 	//DEBUGMSG(TRUE, (TEXT("calculateFOTCONVdata END %d\r\n"),dwEnd-dwStart));
@@ -2035,7 +2035,7 @@ void CThreadFOT::stopFOTThread( void )
 		{
 			if(!TerminateThread(m_pcwtFOTThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:FOT"));
+				theApp.WriteLog(_T("#THR:FOT"));
 				/*int err = GetLastError();
 				CStringW temp;
 				temp.Format(L"TerminateThread error ConnectionThread [%d]",err);*/
@@ -2369,7 +2369,7 @@ DWORD CThreadFOT::FOTData(void)
 
 	getModel()->getVIEWHANDLER()->setFOTrunning(false);
 
-	theApp.getLog()->WriteLine(_T("#THR:FOT end"));
+	theApp.WriteLog(_T("#THR:FOT end"));
 	//DEBUGMSG(TRUE, (TEXT("CThreadFOT::FOTData end\r\n")));
 	
 

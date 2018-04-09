@@ -182,7 +182,7 @@ bool CInterfaceSerial::Init()
 
 	if (m_comPort.Open(dwIndex,9600)!=0)
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0009"));
+		theApp.WriteLog(_T("#HFO:0009"));
 		return false;
 	}
 	else
@@ -297,7 +297,7 @@ bool CInterfaceSerial::Init()
 	//
 	//if (iCOM==0)
 	//{
-	//	theApp.getLog()->WriteLine(_T("ERROR - OpenCom CInterfaceSerial"));
+	//	theApp.WriteLog(_T("ERROR - OpenCom CInterfaceSerial"));
 	//	return false;
 	//}
 	//else
@@ -505,11 +505,11 @@ void CInterfaceSerial::StopSerialThread( void )
 		if (WaitForSingleObject(m_pcwtSerialSendThread->m_hThread,2000) == WAIT_TIMEOUT)
 		{
 			DEBUGMSG(TRUE, (TEXT("TerminateThread 1 !!!!!!!!!!!!!!\r\n")));
-			theApp.getLog()->WriteLine(_T("#THR:011a"));
+			theApp.WriteLog(_T("#THR:011a"));
 			
 			if(!TerminateThread(m_pcwtSerialSendThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:011b"));
+				theApp.WriteLog(_T("#THR:011b"));
 			}
 		}
 	}
@@ -525,11 +525,11 @@ void CInterfaceSerial::StopSerialThread( void )
 		if (WaitForSingleObject(m_pcwtSerialCheckThread->m_hThread,1000) == WAIT_TIMEOUT)
 		{
 			DEBUGMSG(TRUE, (TEXT("TerminateThread 2 !!!!!!!!!!!!!!\r\n")));
-			theApp.getLog()->WriteLine(_T("#THR:012a"));
+			theApp.WriteLog(_T("#THR:012a"));
 
 			if(!TerminateThread(m_pcwtSerialCheckThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:012b"));
+				theApp.WriteLog(_T("#THR:012b"));
 			}
 		}
 	}
@@ -549,11 +549,11 @@ void CInterfaceSerial::StopSerialThread( void )
 		if (WaitForSingleObject(m_pcwtSerialReceiveThread->m_hThread,1000) == WAIT_TIMEOUT)
 		{
 			DEBUGMSG(TRUE, (TEXT("TerminateThread 3 !!!!!!!!!!!!!!\r\n")));
-			theApp.getLog()->WriteLine(_T("#THR:010a"));
+			theApp.WriteLog(_T("#THR:010a"));
 			
 			if(!TerminateThread(m_pcwtSerialReceiveThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:010b"));
+				theApp.WriteLog(_T("#THR:010b"));
 			}
 		}
 	}
@@ -1178,7 +1178,7 @@ DWORD CInterfaceSerial::CheckSerialData(void)
 	}while(doCheckThread() && m_comPort.m_hCommPort!=INVALID_HANDLE_VALUE);
 
 	DEBUGMSG(TRUE, (TEXT("END CheckSerialData\r\n")));
-	//theApp.getLog()->WriteLine(_T("#THR:012"));
+	//theApp.WriteLog(_T("#THR:012"));
 
 	return 0;
 }
@@ -1498,7 +1498,7 @@ DWORD CInterfaceSerial::ReceiveSerialData(void)
 	if (m_comPort.m_hCommPort == INVALID_HANDLE_VALUE) 
 	{
 		// Handle the error. 
-		theApp.getLog()->WriteLine(_T("#HFO:0012"));
+		theApp.WriteLog(_T("#HFO:0012"));
 		return 0;
 	}
 
@@ -1611,7 +1611,7 @@ DWORD CInterfaceSerial::SendSerialData(void)
 			DEBUGMSG(TRUE, (TEXT("send size > 100\r\n")));
 			
 			szError.Format(_T("!!!SendSize: %d!!!"),iListSize);
-			theApp.getLog()->WriteLine(szError);
+			theApp.WriteLog(szError);
 		}*/
 		
 		if(iListSize>0)
@@ -1662,7 +1662,7 @@ DWORD CInterfaceSerial::SendSerialData(void)
 
 						/*CStringW szError=_T("");
 						szError.Format(_T("#HFO:0013: %s"),szData);
-						theApp.getLog()->WriteLine(szError);*/
+						theApp.WriteLog(szError);*/
 
 						EnterCriticalSection(&csMSGSend);
 						MSGSend.RemoveAll();
@@ -1677,7 +1677,7 @@ DWORD CInterfaceSerial::SendSerialData(void)
 							{
 								CStringW szError=_T("");
 								szError.Format(_T("#HFO:0013: %s"),szData);
-								theApp.getLog()->WriteLine(szError);
+								theApp.WriteLog(szError);
 
 								DEBUGMSG(TRUE, (TEXT("WM_SETALARM_IF_COM_REINIT 2\r\n")));
 								if(AfxGetApp())
@@ -1689,7 +1689,7 @@ DWORD CInterfaceSerial::SendSerialData(void)
 							{
 								CStringW szError=_T("");
 								szError.Format(_T("#HFO:0013: %s"),szData);
-								theApp.getLog()->WriteLine(szError);
+								theApp.WriteLog(szError);
 
 								if(getModel()->getDATAHANDLER()->getCOMErrorCode() & ERRC_COM_SEND_DATA
 									&&	true==getModel()->getDATAHANDLER()->checkCOMlastSendError(szData))//newVG
@@ -1722,7 +1722,7 @@ DWORD CInterfaceSerial::SendSerialData(void)
 
 						CStringW szError=_T("");
 						szError.Format(_T("#COMSendAgain: %s"),szData);
-						theApp.getLog()->WriteLine(szError);
+						theApp.WriteLog(szError);
 						DEBUGMSG(TRUE, (szError));
 					}
 					Sleep(10);
@@ -1890,7 +1890,7 @@ void CInterfaceSerial::Send_START_MAN_BREATH()
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("n"));//Sonderkommando ohne "q"
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(_T("START_MAN_BREATH"));
+		theApp.WriteLog(_T("START_MAN_BREATH"));
 	//DEBUGMSG(TRUE, (TEXT("Send_START_MAN_BREATH\r\n")));
 }
 
@@ -1906,7 +1906,7 @@ void CInterfaceSerial::Send_STOP_MAN_BREATH()
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("p"));//Sonderkommando ohne "q"
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(_T("STOP_MAN_BREATH"));
+		theApp.WriteLog(_T("STOP_MAN_BREATH"));
 }
 
 /**********************************************************************************************//**
@@ -1923,7 +1923,7 @@ void CInterfaceSerial::Send_HARDWARE_CONFIG(WORD wHardwareConfig)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("k%dq"),(int)wHardwareConfig);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 }
 
 /**********************************************************************************************//**
@@ -1940,7 +1940,7 @@ void CInterfaceSerial::Send_MODE_OPTION1(WORD wMode)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("r%dq"),wMode);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 }
 
 /**********************************************************************************************//**
@@ -1957,7 +1957,7 @@ void CInterfaceSerial::Send_VENT_MODE(eVentMode mode)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("o%dq"),(int)mode);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 
 }
 
@@ -1975,7 +1975,7 @@ void CInterfaceSerial::Send_PARAVAL_PINSP(int val)//newVG
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("t%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 
 	//if(val%10!=0)//check test
 	//{
@@ -1998,7 +1998,7 @@ void CInterfaceSerial::Send_PARAVAL_PMAXVG(int val)//newVG
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("<%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_PMAXVG %d\r\n"),val));
 }
@@ -2017,7 +2017,7 @@ void CInterfaceSerial::Send_PARAVAL_P_PSV(int val)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("c%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_P_PSV %d\r\n"),val));
 }
@@ -2037,7 +2037,7 @@ void CInterfaceSerial::Send_PARAVAL_PEEP(int val)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("z%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 }
 
 /**********************************************************************************************//**
@@ -2055,7 +2055,7 @@ void CInterfaceSerial::Send_PARAVAL_OXY_RATIO(int val)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("d%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 }
 
 /**********************************************************************************************//**
@@ -2072,7 +2072,7 @@ void CInterfaceSerial::Send_PARAVAL_INSP_FLOW(int val)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("u%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_INSP_FLOW %d\r\n"),val));
 }
@@ -2092,7 +2092,7 @@ void CInterfaceSerial::Send_PARAVAL_RISETIME(int val)
 
 	wsprintf(psz,_T("[%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_RISETIME %d\r\n"),val));
 }
@@ -2111,7 +2111,7 @@ void CInterfaceSerial::Send_PARAVAL_EXH_FLOW(int val)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("a%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_EXH_FLOW %d\r\n"),val));
 }
@@ -2130,7 +2130,7 @@ void CInterfaceSerial::Send_PARAVAL_INSP_TIME(int val)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("w%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 }
 
 /**********************************************************************************************//**
@@ -2147,7 +2147,7 @@ void CInterfaceSerial::Send_PARAVAL_EXH_TIME(int val)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("e%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 }
 
 /**********************************************************************************************//**
@@ -2171,7 +2171,7 @@ void CInterfaceSerial::Send_PARAVAL_HF_AMPL(int val)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("m%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_AMPL %d\r\n"),val));
 }
 
@@ -2189,7 +2189,7 @@ void CInterfaceSerial::Send_PARAVAL_HF_FREQ(int val)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("f%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_FREQ %d\r\n"),val));
 }
 
@@ -2207,7 +2207,7 @@ void CInterfaceSerial::Send_PARAVAL_HF_PMITT(int val)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("j%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_PMITT %d\r\n"),val));
 }
 
@@ -2225,7 +2225,7 @@ void CInterfaceSerial::Send_PARAVAL_HF_PMEANREC(int val)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("!%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_HF_PMEANREC %d\r\n"),val));
 }
 
@@ -2277,7 +2277,7 @@ void CInterfaceSerial::Send_EXP_VALVE(int val)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T(":%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 }
 
 /**********************************************************************************************//**
@@ -2294,7 +2294,7 @@ void CInterfaceSerial::Send_OPEN_VALVE(int val)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T(";%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 }
 
 //void CInterfaceSerial::Send_SET_FG_BIT(int val) //newVG
@@ -2302,7 +2302,7 @@ void CInterfaceSerial::Send_OPEN_VALVE(int val)
 //	TCHAR psz[MAX_PATH];
 //	wsprintf(psz,_T(">%dq"),val);
 //	if(0==sendSerialCommand(psz))
-//		theApp.getLog()->WriteLine(psz);
+//		theApp.WriteLog(psz);
 //}
 
 //void CInterfaceSerial::Send_CLEAR_FG_BIT(int val) //newVG
@@ -2310,7 +2310,7 @@ void CInterfaceSerial::Send_OPEN_VALVE(int val)
 //	TCHAR psz[MAX_PATH];
 //	wsprintf(psz,_T("?%dq"),val);
 //	if(0==sendSerialCommand(psz))
-//		theApp.getLog()->WriteLine(psz);
+//		theApp.WriteLog(psz);
 //}
 
 /**********************************************************************************************//**
@@ -2327,7 +2327,7 @@ void CInterfaceSerial::Send_CAL_PRESS_PROX(int val)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("g%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 }
 
 /**********************************************************************************************//**
@@ -2395,7 +2395,7 @@ void CInterfaceSerial::Send_PARAVAL_APNOE_TIME(int val)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("v%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 	//DEBUGMSG(TRUE, (TEXT("Send_PARAVAL_APNOE_TIME %d\r\n"),val));
 }
 
@@ -2413,7 +2413,7 @@ void CInterfaceSerial::Send_MODE_OPTION2(WORD wMode)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("(%dq"),wMode);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 }
 
 /**********************************************************************************************//**
@@ -2446,7 +2446,7 @@ void CInterfaceSerial::Send_FOTconv_AMP_FREQ(int val)
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("l%dq"),val);
 	if(0==sendSerialCommand(psz))
-		theApp.getLog()->WriteLine(psz);
+		theApp.WriteLog(psz);
 
 	//DEBUGMSG(TRUE, (TEXT("Send_FOT_AMP_FREQ %d\r\n"),val));
 }
@@ -3025,7 +3025,7 @@ int CInterfaceSerial::GetHFO_CHECKSUM()
 //			if(m_iError_evCOM_M_EXP_FLOW>3)
 //			{
 //				m_iError_evCOM_M_EXP_FLOW=0;
-//				theApp.getLog()->WriteLine(_T("#HFO:0004"));
+//				theApp.WriteLog(_T("#HFO:0004"));
 //			}
 //		}
 //		break;
@@ -3036,7 +3036,7 @@ int CInterfaceSerial::GetHFO_CHECKSUM()
 //			if(m_iError_evCOM_VERSION>3)
 //			{
 //				m_iError_evCOM_VERSION=0;
-//				theApp.getLog()->WriteLine(_T("#HFO:0008"));
+//				theApp.WriteLog(_T("#HFO:0008"));
 //			}
 //		}
 //		break;
@@ -3047,7 +3047,7 @@ int CInterfaceSerial::GetHFO_CHECKSUM()
 //			if(m_iError_evCOM_STATUS>3)
 //			{
 //				m_iError_evCOM_STATUS=0;
-//				theApp.getLog()->WriteLine(_T("#HFO:0001"));
+//				theApp.WriteLog(_T("#HFO:0001"));
 //				bAlarm=true;
 //			}
 //		}
@@ -3059,7 +3059,7 @@ int CInterfaceSerial::GetHFO_CHECKSUM()
 //			if(m_iError_evCOM_CHECKSUM>3)
 //			{
 //				m_iError_evCOM_CHECKSUM=0;
-//				theApp.getLog()->WriteLine(_T("#HFO:0002"));
+//				theApp.WriteLog(_T("#HFO:0002"));
 //				bAlarm=true;
 //			}
 //		}
@@ -3071,7 +3071,7 @@ int CInterfaceSerial::GetHFO_CHECKSUM()
 //			if(m_iError_evCOM_M_INSP_FLOW>3)
 //			{
 //				m_iError_evCOM_M_INSP_FLOW=0;
-//				theApp.getLog()->WriteLine(_T("#HFO:0003"));
+//				theApp.WriteLog(_T("#HFO:0003"));
 //			}
 //		}
 //		break;
@@ -3082,7 +3082,7 @@ int CInterfaceSerial::GetHFO_CHECKSUM()
 //			if(m_iError_evCOM_M_DEMAND_FLOW>3)
 //			{
 //				m_iError_evCOM_M_DEMAND_FLOW=0;
-//				theApp.getLog()->WriteLine(_T("#HFO:0005"));
+//				theApp.WriteLog(_T("#HFO:0005"));
 //
 //			}
 //		}
@@ -3094,7 +3094,7 @@ int CInterfaceSerial::GetHFO_CHECKSUM()
 //			if(m_iError_evCOM_CAL_PRESS_SCALE>3)
 //			{
 //				m_iError_evCOM_CAL_PRESS_SCALE=0;
-//				theApp.getLog()->WriteLine(_T("#HFO:0006"));
+//				theApp.WriteLog(_T("#HFO:0006"));
 //			}
 //		}
 //		break;
@@ -3105,7 +3105,7 @@ int CInterfaceSerial::GetHFO_CHECKSUM()
 //			if(m_iError_evCOM_CAL_PRESS_OFFSET>3)
 //			{
 //				m_iError_evCOM_CAL_PRESS_OFFSET=0;
-//				theApp.getLog()->WriteLine(_T("#HFO:0007"));
+//				theApp.WriteLog(_T("#HFO:0007"));
 //			}
 //		}
 //		break;
@@ -3324,7 +3324,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 				}
 				CStringW szError=_T("");
 				szError.Format(_T("#Serial CMD:O CtlL: %d GUI: %d"), iTemp,getModel()->getCONFIG()->GetCurMode());
-				theApp.getLog()->WriteLine(szError);
+				theApp.WriteLog(szError);
 			}
 		}
 	}
@@ -3347,7 +3347,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 				{
 					bError=true;
 					szError.Format(_T("#Serial CMD: R CtlL: %d GUI: VENT_RUNNING"), wTemp);
-					theApp.getLog()->WriteLine(szError);
+					theApp.WriteLog(szError);
 				}			
 			}
 			else
@@ -3356,7 +3356,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 				{
 					bError=true;
 					szError.Format(_T("#Serial CMD: R CtlL: %d GUI: VENT_RUNNING!"), wTemp);
-					theApp.getLog()->WriteLine(szError);
+					theApp.WriteLog(szError);
 				}
 			}
 
@@ -3366,7 +3366,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 				{
 					bError=true;
 					szError.Format(_T("#Serial CMD: R CtlL: %d GUI: VG off"), wTemp);
-					theApp.getLog()->WriteLine(szError);
+					theApp.WriteLog(szError);
 				}
 				
 			}
@@ -3376,7 +3376,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 				{
 					bError=true;
 					szError.Format(_T("#Serial CMD: R CtlL: %d GUI: VG on"), wTemp);
-					theApp.getLog()->WriteLine(szError);
+					theApp.WriteLog(szError);
 				}
 			}
 
@@ -3386,7 +3386,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 				{
 					bError=true;
 					szError.Format(_T("#Serial CMD: R CtlL: %d GUI: VL off"), wTemp);
-					theApp.getLog()->WriteLine(szError);
+					theApp.WriteLog(szError);
 				}		
 			}
 			else
@@ -3395,7 +3395,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 				{
 					bError=true;
 					szError.Format(_T("#Serial CMD: R CtlL: %d GUI: VL on"), wTemp);
-					theApp.getLog()->WriteLine(szError);
+					theApp.WriteLog(szError);
 				}
 			}
 
@@ -3408,7 +3408,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 					{
 						bError=true;
 						szError.Format(_T("#Serial CMD: R CtlL: %d GUI: VolumeTrigger true"), wTemp);
-						theApp.getLog()->WriteLine(szError);
+						theApp.WriteLog(szError);
 					}
 				}
 				else
@@ -3417,7 +3417,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 					{
 						bError=true;
 						szError.Format(_T("#Serial CMD: R CtlL: %d GUI: VolumeTrigger false"), wTemp);
-						theApp.getLog()->WriteLine(szError);
+						theApp.WriteLog(szError);
 					}
 				}
 			}*/
@@ -3428,7 +3428,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 				{
 					bError=true;
 					szError.Format(_T("#Serial CMD: R CtlL: %d GUI: O21SensorCalState false"), wTemp);
-					theApp.getLog()->WriteLine(szError);
+					theApp.WriteLog(szError);
 				}
 			}
 			else
@@ -3437,7 +3437,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 				{
 					bError=true;
 					szError.Format(_T("#Serial CMD: R CtlL: %d GUI: O21SensorCalState true"), wTemp);
-					theApp.getLog()->WriteLine(szError);
+					theApp.WriteLog(szError);
 				}
 			}
 
@@ -3447,7 +3447,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 				{
 					bError=true;
 					szError.Format(_T("#Serial CMD: R CtlL: %d GUI: O100SensorCalState false"), wTemp);
-					theApp.getLog()->WriteLine(szError);
+					theApp.WriteLog(szError);
 				}
 			}
 			else
@@ -3456,7 +3456,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 				{
 					bError=true;
 					szError.Format(_T("#Serial CMD: R CtlL: %d GUI: O100SensorCalState true"), wTemp);
-					theApp.getLog()->WriteLine(szError);
+					theApp.WriteLog(szError);
 				}
 			}
 
@@ -3470,14 +3470,14 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						if(wTemp & BIT12)
 						{
 							szError.Format(_T("#Serial CMD: R CtlL: %d GUI: IERatioParaHFO RIE_1_3"), wTemp);
-							theApp.getLog()->WriteLine(szError);
+							theApp.WriteLog(szError);
 							bError=true;
 						}
 
 						if(wTemp & BIT13)
 						{
 							szError.Format(_T("#Serial CMD: R CtlL: %d GUI: IERatioParaHFO RIE_1_3"), wTemp);
-							theApp.getLog()->WriteLine(szError);
+							theApp.WriteLog(szError);
 							bError=true;
 						}
 					}
@@ -3488,14 +3488,14 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						{
 							bError=true;
 							szError.Format(_T("#Serial CMD: R CtlL: %d GUI: IERatioParaHFO RIE_1_2"), wTemp);
-							theApp.getLog()->WriteLine(szError);
+							theApp.WriteLog(szError);
 						}
 
 						if(wTemp & BIT13)
 						{
 							bError=true;
 							szError.Format(_T("#Serial CMD: R CtlL: %d GUI: IERatioParaHFO RIE_1_2"), wTemp);
-							theApp.getLog()->WriteLine(szError);
+							theApp.WriteLog(szError);
 						}
 					}
 					break;
@@ -3505,14 +3505,14 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 						{
 							bError=true;
 							szError.Format(_T("#Serial CMD: R CtlL: %d GUI: IERatioParaHFO RIE_1_1"), wTemp);
-							theApp.getLog()->WriteLine(szError);
+							theApp.WriteLog(szError);
 						}
 
 						if(wTemp & BIT12)
 						{
 							bError=true;
 							szError.Format(_T("#Serial CMD: R CtlL: %d GUI: IERatioParaHFO RIE_1_1"), wTemp);
-							theApp.getLog()->WriteLine(szError);
+							theApp.WriteLog(szError);
 						}
 					}
 					break;
@@ -3565,7 +3565,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 				}
 				CStringW szError=_T("");
 				szError.Format(_T("#Serial CMD:R CtlL: %d"), wTemp);
-				theApp.getLog()->WriteLine(szError);
+				theApp.WriteLog(szError);
 			}
 			
 		}
@@ -3626,7 +3626,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 				}
 				CStringW szError=_T("");
 				szError.Format(_T("#Serial CMD: W CtlL: %d GUI: %d"), iTemp,getModel()->getDATAHANDLER()->GetCurrentITimePara());
-				theApp.getLog()->WriteLine(szError);
+				theApp.WriteLog(szError);
 			}
 		}
 	}
@@ -3687,7 +3687,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 				CStringW szError=_T("");
 				szError.Format(_T("#Serial CMD: E CtlL: %d GUI: %d"), iTemp,getModel()->getDATAHANDLER()->GetCurrentETimePara());
-				theApp.getLog()->WriteLine(szError);
+				theApp.WriteLog(szError);
 			}
 		}
 	}
@@ -3748,7 +3748,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 				CStringW szError=_T("");
 				szError.Format(_T("#Serial CMD: U CtlL: %d GUI: %d"), iTemp,getModel()->getDATAHANDLER()->GetCurrentIFlowPara());
-				theApp.getLog()->WriteLine(szError);
+				theApp.WriteLog(szError);
 			}
 		}
 	}
@@ -3811,7 +3811,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 				CStringW szError=_T("");
 				szError.Format(_T("#Serial CMD: ] CtlL: %d GUI: %d"), iTemp,iRiseTime);
-				theApp.getLog()->WriteLine(szError);
+				theApp.WriteLog(szError);
 			}
 		}
 	}
@@ -3887,7 +3887,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 				CStringW szError=_T("");
 				szError.Format(_T("#Serial CMD: A CtlL: %d GUI: %d"), iTemp,iFlow);
-				theApp.getLog()->WriteLine(szError);
+				theApp.WriteLog(szError);
 
 			}
 		}
@@ -3950,7 +3950,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 				CStringW szError=_T("");
 				szError.Format(_T("#Serial CMD: F CtlL: %d GUI: %d"), iTemp,getModel()->getDATAHANDLER()->GetCurrentHFFreqPara());
-				theApp.getLog()->WriteLine(szError);
+				theApp.WriteLog(szError);
 			}
 		}
 	}
@@ -4012,7 +4012,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 				CStringW szError=_T("");
 				szError.Format(_T("#Serial CMD: J CtlL: %d GUI: %d"), iTemp,getModel()->getDATAHANDLER()->GetCurrentPmeanPara());
-				theApp.getLog()->WriteLine(szError);
+				theApp.WriteLog(szError);
 			}
 		}
 	}
@@ -4106,7 +4106,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 				CStringW szError=_T("");
 				szError.Format(_T("#Serial CMD: M CtlL: %d GUI: %d"), iTemp,wHFAMPL);
-				theApp.getLog()->WriteLine(szError);
+				theApp.WriteLog(szError);
 			}
 		}
 	}
@@ -4185,7 +4185,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 				CStringW szError=_T("");
 				szError.Format(_T("#Serial CMD: T CtlL: %d GUI: %d"), iTemp,iPIP);
-				theApp.getLog()->WriteLine(szError);
+				theApp.WriteLog(szError);
 
 			}
 		}
@@ -4250,7 +4250,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 				CStringW szError=_T("");
 				szError.Format(_T("#Serial CMD: > CtlL: %d GUI: %d"), iTemp,iPMAX);
-				theApp.getLog()->WriteLine(szError);
+				theApp.WriteLog(szError);
 			}
 		}
 	}
@@ -4313,7 +4313,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 				CStringW szError=_T("");
 				szError.Format(_T("#Serial CMD: Z CtlL: %d GUI: %d"), iTemp,getModel()->getDATAHANDLER()->GetCurrentPEEPPara());
-				theApp.getLog()->WriteLine(szError);
+				theApp.WriteLog(szError);
 			}
 		}
 	}
@@ -4374,7 +4374,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 				CStringW szError=_T("");
 				szError.Format(_T("#Serial CMD: C CtlL: %d GUI: %d"), iTemp,getModel()->getDATAHANDLER()->GetCurrentPpsvPara());
-				theApp.getLog()->WriteLine(szError);
+				theApp.WriteLog(szError);
 			}
 		}
 	}
@@ -4460,7 +4460,7 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 
 				CStringW szError=_T("");
 				szError.Format(_T("#Serial CMD: D CtlL: %d GUI: %d"), iTemp,iCurVal);
-				theApp.getLog()->WriteLine(szError);
+				theApp.WriteLog(szError);
 
 			}
 		}

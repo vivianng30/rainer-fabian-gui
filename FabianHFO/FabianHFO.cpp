@@ -214,7 +214,7 @@ void CFabianHFOApp::initLog()
 	}
 
 
-	log = new Logfile(aPathLog);
+	log = new Logfile(aPathLog,SYSTEMLOG_ID);
 	log->WriteLine(_T(""));
 	log->WriteLine(_T("*******************"));
 	log->WriteLine(_T("**** systemlog ****"));
@@ -242,7 +242,7 @@ void CFabianHFOApp::OpenLog()
 		{
 			aPathLog = "\\FFSDISK\\Logs\\systemlog.txt";
 		}
-		log = new Logfile(aPathLog);
+		log = new Logfile(aPathLog,SYSTEMLOG_ID);
 		log->WriteLine(_T(""));
 		log->WriteLine(_T("*******************"));
 		log->WriteLine(_T("!!!! REOPEN systemlog !!!!"));
@@ -288,9 +288,44 @@ Logfile *CFabianHFOApp::getLog()
 		{
 			aPathLog = "\\FFSDISK\\Logs\\systemlog.txt";
 		}
-		log = new Logfile(aPathLog);
+		log = new Logfile(aPathLog,SYSTEMLOG_ID);
 	}
 	return log;
+}
+
+/**********************************************************************************************//**
+ * Writes a log
+ *
+ * \author	Rainer Kühner
+ * \date	09.04.2018
+ *
+ * \param	inhalt	The inhalt.
+ **************************************************************************************************/
+
+void CFabianHFOApp::WriteLog(CStringW inhalt)
+{
+	if(log!=NULL)
+	{
+		getLog()->WriteLine(inhalt);
+	}
+}
+
+/**********************************************************************************************//**
+ * Determines if we can check log date
+ *
+ * \author	Rainer Kühner
+ * \date	09.04.2018
+ *
+ * \return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
+bool CFabianHFOApp::CheckLogDate()
+{
+	if(log!=NULL)
+	{
+		return theApp.getLog()->CheckDate();
+	}
+	return false;
 }
 
 /**********************************************************************************************//**

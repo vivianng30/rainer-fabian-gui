@@ -16,10 +16,13 @@
  * \param	svDateiname	The sv dateiname.
  **************************************************************************************************/
 
-Logfile::Logfile(const char * svDateiname)
+Logfile::Logfile(const char * svDateiname, BYTE iLogID)
 {
+	//DEBUGMSG(TRUE, (TEXT("Logfile::Logfile\r\n")));
 	InitializeCriticalSection(&csLog);
 	
+	m_iLogID=iLogID;
+
 	m_Logfile = this;
 	m_Logfile->svLastDatum = "";
 
@@ -66,11 +69,20 @@ Logfile::Logfile(const char * svDateiname)
 
 bool Logfile::Open()
 {
+	if (m_Logfile == NULL)
+	{
+		//DEBUGMSG(TRUE, (TEXT("Logfile::Open() m_Logfile == NULL\r\n")));
+		return false;
+	}
 	stream = _wfopen(m_Filename,L"a+");
 
 	if (stream == NULL)
+	{
+		//DEBUGMSG(TRUE, (TEXT("Logfile::Open() stream == NULL\r\n")));
 		return false;
+	}
 
+	//DEBUGMSG(TRUE, (TEXT("Logfile::Open()\r\n")));
 	return true;
 }
 
@@ -85,7 +97,7 @@ bool Logfile::Open()
 
 bool Logfile::Close()
 {
-
+	//DEBUGMSG(TRUE, (TEXT("Logfile::Close\r\n")));
 	if (stream != NULL)
 	{
 		fclose(stream);
@@ -417,7 +429,7 @@ CString Logfile::GetFilePattern()
 
 void Logfile::StartLogfileThread( void )
 {
-	
+	DEBUGMSG(TRUE, (TEXT("Logfile::StartLogfileThread\r\n")));
 	m_bDoWriteLogfile=true;
 
 	if(m_pcwtWriteLogThread!=NULL)
@@ -454,10 +466,10 @@ void Logfile::StopLogfileThread( void )
 	if(m_bDoWriteLogfile)
 	{
 		m_bDoWriteLogfile=false;
-		//DEBUGMSG(TRUE, (TEXT("StopSerialThread 5\r\n")));
+		//DEBUGMSG(TRUE, (TEXT("StopLogfileThread\r\n")));
 		if (WaitForSingleObject(m_pcwtWriteLogThread->m_hThread,500) == WAIT_TIMEOUT)
 		{
-			DEBUGMSG(TRUE, (TEXT("StopLogfileThread 1 !!!!!!!!!!!!!!\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("StopLogfileThread 1 !!!!!!!!!!!!!!\r\n")));
 
 			if(!TerminateThread(m_pcwtWriteLogThread,0))
 			{
@@ -483,6 +495,7 @@ void Logfile::StopLogfileThread( void )
 
 static UINT CWriteLogThread( LPVOID pc )
 {
+	//DEBUGMSG(TRUE, (TEXT("CWriteLogThread\r\n")));
 	((Logfile*)pc)->writeLogfile();
 	return TRUE;
 }
@@ -513,24 +526,49 @@ DWORD Logfile::writeLogfile(void)
 		{
 			if(Open())
 			{
-				if (m_Logfile->stream != NULL)
+				if (m_Logfile == NULL)
+				{
+					//DEBUGMSG(TRUE, (TEXT("writeLogfile m_Logfile == NULL\r\n")));
+					LeaveCriticalSection(&csLog);
+				}
+				//DEBUGMSG(TRUE, (TEXT("writeLogfile\r\n")));
+				else if (m_Logfile->stream != NULL)
 				{
 					fputws(msgLog.GetAt(pos),m_Logfile->stream);
 					fputws(L"\n",m_Logfile->stream);
 					msgLog.RemoveAt(pos);
-				}
-				LeaveCriticalSection(&csLog);
 
-				CheckFileSize();
-				Close();
+					LeaveCriticalSection(&csLog);
+
+					CheckFileSize();
+					Close();
+				}
+				else
+				{
+					//DEBUGMSG(TRUE, (TEXT("writeLogfile m_Logfile->stream == NULL\r\n")));
+					LeaveCriticalSection(&csLog);
+				}
+				
 			}
 			else
 			{
+				m_bExit=true;
 				msgLog.RemoveAll();
 				LeaveCriticalSection(&csLog);
 
-				if(AfxGetApp())
-					AfxGetApp()->GetMainWnd()->PostMessage(WM_REOPENLOG);
+				switch(m_iLogID)
+				{
+				case SYSTEMLOG_ID:
+					if(AfxGetApp())
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_REOPENLOG_SYSTEMLOG);
+					break;
+
+				case ALARMLOG_ID:
+					if(AfxGetApp())
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_REOPENLOG_ALARMLOG);
+					break;
+				}
+				
 			}
 			
 		}

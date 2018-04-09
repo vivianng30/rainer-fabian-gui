@@ -119,7 +119,7 @@ CAlarmMgmtHandler::CAlarmMgmtHandler()
 		aPathLog = "\\FFSDISK\\Logs\\alarmlog.txt";
 	}
 
-	m_AlarmLogfile = new Logfile(aPathLog);
+	m_AlarmLogfile = new Logfile(aPathLog,ALARMLOG_ID);
 
 	m_bVgarantAutoTurnedOff_FOT=false;
 	m_bVgarantAutoTurnedOff_FlowSensor=false;
@@ -740,6 +740,7 @@ CTlsLoglist * CAlarmMgmtHandler::getAlarmLog()
 
 void CAlarmMgmtHandler::reinitAlarmLog()
 {
+	m_AlarmLogfile->Exit();
 	if(m_AlarmLogfile)
 	{
 		delete m_AlarmLogfile;
@@ -757,7 +758,7 @@ void CAlarmMgmtHandler::reinitAlarmLog()
 		aPathLog = "\\FFSDISK\\Logs\\alarmlog.txt";
 	}
 
-	m_AlarmLogfile = new Logfile(aPathLog);
+	m_AlarmLogfile = new Logfile(aPathLog,ALARMLOG_ID);
 }
 
 /**********************************************************************************************//**
@@ -1533,7 +1534,7 @@ void CAlarmMgmtHandler::setSystemSilentActive()
 {
 	setStartupSilent(false);
 
-	theApp.getLog()->WriteLine(_T("*** ASTATE_ACTIVE ***"));
+	theApp.WriteLog(_T("*** ASTATE_ACTIVE ***"));
 
 	setAlarmSilentState(ASTATE_ACTIVE);
 
@@ -1579,7 +1580,7 @@ void CAlarmMgmtHandler::setSystemSilent()
 
 		getModel()->Send_MODE_OPTION1(true,false);
 
-		theApp.getLog()->WriteLine(_T("*** ASTATE_SYSTEM_SILENT ***"));
+		theApp.WriteLog(_T("*** ASTATE_SYSTEM_SILENT ***"));
 	}
 }
 
@@ -1611,7 +1612,7 @@ void CAlarmMgmtHandler::setAlarmSilent(bool bDelSysSilent,bool bDelAllAlarms)
 			{
 				getModel()->setSPIavailability(TRUE);
 			}
-			theApp.getLog()->WriteLine(_T("*** ASTATE_SILENT ***"));
+			theApp.WriteLog(_T("*** ASTATE_SILENT ***"));
 		}
 
 		if(bDelAllAlarms)
@@ -1677,7 +1678,7 @@ void CAlarmMgmtHandler::setAutoSilent(bool bDelSysSilent, bool bDelSilent, bool 
 					getModel()->setSPIavailability(TRUE);
 				}
 
-				theApp.getLog()->WriteLine(_T("*** ASTATE_AUTOSILENT ***"));
+				theApp.WriteLog(_T("*** ASTATE_AUTOSILENT ***"));
 			}
 
 			updateAlarmStatesSilentStateDependend();
@@ -9110,7 +9111,7 @@ void CAlarmMgmtHandler::setPRICOAutoTurnedOff(bool bAutoTurnOn, eAlarmPrio prioA
 
 void CAlarmMgmtHandler::resetPRICOAutoTurnedOff()
 {
-	//theApp.getLog()->WriteLine(_T("resetPRICOAutoTurnedOff"));
+	//theApp.WriteLog(_T("resetPRICOAutoTurnedOff"));
 	DEBUGMSG(TRUE, (TEXT("CAlarmMgmtHandler::resetPRICOAutoTurnedOff()\r\n")));
 	
 	EnterCriticalSection(&csPRICOautoOffState);
@@ -9129,7 +9130,7 @@ void CAlarmMgmtHandler::resetPRICOAutoTurnedOff()
 
 void CAlarmMgmtHandler::resetPRICOAutoTurneOnFlag()
 {
-	//theApp.getLog()->WriteLine(_T("resetPRICOAutoTurnedOff"));
+	//theApp.WriteLog(_T("resetPRICOAutoTurnedOff"));
 	DEBUGMSG(TRUE, (TEXT("CAlarmMgmtHandler::resetPRICOAutoTurnedOff()\r\n")));
 
 	EnterCriticalSection(&csPRICOautoOffState);

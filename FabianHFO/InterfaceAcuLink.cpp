@@ -1280,7 +1280,7 @@ void CInterfaceAcuLink::setGraphDataV3(SHORT iValVolume ,SHORT iValPressure ,SHO
 	//			m_bShowAcuLinkError=false;
 	//			/*CStringW sz=_T("");
 	//			sz.Format(_T("ERROR acuLink SetGraphData: %d"), iRet);
-	//			theApp.getLog()->WriteLine(sz);*/
+	//			theApp.WriteLog(sz);*/
 	//		}
 	//	}
 	//}
@@ -1313,7 +1313,7 @@ void CInterfaceAcuLink::setGraphDataV4(SHORT iValVolume ,SHORT iValPressure ,SHO
 	//			m_bShowAcuLinkError=false;
 	//			/*CStringW sz=_T("");
 	//			sz.Format(_T("ERROR acuLink SetGraphData: %d"), iRet);
-	//			theApp.getLog()->WriteLine(sz);*/
+	//			theApp.WriteLog(sz);*/
 	//		}
 	//	}
 	//}

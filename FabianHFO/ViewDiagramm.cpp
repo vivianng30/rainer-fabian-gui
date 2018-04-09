@@ -3059,7 +3059,7 @@ void CViewDiagramm::drawView(bool bNextGraph)
 	default:
 		{
 			//rku check1
-			theApp.getLog()->WriteLine(_T("#ERROR: CViewDiagramm::drawView default"));
+			theApp.WriteLog(_T("#ERROR: CViewDiagramm::drawView default"));
 			EnterCriticalSection(&csGraphButton);
 			if(m_pcGraph1)
 				m_pcGraph1->ShowWindow(SW_HIDE);
@@ -6034,7 +6034,7 @@ void CViewDiagramm::ShowWndMenuGraphs(bool bShow)
 
 void CViewDiagramm::NotifyVentModeChanged()
 {
-	DEBUGMSG(TRUE, (TEXT("CViewDiagramm::NotifyVentModeChanged()\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("CViewDiagramm::NotifyVentModeChanged()\r\n")));
 	bool bResetAll=false;
 	if(getModel()->getVMODEHANDLER()->activeModeIsTrigger()==false)
 	{
@@ -8538,11 +8538,11 @@ void CViewDiagramm::StopGraphThread( void )
 
 			if (WaitForSingleObject(m_pcwtGraphThread->m_hThread,3000) == WAIT_TIMEOUT)
 			{
-				theApp.getLog()->WriteLine(_T("#THR:031a EXCEPTION"));
+				theApp.WriteLog(_T("#THR:031a EXCEPTION"));
 
 				if(!TerminateThread(m_pcwtGraphThread,0))
 				{
-					theApp.getLog()->WriteLine(_T("#THR:031b EXCEPTION"));
+					theApp.WriteLog(_T("#THR:031b EXCEPTION"));
 				}
 			}
 		}
@@ -11751,7 +11751,7 @@ void CViewDiagramm::redrawPressureVolumeLoop()
 					LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 					//DEBUGMSG(TRUE, (TEXT("unlock 50\r\n")));
 					LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
-					theApp.getLog()->WriteLine(_T("#G_MAXLOOPPOINTS 1"));
+					theApp.WriteLog(_T("#G_MAXLOOPPOINTS 1"));
 					return;
 				}
 			}
@@ -11766,7 +11766,7 @@ void CViewDiagramm::redrawPressureVolumeLoop()
 
 		if(iBreathCnt>3)
 		{
-			theApp.getLog()->WriteLine(_T("#G_MAXLOOPPOINTS 2"));
+			theApp.WriteLog(_T("#G_MAXLOOPPOINTS 2"));
 		}
 
 		m_lpfsPressureVolume->FuncType=G_PLOTSAVEDLOOPPOINTS;
@@ -11807,7 +11807,7 @@ void CViewDiagramm::redrawPressureVolumeLoop()
 						LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 						//DEBUGMSG(TRUE, (TEXT("unlock 50\r\n")));
 						LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
-						theApp.getLog()->WriteLine(_T("#G_MAXLOOPPOINTS 3"));
+						theApp.WriteLog(_T("#G_MAXLOOPPOINTS 3"));
 						return;
 					}
 				}
@@ -11902,7 +11902,7 @@ void CViewDiagramm::redrawVolumeFlowLoop()
 					LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 					//DEBUGMSG(TRUE, (TEXT("unlock 51\r\n")));
 					LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
-					theApp.getLog()->WriteLine(_T("#G_MAXLOOPPOINTS 1"));
+					theApp.WriteLog(_T("#G_MAXLOOPPOINTS 1"));
 					return;
 				}
 			}
@@ -11917,7 +11917,7 @@ void CViewDiagramm::redrawVolumeFlowLoop()
 
 		if(iBreathCnt>3)
 		{
-			theApp.getLog()->WriteLine(_T("#G_MAXLOOPPOINTS 2"));
+			theApp.WriteLog(_T("#G_MAXLOOPPOINTS 2"));
 		}
 
 		m_lpfsVolumeFlow->FuncType=G_PLOTSAVEDLOOPPOINTS;
@@ -11959,7 +11959,7 @@ void CViewDiagramm::redrawVolumeFlowLoop()
 						LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 						//DEBUGMSG(TRUE, (TEXT("unlock 51\r\n")));
 						LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
-						theApp.getLog()->WriteLine(_T("#G_MAXLOOPPOINTS 3"));
+						theApp.WriteLog(_T("#G_MAXLOOPPOINTS 3"));
 						return;
 					}
 				}
@@ -12050,7 +12050,7 @@ void CViewDiagramm::drawFOTsteps()
 				/** \brief The leave critical section csLPFS_FUNCTIONSTRUCT. */
 				LeaveCriticalSection(&csLPFS_FUNCTIONSTRUCT);
 				//DEBUGMSG(TRUE, (TEXT("unlock 52\r\n")));
-				theApp.getLog()->WriteLine(_T("#MAXSIZE_FOT_STEPS"));
+				theApp.WriteLog(_T("#MAXSIZE_FOT_STEPS"));
 				return;
 			}
 		}

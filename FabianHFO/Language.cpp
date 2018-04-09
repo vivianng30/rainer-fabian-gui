@@ -299,7 +299,7 @@ void CLanguage::Init()
 	{
 		CStringW szLog = _T("#HFO:0214: ");
 		szLog+=getModel()->getCONFIG()->getLANGUAGE();
-		theApp.getLog()->WriteLine(szLog);
+		theApp.WriteLog(szLog);
 		getModel()->getCONFIG()->SetLanguage(LANGFILE_ENGLISH);
 
 		dwResult = m_pcLangAdmin.LoadLang(LANGFILE_ENGLISH,true);
@@ -308,7 +308,7 @@ void CLanguage::Init()
 		{
 			szLog = _T("#HFO:0215: ");
 			szLog+=LANGFILE_ENGLISH;
-			theApp.getLog()->WriteLine(szLog);
+			theApp.WriteLog(szLog);
 		}
 	}
 

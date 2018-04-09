@@ -148,10 +148,10 @@ void CThreadFlowsensor::stopFlowsensorThread( void )
 
 		if (WaitForSingleObject(m_pcwtFlowsensorThread->m_hThread,1000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:023a"));
+			theApp.WriteLog(_T("#THR:023a"));
 			if(!TerminateThread(m_pcwtFlowsensorThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:023b"));
+				theApp.WriteLog(_T("#THR:023b"));
 			}
 		}
 	}
@@ -246,7 +246,7 @@ DWORD CThreadFlowsensor::FlowsensorData(void)
 
 	}while(m_bDoFlowsensorThread);
 
-	//theApp.getLog()->WriteLine(_T("#THR:025"));
+	//theApp.WriteLog(_T("#THR:025"));
 
 	return 0;
 }

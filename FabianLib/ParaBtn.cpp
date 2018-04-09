@@ -2918,13 +2918,13 @@ void CParaBtn::WriteCurrentValue()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0016 %d"),m_v.iValue);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 				m_v.iValue=getModel()->getDATAHANDLER()->GetCurrentITimePara();
 
 				if(false==getModel()->getDATAHANDLER()->CalculateETime_ITimeChanged(m_v.iValue,false))
 				{
 					sz.Format(_T("#HFO:0017 %d"),m_v.iValue);
-					theApp.getLog()->WriteLine(sz);
+					theApp.WriteLog(sz);
 
 					getModel()->getDATAHANDLER()->CheckIErelation(	getModel()->getDATAHANDLER()->GetCurrentITimePara(),
 																	getModel()->getDATAHANDLER()->GetCurrentBPMPara(),
@@ -2938,13 +2938,13 @@ void CParaBtn::WriteCurrentValue()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0018 %d"),m_v.iValue);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 				m_v.iValue=getModel()->getDATAHANDLER()->GetCurrentITimePara();
 				
 				if(false==getModel()->getDATAHANDLER()->CalculateBPM_ITimeChanged(m_v.iValue,false))
 				{
 					sz.Format(_T("#HFO:0019 %d"),m_v.iValue);
-					theApp.getLog()->WriteLine(sz);
+					theApp.WriteLog(sz);
 
 					getModel()->getDATAHANDLER()->CheckIErelation(	getModel()->getDATAHANDLER()->GetCurrentITimePara(),
 																	getModel()->getDATAHANDLER()->GetCurrentBPMPara(),
@@ -2961,13 +2961,13 @@ void CParaBtn::WriteCurrentValue()
 		{
 			CStringW sz=_T("");
 			sz.Format(_T("#HFO:0020 %d"),m_v.iValue);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 			m_v.iValue=getModel()->getDATAHANDLER()->GetCurrentETimePara();
 
 			if(false==getModel()->getDATAHANDLER()->CalculateBPM_ETimeChanged(m_v.iValue,true))
 			{
 				sz.Format(_T("#HFO:0021 %d"),m_v.iValue);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 
 				getModel()->getDATAHANDLER()->CheckIErelation(	getModel()->getDATAHANDLER()->GetCurrentITimePara(),
 																getModel()->getDATAHANDLER()->GetCurrentBPMPara(),
@@ -2984,13 +2984,13 @@ void CParaBtn::WriteCurrentValue()
 		{
 			CStringW sz=_T("");
 			sz.Format(_T("#HFO:0022 %d"),m_v.iValue);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 			m_v.iValue=getModel()->getDATAHANDLER()->GetCurrentBPMPara();
 
 			if(false==getModel()->getDATAHANDLER()->CalculateETime_BPMChanged(m_v.iValue,false))
 			{
 				sz.Format(_T("#HFO:0023 %d"),m_v.iValue);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 
 				getModel()->getDATAHANDLER()->CheckIErelation(	getModel()->getDATAHANDLER()->GetCurrentITimePara(),
 																getModel()->getDATAHANDLER()->GetCurrentBPMPara(),

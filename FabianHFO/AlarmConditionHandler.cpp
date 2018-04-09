@@ -671,12 +671,12 @@ void CAlarmConditionHandler::setAlarmLimitRanges_DEFAULT()
 		
 		if (ALIMIT_PIPMIN->getLimitState()==AL_OFF)
 		{
-			DEBUGMSG(TRUE, (TEXT("1 PIPMAX->setMinValue %d\r\n"),iCurPEEP+DIFF_PMAX_PMIN_LIMIT));
+			//DEBUGMSG(TRUE, (TEXT("1 PIPMAX->setMinValue %d\r\n"),iCurPEEP+DIFF_PMAX_PMIN_LIMIT));
 			ALIMIT_PIPMAX->setMinValue(iCurPEEP+DIFF_PMAX_PMIN_LIMIT);
 		}
 		else
 		{
-			DEBUGMSG(TRUE, (TEXT("2 PIPMAX->setMinValue %d\r\n"),ALIMIT_PIPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT));
+			//DEBUGMSG(TRUE, (TEXT("2 PIPMAX->setMinValue %d\r\n"),ALIMIT_PIPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT));
 			ALIMIT_PIPMAX->setMinValue(ALIMIT_PIPMIN->getCurValue()+DIFF_PMAX_PMIN_LIMIT);
 		}
 
@@ -1974,7 +1974,7 @@ void CAlarmConditionHandler::setAlimitApnoeHF(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALApnoeHF%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitApnoeHF(value);
 	getModel()->Send_PARA_APNOE_TIME(value,true,true);
 }
@@ -1994,7 +1994,7 @@ void CAlarmConditionHandler::setAlimitApnoeDefault(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALApnoe%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->setAlimitApnoe(value);
 	getModel()->Send_PARA_APNOE_TIME(value,true,true);
 }
@@ -2036,7 +2036,7 @@ void CAlarmConditionHandler::setAlimitBPMmaxHF(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALBPMmaxHF%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitBPMmaxHF(value);
 }
 
@@ -2055,7 +2055,7 @@ void CAlarmConditionHandler::setAlimitBPMmaxDefault(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALBPMmax%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitBPMmax(value);
 }
 
@@ -2096,7 +2096,7 @@ void CAlarmConditionHandler::setAlimitLeakmaxHF(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALLeakmaxHF%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitLeakmaxHF(value);
 }
 
@@ -2115,7 +2115,7 @@ void CAlarmConditionHandler::setAlimitLeakmaxDefault(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALLeakmax%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitLeakmax(value);
 }
 
@@ -2173,7 +2173,7 @@ void CAlarmConditionHandler::setAlimitMVmaxHF(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALMVmaxHF%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 
 	getModel()->getCONFIG()->SetAlarmlimitMVmaxHF(value);
 }
@@ -2210,7 +2210,7 @@ void CAlarmConditionHandler::setAlimitMVmaxDefault(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALMVmax%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 
 	getModel()->getCONFIG()->SetAlarmlimitMVmax(value);
 }
@@ -2273,7 +2273,7 @@ void CAlarmConditionHandler::setAlimitMVminHF(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALMVminHF%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 
 	getModel()->getCONFIG()->SetAlarmlimitMVminHF(value);
 }
@@ -2314,7 +2314,7 @@ void CAlarmConditionHandler::setAlimitMVminDefault(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALMVmin%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitMVmin(value);
 }
 
@@ -2372,7 +2372,7 @@ void CAlarmConditionHandler::setAlimitPEEPminCpap(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALPEEPminCPAP%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitPEEPminCpap(value);
 }
 
@@ -2392,7 +2392,7 @@ void CAlarmConditionHandler::setAlimitPEEPminNCPAP(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALPEEPminNCPAP%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitPEEPminNCPAP(value);
 }
 
@@ -2414,7 +2414,7 @@ void CAlarmConditionHandler::setAlimitPEEPminDUOPAP(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALPEEPminDUOPAP%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitPEEPminDUOPAP(value);
 }
 
@@ -2435,7 +2435,7 @@ void CAlarmConditionHandler::setAlimitPEEPminDefault(int value)//rku PIPLOW DUOP
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALPEEPmin%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitPEEPmin(value);
 }
 
@@ -2493,7 +2493,7 @@ void CAlarmConditionHandler::setAlimitPIPmaxHF(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALPmaxHF%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitPmaxHF(value);
 }
 
@@ -2513,7 +2513,7 @@ void CAlarmConditionHandler::setAlimitPIPmaxCpap(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALPmaxCPAP%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitPmaxCpap(value);
 }
 
@@ -2533,7 +2533,7 @@ void CAlarmConditionHandler::setAlimitPIPmaxNCPAP(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALPmaxNCPAP%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitPmaxNCPAP(value);
 }
 
@@ -2555,7 +2555,7 @@ void CAlarmConditionHandler::setAlimitPIPmaxDUOPAP(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALPIPmax%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitPIPmaxDUOPAP(value);
 }
 
@@ -2576,7 +2576,7 @@ void CAlarmConditionHandler::setAlimitPIPmaxDefault(int value)//rku PIPLOW DUOPA
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALPIPmax%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitPIPmax(value);
 }
 
@@ -2632,7 +2632,7 @@ void CAlarmConditionHandler::setAlimitPIPminDefault(int value)//rku PIPLOW DUOPA
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALPIPmin%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitPIPmin(value);
 }
 
@@ -2653,7 +2653,7 @@ void CAlarmConditionHandler::setAlimitPIPminDUOPAP(int value)//rku PIPLOW DUOPAP
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALPIPmin%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitPIPminDUOPAP(value);
 }
 /**********************************************************************************************//**
@@ -2694,7 +2694,7 @@ void CAlarmConditionHandler::setAlimitMAPmaxHF(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALMAPmaxHF%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitMAPmaxHF(value);
 }
 
@@ -2735,7 +2735,7 @@ void CAlarmConditionHandler::setAlimitMAPminHF(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALMAPminHF%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitMAPminHF(value);
 }
 
@@ -2789,7 +2789,7 @@ void CAlarmConditionHandler::setAlimitDCO2maxHF(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALDCO2maxHF%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitDCO2maxHF(value);
 }
 
@@ -2843,7 +2843,7 @@ void CAlarmConditionHandler::setAlimitDCO2minHF(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALDCO2minHF%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitDCO2minHF(value);
 }
 
@@ -2885,7 +2885,7 @@ void CAlarmConditionHandler::setAlimitETCO2maxHF(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALETCO2maxHF%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitETCO2maxHF(value);
 }
 
@@ -2905,7 +2905,7 @@ void CAlarmConditionHandler::setAlimitETCO2maxDefault(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALETCO2max%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitETCO2max(value);
 }
 
@@ -2947,7 +2947,7 @@ void CAlarmConditionHandler::setAlimitETCO2minHF(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALETCO2minHF%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitETCO2minHF(value);
 }
 
@@ -2967,7 +2967,7 @@ void CAlarmConditionHandler::setAlimitETCO2minDefault(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALETCO2min%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitETCO2min(value);
 }
 
@@ -3009,7 +3009,7 @@ void CAlarmConditionHandler::setAlimitFICO2maxHF(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALFICO2maxHF%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitFICO2maxHF(value);
 }
 
@@ -3029,7 +3029,7 @@ void CAlarmConditionHandler::setAlimitFICO2maxDefault(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALFICO2max%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitFICO2max(value);
 }
 
@@ -3071,7 +3071,7 @@ void CAlarmConditionHandler::setAlimitFICO2minHF(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALFICO2minHF%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitFICO2minHF(value);
 }
 
@@ -3091,7 +3091,7 @@ void CAlarmConditionHandler::setAlimitFICO2minDefault(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALFICO2min%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitFICO2min(value);
 }
 
@@ -3125,7 +3125,7 @@ void CAlarmConditionHandler::setAlimitSPO2maxDefault(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALSPO2max%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitSPO2max(value);
 }
 
@@ -3159,7 +3159,7 @@ void CAlarmConditionHandler::setAlimitSPO2minDefault(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALSPO2min%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitSPO2min(value);
 }
 
@@ -3195,7 +3195,7 @@ void CAlarmConditionHandler::setAlimitPulseRatemaxDefault(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALPulseRatemax%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitPulseRatemax(value);
 }
 
@@ -3230,7 +3230,7 @@ void CAlarmConditionHandler::setAlimitPulseRateminDefault(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALPulseRatemin%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitPulseRatemin(value);
 }
 
@@ -3263,7 +3263,7 @@ void CAlarmConditionHandler::setAlimitSPO2_PIminDefault(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALSPO2_PImin%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitSPO2_PImin(value);
 }
 
@@ -3296,7 +3296,7 @@ void CAlarmConditionHandler::setAlimitSPO2_SIQminDefault(int value)
 
 	CStringW sz=_T("");
 	sz.Format(_T("ALSPO2_SIQmin%d,"), value);
-	theApp.getLog()->WriteLine(sz);
+	theApp.WriteLog(sz);
 	getModel()->getCONFIG()->SetAlarmlimitSPO2_SIQmin(value);
 }
 
@@ -5048,22 +5048,22 @@ void CAlarmConditionHandler::setAlimitState_ApnoeLimit(eAlarmLimitState state)
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALApnea AL_ON"));
+			theApp.WriteLog(_T("ALApnea AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALApnea AL_OFF"));
+			theApp.WriteLog(_T("ALApnea AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALApnea AL_AUTO"));
+			theApp.WriteLog(_T("ALApnea AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALApnea AL_CALC"));
+			theApp.WriteLog(_T("ALApnea AL_CALC"));
 		}
 		break;
 	}
@@ -5125,22 +5125,22 @@ void CAlarmConditionHandler::setAlimitState_BPMmaxLimit(eAlarmLimitState state)
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALBPMmax AL_ON"));
+			theApp.WriteLog(_T("ALBPMmax AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALBPMmax AL_OFF"));
+			theApp.WriteLog(_T("ALBPMmax AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALBPMmax AL_AUTO"));
+			theApp.WriteLog(_T("ALBPMmax AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALBPMmax AL_CALC"));
+			theApp.WriteLog(_T("ALBPMmax AL_CALC"));
 		}
 		break;
 	}
@@ -5202,22 +5202,22 @@ void CAlarmConditionHandler::setAlimitState_LeakmaxLimit(eAlarmLimitState state)
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALLeakmax AL_ON"));
+			theApp.WriteLog(_T("ALLeakmax AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALLeakmax AL_OFF"));
+			theApp.WriteLog(_T("ALLeakmax AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALLeakmax AL_AUTO"));
+			theApp.WriteLog(_T("ALLeakmax AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALLeakmax AL_CALC"));
+			theApp.WriteLog(_T("ALLeakmax AL_CALC"));
 		}
 		break;
 	}
@@ -5279,22 +5279,22 @@ void CAlarmConditionHandler::setAlimitState_MVmaxLimit(eAlarmLimitState state)
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALMVmax AL_ON"));
+			theApp.WriteLog(_T("ALMVmax AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALMVmax AL_OFF"));
+			theApp.WriteLog(_T("ALMVmax AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALMVmax AL_AUTO"));
+			theApp.WriteLog(_T("ALMVmax AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALMVmax AL_CALC"));
+			theApp.WriteLog(_T("ALMVmax AL_CALC"));
 		}
 		break;
 	}
@@ -5356,25 +5356,25 @@ void CAlarmConditionHandler::setAlimitState_MVminLimit(eAlarmLimitState state)
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALMVmin AL_ON"));
+			theApp.WriteLog(_T("ALMVmin AL_ON"));
 			DEBUGMSG(TRUE, (TEXT("ALMVmin AL_ON\r\n")));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALMVmin AL_OFF"));
+			theApp.WriteLog(_T("ALMVmin AL_OFF"));
 			DEBUGMSG(TRUE, (TEXT("ALMVmin AL_OFF\r\n")));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALMVmin AL_AUTO"));
+			theApp.WriteLog(_T("ALMVmin AL_AUTO"));
 			DEBUGMSG(TRUE, (TEXT("ALMVmin AL_AUTO\r\n")));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALMVmin AL_CALC"));
+			theApp.WriteLog(_T("ALMVmin AL_CALC"));
 			DEBUGMSG(TRUE, (TEXT("ALMVmin AL_CALC\r\n")));
 		}
 		break;
@@ -5437,22 +5437,22 @@ void CAlarmConditionHandler::setAlimitState_PEEPminLimit(eAlarmLimitState state)
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALPmin AL_ON"));
+			theApp.WriteLog(_T("ALPmin AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALPmin AL_OFF"));
+			theApp.WriteLog(_T("ALPmin AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALPmin AL_AUTO"));
+			theApp.WriteLog(_T("ALPmin AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALPmin AL_CALC"));
+			theApp.WriteLog(_T("ALPmin AL_CALC"));
 		}
 		break;
 	}
@@ -5562,22 +5562,22 @@ void CAlarmConditionHandler::setAlimitState_PIPminLimit(eAlarmLimitState state)
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALPIPmin AL_ON"));
+			theApp.WriteLog(_T("ALPIPmin AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALPIPmin AL_OFF"));
+			theApp.WriteLog(_T("ALPIPmin AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALPIPmin AL_AUTO"));
+			theApp.WriteLog(_T("ALPIPmin AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALPIPmin AL_CALC"));
+			theApp.WriteLog(_T("ALPIPmin AL_CALC"));
 		}
 		break;
 	}
@@ -5655,22 +5655,22 @@ void CAlarmConditionHandler::setAlimitState_PIPmaxLimit(eAlarmLimitState state)
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALPmax AL_ON"));
+			theApp.WriteLog(_T("ALPmax AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALPmax AL_OFF"));
+			theApp.WriteLog(_T("ALPmax AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALPmax AL_AUTO"));
+			theApp.WriteLog(_T("ALPmax AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALPIPmax AL_CALC"));
+			theApp.WriteLog(_T("ALPIPmax AL_CALC"));
 		}
 		break;
 	}
@@ -5796,22 +5796,22 @@ void CAlarmConditionHandler::setAlimitState_MAPmaxLimit(eAlarmLimitState state)
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALMAPmax AL_ON"));
+			theApp.WriteLog(_T("ALMAPmax AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALMAPmax AL_OFF"));
+			theApp.WriteLog(_T("ALMAPmax AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALMAPmax AL_AUTO"));
+			theApp.WriteLog(_T("ALMAPmax AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALMAPmax AL_CALC"));
+			theApp.WriteLog(_T("ALMAPmax AL_CALC"));
 		}
 		break;
 	}
@@ -5854,22 +5854,22 @@ void CAlarmConditionHandler::setAlimitState_MAPminLimit(eAlarmLimitState state)
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALMAPmin AL_ON"));
+			theApp.WriteLog(_T("ALMAPmin AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALMAPmin AL_OFF"));
+			theApp.WriteLog(_T("ALMAPmin AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALMAPmin AL_AUTO"));
+			theApp.WriteLog(_T("ALMAPmin AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALMAPmin AL_CALC"));
+			theApp.WriteLog(_T("ALMAPmin AL_CALC"));
 		}
 		break;
 	}
@@ -5912,22 +5912,22 @@ void CAlarmConditionHandler::setAlimitState_DCO2maxLimit(eAlarmLimitState state)
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALDCO2max AL_ON"));
+			theApp.WriteLog(_T("ALDCO2max AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALDCO2max AL_OFF"));
+			theApp.WriteLog(_T("ALDCO2max AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALDCO2max AL_AUTO"));
+			theApp.WriteLog(_T("ALDCO2max AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALDCO2max AL_CALC"));
+			theApp.WriteLog(_T("ALDCO2max AL_CALC"));
 		}
 		break;
 	}
@@ -5970,22 +5970,22 @@ void CAlarmConditionHandler::setAlimitState_DCO2minLimit(eAlarmLimitState state)
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALDCO2min AL_ON"));
+			theApp.WriteLog(_T("ALDCO2min AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALDCO2min AL_OFF"));
+			theApp.WriteLog(_T("ALDCO2min AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALDCO2min AL_AUTO"));
+			theApp.WriteLog(_T("ALDCO2min AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALDCO2min AL_CALC"));
+			theApp.WriteLog(_T("ALDCO2min AL_CALC"));
 		}
 		break;
 	}
@@ -6028,22 +6028,22 @@ void CAlarmConditionHandler::setAlimitState_ETCO2maxLimit(eAlarmLimitState state
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALETCO2max AL_ON"));
+			theApp.WriteLog(_T("ALETCO2max AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALETCO2max AL_OFF"));
+			theApp.WriteLog(_T("ALETCO2max AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALETCO2max AL_AUTO"));
+			theApp.WriteLog(_T("ALETCO2max AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALETCO2max AL_CALC"));
+			theApp.WriteLog(_T("ALETCO2max AL_CALC"));
 		}
 		break;
 	}
@@ -6105,22 +6105,22 @@ void CAlarmConditionHandler::setAlimitState_ETCO2minLimit(eAlarmLimitState state
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALETCO2min AL_ON"));
+			theApp.WriteLog(_T("ALETCO2min AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALETCO2min AL_OFF"));
+			theApp.WriteLog(_T("ALETCO2min AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALETCO2min AL_AUTO"));
+			theApp.WriteLog(_T("ALETCO2min AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALETCO2min AL_CALC"));
+			theApp.WriteLog(_T("ALETCO2min AL_CALC"));
 		}
 		break;
 	}
@@ -6182,22 +6182,22 @@ void CAlarmConditionHandler::setAlimitState_FICO2maxLimit(eAlarmLimitState state
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALFICO2max AL_ON"));
+			theApp.WriteLog(_T("ALFICO2max AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALFICO2max AL_OFF"));
+			theApp.WriteLog(_T("ALFICO2max AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALFICO2max AL_AUTO"));
+			theApp.WriteLog(_T("ALFICO2max AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALFICO2max AL_CALC"));
+			theApp.WriteLog(_T("ALFICO2max AL_CALC"));
 		}
 		break;
 	}
@@ -6259,22 +6259,22 @@ void CAlarmConditionHandler::setAlimitState_FICO2minLimit(eAlarmLimitState state
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALFICO2min AL_ON"));
+			theApp.WriteLog(_T("ALFICO2min AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALFICO2min AL_OFF"));
+			theApp.WriteLog(_T("ALFICO2min AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALFICO2min AL_AUTO"));
+			theApp.WriteLog(_T("ALFICO2min AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALFICO2min AL_CALC"));
+			theApp.WriteLog(_T("ALFICO2min AL_CALC"));
 		}
 		break;
 	}
@@ -6336,22 +6336,22 @@ void CAlarmConditionHandler::setAlimitState_SPO2maxLimit(eAlarmLimitState state)
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALSPO2max AL_ON"));
+			theApp.WriteLog(_T("ALSPO2max AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALSPO2max AL_OFF"));
+			theApp.WriteLog(_T("ALSPO2max AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALSPO2max AL_AUTO"));
+			theApp.WriteLog(_T("ALSPO2max AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALSPO2max AL_CALC"));
+			theApp.WriteLog(_T("ALSPO2max AL_CALC"));
 		}
 		break;
 	}
@@ -6389,22 +6389,22 @@ void CAlarmConditionHandler::setAlimitState_SPO2minLimit(eAlarmLimitState state)
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALSPO2min AL_ON"));
+			theApp.WriteLog(_T("ALSPO2min AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALSPO2min AL_OFF"));
+			theApp.WriteLog(_T("ALSPO2min AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALSPO2minAL_AUTO"));
+			theApp.WriteLog(_T("ALSPO2minAL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALSPO2min AL_CALC"));
+			theApp.WriteLog(_T("ALSPO2min AL_CALC"));
 		}
 		break;
 	}
@@ -6442,22 +6442,22 @@ void CAlarmConditionHandler::setAlimitState_PulseRatemaxLimit(eAlarmLimitState s
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALPulseRatemax AL_ON"));
+			theApp.WriteLog(_T("ALPulseRatemax AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALPulseRatemax AL_OFF"));
+			theApp.WriteLog(_T("ALPulseRatemax AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALPulseRatemax AL_AUTO"));
+			theApp.WriteLog(_T("ALPulseRatemax AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALPulseRatemax AL_CALC"));
+			theApp.WriteLog(_T("ALPulseRatemax AL_CALC"));
 		}
 		break;
 	}
@@ -6495,22 +6495,22 @@ void CAlarmConditionHandler::setAlimitState_PulseRateminLimit(eAlarmLimitState s
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALPulseRatemin AL_ON"));
+			theApp.WriteLog(_T("ALPulseRatemin AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALPulseRatemin AL_OFF"));
+			theApp.WriteLog(_T("ALPulseRatemin AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALPulseRatemin AL_AUTO"));
+			theApp.WriteLog(_T("ALPulseRatemin AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALPulseRatemin AL_CALC"));
+			theApp.WriteLog(_T("ALPulseRatemin AL_CALC"));
 		}
 		break;
 	}
@@ -6548,22 +6548,22 @@ void CAlarmConditionHandler::setAlimitState_SPO2_PIminLimit(eAlarmLimitState sta
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALSPO2_PImin AL_ON"));
+			theApp.WriteLog(_T("ALSPO2_PImin AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALSPO2_PImin AL_OFF"));
+			theApp.WriteLog(_T("ALSPO2_PImin AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALSPO2_PImin AL_AUTO"));
+			theApp.WriteLog(_T("ALSPO2_PImin AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALSPO2_PImin AL_CALC"));
+			theApp.WriteLog(_T("ALSPO2_PImin AL_CALC"));
 		}
 		break;
 	}
@@ -6601,22 +6601,22 @@ void CAlarmConditionHandler::setAlimitState_SPO2_SIQminLimit(eAlarmLimitState st
 	{
 	case AL_ON:
 		{
-			theApp.getLog()->WriteLine(_T("ALSPO2_SIQmin AL_ON"));
+			theApp.WriteLog(_T("ALSPO2_SIQmin AL_ON"));
 		}
 		break;
 	case AL_OFF:
 		{
-			theApp.getLog()->WriteLine(_T("ALSPO2_SIQmin AL_OFF"));
+			theApp.WriteLog(_T("ALSPO2_SIQmin AL_OFF"));
 		}
 		break;
 	case AL_AUTO:
 		{
-			theApp.getLog()->WriteLine(_T("ALSPO2_SIQmin AL_AUTO"));
+			theApp.WriteLog(_T("ALSPO2_SIQmin AL_AUTO"));
 		}
 		break;
 	case AL_CALC:
 		{
-			theApp.getLog()->WriteLine(_T("ALSPO2_SIQmin AL_CALC"));
+			theApp.WriteLog(_T("ALSPO2_SIQmin AL_CALC"));
 		}
 		break;
 	}

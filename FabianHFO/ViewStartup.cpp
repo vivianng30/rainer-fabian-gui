@@ -442,7 +442,7 @@ void CViewStartup::Draw()
 
 		DrawText(hdcMem,_T("- please restart the system -"),-1,&rc,DT_TOP|DT_SINGLELINE|DT_LEFT);
 
-		theApp.getLog()->WriteLine(_T("!!! FATAL SYSTEM ERROR !!!"));
+		theApp.WriteLog(_T("!!! FATAL SYSTEM ERROR !!!"));
 	}
 
 	SetTextColor(hdcMem,RGB(0,0,0));
@@ -464,7 +464,7 @@ void CViewStartup::Draw()
 			m_bERROR=true;
 			m_bCom_ERROR=true;
 			DEBUGMSG(TRUE, (TEXT("STARTUP COM ERROR\r\n")));
-			theApp.getLog()->WriteLine(_T("#HFO:0268"));
+			theApp.WriteLog(_T("#HFO:0268"));
 			getModel()->getDATAHANDLER()->setCOMErrorCode(ERRC_COM_READ_MSTATUS); //newVG
 		}
 	}
@@ -504,7 +504,7 @@ void CViewStartup::Draw()
 	else
 	{
 		m_bPIF_ERROR=true;
-		theApp.getLog()->WriteLine(_T("#HFO:0269"));
+		theApp.WriteLog(_T("#HFO:0269"));
 		getModel()->SetPIFavailability(FALSE);
 	}
 
@@ -515,7 +515,7 @@ void CViewStartup::Draw()
 	{
 		m_bDIO_ERROR=true;
 		getModel()->SetDIOavailability(FALSE);
-		theApp.getLog()->WriteLine(_T("#HFO:0270"));
+		theApp.WriteLog(_T("#HFO:0270"));
 	}
 	else
 	{
@@ -530,7 +530,7 @@ void CViewStartup::Draw()
 	m_byAlarmState=getModel()->getSPI()->Read_STATUS();
 	if(m_byAlarmState<0)
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0271"));
+		theApp.WriteLog(_T("#HFO:0271"));
 		Sleep(500);
 		m_byAlarmState=getModel()->getSPI()->Read_STATUS();
 	}
@@ -541,7 +541,7 @@ void CViewStartup::Draw()
 		m_bSPI_ERROR=true;
 
 #ifndef SIMULATION_NOSPI
-		theApp.getLog()->WriteLine(_T("#HFO:0272"));
+		theApp.WriteLog(_T("#HFO:0272"));
 		getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READSTATUS, true);
 #endif
 		

@@ -139,7 +139,7 @@ DWORD CLangAdmin::EnumLang( DWORD dwLangFolderStringID )
 			strFormatted = _T("CMemoryException CLangAdmin::EnumLang: ");
 			strFormatted += szCause;
 
-			theApp.getLog()->WriteLine(strFormatted);
+			theApp.WriteLog(strFormatted);
 			//e->ReportError();
 			e->Delete();
 		}

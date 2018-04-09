@@ -621,7 +621,7 @@ void CWndMenuVentState::ShowMenuBtn()
 				//getModel()->getDATAHANDLER()->IPPV()->SetDataFromMode(VM_PRE_IPPV);
 
 				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_IPPV))
-					theApp.getLog()->WriteLine(_T("#HFO:0276"));
+					theApp.WriteLog(_T("#HFO:0276"));
 			}
 
 		}
@@ -643,7 +643,7 @@ void CWndMenuVentState::ShowMenuBtn()
 				SetOneButtonDepressed(IDC_BTN_MENU_CPAP);
 
 				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_CPAP))
-					theApp.getLog()->WriteLine(_T("#HFO:0277"));
+					theApp.WriteLog(_T("#HFO:0277"));
 			}
 		}
 		break;
@@ -659,7 +659,7 @@ void CWndMenuVentState::ShowMenuBtn()
 				SetOneButtonDepressed(IDC_BTN_MENU_CPAP);
 
 				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_CPAP))
-					theApp.getLog()->WriteLine(_T("#HFO:0278"));
+					theApp.WriteLog(_T("#HFO:0278"));
 			}
 		}
 		break;
@@ -675,7 +675,7 @@ void CWndMenuVentState::ShowMenuBtn()
 				SetOneButtonDepressed(IDC_BTN_MENU_CPAP);
 
 				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_CPAP))
-					theApp.getLog()->WriteLine(_T("#HFO:0279"));
+					theApp.WriteLog(_T("#HFO:0279"));
 			}
 		}
 		break;

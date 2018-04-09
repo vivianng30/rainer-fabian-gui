@@ -983,7 +983,7 @@ void CWndServiceMaintenance::OnBnClickedInstaller()
 	//	{
 	//		//getModel()->StartInstaller();
 
-	//		theApp.getLog()->WriteLine(_T("#HFO:0284"));
+	//		theApp.WriteLog(_T("#HFO:0284"));
 	//		
 	//		CString file=_T("\\Hard Disk\\FabianInstaller.exe");
 	//		PROCESS_INFORMATION pi;
@@ -1014,7 +1014,7 @@ void CWndServiceMaintenance::OnBnClickedInstaller()
 		{
 			getModel()->StartInstaller();
 
-			theApp.getLog()->WriteLine(_T("#HFO:0284"));
+			theApp.WriteLog(_T("#HFO:0284"));
 			getModel()->SetAccuTurnoff();
 			if(AfxGetApp())
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_VENT_TURNOFF);
@@ -1336,14 +1336,14 @@ LRESULT CWndServiceMaintenance::OnMyMessage(WPARAM wParam, LPARAM lParam)
 			if(lParam==0 && m_bAlarmOn)
 			{
 				m_bAlarmOn=false;
-				theApp.getLog()->WriteLine(_T("#EVO:0199"));
+				theApp.WriteLog(_T("#EVO:0199"));
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_SYSALARM_SILENT);
 			}
 			if(lParam==1 && !m_bAlarmOn)
 			{
 				m_bAlarmOn=true;
-				theApp.getLog()->WriteLine(_T("#EVO:0200"));
+				theApp.WriteLog(_T("#EVO:0200"));
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_SYSALARM_SILENT);
 			}
@@ -1358,7 +1358,7 @@ LRESULT CWndServiceMaintenance::OnMyMessage(WPARAM wParam, LPARAM lParam)
 				getModel()->getCONFIG()->setNextServiceDate(0,0,0);
 
 				CStringW szServiceOff=_T("***Service Date turned off***");
-				theApp.getLog()->WriteLine(szServiceOff);
+				theApp.WriteLog(szServiceOff);
 
 				Draw();
 			}
@@ -1395,7 +1395,7 @@ LRESULT CWndServiceMaintenance::OnMyMessage(WPARAM wParam, LPARAM lParam)
 				if(m_pbtnOk)
 					m_pbtnOk->SetBitmaps(m_pcOkDisabled,m_pcOkDisabled,m_pcOkDisabled,m_pcOkDisabled);
 
-// 				theApp.getLog()->WriteLine(_T("#EVO:0200"));
+// 				theApp.WriteLog(_T("#EVO:0200"));
 // 				if(AfxGetApp())
 // 					AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_SYSALARM_SILENT);
 				Draw();
@@ -1934,7 +1934,7 @@ void CWndServiceMaintenance::OnBnClickedSetDate()
 			strDate.Format(_T("%.2d.%.2d.%.4d"),m_iDay,m_iMonth,m_iYear);
  			szNextDate+=strDate;
  			szNextDate+=_T("***");
- 			theApp.getLog()->WriteLine(szNextDate);
+ 			theApp.WriteLog(szNextDate);
 
 			if(m_pbtnOk)
 				m_pbtnOk->SetBitmaps(m_pcOkGreen_Up,m_pcOkGreen_Dw,m_pcOkGreen_Up,m_pcOkGreen_Up);

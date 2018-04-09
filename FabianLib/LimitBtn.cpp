@@ -1145,7 +1145,7 @@ void CLimitBtn::WriteCurrentValue()
 			getModel()->getDATAHANDLER()->setPRICO_SPO2lowRange(m_v.iValue);
 			CString sz=_T("");
 			sz.Format(_T("#PRICO SpO2 low:%d, "), m_v.iValue);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 		}
 		break;
 	case IDC_BTN_LIMIT_SPO2HIGH:
@@ -1153,7 +1153,7 @@ void CLimitBtn::WriteCurrentValue()
 			getModel()->getDATAHANDLER()->setPRICO_SPO2highRange(m_v.iValue);
 			CString sz=_T("");
 			sz.Format(_T("#PRICO SpO2 high:%d, "), m_v.iValue);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 		}
 		break;
 	case IDC_BTN_LIMIT_FIO2LOW:
@@ -1161,7 +1161,7 @@ void CLimitBtn::WriteCurrentValue()
 			getModel()->getDATAHANDLER()->setPRICO_FIO2lowRange(m_v.iValue);
 			CString sz=_T("");
 			sz.Format(_T("#PRICO FiO2 low:%d, "), m_v.iValue);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 		}
 		break;
 	case IDC_BTN_LIMIT_FIO2HIGH:
@@ -1169,7 +1169,7 @@ void CLimitBtn::WriteCurrentValue()
 			getModel()->getDATAHANDLER()->setPRICO_FIO2highRange(m_v.iValue);
 			CString sz=_T("");
 			sz.Format(_T("#PRICO FiO2 high:%d, "), m_v.iValue);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 		}
 		break;
 	default:

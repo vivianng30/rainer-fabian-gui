@@ -1531,14 +1531,14 @@ LRESULT CSubViewCalOxySensor::WindowProc(UINT message, WPARAM wParam, LPARAM lPa
 					if(getModel()->getDATAHANDLER()->GetO2SensorState()==OXYSENS_OFF)
 					{
 						getModel()->getDATAHANDLER()->SetO2SensorState(OXYSENS_ON);
-						theApp.getLog()->WriteLine(_T("Oxi-Sensor enabled"));
+						theApp.WriteLog(_T("Oxi-Sensor enabled"));
 						if(m_pcOxyOnOff)
 							m_pcOxyOnOff->RefreshText(getModel()->GetLanguageString(IDS_MENU_CAL5),getModel()->GetLanguageString(IDS_MENU_CAL6));
 					}
 					else
 					{
 						getModel()->getDATAHANDLER()->SetO2SensorState(OXYSENS_OFF);
-						theApp.getLog()->WriteLine(_T("Oxi-Sensor disabled"));
+						theApp.WriteLog(_T("Oxi-Sensor disabled"));
 						if(m_pcOxyOnOff)
 							m_pcOxyOnOff->RefreshText(getModel()->GetLanguageString(IDS_MENU_CAL7),getModel()->GetLanguageString(IDS_MENU_CAL8));
 
@@ -1826,10 +1826,10 @@ void CSubViewCalOxySensor::StopCheckOxyThread( void )
 
 		if (WaitForSingleObject(m_pcwtCheckOxyThread->m_hThread,1000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:028a"));
+			theApp.WriteLog(_T("#THR:028a"));
 			if(!TerminateThread(m_pcwtCheckOxyThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:028b"));
+				theApp.WriteLog(_T("#THR:028b"));
 			}
 		}
 	}
@@ -2067,7 +2067,7 @@ DWORD CSubViewCalOxySensor::CheckOxySensor()
 
 	}while(m_bDoCheckThread);
 
-	//theApp.getLog()->WriteLine(_T("#THR:028"));
+	//theApp.WriteLog(_T("#THR:028"));
 
 	return 0;
 

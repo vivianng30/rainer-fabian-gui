@@ -158,10 +158,10 @@ void CThreadMonitor::stopMonitorThread( void )
 
 		if (WaitForSingleObject(m_pcwtMonitorThread->m_hThread,1000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:023a"));
+			theApp.WriteLog(_T("#THR:023a"));
 			if(!TerminateThread(m_pcwtMonitorThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:023b"));
+				theApp.WriteLog(_T("#THR:023b"));
 			}
 		}
 	}
@@ -232,7 +232,7 @@ DWORD CThreadMonitor::MonitorData(void)
 		}
 	}while(m_bDoMonitorThread);
 
-	//theApp.getLog()->WriteLine(_T("#THR:023"));
+	//theApp.WriteLog(_T("#THR:023"));
 
 	return 0;
 }

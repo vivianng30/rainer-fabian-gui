@@ -173,7 +173,7 @@ void CSoundPlayer::SetAlarmVolume(eAlarmLoudness state)
 	DEBUGMSG(TRUE, (TEXT("SetAlarmVolume %d\r\n"),m_byVolume));
 	if(iBytesWritten!=dwBytesToWrite)
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0261"));
+		theApp.WriteLog(_T("#HFO:0261"));
 		//getModel()->getALARMHANDLER()->SetAlarm_IF_PIF(_T(""));
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_PIF);
@@ -243,7 +243,7 @@ void CSoundPlayer::SetPIFSound(ePIFSound sound)
 			int iBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
 			if(iBytesWritten!=dwBytesToWrite)
 			{
-				theApp.getLog()->WriteLine(_T("#HFO:0261"));
+				theApp.WriteLog(_T("#HFO:0261"));
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_PIF);
 			}
@@ -259,7 +259,7 @@ void CSoundPlayer::SetPIFSound(ePIFSound sound)
 			//DEBUGMSG(TRUE, (TEXT("PIF_SIGNAL %d\r\n"),data[0]));
 			if(iBytesWritten!=dwBytesToWrite)
 			{
-				theApp.getLog()->WriteLine(_T("#HFO:0261"));
+				theApp.WriteLog(_T("#HFO:0261"));
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_PIF);
 			}
@@ -273,7 +273,7 @@ void CSoundPlayer::SetPIFSound(ePIFSound sound)
 			int iBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
 			if(iBytesWritten!=dwBytesToWrite)
 			{
-				theApp.getLog()->WriteLine(_T("#HFO:0261"));
+				theApp.WriteLog(_T("#HFO:0261"));
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_PIF);
 			}
@@ -287,7 +287,7 @@ void CSoundPlayer::SetPIFSound(ePIFSound sound)
 			int iBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
 			if(iBytesWritten!=dwBytesToWrite)
 			{
-				theApp.getLog()->WriteLine(_T("#HFO:0261"));
+				theApp.WriteLog(_T("#HFO:0261"));
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_PIF);
 			}
@@ -301,7 +301,7 @@ void CSoundPlayer::SetPIFSound(ePIFSound sound)
 			int iBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
 			if(iBytesWritten!=dwBytesToWrite)
 			{
-				theApp.getLog()->WriteLine(_T("#HFO:0261"));
+				theApp.WriteLog(_T("#HFO:0261"));
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_PIF);
 			}
@@ -315,7 +315,7 @@ void CSoundPlayer::SetPIFSound(ePIFSound sound)
 			int iBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
 			if(iBytesWritten!=dwBytesToWrite)
 			{
-				theApp.getLog()->WriteLine(_T("#HFO:0262"));
+				theApp.WriteLog(_T("#HFO:0262"));
 			}
 		}
 		break;

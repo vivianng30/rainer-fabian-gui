@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  * 
+ * @subsection ver5084 Version 5.0.8.4
+ * @date 2018-04-09
+ * @verbatim
+	- new log reinitialization in case of lost SD card
+ @endverbatim
+ *
  * @subsection ver5083 Version 5.0.8.3
  * @date 2018-03-22
  * @verbatim

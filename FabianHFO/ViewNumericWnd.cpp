@@ -535,7 +535,7 @@ void CViewNumericWnd::ShowWndNumIPPV()
  **************************************************************************************************/
 void CViewNumericWnd::ShowWndNumSIPPV()
 {
-	DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::ShowWndNumSIPPV() start\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::ShowWndNumSIPPV() start\r\n")));
 	if(getModel()->getDATAHANDLER()->getCountNumericSIPPV()>1)
 	{
 		CString szText=_T("");
@@ -570,7 +570,7 @@ void CViewNumericWnd::ShowWndNumSIPPV()
 		break;
 	}
 	LeaveCriticalSection(&csNumWnd);
-	DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::ShowWndNumSIPPV() end\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::ShowWndNumSIPPV() end\r\n")));
 }
 
 /**********************************************************************************************//**
@@ -914,7 +914,7 @@ void CViewNumericWnd::HideNumWnd()
 
 void CViewNumericWnd::ShowNumWnd(eNumBlock eBlock,bool bChangeCurNumBlock)
 {
-	DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::ShowNumWnd() start\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::ShowNumWnd() start\r\n")));
 	if(m_eNumBlock!=eBlock || bChangeCurNumBlock)
 		HideNumWnd();
 
@@ -996,7 +996,7 @@ void CViewNumericWnd::ShowNumWnd(eNumBlock eBlock,bool bChangeCurNumBlock)
 	{
 		DeleteGraphCursor();
 	}
-	DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::ShowNumWnd() end\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("CViewNumericWnd::ShowNumWnd() end\r\n")));
 }
 
 /**********************************************************************************************//**

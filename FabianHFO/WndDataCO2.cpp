@@ -1285,10 +1285,10 @@ void CWndDataCO2::StopCO2DataThread( void )
 		
 		if (WaitForSingleObject(m_pcwtCO2DataThread->m_hThread,1000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:033a"));
+			theApp.WriteLog(_T("#THR:033a"));
 			if(!TerminateThread(m_pcwtCO2DataThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:033b"));
+				theApp.WriteLog(_T("#THR:033b"));
 			}
 		}
 	}
@@ -1501,7 +1501,7 @@ DWORD CWndDataCO2::CO2Data(void)
 		}
 	}while(doThread());
 
-	//theApp.getLog()->WriteLine(_T("#THR:033"));
+	//theApp.WriteLog(_T("#THR:033"));
 
 	return 0;
 }

@@ -1109,7 +1109,7 @@ void CSubViewVentilation::OnBnClickedDefaults()
 		GetParent()->PostMessage(WM_KILL_SETUPTIMER);
 	if(iRes==IDYES)
 	{
-		theApp.getLog()->WriteLine(L"***load default settings***");
+		theApp.WriteLog(L"***load default settings***");
 
 		getModel()->getALARMHANDLER()->setAutoSilent(false,false,false);
 		getModel()->getI2C()->SetFRAMDefaultFactoryValues();
@@ -1153,7 +1153,7 @@ void CSubViewVentilation::OnBnClickedHospital()
 		GetParent()->PostMessage(WM_KILL_SETUPTIMER);
 	if(iRes==IDYES)
 	{
-		theApp.getLog()->WriteLine(L"***load hospital settings***");
+		theApp.WriteLog(L"***load hospital settings***");
 		getModel()->getALARMHANDLER()->setAutoSilent(false,false,false);
 
 		

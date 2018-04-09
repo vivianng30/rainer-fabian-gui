@@ -190,10 +190,10 @@ void CInterfaceCOMport::stopCOMThread(void)
 
 		if (WaitForSingleObject(m_pcwtCOMSendThread->m_hThread,500) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:003a"));
+			theApp.WriteLog(_T("#THR:003a"));
 			if(!TerminateThread(m_pcwtCOMSendThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:003b"));
+				theApp.WriteLog(_T("#THR:003b"));
 			}
 		}
 	}
@@ -204,10 +204,10 @@ void CInterfaceCOMport::stopCOMThread(void)
 
 		if (WaitForSingleObject(m_pcwtCOMInitThread->m_hThread,2000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:004a"));
+			theApp.WriteLog(_T("#THR:004a"));
 			if(!TerminateThread(m_pcwtCOMInitThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:004b"));
+				theApp.WriteLog(_T("#THR:004b"));
 			}
 		}
 	}
@@ -266,10 +266,10 @@ void CInterfaceCOMport::stopCOMcheckThread(void)
 
 		if (WaitForSingleObject(m_pcwtCOMcheckThread->m_hThread,500) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:005a"));
+			theApp.WriteLog(_T("#THR:005a"));
 			if(!TerminateThread(m_pcwtCOMcheckThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:005b"));
+				theApp.WriteLog(_T("#THR:005b"));
 			}
 		}
 	}
@@ -343,7 +343,7 @@ DWORD CInterfaceCOMport::COMcheck(void)
 
 	}while(m_bDoCOMcheckThread);
 
-	//theApp.getLog()->WriteLine(_T("#THR:005"));
+	//theApp.WriteLog(_T("#THR:005"));
 	//DEBUGMSG(TRUE, (TEXT("end CInterfaceCOM::COMcheck\r\n")));
 	return 0;
 }
@@ -436,7 +436,7 @@ DWORD CInterfaceCOMport::SendCOMData(void)
 
 	}while(m_bDoCOMSendThread);
 
-	//theApp.getLog()->WriteLine(_T("#THR:003"));
+	//theApp.WriteLog(_T("#THR:003"));
 
 	
 	return 0;
@@ -541,7 +541,7 @@ DWORD CInterfaceCOMport::COMInit(void)
 	if(m_bStartup)
 		InitializeSequenz();//command 84h
 
-	//theApp.getLog()->WriteLine(_T("#THR:004"));
+	//theApp.WriteLog(_T("#THR:004"));
 
 	return 0;
 }

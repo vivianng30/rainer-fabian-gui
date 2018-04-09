@@ -1477,7 +1477,7 @@ void CSubViewCalFlowSensor::SetCalibrationOk(bool bCalibrated)
 	{
 		//m_szLast21Cal=_T("- error -");
 		m_szLastFlowCal=getModel()->GetLanguageString(IDS_TXT_UNKNOWN);
-		theApp.getLog()->WriteLine(_T("***last Flowcal: unknown***"));
+		theApp.WriteLog(_T("***last Flowcal: unknown***"));
 	}
 	else
 	{
@@ -1491,7 +1491,7 @@ void CSubViewCalFlowSensor::SetCalibrationOk(bool bCalibrated)
 		CStringW szLastFlowCal=_T("***last Flowcal: ");
 		szLastFlowCal+=m_szLastFlowCal;
 		szLastFlowCal+=_T("***");
-		theApp.getLog()->WriteLine(szLastFlowCal);
+		theApp.WriteLog(szLastFlowCal);
 	}
 
 	CStringW sz=_T("");
@@ -2187,10 +2187,10 @@ void CSubViewCalFlowSensor::StopFlowSensorCheckThread()
 
 		if (WaitForSingleObject(m_pcwtCheckFlow->m_hThread,3000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:027a"));
+			theApp.WriteLog(_T("#THR:027a"));
 			if(!TerminateThread(m_pcwtCheckFlow,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:027b"));
+				theApp.WriteLog(_T("#THR:027b"));
 			}
 		}
 	}
@@ -2341,7 +2341,7 @@ DWORD CSubViewCalFlowSensor::CheckFlowSensor()
 
 	m_bCalActive=false;
 
-	theApp.getLog()->WriteLine(_T("#THR:flowcal finished"));
+	theApp.WriteLog(_T("#THR:flowcal finished"));
 
 	return 0;
 }

@@ -148,10 +148,10 @@ void CThreadAlarm::stopAlarmThread( void )
 
 		if (WaitForSingleObject(m_pcwtAlarmThread->m_hThread,1000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:Alarm"));
+			theApp.WriteLog(_T("#THR:Alarm"));
 			if(!TerminateThread(m_pcwtAlarmThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:Alarmb"));
+				theApp.WriteLog(_T("#THR:Alarmb"));
 			}
 		}
 	}
@@ -244,7 +244,7 @@ DWORD CThreadAlarm::AlarmData(void)
 		}
 	}while(m_bDoAlarmThread);
 
-	//theApp.getLog()->WriteLine(_T("#THR:024"));
+	//theApp.WriteLog(_T("#THR:024"));
 
 	return 0;
 }

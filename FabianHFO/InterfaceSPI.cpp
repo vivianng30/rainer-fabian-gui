@@ -691,7 +691,7 @@ bool CInterfaceSPI::Init()
 
 	if(m_hSPIFile==INVALID_HANDLE_VALUE)
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0125"));
+		theApp.WriteLog(_T("#HFO:0125"));
 		return false;
 		
 	}
@@ -759,10 +759,10 @@ void CInterfaceSPI::StopSPIMonitorThread( void )
 
 		if (WaitForSingleObject(m_pcwtSPIMonitorThread->m_hThread,1000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:013a"));
+			theApp.WriteLog(_T("#THR:013a"));
 			if(!TerminateThread(m_pcwtSPIMonitorThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:013b"));
+				theApp.WriteLog(_T("#THR:013b"));
 			}
 		}
 	}
@@ -1365,11 +1365,11 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 							{
 								if(iRes==888)
 								{
-									theApp.getLog()->WriteLine(_T("#ERROR: GetMessureDataError888"));
+									theApp.WriteLog(_T("#ERROR: GetMessureDataError888"));
 								}
 								else if(iRes==999)
 								{
-									theApp.getLog()->WriteLine(_T("#ERROR: GetMessureDataError999"));
+									theApp.WriteLog(_T("#ERROR: GetMessureDataError999"));
 								}
 								m_bShowReadSPIDataError=false;
 							}
@@ -1401,11 +1401,11 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 							{
 								if(iRes==888)
 								{
-									theApp.getLog()->WriteLine(_T("#ERROR: GetMessureDataError888"));
+									theApp.WriteLog(_T("#ERROR: GetMessureDataError888"));
 								}
 								else if(iRes==999)
 								{
-									theApp.getLog()->WriteLine(_T("#ERROR: GetMessureDataError999"));
+									theApp.WriteLog(_T("#ERROR: GetMessureDataError999"));
 								}
 								m_bShowReadSPIDataError=false;
 							}
@@ -2051,11 +2051,11 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 							{
 								if(iRes==888)
 								{
-									theApp.getLog()->WriteLine(_T("#ERROR: GetMessureDataError888"));
+									theApp.WriteLog(_T("#ERROR: GetMessureDataError888"));
 								}
 								else if(iRes==999)
 								{
-									theApp.getLog()->WriteLine(_T("#ERROR: GetMessureDataError999"));
+									theApp.WriteLog(_T("#ERROR: GetMessureDataError999"));
 								}
 								m_bShowReadSPIDataError=false;
 							}
@@ -2086,11 +2086,11 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 							{
 								if(iRes==888)
 								{
-									theApp.getLog()->WriteLine(_T("#ERROR: GetMessureDataError888"));
+									theApp.WriteLog(_T("#ERROR: GetMessureDataError888"));
 								}
 								else if(iRes==999)
 								{
-									theApp.getLog()->WriteLine(_T("#ERROR: GetMessureDataError999"));
+									theApp.WriteLog(_T("#ERROR: GetMessureDataError999"));
 								}
 								m_bShowReadSPIDataError=false;
 							}
@@ -2158,7 +2158,7 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_INVALID_HANDLE_VALUE);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0126"));
+				theApp.WriteLog(_T("#HFO:0126"));
 				m_bDoSPIMonitorThread=false;	
 			}
 		}
@@ -2166,7 +2166,7 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 	}while(m_bDoSPIMonitorThread);
 
 	m_bSPIrunning=false;
-	//theApp.getLog()->WriteLine(_T("#THR:013"));
+	//theApp.WriteLog(_T("#THR:013"));
 
 	return 0;
 }
@@ -2552,10 +2552,10 @@ void CInterfaceSPI::StopSPICommunicationThread( void )
 
 		if (WaitForSingleObject(m_pcwtSPICommunicationThread->m_hThread,1000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:014a"));
+			theApp.WriteLog(_T("#THR:014a"));
 			if(!TerminateThread(m_pcwtSPICommunicationThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:014b"));
+				theApp.WriteLog(_T("#THR:014b"));
 			}
 		}
 	}
@@ -2672,7 +2672,7 @@ DWORD CInterfaceSPI::SPICommunicationData(void)
 	/*if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_THR_STOP,THR_SPISEND);*/
 
-	//theApp.getLog()->WriteLine(_T("#THR:014"));
+	//theApp.WriteLog(_T("#THR:014"));
 
 	return 0;
 }
@@ -2792,7 +2792,7 @@ bool CInterfaceSPI::ReadNSPIdata(BYTE* pCommand,WORD wcommandSize, BYTE* pBuffer
 		dwIO=getModel()->getDIO()->WritePin (CDPINBIT);
 		if(dwIO==0)
 		{
-			theApp.getLog()->WriteLine(_T("#HFO:0127"));
+			theApp.WriteLog(_T("#HFO:0127"));
 		}
 
 		//#############################################################
@@ -2800,13 +2800,13 @@ bool CInterfaceSPI::ReadNSPIdata(BYTE* pCommand,WORD wcommandSize, BYTE* pBuffer
 		if(!DeviceIoControl(m_hSPIFile, IOCTL_NSPI_SEND, pCommand, wcommandSize,NULL, 0, NULL, NULL))
 		{
 			bResult=false;
-			theApp.getLog()->WriteLine(_T("#HFO:0129"));
+			theApp.WriteLog(_T("#HFO:0129"));
 		}
 
 		dwIO=getModel()->getDIO()->ClearPin (CDPINBIT);
 		if(dwIO==0)
 		{
-			theApp.getLog()->WriteLine(_T("#HFO:0128"));
+			theApp.WriteLog(_T("#HFO:0128"));
 		}
 
 		//#############################################################
@@ -2814,7 +2814,7 @@ bool CInterfaceSPI::ReadNSPIdata(BYTE* pCommand,WORD wcommandSize, BYTE* pBuffer
 		if(!DeviceIoControl(m_hSPIFile, IOCTL_NSPI_RECEIVE, NULL, 0,pBuffer, wBufSize, NULL, NULL))
 		{
 			bResult=false;
-			theApp.getLog()->WriteLine(_T("#HFO:0130"));
+			theApp.WriteLog(_T("#HFO:0130"));
 		}
 
 		LeaveCriticalSection(&csSPIFile);
@@ -4188,7 +4188,7 @@ void CInterfaceSPI::Send_PARAVAL_VOLUME_LIMIT(int val)
 
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("VL%d"),val);
-	theApp.getLog()->WriteLine(psz);
+	theApp.WriteLog(psz);
 
 	SendSPICommand(pMessage);
 #endif
@@ -4213,7 +4213,7 @@ void CInterfaceSPI::Send_PARAVAL_VOLUME_GARANT(int val)
 
 	TCHAR psz[MAX_PATH];
 	wsprintf(psz,_T("VG%d"),val);
-	theApp.getLog()->WriteLine(psz);
+	theApp.WriteLog(psz);
 
 	SendSPICommand(pMessage);
 #endif
@@ -4326,7 +4326,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0131 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 			
 			if(iRes<MesData_P_Peak_Min)
@@ -4354,7 +4354,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0132 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_P_Mean_Min)
@@ -4387,7 +4387,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0133 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_PEEP_Min)
@@ -4419,7 +4419,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0134 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_T_insp_PSV_Min)
@@ -4448,7 +4448,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0135 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_Dyn_Compl_Min)
@@ -4475,7 +4475,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0136 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_C20C_Min)
@@ -4508,7 +4508,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0137 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_Resistance_Min)
@@ -4537,7 +4537,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0138 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_Min_Vol_Min)
@@ -4565,7 +4565,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0139 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_Perc_Resp_Min)
@@ -4593,7 +4593,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0140 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_TVE_Min)
@@ -4621,7 +4621,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0141 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_TVE_Resp_Min)
@@ -4649,7 +4649,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0142 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_TVE_Pat_Min)
@@ -4677,7 +4677,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0143 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_Leak_Min)
@@ -4706,7 +4706,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0144 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_Freq_Min)
@@ -4734,7 +4734,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0145 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_Trig_Value_Min)
@@ -4761,7 +4761,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0146 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_TVI_Min)
@@ -4800,7 +4800,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0147 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_HFO_Amp_Min)
@@ -4828,7 +4828,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0148 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_TVE_HFO_Min)
@@ -4856,7 +4856,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0149 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_DCO2_Min)
@@ -4885,7 +4885,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0150 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_HFO_Freq_Min)
@@ -4915,7 +4915,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0151 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<0)
@@ -4934,7 +4934,7 @@ int CInterfaceSPI::ReadSPIData()
 		if(m_bShowReadSPIDataError)
 		{
 			iResult=888;
-			theApp.getLog()->WriteLine(_T("#ERROR: ReadNSPIAVGblock"));
+			theApp.WriteLog(_T("#ERROR: ReadNSPIAVGblock"));
 		}
 		
 	}
@@ -4973,7 +4973,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0152 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_P_Peak_Min)
@@ -5001,7 +5001,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0153 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_P_Mean_Min)
@@ -5043,7 +5043,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0154 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_PEEP_Min)
@@ -5077,7 +5077,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0155 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_T_insp_PSV_Min)
@@ -5106,7 +5106,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0156 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_Dyn_Compl_Min)
@@ -5137,7 +5137,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0157 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_C20C_Min)
@@ -5165,7 +5165,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0158 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_Resistance_Min)
@@ -5193,7 +5193,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0159 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_Min_Vol_Min)
@@ -5221,7 +5221,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0160 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_Perc_Resp_Min)
@@ -5249,7 +5249,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0161 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_TVE_Min)
@@ -5277,7 +5277,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0162 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_TVE_Resp_Min)
@@ -5305,7 +5305,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0163 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_TVE_Pat_Min)
@@ -5333,7 +5333,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0164 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_Leak_Min)
@@ -5362,7 +5362,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0165 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_Freq_Min)
@@ -5391,7 +5391,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0166 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_Trig_Value_Min)
@@ -5418,7 +5418,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0167 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_TVI_Min)
@@ -5457,7 +5457,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0168 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_HFO_Amp_Min)
@@ -5485,7 +5485,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0169 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_TVE_HFO_Min)
@@ -5513,7 +5513,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0170 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_DCO2_Min)
@@ -5541,7 +5541,7 @@ int CInterfaceSPI::ReadSPIData()
 			{
 				CStringW sz=_T("");
 				sz.Format(_T("#HFO:0171 %d#"),iRes);
-				theApp.getLog()->WriteLine(sz);
+				theApp.WriteLog(sz);
 			}
 
 			if(iRes<MesData_HFO_Freq_Min)
@@ -5559,7 +5559,7 @@ int CInterfaceSPI::ReadSPIData()
 		if(m_bShowReadSPIDataError)
 		{
 			iResult=999;
-			theApp.getLog()->WriteLine(_T("#ERROR: ReadNSPIATZblock"));
+			theApp.WriteLog(_T("#ERROR: ReadNSPIATZblock"));
 		}
 		
 	}
@@ -5701,7 +5701,7 @@ int CInterfaceSPI::Read_P_PROX_ADC()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0172"));
+				theApp.WriteLog(_T("#HFO:0172"));
 			}
 
 		}
@@ -5743,7 +5743,7 @@ int CInterfaceSPI::Read_DRM_1_ADC()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0173"));
+				theApp.WriteLog(_T("#HFO:0173"));
 			}
 
 		}
@@ -5785,7 +5785,7 @@ int CInterfaceSPI::Read_DRM_2_ADC()
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
 				//getModel()->getALARMHANDLER()->SetAlarm_IF_SPI(_T("SPI: ERRC_SPI_READDATA Read_DRM_2_ADC"));
-				theApp.getLog()->WriteLine(_T("#HFO:0174"));
+				theApp.WriteLog(_T("#HFO:0174"));
 			}
 
 		}
@@ -5828,7 +5828,7 @@ int CInterfaceSPI::Read_DRM_3_ADC()
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
 				//getModel()->getALARMHANDLER()->SetAlarm_IF_SPI(_T("SPI: ERRC_SPI_READDATA Read_DRM_3_ADC"));
-				theApp.getLog()->WriteLine(_T("#HFO:0175"));
+				theApp.WriteLog(_T("#HFO:0175"));
 			}
 
 		}
@@ -5893,7 +5893,7 @@ int CInterfaceSPI::Read_DRM_3_ADC()
 //				getModel()->getDATAHANDLER()->SetSPIErrorCode(ERRC_SPI_READDATA);
 //				if(AfxGetApp())
 //					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-//				theApp.getLog()->WriteLine(_T("#HFO:0176"));
+//				theApp.WriteLog(_T("#HFO:0176"));
 //			}
 //
 //		}
@@ -5933,7 +5933,7 @@ int CInterfaceSPI::Read_OXY1_ADC()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0177"));
+				theApp.WriteLog(_T("#HFO:0177"));
 			}
 
 		}
@@ -5976,7 +5976,7 @@ int CInterfaceSPI::Read_OXY2_ADC()
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
 				//getModel()->getALARMHANDLER()->SetAlarm_IF_SPI(_T("SPI: ERRC_SPI_READDATA Read_OXY2_ADC"));
-				theApp.getLog()->WriteLine(_T("#HFO:0178"));
+				theApp.WriteLog(_T("#HFO:0178"));
 			}
 
 		}
@@ -6018,16 +6018,16 @@ int CInterfaceSPI::Read_STATUS()
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
 				//getModel()->getALARMHANDLER()->SetAlarm_IF_SPI(_T("SPI: ERRC_SPI_READDATA Read_STATUS"));
-				theApp.getLog()->WriteLine(_T("#HFO:0179"));
+				theApp.WriteLog(_T("#HFO:0179"));
 			}
 		}
 	}
 	else
 	{
 		if(getModel()->isSPIavailabel()==FALSE)
-			theApp.getLog()->WriteLine(_T("#HFO:0180"));
+			theApp.WriteLog(_T("#HFO:0180"));
 		else
-			theApp.getLog()->WriteLine(_T("#HFO:0181"));
+			theApp.WriteLog(_T("#HFO:0181"));
 	}
 
 	return iResult;
@@ -6066,7 +6066,7 @@ int CInterfaceSPI::Read_ATZ_P_Peak()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0182"));
+				theApp.WriteLog(_T("#HFO:0182"));
 			}
 
 		}
@@ -6107,7 +6107,7 @@ int CInterfaceSPI::Read_CHECKSUM()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0183"));
+				theApp.WriteLog(_T("#HFO:0183"));
 			}
 
 		}
@@ -6147,7 +6147,7 @@ WORD CInterfaceSPI::Read_VERSION1()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0184"));
+				theApp.WriteLog(_T("#HFO:0184"));
 			}
 
 		}
@@ -6188,7 +6188,7 @@ WORD CInterfaceSPI::Read_VERSION2()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0185"));
+				theApp.WriteLog(_T("#HFO:0185"));
 			}
 
 		}
@@ -6229,7 +6229,7 @@ int CInterfaceSPI::Read_VCC_24_BLEND_ADC()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0186"));
+				theApp.WriteLog(_T("#HFO:0186"));
 			}
 		}
 	}
@@ -6269,7 +6269,7 @@ int CInterfaceSPI::Read_VCC_5_ADC()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0187"));
+				theApp.WriteLog(_T("#HFO:0187"));
 			}
 		}
 	}
@@ -6550,7 +6550,7 @@ int CInterfaceSPI::Read_VENT_MODE()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0188"));
+				theApp.WriteLog(_T("#HFO:0188"));
 			}
 		}
 	}
@@ -6739,7 +6739,7 @@ int CInterfaceSPI::Read_CAL_PRESS_SCALE()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0189"));
+				theApp.WriteLog(_T("#HFO:0189"));
 			}
 		}
 	}
@@ -6778,7 +6778,7 @@ int CInterfaceSPI::Read_CAL_PRESS_OFFSET()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0190"));
+				theApp.WriteLog(_T("#HFO:0190"));
 			}
 		}
 	}
@@ -6939,7 +6939,7 @@ int CInterfaceSPI::Read_KOMMANDO()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0191"));
+				theApp.WriteLog(_T("#HFO:0191"));
 			}
 		}
 	}
@@ -6982,7 +6982,7 @@ int CInterfaceSPI::Read_FLOWSENS_CMND()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0192"));
+				theApp.WriteLog(_T("#HFO:0192"));
 			}
 		}
 	}
@@ -7022,7 +7022,7 @@ int CInterfaceSPI::Read_STATUS_PROXSENSOR()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0193"));
+				theApp.WriteLog(_T("#HFO:0193"));
 			}
 		}
 	}
@@ -7064,7 +7064,7 @@ int CInterfaceSPI::Read_STATUS_FLOWSENSOR()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0194"));
+				theApp.WriteLog(_T("#HFO:0194"));
 			}
 		}
 	}
@@ -7104,7 +7104,7 @@ int CInterfaceSPI::Read_DAC_FLOW_INSP()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0195"));
+				theApp.WriteLog(_T("#HFO:0195"));
 			}
 		}
 	}
@@ -7145,7 +7145,7 @@ int CInterfaceSPI::Read_DAC_FLOW_EXH()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0196"));
+				theApp.WriteLog(_T("#HFO:0196"));
 			}
 		}
 	}
@@ -7184,7 +7184,7 @@ int CInterfaceSPI::Read_FLOW_INSP_ADC()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0197"));
+				theApp.WriteLog(_T("#HFO:0197"));
 			}
 		}
 	}
@@ -7225,7 +7225,7 @@ int CInterfaceSPI::Read_FLOW_EXH_ADC()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0198"));
+				theApp.WriteLog(_T("#HFO:0198"));
 			}
 		}
 	}
@@ -7296,7 +7296,7 @@ int CInterfaceSPI::Read_SYST_OFFSET_FLOW_INSP()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0199"));
+				theApp.WriteLog(_T("#HFO:0199"));
 			}
 		}
 	}
@@ -7337,7 +7337,7 @@ int CInterfaceSPI::Read_SYST_OFFSET_FLOW_EXH()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0200"));
+				theApp.WriteLog(_T("#HFO:0200"));
 			}
 		}
 	}
@@ -7377,7 +7377,7 @@ int CInterfaceSPI::Read_SYST_SCALE_FLOW_INSP()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0201"));
+				theApp.WriteLog(_T("#HFO:0201"));
 			}
 		}
 	}
@@ -7418,7 +7418,7 @@ int CInterfaceSPI::Read_SYST_SCALE_FLOW_EXH()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0202"));
+				theApp.WriteLog(_T("#HFO:0202"));
 			}
 		}
 	}
@@ -7459,7 +7459,7 @@ int CInterfaceSPI::Read_FLOWCAL_DEV_A()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0203"));
+				theApp.WriteLog(_T("#HFO:0203"));
 			}
 		}
 	}
@@ -7499,7 +7499,7 @@ int CInterfaceSPI::Read_FLOWCAL_DEV_B()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0204"));
+				theApp.WriteLog(_T("#HFO:0204"));
 			}
 		}
 	}
@@ -7540,7 +7540,7 @@ BYTE CInterfaceSPI::Read_AUTOFLOW_CORR()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0205"));
+				theApp.WriteLog(_T("#HFO:0205"));
 			}
 		}
 	}
@@ -7581,7 +7581,7 @@ int CInterfaceSPI::Read_OXY_ACTUAL()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0206"));
+				theApp.WriteLog(_T("#HFO:0206"));
 			}
 		}
 	}
@@ -7622,7 +7622,7 @@ int CInterfaceSPI::Read_OXY_DEFAULT()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0207"));
+				theApp.WriteLog(_T("#HFO:0207"));
 			}
 		}
 	}
@@ -7662,7 +7662,7 @@ int CInterfaceSPI::Read_STATUS_2()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0208"));
+				theApp.WriteLog(_T("#HFO:0208"));
 			}
 		}
 	}
@@ -7735,7 +7735,7 @@ int CInterfaceSPI::Read_FLOW_CORFACTOR_NEO()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0209"));
+				theApp.WriteLog(_T("#HFO:0209"));
 			}
 		}
 	}
@@ -7775,7 +7775,7 @@ int CInterfaceSPI::Read_FLOW_CORFACTOR_PED()
 				getModel()->getDATAHANDLER()->setSPIErrorCode(ERRC_SPI_READDATA);
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_IF_SPI);
-				theApp.getLog()->WriteLine(_T("#HFO:0209"));
+				theApp.WriteLog(_T("#HFO:0209"));
 			}
 		}
 	}

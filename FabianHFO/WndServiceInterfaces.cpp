@@ -625,17 +625,17 @@ void CWndServiceInterfaces::OnBnClickedLogfiles()
 		{
 			m_bCopyLOGrunning=true;
 			KillTimer(SERVICETIMER);
-			theApp.getLog()->WriteLine(_T("**** copy logfile to USB via service ****"));
+			theApp.WriteLog(_T("**** copy logfile to USB via service ****"));
 			
 			CString szVersion=_T("Version Controller PIC: ");
 			szVersion+=m_dataMainboard.m_szConductorVersion;
-			theApp.getLog()->WriteLine(szVersion);
+			theApp.WriteLog(szVersion);
 
 			szVersion.Format(_T("Version Monitor PIC: %d.%d.%d"), 
 				m_dataMainboard.m_iMonitorVersion_x, 
 				m_dataMainboard.m_iMonitorVersion_y, 
 				m_dataMainboard.m_iMonitorVersion_z);
-			theApp.getLog()->WriteLine(szVersion);
+			theApp.WriteLog(szVersion);
 			
 			/*szVersion=_T("Version HFO PIC: ");
 			szVersion+=m_szActHFOPIC_Version;
@@ -643,11 +643,11 @@ void CWndServiceInterfaces::OnBnClickedLogfiles()
 			
 			szVersion=_T("Version fabianHFO: ");
 			szVersion+=getModel()->GetMainVersion();
-			theApp.getLog()->WriteLine(szVersion);
+			theApp.WriteLog(szVersion);
 
 			szVersion=_T("Version Languagefiles: ");
 			szVersion+=getModel()->GetLanguageString(IDS_VERSION_LANGUAGE);
-			theApp.getLog()->WriteLine(szVersion);
+			theApp.WriteLog(szVersion);
 
 			getModel()->getALARMHANDLER()->setLogTxt(_T("**** copy logfile to USB via menu ****"));
 			
@@ -756,13 +756,13 @@ void CWndServiceInterfaces::OnBnClickedLogfiles()
 			if(bErrorCopy)
 			{
 				m_bCopyLOGsuccess=false;
-				theApp.getLog()->WriteLine(_T("#HFO:0280"));
+				theApp.WriteLog(_T("#HFO:0280"));
 				getModel()->getALARMHANDLER()->setLogTxt(_T("#HFO:0280"));
 			}
 			else
 			{
 				m_bCopyLOGsuccess=true;
-				theApp.getLog()->WriteLine(_T("SUCCESS: files copied"));
+				theApp.WriteLog(_T("SUCCESS: files copied"));
 				getModel()->getALARMHANDLER()->setLogTxt(_T("SUCCESS: files copied"));
 			}
 
@@ -787,7 +787,7 @@ void CWndServiceInterfaces::OnBnClickedLogfiles()
 
 void CWndServiceInterfaces::OnBnClickedExitApp()
 {
-	theApp.getLog()->WriteLine(_T("#HFO:0281"));
+	theApp.WriteLog(_T("#HFO:0281"));
 
 	getModel()->StartInstaller();
 	getModel()->SetAccuTurnoff();
@@ -827,7 +827,7 @@ void CWndServiceInterfaces::OnBnClickedExitApp()
 //
 //	if(iRes==IDYES)
 //	{
-//		theApp.getLog()->WriteLine(_T("*** Service mode CWndServiceInterfaces::OnBnClickedEraseFRAM() ***"));
+//		theApp.WriteLog(_T("*** Service mode CWndServiceInterfaces::OnBnClickedEraseFRAM() ***"));
 //
 //		getModel()->getI2C()->SetFRAMDefaultFactoryConfig();
 //		//KernelIoControl(IOCTL_HAL_REBOOT,NULL,0,NULL,0,NULL);

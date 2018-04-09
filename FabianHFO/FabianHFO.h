@@ -41,7 +41,9 @@ public:
 	
 	void initLog();
 	
-	Logfile *getLog();
+	
+	void WriteLog(CStringW inhalt);
+	bool CheckLogDate();
 	int writeLogError (LONG lError, LPCTSTR lptszMessage);
 	
 	void OpenLog();
@@ -66,6 +68,7 @@ public:
 protected:
 	bool isSafeTickCountDelayExpired(DWORD oldTickCount, UINT delay=0);//used for (dwLastTickCount+DELAY<getTickCount64())
 
+	Logfile *getLog();
 // Implementation
 private:
 	bool m_bScreenLock;

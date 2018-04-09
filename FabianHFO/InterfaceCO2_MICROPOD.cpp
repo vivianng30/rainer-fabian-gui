@@ -167,13 +167,13 @@ int CInterfaceCO2_MICROPOD::Init(BYTE com)
 	{
 	case 1:
 		{
-			theApp.getLog()->WriteLine(_T("#CO2:open COM1"));
+			theApp.WriteLog(_T("#CO2:open COM1"));
 			lLastError = Open(_T("COM1:"),0,0);
 		}
 		break;
 	case 3:
 		{
-			theApp.getLog()->WriteLine(_T("#CO2:open COM3"));
+			theApp.WriteLog(_T("#CO2:open COM3"));
 			lLastError = Open(_T("COM3:"),0,0);
 		}
 		break;
@@ -614,7 +614,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 						if(sValue!=m_cfgBTPS)
 						{
 							szError.Format(_T("#HFO:0112: %d, slave: %d"),m_cfgBTPS,sValue);
-							theApp.getLog()->WriteLine(szError);
+							theApp.WriteLog(szError);
 
 							setModuleConfig(CO2_MICROPOD_MODULECONFIG_BTPS, m_cfgBTPS);
 						}
@@ -628,7 +628,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 						if(sValue!=m_cfgPEAKPICK)
 						{
 							szError.Format(_T("#HFO:0113: %d, slave: %d"),m_cfgPEAKPICK,sValue);
-							theApp.getLog()->WriteLine(szError);
+							theApp.WriteLog(szError);
 
 							setModuleConfig(CO2_MICROPOD_MODULECONFIG_PEAKPICK, m_cfgPEAKPICK);
 						}
@@ -642,7 +642,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 						if(sValue!=m_cfgDISTINGBREATHMSG)
 						{
 							szError.Format(_T("#HFO:0114: %d, slave: %d"),m_cfgDISTINGBREATHMSG,sValue);
-							theApp.getLog()->WriteLine(szError);
+							theApp.WriteLog(szError);
 
 							setModuleConfig(CO2_MICROPOD_MODULECONFIG_DISTINGBREATHMSG, m_cfgDISTINGBREATHMSG);
 						}
@@ -656,7 +656,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 						if(sValue!=m_cfgCO2UNITS)
 						{
 							szError.Format(_T("#HFO:0115: %d, slave: %d"),m_cfgCO2UNITS,sValue);
-							theApp.getLog()->WriteLine(szError);
+							theApp.WriteLog(szError);
 
 							setModuleConfig(CO2_MICROPOD_MODULECONFIG_CO2UNITS, m_cfgCO2UNITS);
 						}
@@ -670,7 +670,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 						if(sValue!=m_cfgPERIODICBREATHMSG)
 						{
 							szError.Format(_T("#HFO:0116: %d, slave: %d"),m_cfgPERIODICBREATHMSG,sValue);
-							theApp.getLog()->WriteLine(szError);
+							theApp.WriteLog(szError);
 
 							setModuleConfig(CO2_MICROPOD_MODULECONFIG_PERIODICBREATHMSG, m_cfgPERIODICBREATHMSG);
 						}
@@ -684,7 +684,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 						if(sValue!=m_cfgWAVEMEASINTERVAL)
 						{
 							szError.Format(_T("#HFO:0117: %d, slave: %d"),m_cfgWAVEMEASINTERVAL,sValue);
-							theApp.getLog()->WriteLine(szError);
+							theApp.WriteLog(szError);
 
 							setModuleConfig(CO2_MICROPOD_MODULECONFIG_WAVEMEASINTERVAL, m_cfgWAVEMEASINTERVAL);
 						}
@@ -698,7 +698,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 						if(sValue!=m_cfgAUTOSTANDBY)
 						{
 							szError.Format(_T("#HFO:0118: %d, slave: %d"),m_cfgAUTOSTANDBY,sValue);
-							theApp.getLog()->WriteLine(szError);
+							theApp.WriteLog(szError);
 
 							setModuleConfig(CO2_MICROPOD_MODULECONFIG_AUTOSTANDBY, m_cfgAUTOSTANDBY);
 						}
@@ -712,7 +712,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 						if(sValue!=m_cfgPATIENTMODE)
 						{
 							szError.Format(_T("#HFO:0119: %d, slave: %d"),m_cfgPATIENTMODE,sValue);
-							theApp.getLog()->WriteLine(szError);
+							theApp.WriteLog(szError);
 
 							setModuleConfig(CO2_MICROPOD_MODULECONFIG_PATIENTMODE, m_cfgPATIENTMODE);
 						}
@@ -726,7 +726,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 						if(sValue!=m_cfgCO2RANGE)
 						{
 							szError.Format(_T("#HFO:0120: %d, slave: %d"),m_cfgCO2RANGE,sValue);
-							theApp.getLog()->WriteLine(szError);
+							theApp.WriteLog(szError);
 
 							setModuleConfig(CO2_MICROPOD_MODULECONFIG_CO2RANGE, m_cfgCO2RANGE);
 						}
@@ -740,7 +740,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 						if(sValue!=m_cfgMEASUREMODE)
 						{
 							szError.Format(_T("#HFO:0121: %d, slave: %d"),m_cfgMEASUREMODE,sValue);
-							theApp.getLog()->WriteLine(szError);
+							theApp.WriteLog(szError);
 
 							setModuleConfig(CO2_MICROPOD_MODULECONFIG_MEASUREMODE, m_cfgMEASUREMODE);
 						}
@@ -754,7 +754,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 						if(sValue!=m_cfgCONTCO2NUM)
 						{
 							szError.Format(_T("#HFO:0122: %d, slave: %d"),m_cfgCONTCO2NUM,sValue);
-							theApp.getLog()->WriteLine(szError);
+							theApp.WriteLog(szError);
 
 							setModuleConfig(CO2_MICROPOD_MODULECONFIG_PERIODICMESSAGE_CONTCO2NUM, m_cfgCONTCO2NUM);
 						}
@@ -768,7 +768,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 						if(sValue!=m_cfgCONTPERCSPONT)
 						{
 							szError.Format(_T("#HFO:0123: %d, slave: %d"),m_cfgCONTPERCSPONT,sValue);
-							theApp.getLog()->WriteLine(szError);
+							theApp.WriteLog(szError);
 
 							setModuleConfig(CO2_MICROPOD_MODULECONFIG_PERIODICMESSAGE_CONTPERCSPONT, m_cfgCONTPERCSPONT);
 						}
@@ -785,19 +785,19 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 				//{
 				//	bError=true;
 				//	szError.Format(_T("ERROR MicroPod: ParseCO2Command CO2_MICROPOD_SLAVECMD_CURMODSETUP byte1 host: %d, slave: %d"),m_byMODULESETUPbyte1,pData[2]);
-				//	theApp.getLog()->WriteLine(szError);
+				//	theApp.WriteLog(szError);
 				//}
 				//else if(pData[3]!=m_byMODULESETUPbyte2)
 				//{
 				//	bError=true;
 				//	szError.Format(_T("ERROR MicroPod: ParseCO2Command CO2_MICROPOD_SLAVECMD_CURMODSETUP byte2 host: %d, slave: %d"),m_byMODULESETUPbyte2,pData[3]);
-				//	theApp.getLog()->WriteLine(szError);
+				//	theApp.WriteLog(szError);
 				//}
 				//else if(pData[4]!=m_byMODULESETUPbyte3)
 				//{
 				//	bError=true;
 				//	szError.Format(_T("ERROR MicroPod: ParseCO2Command CO2_MICROPOD_SLAVECMD_CURMODSETUP byte3 host: %d, slave: %d"),m_byMODULESETUPbyte3,pData[4]);
-				//	theApp.getLog()->WriteLine(szError);
+				//	theApp.WriteLog(szError);
 				//}
 
 				//if(m_byMODULESETUPbyte4 & BIT0)	
@@ -807,7 +807,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 				//		//error
 				//		bError=true;
 				//		szError.Format(_T("ERROR MicroPod: ParseCO2Command CO2_MICROPOD_SLAVECMD_CURMODSETUP byte4 bit0 host: %d, slave: %d"),m_byMODULESETUPbyte4,pData[5]);
-				//		theApp.getLog()->WriteLine(szError);
+				//		theApp.WriteLog(szError);
 				//	}
 				//}
 				//else
@@ -817,7 +817,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 				//		//error
 				//		bError=true;
 				//		szError.Format(_T("ERROR MicroPod: ParseCO2Command CO2_MICROPOD_SLAVECMD_CURMODSETUP byte4 bit0 host: %d, slave: %d"),m_byMODULESETUPbyte4,pData[5]);
-				//		theApp.getLog()->WriteLine(szError);
+				//		theApp.WriteLog(szError);
 				//	}
 				//}
 				//
@@ -828,7 +828,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 				//		//error
 				//		bError=true;
 				//		szError.Format(_T("ERROR MicroPod: ParseCO2Command CO2_MICROPOD_SLAVECMD_CURMODSETUP byte4 bit5 host: %d, slave: %d"),m_byMODULESETUPbyte4,pData[5]);
-				//		theApp.getLog()->WriteLine(szError);
+				//		theApp.WriteLog(szError);
 				//	}
 				//}
 				//else
@@ -838,7 +838,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 				//		//error
 				//		bError=true;
 				//		szError.Format(_T("ERROR MicroPod: ParseCO2Command CO2_MICROPOD_SLAVECMD_CURMODSETUP byte4 bit5 host: %d, slave: %d"),m_byMODULESETUPbyte4,pData[5]);
-				//		theApp.getLog()->WriteLine(szError);
+				//		theApp.WriteLog(szError);
 				//	}
 				//}
 
@@ -951,7 +951,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 					//pump off
 					if(m_bPumpStateOn)
 					{
-						theApp.getLog()->WriteLine(_T("*** CO2 pump: off ***"));
+						theApp.WriteLog(_T("*** CO2 pump: off ***"));
 						bNewData=true;
 					}
 					
@@ -974,7 +974,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 				{
 					if(m_bPumpStateOn==false)
 					{
-						theApp.getLog()->WriteLine(_T("*** CO2 pump: on ***"));
+						theApp.WriteLog(_T("*** CO2 pump: on ***"));
 						m_bPumpStateOn=true;
 						bNewData=true;
 					}
@@ -1384,7 +1384,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
 				if(faDataBuf[0]!=m_cfgOPERATINGMODE)
 				{
 					szError.Format(_T("#HFO:0124: %d, slave: %d"),m_cfgOPERATINGMODE,faDataBuf[0]);
-					theApp.getLog()->WriteLine(szError);
+					theApp.WriteLog(szError);
 
 					setOperatingMode(m_cfgOPERATINGMODE);
 				}

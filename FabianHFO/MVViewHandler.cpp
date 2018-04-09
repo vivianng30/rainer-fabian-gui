@@ -1675,7 +1675,7 @@ void CMVViewHandler::viewStateChanged()
 
 //void CMVViewHandler::VentModeChanged()
 //{
-//	//theApp.getLog()->WriteLine(_T("CMVViewHandler::NotifyVentModeChanged"));
+//	//theApp.WriteLog(_T("CMVViewHandler::NotifyVentModeChanged"));
 //	if(AfxGetApp()->GetMainWnd())
 //		AfxGetApp()->GetMainWnd()->SetFocus();
 //	//SetCurrentFocusedView(GetPrimaryActiveView());
@@ -2026,7 +2026,7 @@ void CMVViewHandler::SetFocusToPrimaryView()
 				}
 				LeaveCriticalSection(&csViewSystemAlarm);
 
-				theApp.getLog()->WriteLine(_T("*************Focus VS_ALARM_SYS"));
+				theApp.WriteLog(_T("*************Focus VS_ALARM_SYS"));
 			}
 			break;
 		case VS_SETUP:
@@ -2040,7 +2040,7 @@ void CMVViewHandler::SetFocusToPrimaryView()
 				}
 				LeaveCriticalSection(&csViewMenu);
 
-				theApp.getLog()->WriteLine(_T("*************Focus VS_SETUP"));
+				theApp.WriteLog(_T("*************Focus VS_SETUP"));
 			}
 			break;
 		/*case CMVModel::VS_SELNUM:
@@ -2066,7 +2066,7 @@ void CMVViewHandler::SetFocusToPrimaryView()
 			{
 				if(AfxGetApp())
 					AfxGetApp()->GetMainWnd()->SetFocus();
-				theApp.getLog()->WriteLine(_T("*************Focus default"));
+				theApp.WriteLog(_T("*************Focus default"));
 			}
 			break;
 		}
@@ -3264,7 +3264,7 @@ void CMVViewHandler::setViewState(eViewState state,eViewSubState substate)
 
 	CString viewState=_T("");
 	viewState.Format(_T("***VS %d.%d"),(int)state,(int)substate);
-	theApp.getLog()->WriteLine(viewState);
+	theApp.WriteLog(viewState);
 }
 
 /**********************************************************************************************//**
@@ -3507,28 +3507,28 @@ bool CMVViewHandler::canChangeViewStateAlarmDependend()
 		{
 
 			bRes=false;
-			//theApp.getLog()->WriteLine(L"XXXXXXX #001");
+			//theApp.WriteLog(L"XXXXXXX #001");
 		}
 		else if(	getModel()->getALARMHANDLER()->ALARM_Accu_Empty->getAlarmState()==AS_ACTIVE
 			&&	getViewState()==VS_BATTERY
 			&&	silentState==ASTATE_ACTIVE)
 		{
 			bRes=false;
-			//theApp.getLog()->WriteLine(L"XXXXXXX #002");
+			//theApp.WriteLog(L"XXXXXXX #002");
 		}
 		else if(	getModel()->getALARMHANDLER()->ALARM_Accu_Defect->getAlarmState()==AS_ACTIVE
 			&&	getViewState()==VS_BATTERY
 			&&	silentState==ASTATE_ACTIVE)
 		{
 			bRes=false;
-			//theApp.getLog()->WriteLine(L"XXXXXXX #003");
+			//theApp.WriteLog(L"XXXXXXX #003");
 		}
 		else if(	type==AT_SYSALARM 
 			&&	VS_ALARM_SYS==getViewState()
 			&&	silentState==ASTATE_ACTIVE)
 		{
 			bRes=false;
-			//theApp.getLog()->WriteLine(L"XXXXXXX #004");
+			//theApp.WriteLog(L"XXXXXXX #004");
 		}
 	}
 

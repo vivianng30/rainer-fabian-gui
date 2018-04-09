@@ -198,7 +198,7 @@ void CWndServiceLicensing::Init()
 
 	if(iLenUniqueID>16)
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0282"));
+		theApp.WriteLog(_T("#HFO:0282"));
 	}
 
 	for(iLenUniqueID;iLenUniqueID<16;iLenUniqueID++)

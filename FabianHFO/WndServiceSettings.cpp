@@ -815,9 +815,9 @@ LRESULT CWndServiceSettings::OnMyMessage(WPARAM wParam, LPARAM lParam)
 			getModel()->getCONFIG()->SetEnableAutolimit(m_bEnableAutolimit);
 
 			if(m_bEnableAutolimit)
-				theApp.getLog()->WriteLine(_T("*** Service mode EnableAutolimit==true ***"));
+				theApp.WriteLog(_T("*** Service mode EnableAutolimit==true ***"));
 			else
-				theApp.getLog()->WriteLine(_T("*** Service mode EnableAutolimit==false ***"));
+				theApp.WriteLog(_T("*** Service mode EnableAutolimit==false ***"));
 
 			Draw();
 		}
@@ -836,9 +836,9 @@ LRESULT CWndServiceSettings::OnMyMessage(WPARAM wParam, LPARAM lParam)
 			getModel()->getCONFIG()->SetEnableFactory(m_bEnableFactory);
 
 			if(m_bEnableFactory)
-				theApp.getLog()->WriteLine(_T("*** Service mode EnableFactory==true ***"));
+				theApp.WriteLog(_T("*** Service mode EnableFactory==true ***"));
 			else
-				theApp.getLog()->WriteLine(_T("*** Service mode EnableFactory==false ***"));
+				theApp.WriteLog(_T("*** Service mode EnableFactory==false ***"));
 
 			Draw();
 		}
@@ -1133,7 +1133,7 @@ void CWndServiceSettings::OnBnClickedRegInstall()
 				CString sFileName = FileData.cFileName;
 
 				szState=_T("#REGISTRY INSTALL: file '")+sPath + _T("\\") + FileData.cFileName;
-				theApp.getLog()->WriteLine(szState);
+				theApp.WriteLog(szState);
 
 				int iResult = CTlsRegistry::Import(sPath + _T("\\") + FileData.cFileName);
 				if(iResult != 0)
@@ -1179,7 +1179,7 @@ void CWndServiceSettings::OnBnClickedEraseFRAM()
 
 	if(iRes==IDYES)
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0283"));
+		theApp.WriteLog(_T("#HFO:0283"));
 
 		getModel()->getI2C()->SetFRAMDefaultFactoryConfig();
 		
@@ -1222,7 +1222,7 @@ void CWndServiceSettings::OnBnClickedRestoreFactory()
 
 	if(iRes==IDYES)
 	{
-		theApp.getLog()->WriteLine(L"***load default***");
+		theApp.WriteLog(L"***load default***");
 
 		getModel()->getI2C()->SetFRAMDefaultFactoryValues();
 		Sleep(200);

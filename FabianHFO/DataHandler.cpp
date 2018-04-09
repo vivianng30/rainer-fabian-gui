@@ -1478,12 +1478,12 @@ void CDataHandler::initTrend()
 			//TREND ERROR
 			CStringW szError=_T("#HFO:0056: ");
 			szError+=sFile;
-			theApp.getLog()->WriteLine(szError);
+			theApp.WriteLog(szError);
 		}
 		
 		if(bDeserialize==false)
 		{
-			theApp.getLog()->WriteLine(_T("#HFO:0057"));
+			theApp.WriteLog(_T("#HFO:0057"));
 			DeleteAllTrendData();
 		}
 		else if(m_chFilenumPINSP!=m_chFilenumPMEAN
@@ -1523,7 +1523,7 @@ void CDataHandler::initTrend()
 				m_chFilenumSpO2PR,
 				m_chFilenumFrequency);
 
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 			DeleteAllTrendData();
 		}
 	}
@@ -1819,7 +1819,7 @@ bool CDataHandler::checkLicensing()
 		m_bFOTLicenseAvailable=false;
 		m_bNIVTRIGGERLicenseAvailable=false;
 
-		theApp.getLog()->WriteLine(_T("***allmodulesdisabled***"));
+		theApp.WriteLog(_T("***allmodulesdisabled***"));
 	}
 
 	CStringA szUniqueID16=getModel()->GetUniqueID();
@@ -1827,7 +1827,7 @@ bool CDataHandler::checkLicensing()
 
 	if(iLenUniqueID>16)
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0059"));
+		theApp.WriteLog(_T("#HFO:0059"));
 	}
 
 	for(iLenUniqueID;iLenUniqueID<16;iLenUniqueID++)
@@ -3135,7 +3135,7 @@ CStringA CDataHandler::encryptKey(eModule module)
 
 	if(iLenUniqueID>16)
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0060"));
+		theApp.WriteLog(_T("#HFO:0060"));
 	}
 
 	for(iLenUniqueID;iLenUniqueID<16;iLenUniqueID++)
@@ -3250,7 +3250,7 @@ CStringA CDataHandler::encryptDEMOKey(eModule module)
 
 	if(iLenUniqueID>16)
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0060"));
+		theApp.WriteLog(_T("#HFO:0060"));
 	}
 
 	for(iLenUniqueID;iLenUniqueID<16;iLenUniqueID++)
@@ -3658,7 +3658,7 @@ void CDataHandler::enableHFOLicense()
 {
 	//m_bHFOLicenseAvailable=false;
 	m_bHFOLicenseAvailable=true;
-	theApp.getLog()->WriteLine(_T("-enableHFOmodule"));
+	theApp.WriteLog(_T("-enableHFOmodule"));
 }
 
 /**********************************************************************************************//**
@@ -3671,7 +3671,7 @@ void CDataHandler::enableHFOLicense()
 void CDataHandler::disableHFOLicense()
 {
 	m_bHFOLicenseAvailable=false;
-	theApp.getLog()->WriteLine(_T("-disableHFOmodule"));
+	theApp.WriteLog(_T("-disableHFOmodule"));
 
 	delDemoLicense(MOD_HFO,false);
 }
@@ -3714,7 +3714,7 @@ bool CDataHandler::isNMODELicenseAvailable()
 void CDataHandler::enableNMODELicense()
 {
 	m_bNMODELicenseAvailable=true;
-	theApp.getLog()->WriteLine(_T("-enableNMODEmodule"));
+	theApp.WriteLog(_T("-enableNMODEmodule"));
 }
 
 /**********************************************************************************************//**
@@ -3727,7 +3727,7 @@ void CDataHandler::enableNMODELicense()
 void CDataHandler::disableNMODELicense()
 {
 	m_bNMODELicenseAvailable=false;
-	theApp.getLog()->WriteLine(_T("-disableNMODEmodule"));
+	theApp.WriteLog(_T("-disableNMODEmodule"));
 
 	delDemoLicense(MOD_NMODE,false);
 
@@ -3772,7 +3772,7 @@ bool CDataHandler::isVGUARANTLicenseAvailable()
 void CDataHandler::enableVGUARANTLicense()
 {
 	m_bVGUARANTLicenseAvailable=true;
-	theApp.getLog()->WriteLine(_T("-enableVGUARANTmodule"));
+	theApp.WriteLog(_T("-enableVGUARANTmodule"));
 }
 
 /**********************************************************************************************//**
@@ -3785,7 +3785,7 @@ void CDataHandler::enableVGUARANTLicense()
 void CDataHandler::disableVGUARANTLicense()
 {
 	m_bVGUARANTLicenseAvailable=false;
-	theApp.getLog()->WriteLine(_T("-disableVGUARANTmodule"));
+	theApp.WriteLog(_T("-disableVGUARANTmodule"));
 
 	delDemoLicense(MOD_VGUARANTY,false);
 
@@ -3829,7 +3829,7 @@ bool CDataHandler::isVLIMITLicenseAvailable()
 void CDataHandler::enableVLIMITLicense()
 {
 	m_bVLIMITLicenseAvailable=true;
-	theApp.getLog()->WriteLine(_T("-enableVLIMITmodule"));
+	theApp.WriteLog(_T("-enableVLIMITmodule"));
 }
 
 /**********************************************************************************************//**
@@ -3842,7 +3842,7 @@ void CDataHandler::enableVLIMITLicense()
 void CDataHandler::disableVLIMITLicense()
 {
 	m_bVLIMITLicenseAvailable=false;
-	theApp.getLog()->WriteLine(_T("-disableVLIMITmodule"));
+	theApp.WriteLog(_T("-disableVLIMITmodule"));
 
 	delDemoLicense(MOD_VLIMIT,false);
 
@@ -3886,7 +3886,7 @@ bool CDataHandler::isLUNGRECLicenseAvailable()
 void CDataHandler::enableLUNGRECLicense()
 {
 	m_bLUNGRECLicenseAvailable=true;
-	theApp.getLog()->WriteLine(_T("-enableLUNGRECmodule"));
+	theApp.WriteLog(_T("-enableLUNGRECmodule"));
 }
 
 /**********************************************************************************************//**
@@ -3899,7 +3899,7 @@ void CDataHandler::enableLUNGRECLicense()
 void CDataHandler::disableLUNGRECLicense()
 {
 	m_bLUNGRECLicenseAvailable=false;
-	theApp.getLog()->WriteLine(_T("-disableLUNGRECmodule"));
+	theApp.WriteLog(_T("-disableLUNGRECmodule"));
 
 	delDemoLicense(MOD_LUNGREC,false);
 
@@ -3943,7 +3943,7 @@ bool CDataHandler::isTRENDLicenseAvailable()
 void CDataHandler::enableTRENDLicense()
 {
 	m_bTRENDLicenseAvailable=true;
-	theApp.getLog()->WriteLine(_T("-enableTRENDmodule"));
+	theApp.WriteLog(_T("-enableTRENDmodule"));
 }
 
 /**********************************************************************************************//**
@@ -3956,7 +3956,7 @@ void CDataHandler::enableTRENDLicense()
 void CDataHandler::disableTRENDLicense()
 {
 	m_bTRENDLicenseAvailable=false;
-	theApp.getLog()->WriteLine(_T("-disableTRENDmodule"));
+	theApp.WriteLog(_T("-disableTRENDmodule"));
 
 	delDemoLicense(MOD_TREND,false);
 }
@@ -3999,7 +3999,7 @@ bool CDataHandler::isNIVTRIGGERLicenseAvailable()
 void CDataHandler::enableNIVTRIGGERLicense()
 {
 	m_bNIVTRIGGERLicenseAvailable=true;
-	theApp.getLog()->WriteLine(_T("-enableNIVTRIGGERmodule"));
+	theApp.WriteLog(_T("-enableNIVTRIGGERmodule"));
 }
 
 /**********************************************************************************************//**
@@ -4012,7 +4012,7 @@ void CDataHandler::enableNIVTRIGGERLicense()
 void CDataHandler::disableNIVTRIGGERLicense()
 {
 	m_bNIVTRIGGERLicenseAvailable=false;
-	theApp.getLog()->WriteLine(_T("-disableNIVTRIGGERmodule"));
+	theApp.WriteLog(_T("-disableNIVTRIGGERmodule"));
 
 	delDemoLicense(MOD_NIVTRIGGER,false);
 
@@ -4074,7 +4074,7 @@ bool CDataHandler::isFOTLicenseAvailable()
 void CDataHandler::enableFOTLicense()
 {
 	m_bFOTLicenseAvailable=true;
-	theApp.getLog()->WriteLine(_T("-enableFOTmodule"));
+	theApp.WriteLog(_T("-enableFOTmodule"));
 
 	getModel()->initFOTthread();
 }
@@ -4089,7 +4089,7 @@ void CDataHandler::enableFOTLicense()
 void CDataHandler::disableFOTLicense()
 {
 	m_bFOTLicenseAvailable=false;
-	theApp.getLog()->WriteLine(_T("-disableFOTmodule"));
+	theApp.WriteLog(_T("-disableFOTmodule"));
 
 	delDemoLicense(MOD_FOT,false);
 
@@ -4134,7 +4134,7 @@ bool CDataHandler::isTHERAPYLicenseAvailable()
 void CDataHandler::enableTHERAPYLicense()
 {
 	m_bTHERAPYLicenseAvailable=true;
-	theApp.getLog()->WriteLine(_T("-enableTHERAPYmodule"));
+	theApp.WriteLog(_T("-enableTHERAPYmodule"));
 }
 
 /**********************************************************************************************//**
@@ -4147,7 +4147,7 @@ void CDataHandler::enableTHERAPYLicense()
 void CDataHandler::disableTHERAPYLicense()
 {
 	m_bTHERAPYLicenseAvailable=false;
-	theApp.getLog()->WriteLine(_T("-disableTHERAPYmodule"));
+	theApp.WriteLog(_T("-disableTHERAPYmodule"));
 
 	delDemoLicense(MOD_THERAPY,false);
 
@@ -4191,7 +4191,7 @@ bool CDataHandler::isPRICOLicenseAvailable()
 void CDataHandler::enablePRICOLicense()
 {
 	m_bPRICOLicenseAvailable=true;
-	theApp.getLog()->WriteLine(_T("-enablePRICOmodule"));
+	theApp.WriteLog(_T("-enablePRICOmodule"));
 
 	getModel()->initPRICOthread();
 
@@ -4207,7 +4207,7 @@ void CDataHandler::enablePRICOLicense()
 void CDataHandler::disablePRICOLicense()
 {
 	m_bPRICOLicenseAvailable=false;
-	theApp.getLog()->WriteLine(_T("-disablePRICOmodule"));
+	theApp.WriteLog(_T("-disablePRICOmodule"));
 
 	delDemoLicense(MOD_PRICO,false);
 
@@ -4968,32 +4968,32 @@ void CDataHandler::loadConfig()
 	{
 	case VM_PSV:
 		{
-			theApp.getLog()->WriteLine(_T("### Start with Ventmode PSV"));
+			theApp.WriteLog(_T("### Start with Ventmode PSV"));
 		}
 		break;
 	case VM_SIMVPSV:
 		{
-			theApp.getLog()->WriteLine(_T("### Start with Ventmode SIMVPSV"));
+			theApp.WriteLog(_T("### Start with Ventmode SIMVPSV"));
 		}
 		break;
 	case VM_IPPV:
 		{
-			theApp.getLog()->WriteLine(_T("### Start with Ventmode IPPV"));
+			theApp.WriteLog(_T("### Start with Ventmode IPPV"));
 		}
 		break;
 	case VM_SIMV:
 		{
-			theApp.getLog()->WriteLine(_T("### Start with Ventmode SIMV"));
+			theApp.WriteLog(_T("### Start with Ventmode SIMV"));
 		}
 		break;
 	case VM_SIPPV:
 		{
-			theApp.getLog()->WriteLine(_T("### Start with Ventmode SIPPV"));
+			theApp.WriteLog(_T("### Start with Ventmode SIPPV"));
 		}
 		break;
 	case VM_CPAP:
 		{
-			theApp.getLog()->WriteLine(_T("### Start with Ventmode CPAP"));
+			theApp.WriteLog(_T("### Start with Ventmode CPAP"));
 		}
 		break;
 	case VM_HFO:
@@ -5001,11 +5001,11 @@ void CDataHandler::loadConfig()
 			if(isHFOLicenseAvailable()==false)
 			{
 				getModel()->getCONFIG()->SetCurMode(VM_IPPV);
-				theApp.getLog()->WriteLine(_T("### Start with Ventmode VM_HFO->VM_IPPV"));
+				theApp.WriteLog(_T("### Start with Ventmode VM_HFO->VM_IPPV"));
 			}
 			else
 			{
-				theApp.getLog()->WriteLine(_T("### Start with Ventmode HFO"));
+				theApp.WriteLog(_T("### Start with Ventmode HFO"));
 				SetHFOrunning(true);
 			}
 			
@@ -5016,18 +5016,18 @@ void CDataHandler::loadConfig()
 			if(isNMODELicenseAvailable()==false)
 			{
 				getModel()->getCONFIG()->SetCurMode(VM_IPPV);
-				theApp.getLog()->WriteLine(_T("### Start with Ventmode VM_DUOPAP->VM_IPPV"));
+				theApp.WriteLog(_T("### Start with Ventmode VM_DUOPAP->VM_IPPV"));
 			}
 			else
 			{
-				theApp.getLog()->WriteLine(_T("### Start with Ventmode DUOPAP"));
+				theApp.WriteLog(_T("### Start with Ventmode DUOPAP"));
 				if(GetFlowSensorState()==FLOWSENSOR_AUTOOFF) //rku,PRETRIGGER
 				{
 					EnterCriticalSection(&csFlowsensorState);
 					m_eFlowSensorState=FLOWSENSOR_OFF;
 					LeaveCriticalSection(&csFlowsensorState);
 					
-					theApp.getLog()->WriteLine(_T("#HFO:0061"));
+					theApp.WriteLog(_T("#HFO:0061"));
 				}
 				else if(GetFlowSensorState()!=FLOWSENSOR_OFF && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP()==MAXRANGE_TRIGGER_OFF)
 				{
@@ -5040,14 +5040,14 @@ void CDataHandler::loadConfig()
 					EnterCriticalSection(&csFlowsensorState);
 					m_eFlowSensorState=FLOWSENSOR_ON;
 					LeaveCriticalSection(&csFlowsensorState);
-					//theApp.getLog()->WriteLine(_T("#HFO:0062"));
+					//theApp.WriteLog(_T("#HFO:0062"));
 				}
 				else if(GetFlowSensorState()!=FLOWSENSOR_OFF)
 				{
 					EnterCriticalSection(&csFlowsensorState);
 					m_eFlowSensorState=FLOWSENSOR_OFF;
 					LeaveCriticalSection(&csFlowsensorState);
-					theApp.getLog()->WriteLine(_T("#HFO:0062"));
+					theApp.WriteLog(_T("#HFO:0062"));
 				}*/
 			}
 			
@@ -5058,18 +5058,18 @@ void CDataHandler::loadConfig()
 			if(isNMODELicenseAvailable()==false)
 			{
 				getModel()->getCONFIG()->SetCurMode(VM_IPPV);
-				theApp.getLog()->WriteLine(_T("### Start with Ventmode VM_NCPAP->VM_IPPV"));
+				theApp.WriteLog(_T("### Start with Ventmode VM_NCPAP->VM_IPPV"));
 			}
 			else
 			{
-				theApp.getLog()->WriteLine(_T("### Start with Ventmode NCPAP"));
+				theApp.WriteLog(_T("### Start with Ventmode NCPAP"));
 				if(GetFlowSensorState()==FLOWSENSOR_AUTOOFF) //rku,PRETRIGGER
 				{
 					EnterCriticalSection(&csFlowsensorState);
 					m_eFlowSensorState=FLOWSENSOR_OFF;
 					LeaveCriticalSection(&csFlowsensorState);
 
-					theApp.getLog()->WriteLine(_T("#HFO:0063"));
+					theApp.WriteLog(_T("#HFO:0063"));
 				}
 				else if(GetFlowSensorState()!=FLOWSENSOR_OFF && getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_NCPAP()==MAXRANGE_TRIGGER_OFF)
 				{
@@ -5084,7 +5084,7 @@ void CDataHandler::loadConfig()
 				//	EnterCriticalSection(&csFlowsensorState);
 				//	m_eFlowSensorState=FLOWSENSOR_ON;
 				//	LeaveCriticalSection(&csFlowsensorState);
-				//	//theApp.getLog()->WriteLine(_T("#HFO:0062"));
+				//	//theApp.WriteLog(_T("#HFO:0062"));
 				//}
 
 				//if(/*false==isNebulizerOn() &&*/ GetFlowSensorState()==FLOWSENSOR_AUTOOFF) rku,PRETRIGGER
@@ -5092,14 +5092,14 @@ void CDataHandler::loadConfig()
 				//	EnterCriticalSection(&csFlowsensorState);
 				//	m_eFlowSensorState=FLOWSENSOR_OFF;
 				//	LeaveCriticalSection(&csFlowsensorState);
-				//	theApp.getLog()->WriteLine(_T("#HFO:0063"));
+				//	theApp.WriteLog(_T("#HFO:0063"));
 				//}
 				//else if(GetFlowSensorState()!=FLOWSENSOR_OFF)
 				//{
 				//	EnterCriticalSection(&csFlowsensorState);
 				//	m_eFlowSensorState=FLOWSENSOR_OFF;
 				//	LeaveCriticalSection(&csFlowsensorState);
-				//	theApp.getLog()->WriteLine(_T("#HFO:0064"));
+				//	theApp.WriteLog(_T("#HFO:0064"));
 				//	//SetFlowSensorState(FLOWSENSOR_OFF);
 				//}
 			}
@@ -5111,24 +5111,24 @@ void CDataHandler::loadConfig()
 			if(isTHERAPYLicenseAvailable()==false)
 			{
 				getModel()->getCONFIG()->SetCurMode(VM_IPPV);
-				theApp.getLog()->WriteLine(_T("### Start with Ventmode VM_THERAPIE->VM_IPPV"));
+				theApp.WriteLog(_T("### Start with Ventmode VM_THERAPIE->VM_IPPV"));
 			}
 			else
 			{
-				theApp.getLog()->WriteLine(_T("Start with Ventmode THERAPIE"));
+				theApp.WriteLog(_T("Start with Ventmode THERAPIE"));
 				if(/*false==isNebulizerOn() &&*/ GetFlowSensorState()==FLOWSENSOR_AUTOOFF)
 				{
 					EnterCriticalSection(&csFlowsensorState);
 					m_eFlowSensorState=FLOWSENSOR_OFF;
 					LeaveCriticalSection(&csFlowsensorState);
-					theApp.getLog()->WriteLine(_T("#HFO:0065"));
+					theApp.WriteLog(_T("#HFO:0065"));
 				}
 				else if(GetFlowSensorState()!=FLOWSENSOR_OFF)
 				{
 					EnterCriticalSection(&csFlowsensorState);
 					m_eFlowSensorState=FLOWSENSOR_OFF;
 					LeaveCriticalSection(&csFlowsensorState);
-					theApp.getLog()->WriteLine(_T("#HFO:0066"));
+					theApp.WriteLog(_T("#HFO:0066"));
 					//SetFlowSensorState(FLOWSENSOR_OFF);
 				}
 			}
@@ -5146,7 +5146,7 @@ void CDataHandler::loadConfig()
 	case VM_SERVICE:
 	default:
 		{
-			theApp.getLog()->WriteLine(_T("#HFO:0067"));
+			theApp.WriteLog(_T("#HFO:0067"));
 
 			switch(getModel()->getCONFIG()->GetPrevMode())
 			{
@@ -5224,13 +5224,13 @@ void CDataHandler::loadConfig()
 	COleDateTime dtTimeLastFlowCal;
 	if(szTimeLastFlowCal == _T(""))
 	{
-		theApp.getLog()->WriteLine(_T("*** last Flowcal: unknown"));
+		theApp.WriteLog(_T("*** last Flowcal: unknown"));
 	}
 	else
 	{
 		if(false==dtTimeLastFlowCal.ParseDateTime(szTimeLastFlowCal,LOCALE_NOUSEROVERRIDE))
 		{
-			theApp.getLog()->WriteLine(_T("*** last Flowcal: unknown"));
+			theApp.WriteLog(_T("*** last Flowcal: unknown"));
 		}
 		else
 		{
@@ -5241,7 +5241,7 @@ void CDataHandler::loadConfig()
 				dtTimeLastFlowCal.GetHour(),
 				dtTimeLastFlowCal.GetMinute(),
 				dtTimeLastFlowCal.GetSecond());
-			theApp.getLog()->WriteLine(szLastFlowCal);
+			theApp.WriteLog(szLastFlowCal);
 		}
 	}
 
@@ -5813,7 +5813,7 @@ void CDataHandler::SetFlowSensorState(eFlowSensorState state)
 			{
 				getModel()->getALARMHANDLER()->resetVgVlAutoTurnedOff_FlowSensor();
 			}
-			theApp.getLog()->WriteLine(_T("***SetFlowSensorState FLOWSENSOR_AUTOOFF"));
+			theApp.WriteLog(_T("***SetFlowSensorState FLOWSENSOR_AUTOOFF"));
 
 			bDeleteFlowDependAlarms=true;
 		}
@@ -5821,7 +5821,7 @@ void CDataHandler::SetFlowSensorState(eFlowSensorState state)
 	case FLOWSENSOR_MANOFF:
 		{
 			DEBUGMSG(TRUE, (TEXT("FLOWSENSOR_MANOFF\r\n")));
-			theApp.getLog()->WriteLine(_T("***SetFlowSensorState FLOWSENSOR_MANOFF"));
+			theApp.WriteLog(_T("***SetFlowSensorState FLOWSENSOR_MANOFF"));
 			getModel()->getALARMHANDLER()->resetVgVlAutoTurnedOff();
 
 			bDeleteFlowDependAlarms=true;
@@ -5830,7 +5830,7 @@ void CDataHandler::SetFlowSensorState(eFlowSensorState state)
 	case FLOWSENSOR_OFF:
 		{
 			DEBUGMSG(TRUE, (TEXT("FLOWSENSOR_OFF\r\n")));
-			theApp.getLog()->WriteLine(_T("***SetFlowSensorState FLOWSENSOR_OFF"));
+			theApp.WriteLog(_T("***SetFlowSensorState FLOWSENSOR_OFF"));
 			getModel()->getALARMHANDLER()->resetVgVlAutoTurnedOff();
 
 			bDeleteFlowDependAlarms=true;
@@ -5839,7 +5839,7 @@ void CDataHandler::SetFlowSensorState(eFlowSensorState state)
 	case FLOWSENSOR_ON:
 		{
 			DEBUGMSG(TRUE, (TEXT("FLOWSENSOR_ON\r\n")));
-			theApp.getLog()->WriteLine(_T("***SetFlowSensorState FLOWSENSOR_ON"));
+			theApp.WriteLog(_T("***SetFlowSensorState FLOWSENSOR_ON"));
 		}
 		break;
 	}
@@ -5878,7 +5878,7 @@ void CDataHandler::SetFlowSensorState(eFlowSensorState state)
 		{
 			if(getModel()->getALARMHANDLER()->CanSetAlarm_IF_SPI())
 			{
-				theApp.getLog()->WriteLine(_T("#HFO:0073"));
+				theApp.WriteLog(_T("#HFO:0073"));
 
 				setSPIErrorCode(ERRC_SPI_SET_FLOWSENSSTATE);
 				if(AfxGetApp() != NULL)
@@ -6754,7 +6754,7 @@ void CDataHandler::setMainboardData()
 	m_dataMainboard.m_iMonitorChecksum=getModel()->getSPI()->Read_CHECKSUM();
 	if(m_dataMainboard.m_iMonitorChecksum==-1)
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0068"));
+		theApp.WriteLog(_T("#HFO:0068"));
 	}
 
 	WORD result;
@@ -6764,22 +6764,22 @@ void CDataHandler::setMainboardData()
 		Sleep(100);
 		result=getModel()->getSPI()->Read_VERSION1();
 
-		theApp.getLog()->WriteLine(_T("#HFO:0069"));
+		theApp.WriteLog(_T("#HFO:0069"));
 	}
 	else if(result==0)
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0070"));
+		theApp.WriteLog(_T("#HFO:0070"));
 	}
 	int iXVal=LOBYTE(result);
 
 	result=getModel()->getSPI()->Read_VERSION2();
 	if(result==0xFF)
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0071"));
+		theApp.WriteLog(_T("#HFO:0071"));
 	}
 	else if(result==0)
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0072"));
+		theApp.WriteLog(_T("#HFO:0072"));
 	}
 	int iYVal=HIBYTE(result);
 	int iZVal=LOBYTE(result);	
@@ -6865,7 +6865,7 @@ INT CDataHandler::getMessureDataAVG(BYTE type)
 	{
 		CStringW sz=_T("");
 		sz.Format(_T("#HFO:0287 type%d"),type);
-		theApp.getLog()->WriteLine(sz);
+		theApp.WriteLog(sz);
 	}
 	LeaveCriticalSection(&csMessureDataAVG);
 	return iTemp;
@@ -6973,7 +6973,7 @@ INT CDataHandler::getMessureDataBTB(BYTE type)
 	{
 		CStringW sz=_T("");
 		sz.Format(_T("#HFO:0288 type%d"),type);
-		theApp.getLog()->WriteLine(sz);
+		theApp.WriteLog(sz);
 	}
 	LeaveCriticalSection(&csMessureDataBTB);
 
@@ -8148,7 +8148,7 @@ bool CDataHandler::CheckIErelation(int iITime,int iBPM,int iETime)
 		{
 			CStringW sz=_T("");
 			sz.Format(_T("#HFO:0074 iITime%d iBPM%d iETime%d"),iITime,iBPM,iETime);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 
 			bSetFactory=true;
 		}
@@ -8159,7 +8159,7 @@ bool CDataHandler::CheckIErelation(int iITime,int iBPM,int iETime)
 		{
 			CStringW sz=_T("");
 			sz.Format(_T("#HFO:0075 iITime%d iBPM%d iETime%d."),iITime,iBPM,iETime);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 
 			bSetFactory=true;
 		}
@@ -8663,7 +8663,7 @@ bool CDataHandler::CalculateETime_ITimeChanged(int fITime, bool bTemp)
 		{
 			CStringW sz=_T("");
 			sz.Format(_T("#HFO:0076 %d"),(int)getModel()->getCONFIG()->GetCurMode());
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 		}
 		break;
 	}
@@ -8805,7 +8805,7 @@ bool CDataHandler::CalculateBPM_ITimeChanged(int fITime, bool bTemp)
 		{
 			CStringW sz=_T("");
 			sz.Format(_T("#HFO:0077 %d"),(int)getModel()->getCONFIG()->GetCurMode());
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 		}
 		break;
 	}
@@ -8974,7 +8974,7 @@ bool CDataHandler::CalculateETime_BPMChanged(int iBpm, bool bTemp)
 		{
 			CStringW sz=_T("");
 			sz.Format(_T("#HFO:0078 %d"),(int)getModel()->getCONFIG()->GetCurMode());
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 		}
 		break;
 	}
@@ -9141,7 +9141,7 @@ bool CDataHandler::CalculateBPM_ETimeChanged(int fETime, bool bTemp)
 		{
 			CStringW sz=_T("");
 			sz.Format(_T("#HFO:0079 %d"),(int)getModel()->getCONFIG()->GetCurMode());
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 		}
 		break;
 	}
@@ -9460,7 +9460,7 @@ int CDataHandler::calculateAutoAlarmlimitMVmax()
 	{
 		CStringW sz=_T("");
 		sz.Format(_T("#HFO:0080"));
-		theApp.getLog()->WriteLine(sz);
+		theApp.WriteLog(sz);
 
 		iValue=FACTORY_ALIMIT_VAL_MVMAX;
 		getModel()->getALARMHANDLER()->setAlimitMVmin(FACTORY_ALIMIT_VAL_MVMIN);
@@ -9679,7 +9679,7 @@ int CDataHandler::calculateAutoAlarmlimitPIPHIGH()
 		{
 			CStringW sz=_T("");
 			sz.Format(_T("#HFO:0081: Pmax %d, Ppeak %d, Auto %d, RatioIE %d"), getAVGMessureDataPINSP(),fPpeak,fAuto,ratio);
-			theApp.getLog()->WriteLine(sz);
+			theApp.WriteLog(sz);
 		}
 		
 	}
@@ -16312,7 +16312,7 @@ DWORD CDataHandler::GetContrast(void )
 	nRet = ExtEscape( dcLCD, QUERYESCSUPPORT, sizeof (dwEscFctn ), (LPCSTR)&dwEscFctn, 0, NULL );
 	if( 0 == nRet )
 	{
-		theApp.getLog()->WriteLine( _T("#HFO:0082"));
+		theApp.WriteLog( _T("#HFO:0082"));
 	}
 	else
 	{
@@ -16402,7 +16402,7 @@ DWORD CDataHandler::IncreaseContrast()
 	nRet = ExtEscape( dcLCD, QUERYESCSUPPORT, sizeof (dwEscFctn ), (LPCSTR)&dwEscFctn, 0, NULL );
 	if( 0 == nRet )
 	{
-		theApp.getLog()->WriteLine( _T("#HFO:0082"));
+		theApp.WriteLog( _T("#HFO:0082"));
 	}
 	else
 	{
@@ -16495,7 +16495,7 @@ DWORD CDataHandler::DecreaseContrast()
 	nRet = ExtEscape( dcLCD, QUERYESCSUPPORT, sizeof (dwEscFctn ), (LPCSTR)&dwEscFctn, 0, NULL );
 	if( 0 == nRet )
 	{
-		theApp.getLog()->WriteLine( _T("#HFO:0082"));
+		theApp.WriteLog( _T("#HFO:0082"));
 	}
 	else
 	{
@@ -16586,7 +16586,7 @@ DWORD CDataHandler::IncreaseMaxContrast()
 	nRet = ExtEscape( dcLCD, QUERYESCSUPPORT, sizeof (dwEscFctn ), (LPCSTR)&dwEscFctn, 0, NULL );
 	if( 0 == nRet )
 	{
-		theApp.getLog()->WriteLine( _T("#HFO:0082"));
+		theApp.WriteLog( _T("#HFO:0082"));
 	}
 	else
 	{
@@ -16656,7 +16656,7 @@ DWORD CDataHandler::DecreaseMaxContrast()
 	nRet = ExtEscape( dcLCD, QUERYESCSUPPORT, sizeof (dwEscFctn ), (LPCSTR)&dwEscFctn, 0, NULL );
 	if( 0 == nRet )
 	{
-		theApp.getLog()->WriteLine( _T("#HFO:0082"));
+		theApp.WriteLog( _T("#HFO:0082"));
 	}
 	else
 	{
@@ -17056,7 +17056,7 @@ void CDataHandler::CheckAkku(bool bRange)
 
 		if(temp==0)
 		{
-			theApp.getLog()->WriteLine(_T("ERROR 999"));
+			theApp.WriteLog(_T("ERROR 999"));
 			m_bI2CError=true;
 			getModel()->getI2C()->SetI2Cerror(DEVICE_ADDRESS_ACCUPIC);
 		}
@@ -17066,7 +17066,7 @@ void CDataHandler::CheckAkku(bool bRange)
 			|| (temp & BIT11) 
 			|| (temp & BIT12))
 		{
-			theApp.getLog()->WriteLine(_T("ERROR 998"));
+			theApp.WriteLog(_T("ERROR 998"));
 			m_bI2CError=true;
 			getModel()->getI2C()->SetI2Cerror(DEVICE_ADDRESS_ACCUPIC);
 		}
@@ -17130,7 +17130,7 @@ void CDataHandler::CheckAkku(bool bRange)
 
 						if(isTRENDLicenseAvailable())
 						{
-							theApp.getLog()->WriteLine(_T("#HFO:0083"));
+							theApp.WriteLog(_T("#HFO:0083"));
 							//rkuNEWFIX
 							SerializeAllTrends(false);
 						}
@@ -17294,8 +17294,8 @@ void CDataHandler::CheckAkku(bool bRange)
 					if(isTRENDLicenseAvailable())
 					{
 						//TREND
-						theApp.getLog()->WriteLine(_T("#HFO:0084"));
-						theApp.getLog()->WriteLine(_T("#HFO:0084"));
+						theApp.WriteLog(_T("#HFO:0084"));
+						theApp.WriteLog(_T("#HFO:0084"));
 						//rkuNEWFIX
 						SerializeAllTrends(false);
 					}
@@ -17775,7 +17775,7 @@ bool CDataHandler::SetAccuSupply(bool state)
 
 		if(state)
 		{
-			theApp.getLog()->WriteLine(_T("***SetAccuSupply(true)"));
+			theApp.WriteLog(_T("***SetAccuSupply(true)"));
 
 			//check HF-amplitude
 			CTlsRegistry regLimit(_T("HKCU\\Software\\FabianHFO\\WorkState\\Limits"),true);
@@ -17794,7 +17794,7 @@ bool CDataHandler::SetAccuSupply(bool state)
 			PARADATA()->SetHFAmplMaxParaNEONATAL(iMAXRANGE_NEO_HFAMPL);
 			PARADATA()->SetHFAmplMaxParaPEDIATRIC(iMAXRANGE_PED_HFAMPL);
 
-			theApp.getLog()->WriteLine(_T("***SetAccuSupply(false)"));
+			theApp.WriteLog(_T("***SetAccuSupply(false)"));
 		}
 
 		EnterCriticalSection(&csOpTime);
@@ -18195,7 +18195,7 @@ int CDataHandler::UpdateTrendData(UINT type, COleDateTime dtTime)
 			||	(iCount>MAXSIZE_TREND_BUFFER)
 			/*||	((dbTotalSeconds > enMaxTime) &&	(TTTD_NEVER != enMaxTime))*/)
 		{
-			theApp.getLog()->WriteLine(_T("#HFO:0085"));
+			theApp.WriteLog(_T("#HFO:0085"));
 			DeleteAllTrendData();
 			iResult=-1;
 		}
@@ -19016,7 +19016,7 @@ void CDataHandler::SerializeTrend(UINT type, bool bIncreaseFileNum)
 			strFormatted += _T(" ");
 			strFormatted += szError;
 
-			theApp.getLog()->WriteLine(strFormatted);
+			theApp.WriteLog(strFormatted);
 		}
 	}
 	catch (...)
@@ -19312,7 +19312,7 @@ bool CDataHandler::DeserializeTrend(UINT type, BYTE fileNum)
 			strFormatted += _T(" ");
 			strFormatted += szError;
 
-			theApp.getLog()->WriteLine(strFormatted);
+			theApp.WriteLog(strFormatted);
 
 			bRes=false;
 		}
@@ -19471,7 +19471,7 @@ bool CDataHandler::DeserializeTempTrend(UINT type, WORD fileNum)
 			strFormatted += _T(" ");
 			strFormatted += szError;
 
-			theApp.getLog()->WriteLine(strFormatted);
+			theApp.WriteLog(strFormatted);
 		}
 	}
 
@@ -19710,7 +19710,7 @@ void CDataHandler::DeleteAllTrendData()
 
 					if(sFileError!=_T(""))
 					{
-						theApp.getLog()->WriteLine(_T("#HFO:0096 ")+sFileError);
+						theApp.WriteLog(_T("#HFO:0096 ")+sFileError);
 					}
 				}
 			}
@@ -20038,7 +20038,7 @@ void CDataHandler::setCOMErrorCode(int iERRORcode/*,int iSerialCommand, bool bIg
 	
 	CString szTemp=_T("");
 	szTemp.Format(_T("#HFO:0298: %d"), iERRORcode);
-	theApp.getLog()->WriteLine(szTemp);
+	theApp.WriteLog(szTemp);
 	DEBUGMSG(TRUE, (szTemp));
 }
 
@@ -20674,7 +20674,7 @@ void CDataHandler::ReadI2CWatchdogState()
 	m_byI2CWatchdogState=getModel()->getI2C()->ReadMCP_Port0();
 	CString szTemp=_T("");
 	szTemp.Format(_T("***WatchdogState %d"), (int) m_byI2CWatchdogState);
-	theApp.getLog()->WriteLine(szTemp);
+	theApp.WriteLog(szTemp);
 }
 
 /**********************************************************************************************//**
@@ -22008,7 +22008,7 @@ void CDataHandler::setBodyweight(WORD weightGramm, bool bLog)
 	{
 		CStringW szBW=_T("");
 		szBW.Format(_T("### BODYWEIGHT %d"), m_iBodyweightGramm);
-		theApp.getLog()->WriteLine(szBW);
+		theApp.WriteLog(szBW);
 	}
 	
 }

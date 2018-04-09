@@ -372,7 +372,7 @@ bool CInterfaceI2C::Init(bool bStartup)
 	m_hI2C = CreateFile(_T("I2C2:"), NI2CACCESS, NI2CSHARE, NULL,OPEN_EXISTING, FILE_FLAG_WRITE_THROUGH, 0);
 	if(m_hI2C==INVALID_HANDLE_VALUE)
 	{
-		theApp.getLog()->WriteLine(_T("#HFO:0107"));
+		theApp.WriteLog(_T("#HFO:0107"));
 		SetI2CErrorCode(ERRC_I2C_INIT);
 		bRes=false;
 	}
@@ -504,7 +504,7 @@ bool CInterfaceI2C::ScanForDevice(BYTE bDeviceAddress,bool bStartup)
 
 	if(m_hI2C==INVALID_HANDLE_VALUE)
 	{
-		//theApp.getLog()->WriteLine(_T("#HFO:0108"));
+		//theApp.WriteLog(_T("#HFO:0108"));
 		return false;
 	}
 	EnterCriticalSection(&m_csI2C);
@@ -520,7 +520,7 @@ bool CInterfaceI2C::ScanForDevice(BYTE bDeviceAddress,bool bStartup)
 	{
 		LeaveCriticalSection(&m_csI2C);
 		Sleep(5);
-		//theApp.getLog()->WriteLine(_T("#HFO:0109"));
+		//theApp.WriteLog(_T("#HFO:0109"));
 		m_bI2CerrorPending=SetI2Cerror(bDeviceAddress,bStartup);
 		return false;
 	}
@@ -873,7 +873,7 @@ bool CInterfaceI2C::InitMCP_HfoPIC_MB4()
 //	if(SetRegister8(DEVICE_ADDRESS_MCP, GP0_DIR, b0)==false)		// Input=1;
 //	{
 //		LeaveCriticalSection(&m_csI2C);
-//		//theApp.getLog()->WriteLine(_T("ERROR: GP0_DIR_HFO"));
+//		//theApp.WriteLog(_T("ERROR: GP0_DIR_HFO"));
 //		ReinitI2C();
 //		return false;
 //	}
@@ -882,7 +882,7 @@ bool CInterfaceI2C::InitMCP_HfoPIC_MB4()
 //	if(SetRegister8(DEVICE_ADDRESS_MCP, GP0_ACCESS, b0)==false)	// IO not in use set to 1 = write
 //	{
 //		LeaveCriticalSection(&m_csI2C);
-//		//theApp.getLog()->WriteLine(_T("ERROR: GP0_ACCESS_HFO"));
+//		//theApp.WriteLog(_T("ERROR: GP0_ACCESS_HFO"));
 //		ReinitI2C();
 //		return false;
 //	}
@@ -892,7 +892,7 @@ bool CInterfaceI2C::InitMCP_HfoPIC_MB4()
 //	if(SetRegister8(DEVICE_ADDRESS_MCP, GP1_DIR, b0)==false)		// Input=1;
 //	{
 //		LeaveCriticalSection(&m_csI2C);
-//		//theApp.getLog()->WriteLine(_T("ERROR: GP1_DIR_HFO"));
+//		//theApp.WriteLog(_T("ERROR: GP1_DIR_HFO"));
 //		ReinitI2C();
 //		return false;
 //	}
@@ -901,7 +901,7 @@ bool CInterfaceI2C::InitMCP_HfoPIC_MB4()
 //	if(SetRegister8(DEVICE_ADDRESS_MCP, GP1_ACCESS, m_byGP1_ACCESS)==false)
 //	{
 //		LeaveCriticalSection(&m_csI2C);
-//		//theApp.getLog()->WriteLine(_T("ERROR: GP1_ACCESS_HFO"));
+//		//theApp.WriteLog(_T("ERROR: GP1_ACCESS_HFO"));
 //		ReinitI2C();
 //		return false;
 //	}
@@ -910,7 +910,7 @@ bool CInterfaceI2C::InitMCP_HfoPIC_MB4()
 //	if(SetRegister8(DEVICE_ADDRESS_MCP, GP0_IPOL, b0)==false)
 //	{
 //		LeaveCriticalSection(&m_csI2C);
-//		//theApp.getLog()->WriteLine(_T("ERROR: GP0_IPOL_HFO"));
+//		//theApp.WriteLog(_T("ERROR: GP0_IPOL_HFO"));
 //		ReinitI2C();
 //		return false;
 //	}
@@ -919,7 +919,7 @@ bool CInterfaceI2C::InitMCP_HfoPIC_MB4()
 //	if(SetRegister8(DEVICE_ADDRESS_MCP, GP1_IPOL, b0)==false)
 //	{
 //		LeaveCriticalSection(&m_csI2C);
-//		//theApp.getLog()->WriteLine(_T("ERROR: GP1_IPOL_HFO"));
+//		//theApp.WriteLog(_T("ERROR: GP1_IPOL_HFO"));
 //		ReinitI2C();
 //		return false;
 //	}
@@ -1034,9 +1034,9 @@ void CInterfaceI2C::SetACCUstate(bool state)
 {
 	m_bACCU=state;
 	/*if(state)
-		theApp.getLog()->WriteLine(_T("***CInterfaceI2C::SetACCUstate true"));
+		theApp.WriteLog(_T("***CInterfaceI2C::SetACCUstate true"));
 	else
-		theApp.getLog()->WriteLine(_T("***CInterfaceI2C::SetACCUstate false"));*/
+		theApp.WriteLog(_T("***CInterfaceI2C::SetACCUstate false"));*/
 }
 
 /**********************************************************************************************//**
@@ -2292,11 +2292,11 @@ void CInterfaceI2C::StopI2CThread( void )
 		
 		if (WaitForSingleObject(m_pcwtI2CThread->m_hThread,1000) == WAIT_TIMEOUT)
 		{
-			//theApp.getLog()->WriteLine(_T("#THR:009a"));
-			//theApp.getLog()->WriteLine(_T("#HFO:0110"));
+			//theApp.WriteLog(_T("#THR:009a"));
+			//theApp.WriteLog(_T("#HFO:0110"));
 			if(!TerminateThread(m_pcwtI2CThread,0))
 			{
-				//theApp.getLog()->WriteLine(_T("#THR:009b"));
+				//theApp.WriteLog(_T("#THR:009b"));
 			}
 		}
 	}
@@ -2798,7 +2798,7 @@ DWORD CInterfaceI2C::I2CData(void)
 		}
 	}while(m_bDoI2CThread && m_hI2C!=INVALID_HANDLE_VALUE);
 
-	//theApp.getLog()->WriteLine(_T("#THR:009"));
+	//theApp.WriteLog(_T("#THR:009"));
 
 	return 0;
 }

@@ -1576,10 +1576,10 @@ void CWndDataSPO2::StopSPO2DataThread( void )
 		
 		if (WaitForSingleObject(m_pcwtSPO2DataThread->m_hThread,1000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#THR:035a"));
+			theApp.WriteLog(_T("#THR:035a"));
 			if(!TerminateThread(m_pcwtSPO2DataThread,0))
 			{
-				theApp.getLog()->WriteLine(_T("#THR:035b"));
+				theApp.WriteLog(_T("#THR:035b"));
 			}
 		}
 	}
@@ -1806,7 +1806,7 @@ DWORD CWndDataSPO2::SPO2Data(void)
 		}
 	}while(doThread());
 
-	//theApp.getLog()->WriteLine(_T("#THR:035"));
+	//theApp.WriteLog(_T("#THR:035"));
 
 	return 0;
 }

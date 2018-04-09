@@ -382,7 +382,7 @@ void CInterfaceTerminal::StopTerminalThread( void )
 
 		if (WaitForSingleObject(m_pcwtTerminalSendThread->m_hThread,2000) == WAIT_TIMEOUT)
 		{
-			theApp.getLog()->WriteLine(_T("#HFO:0213"));
+			theApp.WriteLog(_T("#HFO:0213"));
 			if(!TerminateThread(m_pcwtTerminalSendThread,0))
 			{
 			}
@@ -789,7 +789,7 @@ void CInterfaceTerminal::sendWaveData(SHORT  iValPressure,SHORT  iValFlow, SHORT
 //			m_byBuffer[16],m_byBuffer[17],m_byBuffer[18],m_byBuffer[19]);*/
 //
 //		//msg->szMessage=szTemp;
-//		//theApp.getLog()->WriteLine(szTemp);
+//		//theApp.WriteLog(szTemp);
 //		//TRACE(szTemp);
 //
 //

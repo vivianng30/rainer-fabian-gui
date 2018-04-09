@@ -878,7 +878,7 @@ void CVentModeHandler::changeToPrevMode()
 	case VM_IPPV:
 		{
 			if(false==changeVentMode(VM_IPPV,0))
-				theApp.getLog()->WriteLine(_T("#HFO:0238"));
+				theApp.WriteLog(_T("#HFO:0238"));
 
 			if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF)
 			{
@@ -889,7 +889,7 @@ void CVentModeHandler::changeToPrevMode()
 	case VM_PSV: 
 		{
 			if(false==changeVentMode(VM_PSV,0))
-				theApp.getLog()->WriteLine(_T("#HFO:0239"));
+				theApp.WriteLog(_T("#HFO:0239"));
 
 			if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF)
 			{
@@ -900,7 +900,7 @@ void CVentModeHandler::changeToPrevMode()
 	case VM_SIMV:
 		{
 			if(false==changeVentMode(VM_SIMV,0))
-				theApp.getLog()->WriteLine(_T("#HFO:0240"));
+				theApp.WriteLog(_T("#HFO:0240"));
 
 			if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF)
 			{
@@ -911,7 +911,7 @@ void CVentModeHandler::changeToPrevMode()
 	case VM_SIMVPSV:
 		{
 			if(false==changeVentMode(VM_SIMVPSV,0))
-				theApp.getLog()->WriteLine(_T("#HFO:0241"));
+				theApp.WriteLog(_T("#HFO:0241"));
 
 			if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF)
 			{
@@ -922,7 +922,7 @@ void CVentModeHandler::changeToPrevMode()
 	case VM_SIPPV:
 		{
 			if(false==changeVentMode(VM_SIPPV,0))
-				theApp.getLog()->WriteLine(_T("#HFO:0242"));
+				theApp.WriteLog(_T("#HFO:0242"));
 
 			if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF)
 			{
@@ -933,7 +933,7 @@ void CVentModeHandler::changeToPrevMode()
 	case VM_HFO:
 		{
 			if(false==changeVentMode(VM_HFO,0))
-				theApp.getLog()->WriteLine(_T("#HFO:0243"));
+				theApp.WriteLog(_T("#HFO:0243"));
 
 			if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF)
 			{
@@ -944,7 +944,7 @@ void CVentModeHandler::changeToPrevMode()
 	case VM_CPAP:
 		{
 			if(false==changeVentMode(VM_CPAP,0))
-				theApp.getLog()->WriteLine(_T("#HFO:0244"));
+				theApp.WriteLog(_T("#HFO:0244"));
 
 			if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF)
 			{
@@ -957,7 +957,7 @@ void CVentModeHandler::changeToPrevMode()
 			if(getModel()->getDATAHANDLER()->isTHERAPYLicenseAvailable()==true)
 			{
 				if(false==changeVentMode(VM_THERAPIE,0))
-					theApp.getLog()->WriteLine(_T("#HFO:0245"));
+					theApp.WriteLog(_T("#HFO:0245"));
 
 				if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_ON)
 				{
@@ -967,7 +967,7 @@ void CVentModeHandler::changeToPrevMode()
 			else
 			{
 				if(false==changeVentMode(VM_CPAP,0))
-					theApp.getLog()->WriteLine(_T("#HFO:0246"));
+					theApp.WriteLog(_T("#HFO:0246"));
 
 				if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF)
 				{
@@ -981,7 +981,7 @@ void CVentModeHandler::changeToPrevMode()
 			if(getModel()->getDATAHANDLER()->isNMODELicenseAvailable()==true)
 			{
 				if(false==changeVentMode(VM_NCPAP,0))
-					theApp.getLog()->WriteLine(_T("#HFO:0247"));
+					theApp.WriteLog(_T("#HFO:0247"));
 
 				//rku,PRETRIGGER
 				/*if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_ON)
@@ -992,7 +992,7 @@ void CVentModeHandler::changeToPrevMode()
 			else
 			{
 				if(false==changeVentMode(VM_IPPV,0))
-					theApp.getLog()->WriteLine(_T("#HFO:0248"));
+					theApp.WriteLog(_T("#HFO:0248"));
 
 				if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF)
 				{
@@ -1007,7 +1007,7 @@ void CVentModeHandler::changeToPrevMode()
 			if(getModel()->getDATAHANDLER()->isNMODELicenseAvailable()==true)
 			{
 				if(false==changeVentMode(VM_DUOPAP,0))
-					theApp.getLog()->WriteLine(_T("#HFO:0249"));
+					theApp.WriteLog(_T("#HFO:0249"));
 				//rku,PRETRIGGER
 				/*if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_ON)
 				{
@@ -1017,7 +1017,7 @@ void CVentModeHandler::changeToPrevMode()
 			else
 			{
 				if(false==changeVentMode(VM_IPPV,0))
-					theApp.getLog()->WriteLine(_T("#HFO:0250"));
+					theApp.WriteLog(_T("#HFO:0250"));
 
 				if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_OFF)
 				{
@@ -1029,7 +1029,7 @@ void CVentModeHandler::changeToPrevMode()
 		break;
 	default:
 		{
-			theApp.getLog()->WriteLine(_T("#HFO:0251"));
+			theApp.WriteLog(_T("#HFO:0251"));
 		}
 		break;
 	}

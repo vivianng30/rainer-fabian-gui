@@ -39,13 +39,13 @@ int CInterfaceCO2_MASIMO::Init(BYTE com)
 	{
 	case 1:
 		{
-			theApp.getLog()->WriteLine(_T("#CO2:open COM1"));
+			theApp.WriteLog(_T("#CO2:open COM1"));
 			lLastError = Open(_T("COM1:"),0,0);
 		}
 		break;
 	case 3:
 		{
-			theApp.getLog()->WriteLine(_T("#CO2:open COM3"));
+			theApp.WriteLog(_T("#CO2:open COM3"));
 			lLastError = Open(_T("COM3:"),0,0);
 		}
 		break;
