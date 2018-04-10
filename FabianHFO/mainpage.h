@@ -7,10 +7,17 @@
  *
  * @section ver Version history and changelog
  * 
+ * @subsection ver5085 Version 5.0.8.5
+ * @date 2018-04-10
+ * @verbatim
+	- FOT: bug fixed for HFO mode-> CWndDataFOT::drawFOTmenubar() checks regarding current vent mode
+ @endverbatim
+ *
  * @subsection ver5084 Version 5.0.8.4
  * @date 2018-04-09
  * @verbatim
 	- new log reinitialization in case of lost SD card
+	- FOT: bug fixed for HFO mode-> CWndDataFOT::drawFOTmenubar() checks regarding current vent mode
  @endverbatim
  *
  * @subsection ver5083 Version 5.0.8.3

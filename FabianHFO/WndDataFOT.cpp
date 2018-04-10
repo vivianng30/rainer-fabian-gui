@@ -948,7 +948,7 @@ void CWndDataFOT::drawFOTmenubar()
 	m_pcBtnDecreaseSeq->ShowWindow(SW_SHOW);
 
 	bool bDecrease=true;
-	BYTE stepsComplete=getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara();
+	BYTE stepsComplete=getCurrentFOT_STEPSPara();
 	BYTE stepCurrent=getModel()->getFOTThread()->getCurFOTsequence();
 
 	if(true==getModel()->getFOTThread()->isDecreasingSequence())
@@ -986,7 +986,7 @@ void CWndDataFOT::drawFOTmenubar()
 					m_pcBtnDecreaseSeq->EnableWindow(FALSE);
 				}
 				else if(		false==getModel()->getFOTThread()->isDecreasingSequence() 
-					&& getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara()>3)
+					&& getCurrentFOT_STEPSPara()>3)
 					m_pcBtnDecreaseSeq->EnableWindow(TRUE);
 				else
 					m_pcBtnDecreaseSeq->EnableWindow(FALSE);
@@ -1017,7 +1017,7 @@ void CWndDataFOT::drawFOTmenubar()
 					m_pcBtnDecreaseSeq->EnableWindow(FALSE);
 				}
 				else if(		false==getModel()->getFOTThread()->isDecreasingSequence() 
-					&& getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara()>3
+					&& getCurrentFOT_STEPSPara()>3
 					&& getModel()->getFOTThread()->getCurFOTsequence()>1)
 					m_pcBtnDecreaseSeq->EnableWindow(TRUE);
 				else
@@ -1036,7 +1036,7 @@ void CWndDataFOT::drawFOTmenubar()
 					m_pcBtnDecreaseSeq->EnableWindow(FALSE);
 				}
 				else if(		false==getModel()->getFOTThread()->isDecreasingSequence() 
-					&& getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara()>3)
+					&& getCurrentFOT_STEPSPara()>3)
 					m_pcBtnDecreaseSeq->EnableWindow(TRUE);
 				else
 					m_pcBtnDecreaseSeq->EnableWindow(FALSE);
@@ -1072,6 +1072,27 @@ void CWndDataFOT::drawFOTmenubar()
 		m_pcBtnRunSeq->EnableWindow(FALSE);
 		m_pcBtnRepeatSeq->EnableWindow(FALSE);
 		m_pcBtnDecreaseSeq->EnableWindow(FALSE);
+	}
+}
+
+/**********************************************************************************************//**
+ * Gets current fot steps para
+ *
+ * \author	Rainer Kühner
+ * \date	10.04.2018
+ *
+ * \return	The current fot steps para.
+ **************************************************************************************************/
+
+BYTE CWndDataFOT::getCurrentFOT_STEPSPara()
+{
+	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
+	{
+		return getModel()->getDATAHANDLER()->PARADATA()->getFOThfo_STEPSPara();
+	}
+	else
+	{
+		return getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara();
 	}
 }
 

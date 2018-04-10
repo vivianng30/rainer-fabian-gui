@@ -74,6 +74,8 @@ protected:
 	void startHourglass();
 	void stopHourglass();
 	
+	BYTE getCurrentFOT_STEPSPara();
+
 private:
 	CMVView *m_parentView;
 	CMVModel* m_pModel;
