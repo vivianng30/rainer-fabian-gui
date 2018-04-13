@@ -3894,7 +3894,16 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 	}
 	else if(psz[0] == 'F')
 	{
-		if(false==getModel()->getCONFIG()->CurModeIsPresetMode())
+		bool bFOTrun=false;
+		if(getModel()->getFOTThread())
+		{
+			if(getModel()->getFOTThread()->getFOTstate()!=FOT_OFF)
+			{
+				bFOTrun=true;
+			}
+		}
+
+		if(false==getModel()->getCONFIG()->CurModeIsPresetMode() && false==bFOTrun)
 		{
 			CStringW sToken = bl.GetString();
 			sToken = sToken.Right(sToken.GetLength()-1);
@@ -4034,7 +4043,16 @@ bool CInterfaceSerial::ParseControllerCommand(CTlsBlob bl)
 	//}
 	else if(psz[0] == 'M')
 	{
-		if(false==getModel()->getCONFIG()->CurModeIsPresetMode())
+		bool bFOTrun=false;
+		if(getModel()->getFOTThread())
+		{
+			if(getModel()->getFOTThread()->getFOTstate()!=FOT_OFF)
+			{
+				bFOTrun=true;
+			}
+		}
+
+		if(false==getModel()->getCONFIG()->CurModeIsPresetMode() && false==bFOTrun)
 		{
 			CStringW sToken = bl.GetString();
 			sToken = sToken.Right(sToken.GetLength()-1);

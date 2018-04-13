@@ -11,6 +11,7 @@
  * @date 2018-04-10
  * @verbatim
 	- FOT: bug fixed for HFO mode-> CWndDataFOT::drawFOTmenubar() checks regarding current vent mode
+	- FOT: bug fixed serial checking routine for HFO values AMP and FREQ disabled while 3 sec FOT running
  @endverbatim
  *
  * @subsection ver5084 Version 5.0.8.4
