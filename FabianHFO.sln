@@ -9,29 +9,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FabianHFO", "FabianHFO\Fabi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FabianLib", "FabianLib\FabianLib.vcproj", "{AAC83167-07C3-4686-9A00-2C6BB231D9A0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CELib", "..\..\..\CELibProject\CELib\CELib.vcproj", "{88FE10AC-7324-4DC5-A6CE-76A91740D4F0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CELib", "CELib\CELib.vcproj", "{88FE10AC-7324-4DC5-A6CE-76A91740D4F0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "acuLinkLib", "acuLinkLib\acuLinkLib.vcproj", "{668C4D0B-35FC-4CC2-AF0F-A78D6DDB2929}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://192.168.178.59:8080/tfs
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = FabianHFO\\FabianHFO.vcproj
-		SccProjectName1 = FabianHFO
-		SccLocalPath1 = FabianHFO
-		SccProjectUniqueName2 = FabianLib\\FabianLib.vcproj
-		SccProjectName2 = FabianLib
-		SccLocalPath2 = FabianLib
-		SccProjectUniqueName3 = ..\\..\\..\\CELibProject\\CELib\\CELib.vcproj
-		SccProjectName3 = ../../../CELibProject/CELib
-		SccLocalPath3 = ..\\..\\..\\CELibProject\\CELib
-		SccProjectUniqueName4 = acuLinkLib\\acuLinkLib.vcproj
-		SccProjectName4 = acuLinkLib
-		SccLocalPath4 = acuLinkLib
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug Static|Mixed Platforms = Debug Static|Mixed Platforms
 		Debug Static|NetDCU10 (ARMV4I) = Debug Static|NetDCU10 (ARMV4I)
@@ -826,5 +808,23 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		VisualSVNWorkingCopyRoot = .
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://192.168.178.59:8080/tfs
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = FabianHFO\\FabianHFO.vcproj
+		SccProjectName1 = FabianHFO
+		SccLocalPath1 = FabianHFO
+		SccProjectUniqueName2 = FabianLib\\FabianLib.vcproj
+		SccProjectName2 = FabianLib
+		SccLocalPath2 = FabianLib
+		SccProjectUniqueName3 = ..\\..\\..\\CELibProject\\CELib\\CELib.vcproj
+		SccProjectName3 = ../../../CELibProject/CELib
+		SccLocalPath3 = ..\\..\\..\\CELibProject\\CELib
+		SccProjectUniqueName4 = acuLinkLib\\acuLinkLib.vcproj
+		SccProjectName4 = acuLinkLib
+		SccLocalPath4 = acuLinkLib
 	EndGlobalSection
 EndGlobal

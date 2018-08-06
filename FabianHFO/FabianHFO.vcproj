@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="FabianHFO"
 	ProjectGUID="{D07AF9B6-AE04-4669-8E61-D6E8A8C9A7A6}"
 	RootNamespace="FabianHFO"
@@ -80,7 +80,7 @@
 				Name="VCCLCompilerTool"
 				ExecutionBucket="7"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\..\CELibProject\CELib;..\FabianLib;..\acuLinkLib"
+				AdditionalIncludeDirectories="..\CELib;..\FabianLib;..\acuLinkLib"
 				PreprocessorDefinitions="_DEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;WINCE;DEBUG;$(ARCHFAM);$(_ARCHFAM_);STANDARDSHELL_UI_MODEL"
 				MinimalRebuild="true"
 				ExceptionHandling="2"
