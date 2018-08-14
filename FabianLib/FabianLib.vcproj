@@ -5,10 +5,6 @@
 	Name="FabianLib"
 	ProjectGUID="{AAC83167-07C3-4686-9A00-2C6BB231D9A0}"
 	RootNamespace="FabianHFOlib"
-	SccProjectName="SAK"
-	SccAuxPath="SAK"
-	SccLocalPath="SAK"
-	SccProvider="SAK"
 	Keyword="MFCDLLProj"
 	TargetFrameworkVersion="196613"
 	>
@@ -127,7 +123,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				ExecutionBucket="7"
-				AdditionalIncludeDirectories="..\..\..\..\CELibProject\CELib;..\FabianHFO"
+				AdditionalIncludeDirectories="..\CELib;..\FabianHFO"
 				PreprocessorDefinitions="NDEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES);WINCE;_USRDLL;$(ARCHFAM);$(_ARCHFAM_);STANDARDSHELL_UI_MODEL"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
