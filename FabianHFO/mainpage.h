@@ -7,11 +7,17 @@
  *
  * @section ver Version history and changelog
  * 
+ * @subsection ver5086 Version 5.0.8.6
+ * @date 2018-08-15
+ * @verbatim
+	- FBN-44 fixed: High PIP alarm setting change is not retained while alarm log is displayed
+ @endverbatim
+ *
  * @subsection ver5085 Version 5.0.8.5
  * @date 2018-04-10
  * @verbatim
-	- FOT: bug fixed for HFO mode-> CWndDataFOT::drawFOTmenubar() checks regarding current vent mode
-	- FOT: bug fixed serial checking routine for HFO values AMP and FREQ disabled while 3 sec FOT running
+ - FOT: bug fixed for HFO mode-> CWndDataFOT::drawFOTmenubar() checks regarding current vent mode
+ - FOT: bug fixed serial checking routine for HFO values AMP and FREQ disabled while 3 sec FOT running
  @endverbatim
  *
  * @subsection ver5084 Version 5.0.8.4
