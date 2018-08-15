@@ -7,6 +7,13 @@
  *
  * @section ver Version history and changelog
  * 
+ * @subsection ver5086 Version 5.0.8.7
+ * @date 2018-08-15
+ * @verbatim
+	- FBN-141 fixed: "Ventilation" alarm limits are displayed when the "Show EtCO2" limits button is pressed
+	- FBN-90 fixed: same issue than FBN-141
+ @endverbatim
+ *
  * @subsection ver5086 Version 5.0.8.6
  * @date 2018-08-15
  * @verbatim
