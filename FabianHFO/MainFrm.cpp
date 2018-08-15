@@ -1899,10 +1899,9 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 				}
 
-				
+				//close the language view
+				PostMessage(WM_REDRAW_VIEW);
 
-				/*CMVEventUI event(CMVEventUI::EV_LANGUAGE);
-				getModel()->Trigger(&event);*/
 				return 1;
 			}
 			break;
@@ -7004,7 +7003,13 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 		break;
 	case WM_KEYDOWN:
 		if(!m_bInitialized)
-			return 0;
+		{
+			return 1;
+		}
+		else if(true==getModel()->getReloadLanguageProgress())
+		{
+			return 1;
+		}
 
 		switch(pMsg->wParam) 
 		{ 
