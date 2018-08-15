@@ -198,7 +198,8 @@ CMVModel::CMVModel(void)
 	InitializeCriticalSection(&m_csETCO2);
 	InitializeCriticalSection(&m_csSPO2);
 	InitializeCriticalSection(&m_csVentModeInit);
-	//InitializeCriticalSection(&m_csI2Cinit);
+	
+	m_bReloadLangInProgress=false;
 
 	m_szUniqueID=_T("");
 
@@ -234,7 +235,7 @@ CMVModel::CMVModel(void)
 	m_szBuildVersion = _T("9.0.0.0");
 #else
 	m_szVersion = _T("5.0.8");
-	m_szBuildVersion = _T("5.0.8.8");
+	m_szBuildVersion = _T("5.0.8.9");
 #endif
 
 	CTlsRegistry regWorkState(_T("HKCU\\Software\\FabianHFO"),true);
@@ -3485,11 +3486,14 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 				break;
 			case VS_SETUP:
 				{
-					theApp.WriteLog(_T("$M37$"));
-					getVIEWHANDLER()->changeToPrevViewState();
+					if(false==getReloadLanguageProgress())
+					{
+						theApp.WriteLog(_T("$M37$"));
+						getVIEWHANDLER()->changeToPrevViewState();
 
-					if(AfxGetApp())
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_ALARMSTATE_CHANGED);
+						if(AfxGetApp())
+							AfxGetApp()->GetMainWnd()->PostMessage(WM_ALARMSTATE_CHANGED);
+					}
 				}
 				break;
 			case VS_ALARM_LIMIT:
@@ -4597,25 +4601,69 @@ void CMVModel::NotifyCalculateAlarmlimitData()
 }
 
 /**********************************************************************************************//**
- * Gets language string
+ * Gets language string.
  *
- * \author	Rainer Kühner
- * \date	22.02.2018
+ * @author	Rainer Kühner
+ * @date	15.08.2018
  *
- * \param	nID	The identifier.
+ * @param	nID	The identifier.
  *
- * \return	The language string.
+ * @return	The language string.
  **************************************************************************************************/
 
 CStringW CMVModel::GetLanguageString(int nID) 
 {
+	CStringW szTemp=_T("");
+
 	EnterCriticalSection(&m_csLangString);
-	CStringW szTemp=getLANGUAGE()->GetLanguageString(nID);
+	if(false==m_bReloadLangInProgress)
+	{
+		szTemp=getLANGUAGE()->GetLanguageString(nID);
+	}
+	else
+	{
+		DEBUGMSG(TRUE, (TEXT("### ReloadLangInProgress ###\r\n")));
+	}
 	LeaveCriticalSection(&m_csLangString);
 
 	return szTemp;
 }
 
+/**********************************************************************************************//**
+ * Sets reload language progress.
+ *
+ * @author	Rainer Kühner
+ * @date	15.08.2018
+ *
+ * @param	state	True to state.
+ **************************************************************************************************/
+
+void CMVModel::setReloadLanguageProgress(bool state) 
+{
+	EnterCriticalSection(&m_csLangString);
+	m_bReloadLangInProgress=state;
+	LeaveCriticalSection(&m_csLangString);
+}
+
+/**********************************************************************************************//**
+ * Gets reload language progress.
+ *
+ * @author	Rainer Kühner
+ * @date	15.08.2018
+ *
+ * @return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
+bool CMVModel::getReloadLanguageProgress() 
+{
+	bool bState=true;
+
+	EnterCriticalSection(&m_csLangString);
+	bState=m_bReloadLangInProgress;
+	LeaveCriticalSection(&m_csLangString);
+
+	return bState;
+}
 /**********************************************************************************************//**
  * Notifies a view focus changed
  *

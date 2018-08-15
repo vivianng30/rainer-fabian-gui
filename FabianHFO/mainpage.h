@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  * 
+ * @subsection ver5086 Version 5.0.8.9
+ * @date 2018-08-15
+ * @verbatim
+	- BUG FBN-64, 65, 68, 108 fixed: Chinese language change, language view will be closed after changing language, button click will be ignored while loading new language
+ @endverbatim
+ *
  * @subsection ver5086 Version 5.0.8.8
  * @date 2018-08-15
  * @verbatim
