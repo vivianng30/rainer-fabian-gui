@@ -954,14 +954,16 @@ void CALimitBtn::OnLButtonUp(UINT nFlags, CPoint point)
 		{
 			if(m_bDepressed)
 			{
+				m_bDepressed = !m_bDepressed;//rku_FBN44
 				WriteCurrentValue();
 			}
 			else
 			{
+				m_bDepressed = !m_bDepressed;//rku_FBN44
 				m_ePrevstate = m_bAlarmLimitState;
 				m_iPrevValue=m_v.iCurrentLimit;
 			}
-			m_bDepressed = !m_bDepressed;
+			//m_bDepressed = !m_bDepressed; //rku_FBN44
 		}
 		CButton::OnLButtonUp(nFlags, point);
 	}
@@ -995,14 +997,17 @@ void CALimitBtn::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 			if(m_bDepressed)
 			{
+				m_bDepressed = !m_bDepressed;//rku_FBN44
 				WriteCurrentValue();
 			}
 			else
 			{
+				m_bDepressed = !m_bDepressed;//rku_FBN44
 				m_ePrevstate = m_bAlarmLimitState;
 				m_iPrevValue=m_v.iCurrentLimit;
 			}
-			m_bDepressed = !m_bDepressed;
+			//m_bDepressed = !m_bDepressed; //rku_FBN44
+			
 		}
 		CButton::OnKeyDown(nChar,nRepCnt,nFlags);
 	}
@@ -2836,11 +2841,7 @@ void CALimitBtn::OnKillFocus(CWnd* pNewWnd)
 
 		m_bDepressed=false;
 	}
-	CWnd* pFocWnd=CWnd::GetFocus();
-	if(pFocWnd!=0)
-	{
-		int iID=pFocWnd->GetDlgCtrlID();
-	}
+	
 }
 
 /**********************************************************************************************//**
