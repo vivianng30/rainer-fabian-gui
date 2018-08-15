@@ -7,6 +7,12 @@
  *
  * @section ver Version history and changelog
  * 
+ * @subsection ver5086 Version 5.0.8.8
+ * @date 2018-08-15
+ * @verbatim
+	- FBN-43 fixed: GUI freeze - "application Fabian.exe crashed and must shut down" while saving trends data, language files 1.3.0.13 necessary
+ @endverbatim
+ *
  * @subsection ver5086 Version 5.0.8.7
  * @date 2018-08-15
  * @verbatim

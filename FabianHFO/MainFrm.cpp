@@ -8629,6 +8629,8 @@ DWORD CMainFrame::SaveTrendUSB(void)
 			{
 				if(!m_bExit && m_bDoSaveTrendUSBThread)
 				{
+					getModel()->getDATAHANDLER()->SetSavingTrendToUSBactiv();
+
 					CStringW szFileUSB = _T("\\Hard Disk\\");
 					szFileUSB+=getModel()->GetUniqueID();
 					szFileUSB+=_T("-TRENDS\\");
@@ -8636,8 +8638,6 @@ DWORD CMainFrame::SaveTrendUSB(void)
 					{
 						CTlsFile::MkDir(szFileUSB);
 					}
-
-					getModel()->getDATAHANDLER()->SetSavingTrendToUSBactiv();
 
 					theApp.WriteLog(_T("*** SerializeAllTrends SaveTrendUSB"));
 

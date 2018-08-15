@@ -288,7 +288,11 @@ void CSubViewTools::Initialize()
 	//m_pcTrendToUSB->SetText(_T("save"));
 	m_pcTrendToUSB->SetText(getModel()->GetLanguageString(IDS_TXT_SAVE));
 	
-	if(getModel()->getDATAHANDLER()->isTRENDLicenseAvailable())
+	if(getModel()->getDATAHANDLER()->IsSavingTrendToUSBactiv())
+	{
+		m_pcTrendToUSB->ShowWindow(SW_HIDE);
+	}
+	else if(getModel()->getDATAHANDLER()->isTRENDLicenseAvailable())
 	{
 		m_pcTrendToUSB->ShowWindow(SW_SHOW);
 	}
@@ -537,7 +541,19 @@ void CSubViewTools::Draw()
 	//DrawText(hdcMem,cs,-1,&rc,DT_CENTER|DT_TOP|DT_SINGLELINE);
 	DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
 
-	if(m_bUSBavailable && getModel()->getDATAHANDLER()->isTRENDLicenseAvailable())
+	if(getModel()->getDATAHANDLER()->IsSavingTrendToUSBactiv())
+	{
+		m_pcTrendToUSB->ShowWindow(SW_HIDE);
+
+		rc.left = 440;  
+		rc.top = 68;  
+		rc.right  = 660;  
+		rc.bottom = 500; 
+		//cs=_T("in progress");
+		cs=getModel()->GetLanguageString(IDS_TXT_INPROGRESS);
+		DrawText(hdcMem,cs,-1,&rc,DT_LEFT|DT_TOP|DT_SINGLELINE);
+	}
+	else if(m_bUSBavailable && getModel()->getDATAHANDLER()->isTRENDLicenseAvailable())
 	{
 		m_pcTrendToUSB->ShowWindow(SW_SHOW);
 	}
@@ -953,6 +969,8 @@ void CSubViewTools::OnBnClickedTrendToUSB()
 
 		StartWaitTrendUSBThread();
 		
+		getModel()->getDATAHANDLER()->SetSavingTrendToUSBactiv();
+
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_SAVETREND_TOUSB);
 	}
