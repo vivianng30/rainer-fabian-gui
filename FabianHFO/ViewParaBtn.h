@@ -117,6 +117,49 @@ public:
 
 	SHORT getITimeDisplayedValue();
 protected:
+	void createParaMenu();
+	void createParaIFLOW();
+	void createParaRISETIME();
+	void createParaPMEAN_REC();
+	void createParaFLOWMIN();
+	void createParaPEEP();
+	void createParaHFFLOW();
+	void createParaCPAP();
+	void createParaPINSP();
+	void createParaPDUO();
+	void createParaHFAMPL();
+	void createParaPMANUAL();
+	void createParaTHERAPYFLOW();
+	void createParaPPSV();
+	void createParaPMEAN();
+	void createParaVG_PMAXI();
+	void createParaVG_AMPMAXI();
+	void createParaTRIGCONV();
+	void createParaTRIGNMODE();
+	void createParaITIME_REC();
+	void createParaITIME();
+	void createParaBACKUP();
+	void createParaIERATIO();
+	void createParaRATE();
+	void createParaHFFREQ();
+	void createParaETIME();
+	void createParaO2();
+	void createParaO2FLUSH();
+	void createParaVGarant();
+	void createParaVLimit();
+
+	void createONOFF();
+
+	void createSubParaTRIGGER();
+	void createSubParaLEAKCOMP();
+	void createSubParaBIASFLOW();
+	void createSubParaI_E();
+	void createSubParaDEMFLOW();
+	void createSubParaPSVTIME();
+	void createSubParaRATE();
+	void createSubParaETIME();
+	void createSubParaO2REAL();
+	void createSubParaO2FLUSH();
 
 	void SetOneButtonDepressed(int btnID);
 	void SetAllButtonUnpressed();

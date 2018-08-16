@@ -5,10 +5,16 @@
  * @mainpage fabian HFO documentation
  *
  *
- * @section ver Version history and changelog
+ * @section ver Version history and changelog 
  * 
+ * @subsection ver5086 Version 5.0.8.12
+ * @date 2018-08-16
+ * @verbatim
+	- Wrapper for main views implemented
+ @endverbatim
+ *
  * @subsection ver5086 Version 5.0.8.11
- * @date 2018-08-11
+ * @date 2018-08-16
  * @verbatim
 	- function CreateFontHandle()genertal without CDC
 	- CDC *pDC; pDC = GetDC(); ReleaseDC (pDC); //!!!!!!!!!!! memory leak (tested with project "writeSerial")

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="FabianHFO"
 	ProjectGUID="{D07AF9B6-AE04-4669-8E61-D6E8A8C9A7A6}"
 	RootNamespace="FabianHFO"
@@ -3094,6 +3094,66 @@
 				RelativePath=".\WndWaitHourglass.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\WndWrapper.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperAlarmLimits.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperAlarmLog.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperDiagramms.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperDTBField.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperFullscreenMsg.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperMenu.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperNumerics.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperParaBtn.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperPatData.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperService.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperShutdown.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperStartup.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperSystemAlarm.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperTrends.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Headerdateien"
@@ -4078,6 +4138,66 @@
 			</File>
 			<File
 				RelativePath=".\WndWaitHourglass.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapper.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperAlarmLimits.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperAlarmLog.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperDiagramms.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperDTBField.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperFullscreenMsg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperMenu.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperNumerics.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperParaBtn.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperPatData.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperService.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperShutdown.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperStartup.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperSystemAlarm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WndWrapperTrends.h"
 				>
 			</File>
 		</Filter>

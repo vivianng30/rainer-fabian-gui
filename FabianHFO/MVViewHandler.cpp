@@ -8,7 +8,6 @@
 #include "MVViewHandler.h"
 #include "globDefs.h"
 
-
 CMVViewHandler* CMVViewHandler::theViewHandler=0;
 
 /**********************************************************************************************//**
@@ -20,7 +19,6 @@ CMVViewHandler* CMVViewHandler::theViewHandler=0;
 
 CMVViewHandler::CMVViewHandler()
 {
-	//getModel()->AttachObserver(this);
 	InitializeCriticalSection(&csViewState);
 	InitializeCriticalSection(&csViewDiagramm);
 	InitializeCriticalSection(&csViewAlarmLimits);
@@ -35,24 +33,20 @@ CMVViewHandler::CMVViewHandler()
 	InitializeCriticalSection(&csViewLog);
 	InitializeCriticalSection(&csViewNumeric);
 	
-	m_pModel = NULL;
-
-	m_vStartup=NULL;
-	m_vDTBField=NULL;
-	m_vDiagramm=NULL;
-	m_vParaBtn=NULL;
-	m_vNumericWnd=NULL;
-	m_vService=NULL;
-	m_vAlarmLimits=NULL;
-	m_vSystemAlarm=NULL;
-	m_vTrend=NULL;
-	m_vLog=NULL;
-	m_vPatData=NULL;
-	m_vFullscreenMsg=NULL;
-	//m_vSelectNumeric=NULL;
-	m_vMenu=NULL;
-	m_vShutdown=NULL;
-	//m_vNebulizer=NULL;
+	m_vwDTBField=NULL;
+	m_vwParaBtn=NULL;
+	m_vwPatData=NULL;
+	m_vwStartup=NULL;
+	m_vwDiagramm=NULL;
+	m_vwNumericWnd=NULL;
+	m_vwService=NULL;
+	m_vwAlarmLimits=NULL;
+	m_vwSystemAlarm=NULL;
+	m_vwTrend=NULL;
+	m_vwLog=NULL;
+	m_vwFullscreenMsg=NULL;
+	m_vwMenu=NULL;
+	m_vwShutdown=NULL;
 
 	m_vPrimaryActiveView=NULL;
 	m_vCurrentFocusedView=NULL;
@@ -83,17 +77,14 @@ CMVViewHandler::CMVViewHandler()
 
 CMVViewHandler::~CMVViewHandler(void)
 {
-	//CloseNebulizerView();
 	CloseFullscreenMsgView();
 	CloseStartupView();
 	CloseTrendView();
 	CloseSystemAlarmView();
-	//CloseSelectNumericView();
 	CloseServiceView();
 	CloseLogView();
 	CloseNumericView();
 	CloseParaBtnView();
-	//CloseGraphView();
 	CloseDiagrammView();
 	CloseDTBFieldView();
 	CloseAlarmLimitsView();
@@ -175,9 +166,8 @@ CMVViewHandler* CMVViewHandler::GetInstance()
 
 void CMVViewHandler::Init()
 {
-
 	OpenStartupView();
-	SetPrimaryActiveView(m_vStartup);
+	SetPrimaryActiveView(m_vwStartup);
 }
 
 /**********************************************************************************************//**
@@ -195,17 +185,14 @@ bool CMVViewHandler::OpenTrendView(bool bRedraw)
 {
 	bool result = false;
 
-	//rku cs1
 	EnterCriticalSection(&csViewTrend);
-	if(m_vTrend)
-	{
-		m_vTrend->Show(bRedraw);
-		LeaveCriticalSection(&csViewTrend);
-		return false;
-	}
-	m_vTrend = new CViewTrend(IDC_VIEW_TREND);
-	result = m_vTrend->CreateView();
+	if(!m_vwTrend)
+		m_vwTrend = new CWndWrapperTrends();
 
+	if(m_vwTrend)
+	{
+		result = m_vwTrend->showView(bRedraw);
+	}
 	LeaveCriticalSection(&csViewTrend);
 
 	return result;
@@ -223,23 +210,11 @@ bool CMVViewHandler::OpenTrendView(bool bRedraw)
 bool CMVViewHandler::CloseTrendView()
 {
 	EnterCriticalSection(&csViewTrend);
-	try
+	if(m_vwTrend)
 	{
-		if(m_vTrend)
-		{
-			m_vTrend->DestroyWindow();
-		}
+		delete m_vwTrend;
 	}
-	catch (...)
-	{
-		theApp.ReportException(_T("CMVViewHandler::CloseTrendView"));
-
-		delete m_vTrend;
-		m_vTrend=NULL;
-		LeaveCriticalSection(&csViewTrend);
-	}
-	delete m_vTrend;
-	m_vTrend=NULL;
+	m_vwTrend=NULL;
 	LeaveCriticalSection(&csViewTrend);
 
 	return true;
@@ -258,17 +233,14 @@ bool CMVViewHandler::OpenPatDataView()
 {
 	bool result = false;
 
-	//rku cs1
 	EnterCriticalSection(&csViewPatData);
-	if(m_vPatData)
+	if(!m_vwPatData)
+		m_vwPatData = new CWndWrapperPatData();
+
+	if(m_vwPatData)
 	{
-		m_vPatData->Show();
-		LeaveCriticalSection(&csViewPatData);
-		return false;
+		result = m_vwPatData->showView();
 	}
-	m_vPatData = new CViewPatData(IDC_VIEW_PATDATA);
-	result = m_vPatData->CreateView();
-	m_vPatData->Show();
 	LeaveCriticalSection(&csViewPatData);
 
 	return result;
@@ -285,25 +257,12 @@ bool CMVViewHandler::OpenPatDataView()
 
 bool CMVViewHandler::ClosePatDataView()
 {
-
 	EnterCriticalSection(&csViewPatData);
-	try
+	if(m_vwPatData)
 	{
-		if(m_vPatData)
-		{
-			m_vPatData->DestroyWindow();
-		}
+		delete m_vwPatData;
 	}
-	catch (...)
-	{
-		theApp.ReportException(_T("CMVViewHandler::ClosePatDataView"));
-
-		delete m_vPatData;
-		m_vPatData=NULL;
-		LeaveCriticalSection(&csViewPatData);
-	}
-	delete m_vPatData;
-	m_vPatData=NULL;
+	m_vwPatData=NULL;
 	LeaveCriticalSection(&csViewPatData);
 
 	return true;
@@ -322,17 +281,14 @@ bool CMVViewHandler::OpenFullscreenMsgView()
 {
 	bool result = false;
 
-	//rku cs1
 	EnterCriticalSection(&csViewFullscreenMsg);
-	if(m_vFullscreenMsg)
+	if(!m_vwFullscreenMsg)
+		m_vwFullscreenMsg = new CWndWrapperFullscreenMsg();
+
+	if(m_vwFullscreenMsg)
 	{
-		m_vFullscreenMsg->Show();
-		LeaveCriticalSection(&csViewFullscreenMsg);
-		return false;
+		result = m_vwFullscreenMsg->showView();
 	}
-	m_vFullscreenMsg = new CViewFullscreenMsg(IDC_VIEW_MESSAGE);
-	result = m_vFullscreenMsg->CreateView();
-	m_vFullscreenMsg->Show();
 	LeaveCriticalSection(&csViewFullscreenMsg);
 
 	return result;
@@ -350,23 +306,11 @@ bool CMVViewHandler::OpenFullscreenMsgView()
 bool CMVViewHandler::CloseFullscreenMsgView()
 {
 	EnterCriticalSection(&csViewFullscreenMsg);
-	try
+	if(m_vwFullscreenMsg)
 	{
-		if(m_vFullscreenMsg)
-		{
-			m_vFullscreenMsg->DestroyWindow();
-		}
+		delete m_vwFullscreenMsg;
 	}
-	catch (...)
-	{
-		theApp.ReportException(_T("CMVViewHandler::CloseFullscreenMsgView"));
-
-		delete m_vFullscreenMsg;
-		m_vFullscreenMsg=NULL;
-		LeaveCriticalSection(&csViewFullscreenMsg);
-	}
-	delete m_vFullscreenMsg;
-	m_vFullscreenMsg=NULL;
+	m_vwFullscreenMsg=NULL;
 	LeaveCriticalSection(&csViewFullscreenMsg);
 
 	return true;
@@ -385,16 +329,13 @@ bool CMVViewHandler::OpenStartupView()
 {
 	bool result = false;
 
-	if(m_vStartup)
+	if(!m_vwStartup)
+		m_vwStartup = new CWndWrapperStartup();
+
+	if(m_vwStartup)
 	{
-		m_vStartup->Show();
-		return false;
+		result = m_vwStartup->showView();
 	}
-	m_vStartup = new CViewStartup(IDC_VIEW_STARTUP);
-
-	result = m_vStartup->CreateView();
-
-	m_vStartup->Show();
 
 	return result;
 }
@@ -410,22 +351,11 @@ bool CMVViewHandler::OpenStartupView()
 
 bool CMVViewHandler::CloseStartupView()
 {
-	try
+	if(m_vwStartup)
 	{
-		if(m_vStartup)
-		{
-			m_vStartup->DestroyWindow();
-		}
+		delete m_vwStartup;
 	}
-	catch (...)
-	{
-		theApp.ReportException(_T("CMVViewHandler::CloseStartupView"));
-
-		delete m_vStartup;
-		m_vStartup=NULL;
-	}
-	delete m_vStartup;
-	m_vStartup=NULL;
+	m_vwStartup=NULL;
 
 	return true;
 }
@@ -443,16 +373,13 @@ bool CMVViewHandler::OpenShutdownView()
 {
 	bool result = false;
 
-	if(m_vShutdown)
+	if(!m_vwShutdown)
+		m_vwShutdown = new CWndWrapperShutdown();
+
+	if(m_vwShutdown)
 	{
-		m_vShutdown->Show();
-		return false;
+		result = m_vwShutdown->showView();
 	}
-	m_vShutdown = new CViewShutdown(IDC_VIEW_SHUTDOWN);
-
-	result = m_vShutdown->CreateView();
-
-	m_vShutdown->Show();
 
 	return result;
 }
@@ -468,71 +395,15 @@ bool CMVViewHandler::OpenShutdownView()
 
 bool CMVViewHandler::CloseShutdownView()
 {
-	try
+	if(m_vwShutdown)
 	{
-		if(m_vShutdown)
-		{
-			m_vShutdown->DestroyWindow();
-		}
-		
+		delete m_vwShutdown;
 	}
-	catch (...)
-	{
-		theApp.ReportException(_T("CMVViewHandler::CloseShutdownView"));
-
-		delete m_vShutdown;
-		m_vShutdown=NULL;
-	}
-	delete m_vShutdown;
-	m_vShutdown=NULL;
+	m_vwShutdown=NULL;
 
 	return true;
 }
 
-
-//bool CMVViewHandler::OpenNebulizerView()
-//{
-//	bool result = false;
-//
-//	if(m_vNebulizer)
-//	{
-//		m_vNebulizer->Show();
-//		return false;
-//	}
-//	m_vNebulizer = new CViewNebulizer(IDC_VIEW_NEBULIZER);
-//
-//	result = m_vNebulizer->CreateView();
-//
-//	m_vNebulizer->Show();
-//
-//	return result;
-//}
-//
-//bool CMVViewHandler::CloseNebulizerView()
-//{
-//	
-//	try
-//	{
-//		if(m_vNebulizer)
-//		{
-//			m_vNebulizer->DestroyWindow();
-//		}
-//		
-//
-//		if(AfxGetApp())
-//			AfxGetApp()->GetMainWnd()->SetFocus();
-//	}
-//	catch (...)
-//	{
-//		CFabianHFOApp::ReportException(_T("EXCEPTION: CloseNebulizerView"));
-//		delete m_vNebulizer;
-//		throw;
-//	}
-//	delete m_vNebulizer;
-//	m_vNebulizer=NULL;
-//
-//	return true;
-//}
 
 /**********************************************************************************************//**
  * Opens system alarm view
@@ -547,16 +418,14 @@ bool CMVViewHandler::OpenSystemAlarmView()
 {
 	bool result = false;
 
-	//rku cs1
 	EnterCriticalSection(&csViewSystemAlarm);
-	if(m_vSystemAlarm)
+	if(!m_vwSystemAlarm)
+		m_vwSystemAlarm = new CWndWrapperSystemAlarm();
+
+	if(m_vwSystemAlarm)
 	{
-		m_vSystemAlarm->Show();
-		LeaveCriticalSection(&csViewSystemAlarm);
-		return false;
+		result = m_vwSystemAlarm->showView();
 	}
-	m_vSystemAlarm = new CViewSystemAlarm(IDC_VIEW_SYSALARM);
-	result = m_vSystemAlarm->CreateView();
 	LeaveCriticalSection(&csViewSystemAlarm);
 
 	return result;
@@ -573,60 +442,18 @@ bool CMVViewHandler::OpenSystemAlarmView()
 
 bool CMVViewHandler::CloseSystemAlarmView()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewSystemAlarm);
-	try
+	if(m_vwSystemAlarm)
 	{
-		if(m_vSystemAlarm)
-		{
-			m_vSystemAlarm->DestroyWindow();
-		}
+		delete m_vwSystemAlarm;
 	}
-	catch (...)
-	{
-		theApp.ReportException(_T("CMVViewHandler::CloseSystemAlarmView"));
-
-		delete m_vSystemAlarm;
-		m_vSystemAlarm=NULL;
-		LeaveCriticalSection(&csViewSystemAlarm);
-	}
-	delete m_vSystemAlarm;
-	m_vSystemAlarm=NULL;
+	m_vwSystemAlarm=NULL;
 	LeaveCriticalSection(&csViewSystemAlarm);
 
 	return true;
 }
 
-//bool CMVViewHandler::OpenSetupView()
-//{
-//	bool result = false;
-//
-//	if(m_vSetup)
-//	{
-//		m_vSetup->Show();
-//		return false;
-//	}
-//	m_vSetup = new CViewSetup(IDC_VIEW_SETUP);
-//
-//	result = m_vSetup->CreateView();
-//
-//	
-//
-//	return result;
-//}
-//
-//bool CMVViewHandler::CloseSetupView()
-//{
-//	if(m_vSetup)
-//	{
-//		m_vSetup->Close();
-//		m_vSetup->DestroyWindow();
-//		delete m_vSetup;
-//	}
-//	m_vSetup=NULL;
-//
-//	return true;
-//}
+
 
 /**********************************************************************************************//**
  * Opens menu view
@@ -643,18 +470,26 @@ bool CMVViewHandler::OpenMenuView(bool bRedraw)
 {
 	bool result = false;
 
-	//rku cs1
 	EnterCriticalSection(&csViewMenu);
-	if(m_vMenu)
+	if(!m_vwMenu)
+		m_vwMenu = new CWndWrapperMenu();
+
+	if(m_vwMenu)
 	{
-		m_vMenu->Show(bRedraw);
-		LeaveCriticalSection(&csViewMenu);
-		return false;
+		result = m_vwMenu->showView(bRedraw);
 	}
-	m_vMenu = new CViewMenu(IDC_VIEW_MENU);
-	result = m_vMenu->CreateView();
 	LeaveCriticalSection(&csViewMenu);
 
+	/*MEMORYSTATUS stat;
+	GlobalMemoryStatus (&stat);
+	DWORD dwMem=stat.dwAvailPhys/1024;
+
+	CString szMem=_T("");
+	szMem.Format(_T("OpenMenuView %*ld free "),7, stat.dwAvailPhys/1024);
+	DEBUGMSG(TRUE, (szMem));
+	DEBUGMSG(TRUE, (TEXT("\r\n")));*/
+	//theApp.WriteLog(szMem);
+	// 
 	return result;
 }
 
@@ -670,24 +505,11 @@ bool CMVViewHandler::OpenMenuView(bool bRedraw)
 bool CMVViewHandler::CloseMenuView()
 {
 	EnterCriticalSection(&csViewMenu);
-	try
+	if(m_vwMenu)
 	{
-		if(m_vMenu)
-		{
-			m_vMenu->Close();
-			m_vMenu->DestroyWindow();
-		}
+		delete m_vwMenu;
 	}
-	catch (...)
-	{
-		theApp.ReportException(_T("CMVViewHandler::CloseMenuView"));
-
-		delete m_vMenu;
-		m_vMenu=NULL;
-		LeaveCriticalSection(&csViewMenu);
-	}
-	delete m_vMenu;
-	m_vMenu=NULL;
+	m_vwMenu=NULL;
 	LeaveCriticalSection(&csViewMenu);
 
 	return true;
@@ -708,16 +530,14 @@ bool CMVViewHandler::OpenServiceView(bool bRedraw)
 {
 	bool result = false;
 
-	//rku cs1
 	EnterCriticalSection(&csViewService);
-	if(m_vService)
+	if(!m_vwService)
+		m_vwService = new CWndWrapperService();
+
+	if(m_vwService)
 	{
-		m_vService->Show(bRedraw);
-		LeaveCriticalSection(&csViewService);
-		return false;
+		result = m_vwService->showView(bRedraw);
 	}
-	m_vService = new CViewService(IDC_VIEW_SERVICE);
-	result = m_vService->CreateView();
 	LeaveCriticalSection(&csViewService);
 
 	return result;
@@ -734,58 +554,18 @@ bool CMVViewHandler::OpenServiceView(bool bRedraw)
 
 bool CMVViewHandler::CloseServiceView()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewService);
-	try
+	if(m_vwService)
 	{
-		if(m_vService)
-		{
-			m_vService->DestroyWindow();
-		}
+		delete m_vwService;
 	}
-	catch (...)
-	{
-		theApp.ReportException(_T("CMVViewHandler::CloseServiceView"));
-
-		delete m_vService;
-		m_vService=NULL;
-		LeaveCriticalSection(&csViewService);
-	}
-	delete m_vService;
-	m_vService=NULL;
+	m_vwService=NULL;
 	LeaveCriticalSection(&csViewService);
 
 	return true;
 }
 
-//bool CMVViewHandler::OpenCalibrationView()
-//{
-//	bool result = false;
-//
-//	if(m_vCalibration)
-//	{
-//		return false;
-//	}
-//	m_vCalibration = new CViewCalibration(IDC_VIEW_CALIBRATION);
-//
-//	result = m_vCalibration->CreateView();
-//	
-//
-//	return result;
-//}
 
-//bool CMVViewHandler::CloseCalibrationView()
-//{
-//	if(m_vCalibration)
-//	{
-//		m_vCalibration->Close();
-//		m_vCalibration->DestroyWindow();
-//		delete m_vCalibration;
-//	}
-//	m_vCalibration=NULL;
-//
-//	return true;
-//}
 
 /**********************************************************************************************//**
  * Opens log view
@@ -800,17 +580,16 @@ bool CMVViewHandler::OpenLogView()
 {
 	bool result = false;
 
-	//rku cs1
 	EnterCriticalSection(&csViewLog);
-	if(m_vLog)
+	if(!m_vwLog)
+		m_vwLog = new CWndWrapperAlarmLog();
+
+	if(m_vwLog)
 	{
-		m_vLog->Show();
-		LeaveCriticalSection(&csViewLog);
-		return false;
+		result = m_vwLog->showView();
 	}
-	m_vLog = new CViewLog(IDC_VIEW_LOGLIST);
-	result = m_vLog->CreateView();
 	LeaveCriticalSection(&csViewLog);
+
 	return result;
 }
 
@@ -825,26 +604,14 @@ bool CMVViewHandler::OpenLogView()
 
 bool CMVViewHandler::CloseLogView()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewLog);
-	try
+	if(m_vwLog)
 	{
-		if(m_vLog)
-		{
-			m_vLog->DestroyWindow();
-		}
+		delete m_vwLog;
 	}
-	catch (...)
-	{
-		theApp.ReportException(_T("CMVViewHandler::CloseLogView"));
-
-		delete m_vLog;
-		m_vLog=NULL;
-		LeaveCriticalSection(&csViewLog);
-	}
-	delete m_vLog;
-	m_vLog=NULL;
+	m_vwLog=NULL;
 	LeaveCriticalSection(&csViewLog);
+
 	return true;
 }
 
@@ -861,18 +628,16 @@ bool CMVViewHandler::OpenNumericView()
 {
 	bool result = false;
 
-	//rku cs1
 	EnterCriticalSection(&csViewNumeric);
-	if(m_vNumericWnd)
-	{
-		m_vNumericWnd->Show();
-		LeaveCriticalSection(&csViewNumeric);
-		return false;
-	}
-	m_vNumericWnd = new CViewNumericWnd(IDC_VIEW_NUMERIC);
-	result = m_vNumericWnd->CreateView();
+	if(!m_vwNumericWnd)
+		m_vwNumericWnd = new CWndWrapperNumerics();
 
+	if(m_vwNumericWnd)
+	{
+		result = m_vwNumericWnd->showView();
+	}
 	LeaveCriticalSection(&csViewNumeric);
+
 	return result;
 }
 
@@ -887,26 +652,12 @@ bool CMVViewHandler::OpenNumericView()
 
 bool CMVViewHandler::CloseNumericView()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewNumeric);
-	try
+	if(m_vwNumericWnd)
 	{
-		if(m_vNumericWnd)
-		{
-			m_vNumericWnd->DestroyWindow();
-		}
+		delete m_vwNumericWnd;
 	}
-	catch (...)
-	{
-		theApp.ReportException(_T("CMVViewHandler::CloseNumericView"));
-
-		delete m_vNumericWnd;
-		m_vNumericWnd=NULL;
-		LeaveCriticalSection(&csViewNumeric);
-	}
-
-	delete m_vNumericWnd;
-	m_vNumericWnd=NULL;
+	m_vwNumericWnd=NULL;
 	LeaveCriticalSection(&csViewNumeric);
 
 	return true;
@@ -925,17 +676,26 @@ bool CMVViewHandler::OpenParaBtnView()
 {
 	bool result = false;
 
-	//rku cs1
 	EnterCriticalSection(&csViewParaBtn);
-	if(m_vParaBtn)
+	if(!m_vwParaBtn)
+		m_vwParaBtn = new CWndWrapperParaBtn();
+
+	if(m_vwParaBtn)
 	{
-		m_vParaBtn->Show();
-		LeaveCriticalSection(&csViewParaBtn);
-		return false;
+		result = m_vwParaBtn->showView();
 	}
-	m_vParaBtn = new CViewParaBtn(IDC_VIEW_PARABTN);
-	result = m_vParaBtn->CreateView();
 	LeaveCriticalSection(&csViewParaBtn);
+
+	/*MEMORYSTATUS stat;
+	GlobalMemoryStatus (&stat);
+	DWORD dwMem=stat.dwAvailPhys/1024;
+
+	CString szMem=_T("");
+	szMem.Format(_T("OpenParaBtnView %*ld free "),7, stat.dwAvailPhys/1024);
+	DEBUGMSG(TRUE, (szMem));
+	DEBUGMSG(TRUE, (TEXT("\r\n")));*/
+	//theApp.WriteLog(szMem);
+
 	return result;
 }
 
@@ -951,24 +711,11 @@ bool CMVViewHandler::OpenParaBtnView()
 bool CMVViewHandler::CloseParaBtnView()
 {
 	EnterCriticalSection(&csViewParaBtn);
-	try
+	if(m_vwParaBtn)
 	{
-		if(m_vParaBtn)
-		{
-			m_vParaBtn->DestroyWindow();
-		}
+		delete m_vwParaBtn;
 	}
-	catch (...)
-	{
-		theApp.ReportException(_T("CMVViewHandler::CloseParaBtnView"));
-
-		delete m_vParaBtn;
-		m_vParaBtn=NULL;
-		LeaveCriticalSection(&csViewParaBtn);
-	}
-
-	delete m_vParaBtn;
-	m_vParaBtn=NULL;
+	m_vwParaBtn=NULL;
 	LeaveCriticalSection(&csViewParaBtn);
 
 	return true;
@@ -987,16 +734,14 @@ bool CMVViewHandler::OpenDiagrammView()
 {
 	bool result = false;
 
-	//rku cs1
 	EnterCriticalSection(&csViewDiagramm);
-	if(m_vDiagramm)
+	if(!m_vwDiagramm)
+		m_vwDiagramm = new CWndWrapperDiagramms();
+
+	if(m_vwDiagramm)
 	{
-		m_vDiagramm->Show();
-		LeaveCriticalSection(&csViewDiagramm);
-		return false;
+		result = m_vwDiagramm->showView();
 	}
-	m_vDiagramm = new CViewDiagramm(IDC_VIEW_GRAPH);
-	result = m_vDiagramm->CreateView();
 	LeaveCriticalSection(&csViewDiagramm);
 
 	return result;
@@ -1013,26 +758,12 @@ bool CMVViewHandler::OpenDiagrammView()
 
 bool CMVViewHandler::CloseDiagrammView()
 {
-	//rku cs1
 	EnterCriticalSection(&csViewDiagramm);
-	try
+	if(m_vwDiagramm)
 	{
-		if(m_vDiagramm)
-		{
-			m_vDiagramm->DestroyWindow();
-		}
+		delete m_vwDiagramm;
 	}
-	catch (...)
-	{
-		theApp.ReportException(_T("CMVViewHandler::CloseDiagrammView"));
-
-		delete m_vDiagramm;
-		m_vDiagramm=NULL;
-		LeaveCriticalSection(&csViewDiagramm);
-	}
-
-	delete m_vDiagramm;
-	m_vDiagramm=NULL;
+	m_vwDiagramm=NULL;
 	LeaveCriticalSection(&csViewDiagramm);
 
 	return true;
@@ -1051,18 +782,26 @@ bool CMVViewHandler::OpenDTBFieldView()
 {
 	bool result = false;
 
-	//rku cs1
 	EnterCriticalSection(&csViewDTBField);
-	if(m_vDTBField)
+	if(!m_vwDTBField)
+		m_vwDTBField = new CWndWrapperDTBField();
+
+	if(m_vwDTBField)
 	{
-		m_vDTBField->Show();
-		LeaveCriticalSection(&csViewDTBField);
-		return false;
+		result = m_vwDTBField->showView();
 	}
-	m_vDTBField = new CViewDTBField(IDC_VIEW_DTBFIELD);
-	result = m_vDTBField->CreateView();
 	LeaveCriticalSection(&csViewDTBField);
 
+	/*MEMORYSTATUS stat;
+	GlobalMemoryStatus (&stat);
+	DWORD dwMem=stat.dwAvailPhys/1024;
+
+	CString szMem=_T("");
+	szMem.Format(_T("OpenDTBFieldView %*ld free "),7, stat.dwAvailPhys/1024);
+	DEBUGMSG(TRUE, (szMem));
+	DEBUGMSG(TRUE, (TEXT("\r\n")));*/
+	//theApp.WriteLog(szMem);
+	// 
 	return result;
 }
 
@@ -1078,24 +817,11 @@ bool CMVViewHandler::OpenDTBFieldView()
 bool CMVViewHandler::CloseDTBFieldView()
 {
 	EnterCriticalSection(&csViewDTBField);
-	try
+	if(m_vwDTBField)
 	{
-		if(m_vDTBField)
-		{
-			m_vDTBField->DestroyWindow();
-		}
+		delete m_vwDTBField;
 	}
-	catch (...)
-	{
-		theApp.ReportException(_T("CMVViewHandler::CloseDTBFieldView"));
-
-		delete m_vDTBField;
-		m_vDTBField=NULL;
-		LeaveCriticalSection(&csViewDTBField);
-	}
-
-	delete m_vDTBField;
-	m_vDTBField=NULL;
+	m_vwDTBField=NULL;
 	LeaveCriticalSection(&csViewDTBField);
 
 	return true;
@@ -1114,17 +840,14 @@ bool CMVViewHandler::OpenAlarmLimitsView()
 {
 	bool result = false;
 
-	//rku cs1
 	EnterCriticalSection(&csViewAlarmLimits);
-	if(m_vAlarmLimits)
-	{
-		m_vAlarmLimits->Show();
-		LeaveCriticalSection(&csViewAlarmLimits);
+	if(!m_vwAlarmLimits)
+		m_vwAlarmLimits = new CWndWrapperAlarmLimits();
 
-		return false;
+	if(m_vwAlarmLimits)
+	{
+		result = m_vwAlarmLimits->showView();
 	}
-	m_vAlarmLimits = new CViewAlarmLimit(IDC_VIEW_ALARMLIMITS);
-	result = m_vAlarmLimits->CreateView();
 	LeaveCriticalSection(&csViewAlarmLimits);
 
 	return result;
@@ -1142,24 +865,11 @@ bool CMVViewHandler::OpenAlarmLimitsView()
 bool CMVViewHandler::CloseAlarmLimitsView()
 {
 	EnterCriticalSection(&csViewAlarmLimits);
-	try
+	if(m_vwAlarmLimits)
 	{
-		if(m_vAlarmLimits)
-		{
-			m_vAlarmLimits->DestroyWindow();
-		}
+		delete m_vwAlarmLimits;
 	}
-	catch (...)
-	{
-		theApp.ReportException(_T("CMVViewHandler::CloseAlarmLimitsView"));
-
-		delete m_vAlarmLimits;
-		m_vAlarmLimits=NULL;
-		LeaveCriticalSection(&csViewAlarmLimits);
-	}
-
-	delete m_vAlarmLimits;
-	m_vAlarmLimits=NULL;
+	m_vwAlarmLimits=NULL;
 	LeaveCriticalSection(&csViewAlarmLimits);
 
 	return true;
@@ -1270,7 +980,7 @@ void CMVViewHandler::drawView_SHUTDOWN()
 		AfxGetApp()->GetMainWnd()->UpdateWindow();
 	OpenShutdownView();
 
-	SetPrimaryActiveView(m_vShutdown);
+	SetPrimaryActiveView(m_vwShutdown);
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->SetFocus();
 }
@@ -1303,7 +1013,7 @@ void CMVViewHandler::drawView_SYSFAIL()
 	OpenDTBFieldView();
 	OpenFullscreenMsgView();
 
-	SetPrimaryActiveView(m_vFullscreenMsg);
+	SetPrimaryActiveView(m_vwFullscreenMsg);
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->SetFocus();
 }
@@ -1336,7 +1046,7 @@ void CMVViewHandler::drawView_BATTERY()
 	OpenDTBFieldView();
 	OpenFullscreenMsgView();
 
-	SetPrimaryActiveView(m_vFullscreenMsg);
+	SetPrimaryActiveView(m_vwFullscreenMsg);
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->SetFocus();
 }
@@ -1371,7 +1081,7 @@ void CMVViewHandler::drawView_PATDATA()
 
 	getModel()->getALARMHANDLER()->setAutoSilent(true,true,false);
 
-	SetPrimaryActiveView(m_vPatData);
+	SetPrimaryActiveView(m_vwPatData);
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->SetFocus();
 }
@@ -1406,7 +1116,7 @@ void CMVViewHandler::drawView_TREND(bool bRedraw)
 	OpenNumericView();
 	OpenTrendView(bRedraw);
 	
-	SetPrimaryActiveView(m_vTrend);
+	SetPrimaryActiveView(m_vwTrend);
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->SetFocus();
 
@@ -1471,7 +1181,7 @@ void CMVViewHandler::drawView_PARA(bool bRedraw)
 		break;
 	}
 
-	SetPrimaryActiveView(m_vParaBtn);
+	SetPrimaryActiveView(m_vwParaBtn);
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->SetFocus();
 }
@@ -1504,7 +1214,7 @@ void CMVViewHandler::drawView_GRAPH()
 	OpenNumericView();
 	OpenDiagrammView();
 
-	SetPrimaryActiveView(m_vDiagramm);
+	SetPrimaryActiveView(m_vwDiagramm);
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->SetFocus();
 }
@@ -1539,7 +1249,7 @@ void CMVViewHandler::drawView_SERVICE(bool bRedraw)
 	OpenDTBFieldView();
 	OpenServiceView(bRedraw);
 
-	SetPrimaryActiveView(m_vService);
+	SetPrimaryActiveView(m_vwService);
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_SETFOCUS_PIMARYVIEW);
 }
@@ -1572,7 +1282,7 @@ void CMVViewHandler::drawView_ALARM_SYS()
 	OpenDTBFieldView();
 	OpenSystemAlarmView();
 
-	SetPrimaryActiveView(m_vSystemAlarm);
+	SetPrimaryActiveView(m_vwSystemAlarm);
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_SETFOCUS_PIMARYVIEW);
 }
@@ -1607,7 +1317,7 @@ void CMVViewHandler::drawView_SETUP(bool bRedraw)
 	OpenDTBFieldView();
 
 	OpenMenuView(bRedraw);
-	SetPrimaryActiveView(m_vMenu);
+	SetPrimaryActiveView(m_vwMenu);
 
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_SETFOCUS_PIMARYVIEW);
@@ -1637,7 +1347,7 @@ void CMVViewHandler::drawView_ALARM_LIMIT(bool bRedraw)
 
 	if(getViewSubState()==VSS_ALIMIT_LOGLIST)
 	{
-		if(m_vParaBtn)
+		if(m_vwParaBtn)
 			CloseParaBtnView();
 		if(AfxGetApp()->GetMainWnd())
 			AfxGetApp()->GetMainWnd()->UpdateWindow();
@@ -1656,7 +1366,7 @@ void CMVViewHandler::drawView_ALARM_LIMIT(bool bRedraw)
 	OpenDTBFieldView();
 	OpenAlarmLimitsView();
 
-	SetPrimaryActiveView(m_vAlarmLimits);
+	SetPrimaryActiveView(m_vwAlarmLimits);
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_SETFOCUS_PIMARYVIEW);
 }
@@ -1695,8 +1405,8 @@ void CMVViewHandler::setPpsvValue(int iValPPSV,bool bSend)
 {
 	//rku cs1
 	EnterCriticalSection(&csViewParaBtn);
-	if(m_vParaBtn)
-		m_vParaBtn->setPpsvValue(iValPPSV,bSend);
+	if(m_vwParaBtn)
+		m_vwParaBtn->setPpsvValue(iValPPSV,bSend);
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
@@ -1714,8 +1424,8 @@ void CMVViewHandler::setPEEPvalue(int iValPEEP,bool bSend)
 {
 	//rku cs1
 	EnterCriticalSection(&csViewParaBtn);
-	if(m_vParaBtn)
-		m_vParaBtn->setPEEPvalue(iValPEEP,bSend);
+	if(m_vwParaBtn)
+		m_vwParaBtn->setPEEPvalue(iValPEEP,bSend);
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
@@ -1733,8 +1443,8 @@ void CMVViewHandler::setPmeanDifference(int iValPmean,bool bSend)//PMAN1
 {
 	//rku cs1
 	EnterCriticalSection(&csViewParaBtn);
-	if(m_vParaBtn)
-		m_vParaBtn->setPmeanDiff(iValPmean,bSend);
+	if(m_vwParaBtn)
+		m_vwParaBtn->setPmeanDiff(iValPmean,bSend);
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
@@ -1752,8 +1462,8 @@ void CMVViewHandler::setPmeanRecDifference(int iValPmeanRec,bool bSend)//PMAN1
 {
 	//rku cs1
 	EnterCriticalSection(&csViewParaBtn);
-	if(m_vParaBtn)
-		m_vParaBtn->setPmeanRecDiff(iValPmeanRec,bSend);
+	if(m_vwParaBtn)
+		m_vwParaBtn->setPmeanRecDiff(iValPmeanRec,bSend);
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
@@ -1772,23 +1482,23 @@ void CMVViewHandler::UpdateCO2InfoData(bool resetAvailable)
 	if(resetAvailable)
 	{
 		EnterCriticalSection(&csViewDiagramm);
-		if(m_vDiagramm)
-			m_vDiagramm->PostMessage(WM_UPDATECO2INFODATA_TRUE);
+		if(m_vwDiagramm)
+			m_vwDiagramm->PostMessage(WM_UPDATECO2INFODATA_TRUE);
 		LeaveCriticalSection(&csViewDiagramm);
 	}
 	else
 	{
 		EnterCriticalSection(&csViewDiagramm);
-		if(m_vDiagramm)
-			m_vDiagramm->PostMessage(WM_UPDATECO2INFODATA_FALSE);
+		if(m_vwDiagramm)
+			m_vwDiagramm->PostMessage(WM_UPDATECO2INFODATA_FALSE);
 		LeaveCriticalSection(&csViewDiagramm);
 	}
 }
 
 //void CMVViewHandler::CO2PumpOn()
 //{
-//	if(m_vDiagramm)
-//		m_vDiagramm->CO2PumpOn();
+//	if(m_vwDiagramm)
+//		m_vwDiagramm->CO2PumpOn();
 //}
 
 /**********************************************************************************************//**
@@ -1800,7 +1510,7 @@ void CMVViewHandler::UpdateCO2InfoData(bool resetAvailable)
  * \return	Null if it fails, else the primary active view.
  **************************************************************************************************/
 
-CMVView* CMVViewHandler::GetPrimaryActiveView()
+CWndWrapper* CMVViewHandler::GetPrimaryActiveView()
 {
 	return m_vPrimaryActiveView;
 }
@@ -1814,7 +1524,7 @@ CMVView* CMVViewHandler::GetPrimaryActiveView()
  * \param [in,out]	pView	If non-null, the view.
  **************************************************************************************************/
 
-void CMVViewHandler::SetPrimaryActiveView(CMVView *pView)
+void CMVViewHandler::SetPrimaryActiveView(CWndWrapper *pView)
 {
 	m_vPrimaryActiveView=pView;
 }
@@ -1828,7 +1538,7 @@ void CMVViewHandler::SetPrimaryActiveView(CMVView *pView)
  * \return	Null if it fails, else the current focused view.
  **************************************************************************************************/
 
-CMVView* CMVViewHandler::GetCurrentFocusedView()
+CWndWrapper* CMVViewHandler::GetCurrentFocusedView()
 {
 	return m_vCurrentFocusedView;
 }
@@ -1842,7 +1552,7 @@ CMVView* CMVViewHandler::GetCurrentFocusedView()
  * \param [in,out]	pView	If non-null, the view.
  **************************************************************************************************/
 
-void CMVViewHandler::SetCurrentFocusedView(CMVView *pView)
+void CMVViewHandler::SetCurrentFocusedView(CWndWrapper *pView)
 {
 	//DEBUGMSG(TRUE, (TEXT("CMVViewHandler::SetCurrentFocusedView()\r\n")));
 	m_vCurrentFocusedView=pView;
@@ -1875,9 +1585,9 @@ void CMVViewHandler::UpdateServiceView()
 		{
 			//rku cs1
 			EnterCriticalSection(&csViewService);
-			if(m_vService)
+			if(m_vwService)
 			{
-				m_vService->PostMessage(WM_UPDATE_VIEW);
+				m_vwService->PostMessage(WM_UPDATE_VIEW);
 			}
 			LeaveCriticalSection(&csViewService);
 		}
@@ -1906,9 +1616,9 @@ void CMVViewHandler::SetFocusToPrimaryView()
 		{
 			//rku cs1
 			EnterCriticalSection(&csViewDiagramm);
-			if(m_vDiagramm)
+			if(m_vwDiagramm)
 			{
-				m_vDiagramm->PostMessage(WM_GRAPH_LOSTFOCUS);
+				m_vwDiagramm->PostMessage(WM_GRAPH_LOSTFOCUS);
 			}
 			LeaveCriticalSection(&csViewDiagramm);
 
@@ -1917,9 +1627,9 @@ void CMVViewHandler::SetFocusToPrimaryView()
 		{
 			//rku cs1
 			EnterCriticalSection(&csViewTrend);
-			if(m_vTrend)
+			if(m_vwTrend)
 			{
-				m_vTrend->PostMessage(WM_TREND_LOSTFOCUS);
+				m_vwTrend->PostMessage(WM_TREND_LOSTFOCUS);
 			}
 			LeaveCriticalSection(&csViewTrend);
 		}
@@ -1930,18 +1640,18 @@ void CMVViewHandler::SetFocusToPrimaryView()
 		{
 		case VS_SHUTDOWN:
 			{
-				SetPrimaryActiveView(m_vShutdown);
-				m_vShutdown->PostMessage(WM_SETVIEWFOCUS);
+				SetPrimaryActiveView(m_vwShutdown);
+				m_vwShutdown->PostMessage(WM_SETVIEWFOCUS);
 			}
 			break;
 		case VS_SYSFAIL:
 			{
 				//rku cs1
 				EnterCriticalSection(&csViewFullscreenMsg);
-				if(m_vFullscreenMsg)
+				if(m_vwFullscreenMsg)
 				{
-					SetPrimaryActiveView(m_vFullscreenMsg);
-					m_vFullscreenMsg->PostMessage(WM_SETVIEWFOCUS);
+					SetPrimaryActiveView(m_vwFullscreenMsg);
+					m_vwFullscreenMsg->PostMessage(WM_SETVIEWFOCUS);
 				}
 				LeaveCriticalSection(&csViewFullscreenMsg);
 			}
@@ -1950,20 +1660,20 @@ void CMVViewHandler::SetFocusToPrimaryView()
 			{
 				//rku cs1
 				EnterCriticalSection(&csViewFullscreenMsg);
-				if(m_vFullscreenMsg)
+				if(m_vwFullscreenMsg)
 				{
-					SetPrimaryActiveView(m_vFullscreenMsg);
-					m_vFullscreenMsg->PostMessage(WM_SETVIEWFOCUS);
+					SetPrimaryActiveView(m_vwFullscreenMsg);
+					m_vwFullscreenMsg->PostMessage(WM_SETVIEWFOCUS);
 				}
 				LeaveCriticalSection(&csViewFullscreenMsg);
 			}
 			break;
 		case VS_PATDATA:
 			{
-				if(m_vPatData)
+				if(m_vwPatData)
 				{
-					SetPrimaryActiveView(m_vPatData);
-					m_vPatData->PostMessage(WM_SETVIEWFOCUS);
+					SetPrimaryActiveView(m_vwPatData);
+					m_vwPatData->PostMessage(WM_SETVIEWFOCUS);
 				}
 			}
 			break;
@@ -1971,10 +1681,10 @@ void CMVViewHandler::SetFocusToPrimaryView()
 			{
 				//rku cs1
 				EnterCriticalSection(&csViewTrend);
-				if(m_vTrend)
+				if(m_vwTrend)
 				{
-					SetPrimaryActiveView(m_vTrend);
-					m_vTrend->PostMessage(WM_SETVIEWFOCUS);
+					SetPrimaryActiveView(m_vwTrend);
+					m_vwTrend->PostMessage(WM_SETVIEWFOCUS);
 				}
 				LeaveCriticalSection(&csViewTrend);
 			}
@@ -1983,10 +1693,10 @@ void CMVViewHandler::SetFocusToPrimaryView()
 			{
 				//rku cs1
 				EnterCriticalSection(&csViewParaBtn);
-				if(m_vParaBtn)
+				if(m_vwParaBtn)
 				{
-					SetPrimaryActiveView(m_vParaBtn);
-					m_vParaBtn->PostMessage(WM_SETVIEWFOCUS);
+					SetPrimaryActiveView(m_vwParaBtn);
+					m_vwParaBtn->PostMessage(WM_SETVIEWFOCUS);
 				}
 				LeaveCriticalSection(&csViewParaBtn);
 			}
@@ -1995,10 +1705,10 @@ void CMVViewHandler::SetFocusToPrimaryView()
 			{
 				//rku cs1
 				EnterCriticalSection(&csViewDiagramm);
-				if(m_vDiagramm)
+				if(m_vwDiagramm)
 				{
-					SetPrimaryActiveView(m_vDiagramm);
-					m_vDiagramm->PostMessage(WM_SETVIEWFOCUS);
+					SetPrimaryActiveView(m_vwDiagramm);
+					m_vwDiagramm->PostMessage(WM_SETVIEWFOCUS);
 				}
 				LeaveCriticalSection(&csViewDiagramm);
 			}
@@ -2007,10 +1717,10 @@ void CMVViewHandler::SetFocusToPrimaryView()
 			{
 				//rku cs1
 				EnterCriticalSection(&csViewService);
-				if(m_vService)
+				if(m_vwService)
 				{
-					SetPrimaryActiveView(m_vService);
-					m_vService->PostMessage(WM_SETVIEWFOCUS);
+					SetPrimaryActiveView(m_vwService);
+					m_vwService->PostMessage(WM_SETVIEWFOCUS);
 				}
 				LeaveCriticalSection(&csViewService);
 			}
@@ -2019,10 +1729,10 @@ void CMVViewHandler::SetFocusToPrimaryView()
 			{
 				//rku cs1
 				EnterCriticalSection(&csViewSystemAlarm);
-				if(m_vSystemAlarm)
+				if(m_vwSystemAlarm)
 				{
-					SetPrimaryActiveView(m_vSystemAlarm);
-					m_vSystemAlarm->PostMessage(WM_SETVIEWFOCUS);
+					SetPrimaryActiveView(m_vwSystemAlarm);
+					m_vwSystemAlarm->PostMessage(WM_SETVIEWFOCUS);
 				}
 				LeaveCriticalSection(&csViewSystemAlarm);
 
@@ -2033,10 +1743,10 @@ void CMVViewHandler::SetFocusToPrimaryView()
 			{
 				//rku cs1
 				EnterCriticalSection(&csViewMenu);
-				if(m_vMenu)
+				if(m_vwMenu)
 				{
-					SetPrimaryActiveView(m_vMenu);
-					m_vMenu->SetViewFocus();
+					SetPrimaryActiveView(m_vwMenu);
+					m_vwMenu->SetViewFocus();
 				}
 				LeaveCriticalSection(&csViewMenu);
 
@@ -2054,10 +1764,10 @@ void CMVViewHandler::SetFocusToPrimaryView()
 			{
 				//rku cs1
 				EnterCriticalSection(&csViewAlarmLimits);
-				if(m_vAlarmLimits)
+				if(m_vwAlarmLimits)
 				{
-					SetPrimaryActiveView(m_vAlarmLimits);
-					m_vAlarmLimits->SetViewFocus();
+					SetPrimaryActiveView(m_vwAlarmLimits);
+					m_vwAlarmLimits->SetViewFocus();
 				}
 				LeaveCriticalSection(&csViewAlarmLimits);
 			}
@@ -2090,8 +1800,8 @@ void CMVViewHandler::SetViewVKUP()
 			{
 				//rku cs1
 				EnterCriticalSection(&csViewAlarmLimits);
-				if(m_vAlarmLimits)
-					m_vAlarmLimits->PostMessage(WM_SET_ALIMITTIMER);
+				if(m_vwAlarmLimits)
+					m_vwAlarmLimits->PostMessage(WM_SET_ALIMITTIMER);
 				LeaveCriticalSection(&csViewAlarmLimits);
 			}
 			else
@@ -2100,8 +1810,8 @@ void CMVViewHandler::SetViewVKUP()
 				{
 					//rku cs1
 					EnterCriticalSection(&csViewDiagramm);
-					if(m_vDiagramm)
-						m_vDiagramm->PostMessage(WM_GRAPH_INCREASE_SPEED);
+					if(m_vwDiagramm)
+						m_vwDiagramm->PostMessage(WM_GRAPH_INCREASE_SPEED);
 					LeaveCriticalSection(&csViewDiagramm);
 				}
 			}
@@ -2114,16 +1824,16 @@ void CMVViewHandler::SetViewVKUP()
 			{
 				//rku cs1
 				EnterCriticalSection(&csViewDiagramm);
-				if(m_vDiagramm)
-					m_vDiagramm->PostMessage(WM_GRAPH_INCREASE_SPEED);
+				if(m_vwDiagramm)
+					m_vwDiagramm->PostMessage(WM_GRAPH_INCREASE_SPEED);
 				LeaveCriticalSection(&csViewDiagramm);
 			}
 			else if(getViewSubState()==VSS_GRAPH_SPO2GRAPHS)
 			{
 				//rku cs1
 				EnterCriticalSection(&csViewDiagramm);
-				if(m_vDiagramm)
-					m_vDiagramm->PostMessage(WM_GRAPH_INCREASE_SPEED);
+				if(m_vwDiagramm)
+					m_vwDiagramm->PostMessage(WM_GRAPH_INCREASE_SPEED);
 				LeaveCriticalSection(&csViewDiagramm);
 			}
 			//todoFOT ????
@@ -2137,8 +1847,8 @@ void CMVViewHandler::SetViewVKUP()
 			}
 			//rku cs1
 			EnterCriticalSection(&csViewTrend);
-			if(m_vTrend)
-				m_vTrend->PostMessage(WM_TREND_MOVERIGHT,m_iTrendRight);
+			if(m_vwTrend)
+				m_vwTrend->PostMessage(WM_TREND_MOVERIGHT,m_iTrendRight);
 			LeaveCriticalSection(&csViewTrend);
 
 			m_dwLastTrendCntRight=GetTickCount();
@@ -2169,8 +1879,8 @@ void CMVViewHandler::SetViewVKDOWN()
 			{
 				//rku cs1
 				EnterCriticalSection(&csViewAlarmLimits);
-				if(m_vAlarmLimits)
-					m_vAlarmLimits->PostMessage(WM_SET_ALIMITTIMER);
+				if(m_vwAlarmLimits)
+					m_vwAlarmLimits->PostMessage(WM_SET_ALIMITTIMER);
 				LeaveCriticalSection(&csViewAlarmLimits);
 			}
 			else
@@ -2179,8 +1889,8 @@ void CMVViewHandler::SetViewVKDOWN()
 				{
 					//rku cs1
 					EnterCriticalSection(&csViewDiagramm);
-					if(m_vDiagramm)
-						m_vDiagramm->PostMessage(WM_GRAPH_DECREASE_SPEED);
+					if(m_vwDiagramm)
+						m_vwDiagramm->PostMessage(WM_GRAPH_DECREASE_SPEED);
 					LeaveCriticalSection(&csViewDiagramm);
 				}
 			}
@@ -2193,16 +1903,16 @@ void CMVViewHandler::SetViewVKDOWN()
 			{
 				//rku cs1
 				EnterCriticalSection(&csViewDiagramm);
-				if(m_vDiagramm)
-					m_vDiagramm->PostMessage(WM_GRAPH_DECREASE_SPEED);
+				if(m_vwDiagramm)
+					m_vwDiagramm->PostMessage(WM_GRAPH_DECREASE_SPEED);
 				LeaveCriticalSection(&csViewDiagramm);
 			}
 			else if(getViewSubState()==VSS_GRAPH_SPO2GRAPHS)
 			{
 				//rku cs1
 				EnterCriticalSection(&csViewDiagramm);
-				if(m_vDiagramm)
-					m_vDiagramm->PostMessage(WM_GRAPH_DECREASE_SPEED);
+				if(m_vwDiagramm)
+					m_vwDiagramm->PostMessage(WM_GRAPH_DECREASE_SPEED);
 				LeaveCriticalSection(&csViewDiagramm);
 			}
 			//todoFOT ????
@@ -2217,8 +1927,8 @@ void CMVViewHandler::SetViewVKDOWN()
 
 			//rku cs1
 			EnterCriticalSection(&csViewTrend);
-			if(m_vTrend)
-				m_vTrend->PostMessage(WM_TREND_MOVELEFT,m_iTrendLeft);
+			if(m_vwTrend)
+				m_vwTrend->PostMessage(WM_TREND_MOVELEFT,m_iTrendLeft);
 			LeaveCriticalSection(&csViewTrend);
 
 			m_dwLastTrendCntLeft=GetTickCount();
@@ -2278,15 +1988,15 @@ void CMVViewHandler::CheckCurrentView(int iViewID)
 			{
 			case IDC_VIEW_PARABTN:
 				{
-					//SetCurrentFocusedView(m_vParaBtn);
+					//SetCurrentFocusedView(m_vwParaBtn);
 				}
 				break;
 			case IDC_VIEW_GRAPH:
 				{
 					//rku cs1
 					EnterCriticalSection(&csViewDiagramm);
-					if(m_vDiagramm)
-						SetCurrentFocusedView(m_vDiagramm);
+					if(m_vwDiagramm)
+						SetCurrentFocusedView(m_vwDiagramm);
 					LeaveCriticalSection(&csViewDiagramm);
 				}
 				break;
@@ -2306,8 +2016,8 @@ void CMVViewHandler::CheckCurrentView(int iViewID)
 				{
 					//rku cs1
 					EnterCriticalSection(&csViewParaBtn);
-					if(m_vParaBtn)
-						SetCurrentFocusedView(m_vParaBtn);
+					if(m_vwParaBtn)
+						SetCurrentFocusedView(m_vwParaBtn);
 					LeaveCriticalSection(&csViewParaBtn);
 				}
 				break;
@@ -2315,8 +2025,8 @@ void CMVViewHandler::CheckCurrentView(int iViewID)
 				{
 					//rku cs1
 					EnterCriticalSection(&csViewAlarmLimits);
-					if(m_vAlarmLimits)
-						SetCurrentFocusedView(m_vAlarmLimits);
+					if(m_vwAlarmLimits)
+						SetCurrentFocusedView(m_vwAlarmLimits);
 					LeaveCriticalSection(&csViewAlarmLimits);
 				}
 				break;
@@ -2397,10 +2107,10 @@ void CMVViewHandler::SetFocusToNextView()
 			{
 				//rku cs1
 				EnterCriticalSection(&csViewDiagramm);
-				if(m_vDiagramm)
+				if(m_vwDiagramm)
 				{
-					SetCurrentFocusedView(m_vDiagramm);
-					m_vDiagramm->PostMessage(WM_SETVIEWFOCUS);
+					SetCurrentFocusedView(m_vwDiagramm);
+					m_vwDiagramm->PostMessage(WM_SETVIEWFOCUS);
 				}
 				LeaveCriticalSection(&csViewDiagramm);
 			}
@@ -2408,10 +2118,10 @@ void CMVViewHandler::SetFocusToNextView()
 			{
 				//rku cs1
 				EnterCriticalSection(&csViewParaBtn);
-				if(m_vParaBtn)
+				if(m_vwParaBtn)
 				{
-					SetCurrentFocusedView(m_vParaBtn);
-					m_vParaBtn->PostMessage(WM_SETVIEWFOCUS);
+					SetCurrentFocusedView(m_vwParaBtn);
+					m_vwParaBtn->PostMessage(WM_SETVIEWFOCUS);
 				}
 				LeaveCriticalSection(&csViewParaBtn);
 			}
@@ -2450,20 +2160,20 @@ void CMVViewHandler::SetFocusToPrevView()
 			if(iT==IDC_VIEW_PARABTN)
 			{
 				EnterCriticalSection(&csViewDiagramm);
-				if(m_vDiagramm)
+				if(m_vwDiagramm)
 				{
-					SetCurrentFocusedView(m_vDiagramm);
-					m_vDiagramm->PostMessage(WM_SETVIEWFOCUS);
+					SetCurrentFocusedView(m_vwDiagramm);
+					m_vwDiagramm->PostMessage(WM_SETVIEWFOCUS);
 				}
 				LeaveCriticalSection(&csViewDiagramm);
 			}
 			else if(iT==IDC_VIEW_GRAPH)
 			{
 				EnterCriticalSection(&csViewParaBtn);
-				if(m_vParaBtn)
+				if(m_vwParaBtn)
 				{
-					SetCurrentFocusedView(m_vParaBtn);
-					m_vParaBtn->PostMessage(WM_SETNEXTFOCUS);
+					SetCurrentFocusedView(m_vwParaBtn);
+					m_vwParaBtn->PostMessage(WM_SETNEXTFOCUS);
 				}
 				LeaveCriticalSection(&csViewParaBtn);
 			}
@@ -2491,15 +2201,15 @@ void CMVViewHandler::SetOxyHourglass(bool state)
 	if(state)
 	{
 		EnterCriticalSection(&csViewParaBtn);
-		if(m_vParaBtn)
-			m_vParaBtn->PostMessage(WM_SETOXYHOURGLASS_TRUE);
+		if(m_vwParaBtn)
+			m_vwParaBtn->PostMessage(WM_SETOXYHOURGLASS_TRUE);
 		LeaveCriticalSection(&csViewParaBtn);
 	}
 	else
 	{
 		EnterCriticalSection(&csViewParaBtn);
-		if(m_vParaBtn)
-			m_vParaBtn->PostMessage(WM_SETOXYHOURGLASS_FALSE);
+		if(m_vwParaBtn)
+			m_vwParaBtn->PostMessage(WM_SETOXYHOURGLASS_FALSE);
 		LeaveCriticalSection(&csViewParaBtn);
 	}
 }
@@ -2516,8 +2226,8 @@ void CMVViewHandler::SetOxyHourglass(bool state)
 void CMVViewHandler::StopDiagramm(bool bStopFreeze)
 {
 	EnterCriticalSection(&csViewDiagramm);
-	if(m_vDiagramm)
-		m_vDiagramm->StopDiagramm(bStopFreeze);
+	if(m_vwDiagramm)
+		m_vwDiagramm->StopDiagramm(bStopFreeze);
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
@@ -2531,8 +2241,8 @@ void CMVViewHandler::StopDiagramm(bool bStopFreeze)
 void CMVViewHandler::SetALIMITTIMER()
 {
 	EnterCriticalSection(&csViewAlarmLimits);
-	if(m_vAlarmLimits)
-		m_vAlarmLimits->PostMessage(WM_SET_ALIMITTIMER);
+	if(m_vwAlarmLimits)
+		m_vwAlarmLimits->PostMessage(WM_SET_ALIMITTIMER);
 	LeaveCriticalSection(&csViewAlarmLimits);
 }
 
@@ -2550,15 +2260,15 @@ void CMVViewHandler::SetCPAPBackup(bool bState)
 	if(bState)
 	{
 		EnterCriticalSection(&csViewDTBField);
-		if(m_vDTBField)
-			m_vDTBField->PostMessage(WM_SETCPAPBACKUP_TRUE);
+		if(m_vwDTBField)
+			m_vwDTBField->PostMessage(WM_SETCPAPBACKUP_TRUE);
 		LeaveCriticalSection(&csViewDTBField);
 	}
 	else
 	{
 		EnterCriticalSection(&csViewDTBField);
-		if(m_vDTBField)
-			m_vDTBField->PostMessage(WM_SETCPAPBACKUP_FALSE);
+		if(m_vwDTBField)
+			m_vwDTBField->PostMessage(WM_SETCPAPBACKUP_FALSE);
 		LeaveCriticalSection(&csViewDTBField);
 	}
 }
@@ -2577,25 +2287,25 @@ void CMVViewHandler::setPSVapnoe(bool bState)
 	if(bState)
 	{
 		EnterCriticalSection(&csViewParaBtn);
-		if(m_vParaBtn)
-			m_vParaBtn->PostMessage(WM_SETPSVAPNOE_TRUE);
+		if(m_vwParaBtn)
+			m_vwParaBtn->PostMessage(WM_SETPSVAPNOE_TRUE);
 		LeaveCriticalSection(&csViewParaBtn);
 
 		EnterCriticalSection(&csViewDTBField);
-		if(m_vDTBField)
-			m_vDTBField->PostMessage(WM_SETPSVAPNOE_TRUE);
+		if(m_vwDTBField)
+			m_vwDTBField->PostMessage(WM_SETPSVAPNOE_TRUE);
 		LeaveCriticalSection(&csViewDTBField);
 	}
 	else
 	{
 		EnterCriticalSection(&csViewParaBtn);
-		if(m_vParaBtn)
-			m_vParaBtn->PostMessage(WM_SETPSVAPNOE_FALSE);
+		if(m_vwParaBtn)
+			m_vwParaBtn->PostMessage(WM_SETPSVAPNOE_FALSE);
 		LeaveCriticalSection(&csViewParaBtn);
 
 		EnterCriticalSection(&csViewDTBField);
-		if(m_vDTBField)
-			m_vDTBField->PostMessage(WM_SETPSVAPNOE_FALSE);
+		if(m_vwDTBField)
+			m_vwDTBField->PostMessage(WM_SETPSVAPNOE_FALSE);
 		LeaveCriticalSection(&csViewDTBField);
 	}
 }
@@ -2614,13 +2324,13 @@ void CMVViewHandler::setMaintenanceFlag(bool bState)
 	EnterCriticalSection(&csViewDTBField);
 	if(bState)
 	{
-		if(m_vDTBField)
-			m_vDTBField->PostMessage(WM_SETMAINTENANCE_TRUE);
+		if(m_vwDTBField)
+			m_vwDTBField->PostMessage(WM_SETMAINTENANCE_TRUE);
 	}
 	else
 	{
-		if(m_vDTBField)
-			m_vDTBField->PostMessage(WM_SETMAINTENANCE_FALSE);
+		if(m_vwDTBField)
+			m_vwDTBField->PostMessage(WM_SETMAINTENANCE_FALSE);
 	}
 	LeaveCriticalSection(&csViewDTBField);
 }
@@ -2635,8 +2345,8 @@ void CMVViewHandler::setMaintenanceFlag(bool bState)
 void CMVViewHandler::SetTriggeredBreath()
 {
 	EnterCriticalSection(&csViewParaBtn);
-	if(m_vParaBtn)
-		m_vParaBtn->PostMessage(WM_SETTRIGGEREDBREATH);
+	if(m_vwParaBtn)
+		m_vwParaBtn->PostMessage(WM_SETTRIGGEREDBREATH);
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
@@ -2654,31 +2364,31 @@ void CMVViewHandler::setPRICOrunning(bool state)
 	if(state)
 	{
 		EnterCriticalSection(&csViewDiagramm);
-		if(m_vDiagramm)
-			m_vDiagramm->PostMessage(WM_SETPRICO_TRUE);
+		if(m_vwDiagramm)
+			m_vwDiagramm->PostMessage(WM_SETPRICO_TRUE);
 		LeaveCriticalSection(&csViewDiagramm);
 		EnterCriticalSection(&csViewDTBField);
-		if(m_vDTBField)
-			m_vDTBField->PostMessage(WM_SETPRICO_TRUE);
+		if(m_vwDTBField)
+			m_vwDTBField->PostMessage(WM_SETPRICO_TRUE);
 		LeaveCriticalSection(&csViewDTBField);
 		EnterCriticalSection(&csViewParaBtn);
-		if(m_vParaBtn)
-			m_vParaBtn->PostMessage(WM_SETPRICO_TRUE);
+		if(m_vwParaBtn)
+			m_vwParaBtn->PostMessage(WM_SETPRICO_TRUE);
 		LeaveCriticalSection(&csViewParaBtn);
 	}		
 	else
 	{
 		EnterCriticalSection(&csViewDiagramm);
-		if(m_vDiagramm)
-			m_vDiagramm->PostMessage(WM_SETPRICO_FALSE);
+		if(m_vwDiagramm)
+			m_vwDiagramm->PostMessage(WM_SETPRICO_FALSE);
 		LeaveCriticalSection(&csViewDiagramm);
 		EnterCriticalSection(&csViewDTBField);
-		if(m_vDTBField)
-			m_vDTBField->PostMessage(WM_SETPRICO_FALSE);
+		if(m_vwDTBField)
+			m_vwDTBField->PostMessage(WM_SETPRICO_FALSE);
 		LeaveCriticalSection(&csViewDTBField);
 		EnterCriticalSection(&csViewParaBtn);
-		if(m_vParaBtn)
-			m_vParaBtn->PostMessage(WM_SETPRICO_FALSE);
+		if(m_vwParaBtn)
+			m_vwParaBtn->PostMessage(WM_SETPRICO_FALSE);
 		LeaveCriticalSection(&csViewParaBtn);
 	}
 }
@@ -2693,8 +2403,8 @@ void CMVViewHandler::setPRICOrunning(bool state)
 void CMVViewHandler::setSIQdata()
 {
 	EnterCriticalSection(&csViewDiagramm);
-	if(m_vDiagramm)
-		m_vDiagramm->PostMessage(WM_DRAW_SIQSPO2);
+	if(m_vwDiagramm)
+		m_vwDiagramm->PostMessage(WM_DRAW_SIQSPO2);
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
@@ -2708,8 +2418,8 @@ void CMVViewHandler::setSIQdata()
 void CMVViewHandler::drawMeasuredFiO2Value()
 {
 	EnterCriticalSection(&csViewDiagramm);
-	if(m_vDiagramm)
-		m_vDiagramm->PostMessage(WM_DRAW_FIO2VALUE);
+	if(m_vwDiagramm)
+		m_vwDiagramm->PostMessage(WM_DRAW_FIO2VALUE);
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
@@ -2723,8 +2433,8 @@ void CMVViewHandler::drawMeasuredFiO2Value()
 void CMVViewHandler::drawFOTsteps()
 {
 	EnterCriticalSection(&csViewDiagramm);
-	if(m_vDiagramm)
-		m_vDiagramm->PostMessage(WM_DRAW_FOT_STEP);
+	if(m_vwDiagramm)
+		m_vwDiagramm->PostMessage(WM_DRAW_FOT_STEP);
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
@@ -2738,8 +2448,8 @@ void CMVViewHandler::drawFOTsteps()
 void CMVViewHandler::UpdateLimitData()
 {
 	EnterCriticalSection(&csViewDiagramm);
-	if(m_vDiagramm)
-		m_vDiagramm->PostMessage(WM_UPDATELIMITDATA);
+	if(m_vwDiagramm)
+		m_vwDiagramm->PostMessage(WM_UPDATELIMITDATA);
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
@@ -2753,8 +2463,8 @@ void CMVViewHandler::UpdateLimitData()
 void CMVViewHandler::O2FlushChanged()
 {
 	EnterCriticalSection(&csViewParaBtn);
-	if(m_vParaBtn)
-		m_vParaBtn->PostMessage(WM_O2FLUSH_CHANGED);
+	if(m_vwParaBtn)
+		m_vwParaBtn->PostMessage(WM_O2FLUSH_CHANGED);
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
@@ -2770,8 +2480,8 @@ void CMVViewHandler::O2FlushChanged()
 void CMVViewHandler::HFPMEANRECFlushChanged(int iVal)
 {
 	EnterCriticalSection(&csViewParaBtn);
-	if(m_vParaBtn)
-		m_vParaBtn->PostMessage(WM_PMEANREC_CHANGED);
+	if(m_vwParaBtn)
+		m_vwParaBtn->PostMessage(WM_PMEANREC_CHANGED);
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
@@ -2785,18 +2495,18 @@ void CMVViewHandler::HFPMEANRECFlushChanged(int iVal)
 void CMVViewHandler::paraDataChanged()
 {
 	EnterCriticalSection(&csViewParaBtn);
-	if(m_vParaBtn)
-		m_vParaBtn->PostMessage(WM_SHOWPARABTN);
+	if(m_vwParaBtn)
+		m_vwParaBtn->PostMessage(WM_SHOWPARABTN);
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
 
 //void CMVViewHandler::lungRecStateChanged()
 //{
-//	/*if(m_vParaBtn)
+//	/*if(m_vwParaBtn)
 //	{
-//		m_vParaBtn->ShowParaBtn(false);
-//		m_vParaBtn->Show();
+//		m_vwParaBtn->ShowParaBtn(false);
+//		m_vwParaBtn->Show();
 //	}*/
 //}
 
@@ -2810,8 +2520,8 @@ void CMVViewHandler::paraDataChanged()
 void CMVViewHandler::ITIMEChanged()
 {
 	EnterCriticalSection(&csViewParaBtn);
-	if(m_vParaBtn)
-		m_vParaBtn->PostMessage(WM_ITIME_CHANGED);
+	if(m_vwParaBtn)
+		m_vwParaBtn->PostMessage(WM_ITIME_CHANGED);
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
@@ -2825,8 +2535,8 @@ void CMVViewHandler::ITIMEChanged()
 void CMVViewHandler::ETIMEChanged()
 {
 	EnterCriticalSection(&csViewParaBtn);
-	if(m_vParaBtn)
-		m_vParaBtn->PostMessage(WM_ETIME_CHANGED);
+	if(m_vwParaBtn)
+		m_vwParaBtn->PostMessage(WM_ETIME_CHANGED);
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
@@ -2840,8 +2550,8 @@ void CMVViewHandler::ETIMEChanged()
 void CMVViewHandler::BPMChanged()
 {
 	EnterCriticalSection(&csViewParaBtn);
-	if(m_vParaBtn)
-		m_vParaBtn->PostMessage(WM_BPM_CHANGED);
+	if(m_vwParaBtn)
+		m_vwParaBtn->PostMessage(WM_BPM_CHANGED);
 	LeaveCriticalSection(&csViewParaBtn);
 }
 
@@ -2855,15 +2565,15 @@ void CMVViewHandler::BPMChanged()
 void CMVViewHandler::refreshO2Flush()
 {
 	EnterCriticalSection(&csViewParaBtn);
-	if(m_vParaBtn)
-		m_vParaBtn->PostMessage(WM_REFRESHOXIFLUSH);
+	if(m_vwParaBtn)
+		m_vwParaBtn->PostMessage(WM_REFRESHOXIFLUSH);
 	LeaveCriticalSection(&csViewParaBtn);
 
 	if(getModel()->getDATAHANDLER()->isPRICOLicenseAvailable()==true)
 	{
 		EnterCriticalSection(&csViewDiagramm);
-		if(m_vDiagramm)
-			m_vDiagramm->PostMessage(WM_CHECK_PRICO_ALARMS);
+		if(m_vwDiagramm)
+			m_vwDiagramm->PostMessage(WM_CHECK_PRICO_ALARMS);
 		LeaveCriticalSection(&csViewDiagramm);
 	}
 }
@@ -2880,12 +2590,12 @@ void CMVViewHandler::refreshO2Flush()
 void CMVViewHandler::setFOTrunning(bool state)
 {
 	EnterCriticalSection(&csViewDiagramm);
-	if(m_vDiagramm)
+	if(m_vwDiagramm)
 	{
 		if(state)
-			m_vDiagramm->PostMessage(WM_FOT_STARTED);
+			m_vwDiagramm->PostMessage(WM_FOT_STARTED);
 		else
-			m_vDiagramm->PostMessage(WM_FOT_STOPPED);
+			m_vwDiagramm->PostMessage(WM_FOT_STOPPED);
 	}
 	LeaveCriticalSection(&csViewDiagramm);
 }
@@ -2900,8 +2610,8 @@ void CMVViewHandler::setFOTrunning(bool state)
 void CMVViewHandler::redrawINFO()
 {
 	EnterCriticalSection(&csViewDiagramm);
-	if(m_vDTBField)
-		m_vDTBField->PostMessage(WM_DTB_REFRESH_INFO);
+	if(m_vwDTBField)
+		m_vwDTBField->PostMessage(WM_DTB_REFRESH_INFO);
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
@@ -2917,8 +2627,8 @@ void CMVViewHandler::redrawINFO()
 void CMVViewHandler::drawFOTtime(BYTE iCountFOTimer)
 {
 	EnterCriticalSection(&csViewDiagramm);
-	if(m_vDiagramm)
-		m_vDiagramm->PostMessage(WM_DRAW_FOT_TIME,iCountFOTimer);
+	if(m_vwDiagramm)
+		m_vwDiagramm->PostMessage(WM_DRAW_FOT_TIME,iCountFOTimer);
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
@@ -2932,8 +2642,8 @@ void CMVViewHandler::drawFOTtime(BYTE iCountFOTimer)
 void CMVViewHandler::redrawFOTmenu()
 {
 	EnterCriticalSection(&csViewDiagramm);
-	if(m_vDiagramm)
-		m_vDiagramm->PostMessage(WM_REDRAW_FOT_STATE);
+	if(m_vwDiagramm)
+		m_vwDiagramm->PostMessage(WM_REDRAW_FOT_STATE);
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
@@ -2947,8 +2657,8 @@ void CMVViewHandler::redrawFOTmenu()
 void CMVViewHandler::checkFOTalarms()
 {
 	EnterCriticalSection(&csViewDiagramm);
-	if(m_vDiagramm)
-		m_vDiagramm->PostMessage(WM_CHECK_FOT_ALARMS);
+	if(m_vwDiagramm)
+		m_vwDiagramm->PostMessage(WM_CHECK_FOT_ALARMS);
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
@@ -2962,8 +2672,8 @@ void CMVViewHandler::checkFOTalarms()
 void CMVViewHandler::updateFOTPmeanPara()
 {
 	EnterCriticalSection(&csViewDiagramm);
-	if(m_vDiagramm)
-		m_vDiagramm->PostMessage(WM_FOT_UPDATE_PMEAN);
+	if(m_vwDiagramm)
+		m_vwDiagramm->PostMessage(WM_FOT_UPDATE_PMEAN);
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
@@ -2977,8 +2687,8 @@ void CMVViewHandler::updateFOTPmeanPara()
 void CMVViewHandler::updateFOTPEEPPara()
 {
 	EnterCriticalSection(&csViewDiagramm);
-	if(m_vDiagramm)
-		m_vDiagramm->PostMessage(WM_FOT_UPDATE_PEEP);
+	if(m_vwDiagramm)
+		m_vwDiagramm->PostMessage(WM_FOT_UPDATE_PEEP);
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
@@ -2992,8 +2702,8 @@ void CMVViewHandler::updateFOTPEEPPara()
 void CMVViewHandler::redrawGraph()
 {
 	EnterCriticalSection(&csViewDiagramm);
-	if(m_vDiagramm)
-		m_vDiagramm->PostMessage(WM_GRAPH_REDRAW);
+	if(m_vwDiagramm)
+		m_vwDiagramm->PostMessage(WM_GRAPH_REDRAW);
 	LeaveCriticalSection(&csViewDiagramm);
 }
 
@@ -3011,25 +2721,25 @@ void CMVViewHandler::DrawO2FlushTime(int iO2FlushTime)
 	if(VS_PARA==getViewState())
 	{
 		EnterCriticalSection(&csViewParaBtn);
-		if(m_vParaBtn)
-			m_vParaBtn->PostMessage(WM_OXIFLUSHTIME,iO2FlushTime);
+		if(m_vwParaBtn)
+			m_vwParaBtn->PostMessage(WM_OXIFLUSHTIME,iO2FlushTime);
 		LeaveCriticalSection(&csViewParaBtn);
 
 		EnterCriticalSection(&csViewDTBField);
-		if(m_vDTBField)
-			m_vDTBField->PostMessage(WM_STOPOXIFLUSH);
+		if(m_vwDTBField)
+			m_vwDTBField->PostMessage(WM_STOPOXIFLUSH);
 		LeaveCriticalSection(&csViewDTBField);
 	}
 	else if(VS_ALARM_LIMIT==getViewState())
 	{
 		EnterCriticalSection(&csViewParaBtn);
-		if(m_vParaBtn)
-			m_vParaBtn->PostMessage(WM_OXIFLUSHTIME,iO2FlushTime);
+		if(m_vwParaBtn)
+			m_vwParaBtn->PostMessage(WM_OXIFLUSHTIME,iO2FlushTime);
 		LeaveCriticalSection(&csViewParaBtn);
 
 		EnterCriticalSection(&csViewDTBField);
-		if(m_vDTBField)
-			m_vDTBField->PostMessage(WM_STOPOXIFLUSH);
+		if(m_vwDTBField)
+			m_vwDTBField->PostMessage(WM_STOPOXIFLUSH);
 		LeaveCriticalSection(&csViewDTBField);
 	}
 	else
@@ -3039,17 +2749,15 @@ void CMVViewHandler::DrawO2FlushTime(int iO2FlushTime)
 			if(iO2FlushTime==getModel()->getDATAHANDLER()->GetCurO2FlushTime())
 			{
 				EnterCriticalSection(&csViewDTBField);
-				if(m_vDTBField)
-					m_vDTBField->PostMessage(WM_STOPOXIFLUSH);
+				if(m_vwDTBField)
+					m_vwDTBField->PostMessage(WM_STOPOXIFLUSH);
 				LeaveCriticalSection(&csViewDTBField);
 			}
 			else
 			{
-				CStringW sz;
-				sz.Format(_T("%s %d %s"),getModel()->GetLanguageString(IDS_TXT_FLUSHTIME), iO2FlushTime, getModel()->GetLanguageString(IDS_UNIT_SECONDS));
 				EnterCriticalSection(&csViewDTBField);
-				if(m_vDTBField)
-					m_vDTBField->SetTimeO2Flush(sz);
+				if(m_vwDTBField)
+					m_vwDTBField->SetTimeO2Flush(iO2FlushTime);
 				LeaveCriticalSection(&csViewDTBField);
 			}
 
@@ -3057,8 +2765,8 @@ void CMVViewHandler::DrawO2FlushTime(int iO2FlushTime)
 		else
 		{
 			EnterCriticalSection(&csViewDTBField);
-			if(m_vDTBField)
-				m_vDTBField->PostMessage(WM_STOPOXIFLUSH);
+			if(m_vwDTBField)
+				m_vwDTBField->PostMessage(WM_STOPOXIFLUSH);
 			LeaveCriticalSection(&csViewDTBField);
 		}
 	}
@@ -3076,8 +2784,8 @@ void CMVViewHandler::DrawO2FlushTime(int iO2FlushTime)
 void CMVViewHandler::DrawCountDownStartTime(int iCountDown)
 {
 	EnterCriticalSection(&csViewDTBField);
-	if(m_vDTBField)
-		m_vDTBField->SetTimeUntilStartVent(iCountDown);
+	if(m_vwDTBField)
+		m_vwDTBField->SetTimeUntilStartVent(iCountDown);
 	LeaveCriticalSection(&csViewDTBField);
 
 }
@@ -3092,8 +2800,8 @@ void CMVViewHandler::DrawCountDownStartTime(int iCountDown)
 void CMVViewHandler::StopCountDownStartTime()
 {
 	EnterCriticalSection(&csViewDTBField);
-	if(m_vDTBField)
-		m_vDTBField->PostMessage(WM_STOPTIMEUNTILSTARTVENT);
+	if(m_vwDTBField)
+		m_vwDTBField->PostMessage(WM_STOPTIMEUNTILSTARTVENT);
 	LeaveCriticalSection(&csViewDTBField);
 }
 
@@ -3109,8 +2817,8 @@ void CMVViewHandler::StopCountDownStartTime()
 void CMVViewHandler::DrawCountDownAlarmSilent(int iCountDown)
 {
 	EnterCriticalSection(&csViewDTBField);
-	if(m_vDTBField)
-		m_vDTBField->SetTimeAlarmSilent(iCountDown);
+	if(m_vwDTBField)
+		m_vwDTBField->SetTimeAlarmSilent(iCountDown);
 	LeaveCriticalSection(&csViewDTBField);
 }
 
@@ -3124,8 +2832,8 @@ void CMVViewHandler::DrawCountDownAlarmSilent(int iCountDown)
 void CMVViewHandler::StopCountDownAlarmSilent()
 {
 	EnterCriticalSection(&csViewDTBField);
-	if(m_vDTBField)
-		m_vDTBField->PostMessage(WM_STOPALARMSILENT);
+	if(m_vwDTBField)
+		m_vwDTBField->PostMessage(WM_STOPALARMSILENT);
 	LeaveCriticalSection(&csViewDTBField);
 }
 
@@ -3141,8 +2849,8 @@ void CMVViewHandler::StopCountDownAlarmSilent()
 void CMVViewHandler::DrawCountTimeUntilStop(int iCountDown)
 {
 	EnterCriticalSection(&csViewDTBField);
-	if(m_vDTBField)
-		m_vDTBField->SetTimeUntilStopVent(iCountDown);
+	if(m_vwDTBField)
+		m_vwDTBField->SetTimeUntilStopVent(iCountDown);
 	LeaveCriticalSection(&csViewDTBField);
 }
 
@@ -3156,8 +2864,8 @@ void CMVViewHandler::DrawCountTimeUntilStop(int iCountDown)
 void CMVViewHandler::StopCountTimeUntilStop()
 {
 	EnterCriticalSection(&csViewDTBField);
-	if(m_vDTBField)
-		m_vDTBField->PostMessage(WM_STOPTIMEUNTILSTOPVENT);
+	if(m_vwDTBField)
+		m_vwDTBField->PostMessage(WM_STOPTIMEUNTILSTOPVENT);
 	LeaveCriticalSection(&csViewDTBField);
 }
 
@@ -3173,8 +2881,8 @@ void CMVViewHandler::StopCountTimeUntilStop()
 void CMVViewHandler::DrawCountTimeUntilOff(int iCountDown)
 {
 	EnterCriticalSection(&csViewDTBField);
-	if(m_vDTBField)
-		m_vDTBField->SetTimeUntilTurnOff(iCountDown);
+	if(m_vwDTBField)
+		m_vwDTBField->SetTimeUntilTurnOff(iCountDown);
 	LeaveCriticalSection(&csViewDTBField);
 }
 
@@ -3188,8 +2896,8 @@ void CMVViewHandler::DrawCountTimeUntilOff(int iCountDown)
 void CMVViewHandler::StopCountTimeUntilOff()
 {
 	EnterCriticalSection(&csViewDTBField);
-	if(m_vDTBField)
-		m_vDTBField->PostMessage(WM_STOPTIMEUNTILTURNOFF);
+	if(m_vwDTBField)
+		m_vwDTBField->PostMessage(WM_STOPTIMEUNTILTURNOFF);
 	LeaveCriticalSection(&csViewDTBField);
 }
 
@@ -3203,8 +2911,8 @@ void CMVViewHandler::StopCountTimeUntilOff()
 void CMVViewHandler::StopVideo()
 {
 	EnterCriticalSection(&csViewMenu);
-	if(m_vMenu)
-		m_vMenu->PostMessage(WM_DEACTIVATE_VIDEO);
+	if(m_vwMenu)
+		m_vwMenu->PostMessage(WM_DEACTIVATE_VIDEO);
 	LeaveCriticalSection(&csViewMenu);
 }
 
@@ -3450,7 +3158,6 @@ void CMVViewHandler::changeToPrevViewState()
 	ePrevGraphSubState=m_ePrevGraphSubState;
 	LeaveCriticalSection(&csViewState);
 
-	//DEBUGMSG(TRUE, (TEXT("changeToPrevViewState\r\n")));
 	if(		(getModel()->getCONFIG()->getCO2module()==CO2MODULE_NONE) 
 		&&	ePrevGraphState==VS_GRAPH
 		&&	(eViewSubState)getModel()->getCONFIG()->GraphGetLastViewState()==VSS_GRAPH_CO2GRAPHS)
@@ -3507,46 +3214,27 @@ bool CMVViewHandler::canChangeViewStateAlarmDependend()
 		{
 
 			bRes=false;
-			//theApp.WriteLog(L"XXXXXXX #001");
 		}
 		else if(	getModel()->getALARMHANDLER()->ALARM_Accu_Empty->getAlarmState()==AS_ACTIVE
 			&&	getViewState()==VS_BATTERY
 			&&	silentState==ASTATE_ACTIVE)
 		{
 			bRes=false;
-			//theApp.WriteLog(L"XXXXXXX #002");
 		}
 		else if(	getModel()->getALARMHANDLER()->ALARM_Accu_Defect->getAlarmState()==AS_ACTIVE
 			&&	getViewState()==VS_BATTERY
 			&&	silentState==ASTATE_ACTIVE)
 		{
 			bRes=false;
-			//theApp.WriteLog(L"XXXXXXX #003");
 		}
 		else if(	type==AT_SYSALARM 
 			&&	VS_ALARM_SYS==getViewState()
 			&&	silentState==ASTATE_ACTIVE)
 		{
 			bRes=false;
-			//theApp.WriteLog(L"XXXXXXX #004");
 		}
 	}
 
 	return bRes;
 }
 
-//void CMVViewHandler::startTest()
-//{
-//	if(m_vParaBtn)
-//	{
-//		//m_vParaBtn->ShowParaBtn();
-//		HWND hWnd2=m_vParaBtn->GetSafeHwnd();
-//		//CWnd* pWnd = CWnd::FromHandle(GetDlgItem(hWnd2,IDC_BTN_PARA_IFLOW));
-//		CParaBtn* pWnd = (CParaBtn*)CWnd::FromHandle(GetDlgItem(hWnd2,IDC_BTN_PARA_IFLOW));
-//		pWnd->SetParaValue(5000);
-//		pWnd->PostMessage(WM_KEYDOWN);
-//		//pWnd->WriteCurrentValue();
-//		//pWnd->Depress();
-//		int iStop=0;
-//	}
-//}

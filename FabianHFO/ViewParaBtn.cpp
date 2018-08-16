@@ -251,9 +251,6 @@ bool CViewParaBtn::Initialize()
 
 	DWORD dwStyleNoTab = WS_CHILD/*|WS_VISIBLE*/|BS_OWNERDRAW|WS_TABSTOP;
 
-	BTN btn;
-	fVALUE fv;
-
 	/** \brief The enter critical section. */
 	EnterCriticalSection(&csDraw);
 
@@ -293,1179 +290,86 @@ bool CViewParaBtn::Initialize()
 
 	m_pcLungRec		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_PIC_GROUP_TOP_BOT);
 
-	btn.wID					= IDC_BTN_PARAMENU;	
-	btn.poPosition.x		= 0;
-	btn.poPosition.y		= 20;
-	btn.pcBmpUp				= m_pcParaMenu_Up;
-	btn.pcBmpDown			= m_pcParaMenu_Dw;
-	btn.pcBmpFocus			= m_pcParaMenu_Up;
-	btn.pcBmpDisabled		= m_pcParaMenu_Up;
-	btn.dwFormat			= DT_VCENTER|DT_CENTER;
-	
-	m_pcParaMenu=new CUpDwnBtn(btn,COLOR_TXTBTNUP,false,true);
-	m_pcParaMenu->Create(this,g_hf7AcuBold,0);
-	m_pcParaMenu->SetText(getModel()->GetLanguageString(IDS_TXT_SETTINGS),getModel()->GetLanguageString(IDS_TXT_SETTINGS));
-	m_pcParaMenu->ShowWindow(SW_SHOW);
-
-	
-
-	//-------------------------------------------------------------
-	//Parameter Button------I-Flow---------------------------------
-	btn.wID					= IDC_BTN_PARA_IFLOW;	
-	btn.poPosition.x		= 55;
-	btn.poPosition.y		= 20;
-	btn.pcBmpUp				= m_pcPara_UpT;
-	btn.pcBmpDown			= m_pcPara_DwT;
-	btn.pcBmpFocus			= m_pcPara_FcT;
-	btn.pcBmpDisabled		= m_pcPara_UpT;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowMinPara_IPPV();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowMaxPara_IPPV();
-		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowPara_IPPV();
-	}
-	else
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowMinPara_TRIGGER();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowMaxPara_TRIGGER();
-		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowPara_TRIGGER();
-	}
-	
-	
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_IFLOW=new CParaBtn_IFLOW(btn,0,false);
-	m_pcPara_IFLOW->Create(this,dwStyleNoTab,fv);
-	m_pcPara_IFLOW->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_IFLOW->SetNameText(getModel()->GetLanguageString(IDS_PARA_IFLOW));
-	m_pcPara_IFLOW->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_LMIN));
-	m_plParaBtn.AddTail(m_pcPara_IFLOW);
-	
-	//-------------------------------------------------------------
-	//Parameter Button------RiseTime---------------------------------
-	btn.wID					= IDC_BTN_PARA_RISETIME;	
-	btn.poPosition.x		= 55;
-	btn.poPosition.y		= 20;
-	btn.pcBmpUp				= m_pcPara_UpT;
-	btn.pcBmpDown			= m_pcPara_DwT;
-	btn.pcBmpFocus			= m_pcPara_FcT;
-	btn.pcBmpDisabled		= m_pcPara_UpT;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimeMinPara_IPPV();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimeMaxPara_IPPV();
-		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimePara_IPPV();
-	}
-	else
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimeMinPara_TRIGGER();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimeMaxPara_TRIGGER();
-		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimePara_TRIGGER();
-	}
-
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_RISETIME=new CParaBtn_RISETIME(btn,0,false);
-	m_pcPara_RISETIME->Create(this,dwStyleNoTab,fv);
-	m_pcPara_RISETIME->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_RISETIME->SetNameText(getModel()->GetLanguageString(IDS_PARA_RISETIME));
-	m_pcPara_RISETIME->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_SECONDS));
-	m_plParaBtn.AddTail(m_pcPara_RISETIME);
-
-	
-	//-------------------------------------------------------------
-	//Parameter Button------PMEAN_RECRUITMENT---------------------------------
-	btn.wID					= IDC_BTN_PARA_PMEAN_REC;	
-	btn.poPosition.x		= 55;
-	btn.poPosition.y		= 20;
-	btn.pcBmpUp				= m_pcParaGroup_UpT;
-	btn.pcBmpDown			= m_pcParaGroup_DwT;
-	btn.pcBmpFocus			= m_pcParaGroup_FcT;
-	btn.pcBmpDisabled		= m_pcParaGroup_UpT;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMinPara();
-	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMaxPara();
-
-	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecPara();
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_PMEAN_REC=new CParaBtn_PMEAN_REC(this,btn,0,false);
-	m_pcPara_PMEAN_REC->Create(this,dwStyleNoTab,fv);
-	m_pcPara_PMEAN_REC->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_PMEAN_REC->SetNameText(getModel()->GetLanguageString(IDS_PARA_P));
-	m_pcPara_PMEAN_REC->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_MITT)+_T(" ")+getModel()->GetLanguageString(IDS_PARA_REC));
-	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
-	{
-		m_pcPara_PMEAN_REC->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
-	}
-	else
-	{
-		m_pcPara_PMEAN_REC->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
-	}
-	m_plParaBtn.AddTail(m_pcPara_PMEAN_REC);
-
-	//-------------------------------------------------------------
-	//Parameter Button------E-Flow---------------------------------
-	//btn.wID					= IDC_BTN_PARA_EFLOW;	
-	//btn.poPosition.x		= 145;
-	//btn.poPosition.y		= 20;
-	//btn.pcBmpUp				= m_pcPara_UpT;
-	//btn.pcBmpDown			= m_pcPara_DwT;
-	//btn.pcBmpFocus			= m_pcPara_FcT;
-	//btn.pcBmpDisabled		= m_pcPara_UpT;
-	//btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	/*if(getModel()->getDATAHANDLER()->activeModeIsIPPV())
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_IPPV();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_IPPV();
-	}
-	else
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMinPara_TRIGGER();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetEFLOWMaxPara_TRIGGER();
-	}
-	fv.iValue=getModel()->getDATAHANDLER()->GetCurrentEFlowParaData();*/
-	//if(fv.iValue>fv.iUpperLimit)
-	//	fv.iValue=fv.iUpperLimit;
-	//else if(fv.iValue<fv.iLowerLimit)
-	//	fv.iValue=fv.iLowerLimit;
-	////fv.tText[0]=0;
-	//m_pcPara_EFLOW=new CParaBtn_EFLOW(btn,0,false);
-	//m_pcPara_EFLOW->Create(this,dwStyleNoTab,fv);
-	//m_pcPara_EFLOW->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	//m_pcPara_EFLOW->SetNameText(getModel()->GetLanguageString(IDS_PARA_EFLOW));
-	//m_pcPara_EFLOW->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_LMIN));
-	//m_plParaBtn.AddTail(m_pcPara_EFLOW);
-	
-
-	//-------------------------------------------------------------
-	//Parameter Button------Flow min---------------------------------
-	btn.wID					= IDC_BTN_PARA_FLOWMIN;	
-	btn.poPosition.x		= 145;
-	btn.poPosition.y		= 20;
-	btn.pcBmpUp				= m_pcPara_UpT;
-	btn.pcBmpDown			= m_pcPara_DwT;
-	btn.pcBmpFocus			= m_pcPara_FcT;
-	btn.pcBmpDisabled		= m_pcPara_UpT;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetFlowminMinPara();
-	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetFlowminMaxPara();
-
-	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetFlowminPara();
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_FLOWMIN=new CParaBtn_FLOWMIN(btn,0,false);
-	m_pcPara_FLOWMIN->Create(this,dwStyleNoTab,fv);
-	m_pcPara_FLOWMIN->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_FLOWMIN->SetNameText(getModel()->GetLanguageString(IDS_PARA_FLOW));
-	m_pcPara_FLOWMIN->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_MIN));
-	m_pcPara_FLOWMIN->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_LMIN));
-	m_plParaBtn.AddTail(m_pcPara_FLOWMIN);
-
-	//-------------------------------------------------------------
-	//Parameter Button------PEEP---------------------------------
-	btn.wID					= IDC_BTN_PARA_PEEP;	
-	btn.poPosition.x		= 235;
-	btn.poPosition.y		= 20;
-	btn.pcBmpUp				= m_pcPara_UpT;
-	btn.pcBmpDown			= m_pcPara_DwT;
-	btn.pcBmpFocus			= m_pcPara_FcT;
-	btn.pcBmpDisabled		= m_pcPara_UpT;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	
-	if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-	{
-		if(getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_LINEAR)
-		{
-			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPMinPara_RISETIME();
-		}
-		else
-		{
-			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPMinPara_IPPV();
-		}
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPMaxPara_IPPV();
-		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_IPPV();
-	}
-	else
-	{
-		if(getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_LINEAR)
-		{
-			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPMinPara_RISETIME();
-		}
-		else
-		{
-			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPMinPara_TRIGGER();
-		}
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPMaxPara_TRIGGER();
-		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_TRIGGER();
-	}
-	
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_PEEP=new CParaBtn_PEEP(this,btn,0,false);
-	m_pcPara_PEEP->Create(this,dwStyleNoTab,fv);
-	m_pcPara_PEEP->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_PEEP->SetNameText(getModel()->GetLanguageString(IDS_PARA_PEEP));
-	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
-	{
-		m_pcPara_PEEP->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
-	}
-	else
-	{
-		m_pcPara_PEEP->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
-	}
-	m_plParaBtn.AddTail(m_pcPara_PEEP);
-	
-
-	//-------------------------------------------------------------
-	//Parameter Button------HF Flow---------------------------------
-	btn.wID					= IDC_BTN_PARA_HFFLOW;	
-	btn.poPosition.x		= 145;//235;
-	btn.poPosition.y		= 20;
-	btn.pcBmpUp				= m_pcPara_UpT;
-	btn.pcBmpDown			= m_pcPara_DwT;
-	btn.pcBmpFocus			= m_pcPara_FcT;
-	btn.pcBmpDisabled		= m_pcPara_UpT;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-
-	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFFlowMinPara();
-	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFFlowMaxPara();
-
-	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetHFFlowPara();
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit && fv.iValue!=0)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_HFFLOW=new CParaBtn_HFFLOW(btn,0,false);
-	m_pcPara_HFFLOW->Create(this,dwStyleNoTab,fv);
-	m_pcPara_HFFLOW->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_HFFLOW->SetNameText(getModel()->GetLanguageString(IDS_PARA_FLOW));
-	m_pcPara_HFFLOW->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_LMIN));
-	m_plParaBtn.AddTail(m_pcPara_HFFLOW);
-
-
-	//-------------------------------------------------------------
-	//Parameter Button------CPAP---------------------------------
-	btn.wID					= IDC_BTN_PARA_CPAP;	
-	btn.poPosition.x		= 235;
-	btn.poPosition.y		= 20;
-	btn.pcBmpUp				= m_pcPara_UpT;
-	btn.pcBmpDown			= m_pcPara_DwT;
-	btn.pcBmpFocus			= m_pcPara_FcT;
-	btn.pcBmpDisabled		= m_pcPara_UpT;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	if(getModel()->getVMODEHANDLER()->activeModeIsNMODE())
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPNMODEMinPara();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPNMODEMaxPara();
-		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPNMODEPara();
-	}
-	else
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPMinPara();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPMaxPara();
-		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPPara();//GetPEEPPara_IPPV
-	}
-
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_CPAP=new CParaBtn_CPAP(btn,0,false);
-	m_pcPara_CPAP->Create(this,dwStyleNoTab,fv);
-	m_pcPara_CPAP->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_CPAP->SetNameText(getModel()->GetLanguageString(IDS_PARA_CPAP));
-	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
-	{
-		m_pcPara_CPAP->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
-	}
-	else
-	{
-		m_pcPara_CPAP->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
-	}
-	m_plParaBtn.AddTail(m_pcPara_CPAP);
-
-
-	//-------------------------------------------------------------
-	//Parameter Button------P Insp---------------------------------
-	btn.wID					= IDC_BTN_PARA_PINSP;	
-	btn.poPosition.x		= 325;
-	btn.poPosition.y		= 20;
-	btn.pcBmpUp				= m_pcPara_UpT;
-	btn.pcBmpDown			= m_pcPara_DwT;
-	btn.pcBmpFocus			= m_pcPara_FcT;
-	btn.pcBmpDisabled		= m_pcPara_UpT;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-	
-	if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPMinPara_IPPV();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPMaxPara_IPPV();
-	}
-	else
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPMinPara_TRIGGER();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPMaxPara_TRIGGER();
-	}
-
-	fv.iValue=getModel()->getDATAHANDLER()->GetCurrentPINSPPara();
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_PINSP=new CParaBtn_PINSP(btn,0,false);
-	m_pcPara_PINSP->Create(this,dwStyleNoTab,fv);
-	m_pcPara_PINSP->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_PINSP->SetNameText(getModel()->GetLanguageString(IDS_PARA_P));
-
-	if(getModel()->getVMODEHANDLER()->modeIsPSVmode())//newVG
-	{
-		m_pcPara_PINSP->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_BACKUP));
-	}
-	else
-	{
-		m_pcPara_PINSP->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_INSP));
-	}
-
-	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
-	{
-		m_pcPara_PINSP->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
-	}
-	else
-	{
-		m_pcPara_PINSP->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
-	}
-	m_plParaBtn.AddTail(m_pcPara_PINSP);
-
-	//-------------------------------------------------------------
-	//Parameter Button------P Duo---------------------------------
-	btn.wID					= IDC_BTN_PARA_PDUO;	
-	btn.poPosition.x		= 325;
-	btn.poPosition.y		= 20;
-	btn.pcBmpUp				= m_pcPara_UpT;
-	btn.pcBmpDown			= m_pcPara_DwT;
-	btn.pcBmpFocus			= m_pcPara_FcT;
-	btn.pcBmpDisabled		= m_pcPara_UpT;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualNMODEMinPara();
-	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualNMODEMaxPara();
-	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPManualNMODEPara();
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_PDUO=new CParaBtn_PDUO(btn,0,false);
-	m_pcPara_PDUO->Create(this,dwStyleNoTab,fv);
-	m_pcPara_PDUO->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_PDUO->SetNameText(getModel()->GetLanguageString(IDS_PARA_DUO_P));
-	m_pcPara_PDUO->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_DUO));
-	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
-	{
-		m_pcPara_PDUO->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
-	}
-	else
-	{
-		m_pcPara_PDUO->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
-	}
-	m_plParaBtn.AddTail(m_pcPara_PDUO);
-
-	//-------------------------------------------------------------
-	//Parameter Button------HF Ampl---------------------------------
-	btn.wID					= IDC_BTN_PARA_HFAMPL;	
-	btn.poPosition.x		= 235;//415;
-	btn.poPosition.y		= 20;
-	btn.pcBmpUp				= m_pcPara_UpT;
-	btn.pcBmpDown			= m_pcPara_DwT;
-	btn.pcBmpFocus			= m_pcPara_FcT;
-	btn.pcBmpDisabled		= m_pcPara_UpT;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLMinPara();
-	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLMaxPara();
-
-	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLPara();
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_HFAMPL=new CParaBtn_HFAMPL(btn,0,false);
-	m_pcPara_HFAMPL->Create(this,dwStyleNoTab,fv);
-	m_pcPara_HFAMPL->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_HFAMPL->SetNameText(_T("Amp"));
-	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
-	{
-		m_pcPara_HFAMPL->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
-	}
-	else
-	{
-		m_pcPara_HFAMPL->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
-	}
-	m_plParaBtn.AddTail(m_pcPara_HFAMPL);
-
-	//-------------------------------------------------------------
-	//Parameter Button------P Man---------------------------------
-	btn.wID					= IDC_BTN_PARA_PMANUAL;	
-	btn.poPosition.x		= 325;
-	btn.poPosition.y		= 20;
-	btn.pcBmpUp				= m_pcPara_UpT;
-	btn.pcBmpDown			= m_pcPara_DwT;
-	btn.pcBmpFocus			= m_pcPara_FcT;
-	btn.pcBmpDisabled		= m_pcPara_UpT;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	if(getModel()->getVMODEHANDLER()->activeModeIsNMODE())
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualNMODEMinPara();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualNMODEMaxPara();
-		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPManualNMODEPara();
-	}
-	else if(getModel()->getVMODEHANDLER()->activeModeIsCPAP())
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMinPara();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMaxPara();
-		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPManualCPAPPara();
-	}
-	else
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMinPara();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMaxPara();
-		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPManualHFOPara();
-	}
-	//else//PMAN1
-	//{
-	//	if(getModel()->getDATAHANDLER()->isHFOManBreathAvailable())
-	//		//if(getModel()->getCONFIG()->IsHFOManBreathEnabled())
-	//	{
-	//		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
-	//	}
-	//	else
-	//	{
-	//		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMinPara();
-	//	}
-	//	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMaxPara();
-	//	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPManualHFOPara();
-
-	//	if(fv.iValue<getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara()+10)
-	//	{
-	//		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara()+10;
-	//		getModel()->getDATAHANDLER()->SetPManualHFOParadata(fv.iValue);
-	//	}
-	//}
-	
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_PMANUAL=new CParaBtn_PMANUAL(btn,0,false);
-	m_pcPara_PMANUAL->Create(this,dwStyleNoTab,fv);
-	m_pcPara_PMANUAL->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_PMANUAL->SetNameText(getModel()->GetLanguageString(IDS_PARA_P));
-	m_pcPara_PMANUAL->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_MANUAL));
-	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
-	{
-		m_pcPara_PMANUAL->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
-	}
-	else
-	{
-		m_pcPara_PMANUAL->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
-	}
-	m_plParaBtn.AddTail(m_pcPara_PMANUAL);
-
-	//-------------------------------------------------------------
-	//Parameter Button------Flow min---------------------------------
-	btn.wID					= IDC_BTN_PARA_THERAPYFLOW;	
-	btn.poPosition.x		= 415;
-	btn.poPosition.y		= 20;
-	btn.pcBmpUp				= m_pcPara_UpT;
-	btn.pcBmpDown			= m_pcPara_DwT;
-	btn.pcBmpFocus			= m_pcPara_FcT;
-	btn.pcBmpDisabled		= m_pcPara_UpT;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTherapieFlowMinPara();
-	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTherapieFlowMaxPara();
-
-	fv.iValue=getModel()->getDATAHANDLER()->GetFlowminParaData();
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_FLOW=new CParaBtn_FLOW(btn,0,false);
-	m_pcPara_FLOW->Create(this,dwStyleNoTab,fv);
-	m_pcPara_FLOW->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_FLOW->SetNameText(getModel()->GetLanguageString(IDS_PARA_FLOW));
-	m_pcPara_FLOW->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_LMIN));
-	m_plParaBtn.AddTail(m_pcPara_FLOW);
-
-	//-------------------------------------------------------------
-	//Parameter Button------P PSV---------------------------------
-	btn.wID					= IDC_BTN_PARA_PPSV;	
-	btn.poPosition.x		= 415;
-	btn.poPosition.y		= 20;
-	btn.pcBmpUp				= m_pcPara_UpT;
-	btn.pcBmpDown			= m_pcPara_DwT;
-	btn.pcBmpFocus			= m_pcPara_FcT;
-	btn.pcBmpDisabled		= m_pcPara_UpT;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPpsvMinPara();
-	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPpsvMaxPara();
-
-	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPpsvPara();
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_PPSV=new CParaBtn_PPSV(this,btn,0,false);
-	m_pcPara_PPSV->Create(this,dwStyleNoTab,fv);
-	m_pcPara_PPSV->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_PPSV->SetNameText(getModel()->GetLanguageString(IDS_PARA_P));
-	m_pcPara_PPSV->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_PSV));
-	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
-	{
-		m_pcPara_PPSV->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR)+_T(" ")+getModel()->GetLanguageString(IDS_UNIT_OVERPEEP));
-	}
-	else
-	{
-		m_pcPara_PPSV->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O)+_T(" ")+getModel()->GetLanguageString(IDS_UNIT_OVERPEEP));
-	}
-	m_plParaBtn.AddTail(m_pcPara_PPSV);
-	
-
-	//-------------------------------------------------------------
-	//Parameter Button------P Mitt---------------------------------
-	btn.wID					= IDC_BTN_PARA_PMITT;	
-	btn.poPosition.x		= 415;
-	btn.poPosition.y		= 20;
-	btn.pcBmpUp				= m_pcPara_UpT;
-	btn.pcBmpDown			= m_pcPara_DwT;
-	btn.pcBmpFocus			= m_pcPara_FcT;
-	btn.pcBmpDisabled		= m_pcPara_UpT;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanMinPara();
-	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanMaxPara();
-
-	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_PMITT=new CParaBtn_PMITT(this,btn,0,false);
-	m_pcPara_PMITT->Create(this,dwStyleNoTab,fv);
-	m_pcPara_PMITT->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_PMITT->SetNameText(getModel()->GetLanguageString(IDS_PARA_P));
-	m_pcPara_PMITT->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_MITT));
-	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
-	{
-		m_pcPara_PMITT->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
-	}
-	else
-	{
-		m_pcPara_PMITT->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
-	}
-	m_plParaBtn.AddTail(m_pcPara_PMITT);
+	createParaIFLOW();
+	createParaRISETIME();
+	createParaPMEAN_REC();
+	createParaFLOWMIN();
+	createParaPEEP();
+	createParaHFFLOW();
+	createParaCPAP();
+	createParaPINSP();
+	createParaPDUO();
+	createParaHFAMPL();
+	createParaPMANUAL();
+	createParaTHERAPYFLOW();
+	createParaPPSV();
+	createParaPMEAN();
 
 	if(getModel()->getDATAHANDLER()->isVGUARANTLicenseAvailable())
 	{
-		btn.wID					= IDC_BTN_PARA_VG_PMAXI;	
-		btn.poPosition.x		= 505;
-		btn.poPosition.y		= 20;
-		btn.pcBmpUp				= m_pcPara_UpT;
-		btn.pcBmpDown			= m_pcPara_DwT;
-		btn.pcBmpFocus			= m_pcPara_FcT;
-		btn.pcBmpDisabled		= m_pcPara_UpT;
-
-		btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-		if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-		{
-			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPMAXMinPara_IPPV();
-			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPMAXMaxPara_IPPV();
-			fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPmaxVolGPara_IPPV();
-		}
-		else
-		{
-			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPMAXMinPara_TRIGGER();
-			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPMAXMaxPara_TRIGGER();
-			fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPmaxVolGPara_TRIGGER();
-		}
-		
-		if(fv.iValue>fv.iUpperLimit)
-			fv.iValue=fv.iUpperLimit;
-		else if(fv.iValue<fv.iLowerLimit)
-			fv.iValue=fv.iLowerLimit;
-		m_pcPara_PMAXI=new CParaBtn_PMAX(btn,0,false);
-		m_pcPara_PMAXI->Create(this,dwStyleNoTab,fv);
-		m_pcPara_PMAXI->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-		m_pcPara_PMAXI->SetNameText(getModel()->GetLanguageString(IDS_PARA_P));
-		m_pcPara_PMAXI->SetNameNoteText(_T(""));
-		if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
-		{
-			m_pcPara_PMAXI->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
-		}
-		else
-		{
-			m_pcPara_PMAXI->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
-		}
-
-		m_pcPara_PMAXI->SetOffState(!getModel()->getDATAHANDLER()->IsCurrentModeVGarantStateOn());
-		m_pcPara_PMAXI->ShowWindow(SW_HIDE);
-		m_plParaBtn.AddTail(m_pcPara_PMAXI);
-
-
-
-		btn.wID					= IDC_BTN_PARA_VG_AMPMAXI;	
-		btn.poPosition.x		= 505;
-		btn.poPosition.y		= 20;
-		btn.pcBmpUp				= m_pcPara_UpT;
-		btn.pcBmpDown			= m_pcPara_DwT;
-		btn.pcBmpFocus			= m_pcPara_FcT;
-		btn.pcBmpDisabled		= m_pcPara_UpT;
-
-		btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLMinPara();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLMaxPara();
-
-		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLmaxPara();
-
-		if(fv.iValue>fv.iUpperLimit)
-			fv.iValue=fv.iUpperLimit;
-		else if(fv.iValue<fv.iLowerLimit)
-			fv.iValue=fv.iLowerLimit;
-		m_pcPara_AMPMAXI=new CParaBtn_AMPMAX(btn,0,false);
-		m_pcPara_AMPMAXI->Create(this,dwStyleNoTab,fv);
-		m_pcPara_AMPMAXI->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-		m_pcPara_AMPMAXI->SetNameText(getModel()->GetLanguageString(IDS_PARA_P));
-		m_pcPara_AMPMAXI->SetNameNoteText(_T(""));
-		if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
-		{
-			m_pcPara_AMPMAXI->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
-		}
-		else
-		{
-			m_pcPara_AMPMAXI->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
-		}
-
-		m_pcPara_AMPMAXI->SetOffState(!getModel()->getDATAHANDLER()->IsCurrentModeVGarantStateOn());
-		m_pcPara_AMPMAXI->ShowWindow(SW_HIDE);
-		m_plParaBtn.AddTail(m_pcPara_AMPMAXI);
+		createParaVG_PMAXI();
+		createParaVG_AMPMAXI();
 	}
-	
-	/**************************************************************/
-	//-------------------------------------------------------------
-	//Parameter Button------Trigger---------------------------------
-	btn.wID					= IDC_BTN_PARA_TRIGCONV;	
-	btn.poPosition.x		= 55;
-	btn.poPosition.y		= 165;
-	btn.pcBmpUp				= m_pcPara_UpB;
-	btn.pcBmpDown			= m_pcPara_DwB;
-	btn.pcBmpFocus			= m_pcPara_FcB;
-	btn.pcBmpDisabled		= m_pcPara_UpB;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
 
-	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerCONVMinPara();
-	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerCONVMaxPara();
-
-	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_CONV();
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_TRIGGERCONV=new CParaBtn_TRIGGER(btn,0,false);
-	m_pcPara_TRIGGERCONV->Create(this,dwStyleNoTab,fv);
-	m_pcPara_TRIGGERCONV->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_TRIGGERCONV->SetNameText(getModel()->GetLanguageString(IDS_PARA_TRIGGER));
-	m_pcPara_TRIGGERCONV->SetUnitText(_T(""));
-	m_plParaBtn.AddTail(m_pcPara_TRIGGERCONV);
-
-
-	/**************************************************************/
-	//-------------------------------------------------------------
-	//Parameter Button------Trigger---------------------------------
-	btn.wID					= IDC_BTN_PARA_TRIGNMODE;	
-	btn.poPosition.x		= 55;
-	btn.poPosition.y		= 165;
-	btn.pcBmpUp				= m_pcPara_UpB;
-	btn.pcBmpDown			= m_pcPara_DwB;
-	btn.pcBmpFocus			= m_pcPara_FcB;
-	btn.pcBmpDisabled		= m_pcPara_DisB;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerDUOPAPMinPara();
-	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerDUOPAPMaxPara();
-
-	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP();
-	
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_TRIGGERNMODE=new CParaBtn_TRIGGERNMODE(btn,0,false);
-	m_pcPara_TRIGGERNMODE->Create(this,dwStyleNoTab,fv);
-	m_pcPara_TRIGGERNMODE->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_TRIGGERNMODE->SetNameText(getModel()->GetLanguageString(IDS_PARA_TRIGGER));
-	m_pcPara_TRIGGERNMODE->SetUnitText(_T(""));
-	m_plParaBtn.AddTail(m_pcPara_TRIGGERNMODE);
-
-	//-------------------------------------------------------------
-	//Parameter Button------ITIME Recruitment---------------------------------
-	btn.wID					= IDC_BTN_PARA_ITIME_REC;	
-	btn.poPosition.x		= 55;
-	btn.poPosition.y		= 165;
-	btn.pcBmpUp				= m_pcParaGroup_UpB;
-	btn.pcBmpDown			= m_pcParaGroup_DwB;
-	btn.pcBmpFocus			= m_pcParaGroup_FcB;
-	btn.pcBmpDisabled		= m_pcParaGroup_UpB;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeRecMinPara();
-	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeRecMaxPara();
-	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetITimeRecPara();
-
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_ITIME_REC=new CParaBtn_ITIME_REC(btn,0,false);
-	m_pcPara_ITIME_REC->Create(this,dwStyleNoTab,fv);
-	m_pcPara_ITIME_REC->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_ITIME_REC->SetNameText(getModel()->GetLanguageString(IDS_PARA_ITIME));
-	m_pcPara_ITIME_REC->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_REC));
-	m_pcPara_ITIME_REC->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_SECONDS));
-	m_plParaBtn.AddTail(m_pcPara_ITIME_REC);
-
-	//-------------------------------------------------------------
-	//Parameter Button------I-Time---------------------------------
-	btn.wID					= IDC_BTN_PARA_ITIME;	
-	btn.poPosition.x		= 145;
-	btn.poPosition.y		= 165;
-	btn.pcBmpUp				= m_pcPara_UpB;
-	btn.pcBmpDown			= m_pcPara_DwB;
-	btn.pcBmpFocus			= m_pcPara_FcB;
-	btn.pcBmpDisabled		= m_pcPara_UpB;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	if(getModel()->getVMODEHANDLER()->activeModeIsNMODE())
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEMinPara();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEMaxPara();
-		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEPara();
-	}
-	else
-	{
-		if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-		{
-			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeMinPara_IPPV();
-			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeMaxPara_IPPV();
-			fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetITimePara_IPPV();
-		}
-		else
-		{
-			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeMinPara_TRIGGER();
-			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeMaxPara_TRIGGER();
-			fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetITimePara_TRIGGER();
-		}
-	}
-	
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_ITIME=new CParaBtn_ITIME(btn,0,false);
-	m_pcPara_ITIME->Create(this,dwStyleNoTab,fv);
-	m_pcPara_ITIME->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_ITIME->SetNameText(getModel()->GetLanguageString(IDS_PARA_ITIME));
-	m_pcPara_ITIME->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_SECONDS));
-	m_plParaBtn.AddTail(m_pcPara_ITIME);
-
-	//-------------------------------------------------------------
-	//Parameter Button------Backup---------------------------------
-	btn.wID					= IDC_BTN_PARA_BACKUP;	
-	btn.poPosition.x		= 145;
-	btn.poPosition.y		= 165;
-	btn.pcBmpUp				= m_pcPara_UpB;
-	btn.pcBmpDown			= m_pcPara_DwB;
-	btn.pcBmpFocus			= m_pcPara_FcB;
-	btn.pcBmpDisabled		= m_pcPara_UpB;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBackupMinPara();
-	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBackupMaxPara();
-
-	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetBackupPara();
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_BACKUP=new CParaBtn_BACKUP(btn,0,false);
-	m_pcPara_BACKUP->Create(this,dwStyleNoTab,fv);
-	m_pcPara_BACKUP->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_BACKUP->SetNameText(getModel()->GetLanguageString(IDS_PARA_BACKUP));
-	m_pcPara_BACKUP->SetUnitText(_T(""));
-	m_plParaBtn.AddTail(m_pcPara_BACKUP);
-
-	//-------------------------------------------------------------
-	//Parameter Button------I/E Ratio HFO---------------------------------
-	btn.wID					= IDC_BTN_PARA_IERATIO;	
-	btn.poPosition.x		= 145;
-	btn.poPosition.y		= 165;
-	btn.pcBmpUp				= m_pcPara_UpB;
-	btn.pcBmpDown			= m_pcPara_DwB;
-	btn.pcBmpFocus			= m_pcPara_FcB;
-	btn.pcBmpDisabled		= m_pcPara_UpB;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIERatioMinPara();
-	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIERatioMaxPara();
-
-	fv.iValue=(int)getModel()->getDATAHANDLER()->PARADATA()->GetIERatioParaHFO();
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_IERatio=new CParaBtn_IERatio(btn,0,false);
-	m_pcPara_IERatio->Create(this,dwStyleNoTab,fv);
-	m_pcPara_IERatio->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_IERatio->SetNameText(getModel()->GetLanguageString(IDS_PARA_IE));
-	m_pcPara_IERatio->SetUnitText(_T(""));
-	m_plParaBtn.AddTail(m_pcPara_IERatio);
-
-
-	//-------------------------------------------------------------
-	//Parameter Button------BPM---------------------------------
-	btn.wID					= IDC_BTN_PARA_BPM;	
-	btn.poPosition.x		= 235;
-	btn.poPosition.y		= 165;
-	btn.pcBmpUp				= m_pcPara_UpB;
-	btn.pcBmpDown			= m_pcPara_DwB;
-	btn.pcBmpFocus			= m_pcPara_FcB;
-	btn.pcBmpDisabled		= m_pcPara_UpB;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	if(getModel()->getVMODEHANDLER()->activeModeIsNMODE())
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMNMODEMinPara();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMNMODEMaxPara();
-		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetBPMNMODEPara();
-	}
-	else
-	{
-		if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-		{
-			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMMinPara_IPPV();
-			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMMaxPara_IPPV();
-			fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetBPMPara_IPPV();
-		}
-		else
-		{
-			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMMinPara_TRIGGER();
-			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMMaxPara_TRIGGER();
-			fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetBPMPara_TRIGGER();
-		}
-		
-	}
-	
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_BPM=new CParaBtn_BPM(btn,0,false);
-	m_pcPara_BPM->Create(this,dwStyleNoTab,fv);
-	m_pcPara_BPM->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	//m_pcPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_FREQ));
-	
-	if(getModel()->getVMODEHANDLER()->modeIsPSVmode())//newVG
-	{
-		m_pcPara_BPM->SetNameText(_T(""));
-		m_pcPara_BPM->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_FREQBACKUP));
-	}
-	else
-	{
-		m_pcPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_FREQ));
-		m_pcPara_BPM->SetNameNoteText(_T(""));
-	}
-	m_pcPara_BPM->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_BPM));
-	m_plParaBtn.AddTail(m_pcPara_BPM);
-
-	
-	//-------------------------------------------------------------
-	//Parameter Button------HF Freq---------------------------------
-	btn.wID					= IDC_BTN_PARA_HFFREQ;	
-	btn.poPosition.x		= 235;
-	btn.poPosition.y		= 165;
-	btn.pcBmpUp				= m_pcPara_UpB;
-	btn.pcBmpDown			= m_pcPara_DwB;
-	btn.pcBmpFocus			= m_pcPara_FcB;
-	btn.pcBmpDisabled		= m_pcPara_UpB;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqMinPara();
-	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqMaxPara();
-
-	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara();
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_HFFREQ=new CParaBtn_HFFREQ(btn,0,false);
-	m_pcPara_HFFREQ->Create(this,dwStyleNoTab,fv);
-	m_pcPara_HFFREQ->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_HFFREQ->SetNameText(getModel()->GetLanguageString(IDS_PARA_HF_FREQ));
-	m_pcPara_HFFREQ->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_HFFREQ_NOTE));
-	m_pcPara_HFFREQ->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_HZ));
-	m_plParaBtn.AddTail(m_pcPara_HFFREQ);
-
-
-	//-------------------------------------------------------------
-	//Parameter Button------E-Time---------------------------------
-	btn.wID					= IDC_BTN_PARA_ETIME;	
-	btn.poPosition.x		= 235;
-	btn.poPosition.y		= 165;
-	btn.pcBmpUp				= m_pcPara_UpB;
-	btn.pcBmpDown			= m_pcPara_DwB;
-	btn.pcBmpFocus			= m_pcPara_FcB;
-	btn.pcBmpDisabled		= m_pcPara_UpB;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEMinPara_IPPV();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEMaxPara_IPPV();
-		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEPara_IPPV();
-	}
-	else
-	{
-		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEMinPara_TRIGGER();
-		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEMaxPara_TRIGGER();
-		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEPara_TRIGGER();
-	}
-	
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_ETIME=new CParaBtn_ETIME(this,btn,0,false);
-	m_pcPara_ETIME->Create(this,dwStyleNoTab,fv);
-	m_pcPara_ETIME->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_ETIME->SetNameText(getModel()->GetLanguageString(IDS_PARA_ETIME));
-	m_pcPara_ETIME->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_SECONDS));
-	m_plParaBtn.AddTail(m_pcPara_ETIME);
-
-
-	//-------------------------------------------------------------
-	//Parameter Button------O2---------------------------------
-	btn.wID					= IDC_BTN_PARA_O2;	
-	btn.poPosition.x		= 325;
-	btn.poPosition.y		= 165;
-	btn.pcBmpUp				= m_pcPara_UpB;
-	btn.pcBmpDown			= m_pcPara_DwB;
-	btn.pcBmpFocus			= m_pcPara_FcB;
-	btn.pcBmpDisabled		= m_pcPara_UpB;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetO2MinPara();
-	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetO2MaxPara();
-
-	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetO2Para();
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_O2=new CParaBtn_O2(this,btn,0,false);
-	m_pcPara_O2->Create(this,dwStyleNoTab,fv);
-	m_pcPara_O2->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_O2->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_PERCENT));
-	m_plParaBtn.AddTail(m_pcPara_O2);
-
-
-	//-------------------------------------------------------------
-	//Parameter Button------O2 Flush---------------------------------
-	btn.wID					= IDC_BTN_PARA_O2FLUSH;	
-	btn.poPosition.x		= 415;
-	btn.poPosition.y		= 165;
-	btn.pcBmpUp				= m_pcPara_UpB;
-	btn.pcBmpDown			= m_pcPara_DwB;
-	btn.pcBmpFocus			= m_pcPara_FcB;
-	btn.pcBmpDisabled		= m_pcPara_UpB;
-	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetO2FlushMinPara();
-	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetO2FlushMaxPara();
-
-	fv.iValue=getModel()->getDATAHANDLER()->GetCurrentO2FlushPara();
-	if(fv.iValue>fv.iUpperLimit)
-		fv.iValue=fv.iUpperLimit;
-	else if(fv.iValue<fv.iLowerLimit)
-		fv.iValue=fv.iLowerLimit;
-	m_pcPara_O2Flush=new CParaBtn_O2Flush(btn,0,false);
-	m_pcPara_O2Flush->Create(this,dwStyleNoTab,fv);
-	m_pcPara_O2Flush->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	m_pcPara_O2Flush->SetNameText(getModel()->GetLanguageString(IDS_PARA_O2));
-	m_pcPara_O2Flush->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_FLUSH));
-	m_pcPara_O2Flush->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_PERCENT));
-
-	m_plParaBtn.AddTail(m_pcPara_O2Flush);
-
+	createParaTRIGCONV();
+	createParaTRIGNMODE();
+	createParaITIME_REC();
+	createParaITIME();
+	createParaBACKUP();
+	createParaIERATIO();
+	createParaRATE();
+	createParaHFFREQ();
+	createParaETIME();
+	createParaO2();
+	createParaO2FLUSH();
 
 	if(getModel()->getDATAHANDLER()->isVGUARANTLicenseAvailable())
 	{
-		btn.wID					= IDC_BTN_PARA_VG_VL;	
-		btn.poPosition.x		= 505;
-		btn.poPosition.y		= 165;
-		btn.pcBmpUp				= m_pcPara_UpB;
-		btn.pcBmpDown			= m_pcPara_DwB;
-		btn.pcBmpFocus			= m_pcPara_FcB;
-		btn.pcBmpDisabled		= m_pcPara_UpB;
-
-		btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-		if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
-		{
-			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFVGarantMinPara();
-			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFVGarantMaxPara();
-
-			fv.iValue=getModel()->getDATAHANDLER()->GetCurrentVGarantParaData();
-		}
-		else
-		{
-			if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-			{
-				fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVGarantMinPara_IPPV();
-				fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVGarantMaxPara_IPPV();
-			}
-			else
-			{
-				fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVGarantMinPara_TRIGGER();
-				fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVGarantMaxPara_TRIGGER();
-			}
-
-			fv.iValue=getModel()->getDATAHANDLER()->GetCurrentVGarantParaData();
-		}
-
-		if(fv.iValue>fv.iUpperLimit)
-			fv.iValue=fv.iUpperLimit;
-		else if(fv.iValue<fv.iLowerLimit)
-			fv.iValue=fv.iLowerLimit;
-		m_pcPara_VGARANT=new CParaBtn_VGARANT(btn,0,false);
-		m_pcPara_VGARANT->Create(this,dwStyleNoTab,fv);
-		m_pcPara_VGARANT->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-		m_pcPara_VGARANT->SetNameText(getModel()->GetLanguageString(IDS_PARA_V));
-		m_pcPara_VGARANT->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_GARANT));
-		m_pcPara_VGARANT->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MILLILITER));
-
-		m_pcPara_VGARANT->SetOffState(!getModel()->getDATAHANDLER()->IsCurrentModeVGarantStateOn());
-		m_pcPara_VGARANT->ShowWindow(SW_HIDE);
-		m_plParaBtn.AddTail(m_pcPara_VGARANT);
+		createParaVGarant();
 	}
 
 	//-------------------------------------------------------------
 	//Parameter Button------V Limit---------------------------------
 	if(getModel()->getDATAHANDLER()->isVLIMITLicenseAvailable())
 	{
-		btn.wID					= IDC_BTN_PARA_VG_VL;	
-		btn.poPosition.x		= 505;
-		btn.poPosition.y		= 165;
-		btn.pcBmpUp				= m_pcPara_UpB;
-		btn.pcBmpDown			= m_pcPara_DwB;
-		btn.pcBmpFocus			= m_pcPara_FcB;
-		btn.pcBmpDisabled		= m_pcPara_UpB;
-		btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-		if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
-		{
-			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVLimitMinPara_IPPV();
-			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVLimitMaxPara_IPPV();
-		}
-		else
-		{
-			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVLimitMinPara_TRIGGER();
-			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVLimitMaxPara_TRIGGER();
-		}
-
-		fv.iValue=getModel()->getDATAHANDLER()->GetCurrentVLimitPara();
-		if(fv.iValue>fv.iUpperLimit)
-			fv.iValue=fv.iUpperLimit;
-		else if(fv.iValue<fv.iLowerLimit)
-			fv.iValue=fv.iLowerLimit;
-		m_pcPara_VLIMIT=new CParaBtn_VLIMIT(btn,0,false);
-		m_pcPara_VLIMIT->Create(this,dwStyleNoTab,fv);
-		m_pcPara_VLIMIT->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-		m_pcPara_VLIMIT->SetNameText(getModel()->GetLanguageString(IDS_PARA_V));
-		m_pcPara_VLIMIT->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_LIMIT));
-		m_pcPara_VLIMIT->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MILLILITER));
-		m_pcPara_VLIMIT->SetOffState(!getModel()->getDATAHANDLER()->IsCurrentModeVLimitStateOn());
-		m_pcPara_VLIMIT->ShowWindow(SW_HIDE);
-		m_plParaBtn.AddTail(m_pcPara_VLIMIT);
+		createParaVLimit();
 	}
 
-	//-------------------------------------------------------------
-	//Parameter Button------V Garant---------------------------------
-	btn.wID					= IDC_BTN_PARA_ONOFF;	
-	btn.poPosition.x		= 505;//513;
-	btn.poPosition.y		= 105;//178;
-	btn.pcBmpUp				= m_pcPara_OnOff_Up;
-	btn.pcBmpDown			= m_pcPara_OnOff_Dw;
-	btn.pcBmpFocus			= m_pcPara_OnOff_Up;
-	btn.pcBmpDisabled		= m_pcPara_OnOff_Up;
-	btn.dwFormat			= DT_VCENTER|DT_CENTER;
+	createONOFF();
 
-	m_pcPara_OnOff=new CUpDwnBtn(btn,COLOR_TXTBTNUP,false,true);
-	m_pcPara_OnOff->Create(this,g_hf7AcuBold,0);
-	m_pcPara_OnOff->SetText(_T(""),_T(""));
-	m_pcPara_OnOff->ShowWindow(SW_SHOW);
-
-	if(getModel()->getCONFIG()->GetCurMode()==VM_PRE_HFO 
-		||	getModel()->getCONFIG()->GetCurMode()==VM_HFO)
+	if(m_pcPara_OnOff)
 	{
-		if(getModel()->getDATAHANDLER()->IsCurrentModeVGarantStateOn()==true)
-			m_pcPara_OnOff->Depress(true);
-		else
-			m_pcPara_OnOff->Depress(false);
-	}
-	else
-	{
-		if(		getModel()->getDATAHANDLER()->isVGUARANTLicenseAvailable() 
-			&&	getModel()->getCONFIG()->GetVolumeControl()==VCTRL_VGARANT
-			&&	m_pcPara_VGARANT)
+		if(getModel()->getCONFIG()->GetCurMode()==VM_PRE_HFO 
+			||	getModel()->getCONFIG()->GetCurMode()==VM_HFO)
 		{
 			if(getModel()->getDATAHANDLER()->IsCurrentModeVGarantStateOn()==true)
 				m_pcPara_OnOff->Depress(true);
 			else
 				m_pcPara_OnOff->Depress(false);
 		}
-		else if(		getModel()->getDATAHANDLER()->isVLIMITLicenseAvailable() 
-			&&	getModel()->getCONFIG()->GetVolumeControl()==VCTRL_VLIMIT
-			&&	m_pcPara_VLIMIT)
+		else
 		{
-			if(getModel()->getDATAHANDLER()->IsCurrentModeVLimitStateOn()==true)
-				m_pcPara_OnOff->Depress(true);
-			else
-				m_pcPara_OnOff->Depress(false);
+			if(		getModel()->getDATAHANDLER()->isVGUARANTLicenseAvailable() 
+				&&	getModel()->getCONFIG()->GetVolumeControl()==VCTRL_VGARANT
+				&&	m_pcPara_VGARANT)
+			{
+				if(getModel()->getDATAHANDLER()->IsCurrentModeVGarantStateOn()==true)
+					m_pcPara_OnOff->Depress(true);
+				else
+					m_pcPara_OnOff->Depress(false);
+			}
+			else if(		getModel()->getDATAHANDLER()->isVLIMITLicenseAvailable() 
+				&&	getModel()->getCONFIG()->GetVolumeControl()==VCTRL_VLIMIT
+				&&	m_pcPara_VLIMIT)
+			{
+				if(getModel()->getDATAHANDLER()->IsCurrentModeVLimitStateOn()==true)
+					m_pcPara_OnOff->Depress(true);
+				else
+					m_pcPara_OnOff->Depress(false);
+			}
 		}
 	}
+
 
 	if(getModel()->getCONFIG()->GetCurMode()==VM_PRE_HFO 
 		||	getModel()->getCONFIG()->GetCurMode()==VM_HFO)
@@ -1512,8 +416,1532 @@ bool CViewParaBtn::Initialize()
 		if(m_pcPara_OnOff)
 			m_pcPara_OnOff->ShowWindow(SW_SHOW);
 	}
-	
-	
+
+	createSubParaTRIGGER();
+	createSubParaLEAKCOMP();
+	createSubParaBIASFLOW();
+	createSubParaI_E();
+	createSubParaDEMFLOW();
+	createSubParaPSVTIME();
+	createSubParaRATE();
+	createSubParaETIME();
+	createSubParaO2REAL();
+	createSubParaO2FLUSH();
+
+	createParaMenu();
+	result = CreateWndMenuVentState();
+
+	/** \brief The leave critical section. */
+	LeaveCriticalSection(&csDraw);
+
+	return result;
+}
+
+/**********************************************************************************************//**
+ * Creates para menu.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaMenu()
+{
+	BTN btn;
+
+	btn.wID					= IDC_BTN_PARAMENU;	
+	btn.poPosition.x		= 0;
+	btn.poPosition.y		= 20;
+	btn.pcBmpUp				= m_pcParaMenu_Up;
+	btn.pcBmpDown			= m_pcParaMenu_Dw;
+	btn.pcBmpFocus			= m_pcParaMenu_Up;
+	btn.pcBmpDisabled		= m_pcParaMenu_Up;
+	btn.dwFormat			= DT_VCENTER|DT_CENTER;
+
+	m_pcParaMenu=new CUpDwnBtn(btn,COLOR_TXTBTNUP,false,true);
+	m_pcParaMenu->Create(this,g_hf7AcuBold,0);
+	m_pcParaMenu->SetText(getModel()->GetLanguageString(IDS_TXT_SETTINGS),getModel()->GetLanguageString(IDS_TXT_SETTINGS));
+	m_pcParaMenu->ShowWindow(SW_SHOW);
+}
+
+/**********************************************************************************************//**
+ * Creates para iflow.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaIFLOW()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------I-Flow---------------------------------
+	btn.wID					= IDC_BTN_PARA_IFLOW;	
+	btn.poPosition.x		= 55;
+	btn.poPosition.y		= 20;
+	btn.pcBmpUp				= m_pcPara_UpT;
+	btn.pcBmpDown			= m_pcPara_DwT;
+	btn.pcBmpFocus			= m_pcPara_FcT;
+	btn.pcBmpDisabled		= m_pcPara_UpT;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowMinPara_IPPV();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowMaxPara_IPPV();
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowPara_IPPV();
+	}
+	else
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowMinPara_TRIGGER();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowMaxPara_TRIGGER();
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowPara_TRIGGER();
+	}
+
+
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_IFLOW=new CParaBtn_IFLOW(btn,0,false);
+	m_pcPara_IFLOW->Create(this,dwStyleNoTab,fv);
+	m_pcPara_IFLOW->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_IFLOW->SetNameText(getModel()->GetLanguageString(IDS_PARA_IFLOW));
+	m_pcPara_IFLOW->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_LMIN));
+	m_plParaBtn.AddTail(m_pcPara_IFLOW);
+}
+
+/**********************************************************************************************//**
+ * Creates para risetime.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaRISETIME()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------RiseTime---------------------------------
+	btn.wID					= IDC_BTN_PARA_RISETIME;	
+	btn.poPosition.x		= 55;
+	btn.poPosition.y		= 20;
+	btn.pcBmpUp				= m_pcPara_UpT;
+	btn.pcBmpDown			= m_pcPara_DwT;
+	btn.pcBmpFocus			= m_pcPara_FcT;
+	btn.pcBmpDisabled		= m_pcPara_UpT;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimeMinPara_IPPV();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimeMaxPara_IPPV();
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimePara_IPPV();
+	}
+	else
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimeMinPara_TRIGGER();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimeMaxPara_TRIGGER();
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetRisetimePara_TRIGGER();
+	}
+
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_RISETIME=new CParaBtn_RISETIME(btn,0,false);
+	m_pcPara_RISETIME->Create(this,dwStyleNoTab,fv);
+	m_pcPara_RISETIME->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_RISETIME->SetNameText(getModel()->GetLanguageString(IDS_PARA_RISETIME));
+	m_pcPara_RISETIME->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_SECONDS));
+	m_plParaBtn.AddTail(m_pcPara_RISETIME);
+}
+
+/**********************************************************************************************//**
+ * Creates para pmean record.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaPMEAN_REC()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------PMEAN_RECRUITMENT---------------------------------
+	btn.wID					= IDC_BTN_PARA_PMEAN_REC;	
+	btn.poPosition.x		= 55;
+	btn.poPosition.y		= 20;
+	btn.pcBmpUp				= m_pcParaGroup_UpT;
+	btn.pcBmpDown			= m_pcParaGroup_DwT;
+	btn.pcBmpFocus			= m_pcParaGroup_FcT;
+	btn.pcBmpDisabled		= m_pcParaGroup_UpT;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMaxPara();
+
+	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecPara();
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_PMEAN_REC=new CParaBtn_PMEAN_REC(this,btn,0,false);
+	m_pcPara_PMEAN_REC->Create(this,dwStyleNoTab,fv);
+	m_pcPara_PMEAN_REC->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_PMEAN_REC->SetNameText(getModel()->GetLanguageString(IDS_PARA_P));
+	m_pcPara_PMEAN_REC->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_MITT)+_T(" ")+getModel()->GetLanguageString(IDS_PARA_REC));
+	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
+	{
+		m_pcPara_PMEAN_REC->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
+	}
+	else
+	{
+		m_pcPara_PMEAN_REC->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
+	}
+	m_plParaBtn.AddTail(m_pcPara_PMEAN_REC);
+}
+
+/**********************************************************************************************//**
+ * Creates para flowmin.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaFLOWMIN()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------Flow min---------------------------------
+	btn.wID					= IDC_BTN_PARA_FLOWMIN;	
+	btn.poPosition.x		= 145;
+	btn.poPosition.y		= 20;
+	btn.pcBmpUp				= m_pcPara_UpT;
+	btn.pcBmpDown			= m_pcPara_DwT;
+	btn.pcBmpFocus			= m_pcPara_FcT;
+	btn.pcBmpDisabled		= m_pcPara_UpT;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetFlowminMinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetFlowminMaxPara();
+
+	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetFlowminPara();
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_FLOWMIN=new CParaBtn_FLOWMIN(btn,0,false);
+	m_pcPara_FLOWMIN->Create(this,dwStyleNoTab,fv);
+	m_pcPara_FLOWMIN->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_FLOWMIN->SetNameText(getModel()->GetLanguageString(IDS_PARA_FLOW));
+	m_pcPara_FLOWMIN->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_MIN));
+	m_pcPara_FLOWMIN->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_LMIN));
+	m_plParaBtn.AddTail(m_pcPara_FLOWMIN);
+}
+
+/**********************************************************************************************//**
+ * Creates para peep.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaPEEP()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------PEEP---------------------------------
+	btn.wID					= IDC_BTN_PARA_PEEP;	
+	btn.poPosition.x		= 235;
+	btn.poPosition.y		= 20;
+	btn.pcBmpUp				= m_pcPara_UpT;
+	btn.pcBmpDown			= m_pcPara_DwT;
+	btn.pcBmpFocus			= m_pcPara_FcT;
+	btn.pcBmpDisabled		= m_pcPara_UpT;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+
+	if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+	{
+		if(getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_LINEAR)
+		{
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPMinPara_RISETIME();
+		}
+		else
+		{
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPMinPara_IPPV();
+		}
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPMaxPara_IPPV();
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_IPPV();
+	}
+	else
+	{
+		if(getModel()->getCONFIG()->GetCurPressureRiseCtrl()==CURVE_LINEAR)
+		{
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPMinPara_RISETIME();
+		}
+		else
+		{
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPMinPara_TRIGGER();
+		}
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPMaxPara_TRIGGER();
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPEEPPara_TRIGGER();
+	}
+
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_PEEP=new CParaBtn_PEEP(this,btn,0,false);
+	m_pcPara_PEEP->Create(this,dwStyleNoTab,fv);
+	m_pcPara_PEEP->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_PEEP->SetNameText(getModel()->GetLanguageString(IDS_PARA_PEEP));
+	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
+	{
+		m_pcPara_PEEP->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
+	}
+	else
+	{
+		m_pcPara_PEEP->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
+	}
+	m_plParaBtn.AddTail(m_pcPara_PEEP);
+}
+
+/**********************************************************************************************//**
+ * Creates para hfflow.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaHFFLOW()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------HF Flow---------------------------------
+	btn.wID					= IDC_BTN_PARA_HFFLOW;	
+	btn.poPosition.x		= 145;//235;
+	btn.poPosition.y		= 20;
+	btn.pcBmpUp				= m_pcPara_UpT;
+	btn.pcBmpDown			= m_pcPara_DwT;
+	btn.pcBmpFocus			= m_pcPara_FcT;
+	btn.pcBmpDisabled		= m_pcPara_UpT;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFFlowMinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFFlowMaxPara();
+
+	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetHFFlowPara();
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit && fv.iValue!=0)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_HFFLOW=new CParaBtn_HFFLOW(btn,0,false);
+	m_pcPara_HFFLOW->Create(this,dwStyleNoTab,fv);
+	m_pcPara_HFFLOW->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_HFFLOW->SetNameText(getModel()->GetLanguageString(IDS_PARA_FLOW));
+	m_pcPara_HFFLOW->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_LMIN));
+	m_plParaBtn.AddTail(m_pcPara_HFFLOW);
+}
+
+/**********************************************************************************************//**
+ * Creates para cpap.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaCPAP()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------CPAP---------------------------------
+	btn.wID					= IDC_BTN_PARA_CPAP;	
+	btn.poPosition.x		= 235;
+	btn.poPosition.y		= 20;
+	btn.pcBmpUp				= m_pcPara_UpT;
+	btn.pcBmpDown			= m_pcPara_DwT;
+	btn.pcBmpFocus			= m_pcPara_FcT;
+	btn.pcBmpDisabled		= m_pcPara_UpT;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	if(getModel()->getVMODEHANDLER()->activeModeIsNMODE())
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPNMODEMinPara();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPNMODEMaxPara();
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPNMODEPara();
+	}
+	else
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPMinPara();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPMaxPara();
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetCPAPPara();//GetPEEPPara_IPPV
+	}
+
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_CPAP=new CParaBtn_CPAP(btn,0,false);
+	m_pcPara_CPAP->Create(this,dwStyleNoTab,fv);
+	m_pcPara_CPAP->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_CPAP->SetNameText(getModel()->GetLanguageString(IDS_PARA_CPAP));
+	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
+	{
+		m_pcPara_CPAP->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
+	}
+	else
+	{
+		m_pcPara_CPAP->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
+	}
+	m_plParaBtn.AddTail(m_pcPara_CPAP);
+}
+
+/**********************************************************************************************//**
+ * Creates para pinsp.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaPINSP()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------P Insp---------------------------------
+	btn.wID					= IDC_BTN_PARA_PINSP;	
+	btn.poPosition.x		= 325;
+	btn.poPosition.y		= 20;
+	btn.pcBmpUp				= m_pcPara_UpT;
+	btn.pcBmpDown			= m_pcPara_DwT;
+	btn.pcBmpFocus			= m_pcPara_FcT;
+	btn.pcBmpDisabled		= m_pcPara_UpT;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPMinPara_IPPV();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPMaxPara_IPPV();
+	}
+	else
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPMinPara_TRIGGER();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPINSPMaxPara_TRIGGER();
+	}
+
+	fv.iValue=getModel()->getDATAHANDLER()->GetCurrentPINSPPara();
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_PINSP=new CParaBtn_PINSP(btn,0,false);
+	m_pcPara_PINSP->Create(this,dwStyleNoTab,fv);
+	m_pcPara_PINSP->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_PINSP->SetNameText(getModel()->GetLanguageString(IDS_PARA_P));
+
+	if(getModel()->getVMODEHANDLER()->modeIsPSVmode())//newVG
+	{
+		m_pcPara_PINSP->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_BACKUP));
+	}
+	else
+	{
+		m_pcPara_PINSP->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_INSP));
+	}
+
+	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
+	{
+		m_pcPara_PINSP->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
+	}
+	else
+	{
+		m_pcPara_PINSP->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
+	}
+	m_plParaBtn.AddTail(m_pcPara_PINSP);
+}
+
+/**********************************************************************************************//**
+ * Creates para pduo.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaPDUO()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------P Duo---------------------------------
+	btn.wID					= IDC_BTN_PARA_PDUO;	
+	btn.poPosition.x		= 325;
+	btn.poPosition.y		= 20;
+	btn.pcBmpUp				= m_pcPara_UpT;
+	btn.pcBmpDown			= m_pcPara_DwT;
+	btn.pcBmpFocus			= m_pcPara_FcT;
+	btn.pcBmpDisabled		= m_pcPara_UpT;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualNMODEMinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualNMODEMaxPara();
+	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPManualNMODEPara();
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_PDUO=new CParaBtn_PDUO(btn,0,false);
+	m_pcPara_PDUO->Create(this,dwStyleNoTab,fv);
+	m_pcPara_PDUO->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_PDUO->SetNameText(getModel()->GetLanguageString(IDS_PARA_DUO_P));
+	m_pcPara_PDUO->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_DUO));
+	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
+	{
+		m_pcPara_PDUO->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
+	}
+	else
+	{
+		m_pcPara_PDUO->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
+	}
+	m_plParaBtn.AddTail(m_pcPara_PDUO);
+}
+
+/**********************************************************************************************//**
+ * Creates para hfampl.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaHFAMPL()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------HF Ampl---------------------------------
+	btn.wID					= IDC_BTN_PARA_HFAMPL;	
+	btn.poPosition.x		= 235;//415;
+	btn.poPosition.y		= 20;
+	btn.pcBmpUp				= m_pcPara_UpT;
+	btn.pcBmpDown			= m_pcPara_DwT;
+	btn.pcBmpFocus			= m_pcPara_FcT;
+	btn.pcBmpDisabled		= m_pcPara_UpT;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLMinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLMaxPara();
+
+	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLPara();
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_HFAMPL=new CParaBtn_HFAMPL(btn,0,false);
+	m_pcPara_HFAMPL->Create(this,dwStyleNoTab,fv);
+	m_pcPara_HFAMPL->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_HFAMPL->SetNameText(_T("Amp"));
+	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
+	{
+		m_pcPara_HFAMPL->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
+	}
+	else
+	{
+		m_pcPara_HFAMPL->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
+	}
+	m_plParaBtn.AddTail(m_pcPara_HFAMPL);
+}
+
+/**********************************************************************************************//**
+ * Creates para pmanual.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaPMANUAL()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------P Man---------------------------------
+	btn.wID					= IDC_BTN_PARA_PMANUAL;	
+	btn.poPosition.x		= 325;
+	btn.poPosition.y		= 20;
+	btn.pcBmpUp				= m_pcPara_UpT;
+	btn.pcBmpDown			= m_pcPara_DwT;
+	btn.pcBmpFocus			= m_pcPara_FcT;
+	btn.pcBmpDisabled		= m_pcPara_UpT;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	if(getModel()->getVMODEHANDLER()->activeModeIsNMODE())
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualNMODEMinPara();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualNMODEMaxPara();
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPManualNMODEPara();
+	}
+	else if(getModel()->getVMODEHANDLER()->activeModeIsCPAP())
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMinPara();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMaxPara();
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPManualCPAPPara();
+	}
+	else
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMinPara();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPManualMaxPara();
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPManualHFOPara();
+	}
+
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_PMANUAL=new CParaBtn_PMANUAL(btn,0,false);
+	m_pcPara_PMANUAL->Create(this,dwStyleNoTab,fv);
+	m_pcPara_PMANUAL->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_PMANUAL->SetNameText(getModel()->GetLanguageString(IDS_PARA_P));
+	m_pcPara_PMANUAL->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_MANUAL));
+	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
+	{
+		m_pcPara_PMANUAL->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
+	}
+	else
+	{
+		m_pcPara_PMANUAL->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
+	}
+	m_plParaBtn.AddTail(m_pcPara_PMANUAL);
+}
+
+/**********************************************************************************************//**
+ * Creates para therapyflow.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaTHERAPYFLOW()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------Flow min---------------------------------
+	btn.wID					= IDC_BTN_PARA_THERAPYFLOW;	
+	btn.poPosition.x		= 415;
+	btn.poPosition.y		= 20;
+	btn.pcBmpUp				= m_pcPara_UpT;
+	btn.pcBmpDown			= m_pcPara_DwT;
+	btn.pcBmpFocus			= m_pcPara_FcT;
+	btn.pcBmpDisabled		= m_pcPara_UpT;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTherapieFlowMinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTherapieFlowMaxPara();
+
+	fv.iValue=getModel()->getDATAHANDLER()->GetFlowminParaData();
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_FLOW=new CParaBtn_FLOW(btn,0,false);
+	m_pcPara_FLOW->Create(this,dwStyleNoTab,fv);
+	m_pcPara_FLOW->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_FLOW->SetNameText(getModel()->GetLanguageString(IDS_PARA_FLOW));
+	m_pcPara_FLOW->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_LMIN));
+	m_plParaBtn.AddTail(m_pcPara_FLOW);
+}
+
+/**********************************************************************************************//**
+ * Creates para ppsv.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaPPSV()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------P PSV---------------------------------
+	btn.wID					= IDC_BTN_PARA_PPSV;	
+	btn.poPosition.x		= 415;
+	btn.poPosition.y		= 20;
+	btn.pcBmpUp				= m_pcPara_UpT;
+	btn.pcBmpDown			= m_pcPara_DwT;
+	btn.pcBmpFocus			= m_pcPara_FcT;
+	btn.pcBmpDisabled		= m_pcPara_UpT;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPpsvMinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPpsvMaxPara();
+
+	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPpsvPara();
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_PPSV=new CParaBtn_PPSV(this,btn,0,false);
+	m_pcPara_PPSV->Create(this,dwStyleNoTab,fv);
+	m_pcPara_PPSV->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_PPSV->SetNameText(getModel()->GetLanguageString(IDS_PARA_P));
+	m_pcPara_PPSV->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_PSV));
+	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
+	{
+		m_pcPara_PPSV->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR)+_T(" ")+getModel()->GetLanguageString(IDS_UNIT_OVERPEEP));
+	}
+	else
+	{
+		m_pcPara_PPSV->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O)+_T(" ")+getModel()->GetLanguageString(IDS_UNIT_OVERPEEP));
+	}
+	m_plParaBtn.AddTail(m_pcPara_PPSV);
+}
+
+/**********************************************************************************************//**
+ * Creates para pmean.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaPMEAN()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------P Mitt---------------------------------
+	btn.wID					= IDC_BTN_PARA_PMITT;	
+	btn.poPosition.x		= 415;
+	btn.poPosition.y		= 20;
+	btn.pcBmpUp				= m_pcPara_UpT;
+	btn.pcBmpDown			= m_pcPara_DwT;
+	btn.pcBmpFocus			= m_pcPara_FcT;
+	btn.pcBmpDisabled		= m_pcPara_UpT;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanMinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanMaxPara();
+
+	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanPara();
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_PMITT=new CParaBtn_PMITT(this,btn,0,false);
+	m_pcPara_PMITT->Create(this,dwStyleNoTab,fv);
+	m_pcPara_PMITT->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_PMITT->SetNameText(getModel()->GetLanguageString(IDS_PARA_P));
+	m_pcPara_PMITT->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_MITT));
+	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
+	{
+		m_pcPara_PMITT->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
+	}
+	else
+	{
+		m_pcPara_PMITT->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
+	}
+	m_plParaBtn.AddTail(m_pcPara_PMITT);
+}
+
+/**********************************************************************************************//**
+ * Creates para vg pmaxi.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaVG_PMAXI()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	btn.wID					= IDC_BTN_PARA_VG_PMAXI;	
+	btn.poPosition.x		= 505;
+	btn.poPosition.y		= 20;
+	btn.pcBmpUp				= m_pcPara_UpT;
+	btn.pcBmpDown			= m_pcPara_DwT;
+	btn.pcBmpFocus			= m_pcPara_FcT;
+	btn.pcBmpDisabled		= m_pcPara_UpT;
+
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPMAXMinPara_IPPV();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPMAXMaxPara_IPPV();
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPmaxVolGPara_IPPV();
+	}
+	else
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPMAXMinPara_TRIGGER();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetPMAXMaxPara_TRIGGER();
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetPmaxVolGPara_TRIGGER();
+	}
+
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_PMAXI=new CParaBtn_PMAX(btn,0,false);
+	m_pcPara_PMAXI->Create(this,dwStyleNoTab,fv);
+	m_pcPara_PMAXI->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_PMAXI->SetNameText(getModel()->GetLanguageString(IDS_PARA_P));
+	m_pcPara_PMAXI->SetNameNoteText(_T(""));
+	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
+	{
+		m_pcPara_PMAXI->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
+	}
+	else
+	{
+		m_pcPara_PMAXI->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
+	}
+
+	m_pcPara_PMAXI->SetOffState(!getModel()->getDATAHANDLER()->IsCurrentModeVGarantStateOn());
+	m_pcPara_PMAXI->ShowWindow(SW_HIDE);
+	m_plParaBtn.AddTail(m_pcPara_PMAXI);
+}
+
+/**********************************************************************************************//**
+ * Creates para vg ampmaxi.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaVG_AMPMAXI()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	btn.wID					= IDC_BTN_PARA_VG_AMPMAXI;	
+	btn.poPosition.x		= 505;
+	btn.poPosition.y		= 20;
+	btn.pcBmpUp				= m_pcPara_UpT;
+	btn.pcBmpDown			= m_pcPara_DwT;
+	btn.pcBmpFocus			= m_pcPara_FcT;
+	btn.pcBmpDisabled		= m_pcPara_UpT;
+
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLMinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLMaxPara();
+
+	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetHFAMPLmaxPara();
+
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_AMPMAXI=new CParaBtn_AMPMAX(btn,0,false);
+	m_pcPara_AMPMAXI->Create(this,dwStyleNoTab,fv);
+	m_pcPara_AMPMAXI->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_AMPMAXI->SetNameText(getModel()->GetLanguageString(IDS_PARA_P));
+	m_pcPara_AMPMAXI->SetNameNoteText(_T(""));
+	if(getModel()->getCONFIG()->GetPressureUnit()==PUNIT_MBAR)
+	{
+		m_pcPara_AMPMAXI->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MBAR));
+	}
+	else
+	{
+		m_pcPara_AMPMAXI->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_CMH2O));
+	}
+
+	m_pcPara_AMPMAXI->SetOffState(!getModel()->getDATAHANDLER()->IsCurrentModeVGarantStateOn());
+	m_pcPara_AMPMAXI->ShowWindow(SW_HIDE);
+	m_plParaBtn.AddTail(m_pcPara_AMPMAXI);
+}
+
+/**********************************************************************************************//**
+ * Creates para trigconv.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaTRIGCONV()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------Trigger---------------------------------
+	btn.wID					= IDC_BTN_PARA_TRIGCONV;	
+	btn.poPosition.x		= 55;
+	btn.poPosition.y		= 165;
+	btn.pcBmpUp				= m_pcPara_UpB;
+	btn.pcBmpDown			= m_pcPara_DwB;
+	btn.pcBmpFocus			= m_pcPara_FcB;
+	btn.pcBmpDisabled		= m_pcPara_UpB;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerCONVMinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerCONVMaxPara();
+
+	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_CONV();
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_TRIGGERCONV=new CParaBtn_TRIGGER(btn,0,false);
+	m_pcPara_TRIGGERCONV->Create(this,dwStyleNoTab,fv);
+	m_pcPara_TRIGGERCONV->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_TRIGGERCONV->SetNameText(getModel()->GetLanguageString(IDS_PARA_TRIGGER));
+	m_pcPara_TRIGGERCONV->SetUnitText(_T(""));
+	m_plParaBtn.AddTail(m_pcPara_TRIGGERCONV);
+}
+
+/**********************************************************************************************//**
+ * Creates para trignmode.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaTRIGNMODE()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------Trigger---------------------------------
+	btn.wID					= IDC_BTN_PARA_TRIGNMODE;	
+	btn.poPosition.x		= 55;
+	btn.poPosition.y		= 165;
+	btn.pcBmpUp				= m_pcPara_UpB;
+	btn.pcBmpDown			= m_pcPara_DwB;
+	btn.pcBmpFocus			= m_pcPara_FcB;
+	btn.pcBmpDisabled		= m_pcPara_DisB;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerDUOPAPMinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerDUOPAPMaxPara();
+
+	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetTriggerPara_DUOPAP();
+
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_TRIGGERNMODE=new CParaBtn_TRIGGERNMODE(btn,0,false);
+	m_pcPara_TRIGGERNMODE->Create(this,dwStyleNoTab,fv);
+	m_pcPara_TRIGGERNMODE->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_TRIGGERNMODE->SetNameText(getModel()->GetLanguageString(IDS_PARA_TRIGGER));
+	m_pcPara_TRIGGERNMODE->SetUnitText(_T(""));
+	m_plParaBtn.AddTail(m_pcPara_TRIGGERNMODE);
+}
+
+/**********************************************************************************************//**
+ * Creates para itime record.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaITIME_REC()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------ITIME Recruitment---------------------------------
+	btn.wID					= IDC_BTN_PARA_ITIME_REC;	
+	btn.poPosition.x		= 55;
+	btn.poPosition.y		= 165;
+	btn.pcBmpUp				= m_pcParaGroup_UpB;
+	btn.pcBmpDown			= m_pcParaGroup_DwB;
+	btn.pcBmpFocus			= m_pcParaGroup_FcB;
+	btn.pcBmpDisabled		= m_pcParaGroup_UpB;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeRecMinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeRecMaxPara();
+	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetITimeRecPara();
+
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_ITIME_REC=new CParaBtn_ITIME_REC(btn,0,false);
+	m_pcPara_ITIME_REC->Create(this,dwStyleNoTab,fv);
+	m_pcPara_ITIME_REC->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_ITIME_REC->SetNameText(getModel()->GetLanguageString(IDS_PARA_ITIME));
+	m_pcPara_ITIME_REC->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_REC));
+	m_pcPara_ITIME_REC->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_SECONDS));
+	m_plParaBtn.AddTail(m_pcPara_ITIME_REC);
+}
+
+/**********************************************************************************************//**
+ * Creates para itime.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaITIME()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------I-Time---------------------------------
+	btn.wID					= IDC_BTN_PARA_ITIME;	
+	btn.poPosition.x		= 145;
+	btn.poPosition.y		= 165;
+	btn.pcBmpUp				= m_pcPara_UpB;
+	btn.pcBmpDown			= m_pcPara_DwB;
+	btn.pcBmpFocus			= m_pcPara_FcB;
+	btn.pcBmpDisabled		= m_pcPara_UpB;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	if(getModel()->getVMODEHANDLER()->activeModeIsNMODE())
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEMinPara();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEMaxPara();
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetITimeNMODEPara();
+	}
+	else
+	{
+		if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+		{
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeMinPara_IPPV();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeMaxPara_IPPV();
+			fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetITimePara_IPPV();
+		}
+		else
+		{
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeMinPara_TRIGGER();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetITimeMaxPara_TRIGGER();
+			fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetITimePara_TRIGGER();
+		}
+	}
+
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_ITIME=new CParaBtn_ITIME(btn,0,false);
+	m_pcPara_ITIME->Create(this,dwStyleNoTab,fv);
+	m_pcPara_ITIME->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_ITIME->SetNameText(getModel()->GetLanguageString(IDS_PARA_ITIME));
+	m_pcPara_ITIME->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_SECONDS));
+	m_plParaBtn.AddTail(m_pcPara_ITIME);
+}
+
+/**********************************************************************************************//**
+ * Creates para backup.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaBACKUP()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------Backup---------------------------------
+	btn.wID					= IDC_BTN_PARA_BACKUP;	
+	btn.poPosition.x		= 145;
+	btn.poPosition.y		= 165;
+	btn.pcBmpUp				= m_pcPara_UpB;
+	btn.pcBmpDown			= m_pcPara_DwB;
+	btn.pcBmpFocus			= m_pcPara_FcB;
+	btn.pcBmpDisabled		= m_pcPara_UpB;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBackupMinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBackupMaxPara();
+
+	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetBackupPara();
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_BACKUP=new CParaBtn_BACKUP(btn,0,false);
+	m_pcPara_BACKUP->Create(this,dwStyleNoTab,fv);
+	m_pcPara_BACKUP->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_BACKUP->SetNameText(getModel()->GetLanguageString(IDS_PARA_BACKUP));
+	m_pcPara_BACKUP->SetUnitText(_T(""));
+	m_plParaBtn.AddTail(m_pcPara_BACKUP);
+}
+
+/**********************************************************************************************//**
+ * Creates para ieratio.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaIERATIO()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------I/E Ratio HFO---------------------------------
+	btn.wID					= IDC_BTN_PARA_IERATIO;	
+	btn.poPosition.x		= 145;
+	btn.poPosition.y		= 165;
+	btn.pcBmpUp				= m_pcPara_UpB;
+	btn.pcBmpDown			= m_pcPara_DwB;
+	btn.pcBmpFocus			= m_pcPara_FcB;
+	btn.pcBmpDisabled		= m_pcPara_UpB;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIERatioMinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIERatioMaxPara();
+
+	fv.iValue=(int)getModel()->getDATAHANDLER()->PARADATA()->GetIERatioParaHFO();
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_IERatio=new CParaBtn_IERatio(btn,0,false);
+	m_pcPara_IERatio->Create(this,dwStyleNoTab,fv);
+	m_pcPara_IERatio->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_IERatio->SetNameText(getModel()->GetLanguageString(IDS_PARA_IE));
+	m_pcPara_IERatio->SetUnitText(_T(""));
+	m_plParaBtn.AddTail(m_pcPara_IERatio);
+
+}
+
+/**********************************************************************************************//**
+ * Creates para rate.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaRATE()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------BPM---------------------------------
+	btn.wID					= IDC_BTN_PARA_BPM;	
+	btn.poPosition.x		= 235;
+	btn.poPosition.y		= 165;
+	btn.pcBmpUp				= m_pcPara_UpB;
+	btn.pcBmpDown			= m_pcPara_DwB;
+	btn.pcBmpFocus			= m_pcPara_FcB;
+	btn.pcBmpDisabled		= m_pcPara_UpB;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	if(getModel()->getVMODEHANDLER()->activeModeIsNMODE())
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMNMODEMinPara();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMNMODEMaxPara();
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetBPMNMODEPara();
+	}
+	else
+	{
+		if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+		{
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMMinPara_IPPV();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMMaxPara_IPPV();
+			fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetBPMPara_IPPV();
+		}
+		else
+		{
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMMinPara_TRIGGER();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetBPMMaxPara_TRIGGER();
+			fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetBPMPara_TRIGGER();
+		}
+
+	}
+
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_BPM=new CParaBtn_BPM(btn,0,false);
+	m_pcPara_BPM->Create(this,dwStyleNoTab,fv);
+	m_pcPara_BPM->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	//m_pcPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_FREQ));
+
+	if(getModel()->getVMODEHANDLER()->modeIsPSVmode())//newVG
+	{
+		m_pcPara_BPM->SetNameText(_T(""));
+		m_pcPara_BPM->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_FREQBACKUP));
+	}
+	else
+	{
+		m_pcPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_FREQ));
+		m_pcPara_BPM->SetNameNoteText(_T(""));
+	}
+	m_pcPara_BPM->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_BPM));
+	m_plParaBtn.AddTail(m_pcPara_BPM);
+}
+
+/**********************************************************************************************//**
+ * Creates para hffreq.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaHFFREQ()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------HF Freq---------------------------------
+	btn.wID					= IDC_BTN_PARA_HFFREQ;	
+	btn.poPosition.x		= 235;
+	btn.poPosition.y		= 165;
+	btn.pcBmpUp				= m_pcPara_UpB;
+	btn.pcBmpDown			= m_pcPara_DwB;
+	btn.pcBmpFocus			= m_pcPara_FcB;
+	btn.pcBmpDisabled		= m_pcPara_UpB;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqMinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqMaxPara();
+
+	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetHFFreqPara();
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_HFFREQ=new CParaBtn_HFFREQ(btn,0,false);
+	m_pcPara_HFFREQ->Create(this,dwStyleNoTab,fv);
+	m_pcPara_HFFREQ->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_HFFREQ->SetNameText(getModel()->GetLanguageString(IDS_PARA_HF_FREQ));
+	m_pcPara_HFFREQ->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_HFFREQ_NOTE));
+	m_pcPara_HFFREQ->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_HZ));
+	m_plParaBtn.AddTail(m_pcPara_HFFREQ);
+}
+
+/**********************************************************************************************//**
+ * Creates para etime.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaETIME()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------E-Time---------------------------------
+	btn.wID					= IDC_BTN_PARA_ETIME;	
+	btn.poPosition.x		= 235;
+	btn.poPosition.y		= 165;
+	btn.pcBmpUp				= m_pcPara_UpB;
+	btn.pcBmpDown			= m_pcPara_DwB;
+	btn.pcBmpFocus			= m_pcPara_FcB;
+	btn.pcBmpDisabled		= m_pcPara_UpB;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEMinPara_IPPV();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEMaxPara_IPPV();
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEPara_IPPV();
+	}
+	else
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEMinPara_TRIGGER();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEMaxPara_TRIGGER();
+		fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetETIMEPara_TRIGGER();
+	}
+
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_ETIME=new CParaBtn_ETIME(this,btn,0,false);
+	m_pcPara_ETIME->Create(this,dwStyleNoTab,fv);
+	m_pcPara_ETIME->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_ETIME->SetNameText(getModel()->GetLanguageString(IDS_PARA_ETIME));
+	m_pcPara_ETIME->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_SECONDS));
+	m_plParaBtn.AddTail(m_pcPara_ETIME);
+}
+
+/**********************************************************************************************//**
+ * Creates para o 2.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaO2()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------O2---------------------------------
+	btn.wID					= IDC_BTN_PARA_O2;	
+	btn.poPosition.x		= 325;
+	btn.poPosition.y		= 165;
+	btn.pcBmpUp				= m_pcPara_UpB;
+	btn.pcBmpDown			= m_pcPara_DwB;
+	btn.pcBmpFocus			= m_pcPara_FcB;
+	btn.pcBmpDisabled		= m_pcPara_UpB;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetO2MinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetO2MaxPara();
+
+	fv.iValue=getModel()->getDATAHANDLER()->PARADATA()->GetO2Para();
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_O2=new CParaBtn_O2(this,btn,0,false);
+	m_pcPara_O2->Create(this,dwStyleNoTab,fv);
+	m_pcPara_O2->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_O2->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_PERCENT));
+	m_plParaBtn.AddTail(m_pcPara_O2);
+}
+
+/**********************************************************************************************//**
+ * Creates para o 2 flush.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaO2FLUSH()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------O2 Flush---------------------------------
+	btn.wID					= IDC_BTN_PARA_O2FLUSH;	
+	btn.poPosition.x		= 415;
+	btn.poPosition.y		= 165;
+	btn.pcBmpUp				= m_pcPara_UpB;
+	btn.pcBmpDown			= m_pcPara_DwB;
+	btn.pcBmpFocus			= m_pcPara_FcB;
+	btn.pcBmpDisabled		= m_pcPara_UpB;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetO2FlushMinPara();
+	fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetO2FlushMaxPara();
+
+	fv.iValue=getModel()->getDATAHANDLER()->GetCurrentO2FlushPara();
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_O2Flush=new CParaBtn_O2Flush(btn,0,false);
+	m_pcPara_O2Flush->Create(this,dwStyleNoTab,fv);
+	m_pcPara_O2Flush->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_O2Flush->SetNameText(getModel()->GetLanguageString(IDS_PARA_O2));
+	m_pcPara_O2Flush->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_FLUSH));
+	m_pcPara_O2Flush->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_PERCENT));
+
+	m_plParaBtn.AddTail(m_pcPara_O2Flush);
+}
+
+/**********************************************************************************************//**
+ * Creates para v garant.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaVGarant()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	btn.wID					= IDC_BTN_PARA_VG_VL;	
+	btn.poPosition.x		= 505;
+	btn.poPosition.y		= 165;
+	btn.pcBmpUp				= m_pcPara_UpB;
+	btn.pcBmpDown			= m_pcPara_DwB;
+	btn.pcBmpFocus			= m_pcPara_FcB;
+	btn.pcBmpDisabled		= m_pcPara_UpB;
+
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFVGarantMinPara();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetHFVGarantMaxPara();
+
+		fv.iValue=getModel()->getDATAHANDLER()->GetCurrentVGarantParaData();
+	}
+	else
+	{
+		if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+		{
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVGarantMinPara_IPPV();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVGarantMaxPara_IPPV();
+		}
+		else
+		{
+			fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVGarantMinPara_TRIGGER();
+			fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVGarantMaxPara_TRIGGER();
+		}
+
+		fv.iValue=getModel()->getDATAHANDLER()->GetCurrentVGarantParaData();
+	}
+
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_VGARANT=new CParaBtn_VGARANT(btn,0,false);
+	m_pcPara_VGARANT->Create(this,dwStyleNoTab,fv);
+	m_pcPara_VGARANT->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_VGARANT->SetNameText(getModel()->GetLanguageString(IDS_PARA_V));
+	m_pcPara_VGARANT->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_GARANT));
+	m_pcPara_VGARANT->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MILLILITER));
+
+	m_pcPara_VGARANT->SetOffState(!getModel()->getDATAHANDLER()->IsCurrentModeVGarantStateOn());
+	m_pcPara_VGARANT->ShowWindow(SW_HIDE);
+	m_plParaBtn.AddTail(m_pcPara_VGARANT);
+}
+
+/**********************************************************************************************//**
+ * Creates para v limit.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createParaVLimit()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	btn.wID					= IDC_BTN_PARA_VG_VL;	
+	btn.poPosition.x		= 505;
+	btn.poPosition.y		= 165;
+	btn.pcBmpUp				= m_pcPara_UpB;
+	btn.pcBmpDown			= m_pcPara_DwB;
+	btn.pcBmpFocus			= m_pcPara_FcB;
+	btn.pcBmpDisabled		= m_pcPara_UpB;
+	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
+
+	if(getModel()->getVMODEHANDLER()->activeModeIsIPPV())
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVLimitMinPara_IPPV();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVLimitMaxPara_IPPV();
+	}
+	else
+	{
+		fv.iLowerLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVLimitMinPara_TRIGGER();
+		fv.iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetVLimitMaxPara_TRIGGER();
+	}
+
+	fv.iValue=getModel()->getDATAHANDLER()->GetCurrentVLimitPara();
+	if(fv.iValue>fv.iUpperLimit)
+		fv.iValue=fv.iUpperLimit;
+	else if(fv.iValue<fv.iLowerLimit)
+		fv.iValue=fv.iLowerLimit;
+	m_pcPara_VLIMIT=new CParaBtn_VLIMIT(btn,0,false);
+	m_pcPara_VLIMIT->Create(this,dwStyleNoTab,fv);
+	m_pcPara_VLIMIT->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
+	m_pcPara_VLIMIT->SetNameText(getModel()->GetLanguageString(IDS_PARA_V));
+	m_pcPara_VLIMIT->SetNameNoteText(getModel()->GetLanguageString(IDS_PARA_LIMIT));
+	m_pcPara_VLIMIT->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_MILLILITER));
+	m_pcPara_VLIMIT->SetOffState(!getModel()->getDATAHANDLER()->IsCurrentModeVLimitStateOn());
+	m_pcPara_VLIMIT->ShowWindow(SW_HIDE);
+	m_plParaBtn.AddTail(m_pcPara_VLIMIT);
+}
+
+/**********************************************************************************************//**
+ * Creates the onoff.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createONOFF()
+{
+	BTN btn;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
+	//-------------------------------------------------------------
+	//Parameter Button------V Garant---------------------------------
+	btn.wID					= IDC_BTN_PARA_ONOFF;	
+	btn.poPosition.x		= 505;//513;
+	btn.poPosition.y		= 105;//178;
+	btn.pcBmpUp				= m_pcPara_OnOff_Up;
+	btn.pcBmpDown			= m_pcPara_OnOff_Dw;
+	btn.pcBmpFocus			= m_pcPara_OnOff_Up;
+	btn.pcBmpDisabled		= m_pcPara_OnOff_Up;
+	btn.dwFormat			= DT_VCENTER|DT_CENTER;
+
+	m_pcPara_OnOff=new CUpDwnBtn(btn,COLOR_TXTBTNUP,false,true);
+	m_pcPara_OnOff->Create(this,g_hf7AcuBold,0);
+	m_pcPara_OnOff->SetText(_T(""),_T(""));
+	m_pcPara_OnOff->ShowWindow(SW_SHOW);
+}
+
+/**********************************************************************************************//**
+ * Creates sub para trigger.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createSubParaTRIGGER()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
 	//-------------------------------------------------------------
 	//SubParameter Button------TriggerVol---------------------------------
 	btn.wID					= IDC_BTN_SUBPARA_TRIGGER;	
@@ -1529,7 +1957,7 @@ bool CViewParaBtn::Initialize()
 	m_pcSubPara_TrigThreshold=new CSubParaBtn(btn,0,false);
 	m_pcSubPara_TrigThreshold->Create(this,dwStyleNoTab,fv);
 	m_pcSubPara_TrigThreshold->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
-	
+
 	if(		getModel()->getCONFIG()->GetCurMode()==VM_DUOPAP
 		||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_DUOPAP)
 	{
@@ -1554,7 +1982,20 @@ bool CViewParaBtn::Initialize()
 			m_pcSubPara_TrigThreshold->SetUnitText(_T(""));
 		}
 	}
-	
+}
+
+/**********************************************************************************************//**
+ * Creates sub para leakcomp.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createSubParaLEAKCOMP()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
 
 	//-------------------------------------------------------------
 	//SubParameter Button------LEAKCOMP----------------------------
@@ -1574,9 +2015,23 @@ bool CViewParaBtn::Initialize()
 	m_pcSubPara_LEAKCOMP->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
 	m_pcSubPara_LEAKCOMP->SetNameText(getModel()->GetLanguageString(IDS_PARA_LEAKCOMP));
 	m_pcSubPara_LEAKCOMP->SetUnitText(_T(""));
+}
+
+/**********************************************************************************************//**
+ * Creates sub para biasflow.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createSubParaBIASFLOW()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
 
 	//-------------------------------------------------------------
-	//SubParameter Button------LEAKCOMP----------------------------
+	//SubParameter Button------BIASFLOW----------------------------
 	//pro, added
 	btn.wID					= IDC_BTN_SUBPARA_BIASFLOW;	
 	btn.poPosition.x		= 145;
@@ -1593,6 +2048,20 @@ bool CViewParaBtn::Initialize()
 	m_pcSubPara_BIASFLOW->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
 	m_pcSubPara_BIASFLOW->SetNameText(_T(""));
 	m_pcSubPara_BIASFLOW->SetUnitText(_T(""));
+}
+
+/**********************************************************************************************//**
+ * Creates sub para i e.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createSubParaI_E()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
 
 	//-------------------------------------------------------------
 	//SubParameter Button------IE---------------------------------
@@ -1611,6 +2080,20 @@ bool CViewParaBtn::Initialize()
 	m_pcSubPara_IE->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
 	m_pcSubPara_IE->SetNameText(getModel()->GetLanguageString(IDS_PARA_IE));
 	m_pcSubPara_IE->SetUnitText(_T(""));
+}
+
+/**********************************************************************************************//**
+ * Creates sub para demflow.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createSubParaDEMFLOW()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
 
 	//-------------------------------------------------------------
 	//SubParameter Button------Demand FLow---------------------------------
@@ -1629,7 +2112,20 @@ bool CViewParaBtn::Initialize()
 	m_pcSubPara_DemandFlow->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
 	m_pcSubPara_DemandFlow->SetNameText(getModel()->GetLanguageString(IDS_PARA_DEMFLOW));
 	m_pcSubPara_DemandFlow->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_LMIN));
+}
 
+/**********************************************************************************************//**
+ * Creates sub para psvtime.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createSubParaPSVTIME()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
 
 	//-------------------------------------------------------------
 	//SubParameter Button------PSV-TIME---------------------------------
@@ -1648,8 +2144,21 @@ bool CViewParaBtn::Initialize()
 	m_pcSubPara_PSVTIME->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
 	m_pcSubPara_PSVTIME->SetNameText(getModel()->GetLanguageString(IDS_PARA_PSVTIME));
 	m_pcSubPara_PSVTIME->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_SECONDS));
+}
 
-	
+/**********************************************************************************************//**
+ * Creates sub para rate.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createSubParaRATE()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
+
 	//-------------------------------------------------------------
 	//SubParameter Button------BPM---------------------------------
 	btn.wID					= IDC_BTN_SUBPARA_BPM;	
@@ -1675,6 +2184,20 @@ bool CViewParaBtn::Initialize()
 	{
 		m_pcSubPara_BPM->SetNameText(getModel()->GetLanguageString(IDS_PARA_FREQ));
 	}
+}
+
+/**********************************************************************************************//**
+ * Creates sub para etime.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createSubParaETIME()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
 
 	//-------------------------------------------------------------
 	//SubParameter Button------ETIME---------------------------------
@@ -1693,7 +2216,20 @@ bool CViewParaBtn::Initialize()
 	m_pcSubPara_ETime->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
 	m_pcSubPara_ETime->SetNameText(getModel()->GetLanguageString(IDS_PARA_ETIME));
 	m_pcSubPara_ETime->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_SECONDS));
+}
 
+/**********************************************************************************************//**
+ * Creates sub para o 2 real.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createSubParaO2REAL()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
 
 	//-------------------------------------------------------------
 	//SubParameter Button------O2 Ist---------------------------------
@@ -1711,6 +2247,20 @@ bool CViewParaBtn::Initialize()
 	m_pcSubPara_O2act->Create(this,dwStyleNoTab,fv);
 	m_pcSubPara_O2act->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
 	m_pcSubPara_O2act->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_PERCENT));
+}
+
+/**********************************************************************************************//**
+ * Creates sub para o 2 flush.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
+void CViewParaBtn::createSubParaO2FLUSH()
+{
+	BTN btn;
+	fVALUE fv;
+	DWORD dwStyleNoTab = WS_CHILD|BS_OWNERDRAW|WS_TABSTOP;
 
 	//-------------------------------------------------------------
 	//SubParameter Button------O2FLUSH---------------------------------
@@ -1730,15 +2280,7 @@ bool CViewParaBtn::Initialize()
 	m_pcSubPara_O2Flush->SetColors(COLOR_TXTBTNUP,COLOR_TXTBTNDW,COLOR_TXTSUBBTNDW,COLOR_TXTBTNFC);
 	m_pcSubPara_O2Flush->SetUnitText(getModel()->GetLanguageString(IDS_UNIT_SECONDS));
 
-	
-	result = CreateWndMenuVentState();
-
-	/** \brief The leave critical section. */
-	LeaveCriticalSection(&csDraw);
-
-	return result;
 }
-
 /**=================================================================================================
  * \fn void CViewParaBtn::Open()
  *
