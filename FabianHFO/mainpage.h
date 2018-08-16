@@ -7,6 +7,14 @@
  *
  * @section ver Version history and changelog
  * 
+ * @subsection ver5086 Version 5.0.8.10
+ * @date 2018-08-15
+ * @verbatim
+	- WM_EV_BN_GRAPH_FREEZED + WM_EV_BN_GRAPH_CONTINUE deleted (not called at all)
+	- BUGFIX MEMORYLEAK: CArchive objektArchiv trend serialization replaced, new CTrend class, no more memory leak when serialiazing trends
+	- old trends need to be deleted manually (FFSDISK + SD) first if the fabian software isn't installed with the FabianSetup installer!!!!
+ @endverbatim
+ *
  * @subsection ver5086 Version 5.0.8.9
  * @date 2018-08-15
  * @verbatim

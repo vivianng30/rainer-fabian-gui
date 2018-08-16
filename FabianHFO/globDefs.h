@@ -601,8 +601,8 @@
 #define WM_TRIGGER_O2SENSORSTATE			WM_USER + 0x5328
 #define WM_EV_PATDATA_CHANGED				WM_USER + 0x5329
 #define WM_EV_BN_NUMERIC					WM_USER + 0x5330
-#define WM_EV_BN_GRAPH_FREEZED				WM_USER + 0x5331
-#define WM_EV_BN_GRAPH_CONTINUE				WM_USER + 0x5332
+//#define WM_EV_BN_GRAPH_FREEZED				WM_USER + 0x5331
+//#define WM_EV_BN_GRAPH_CONTINUE				WM_USER + 0x5332
 #define WM_EV_BN_GRAPH_WAVE					WM_USER + 0x5333
 #define WM_EV_BN_ALIMIT5					WM_USER + 0x5334
 #define WM_EV_TEXT_SERVICE_SYSTEM			WM_USER + 0x5335
@@ -2461,7 +2461,11 @@ enum eCurveForm {
 //	VGARANT			= 2
 //};
 
-
+//Mode trend serialize state
+enum eTrendSerialize {
+	TREND_READ	= 0, 
+	TREND_WRITE	= 1
+};
 
 
 //Mode of Time-Changer in Setup-View

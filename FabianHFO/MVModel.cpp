@@ -3323,12 +3323,12 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 				getDATAHANDLER()->SetGraphFreezed(false);
 		}
 		break;
-	case CMVEventUI::EV_BN_GRAPH_FREEZED:
+	/*case CMVEventUI::EV_BN_GRAPH_FREEZED:
 	case CMVEventUI::EV_BN_GRAPH_CONTINUE:
 		{
 			NotifyEvent(pEvent);
 		}
-		break;
+		break;*/
 	case CMVEventUI::EV_BN_GRAPH_SAVE:
 		{
 			if(AfxGetApp())

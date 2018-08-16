@@ -9,52 +9,61 @@
 #include "CircularBuffer.h"
 #include "globDefs.h"
 
+
 // CTrend command target
 
 //class CircularBuffer;
 
 
 
-class CTrend : public CObject
+class CTrend //: public CObject
 {
 	//DECLARE_SERIAL(CTrend)
 public:
-	virtual void Serialize(CArchive& ar);
-	//void Serialize(CArchive& ar);
+	//virtual void Serialize(CArchive& ar);
+	bool Serialize(CString szFile, eTrendSerialize state, UINT type);
 	
 	CTrend();
 	virtual ~CTrend(void);
 
-	DECLARE_SERIAL(CTrend)
+	//DECLARE_SERIAL(CTrend)
 
 	WORD WriteBuffer(WORD val, COleDateTime dtTimestamp);
 	WORD GetBufferValue(UINT pos);
 
 	COleDateTime GetTimestamp();
-	//void SetTimestamp();
 	void SetTimestamp(COleDateTime timestamp);
 
 	WORD GetBufferCount();
 	void SetBufferCount(WORD count);
 	void ResetBuffer();
 
-protected:
-	COleDateTime m_dtTimestamp;
 	
-	//WORD	*m_wBuffer;
-	WORD	m_wBuffer[SERIALZEBUFFER];
-	WORD	m_wBufCount;
 
-	/*typedef struct tagTREND
+protected:
+
+	bool write(CString szFile);
+	bool read(CString szFile);
+
+	/*SYSTEMTIME stTime;
+		GetLocalTime(&stTime);
+		COleDateTime dtCurrentTime(stTime);*/
+	//std::string currentDateTime();
+
+	typedef struct
 	{
 		COleDateTime m_dtTimestamp;
-		WORD	m_wBuffer[SERIALZEBUFFER];
-		WORD	m_wBufCount;
-	}MYTREND;
+		//char strTimestamp[80];
+		WORD	wBuffer[SERIALZEBUFFER];
+		WORD	wBufCount;
+	}TrendData;
 
-	MYTREND m_MyTrend;*/
+	TrendData m_stTrendData;
 
- 
+	//COleDateTime m_dtTimestamp;
+	
+	//WORD	m_wBuffer[SERIALZEBUFFER];
+	//WORD	m_wBufCount;
 };
 
 

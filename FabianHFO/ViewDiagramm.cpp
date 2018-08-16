@@ -4962,8 +4962,8 @@ LRESULT CViewDiagramm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 		break;
 	case WM_FREEZE_GRAPHS:
 		{
-			if(AfxGetApp())
-				AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_GRAPH_FREEZED);
+			/*if(AfxGetApp())
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_GRAPH_FREEZED);*/
 
 			if(		getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_LOOPGRAPHS
 				&&	getModel()->getCONFIG()->GetCurMode()!=VM_CPAP
@@ -4992,8 +4992,8 @@ LRESULT CViewDiagramm::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 		break;
 	case WM_CONTINUE_GRAPHS:
 		{
-			if(AfxGetApp())
-				AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_GRAPH_CONTINUE);
+			/*if(AfxGetApp())
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_GRAPH_CONTINUE);*/
 
 			m_bResetAllDiagramms=true;
 			m_bDrawSavedLoops=false;

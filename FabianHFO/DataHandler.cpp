@@ -18978,52 +18978,18 @@ void CDataHandler::SerializeTrend(UINT type, bool bIncreaseFileNum)
 
 
 	szFile.Format(_T("%s%d%s"),szTrendFolder,chFilenum, IDS_TRD_FILE_ID);
-	CFile archivDatei;
-	CFileException ex;
+	m_cpTend->Serialize(szFile,TREND_WRITE,type);
+	//zuletzt serialisierte Dateinummer im FRAM speichern
+	getModel()->getCONFIG()->SetLastWrittenTrendFile(type, chFilenum);
 
-	try
+	if(bIncreaseFileNum)
 	{
-		if(archivDatei.Open(szFile,CFile::modeCreate | CFile::modeWrite, &ex)!=0)
-		{
-			CArchive objektArchiv(&archivDatei, CArchive::store);
+		chFilenum++;
 
-			m_cpTend->Serialize(objektArchiv);
+		if(chFilenum>MAXTRENDFILES)
+			chFilenum=1;
 
-			objektArchiv.Close();
-			archivDatei.Close();
-
-			//zuletzt serialisierte Dateinummer im FRAM speichern
-			getModel()->getCONFIG()->SetLastWrittenTrendFile(type, chFilenum);
-
-			if(bIncreaseFileNum)
-			{
-				chFilenum++;
-
-				if(chFilenum>MAXTRENDFILES)
-					chFilenum=1;
-
-				m_cpTend->ResetBuffer();
-			}
-		}
-		else
-		{
-			TCHAR szError[1024];
-			ex.GetErrorMessage(szError, 1024);
-
-			CStringW strFormatted;
-			strFormatted = _T("#HFO:0093: ");
-			strFormatted += szFile;
-			strFormatted += _T(" ");
-			strFormatted += szError;
-
-			theApp.WriteLog(strFormatted);
-		}
-	}
-	catch (...)
-	{
-		archivDatei.Close();
-
-		theApp.ReportException(_T("CDataHandler::SerializeTrend"));
+		m_cpTend->ResetBuffer();
 	}
 
 	switch(type)
@@ -19286,44 +19252,10 @@ bool CDataHandler::DeserializeTrend(UINT type, BYTE fileNum)
 
 
 	szFile.Format(_T("%s%d%s"),szTrendFolder,fileNum, IDS_TRD_FILE_ID);
-	CFile archivDatei;
-	CFileException ex;
-
-	try
+	if(szFile!=_T(""))
 	{
-		if(archivDatei.Open(szFile,CFile::modeRead, &ex)!=0)
-		{
-			CArchive objektArchiv(&archivDatei, CArchive::load); 
-
-			m_cpTend->Serialize(objektArchiv);
-
-			objektArchiv.Close();
-			archivDatei.Close();
-
-		}
-		else
-		{
-			TCHAR szError[1024];
-			ex.GetErrorMessage(szError, 1024);
-
-			CStringW strFormatted;
-			strFormatted = _T("#HFO:0094: ");
-			strFormatted += szFile;
-			strFormatted += _T(" ");
-			strFormatted += szError;
-
-			theApp.WriteLog(strFormatted);
-
-			bRes=false;
-		}
+		bRes=m_cpTend->Serialize(szFile,TREND_READ,type);
 	}
-	catch (...)
-	{
-		archivDatei.Close();
-
-		theApp.ReportException(_T("CDataHandler::DeserializeTrend"));
-	}
-
 
 	return bRes;
 }
@@ -19448,31 +19380,7 @@ bool CDataHandler::DeserializeTempTrend(UINT type, WORD fileNum)
 
 	if(szFile!=_T(""))
 	{
-		CFile archivDatei;
-		CFileException ex;
-
-		if(archivDatei.Open(szFile,CFile::modeRead, &ex)!=0)
-		{
-			CArchive objektArchiv(&archivDatei, CArchive::load);
-			m_cTrendTemporary.Serialize(objektArchiv);
-
-			objektArchiv.Close();
-			archivDatei.Close();
-
-			bResult=true;
-		}
-		else
-		{
-			TCHAR szError[1024];
-			ex.GetErrorMessage(szError, 1024);
-			CStringW strFormatted;
-			strFormatted = _T("#HFO:0095: ");
-			strFormatted += szFile;
-			strFormatted += _T(" ");
-			strFormatted += szError;
-
-			theApp.WriteLog(strFormatted);
-		}
+		bResult=m_cTrendTemporary.Serialize(szFile,TREND_READ,type);
 	}
 
 	return bResult;

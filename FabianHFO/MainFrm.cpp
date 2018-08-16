@@ -2133,7 +2133,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		//		return 1;
 		//	}
 		//	break;
-		case WM_EV_BN_GRAPH_FREEZED:
+		/*case WM_EV_BN_GRAPH_FREEZED:
 			{
 				CMVEventUI event(CMVEventUI::EV_BN_GRAPH_FREEZED);
 				getModel()->triggerEvent(&event);
@@ -2146,7 +2146,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				getModel()->triggerEvent(&event);
 				return 1;
 			}
-			break;
+			break;*/
 		case WM_EV_BN_GRAPH_WAVE:
 			{
 				CMVEventUI event(CMVEventUI::EV_BN_GRAPH_WAVE);
