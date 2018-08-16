@@ -3736,14 +3736,10 @@ bool CViewAlarmLimit::CreateWndMenuAlarmLimits()
 	// Init. line diagram
 	if(m_pWndMenuAlarmLimits==NULL && m_lX>-1 && !m_bExit)
 	{
-		m_pWndMenuAlarmLimits = new CWndMenuAlarmLimits(this);
-		RECT rcLd={0,551,800,600};
+		m_pWndMenuAlarmLimits = new CMnuWrapperAlarmLimits();
 
-		//RECT rcLd={477,0,640,435};
-		if(m_pWndMenuAlarmLimits->Create(AfxGetApp()->GetMainWnd(),rcLd,IDC_VIEW_ALARMLIMITSMENU))
+		if(m_pWndMenuAlarmLimits->createMenu(AfxGetApp()->GetMainWnd(), this))
 		{
-			m_pWndMenuAlarmLimits->Init();
-
 			return true;
 		}
 
@@ -6184,9 +6180,9 @@ void CViewAlarmLimit::OnDestroy()
 
 	if(m_pWndMenuAlarmLimits)
 	{
-		m_pWndMenuAlarmLimits->DestroyWindow();
-		
+		delete m_pWndMenuAlarmLimits;
 	}
+	m_pWndMenuAlarmLimits=NULL;
 
 	CMVView::OnDestroy();
 

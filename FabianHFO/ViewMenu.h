@@ -6,7 +6,7 @@
 
 #pragma once
 #include "MVView.h"
-#include "WndMenuMenu.h"
+#include "MnuWrapperSetupMenu.h"
 #include "SubViewCalOxySensor.h"
 #include "SubViewCalFlowSensor.h"
 #include "SubViewDisplay.h"
@@ -251,7 +251,7 @@ protected:
 protected:
 	bool m_bExit;
 
-	CWndMenuMenu *m_pWndMenuMenu;
+	CMnuWrapperSetupMenu *m_pWndMenuMenu;
 
 	 CSubViewMenuSelect *m_pcSubViewMenu;
 

@@ -665,8 +665,8 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		CString szBot=_T("intern");*/
 		
 
-		//m_pcFreshgasInt=new CDwnBtn(btn,COLOR_TXTBTNUP,true,false);
-		m_pcFreshgasInt=new CPresetMenuBtn(btn,COLOR_TXTBTNUP);
+		m_pcFreshgasInt=new CPresetMenuBtn();
+		m_pcFreshgasInt->Initialize(btn,COLOR_TXTBTNUP);
 		m_pcFreshgasInt->Create(this,g_hf9AcuBold,0);
 		m_pcFreshgasInt->SetTextTwoLines(getModel()->GetLanguageString(IDS_BTN_BIAS_INT1),getModel()->GetLanguageString(IDS_BTN_BIAS_INT2));
 
@@ -690,10 +690,8 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		btn.pcBmpDisabled		= m_pcSelSetting_Up;
 		btn.dwFormat			= DT_VCENTER|DT_CENTER;
 
-		//szTop=_T("Bias Flow");
-		//szBot=_T("extern");
-		//m_pcFreshgasExt=new CDwnBtn(btn,COLOR_TXTBTNUP,true,false);
-		m_pcFreshgasExt=new CPresetMenuBtn(btn,COLOR_TXTBTNUP);
+		m_pcFreshgasExt=new CPresetMenuBtn();
+		m_pcFreshgasExt->Initialize(btn,COLOR_TXTBTNUP);
 		m_pcFreshgasExt->Create(this,g_hf9AcuBold,0);
 		m_pcFreshgasExt->SetTextTwoLines(getModel()->GetLanguageString(IDS_BTN_BIAS_EXT1),getModel()->GetLanguageString(IDS_BTN_BIAS_EXT2));
 		
@@ -720,8 +718,8 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		/*szTop=_T("Volume");
 		szBot=_T("guarantee");*/
 
-		//m_pcVolumeGuarantee=new CDwnBtn(btn,COLOR_TXTBTNUP,true,false);
-		m_pcVolumeGuarantee=new CPresetMenuBtn(btn,COLOR_TXTBTNUP);
+		m_pcVolumeGuarantee=new CPresetMenuBtn();
+		m_pcVolumeGuarantee->Initialize(btn,COLOR_TXTBTNUP);
 		m_pcVolumeGuarantee->Create(this,g_hf9AcuBold,0);
 		m_pcVolumeGuarantee->SetTextTwoLines(getModel()->GetLanguageString(IDS_BTN_VG1),getModel()->GetLanguageString(IDS_BTN_VG2));
 		m_pcVolumeGuarantee->ShowWindow(SW_HIDE);
@@ -738,10 +736,8 @@ BOOL CWndParaSettings::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 		btn.pcBmpDisabled		= m_pcSelSetting_Up;
 		btn.dwFormat			= DT_VCENTER|DT_CENTER;
 
-		//szTop=_T("Volume");
-		//szBot=_T("limit");
-		//m_pcVolumeLimit=new CDwnBtn(btn,COLOR_TXTBTNUP,true,false);
-		m_pcVolumeLimit=new CPresetMenuBtn(btn,COLOR_TXTBTNUP);
+		m_pcVolumeLimit=new CPresetMenuBtn();
+		m_pcVolumeLimit->Initialize(btn,COLOR_TXTBTNUP);
 		m_pcVolumeLimit->Create(this,g_hf9AcuBold,0);
 		m_pcVolumeLimit->SetTextTwoLines(getModel()->GetLanguageString(IDS_BTN_VL1),getModel()->GetLanguageString(IDS_BTN_VL2));
 		m_pcVolumeLimit->ShowWindow(SW_HIDE);

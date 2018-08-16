@@ -6,15 +6,10 @@
 
 #pragma once
 #include "MVView.h"
-#include "WndMenuAlarmLimits.h"
+#include "MnuWrapperAlarmLimits.h"
 #include "ALimitBtn.h"
 #include "SelectSetupBtn.h"
-//#include "ALimitBtn_MV.h"
-//#include "ALimitBtn_Apnoe.h"
-//#include "ALimitBtn_Pmax.h"
-//#include "ALimitBtn_PEEP.h"
-//#include "ALimitBtn_Leak.h"
-//#include "ALimitBtn_BPM.h"
+
 
 
 class CViewAlarmLimit :public CMVView
@@ -171,7 +166,7 @@ protected:
 
 	CSelectSetupBtn* m_pbtnValueDelay;
 
-	CWndMenuAlarmLimits *m_pWndMenuAlarmLimits;
+	CMnuWrapperAlarmLimits *m_pWndMenuAlarmLimits;
 
 	int m_iValueDelay;
 	int m_iFocusedWnd;

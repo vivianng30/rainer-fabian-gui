@@ -38,7 +38,10 @@ class CBtn : public CButton
 	DECLARE_DYNAMIC(CBtn)
 
 public:
+	CBtn();
 	CBtn(BTN &btn,COLORREF crTxtUp=0x00000000, COLORREF crTxtDown=0x00000000, COLORREF crTxtDisabled=0x00000000, COLORREF crTxtFocus=0x00000000);
+	virtual void Initialize(BTN &btn,COLORREF crTxtUp=0x00000000, COLORREF crTxtDown=0x00000000, COLORREF crTxtDisabled=0x00000000, COLORREF crTxtFocus=0x00000000);
+
 	inline void GetButtonColors(BTNCOLORS* pbtncr){memcpy(pbtncr,&m_btncr,sizeof(BTNCOLORS));};
 	inline void SetButtonColors(BTNCOLORS* pbtncr){memcpy(&m_btncr,pbtncr,sizeof(BTNCOLORS));};
 

@@ -61,11 +61,8 @@ IMPLEMENT_DYNAMIC(CWndMenuVentState, CWnd)
  * \param [in,out]	parentView	If non-null, the parent view.
  **************************************************************************************************/
 
-CWndMenuVentState::CWndMenuVentState(CMVView *parentView)
+CWndMenuVentState::CWndMenuVentState()
 {
-	//m_iCurrentPressedBtn=0;
-	m_parentView=parentView;
-
 	m_lX				= 0;
 	m_lY				= 0;
 	m_lXo				= 0;
@@ -79,19 +76,6 @@ CWndMenuVentState::CWndMenuVentState(CMVView *parentView)
 	m_pcMenu_Dw=NULL;
 	m_pcMenu_Fc=NULL;
 	m_pcMenu_Dis=NULL;
-
-	m_pcMenuIPPV=NULL;
-	m_pcMenuSIPPV=NULL;
-	m_pcMenuSIMV=NULL;
-	m_pcMenuSIMVPSV=NULL;
-	m_pcMenuPSV=NULL;
-	m_pcMenuHFO=NULL;
-	m_pcMenuCPAP=NULL;
-	m_pcMenuNCPAP=NULL;
-	m_pcMenuDUOPAP=NULL;
-	m_pcMenuTherapy=NULL;
-
-	m_pModel = NULL;
 }
 
 /**********************************************************************************************//**
@@ -103,27 +87,6 @@ CWndMenuVentState::CWndMenuVentState(CMVView *parentView)
 
 CWndMenuVentState::~CWndMenuVentState()
 {
-	delete m_pcMenuIPPV;
-	m_pcMenuIPPV=NULL;
-	delete m_pcMenuSIPPV;
-	m_pcMenuSIPPV=NULL;
-	delete m_pcMenuSIMV;
-	m_pcMenuSIMV=NULL;
-	delete m_pcMenuSIMVPSV;
-	m_pcMenuSIMVPSV=NULL;
-	delete m_pcMenuPSV;
-	m_pcMenuPSV=NULL;
-	delete m_pcMenuHFO;
-	m_pcMenuHFO=NULL;
-	delete m_pcMenuCPAP;
-	m_pcMenuCPAP=NULL;
-	delete m_pcMenuNCPAP;
-	m_pcMenuNCPAP=NULL;
-	delete m_pcMenuDUOPAP;
-	m_pcMenuDUOPAP=NULL;
-	delete m_pcMenuTherapy;
-	m_pcMenuTherapy=NULL;
-
 	delete m_pcMenu_Up;
 	m_pcMenu_Up=NULL;
 	delete m_pcMenu_Dw;
@@ -184,16 +147,20 @@ BOOL CWndMenuVentState::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreat
 		m_hBmp=CreateCompatibleBitmap(dc.m_hDC,m_lX,m_lY);
 		m_hBmpPrev=(HBITMAP)SelectObject(m_hDC,m_hBmp);
 
+		CPen penBack;
+		penBack.CreatePen(PS_SOLID,1,BACKGND);
+
 		CBrush cbrBack(BACKGND);
 		//CBrush cbrBack(RGB(200,200,255));
 		HBRUSH hbrprev=(HBRUSH)SelectObject(m_hDC,cbrBack);
-		HPEN hpenprev=(HPEN)SelectObject(m_hDC, (HPEN)GetStockObject(NULL_PEN));	
+		HPEN hpenprev=(HPEN)SelectObject(m_hDC, (HPEN)penBack);	
 
 		Rectangle(m_hDC, 0, 0, m_lX, m_lY);
 
 		SelectObject(m_hDC,hpenprev);
 		SelectObject(m_hDC,hbrprev);
-		//cbrBack.DeleteObject();//rkuNEWFIX
+		
+		penBack.DeleteObject();
 
 		return 1;
 	}
@@ -213,13 +180,8 @@ void CWndMenuVentState::Init()
 	CClientDC dc(this);
 
 	DWORD dwStyleNoTab = WS_CHILD|WS_VISIBLE|BS_OWNERDRAW;
-	//DWORD dwStyleNoTab = WS_CHILD|WS_VISIBLE|BS_OWNERDRAW|WS_TABSTOP;
 
 	BTN btn;
-
-	/*m_pcMenu_Up		= new CBmp(theApp.m_hInstance,hdc,	IDB_BTN_5MENU_UP);
-	m_pcMenu_Dw		= new CBmp(theApp.m_hInstance,hdc,	IDB_BTN_5MENU_DW);
-	m_pcMenu_Fc		= new CBmp(theApp.m_hInstance,hdc,	IDB_BTN_5MENU_FC);*/
 
 	m_pcMenu_Up		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_5MENU_UP);
 	m_pcMenu_Dw		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_5MENU_DW);
@@ -236,11 +198,11 @@ void CWndMenuVentState::Init()
 	btn.pcBmpDisabled		= m_pcMenu_Up;
 	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
 
-	m_pcMenuIPPV=new CPresetMenuBtn(btn,COLOR_TXTBTNUP);
-	m_pcMenuIPPV->Create(this,g_hf14AcuMed,0);
-	m_pcMenuIPPV->SetText(getModel()->GetLanguageString(IDS_IPPV));
-	m_pcMenuIPPV->ShowWindow(SW_HIDE);
-	m_plMenuBtn.AddTail(m_pcMenuIPPV);
+	m_menuIPPV.Initialize(btn,COLOR_TXTBTNUP);
+	m_menuIPPV.Create(this,g_hf14AcuMed,0);
+	m_menuIPPV.SetText(getModel()->GetLanguageString(IDS_IPPV));
+	m_menuIPPV.ShowWindow(SW_HIDE);
+	m_plMenuBtn.AddTail(&m_menuIPPV);
 
 
 
@@ -254,11 +216,11 @@ void CWndMenuVentState::Init()
 	btn.pcBmpDisabled		= m_pcMenu_Up;
 	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
 
-	m_pcMenuSIPPV=new CPresetMenuBtn(btn,COLOR_TXTBTNUP);
-	m_pcMenuSIPPV->Create(this,g_hf14AcuMed,0);
-	m_pcMenuSIPPV->SetText(getModel()->GetLanguageString(IDS_SIPPV));
-	m_pcMenuSIPPV->ShowWindow(SW_HIDE);
-	m_plMenuBtn.AddTail(m_pcMenuSIPPV);
+	m_menuSIPPV.Initialize(btn,COLOR_TXTBTNUP);
+	m_menuSIPPV.Create(this,g_hf14AcuMed,0);
+	m_menuSIPPV.SetText(getModel()->GetLanguageString(IDS_SIPPV));
+	m_menuSIPPV.ShowWindow(SW_HIDE);
+	m_plMenuBtn.AddTail(&m_menuSIPPV);
 
 	btn.wID					= IDC_BTN_MENU_SIMV;	
 	btn.poPosition.x		= 237;
@@ -270,11 +232,11 @@ void CWndMenuVentState::Init()
 	btn.pcBmpDisabled		= m_pcMenu_Up;
 	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
 
-	m_pcMenuSIMV=new CPresetMenuBtn(btn,COLOR_TXTBTNUP);
-	m_pcMenuSIMV->Create(this,g_hf14AcuMed,0);
-	m_pcMenuSIMV->SetText(getModel()->GetLanguageString(IDS_SIMV));
-	m_pcMenuSIMV->ShowWindow(SW_HIDE);
-	m_plMenuBtn.AddTail(m_pcMenuSIMV);
+	m_menuSIMV.Initialize(btn,COLOR_TXTBTNUP);
+	m_menuSIMV.Create(this,g_hf14AcuMed,0);
+	m_menuSIMV.SetText(getModel()->GetLanguageString(IDS_SIMV));
+	m_menuSIMV.ShowWindow(SW_HIDE);
+	m_plMenuBtn.AddTail(&m_menuSIMV);
 
 	btn.wID					= IDC_BTN_MENU_SIMVPSV;	
 	btn.poPosition.x		= 354;
@@ -286,12 +248,12 @@ void CWndMenuVentState::Init()
 	btn.pcBmpDisabled		= m_pcMenu_Dis;
 	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
 
-	m_pcMenuSIMVPSV=new CPresetMenuBtn(btn,COLOR_TXTBTNUP);
-	m_pcMenuSIMVPSV->Create(this,g_hf14AcuMed,0);
-	m_pcMenuSIMVPSV->SetText(getModel()->GetLanguageString(IDS_SIMVPSV));
-	m_pcMenuSIMVPSV->ShowWindow(SW_HIDE);
+	m_menuSIMVPSV.Initialize(btn,COLOR_TXTBTNUP);
+	m_menuSIMVPSV.Create(this,g_hf14AcuMed,0);
+	m_menuSIMVPSV.SetText(getModel()->GetLanguageString(IDS_SIMVPSV));
+	m_menuSIMVPSV.ShowWindow(SW_HIDE);
 	//TESTVERSION PSV
-	m_plMenuBtn.AddTail(m_pcMenuSIMVPSV);
+	m_plMenuBtn.AddTail(&m_menuSIMVPSV);
 
 	btn.wID					= IDC_BTN_MENU_PSV;	
 	btn.poPosition.x		= 471;
@@ -303,11 +265,11 @@ void CWndMenuVentState::Init()
 	btn.pcBmpDisabled		= m_pcMenu_Dis;
 	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
 
-	m_pcMenuPSV=new CPresetMenuBtn(btn,COLOR_TXTBTNUP);
-	m_pcMenuPSV->Create(this,g_hf14AcuMed,0);
-	m_pcMenuPSV->SetText(getModel()->GetLanguageString(IDS_PSV));
-	m_pcMenuPSV->ShowWindow(SW_HIDE);
-	m_plMenuBtn.AddTail(m_pcMenuPSV);
+	m_menuPSV.Initialize(btn,COLOR_TXTBTNUP);
+	m_menuPSV.Create(this,g_hf14AcuMed,0);
+	m_menuPSV.SetText(getModel()->GetLanguageString(IDS_PSV));
+	m_menuPSV.ShowWindow(SW_HIDE);
+	m_plMenuBtn.AddTail(&m_menuPSV);
 
 	
 
@@ -320,11 +282,11 @@ void CWndMenuVentState::Init()
 	btn.pcBmpDisabled		= m_pcMenu_Up;
 	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
 
-	m_pcMenuCPAP=new CPresetMenuBtn(btn,COLOR_TXTBTNUP);
-	m_pcMenuCPAP->Create(this,g_hf14AcuMed,0);
-	m_pcMenuCPAP->SetText(getModel()->GetLanguageString(IDS_CPAP));
-	m_pcMenuCPAP->ShowWindow(SW_HIDE);
-	m_plMenuBtn.AddTail(m_pcMenuCPAP);
+	m_menuCPAP.Initialize(btn,COLOR_TXTBTNUP);
+	m_menuCPAP.Create(this,g_hf14AcuMed,0);
+	m_menuCPAP.SetText(getModel()->GetLanguageString(IDS_CPAP));
+	m_menuCPAP.ShowWindow(SW_HIDE);
+	m_plMenuBtn.AddTail(&m_menuCPAP);
 
 	btn.wID					= IDC_BTN_MENU_NCPAP;	
 	btn.poPosition.x		= 120;
@@ -336,11 +298,11 @@ void CWndMenuVentState::Init()
 	btn.pcBmpDisabled		= m_pcMenu_Dis;
 	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
 
-	m_pcMenuNCPAP=new CPresetMenuBtn(btn,COLOR_TXTBTNUP);
-	m_pcMenuNCPAP->Create(this,g_hf14AcuMed,0);
-	m_pcMenuNCPAP->SetText(getModel()->GetLanguageString(IDS_NCPAP));
-	m_pcMenuNCPAP->ShowWindow(SW_HIDE);
-	m_plMenuBtn.AddTail(m_pcMenuNCPAP);
+	m_menuNCPAP.Initialize(btn,COLOR_TXTBTNUP);
+	m_menuNCPAP.Create(this,g_hf14AcuMed,0);
+	m_menuNCPAP.SetText(getModel()->GetLanguageString(IDS_NCPAP));
+	m_menuNCPAP.ShowWindow(SW_HIDE);
+	m_plMenuBtn.AddTail(&m_menuNCPAP);
 
 	btn.wID					= IDC_BTN_MENU_DUOPAP;	
 	btn.poPosition.x		= 237;
@@ -352,11 +314,11 @@ void CWndMenuVentState::Init()
 	btn.pcBmpDisabled		= m_pcMenu_Dis;
 	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
 
-	m_pcMenuDUOPAP=new CPresetMenuBtn(btn,COLOR_TXTBTNUP);
-	m_pcMenuDUOPAP->Create(this,g_hf14AcuMed,0);
-	m_pcMenuDUOPAP->SetText(getModel()->GetLanguageString(IDS_DUOPAP));
-	m_pcMenuDUOPAP->ShowWindow(SW_HIDE);
-	m_plMenuBtn.AddTail(m_pcMenuDUOPAP);
+	m_menuDUOPAP.Initialize(btn,COLOR_TXTBTNUP);
+	m_menuDUOPAP.Create(this,g_hf14AcuMed,0);
+	m_menuDUOPAP.SetText(getModel()->GetLanguageString(IDS_DUOPAP));
+	m_menuDUOPAP.ShowWindow(SW_HIDE);
+	m_plMenuBtn.AddTail(&m_menuDUOPAP);
 
 	btn.wID					= IDC_BTN_MENU_HFO;	
 	btn.poPosition.x		= 354;
@@ -368,19 +330,19 @@ void CWndMenuVentState::Init()
 	btn.pcBmpDisabled		= m_pcMenu_Dis;
 	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
 
-	m_pcMenuHFO=new CPresetMenuBtn(btn,COLOR_TXTBTNUP);
-	m_pcMenuHFO->Create(this,g_hf14AcuMed,0);
-	m_pcMenuHFO->SetText(getModel()->GetLanguageString(IDS_HFO));
+	m_menuHFO.Initialize(btn,COLOR_TXTBTNUP);
+	m_menuHFO.Create(this,g_hf14AcuMed,0);
+	m_menuHFO.SetText(getModel()->GetLanguageString(IDS_HFO));
 
 	if(		false==getModel()->getCONFIG()->isBiasFlowActive()
 		&&	false==getModel()->getDATAHANDLER()->isHFOLicenseAvailable())
 	{
-		m_pcMenuHFO->ShowWindow(SW_HIDE);
+		m_menuHFO.ShowWindow(SW_HIDE);
 	}
 	else
 	{
-		m_pcMenuHFO->ShowWindow(SW_HIDE);
-		m_plMenuBtn.AddTail(m_pcMenuHFO);
+		m_menuHFO.ShowWindow(SW_HIDE);
+		m_plMenuBtn.AddTail(&m_menuHFO);
 	}
 	
 
@@ -393,26 +355,12 @@ void CWndMenuVentState::Init()
 	btn.pcBmpDisabled		= m_pcMenu_Dis;
 	btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
 
-	m_pcMenuTherapy=new CPresetMenuBtn(btn,COLOR_TXTBTNUP);
-	m_pcMenuTherapy->Create(this,g_hf14AcuMed,0);
-	m_pcMenuTherapy->SetText(getModel()->GetLanguageString(IDS_O2THERAPIE));
-	m_pcMenuTherapy->ShowWindow(SW_HIDE);
-	m_plMenuBtn.AddTail(m_pcMenuTherapy);
+	m_menuTherapy.Initialize(btn,COLOR_TXTBTNUP);
+	m_menuTherapy.Create(this,g_hf14AcuMed,0);
+	m_menuTherapy.SetText(getModel()->GetLanguageString(IDS_O2THERAPIE));
+	m_menuTherapy.ShowWindow(SW_HIDE);
+	m_plMenuBtn.AddTail(&m_menuTherapy);
 
-	//btn.wID					= IDC_BTN_MENU_NUMERIC;	
-	//btn.poPosition.x		= 602;
-	//btn.poPosition.y		= 48;//553;
-	//btn.pcBmpUp				= m_pcNumeric_Up;
-	//btn.pcBmpDown			= m_pcNumeric_Dw;
-	//btn.pcBmpFocus			= m_pcNumeric_Up;
-	//btn.pcBmpDisabled		= m_pcNumeric_Up;
-	//btn.dwFormat			= DT_VCENTER|DT_SINGLELINE|DT_CENTER;
-
-	//m_pcMenuNumeric=new CNumBtn(btn,COLOR_TXTBTNUP,GRP_NUMERIC_BTN);
-	//m_pcMenuNumeric->Create(this,g_hf14AcuMed,0);
-	//m_pcMenuNumeric->SetText(_T("Numerics"));
-	//m_pcMenuNumeric->ShowWindow(SW_HIDE);
-	
 
 	ShowMenuBtn();
 
@@ -428,41 +376,9 @@ void CWndMenuVentState::Init()
  **************************************************************************************************/
 
 void CWndMenuVentState::Show(BOOL bShow)
-{
+{	
 	if(bShow==TRUE)
 	{
-		//if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
-		//{
-		//	if(m_pcMenuPSV)
-		//		m_pcMenuPSV->ShowWindow(SW_HIDE);
-		//	if(m_pcMenuSIMVPSV)
-		//		m_pcMenuSIMVPSV->ShowWindow(SW_HIDE);
-		//	/*if(m_pcMenuSIMV)
-		//		m_pcMenuSIMV->ShowWindow(SW_HIDE);
-		//	if(m_pcMenuSIPPV)
-		//		m_pcMenuSIPPV->ShowWindow(SW_HIDE);*/
-		//}
-		//else
-		//{
-		//	if(m_pcMenuPSV)
-		//		m_pcMenuPSV->ShowWindow(SW_SHOW);
-		//	//TESTVERSION PSV
-		//	if(m_pcMenuSIMVPSV)
-		//		m_pcMenuSIMVPSV->ShowWindow(SW_SHOW);
-		//	/*if(m_pcMenuSIMV)
-		//		m_pcMenuSIMV->ShowWindow(SW_SHOW);
-		//	if(m_pcMenuSIPPV)
-		//		m_pcMenuSIPPV->ShowWindow(SW_SHOW);*/
-		//}
-
-		//if(getModel()->getCONFIG()->GetVentRange()==NEONATAL)
-		//{
-
-		//}
-		//else
-		//{
-
-		//}
 		ShowMenuBtn();
 		this->ShowWindow(SW_SHOW);
 	}
@@ -479,108 +395,72 @@ void CWndMenuVentState::Show(BOOL bShow)
 
 void CWndMenuVentState::ShowMenuBtn()
 {
-	//m_pcMenuNumeric->ShowWindow(SW_SHOW);
-
-	if(m_pcMenuIPPV)
-		m_pcMenuIPPV->ShowWindow(SW_SHOW);
-	if(m_pcMenuSIPPV)
-		m_pcMenuSIPPV->ShowWindow(SW_SHOW);
-	if(m_pcMenuSIMV)
-		m_pcMenuSIMV->ShowWindow(SW_SHOW);
-	if(m_pcMenuSIMVPSV)
-		m_pcMenuSIMVPSV->ShowWindow(SW_SHOW);
-	if(m_pcMenuPSV)
-		m_pcMenuPSV->ShowWindow(SW_SHOW);
+	m_menuIPPV.ShowWindow(SW_SHOW);
+	m_menuSIPPV.ShowWindow(SW_SHOW);
+	m_menuSIMV.ShowWindow(SW_SHOW);
+	m_menuSIMVPSV.ShowWindow(SW_SHOW);
+	m_menuPSV.ShowWindow(SW_SHOW);
 
 	//HFO
 	if(		false==getModel()->getCONFIG()->isBiasFlowActive()
 		&&	false==getModel()->getDATAHANDLER()->isHFOLicenseAvailable())
 	{
-		if(m_pcMenuHFO)
-			m_pcMenuHFO->ShowWindow(SW_HIDE);
+		m_menuHFO.ShowWindow(SW_HIDE);
 	}
 	else if(true==getModel()->getDATAHANDLER()->isHFOLicenseAvailable())
 	{
-		if(m_pcMenuHFO)
-			m_pcMenuHFO->EnableWindow(TRUE);
-		if(m_pcMenuHFO)
-			m_pcMenuHFO->ShowWindow(SW_SHOW);
+		m_menuHFO.EnableWindow(TRUE);
+		m_menuHFO.ShowWindow(SW_SHOW);
 	}
 	else
 	{
-		if(m_pcMenuHFO)
-			m_pcMenuHFO->EnableWindow(FALSE);
-		if(m_pcMenuHFO)
-			m_pcMenuHFO->ShowWindow(SW_SHOW);
-		/*if(m_pcMenuHFO)
-			m_pcMenuHFO->ShowWindow(SW_HIDE);*/
+		m_menuHFO.EnableWindow(FALSE);
+		m_menuHFO.ShowWindow(SW_SHOW);
 	}
 
 
-	if(m_pcMenuCPAP)
-		m_pcMenuCPAP->ShowWindow(SW_SHOW);
+	m_menuCPAP.ShowWindow(SW_SHOW);
 
 	if(		true==getModel()->getDATAHANDLER()->isNMODELicenseAvailable() 
 		&&	getModel()->getCONFIG()->GetVentRange()==NEONATAL)
 	{
-		if(m_pcMenuNCPAP)
-			m_pcMenuNCPAP->EnableWindow(TRUE);
-		if(m_pcMenuNCPAP)
-			m_pcMenuNCPAP->ShowWindow(SW_SHOW);
-		if(m_pcMenuDUOPAP)
-			m_pcMenuDUOPAP->EnableWindow(TRUE);
-		if(m_pcMenuDUOPAP)
-			m_pcMenuDUOPAP->ShowWindow(SW_SHOW);
+		m_menuNCPAP.EnableWindow(TRUE);
+		m_menuNCPAP.ShowWindow(SW_SHOW);
+		m_menuDUOPAP.EnableWindow(TRUE);
+		m_menuDUOPAP.ShowWindow(SW_SHOW);
 	}
 	else
 	{
-		if(m_pcMenuNCPAP)
-			m_pcMenuNCPAP->EnableWindow(FALSE);
-		if(m_pcMenuNCPAP)
-			m_pcMenuNCPAP->ShowWindow(SW_SHOW);
-		if(m_pcMenuDUOPAP)
-			m_pcMenuDUOPAP->EnableWindow(FALSE);
-		if(m_pcMenuDUOPAP)
-			m_pcMenuDUOPAP->ShowWindow(SW_SHOW);
+		m_menuNCPAP.EnableWindow(FALSE);
+		m_menuNCPAP.ShowWindow(SW_SHOW);
+		m_menuDUOPAP.EnableWindow(FALSE);
+		m_menuDUOPAP.ShowWindow(SW_SHOW);
 	}
 
 	if(true==getModel()->getDATAHANDLER()->isTHERAPYLicenseAvailable())
 	{
-		if(m_pcMenuTherapy)
-			m_pcMenuTherapy->EnableWindow(TRUE);
-		if(m_pcMenuTherapy)
-			m_pcMenuTherapy->ShowWindow(SW_SHOW);
+		m_menuTherapy.EnableWindow(TRUE);
+		m_menuTherapy.ShowWindow(SW_SHOW);
 	}
 	else
 	{
-		if(m_pcMenuTherapy)
-			m_pcMenuTherapy->EnableWindow(FALSE);
-		if(m_pcMenuTherapy)
-			m_pcMenuTherapy->ShowWindow(SW_SHOW);
+		m_menuTherapy.EnableWindow(FALSE);
+		m_menuTherapy.ShowWindow(SW_SHOW);
 	}
 
 	if(getModel()->getDATAHANDLER()->GetFlowSensorState()==FLOWSENSOR_MANOFF)
 	{
-		if(m_pcMenuPSV)
-			m_pcMenuPSV->EnableWindow(FALSE);
-		if(m_pcMenuPSV)
-			m_pcMenuPSV->ShowWindow(SW_SHOW);
-		if(m_pcMenuSIMVPSV)
-			m_pcMenuSIMVPSV->EnableWindow(FALSE);
-		if(m_pcMenuSIMVPSV)
-			m_pcMenuSIMVPSV->ShowWindow(SW_SHOW);
-		
+		m_menuPSV.EnableWindow(FALSE);
+		m_menuPSV.ShowWindow(SW_SHOW);
+		m_menuSIMVPSV.EnableWindow(FALSE);
+		m_menuSIMVPSV.ShowWindow(SW_SHOW);
 	}
 	else
 	{
-		if(m_pcMenuPSV)
-			m_pcMenuPSV->EnableWindow(TRUE);
-		if(m_pcMenuPSV)
-			m_pcMenuPSV->ShowWindow(SW_SHOW);
-		if(m_pcMenuSIMVPSV)
-			m_pcMenuSIMVPSV->EnableWindow(TRUE);
-		if(m_pcMenuSIMVPSV)
-			m_pcMenuSIMVPSV->ShowWindow(SW_SHOW);
+		m_menuPSV.EnableWindow(TRUE);
+		m_menuPSV.ShowWindow(SW_SHOW);
+		m_menuSIMVPSV.EnableWindow(TRUE);
+		m_menuSIMVPSV.ShowWindow(SW_SHOW);
 	}
 
 		
@@ -618,12 +498,10 @@ void CWndMenuVentState::ShowMenuBtn()
 			else
 			{
 				SetOneButtonDepressed(IDC_BTN_MENU_IPPV);
-				//getModel()->getDATAHANDLER()->IPPV()->SetDataFromMode(VM_PRE_IPPV);
 
 				if(false==getModel()->getVMODEHANDLER()->changeVentMode(VM_IPPV))
 					theApp.WriteLog(_T("#HFO:0276"));
 			}
-
 		}
 		break;
 	case VM_CPAP:
@@ -633,8 +511,7 @@ void CWndMenuVentState::ShowMenuBtn()
 		break;
 	case VM_NCPAP:
 		{
-			if(		true==getModel()->getDATAHANDLER()->isNMODELicenseAvailable()
-				 /*&& getModel()->getCONFIG()->GetVentRange()==NEONATAL*/)
+			if(		true==getModel()->getDATAHANDLER()->isNMODELicenseAvailable())
 			{
 				SetOneButtonDepressed(IDC_BTN_MENU_NCPAP);
 			}
@@ -649,8 +526,7 @@ void CWndMenuVentState::ShowMenuBtn()
 		break;
 	case VM_DUOPAP:
 		{
-			if(		true==getModel()->getDATAHANDLER()->isNMODELicenseAvailable()
-				 /*&& getModel()->getCONFIG()->GetVentRange()==NEONATAL*/)
+			if(		true==getModel()->getDATAHANDLER()->isNMODELicenseAvailable())
 			{
 				SetOneButtonDepressed(IDC_BTN_MENU_DUOPAP);
 			}
@@ -665,8 +541,7 @@ void CWndMenuVentState::ShowMenuBtn()
 		break;
 	case VM_THERAPIE:
 		{
-			if(		true==getModel()->getDATAHANDLER()->isTHERAPYLicenseAvailable()
-				/*&& getModel()->getCONFIG()->GetVentRange()==NEONATAL*/)
+			if(		true==getModel()->getDATAHANDLER()->isTHERAPYLicenseAvailable())
 			{
 				SetOneButtonDepressed(IDC_BTN_MENU_THERAPIE);
 			}
@@ -685,9 +560,6 @@ void CWndMenuVentState::ShowMenuBtn()
 		}
 		break;
 	}
-
-	
-	
 }
 
 /**********************************************************************************************//**
@@ -699,28 +571,16 @@ void CWndMenuVentState::ShowMenuBtn()
 
 void CWndMenuVentState::HideMenuBtn()
 {
-	if(m_pcMenuIPPV)
-		m_pcMenuIPPV->ShowWindow(SW_HIDE);
-	if(m_pcMenuSIPPV)
-		m_pcMenuSIPPV->ShowWindow(SW_HIDE);
-	if(m_pcMenuSIMV)
-		m_pcMenuSIMV->ShowWindow(SW_HIDE);
-	if(m_pcMenuSIMVPSV)
-		m_pcMenuSIMVPSV->ShowWindow(SW_HIDE);
-	if(m_pcMenuPSV)
-		m_pcMenuPSV->ShowWindow(SW_HIDE);
-	if(m_pcMenuHFO)
-		m_pcMenuHFO->ShowWindow(SW_HIDE);
-	if(m_pcMenuCPAP)
-		m_pcMenuCPAP->ShowWindow(SW_HIDE);
-	if(m_pcMenuNCPAP)
-		m_pcMenuNCPAP->ShowWindow(SW_HIDE);
-	if(m_pcMenuDUOPAP)
-		m_pcMenuDUOPAP->ShowWindow(SW_HIDE);
-	if(m_pcMenuTherapy)
-		m_pcMenuTherapy->ShowWindow(SW_HIDE);
-	//m_pcMenuVolume->ShowWindow(SW_HIDE);
-	/*m_pcMenu10->ShowWindow(SW_HIDE);*/
+	m_menuIPPV.ShowWindow(SW_HIDE);
+	m_menuSIPPV.ShowWindow(SW_HIDE);
+	m_menuSIMV.ShowWindow(SW_HIDE);
+	m_menuSIMVPSV.ShowWindow(SW_HIDE);
+	m_menuPSV.ShowWindow(SW_HIDE);
+	m_menuHFO.ShowWindow(SW_HIDE);
+	m_menuCPAP.ShowWindow(SW_HIDE);
+	m_menuNCPAP.ShowWindow(SW_HIDE);
+	m_menuDUOPAP.ShowWindow(SW_HIDE);
+	m_menuTherapy.ShowWindow(SW_HIDE);
 }
 
 /**********************************************************************************************//**
@@ -1059,9 +919,9 @@ void CWndMenuVentState::OnPaint()
 
 void CWndMenuVentState::OnDestroy() 
 {
-	m_plMenuBtn.RemoveAll();
-
 	CWnd::OnDestroy();
+
+	m_plMenuBtn.RemoveAll();
 
 	if(m_hBmp)
 	{
@@ -1116,12 +976,3 @@ BOOL CWndMenuVentState::PreTranslateMessage(MSG* pMsg)
 	}
 	return CWnd::PreTranslateMessage(pMsg);
 }
-
-//int CWndMenuVentState::GetCurrentPressedBtn()
-//{
-//	return m_iCurrentPressedBtn;
-//}
-//void CWndMenuVentState::SetCurrentPressedBtn(int btn)
-//{
-//	m_iCurrentPressedBtn=btn;
-//}

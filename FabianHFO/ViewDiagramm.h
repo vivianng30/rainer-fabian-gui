@@ -10,10 +10,8 @@
 #include "WndDataCO2.h"
 #include "WndDataSPO2.h"
 #include "WndDataFOT.h"
-//#include "WndDataCLFIO2.h"
-#include "WndMenuGraphs.h"
+#include "MnuWrapperGraphs.h"
 #include "SelectGraphBtn.h"
-//#include "WndGraphViewSelection.h"
 
 
 class CViewDiagramm :public CMVView
@@ -289,8 +287,7 @@ protected:
 	CString m_szGraph2;
 	CString m_szGraph3;
 
-	CWndMenuGraphs *m_pWndMenuGraphs;
-	//CWndGraphViewSelection *m_pcWndGraphViewSelection;
+	CMnuWrapperGraphs *m_pWndMenuGraphs;
 
 	static CRITICAL_SECTION	csDrawDataFOT;
 	static CRITICAL_SECTION	csDrawDataSPO2;

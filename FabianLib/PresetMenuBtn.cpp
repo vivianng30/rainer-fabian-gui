@@ -28,7 +28,7 @@ IMPLEMENT_DYNAMIC(CPresetMenuBtn, CBtn)
  * \param	cr 	The carriage return.
  **************************************************************************************************/
 
-CPresetMenuBtn::CPresetMenuBtn(BTN btn,COLORREF cr) : CBtn(btn,cr),m_eBtnState(UP)
+CPresetMenuBtn::CPresetMenuBtn() : CBtn()
 {
 	// Init state
 	m_pszTextTop[0]=0x0000;
@@ -41,6 +41,7 @@ CPresetMenuBtn::CPresetMenuBtn(BTN btn,COLORREF cr) : CBtn(btn,cr),m_eBtnState(U
 	//m_pViewHandler = CMVViewHandler::GetInstance();
 
 	m_bTwoLine=false;
+	m_eBtnState=UP;
 }
 
 /**********************************************************************************************//**

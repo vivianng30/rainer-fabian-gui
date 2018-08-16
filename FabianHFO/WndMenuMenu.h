@@ -15,10 +15,10 @@ class CWndMenuMenu : public CWnd
 	DECLARE_DYNAMIC(CWndMenuMenu)
 
 public:
-	CWndMenuMenu(CMVView *parentView);
+	CWndMenuMenu();
 	virtual ~CWndMenuMenu();
 
-	virtual void Init();
+	virtual void Init(CMVView *parentView);
 	virtual void Show(BOOL bShow);
 
 

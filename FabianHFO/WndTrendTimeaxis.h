@@ -16,10 +16,10 @@ class CWndTrendTimeaxis : public CWnd
 	DECLARE_DYNAMIC(CWndTrendTimeaxis)
 
 public:
-	CWndTrendTimeaxis(CMVView *parentView);
+	CWndTrendTimeaxis();
 	virtual ~CWndTrendTimeaxis();
 
-	void Init();
+	void Init(CMVView *parentView);
 	void Show(BOOL bShow);
 
 
@@ -27,8 +27,6 @@ public:
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 
-	//void SetComplTimeRange(COleDateTime startTime, COleDateTime endTime);
-	//void SetCurrTimeRange(int iOffset, int iTimeSpan);
 	void SetTimeRange(COleDateTime dtStartTime, COleDateTime dtEndTime,int iOffset, int iTimeSpan);
 
 protected:
@@ -36,13 +34,6 @@ protected:
 	void Draw();
 
 	CMVModel *getModel();
-
-	//void ShowMenuBtn();
-	//void HideMenuBtn();
-
-	//void SetOneButtonDepressed(int btnID);
-	//void SetAllButtonUnpressed();
-
 
 private:
 	CMVView *m_parentView;

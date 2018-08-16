@@ -117,7 +117,7 @@ CMVView(iViewID)
 	m_pcParaMenu=NULL;
 	m_pcLungRec=NULL;
 
-	m_pWndMenuVentState=NULL;
+	m_pMenuVentState=NULL;
 
 	//m_bBPM_SetKey=false;
 	//m_bCPAP_SetKey=false;
@@ -2945,19 +2945,18 @@ bool CViewParaBtn::CreateWndMenuVentState()
 {
 	// **********************************************************************
 	// Init. line diagram
-	if(m_pWndMenuVentState==NULL && m_lX>-1)
+	if(m_pMenuVentState==NULL && m_lX>-1)
 	{
-		m_pWndMenuVentState = new CWndMenuVentState(this);
-		//RECT rcLd={0,504,800,600};
-		RECT rcLd={0,500,610,600};
+		m_pMenuVentState = new CMnuWrapperVentState();
 
-		//RECT rcLd={477,0,640,435};
-		if(m_pWndMenuVentState->Create(AfxGetApp()->GetMainWnd(),rcLd,IDC_VIEW_VENTMENU))
+		if(m_pMenuVentState)
 		{
-			m_pWndMenuVentState->Init();
-
-			return true;
+			if(m_pMenuVentState->createMenu(AfxGetApp()->GetMainWnd()))
+			{
+				return true;
+			}
 		}
+
 	}
 	return false;
 }
@@ -2973,9 +2972,9 @@ bool CViewParaBtn::CreateWndMenuVentState()
 
 void CViewParaBtn::ShowWndMenuVentState(bool bShow)
 {
-	if(m_pWndMenuVentState)
+	if(m_pMenuVentState)
 	{
-		m_pWndMenuVentState->Show(bShow);
+		m_pMenuVentState->Show(bShow);
 	}
 }
 
@@ -3984,8 +3983,8 @@ void CViewParaBtn::show_IPPVmode()
 	if(m_pcPara_FLOW)
 		m_pcPara_FLOW->ShowWindow(SW_HIDE);
 	
-	if(m_pWndMenuVentState)
-		m_pWndMenuVentState->ResetButtonPresetstate();
+	if(m_pMenuVentState)
+		m_pMenuVentState->ResetButtonPresetstate();
 
 	/** \brief The leave critical section. */
 	LeaveCriticalSection(&csDraw);
@@ -4475,8 +4474,10 @@ void CViewParaBtn::show_SIPPVmode()
 		m_pcPara_O2Flush->ShowWindow(SW_SHOW);
 	if(m_pcPara_FLOW)
 		m_pcPara_FLOW->ShowWindow(SW_HIDE);
-	if(m_pWndMenuVentState)
-		m_pWndMenuVentState->ResetButtonPresetstate();
+	
+	if(m_pMenuVentState)
+		m_pMenuVentState->ResetButtonPresetstate();
+
 	/** \brief The leave critical section. */
 	LeaveCriticalSection(&csDraw);
 }
@@ -4968,8 +4969,10 @@ void CViewParaBtn::show_SIMVmode()
 		m_pcPara_O2Flush->ShowWindow(SW_SHOW);
 	if(m_pcPara_FLOW)
 		m_pcPara_FLOW->ShowWindow(SW_HIDE);
-	if(m_pWndMenuVentState)
-		m_pWndMenuVentState->ResetButtonPresetstate();
+	
+	if(m_pMenuVentState)
+		m_pMenuVentState->ResetButtonPresetstate();
+
 	/** \brief The leave critical section. */
 	LeaveCriticalSection(&csDraw);
 }
@@ -5459,8 +5462,10 @@ void CViewParaBtn::show_PSVmode()
 		m_pcPara_O2Flush->ShowWindow(SW_SHOW);
 	if(m_pcPara_FLOW)
 		m_pcPara_FLOW->ShowWindow(SW_HIDE);
-	if(m_pWndMenuVentState)
-		m_pWndMenuVentState->ResetButtonPresetstate();
+	
+	if(m_pMenuVentState)
+		m_pMenuVentState->ResetButtonPresetstate();
+
 	/** \brief The leave critical section. */
 	LeaveCriticalSection(&csDraw);
 }
@@ -5948,8 +5953,10 @@ void CViewParaBtn::show_SIMVPSVmode()
 		m_pcPara_O2Flush->ShowWindow(SW_SHOW);
 	if(m_pcPara_FLOW)
 		m_pcPara_FLOW->ShowWindow(SW_HIDE);
-	if(m_pWndMenuVentState)
-		m_pWndMenuVentState->ResetButtonPresetstate();
+	
+	if(m_pMenuVentState)
+		m_pMenuVentState->ResetButtonPresetstate();
+
 	/** \brief The leave critical section. */
 	LeaveCriticalSection(&csDraw);
 }
@@ -6314,8 +6321,10 @@ void CViewParaBtn::show_CPAPmode()
 		m_pcPara_O2Flush->ShowWindow(SW_SHOW);
 	if(m_pcPara_FLOW)
 		m_pcPara_FLOW->ShowWindow(SW_HIDE);
-	if(m_pWndMenuVentState)
-		m_pWndMenuVentState->ResetButtonPresetstate();
+	
+	if(m_pMenuVentState)
+		m_pMenuVentState->ResetButtonPresetstate();
+
 	/** \brief The leave critical section. */
 	LeaveCriticalSection(&csDraw);
 }
@@ -6562,8 +6571,10 @@ void CViewParaBtn::show_NCPAPmode()
 		m_pcPara_O2Flush->ShowWindow(SW_SHOW);
 	if(m_pcPara_FLOW)
 		m_pcPara_FLOW->ShowWindow(SW_HIDE);
-	if(m_pWndMenuVentState)
-		m_pWndMenuVentState->ResetButtonPresetstate();
+	
+	if(m_pMenuVentState)
+		m_pMenuVentState->ResetButtonPresetstate();
+
 	/** \brief The leave critical section. */
 	LeaveCriticalSection(&csDraw);
 }
@@ -6899,8 +6910,10 @@ void CViewParaBtn::show_DUOPAPmode()
 		m_pcPara_O2Flush->ShowWindow(SW_SHOW);
 	if(m_pcPara_FLOW)
 		m_pcPara_FLOW->ShowWindow(SW_HIDE);
-	if(m_pWndMenuVentState)
-		m_pWndMenuVentState->ResetButtonPresetstate();
+	
+	if(m_pMenuVentState)
+		m_pMenuVentState->ResetButtonPresetstate();
+
 	/** \brief The leave critical section. */
 	LeaveCriticalSection(&csDraw);
 }
@@ -7223,8 +7236,8 @@ void CViewParaBtn::show_THERAPYmode()
 	if(m_pcPara_IERatio)
 		m_pcPara_IERatio->ShowWindow(SW_HIDE);
 
-	if(m_pWndMenuVentState)
-		m_pWndMenuVentState->ResetButtonPresetstate();
+	if(m_pMenuVentState)
+		m_pMenuVentState->ResetButtonPresetstate();
 	/** \brief The leave critical section. */
 	LeaveCriticalSection(&csDraw);
 }
@@ -7539,8 +7552,8 @@ void CViewParaBtn::show_HFOmode()
 	if(m_pcPara_FLOW)
 		m_pcPara_FLOW->ShowWindow(SW_HIDE);
 
-	if(m_pWndMenuVentState)
-		m_pWndMenuVentState->ResetButtonPresetstate();
+	if(m_pMenuVentState)
+		m_pMenuVentState->ResetButtonPresetstate();
 	/** \brief The leave critical section. */
 	LeaveCriticalSection(&csDraw);
 }
@@ -12602,12 +12615,11 @@ void CViewParaBtn::OnDestroy()
 	/** \brief The leave critical section. */
 	LeaveCriticalSection(&csDraw);
 
-	if(m_pWndMenuVentState)
+	if(m_pMenuVentState)
 	{
-		m_pWndMenuVentState->DestroyWindow();
-		delete m_pWndMenuVentState;
+		delete m_pMenuVentState;
 	}
-	m_pWndMenuVentState=NULL;
+	m_pMenuVentState=NULL;
 
 	DestroyWndParaSettings();
 

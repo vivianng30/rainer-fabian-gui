@@ -2115,6 +2115,38 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MnuWrapper.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MnuWrapperAlarmLimits.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MnuWrapperGraphs.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MnuWrapperSetupMenu.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MnuWrapperTrend.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MnuWrapperTrendTimeaxis.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MnuWrapperTrendtype.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MnuWrapperVentState.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MVEvent.cpp"
 				>
 			</File>
@@ -3334,6 +3366,38 @@
 			</File>
 			<File
 				RelativePath=".\messages.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MnuWrapper.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MnuWrapperAlarmLimits.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MnuWrapperGraphs.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MnuWrapperSetupMenu.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MnuWrapperTrend.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MnuWrapperTrendTimeaxis.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MnuWrapperTrendtype.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MnuWrapperVentState.h"
 				>
 			</File>
 			<File

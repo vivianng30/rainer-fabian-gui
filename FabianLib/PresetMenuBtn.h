@@ -17,7 +17,7 @@ class CPresetMenuBtn : public CBtn
 	
 
 public:
-	CPresetMenuBtn(BTN btn,COLORREF cr);
+	CPresetMenuBtn();
 	virtual ~CPresetMenuBtn();
 
 	enum eBtnState{

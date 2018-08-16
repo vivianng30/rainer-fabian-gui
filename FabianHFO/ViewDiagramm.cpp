@@ -2988,7 +2988,6 @@ void CViewDiagramm::StopDiagramm(bool bStopFreeze)
 
 void CViewDiagramm::Show(bool bNextGraph)
 {
-	DEBUGMSG(TRUE, (TEXT("CViewDiagramm::Show\r\n")));
 	drawView(bNextGraph);
 }
 
@@ -5954,16 +5953,14 @@ void CViewDiagramm::RedrawDiagrammData(int iDiagrammID)
 
 bool CViewDiagramm::DestroyWndMenuGraphs()
 {
-	//rku check1
 	EnterCriticalSection(&csMenuGraphs);
 	if(m_pWndMenuGraphs)
 	{
-		m_pWndMenuGraphs->DestroyWindow();
 		delete m_pWndMenuGraphs;
 		m_pWndMenuGraphs=NULL;
 	}
 	LeaveCriticalSection(&csMenuGraphs);
-	
+
 	return true;
 }
 
@@ -5981,22 +5978,19 @@ bool CViewDiagramm::CreateWndMenuGraphs()
 	if(isExit())
 		return false;
 
-	//rku check1
 	EnterCriticalSection(&csMenuGraphs);
 	if(m_pWndMenuGraphs==NULL && m_lX>-1)
 	{
-		m_pWndMenuGraphs = new CWndMenuGraphs(this);
-		RECT rcLd={0,551,610,600};
+		m_pWndMenuGraphs = new CMnuWrapperGraphs();
 
-		if(m_pWndMenuGraphs->Create(AfxGetApp()->GetMainWnd(),rcLd,IDC_VIEW_GRAPHMENU))
+		if(m_pWndMenuGraphs->createMenu(AfxGetApp()->GetMainWnd(),this))
 		{
-			m_pWndMenuGraphs->Init();
 			LeaveCriticalSection(&csMenuGraphs);
 			return true;
 		}
 	}
 	LeaveCriticalSection(&csMenuGraphs);
-	
+
 	return false;
 }
 

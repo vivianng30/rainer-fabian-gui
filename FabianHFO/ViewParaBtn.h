@@ -31,7 +31,6 @@
 #include "ParaBtn_BACKUP.h"
 #include "ParaBtn_CPAP.h"
 #include "ParaBtn_FLOWMIN.h"
-#include "WndMenuVentState.h"
 #include "ParaBtn_O2Flush.h"
 #include "ParaBtn_PMANUAL.h"
 #include "ParaBtn_IERatio.h"
@@ -44,12 +43,8 @@
 #include "ParaBtn_AMPMAX.h"
 #include "SubParaBtn.h"
 #include "WndParaSettings.h"
-//#include "CustomSlider.h"
 
-//TEST
-//#include "UDBtn.h"
-
-//#include "OCArray.h"
+#include "MnuWrapperVentState.h"
 
 class CViewParaBtn :public CMVView
 {
@@ -357,29 +352,10 @@ protected:
 	CSubParaBtn* m_pcSubPara_LEAKCOMP;
 	CSubParaBtn* m_pcSubPara_BIASFLOW;
 
-	CList<CParaBtn* , CParaBtn *> m_plParaBtn;
 	//CPtrList
-
-
-	CWndMenuVentState *m_pWndMenuVentState;
-
-	//bool m_bBPM_SetKey;
-	//bool m_bCPAP_SetKey;
-	//bool m_bETIME_SetKey;
-	//bool m_bITIME_SetKey;
-	//bool m_bPDUO_SetKey;
-	//bool m_bPEEP_SetKey;
-	//bool m_bPINSP_SetKey;
-	//bool m_bPMAX_SetKey;
-	//bool m_bPPSV_SetKey;
-	////bool m_bPMan_SetKey;
-	//bool m_bPMEAN_SetKey;
-	//bool m_bHFamp_SetKey;
-	//bool m_bHFfreq_SetKey;
-	//bool m_bVLIMIT_SetKey;
-	//bool m_bVGARANT_SetKey;
-	//bool m_bPMEANREC_SetKey;
-	//bool m_bTHERAPYFLOW_SetKey;
+	CList<CParaBtn* , CParaBtn *> m_plParaBtn;
+	
+	CMnuWrapperVentState *m_pMenuVentState;
 
 	bool m_bSettingsActive;
 

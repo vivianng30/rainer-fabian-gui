@@ -375,7 +375,6 @@ bool CViewTrend::Initialize()
 	CreateTrend2Diagram(40,152,TREND_WIDTH,TREND_HEIGHT);
 	CreateTrend3Diagram(40,300,TREND_WIDTH,TREND_HEIGHT);
 
-	DEBUGMSG(TRUE, (TEXT("CreateWndTrendTimeaxis\r\n")));
 	CreateWndTrendTimeaxis();
 
 	COleDateTimeSpan tsMax;
@@ -387,7 +386,6 @@ bool CViewTrend::Initialize()
 		m_pWndTrendTimeaxis->SetTimeRange(m_dtStartTime,tmEndTime,m_pcTrend1Diagram->GetOffsetMinutes(), (int)m_pcTrend1Diagram->GetTrendSpan());
 	}
 
-	DEBUGMSG(TRUE, (TEXT("CreateWndMenuTrend\r\n")));
 	CreateWndMenuTrend();
 
 	m_pBufferTrend1=new WORD[MAXSIZE_TREND_BUFFER];
@@ -409,8 +407,6 @@ bool CViewTrend::Initialize()
 
 void CViewTrend::DrawTrends()
 {
-	DEBUGMSG(TRUE, (TEXT("DrawTrends\r\n")));
-
 	if(m_bExit)
 		return;
 
@@ -645,8 +641,6 @@ void CViewTrend::loadTrendData(BYTE type, eTrend trend)
 
 void CViewTrend::loadAllTrendData()
 {
-	DEBUGMSG(TRUE, (TEXT("loadAllTrendData\r\n")));
-
 	if(m_bExit)
 		return;
 
@@ -1228,7 +1222,6 @@ bool CViewTrend::DestroyWndTrendTimeaxis()
 {
 	if(m_pWndTrendTimeaxis)
 	{
-		m_pWndTrendTimeaxis->DestroyWindow();
 		delete m_pWndTrendTimeaxis;
 		m_pWndTrendTimeaxis=NULL;
 	}
@@ -1247,18 +1240,14 @@ bool CViewTrend::DestroyWndTrendTimeaxis()
 
 bool CViewTrend::CreateWndTrendTimeaxis()
 {
-	DEBUGMSG(TRUE, (TEXT("CreateWndTrendTimeaxis\r\n")));
 	// **********************************************************************
 	// Init. line diagram
 	if(m_pWndTrendTimeaxis==NULL && m_lX>-1)
 	{
-		m_pWndTrendTimeaxis = new CWndTrendTimeaxis(this);
-		RECT rcLd={5,450,585,492};
+		m_pWndTrendTimeaxis = new CMnuWrapperTrendTimeaxis();
 
-		if(m_pWndTrendTimeaxis->Create(this,rcLd,IDC_WND_TRENDAXIS))
+		if(m_pWndTrendTimeaxis->createMenu(this,this))
 		{
-			m_pWndTrendTimeaxis->Init();
-
 			return true;
 		}
 	}
@@ -1295,7 +1284,6 @@ bool CViewTrend::DestroyWndMenuTrend()
 {
 	if(m_pWndMenuTrend)
 	{
-		m_pWndMenuTrend->DestroyWindow();
 		delete m_pWndMenuTrend;
 		m_pWndMenuTrend=NULL;
 	}
@@ -1318,12 +1306,10 @@ bool CViewTrend::CreateWndMenuTrend()
 	// Init. line diagram
 	if(m_pWndMenuTrend==NULL && m_lX>-1)
 	{
-		m_pWndMenuTrend = new CWndMenuTrend(this);
-		RECT rcLd={0,550,600,600};
+		m_pWndMenuTrend = new CMnuWrapperTrend();
 
-		if(m_pWndMenuTrend->Create(AfxGetApp()->GetMainWnd(),rcLd,IDC_VIEW_TRENDMENU))
+		if(m_pWndMenuTrend->createMenu(AfxGetApp()->GetMainWnd(),this))
 		{
-			m_pWndMenuTrend->Init();
 			return true;
 		}
 	}
@@ -1341,7 +1327,6 @@ bool CViewTrend::CreateWndMenuTrend()
 
 void CViewTrend::ShowWndMenuTrend(bool bShow)
 {
-	DEBUGMSG(TRUE, (TEXT("ShowWndMenuTrend\r\n")));
 	if(m_pWndMenuTrend)
 	{
 		m_pWndMenuTrend->Show(bShow);
@@ -1361,18 +1346,10 @@ bool CViewTrend::DestroyWndMenuTrendtype()
 {
 	if(m_pWndMenuTrendtype)
 	{
-		try
-		{
-			m_pWndMenuTrendtype->DestroyWindow();
-			delete m_pWndMenuTrendtype;
-			m_pWndMenuTrendtype=NULL;
+		delete m_pWndMenuTrendtype;
+		m_pWndMenuTrendtype=NULL;
 
-			m_bWndMenuTrendtype=false;
-		}
-		catch (...)
-		{
-			theApp.ReportException(_T("CViewTrend::DestroyWndMenuTrendtype"));
-		}
+		m_bWndMenuTrendtype=false;
 	}
 
 	return true;
@@ -1393,15 +1370,11 @@ bool CViewTrend::CreateWndMenuTrendtype(UINT bSelTrend)
 {
 	if(m_pWndMenuTrendtype==NULL && m_lX>-1)
 	{
-		m_pWndMenuTrendtype = new CWndMenuTrendtype(this);
-		
-		//RECT rcLd={38,49,350,490};
-		RECT rcLd={38,49,501,490};
+		m_pWndMenuTrendtype = new CMnuWrapperTrendtype();
 
-		if(m_pWndMenuTrendtype->Create(this,rcLd,IDC_POPUP_TRENDTYPE,bSelTrend))
+		m_pWndMenuTrendtype->preCreateInit(bSelTrend);
+		if(m_pWndMenuTrendtype->createMenu(this,this))
 		{
-			m_pWndMenuTrendtype->Init();
-
 			m_bWndMenuTrendtype=true;
 			return true;
 		}
@@ -1424,7 +1397,7 @@ void CViewTrend::ShowWndMenuTrendtype(bool bShow, UINT iTrendType, UINT bSelTren
 {
 	if(m_pWndMenuTrendtype)
 	{
-		m_pWndMenuTrendtype->Show(bShow,iTrendType,bSelTrend);
+		m_pWndMenuTrendtype->ShowTrendType(bShow,iTrendType,bSelTrend);
 	}
 }
 
@@ -1437,7 +1410,6 @@ void CViewTrend::ShowWndMenuTrendtype(bool bShow, UINT iTrendType, UINT bSelTren
 
 void CViewTrend::DeleteTrend1Diagram(void)
 {
-	DEBUGMSG(TRUE, (TEXT("DeleteTrend1Diagram\r\n")));
 	if(m_pcTrend1Diagram)
 	{
 		m_pcTrend1Diagram->DestroyWindow();
@@ -1457,7 +1429,6 @@ void CViewTrend::DeleteTrend1Diagram(void)
 
 void CViewTrend::ShowTrend1Diagram(bool bShow)
 {
-	DEBUGMSG(TRUE, (TEXT("ShowTrend1Diagram\r\n")));
 	if(m_pcTrend1Diagram)
 	{
 		m_pcTrend1Diagram->Show(bShow);
@@ -1473,7 +1444,6 @@ void CViewTrend::ShowTrend1Diagram(bool bShow)
 
 void CViewTrend::DeleteTrend2Diagram(void)
 {
-	DEBUGMSG(TRUE, (TEXT("DeleteTrend2Diagram\r\n")));
 	if(m_pcTrend2Diagram)
 	{
 		m_pcTrend2Diagram->DestroyWindow();
@@ -1493,7 +1463,6 @@ void CViewTrend::DeleteTrend2Diagram(void)
 
 void CViewTrend::ShowTrend2Diagram(bool bShow)
 {
-	DEBUGMSG(TRUE, (TEXT("ShowTrend2Diagram\r\n")));
 	if(m_pcTrend2Diagram)
 	{
 		m_pcTrend2Diagram->Show(bShow);
@@ -1509,7 +1478,6 @@ void CViewTrend::ShowTrend2Diagram(bool bShow)
 
 void CViewTrend::DeleteTrend3Diagram(void)
 {
-	DEBUGMSG(TRUE, (TEXT("DeleteTrend3Diagram\r\n")));
 	if(m_pcTrend3Diagram)
 	{
 		m_pcTrend3Diagram->DestroyWindow();
@@ -1529,7 +1497,6 @@ void CViewTrend::DeleteTrend3Diagram(void)
 
 void CViewTrend::ShowTrend3Diagram(bool bShow)
 {
-	DEBUGMSG(TRUE, (TEXT("ShowTrend3Diagram\r\n")));
 	if(m_pcTrend3Diagram)
 	{
 		m_pcTrend3Diagram->Show(bShow);
@@ -2031,7 +1998,6 @@ void CViewTrend::OnTimer(UINT_PTR nIDEvent)
 {
 	if(nIDEvent==STARTTREND_TIMER)
 	{
-		DEBUGMSG(TRUE, (TEXT("CViewTrend::OnTimer\r\n")));
 		KillTimer(STARTTREND_TIMER);
 
 		PostMessage(WM_LOAD_TREND);
@@ -2169,7 +2135,6 @@ LRESULT CViewTrend::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 		break;
 	case WM_TREND_DRAWDATA:
 		{
-			DEBUGMSG(TRUE, (TEXT("WM_TREND_DRAWDATA\r\n")));
 			EnterCriticalSection(&csTrends);
 			if(m_pcTrend1Diagram && m_pcTrend2Diagram && m_pcTrend3Diagram)
 			{
@@ -2302,7 +2267,7 @@ LRESULT CViewTrend::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 		break;
 	case WM_LOAD_TREND:
 		{
-			DEBUGMSG(TRUE, (TEXT("WM_LOAD_TREND\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("WM_LOAD_TREND\r\n")));
 			
 			UpdateWindow();
 			getModel()->getDATAHANDLER()->LoadingTrendData(true);
@@ -2343,7 +2308,7 @@ LRESULT CViewTrend::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 		break;
 	case WM_START_TREND:
 		{
-			DEBUGMSG(TRUE, (TEXT("WM_START_TREND\r\n")));
+			//DEBUGMSG(TRUE, (TEXT("WM_START_TREND\r\n")));
 			if(m_pcTrend1Diagram && m_pcTrend2Diagram && m_pcTrend3Diagram && !m_bExit)
 			{
 				EnterCriticalSection(&csTrends);
@@ -2395,14 +2360,12 @@ LRESULT CViewTrend::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 		break;
 	case WM_REDRAW_DIAGRAMM:
 		{
-			DEBUGMSG(TRUE, (TEXT("WM_REDRAW_DIAGRAMM\r\n")));
 			EnterCriticalSection(&csTrends);
 
 			switch(wParam)
 			{
 			case IDC_TREND1_DIAGRAM:
 				{
-					DEBUGMSG(TRUE, (TEXT("WM_REDRAW_DIAGRAMM IDC_TREND1_DIAGRAM\r\n")));
 					if(m_pcTrend1Diagram)
 					{
 						int iPrev=m_pcTrend1Diagram->GetTrendBufferXPos();
@@ -2414,7 +2377,6 @@ LRESULT CViewTrend::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 				break;
 			case IDC_TREND2_DIAGRAM:
 				{
-					DEBUGMSG(TRUE, (TEXT("WM_REDRAW_DIAGRAMM IDC_TREND2_DIAGRAM\r\n")));
 					if(m_pcTrend2Diagram)
 					{
 						int iPrev=m_pcTrend2Diagram->GetTrendBufferXPos();
@@ -2426,7 +2388,6 @@ LRESULT CViewTrend::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 				break;
 			case IDC_TREND3_DIAGRAM:
 				{
-					DEBUGMSG(TRUE, (TEXT("WM_REDRAW_DIAGRAMM IDC_TREND3_DIAGRAM\r\n")));
 					if(m_pcTrend3Diagram)
 					{
 						int iPrev=m_pcTrend3Diagram->GetTrendBufferXPos();
@@ -3566,14 +3527,11 @@ void CViewTrend::newTrendType(UINT type)
 	DestroyWndMenuTrendtype();
 	UpdateWindow();
 
-	DEBUGMSG(TRUE, (TEXT("newTrendType %s\r\n"),szText));
-
 	EnterCriticalSection(&csTrends);
 	switch(m_iCurBtnSelTrend)
 	{
 	case IDC_BTN_SELTREND_1:
 		{
-			DEBUGMSG(TRUE, (TEXT("IDC_BTN_SELTREND_1\r\n")));
 			if(m_pcSelectTrend1)
 			{
 				m_pcSelectTrend1->RefreshText(szText,szText);
@@ -3585,7 +3543,6 @@ void CViewTrend::newTrendType(UINT type)
 		break;
 	case IDC_BTN_SELTREND_2:
 		{
-			DEBUGMSG(TRUE, (TEXT("IDC_BTN_SELTREND_2\r\n")));
 			if(m_pcSelectTrend2)
 			{
 				m_pcSelectTrend2->RefreshText(szText,szText);
@@ -3598,7 +3555,6 @@ void CViewTrend::newTrendType(UINT type)
 		break;
 	case IDC_BTN_SELTREND_3:
 		{
-			DEBUGMSG(TRUE, (TEXT("IDC_BTN_SELTREND_3\r\n")));
 			if(m_pcSelectTrend3)
 			{
 				m_pcSelectTrend3->RefreshText(szText,szText);

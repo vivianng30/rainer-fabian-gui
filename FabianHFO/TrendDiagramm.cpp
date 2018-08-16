@@ -3689,7 +3689,7 @@ void CTrendDiagramm::DoPlotXYPoints()
 			}
 
 			Sleep(0);
-			DEBUGMSG(TRUE, (TEXT("TREND: PlotPointArray %d\r\n"),iPointsCount));
+			//DEBUGMSG(TRUE, (TEXT("TREND: PlotPointArray %d\r\n"),iPointsCount));
 			PlotPointArray(ptsTrend,iPointsCount);
 			Sleep(0);
 

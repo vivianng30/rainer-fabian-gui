@@ -706,7 +706,8 @@ void CSubViewCalFlowSensor::Init()
 	btn.pcBmpDisabled		= m_pcNeonatal_Up;
 	btn.dwFormat			= DT_VCENTER|DT_CENTER;
 
-	m_pcNeonatal=new CPresetMenuBtn(btn,COLOR_TXTBTNUP);
+	m_pcNeonatal=new CPresetMenuBtn();
+	m_pcNeonatal->Initialize(btn,COLOR_TXTBTNUP);
 	m_pcNeonatal->Create(this,g_hf9AcuBold,0);
 	m_pcNeonatal->SetText(_T(""));
 
@@ -721,7 +722,8 @@ void CSubViewCalFlowSensor::Init()
 	btn.pcBmpDisabled		= m_pcPediatric_Dis;
 	btn.dwFormat			= DT_VCENTER|DT_CENTER;
 
-	m_pcPediatric=new CPresetMenuBtn(btn,COLOR_TXTBTNUP);
+	m_pcPediatric=new CPresetMenuBtn();
+	m_pcPediatric->Initialize(btn,COLOR_TXTBTNUP);
 	m_pcPediatric->Create(this,g_hf9AcuBold,0);
 	m_pcPediatric->SetText(_T(""));
 

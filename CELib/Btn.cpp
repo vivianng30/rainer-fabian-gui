@@ -4,15 +4,35 @@
 #include "stdafx.h"
 #include "Btn.h"
 
-// CBtn
+/**********************************************************************************************//**
+ * CBtn.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ *
+ * @param	parameter1	The first parameter.
+ * @param	parameter2	The second parameter.
+ **************************************************************************************************/
 
 IMPLEMENT_DYNAMIC(CBtn, CButton)
 
-/////////////////////////////////////////////////////////////////////////////
-// CBtn
-// **************************************************************************
-// 
-// **************************************************************************
+CBtn::CBtn()
+{
+	m_hDC=NULL;
+	m_hBm=NULL;
+	m_hBmPrev=NULL;
+	//
+	m_pszText[0]=0x0000;
+	m_nXOffset=0;
+	m_nYOffset=0;
+	//
+	m_hFont=NULL;
+
+	m_bMoveDepressedText=false;
+
+	m_nNbr=-1;
+}
+
 CBtn::CBtn(BTN &btn,COLORREF crTxtUp, COLORREF crTxtDown, COLORREF crTxtDisabled, COLORREF crTxtFocus)
 {
 	memcpy(&m_btn,&btn,sizeof(BTN));
@@ -37,6 +57,13 @@ CBtn::CBtn(BTN &btn,COLORREF crTxtUp, COLORREF crTxtDown, COLORREF crTxtDisabled
 	m_nNbr=-1;
 }
 
+/**********************************************************************************************//**
+ * Finalizes an instance of the CBtn class.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ **************************************************************************************************/
+
 CBtn::~CBtn()
 {
 	if(m_hDC)
@@ -47,6 +74,15 @@ CBtn::~CBtn()
 	}
 }
 
+void CBtn::Initialize(BTN &btn,COLORREF crTxtUp, COLORREF crTxtDown, COLORREF crTxtDisabled, COLORREF crTxtFocus)
+{
+	memcpy(&m_btn,&btn,sizeof(BTN));
+	// Default colors
+	m_btncr.crTxtUp			= crTxtUp;
+	m_btncr.crTxtDown		= crTxtDown;
+	m_btncr.crTxtDisabled	= crTxtDisabled;
+	m_btncr.crTxtFocus		= crTxtFocus;	
+}
 
 BEGIN_MESSAGE_MAP(CBtn, CButton)
 	//{{AFX_MSG_MAP(CBtn)
@@ -54,11 +90,25 @@ BEGIN_MESSAGE_MAP(CBtn, CButton)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
-// CBtn message handlers
-// **************************************************************************
-// Creation
-// **************************************************************************
+/**********************************************************************************************//**
+ * ///////////////////////////////////////////////////////////////////////////
+ *  CBtn message handlers
+ *  **************************************************************************
+ *  Creation
+ *  **************************************************************************.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ *
+ * @param [in,out]	pParentWnd		  	If non-null, the parent window.
+ * @param 		  	hFont			  	The font.
+ * @param 		  	nXOffset		  	The x coordinate offset.
+ * @param 		  	nYOffset		  	The y coordinate offset.
+ * @param 		  	bMoveDepressedText	True to move depressed text.
+ *
+ * @return	True if it succeeds, false if it fails.
+ **************************************************************************************************/
+
 BOOL CBtn::Create(CWnd* pParentWnd, HFONT hFont, int nXOffset, int nYOffset, bool bMoveDepressedText
 				  ) 
 {
@@ -87,6 +137,16 @@ BOOL CBtn::Create(CWnd* pParentWnd, HFONT hFont, int nXOffset, int nYOffset, boo
 	}
 	return 0;
 }
+
+/**********************************************************************************************//**
+ * Replace font.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ *
+ * @param	hFont	The font.
+ **************************************************************************************************/
+
 void CBtn::ReplaceFont(HFONT hFont) 
 {
 	m_hFont=hFont;
@@ -98,11 +158,33 @@ void CBtn::SetText(TCHAR* pszText, int nNbr)
 	_tcscpy(m_pszText,pszText);
 	m_nNbr=nNbr;
 }
+
+/**********************************************************************************************//**
+ * Sets a text.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ *
+ * @param [in,out]	szText	The text.
+ * @param 		  	nNbr  	Number of.
+ **************************************************************************************************/
+
 void CBtn::SetText(CStringW& szText, int nNbr) 
 {
 	_tcscpy(m_pszText,szText);
 	m_nNbr=nNbr;
 }
+
+/**********************************************************************************************//**
+ * Refresh text.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ *
+ * @param [in,out]	szText	The text.
+ * @param 		  	nNbr  	Number of.
+ **************************************************************************************************/
+
 void CBtn::RefreshText(CStringW& szText, int nNbr) 
 {
 	SetText(szText,nNbr);
@@ -115,9 +197,16 @@ void CBtn::SetChar(TCHAR t)
 	m_pszText[1]=0x0000;
 }
 
-// **************************************************************************
-// Painting
-// **************************************************************************
+/**********************************************************************************************//**
+ * ************************************************************************** Painting
+ * **************************************************************************.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ *
+ * @param	lpDrawItemStruct	The draw item structure.
+ **************************************************************************************************/
+
 void CBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
 	//	Rectangle(lpDrawItemStruct->hDC,0,0,m_rcClient.right,m_rcClient.bottom);
@@ -152,6 +241,15 @@ void CBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		}
 	}
 }
+
+/**********************************************************************************************//**
+ * Draws.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ *
+ * @param	nState	The state.
+ **************************************************************************************************/
 
 void CBtn::Draw(int nState/*,TCHAR* psz*/)
 {
@@ -208,8 +306,17 @@ void CBtn::Draw(int nState/*,TCHAR* psz*/)
 	}
 }
 
-
-
+/**********************************************************************************************//**
+ * Sets the bitmaps.
+ *
+ * @author	Rainer Kühner
+ * @date	16.08.2018
+ *
+ * @param [in,out]	pcBmpUp		 	If non-null, the PC bitmap up.
+ * @param [in,out]	pcBmpDown	 	If non-null, the PC bitmap down.
+ * @param [in,out]	pcBmpDisabled	If non-null, the PC bitmap disabled.
+ * @param [in,out]	pcBmpFocus   	If non-null, the PC bitmap focus.
+ **************************************************************************************************/
 
 void CBtn::SetBitmaps(CBmp* pcBmpUp,CBmp* pcBmpDown,CBmp* pcBmpDisabled,CBmp* pcBmpFocus)
 {

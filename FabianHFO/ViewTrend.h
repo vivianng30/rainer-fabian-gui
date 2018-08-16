@@ -6,9 +6,9 @@
 
 #pragma once
 #include "MVView.h"
-#include "WndMenuTrend.h"
-#include "WndMenuTrendtype.h"
-#include "WndTrendTimeaxis.h"
+#include "MnuWrapperTrend.h"
+#include "MnuWrapperTrendtype.h"
+#include "MnuWrapperTrendTimeaxis.h"
 #include "TrendDiagramm.h"
 #include "SelectTrendBtn.h"
 #include "UpDwnBtn.h"
@@ -111,9 +111,9 @@ protected:
 
 	CWndWaitHourglass *m_pWndHourglass;
 		
-	CWndMenuTrendtype *m_pWndMenuTrendtype;
-	CWndMenuTrend *m_pWndMenuTrend;
-	CWndTrendTimeaxis *m_pWndTrendTimeaxis;
+	CMnuWrapperTrendtype *m_pWndMenuTrendtype;
+	CMnuWrapperTrend *m_pWndMenuTrend;
+	CMnuWrapperTrendTimeaxis *m_pWndTrendTimeaxis;
 
 	bool m_bExit;
 

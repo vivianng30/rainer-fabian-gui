@@ -64,11 +64,10 @@ IMPLEMENT_DYNAMIC(CWndMenuTrendtype, CWnd)
  * \param [in,out]	parentView	If non-null, the parent view.
  **************************************************************************************************/
 
-CWndMenuTrendtype::CWndMenuTrendtype(CMVView *parentView)
+CWndMenuTrendtype::CWndMenuTrendtype()
 {
 	m_bPopupBtn=false;
-	m_parentView=parentView;
-
+	
 	m_iCurBtnSelTrend=IDC_BTN_SELTREND_1;
 
 	m_lX				= 0;
@@ -276,8 +275,10 @@ BOOL CWndMenuTrendtype::Create(CWnd* pParentWnd, const RECT rc, UINT nID, UINT b
  * \date	26.02.2018
  **************************************************************************************************/
 
-void CWndMenuTrendtype::Init()
+void CWndMenuTrendtype::Init(CMVView *parentView)
 {
+	m_parentView=parentView;
+
 	CClientDC dc(this);
 
 	DWORD dwStyleNoTab = WS_CHILD|WS_VISIBLE|BS_OWNERDRAW;

@@ -15,10 +15,10 @@ class CWndMenuAlarmLimits : public CWnd
 	DECLARE_DYNAMIC(CWndMenuAlarmLimits)
 
 public:
-	CWndMenuAlarmLimits(CMVView *parentView);
+	CWndMenuAlarmLimits(void);
 	virtual ~CWndMenuAlarmLimits();
 
-	virtual void Init();
+	virtual void Init(CMVView *parentView);
 	virtual void Show(BOOL bShow);
 
 	

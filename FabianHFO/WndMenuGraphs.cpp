@@ -56,19 +56,13 @@ IMPLEMENT_DYNAMIC(CWndMenuGraphs, CWnd)
  * \param [in,out]	parentView	If non-null, the parent view.
  **************************************************************************************************/
 
-CWndMenuGraphs::CWndMenuGraphs(CMVView *parentView)
+CWndMenuGraphs::CWndMenuGraphs()
 {
-	m_parentView=parentView;
-
 	m_lX				= 0;
 	m_lY				= 0;
 	m_lXo				= 0;
 	m_lYo				= 0;
 
-	//test inbiolab
-//#ifdef INBIOLAB_VERSION
-//	m_bViewMenu=false;
-//#else
 	m_pcMenu_Dis=NULL;
 
 	m_pcMenu_Graph_Up=NULL;
@@ -283,8 +277,10 @@ BOOL CWndMenuGraphs::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateCo
  * \date	26.02.2018
  **************************************************************************************************/
 
-void CWndMenuGraphs::Init()
+void CWndMenuGraphs::Init(CMVView *parentView)
 {
+	m_parentView=parentView;
+
 	CClientDC dc(this);
 
 	DWORD dwStyleNoTab = WS_CHILD|WS_VISIBLE|BS_OWNERDRAW;
@@ -898,151 +894,7 @@ void CWndMenuGraphs::Show(BOOL bShow)
 
 LRESULT CWndMenuGraphs::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
-//#ifdef INBIOLAB_VERSION
-//	switch(message)
-//	{
-//	case WM_SHOW_VIEWMENUBTN:
-//		{
-//			m_bViewMenu=false;
-//			m_pcSelView->ShowWindow(SW_SHOW);
-//
-//			if(m_pcSelView->IsDepressed())
-//			{
-//				m_pcSelView->Depress(false);
-//			}
-//
-//			Invalidate();
-//			UpdateWindow();
-//			return 1;
-//		}
-//		break;
-//	case WM_HIDE_VIEWMENUBTN:
-//		{
-//			m_bViewMenu=true;
-//			if(m_pcSelView->IsDepressed())
-//			{
-//				m_pcSelView->Depress(false);
-//			}
-//
-//			m_pcSelView->ShowWindow(SW_HIDE);
-//
-//			Invalidate();
-//			UpdateWindow();
-//			return 1;
-//		}
-//		break;
-//	case WM_MENUBUTTONDOWN:
-//		{
-//			switch(wParam)
-//			{
-//			case IDC_BTN_SELECT_VIEW:
-//				{
-//					if(m_parentView)
-//						m_parentView->PostMessage(WM_SELECT_VIEW);
-//
-//					
-//					return 1;
-//				}
-//				break;
-//			case IDC_BTN_GRAPH_FREEZE:
-//				{
-//					m_bFREEZE=!m_bFREEZE;
-//
-//					if(m_bFREEZE)
-//					{
-//						if(		getModel()->getVIEWHANDLER()->getViewSubState()==VSS_GRAPH_LOOPGRAPHS
-//							&&	getModel()->getCONFIG()->GetCurMode()!=VM_CPAP
-//							&&	getModel()->getCONFIG()->GetCurMode()!=VM_NCPAP
-//							&&	getModel()->getCONFIG()->GetCurMode()!=VM_DUOPAP)
-//						{
-//							if(m_pcMenuSave)
-//								m_pcMenuSave->ShowWindow(SW_SHOW);
-//						}
-//						else
-//						{
-//							if(m_pcMenuSave)
-//								m_pcMenuSave->ShowWindow(SW_HIDE);
-//						}
-//
-//						m_parentView->PostMessage(WM_FREEZE_GRAPHS);
-//					}
-//					else
-//					{
-//						m_pcMenuSave->ShowWindow(SW_HIDE);
-//						m_parentView->PostMessage(WM_CONTINUE_GRAPHS);
-//					}
-//
-//					return 1;
-//				}
-//				break;
-//			case IDC_BTN_GRAPH_SAVE:
-//				{
-//					if(AfxGetApp())
-//						AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_GRAPH_SAVE);
-//					
-//					return 1;
-//				}
-//				break;
-//			default:
-//				{
-//				}
-//				break;
-//			}
-//		}
-//		break;
-//	case WM_MENUBUTTONUP:
-//		{
-//			switch(wParam)
-//			{
-//			case IDC_BTN_SELECT_VIEW:
-//				{
-//					if(m_parentView)
-//						m_parentView->PostMessage(WM_SELECT_VIEW);
-//
-//					return 1;
-//				}
-//				break;
-//			case IDC_BTN_GRAPH_WAVE:
-//				{
-//					return 1;
-//				}
-//				break;
-//			case IDC_BTN_GRAPH_LOOPS:
-//				{
-//					return 1;
-//				}
-//				break;
-//			case IDC_BTN_GRAPH_CO2:
-//				{
-//					return 1;
-//				}
-//				break;
-//			case IDC_BTN_GRAPH_TREND:
-//				{
-//					return 1;
-//					
-//				}
-//				break;
-//			case IDC_BTN_GRAPH_FREEZE:
-//				{
-//					return 1;
-//				}
-//				break;
-//			case IDC_BTN_GRAPH_SAVE:
-//				{
-//					return 1;
-//				}
-//				break;
-//			default:
-//				{
-//				}
-//				break;
-//			}
-//
-//		}
-//		break;
-//	}
-//#else
+
 	switch(message)
 	{
 	case WM_MENUBUTTONDOWN:
@@ -1137,7 +989,8 @@ LRESULT CWndMenuGraphs::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 							}
 						}
 
-						m_parentView->PostMessage(WM_FREEZE_GRAPHS);
+						if(m_parentView)
+							m_parentView->PostMessage(WM_FREEZE_GRAPHS);
 					}
 					else
 					{
@@ -1149,7 +1002,8 @@ LRESULT CWndMenuGraphs::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 								m_pcMenuTrend->ShowWindow(SW_SHOW);
 						}
 
-						m_parentView->PostMessage(WM_CONTINUE_GRAPHS);
+						if(m_parentView)
+							m_parentView->PostMessage(WM_CONTINUE_GRAPHS);
 					}
 
 					return 1;

@@ -7,6 +7,21 @@
  *
  * @section ver Version history and changelog 
  * 
+ * @subsection ver5086 Version 5.0.8.13
+ * @date 2018-08-16
+ * @verbatim
+	- CViewParaBtn: CWndMenuVentState through wrapper -> CMnuWrapper -> CMnuWrapperVentState
+	- CWndMenuVentState: CPresetMenuBtn on the stack with default constructor
+	- Wrapper classes for menues/windows included: 
+		CMnuWrapperGraphs
+		CMnuWrapperAlarmLimits
+		CMnuWrapperSetupMenu
+		CMnuWrapperTrend
+		CMnuWrapperTrendtype
+		CMnuWrapperTrendTimeaxis
+	- CMnuWrapper::CMnuWrapper-> and CWndWrapper::CWndWrapper->pView initialized in constructor
+ @endverbatim
+ *
  * @subsection ver5086 Version 5.0.8.12
  * @date 2018-08-16
  * @verbatim

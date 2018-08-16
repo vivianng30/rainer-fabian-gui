@@ -2574,16 +2574,10 @@ bool CViewMenu::CreateWndMenuMenu()
 {
 	if(m_pWndMenuMenu==NULL && m_lX>-1)
 	{
-		m_pWndMenuMenu = new CWndMenuMenu(this);
-		RECT rcLd={0,551,800,600};
+		m_pWndMenuMenu = new CMnuWrapperSetupMenu();
 
-		//RECT rcLd={477,0,640,435};
-		if(m_pWndMenuMenu->Create(AfxGetApp()->GetMainWnd(),rcLd,IDC_VIEW_SETUPMENU))
+		if(m_pWndMenuMenu->createMenu(AfxGetApp()->GetMainWnd(),this))
 		{
-			m_pWndMenuMenu->Init();
-
-			//m_pWndMenuMenu->
-
 			return true;
 		}
 	}
@@ -2603,7 +2597,6 @@ bool CViewMenu::DestroyWndMenuMenu()
 {
 	if(m_pWndMenuMenu)
 	{
-		m_pWndMenuMenu->DestroyWindow();
 		delete m_pWndMenuMenu;
 		m_pWndMenuMenu=NULL;
 	}
@@ -2628,13 +2621,6 @@ void CViewMenu::ShowWndMenuMenu(bool bShow, CStringW txt, bool bMenuBtnOpen, boo
 	{
 		m_pWndMenuMenu->Show(bShow);
 		m_pWndMenuMenu->SetMenuText(txt);
-
-		/*if(bMenuBtnOpen)
-			m_pWndMenuMenu->PostMessage(WM_SETMENUBTN_OPEN);
-		else if(!bMenuBtnReturn)
-			m_pWndMenuMenu->PostMessage(WM_SETMENUBTN_CLOSE);
-		else
-			m_pWndMenuMenu->PostMessage(WM_SETMENUBTN_RETURN);*/
 	}
 }
 

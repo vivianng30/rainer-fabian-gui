@@ -54,10 +54,8 @@ IMPLEMENT_DYNAMIC(CWndMenuMenu, CWnd)
  * \param [in,out]	parentView	If non-null, the parent view.
  **************************************************************************************************/
 
-CWndMenuMenu::CWndMenuMenu(CMVView *parentView)
+CWndMenuMenu::CWndMenuMenu()
 {
-	m_parentView=parentView;
-
 	m_csMenuText=_T("");
 
 	m_hDC=NULL;
@@ -228,8 +226,9 @@ BOOL CWndMenuMenu::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateCont
  * \date	26.02.2018
  **************************************************************************************************/
 
-void CWndMenuMenu::Init()
+void CWndMenuMenu::Init(CMVView *parentView)
 {
+	m_parentView=parentView;
 
 	CClientDC dc(this);
 

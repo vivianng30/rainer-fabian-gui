@@ -63,13 +63,9 @@ IMPLEMENT_DYNAMIC(CWndMenuAlarmLimits, CWnd)
  * \param [in,out]	parentView	If non-null, the parent view.
  **************************************************************************************************/
 
-CWndMenuAlarmLimits::CWndMenuAlarmLimits(CMVView *parentView)
+CWndMenuAlarmLimits::CWndMenuAlarmLimits()
 {
 	m_pModel = NULL;
-
-	m_parentView=parentView;
-
-	//m_bIsLoud = false;
 
 	m_hDC = NULL;
 	m_hBmp = NULL;
@@ -81,19 +77,6 @@ CWndMenuAlarmLimits::CWndMenuAlarmLimits(CMVView *parentView)
 
 	m_eAlarmVolume=getModel()->getSOUND()->GetAlarmVolume();
 
-	//if(m_eAlarmVolume==ALARMMEDIUM)
-	//{
-	//	m_pcMenu3->SetBitmaps(m_pcAlMedium_Up,m_pcAlMedium_Dw,m_pcAlMedium_Up,m_pcAlMedium_Up);
-	//}
-	//else if(m_eAlarmVolume==ALARMLOUD)
-	//{
-	//	m_pcMenu3->SetBitmaps(m_pcAlLoud_Up,m_pcAlLoud_Dw,m_pcAlLoud_Up,m_pcAlLoud_Up);
-	//}
-	//else //ALARMLOUD
-	//{
-	//	m_pcMenu3->SetBitmaps(m_pcAlSilent_Up,m_pcAlSilent_Dw,m_pcAlSilent_Up,m_pcAlSilent_Up);
-	//}
-
 	m_lX				= 0;
 	m_lY				= 0;
 	m_lXo				= 0;
@@ -104,8 +87,6 @@ CWndMenuAlarmLimits::CWndMenuAlarmLimits(CMVView *parentView)
 
 	m_pcMenu_Up=NULL;
 	m_pcMenu_Dw=NULL;
-	//m_pcAlOff_Up=NULL;
-	//m_pcAlOff_Dw=NULL;
 	m_pcAlLoud_Up=NULL;
 	m_pcAlLoud_Dw=NULL;
 	m_pcAlMedium_Up=NULL;
@@ -258,8 +239,10 @@ BOOL CWndMenuAlarmLimits::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCre
  * \date	26.02.2018
  **************************************************************************************************/
 
-void CWndMenuAlarmLimits::Init()
+void CWndMenuAlarmLimits::Init(CMVView *parentView)
 {
+	m_parentView=parentView;
+
 	CClientDC dc(this);
 
 	DWORD dwStyleNoTab = WS_CHILD|WS_VISIBLE|BS_OWNERDRAW|BS_MULTILINE;
@@ -801,9 +784,8 @@ void CWndMenuAlarmLimits::refreshCurALimitNumeric()
 
 void CWndMenuAlarmLimits::OnBnClickedMenu2()
 {
-	/*CMVEventUI event(CMVEventUI::EV_BN_ALIMIT2);
-	getModel()->Trigger(&event);*/
-	m_parentView->PostMessage(WM_ALIMIT_AUTOSET_SINGLE);
+	if(m_parentView)
+		m_parentView->PostMessage(WM_ALIMIT_AUTOSET_SINGLE);
 }
 
 /**********************************************************************************************//**
@@ -837,14 +819,8 @@ void CWndMenuAlarmLimits::OnBnClickedMenu3()
 	if(AfxGetApp())
 		AfxGetApp()->GetMainWnd()->PostMessage(WM_PIF_DOUBLESIGNAL);
 
-	//m_parentView->PostMessage(WM_ALIMIT_SETFOCUS);
 }
 
-//void CWndMenuAlarmLimits::OnBnClickedMenu4()
-//{
-//	if(AfxGetApp())
-//		AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_RESET_ALARMS);
-//}
 
 /**********************************************************************************************//**
  * Executes the button clicked menu 5 action

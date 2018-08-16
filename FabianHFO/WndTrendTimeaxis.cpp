@@ -39,10 +39,8 @@ IMPLEMENT_DYNAMIC(CWndTrendTimeaxis, CWnd)
  * \param [in,out]	parentView	If non-null, the parent view.
  **************************************************************************************************/
 
-CWndTrendTimeaxis::CWndTrendTimeaxis(CMVView *parentView)
+CWndTrendTimeaxis::CWndTrendTimeaxis()
 {
-	m_parentView=parentView;
-
 	m_pcTimeAxis=NULL;
 
 	m_iXStartPos=0;
@@ -154,19 +152,15 @@ BOOL CWndTrendTimeaxis::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreat
  * \date	26.02.2018
  **************************************************************************************************/
 
-void CWndTrendTimeaxis::Init()
+void CWndTrendTimeaxis::Init(CMVView *parentView)
 {
-	CClientDC dc(this);
+	m_parentView=parentView;
 
-	//DWORD dwStyleNoTab = WS_CHILD|WS_VISIBLE|BS_OWNERDRAW;
-	//DWORD dwStyleNoTab = WS_CHILD|WS_VISIBLE|BS_OWNERDRAW|WS_TABSTOP;
+	CClientDC dc(this);
 
 	m_pcTimeAxis= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_TIMEAXIS);
 	
-
 	Draw();
-
-
 }
 
 /**********************************************************************************************//**
@@ -229,7 +223,7 @@ void CWndTrendTimeaxis::OnDestroy()
 
 void CWndTrendTimeaxis::SetTimeRange(COleDateTime dtStartTime, COleDateTime dtEndTime,int iOffset, int iTimeSpan)
 {
-	DEBUGMSG(TRUE, (TEXT("CWndTrendTimeaxis::SetTimeRange\r\n")));
+	//DEBUGMSG(TRUE, (TEXT("CWndTrendTimeaxis::SetTimeRange\r\n")));
 
 	m_dtStartTime=dtStartTime;
 	m_dtEndTime=dtEndTime;
@@ -378,51 +372,6 @@ BOOL CWndTrendTimeaxis::PreTranslateMessage(MSG* pMsg)
 {
 	switch(pMsg->message)
 	{
-	/*case WM_MOUSEMOVE:
-		{
-			switch(pMsg->wParam)
-			{
-			case MK_LBUTTON:
-				{
-					int xPos = GET_X_LPARAM(pMsg->lParam); 
-					
-					double dSpan=(m_dFactor*(double)m_iTimeSpanMinutes);
-					double dRight=490-(m_dFactor*(double)m_iOffsetMinutes);
-					int iLeft=(int)(dRight-dSpan);
-
-					if(xPos>dRight)
-					{
-						m_parentView->PostMessage(WM_TREND_MOVERIGHT);
-					}
-					else if(xPos<iLeft)
-					{
-						m_parentView->PostMessage(WM_TREND_MOVELEFT);
-					}
-
-
-					
-					
-				}
-				break;
-			default:
-				{
-					int iSt=0;
-				}
-				break;
-			}
-		}
-		break;*/
-	//case WM_LBUTTONUP:
-	//	{
-	//		int xPos = GET_X_LPARAM(pMsg->lParam); 
-	//		int yPos = GET_Y_LPARAM(pMsg->lParam);
-
-	//		
-
-	//		//m_iXStartPos = 0;
-	//		//m_iYStartPos = 0;
-	//	}
-	//	break;
 	case WM_LBUTTONDOWN:
 		{
 			m_iXStartPos = GET_X_LPARAM(pMsg->lParam);
@@ -439,11 +388,13 @@ BOOL CWndTrendTimeaxis::PreTranslateMessage(MSG* pMsg)
 			
 				if(m_iXStartPos<iLeft)
 				{
-					m_parentView->PostMessage(WM_TREND_MOVE,iPos);
+					if(m_parentView)
+						m_parentView->PostMessage(WM_TREND_MOVE,iPos);
 				}
 				else if(m_iXStartPos>dRight)
 				{
-					m_parentView->PostMessage(WM_TREND_MOVE,iPos);
+					if(m_parentView)
+						m_parentView->PostMessage(WM_TREND_MOVE,iPos);
 				}
 			}
 		}

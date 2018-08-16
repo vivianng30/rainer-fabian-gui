@@ -17,10 +17,10 @@ class CWndMenuGraphs : public CWnd
 	DECLARE_DYNAMIC(CWndMenuGraphs)
 
 public:
-	CWndMenuGraphs(CMVView *parentView);
+	CWndMenuGraphs();
 	virtual ~CWndMenuGraphs();
 
-	void Init();
+	void Init(CMVView *parentView);
 	void Show(BOOL bShow);
 	
 	//test inbiolab

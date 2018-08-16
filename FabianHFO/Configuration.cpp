@@ -14668,6 +14668,7 @@ void CConfiguration::SetLastWrittenTrendFile(UINT type, BYTE count)
 	{
 	case TREND_PINSP:
 		{
+			//DEBUGMSG(TRUE, (TEXT("CConfiguration::SetLastWrittenTrendFile %d\r\n"),(int)count));
 			getModel()->getI2C()->WriteConfigByte(TRENDFILE_PINSP_8, count);
 		}
 		break;
@@ -14774,6 +14775,7 @@ BYTE CConfiguration::GetLastWrittenTrendFile(UINT type)
 	case TREND_PINSP:
 		{
 			byResult=getModel()->getI2C()->ReadConfigByte(TRENDFILE_PINSP_8);
+			//DEBUGMSG(TRUE, (TEXT("CConfiguration::GetLastWrittenTrendFile %d\r\n"),(int)byResult));
 		}
 		break;
 	case TREND_PMEAN:

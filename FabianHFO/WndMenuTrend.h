@@ -16,10 +16,10 @@ class CWndMenuTrend : public CWnd
 	DECLARE_DYNAMIC(CWndMenuTrend)
 
 public:
-	CWndMenuTrend(CMVView *parentView);
+	CWndMenuTrend();
 	virtual ~CWndMenuTrend();
 
-	void Init();
+	void Init(CMVView *parentView);
 	void Show(BOOL bShow);
 
 
