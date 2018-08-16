@@ -44,23 +44,15 @@ public:
 
 	//Observer
 	virtual void NotifyVentModeChanged();
-	//virtual void NotifyViewStateChanged();
 	virtual void NotifyEvent(CMVEvent* pEvent);
 	virtual void NotifyParaBtnEvent(CMVEvent* pEvent);
 	virtual void NotifyDataChanged();
 	virtual void NotifyAlarmLimitChanged();
 
-	//TCHAR m_pszFontName[32];
-	//HFONT CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation);
 
 	void setPRICOrunning(bool state);
 	void drawSIQofSPO2();
 	void drawMeasuredFiO2Value();
-	/*void setFIO2LOWvalue(BYTE iFIO2LOWvalue);
-	void setFIO2HIGHvalue(BYTE iFIO2HIGHvalue);
-
-	void setSPO2LOWvalue(BYTE iSPO2LOWvalue);
-	void setSPO2HIGHvalue(BYTE iSPO2HIGHvalue);*/
 	void UpdateLimitData();
 
 

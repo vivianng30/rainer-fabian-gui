@@ -131,10 +131,9 @@ BOOL CMessageBoxProxCal::OnInitDialog()
 
 	_tcscpy_s(m_pszFontName,_countof(m_pszFontName),getModel()->GetFontFace());
 
-	CDC* pDC = this->GetDC();
-	m_hfont=CreateFontHandle(pDC,16,m_pszFontName,FW_BOLD,0);
+	m_hfont=CreateFontHandle(16,m_pszFontName,FW_BOLD,0);
 	this->SetFont(CFont::FromHandle(m_hfont));
-	m_hfontButton=CreateFontHandle(pDC,18,m_pszFontName,FW_BOLD,0);
+	m_hfontButton=CreateFontHandle(18,m_pszFontName,FW_BOLD,0);
 
 	m_szStaticTextMsg.SetFont(CFont::FromHandle(m_hfont));
 
@@ -145,9 +144,6 @@ BOOL CMessageBoxProxCal::OnInitDialog()
 	m_szPProxADC.SetFont(CFont::FromHandle(m_hfont));
 	m_szPressure.SetFont(CFont::FromHandle(m_hfont));
 
-	
-	ReleaseDC(pDC);
-
 	switch(m_iFlags)
 	{
 	case MB_CAL_0MBAR:
@@ -156,7 +152,6 @@ BOOL CMessageBoxProxCal::OnInitDialog()
 			m_pcRessource.GetClientRect(rcRes);
 			m_pcRessource.MoveWindow(((rcDlg.right-rcRes.right)/2),10,rcRes.right,rcRes.bottom);
 
-			//m_btn0mbar.GetDC()->SetTextColor(RGB(0,255,0));
 			m_btn0mbar.SetWindowText(_T("0 mbar"));
 			m_btn0mbar.EnableWindow(true);
 			m_btn60mbar.SetWindowText(_T("60 mbar"));
@@ -278,7 +273,7 @@ HBRUSH CMessageBoxProxCal::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
  * \return	The new font handle.
  **************************************************************************************************/
 
-HFONT CMessageBoxProxCal::CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation) 
+HFONT CMessageBoxProxCal::CreateFontHandle(int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation) 
 {
 	// Standard settings
 	LOGFONT lf;

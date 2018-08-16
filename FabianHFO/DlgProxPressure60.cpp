@@ -281,9 +281,8 @@ BOOL CDlgProxPressure60::OnInitDialog()
 	_tcscpy_s(m_pszFontName,_countof(m_pszFontName),getModel()->GetFontFace());
 
 	CClientDC dc(this);
-	CDC* pDC = this->GetDC();
 
-	m_hfont=CreateFontHandle(pDC,16,m_pszFontName,FW_BOLD,0);
+	m_hfont=CreateFontHandle(16,m_pszFontName,FW_BOLD,0);
 	this->SetFont(CFont::FromHandle(m_hfont));
 	m_szPProxADC.SetFont(CFont::FromHandle(m_hfont));
 	m_szPressure.SetFont(CFont::FromHandle(m_hfont));
@@ -415,11 +414,6 @@ BOOL CDlgProxPressure60::OnInitDialog()
 
 	m_szPProxADC.SetWindowText(_T("PPROX ADC:"));
 	m_szPressure.SetWindowText(_T("Pressure:"));
-
-	//this->SetWindowText(m_szCaption);
-
-	
-	ReleaseDC(pDC);
 
 	SetTimer(PROXPRESSURECALTIMER, 250, NULL);
 	return TRUE;
@@ -623,7 +617,7 @@ void CDlgProxPressure60::Draw()
  * \return	The new font handle.
  **************************************************************************************************/
 
-HFONT CDlgProxPressure60::CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation) 
+HFONT CDlgProxPressure60::CreateFontHandle(int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation) 
 {
 	// Standard settings
 	LOGFONT lf;

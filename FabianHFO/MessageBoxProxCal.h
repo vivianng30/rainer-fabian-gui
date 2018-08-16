@@ -26,7 +26,7 @@ public:
 	CMessageBoxProxCal(CWnd* pParent = NULL, CStringW sCaption = _T(""), CStringW sText = _T(""), UINT iFlags = 0);   // standard constructor
 	virtual ~CMessageBoxProxCal();
 
-	HFONT CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation);
+	HFONT CreateFontHandle(int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation);
 private:
 	CMVModel *getModel();
 

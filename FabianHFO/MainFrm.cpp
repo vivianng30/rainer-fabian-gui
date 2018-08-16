@@ -1077,57 +1077,57 @@ WORD CMainFrame::CreateAcuFonts(WORD wLanguageID, bool bSetFaceToModel)
 		m_hf70BoldNum=NULL;
 	}
 
-	m_hf10Bold=CreateFontHandle(&dc,10,m_pszFontName,FW_BOLD);
-	m_hf13Bold=CreateFontHandle(&dc,13,m_pszFontName,FW_BOLD);
-	m_hf10Norm=CreateFontHandle(&dc,10,m_pszFontName,FW_NORMAL);
-	m_hf11Norm=CreateFontHandle(&dc,11,m_pszFontName,FW_NORMAL);
-	m_hf12Norm=CreateFontHandle(&dc,12,m_pszFontName,FW_NORMAL);
-	m_hf12Norm90degree=CreateFontHandle(&dc,-((8*dc.GetDeviceCaps(LOGPIXELSY))/72),m_pszFontName,FW_NORMAL,900);
-	m_hf13Norm=CreateFontHandle(&dc,13,m_pszFontName,FW_NORMAL);
-	m_hf14Norm=CreateFontHandle(&dc,14,m_pszFontName,FW_NORMAL);
-	m_hf14Bold=CreateFontHandle(&dc,14,m_pszFontName,FW_BOLD);
-	m_hf14Bold90degree=CreateFontHandle(&dc,-((9*dc.GetDeviceCaps(LOGPIXELSY))/72),m_pszFontName,FW_NORMAL,900);
-	m_hf15Normal=CreateFontHandle(&dc,15,m_pszFontName,FW_NORMAL);
-	m_hf15Bold=CreateFontHandle(&dc,15,m_pszFontName,FW_BOLD);
-	m_hf16Bold=CreateFontHandle(&dc,16,m_pszFontName,FW_BOLD);
-	m_hf16Normal=CreateFontHandle(&dc,16,m_pszFontName,FW_NORMAL);
-	m_hf16Bold90degree=CreateFontHandle(&dc,-((10*dc.GetDeviceCaps(LOGPIXELSY))/72),m_pszFontName,FW_NORMAL,900);
-	m_hf17Bold=CreateFontHandle(&dc,17,m_pszFontName,FW_BOLD);
-	m_hf18Normal=CreateFontHandle(&dc,18,m_pszFontName,FW_NORMAL);
-	m_hf18Bold=CreateFontHandle(&dc,18,m_pszFontName,FW_BOLD);
-	m_hf20Bold=CreateFontHandle(&dc,20,m_pszFontName,FW_BOLD);
-	m_hf21Medium=CreateFontHandle(&dc,21,m_pszFontName,FW_MEDIUM);
-	m_hf21Bold=CreateFontHandle(&dc,21,m_pszFontName,FW_BOLD);
-	m_hf22Medium=CreateFontHandle(&dc,22,m_pszFontName,FW_MEDIUM);
-	m_hf22Bold=CreateFontHandle(&dc,22,m_pszFontName,FW_BOLD);
-	m_hf24Bold=CreateFontHandle(&dc,24,m_pszFontName,FW_BOLD);
-	m_hf26Medium=CreateFontHandle(&dc,26,m_pszFontName,FW_MEDIUM);
-	m_hf28Bold=CreateFontHandle(&dc,28,m_pszFontName,FW_BOLD);
-	m_hf30Bold=CreateFontHandle(&dc,30,m_pszFontName,FW_BOLD);
-	m_hf32Medium=CreateFontHandle(&dc,32,m_pszFontName,FW_MEDIUM);
-	m_hf34Bold=CreateFontHandle(&dc,34,m_pszFontName,FW_BOLD);
-	m_hf38Bold=CreateFontHandle(&dc,38,m_pszFontName,FW_BOLD);
-	m_hf40Bold=CreateFontHandle(&dc,40,m_pszFontName,FW_BOLD);
-	m_hf50Bold=CreateFontHandle(&dc,50,m_pszFontName,FW_BOLD);
-	m_hf60Bold=CreateFontHandle(&dc,60,m_pszFontName,FW_BOLD);
-	m_hf70Bold=CreateFontHandle(&dc,70,m_pszFontName,FW_BOLD);
+	m_hf10Bold=CreateFontHandle(10,m_pszFontName,FW_BOLD);
+	m_hf13Bold=CreateFontHandle(13,m_pszFontName,FW_BOLD);
+	m_hf10Norm=CreateFontHandle(10,m_pszFontName,FW_NORMAL);
+	m_hf11Norm=CreateFontHandle(11,m_pszFontName,FW_NORMAL);
+	m_hf12Norm=CreateFontHandle(12,m_pszFontName,FW_NORMAL);
+	m_hf12Norm90degree=CreateFontHandle(-((8*dc.GetDeviceCaps(LOGPIXELSY))/72),m_pszFontName,FW_NORMAL,900);
+	m_hf13Norm=CreateFontHandle(13,m_pszFontName,FW_NORMAL);
+	m_hf14Norm=CreateFontHandle(14,m_pszFontName,FW_NORMAL);
+	m_hf14Bold=CreateFontHandle(14,m_pszFontName,FW_BOLD);
+	m_hf14Bold90degree=CreateFontHandle(-((9*dc.GetDeviceCaps(LOGPIXELSY))/72),m_pszFontName,FW_NORMAL,900);
+	m_hf15Normal=CreateFontHandle(15,m_pszFontName,FW_NORMAL);
+	m_hf15Bold=CreateFontHandle(15,m_pszFontName,FW_BOLD);
+	m_hf16Bold=CreateFontHandle(16,m_pszFontName,FW_BOLD);
+	m_hf16Normal=CreateFontHandle(16,m_pszFontName,FW_NORMAL);
+	m_hf16Bold90degree=CreateFontHandle(-((10*dc.GetDeviceCaps(LOGPIXELSY))/72),m_pszFontName,FW_NORMAL,900);
+	m_hf17Bold=CreateFontHandle(17,m_pszFontName,FW_BOLD);
+	m_hf18Normal=CreateFontHandle(18,m_pszFontName,FW_NORMAL);
+	m_hf18Bold=CreateFontHandle(18,m_pszFontName,FW_BOLD);
+	m_hf20Bold=CreateFontHandle(20,m_pszFontName,FW_BOLD);
+	m_hf21Medium=CreateFontHandle(21,m_pszFontName,FW_MEDIUM);
+	m_hf21Bold=CreateFontHandle(21,m_pszFontName,FW_BOLD);
+	m_hf22Medium=CreateFontHandle(22,m_pszFontName,FW_MEDIUM);
+	m_hf22Bold=CreateFontHandle(22,m_pszFontName,FW_BOLD);
+	m_hf24Bold=CreateFontHandle(24,m_pszFontName,FW_BOLD);
+	m_hf26Medium=CreateFontHandle(26,m_pszFontName,FW_MEDIUM);
+	m_hf28Bold=CreateFontHandle(28,m_pszFontName,FW_BOLD);
+	m_hf30Bold=CreateFontHandle(30,m_pszFontName,FW_BOLD);
+	m_hf32Medium=CreateFontHandle(32,m_pszFontName,FW_MEDIUM);
+	m_hf34Bold=CreateFontHandle(34,m_pszFontName,FW_BOLD);
+	m_hf38Bold=CreateFontHandle(38,m_pszFontName,FW_BOLD);
+	m_hf40Bold=CreateFontHandle(40,m_pszFontName,FW_BOLD);
+	m_hf50Bold=CreateFontHandle(50,m_pszFontName,FW_BOLD);
+	m_hf60Bold=CreateFontHandle(60,m_pszFontName,FW_BOLD);
+	m_hf70Bold=CreateFontHandle(70,m_pszFontName,FW_BOLD);
 
-	m_hf31AcuBoldNum=CreateFontHandle(&dc,38,m_pszFontName,FW_BOLD);
-	m_hf33AcuBoldNum=CreateFontHandle(&dc,40,m_pszFontName,FW_BOLD);
-	m_hf70BoldNum=CreateFontHandle(&dc,70,m_pszFontName,FW_BOLD);
-	m_hf14AcuNormNum=CreateFontHandle(&dc,14,m_pszFontName,FW_NORMAL);
-	m_hf12AcuNormNum=CreateFontHandle(&dc,12,m_pszFontName,FW_NORMAL);
-	m_hf34BoldNum=CreateFontHandle(&dc,34,m_pszFontName,FW_BOLD);
-	m_hf20BoldNum=CreateFontHandle(&dc,20,m_pszFontName,FW_BOLD);
-	m_hf18BoldNum=CreateFontHandle(&dc,18,m_pszFontName,FW_BOLD);
+	m_hf31AcuBoldNum=CreateFontHandle(38,m_pszFontName,FW_BOLD);
+	m_hf33AcuBoldNum=CreateFontHandle(40,m_pszFontName,FW_BOLD);
+	m_hf70BoldNum=CreateFontHandle(70,m_pszFontName,FW_BOLD);
+	m_hf14AcuNormNum=CreateFontHandle(14,m_pszFontName,FW_NORMAL);
+	m_hf12AcuNormNum=CreateFontHandle(12,m_pszFontName,FW_NORMAL);
+	m_hf34BoldNum=CreateFontHandle(34,m_pszFontName,FW_BOLD);
+	m_hf20BoldNum=CreateFontHandle(20,m_pszFontName,FW_BOLD);
+	m_hf18BoldNum=CreateFontHandle(18,m_pszFontName,FW_BOLD);
 
-	/*m_hf31AcuBoldNum=CreateFontHandle(&dc,38,_T("arial"),FW_BOLD);
-	m_hf33AcuBoldNum=CreateFontHandle(&dc,40,_T("arial"),FW_BOLD);
-	m_hf70BoldNum=CreateFontHandle(&dc,70,_T("arial"),FW_BOLD);
-	m_hf14AcuNormNum=CreateFontHandle(&dc,14,_T("arial"),FW_NORMAL);
-	m_hf34BoldNum=CreateFontHandle(&dc,34,_T("arial"),FW_BOLD);
-	m_hf20BoldNum=CreateFontHandle(&dc,20,_T("arial"),FW_BOLD);
-	m_hf18BoldNum=CreateFontHandle(&dc,18,_T("arial"),FW_BOLD);*/
+	/*m_hf31AcuBoldNum=CreateFontHandle(38,_T("arial"),FW_BOLD);
+	m_hf33AcuBoldNum=CreateFontHandle(40,_T("arial"),FW_BOLD);
+	m_hf70BoldNum=CreateFontHandle(70,_T("arial"),FW_BOLD);
+	m_hf14AcuNormNum=CreateFontHandle(14,_T("arial"),FW_NORMAL);
+	m_hf34BoldNum=CreateFontHandle(34,_T("arial"),FW_BOLD);
+	m_hf20BoldNum=CreateFontHandle(20,_T("arial"),FW_BOLD);
+	m_hf18BoldNum=CreateFontHandle(18,_T("arial"),FW_BOLD);*/
 
 	return wLanguageID;
 }
@@ -1446,7 +1446,7 @@ void CMainFrame::UnregisterSDCardFonts()
  * \return	The new font handle.
  **************************************************************************************************/
 
-HFONT CMainFrame::CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation) 
+HFONT CMainFrame::CreateFontHandle(int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation) 
 {
 	// Standard settings
 	LOGFONT lf;
@@ -6077,7 +6077,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 //void CMainFrame::SaveScreenShot()
 //{
-//	CDC* pDC = GetDC();
+//	
 //	
 //
 //	//create a memory dc 

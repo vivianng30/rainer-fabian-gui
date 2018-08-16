@@ -209,7 +209,6 @@ BOOL CDlgMessageBox::OnInitDialog()
 	MoveWindow(iXpos,iYpos,440,295);
 	SetWindowPos(&this->wndTopMost,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
 
-	CDC* pDC = this->GetDC();
 	CClientDC dc(this);
 
 	m_pcDlgLeft= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_DLG_LEFT);
@@ -356,8 +355,6 @@ BOOL CDlgMessageBox::OnInitDialog()
 	{
 		m_pcRessource.ShowWindow(SW_HIDE);
 	}
-
-	ReleaseDC(pDC);
 
 	return TRUE;   // return TRUE unless you set the focus to a control
 }

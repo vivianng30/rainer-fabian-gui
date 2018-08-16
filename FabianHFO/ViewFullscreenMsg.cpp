@@ -188,8 +188,6 @@ bool CViewFullscreenMsg::Initialize()
 {
 	bool result=false;
 
-	/*CDC* pDC = this->GetDC();
-	HDC hdc = pDC->GetSafeHdc();*/
 	CClientDC dc(this);
 
 	BTN btn;

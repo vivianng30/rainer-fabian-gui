@@ -33,8 +33,6 @@ public:
 	virtual void AddMessageTail(CStringW sMessage);
 
 protected:
-	void Draw();
-	void SetHorizontalExtent(/*CListBox& ListBox*/);
 	CMVModel *getModel();
 
 private:

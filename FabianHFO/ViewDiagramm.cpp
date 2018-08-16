@@ -671,13 +671,12 @@ bool CViewDiagramm::Initialize()
 	if(isExit())
 		return false;
 
-	CDC* pDC = this->GetDC();
-	HDC hdc = pDC->GetSafeHdc();
+	HDC hDC = ::GetDC(m_hWnd);
 
-	m_pcGraphArrow_Up		= new CBmp(theApp.m_hInstance,hdc,	IDB_GRAPHBTN_ARW_UP);
-	m_pcGraphArrow_Fc		= new CBmp(theApp.m_hInstance,hdc,	IDB_GRAPHBTN_ARW_DW);
+	m_pcGraphArrow_Up		= new CBmp(theApp.m_hInstance,hDC,	IDB_GRAPHBTN_ARW_UP);
+	m_pcGraphArrow_Fc		= new CBmp(theApp.m_hInstance,hDC,	IDB_GRAPHBTN_ARW_DW);
 
-	m_pcBargraphSIQofSPO2	= new CBmp(theApp.m_hInstance,hdc,	IDB_FRAME_SIQ);
+	m_pcBargraphSIQofSPO2	= new CBmp(theApp.m_hInstance,hDC,	IDB_FRAME_SIQ);
 
 	BTN btn;
 
@@ -704,8 +703,7 @@ bool CViewDiagramm::Initialize()
 
 
 	//release the Display DC
-	ReleaseDC(pDC);
-
+	::ReleaseDC(m_hWnd, hDC);
 
 	return true;
 }

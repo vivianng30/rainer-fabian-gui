@@ -7,6 +7,14 @@
  *
  * @section ver Version history and changelog
  * 
+ * @subsection ver5086 Version 5.0.8.11
+ * @date 2018-08-11
+ * @verbatim
+	- function CreateFontHandle()genertal without CDC
+	- CDC *pDC; pDC = GetDC(); ReleaseDC (pDC); //!!!!!!!!!!! memory leak (tested with project "writeSerial")
+		instead: HDC hDC = ::GetDC (m_hWnd); ::ReleaseDC (m_hWnd, hDC); -> no memory leak
+ @endverbatim
+ *
  * @subsection ver5086 Version 5.0.8.10
  * @date 2018-08-15
  * @verbatim

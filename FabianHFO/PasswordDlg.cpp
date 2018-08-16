@@ -172,13 +172,10 @@ BOOL CPasswordDlg::OnInitDialog()
 	CRect rcDlg, rcRes;
 	GetClientRect(rcDlg);
 
-	CDC* pDC = this->GetDC();
-
-
 	_tcscpy_s(m_pszFontName,_countof(m_pszFontName),getModel()->GetFontFace());
-	m_hfont=CreateFontHandle(pDC,16,m_pszFontName,FW_BOLD,0);
+	m_hfont=CreateFontHandle(16,m_pszFontName,FW_BOLD,0);
 	this->SetFont(CFont::FromHandle(m_hfont));
-	m_hfontButton=CreateFontHandle(pDC,18,m_pszFontName,FW_BOLD,0);
+	m_hfontButton=CreateFontHandle(18,m_pszFontName,FW_BOLD,0);
 
 	CString szCaption=_T("License key: ");
 	CString szInfo=_T("Insert key: ");
@@ -300,8 +297,6 @@ BOOL CPasswordDlg::OnInitDialog()
 
 	SetTimer(FOCUSTIMER, 100, NULL);
 
-	ReleaseDC(pDC);
-
 	return TRUE;   // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -337,7 +332,7 @@ CMVModel *CPasswordDlg::getModel()
  * \return	The new font handle.
  **************************************************************************************************/
 
-HFONT CPasswordDlg::CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation) 
+HFONT CPasswordDlg::CreateFontHandle(int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation) 
 {
 	// Standard settings
 	LOGFONT lf;

@@ -45,7 +45,7 @@ public:
 	
 
 protected:
-	HFONT CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation=0);
+	HFONT CreateFontHandle(int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation=0);
 	void RegisterFFSDISKFonts();
 	void RegisterSDCardFonts();
 	void UnregisterFFSDISKFonts();

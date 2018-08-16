@@ -301,13 +301,12 @@ bool CViewTrend::Initialize()
 {
 	bool result = false;
 
-	CDC* pDC = this->GetDC();
-	HDC hdc = pDC->GetSafeHdc();
+	HDC hDC = ::GetDC(m_hWnd);
 
-	m_pcSelectTrend_Up		= new CBmp(theApp.m_hInstance,hdc,	IDB_GRAPHBTN_ARW_UP);
-	m_pcSelectTrend_Dw		= new CBmp(theApp.m_hInstance,hdc,	IDB_TRENDBTN_ARW_DW);
+	m_pcSelectTrend_Up		= new CBmp(theApp.m_hInstance,hDC,	IDB_GRAPHBTN_ARW_UP);
+	m_pcSelectTrend_Dw		= new CBmp(theApp.m_hInstance,hDC,	IDB_TRENDBTN_ARW_DW);
 
-	m_pcNumPara2er		= new CBmp(theApp.m_hInstance,hdc,	IDB_NUMPARA_2);
+	m_pcNumPara2er		= new CBmp(theApp.m_hInstance,hDC,	IDB_NUMPARA_2);
 
 	m_iTrendSpan=getModel()->getCONFIG()->GetTrendSpan();
 	m_iTypeTrend1=getModel()->getCONFIG()->GetTrendType1();
@@ -396,7 +395,7 @@ bool CViewTrend::Initialize()
 	m_pBufferTrend3=new WORD[MAXSIZE_TREND_BUFFER];
 
 	//release the Display DC
-	ReleaseDC(pDC);
+	::ReleaseDC(m_hWnd, hDC);
 
 	return result;
 }

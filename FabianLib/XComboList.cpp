@@ -530,41 +530,34 @@ void CXComboList::SetHorizontalExtent(/*CListBox& ListBox*/)
 {
 	int nMaxTextWidth = 0;
 
-	CDC *pDC = m_ListBox.GetDC();
+	HDC hDC = ::GetDC(m_ListBox.m_hWnd);
 
-	if (pDC)
+	HGDIOBJ original = NULL;
+
+	//Saving the original object
+	original = SelectObject(hDC,m_ListBox.GetFont());
+
+	CStringW Text;
+	const int nItems = m_ListBox.GetCount();
+
+	for (int i = 0; i < nItems; i++)
 	{
-		CFont *pOldFont = pDC->SelectObject(m_ListBox.GetFont());
+		m_ListBox.GetText(i, Text);
 
-		CStringW Text;
-		const int nItems = m_ListBox.GetCount();
+		Text += "X";  // otherwise item may be clipped.
+		SIZE sizeText;
+		//Calculate the width of the text, by using the classic method
+		GetTextExtentPoint32(hDC,Text,lstrlen(Text),&sizeText);
 
-		for (int i = 0; i < nItems; i++)
+		if (sizeText.cx > nMaxTextWidth)
 		{
-			m_ListBox.GetText(i, Text);
-
-			Text += "X";  // otherwise item may be clipped.
-
-			const int nTextWidth = pDC->GetTextExtent(Text).cx;
-
-			if (nTextWidth > nMaxTextWidth)
-			{
-				nMaxTextWidth = nTextWidth;
-			}
+			nMaxTextWidth = sizeText.cx;
 		}
-
-		pDC->SelectObject(pOldFont);
-
-		VERIFY(m_ListBox.ReleaseDC(pDC) != 0);
 	}
-	else
-	{
-		ASSERT(FALSE);
-	}
+
+	VERIFY(::ReleaseDC(m_ListBox.m_hWnd, hDC) != 0);
 
 	m_ListBox.SetHorizontalExtent(nMaxTextWidth);
-
-
 }
 
 /**********************************************************************************************//**
