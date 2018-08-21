@@ -3863,6 +3863,7 @@ void CMVModel::triggerMatrixEvent(CMVEvent* pEvent)
 					getVIEWHANDLER()->StopDiagramm();*/
 
 				getVIEWHANDLER()->changeViewState(VS_ALARM_LIMIT,VSS_NONE);
+				NotifyEvent(pEvent);
 			}
 		}
 		break;

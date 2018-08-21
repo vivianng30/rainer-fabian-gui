@@ -698,12 +698,12 @@ LRESULT CWndMenuAlarmLimits::WindowProc(UINT message, WPARAM wParam, LPARAM lPar
 			if(getModel()->getVIEWHANDLER()->getViewSubState()==VSS_ALIMIT_LOGLIST)
 			{
 				if(m_pcMenu5)
-					m_pcMenu5->SetText(getModel()->GetLanguageString(IDS_MENU_CLOSELOG));
+					m_pcMenu5->RefreshText(getModel()->GetLanguageString(IDS_MENU_CLOSELOG));
 			}
 			else
 			{
 				if(m_pcMenu5)
-					m_pcMenu5->SetText(getModel()->GetLanguageString(IDS_MENU_SHOWLOG));
+					m_pcMenu5->RefreshText(getModel()->GetLanguageString(IDS_MENU_SHOWLOG));
 			}
 			return 1;
 		}

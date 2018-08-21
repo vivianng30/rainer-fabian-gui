@@ -4144,6 +4144,12 @@ void CViewAlarmLimit::NotifyEvent(CMVEvent* pEvent)
 				CMVEventMatrix* pUIEvent = (CMVEventMatrix*)pEvent;
 				switch(pUIEvent->GetEventType())
 				{
+				case CMVEventMatrix::EV_BN_MATRIX_ALARMLIMITS:
+					{
+						if(m_pWndMenuAlarmLimits)
+							m_pWndMenuAlarmLimits->PostMessage(WM_ALIMIT_LOGLIST);
+					}
+					break;
 				case CMVEventMatrix::EV_BN_MATRIX_SYSALARM_SILENT:
 				case CMVEventMatrix::EV_BN_MATRIX_ALARM_SILENT:
 					{
