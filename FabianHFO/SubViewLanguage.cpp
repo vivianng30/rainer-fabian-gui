@@ -1632,6 +1632,8 @@ DWORD CSubViewLanguage::LoadLanguage(void)
 
 	if (::WaitForSingleObject(eventLoadLanguage, INFINITE) == WAIT_OBJECT_0 && m_bDoLoadLanguageThread) 
 	{
+		theApp.WriteLog(_T("LL"));
+
 		if(m_szLangToLoad!=_T("") && false==getModel()->getReloadLanguageProgress())
 		{
 			//protect language reload
@@ -1676,6 +1678,7 @@ DWORD CSubViewLanguage::LoadLanguage(void)
 
 	if(bLangChanged)
 	{
+		theApp.WriteLog(_T("PLGC"));
 		if(AfxGetApp())
 			AfxGetApp()->GetMainWnd()->PostMessage(WM_LANGUAGE_CHANGED);
 	}
