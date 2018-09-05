@@ -222,7 +222,6 @@ LONG CSerial::Open (LPCTSTR lpszDevice, DWORD dwInQueue, DWORD dwOutQueue, bool 
 
 	//workaround from F&S -> CheckForHang
 	DWORD HangParam[2];
-	DWORD TheLastError;
 	if(!DeviceIoControl(m_hFile, IOCTL_COM_GET_HANGPARAM, NULL, 0, HangParam, sizeof(HangParam), NULL, NULL))
 	{
 		//m_lLastError = ::GetLastError();

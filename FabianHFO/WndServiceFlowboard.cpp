@@ -86,7 +86,6 @@ void CWndServiceFlowboard::Init()
 	//if(m_iFCOR<500 || m_iFCOR>1500)
 	//	m_iFCOR=1000;
 
-	BTN btn;
 
 	
 	//VALUE v;
