@@ -2635,7 +2635,7 @@ void CConfiguration::LoadSettings()
 	m_iPRICO_SPO2highRange=getModel()->getI2C()->ReadConfigByte(PRICOSPO2HIGH_8);
 	if(m_iPRICO_SPO2highRange>100 || m_iPRICO_SPO2highRange==0)
 	{
-		getModel()->getI2C()->WriteConfigByte(PRICOSPO2HIGH_8,FACTORY_ALIMIT_VAL_SPO2MAX);
+		getModel()->getI2C()->WriteConfigByte(PRICOSPO2HIGH_8, (BYTE)FACTORY_ALIMIT_VAL_SPO2MAX);
 		m_iPRICO_SPO2highRange=FACTORY_ALIMIT_VAL_SPO2MAX/10;
 	}
 	if(m_iPRICO_SPO2lowRange>100 || m_iPRICO_SPO2lowRange>=m_iPRICO_SPO2highRange)
