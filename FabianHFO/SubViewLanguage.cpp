@@ -1628,7 +1628,7 @@ static UINT CLoadLanguageThread( LPVOID pc )
 
 DWORD CSubViewLanguage::LoadLanguage(void) 
 {
-	bool bLangChanged=false;
+
 
 	if (::WaitForSingleObject(eventLoadLanguage, INFINITE) == WAIT_OBJECT_0 && m_bDoLoadLanguageThread) 
 	{
@@ -1659,14 +1659,17 @@ DWORD CSubViewLanguage::LoadLanguage(void)
 				getModel()->SetLanguageID(iIdNew);
 			}
 
-			bLangChanged=true;
-
 			m_szLangToLoad=_T("");
 
+			theApp.WriteLog(_T("PLGC"));
+			if(AfxGetApp())
+				AfxGetApp()->GetMainWnd()->PostMessage(WM_LANGUAGE_CHANGED);
+
 			getModel()->setReloadLanguageProgress(false);
+			Sleep(200);
+
 		}
 
-		Sleep(200);
 	}
 	m_bDoLoadLanguageThread=false;
 
@@ -1674,13 +1677,6 @@ DWORD CSubViewLanguage::LoadLanguage(void)
 	{
 		ShowWndHourglass(false);
 		Draw();
-	}
-
-	if(bLangChanged)
-	{
-		theApp.WriteLog(_T("PLGC"));
-		if(AfxGetApp())
-			AfxGetApp()->GetMainWnd()->PostMessage(WM_LANGUAGE_CHANGED);
 	}
 
 	return 0;
@@ -1747,7 +1743,10 @@ void CSubViewLanguage::ShowWndHourglass(bool bShow)
 		if(bShow)
 		{
 			m_pWndHourglass->SetMessage(getModel()->GetLanguageString(IDS_TXT_LOADLANG));
+			BeginModalState();
 			//m_pWndHourglass->StartTimer();
+		} else {
+			EndModalState();
 		}
 		/*else
 			m_pWndHourglass->StopTimer();*/
