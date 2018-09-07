@@ -493,7 +493,7 @@ void CWndGraphViewSelection::SetAllButtonUnpressed()
 
 void CWndGraphViewSelection::Show(BOOL bShow)
 {
-	if(bShow)
+	if(bShow==TRUE)
 	{
 		if(m_pcWaveView)
 			m_pcWaveView->ShowWindow(SW_SHOW);
