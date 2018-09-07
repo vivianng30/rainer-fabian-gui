@@ -1641,6 +1641,12 @@ void CSubViewTools::ShowWndHourglass(bool bShow)
 			m_pWndHourglass->StartTimer();
 		else
 			m_pWndHourglass->StopTimer();*/
+		if (bShow) {
+			BeginModalState();
+		} else {
+			EndModalState();
+		}
 		m_pWndHourglass->Show(bShow);
+
 	}
 }
