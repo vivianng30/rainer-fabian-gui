@@ -854,10 +854,10 @@ WORD CMainFrame::CreateAcuFonts(WORD wLanguageID, bool bSetFaceToModel)
 			_tcscpy_s(m_pszFontName,_countof(m_pszFontName),_T("arial"));
 		}
 		
-		theApp.WriteLog(_T("***RFF"));
-		RegisterFFSDISKFonts();
-		theApp.WriteLog(_T("***RSD"));
-		RegisterSDCardFonts();
+//		theApp.WriteLog(_T("***RFF"));
+//		RegisterFFSDISKFonts();
+//		theApp.WriteLog(_T("***RSD"));
+//		RegisterSDCardFonts();
 	}
 	else
 	{
@@ -868,7 +868,7 @@ WORD CMainFrame::CreateAcuFonts(WORD wLanguageID, bool bSetFaceToModel)
 			m_wLanguageID=0;
 		}
 		_tcscpy_s(m_pszFontName,_countof(m_pszFontName),_T("arial"));
-		RegisterFFSDISKFonts();
+//		RegisterFFSDISKFonts();
 	}
 
 	theApp.WriteLog(_T("***SFF"));
@@ -879,6 +879,11 @@ WORD CMainFrame::CreateAcuFonts(WORD wLanguageID, bool bSetFaceToModel)
 	theApp.WriteLog(_T("***SFF1"));
 
 	if (!m_hasFontCreated) {
+		RegisterFFSDISKFonts();
+		if (bSDCARDfont) {
+			RegisterSDCardFonts();
+		}
+
 		CreateFontHandles(CHINESE, _T("Arial Unicode MS"));
 		CreateFontHandles(JAPANESE, _T("MS PGothic"));
 		CreateFontHandles(OTHER, _T("arial"));
