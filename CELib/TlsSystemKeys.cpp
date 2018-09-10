@@ -113,7 +113,8 @@ bool CTlsSystemKeys::RegisterHotKey(HWND hWnd, eKey key, bool bRegister)
     // Im Buch ist die ganze Stelle sehr unklar und 
     // seltsamerweise gibt' zu den App-Buttons auch 
     // kein Beispiel auf der CD...
-    if(byteButton = m_procShGetAppKeyAssocProc(szAppName))
+    byteButton = m_procShGetAppKeyAssocProc(szAppName);
+    if(byteButton)
       ::RegisterHotKey(hWnd, iKey, MOD_WIN, byteButton);
 
     return true;
