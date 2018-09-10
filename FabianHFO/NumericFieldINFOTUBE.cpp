@@ -87,8 +87,6 @@ bool CNumericFieldINFOTUBE::drawData(bool bData, bool bFrames, bool bText, bool 
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
 
-	RECT rc={0,0,m_lX,m_lY};
-
 	CClientDC dc(this);
 	HDC hdcMem=CreateCompatibleDC(dc.m_hDC);
 	HBITMAP hBmpMem=CreateCompatibleBitmap(dc.m_hDC,m_lX,m_lY);

@@ -1077,7 +1077,7 @@ void CWndServiceSettings::OnBnClickedHelpFactory()
 {
 	CDlgMessageBox box(this,_T("Help"),_T(""),MB_OK,0,HLP_0001);
 	m_pDlg = &box;
-	int iRes=box.DoModal();
+	box.DoModal();
 	m_pDlg = NULL;
 
 	Draw();
@@ -1096,7 +1096,7 @@ void CWndServiceSettings::OnBnClickedHelpAutoAL()
 {
 	CDlgMessageBox box(this,_T("Help"),_T(""),MB_OK,0,HLP_0002);
 	m_pDlg = &box;
-	int iRes=box.DoModal();
+	box.DoModal();
 	m_pDlg = NULL;
 
 	Draw();
@@ -1141,7 +1141,7 @@ void CWndServiceSettings::OnBnClickedRegInstall()
 					CString szTemp=_T("Install of registry file failed: ");
 					szTemp+=FileData.cFileName;
 					CDlgMessageBox box2(this,_T("ERROR"),szTemp,MB_OK);
-					int iRes=box2.DoModal();
+					box2.DoModal();
 
 					bError=true;
 				}
@@ -1185,7 +1185,7 @@ void CWndServiceSettings::OnBnClickedEraseFRAM()
 		
 		CDlgMessageBox box2(this,_T("Restart System"),_T("The system will restart now to make the changes effective!"),MB_OK,IDB_MSG_CONFIG);
 		m_pDlg = &box2;
-		int iRes2=box2.DoModal();
+		box2.DoModal();
 		m_pDlg = NULL;
 
 		//rku, change reboot !!!

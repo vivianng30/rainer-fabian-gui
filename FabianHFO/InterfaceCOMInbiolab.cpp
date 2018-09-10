@@ -212,7 +212,7 @@ void CInterfaceCOMInbiolab::StopInbiolabThread( void )
 		m_bDoSerialReceiveThread=false;
 
 		GetCommMask(m_comPort.m_hCommPort,&dwCommModemStatus);
-		BOOL fSuccess = SetCommMask (m_comPort.m_hCommPort,dwCommModemStatus);
+		SetCommMask (m_comPort.m_hCommPort,dwCommModemStatus);
 
 		PurgeComm(m_comPort.m_hCommPort, PURGE_RXABORT | PURGE_RXCLEAR);
 
@@ -1456,7 +1456,6 @@ bool CInterfaceCOMInbiolab::PerformMsg()
 
 void CInterfaceCOMInbiolab::doInterpolation(SHORT iTempfaWaveBuf)
 {
-	SHORT iDiff=((iTempfaWaveBuf-m_cLastWaveVal)/2);
 	
 	//SHORT iTemp=m_cLastWaveValW0;
 	PBUFEMG _pBuf;

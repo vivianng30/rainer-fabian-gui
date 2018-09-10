@@ -906,10 +906,9 @@ DWORD CInterfaceCO2::SendETCO2Data(void)
 		return 0;
 	}
 
-	bool bWrite=false;
 	do
 	{
-		DWORD dw = ::WaitForSingleObject(g_eventETCO2SendData, INFINITE);
+		::WaitForSingleObject(g_eventETCO2SendData, INFINITE);
 
 		if(!m_bDoETCO2SendThread)
 			continue;
@@ -995,8 +994,6 @@ DWORD CInterfaceCO2::ETCO2check(void)
 	CeSetThreadPriority(m_pcwtETCO2checkThread->m_hThread,130);
 
 
-	WORD iCnt=0;
-	
 	if(!m_bDoETCO2checkThread)
 	{
 		return 0;
@@ -1006,7 +1003,7 @@ DWORD CInterfaceCO2::ETCO2check(void)
 
 	do
 	{
-		DWORD dw = ::WaitForSingleObject(g_eventCO2CheckData, dwWait);
+		::WaitForSingleObject(g_eventCO2CheckData, dwWait);
 		if(m_bDoETCO2checkThread)
 			CheckModuleState();
 	}while(m_bDoETCO2checkThread);

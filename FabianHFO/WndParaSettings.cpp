@@ -1143,7 +1143,6 @@ void CWndParaSettings::OnDestroy()
 
 LRESULT CWndParaSettings::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
-	int iID = 0;
 	switch(message)
 	{
 	case WM_MENUBUTTONDOWN:

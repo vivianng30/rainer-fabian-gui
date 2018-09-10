@@ -1371,7 +1371,6 @@ void CInterfaceCO2_CAPNOSTAT::OnEvent(EEvent eEvent, EError eError)
 					}
 					else
 					{
-						int iTest=fwDataSize;
 						fwReadChkSum = c;
 						fwCalcChkSum = ((-fwCalcChkSum) & 0x7F);
 						/*fwCalcChkSum &= 0x7F;*/
@@ -1780,7 +1779,6 @@ BYTE CInterfaceCO2_CAPNOSTAT::getExtendedStateBytes()
 bool CInterfaceCO2_CAPNOSTAT::isExtendedStateOk()
 {
 	EnterCriticalSection(&csErrorDataCO2);
-	BYTE state=m_byExtendedStateBytes;
 	LeaveCriticalSection(&csErrorDataCO2);
 
 	bool bRes=true;

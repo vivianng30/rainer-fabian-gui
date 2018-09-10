@@ -178,7 +178,6 @@ CWndService()
 	m_bDateValidChanged=false;
 	m_bDateChanged=false;
 
-	int iTest=m_lY;
 	m_dwLastSetupTimer=0;
 
 	m_iYear=0;

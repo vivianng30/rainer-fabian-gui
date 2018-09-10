@@ -95,8 +95,6 @@ void CParaBtn_PMAX::Draw(int nState)
 			HFONT hPrevFont=(HFONT)SelectObject(m_hDC,g_hf31AcuBoldNum);
 			int nBkMode=SetBkMode(m_hDC,TRANSPARENT);
 			int nTxtColor;
-			COLORREF	crTxtInactive=0x00828282;
-
 			CBmp* pcArrow=NULL;
 
 			switch(nState)

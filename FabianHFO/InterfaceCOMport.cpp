@@ -334,7 +334,7 @@ DWORD CInterfaceCOMport::COMcheck(void)
 
 	do
 	{
-		DWORD dw = ::WaitForSingleObject(g_eventCOMIFCheckData, dwWait);
+		::WaitForSingleObject(g_eventCOMIFCheckData, dwWait);
 
 		if(!m_bDoCOMcheckThread)
 			continue;
@@ -406,7 +406,7 @@ DWORD CInterfaceCOMport::SendCOMData(void)
 	do
 	{
 		
-		DWORD dw = ::WaitForSingleObject(g_eventCOMIFSendData, INFINITE);
+		::WaitForSingleObject(g_eventCOMIFSendData, INFINITE);
 
 		if(!m_bDoCOMSendThread)
 			continue;

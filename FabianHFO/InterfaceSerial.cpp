@@ -542,7 +542,7 @@ void CInterfaceSerial::StopSerialThread( void )
 		stopReceiveThread();
 		
 		GetCommMask(m_comPort.m_hCommPort,&dwCommModemStatus);
-		BOOL fSuccess = SetCommMask (m_comPort.m_hCommPort,dwCommModemStatus);
+		SetCommMask (m_comPort.m_hCommPort,dwCommModemStatus);
 
 		PurgeComm(m_comPort.m_hCommPort, PURGE_RXABORT | PURGE_RXCLEAR);
 
@@ -1592,7 +1592,6 @@ DWORD CInterfaceSerial::SendSerialData(void)
 	m_iErrorCountSendThread=0;
 	UINT iListSize=0;
 	CStringW szError=_T("");
-	bool bPrint=true;
 
 	do
 	{

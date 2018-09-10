@@ -2173,8 +2173,6 @@ void CConfiguration::LoadSettings()
 	CTlsRegistry regLimit(_T("HKCU\\Software\\FabianHFO\\WorkState\\Limits"),true);
 	
 
-	WORD iMINRANGE_NEO_ITIME_IPPV=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_ITIME_IPPV"), MINRANGE_NEO_ITIME_IPPV);
-	WORD iMAXRANGE_PED_ITIME_IPPV=(WORD)regLimit.ReadDWORD(_T("MAXRANGE_PED_ITIME_IPPV"), MAXRANGE_PED_ITIME_IPPV);
 	//m_iParaDataITime;
 	m_iParaDataITime_IPPV=getModel()->getI2C()->ReadConfigWord(PARA_ITIME_IPPV_16);
 	if(m_iParaDataITime_IPPV<100 || m_iParaDataITime_IPPV>2000)
@@ -17569,7 +17567,6 @@ void CConfiguration::readAmpCorFactor()
 		//CStringW csTemp=_T("");
 		CString szFactor=_T("");
 		CStringW szFreq=_T("");
-		BYTE byFreq=5;
 		for(int i=0;i<16;i++)
 		{
 			szFreq.Format(_T("%d"),i+5);

@@ -732,7 +732,6 @@ int CInterfaceAcuLink_SERIAL::sendAllMeasurementData()//CAcuLinkApp::BuildMsg()
 	fillMeasurementData();
 	
 	unsigned char faSendBuf[4096];
-	DWORD   fdwSendBufLen = 0;
 	DWORD dwBytesWRitten=0;
 	int i;
 	char ls[16];
@@ -776,10 +775,6 @@ int CInterfaceAcuLink_SERIAL::sendAllMeasurementData()//CAcuLinkApp::BuildMsg()
 	for (i = 0; i < ALINK_SETT_ARRAY; i++)
 	{
 		liVal = getParaData(i);            // hole den i-ten Parameter
-		if (i == 5)
-		{
-			int kk = 2;
-		}
 		if (buildValue(lsPointBuf, liVal, gSettingNkArray[i], fiLinkType) >= 0)
 		{
 			sprintf(lsCodeBuf, "%03d=%s", i+100, lsPointBuf);

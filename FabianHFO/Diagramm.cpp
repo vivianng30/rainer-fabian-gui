@@ -4577,7 +4577,6 @@ void CDiagramm::RefreshLineChart()
 
 	double yperpixel=1/m_dPixelsPerY;
 	LONG result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);
-	UINT xstart=LOWORD(result);//the left hand side of the graph plot area on screen
 	UINT ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
 	UINT Graphbottom=m_iGraphY+m_iGraphHeight;
 	UINT Graphright=m_iGraphX+m_iGraphWidth;
@@ -4973,7 +4972,6 @@ void CDiagramm::RefreshFilledChart()
 
 	double yperpixel=1/m_dPixelsPerY;
 	LONG result=ConvertToGraphCoords(m_dXAxisMin,m_dYAxisMin);
-	UINT xstart=LOWORD(result);//the left hand side of the graph plot area on screen
 	UINT ystart=HIWORD(result);//shouldbe the bottom of the graph plot area on screen
 	UINT Graphbottom=m_iGraphY+m_iGraphHeight;
 	UINT Graphright=m_iGraphX+m_iGraphWidth;
@@ -7182,8 +7180,6 @@ double CDiagramm::GetHigherYAxisMax()
 		break;
 	case FOT_LOOP:
 		{
-			double test=m_dMinY;
-
 			if(m_dMaxY>=0)
 			{
 				double dValue=m_dMaxY;
@@ -7419,8 +7415,6 @@ double CDiagramm::GetHigherYAxisMin()
 	{
 		return dHigherAxisMin;
 	}
-
-	double dValue=m_dMinY;
 
 	/*if((m_dMinY *(-1))>m_dMaxY)
 		dValue=m_dMinY *(-1);*/
@@ -10018,16 +10012,12 @@ void CDiagramm::DrawConnectLoop(CPoint *pts, int iSize, bool levelPlot)
 
 	CPen pen;//,penLevel1,penLevel2;
 	CPen *poldpenDC=NULL;
-	CPen *poldpen1=NULL;
-	CPen  *poldpen2=NULL;
 	pen.CreatePen(PS_SOLID,m_iGraphPenSize,m_crCurrentGraphPenColor);
 	//penLevel1.CreatePen(PS_SOLID,m_iGraphPenSize,m_crPrevLoop2);
 	//penLevel2.CreatePen(PS_SOLID,m_iGraphPenSize,m_crPrevLoop3);
 
 	CBrush brush;
 	CBrush *poldbrushDC=NULL;
-	CBrush *poldbrush1=NULL;
-	CBrush *poldbrush2=NULL;
 	brush.CreateSolidBrush(m_crCurrentGraphPenColor);
 
 	CClientDC dc(this);
@@ -10105,8 +10095,7 @@ void CDiagramm::DrawFOTLoop(CPoint *pts, int iSize, bool levelPlot)
 
 	CPen pen, penRect;
 	CPen *poldpenDC=NULL;
-	CPen *poldpen1=NULL;
-	CPen  *poldpen2=NULL;
+
 	pen.CreatePen(PS_SOLID,m_iGraphPenSize,m_crCurrentGraphPenColor);
 	penRect.CreatePen(PS_SOLID,1,m_crCurrentGraphPenColor);
 
@@ -10748,10 +10737,6 @@ void CDiagramm::SetHFOVolumeGaranty(bool drawState, double iValueHigh, double iV
 		bScaleHigh=true;
 	}
 
-	if(m_iHFOVolumeGarantyLow<100)
-		int iStop=0;
-	else
-		int iStop2=0;
 	DEBUGMSG(TRUE, (TEXT("high %d %d\r\n"),m_iHFOVolumeGarantyHigh, iValueHigh));
 	DEBUGMSG(TRUE, (TEXT("low %d %d\r\n"),m_iHFOVolumeGarantyLow, iValueLow));
 	

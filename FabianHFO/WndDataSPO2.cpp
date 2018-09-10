@@ -2104,7 +2104,6 @@ void CWndDataSPO2::UpdateLimitData()
 
 LRESULT CWndDataSPO2::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
-	int iID = 0;
 	switch(message)
 	{
 	case WM_CHECK_PRICO_ALARMS:

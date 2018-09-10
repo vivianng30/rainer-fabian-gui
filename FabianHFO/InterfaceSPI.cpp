@@ -879,8 +879,6 @@ DWORD CInterfaceSPI::SPIMonitorData(void)
 	bool bHFOmode=false;
 	UINT iCntTerminal=1;
 	UINT iCntFOTdata=1;
-	UINT iCntSpO2=0;
-	WORD iCntThreadWatchdog=0;
 
 	DWORD dwLastGetMessureData=GetTickCount();
 	DWORD dwLastInspirationBit=GetTickCount();

@@ -5862,7 +5862,6 @@ bool CAlarmMgmtHandler::SetAlarm_PEEPminLow()
 		return false;
 	}
 	eAlarm alarm=AL_PatAl_PEEPminLow;
-	eAlarmPrio prioAlarm = getAlarmPrio(alarm);//AP_6
 
 	if(m_iPEEPminLowAlarmValue!=-999)
 	{
@@ -9891,10 +9890,6 @@ void CAlarmMgmtHandler::setAlimitFICO2min(int value)
 
 void CAlarmMgmtHandler::setAlimitSPO2max(int value)
 {
-	if(value==0)//testZERO
-	{
-		int iStop=0;
-	}
 	bool bUpdateLimitData=false;
 	if(value>1000)
 		value=1000;

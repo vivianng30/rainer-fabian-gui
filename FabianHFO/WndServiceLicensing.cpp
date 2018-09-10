@@ -2320,7 +2320,7 @@ void CWndServiceLicensing::OnBnClickedActivateLUNGREC()
 	{
 		CDlgMessageBox box(this,_T("Not possible!"),_T("You need to enable HFO first!"),MB_OK,IDB_MSG_STOP);
 		m_pDlg = &box;
-		int iRes=box.DoModal();
+		box.DoModal();
 		m_pDlg = NULL;
 		Invalidate();
 		UpdateWindow();

@@ -589,7 +589,7 @@ DWORD CInterfaceSPO2::SPO2check(void)
 
 	do
 	{
-		DWORD dw = ::WaitForSingleObject(g_eventSPO2CheckData, dwWait);
+		::WaitForSingleObject(g_eventSPO2CheckData, dwWait);
 
 		if(!m_bDoSPO2checkThread)
 			continue;
@@ -675,7 +675,7 @@ DWORD CInterfaceSPO2::SendSPO2Data(void)
 	do
 	{
 		
-		DWORD dw = ::WaitForSingleObject(g_eventSPO2SendData, INFINITE);
+		::WaitForSingleObject(g_eventSPO2SendData, INFINITE);
 
 		if(!m_bDoSPO2SendThread)
 			continue;
@@ -810,7 +810,7 @@ DWORD CInterfaceSPO2::SPO2Init(void)
 			dwWait=1;
 		}
 
-		DWORD dw = ::WaitForSingleObject(g_eventCO2Startup, dwWait);
+		::WaitForSingleObject(g_eventCO2Startup, dwWait);
 		//WaitForSingleObject(g_eventCO2Startup, INFINITE);
 
 		if(!m_bDoSPO2InitThread)

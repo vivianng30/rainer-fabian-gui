@@ -356,7 +356,7 @@ void CInterfaceTerminal::StartTerminalThread( void )
 
 		if(m_hThreadTerminalSend!=INVALID_HANDLE_VALUE)
 		{
-			HRESULT res=CloseHandle(m_hThreadTerminalSend);
+			CloseHandle(m_hThreadTerminalSend);
 			m_hThreadTerminalSend=INVALID_HANDLE_VALUE;
 		}
 	}

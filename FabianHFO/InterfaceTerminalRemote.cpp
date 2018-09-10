@@ -226,7 +226,6 @@ bool CInterfaceTerminalRemote::OpenCOM()
 {
 	bool bRes=false;
 	
-	DWORD dwIndex=0;
 	LONG    lLastError =0;
 
 	if(getModel()->getCONFIG()->GetMainBoardVersion()>=MAINBOARD_30)
@@ -427,7 +426,6 @@ void CInterfaceTerminalRemote::OnEvent(EEvent eEvent, EError eError)
 bool CInterfaceTerminalRemote::PerformMsg()
 {
 	CString szError=_T("");
-	bool bNewData=false;
 	
 	switch(fwRecvDataCode)
 	{

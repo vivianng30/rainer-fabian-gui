@@ -2882,7 +2882,7 @@ void CViewParaBtn::ShowParaBtn(bool bVentModeChanged)
 			{
 				iUpperLimit=getModel()->getDATAHANDLER()->PARADATA()->GetIFlowMaxPara_TRIGGER();
 			}		
-			int iValue=getModel()->getDATAHANDLER()->GetCurrentIFlowPara();
+			getModel()->getDATAHANDLER()->GetCurrentIFlowPara();
 			if(m_pcPara_IFLOW)
 				m_pcPara_IFLOW->SetAlarmArrowUp(true);
 		}
@@ -13044,7 +13044,7 @@ void CViewParaBtn::setPEEPvalue(int iValPEEP, bool bSend)
 			if(m_pcPara_PPSV)
 				m_pcPara_PPSV->GetValue(&fvPpsv);
 			int iPEEP_PPSVdiff=getModel()->getDATAHANDLER()->getPEEP_PpsvDifference();
-			int fPpsv = getModel()->getDATAHANDLER()->GetCurrentPpsvPara();
+			getModel()->getDATAHANDLER()->GetCurrentPpsvPara();
 
 			if(fvPpsv.iValue==iValPEEP+iPEEP_PPSVdiff)
 			{

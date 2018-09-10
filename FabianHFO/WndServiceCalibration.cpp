@@ -1681,7 +1681,7 @@ void CWndServiceCalibration::OnBnClickedExhCal()
 	{
 		CDlgMessageBox box(this,_T("Exhalation valve calibration not possible"),_T("PRICO algorithm is running, must be turned off before!"),MB_OK,IDB_MSG_STOP);
 		m_pDlg = &box;
-		int iRes=box.DoModal();
+		box.DoModal();
 		m_pDlg = NULL;
 	}
 	else

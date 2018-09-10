@@ -205,8 +205,6 @@ void CWndMenuSelectNum::Init()
 {
 	CClientDC dc(this);
 
-	DWORD dwStyleNoTab = WS_CHILD|WS_VISIBLE|BS_OWNERDRAW;
-
 	BTN btn;
 	
 	m_pcMenu_Up		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_5MENU_UP);

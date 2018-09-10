@@ -287,8 +287,6 @@ void CWndMenuGraphs::Init()
 {
 	CClientDC dc(this);
 
-	DWORD dwStyleNoTab = WS_CHILD|WS_VISIBLE|BS_OWNERDRAW;
-
 	BTN btn;
 
 	//test inbiolab

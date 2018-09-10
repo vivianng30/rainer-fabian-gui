@@ -4479,8 +4479,6 @@ void CParaData::setFOTconv_AMPLITUDEPara(WORD ampl, bool bSend, bool bConfig)
 		break;
 	}
 
-	int iRes=m_byFOTAmp+m_byFOTFreq;
-
 	if(bConfig)
 	{
 		getModel()->getCONFIG()->setFOTconv_AMPLITUDE(ampl);
@@ -4564,7 +4562,6 @@ void CParaData::setFOTconv_FREQPara(BYTE value, bool bSend, bool bConfig)
 		}
 		break;
 	}
-	int iRes=m_byFOTFreq+m_byFOTAmp;
 
 	if(bConfig)
 	{

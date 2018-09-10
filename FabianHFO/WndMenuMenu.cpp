@@ -233,8 +233,6 @@ void CWndMenuMenu::Init()
 
 	CClientDC dc(this);
 
-	DWORD dwStyleNoTab = WS_CHILD|WS_VISIBLE|BS_OWNERDRAW|BS_MULTILINE;
-
 	BTN btn;
 
 	m_pcRegionTopLeCorner		= new CBmp(theApp.m_hInstance,m_hDC,	IDB_SETUP_LE_TOP_CORNER);

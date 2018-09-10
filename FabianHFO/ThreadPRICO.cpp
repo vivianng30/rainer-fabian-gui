@@ -326,8 +326,6 @@ DWORD CThreadPRICO::PRICOData(void)
 		{
 			if(doThread() && false==getModel()->isO2FlushActive())
 			{
-				int iAvgSpO2 = 0;
-				bool bRunPrico=false;
 
 				SHORT iLastFiO2=CTlsFloat::Round(((double)getModel()->getDATAHANDLER()->getAppliedFiO2para())/10, 0);
 				if(getModel()->getDATAHANDLER()->GetOxyCalRunning()==false && m_bSPO2checkFlag==FALSE)
@@ -613,7 +611,6 @@ void CThreadPRICO::resetCircBufSpO2()
 
 SHORT CThreadPRICO::calcFiO2(/*int iAvgSpO2*/)
 {
-	DWORD dwStart=GetTickCount();
 	
 	// Future Targets, used for the prediction part of the algorithm
       int iCurHiTarget= getHighSpO2PRICOlimit()*10;

@@ -259,7 +259,6 @@ BOOL CWndGraphViewSelection::Create(CWnd* pParentWnd, const RECT rc, UINT nID, C
 		m_pcSelView_Up		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SELMENU_BACK_UP);
 		m_pcSelView_Dw		= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_BTN_SELMENU_BACK_DW);
 
-		DWORD dwStyleNoTab = WS_CHILD|WS_VISIBLE|BS_OWNERDRAW;
 		//DWORD dwStyleNoTab = WS_CHILD|WS_VISIBLE|BS_OWNERDRAW|WS_TABSTOP;
 
 		BTN btn;

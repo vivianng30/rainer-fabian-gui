@@ -763,9 +763,6 @@ void CThreadFOT::calcDecreaseParaFOTCONV()
 		}
 		m_iFOTPEEPStep=(m_iFOTPEEPStep/5)*5;
 
-		BYTE iprevFOTsequence=getCurFOTsequence();
-
-		
 		EnterCriticalSection(&csFOTsequence);
 		if(m_iFOTsequence<3)
 		{
@@ -912,8 +909,6 @@ void CThreadFOT::calcDecreaseParaFOTHFO()
 			theApp.WriteLog(_T("#HFO:0301"));
 		}
 		m_iFOTHFPmeanStep=(m_iFOTHFPmeanStep/5)*5;
-
-		BYTE iprevFOTsequence=getCurFOTsequence();
 
 		EnterCriticalSection(&csFOTsequence);
 		if(m_iFOTsequence<3)
@@ -2142,8 +2137,6 @@ static UINT FOTThread( LPVOID pc )
 DWORD CThreadFOT::FOTData(void) 
 {
 	CeSetThreadPriority(m_pcwtFOTThread->m_hThread,256);
-
-	bool bValidMeasurementData=false;
 
 	getModel()->getVIEWHANDLER()->setFOTrunning(true);
 	

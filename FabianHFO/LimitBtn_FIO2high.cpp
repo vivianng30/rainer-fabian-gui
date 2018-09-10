@@ -74,8 +74,6 @@ void CLimitBtn_FIO2high::Draw(int nState)
 		int nBkMode=SetBkMode(m_hDC,TRANSPARENT);
 		int nTxtColor;
 
-		CBmp* pcArrow=NULL;
-
 		switch(nState)
 		{
 		case BTN_DW_FOCUS:

@@ -1737,7 +1737,6 @@ void CWndDataFOT::Draw(bool bStatic)
 						{
 							//calculate next used values
 							WORD iPEEPSTART=getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_PEEPSTARTPara();
-							WORD iPEEPEND=getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_PEEPENDPara();
 							WORD iStepsPARA=getModel()->getDATAHANDLER()->PARADATA()->getFOTconv_STEPSPara();
 							WORD nextPIPValue=0;
 							if(true==getModel()->getFOTThread()->isFOToriginVGstateOn())
@@ -2018,7 +2017,6 @@ void CWndDataFOT::drawPIPmax()
 
 		if(m_pcPara_FOT_PmeanHigh)
 			m_pcPara_FOT_PmeanHigh->GetValue(&fv);
-		WORD iPMEANhigh=fv.iValue;
 
 		WORD iHFAMPL=0;
 		if(bVGon)
@@ -2073,7 +2071,6 @@ void CWndDataFOT::drawPIPmax()
 
 		if(m_pcPara_FOT_PEEPHigh)
 			m_pcPara_FOT_PEEPHigh->GetValue(&fv);
-		WORD iPEEhigh=fv.iValue;
 
 		SHORT iMaxPIP=0;
 		if(iSteps==1)
@@ -2414,7 +2411,7 @@ void CWndDataFOT::DrawStatic()
 {
 	//RECT rc;
 
-	CDC* pDCStatic=CDC::FromHandle(m_hdcStatic);
+	CDC::FromHandle(m_hdcStatic);
 
 	CBrush cbrBack(BACKGND);
 	CBrush cbrLightGrey(LIGHTGREY);
@@ -2606,8 +2603,6 @@ bool CWndDataFOT::SetNextFocus()
 	CWnd* pWnd = GetNextDlgTabItem(pFocWnd,FALSE);
 	if(pWnd==NULL)
 		return false;
-
-	int iID2=pWnd->GetDlgCtrlID();
 
 	if(		pFocWnd->GetDlgCtrlID()>pWnd->GetDlgCtrlID()
 		||	IDC_BTN_PARA_FOT_PEEPHIGH<pWnd->GetDlgCtrlID())

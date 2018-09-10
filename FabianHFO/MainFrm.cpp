@@ -583,14 +583,14 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	HANDLE hServiceHTP = GetServiceHandle(_T("HTP0:"),NULL,NULL);
 	if(hServiceHTP!=INVALID_HANDLE_VALUE)
 	{
-		BOOL bSuccess=DeregisterService(hServiceHTP);
+		DeregisterService(hServiceHTP);
 		theApp.writeLogError(GetLastError(), _T("***SECURITY: disable HTP"));
 	}
 
 	HANDLE hServiceTEL = GetServiceHandle(_T("TEL0:"),NULL,NULL);
 	if(hServiceTEL!=INVALID_HANDLE_VALUE)
 	{
-		BOOL bSuccess=DeregisterService(hServiceTEL);
+		DeregisterService(hServiceTEL);
 		theApp.writeLogError(GetLastError(), _T("***SECURITY: disable HTP"));
 	}
 
@@ -6028,7 +6028,6 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			break;*/
 		default:
 			{
-				int iStop=0;
 			}
 			break;
 		}
@@ -8346,7 +8345,6 @@ DWORD CMainFrame::SetI2CWatchdog(void)
 	DWORD dwDiff = 0;
 	DWORD dwStart=0;
 	DWORD dwEnd=0;
-	bool bPrintError=true;
 	
 	bool bI2Cinitialized=false;
 	EnterCriticalSection(&m_csI2Cinit);
@@ -8474,7 +8472,6 @@ bool Action(void*)
 
 				MEMORYSTATUS stat;
 				GlobalMemoryStatus (&stat);
-				DWORD dwMem=stat.dwAvailPhys/1024;
 
 				CString szTemp=_T("");
 				szTemp.Format(_T("%*ld free "),7, stat.dwAvailPhys/1024);
@@ -8959,7 +8956,6 @@ DWORD CMainFrame::DoTimerFunctions(void)
 	 
 	//UINT iNebulizeCounter=0;
 	//UINT iNebulizeDelayCounter=10;
-	int iHighO2=0;
 	BYTE iSpiERROR=0;
 	DWORD dwCurTickCount=0;
 	dwStart = GetTickCount();
@@ -9536,8 +9532,8 @@ DWORD CMainFrame::CheckOxyCal(void)
 				if(m_bDelayAutoOxyCal)
 					break;
 
-				eStateOfAlarm state1=getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_AIR->getAlarmState();
-				eStateOfAlarm state2=getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_O2->getAlarmState();
+				getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_AIR->getAlarmState();
+				getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_O2->getAlarmState();
 				if(		getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_O2->getAlarmState()==AS_ACTIVE
 					||	getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_AIR->getAlarmState()==AS_ACTIVE)
 				{

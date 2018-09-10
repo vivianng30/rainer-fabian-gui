@@ -392,8 +392,6 @@ void CSubViewCalOxySensor::Init()
 	m_pcWait8= new CBmp(theApp.m_hInstance,dc.m_hDC,	IDB_WAIT30_GREY8);
 
 
-	DWORD dwStyleNoTab = WS_CHILD|WS_VISIBLE|BS_OWNERDRAW|BS_MULTILINE;
-
 	BTN btn;
 
 	btn.wID					= IDC_BTN_CALOXY_ONOFF;	

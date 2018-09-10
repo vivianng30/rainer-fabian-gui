@@ -82,7 +82,6 @@ bool CInterfaceTerminalWave::OpenCOM()
 {
 	bool bRes=false;
 
-	DWORD dwIndex=0;
 	LONG    lLastError =0;
 
 	if(getModel()->getCONFIG()->GetMainBoardVersion()>=MAINBOARD_30)

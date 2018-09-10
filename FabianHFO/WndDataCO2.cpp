@@ -574,7 +574,6 @@ void CWndDataCO2::Draw(bool bStatic, bool bLimits)
 
 	EnterCriticalSection(&csValues);
 	bool bETCO2ValueValid=m_bETCO2ValueValid;
-	bool bCO2ValueValid=m_bCO2ValueValid;
 	bool bFreqValuevalid=m_bFreqValuevalid;
 	BYTE byCO2Module=m_byCO2Module;
 	SHORT iETCO2=m_iETCO2;
@@ -1477,7 +1476,6 @@ DWORD CWndDataCO2::CO2Data(void)
 				bDraw=false;
 			}
 			bool bPumpOn=m_bPumpOn;
-			bool bAutoonPump=m_bAutoonPump;
 
 			if(m_byCO2Module==CO2MODULE_MICROPOD)
 			{

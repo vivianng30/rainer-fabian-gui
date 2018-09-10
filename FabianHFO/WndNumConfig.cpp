@@ -222,11 +222,6 @@ void CWndNumConfig::createNumericFields(BYTE block)
 	if(m_bExit)
 		return;
 
-	bool bCursorField=false;
-	CNumericField* pNumField=NULL;
-	eNumericType numType=NUMT_PPEAK;
-	eNumericSize numSize=NUMERICSIZE_0;
-	UINT numBlockID=0;
 	RECT rcLd;
 	rcLd.left=0;
 	rcLd.right=190;
@@ -981,8 +976,6 @@ bool CWndNumConfig::DrawData(bool bData, bool bFrames, bool bText, bool bLimits,
 
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
-
-	RECT rc={0,0,m_lX,m_lY};
 
 	CNumericField* pNumField=NULL;
 

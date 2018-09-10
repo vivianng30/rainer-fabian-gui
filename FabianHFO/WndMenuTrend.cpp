@@ -236,7 +236,6 @@ void CWndMenuTrend::Init()
 {
 	CClientDC dc(this);
 
-	DWORD dwStyleNoTab = WS_CHILD|WS_VISIBLE|BS_OWNERDRAW;
 	//DWORD dwStyleNoTab = WS_CHILD|WS_VISIBLE|BS_OWNERDRAW|WS_TABSTOP;
 
 	BTN btn;

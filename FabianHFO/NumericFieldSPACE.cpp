@@ -84,7 +84,6 @@ bool CNumericFieldSPACE::drawData(bool bData, bool bFrames, bool bText, bool bLi
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
 
-	RECT rc={0,0,m_lX,m_lY};
 
 	CClientDC dc(this);
 	HDC hdcMem=CreateCompatibleDC(dc.m_hDC);

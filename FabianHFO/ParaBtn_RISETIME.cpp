@@ -268,8 +268,6 @@ void CParaBtn_RISETIME::Draw(int nState)
 
 void CParaBtn_RISETIME::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
-	bool bLimitsOk=true;
-
 	if( m_bLMouseButtonDown )
 	{
 

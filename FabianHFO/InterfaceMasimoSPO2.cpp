@@ -498,8 +498,6 @@ bool CInterfaceMasimoSPO2::PerformMsg()
 			break;
 		case SPO2_MASIMO_SLAVECMD_EXCEPTIONS2:
 			{
-				SHORT iError=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
 				m_iEXCEPTIONS2=MAKEWORD(faDataBuf[1],faDataBuf[0]);
 
 				checkEXCEPTIONS2();
@@ -555,8 +553,6 @@ bool CInterfaceMasimoSPO2::PerformMsg()
 			break;
 		case SPO2_MASIMO_SLAVECMD_SENSORFAILURE:
 			{
-				SHORT iError=MAKEWORD(faDataBuf[1],faDataBuf[0]);
-
 				m_iSENSORFAILURE=MAKEWORD(faDataBuf[1],faDataBuf[0]);
 
 				checkSENSORFAILURE();

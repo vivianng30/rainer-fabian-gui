@@ -2487,17 +2487,6 @@ void CDataHandler::checkDemoLicense_FOT()
 
 		COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
-		if(dtLicenseTimestamp.GetYear()==dtCurrentTime.GetYear())
-		{
-			int iLicMonth=dtLicenseTimestamp.GetMonth();
-			int iLicDay=dtLicenseTimestamp.GetDay();
-
-			int iCurMonth=dtLicenseTimestamp.GetMonth();
-			int iLCurDay=dtLicenseTimestamp.GetDay();
-
-			int iStop=0;
-		}
-		int iTest=dtElapsePeriod.GetTotalDays();
 		if(dtElapsePeriod.GetTotalDays()>DEMOLICENSE)
 		///if (dtCurrentTime >= dtLicenseTimestamp - dtElapsePeriod)
 		{
@@ -2540,17 +2529,6 @@ void CDataHandler::checkDemoLicense_NIVTRIGGER()
 
 		COleDateTimeSpan dtElapsePeriod=dtCurrentTime-dtLicenseTimestamp;
 
-		if(dtLicenseTimestamp.GetYear()==dtCurrentTime.GetYear())
-		{
-			int iLicMonth=dtLicenseTimestamp.GetMonth();
-			int iLicDay=dtLicenseTimestamp.GetDay();
-
-			int iCurMonth=dtLicenseTimestamp.GetMonth();
-			int iLCurDay=dtLicenseTimestamp.GetDay();
-
-			int iStop=0;
-		}
-		int iTest=dtElapsePeriod.GetTotalDays();
 		if(dtElapsePeriod.GetTotalDays()>DEMOLICENSE)
 			///if (dtCurrentTime >= dtLicenseTimestamp - dtElapsePeriod)
 		{
@@ -14129,7 +14107,6 @@ eVgarantState CDataHandler::GetVgarantState()
 
 void CDataHandler::ChangeVgarantState(eVgarantState state)
 {
-	eVgarantState stateOld=m_eCurVgarantState;
 	//DEBUGMSG(TRUE, (TEXT("ChangeVgarantState old %d\r\n"),(int)m_eCurVgarantState));
 	//DEBUGMSG(TRUE, (TEXT("ChangeVgarantState new %d\r\n"),(int)state));
 	m_eCurVgarantState=state;
@@ -14938,7 +14915,6 @@ SHORT CDataHandler::GetCurrentPEEPPara()
 
 void CDataHandler::SetCurrentPpsvPara(SHORT val)
 {
-	bool bSend=true;
 
 	switch(getModel()->getCONFIG()->GetCurMode())
 	{
@@ -15644,7 +15620,6 @@ void CDataHandler::SetCurrentFreqRecPara(WORD val)
 		break;
 	case VM_PRE_HFO:
 		{
-			WORD valOld=PRESET()->GetFreqRecPara();
 			//if(valOld!=val)
 			/*{
 				if(valOld==0)
@@ -17049,7 +17024,6 @@ WORD CDataHandler::GetAccuState()
 
 void CDataHandler::CheckAkku(bool bRange)
 {
-	WORD wBatteryState=0;
 	WORD temp=0;
 	if(getModel()->getI2C()->IsI2C_ACCUavailability())
 	{
