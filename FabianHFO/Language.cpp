@@ -428,17 +428,12 @@ static CStringW CS_ERROR=_T("- - -");   ///< The create struct error
 CStringW CLanguage::GetLanguageString(int nID)
 {
 	CStringW cs=_T("");
-	//if(m_pcLangAdmin)
+	cs=m_pcLangAdmin.FindString(nID);
+
+	if(cs==_T(""))
 	{
-		//EnterCriticalSection(&csList);
-		cs=m_pcLangAdmin.FindString(nID);
-		if(cs==_T(""))
-		{
-			cs.LoadString(nID);
-			//LeaveCriticalSection(&csList);
-			return cs;
-		}
-		return cs;
+		cs.LoadString(nID);
 	}
-	return CS_ERROR;
+
+	return cs;
 }

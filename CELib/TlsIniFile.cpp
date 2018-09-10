@@ -126,9 +126,6 @@ bool CTlsIniFile::ReadIniGroup( FILE *fiPtr, CStringW sGroup)
 			} 
 		} /* if == '[' */ 
 	} /* for(;;) */ 
-
-
-	return false;
 } 
  
 //**************************************************************************
@@ -214,9 +211,6 @@ CStringW CTlsIniFile::ReadIniStr( CStringW sGroup, CStringW sField, CStringW sDe
 
 	fclose( fiPtr );
 	return sDef;
-
-	
-	return buffer;
 }
 
 DWORD CTlsIniFile::ReadIniDWORD( CStringW sGroup, CStringW sField, DWORD iDef, CStringW sFileName ) 
@@ -246,10 +240,6 @@ DWORD CTlsIniFile::ReadIniDWORD( CStringW sGroup, CStringW sField, DWORD iDef, C
 
 	fclose( fiPtr );
 	return iDef;
-
-
-	retValue = _wtoi(buffer);
-	return retValue; 
 }
 
 bool CTlsIniFile::WriteIniStr( CStringW sEntry ) 

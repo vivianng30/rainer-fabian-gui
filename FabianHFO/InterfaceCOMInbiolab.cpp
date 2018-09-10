@@ -123,21 +123,15 @@ CInterfaceCOMInbiolab::~CInterfaceCOMInbiolab()
 int CInterfaceCOMInbiolab::Init(BYTE com)
 {
 	DWORD dwIndex=2;
-	//DWORD dwIndex=9;
 
 	if (!m_comPort.Open(dwIndex,115200))
 	{
 		theApp.WriteLog(_T("#HFO:0009"));
 		return false;
 	}
-	else
-	{
-		StartInbiolabThread();
-		//StartSerialThread();
-		return true;
-	}
 
-	return 0;
+	StartInbiolabThread();
+	return true;
 }
 // **************************************************************************
 // 

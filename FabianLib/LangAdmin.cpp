@@ -126,17 +126,6 @@ DWORD CLangAdmin::EnumLang( DWORD dwLangFolderStringID )
 		catch (CMemoryException* e)
 		{
 			AfxThrowMemoryException( );
-			TCHAR   szCause[255];
-			CStringW strFormatted;
-
-			e->GetErrorMessage(szCause, 255);
-
-			strFormatted = _T("CMemoryException CLangAdmin::EnumLang: ");
-			strFormatted += szCause;
-
-			theApp.WriteLog(strFormatted);
-			//e->ReportError();
-			e->Delete();
 		}
 		catch (...)
 		{
