@@ -43,21 +43,6 @@ CTrend::CTrend()
 }
 
 /**********************************************************************************************//**
- * Finalizes an instance of the CTrend class
- *
- * \author	Rainer Kühner
- * \date	23.02.2018
- **************************************************************************************************/
-
-CTrend::~CTrend(void)
-{
-	if (m_wBuffer != NULL) {
-		delete [] m_wBuffer;
-		//m_wBuffer=NULL;
-	}
-}
-
-/**********************************************************************************************//**
  * Serialize this instance to the given stream
  *
  * \author	Rainer Kühner

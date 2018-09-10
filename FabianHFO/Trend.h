@@ -23,7 +23,6 @@ public:
 	//void Serialize(CArchive& ar);
 	
 	CTrend();
-	virtual ~CTrend(void);
 
 	DECLARE_SERIAL(CTrend)
 
@@ -41,7 +40,6 @@ public:
 protected:
 	COleDateTime m_dtTimestamp;
 	
-	//WORD	*m_wBuffer;
 	WORD	m_wBuffer[SERIALZEBUFFER];
 	WORD	m_wBufCount;
 

@@ -57,11 +57,6 @@ CLangAdmin::~CLangAdmin()
 	m_pcStringTable=NULL;
 	delete m_pcsFileNames;
 	m_pcsFileNames=NULL;
-
-
-	if (m_tLineBuffer != NULL) {
-		delete [] m_tLineBuffer;
-	}
 	
 	DeleteCriticalSection(&csList);
 }
