@@ -3101,10 +3101,6 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\AcuTestFrame.h"
-				>
-			</File>
-			<File
 				RelativePath=".\AlarmConditionHandler.h"
 				>
 			</File>
@@ -3810,10 +3806,6 @@
 			</File>
 			<File
 				RelativePath=".\ViewTrend.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WaitDlg.h"
 				>
 			</File>
 			<File

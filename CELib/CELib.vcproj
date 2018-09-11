@@ -800,6 +800,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\StringParser.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TlsBase64.cpp"
 				>
 			</File>
@@ -975,10 +979,6 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
-				>
-			</File>
-			<File
-				RelativePath=".\StringParser.cpp"
 				>
 			</File>
 			<File
