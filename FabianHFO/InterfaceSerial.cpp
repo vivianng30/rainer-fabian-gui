@@ -2460,9 +2460,9 @@ void CInterfaceSerial::Send_FOTconv_AMP_FREQ(int val)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CInterfaceSerial::GetM_StatusByte()
+bool CInterfaceSerial::GetM_StatusByte()
 {
-	BOOL bResult=FALSE;
+	bool bResult=FALSE;
 
 	BYTE bResultSend=sendSerialCommand(_T("Lq"));
 	if(0==bResultSend)
@@ -2475,7 +2475,7 @@ BOOL CInterfaceSerial::GetM_StatusByte()
 		case WAIT_OBJECT_0:
 			{
 				//resetCOMerror(COM_STATUS);
-				bResult=TRUE;
+				bResult=true;
 			}
 			break;
 		case WAIT_TIMEOUT:

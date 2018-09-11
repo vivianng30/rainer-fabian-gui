@@ -569,7 +569,8 @@ bool CTlsXmlScanner::Parse(CTlsXmlScanner& scanner, eTokenType& Type, CStringW& 
 		}
 		break;
 	default:
-		return SetError("Fehler Parse");
+		SetError("Fehler Parse");
+		return false;
 	}
 	
     return true;

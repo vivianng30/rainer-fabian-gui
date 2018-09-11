@@ -7718,7 +7718,7 @@ bool CDiagramm::DecreaseXScale(bool bTry, bool bRedrawDiagrammData)
 
 	if(!m_pFunctionParams)
 	{
-		return dLowerXAxisMax;
+		return false;
 	}
 
 	switch(m_iDiagrammType)

@@ -97,7 +97,7 @@ public:
 	//void CheckM_StatusByte();
 	//void CheckM_StatusByteTime();
 	//void CheckM_StatusByteATZ();
-	BOOL GetM_StatusByte();
+	bool GetM_StatusByte();
 	int GetM_CHECKSUM(bool bIgnorCOMstate=false);
 	int GetM_CAL_PRESS_SCALE();
 	int GetM_CAL_PRESS_OFFSET();
