@@ -65,7 +65,7 @@ protected:
 	int maxfiles;
 	int maxsize;
 
-	friend UINT CWriteLogThread(LPVOID pc);
+	static friend UINT CWriteLogThread(LPVOID pc);
 	CWinThread*	m_pcwtWriteLogThread;
 	DWORD writeLogfile(void);
 	bool m_bDoWriteLogfile;
