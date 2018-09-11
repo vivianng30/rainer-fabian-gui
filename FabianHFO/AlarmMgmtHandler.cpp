@@ -4993,7 +4993,8 @@ bool CAlarmMgmtHandler::SetAlarm_SPO2_MODULE_NOTCONNECTED(CStringW alarmTxt)
 	{
 		deleteAlarm(AL_Sens_SPO2_CHECKSENSOR, false);
 	}
-	else if(ALARM_Sens_SPO2_SENSORFAULTY->getAlarmState()!=AS_NONE)
+
+	if(ALARM_Sens_SPO2_SENSORFAULTY->getAlarmState()!=AS_NONE)
 	{
 		deleteAlarm(AL_Sens_SPO2_SENSORFAULTY, false);
 	}

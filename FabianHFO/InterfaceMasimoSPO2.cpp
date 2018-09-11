@@ -743,6 +743,9 @@ void CInterfaceMasimoSPO2::checkEXCEPTIONS2()
 			if(AfxGetApp())
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_SETALARM_SPO2_SENSORFAULTY);
 		}
+	} else if(getModel()->getALARMHANDLER()->ALARM_Sens_SPO2_SENSORFAULTY->getAlarmState()==AS_ACTIVE)
+	{
+		getModel()->getALARMHANDLER()->setStateOfAlarm(AL_Sens_SPO2_SENSORFAULTY, AS_SIGNALED);
 	}
 
 	if(m_iEXCEPTIONS2 & BIT2)	// low perfusion
