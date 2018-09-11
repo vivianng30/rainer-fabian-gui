@@ -695,37 +695,8 @@ LRESULT CSubViewPatient::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 {
 	switch(message)
 	{
-	case WM_MENUBUTTONDOWN:
-		{
-			switch(wParam)
-			{
-			/*case IDC_BTN_SETUP_RESET:
-				{
-					BnClickedReset();
-					return 1;
-				}
-				break;*/
-			/*case IDC_BTN_SETUP_CHANGE:
-				{
-					BnClickedChange();
-					return 1;
-				}
-				break;*/
-			/*case IDC_BTN_SETUP_APLY:
-				{
-					BnClickedApply();
-					return 1;
-				}
-				break;*/
-			default:
-				{
 
-				}
-				break;
-			}
-		}
-		break;
-	/*case WM_MENUBUTTONUP:
+        /*case WM_MENUBUTTONUP:
 		{
 			switch(wParam)
 			{
