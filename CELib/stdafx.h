@@ -5,6 +5,9 @@
 #pragma once
 
 // NOTE - this is value is not strongly correlated to the Windows CE OS version being targeted
+#if defined WINVER
+#undef WINVER
+#endif
 #define WINVER _WIN32_WCE
 
 #ifndef VC_EXTRALEAN
