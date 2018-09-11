@@ -103,7 +103,7 @@ private:
 	CRITICAL_SECTION	csPRICOcntdown;
 	CRITICAL_SECTION	csPRICOthread;
 
-	friend UINT PRICOThread(LPVOID pc);
+	static friend UINT PRICOThread(LPVOID pc);
 	CWinThread*	m_pcwtPRICOThread;
 	DWORD PRICOData(void);
 	bool m_bDoPRICOThread;

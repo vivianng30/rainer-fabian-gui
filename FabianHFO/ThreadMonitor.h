@@ -34,7 +34,7 @@ private:
 	static CThreadMonitor* theThreadMonitor;//!< singleton of ThreadMonitor
 	CMVModel *m_pModel;//!< the model
 
-	friend UINT MonitorThread(LPVOID pc);
+	static friend UINT MonitorThread(LPVOID pc);
 	CWinThread*	m_pcwtMonitorThread;
 	DWORD MonitorData(void);
 	bool m_bDoMonitorThread;

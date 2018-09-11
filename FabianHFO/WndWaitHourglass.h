@@ -60,7 +60,7 @@ private:
 
 	CString m_szMessage;
 
-	friend UINT CWaitThread(LPVOID pc);
+	static friend UINT CWaitThread(LPVOID pc);
 	CWinThread*	m_pcwtWaitThread;
 	DWORD WaitHourglass(void);
 	bool m_bDoWaitThread;

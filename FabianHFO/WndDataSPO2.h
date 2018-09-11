@@ -128,7 +128,7 @@ private:
 	CBmp* m_pcLimit_RiUp;
 	CBmp* m_pcLimit_RiDw;
 
-	friend UINT CSPO2DataThread(LPVOID pc);
+	static friend UINT CSPO2DataThread(LPVOID pc);
 	CWinThread*	m_pcwtSPO2DataThread;
 	DWORD SPO2Data(void);
 	bool m_bDoThread;

@@ -154,7 +154,7 @@ protected:
 	
 protected:
 
-	friend UINT CSerialReceiveThread(LPVOID pc);
+	static friend UINT CSerialReceiveThread(LPVOID pc);
 	CWinThread*	m_pcwtSerialReceiveThread;
 	DWORD ReceiveSerialData(void);
 	bool m_bDoReceiveThread;
@@ -164,7 +164,7 @@ protected:
 	void startReceiveThread();
 	void stopReceiveThread();
 
-	friend UINT CSerialSendThread(LPVOID pc);
+	static friend UINT CSerialSendThread(LPVOID pc);
 	CWinThread*	m_pcwtSerialSendThread;
 	DWORD SendSerialData(void);
 	bool m_bDoSendThread;
@@ -174,7 +174,7 @@ protected:
 	void startSendThread();
 	void stopSendThread();
 
-	friend UINT CSerialCheckThread(LPVOID pc);
+	static friend UINT CSerialCheckThread(LPVOID pc);
 	CWinThread*	m_pcwtSerialCheckThread;
 	DWORD CheckSerialData(void);
 	bool m_bDoCheckThread;

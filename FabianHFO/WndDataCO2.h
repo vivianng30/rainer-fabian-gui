@@ -104,7 +104,7 @@ private:
 	bool m_bETCO2ValueValid;
 	bool m_bFreqValuevalid;
 	
-	friend UINT CCO2DataThread(LPVOID pc);
+	static friend UINT CCO2DataThread(LPVOID pc);
 	CWinThread*	m_pcwtCO2DataThread;
 	DWORD CO2Data(void);
 	bool m_bDoThread;

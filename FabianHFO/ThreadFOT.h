@@ -154,7 +154,7 @@ private:
 	CRITICAL_SECTION	csFOTventBuffer;//!< critical section for FOT sequence
 	CRITICAL_SECTION	csFOTdate;//!< critical section for FOT date
 
-	friend UINT FOTThread(LPVOID pc);
+	static friend UINT FOTThread(LPVOID pc);
 	CWinThread*	m_pcwtFOTThread;
 	DWORD FOTData(void);
 	bool m_bDoFOTThread;

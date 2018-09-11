@@ -61,7 +61,7 @@ protected:
 	void DrawCalText();
 	CMVModel *getModel();
 
-	friend UINT CCheckOxyThread(LPVOID pc);
+	static friend UINT CCheckOxyThread(LPVOID pc);
 	CWinThread*	m_pcwtCheckOxyThread;
 	DWORD CheckOxySensor(void);
 	bool m_bDoCheckThread;

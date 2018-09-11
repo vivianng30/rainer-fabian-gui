@@ -213,14 +213,14 @@ protected:
 	
 	HANDLE m_hSPIFile;
 
-	friend UINT CSPIMonitorThread(LPVOID pc);
+	static friend UINT CSPIMonitorThread(LPVOID pc);
 	CWinThread*	m_pcwtSPIMonitorThread;
 	bool m_bDoSPIMonitorThread;
 	CEvent eventSPITime;
 	HANDLE m_hThreadSPIMonitor;
 	DWORD SPIMonitorData(void);
 
-	friend UINT CSPICommunicationThread(LPVOID pc);
+	static friend UINT CSPICommunicationThread(LPVOID pc);
 	CWinThread*	m_pcwtSPICommunicationThread;
 	bool m_bDoSPICommunicationThread;
 	HANDLE m_hThreadSPICommunication;

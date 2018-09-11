@@ -219,7 +219,7 @@ protected:
 	
 	//Threads
 	//WEC2013
-	friend UINT CI2CWatchdogThread(LPVOID pc);
+	static friend UINT CI2CWatchdogThread(LPVOID pc);
 	CWinThread*	m_pcwtI2CWatchdogThread;
 	DWORD SetI2CWatchdog(void);
 	bool m_bDoI2CWatchdogThread;
@@ -227,7 +227,7 @@ protected:
 	HANDLE m_hThreadI2CWatchdog;
 
 	//WEC2013
-	friend UINT COxyCalThread(LPVOID pc);
+	static friend UINT COxyCalThread(LPVOID pc);
 	CWinThread*	m_pcwtOxyCalThread;
 	DWORD CheckOxyCal(void);
 	bool m_bDoOxyCalThread;
@@ -244,7 +244,7 @@ protected:
 
 	
 	//WEC2013
-	friend UINT CTimerThread(LPVOID pc);
+	static friend UINT CTimerThread(LPVOID pc);
 	CWinThread*	m_pcwtTimerThread;
 	DWORD DoTimerFunctions(void);
 	bool m_bDoDoTimerFunctionsThread;
@@ -255,7 +255,7 @@ protected:
 	int m_iTestCntMemory;
 
 	//WEC2013
-	friend UINT CSaveTrendUSBThread(LPVOID pc);
+	static friend UINT CSaveTrendUSBThread(LPVOID pc);
 	CWinThread*	m_pcwtSaveTrendUSBThread;
 	DWORD SaveTrendUSB(void);
 	bool m_bDoSaveTrendUSBThread;
@@ -263,7 +263,7 @@ protected:
 	HANDLE m_hThreadSaveTrendUSB;
 
 	//WEC2013
-	friend UINT CDelTrendThread(LPVOID pc);
+	static friend UINT CDelTrendThread(LPVOID pc);
 	CWinThread*	m_pcwtDelTrendThread;
 	DWORD DelTrendData(void);
 	bool m_bDoDelTrendThread;

@@ -182,7 +182,7 @@ protected:
 
 	//bool ResizeBuffer(int iLen);
 
-	friend UINT CI2CThread(LPVOID pc);
+	static friend UINT CI2CThread(LPVOID pc);
 	CWinThread*	m_pcwtI2CThread;
 	DWORD I2CData(void);
 	bool m_bDoI2CThread;

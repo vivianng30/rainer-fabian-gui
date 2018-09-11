@@ -366,7 +366,7 @@ protected:
 
 	static LPG_PLOTITEMSSTRUCT_LD m_pPlotItems;
 
-	friend UINT CGraphThread(LPVOID pc);
+	static friend UINT CGraphThread(LPVOID pc);
 	CWinThread*	m_pcwtGraphThread;
 	bool m_bDoThread;
 	HANDLE m_hThreadGraph;

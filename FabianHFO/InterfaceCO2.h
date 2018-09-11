@@ -191,20 +191,20 @@ protected:
 
 	//DWORD m_dwLastCO2send;
 	
-	friend UINT CETCO2SendThread(LPVOID pc);
+	static friend UINT CETCO2SendThread(LPVOID pc);
 	CWinThread*	m_pcwtETCO2SendThread;
 	DWORD SendETCO2Data(void);
 	bool m_bDoETCO2SendThread;
 	HANDLE m_hThreadETCO2Send;
 
-	friend UINT CETCO2InitThread(LPVOID pc);
+	static friend UINT CETCO2InitThread(LPVOID pc);
 	CWinThread*	m_pcwtETCO2InitThread;
 	DWORD ETCO2Init(void);
 	bool m_bDoETCO2InitThread;
 	//CEvent eventCO2Time;
 	HANDLE m_hThreadETCO2Init;
 
-	friend UINT CETCO2checkThread(LPVOID pc);
+	static friend UINT CETCO2checkThread(LPVOID pc);
 	CWinThread*	m_pcwtETCO2checkThread;
 	DWORD ETCO2check(void);
 	bool m_bDoETCO2checkThread;

@@ -58,7 +58,7 @@ public:
 
 	void StartFlowSensorCheckThread();
 	void StopFlowSensorCheckThread();
-	friend UINT CCheckFlowSensorThread(LPVOID pc);
+	static friend UINT CCheckFlowSensorThread(LPVOID pc);
 
 	DWORD CheckFlowSensor();
 	void CalibrateFlowSensor();

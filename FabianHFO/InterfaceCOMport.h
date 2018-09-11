@@ -77,19 +77,19 @@ protected:
 	CInterfaceCOMport(void);
 	virtual ~CInterfaceCOMport(void);
 
-	friend UINT CCOMSendThread(LPVOID pc);
+	static friend UINT CCOMSendThread(LPVOID pc);
 	CWinThread*	m_pcwtCOMSendThread;
 	DWORD SendCOMData(void);
 	bool m_bDoCOMSendThread;
 	HANDLE m_hThreadCOMSend;
 
-	friend UINT CCOMInitThread(LPVOID pc);
+	static friend UINT CCOMInitThread(LPVOID pc);
 	CWinThread*	m_pcwtCOMInitThread;
 	DWORD COMInit(void);
 	bool m_bDoCOMInitThread;
 	HANDLE m_hThreadCOMInit;
 
-	friend UINT CCOMcheckThread(LPVOID pc);
+	static friend UINT CCOMcheckThread(LPVOID pc);
 	CWinThread*	m_pcwtCOMcheckThread;
 	DWORD COMcheck(void);
 	bool m_bDoCOMcheckThread;

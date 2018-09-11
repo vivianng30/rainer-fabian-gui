@@ -92,20 +92,20 @@ protected:
 	CInterfaceSPO2(void);
 	virtual ~CInterfaceSPO2(void);
 
-	friend UINT CSPO2SendThread(LPVOID pc);
+	static friend UINT CSPO2SendThread(LPVOID pc);
 	CWinThread*	m_pcwtSPO2SendThread;
 	DWORD SendSPO2Data(void);
 	bool m_bDoSPO2SendThread;
 	HANDLE m_hThreadSPO2Send;
 
-	friend UINT CSPO2InitThread(LPVOID pc);
+	static friend UINT CSPO2InitThread(LPVOID pc);
 	CWinThread*	m_pcwtSPO2InitThread;
 	DWORD SPO2Init(void);
 	bool m_bDoSPO2InitThread;
 	HANDLE m_hThreadSPO2Init;
 	CEvent g_eventCO2Startup;
 
-	friend UINT CSPO2checkThread(LPVOID pc);
+	static friend UINT CSPO2checkThread(LPVOID pc);
 	CWinThread*	m_pcwtSPO2checkThread;
 	DWORD SPO2check(void);
 	bool m_bDoSPO2checkThread;

@@ -42,7 +42,7 @@ protected:
 	void ShowWndHourglass(bool bShow);
 	bool DestroyWndHourglass();
 
-	friend UINT CWaitTrendUSBThread(LPVOID pc);
+	static friend UINT CWaitTrendUSBThread(LPVOID pc);
 	CWinThread*	m_pcwtWaitTrendUSBThread;
 	DWORD WaitTrendUSB(void);
 	bool m_bDoWaitTrendUSBThread;

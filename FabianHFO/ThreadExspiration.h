@@ -39,7 +39,7 @@ private:
 	static CThreadExspiration* theThreadExspiration;//!< singleton of CThreadExspiration
 	CMVModel *m_pModel;//!< the model
 
-	friend UINT ExspirationThread(LPVOID pc);
+	static friend UINT ExspirationThread(LPVOID pc);
 	CWinThread*	m_pcwtExspirationThread;
 	DWORD Exspirationstart(void);
 	bool m_bDoExspirationThread;

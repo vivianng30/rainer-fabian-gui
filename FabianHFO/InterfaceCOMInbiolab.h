@@ -70,7 +70,7 @@ protected:
 
 	CTlsComPort m_comPort;
 
-	friend UINT CSerialReceiveThread(LPVOID pc);
+	static friend UINT CSerialReceiveThread(LPVOID pc);
 	CWinThread*	m_pcwtSerialReceiveThread;
 	DWORD ReceiveSerialData(void);
 	bool m_bDoSerialReceiveThread;

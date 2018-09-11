@@ -33,7 +33,7 @@ private:
 	static CThreadFlowsensor* theThreadFlowsensor;//!< singleton of ThreadFlowsensor
 	CMVModel *m_pModel;//!< the model
 
-	friend UINT FlowsensorThread(LPVOID pc);
+	static friend UINT FlowsensorThread(LPVOID pc);
 	CWinThread*	m_pcwtFlowsensorThread;
 	DWORD FlowsensorData(void);
 	bool m_bDoFlowsensorThread;

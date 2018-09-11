@@ -127,7 +127,7 @@ private:
 
 protected:
 
-	friend UINT CTerminalSendThread(LPVOID pc);
+	static friend UINT CTerminalSendThread(LPVOID pc);
 	CWinThread*	m_pcwtTerminalSendThread;
 	DWORD SendTerminalData(void);
 	bool m_bDoTerminalSendThread;

@@ -54,7 +54,7 @@ protected:
 	void StartLoadLanguageThread(void);
 	void StopLoadLanguageThread(void);
 
-	friend UINT CLoadLanguageThread(LPVOID pc);
+	static friend UINT CLoadLanguageThread(LPVOID pc);
 	CWinThread*	m_pcwtLoadLanguageThread;
 	DWORD LoadLanguage(void);
 	bool m_bDoLoadLanguageThread;

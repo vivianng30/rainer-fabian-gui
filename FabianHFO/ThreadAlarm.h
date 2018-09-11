@@ -35,7 +35,7 @@ private:
 	static CThreadAlarm* theThreadAlarm;//!< singleton of CThreadAlarm
 	CMVModel *m_pModel;//!< the model
 
-	friend UINT AlarmThread(LPVOID pc);
+	static friend UINT AlarmThread(LPVOID pc);
 	CWinThread*	m_pcwtAlarmThread;
 	DWORD AlarmData(void);
 	bool m_bDoAlarmThread;
