@@ -9,10 +9,10 @@
 #define FILE_DEVICE_COM     0x00008097
 /* Get the current speed of the I2C bus */
 #define IOCTL_COM_GET_HANGPARAM \
-	CTL_CODE(FILE_DEVICE_COM, 0x800, METHOD_BUFFERED, FILE_ANY_ACCESS)
+	(DWORD) CTL_CODE(FILE_DEVICE_COM, 0x800, METHOD_BUFFERED, FILE_ANY_ACCESS)
 /* Set the current speed of the I2C bus */
 #define IOCTL_COM_SET_HANGPARAM \
-	CTL_CODE(FILE_DEVICE_COM, 0x801, METHOD_BUFFERED, FILE_ANY_ACCESS)
+	(DWORD) CTL_CODE(FILE_DEVICE_COM, 0x801, METHOD_BUFFERED, FILE_ANY_ACCESS)
 //********************************************************************
 
 #define COM_LOG
@@ -215,7 +215,7 @@ DWORD CTlsComPort::Read(void *pData , DWORD iData)
     return iRead;
 }
 
-DWORD CTlsComPort::ReadLine(char *pData , DWORD iData)
+int CTlsComPort::ReadLine(char *pData , DWORD iData)
 {
     DWORD iRead = 0;
     
@@ -242,7 +242,7 @@ DWORD CTlsComPort::ReadLine(char *pData , DWORD iData)
     return iRead;
 }
 
-DWORD CTlsComPort::ReadCommand(char *pData , DWORD iData)
+int CTlsComPort::ReadCommand(char *pData , DWORD iData)
 {
 	DWORD iRead = 0;
 
@@ -276,7 +276,7 @@ DWORD CTlsComPort::ReadCommand(char *pData , DWORD iData)
 
 	return iRead;
 }
-DWORD CTlsComPort::ReadCO2Command(BYTE *pData , DWORD iData)
+int CTlsComPort::ReadCO2Command(BYTE *pData , DWORD iData)
 {
 	
 	if(m_hCommPort == INVALID_HANDLE_VALUE) 

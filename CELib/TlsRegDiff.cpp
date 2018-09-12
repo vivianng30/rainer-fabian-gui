@@ -55,7 +55,7 @@ void CTlsRegDiff::WriteOut(CTlsOStream_Base& rOut, CStringW sPath, HKEY hkCurren
 
     DWORD dwNameSize = 255;
     CStringW sKey;
-    DWORD dwType = -1;
+    DWORD dwType = ULONG_MAX;
 	CTlsBlob blData(4096);
     DWORD dwDataLen = 4096;
 
@@ -106,7 +106,7 @@ void CTlsRegDiff::WriteOut(CTlsOStream_Base& rOut, CStringW sPath, HKEY hkCurren
       while(true)
       {
         // +++ get data +++
-        DWORD dwType = -1;
+        DWORD dwType = ULONG_MAX;
         unsigned char szData[4096];
         DWORD dwDataLen = 0;
         LONG lr = RegQueryValueEx(hkCurrent, sKey, NULL, &dwType, szData, &dwDataLen);
@@ -344,7 +344,7 @@ void CTlsRegDiff::Compare(CMapStringToPtr& map, CStringW sPath, HKEY hkCurrent, 
 
     DWORD dwNameSize = 255;
     CStringW sKey;
-    DWORD dwType = -1;
+    DWORD dwType = ULONG_MAX;
     CTlsBlob blData(4096);
     DWORD dwDataLen = 4096;
 
@@ -410,7 +410,7 @@ void CTlsRegDiff::Compare(CMapStringToPtr& map, CStringW sPath, HKEY hkCurrent, 
       while(true)
       {
         // +++ get data +++
-        DWORD dwType = -1;
+        DWORD dwType = ULONG_MAX;
         unsigned char szData[4096];
         DWORD dwDataLen = 0;
         LONG lr = RegQueryValueEx(hkCurrent, sKey, NULL, &dwType, szData, &dwDataLen);

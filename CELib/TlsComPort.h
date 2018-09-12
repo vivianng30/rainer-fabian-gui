@@ -26,10 +26,10 @@ public:
   DWORD		 Baud;
 
   DWORD		 Read(void *pData ,DWORD iData);
-  DWORD      ReadLine(char* pData,DWORD iData);
+  int      ReadLine(char* pData,DWORD iData);
   DWORD       Read(CTlsBlob &data);
-  DWORD		 ReadCommand(char *pData , DWORD iData);
-  DWORD		ReadCO2Command(BYTE *pData , DWORD iData);
+  int		 ReadCommand(char *pData , DWORD iData);
+  int		ReadCO2Command(BYTE *pData , DWORD iData);
 
   DWORD		 Write (const void *pData,DWORD len);
   DWORD		 Write (CStringW data);

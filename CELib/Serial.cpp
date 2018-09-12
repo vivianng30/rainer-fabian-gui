@@ -35,10 +35,10 @@
 #define FILE_DEVICE_COM     0x00008097
 /* Get the current speed of the I2C bus */
 #define IOCTL_COM_GET_HANGPARAM \
-	CTL_CODE(FILE_DEVICE_COM, 0x800, METHOD_BUFFERED, FILE_ANY_ACCESS)
+	CTL_CODE(FILE_DEVICE_COM, (DWORD) 0x800, METHOD_BUFFERED, FILE_ANY_ACCESS)
 /* Set the current speed of the I2C bus */
 #define IOCTL_COM_SET_HANGPARAM \
-	CTL_CODE(FILE_DEVICE_COM, 0x801, METHOD_BUFFERED, FILE_ANY_ACCESS)
+	CTL_CODE(FILE_DEVICE_COM, (DWORD) 0x801, METHOD_BUFFERED, FILE_ANY_ACCESS)
 //********************************************************************
 
 
