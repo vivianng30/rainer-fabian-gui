@@ -2011,10 +2011,16 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 						theApp.WriteLog(_T("CF1"));
 						LoadGlobalAcuFonts(getModel()->GetLanguageID());
 						m_wLanguageID=getModel()->GetLanguageID();
-						::SendMessage(HWND_BROADCAST,WM_FONTCHANGE,0,0);
+						if(!m_bExit)
+						{
+							CMVEventUI event(CMVEventUI::EV_LANGUAGE);
+							getModel()->triggerEvent(&event);
+						}
 					}
 
 				}
+
+				getModel()->setReloadLanguageProgress(false);
 
 				//close the language view
 				theApp.WriteLog(_T("RDV"));

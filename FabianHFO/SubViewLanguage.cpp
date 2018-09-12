@@ -1665,7 +1665,6 @@ DWORD CSubViewLanguage::LoadLanguage(void)
 			if(AfxGetApp())
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_LANGUAGE_CHANGED);
 
-			getModel()->setReloadLanguageProgress(false);
 			Sleep(200);
 
 		}
