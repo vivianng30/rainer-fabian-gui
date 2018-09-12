@@ -49,10 +49,6 @@
 //#define WAVE_CO2		3
 
 
-#if defined MAX_WAVES
-#undef MAX_WAVES
-#endif
-#define MAX_WAVES		4
 #define MAX_SAMPLES		4
 
 #define MAX_WAVE_RECORDS	1000
