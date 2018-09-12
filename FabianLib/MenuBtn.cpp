@@ -161,8 +161,8 @@ void CMenuBtn::Draw(int nState,int nAddInfo)
 {
 	HFONT hPrevFont=(HFONT)SelectObject(m_hDC,m_hFont);
 	int nBkMode=SetBkMode(m_hDC,TRANSPARENT);
-	int nTxtColor;
-	TCHAR* pszText;
+	int nTxtColor = 0;
+	TCHAR* pszText = NULL;
 
 	RECT rc;
 	memcpy(&rc,&m_rcClient,sizeof(RECT));

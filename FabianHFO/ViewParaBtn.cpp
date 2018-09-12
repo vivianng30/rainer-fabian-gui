@@ -12948,6 +12948,9 @@ void CViewParaBtn::setPEEPvalue(int iValPEEP, bool bSend)
 {
 	/** \brief The enter critical section. */
 	EnterCriticalSection(&csDraw);
+
+    fVALUE fvPpsv = {0, 0, 0};
+
 	if(TRUE==getModel()->getCONFIG()->isPpsvAsDeltaPEEPValue())
 	{
 		if(		getModel()->getCONFIG()->GetCurMode()==VM_PSV
@@ -12955,7 +12958,6 @@ void CViewParaBtn::setPEEPvalue(int iValPEEP, bool bSend)
 			||	getModel()->getCONFIG()->GetCurMode()==VM_SIMVPSV
 			||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_SIMVPSV)//newVG
 		{
-			fVALUE fvPpsv;
 			if(m_pcPara_PPSV)
 				m_pcPara_PPSV->GetValue(&fvPpsv);
 			int iPEEP_PPSVdiff=getModel()->getDATAHANDLER()->getPEEP_PpsvDifference();
@@ -12977,7 +12979,6 @@ void CViewParaBtn::setPEEPvalue(int iValPEEP, bool bSend)
 		else if(		getModel()->getCONFIG()->GetCurMode()==VM_PSV
 			||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_PSV)
 		{
-			fVALUE fvPpsv;
 			if(m_pcPara_PPSV)
 				m_pcPara_PPSV->GetValue(&fvPpsv);
 			int iPEEP_PPSVdiff=getModel()->getDATAHANDLER()->getPEEP_PpsvDifference();
@@ -13003,7 +13004,6 @@ void CViewParaBtn::setPEEPvalue(int iValPEEP, bool bSend)
 			||	getModel()->getCONFIG()->GetCurMode()==VM_SIMVPSV
 			||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_SIMVPSV)//newVG
 		{
-			fVALUE fvPpsv;
 			if(m_pcPara_PPSV)
 				m_pcPara_PPSV->GetValue(&fvPpsv);
 			int iPEEP_PPSVdiff=getModel()->getDATAHANDLER()->getPEEP_PpsvDifference();
@@ -13041,7 +13041,6 @@ void CViewParaBtn::setPEEPvalue(int iValPEEP, bool bSend)
 		else if(		getModel()->getCONFIG()->GetCurMode()==VM_PSV
 			||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_PSV)
 		{
-			fVALUE fvPpsv;
 			if(m_pcPara_PPSV)
 				m_pcPara_PPSV->GetValue(&fvPpsv);
 			int iPEEP_PPSVdiff=getModel()->getDATAHANDLER()->getPEEP_PpsvDifference();
@@ -13086,7 +13085,7 @@ void CViewParaBtn::setPEEPvalue(int iValPEEP, bool bSend)
 void CViewParaBtn::setPpsvValue(int iValPPSV, bool bWriteConfig)
 {
 
-	fVALUE fvPEEP;
+    fVALUE fvPEEP = {0, 0, 0};
 	/** \brief The enter critical section. */
 	EnterCriticalSection(&csDraw);
 	if(m_pcPara_PEEP)

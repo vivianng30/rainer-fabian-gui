@@ -16287,7 +16287,8 @@ void CDataHandler::setCurrentFOT_PMEANENDPara(WORD val)
 
 DWORD CDataHandler::GetContrast(void )
 {
-	struct ContrastCmdInputParm ContrastParm, RetParm;  
+	struct ContrastCmdInputParm ContrastParm;  
+    struct ContrastCmdInputParm RetParm = {0, 0};  
 	HDC dcLCD=NULL;;
 	int nRet;
 	DWORD dwEscFctn;

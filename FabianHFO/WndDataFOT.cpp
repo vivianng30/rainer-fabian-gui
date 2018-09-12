@@ -2007,7 +2007,7 @@ void CWndDataFOT::drawPIPmax()
 
 	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 	{
-		fVALUE fv;
+		fVALUE fv = {0, 0, 0};
 		if(m_pcPara_FOT_Steps)
 			m_pcPara_FOT_Steps->GetValue(&fv);
 		WORD iSteps=fv.iValue;
@@ -2062,7 +2062,7 @@ void CWndDataFOT::drawPIPmax()
 	}
 	else
 	{
-		fVALUE fv;
+		fVALUE fv = {0, 0, 0};
 		if(m_pcPara_FOT_Steps)
 			m_pcPara_FOT_Steps->GetValue(&fv);
 		WORD iSteps=fv.iValue;
@@ -2187,7 +2187,7 @@ void CWndDataFOT::drawMbarStep()
 
 	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 	{
-		fVALUE fv;
+		fVALUE fv = {0, 0, 0};
 		if(m_pcPara_FOT_Steps)
 			m_pcPara_FOT_Steps->GetValue(&fv);
 		WORD iSteps=fv.iValue;
@@ -2238,7 +2238,7 @@ void CWndDataFOT::drawMbarStep()
 	}
 	else
 	{
-		fVALUE fv;
+		fVALUE fv = {0, 0, 0};
 		if(m_pcPara_FOT_Steps)
 			m_pcPara_FOT_Steps->GetValue(&fv);
 		WORD iSteps=fv.iValue;

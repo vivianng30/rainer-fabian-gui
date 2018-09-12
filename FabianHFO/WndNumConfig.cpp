@@ -548,7 +548,7 @@ void CWndNumConfig::createNumericField1()
 	eNumericType numType=m_pbufNumeric->VAL1;
 	eNumericSize numSize=m_pbufNumeric->SIZE1;
 	UINT numBlockID=IDC_VIEW_NUM_FIELD1;
-	RECT rcLd;
+	RECT rcLd = {0, 0, 0, 0};
 	rcLd.left=0;
 	rcLd.right=190;
 	rcLd.top=m_iCurrentNumPositionYaxes;	
@@ -597,7 +597,7 @@ void CWndNumConfig::createNumericField2()
 	eNumericType numType=m_pbufNumeric->VAL2;
 	eNumericSize numSize=m_pbufNumeric->SIZE2;
 	UINT numBlockID=IDC_VIEW_NUM_FIELD2;
-	RECT rcLd;
+	RECT rcLd = {0, 0, 0, 0};
 	rcLd.left=0;
 	rcLd.right=190;
 	rcLd.top=m_iCurrentNumPositionYaxes;	
@@ -646,7 +646,7 @@ void CWndNumConfig::createNumericField3()
 	eNumericType numType=m_pbufNumeric->VAL3;
 	eNumericSize numSize=m_pbufNumeric->SIZE3;
 	UINT numBlockID=IDC_VIEW_NUM_FIELD3;
-	RECT rcLd;
+	RECT rcLd = {0, 0, 0, 0};
 	rcLd.left=0;
 	rcLd.right=190;
 	rcLd.top=m_iCurrentNumPositionYaxes;	
@@ -695,7 +695,7 @@ void CWndNumConfig::createNumericField4()
 	eNumericType numType=m_pbufNumeric->VAL4;
 	eNumericSize numSize=m_pbufNumeric->SIZE4;
 	UINT numBlockID=IDC_VIEW_NUM_FIELD4;
-	RECT rcLd;
+	RECT rcLd = {0, 0, 0, 0};
 	rcLd.left=0;
 	rcLd.right=190;
 	rcLd.top=m_iCurrentNumPositionYaxes;	
@@ -744,7 +744,7 @@ void CWndNumConfig::createNumericField5()
 	eNumericType numType=m_pbufNumeric->VAL5;
 	eNumericSize numSize=m_pbufNumeric->SIZE5;
 	UINT numBlockID=IDC_VIEW_NUM_FIELD5;
-	RECT rcLd;
+	RECT rcLd = {0, 0, 0, 0};
 	rcLd.left=0;
 	rcLd.right=190;
 	rcLd.top=m_iCurrentNumPositionYaxes;	
@@ -793,7 +793,7 @@ void CWndNumConfig::createNumericField6()
 	eNumericType numType=m_pbufNumeric->VAL6;
 	eNumericSize numSize=m_pbufNumeric->SIZE6;
 	UINT numBlockID=IDC_VIEW_NUM_FIELD6;
-	RECT rcLd;
+	RECT rcLd = {0, 0, 0, 0};
 	rcLd.left=0;
 	rcLd.right=190;
 	rcLd.top=m_iCurrentNumPositionYaxes;	
@@ -842,7 +842,7 @@ void CWndNumConfig::createNumericField7()
 	eNumericType numType=m_pbufNumeric->VAL7;
 	eNumericSize numSize=m_pbufNumeric->SIZE7;
 	UINT numBlockID=IDC_VIEW_NUM_FIELD7;
-	RECT rcLd;
+	RECT rcLd = {0, 0, 0, 0};
 	rcLd.left=0;
 	rcLd.right=190;
 	rcLd.top=m_iCurrentNumPositionYaxes;	
@@ -891,7 +891,7 @@ void CWndNumConfig::createNumericField8()
 	eNumericType numType=m_pbufNumeric->VAL8;
 	eNumericSize numSize=m_pbufNumeric->SIZE8;
 	UINT numBlockID=IDC_VIEW_NUM_FIELD8;
-	RECT rcLd;
+    RECT rcLd = {0, 0, 0, 0};
 	rcLd.left=0;
 	rcLd.right=190;
 	rcLd.top=m_iCurrentNumPositionYaxes;	
