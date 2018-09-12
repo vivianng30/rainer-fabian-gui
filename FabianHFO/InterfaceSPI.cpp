@@ -3053,7 +3053,7 @@ DWORD CInterfaceSPI::SimulateNSPIblock(BYTE *pBuffer)	//monitor data;
 			m_iTempV = m_iTempP;
 
 			if(m_iTempF>=50000)
-				m_iTempF=(SHORT)-50000;
+				m_iTempF=-32767;	// @todo revisit Jira FSW-112.
 			m_iTempF=m_iTempF+50;
 			
 			m_iGraphCount++;
