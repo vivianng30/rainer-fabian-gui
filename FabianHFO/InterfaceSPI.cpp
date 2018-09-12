@@ -2809,7 +2809,7 @@ bool CInterfaceSPI::ReadNSPIdata(BYTE* pCommand,WORD wcommandSize, BYTE* pBuffer
 
 		//#############################################################
 		//-> read 
-		if(!DeviceIoControl(m_hSPIFile, IOCTL_NSPI_RECEIVE, NULL, 0,pBuffer, wBufSize, NULL, NULL))
+		if(!DeviceIoControl(m_hSPIFile, (DWORD) IOCTL_NSPI_RECEIVE, NULL, 0,pBuffer, wBufSize, NULL, NULL))
 		{
 			bResult=false;
 			theApp.WriteLog(_T("#HFO:0130"));
@@ -2848,7 +2848,7 @@ UINT CInterfaceSPI::ReadNSPIPFVblock(BYTE *pBuffer)	//monitor data;
 		bufferBlocksize[0]=0;
 
 
-		if(!DeviceIoControl(m_hSPIFile, IOCTL_NSPI_RECEIVE, NULL, 0,bufferBlocksize, 1, NULL, NULL))
+		if(!DeviceIoControl(m_hSPIFile, (DWORD) IOCTL_NSPI_RECEIVE, NULL, 0,bufferBlocksize, 1, NULL, NULL))
 		{
 			theApp.writeLogError(GetLastError(), _T("SPI: Error while receive block data"));
 		}
@@ -2882,7 +2882,7 @@ UINT CInterfaceSPI::ReadNSPIPFVblock(BYTE *pBuffer)	//monitor data;
 
 		if(bufSize>0)
 		{
-			if(!DeviceIoControl(m_hSPIFile, IOCTL_NSPI_RECEIVE, NULL, 0,pBuffer, bufSize, NULL, NULL))
+			if(!DeviceIoControl(m_hSPIFile, (DWORD) IOCTL_NSPI_RECEIVE, NULL, 0,pBuffer, bufSize, NULL, NULL))
 			{
 				//todo
 				//LogError(_T("SPI: Error while receive block data"));
@@ -3212,7 +3212,7 @@ DWORD CInterfaceSPI::ReadNSPIAVGblock(BYTE *pBuffer,WORD bufSize)	//monitor data
 
 		//#############################################################
 		//-> read 
-		if(!DeviceIoControl(m_hSPIFile, IOCTL_NSPI_RECEIVE, NULL, 0,pBuffer, bufSize, NULL, NULL))
+		if(!DeviceIoControl(m_hSPIFile, (DWORD) IOCTL_NSPI_RECEIVE, NULL, 0,pBuffer, bufSize, NULL, NULL))
 		{
 			dwResult=0;
 			theApp.writeLogError(GetLastError(), _T("SPI: Error while receive ATZ block data"));
@@ -3279,7 +3279,7 @@ DWORD CInterfaceSPI::ReadNSPIATZblock(BYTE *pBuffer,WORD bufSize)	//monitor data
 
 		//#############################################################
 		//-> read 
-		if(!DeviceIoControl(m_hSPIFile, IOCTL_NSPI_RECEIVE, NULL, 0,pBuffer, bufSize, NULL, NULL))
+		if(!DeviceIoControl(m_hSPIFile, (DWORD) IOCTL_NSPI_RECEIVE, NULL, 0,pBuffer, bufSize, NULL, NULL))
 		{
 			dwResult=0;
 			theApp.writeLogError(GetLastError(), _T("SPI: Error while receive ATZ block data"));
@@ -7905,7 +7905,7 @@ CStringW CInterfaceSPI::GetDriverInfo()
 
 	EnterCriticalSection(&csSPIFile);
 
-	if(!DeviceIoControl(m_hSPIFile, IOCTL_DRIVER_GETINFO, NULL, 0,&cInfo, sizeof(cInfo), NULL, NULL))
+	if(!DeviceIoControl(m_hSPIFile, (DWORD) IOCTL_DRIVER_GETINFO, NULL, 0,&cInfo, sizeof(cInfo), NULL, NULL))
 	{
 			cInfo.wVerMajor = 1; /* Command failed: this is V1.x */
 			cInfo.wVerMinor = 0;

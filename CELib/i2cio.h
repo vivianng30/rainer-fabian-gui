@@ -48,15 +48,15 @@
 
 /* Schedule a transmission request */
 #define IOCTL_NI2C_SCHEDULE \
-    CTL_CODE(FILE_DEVICE_NI2C, 0x800, METHOD_BUFFERED, FILE_ANY_ACCESS)
+    (DWORD) CTL_CODE(FILE_DEVICE_NI2C, 0x800, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
 /* Wait until a transmission result is available and return it */
 #define IOCTL_NI2C_GET_RESULT \
-    CTL_CODE(FILE_DEVICE_NI2C, 0x801, METHOD_BUFFERED, FILE_ANY_ACCESS)
+    (DWORD) CTL_CODE(FILE_DEVICE_NI2C, 0x801, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
 /* Wait until a transmission result is available and discard it */
 #define IOCTL_NI2C_SKIP_RESULT \
-    CTL_CODE(FILE_DEVICE_NI2C, 0x802, METHOD_BUFFERED, FILE_ANY_ACCESS)
+    CTL_CODE(FILE_DEVICE_NI2C, (DWORD) 0x802, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
 /* Check if the result of a transmission request is available */
 #define IOCTL_NI2C_CHECK_RESULT \

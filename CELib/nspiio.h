@@ -89,7 +89,7 @@
 
 /* Send command and data to SPI device */
 #define IOCTL_NSPI_SEND \
-    CTL_CODE(FILE_DEVICE_NSPI, 0x800, METHOD_BUFFERED, FILE_ANY_ACCESS)
+     (DWORD) CTL_CODE(FILE_DEVICE_NSPI, 0x800, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
 /* Send command to SPI device and then receive data from SPI device */
 #define IOCTL_NSPI_RECEIVE \

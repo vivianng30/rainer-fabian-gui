@@ -1450,82 +1450,82 @@ void CInterfaceTerminalRemote::sendMessurementData()
 	{
 	case VM_IPPV:
 		{
-			pMessureData.m_iTrigVol=TERMINAL_NOTVALID; 
-			pMessureData.m_iHFAmpl=TERMINAL_NOTVALID;
-			pMessureData.m_iTVEHFO=TERMINAL_NOTVALID;
-			pMessureData.m_iDCO2=TERMINAL_NOTVALID;
+			pMessureData.m_iTrigVol= (WORD) TERMINAL_NOTVALID; 
+			pMessureData.m_iHFAmpl= (WORD) TERMINAL_NOTVALID;
+			pMessureData.m_iTVEHFO= (WORD) TERMINAL_NOTVALID;
+			pMessureData.m_iDCO2= (WORD) TERMINAL_NOTVALID;
 			iHFFreq=TERMINAL_NOTVALID;
 			iPercent=TERMINAL_NOTVALID;
-			pMessureData.m_iTVEresp=TERMINAL_NOTVALID;
-			pMessureData.m_iTVEpat=TERMINAL_NOTVALID;
+			pMessureData.m_iTVEresp= (WORD) TERMINAL_NOTVALID;
+			pMessureData.m_iTVEpat= (WORD) TERMINAL_NOTVALID;
 		}
 		break;
 	case VM_SIPPV:
 	case VM_PSV:
 		{
-			pMessureData.m_iHFAmpl=TERMINAL_NOTVALID;
-			pMessureData.m_iTVEHFO=TERMINAL_NOTVALID;
-			pMessureData.m_iDCO2=TERMINAL_NOTVALID;
+			pMessureData.m_iHFAmpl= (WORD) TERMINAL_NOTVALID;
+			pMessureData.m_iTVEHFO= (WORD) TERMINAL_NOTVALID;
+			pMessureData.m_iDCO2= (WORD) TERMINAL_NOTVALID;
 			iHFFreq=TERMINAL_NOTVALID;
-			pMessureData.m_iTVEresp=TERMINAL_NOTVALID; 
-			pMessureData.m_iTVEpat=TERMINAL_NOTVALID; 
+			pMessureData.m_iTVEresp= (WORD) TERMINAL_NOTVALID; 
+			pMessureData.m_iTVEpat= (WORD) TERMINAL_NOTVALID; 
 			iPercent=TERMINAL_NOTVALID; 
 		}
 		break;
 	case VM_SIMV:
 	case VM_SIMVPSV:
 		{
-			pMessureData.m_iHFAmpl=TERMINAL_NOTVALID;
-			pMessureData.m_iTVEHFO=TERMINAL_NOTVALID;
-			pMessureData.m_iDCO2=TERMINAL_NOTVALID;
+			pMessureData.m_iHFAmpl= (WORD) TERMINAL_NOTVALID;
+			pMessureData.m_iTVEHFO= (WORD) TERMINAL_NOTVALID;
+			pMessureData.m_iDCO2= (WORD) TERMINAL_NOTVALID;
 			iHFFreq=TERMINAL_NOTVALID;
 		}
 		break;
 	case VM_CPAP:
 		{
-			pMessureData.m_iHFAmpl=TERMINAL_NOTVALID;
-			pMessureData.m_iTVEHFO=TERMINAL_NOTVALID;
-			pMessureData.m_iDCO2=TERMINAL_NOTVALID;
+			pMessureData.m_iHFAmpl= (WORD) TERMINAL_NOTVALID;
+			pMessureData.m_iTVEHFO= (WORD) TERMINAL_NOTVALID;
+			pMessureData.m_iDCO2= (WORD) TERMINAL_NOTVALID;
 			iHFFreq=TERMINAL_NOTVALID;
-			pMessureData.m_iTrigVol=TERMINAL_NOTVALID; 
-			pMessureData.m_iTVEresp=TERMINAL_NOTVALID; 
-			pMessureData.m_iTVEpat=TERMINAL_NOTVALID; 
+			pMessureData.m_iTrigVol= (WORD) TERMINAL_NOTVALID; 
+			pMessureData.m_iTVEresp= (WORD) TERMINAL_NOTVALID; 
+			pMessureData.m_iTVEpat= (WORD) TERMINAL_NOTVALID; 
 			iPercent=TERMINAL_NOTVALID; 
 		}
 		break;
 	case VM_DUOPAP:
 		{
-			pMessureData.m_iHFAmpl=TERMINAL_NOTVALID;
-			pMessureData.m_iTVEHFO=TERMINAL_NOTVALID;
-			pMessureData.m_iDCO2=TERMINAL_NOTVALID;
+			pMessureData.m_iHFAmpl= (WORD) TERMINAL_NOTVALID;
+			pMessureData.m_iTVEHFO= (WORD) TERMINAL_NOTVALID;
+			pMessureData.m_iDCO2= (WORD) TERMINAL_NOTVALID;
 			iHFFreq=TERMINAL_NOTVALID;
-			pMessureData.m_iTrigVol=TERMINAL_NOTVALID; 
-			pMessureData.m_iTVEresp=TERMINAL_NOTVALID; 
-			pMessureData.m_iTVEpat=TERMINAL_NOTVALID; 
+			pMessureData.m_iTrigVol= (WORD) TERMINAL_NOTVALID; 
+			pMessureData.m_iTVEresp= (WORD) TERMINAL_NOTVALID; 
+			pMessureData.m_iTVEpat= (WORD) TERMINAL_NOTVALID; 
 			iPercent=TERMINAL_NOTVALID; 
 		}
 		break;
 	case VM_NCPAP:
 		{
-			pMessureData.m_iHFAmpl=TERMINAL_NOTVALID;
-			pMessureData.m_iTVEHFO=TERMINAL_NOTVALID;
-			pMessureData.m_iDCO2=TERMINAL_NOTVALID;
+			pMessureData.m_iHFAmpl= (WORD) TERMINAL_NOTVALID;
+			pMessureData.m_iTVEHFO= (WORD) TERMINAL_NOTVALID;
+			pMessureData.m_iDCO2= (WORD) TERMINAL_NOTVALID;
 			iHFFreq=TERMINAL_NOTVALID;
-			pMessureData.m_iTrigVol=TERMINAL_NOTVALID; 
-			pMessureData.m_iTVEresp=TERMINAL_NOTVALID; 
-			pMessureData.m_iTVEpat=TERMINAL_NOTVALID; 
+			pMessureData.m_iTrigVol= (WORD) TERMINAL_NOTVALID; 
+			pMessureData.m_iTVEresp= (WORD) TERMINAL_NOTVALID; 
+			pMessureData.m_iTVEpat= (WORD) TERMINAL_NOTVALID; 
 			iPercent=TERMINAL_NOTVALID; 
 		}
 		break;
 	case VM_THERAPIE:
 		{
-			pMessureData.m_iHFAmpl=TERMINAL_NOTVALID;
-			pMessureData.m_iTVEHFO=TERMINAL_NOTVALID;
-			pMessureData.m_iDCO2=TERMINAL_NOTVALID;
+			pMessureData.m_iHFAmpl= (WORD) TERMINAL_NOTVALID;
+			pMessureData.m_iTVEHFO= (WORD) TERMINAL_NOTVALID;
+			pMessureData.m_iDCO2= (WORD) TERMINAL_NOTVALID;
 			iHFFreq=TERMINAL_NOTVALID;
-			pMessureData.m_iTrigVol=TERMINAL_NOTVALID; 
-			pMessureData.m_iTVEresp=TERMINAL_NOTVALID; 
-			pMessureData.m_iTVEpat=TERMINAL_NOTVALID; 
+			pMessureData.m_iTrigVol= (WORD) TERMINAL_NOTVALID; 
+			pMessureData.m_iTVEresp= (WORD) TERMINAL_NOTVALID; 
+			pMessureData.m_iTVEpat= (WORD) TERMINAL_NOTVALID; 
 			iPercent=TERMINAL_NOTVALID; 
 		}
 		break;
@@ -1533,11 +1533,11 @@ void CInterfaceTerminalRemote::sendMessurementData()
 		{
 			iBPMco2=TERMINAL_NOTVALID;
 			iBPM=TERMINAL_NOTVALID;
-			pMessureData.m_iTrigVol=TERMINAL_NOTVALID; 
+			pMessureData.m_iTrigVol= (WORD) TERMINAL_NOTVALID; 
 			iPercent=TERMINAL_NOTVALID; 
-			pMessureData.m_iTVE =TERMINAL_NOTVALID;
-			pMessureData.m_iTVEresp=TERMINAL_NOTVALID; 
-			pMessureData.m_iTVEpat=TERMINAL_NOTVALID; 
+			pMessureData.m_iTVE = (WORD) TERMINAL_NOTVALID;
+			pMessureData.m_iTVEresp= (WORD) TERMINAL_NOTVALID; 
+			pMessureData.m_iTVEpat= (WORD) TERMINAL_NOTVALID; 
 			pMessureData.m_iPEEP =TERMINAL_NOTVALID;
 		}
 		break;

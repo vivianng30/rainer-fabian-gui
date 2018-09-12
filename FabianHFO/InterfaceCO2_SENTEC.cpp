@@ -98,7 +98,7 @@ int CInterfaceCO2_SENTEC::Deinit()
 	getModel()->getDATAHANDLER()->setMessureDataAVG(ALINK_MSMNT_ETCO2,m_iETCO2);
 	getModel()->getDATAHANDLER()->setMessureDataAVG(ALINK_MSMNT_FICO2,m_iFICO2);
 
-	StopListener(-1);
+	StopListener(INFINITE);
 	Close();
 
 	if (getModel()->getAcuLink()==NULL)

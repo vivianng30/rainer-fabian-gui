@@ -131,7 +131,7 @@ void CInterfaceCO2_MICROPOD::turnOff()
 	stopETCO2checkThread();
 	stopETCO2Thread();
 	
-	StopListener(-1);
+	StopListener(INFINITE);
 	Close();
 }
 
@@ -253,7 +253,7 @@ int CInterfaceCO2_MICROPOD::Deinit()
 	getModel()->getDATAHANDLER()->setMessureDataAVG(ALINK_MSMNT_ETCO2,m_iETCO2);
 	getModel()->getDATAHANDLER()->setMessureDataAVG(ALINK_MSMNT_FICO2,m_iFICO2);
 	
-	StopListener(-1);
+	StopListener(INFINITE);
 	Close();
 	
 	if (getModel()->getAcuLink()!=NULL)

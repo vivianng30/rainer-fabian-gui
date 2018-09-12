@@ -282,7 +282,7 @@ bool CInterfaceTerminal::Deinit()
 		}
 	}
 
-	StopListener(-1);
+	StopListener(INFINITE);
 	Close();
 
 	DeleteCriticalSection(&csEnableSend);

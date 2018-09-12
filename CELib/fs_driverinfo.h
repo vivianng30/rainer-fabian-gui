@@ -55,7 +55,7 @@ typedef struct tagDRIVER_INFO
 // DeviceIoControl( hDIO, IOCTL_DRIVER_GETINFO, 
 //                  NULL, 0, 
 //                  &cInfo, sizeof(DRIVER_INFO), NULL );
-#define IOCTL_DRIVER_GETINFO CTL_CODE(FILE_DEVICE_FSDRIVER, 1, METHOD_BUFFERED, FILE_ANY_ACCESS)
+#define IOCTL_DRIVER_GETINFO (DWORD) CTL_CODE(FILE_DEVICE_FSDRIVER, 1, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
 
 #ifdef __cplusplus

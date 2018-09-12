@@ -95,7 +95,7 @@ CInterfaceCOMport::~CInterfaceCOMport(void)
 		}
 	}
 
-	StopListener(-1);
+	StopListener(INFINITE);
 	Close();
 
 	DeleteCriticalSection(&csMSGSendCOM);

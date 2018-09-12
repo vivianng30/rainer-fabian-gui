@@ -92,7 +92,7 @@ extern "C" {
 //    DeviceIoControl( hDIO, IOCTL_DIO_SET_PIN, 
 //                     &chPin, sizeof(BYTE), 
 //                     NULL, 0, NULL );
-#define IOCTL_DIO_SET_PIN CTL_CODE(FILE_DEVICE_DIO, 60, METHOD_BUFFERED, FILE_ANY_ACCESS)
+#define IOCTL_DIO_SET_PIN (DWORD) CTL_CODE(FILE_DEVICE_DIO, 60, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
 // IOCTL_DIO_CLR_PIN
 //
@@ -100,7 +100,7 @@ extern "C" {
 //    DeviceIoControl( hDIO, IOCTL_DIO_CLR_PIN, 
 //                     &chPin, sizeof(BYTE), 
 //                     NULL, 0, NULL );
-#define IOCTL_DIO_GET_PIN CTL_CODE(FILE_DEVICE_DIO, 61, METHOD_BUFFERED, FILE_ANY_ACCESS)
+#define IOCTL_DIO_GET_PIN (DWORD) CTL_CODE(FILE_DEVICE_DIO, 61, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
 // IOCTL_DIO_CLR_PIN
 //
@@ -109,7 +109,7 @@ extern "C" {
 //    DeviceIoControl( hDIO, IOCTL_DIO_SET_PIN, 
 //                     &chPin, sizeof(BYTE), 
 //                     &chReturn, sizeof(BYTE), NULL );
-#define IOCTL_DIO_CLR_PIN CTL_CODE(FILE_DEVICE_DIO, 62, METHOD_BUFFERED, FILE_ANY_ACCESS)
+#define IOCTL_DIO_CLR_PIN (DWORD) CTL_CODE(FILE_DEVICE_DIO, 62, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
 
 // IOCTL_DIO_REINIT:

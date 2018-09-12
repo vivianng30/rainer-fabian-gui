@@ -181,7 +181,7 @@ int CInterfaceMasimoSPO2::Deinit(bool bReinit)
 	m_bProcessing=false;
 	m_bSensorConnectedToUSB=false;
 	
-	StopListener(-1);
+	StopListener(INFINITE);
 
 	/*DWORD dwEnd=GetTickCount();
 	DEBUGMSG(TRUE, (TEXT("CInterfaceMasimoSPO2::Deinit1 %d\r\n"),dwEnd-dwStart));*/

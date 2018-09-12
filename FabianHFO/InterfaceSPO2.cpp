@@ -113,7 +113,7 @@ CInterfaceSPO2::~CInterfaceSPO2(void)
 		}
 	}
 
-	StopListener(-1);
+	StopListener(INFINITE);
 	Close();
 
 	DeleteCriticalSection(&csMSGSendSPO2);
