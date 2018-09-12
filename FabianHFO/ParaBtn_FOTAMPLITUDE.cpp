@@ -62,7 +62,6 @@ void CParaBtn_FOTAMPLITUDE::Draw(int nState)
 {
 	if(!m_bDisableText)
 	{
-		CDC::FromHandle(m_hDC);
 		HFONT hPrevFont=(HFONT)SelectObject(m_hDC,g_hf31AcuBoldNum);
 		int nBkMode=SetBkMode(m_hDC,TRANSPARENT);
 		int nTxtColor;

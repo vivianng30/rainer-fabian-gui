@@ -9532,8 +9532,6 @@ DWORD CMainFrame::CheckOxyCal(void)
 				if(m_bDelayAutoOxyCal)
 					break;
 
-				getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_AIR->getAlarmState();
-				getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_O2->getAlarmState();
 				if(		getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_O2->getAlarmState()==AS_ACTIVE
 					||	getModel()->getALARMHANDLER()->ALARM_SysAl_P_IN_AIR->getAlarmState()==AS_ACTIVE)
 				{

@@ -2411,8 +2411,6 @@ void CWndDataFOT::DrawStatic()
 {
 	//RECT rc;
 
-	CDC::FromHandle(m_hdcStatic);
-
 	CBrush cbrBack(BACKGND);
 	CBrush cbrLightGrey(LIGHTGREY);
 	CBrush cbrYellow(NUMERIC);

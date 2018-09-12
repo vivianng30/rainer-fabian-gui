@@ -66,7 +66,6 @@ void CParaBtn_HFAMPL::Draw(int nState)
 	{
 		//if(g_hf31AcuBold )
 		{
-			CDC::FromHandle(m_hDC);
 			HFONT hPrevFont=(HFONT)SelectObject(m_hDC,g_hf31AcuBoldNum);
 			int nBkMode=SetBkMode(m_hDC,TRANSPARENT);
 			int nTxtColor;
