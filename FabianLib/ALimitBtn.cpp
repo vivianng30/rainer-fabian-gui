@@ -963,7 +963,6 @@ void CALimitBtn::OnLButtonUp(UINT nFlags, CPoint point)
 				m_ePrevstate = m_bAlarmLimitState;
 				m_iPrevValue=m_v.iCurrentLimit;
 			}
-			//m_bDepressed = !m_bDepressed; //rku_FBN44
 		}
 		CButton::OnLButtonUp(nFlags, point);
 	}
@@ -1006,7 +1005,6 @@ void CALimitBtn::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 				m_ePrevstate = m_bAlarmLimitState;
 				m_iPrevValue=m_v.iCurrentLimit;
 			}
-			//m_bDepressed = !m_bDepressed; //rku_FBN44
 			
 		}
 		CButton::OnKeyDown(nChar,nRepCnt,nFlags);
