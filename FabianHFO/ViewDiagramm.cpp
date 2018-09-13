@@ -11708,7 +11708,7 @@ void CViewDiagramm::redrawPressureVolumeLoop()
 		return;
 
 	EnterCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
-	int iSize=getModel()->getDATAHANDLER()->m_rbufCopy.getCount();
+	UINT iSize=getModel()->getDATAHANDLER()->m_rbufCopy.getCount();
 	if(iSize==0)
 	{
 		LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
@@ -11859,7 +11859,7 @@ void CViewDiagramm::redrawVolumeFlowLoop()
 		return;
 
 	EnterCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);
-	int iSize=getModel()->getDATAHANDLER()->m_rbufCopy.getCount();
+	UINT iSize=getModel()->getDATAHANDLER()->m_rbufCopy.getCount();
 	if(iSize==0)
 	{
 		LeaveCriticalSection(&getModel()->getDATAHANDLER()->csCopyDataBuffer);

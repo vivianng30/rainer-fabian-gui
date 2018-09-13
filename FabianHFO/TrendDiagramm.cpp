@@ -1856,12 +1856,12 @@ void CTrendDiagramm::DrawTrendCursor(bool bClear)
 	if(bClear)
 	{
 		BitBlt(dc.m_hDC, 0, 0, m_iGraphWidth,m_iGraphHeight, m_hdcGraph, 0, 0, SRCCOPY);
-		if(iPos<m_lmargin+50)
+		if(iPos<(int)m_lmargin+50)
 			iPosRectLeft=m_lmargin;
 		else
 			iPosRectLeft=iPos-50;
 	}
-	else if(iPos<m_lmargin+50)
+	else if(iPos<(int)m_lmargin+50)
 	{
 		BitBlt(dc.m_hDC, m_lmargin, 0, 80,m_iGraphHeight, m_hdcGraph, m_lmargin, 0, SRCCOPY);
 		iPosRectLeft=m_lmargin;

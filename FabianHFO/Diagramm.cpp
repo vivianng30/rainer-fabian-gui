@@ -1956,11 +1956,11 @@ void CDiagramm::DrawTicks(CDC* pDC)
 	int iYpixelsTop=Graphbottom-m_tmargin-m_iOriginY;
 	while(GridSpacing*n<iYpixelsTop)
 	{
-		pDC->MoveTo(xPoint,Graphbottom-m_iOriginY-(n*GridSpacing));
+		pDC->MoveTo(xPoint,Graphbottom-m_iOriginY-(int)(n*GridSpacing));
 		//do left side tick
-		pDC->LineTo(xPoint-ylefttick,Graphbottom-m_iOriginY-(n*GridSpacing));
+		pDC->LineTo(xPoint-ylefttick,Graphbottom-m_iOriginY-(int)(n*GridSpacing));
 		//do rightside tick
-		pDC->LineTo(xPoint+yrighttick,Graphbottom-m_iOriginY-(n*GridSpacing));
+		pDC->LineTo(xPoint+yrighttick,Graphbottom-m_iOriginY-(int)(n*GridSpacing));
 		n++;
 	}
 	//draw negative yticks
@@ -1968,11 +1968,11 @@ void CDiagramm::DrawTicks(CDC* pDC)
 	n=1;
 	while(GridSpacing*n<iYpixelsBottom)
 	{
-		pDC->MoveTo(xPoint,Graphbottom-m_iOriginY+(n*GridSpacing));
+		pDC->MoveTo(xPoint,Graphbottom-m_iOriginY+(int)(n*GridSpacing));
 		//do left side tick
-		pDC->LineTo(xPoint-ylefttick,Graphbottom-m_iOriginY+(n*GridSpacing));
+		pDC->LineTo(xPoint-ylefttick,Graphbottom-m_iOriginY+(int)(n*GridSpacing));
 		//do rightside tick
-		pDC->LineTo(xPoint+yrighttick,(int)(Graphbottom-m_iOriginY+(n*GridSpacing)));
+		pDC->LineTo(xPoint+yrighttick,(int)(Graphbottom-m_iOriginY+(int)(n*GridSpacing)));
 		n++;
 	}
 
@@ -2344,7 +2344,7 @@ double CDiagramm::CalculateYAxisTickGridSpace()
 		break;
 	case FOT_LOOP://rku, check FOTGRAPH
 		{
-			double dSpan=abs(m_dYAxisMax-m_dYAxisMin);
+			double dSpan=fabs(m_dYAxisMax-m_dYAxisMin);
 
 			if(dSpan>=300)
 				result=50;
@@ -3128,7 +3128,7 @@ void CDiagramm::DrawXAxisNumbers(CDC* pDC)
 	//top or bottom of the dataarea
 	int n=0;
 	////draw positive xticks
-	UINT Graphright=m_iGraphX+m_iGraphWidth;
+	LONG Graphright=m_iGraphX+m_iGraphWidth;
 	int iXpixelsRight=Graphright-m_rmargin-m_iOriginX;
 
 	switch(m_iDiagrammType)
@@ -4904,7 +4904,7 @@ void CDiagramm::RefreshLineChart()
 	}
 
 	poldpenDC=dc.SelectObject(&cursorpen);
-	if(iXleft+iWidth+3<(m_iGraphX+m_iGraphWidth-m_rmargin))
+	if(iXleft+iWidth+3<(int)(m_iGraphX+m_iGraphWidth-m_rmargin))
 	{
 		MoveToEx(dc.m_hDC, iXleft+iWidth+3, m_iGraphHeight-1, NULL);
 		LineTo(dc.m_hDC, iXleft+iWidth+3, 1);
@@ -5349,7 +5349,7 @@ void CDiagramm::RefreshFilledChart()
 	}
 
 	poldpenDC=dc.SelectObject(&cursorpen);
-	if(iXleft+iWidth+3<(m_iGraphX+m_iGraphWidth-m_rmargin))
+	if(iXleft+iWidth+3<(int)(m_iGraphX+m_iGraphWidth-m_rmargin))
 	{
 		MoveToEx(dc.m_hDC, iXleft+iWidth+3, m_iGraphHeight-1, NULL);
 		LineTo(dc.m_hDC, iXleft+iWidth+3, 1);
@@ -9973,7 +9973,7 @@ void CDiagramm::DrawConnectLine(CPoint *pts, int iSize)
 	}
 
 	poldpenDC=dc.SelectObject(&cursorpen);
-	if(iXleft+iWidth+3<(m_iGraphX+m_iGraphWidth-m_rmargin))
+	if(iXleft+iWidth+3<(int)(m_iGraphX+m_iGraphWidth-m_rmargin))
 	{
 		MoveToEx(dc.m_hDC, iXleft+iWidth+3, m_iGraphHeight-1, NULL);
 		LineTo(dc.m_hDC, iXleft+iWidth+3, 1);
@@ -10229,7 +10229,7 @@ void CDiagramm::DrawFilledLine(CPoint *pts, int iSize)
 
 	poldpenDC=dc.SelectObject(&cursorpen);
 
-	if(iXleft+iWidth+3<(m_iGraphX+m_iGraphWidth-m_rmargin))
+	if(iXleft+iWidth+3<(int)(m_iGraphX+m_iGraphWidth-m_rmargin))
 	{
 		MoveToEx(dc.m_hDC, iXleft+iWidth+3, m_iGraphHeight-1, NULL);
 		LineTo(dc.m_hDC, iXleft+iWidth+3, 1);

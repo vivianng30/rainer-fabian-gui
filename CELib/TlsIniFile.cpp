@@ -85,7 +85,7 @@ bool CTlsIniFile::Close()
 
 bool CTlsIniFile::ReadIniGroup( FILE *fiPtr, CStringW sGroup) 
 { 
-	int i, j; 
+	unsigned int i, j; 
 	char buf[ 256 ]; 
 	char lName[ 256 ]; 
 	CStringW sCurrGroup;

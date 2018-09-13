@@ -921,8 +921,8 @@ void CThreadPRICO::setMeasuredSpO2Value(SHORT iValue)
 	BOOL bSetFlag=FALSE;
 	if(FALSE==m_bSPO2checkFlag)
 	{
-		UINT iSpO2high= getHighSpO2PRICOlimit()*10;
-		UINT iSpO2low= getLowSpO2PRICOlimit()*10;
+		int iSpO2high= getHighSpO2PRICOlimit()*10;
+		int iSpO2low= getLowSpO2PRICOlimit()*10;
 
 		if(m_iCurSpO2val>iSpO2high)
 		{
@@ -945,8 +945,8 @@ void CThreadPRICO::setMeasuredSpO2Value(SHORT iValue)
 	{
 		g_eventPRICO.SetEvent();
 
-		UINT iSpO2high= getHighSpO2PRICOlimit()*10;
-		UINT iSpO2low= getLowSpO2PRICOlimit()*10;
+		int iSpO2high= getHighSpO2PRICOlimit()*10;
+		int iSpO2low= getLowSpO2PRICOlimit()*10;
 
 		if(TRUE==m_bSPO2checkFlag && FALSE==bSetFlag && m_iCurSpO2val<=iSpO2high && m_iCurSpO2val>=iSpO2low)
 			m_bSPO2checkFlag=FALSE;

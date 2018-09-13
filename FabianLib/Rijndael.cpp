@@ -1393,9 +1393,10 @@ void CRijndael::Encrypt(char const* in, char* result, size_t n, int iMode)
 	int i;
 	char const* pin;
 	char* presult;
+	int num_blocks = (int)n / m_blockSize;
 	if(CBC == iMode) //CBC mode, using the Chain
 	{
-		for(i=0,pin=in,presult=result; i<n/m_blockSize; i++)
+		for(i=0,pin=in,presult=result; i<num_blocks; i++)
 		{
 			Xor(m_chain, pin);
 			EncryptBlock(m_chain, presult);
@@ -1406,7 +1407,7 @@ void CRijndael::Encrypt(char const* in, char* result, size_t n, int iMode)
 	}
 	else if(CFB == iMode) //CFB mode, using the Chain
 	{
-		for(i=0,pin=in,presult=result; i<n/m_blockSize; i++)
+		for(i=0,pin=in,presult=result; i<num_blocks; i++)
 		{
 			EncryptBlock(m_chain, presult);
 			Xor(presult, pin);
@@ -1417,7 +1418,7 @@ void CRijndael::Encrypt(char const* in, char* result, size_t n, int iMode)
 	}
 	else //ECB mode, not using the Chain
 	{
-		for(i=0,pin=in,presult=result; i<n/m_blockSize; i++)
+		for(i=0,pin=in,presult=result; i<num_blocks; i++)
 		{
 			EncryptBlock(pin, presult);
 			pin += m_blockSize;
@@ -1450,9 +1451,10 @@ void CRijndael::Decrypt(char const* in, char* result, size_t n, int iMode)
 	int i;
 	char const* pin;
 	char* presult;
+	int num_blocks = (int)n / m_blockSize;
 	if(CBC == iMode) //CBC mode, using the Chain
 	{
-		for(i=0,pin=in,presult=result; i<n/m_blockSize; i++)
+		for(i=0,pin=in,presult=result; i<num_blocks; i++)
 		{
 			DecryptBlock(pin, presult);
 			Xor(presult, m_chain);
@@ -1463,7 +1465,7 @@ void CRijndael::Decrypt(char const* in, char* result, size_t n, int iMode)
 	}
 	else if(CFB == iMode) //CFB mode, using the Chain, not using Decrypt()
 	{
-		for(i=0,pin=in,presult=result; i<n/m_blockSize; i++)
+		for(i=0,pin=in,presult=result; i<num_blocks; i++)
 		{
 			EncryptBlock(m_chain, presult);
 			//memcpy(presult, pin, m_blockSize);
@@ -1475,7 +1477,7 @@ void CRijndael::Decrypt(char const* in, char* result, size_t n, int iMode)
 	}
 	else //ECB mode, not using the Chain
 	{
-		for(i=0,pin=in,presult=result; i<n/m_blockSize; i++)
+        for(i=0,pin=in,presult=result; i<num_blocks; i++)
 		{
 			DecryptBlock(pin, presult);
 			pin += m_blockSize;

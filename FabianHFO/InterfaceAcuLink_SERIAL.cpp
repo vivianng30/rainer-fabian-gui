@@ -633,7 +633,7 @@ int CInterfaceAcuLink_SERIAL::setPoint( char *s, char *news, int nk )
 	}
 
 	j = 0;
-	if( strlen( s ) <=  nk )
+	if( strlen( s ) <=  (size_t)nk )
 	{
 		for( i = strlen( s ), j = 0; i < nk + 1; i++ )
 		{

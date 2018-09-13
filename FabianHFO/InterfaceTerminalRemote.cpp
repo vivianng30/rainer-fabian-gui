@@ -4013,7 +4013,7 @@ void CInterfaceTerminalRemote::setParam_BPM(WORD iVal)
 			}
 			else
 			{
-				getModel()->getDATAHANDLER()->SetCurrentBPMPara(fv.iValue);
+				getModel()->getDATAHANDLER()->SetCurrentBPMPara((WORD)fv.iValue);
 				getModel()->getDATAHANDLER()->CalculateETime_BPMChanged(fv.iValue, false);
 				if(AfxGetApp() != NULL)
 					AfxGetApp()->GetMainWnd()->PostMessage(WM_PARADATA_CHANGED);

@@ -506,7 +506,7 @@ BOOL CSubViewLanguage::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreate
 
 		if(m_iCurSelectedPos>MAXLANG)
 		{
-			UINT diff=m_iCurSelectedPos-MAXLANG;
+			int diff=m_iCurSelectedPos-MAXLANG;
 			for(int i=0;i<diff;i++)
 				ReorganizeBtns(true);
 		}
