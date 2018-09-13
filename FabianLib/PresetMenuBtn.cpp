@@ -424,7 +424,7 @@ void CPresetMenuBtn::RefreshText(TCHAR* pszText,/*TCHAR* pszTextDown,*/int nNbr)
  * \param 		  	nNbr   	Number of.
  **************************************************************************************************/
 
-void CPresetMenuBtn::SetText(CStringW& pszText,/*CStringW& pszTextDown,*/int nNbr) 
+void CPresetMenuBtn::SetText(const CStringW& pszText,/*CStringW& pszTextDown,*/int nNbr) 
 {
 	_tcscpy(m_pszText,pszText);
 	//_tcscpy(m_pszTextDown,pszTextDown);
@@ -442,7 +442,7 @@ void CPresetMenuBtn::SetText(CStringW& pszText,/*CStringW& pszTextDown,*/int nNb
  * \param 		  	nNbr   	Number of.
  **************************************************************************************************/
 
-void CPresetMenuBtn::RefreshText(CStringW& pszText,/*CStringW& pszTextDown,*/int nNbr) 
+void CPresetMenuBtn::RefreshText(const CStringW& pszText,/*CStringW& pszTextDown,*/int nNbr) 
 {
 	SetText(pszText,/*pszTextDown,*/nNbr);
 	Invalidate();
@@ -460,7 +460,7 @@ void CPresetMenuBtn::RefreshText(CStringW& pszText,/*CStringW& pszTextDown,*/int
  * \param 		  	nNbr		 	Number of.
  **************************************************************************************************/
 
-void CPresetMenuBtn::SetTextTwoLines(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr)
+void CPresetMenuBtn::SetTextTwoLines(const CStringW& pszTextTop,const CStringW& pszTextBottom,int nNbr)
 {
 	_tcscpy_s(m_pszTextTop,_countof(m_pszText),pszTextTop);
 	_tcscpy_s(m_pszTextBottom,_countof(m_pszText),pszTextBottom);
@@ -479,7 +479,7 @@ void CPresetMenuBtn::SetTextTwoLines(CStringW& pszTextTop,CStringW& pszTextBotto
  * \param 		  	nNbr		 	Number of.
  **************************************************************************************************/
 
-void CPresetMenuBtn::RefreshTextTwoLines(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr)
+void CPresetMenuBtn::RefreshTextTwoLines(const CStringW& pszTextTop,const CStringW& pszTextBottom,int nNbr)
 {
 	SetTextTwoLines(pszTextTop,pszTextBottom,nNbr);
 	Invalidate();

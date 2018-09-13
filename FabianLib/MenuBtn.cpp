@@ -436,7 +436,7 @@ void CMenuBtn::RefreshText(TCHAR* pszText,TCHAR* pszTextDown,int nNbr)
  * \param 		  	nNbr	   	Number of.
  **************************************************************************************************/
 
-void CMenuBtn::SetText(CStringW& pszText,CStringW& pszTextDown,int nNbr) 
+void CMenuBtn::SetText(const CStringW& pszText,const CStringW& pszTextDown,int nNbr) 
 {
 	_tcscpy(m_pszText,pszText);
 	_tcscpy(m_pszTextDown,pszTextDown);
@@ -454,7 +454,7 @@ void CMenuBtn::SetText(CStringW& pszText,CStringW& pszTextDown,int nNbr)
  * \param 		  	nNbr	   	Number of.
  **************************************************************************************************/
 
-void CMenuBtn::RefreshText(CStringW& pszText,CStringW& pszTextDown,int nNbr) 
+void CMenuBtn::RefreshText(const CStringW& pszText,const CStringW& pszTextDown,int nNbr) 
 {
 	SetText(pszText,pszTextDown,nNbr);
 	Invalidate();

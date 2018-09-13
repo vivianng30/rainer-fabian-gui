@@ -26,8 +26,8 @@ public:
 	void DrawDirectUp(void);
 	virtual void SetText(TCHAR* pszText,TCHAR* pszTextDown,int nNbr=-1);
 	void RefreshText(TCHAR* pszText,TCHAR* pszTextDown,int nNbr=-1);
-	void SetText(CStringW& pszText,CStringW& pszTextDown,int nNbr=-1);
-	void RefreshText(CStringW& pszText,CStringW& pszTextDown,int nNbr=-1);
+	void SetText(const CStringW& pszText,const CStringW& pszTextDown,int nNbr=-1);
+	void RefreshText(const CStringW& pszText,const CStringW& pszTextDown,int nNbr=-1);
 	//inline void SetFocusDownBmp(CBmp* pcBmpFocusDown){m_pcBmpFocusDown=pcBmpFocusDown;};
 
 	int GetBtnId();

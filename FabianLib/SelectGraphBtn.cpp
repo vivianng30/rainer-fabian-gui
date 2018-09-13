@@ -159,7 +159,7 @@ void CSelectGraphBtn::SetText(TCHAR* pszText, int nNbr)
  * \param 		  	nNbr  	Number of.
  **************************************************************************************************/
 
-void CSelectGraphBtn::SetText(CStringW& szText, int nNbr) 
+void CSelectGraphBtn::SetText(const CStringW& szText, int nNbr) 
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),szText);
 	m_nNbr=nNbr;
@@ -175,7 +175,7 @@ void CSelectGraphBtn::SetText(CStringW& szText, int nNbr)
  * \param 		  	nNbr  	Number of.
  **************************************************************************************************/
 
-void CSelectGraphBtn::RefreshText(CStringW& szText, int nNbr) 
+void CSelectGraphBtn::RefreshText(const CStringW& szText, int nNbr) 
 {
 	SetText(szText,nNbr);
 	Invalidate();

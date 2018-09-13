@@ -423,7 +423,7 @@ void CSelectSetupBtn::SetText(TCHAR* pszText, int nNbr)
  * \param 		  	nNbr  	Number of.
  **************************************************************************************************/
 
-void CSelectSetupBtn::SetText(CStringW& szText, int nNbr) 
+void CSelectSetupBtn::SetText(const CStringW& szText, int nNbr) 
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),szText);
 	m_nNbr=nNbr;
@@ -455,7 +455,7 @@ void CSelectSetupBtn::SetValueText(TCHAR* pszText, int nNbr)
  * \param 		  	nNbr  	Number of.
  **************************************************************************************************/
 
-void CSelectSetupBtn::SetValueText(CStringW& szText, int nNbr) 
+void CSelectSetupBtn::SetValueText(const CStringW& szText, int nNbr) 
 {
 	_tcscpy_s(m_pszValueText,_countof(m_pszValueText),szText);
 	m_nNbr=nNbr;
@@ -471,7 +471,7 @@ void CSelectSetupBtn::SetValueText(CStringW& szText, int nNbr)
  * \param 		  	nNbr  	Number of.
  **************************************************************************************************/
 
-void CSelectSetupBtn::RefreshText(CStringW& szText, int nNbr) 
+void CSelectSetupBtn::RefreshText(const CStringW& szText, int nNbr) 
 {
 	SetText(szText,nNbr);
 	Invalidate();
@@ -505,7 +505,7 @@ void CSelectSetupBtn::RefreshText(TCHAR* pszText, int nNbr)
  * \param 		  	nNbr  	Number of.
  **************************************************************************************************/
 
-void CSelectSetupBtn::RefreshValueText(CStringW& szText, int nNbr) 
+void CSelectSetupBtn::RefreshValueText(const CStringW& szText, int nNbr) 
 {
 	SetValueText(szText,nNbr);
 	Invalidate();

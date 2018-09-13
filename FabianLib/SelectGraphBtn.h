@@ -32,8 +32,8 @@ public:
 	inline void SetButtonColors(BTNCOLORS* pbtncr){memcpy(&m_btncr,pbtncr,sizeof(BTNCOLORS));};
 
 	void SetText(TCHAR* pszText, int nNbr=-1);
-	void SetText(CStringW& szText, int nNbr=-1);
-	void RefreshText(CStringW& szText, int nNbr=-1);
+	void SetText(const CStringW& szText, int nNbr=-1);
+	void RefreshText(const CStringW& szText, int nNbr=-1);
 	void RefreshText(TCHAR* pszText, int nNbr=-1);
 	void SetChar(TCHAR t);
 

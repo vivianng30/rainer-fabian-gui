@@ -251,7 +251,7 @@ void CAlarmBtn::SetText(const CStringW& szText, int nNbr,bool bRefresh)
  * \param 		  	nNbr  	Number of.
  **************************************************************************************************/
 
-void CAlarmBtn::RefreshText(CStringW& szText, int nNbr) 
+void CAlarmBtn::RefreshText(const CStringW& szText, int nNbr) 
 {
 	SetText(szText,nNbr);
 	Invalidate();

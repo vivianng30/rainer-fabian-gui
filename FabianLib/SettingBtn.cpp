@@ -330,7 +330,7 @@ void CSettingBtn::SetText(TCHAR* pszText, int nNbr)
  * \param 		  	nNbr  	Number of.
  **************************************************************************************************/
 
-void CSettingBtn::SetText(CStringW& szText, int nNbr) 
+void CSettingBtn::SetText(const CStringW& szText, int nNbr) 
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),szText);
 	m_nNbr=nNbr;
@@ -378,7 +378,7 @@ void CSettingBtn::SetValueText(CStringW& szText, int nNbr)
  * \param 		  	nNbr  	Number of.
  **************************************************************************************************/
 
-void CSettingBtn::RefreshText(CStringW& szText, int nNbr) 
+void CSettingBtn::RefreshText(const CStringW& szText, int nNbr) 
 {
 	SetText(szText,nNbr);
 	Invalidate();

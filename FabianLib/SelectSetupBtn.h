@@ -41,12 +41,12 @@ public:
 	void ReplaceFont(HFONT hFont);
 
 	void SetText(TCHAR* pszText, int nNbr=-1);
-	void SetText(CStringW& szText, int nNbr=-1);
+	void SetText(const CStringW& szText, int nNbr=-1);
 	void SetValueText(TCHAR* pszText, int nNbr=-1);
-	void SetValueText(CStringW& szText, int nNbr=-1);
-	void RefreshText(CStringW& szText, int nNbr=-1);
+	void SetValueText(const CStringW& szText, int nNbr=-1);
+	void RefreshText(const CStringW& szText, int nNbr=-1);
 	void RefreshValueText(TCHAR* pszText, int nNbr=-1);
-	void RefreshValueText(CStringW& szText, int nNbr=-1);
+	void RefreshValueText(const CStringW& szText, int nNbr=-1);
 	void RefreshText(TCHAR* pszText, int nNbr=-1);
 	void SetChar(TCHAR t);
 	void SetState(eBtnState state);

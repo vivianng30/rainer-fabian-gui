@@ -627,7 +627,7 @@ void CSubViewCalOxySensor::Show(BOOL bShow)
  * \param 		  	bTwoLines 	True to two lines.
  **************************************************************************************************/
 
-void CSubViewCalOxySensor::SetO2SensorText(CStringW& pszTextTop,CStringW& pszTextBot,bool bTwoLines)
+void CSubViewCalOxySensor::SetO2SensorText(const CStringW& pszTextTop,const CStringW& pszTextBot,bool bTwoLines)
 {
 	EnterCriticalSection(&csOxy);
 	_tcscpy_s(m_pszTextO2SensorTop,_countof(m_pszTextO2SensorTop),pszTextTop);

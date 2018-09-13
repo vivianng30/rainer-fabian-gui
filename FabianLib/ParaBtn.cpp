@@ -1430,7 +1430,7 @@ void CParaBtn::SetNameText(TCHAR* pszText, bool bRefresh)
  * \param 		  	bRefresh	True to refresh.
  **************************************************************************************************/
 
-void CParaBtn::SetNameText(CStringW& szText, bool bRefresh)
+void CParaBtn::SetNameText(const CStringW& szText, bool bRefresh)
 {
 	_tcscpy_s(m_pszNameText,_countof(m_pszNameText),szText);
 	if(bRefresh)
@@ -1469,7 +1469,7 @@ void CParaBtn::SetNameNoteText(TCHAR* pszText, bool bRefresh)
  * \param 		  	bRefresh	True to refresh.
  **************************************************************************************************/
 
-void CParaBtn::SetNameNoteText(CStringW& szText, bool bRefresh)
+void CParaBtn::SetNameNoteText(const CStringW& szText, bool bRefresh)
 {
 	_tcscpy_s(m_pszNameNoteText,_countof(m_pszNameNoteText),szText);
 
@@ -1502,7 +1502,7 @@ void CParaBtn::SetUnitText(TCHAR* pszText)
  * \param [in,out]	szText	The text.
  **************************************************************************************************/
 
-void CParaBtn::SetUnitText(CStringW& szText)
+void CParaBtn::SetUnitText(const CStringW& szText)
 {
 	_tcscpy_s(m_pszUnitText,_countof(m_pszUnitText),szText);
 }

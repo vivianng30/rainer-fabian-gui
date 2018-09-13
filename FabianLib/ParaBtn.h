@@ -60,11 +60,11 @@ public:
 	virtual void SetValueText(TCHAR* pszText,bool bTextOnly=false);
 	virtual void SetValueText(CStringW& szText,bool bTextOnly=false);
 	virtual void SetNameText(TCHAR* pszText, bool bRefresh=false);
-	virtual void SetNameText(CStringW& szText, bool bRefresh=false);
+	virtual void SetNameText(const CStringW& szText, bool bRefresh=false);
 	virtual void SetNameNoteText(TCHAR* pszText, bool bRefresh=false);
-	virtual void SetNameNoteText(CStringW& szText, bool bRefresh=false);
+	virtual void SetNameNoteText(const CStringW& szText, bool bRefresh=false);
 	virtual void SetUnitText(TCHAR* pszText);
-	virtual void SetUnitText(CStringW& szText);
+	virtual void SetUnitText(const CStringW& szText);
 	virtual void RefreshValueText(CStringW& szText,bool bTextOnly=false);
 	virtual void RefreshBtn();
 	virtual void RefreshBtnState();

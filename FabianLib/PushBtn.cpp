@@ -189,7 +189,7 @@ void CPushBtn::RefreshText(TCHAR* pszTextTop,TCHAR* pszTextBottom,int nNbr)
  * \param 		  	nNbr		 	Number of.
  **************************************************************************************************/
 
-void CPushBtn::SetText(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr)
+void CPushBtn::SetText(const CStringW& pszTextTop,const CStringW& pszTextBottom,int nNbr)
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),pszTextTop);
 	_tcscpy_s(m_pszTextTop,_countof(m_pszTextTop),pszTextTop);
@@ -208,7 +208,7 @@ void CPushBtn::SetText(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr)
  * \param 		  	nNbr		 	Number of.
  **************************************************************************************************/
 
-void CPushBtn::RefreshText(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr)
+void CPushBtn::RefreshText(const CStringW& pszTextTop,const CStringW& pszTextBottom,int nNbr)
 {
 	SetText(pszTextTop,pszTextBottom,nNbr);
 	Invalidate();
@@ -241,7 +241,7 @@ void CPushBtn::SetText(TCHAR* pszText, int nNbr)
  * \param 		  	nNbr  	Number of.
  **************************************************************************************************/
 
-void CPushBtn::SetText(CStringW& szText, int nNbr) 
+void CPushBtn::SetText(const CStringW& szText, int nNbr) 
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),szText);
 	m_nNbr=nNbr;
@@ -257,7 +257,7 @@ void CPushBtn::SetText(CStringW& szText, int nNbr)
  * \param 		  	nNbr  	Number of.
  **************************************************************************************************/
 
-void CPushBtn::RefreshText(CStringW& szText, int nNbr) 
+void CPushBtn::RefreshText(const CStringW& szText, int nNbr) 
 {
 	SetText(szText,nNbr);
 	Invalidate();

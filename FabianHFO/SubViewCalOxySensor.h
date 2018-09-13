@@ -33,7 +33,7 @@ public:
 	void EnableOnOFF(BOOL state);
 
 	void DrawO2Sensor(bool bStatic=false, bool bText=false);
-	void SetO2SensorText(CStringW& pszTextTop,CStringW& pszTextBot,bool bTwoLines);
+	void SetO2SensorText(const CStringW& pszTextTop,const CStringW& pszTextBot,bool bTwoLines);
 	void SetO2SensorValue(int val);
 	void RefreshO2SensorValue(int val);
 

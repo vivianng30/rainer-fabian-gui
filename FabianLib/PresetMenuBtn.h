@@ -33,10 +33,10 @@ public:
 	//void DrawDirectPreset(void);
 	virtual void SetText(TCHAR* pszText,/*TCHAR* pszTextDown,*/int nNbr=-1);
 	void RefreshText(TCHAR* pszText,/*TCHAR* pszTextDown,*/int nNbr=-1);
-	void SetText(CStringW& pszText,/*CStringW& pszTextDown,*/int nNbr=-1);
-	void RefreshText(CStringW& pszText,/*CStringW& pszTextDown,*/int nNbr=-1);
-	void SetTextTwoLines(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr=-1);
-	void RefreshTextTwoLines(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr=-1);
+	void SetText(const CStringW& pszText,/*CStringW& pszTextDown,*/int nNbr=-1);
+	void RefreshText(const CStringW& pszText,/*CStringW& pszTextDown,*/int nNbr=-1);
+	void SetTextTwoLines(const CStringW& pszTextTop,const CStringW& pszTextBottom,int nNbr=-1);
+	void RefreshTextTwoLines(const CStringW& pszTextTop,const CStringW& pszTextBottom,int nNbr=-1);
 	inline void SetFocusDownBmp(CBmp* pcBmpFocusDown){m_pcBmpFocusDown=pcBmpFocusDown;};
 
 	int GetBtnId();

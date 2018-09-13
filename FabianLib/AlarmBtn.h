@@ -32,7 +32,7 @@ public:
 
 	void SetText(TCHAR* pszText, int nNbr=-1,bool bRefresh=false);
 	void SetText(const CStringW& szText, int nNbr=-1,bool bRefresh=false);
-	void RefreshText(CStringW& szText, int nNbr=-1);
+	void RefreshText(const CStringW& szText, int nNbr=-1);
 	void RefreshText(TCHAR* pszText, int nNbr=-1);
 	void SetChar(TCHAR t);
 	void SetText(TCHAR* pszTextTop,TCHAR* pszTextBottom,int nNbr=-1,bool bRefresh=false);

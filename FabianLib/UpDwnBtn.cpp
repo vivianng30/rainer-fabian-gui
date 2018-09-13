@@ -411,7 +411,7 @@ void CUpDwnBtn::RefreshText(TCHAR* pszText,TCHAR* pszTextDown,int nNbr)
  * \param 		  	nNbr	   	Number of.
  **************************************************************************************************/
 
-void CUpDwnBtn::SetText(CStringW& pszText,CStringW& pszTextDown,int nNbr) 
+void CUpDwnBtn::SetText(const CStringW& pszText,const CStringW& pszTextDown,int nNbr) 
 {
 	_tcscpy(m_pszText,pszText);
 	_tcscpy(m_pszTextDown,pszTextDown);

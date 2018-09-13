@@ -142,7 +142,7 @@ BOOL CKbrdBtn::Create(CWnd* pParentWnd, HFONT hFont, int nXOffset, DWORD	dwStyle
  * \param 		  	nNbr		 	Number of.
  **************************************************************************************************/
 
-void CKbrdBtn::SetText(CStringW& pszTextTop,CStringW& pszTextBottom,int nNbr)
+void CKbrdBtn::SetText(const CStringW& pszTextTop,const CStringW& pszTextBottom,int nNbr)
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),pszTextTop);
 	_tcscpy_s(m_pszTextTop,_countof(m_pszText),pszTextTop);
@@ -213,7 +213,7 @@ void CKbrdBtn::SetText(TCHAR* pszText, int nNbr)
  * \param 		  	nNbr  	Number of.
  **************************************************************************************************/
 
-void CKbrdBtn::SetText(CStringW& szText, int nNbr) 
+void CKbrdBtn::SetText(const CStringW& szText, int nNbr) 
 {
 	_tcscpy_s(m_pszText,_countof(m_pszText),szText);
 	m_nNbr=nNbr;
@@ -259,7 +259,7 @@ void CKbrdBtn::GetText(TCHAR* pszTextTop,TCHAR* pszTextBottom)
  * \param 		  	nNbr  	Number of.
  **************************************************************************************************/
 
-void CKbrdBtn::RefreshText(CStringW& szText, int nNbr) 
+void CKbrdBtn::RefreshText(const CStringW& szText, int nNbr) 
 {
 	SetText(szText,nNbr);
 	Invalidate();
