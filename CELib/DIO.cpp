@@ -87,7 +87,7 @@ CDIO::~CDIO()
 // **************************************************************************
 // 
 // **************************************************************************
-DWORD CDIO::ReadPin (BYTE* pbyData,int nPort,BYTE chPin)
+DWORD CDIO::ReadPin (BYTE* pbyData, int, BYTE chPin)
 {
 	DWORD dwReturn=1;
 
@@ -106,7 +106,7 @@ DWORD CDIO::ReadPin (BYTE* pbyData,int nPort,BYTE chPin)
 	return dwReturn;
 }
 
-BYTE CDIO::ReadPin (int nPort,BYTE chPin)
+BYTE CDIO::ReadPin (int,BYTE chPin)
 {
 	BYTE pbyData=0;
 

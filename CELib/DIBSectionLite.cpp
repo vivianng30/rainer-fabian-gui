@@ -340,7 +340,7 @@ UINT CEGetDIBColorTable(HDC hdc, UINT uStartIndex, UINT cEntries, RGBQUAD *pColo
 // --- Returns :The number of colors for this color depth
 // --- Effect : Returns the number of color table entries given the number
 //              of bits per pixel of a bitmap
-/*static*/ int CDIBSectionLite::NumColorEntries(int nBitsPerPixel, int nCompression, DWORD biClrUsed /*= 0*/)
+/*static*/ int CDIBSectionLite::NumColorEntries(int nBitsPerPixel, int, DWORD biClrUsed /*= 0*/)
 {
     int nColors = 0;
 
@@ -1659,7 +1659,7 @@ CDC* CDIBSectionLite::GetMemoryDC(CDC* pDC /*=NULL*/, BOOL bSelectPalette /*=TRU
 //
 //               bracketed calls. If m_bReuseMemDC is subsequently set to FALSE, then 
 //               the same code fragment will still work.
-BOOL CDIBSectionLite::ReleaseMemoryDC(BOOL bForceRelease /*=FALSE*/)
+BOOL CDIBSectionLite::ReleaseMemoryDC(BOOL /*=FALSE*/)
 {
     if ( !m_MemDC.GetSafeHdc() 
 #ifndef DIBSECTION_NO_MEMDC_REUSE

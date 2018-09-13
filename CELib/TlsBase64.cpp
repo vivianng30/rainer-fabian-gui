@@ -326,7 +326,7 @@ int CTlsHex::ParseInt(CString s)
 \brief 
 */
 //=============================================================================
-unsigned long CTlsCrc32::Crc32(unsigned char* psz, unsigned int iLen)
+unsigned long CTlsCrc32::Crc32(unsigned char*, unsigned int)
 {
 	return 0;
 	//return crc32(0, psz, iLen);

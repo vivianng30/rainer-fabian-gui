@@ -15,7 +15,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 //=============================================================================
-void CTlsRegistry::Init(HKEY hkeyParent, CStringW pcszSubkey, bool bWrite)
+void CTlsRegistry::Init(HKEY hkeyParent, CStringW pcszSubkey, bool)
 {
 	m_strSubkey = pcszSubkey;
 	m_hkeyParent = hkeyParent;

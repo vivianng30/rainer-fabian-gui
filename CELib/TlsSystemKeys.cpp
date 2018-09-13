@@ -245,7 +245,7 @@ void CTlsSystemKeys::DisableAllKeys(HWND hWnd)
  // hwnd-param of 'register hot key'
 //
 //=============================================================================
-CTlsSystemKeys::eKey CTlsSystemKeys::IsSystemKey(UINT message, WPARAM wParam, LPARAM lParam)
+CTlsSystemKeys::eKey CTlsSystemKeys::IsSystemKey(UINT message, WPARAM wParam, LPARAM)
 {
   eKey key = KEY_NONE;
 

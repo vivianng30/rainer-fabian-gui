@@ -51,7 +51,7 @@ bool CTlsFile::Exists(CStringW sPath)
 // \param bOverwrite
 //
 //=============================================================================
-bool CTlsFile::Rename(CStringW sFrom, CStringW sTo, bool bOverwrite)
+bool CTlsFile::Rename(CStringW sFrom, CStringW sTo, bool)
 {
   return MoveFile(sFrom, sTo) != 0;
 }

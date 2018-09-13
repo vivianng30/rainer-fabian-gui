@@ -311,13 +311,13 @@ int  CTlsIStream_Base::GetPos()
 }
 
 //=============================================================================
-bool CTlsIStream_Base::GotoAbs(int i)
+bool CTlsIStream_Base::GotoAbs(int)
 {
   return false;
 }
 
 //=============================================================================
-bool CTlsIStream_Base::GotoAbsR(int i)
+bool CTlsIStream_Base::GotoAbsR(int)
 {
   return false;
 }
@@ -700,7 +700,7 @@ CTlsBlob CTlsOStream_Mem::GetBuffer()
 }
 
 //=============================================================================
-CTlsIStream_Res::CTlsIStream_Res(HINSTANCE hm, int iResID)
+CTlsIStream_Res::CTlsIStream_Res(HINSTANCE, int)
 {
 }
 

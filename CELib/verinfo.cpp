@@ -328,9 +328,9 @@ BOOL CFileVersionInfo::SetTransIndex( IN UINT nIndex /*0*/ )
 // If the LID identifier is unknown, it returns a 
 // default string ("Language Neutral"):
 
-BOOL CFileVersionInfo::GetLIDName( IN  WORD   wLID, 
-								   OUT LPTSTR lpszName, 
-								   IN  INT    nBuf )
+BOOL CFileVersionInfo::GetLIDName( IN  WORD, 
+								   OUT LPTSTR, 
+								   IN  INT )
 {
 	/*if( lpszName == NULL || nBuf <= 0 )
 		ASSERT_RETURN( FALSE );
