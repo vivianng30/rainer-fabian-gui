@@ -885,13 +885,13 @@ bool CParaBtn::Depress()
 		}
 		else if(m_btn.wID==IDC_BTN_PARA_O2)
 		{
-			getModel()->getDATAHANDLER()->setO2FlushDiff(m_v.iValue);
+			getModel()->getDATAHANDLER()->setO2FlushDiff((BYTE) m_v.iValue);
 			if(GetParent())
 				GetParent()->PostMessage(WM_O2_CHANGED,m_v.iValue);
 		}
 		else if(m_btn.wID==IDC_BTN_PARA_O2FLUSH)
 		{
-			getModel()->getDATAHANDLER()->setO2Diff(m_v.iValue);
+			getModel()->getDATAHANDLER()->setO2Diff((BYTE) m_v.iValue);
 			if(GetParent())
 				GetParent()->PostMessage(WM_O2FLUSH_CHANGED);
 		}
@@ -3018,7 +3018,7 @@ void CParaBtn::WriteCurrentValue()
 		break;
 	case IDC_BTN_PARA_FLUSHTIME:
 		{
-			getModel()->getDATAHANDLER()->SetCurO2FlushTime(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurO2FlushTime((BYTE) m_v.iValue);
 			bStopFOT=false;
 		}
 		break;
@@ -3038,34 +3038,34 @@ void CParaBtn::WriteCurrentValue()
 		break;
 	case IDC_BTN_PARA_RISETIME:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentRisetimePara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentRisetimePara((WORD) m_v.iValue);
 			if(GetParent())
 				GetParent()->PostMessage(WM_RISETIME_CHANGED);
 		}
 		break;
 	case IDC_BTN_PARA_HFFLOW:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentHFFlowPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentHFFlowPara((WORD) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_IFLOW:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentIFlowPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentIFlowPara((WORD) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_EFLOW:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentEFlowPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentEFlowPara((WORD) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_THERAPYFLOW:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentTherapieFlowParaData(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentTherapieFlowParaData((WORD) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_PEEP:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentPEEPPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentPEEPPara((SHORT) m_v.iValue);
 			if(getModel()->getCONFIG()->GetCurMode()==VM_PSV
 				||	getModel()->getCONFIG()->GetCurMode()==VM_PRE_PSV
 				||	getModel()->getCONFIG()->GetCurMode()==VM_SIMVPSV
@@ -3077,32 +3077,32 @@ void CParaBtn::WriteCurrentValue()
 		break;
 	case IDC_BTN_PARA_PINSP:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentPINSPPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentPINSPPara((SHORT) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_VG_PMAXI:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentPmaxVolGPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentPmaxVolGPara((SHORT) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_VG_AMPMAXI:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentHFAMPLmaxPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentHFAMPLmaxPara((SHORT) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_PDUO:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentPManPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentPManPara((SHORT) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_PMANUAL:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentPManPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentPManPara((SHORT) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_PPSV:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentPpsvPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentPpsvPara((SHORT) m_v.iValue);
 			getModel()->getVIEWHANDLER()->setPpsvValue(m_v.iValue,false);
 		}
 		break;
@@ -3112,52 +3112,52 @@ void CParaBtn::WriteCurrentValue()
 				||	getModel()->getCONFIG()->GetCurMode()==VM_HFO)
 			{
 				getModel()->getALARMHANDLER()->resetVgVlAutoTurnedOff();
-				getModel()->getDATAHANDLER()->SetCurrentVGarantParamData(m_v.iValue);
+				getModel()->getDATAHANDLER()->SetCurrentVGarantParamData((WORD) m_v.iValue);
 			}
 			else if(getModel()->getDATAHANDLER()->isVLIMITLicenseAvailable() 
 				&& getModel()->getCONFIG()->GetVolumeControl()==VCTRL_VLIMIT)
 			{
 				getModel()->getALARMHANDLER()->resetVgVlAutoTurnedOff();
-				getModel()->getDATAHANDLER()->SetCurrentVLimitParam(m_v.iValue,getModel()->getDATAHANDLER()->IsCurrentModeVLimitStateOn(),true);
+				getModel()->getDATAHANDLER()->SetCurrentVLimitParam((WORD) m_v.iValue,getModel()->getDATAHANDLER()->IsCurrentModeVLimitStateOn(),true);
 			}
 			else if(getModel()->getDATAHANDLER()->isVGUARANTLicenseAvailable() 
 				&& getModel()->getCONFIG()->GetVolumeControl()==VCTRL_VGARANT)
 			{
 				getModel()->getALARMHANDLER()->resetVgVlAutoTurnedOff();
-				getModel()->getDATAHANDLER()->SetCurrentVGarantParamData(m_v.iValue);
+				getModel()->getDATAHANDLER()->SetCurrentVGarantParamData((WORD) m_v.iValue);
 			}
 		}
 		break;
 	case IDC_BTN_PARA_BPM:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentBPMPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentBPMPara((WORD) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_ITIME:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentITimePara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentITimePara((WORD) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_O2:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentO2Para(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentO2Para((BYTE) m_v.iValue);
 			bStopFOT=false;
 		}
 		break;
 	case IDC_BTN_PARA_O2FLUSH:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentO2FlushPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentO2FlushPara((BYTE) m_v.iValue);
 			bStopFOT=false;
 		}
 		break;
 	case IDC_BTN_PARA_HFAMPL:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentHFAMPLPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentHFAMPLPara((WORD) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_HFFREQ:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentHFFreqPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentHFFreqPara((BYTE) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_IERATIO:
@@ -3167,7 +3167,7 @@ void CParaBtn::WriteCurrentValue()
 		break;
 	case IDC_BTN_PARA_PMITT:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentPMeanPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentPMeanPara((WORD) m_v.iValue);
 
 			if(getModel()->getDATAHANDLER()->isLUNGRECLicenseAvailable()==true)
 				getModel()->getVIEWHANDLER()->setPmeanDifference(m_v.iValue,true);
@@ -3175,43 +3175,43 @@ void CParaBtn::WriteCurrentValue()
 		break;
 	case IDC_BTN_PARA_ETIME:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentETimePara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentETimePara((WORD) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_CPAP:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentCPAPPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentCPAPPara((SHORT) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_TRIGNMODE:
 	case IDC_BTN_PARA_TRIGCONV:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentTriggerPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentTriggerPara((BYTE) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_BACKUP:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentBackupPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentBackupPara((BYTE) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_FLOWMIN:
 		{
-			getModel()->getDATAHANDLER()->SetFlowMinParadata(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetFlowMinParadata((WORD) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_ITIME_REC:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentITimeRecPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentITimeRecPara((WORD) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_BPM_REC:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentFreqRecPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentFreqRecPara((WORD) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_PMEAN_REC:
 		{
-			getModel()->getDATAHANDLER()->SetCurrentHFPMeanRecPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->SetCurrentHFPMeanRecPara((WORD) m_v.iValue);
 			if(m_v.iValue>getModel()->getDATAHANDLER()->PARADATA()->GetHFPMeanRecMaxKey())
 			{
 				//m_bKeyValueAccepted=true;
@@ -3243,29 +3243,29 @@ void CParaBtn::WriteCurrentValue()
 	//	break;
 	case IDC_BTN_PARA_FOT_STEPS:
 		{
-			getModel()->getDATAHANDLER()->setCurrentFOT_STEPSPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->setCurrentFOT_STEPSPara((WORD) m_v.iValue);
 			if(GetParent())
 				GetParent()->PostMessage(WM_FOTSTEP_CHANGED);
 		}
 		break;
 	case IDC_BTN_PARA_FOT_PMEANLOW:
 		{
-			getModel()->getDATAHANDLER()->setCurrentFOT_PMEANSTARTPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->setCurrentFOT_PMEANSTARTPara((WORD) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_FOT_PMEANHIGH:
 		{
-			getModel()->getDATAHANDLER()->setCurrentFOT_PMEANENDPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->setCurrentFOT_PMEANENDPara((WORD) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_FOT_PEEPLOW:
 		{
-			getModel()->getDATAHANDLER()->setCurrentFOT_PEEPSTARTPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->setCurrentFOT_PEEPSTARTPara((WORD) m_v.iValue);
 		}
 		break;
 	case IDC_BTN_PARA_FOT_PEEPHIGH:
 		{
-			getModel()->getDATAHANDLER()->setCurrentFOT_PEEPENDPara(m_v.iValue);
+			getModel()->getDATAHANDLER()->setCurrentFOT_PEEPENDPara((WORD) m_v.iValue);
 		}
 		break;
 	default:

@@ -1142,24 +1142,24 @@ void CRijndael::DefEncryptBlock(char const* in, char* result)
 	Ker = m_Ke[m_iROUNDS];
 	int tt = Ker[0];
 	result[0] = sm_S[(t0 >> 24) & 0xFF] ^ (tt >> 24);
-	result[1] = sm_S[(t1 >> 16) & 0xFF] ^ (tt >> 16);
-	result[2] = sm_S[(t2 >>  8) & 0xFF] ^ (tt >>  8);
-	result[3] = sm_S[t3 & 0xFF] ^ tt;
+	result[1] = char (sm_S[(t1 >> 16) & 0xFF] ^ (tt >> 16));
+	result[2] = char (sm_S[(t2 >>  8) & 0xFF] ^ (tt >>  8));
+	result[3] = char (sm_S[t3 & 0xFF] ^ tt);
 	tt = Ker[1];
 	result[4] = sm_S[(t1 >> 24) & 0xFF] ^ (tt >> 24);
-	result[5] = sm_S[(t2 >> 16) & 0xFF] ^ (tt >> 16);
-	result[6] = sm_S[(t3 >>  8) & 0xFF] ^ (tt >>  8);
-	result[7] = sm_S[t0 & 0xFF] ^ tt;
+	result[5] = char (sm_S[(t2 >> 16) & 0xFF] ^ (tt >> 16));
+	result[6] = char (sm_S[(t3 >>  8) & 0xFF] ^ (tt >>  8));
+	result[7] = char (sm_S[t0 & 0xFF] ^ tt);
 	tt = Ker[2];
 	result[8] = sm_S[(t2 >> 24) & 0xFF] ^ (tt >> 24);
-	result[9] = sm_S[(t3 >> 16) & 0xFF] ^ (tt >> 16);
-	result[10] = sm_S[(t0 >>  8) & 0xFF] ^ (tt >>  8);
-	result[11] = sm_S[t1 & 0xFF] ^ tt;
+	result[9] = char (sm_S[(t3 >> 16) & 0xFF] ^ (tt >> 16));
+	result[10] = char (sm_S[(t0 >>  8) & 0xFF] ^ (tt >>  8));
+	result[11] = char (sm_S[t1 & 0xFF] ^ tt);
 	tt = Ker[3];
 	result[12] = sm_S[(t3 >> 24) & 0xFF] ^ (tt >> 24);
-	result[13] = sm_S[(t0 >> 16) & 0xFF] ^ (tt >> 16);
-	result[14] = sm_S[(t1 >>  8) & 0xFF] ^ (tt >>  8);
-	result[15] = sm_S[t2 & 0xFF] ^ tt;
+	result[13] = char (sm_S[(t0 >> 16) & 0xFF] ^ (tt >> 16));
+	result[14] = char (sm_S[(t1 >>  8) & 0xFF] ^ (tt >>  8));
+	result[15] = char (sm_S[t2 & 0xFF] ^ tt);
 }
 
 /**********************************************************************************************//**
@@ -1227,24 +1227,24 @@ void CRijndael::DefDecryptBlock(char const* in, char* result)
 	Kdr = m_Kd[m_iROUNDS];
 	int tt = Kdr[0];
 	result[ 0] = sm_Si[(t0 >> 24) & 0xFF] ^ (tt >> 24);
-	result[ 1] = sm_Si[(t3 >> 16) & 0xFF] ^ (tt >> 16);
-	result[ 2] = sm_Si[(t2 >>  8) & 0xFF] ^ (tt >>  8);
-	result[ 3] = sm_Si[ t1 & 0xFF] ^ tt;
+	result[ 1] = char (sm_Si[(t3 >> 16) & 0xFF] ^ (tt >> 16));
+	result[ 2] = char (sm_Si[(t2 >>  8) & 0xFF] ^ (tt >>  8));
+	result[ 3] = char (sm_Si[ t1 & 0xFF] ^ tt);
 	tt = Kdr[1];
 	result[ 4] = sm_Si[(t1 >> 24) & 0xFF] ^ (tt >> 24);
-	result[ 5] = sm_Si[(t0 >> 16) & 0xFF] ^ (tt >> 16);
-	result[ 6] = sm_Si[(t3 >>  8) & 0xFF] ^ (tt >>  8);
-	result[ 7] = sm_Si[ t2 & 0xFF] ^ tt;
+	result[ 5] = char (sm_Si[(t0 >> 16) & 0xFF] ^ (tt >> 16));
+	result[ 6] = char (sm_Si[(t3 >>  8) & 0xFF] ^ (tt >>  8));
+	result[ 7] = char (sm_Si[ t2 & 0xFF] ^ tt);
 	tt = Kdr[2];
 	result[ 8] = sm_Si[(t2 >> 24) & 0xFF] ^ (tt >> 24);
-	result[ 9] = sm_Si[(t1 >> 16) & 0xFF] ^ (tt >> 16);
-	result[10] = sm_Si[(t0 >>  8) & 0xFF] ^ (tt >>  8);
-	result[11] = sm_Si[ t3 & 0xFF] ^ tt;
+	result[ 9] = char (sm_Si[(t1 >> 16) & 0xFF] ^ (tt >> 16));
+	result[10] = char (sm_Si[(t0 >>  8) & 0xFF] ^ (tt >>  8));
+	result[11] = char (sm_Si[ t3 & 0xFF] ^ tt);
 	tt = Kdr[3];
 	result[12] = sm_Si[(t3 >> 24) & 0xFF] ^ (tt >> 24);
-	result[13] = sm_Si[(t2 >> 16) & 0xFF] ^ (tt >> 16);
-	result[14] = sm_Si[(t1 >>  8) & 0xFF] ^ (tt >>  8);
-	result[15] = sm_Si[ t0 & 0xFF] ^ tt;
+	result[13] = char (sm_Si[(t2 >> 16) & 0xFF] ^ (tt >> 16));
+	result[14] = char (sm_Si[(t1 >>  8) & 0xFF] ^ (tt >>  8));
+	result[15] = char (sm_Si[ t0 & 0xFF] ^ tt);
 }
 
 /**********************************************************************************************//**
@@ -1302,9 +1302,9 @@ void CRijndael::EncryptBlock(char const* in, char* result)
 	{
 		tt = m_Ke[m_iROUNDS][i];
 		result[j++] = sm_S[(t[i] >> 24) & 0xFF] ^ (tt >> 24);
-		result[j++] = sm_S[(t[(i + s1) % BC] >> 16) & 0xFF] ^ (tt >> 16);
-		result[j++] = sm_S[(t[(i + s2) % BC] >>  8) & 0xFF] ^ (tt >>  8);
-		result[j++] = sm_S[ t[(i + s3) % BC] & 0xFF] ^ tt;
+		result[j++] = char (sm_S[(t[(i + s1) % BC] >> 16) & 0xFF] ^ (tt >> 16));
+		result[j++] = char (sm_S[(t[(i + s2) % BC] >>  8) & 0xFF] ^ (tt >>  8));
+		result[j++] = char (sm_S[ t[(i + s3) % BC] & 0xFF] ^ tt);
 	}
 }
 
@@ -1363,9 +1363,9 @@ void CRijndael::DecryptBlock(char const* in, char* result)
 	{
 		tt = m_Kd[m_iROUNDS][i];
 		result[j++] = sm_Si[(t[i] >> 24) & 0xFF] ^ (tt >> 24);
-		result[j++] = sm_Si[(t[(i + s1) % BC] >> 16) & 0xFF] ^ (tt >> 16);
-		result[j++] = sm_Si[(t[(i + s2) % BC] >>  8) & 0xFF] ^ (tt >>  8);
-		result[j++] = sm_Si[ t[(i + s3) % BC] & 0xFF] ^ tt;
+		result[j++] = char (sm_Si[(t[(i + s1) % BC] >> 16) & 0xFF] ^ (tt >> 16));
+		result[j++] = char (sm_Si[(t[(i + s2) % BC] >>  8) & 0xFF] ^ (tt >>  8));
+		result[j++] = char (sm_Si[ t[(i + s3) % BC] & 0xFF] ^ tt);
 	}
 }
 

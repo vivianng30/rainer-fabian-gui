@@ -1059,7 +1059,7 @@ void CSubParaBtn::DrawSUBPARA_O2REAL(int nState)
 		}
 		else
 		{
-			int iOxy=CTlsFloat::Round(((double)m_v.iValue)/10, 0);
+			double iOxy=CTlsFloat::Round(((double)m_v.iValue)/10, 0);
 			if(iOxy<19)
 			{
 				wsprintf(psz,_T("--"));

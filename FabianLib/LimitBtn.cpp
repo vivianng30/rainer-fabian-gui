@@ -256,19 +256,19 @@ bool CLimitBtn::Depress()
 		if(m_btn.wID==IDC_BTN_LIMIT_FIO2LOW)//PRICO02
 		{
 			//getModel()->getVIEWHANDLER()->setFIO2LOWvalue(m_v.iValue);
-			WNDDATASPO2->setFIO2LOWvalue(m_v.iValue);
+			WNDDATASPO2->setFIO2LOWvalue((BYTE) m_v.iValue);
 		}
 		else if(m_btn.wID==IDC_BTN_LIMIT_FIO2HIGH)//PRICO02
 		{
-			WNDDATASPO2->setFIO2HIGHvalue(m_v.iValue);
+			WNDDATASPO2->setFIO2HIGHvalue((BYTE) m_v.iValue);
 		}
 		else if(m_btn.wID==IDC_BTN_LIMIT_SPO2LOW)//PRICO02
 		{
-			WNDDATASPO2->setSPO2LOWvalue(m_v.iValue);
+			WNDDATASPO2->setSPO2LOWvalue((BYTE) m_v.iValue);
 		}
 		else if(m_btn.wID==IDC_BTN_LIMIT_SPO2HIGH)//PRICO02
 		{
-			WNDDATASPO2->setSPO2HIGHvalue(m_v.iValue);
+			WNDDATASPO2->setSPO2HIGHvalue((BYTE) m_v.iValue);
 		}
 
 		if(GetParent())
@@ -1142,7 +1142,7 @@ void CLimitBtn::WriteCurrentValue()
 	{
 	case IDC_BTN_LIMIT_SPO2LOW:
 		{
-			getModel()->getDATAHANDLER()->setPRICO_SPO2lowRange(m_v.iValue);
+			getModel()->getDATAHANDLER()->setPRICO_SPO2lowRange((BYTE) m_v.iValue);
 			CString sz=_T("");
 			sz.Format(_T("#PRICO SpO2 low:%d, "), m_v.iValue);
 			theApp.WriteLog(sz);
@@ -1150,7 +1150,7 @@ void CLimitBtn::WriteCurrentValue()
 		break;
 	case IDC_BTN_LIMIT_SPO2HIGH:
 		{
-			getModel()->getDATAHANDLER()->setPRICO_SPO2highRange(m_v.iValue);
+			getModel()->getDATAHANDLER()->setPRICO_SPO2highRange((BYTE) m_v.iValue);
 			CString sz=_T("");
 			sz.Format(_T("#PRICO SpO2 high:%d, "), m_v.iValue);
 			theApp.WriteLog(sz);
@@ -1158,7 +1158,7 @@ void CLimitBtn::WriteCurrentValue()
 		break;
 	case IDC_BTN_LIMIT_FIO2LOW:
 		{
-			getModel()->getDATAHANDLER()->setPRICO_FIO2lowRange(m_v.iValue);
+			getModel()->getDATAHANDLER()->setPRICO_FIO2lowRange((BYTE) m_v.iValue);
 			CString sz=_T("");
 			sz.Format(_T("#PRICO FiO2 low:%d, "), m_v.iValue);
 			theApp.WriteLog(sz);
@@ -1166,7 +1166,7 @@ void CLimitBtn::WriteCurrentValue()
 		break;
 	case IDC_BTN_LIMIT_FIO2HIGH:
 		{
-			getModel()->getDATAHANDLER()->setPRICO_FIO2highRange(m_v.iValue);
+			getModel()->getDATAHANDLER()->setPRICO_FIO2highRange((BYTE) m_v.iValue);
 			CString sz=_T("");
 			sz.Format(_T("#PRICO FiO2 high:%d, "), m_v.iValue);
 			theApp.WriteLog(sz);
