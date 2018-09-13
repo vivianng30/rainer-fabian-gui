@@ -844,7 +844,7 @@ int CInterfaceAcuLink_SERIAL::sendAllMeasurementData()//CAcuLinkApp::BuildMsg()
 		{
 			dwBytesWRitten=m_comPort.Write(&(faSendBuf[iCount]),iRest);
 
-			if(dwBytesWRitten!=iRest)
+			if(dwBytesWRitten!=(DWORD)iRest)
 			{
 				CString sz;
 				sz.Format(_T("sendAcuLink2: %d"), dwBytesWRitten);

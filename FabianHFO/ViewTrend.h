@@ -125,7 +125,7 @@ protected:
 	CSelectTrendBtn* m_pcSelectTrend2;
 	CSelectTrendBtn* m_pcSelectTrend3;
 
-	int m_iCurFocusedWnd;
+	WPARAM m_iCurFocusedWnd;
 	bool m_bGraphSelected;
 
 	UINT m_iCurBtnSelTrend;

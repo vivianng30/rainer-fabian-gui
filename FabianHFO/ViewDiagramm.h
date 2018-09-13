@@ -330,7 +330,7 @@ protected:
 	UINT m_iItemsToMerge;
 
 	int m_iCurrentLineDiagramm;
-	int m_iCurFocusedWnd;
+	WPARAM m_iCurFocusedWnd;
 	bool m_bGraphSelected;
 
 	bool m_bDataFOTIsActive;

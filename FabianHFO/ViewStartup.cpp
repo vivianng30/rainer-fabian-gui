@@ -496,7 +496,7 @@ void CViewStartup::Draw()
 	BYTE data[1];
 	DWORD dwBytesToWrite=1;
 	data[0] = 0;
-	int iBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
+	DWORD iBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
 	if(iBytesWritten==dwBytesToWrite)
 	{
 		m_bPIF_ERROR=false;

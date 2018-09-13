@@ -3578,7 +3578,7 @@ void CTrendDiagramm::DoPlotXYPoints()
 	double iAverageY=0;
 
 	//test
-	int oldX=-1;
+	UINT oldX=UINT_MAX;
 	int iOldCountbuffer=0;
 	m_iCountbuffer=0;
 	m_iPosbufferX=0;

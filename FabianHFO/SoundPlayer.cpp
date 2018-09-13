@@ -169,9 +169,9 @@ void CSoundPlayer::SetAlarmVolume(eAlarmLoudness state)
 	BYTE data[1];
 	DWORD dwBytesToWrite=1;
 	data[0] = m_byVolume;
-	int iBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
+	DWORD dwBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
 	DEBUGMSG(TRUE, (TEXT("SetAlarmVolume %d\r\n"),m_byVolume));
-	if(iBytesWritten!=dwBytesToWrite)
+	if(dwBytesWritten!=dwBytesToWrite)
 	{
 		theApp.WriteLog(_T("#HFO:0261"));
 		//getModel()->getALARMHANDLER()->SetAlarm_IF_PIF(_T(""));
@@ -240,8 +240,8 @@ void CSoundPlayer::SetPIFSound(ePIFSound sound)
 
 			//data[0] = 0;
 			data[0] = m_bySignal + m_byVolume;
-			int iBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
-			if(iBytesWritten!=dwBytesToWrite)
+			DWORD dwBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
+			if(dwBytesWritten!=dwBytesToWrite)
 			{
 				theApp.WriteLog(_T("#HFO:0261"));
 				if(AfxGetApp())
@@ -255,9 +255,9 @@ void CSoundPlayer::SetPIFSound(ePIFSound sound)
 			//data[0] = m_bySignal + m_byVolume + m_byAlarm;
 			data[0] = m_bySignal + m_byVolume + m_byAlarm;
 
-			int iBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
+			DWORD dwBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
 			//DEBUGMSG(TRUE, (TEXT("PIF_SIGNAL %d\r\n"),data[0]));
-			if(iBytesWritten!=dwBytesToWrite)
+			if(dwBytesWritten!=dwBytesToWrite)
 			{
 				theApp.WriteLog(_T("#HFO:0261"));
 				if(AfxGetApp())
@@ -270,8 +270,8 @@ void CSoundPlayer::SetPIFSound(ePIFSound sound)
 			m_byAlarm = 0x1;
 			data[0] = m_bySignal + m_byVolume + m_byAlarm;
 
-			int iBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
-			if(iBytesWritten!=dwBytesToWrite)
+			DWORD dwBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
+			if(dwBytesWritten!=dwBytesToWrite)
 			{
 				theApp.WriteLog(_T("#HFO:0261"));
 				if(AfxGetApp())
@@ -284,8 +284,8 @@ void CSoundPlayer::SetPIFSound(ePIFSound sound)
 			m_byAlarm = 0x2;
 			data[0] = m_bySignal + m_byVolume + m_byAlarm;
 
-			int iBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
-			if(iBytesWritten!=dwBytesToWrite)
+			DWORD dwBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
+			if(dwBytesWritten!=dwBytesToWrite)
 			{
 				theApp.WriteLog(_T("#HFO:0261"));
 				if(AfxGetApp())
@@ -298,8 +298,8 @@ void CSoundPlayer::SetPIFSound(ePIFSound sound)
 			m_byAlarm = 0x3;
 			data[0] = m_bySignal + m_byVolume + m_byAlarm;
 
-			int iBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
-			if(iBytesWritten!=dwBytesToWrite)
+			DWORD dwBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
+			if(dwBytesWritten!=dwBytesToWrite)
 			{
 				theApp.WriteLog(_T("#HFO:0261"));
 				if(AfxGetApp())
@@ -312,8 +312,8 @@ void CSoundPlayer::SetPIFSound(ePIFSound sound)
 			m_byAlarm = 0x20;
 			data[0] = m_bySignal + m_byVolume + m_byAlarm;
 
-			int iBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
-			if(iBytesWritten!=dwBytesToWrite)
+			DWORD dwBytesWritten=getModel()->getPIF()->SendData(data, dwBytesToWrite);
+			if(dwBytesWritten!=dwBytesToWrite)
 			{
 				theApp.WriteLog(_T("#HFO:0262"));
 			}
