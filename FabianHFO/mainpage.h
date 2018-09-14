@@ -23,8 +23,15 @@
  * @subsection ver5085 Version 5.0.8.5
  * @date 2018-04-10
  * @verbatim
- - FOT: bug fixed for HFO mode-> CWndDataFOT::drawFOTmenubar() checks regarding current vent mode
- - FOT: bug fixed serial checking routine for HFO values AMP and FREQ disabled while 3 sec FOT running
+  	- FSW-33/FBN-43 Make SubViewTools modal while saving trends to USB  
+  	- FSW-33/FBN-43 fixed: GUI freeze - "application Fabian.exe crashed and must shut down" while saving trends data
+		button to save trend data to USB will be hidden while saving process is running, text will be displayed instead: "in progress"
+		language files 1.3.0.13 necessary
+	- !!!CAUTION regarding installation/debugging: if version with new trend serialization regarding memory leak was installed once
+	  !!!and this debug version will be used (or this release will be installed manually) the trend data need to be deleted manually
+	  !!!otherwise it will crash when saving trend data due to new trend data format
+	- FOT: bug fixed for HFO mode-> CWndDataFOT::drawFOTmenubar() checks regarding current vent mode
+	- FOT: bug fixed serial checking routine for HFO values AMP and FREQ disabled while 3 sec FOT running
  @endverbatim
  *
  * @subsection ver5084 Version 5.0.8.4
@@ -616,7 +623,7 @@
 		ALINK_MSMNT_SPO2_SIQ
 		ALINK_MSMNT_RSBI
 		ALINK_MSMNT_VTEKG
-	- Dynamic Compliance, Resolution for acuLink: 0.1 (0.0 – 500.0 ml/mbar), Resolution from PIC: 0.01 !!!
+	- Dynamic Compliance, Resolution for acuLink: 0.1 (0.0 Â– 500.0 ml/mbar), Resolution from PIC: 0.01 !!!
 	- AmplitudeCorrectionFactor implemented
 	- Altitude written to log file
 	- focus after FOT sequence fixed
@@ -1022,7 +1029,7 @@
 	- in case of O2 calibration PRICO uses the applied value: getMessureDataO2calindependent //rku O2
 	- Oxy parameter is in case of running PRICO a backup setting, O2 flush is possible while PRICO -> PRICO will be stopped
 	- SpO2 alarm limits fixed
-	- stopping PRICO deletes general alarm “PRICO: FiO2 out of range”
+	- stopping PRICO deletes general alarm Â“PRICO: FiO2 out of rangeÂ”
 	- SIQ alartm limit: autoset -> value is set to 30, no auto displayed
 	- memory test switched from watchdog to timer function
 	- PRICO alarm AL_PRICO_FiO2limit: in case of measuered oxy value below 21%: alarm message + "- check O2 calibration!"
@@ -1852,7 +1859,7 @@
  * @date 2013-07-27
  * @verbatim
 	(Ctrl 3.3.12 / Mon 2.9.8 bzw 3.9.8 / HFO 2.0.1 / Blender 3.4 oder 4.1)
-	- G_FACTOR_FLOW = 500 //Achtung, tatsächlicher Meß-Wert ist um Faktor 2 größer ->PediatrieSensor, Achtung acuLink noch nicht angepasst -> ALINK_FACTOR_FLOW
+	- G_FACTOR_FLOW = 500 //Achtung, tatsÃ¤chlicher MeÃŸ-Wert ist um Faktor 2 grÃ¶ÃŸer ->PediatrieSensor, Achtung acuLink noch nicht angepasst -> ALINK_FACTOR_FLOW
 	- ViewSubState CO2 + SpO2 changed
 	- AccuPIC: ChecksumBit in ServiceAccuboard included
 	- Ppsv configurable: delta PEEP/absolute value
@@ -1896,8 +1903,8 @@
  * @verbatim
 	 (Ctrl 3.3.08(ohne VGLimit) oder 3.3.09(mit VGLimit) / Mon 2.9.2(ohne VGLimit) bzw 3.9.2(ohne VGLimit) oder 2.9.3(mit VGLimit) bzw 3.9.3(mit VGLimit) / HFO 2.0.1 / Blender 3.2)
 	 - Dellaca-Terminal implementiert
-	 - Graphik: Skalierung Flow auf 80l/min erhöht
-	 - Graphik: Skalierung HFO VOlumen auf 80ml erhöht
+	 - Graphik: Skalierung Flow auf 80l/min erhÃ¶ht
+	 - Graphik: Skalierung HFO VOlumen auf 80ml erhÃ¶ht
 	 - Cursor manual scaling of graphs in therapy mode will be displayed now
 	 - MAXRANGE_PEDIATRIC_THERAPYFLOW auf 19lpm begrenzt
  @endverbatim
@@ -1906,13 +1913,13 @@
  * @date 2013-04-15
  * @verbatim
 	(Ctrl 3.3.05 / Mon 2.9.2 oder 3.9.2 / HFO 2.0.1 / Blender 3.2)
-	- Terminal-Funktionalität implementiert 
+	- Terminal-FunktionalitÃ¤t implementiert 
 	- MAXRANGE_PEDIATRIC_THERAPYFLOW bei 20l/min begrenzt
-	- Config-Version wird in das Systemlog eingetragen (Kompatibilität für Hospital-Settings)
-	- Service-Menü: P-Mix -> P-insp umbenannt
+	- Config-Version wird in das Systemlog eingetragen (KompatibilitÃ¤t fÃ¼r Hospital-Settings)
+	- Service-MenÃ¼: P-Mix -> P-insp umbenannt
 	- ParaBtn Abbruchkriterium in den Schnelleinstellungen nur bei den PSV-Modi
 	- FlowParaBtn HFO umbenannt von "auto" nach "default"
-	- Languagefiles 1.0.0.99 nötig
+	- Languagefiles 1.0.0.99 nÃ¶tig
 	- im HFO wird bei FREEZE nur 1 ATZ-Loop gezeichnet
  @endverbatim
  *
@@ -1927,7 +1934,7 @@
  * @date 2013-04-08
  * @verbatim
 	(Ctrl 3.3.03 / Mon 2.9.1 oder 3.9.1 / HFO 2.0.1 / Blender 2.6)
-	- Operating time lässt sich im ServiceMenü einstellen
+	- Operating time lÃ¤sst sich im ServiceMenÃ¼ einstellen
 	- AcuLink wird explizit beendet
  @endverbatim
  *
@@ -1935,12 +1942,12 @@
  * @date 2013-03-28
  * @verbatim
 	(Ctrl 3.3.03 / Mon 2.9.1 oder 3.9.1 / HFO 2.0.1 / Blender 2.6)
-	- CInterfaceSerial::CheckSerialData geändert bezüglich ERROR-Code
+	- CInterfaceSerial::CheckSerialData geÃ¤ndert bezÃ¼glich ERROR-Code
 	- Mischer Checksum fail-> Mischdefekt Alarm           28.3.13
 		'g_bMischAlarm'
 		bei Ausfall HFO-Modul:'g_b_HFO_HW_ok' sicherer Zustand Druck
 		FILTER_UEB_HFO_E (35)-> 90 ms Prox-Filt bei HFO
-		sonst sporadisch Entlüftg.bei Start Man_ATZ
+		sonst sporadisch EntlÃ¼ftg.bei Start Man_ATZ
 		Ctl_3_3_03 CS= 9F0B  MPLAB= 4e2a (combi)
 		Fct_3_3_03 CS= C0CA  MPLAB= 71a7 (combi)
  @endverbatim
@@ -1949,14 +1956,14 @@
  * @date 2013-03-21
  * @verbatim
 	(Ctrl 3.3.02 / Mon 2.9.0 oder 3.9.0 / HFO 2.0.1 / Blender 2.6)
-	- CInterfaceSerial::CheckSerialData geändert:
+	- CInterfaceSerial::CheckSerialData geÃ¤ndert:
 	- es wird alle 2 Sekunden ein Wert abgefragt
-	- stimmt der Wert nicht überein, wird dieser noch 2x mal geprüft
+	- stimmt der Wert nicht Ã¼berein, wird dieser noch 2x mal geprÃ¼ft
 	- stimmt der Wert immer noch nicht, werden alle Vent-Settings nochmal geschickt
-	- stimmt der Wert nicht überein, wird dieser noch 1x mal geprüft
+	- stimmt der Wert nicht Ã¼berein, wird dieser noch 1x mal geprÃ¼ft
 	- stimmt der Wert immer noch nicht, wird der entsprechende ERROR-Code gesetzt und alarmiert
-	- die Schnittstelle wird darauf hin alle 2 Sekunden erneut überprüft (gem. )
-	- folgende ERROR-Code bezüglich Wertüberprüfung existieren:
+	- die Schnittstelle wird darauf hin alle 2 Sekunden erneut Ã¼berprÃ¼ft (gem. )
+	- folgende ERROR-Code bezÃ¼glich WertÃ¼berprÃ¼fung existieren:
 		ERRC_COM_CHECK_VENTMODE:	//"Oq"
 		ERRC_COM_CHECK_ITIME:		//"Wq"
 		ERRC_COM_CHECK_ETIME:		//"Eq"
@@ -1970,14 +1977,14 @@
 		ERRC_COM_CHECK_HFFREQ:		//"Fq"
 		ERRC_COM_CHECK_HFPMEAN:	//"Jq"
 		ERRC_COM_CHECK_HFAMP:		//"Mq" 
-	- Therapy in CInterfaceSerial::CheckSerialData eingefügt
+	- Therapy in CInterfaceSerial::CheckSerialData eingefÃ¼gt
  @endverbatim
  *
  * @subsection ver20033 Version 2.0.0.33
  * @date 2013-03-20
  * @verbatim
 	(Ctrl 3.3.02 / Mon 2.8.15 oder 3.8.15 / HFO 2.0.1 / Blender 2.6)
-	- Flowsensor und OxySensor haben jetzt unterschiedliche Adresse für Kommandos
+	- Flowsensor und OxySensor haben jetzt unterschiedliche Adresse fÃ¼r Kommandos
  @endverbatim
  *
  * @subsection ver20032 Version 2.0.0.32
@@ -1991,7 +1998,7 @@
  * @date 2013-03-19
  * @verbatim
 	(Ctrl 3.3.02 / Mon 2.8.14 oder 3.8.14 / HFO 2.0.1 / Blender 2.6)
-	- ALarm PIF (ParallelInterface) löst WD0 aus
+	- ALarm PIF (ParallelInterface) lÃ¶st WD0 aus
  @endverbatim
  *
  * @subsection ver20030 Version 2.0.0.30
@@ -2008,8 +2015,8 @@
  * @verbatim
 	(Ctrl 3.3.02 / Mon 2.8.14 oder 3.8.14 / HFO 2.0.1 / Blender 2.6)
 	- neuen Kernel (NK11MIM_UARTx_130313) implementiert -> KernelVersion in Systeminfo + Systemlog: KernelVersion + SpezialVersion (wenn Eintrag in Registry vorhanden), sonst wie bisher Datum des Kernel
-	- 2er von etCO2 und SPO2 im Graphikmenü tiefgestellt, Text wird nicht von Language-Files bezogen!
-	- im ServiceMenü System wird die Buildversion angezeigt
+	- 2er von etCO2 und SPO2 im GraphikmenÃ¼ tiefgestellt, Text wird nicht von Language-Files bezogen!
+	- im ServiceMenÃ¼ System wird die Buildversion angezeigt
  @endverbatim
  *
  * @subsection ver20028 Version 2.0.0.28
@@ -2023,17 +2030,17 @@
  * @date 2013-03-07
  * @verbatim
 	(Ctrl 3.3.02 / Mon 2.8.13 oder 3.8.13 / HFO 2.0.1 / Blender 2.6)
-	- I2CWatchdog-Thread überprüft verfügbaren Systemspeicher, wenn unter 1000k fällt -> Alarm OUTOFMEMORY
+	- I2CWatchdog-Thread Ã¼berprÃ¼ft verfÃ¼gbaren Systemspeicher, wenn unter 1000k fÃ¤llt -> Alarm OUTOFMEMORY
  @endverbatim
  *
  * @subsection ver20026 Version 2.0.0.26
  * @date 2013-03-05
  * @verbatim
 	(Ctrl 3.3.02 / Mon 2.8.13 oder 3.8.13 / HFO 2.0.1 / Blender 2.6)
-	- wenn ParaBtn mit UDP grün geschalten wird und der UDP weiterhin gedrückt wird, wird nach 3 Sekunden der Screenlock aktiv und der ParaBtn wird inaktiv
-	- Pfeil bei I-Flow wird bezüglich Vgaranty und PinspNotReached überprüft
-	- Einträge ins LogFile: Kernelversion, SerialTreiber, acuLink
-	- *.dl_ Dateien von der Installation werden gelöscht
+	- wenn ParaBtn mit UDP grÃ¼n geschalten wird und der UDP weiterhin gedrÃ¼ckt wird, wird nach 3 Sekunden der Screenlock aktiv und der ParaBtn wird inaktiv
+	- Pfeil bei I-Flow wird bezÃ¼glich Vgaranty und PinspNotReached Ã¼berprÃ¼ft
+	- EintrÃ¤ge ins LogFile: Kernelversion, SerialTreiber, acuLink
+	- *.dl_ Dateien von der Installation werden gelÃ¶scht
  @endverbatim
  *
  * @subsection ver20025 Version 2.0.0.25
@@ -2041,7 +2048,7 @@
  * @verbatim
 	(Ctrl Ctrl 3.3.1 / Mon 2.8.12 oder 3.8.12 / HFO 2.0.1 / Blender 2.6)
 	- tsAlarmTime aus CAlarm entfernt (Performance)
-	- wird der AV Abgleich ausgeführt und Flowsensor war ausgeschalten (DUOPAP/NCPAP), wird dieser eingeschalten
+	- wird der AV Abgleich ausgefÃ¼hrt und Flowsensor war ausgeschalten (DUOPAP/NCPAP), wird dieser eingeschalten
 	- PSV + VG: Volumen nicht erreicht -> bei Apnoebeatmung aktiv wird Pfeil in Pbackup angezeigt, sonst bei Ppsv
 	- Einstellung Pmin Alarmdelay -> Setup: Text ist jetzt mittig
  @endverbatim
@@ -2053,14 +2060,14 @@
 	- StartupDelay 10sec
 	- beim Einschalten von VG wird der Auto-Wert je nach Bereich gerundet
 	- bei "Apnoebeatmung aktiv" wird die rote Linie VG nicht gezeichnet
-	- Alarmhandler: Membervariable m_pTempAlarmClass gelöscht
-	- CDataHandler::checkLimits() wird nur ausgeführt, wenn 
+	- Alarmhandler: Membervariable m_pTempAlarmClass gelÃ¶scht
+	- CDataHandler::checkLimits() wird nur ausgefÃ¼hrt, wenn 
 		getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_SYSTEM_SILENT
 		&&	getModel()->getALARMHANDLER()->getAlarmSilentState()!=ASTATE_SILENT
 		&&	getModel()->getVIEWHANDLER()->getViewState()!=VS_STARTUP
-	- Code mit cppCheck überprüft und bereinigt
-	- Version für Customer besteht nur noch aus <major release>.<minor release>
-	- Lizenzdatei wird auf Schreibschutz überprüft und wenn vorhanden beseitigt
+	- Code mit cppCheck Ã¼berprÃ¼ft und bereinigt
+	- Version fÃ¼r Customer besteht nur noch aus <major release>.<minor release>
+	- Lizenzdatei wird auf Schreibschutz Ã¼berprÃ¼ft und wenn vorhanden beseitigt
 	- VG: wenn VG wieder automatisch eingeschalten wird, wird der max erlaubte Pinsp wieder auf alten Wert gesetzt
  @endverbatim
  *
@@ -2071,7 +2078,7 @@
 	- HRESULT res= entfernt aus allen HRESULT res=CloseHandle(..)
 	- #define SIMULATION_ENTREK implementiert
 	- CViewDTBField::DrawLine(...): ohne try/catch, ist bereits in der Funktion
-	- bei Startup CDataHandler::PatientDataAvailable() ... und bei Änderung....wird sonst laufend durch ViewDTBField aufgerufen -> Zugriff auf Registry....
+	- bei Startup CDataHandler::PatientDataAvailable() ... und bei Ã„nderung....wird sonst laufend durch ViewDTBField aufgerufen -> Zugriff auf Registry....
  @endverbatim
  *
  * @subsection ver20022 Version 2.0.0.22
@@ -2085,7 +2092,7 @@
  * @date 2013-02-05
  * @verbatim
 	(Ctrl 3.3.1 / Mon 2.8.12 oder 3.8.12 / HFO 2.0.1 / Blender 2.6)
-	- Graphik-Menü zurück gebaut, SPO2 ins Menü eingebaut
+	- Graphik-MenÃ¼ zurÃ¼ck gebaut, SPO2 ins MenÃ¼ eingebaut
  @endverbatim
  * 
  * @subsection ver20020 Version 2.0.0.20
@@ -2107,7 +2114,7 @@
  * @date 2013-01-22
  * @verbatim
 	(Ctrl 3.3.01 / Mon 2.8.12 oder 3.8.12 / HFO 2.0.1 / Blender 2.6)
-	- Alarm Flat battery löscht vorherige Alarme AL_Accu_60, AL_Accu_30, AL_Accu_15
+	- Alarm Flat battery lÃ¶scht vorherige Alarme AL_Accu_60, AL_Accu_30, AL_Accu_15
  @endverbatim
  * 
  * @subsection ver20017 Version 2.0.0.17
@@ -2135,7 +2142,7 @@
  * @date 2012-12-26
  * @verbatim
 	(Ctrl 3.3.01 / Mon 2.8.12 oder 3.8.12 / HFO 2.0.1 / Blender 2.6)
-	- Pmean lässt sich auch wieder dekrementieren
+	- Pmean lÃ¤sst sich auch wieder dekrementieren
  @endverbatim
  *
  * @subsection ver20013 Version 2.0.0.13
@@ -2143,7 +2150,7 @@
  * @verbatim
 	(Ctrl 3.3.01 / Mon 2.8.12 oder 3.8.12 / HFO 2.0.1 / Blender 2.6)
 	BUG!!!!!! NICHT VERWENDEN !!!!!
-	- P-PSV erhöht/verringert sich automatisch, wenn PEEP erhöht/verringert wird
+	- P-PSV erhÃ¶ht/verringert sich automatisch, wenn PEEP erhÃ¶ht/verringert wird
 	- Pmean + PmeanRec bei Lungenrekruitment gem PEEP/P-PSV implementiert
  @endverbatim
  *
@@ -2163,18 +2170,18 @@
 	- Verriegelung P-Insp / PEEP bei PSV angepasst
 	- VT wird generell je nach Einstellung Service BTB oder Average angezeigt
 	- Flowsensor ausgeschalten: Numeriks werden richtig angezeigt (CPAP), "Backup aktiv" wird deaktiviert
-	- Therapie-Flow: einstellbar 0, 1 bis 5 l/min(0,2er Schritten), über 5l/min in 1er Schritten
+	- Therapie-Flow: einstellbar 0, 1 bis 5 l/min(0,2er Schritten), Ã¼ber 5l/min in 1er Schritten
 	- Alarm AL_SysLimit_Vgaranty -> im PSV wird Pfeil bei ParaBtn P-PSV angezeigt
-	- Licensing: wird in Eingabefenster für jeweilige Lizenznummer "Cancel" gedrückt, wird die Lizens nicht mehr gelöscht
+	- Licensing: wird in Eingabefenster fÃ¼r jeweilige Lizenznummer "Cancel" gedrÃ¼ckt, wird die Lizens nicht mehr gelÃ¶scht
 	- P-Mean bei HFO: ist Lungenrekruitment deaktiviert, wird P-Mean-rec nicht nachgezogen
-	- Pmean-Rec wird bezüglich Pmean überprüpft (HFO)
+	- Pmean-Rec wird bezÃ¼glich Pmean Ã¼berprÃ¼pft (HFO)
  @endverbatim
  *
  * @subsection ver20010 Version 2.0.0.10
  * @date 2012-12-07
  * @verbatim
 	 (Ctrl 3.2.7 / Mon 2.8.8 oder 3.8.8 / HFO 2.0.1 / Blender 2.6)
-	- Servicemenü: Satz „connect test lung“ durch „close Y-Piece at ET tube connector“ ersetzt
+	- ServicemenÃ¼: Satz Â„connect test lungÂ“ durch Â„close Y-Piece at ET tube connectorÂ“ ersetzt
 	- Voulmengarantie: bei PSV-Mode wird Wert der rote Linie vom P-PSV-Para genommen, sonst vom P-Insp
  @endverbatim
  *
@@ -2183,13 +2190,13 @@
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.8 oder 3.8.8 / HFO 2.0.1 / Blender 2.6)
 	- Interface Terminal nach AcuLink umbenannt
-	- Bug beim Startup I:E-Verhältnis beseitigt
-	- Projekt mit CppCheck Version 1.57 überprüft und bereinigt
+	- Bug beim Startup I:E-VerhÃ¤ltnis beseitigt
+	- Projekt mit CppCheck Version 1.57 Ã¼berprÃ¼ft und bereinigt
 	- Mischer alarm erweiter: SelfTest
 	- Alarm AV-Abgleich implementiert
-	- Language file 1.0.0.92 nötig
-	- CO2-Lizenzdatei über Servicemenü komplett entfernt
-	- CO2-Umschaltung geändert -> kein Absturz mehr
+	- Language file 1.0.0.92 nÃ¶tig
+	- CO2-Lizenzdatei Ã¼ber ServicemenÃ¼ komplett entfernt
+	- CO2-Umschaltung geÃ¤ndert -> kein Absturz mehr
  @endverbatim
  *
  * @subsection ver20008 Version 2.0.0.8
@@ -2224,7 +2231,7 @@
  * @date 2012-10-23
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
-	- "Apnoebeatmung aktiv" und "Backup aktiv" wird generell bei Moduswechsel gelöscht
+	- "Apnoebeatmung aktiv" und "Backup aktiv" wird generell bei Moduswechsel gelÃ¶scht
 	- Controller-PIC-Version wird im Log richtig eingetragen
  @endverbatim
  *
@@ -2233,7 +2240,7 @@
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
 	- Infoanzeige: bei ein-/ausschalten VG wird Infoanzeige neu gezeichnet -> "IPPV + VG"
-	- Überprüfung gegenüber alter SW + Ppsv ü.PEEP -> Ppsv >= PEEP+2mbar
+	- ÃœberprÃ¼fung gegenÃ¼ber alter SW + Ppsv Ã¼.PEEP -> Ppsv >= PEEP+2mbar
  @endverbatim
  *
  * @subsection ver20002 Version 2.0.0.2
@@ -2270,11 +2277,11 @@
  * @date 2012-10-08
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
-	- bei VG: decrease/increase von Pinsp geändert
-	- Werte werden richtig in die Config übernommen
+	- bei VG: decrease/increase von Pinsp geÃ¤ndert
+	- Werte werden richtig in die Config Ã¼bernommen
 	- PDMS-VueLink: Sprache wird gesetzt
-	- Ppsv immer mindestens 2mbar über PEEP und immer kleiner oder gleich dem Pinsp sein
-	- HF-Amplitude über Registry konfigurierbar
+	- Ppsv immer mindestens 2mbar Ã¼ber PEEP und immer kleiner oder gleich dem Pinsp sein
+	- HF-Amplitude Ã¼ber Registry konfigurierbar
 	- Lungenrecruitment disabled -> Flag: TODO_LUNREC
  @endverbatim
  *
@@ -2282,8 +2289,8 @@
  * @date 2012-10-08
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
-	- Wird VG on/off nicht bestätigt, wird P-Insp wieder auf den alten Wert gesetzt
-	- Netzwerk: Anzeige geändert, Port hinzugefügt
+	- Wird VG on/off nicht bestÃ¤tigt, wird P-Insp wieder auf den alten Wert gesetzt
+	- Netzwerk: Anzeige geÃ¤ndert, Port hinzugefÃ¼gt
 	- Port mit Installer konfigurierbar
  @endverbatim
  *
@@ -2291,9 +2298,9 @@
  * @date 2012-10-02
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
-	- P-PSV als Absolutwert (nicht mehr "über PEEP") -> BENÖTIGT NEUE PIC VERSIONEN!!!!!!!!!!!!!!
-	- PSV-Modus: Anzeige "Apnoebeatmung aktiv" implementiert -> Languagefile 1.0.0.89 nötig!!!!
-	- Port für PDMS->Ethernet wird eingelesen und gesetzt
+	- P-PSV als Absolutwert (nicht mehr "Ã¼ber PEEP") -> BENÃ–TIGT NEUE PIC VERSIONEN!!!!!!!!!!!!!!
+	- PSV-Modus: Anzeige "Apnoebeatmung aktiv" implementiert -> Languagefile 1.0.0.89 nÃ¶tig!!!!
+	- Port fÃ¼r PDMS->Ethernet wird eingelesen und gesetzt
 	- Port und PDMS-Protokoll werden als Hospitalsettings geschrieben und eingelesen
  @endverbatim
  *
@@ -2323,36 +2330,36 @@
  * @date 2012-09-27
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
-	- IPPV + SIPPV: Alarmlimit State Apnoe wird auf OFF gesetzt (zur Sicherheit für die PICs)
+	- IPPV + SIPPV: Alarmlimit State Apnoe wird auf OFF gesetzt (zur Sicherheit fÃ¼r die PICs)
 	- V-Ti wird BTB angezeigt
 	- Range Abbruchkriterium in den Para-Settings geht jetzt auch von 5 bis 70
 	- Logo logoFabianHFO.bmp jetzt auch in der Shutdown-View
 	- Apnoe-Bereich einstellbar von 2 bis 20 sec + off
 	- MV-Bereich Neo einstellbar bis 7 lpm
-	- P-PSV als Absolutwert (nicht mehr "über PEEP") -> BENÖTIGT NEUE PIC VERSIONEN!!!!!!!!!!!!!!
-	- PSV-Modus: Anzeige "Apnoebeatmung aktiv" implementiert -> Languagefile 1.0.0.89 nötig!!!!
-	- Wird VG on/off nicht bestätigt, wird P-Insp wieder auf den alten Wert gesetzt
-	- bei eingeschaltener VG (noch nicht bestätigt) und Focusverlust wird Pinsp auf richtigen Wert zurückgesetzt
-	- Änderungen aus FabianHFO 2.0.0.0 übernommen
+	- P-PSV als Absolutwert (nicht mehr "Ã¼ber PEEP") -> BENÃ–TIGT NEUE PIC VERSIONEN!!!!!!!!!!!!!!
+	- PSV-Modus: Anzeige "Apnoebeatmung aktiv" implementiert -> Languagefile 1.0.0.89 nÃ¶tig!!!!
+	- Wird VG on/off nicht bestÃ¤tigt, wird P-Insp wieder auf den alten Wert gesetzt
+	- bei eingeschaltener VG (noch nicht bestÃ¤tigt) und Focusverlust wird Pinsp auf richtigen Wert zurÃ¼ckgesetzt
+	- Ã„nderungen aus FabianHFO 2.0.0.0 Ã¼bernommen
 	- Limits von Pinsp wird bei VG-Decrease jetzt richtig gesetzt
 	- Kalibrierung Ausatemventil gefixt
 	- Infoanzeige: bei ein-/ausschalten VG wird Infoanzeige neu gezeichnet -> "IPPV + VG"
-	- Überprüfung gegenüber alter SW + Ppsv ü.PEEP -> Ppsv >= PEEP+2mbar
-	- "Apnoebeatmung aktiv" und "Backup aktiv" wird generell bei Moduswechsel gelöscht
+	- ÃœberprÃ¼fung gegenÃ¼ber alter SW + Ppsv Ã¼.PEEP -> Ppsv >= PEEP+2mbar
+	- "Apnoebeatmung aktiv" und "Backup aktiv" wird generell bei Moduswechsel gelÃ¶scht
 	- Controller-PIC-Version wird im Log richtig eingetragen
-	- GetParent() wird überprüft
+	- GetParent() wird Ã¼berprÃ¼ft
 	- Ausatemventilkalibrierung: I:E wird richtig gesetzt
-	- Servicemenü: Satz „connect test lung“ durch „close Y-Piece at ET tube connector“ ersetzt
+	- ServicemenÃ¼: Satz Â„connect test lungÂ“ durch Â„close Y-Piece at ET tube connectorÂ“ ersetzt
 	- O2-Flush-Button bleibt aktiv auch bei mehrmaligem on/off
-	- View-Menü implementiert
-	- Trend-Menü an View-Menü angepasst
-	- Graph-Menü angepasst (CO2 etc)
+	- View-MenÃ¼ implementiert
+	- Trend-MenÃ¼ an View-MenÃ¼ angepasst
+	- Graph-MenÃ¼ angepasst (CO2 etc)
 	- CO2-View MicroPod angepasst
 	- Startup-Delay von 2 Minuten auch in NMODE
 	- Interface Terminal nach AcuLink umbenannt
 	 - Volumengarantie bis 1,2 ml Minimum
-	 - Bug beim Startup I:E-Verhältnis beseitigt
-	- IPPV + SIPPV: Alarmlimit State Apnoe wird auf OFF gesetzt (zur Sicherheit für die PICs)
+	 - Bug beim Startup I:E-VerhÃ¤ltnis beseitigt
+	- IPPV + SIPPV: Alarmlimit State Apnoe wird auf OFF gesetzt (zur Sicherheit fÃ¼r die PICs)
 	- V-Ti wird BTB angezeigt
  @endverbatim
  *
@@ -2361,8 +2368,8 @@
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
 	- Apnoe-Alarm aus IPPV und SIPPV entfernt
-	- in der Wahl manuelle Skalierung der Diagramm: die Zeitskalierung lässt sich nicht mehr mit dem Encoder, sondern nur noch über die Cursor Tastatur skalieren
-	- wenn im Schleifenbildschirm „Freeze“ betätigt wird, wird kein Numerikblock mit den gespeicherten Meßwerten mehr angezeigt
+	- in der Wahl manuelle Skalierung der Diagramm: die Zeitskalierung lÃ¤sst sich nicht mehr mit dem Encoder, sondern nur noch Ã¼ber die Cursor Tastatur skalieren
+	- wenn im Schleifenbildschirm Â„FreezeÂ“ betÃ¤tigt wird, wird kein Numerikblock mit den gespeicherten MeÃŸwerten mehr angezeigt
 	- Languagefile 1.0.0.88 verwenden
  @endverbatim
  *
@@ -2380,35 +2387,35 @@
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
 	- Therapy: Flowmeter an Range (PEDIATRIC) angepasst
 	- Datum der letzten Flow-Kalibrierung wird ins Log gechrieben
-	- Sprachenänderung neu implementiert
-	- Logo kann ersetzt werden: logoFabianHFO.bmp -> Verzeichnis FFSDISK\\logoFabianHFO.bmp, wenn SW dies Datei vorfindet, wird dieses Bitmap als Logo verwendet, ansonst defaultmäßig das Acutronic-Logo
+	- SprachenÃ¤nderung neu implementiert
+	- Logo kann ersetzt werden: logoFabianHFO.bmp -> Verzeichnis FFSDISK\\logoFabianHFO.bmp, wenn SW dies Datei vorfindet, wird dieses Bitmap als Logo verwendet, ansonst defaultmÃ¤ÃŸig das Acutronic-Logo
  @endverbatim
  *
  * @subsection ver19987 Version 2.0.0.0beta72
  * @date 2012-09-10
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
-	- Alarmlimitprüfung PminHigh bei PRESET -> wird jetzt vom aktiven Modus genommen
-	- beim STARTUP gilt ein Alarmdelay von 10 Sekunden, unabhängig von dem eingestellten Alarmdelay
-	- Text "autoset alarm limits canceled" gelöscht
+	- AlarmlimitprÃ¼fung PminHigh bei PRESET -> wird jetzt vom aktiven Modus genommen
+	- beim STARTUP gilt ein Alarmdelay von 10 Sekunden, unabhÃ¤ngig von dem eingestellten Alarmdelay
+	- Text "autoset alarm limits canceled" gelÃ¶scht
 	- bei Aufhebung Schlauchalarm wird Alarmdelay aktiviert
 	- Alarm "Volumengarantie hoch" entfernt
 	- im Falle eines COM-Errors wird die serielle Schnittstelle erst noch neu initialisiert, wenn kein Erfolg -> Alarm
-	- wenn O2-Flush aktiv ist und O2-Para geändert wird, wird der Wert nicht an PICs gesendet, O2-Para wird disabled
+	- wenn O2-Flush aktiv ist und O2-Para geÃ¤ndert wird, wird der Wert nicht an PICs gesendet, O2-Para wird disabled
  @endverbatim
  *
  * @subsection ver19986 Version 2.0.0.0beta71
  * @date 2012-08-10
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
-	- Lizensierung CO2 entfernt, einstellbar im CO2-Menü (disabled,MicroPod,Capnostat)
+	- Lizensierung CO2 entfernt, einstellbar im CO2-MenÃ¼ (disabled,MicroPod,Capnostat)
  @endverbatim
  *
  * @subsection ver19985 Version 2.0.0.0beta70
  * @date 2012-08-08
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
-	- CriticalSection der Trends geändert
+	- CriticalSection der Trends geÃ¤ndert
  @endverbatim
  *
  * @subsection ver19984 Version 2.0.0.0beta69
@@ -2422,7 +2429,7 @@
  * @date 2012-08-01
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
-	- Datum Logfile wird zyklisch überprüft
+	- Datum Logfile wird zyklisch Ã¼berprÃ¼ft
 	- Watchdog WD_PERIODE 20000
  @endverbatim
  *
@@ -2430,7 +2437,7 @@
  * @date 2012-07-27
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
-	- Alarmdelay einstellbar im Menü->Ventilation
+	- Alarmdelay einstellbar im MenÃ¼->Ventilation
  @endverbatim
  *
  * @subsection ver19981 Version 2.0.0.0beta66
@@ -2438,7 +2445,7 @@
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
 	- Therapie -> FLow: unterster Wert = 0lpm, von 0 bis 1lpm in 0,1er Schritte einstellbar
-	- Rücksetzen der Patientenalarme unterliegt nicht dem 20sec Alarmdelay
+	- RÃ¼cksetzen der Patientenalarme unterliegt nicht dem 20sec Alarmdelay
  @endverbatim
  *
  * @subsection ver19980 Version 2.0.0.0beta65
@@ -2446,11 +2453,11 @@
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
 	- CalculateAutoAlarmlimitVgaranty + CalculateAutoAlarmlimitVlimit: bei VM_SIMV und VM_SIMVPSV wird Wert von getAVGMessureDataTVEresp genommen, sonst getAVGMessureDataTVE
-	- Service-Menü->MonitorPIC: Reihenfolge der ADC,OFFS,SCL-Werte geändert
+	- Service-MenÃ¼->MonitorPIC: Reihenfolge der ADC,OFFS,SCL-Werte geÃ¤ndert
 	- Trigger-Bereich auf 1-10 verringert
-	- Autoset Alarmlimits: ist der entsprechende Wert ein Alarm, wird dieser gelöscht
+	- Autoset Alarmlimits: ist der entsprechende Wert ein Alarm, wird dieser gelÃ¶scht
 	- Btn Autoset Alarmlimits: mit Graphik
-	- Sprachen-Menü: beim Laden wird der Focus auf die eingestellte Sprache gesetzt und diese angezeigt
+	- Sprachen-MenÃ¼: beim Laden wird der Focus auf die eingestellte Sprache gesetzt und diese angezeigt
  @endverbatim
  *
  * @subsection ver19979 Version 2.0.0.0beta64
@@ -2475,8 +2482,8 @@
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
 	- NMODE auch im Pediatrie-Modus (sofern NMODE lizensiert)
 	- Autosilent bei TubeOcclusion im HFO entfernt
-	- Flowsensor lässt sich auch mit Alarm "Flowsensor reinigen" kalibrieren
-	- bei Flowsensorkalibrierung werden alte Flowsennsoralrme gelöscht
+	- Flowsensor lÃ¤sst sich auch mit Alarm "Flowsensor reinigen" kalibrieren
+	- bei Flowsensorkalibrierung werden alte Flowsennsoralrme gelÃ¶scht
  @endverbatim
  *
  * @subsection ver19976 Version 2.0.0.0beta61
@@ -2497,8 +2504,8 @@
 		AL_SysAl_P_IN_O2
 		AL_SysAl_P_IN_AIR
 		AL_SysAl_TUBE_OCCLUSION
-	- werden Alarmlits ausgeschalten, werden entsprechende Alarme gelöscht (AL_PatAl_Apnoe, AL_PatAl_Leakmax, AL_PatAl_BPMmax, AL_PatAl_DCO2max, AL_PatAl_DCO2min, AL_PatAl_ETCO2max, AL_PatAl_ETCO2min)
-	- ist VG oder VL aktiv, wird zusätzlich zum Modus "+VG" oder "+VL" in der Infozeile angezeigt
+	- werden Alarmlits ausgeschalten, werden entsprechende Alarme gelÃ¶scht (AL_PatAl_Apnoe, AL_PatAl_Leakmax, AL_PatAl_BPMmax, AL_PatAl_DCO2max, AL_PatAl_DCO2min, AL_PatAl_ETCO2max, AL_PatAl_ETCO2min)
+	- ist VG oder VL aktiv, wird zusÃ¤tzlich zum Modus "+VG" oder "+VL" in der Infozeile angezeigt
 	- untere Grenze CPAP-Parameter im NMODE jetzt 2 mbar
  @endverbatim
  *
@@ -2507,15 +2514,15 @@
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
 	- Liste des Besprechnungsprotokolls vom 16.07.2012 durchgearbeitet:
-		Punkt 3/9: ist die VG aktiv und der Flowsensor wird ausgeschaltet, geht der Pinsp auf den letzten gültigen Wert, der während der VG verwendet wurde, ist kein gültiger Wert vorhanden auf den vom Anwender zuvor eingestellten Wert
+		Punkt 3/9: ist die VG aktiv und der Flowsensor wird ausgeschaltet, geht der Pinsp auf den letzten gÃ¼ltigen Wert, der wÃ¤hrend der VG verwendet wurde, ist kein gÃ¼ltiger Wert vorhanden auf den vom Anwender zuvor eingestellten Wert
 		Punkt 4: kein Autosilent nach "Disconnection" und "Tubus blockiert"
 		Punkt 5: bei Dekonnektion wird die Autoskalierung ausser Kraft gesetzt
 		Punkt 10: beim Einschalten von VLimit dird die Kurve nicht mehr gewechselt
-		Punkt 11: Pfeil bei Pinsp bei Alarm "Tidalvolumen zu hoch" weg, Text von "Volumen nicht erreicht" nach "Tidalvolumen nicht erreicht" geändert, 
+		Punkt 11: Pfeil bei Pinsp bei Alarm "Tidalvolumen zu hoch" weg, Text von "Volumen nicht erreicht" nach "Tidalvolumen nicht erreicht" geÃ¤ndert, 
 		Punkt 13: Backup-Btn ohne 1/min
 		Punkt 15: PSV Abbruchkriterium von 5-70 einstellbar
-		Punkt 16: wird der Flowsensor ausgeschaltet, werden MV-Alarme gelöscht
-	- Sprachenfiles 1.0.0.85 nötig
+		Punkt 16: wird der Flowsensor ausgeschaltet, werden MV-Alarme gelÃ¶scht
+	- Sprachenfiles 1.0.0.85 nÃ¶tig
  @endverbatim
  *
  * @subsection ver19973 Version 2.0.0.0beta58
@@ -2523,20 +2530,20 @@
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
 	- 2 graue Glocke + Alarmtext bei signalisiertem Alarme in Infozeile
-	- kein Text "signalisierte Alarme gelöscht"
+	- kein Text "signalisierte Alarme gelÃ¶scht"
 	- letzter signalisierter Alarm bleibt in Infozeile stehen bis RESET
-	- wenn signalisierte Alarme mit der Tatse "Alarmsilent" gelöscht werden, wird kein "Send_ALARMKEY_PUSH" an SPI gesendet
-	- wenn Alarmsilent aktiv geschalten wird, wird ein Delay von 20 Sekunden für alle Patientenalarme gesetzt
-	- CPAP: wenn BackupParaBtn auf aus geschalten wird, wird aktiver Backup gelöscht
-	- Alarmlimits: Reset-Btn gelöscht, Rest nur noch über Alarmsilent-Taste
-	- Menüführung Setup/Service geändert
-	- Backup-Akustik-Meldung wählbar in Ventilation Settings
+	- wenn signalisierte Alarme mit der Tatse "Alarmsilent" gelÃ¶scht werden, wird kein "Send_ALARMKEY_PUSH" an SPI gesendet
+	- wenn Alarmsilent aktiv geschalten wird, wird ein Delay von 20 Sekunden fÃ¼r alle Patientenalarme gesetzt
+	- CPAP: wenn BackupParaBtn auf aus geschalten wird, wird aktiver Backup gelÃ¶scht
+	- Alarmlimits: Reset-Btn gelÃ¶scht, Rest nur noch Ã¼ber Alarmsilent-Taste
+	- MenÃ¼fÃ¼hrung Setup/Service geÃ¤ndert
+	- Backup-Akustik-Meldung wÃ¤hlbar in Ventilation Settings
 	- erledigt: HFO + VG + Autoscale: rote Linie in Druckkurve rutscht mitunter aus dem Bild oben oder unten hinaus.
-	- erledigt: HFO + VG:  bei "Volumen nicht erreicht" -> Pfeil aufwärts bei Amplitude setzen
-	- erledigt: Autoscale: X-Achse manuell verstellt: -> nach Alarmbildschirm Rückkehr immer in "10 sek" Einstellung (gewählte Einstellung geht verloren)
-	- erledigt: die Alarmgeschichte wieder so wie zu Beginn gelöst werden, d.h. wenn der Alarm stumm geschalten ist, dann ist er stumm, egal was kommt. 
+	- erledigt: HFO + VG:  bei "Volumen nicht erreicht" -> Pfeil aufwÃ¤rts bei Amplitude setzen
+	- erledigt: Autoscale: X-Achse manuell verstellt: -> nach Alarmbildschirm RÃ¼ckkehr immer in "10 sek" Einstellung (gewÃ¤hlte Einstellung geht verloren)
+	- erledigt: die Alarmgeschichte wieder so wie zu Beginn gelÃ¶st werden, d.h. wenn der Alarm stumm geschalten ist, dann ist er stumm, egal was kommt. 
 		Der Alarm soll aber visuell dargestellt werden. So ist es bei der ganzen fabian-Familie und Mitbewerbern bisher umgesetzt worden. 
-		Gemäss Norm entspricht das einem „Audio AUS“. Da die Stummschaltung bei uns zeitlich begrenzt ist muss die Glocke oben rechts der Richtigkeit halber 
+		GemÃ¤ss Norm entspricht das einem Â„Audio AUSÂ“. Da die Stummschaltung bei uns zeitlich begrenzt ist muss die Glocke oben rechts der Richtigkeit halber 
 		gestrichelte gekreuzte Linien und keine durchgezogenen haben. Im Service Modus muss die Glocke durchgezogene Linien haben, da nicht zeitlich begrenzt.
  @endverbatim
  *
@@ -2544,11 +2551,11 @@
  * @date 2012-07-10
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
-	- Während autoset Alarmlimts läuft und Modus gewechselt wird, wird autoset abgebrochen
-	- Languagefiles 1.0.0.84 nötig
+	- WÃ¤hrend autoset Alarmlimts lÃ¤uft und Modus gewechselt wird, wird autoset abgebrochen
+	- Languagefiles 1.0.0.84 nÃ¶tig
 	- graue Alarmglocke nicht mehr in Infozeile, nur noch in Numerikzeile
 	- Alarm "High Tidal Volume" der Volumengarantie implementiert
-	- Autosilent 30sec nur, wenn Wert geändert wurde
+	- Autosilent 30sec nur, wenn Wert geÃ¤ndert wurde
 	- Alarme Inspirationsschlauch, Exspirationsschlauch, ProximalPressure sind durch Alarm Tobe Occlusion ersetzt
  @endverbatim
  *
@@ -2556,22 +2563,22 @@
  * @date 2012-07-09
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
-	- wenn ALarme signalisiert sind (graue Glocke) können diese mit der gelben Alarmstumm-Taste gelöscht (reset) werden
-	- Languagefiles 1.0.0.82 nötig
+	- wenn ALarme signalisiert sind (graue Glocke) kÃ¶nnen diese mit der gelben Alarmstumm-Taste gelÃ¶scht (reset) werden
+	- Languagefiles 1.0.0.82 nÃ¶tig
  @endverbatim
  *
  * @subsection ver19970 Version 2.0.0.0beta55
  * @date 2012-07-07
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
-	- VG geändert: Während der Beatmung wird ständig der aktuelle und gültige Pins mitgeloggt (mit jedem Atemzug). Der Wert wird als gültig angesehen, wenn der Wert folgende Kriterien erfüllt:
+	- VG geÃ¤ndert: WÃ¤hrend der Beatmung wird stÃ¤ndig der aktuelle und gÃ¼ltige Pins mitgeloggt (mit jedem Atemzug). Der Wert wird als gÃ¼ltig angesehen, wenn der Wert folgende Kriterien erfÃ¼llt:
 	- bei eingeschalteter VG: wenn das gemessene Vte +-15% im Bereich der eingestellten VG liegt
 	- bei ausgeschalteter VG und bei Preset: wenn der gemessene Pmax +-15% im Bereich des eingestellten Pinsp liegt
-		Wird nun die VG eingeschaltet, erhöht sich der erlaubte Pins (Parameter) wie bisher um 5mbar, wird VG ausgeschaltet, wird nachgesehen, ob ein letzter gültiger Pins vorliegt, wenn ja, wird dieser verwendet, wenn nein, wird der eingestellte/max. erlaubte Pins um 5 mbar verringert.
+		Wird nun die VG eingeschaltet, erhÃ¶ht sich der erlaubte Pins (Parameter) wie bisher um 5mbar, wird VG ausgeschaltet, wird nachgesehen, ob ein letzter gÃ¼ltiger Pins vorliegt, wenn ja, wird dieser verwendet, wenn nein, wird der eingestellte/max. erlaubte Pins um 5 mbar verringert.
 		Kriterien, wenn Pinsp verringert wird: 
-	- Pinsp >= PEEP+Ppsv: der Pinsp darf, wenn er verringert wird, nicht kleiner PEEP+Ppsv sein (bei SIMV+PSV). In diesem Fall (habe ich bereits mit Franz W geklärt), wird der Ppsv ebenfalls reduziert
-	- Pinsp muss immer 2mbar größer als PEEP sein
-	- SIMV+PSV+VG: bei automatischer Deaktivierung und Reaktivierung wird der ursprünglich P-PSV wider hergestellt (sofern Bereich passt)
+	- Pinsp >= PEEP+Ppsv: der Pinsp darf, wenn er verringert wird, nicht kleiner PEEP+Ppsv sein (bei SIMV+PSV). In diesem Fall (habe ich bereits mit Franz W geklÃ¤rt), wird der Ppsv ebenfalls reduziert
+	- Pinsp muss immer 2mbar grÃ¶ÃŸer als PEEP sein
+	- SIMV+PSV+VG: bei automatischer Deaktivierung und Reaktivierung wird der ursprÃ¼nglich P-PSV wider hergestellt (sofern Bereich passt)
 	- es wird nur noch bei ff Alarmen die aktuelle View in die entsprechende Alarmview gewechselt:
 		AL_Accu_Defect
 		AL_Accu_Empty
@@ -2601,14 +2608,14 @@
  * @date 2012-07-04
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
-	- HFO + VG:  bei "Volumen nicht erreicht" -> Pfeil aufwärts bei Amplitude
-	- Autoscale: X-Achse gewählte Einstellung wird bei HFO sepaart gespeichert, auch bei Autoscale wird die letzte Einstellung geladen
+	- HFO + VG:  bei "Volumen nicht erreicht" -> Pfeil aufwÃ¤rts bei Amplitude
+	- Autoscale: X-Achse gewÃ¤hlte Einstellung wird bei HFO sepaart gespeichert, auch bei Autoscale wird die letzte Einstellung geladen
 	- HFO + VG + Autoscale:Skalierung richtet sich auch nach den roten Linien der VG
 	- PSV: "Backup aktiv" aus der Infozeile entfernt
-	- Alarmstummschaltung "Manual Silent": Alle Alarme sind für 2 Minuten stumm
-	- Alarmglocke für Alarmstumm rot gestrichelt
+	- Alarmstummschaltung "Manual Silent": Alle Alarme sind fÃ¼r 2 Minuten stumm
+	- Alarmglocke fÃ¼r Alarmstumm rot gestrichelt
 	- Backup-Anzeige nur wenn FLowsensor on
-	- Signalton bei Backup läsdst sich im Menü ausschalten
+	- Signalton bei Backup lÃ¤sdst sich im MenÃ¼ ausschalten
  @endverbatim
  *
  * @subsection ver19968 Version 2.0.0.0beta53
@@ -2617,8 +2624,8 @@
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
 	- DUOPAP -> PEEP: Einheit jetzt sichtbar
 	- CO2 Factory ALarmlimits: High 60 mmHg, Low 8 mmHg
-	- Diverse Änderungen bei CO2-Implementierung MicroPod (Zeit einstellbar bis Pumpe automatisch eingeschaltet wird etc)
-	- Languagefile Version 1.0.0.81 nötig
+	- Diverse Ã„nderungen bei CO2-Implementierung MicroPod (Zeit einstellbar bis Pumpe automatisch eingeschaltet wird etc)
+	- Languagefile Version 1.0.0.81 nÃ¶tig
  @endverbatim
  *
  * @subsection ver19967 Version 2.0.0.0beta52
@@ -2633,13 +2640,13 @@
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
 	- Filter Volumengarntie entfernt
-	- Menü-Struktur geändert (Return-Button etc)
-	- VTe-Werte können entweder BTB oder AVG verwendet werden, Service-Menü->Settings->Use BTB for VTe
-	- Languagefiles 1.0.0.79 nötig
+	- MenÃ¼-Struktur geÃ¤ndert (Return-Button etc)
+	- VTe-Werte kÃ¶nnen entweder BTB oder AVG verwendet werden, Service-MenÃ¼->Settings->Use BTB for VTe
+	- Languagefiles 1.0.0.79 nÃ¶tig
 	- O2 aus Numerik ausgebaut
 	- Anzeige Tubeset aus Numerik ausgebaut
-	- Numerik: Mechanikblöcke nur noch bei Loops
-	- CPAP: "Backup aktiv" in der Infozeile geändert
+	- Numerik: MechanikblÃ¶cke nur noch bei Loops
+	- CPAP: "Backup aktiv" in der Infozeile geÃ¤ndert
  @endverbatim
  *
  * @subsection ver19965 Version 2.0.0.0beta50
@@ -2660,21 +2667,21 @@
  * @date 2012-06-26
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
-	- CO2:	Anzeige der verbleibenden Stunden bis zur Kalibrierung im CO2-Menü(nur Oridion)
+	- CO2:	Anzeige der verbleibenden Stunden bis zur Kalibrierung im CO2-MenÃ¼(nur Oridion)
 			Anzeige, wenn Kalibrierung oder Service erforderlich ist ->Status CO2Sensor, wenn erforderlich dann rot (nur Oridion, Anzeigen-Bsp: Sensor state: ok (calibration required) )
-			Anzeige des Datum der letzten Kalibrierung, ANzeige, wenn Systemzeit ungültig
+			Anzeige des Datum der letzten Kalibrierung, ANzeige, wenn Systemzeit ungÃ¼ltig
 			Factory-Werte: etCO2 high: 50mmHg, etCO2 low: 20mmHg
 			Alarmlimit range: etCO2 high: 5 - 150mmHg, etCO2 low: 0 - 145mmHg
-	- Volumengarantie geändert: bei SIMVPSV wird beim EInschalten der VG der VG-Wert vom TVEresp ermittelt
+	- Volumengarantie geÃ¤ndert: bei SIMVPSV wird beim EInschalten der VG der VG-Wert vom TVEresp ermittelt
  @endverbatim
  *
  * @subsection ver19962 Version 2.0.0.0beta47
  * @date 2012-06-25
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
-	- Volumengarantie geändert:
-		PSV+VG:			VG aktiv für PSV Atemhub, Taste I-Time + Pinsp wird orange, Taste P_PSV dird nicht angezeigt 
-		im Apnoe-Fall wird mit Pinsp beatmet und an die VG herangetastet, Pinsp erhöht sich um 5mbar bei 
+	- Volumengarantie geÃ¤ndert:
+		PSV+VG:			VG aktiv fÃ¼r PSV Atemhub, Taste I-Time + Pinsp wird orange, Taste P_PSV dird nicht angezeigt 
+		im Apnoe-Fall wird mit Pinsp beatmet und an die VG herangetastet, Pinsp erhÃ¶ht sich um 5mbar bei 
 		zuschalten der VG, maximale Grenze Pinsp
 	- CPAP: bei Backup wird "Backup aktiv" in der Infozeile angezeigt
 	- Verriegelung Pinsp bei PSV+VG entfernt
@@ -2686,11 +2693,11 @@
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
 	- Volumengarantie neu implementiert:
-		SIMV+PSV+VG:	VG aktiv für SIMV Atemhub, PSV Atemhub nicht VG kontolliert. 
-			I-Time + Pinsp Button wird orange, Pinsp erhöht sich um 5mbar bei 
+		SIMV+PSV+VG:	VG aktiv fÃ¼r SIMV Atemhub, PSV Atemhub nicht VG kontolliert. 
+			I-Time + Pinsp Button wird orange, Pinsp erhÃ¶ht sich um 5mbar bei 
 			zuschalten der VG, bei nichgt erreichen von VG -> Pfeil nach oben 
 			in der Pinsp-Taste
-		PSV+VG:			VG aktiv für PSV Atemhub, Taste I-Time + Pinsp wird orange, 
+		PSV+VG:			VG aktiv fÃ¼r PSV Atemhub, Taste I-Time + Pinsp wird orange, 
 			im Apnoe-Fall wird mit Pinsp beatmet und an die VG herangetastet, 
 			maximale Grenze Pinsp
 	- Button I-Time bei PSV und SIMV+PSV auch ohne VG orange
@@ -2700,8 +2707,8 @@
  * @date 2012-06-21
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
-	- Autoset Alarmlimit lässt sich deaktivieren
-	- Button Factory Settings lässt sich ausblenden
+	- Autoset Alarmlimit lÃ¤sst sich deaktivieren
+	- Button Factory Settings lÃ¤sst sich ausblenden
  @endverbatim
  *
  * @subsection ver19959 Version 2.0.0.0beta44
@@ -2716,8 +2723,8 @@
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
 	- Referenzschleife wird jetzt gleich gespeichert
-	- Alarmlimit Leak: on/off-Regelung geändert -> off -> 10 -> 50
-	- Verzögerung Alarm "Druck tief" (AL_PatAl_PminLow) von 500ms auf 1000ms erhöht
+	- Alarmlimit Leak: on/off-Regelung geÃ¤ndert -> off -> 10 -> 50
+	- VerzÃ¶gerung Alarm "Druck tief" (AL_PatAl_PminLow) von 500ms auf 1000ms erhÃ¶ht
 	- Im NMODE wird bei Aufhebung Disconnectionsalarm kein Autosilent(30sec) gesetzt
  @endverbatim
  *
@@ -2739,42 +2746,42 @@
  * @date 2012-05-24
  * @verbatim
 	(Ctrl 3.2.7 / Mon 2.8.7 oder 3.8.7 / HFO 2.0.1 / Blender 2.6)
-	- PDMS-Testversion für Holland
+	- PDMS-Testversion fÃ¼r Holland
  @endverbatim
  *
  * @subsection ver19954 Version 2.0.0.0beta
  * @date 2011-12-15
  * @verbatim
  (Ctrl 3.0.x / Mon 2.7.2 oder 3.0.1 / HFO 2.0.1 / Blender 2.5)
-	- Video implementiert (es muss künftig die Video-DLL im Verzeichnis FFSDISK der NetDCU liegen, auch NetDCU11!)
+	- Video implementiert (es muss kÃ¼nftig die Video-DLL im Verzeichnis FFSDISK der NetDCU liegen, auch NetDCU11!)
 	- PDMS implementiert (acuLink)
-	- Trends mit Lizenzschlüssel
+	- Trends mit LizenzschlÃ¼ssel
 	- AutoIFlow + Lungenrekruitment implementiert
-	- Lungenrekruitment mit Lizenzschlüssel implementiert
-	- Mainboard-Version wird unterstützt, wird bei Startup an SPI & COM geschickt,
-		wird bei System-Info im Menü und im Service-Mode angezeigt
+	- Lungenrekruitment mit LizenzschlÃ¼ssel implementiert
+	- Mainboard-Version wird unterstÃ¼tzt, wird bei Startup an SPI & COM geschickt,
+		wird bei System-Info im MenÃ¼ und im Service-Mode angezeigt
 	- Serielle Schnittstellen sind an Mainboard-Version angepasst
 	- Autoscale Pressure-Graoh an Pmean rec (Lungenrekruitment) angepasst
 	- FlowTrigger: Einheit jetzt als Liter/Minute
 	- Pmanual wir in HFO mit Lungenrecruitment ausgeblendet
-	- minimale Differenz Pmean und Pmean rec beträgt jetzt 2mbar
+	- minimale Differenz Pmean und Pmean rec betrÃ¤gt jetzt 2mbar
 	- CO2-Modul: ALarmlimits an Einheit angepasst
 	- Send_PARAVAL_EXH_TIME(iETIME/1000);
-	- Signaltöne SetPIFSound(PIF_SIGNAL) werden mit minimaler Lautstärke gesendet
+	- SignaltÃ¶ne SetPIFSound(PIF_SIGNAL) werden mit minimaler LautstÃ¤rke gesendet
 	- Flowkalibrierung: DAC-Werte aus Anzeige entfernt
-	- MAC-Adresse wir überprüft
+	- MAC-Adresse wir Ã¼berprÃ¼ft
 	- Trends: Kommastelle bei COMPLIANCE, Vte, MV und Pmean
 	- Nebulizer implementiert, Alarme: 
 		AL_Nebulizer_Disconnection,			// 37,
 		AL_Nebulizer_SysError,				// 38,
-	- Languagefiles 1.0.0.73 nötig
-	- I2C: delay bei I2C-Alarm von 15 sec, Überprüfung der CalibratioBits vom AccuStatus
-	- CModelObserver	* pObserver wird auf NULL geprüft
-	- I2C über CriticalSection abgesichert
-	- SERIAL über CriticalSection abgesichert
+	- Languagefiles 1.0.0.73 nÃ¶tig
+	- I2C: delay bei I2C-Alarm von 15 sec, ÃœberprÃ¼fung der CalibratioBits vom AccuStatus
+	- CModelObserver	* pObserver wird auf NULL geprÃ¼ft
+	- I2C Ã¼ber CriticalSection abgesichert
+	- SERIAL Ã¼ber CriticalSection abgesichert
 	- etCO2: Capnostat -> GasCompensation wird vom aktuellen O2 Wert automatisch geschickt, kann nicht mehr eingestellt werden
 	- CMVModel::SaveLastGuiltyBreathValues() nur wenn VENT_RUNNING==GetVentRunState()
-	- Volumengarantie/-limit: ResetLastGuiltyPINSP() und ResetLastGuiltyHFamp() wird erst nach Deaktivierung durchgeführt 
+	- Volumengarantie/-limit: ResetLastGuiltyPINSP() und ResetLastGuiltyHFamp() wird erst nach Deaktivierung durchgefÃ¼hrt 
 	- CO2 Implementierung: neue ALarme: 
 		AL_Sens_CO2_MODULE_NOTCONNECTED,	// 32,
 		AL_Sens_CO2_FILTERLINE_NOTCONNECTED,// 33,
@@ -2783,23 +2790,23 @@
 		AL_Sens_CO2_SENSORFAULTY,		// 36,
 	- CO2 neu implementiert (MicroPod & Capnostat)
 	- wenn CO2-Modul aktiv und FLowsensor ausgeschaltet -> RR wird von CO2-Modul angezeigt
-	- P-PROXIMAL-Alarm über serielle Schnittstelle implementiert
+	- P-PROXIMAL-Alarm Ã¼ber serielle Schnittstelle implementiert
 	- Erkennung NetDCU9 + LED/LCD Display mittels RegKey "HKLM\\Drivers\\Display\\SMIVGX\\Mode20"
 	- etCO2 development project merged
 	- Nebulizer implementiert
-	- Languagefiles 1.0.0.74 nötig
+	- Languagefiles 1.0.0.74 nÃ¶tig
 	- CMVModel::SaveLastGuiltyBreathValues() nur wenn VENT_RUNNING==GetVentRunState()
 	- DEMOVERSION als #define implementiert
-	- AlarmLogList: wenn voll wird ältester Eintrag gelöscht 
+	- AlarmLogList: wenn voll wird Ã¤ltester Eintrag gelÃ¶scht 
 	- ViewDiagramm/CircularBuffer: for-Schleifen durch memcpy ersetzt
-	- Timer zum Wechsel von den Menüs zum HomeBS auf 45 Sekunden erhöht
-	- Timer der Parameterbuttons auf 45 Sekunden erhöht
-	- HOMETIMER (Moduswechsel) auf 45 Sekunden erhöht
+	- Timer zum Wechsel von den MenÃ¼s zum HomeBS auf 45 Sekunden erhÃ¶ht
+	- Timer der Parameterbuttons auf 45 Sekunden erhÃ¶ht
+	- HOMETIMER (Moduswechsel) auf 45 Sekunden erhÃ¶ht
 	- Trigger ParaBtn: Anzeige je nach Wert: sensitivity high/middle/low
-	- PSV-Modus: Pinsp wir bei Aktivierung nicht erhöht, bei Alarm "Volumen nicht erreicht" wird Pfeil nach oben in Ppsv-Para gezeichnet (nicht mehr Pinsp)
-	- PDMS und CO2-Project zusammen geführt
-	- InfantFlowLP included, LanguageFile 1.0.0.76 nötig!
-	- Sprachfiles bezüglich Tubeset angepasst
+	- PSV-Modus: Pinsp wir bei Aktivierung nicht erhÃ¶ht, bei Alarm "Volumen nicht erreicht" wird Pfeil nach oben in Ppsv-Para gezeichnet (nicht mehr Pinsp)
+	- PDMS und CO2-Project zusammen gefÃ¼hrt
+	- InfantFlowLP included, LanguageFile 1.0.0.76 nÃ¶tig!
+	- Sprachfiles bezÃ¼glich Tubeset angepasst
 	- AfxGetMainWnd()->PostMessage() durch AfxGetApp()->GetMainWnd()->PostMessage() ersetzt
 	- bei VueLink wird nur der aktive Alarm gesetzt, alle anderen sind '0', bei acuLink werden alle Alarmstati gesetzt
 	- acuLink: ALINK_ALARM_ENABLED implementiert, Messwerte werden nicht mehr in AVG und BTB unterschieden

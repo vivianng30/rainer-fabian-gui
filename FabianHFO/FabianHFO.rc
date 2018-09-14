@@ -1935,6 +1935,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_TXT_CHECKLEAK       "check leak"
+    IDS_TXT_INPROGRESS      "in progress"
 END
 
 #endif    // German (Germany) resources
