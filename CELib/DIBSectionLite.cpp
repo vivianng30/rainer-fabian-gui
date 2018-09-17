@@ -1040,7 +1040,7 @@ BOOL CDIBSectionLite::Load(LPCTSTR lpszFileName)
         return FALSE;
 
     // Get the current file position.  
-    DWORD dwFileStart = file.GetPosition();
+    DWORD dwFileStart = (DWORD) file.GetPosition();
 
     // The first part of the file contains the file header.
     // This will tell us if it is a bitmap, how big the header is, and how big 
@@ -1303,7 +1303,7 @@ BOOL CDIBSectionLite::CreatePalette()
     
     // Create and fill a LOGPALETTE structure with the colors used.
     PALETTEINFO PaletteInfo;
-    PaletteInfo.palNumEntries = m_iColorTableSize;
+    PaletteInfo.palNumEntries = (WORD) m_iColorTableSize;
                         
     for (int i = 0; i < nColors; i++)
     {
@@ -1569,8 +1569,8 @@ UINT CEGetDIBColorTable(HDC hdc, UINT uStartIndex, UINT cEntries,
         
         // Set the palette index for the test pixel,
         // modifying only the bits for one pixel
-        *pBits = (iColor << (8 - ds.dsBmih.biBitCount)) |
-            (*pBits & ~wIndexMask);
+        *pBits = BYTE ((iColor << (8 - ds.dsBmih.biBitCount)) |
+            (*pBits & ~wIndexMask));
         
         // now get the resulting color
         rgbColor = GetPixel( hdc, 0, TestPixelY );

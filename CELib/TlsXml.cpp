@@ -219,7 +219,7 @@ CTlsXmlScanner::EToken CTlsXmlScanner::Lexx()
 					  while(true)
 					  {
 						  int c2 = GetChar();
-						  szBuf[iBuf++] = c2;
+						  szBuf[iBuf++] = (char) c2;
 						  if(c2 == -1)
 							  break;
 						  if(c2 == ';')
@@ -245,7 +245,7 @@ CTlsXmlScanner::EToken CTlsXmlScanner::Lexx()
 					  else if(strncmp(szBuf, "&amp", 4)==0)
 						  m_szCurrToken[m_iCurrLen++] = '&';
 					  else if(strncmp(szBuf, "&#", 2)==0)
-						  m_szCurrToken[m_iCurrLen++] = atoi(szBuf+2);
+						  m_szCurrToken[m_iCurrLen++] = (char) atoi(szBuf+2);
 					  else 
 					  {
 						  for(int i3 = 0; i3 < iBuf; i3++)

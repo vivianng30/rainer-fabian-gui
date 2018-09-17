@@ -517,7 +517,7 @@ int CTlsRegistry::Import(CStringW sFileName)
             continue;
           }
           int i = HexDigit(c);
-          uiCurrbyte = (uiCurrbyte << 4) | i;
+          uiCurrbyte = (uiCurrbyte << 4) | (unsigned char) i;
         }
         bl.Append(&uiCurrbyte, 1);
         
@@ -629,7 +629,7 @@ int CTlsRegistry::Import(CStringW sFileName)
           }
           int i = HexDigit(c);
 
-          uiCurrbyte = (uiCurrbyte << 4) | i;
+          uiCurrbyte = (uiCurrbyte << 4) | (unsigned char) i;
         }
         bl.Append(&uiCurrbyte, 1);
 

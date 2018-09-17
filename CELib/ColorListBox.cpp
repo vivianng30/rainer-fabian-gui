@@ -374,9 +374,9 @@ bool CColorListBox::AlphaBlendU
 
 		for (int i = 0; i < cx; ++i)
 		{
-			pbSrcRGB[0]=(pbDestRGB[0] * (255-alpha) + pbSrcRGB[0] * alpha)>>8;
-			pbSrcRGB[1]=(pbDestRGB[1] * (255-alpha) + pbSrcRGB[1] * alpha)>>8;
-			pbSrcRGB[2]=(pbDestRGB[2] * (255-alpha) + pbSrcRGB[2] * alpha)>>8;
+			pbSrcRGB[0]= (BYTE) ((pbDestRGB[0] * (255-alpha) + pbSrcRGB[0] * alpha)>>8);
+			pbSrcRGB[1]= (BYTE) ((pbDestRGB[1] * (255-alpha) + pbSrcRGB[1] * alpha)>>8);
+			pbSrcRGB[2]= (BYTE) ((pbDestRGB[2] * (255-alpha) + pbSrcRGB[2] * alpha)>>8);
 			pbSrcRGB += 4;
 			pbDestRGB += 4;
 		}

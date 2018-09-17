@@ -107,7 +107,7 @@ bool CTlsIStream_Base::ReadLine(CStringW& rString)
 {
   while(!IsEof())
   {
-    char c = ReadChar();
+    char c = (char) ReadChar();
     if(c == '\r')
     {
       int c2 = ReadChar();
@@ -139,7 +139,7 @@ bool CTlsIStream_Base::ReadString(CStringW& rString, CStringW delimchars)
       break;
 
     char sz[2] = " ";
-    sz[0] = c;
+    sz[0] = (char) c;
     if(delimchars.FindOneOf(CStringW(sz)) != -1)
       break;
 
@@ -184,7 +184,7 @@ bool CTlsIStream_Base::ReadBYTE(BYTE& pc)
   if(i == -1)
     return false;
 
-  pc = i;
+  pc = (BYTE)i;
 
   return true;
 }
@@ -197,7 +197,7 @@ int i = 0;
   {
     if(IsEof())
       break;
-    by[i] = ReadChar();
+    by[i] = (char) ReadChar();
   }
   return i;
 }
@@ -391,7 +391,7 @@ bool CTlsOStream_Base::Write(const CStringW sData)
   int iLen = sData.GetLength();
   char* psz = (char*)malloc(iLen+1);
   for(int idx = 0; idx < iLen; idx++)
-	  psz[idx] = sData.GetAt(idx);
+	  psz[idx] = (char) sData.GetAt(idx);
 /*
   int iLen = wcstombs(psz, sData, i);
 */

@@ -288,7 +288,7 @@ DWORD CTlsComPort::ReadCO2Command(BYTE *pData , DWORD iData)
 	DWORD iLen = 0;
 	DWORD iRead = 0;
 
-	ULONGLONG timeout = 0;
+	DWORD timeout = 0;
 	
 	/*DWORD dwStart = GetTickCount();
 	DWORD dwDiff=0;*/
@@ -363,7 +363,7 @@ DWORD CTlsComPort::ReadCO2Command(BYTE *pData , DWORD iData)
 
 bool CTlsComPort::Write(CTlsBlob &data)
 {
-    ULONGLONG timeout = GetTickCount();
+    DWORD timeout = GetTickCount();
     
     const char * temp = (const char *)data.GetBuffer();
     int size = data.GetBufferLen();

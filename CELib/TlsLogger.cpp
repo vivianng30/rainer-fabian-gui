@@ -82,7 +82,7 @@ bool CTlsLogger::AppendLine(CStringW sLine)
   pMsg[iLen+1] = '\n';
   pMsg[iLen+2] = '\0';
 
-  Append(pMsg, iLen+2);
+  Append(pMsg, (WORD) iLen+2);
   delete [] pMsg;
     
   return true;

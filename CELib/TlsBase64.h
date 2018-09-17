@@ -41,7 +41,7 @@ public:
 class CTlsHex  
 {
 public:
-	static char ToHex(unsigned int h);
+	static char ToHex(char h);
 	static unsigned int FromHex(wchar_t c);
 	static CString CharToHex(char c);
 	static CString IntToHex8(int i);

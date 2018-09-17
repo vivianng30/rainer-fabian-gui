@@ -80,7 +80,7 @@ bool CTlsBase64::Decode(CTlsBlob rIn, CTlsBlob& rOut)
 
   while(!is.IsEof())
   {
-    char c = is.ReadChar();
+    char c = (char) is.ReadChar();
 
     if(c == -1)
       break;
@@ -247,7 +247,7 @@ bool CTlsBase64::Encode(CTlsBlob rIn, CTlsBlob& rOut)
 \brief 
 */
 //=============================================================================
-char CTlsHex::ToHex(unsigned int h)
+char CTlsHex::ToHex(char h)
 {
 	if(h >= 0 && h <= 9)
 		return '0' + h;
