@@ -26,9 +26,9 @@ public:
   DWORD		 Baud;
 
   DWORD		 Read(void *pData ,DWORD iData);
-  int      ReadLine(char* pData,DWORD iData);
+  DWORD      ReadLine(char* pData,DWORD iData);
   DWORD       Read(CTlsBlob &data);
-  int		 ReadCommand(char *pData , DWORD iData);
+  DWORD		 ReadCommand(char *pData , DWORD iData);
   int		ReadCO2Command(BYTE *pData , DWORD iData);
 
   DWORD		 Write (const void *pData,DWORD len);

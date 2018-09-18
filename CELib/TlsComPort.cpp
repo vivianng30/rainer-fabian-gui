@@ -215,7 +215,7 @@ DWORD CTlsComPort::Read(void *pData , DWORD iData)
     return iRead;
 }
 
-int CTlsComPort::ReadLine(char *pData , DWORD iData)
+DWORD CTlsComPort::ReadLine(char *pData , DWORD iData)
 {
     DWORD iRead = 0;
     
@@ -223,7 +223,7 @@ int CTlsComPort::ReadLine(char *pData , DWORD iData)
         return 0;
     
     if(!pData)
-        return -1;
+        return MAXDWORD;
     
     while(true)
     {
@@ -242,7 +242,7 @@ int CTlsComPort::ReadLine(char *pData , DWORD iData)
     return iRead;
 }
 
-int CTlsComPort::ReadCommand(char *pData , DWORD iData)
+DWORD CTlsComPort::ReadCommand(char *pData , DWORD iData)
 {
 	DWORD iRead = 0;
 
@@ -250,7 +250,7 @@ int CTlsComPort::ReadCommand(char *pData , DWORD iData)
 		return 0;
 
 	if(!pData)
-		return -1;
+		return MAXDWORD;
 
 	while(true)
 	{
