@@ -77,7 +77,7 @@ public:
 			CBmp*	pcBmpDown,
 			CBmp*	pcBmpDisabled,
 			CBmp*	pcBmpFocus,
-			bool bSignaled,
+            bool    bSignaled,
 			bool bRedraw);
 
 protected:

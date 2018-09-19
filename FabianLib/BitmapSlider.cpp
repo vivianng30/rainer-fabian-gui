@@ -72,7 +72,7 @@ END_MESSAGE_MAP()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CBitmapSlider::OnEraseBkgnd(CDC* pDC) 
+BOOL CBitmapSlider::OnEraseBkgnd(CDC*) 
 {	
 	// Do not erase background for the transparency effect
 	return TRUE;

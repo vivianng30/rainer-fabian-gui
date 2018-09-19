@@ -202,7 +202,7 @@ BOOL CLimitBtn::Create(CWnd* pParentWnd,DWORD dwStyle, fVALUE v)
  * \param 		  	bRedraw		 	True to redraw.
  **************************************************************************************************/
 
-void CLimitBtn::SetBitmaps(CBmp* pcBmpUp,CBmp* pcBmpDown,CBmp* pcBmpDisabled,CBmp* pcBmpFocus,bool bSignaled,bool bRedraw)
+void CLimitBtn::SetBitmaps(CBmp* pcBmpUp,CBmp* pcBmpDown,CBmp* pcBmpDisabled,CBmp* pcBmpFocus,bool,bool bRedraw)
 {
 	if(m_btn.pcBmpUp!=pcBmpUp)
 	{
@@ -606,7 +606,7 @@ bool CLimitBtn::SetLimits(int nLower,int nUpper)
  * \param	bCheckValueChanged	True if check value changed.
  **************************************************************************************************/
 
-void CLimitBtn::DrawDirectUp(bool bCheckValueChanged)
+void CLimitBtn::DrawDirectUp(bool)
 {
 	m_bDepressed=false;
 	m_bTurnedOff=false;

@@ -1552,7 +1552,7 @@ bool CParaBtn::SetLimits(int nLower,int nUpper)
  * \param	bCheckValueChanged	True if check value changed.
  **************************************************************************************************/
 
-void CParaBtn::DrawDirectUp(bool bCheckValueChanged)
+void CParaBtn::DrawDirectUp(bool)
 {
 	m_bDepressed=false;
 	m_bTurnedOff=false;

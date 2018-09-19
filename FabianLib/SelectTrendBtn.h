@@ -42,7 +42,7 @@ public:
 		CBmp*	pcBmpFocus);*/
 
 protected:
-	void Draw(int nState,int AddInfo=0);
+	void Draw(int nState, int AddInfo=0);
 	void DrawRotatedText(CDC* pDC, const CStringW str, CRect rect, double angle, UINT nOptions = 0);
 
 	// Attributes

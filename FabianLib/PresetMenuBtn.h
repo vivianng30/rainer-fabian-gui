@@ -45,7 +45,7 @@ public:
 	void SetBtnState(eBtnState state, bool bReleaseButton=false);
 
 protected:
-	void Draw(int nState,int AddInfo=0);
+	void Draw(int nState, int AddInfo=0);
 	// Attributes
 public:
 private:

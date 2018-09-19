@@ -129,7 +129,7 @@ void CDTUpDwnBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
  * \param	nAddInfo	Information describing the add.
  **************************************************************************************************/
 
-void CDTUpDwnBtn::Draw(int nState,int nAddInfo)
+void CDTUpDwnBtn::Draw(int nState,int)
 {
 	if(m_hFont)
 	{

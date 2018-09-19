@@ -206,7 +206,7 @@ void CSelectTrendBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
  * \param	nAddInfo	Information describing the add.
  **************************************************************************************************/
 
-void CSelectTrendBtn::Draw(int nState,int nAddInfo)
+void CSelectTrendBtn::Draw(int nState, int)
 {
 	HFONT hPrevFont=(HFONT)SelectObject(m_hDC,m_hFont);
 	int nBkMode=SetBkMode(m_hDC,TRANSPARENT);
