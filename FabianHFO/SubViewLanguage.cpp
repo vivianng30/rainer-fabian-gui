@@ -87,9 +87,9 @@ CSubViewLanguage::CSubViewLanguage()
 	m_bInitialized=false;
 	m_pModel=NULL;
 	m_pWndHourglass=NULL;
-	m_pcwtLoadLanguageThread=NULL;
+	/*m_pcwtLoadLanguageThread=NULL;
 	m_hThreadLoadLanguage=INVALID_HANDLE_VALUE;
-	m_bDoLoadLanguageThread=false;
+	m_bDoLoadLanguageThread=false;*/
 
 	m_bExit=false;
 
@@ -582,6 +582,8 @@ void CSubViewLanguage::OnDestroy()
 {
 	m_bExit=true;
 
+	DestroyWndHourglass();
+
 	BYTE iTimeout=0;
 	if(m_bInitialized==false)
 	{
@@ -592,7 +594,7 @@ void CSubViewLanguage::OnDestroy()
 		}
 	}
 
-	StopLoadLanguageThread();
+	/*StopLoadLanguageThread();
 	if(m_pcwtLoadLanguageThread!=NULL)
 	{
 		delete m_pcwtLoadLanguageThread;
@@ -603,9 +605,9 @@ void CSubViewLanguage::OnDestroy()
 			CloseHandle(m_hThreadLoadLanguage);
 			m_hThreadLoadLanguage=INVALID_HANDLE_VALUE;
 		}
-	}
+	}*/
 
-	DestroyWndHourglass();
+	//DestroyWndHourglass();
 
 	m_plLangBtn.RemoveAll();
 	m_plUsedLangBtn.RemoveAll();
@@ -1405,11 +1407,14 @@ void CSubViewLanguage::SetLanguage(int btnID)
 
 				SetSelectedPos(szTemp);
 
+				
 				CreateWndHourglass();
 				ShowWndHourglass(true);
 
-				StartLoadLanguageThread();
-				eventLoadLanguage.SetEvent();
+				/*StartLoadLanguageThread();
+				eventLoadLanguage.SetEvent();*/
+
+				LoadLanguage();
 
 			}
 		}
@@ -1524,28 +1529,28 @@ void CSubViewLanguage::ReorganizeBtns(bool forward)
  * \date	23.02.2018
  **************************************************************************************************/
 
-void CSubViewLanguage::StartLoadLanguageThread( void )
-{
-	m_bDoLoadLanguageThread=true;
-	//m_pcwtLoadLanguageThread=AfxBeginThread(CLoadLanguageThread,this);
-
-	if(m_pcwtLoadLanguageThread!=NULL)
-	{
-		delete m_pcwtLoadLanguageThread;
-		m_pcwtLoadLanguageThread=NULL;
-
-		if(m_hThreadLoadLanguage!=INVALID_HANDLE_VALUE)
-		{
-			CloseHandle(m_hThreadLoadLanguage);
-			m_hThreadLoadLanguage=INVALID_HANDLE_VALUE;
-		}
-	}
-
-	m_pcwtLoadLanguageThread=AfxBeginThread(CLoadLanguageThread,this,THREAD_PRIORITY_NORMAL,0,CREATE_SUSPENDED);
-	m_hThreadLoadLanguage=m_pcwtLoadLanguageThread->m_hThread;
-	m_pcwtLoadLanguageThread->m_bAutoDelete = FALSE; 
-	m_pcwtLoadLanguageThread->ResumeThread();
-}
+//void CSubViewLanguage::StartLoadLanguageThread( void )
+//{
+//	m_bDoLoadLanguageThread=true;
+//	//m_pcwtLoadLanguageThread=AfxBeginThread(CLoadLanguageThread,this);
+//
+//	if(m_pcwtLoadLanguageThread!=NULL)
+//	{
+//		delete m_pcwtLoadLanguageThread;
+//		m_pcwtLoadLanguageThread=NULL;
+//
+//		if(m_hThreadLoadLanguage!=INVALID_HANDLE_VALUE)
+//		{
+//			CloseHandle(m_hThreadLoadLanguage);
+//			m_hThreadLoadLanguage=INVALID_HANDLE_VALUE;
+//		}
+//	}
+//
+//	m_pcwtLoadLanguageThread=AfxBeginThread(CLoadLanguageThread,this,THREAD_PRIORITY_NORMAL,0,CREATE_SUSPENDED);
+//	m_hThreadLoadLanguage=m_pcwtLoadLanguageThread->m_hThread;
+//	m_pcwtLoadLanguageThread->m_bAutoDelete = FALSE; 
+//	m_pcwtLoadLanguageThread->ResumeThread();
+//}
 
 /**********************************************************************************************//**
  * Stops load language thread
@@ -1554,28 +1559,28 @@ void CSubViewLanguage::StartLoadLanguageThread( void )
  * \date	23.02.2018
  **************************************************************************************************/
 
-void CSubViewLanguage::StopLoadLanguageThread( void )
-{
-	if(m_bDoLoadLanguageThread)
-	{
-		m_bDoLoadLanguageThread=false;
-		eventLoadLanguage.SetEvent();
-
-		if (WaitForSingleObject(m_pcwtLoadLanguageThread->m_hThread,3000) == WAIT_TIMEOUT)
-		{
-			theApp.WriteLog(_T("#THR:029a"));
-			if(!TerminateThread(m_pcwtLoadLanguageThread,0))
-			{
-				theApp.WriteLog(_T("#THR:029b"));
-				/*int err = GetLastError();
-				CStringW temp;
-				temp.Format(L"TerminateThread error ConnectionThread [%d]",err);*/
-			}
-			/*m_pcwtLoadLanguageThread=NULL;*/
-		}
-	}
-	
-}
+//void CSubViewLanguage::StopLoadLanguageThread( void )
+//{
+//	if(m_bDoLoadLanguageThread)
+//	{
+//		m_bDoLoadLanguageThread=false;
+//		eventLoadLanguage.SetEvent();
+//
+//		if (WaitForSingleObject(m_pcwtLoadLanguageThread->m_hThread,3000) == WAIT_TIMEOUT)
+//		{
+//			theApp.WriteLog(_T("#THR:029a"));
+//			if(!TerminateThread(m_pcwtLoadLanguageThread,0))
+//			{
+//				theApp.WriteLog(_T("#THR:029b"));
+//				/*int err = GetLastError();
+//				CStringW temp;
+//				temp.Format(L"TerminateThread error ConnectionThread [%d]",err);*/
+//			}
+//			/*m_pcwtLoadLanguageThread=NULL;*/
+//		}
+//	}
+//	
+//}
 
 /**********************************************************************************************//**
  * Loads language thread
@@ -1588,34 +1593,34 @@ void CSubViewLanguage::StopLoadLanguageThread( void )
  * \return	The language thread.
  **************************************************************************************************/
 
-static UINT CLoadLanguageThread( LPVOID pc )
-{
-	try
-	{
-		((CSubViewLanguage*)pc)->LoadLanguage();
-	}
-	catch (CException* e)
-	{
-		TCHAR   szCause[255];
-		e->GetErrorMessage(szCause, 255);
-
-		CString errorStr=_T("");
-		errorStr.Format(_T("CLoadLanguageThread: %s"),szCause);
-
-		theApp.ReportException(errorStr);
-
-		e->Delete();
-	}
-	catch(...)
-	{
-		theApp.ReportException(_T("CLoadLanguageThread"));
-
-		if(AfxGetApp())
-			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
-	}
-	//((CSubViewLanguage*)pc)->LoadLanguage();
-	return TRUE;
-}
+//static UINT CLoadLanguageThread( LPVOID pc )
+//{
+//	try
+//	{
+//		((CSubViewLanguage*)pc)->LoadLanguage();
+//	}
+//	catch (CException* e)
+//	{
+//		TCHAR   szCause[255];
+//		e->GetErrorMessage(szCause, 255);
+//
+//		CString errorStr=_T("");
+//		errorStr.Format(_T("CLoadLanguageThread: %s"),szCause);
+//
+//		theApp.ReportException(errorStr);
+//
+//		e->Delete();
+//	}
+//	catch(...)
+//	{
+//		theApp.ReportException(_T("CLoadLanguageThread"));
+//
+//		if(AfxGetApp())
+//			AfxGetApp()->GetMainWnd()->PostMessage(WM_EXCEPTION);
+//	}
+//	//((CSubViewLanguage*)pc)->LoadLanguage();
+//	return TRUE;
+//}
 
 /**********************************************************************************************//**
  * Loads the language
@@ -1628,9 +1633,7 @@ static UINT CLoadLanguageThread( LPVOID pc )
 
 DWORD CSubViewLanguage::LoadLanguage(void) 
 {
-
-
-	if (::WaitForSingleObject(eventLoadLanguage, INFINITE) == WAIT_OBJECT_0 && m_bDoLoadLanguageThread) 
+	//if (::WaitForSingleObject(eventLoadLanguage, INFINITE) == WAIT_OBJECT_0 && m_bDoLoadLanguageThread) 
 	{
 		theApp.WriteLog(_T("LL"));
 
@@ -1640,7 +1643,7 @@ DWORD CSubViewLanguage::LoadLanguage(void)
 			getModel()->setReloadLanguageProgress(true);
 
 			DWORD dwResult = getModel()->getLANGUAGE()->LoadLang(m_szLangToLoad,true);
-			Sleep(1);
+			//Sleep(1);
 			if(dwResult==100)
 			{
 				CStringW szLog = _T("#HFO:0214: ");
@@ -1665,19 +1668,17 @@ DWORD CSubViewLanguage::LoadLanguage(void)
 			if(AfxGetApp())
 				AfxGetApp()->GetMainWnd()->PostMessage(WM_LANGUAGE_CHANGED);
 
-			getModel()->setReloadLanguageProgress(false);
-			Sleep(200);
-
+			//getModel()->setReloadLanguageProgress(false);
+			//Sleep(200);
 		}
-
 	}
-	m_bDoLoadLanguageThread=false;
+	//m_bDoLoadLanguageThread=false;
 
-	if(!m_bExit)
+	/*if(!m_bExit)
 	{
 		ShowWndHourglass(false);
 		Draw();
-	}
+	}*/
 
 	return 0;
 }
