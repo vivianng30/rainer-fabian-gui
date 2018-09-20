@@ -2011,10 +2011,19 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 						theApp.WriteLog(_T("CF1"));
 						LoadGlobalAcuFonts(getModel()->GetLanguageID());
 						m_wLanguageID=getModel()->GetLanguageID();
+
+						//todo call directly the event
+						CMVEventUI event(CMVEventUI::EV_LANGUAGE);
+						getModel()->triggerEvent(&event);
+
+						//to inform all other windows beside fabian
 						::SendMessage(HWND_BROADCAST,WM_FONTCHANGE,0,0);
 					}
 
 				}
+
+				//todo reset font loading flag
+				getModel()->setReloadLanguageProgress(false);
 
 				//close the language view
 				theApp.WriteLog(_T("RDV"));
@@ -2023,7 +2032,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 			break;
-		case WM_FONTCHANGE:
+		/*case WM_FONTCHANGE:
 			{
 				if(!m_bExit)
 				{
@@ -2031,7 +2040,7 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					getModel()->triggerEvent(&event);
 				}
 			}
-			break;
+			break;*/
 		case WM_EXCEPTION:
 			{
 				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("! EXCEPTION: please restart ASAP !"), 5000);
@@ -2098,6 +2107,9 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			break;*/
 		case WM_EV_TIMETEXT_RELOADCONFIG:
 			{
+				//set font loading flag
+				getModel()->setReloadLanguageProgress(true);
+
 				CStringW sData = getModel()->GetLanguageString(IDS_TXT_CONFIGLOADED);
 				CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  sData, 3000);
 				getModel()->triggerEvent(&event2);
@@ -4479,6 +4491,9 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case WM_RELOAD_CONFIG_ERROR:
 			{
+				//set font loading flag
+				getModel()->setReloadLanguageProgress(true);
+
 				CStringW sData = _T("ERROR: ");
 				sData += getModel()->GetLanguageString(IDS_TXT_CONFIGLOADED);
 				CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  sData, 3000);
