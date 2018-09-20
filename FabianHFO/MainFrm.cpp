@@ -2018,13 +2018,11 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 						//to inform all other windows beside fabian
 						::SendMessage(HWND_BROADCAST,WM_FONTCHANGE,0,0);
-
 					}
 
 				}
 
-
-				//reset font loading flag
+				//todo reset font loading flag
 				getModel()->setReloadLanguageProgress(false);
 
 				//close the language view
