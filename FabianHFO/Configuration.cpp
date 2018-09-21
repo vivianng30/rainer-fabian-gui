@@ -1460,7 +1460,7 @@ void CConfiguration::LoadSettings()
 	if(m_eTriggerType_CPAP<TRIGGER_FLOW  || m_eTriggerType_CPAP>TRIGGER_PRESSURE) //pressure trigger check, allowed setting: FLOW, PRESSURE, OFF
 	{
 		m_eTriggerType_CPAP=TRIGGER_FLOW;
-		getModel()->getI2C()->WriteConfigByte(m_eTriggerType_CPAP,TRIGGER_FLOW);
+		getModel()->getI2C()->WriteConfigByte((WORD)m_eTriggerType_CPAP, (BYTE)TRIGGER_FLOW);
 	}
 
 	m_eTriggerType_NCPAP=(eTriggereType)getModel()->getI2C()->ReadConfigByte(TRIGGERTYPENCPAP_8);
@@ -1489,7 +1489,7 @@ void CConfiguration::LoadSettings()
 		/*else
 			m_eTriggerTypeNMODE=TRIGGER_OFF;*/
 
-		getModel()->getI2C()->WriteConfigByte(TRIGGERTYPEDUOPAP_8,m_eTriggerType_DUOPAP);
+		getModel()->getI2C()->WriteConfigByte(TRIGGERTYPEDUOPAP_8, (BYTE)m_eTriggerType_DUOPAP);
 	}
 
 	m_eAutoOxyCal=(eAutoOxyCal)getModel()->getI2C()->ReadConfigByte(AUTOOXYCAL_8);
@@ -1659,14 +1659,14 @@ void CConfiguration::LoadSettings()
 	if(m_iBreathVolGaranty<2 || m_iBreathVolGaranty>10)
 	{
 		m_iBreathVolGaranty=5;
-		getModel()->getI2C()->WriteConfigByte(BREATHVOLGARANTY_8,m_iBreathVolGaranty);
+		getModel()->getI2C()->WriteConfigByte(BREATHVOLGARANTY_8, (BYTE)m_iBreathVolGaranty);
 	}*/
 
 	m_iPercentAbortCriterionPSV=getModel()->getI2C()->ReadConfigByte(ABORTCRITERIONPSV_8);
 	if(m_iPercentAbortCriterionPSV<MIN_ABORTCRITERION_PSV || m_iPercentAbortCriterionPSV>MAX_ABORTCRITERION_PSV)
 	{
 		m_iPercentAbortCriterionPSV=25;
-		getModel()->getI2C()->WriteConfigByte(ABORTCRITERIONPSV_8,m_iPercentAbortCriterionPSV);
+		getModel()->getI2C()->WriteConfigByte(ABORTCRITERIONPSV_8,(BYTE)m_iPercentAbortCriterionPSV);
 	}
 
 	if(getModel()->getI2C()->ReadConfigByte(FILLEDGRAPH_8)==1)
@@ -1810,107 +1810,107 @@ void CConfiguration::LoadSettings()
 	if(m_iTrendPMeanMax<G_LOWER_MAXSCALE_PRESSURE || m_iTrendPMeanMax>G_UPPER_MAXSCALE_PRESSURE)
 	{
 		m_iTrendPMeanMax=G_UPPER_MAXSCALE_PRESSURE;
-		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_PMEAN_16,m_iTrendPMeanMax);
+		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_PMEAN_16,(SHORT)m_iTrendPMeanMax);
 	}
 	m_iTrendFIO2Max=getModel()->getI2C()->ReadConfigWord(TRENDSCALE_FIO2_16);
 	if(m_iTrendFIO2Max<G_LOWER_MAXSCALE_FIO2 || m_iTrendFIO2Max>G_UPPER_MAXSCALE_FIO2)
 	{
 		m_iTrendFIO2Max=G_UPPER_MAXSCALE_FIO2;
-		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_FIO2_16,m_iTrendFIO2Max);
+		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_FIO2_16,(SHORT)m_iTrendFIO2Max);
 	}
 	m_iTrendVteMax=getModel()->getI2C()->ReadConfigWord(TRENDSCALE_VTE_16);
 	if(m_iTrendVteMax<G_LOWER_MAXSCALE_VTE || m_iTrendVteMax>G_UPPER_MAXSCALE_VTE)
 	{
 		m_iTrendVteMax=G_UPPER_MAXSCALE_VTE;
-		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_VTE_16,m_iTrendVteMax);
+		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_VTE_16,(SHORT)m_iTrendVteMax);
 	}
 	m_iTrendComplianceMax=getModel()->getI2C()->ReadConfigWord(TRENDSCALE_COMPLIANCE_16);
 	if(m_iTrendComplianceMax<G_LOWER_MAXSCALE_COMPL || m_iTrendComplianceMax>G_UPPER_MAXSCALE_COMPL)
 	{
 		m_iTrendComplianceMax=G_UPPER_MAXSCALE_COMPL;
-		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_COMPLIANCE_16,m_iTrendComplianceMax);
+		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_COMPLIANCE_16,(SHORT)m_iTrendComplianceMax);
 	}
 	m_iTrendDCO2Max=getModel()->getI2C()->ReadConfigWord(TRENDSCALE_DCO2_16);
 	if(m_iTrendDCO2Max<G_LOWER_MAXSCALE_DCO2 || m_iTrendDCO2Max>G_UPPER_MAXSCALE_DCO2)
 	{
 		m_iTrendDCO2Max=G_UPPER_MAXSCALE_DCO2;
-		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_DCO2_16,m_iTrendDCO2Max);
+		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_DCO2_16,(SHORT)m_iTrendDCO2Max);
 	}
 	m_iTrendMVMax=getModel()->getI2C()->ReadConfigWord(TRENDSCALE_MV_16);
 	if(m_iTrendMVMax<G_LOWER_MAXSCALE_MV || m_iTrendMVMax>G_UPPER_MAXSCALE_MV)
 	{
 		m_iTrendMVMax=G_UPPER_MAXSCALE_MV;
-		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_MV_16,m_iTrendMVMax);
+		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_MV_16,(SHORT)m_iTrendMVMax);
 	}
 
 	m_iTrendHFAMPMax=getModel()->getI2C()->ReadConfigWord(TRENDSCALE_HFAMP_16);
 	if(m_iTrendHFAMPMax<G_LOWER_MAXSCALE_HFAMP || m_iTrendHFAMPMax>G_UPPER_MAXSCALE_HFAMP)
 	{
 		m_iTrendHFAMPMax=G_UPPER_MAXSCALE_HFAMP;
-		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_HFAMP_16,m_iTrendHFAMPMax);
+		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_HFAMP_16,(SHORT)m_iTrendHFAMPMax);
 	}
 
 	m_iTrendRSBIMax=getModel()->getI2C()->ReadConfigWord(TRENDSCALE_RSBI_16);
 	if(m_iTrendRSBIMax<G_LOWER_MAXSCALE_RSBI || m_iTrendRSBIMax>G_UPPER_MAXSCALE_RSBI)
 	{
 		m_iTrendRSBIMax=G_UPPER_MAXSCALE_RSBI;
-		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_RSBI_16,m_iTrendRSBIMax);
+		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_RSBI_16,(SHORT)m_iTrendRSBIMax);
 	}
 
 	m_iTrendSHAREMVMANDMax=getModel()->getI2C()->ReadConfigWord(TRENDSCALE_SHAREMVMAND_16);
 	if(m_iTrendSHAREMVMANDMax<G_LOWER_MAXSCALE_SHAREMVMAND || m_iTrendSHAREMVMANDMax>G_UPPER_MAXSCALE_SHAREMVMAND)
 	{
 		m_iTrendSHAREMVMANDMax=G_UPPER_MAXSCALE_SHAREMVMAND;
-		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SHAREMVMAND_16,m_iTrendSHAREMVMANDMax);
+		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SHAREMVMAND_16,(SHORT)m_iTrendSHAREMVMANDMax);
 	}
 
 	m_iTrendRESISTANCEMax=getModel()->getI2C()->ReadConfigWord(TRENDSCALE_RESISTANCE_16);
 	if(m_iTrendRESISTANCEMax<G_LOWER_MAXSCALE_RESISTANCE || m_iTrendRESISTANCEMax>G_UPPER_MAXSCALE_RESISTANCE)
 	{
 		m_iTrendRESISTANCEMax=G_UPPER_MAXSCALE_RESISTANCE;
-		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_RESISTANCE_16,m_iTrendRESISTANCEMax);
+		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_RESISTANCE_16,(SHORT)m_iTrendRESISTANCEMax);
 	}
 
 	m_iTrendLEAKMax=getModel()->getI2C()->ReadConfigWord(TRENDSCALE_LEAK_16);
 	if(m_iTrendLEAKMax<G_LOWER_MAXSCALE_LEAK || m_iTrendLEAKMax>G_UPPER_MAXSCALE_LEAK)
 	{
 		m_iTrendLEAKMax=G_UPPER_MAXSCALE_LEAK;
-		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_LEAK_16,m_iTrendLEAKMax);
+		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_LEAK_16,(SHORT)m_iTrendLEAKMax);
 	}
 
 	m_iTrendSPO2Max=getModel()->getI2C()->ReadConfigWord(TRENDSCALE_SPO2_16);
 	if(m_iTrendSPO2Max<G_LOWER_MAXSCALE_SPO2 || m_iTrendSPO2Max>G_UPPER_MAXSCALE_SPO2)
 	{
 		m_iTrendSPO2Max=G_UPPER_MAXSCALE_SPO2;
-		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SPO2_16,m_iTrendSPO2Max);
+		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SPO2_16,(SHORT)m_iTrendSPO2Max);
 	}
 
 	m_iTrendSPO2PIMax=getModel()->getI2C()->ReadConfigWord(TRENDSCALE_SPO2PI_16);
 	if(m_iTrendSPO2PIMax<G_LOWER_MAXSCALE_SPO2PI || m_iTrendSPO2PIMax>G_UPPER_MAXSCALE_SPO2PI)
 	{
 		m_iTrendSPO2PIMax=G_UPPER_MAXSCALE_SPO2PI;
-		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SPO2PI_16,m_iTrendSPO2PIMax);
+		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SPO2PI_16,(SHORT)m_iTrendSPO2PIMax);
 	}
 
 	m_iTrendETCO2Max=getModel()->getI2C()->ReadConfigWord(TRENDSCALE_ETCO2_16);
 	if(m_iTrendETCO2Max<G_LOWER_MAXSCALE_CO2 || m_iTrendETCO2Max>G_UPPER_MAXSCALE_CO2)
 	{
 		m_iTrendETCO2Max=G_UPPER_MAXSCALE_CO2;
-		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_ETCO2_16,m_iTrendETCO2Max);
+		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_ETCO2_16,(SHORT)m_iTrendETCO2Max);
 	}
 
 	m_iTrendSPO2PRMax=getModel()->getI2C()->ReadConfigWord(TRENDSCALE_SPO2PR_16);
 	if(m_iTrendSPO2PRMax<G_LOWER_MAXSCALE_SPO2PR || m_iTrendSPO2PRMax>G_UPPER_MAXSCALE_SPO2PR)
 	{
 		m_iTrendSPO2PRMax=G_UPPER_MAXSCALE_SPO2PR;
-		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SPO2PR_16,m_iTrendSPO2PRMax);
+		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SPO2PR_16,(SHORT)m_iTrendSPO2PRMax);
 	}
 
 	m_iTrendFREQUENCYMax=getModel()->getI2C()->ReadConfigWord(TRENDSCALE_FREQUENCY_16);
 	if(m_iTrendFREQUENCYMax<G_LOWER_MAXSCALE_FREQUENCY || m_iTrendFREQUENCYMax>G_UPPER_MAXSCALE_FREQUENCY)
 	{
 		m_iTrendFREQUENCYMax=G_UPPER_MAXSCALE_FREQUENCY;
-		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_FREQUENCY_16,m_iTrendFREQUENCYMax);
+		getModel()->getI2C()->WriteConfigWord(TRENDSCALE_FREQUENCY_16,(SHORT)m_iTrendFREQUENCYMax);
 	}
 
 	m_iMAXSCALE_SPO2_GRAPH=getModel()->getI2C()->ReadConfigWord(MAXSCALE_SPO2_GRAPH_16);
@@ -1961,7 +1961,7 @@ void CConfiguration::LoadSettings()
 	if(m_iMAXSCALE_VOLUME_GRAPH<G_LOWER_MAXSCALE_VOLUME*10 || m_iMAXSCALE_VOLUME_GRAPH>iUPPER_MAXSCALE_VOLUME*10)
 	{
 		m_iMAXSCALE_VOLUME_GRAPH=iUPPER_MAXSCALE_VOLUME*10;
-		getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_GRAPH_16,iUPPER_MAXSCALE_VOLUME*10);
+		getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_GRAPH_16,(SHORT)iUPPER_MAXSCALE_VOLUME*10);
 	}
 
 	m_iMAXSCALE_SPO2_HFGRAPH=getModel()->getI2C()->ReadConfigWord(MAXSCALE_SPO2_HFGRAPH_16);
@@ -2049,13 +2049,13 @@ void CConfiguration::LoadSettings()
 	if(m_iMAXSCALE_VOLUME_PVLOOP<G_LOWER_MAXSCALE_VOLUME*10 || m_iMAXSCALE_VOLUME_PVLOOP>iUPPER_MAXSCALE_VOLUME*10)
 	{
 		m_iMAXSCALE_VOLUME_PVLOOP=iUPPER_MAXSCALE_VOLUME*10;
-		getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_PVLOOP_16,iUPPER_MAXSCALE_VOLUME*10);
+		getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_PVLOOP_16,(SHORT)iUPPER_MAXSCALE_VOLUME*10);
 	}
 	m_iMAXSCALE_VOLUME_VFLOOP=getModel()->getI2C()->ReadConfigWord(MAXSCALE_VOLUME_VFLOOP_16);
 	if(m_iMAXSCALE_VOLUME_VFLOOP<G_LOWER_MAXSCALE_VOLUME*10 || m_iMAXSCALE_VOLUME_VFLOOP>iUPPER_MAXSCALE_VOLUME*10)
 	{
 		m_iMAXSCALE_VOLUME_VFLOOP=iUPPER_MAXSCALE_VOLUME*10;
-		getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_VFLOOP_16,iUPPER_MAXSCALE_VOLUME*10);
+		getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_VFLOOP_16,(SHORT)iUPPER_MAXSCALE_VOLUME*10);
 	}
 	m_iMAXSCALE_FLOW_VFLOOP=getModel()->getI2C()->ReadConfigWord(MAXSCALE_FLOW_VFLOOP_16);
 	if(m_iMAXSCALE_FLOW_VFLOOP<G_LOWER_MAXSCALE_FLOW*10 || m_iMAXSCALE_FLOW_VFLOOP>G_UPPER_MAXSCALE_FLOW*10)
@@ -2069,14 +2069,14 @@ void CConfiguration::LoadSettings()
 	if(m_iMAXSCALE_FOT_PRESSURE<G_LOWER_MAXSCALE_PRESSURE_FOT || m_iMAXSCALE_FOT_PRESSURE>G_UPPER_MAXSCALE_PRESSURE)
 	{
 		m_iMAXSCALE_FOT_PRESSURE=G_LOWER_MAXSCALE_PRESSURE_FOT;
-		getModel()->getI2C()->WriteConfigWord(MAXSCALE_FOT_PRESSURE_16,m_iMAXSCALE_FOT_PRESSURE);
+		getModel()->getI2C()->WriteConfigWord(MAXSCALE_FOT_PRESSURE_16,(SHORT)m_iMAXSCALE_FOT_PRESSURE);
 	}
 
 	//m_iMINSCALE_FOT_XRS=getModel()->getI2C()->ReadConfigWord(MINSCALE_FOT_XRS_16);
 	//if(m_iMINSCALE_FOT_XRS> (G_LOWER_MINSCALE_XRS_FOT *(-1)) || m_iMINSCALE_FOT_XRS<G_UPPER_MINSCALE_XRS_FOT)//rku, check FOTGRAPH
 	//{
 	//	m_iMINSCALE_FOT_XRS=(G_LOWER_MINSCALE_XRS_FOT *(-1));
-	//	getModel()->getI2C()->WriteConfigWord(MINSCALE_FOT_XRS_16,m_iMINSCALE_FOT_XRS);
+	//	getModel()->getI2C()->WriteConfigWord(MINSCALE_FOT_XRS_16, (SHORT)m_iMINSCALE_FOT_XRS);
 	//}
 	m_iMINSCALE_FOT_XRS=G_LOWER_MINSCALE_XRS_FOT;//rku, check FOTGRAPH
 	m_iMAXSCALE_FOT_XRS=G_UPPER_MAXSCALE_XRS_FOT;
@@ -2102,7 +2102,7 @@ void CConfiguration::LoadSettings()
 	if(m_iCO2BaroPressure<MIN_BAROPRESSURE || m_iCO2BaroPressure>MAX_BAROPRESSURE)
 	{
 		m_iCO2BaroPressure=760;
-		getModel()->getI2C()->WriteConfigWord(CO2BAROPRESSURE_16, m_iCO2BaroPressure);
+		getModel()->getI2C()->WriteConfigWord(CO2BAROPRESSURE_16, (SHORT)m_iCO2BaroPressure);
 	}
 
 	m_iCO2TimePumpAutoOn=getModel()->getI2C()->ReadConfigByte(CO2TIMEPUMPAUTOON);
@@ -2178,7 +2178,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataITime_IPPV<100 || m_iParaDataITime_IPPV>2000)
 	{
 		m_iParaDataITime_IPPV=FACTORY_IPPV_ITIME;
-		getModel()->getI2C()->WriteConfigWord(PARA_ITIME_IPPV_16,m_iParaDataITime_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_ITIME_IPPV_16, (SHORT)m_iParaDataITime_IPPV);
 	}
 
 	WORD iMINRANGE_NEO_ITIME_TRIGGER=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_ITIME_TRIGGER"), MINRANGE_NEO_ITIME_TRIGGER);
@@ -2215,7 +2215,7 @@ void CConfiguration::LoadSettings()
 			break;
 		}
 		
-		getModel()->getI2C()->WriteConfigWord(PARA_ITIME_TRIGGER_16,m_iParaDataITime_TRIGGER);
+		getModel()->getI2C()->WriteConfigWord(PARA_ITIME_TRIGGER_16, (SHORT)m_iParaDataITime_TRIGGER);
 	}
 
 	WORD iMINRANGE_NEO_ITIME_NMODE=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_ITIME_NMODE"), MINRANGE_NEO_ITIME_NMODE);
@@ -2225,7 +2225,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataITime_NMODE<iMINRANGE_NEO_ITIME_NMODE || m_iParaDataITime_NMODE>iMAXRANGE_PED_ITIME_NMODE)
 	{
 		m_iParaDataITime_NMODE=FACTORY_NMODE_ITIME;
-		getModel()->getI2C()->WriteConfigWord(PARA_ITIME_NMODE_16,m_iParaDataITime_NMODE);
+		getModel()->getI2C()->WriteConfigWord(PARA_ITIME_NMODE_16, (SHORT)m_iParaDataITime_NMODE);
 	}
 
 	WORD iMINRANGE_NEO_ETIME_IPPV=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_ETIME_IPPV"), MINRANGE_NEO_ETIME_IPPV);
@@ -2234,7 +2234,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataETIME_IPPV<iMINRANGE_NEO_ETIME_IPPV || m_iParaDataETIME_IPPV>iMAXRANGE_PED_ETIME_IPPV)
 	{
 		m_iParaDataETIME_IPPV=FACTORY_IPPV_ETIME;
-		getModel()->getI2C()->WriteConfigWord(PARA_ETIME_IPPV_16,m_iParaDataETIME_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_ETIME_IPPV_16, (SHORT)m_iParaDataETIME_IPPV);
 	}
 
 	WORD iMINRANGE_NEO_ETIME_TRIGGER=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_ETIME_TRIGGER"), MINRANGE_NEO_ETIME_TRIGGER);
@@ -2271,7 +2271,7 @@ void CConfiguration::LoadSettings()
 			}
 			break;
 		}
-		getModel()->getI2C()->WriteConfigWord(PARA_ETIME_TRIGGER_16,m_iParaDataETIME_TRIGGER);
+		getModel()->getI2C()->WriteConfigWord(PARA_ETIME_TRIGGER_16, (SHORT)m_iParaDataETIME_TRIGGER);
 	}
 
 	WORD iMINRANGE_NEO_ETIME_NMODE=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_ETIME_NMODE"), MINRANGE_NEO_ETIME_NMODE);
@@ -2295,7 +2295,7 @@ void CConfiguration::LoadSettings()
 			}
 			break;
 		}
-		getModel()->getI2C()->WriteConfigWord(PARA_ETIME_NMODE_16,m_iParaDataETIME_NMODE);
+		getModel()->getI2C()->WriteConfigWord(PARA_ETIME_NMODE_16, (SHORT)m_iParaDataETIME_NMODE);
 	}
 
 	WORD iMINRANGE_PED_BPM_IPPV=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_BPM_IPPV"), MINRANGE_PED_BPM_IPPV);
@@ -2304,7 +2304,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataBPM_IPPV<iMINRANGE_PED_BPM_IPPV || m_iParaDataBPM_IPPV>iMAXRANGE_NEO_BPM_IPPV)
 	{
 		m_iParaDataBPM_IPPV=FACTORY_IPPV_BPM;
-		getModel()->getI2C()->WriteConfigWord(PARA_BPM_IPPV_16,m_iParaDataBPM_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_BPM_IPPV_16, (SHORT)m_iParaDataBPM_IPPV);
 	}
 
 	WORD iMINRANGE_PED_BPM_TRIGGER=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_BPM_TRIGGER"), MINRANGE_PED_BPM_TRIGGER);
@@ -2342,7 +2342,7 @@ void CConfiguration::LoadSettings()
 			}
 			break;
 		}
-		getModel()->getI2C()->WriteConfigWord(PARA_BPM_TRIGGER_16,m_iParaDataBPM_TRIGGER);
+		getModel()->getI2C()->WriteConfigWord(PARA_BPM_TRIGGER_16, (SHORT)m_iParaDataBPM_TRIGGER);
 	}
 
 	WORD iMINRANGE_NEO_BPM_NMODE=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_BPM_NMODE"), MINRANGE_NEO_BPM_NMODE);
@@ -2352,7 +2352,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataBPM_NMODE<iMINRANGE_NEO_BPM_NMODE || m_iParaDataBPM_NMODE>iMAXRANGE_PED_BPM_NMODE)
 	{
 		m_iParaDataBPM_NMODE=FACTORY_NMODE_BPM;
-		getModel()->getI2C()->WriteConfigWord(PARA_BPM_NMODE_16,m_iParaDataBPM_NMODE);
+		getModel()->getI2C()->WriteConfigWord(PARA_BPM_NMODE_16, (SHORT)m_iParaDataBPM_NMODE);
 	}
 
 	WORD iMINRANGE_NEO_IFLOW_IPPV=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_IFLOW_IPPV"), MINRANGE_NEO_IFLOW_IPPV);
@@ -2361,7 +2361,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataIFlow_IPPV<iMINRANGE_NEO_IFLOW_IPPV || m_iParaDataIFlow_IPPV>iMAXRANGE_PED_IFLOW_IPPV)
 	{
 		m_iParaDataIFlow_IPPV=FACTORY_IFLOW;
-		getModel()->getI2C()->WriteConfigWord(PARA_IFLOW_IPPV_16,m_iParaDataIFlow_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_IFLOW_IPPV_16, (SHORT)m_iParaDataIFlow_IPPV);
 	}
 
 	WORD iMINRANGE_NEO_IFLOW_TRIGGER=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_IFLOW_TRIGGER"), MINRANGE_NEO_IFLOW_TRIGGER);
@@ -2371,7 +2371,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataIFlow_TRIGGER<iMINRANGE_NEO_IFLOW_TRIGGER || m_iParaDataIFlow_TRIGGER>iMAXRANGE_PED_IFLOW_TRIGGER)
 	{
 		m_iParaDataIFlow_TRIGGER=FACTORY_IFLOW;
-		getModel()->getI2C()->WriteConfigWord(PARA_IFLOW_TRIGGER_16,m_iParaDataIFlow_TRIGGER);
+		getModel()->getI2C()->WriteConfigWord(PARA_IFLOW_TRIGGER_16, (SHORT)m_iParaDataIFlow_TRIGGER);
 	}
 
 	WORD iMINRANGE_NEO_HFFLOW=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_HFFLOW"), MINRANGE_NEO_HFFLOW);
@@ -2381,7 +2381,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataHFFlow<iMINRANGE_NEO_HFFLOW || m_iParaDataHFFlow>iMAXRANGE_PED_HFFLOW)
 	{
 		m_iParaDataHFFlow=FACTORY_HFFLOW;
-		getModel()->getI2C()->WriteConfigWord(PARA_HFFLOW_16,m_iParaDataHFFlow);
+		getModel()->getI2C()->WriteConfigWord(PARA_HFFLOW_16, (SHORT)m_iParaDataHFFlow);
 	}
 
 	WORD iMAXRANGE_PED_RISETIME_IPPV=(WORD)regLimit.ReadDWORD(_T("MAXRANGE_PED_RISETIME_IPPV"), MAXRANGE_PED_RISETIME_IPPV);
@@ -2392,7 +2392,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataRisetime_IPPV<iMINRANGE_NEO_RISETIME_IPPV || m_iParaDataRisetime_IPPV>iMAXRANGE_PED_RISETIME_IPPV)
 	{
 		m_iParaDataRisetime_IPPV=FACTORY_RISETIME;
-		getModel()->getI2C()->WriteConfigWord(PARA_RISETIME_IPPV_16,m_iParaDataRisetime_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_RISETIME_IPPV_16, (SHORT)m_iParaDataRisetime_IPPV);
 	}
 
 	WORD iMAXRANGE_PED_RISETIME_TRIGGER=(WORD)regLimit.ReadDWORD(_T("MAXRANGE_PED_RISETIME_TRIGGER"), MAXRANGE_PED_RISETIME_TRIGGER);
@@ -2402,7 +2402,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataRisetime_TRIGGER<iMINRANGE_NEO_RISETIME_TRIGGER || m_iParaDataRisetime_TRIGGER>iMAXRANGE_PED_RISETIME_TRIGGER)
 	{
 		m_iParaDataRisetime_TRIGGER=FACTORY_RISETIME;
-		getModel()->getI2C()->WriteConfigWord(PARA_RISETIME_TRIGGER_16,m_iParaDataRisetime_TRIGGER);
+		getModel()->getI2C()->WriteConfigWord(PARA_RISETIME_TRIGGER_16, (SHORT)m_iParaDataRisetime_TRIGGER);
 	}
 
 	WORD iMINRANGE_NEO_EFLOW_IPPV=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_EFLOW_IPPV"), MINRANGE_NEO_EFLOW_IPPV);
@@ -2412,7 +2412,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataEFlow_IPPV<iMINRANGE_NEO_EFLOW_IPPV || m_iParaDataEFlow_IPPV>iMAXRANGE_PED_EFLOW_IPPV)
 	{
 		m_iParaDataEFlow_IPPV=FACTORY_EFLOW;
-		getModel()->getI2C()->WriteConfigWord(PARA_EFLOW_IPPV_16,m_iParaDataEFlow_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_EFLOW_IPPV_16, (SHORT)m_iParaDataEFlow_IPPV);
 	}
 
 	WORD iMINRANGE_NEO_EFLOW_TRIGGER=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_EFLOW_TRIGGER"), MINRANGE_NEO_EFLOW_TRIGGER);
@@ -2421,7 +2421,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataEFlow_TRIGGER<iMINRANGE_NEO_EFLOW_TRIGGER || m_iParaDataEFlow_TRIGGER>iMAXRANGE_PED_EFLOW_TRIGGER)
 	{
 		m_iParaDataEFlow_TRIGGER=FACTORY_EFLOW;
-		getModel()->getI2C()->WriteConfigWord(PARA_EFLOW_TRIGGER_16,m_iParaDataEFlow_TRIGGER);
+		getModel()->getI2C()->WriteConfigWord(PARA_EFLOW_TRIGGER_16, (SHORT)m_iParaDataEFlow_TRIGGER);
 	}
 
 	WORD iMINRANGE_PED_THERAPYFLOW=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_THERAPYFLOW"), MINRANGE_PED_THERAPYFLOW);
@@ -2431,7 +2431,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataTherapieFlow<iMINRANGE_PED_THERAPYFLOW || m_iParaDataTherapieFlow>iMAXRANGE_PED_THERAPYFLOW)
 	{
 		m_iParaDataTherapieFlow=FACTORY_THERAPYFLOW;
-		getModel()->getI2C()->WriteConfigWord(PARA_THERAPYFLOW_16,m_iParaDataTherapieFlow);
+		getModel()->getI2C()->WriteConfigWord(PARA_THERAPYFLOW_16, (SHORT)m_iParaDataTherapieFlow);
 	}
 
 	WORD iMINRANGE_PED_FLOWMIN=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_FLOWMIN"), MINRANGE_PED_FLOWMIN);
@@ -2441,7 +2441,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataFlowMin<iMINRANGE_PED_FLOWMIN || m_iParaDataFlowMin>iMAXRANGE_PED_FLOWMIN)
 	{
 		m_iParaDataFlowMin=FACTORY_FLOWMIN;
-		getModel()->getI2C()->WriteConfigWord(PARA_FLOWMIN_16,m_iParaDataFlowMin);
+		getModel()->getI2C()->WriteConfigWord(PARA_FLOWMIN_16, (SHORT)m_iParaDataFlowMin);
 	}
 
 	WORD iMINRANGE_PED_PEEP_IPPV=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_PEEP_IPPV"), MINRANGE_PED_PEEP_IPPV);
@@ -2451,7 +2451,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataPEEP_IPPV<iMINRANGE_PED_PEEP_IPPV || m_iParaDataPEEP_IPPV>iMAXRANGE_PED_PEEP_IPPV)
 	{
 		m_iParaDataPEEP_IPPV=FACTORY_PEEP;
-		getModel()->getI2C()->WriteConfigWord(PARA_PEEP_IPPV_16,m_iParaDataPEEP_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_PEEP_IPPV_16, (SHORT)m_iParaDataPEEP_IPPV);
 	}
 
 	WORD iMINRANGE_PED_PEEP_TRIGGER=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_PEEP_TRIGGER"), MINRANGE_PED_PEEP_TRIGGER);
@@ -2460,7 +2460,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataPEEP_TRIGGER<iMINRANGE_PED_PEEP_TRIGGER || m_iParaDataPEEP_TRIGGER>iMAXRANGE_PED_PEEP_TRIGGER)
 	{
 		m_iParaDataPEEP_TRIGGER=FACTORY_PEEP;
-		getModel()->getI2C()->WriteConfigWord(PARA_PEEP_TRIGGER_16,m_iParaDataPEEP_TRIGGER);
+		getModel()->getI2C()->WriteConfigWord(PARA_PEEP_TRIGGER_16, (SHORT)m_iParaDataPEEP_TRIGGER);
 	}
 
 	WORD iMINRANGE_PED_CPAP=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_CPAP"), MINRANGE_PED_CPAP);
@@ -2470,7 +2470,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataCpap<iMINRANGE_PED_CPAP || m_iParaDataCpap>iMAXRANGE_PED_CPAP)
 	{
 		m_iParaDataCpap=FACTORY_CPAP;
-		getModel()->getI2C()->WriteConfigWord(PARA_CPAP_16,m_iParaDataCpap);
+		getModel()->getI2C()->WriteConfigWord(PARA_CPAP_16, (SHORT)m_iParaDataCpap);
 	}
 
 	
@@ -2492,7 +2492,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataPInsp_IPPV<iMINRANGE_PED_PINSP_IPPV || m_iParaDataPInsp_IPPV>iMAXRANGE_PED_PINSP_IPPV)
 	{
 		m_iParaDataPInsp_IPPV=FACTORY_PINSP;
-		getModel()->getI2C()->WriteConfigWord(PARA_PINSP_IPPV_16,m_iParaDataPInsp_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_PINSP_IPPV_16, (SHORT)m_iParaDataPInsp_IPPV);
 	}
 
 	WORD iMINRANGE_PED_PINSP_TRIGGER=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_PINSP_TRIGGER"), MINRANGE_PED_PINSP_TRIGGER);
@@ -2501,7 +2501,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataPInsp_TRIGGER<iMINRANGE_PED_PINSP_TRIGGER || m_iParaDataPInsp_TRIGGER>iMAXRANGE_PED_PINSP_TRIGGER)
 	{
 		m_iParaDataPInsp_TRIGGER=FACTORY_PINSP;
-		getModel()->getI2C()->WriteConfigWord(PARA_PINSP_TRIGGER_16,m_iParaDataPInsp_TRIGGER);
+		getModel()->getI2C()->WriteConfigWord(PARA_PINSP_TRIGGER_16, (SHORT)m_iParaDataPInsp_TRIGGER);
 	}
 
 	
@@ -2512,7 +2512,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataPmaxVolG_IPPV<iMINRANGE_PED_PMAXVOLG_IPPV || m_iParaDataPmaxVolG_IPPV>iMAXRANGE_PED_PMAXVOLG_IPPV)
 	{
 		m_iParaDataPmaxVolG_IPPV=FACTORY_PMAXVOLG;
-		getModel()->getI2C()->WriteConfigWord(PARA_PMAXVOLG_IPPV_16,m_iParaDataPmaxVolG_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_PMAXVOLG_IPPV_16, (SHORT)m_iParaDataPmaxVolG_IPPV);
 	}
 
 	WORD iMINRANGE_PED_PMAXVOLG_TRIGGER=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_PMAXVOLG_TRIGGER"), MINRANGE_PED_PMAXVOLG_TRIGGER);
@@ -2521,7 +2521,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataPmaxVolG_TRIGGER<iMINRANGE_PED_PMAXVOLG_TRIGGER || m_iParaDataPmaxVolG_TRIGGER>iMAXRANGE_PED_PMAXVOLG_TRIGGER)
 	{
 		m_iParaDataPmaxVolG_TRIGGER=FACTORY_PMAXVOLG;
-		getModel()->getI2C()->WriteConfigWord(PARA_PMAXVOLG_TRIGGER_16,m_iParaDataPmaxVolG_TRIGGER);
+		getModel()->getI2C()->WriteConfigWord(PARA_PMAXVOLG_TRIGGER_16, (SHORT)m_iParaDataPmaxVolG_TRIGGER);
 	}
 
 	WORD iMINRANGE_PED_PPSV=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_PPSV"), MINRANGE_PED_PPSV);
@@ -2531,11 +2531,11 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataPPSV<iMINRANGE_PED_PPSV || m_iParaDataPPSV>iMAXRANGE_PED_PPSV)
 	{
 		m_iParaDataPPSV=FACTORY_PEEP+20;//FACTORY_PPSV;
-		getModel()->getI2C()->WriteConfigWord(PARA_PPSV_16,m_iParaDataPPSV);
+		getModel()->getI2C()->WriteConfigWord(PARA_PPSV_16, (SHORT)m_iParaDataPPSV);
 	}
 
 	//m_iParaDataPPSV=FACTORY_PEEP+20;//FACTORY_PPSV;
-	//getModel()->getI2C()->WriteConfigWord(PARA_PPSV_16,m_iParaDataPPSV);
+	//getModel()->getI2C()->WriteConfigWord(PARA_PPSV_16, (SHORT)m_iParaDataPPSV);
 
 	
 
@@ -2546,14 +2546,14 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataPManual_HFO<iMINRANGE_PED_PMANUAL || m_iParaDataPManual_HFO>iMAXRANGE_PED_PMANUAL)
 	{
 		m_iParaDataPManual_HFO=FACTORY_PMAN;
-		getModel()->getI2C()->WriteConfigWord(PARA_PMAN_HFO_16,m_iParaDataPManual_HFO);
+		getModel()->getI2C()->WriteConfigWord(PARA_PMAN_HFO_16, (SHORT)m_iParaDataPManual_HFO);
 	}
 
 	m_iParaDataPManual_CPAP=getModel()->getI2C()->ReadConfigWord(PARA_PMAN_CPAP_16);
 	if(m_iParaDataPManual_CPAP<iMINRANGE_PED_PMANUAL || m_iParaDataPManual_CPAP>iMAXRANGE_PED_PMANUAL)
 	{
 		m_iParaDataPManual_CPAP=FACTORY_PMAN;
-		getModel()->getI2C()->WriteConfigWord(PARA_PMAN_CPAP_16,m_iParaDataPManual_CPAP);
+		getModel()->getI2C()->WriteConfigWord(PARA_PMAN_CPAP_16, (SHORT)m_iParaDataPManual_CPAP);
 	}
 
 	WORD iMINRANGE_PED_PMANUAL_NMODE=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_PMANUAL_NMODE"), MINRANGE_PED_PMANUAL_NMODE);
@@ -2563,7 +2563,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataPManual_NMODE<iMINRANGE_PED_PMANUAL_NMODE || m_iParaDataPManual_NMODE>iMAXRANGE_PED_PMANUAL_NMODE)
 	{
 		m_iParaDataPManual_NMODE=FACTORY_PMAN;
-		getModel()->getI2C()->WriteConfigWord(PARA_PMAN_NMODE_16,m_iParaDataPManual_NMODE);
+		getModel()->getI2C()->WriteConfigWord(PARA_PMAN_NMODE_16, (SHORT)m_iParaDataPManual_NMODE);
 	}
 
 	WORD iMINRANGE_PED_O2=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_O2"), MINRANGE_PED_O2);
@@ -2573,7 +2573,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataO2<iMINRANGE_PED_O2 || m_iParaDataO2>iMAXRANGE_PED_O2)
 	{
 		m_iParaDataO2=FACTORY_O2;
-		getModel()->getI2C()->WriteConfigWord(PARA_O2_16,m_iParaDataO2);
+		getModel()->getI2C()->WriteConfigWord(PARA_O2_16, (SHORT)m_iParaDataO2);
 	}
 
 	WORD iMINRANGE_PED_O2FLUSH=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_O2FLUSH"), MINRANGE_PED_O2FLUSH);
@@ -2583,7 +2583,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataO2Flush<iMINRANGE_PED_O2FLUSH || m_iParaDataO2Flush>iMAXRANGE_PED_O2FLUSH)
 	{
 		m_iParaDataO2Flush=FACTORY_O2FLUSH;
-		getModel()->getI2C()->WriteConfigWord(PARA_O2FLUSH_16,m_iParaDataO2Flush);
+		getModel()->getI2C()->WriteConfigWord(PARA_O2FLUSH_16, (SHORT)m_iParaDataO2Flush);
 	}
 
 	//m_iO2Difference;
@@ -2591,17 +2591,17 @@ void CConfiguration::LoadSettings()
 	if(m_iO2Difference<MAXDIFF_O2_FLUSH || m_iO2Difference>79)
 	{
 		m_iO2Difference=MAXDIFF_O2_FLUSH;
-		getModel()->getI2C()->WriteConfigWord(PARA_O2DIFF_16,m_iO2Difference);
+		getModel()->getI2C()->WriteConfigWord(PARA_O2DIFF_16, (SHORT)m_iO2Difference);
 	}
 
 	if(m_iParaDataO2>m_iParaDataO2Flush-MAXDIFF_O2_FLUSH)
 	{
 		m_iParaDataO2=FACTORY_O2;
-		getModel()->getI2C()->WriteConfigWord(PARA_O2_16,m_iParaDataO2);
+		getModel()->getI2C()->WriteConfigWord(PARA_O2_16, (SHORT)m_iParaDataO2);
 		m_iParaDataO2Flush=FACTORY_O2FLUSH;
-		getModel()->getI2C()->WriteConfigWord(PARA_O2FLUSH_16,m_iParaDataO2Flush);
+		getModel()->getI2C()->WriteConfigWord(PARA_O2FLUSH_16, (SHORT)m_iParaDataO2Flush);
 		m_iO2Difference=MAXDIFF_O2_FLUSH;
-		getModel()->getI2C()->WriteConfigWord(PARA_O2DIFF_16,m_iO2Difference);
+		getModel()->getI2C()->WriteConfigWord(PARA_O2DIFF_16, (SHORT)m_iO2Difference);
 	}
 
 	//PRICO02 dependency of range regarding parameter of FiO2
@@ -2614,18 +2614,18 @@ void CConfiguration::LoadSettings()
 	}
 	/*else if(m_iPRICO_FIO2highRange<m_iParaDataO2)
 	{
-		getModel()->getI2C()->WriteConfigByte(PRICOFIO2HIGH_8,m_iParaDataO2);
+		getModel()->getI2C()->WriteConfigByte(PRICOFIO2HIGH_8, (BYTE)m_iParaDataO2);
 		m_iPRICO_FIO2highRange=m_iParaDataO2;
 	}*/
 	if(m_iPRICO_FIO2lowRange>100 || m_iPRICO_FIO2lowRange>=m_iPRICO_FIO2highRange)
 	{
 		m_iPRICO_FIO2lowRange=21;
-		getModel()->getI2C()->WriteConfigByte(PRICOFIO2LOW_8,m_iPRICO_FIO2lowRange);
+		getModel()->getI2C()->WriteConfigByte(PRICOFIO2LOW_8, (BYTE)m_iPRICO_FIO2lowRange);
 	}
 	/*else if(m_iPRICO_FIO2lowRange>m_iParaDataO2)
 	{
 		m_iPRICO_FIO2lowRange=m_iParaDataO2;
-		getModel()->getI2C()->WriteConfigByte(PRICOFIO2LOW_8,m_iParaDataO2);
+		getModel()->getI2C()->WriteConfigByte(PRICOFIO2LOW_8, (BYTE)m_iParaDataO2);
 	}*/
 
 
@@ -2639,7 +2639,7 @@ void CConfiguration::LoadSettings()
 	if(m_iPRICO_SPO2lowRange>100 || m_iPRICO_SPO2lowRange>=m_iPRICO_SPO2highRange)
 	{
 		m_iPRICO_SPO2lowRange=m_iPRICO_SPO2highRange-1;
-		getModel()->getI2C()->WriteConfigByte(PRICOSPO2HIGH_8,m_iPRICO_SPO2lowRange);
+		getModel()->getI2C()->WriteConfigByte(PRICOSPO2HIGH_8, (BYTE)m_iPRICO_SPO2lowRange);
 	}
 
 	
@@ -2649,18 +2649,18 @@ void CConfiguration::LoadSettings()
 	if(m_iPPSVDifference<DIFF_PEEP_PINSP /*|| m_iPPSVDifference>79*/)
 	{
 		m_iPPSVDifference=DIFF_PEEP_PINSP;
-		getModel()->getI2C()->WriteConfigWord(PARA_PPSVDIFF_16,m_iPPSVDifference);
+		getModel()->getI2C()->WriteConfigWord(PARA_PPSVDIFF_16,(SHORT)m_iPPSVDifference);
 	}
 
 	/*m_iPPSVDifference=DIFF_PEEP_PINSP;
-	getModel()->getI2C()->WriteConfigWord(PARA_PPSVDIFF_16,m_iPPSVDifference);*/
+	getModel()->getI2C()->WriteConfigWord(PARA_PPSVDIFF_16, (SHORT)m_iPPSVDifference);*/
 
 	//m_iPmeanDifference;
 	m_iPmeanDifference=getModel()->getI2C()->ReadConfigWord(PARA_PMEANDIFF_16);
 	if(m_iPmeanDifference<MAXDIFF_PMEANREC /*|| m_iPmeanDifference>79*/)
 	{
 		m_iPmeanDifference=MAXDIFF_PMEANREC;
-		getModel()->getI2C()->WriteConfigWord(PARA_PMEANDIFF_16,m_iPmeanDifference);
+		getModel()->getI2C()->WriteConfigWord(PARA_PMEANDIFF_16,(SHORT)m_iPmeanDifference);
 	}
 
 
@@ -2671,7 +2671,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataVLimit_TRIGGER<iMINRANGE_NEO_VLIMIT_TRIGGER || m_iParaDataVLimit_TRIGGER>iMAXRANGE_PED_VLIMIT_TRIGGER)
 	{
 		m_iParaDataVLimit_TRIGGER=FACTORY_VLIMIT;
-		getModel()->getI2C()->WriteConfigWord(PARA_VLIMIT_TRIGGER_16,m_iParaDataVLimit_TRIGGER);
+		getModel()->getI2C()->WriteConfigWord(PARA_VLIMIT_TRIGGER_16, (SHORT)m_iParaDataVLimit_TRIGGER);
 	}
 
 	WORD iMINRANGE_NEO_VLIMIT_IPPV=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_VLIMIT_IPPV"), MINRANGE_NEO_VLIMIT_IPPV);
@@ -2680,7 +2680,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataVLimit_IPPV<iMINRANGE_NEO_VLIMIT_IPPV || m_iParaDataVLimit_IPPV>iMAXRANGE_PED_VLIMIT_IPPV)
 	{
 		m_iParaDataVLimit_IPPV=FACTORY_VLIMIT;
-		getModel()->getI2C()->WriteConfigWord(PARA_VLIMIT_IPPV_16,m_iParaDataVLimit_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_VLIMIT_IPPV_16, (SHORT)m_iParaDataVLimit_IPPV);
 	}
 
 	
@@ -2726,7 +2726,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataVGarant_TRIGGER<iMINRANGE_NEO_VGARANT_TRIGGER || m_iParaDataVGarant_TRIGGER>iMAXRANGE_PED_VGARANT_TRIGGER)
 	{
 		m_iParaDataVGarant_TRIGGER=FACTORY_VGARANT;
-		getModel()->getI2C()->WriteConfigWord(PARA_VGARANT_TRIGGER_16,m_iParaDataVGarant_TRIGGER);
+		getModel()->getI2C()->WriteConfigWord(PARA_VGARANT_TRIGGER_16, (SHORT)m_iParaDataVGarant_TRIGGER);
 	}
 
 	WORD iMINRANGE_NEO_VGARANT_IPPV=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_VGARANT_IPPV"), MINRANGE_NEO_VGARANT_IPPV);
@@ -2736,7 +2736,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataVGarant_IPPV<iMINRANGE_NEO_VGARANT_IPPV || m_iParaDataVGarant_IPPV>iMAXRANGE_PED_VGARANT_IPPV)
 	{
 		m_iParaDataVGarant_IPPV=FACTORY_VGARANT;
-		getModel()->getI2C()->WriteConfigWord(PARA_VGARANT_IPPV_16,m_iParaDataVGarant_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_VGARANT_IPPV_16, (SHORT)m_iParaDataVGarant_IPPV);
 	}
 
 	//m_bParaDataVGarantOn;
@@ -2784,7 +2784,7 @@ void CConfiguration::LoadSettings()
 			}
 			break;
 		}
-		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CONVENT_16,m_iParaDataTrigger_CONV);
+		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CONVENT_16, (SHORT)m_iParaDataTrigger_CONV);
 	}
 
 	
@@ -2795,7 +2795,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataTrigger_CPAP<iMINRANGE_PED_TRIGGER_CPAP || m_iParaDataTrigger_CPAP>iMAXRANGE_PED_TRIGGER_CPAP)
 	{
 		m_iParaDataTrigger_CPAP=FACTORY_CPAP_TRIGGER;
-		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CPAP_16,m_iParaDataTrigger_CPAP);
+		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CPAP_16, (SHORT)m_iParaDataTrigger_CPAP);
 	}
 
 	WORD iMAXRANGE_PED_TRIGGER_DUOPAP=(WORD)regLimit.ReadDWORD(_T("MAXRANGE_PED_TRIGGER_DUOPAP"), MAXRANGE_TRIGGER_OFF);
@@ -2804,7 +2804,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataTrigger_DUOPAP<iMINRANGE_PED_TRIGGER_DUOPAP || m_iParaDataTrigger_DUOPAP>iMAXRANGE_PED_TRIGGER_DUOPAP)
 	{
 		m_iParaDataTrigger_DUOPAP=FACTORY_DUOPAP_TRIGGER;
-		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_DUOPAP_16,m_iParaDataTrigger_DUOPAP);
+		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_DUOPAP_16, (SHORT)m_iParaDataTrigger_DUOPAP);
 	}
 
 	WORD iMAXRANGE_PED_TRIGGER_NCPAP=(WORD)regLimit.ReadDWORD(_T("MAXRANGE_PED_TRIGGER_NCPAP"), MAXRANGE_TRIGGER_OFF);
@@ -2813,7 +2813,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataTrigger_NCPAP<iMINRANGE_PED_TRIGGER_NCPAP || m_iParaDataTrigger_NCPAP>iMAXRANGE_PED_TRIGGER_NCPAP)
 	{
 		m_iParaDataTrigger_NCPAP=FACTORY_NCPAP_TRIGGER;
-		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NCPAP_16,m_iParaDataTrigger_NCPAP);
+		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NCPAP_16, (SHORT)m_iParaDataTrigger_NCPAP);
 	}
 
 	WORD iMAXRANGE_PED_BACKUP=(WORD)regLimit.ReadDWORD(_T("MAXRANGE_PED_BACKUP"), MAXRANGE_PED_BACKUP);
@@ -2833,7 +2833,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataHFAmpl<iMINRANGE_NEO_HFAMPL || m_iParaDataHFAmpl>iMAXRANGE_NEO_HFAMPL)
 	{
 		m_iParaDataHFAmpl=FACTORY_HFO_HFAMPL;
-		getModel()->getI2C()->WriteConfigWord(PARA_HFO_HFAMPL_16,m_iParaDataHFAmpl);
+		getModel()->getI2C()->WriteConfigWord(PARA_HFO_HFAMPL_16, (SHORT)m_iParaDataHFAmpl);
 	}
 
 
@@ -2845,7 +2845,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataHFAmplmax<iMINRANGE_NEO_HFAMPLVOLG || m_iParaDataHFAmplmax>iMAXRANGE_NEO_HFAMPLVOLG)
 	{
 		m_iParaDataHFAmplmax=FACTORY_HFO_HFAMPL;
-		getModel()->getI2C()->WriteConfigWord(PARA_HFO_HFAMPL_VOLG_16,m_iParaDataHFAmplmax);
+		getModel()->getI2C()->WriteConfigWord(PARA_HFO_HFAMPL_VOLG_16, (SHORT)m_iParaDataHFAmplmax);
 	}
 	
 
@@ -2856,7 +2856,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataHFFreq<iMINRANGE_PED_HFFREQ || m_iParaDataHFFreq>iMAXRANGE_PED_HFFREQ)
 	{
 		m_iParaDataHFFreq=FACTORY_HFO_HFFREQ;
-		getModel()->getI2C()->WriteConfigWord(PARA_HFO_HFFREQ_16,m_iParaDataHFFreq);
+		getModel()->getI2C()->WriteConfigWord(PARA_HFO_HFFREQ_16,(SHORT)m_iParaDataHFFreq);
 	}
 
 	WORD iMINRANGE_PED_ITIME_REC=(WORD)regLimit.ReadDWORD(_T("MINRANGE_PED_ITIME_REC"), MINRANGE_PED_ITIME_REC);
@@ -2900,7 +2900,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataHFPmean>iMAXRANGE_NEO_HFPMEAN)
 	{
 		m_iParaDataHFPmean=FACTORY_HFO_PMEAN;
-		getModel()->getI2C()->WriteConfigWord(PARA_HFO_PMEAN_16,m_iParaDataHFPmean);
+		getModel()->getI2C()->WriteConfigWord(PARA_HFO_PMEAN_16, (SHORT)m_iParaDataHFPmean);
 	}
 	
 	WORD iMINRANGE_NEO_HFVGARANT=(WORD)regLimit.ReadDWORD(_T("MINRANGE_NEO_HFVGARANT"), MINRANGE_NEO_HFVGARANT);
@@ -2910,7 +2910,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataHFVGarant<iMINRANGE_NEO_HFVGARANT ||m_iParaDataHFVGarant>iMAXRANGE_PED_HFVGARANT)
 	{
 		m_iParaDataHFVGarant=FACTORY_HFO_VGARANT;
-		getModel()->getI2C()->WriteConfigWord(PARA_HFO_VGARANT_16,m_iParaDataHFVGarant);
+		getModel()->getI2C()->WriteConfigWord(PARA_HFO_VGARANT_16, (SHORT)m_iParaDataHFVGarant);
 	}
 	
 	//m_bParaDataHFVGarantState;
@@ -2924,7 +2924,7 @@ void CConfiguration::LoadSettings()
 	if(m_iParaDataHFIERatio<RIE_1_3 || m_iParaDataHFIERatio>RIE_1_1)
 	{
 		m_iParaDataHFIERatio=(eRatioIE)FACTORY_HFO_IERATIO;
-		getModel()->getI2C()->WriteConfigByte(PARA_HFO_IERATIO_8,m_iParaDataHFIERatio);
+		getModel()->getI2C()->WriteConfigByte(PARA_HFO_IERATIO_8,(BYTE)m_iParaDataHFIERatio);
 	}
 
 
@@ -2938,14 +2938,14 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitSPO2max<20 || m_iAlarmlimitSPO2max>1000)
 	{
 		m_iAlarmlimitSPO2max=FACTORY_ALIMIT_VAL_SPO2MAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MAX_16,m_iAlarmlimitSPO2max);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MAX_16,(SHORT)m_iAlarmlimitSPO2max);
 	}
 
 	m_iAlarmlimitStateSPO2max=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_SPO2MAX_8);
 	if(m_iAlarmlimitStateSPO2max<AL_ON || m_iAlarmlimitStateSPO2max>AL_AUTO)
 	{
 		m_iAlarmlimitStateSPO2max=FACTORY_ALIMIT_STATE_SPO2MAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MAX_8,m_iAlarmlimitStateSPO2max);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MAX_8,(BYTE)m_iAlarmlimitStateSPO2max);
 	}
 
 
@@ -2956,14 +2956,14 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitSPO2min<0 || m_iAlarmlimitSPO2min>980)
 	{
 		m_iAlarmlimitSPO2min=FACTORY_ALIMIT_VAL_SPO2MIN;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MIN_16,m_iAlarmlimitSPO2min);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MIN_16,(SHORT)m_iAlarmlimitSPO2min);
 	}
 
 	m_iAlarmlimitStateSPO2min=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_SPO2MIN_8);
 	if(m_iAlarmlimitStateSPO2min<AL_ON || m_iAlarmlimitStateSPO2min>AL_AUTO)
 	{
 		m_iAlarmlimitStateSPO2min=FACTORY_ALIMIT_STATE_SPO2MIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MIN_8,m_iAlarmlimitStateSPO2min);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MIN_8,(BYTE)m_iAlarmlimitStateSPO2min);
 	}
 
 	//check SpO2 value against limits
@@ -2971,10 +2971,10 @@ void CConfiguration::LoadSettings()
 	{
 		//set factory
 		m_iAlarmlimitSPO2max=FACTORY_ALIMIT_VAL_SPO2MAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MAX_16,m_iAlarmlimitSPO2max);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MAX_16,(SHORT)m_iAlarmlimitSPO2max);
 
 		m_iAlarmlimitSPO2min=FACTORY_ALIMIT_VAL_SPO2MIN;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MIN_16,m_iAlarmlimitSPO2min);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MIN_16,(SHORT)m_iAlarmlimitSPO2min);
 	}
 
 
@@ -2983,28 +2983,28 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitPulseRatemax<0 || m_iAlarmlimitPulseRatemax>240)
 	{
 		m_iAlarmlimitPulseRatemax=FACTORY_ALIMIT_VAL_PULSERATEMAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMAX_16,m_iAlarmlimitPulseRatemax);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMAX_16,(SHORT)m_iAlarmlimitPulseRatemax);
 	}
 
 	m_iAlarmlimitStatePulseRatemax=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PULSERATEMAX_8);
 	if(m_iAlarmlimitStatePulseRatemax<AL_ON || m_iAlarmlimitStatePulseRatemax>AL_AUTO)
 	{
 		m_iAlarmlimitStatePulseRatemax=FACTORY_ALIMIT_STATE_PULSERATEMAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMAX_8,m_iAlarmlimitStatePulseRatemax);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMAX_8,(BYTE)m_iAlarmlimitStatePulseRatemax);
 	}
 	
 	m_iAlarmlimitPulseRatemin=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_PULSERATEMIN_16);
 	if(m_iAlarmlimitPulseRatemin<0 || m_iAlarmlimitPulseRatemin>240)
 	{
 		m_iAlarmlimitPulseRatemin=FACTORY_ALIMIT_VAL_PULSERATEMIN;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMIN_16,m_iAlarmlimitPulseRatemin);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMIN_16,(SHORT)m_iAlarmlimitPulseRatemin);
 	}
 
 	m_iAlarmlimitStatePulseRatemin=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PULSERATEMIN_8);
 	if(m_iAlarmlimitStatePulseRatemin<AL_ON || m_iAlarmlimitStatePulseRatemin>AL_AUTO)
 	{
 		m_iAlarmlimitStatePulseRatemin=FACTORY_ALIMIT_STATE_PULSERATEMIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMIN_8,m_iAlarmlimitStatePulseRatemin);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMIN_8,(BYTE)m_iAlarmlimitStatePulseRatemin);
 	}
 
 	//check pulse rate value against limits
@@ -3012,24 +3012,24 @@ void CConfiguration::LoadSettings()
 	{
 		//set factory
 		m_iAlarmlimitPulseRatemax=FACTORY_ALIMIT_VAL_PULSERATEMAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMAX_16,m_iAlarmlimitPulseRatemax);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMAX_16,(SHORT)m_iAlarmlimitPulseRatemax);
 
 		m_iAlarmlimitPulseRatemin=FACTORY_ALIMIT_VAL_PULSERATEMIN;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMIN_16,m_iAlarmlimitPulseRatemin);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMIN_16,(SHORT)m_iAlarmlimitPulseRatemin);
 	}
 
 	m_iAlarmlimitSPO2_PImin=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_SPO2_PIMIN_16);
 	if(m_iAlarmlimitSPO2_PImin<0 || m_iAlarmlimitSPO2_PImin>20000)
 	{
 		m_iAlarmlimitSPO2_PImin=FACTORY_ALIMIT_VAL_SPO2_PIMIN;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_PIMIN_16,m_iAlarmlimitSPO2_PImin);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_PIMIN_16,(SHORT)m_iAlarmlimitSPO2_PImin);
 	}
 
 	m_iAlarmlimitStateSPO2_PImin=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_SPO2_PIMIN_8);
 	if(m_iAlarmlimitStateSPO2_PImin<AL_ON || m_iAlarmlimitStateSPO2_PImin>AL_AUTO)
 	{
 		m_iAlarmlimitStateSPO2_PImin=FACTORY_ALIMIT_STATE_SPO2_PIMIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_PIMIN_8,m_iAlarmlimitStateSPO2_PImin);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_PIMIN_8,(BYTE)m_iAlarmlimitStateSPO2_PImin);
 	}
 
 
@@ -3040,14 +3040,14 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitSPO2_SIQmin<0 || m_iAlarmlimitSPO2_SIQmin>100)
 	{
 		m_iAlarmlimitSPO2_SIQmin=FACTORY_ALIMIT_VAL_SPO2_SIQMIN;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_SIQMIN_16,m_iAlarmlimitSPO2_SIQmin);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_SIQMIN_16,(SHORT)m_iAlarmlimitSPO2_SIQmin);
 	}
 
 	m_iAlarmlimitStateSPO2_SIQmin=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_SPO2_SIQMIN_8);
 	if(m_iAlarmlimitStateSPO2_SIQmin<AL_ON || m_iAlarmlimitStateSPO2_SIQmin>AL_AUTO)
 	{
 		m_iAlarmlimitStateSPO2_SIQmin=FACTORY_ALIMIT_STATE_SPO2_SIQMIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_SIQMIN_8,m_iAlarmlimitStateSPO2_SIQmin);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_SIQMIN_8,(BYTE)m_iAlarmlimitStateSPO2_SIQmin);
 	}
 
 
@@ -3062,7 +3062,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitETCO2max<MINRANGE_HF_NEONATAL_ETCO2MIN_KPA || m_iAlarmlimitETCO2max>MAXRANGE_HF_NEONATAL_ETCO2MAX_KPA)
 			{
 				m_iAlarmlimitETCO2max=FACTORY_ALIMIT_VAL_ETCO2MAX_KPA;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_16,m_iAlarmlimitETCO2max);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_16,(SHORT)m_iAlarmlimitETCO2max);
 			}
 		}
 		break;
@@ -3072,7 +3072,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitETCO2max<MINRANGE_HF_NEONATAL_ETCO2MIN_VOL || m_iAlarmlimitETCO2max>MAXRANGE_HF_NEONATAL_ETCO2MAX_VOL)
 			{
 				m_iAlarmlimitETCO2max=FACTORY_ALIMIT_VAL_ETCO2MAX_VOL;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_16,m_iAlarmlimitETCO2max);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_16,(SHORT)m_iAlarmlimitETCO2max);
 			}
 		}
 		break;
@@ -3083,7 +3083,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitETCO2max<MINRANGE_HF_NEONATAL_ETCO2MIN_MMHG || m_iAlarmlimitETCO2max>MAXRANGE_HF_NEONATAL_ETCO2MAX_MMHG)
 			{
 				m_iAlarmlimitETCO2max=FACTORY_ALIMIT_VAL_ETCO2MAX_MMHG;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_16,m_iAlarmlimitETCO2max);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_16,(SHORT)m_iAlarmlimitETCO2max);
 			}
 		}
 		break;
@@ -3094,7 +3094,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStateETCO2max<AL_ON || m_iAlarmlimitStateETCO2max>AL_AUTO)
 	{
 		m_iAlarmlimitStateETCO2max=FACTORY_ALIMIT_STATE_ETCO2MAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MAX_8,m_iAlarmlimitStateETCO2max);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MAX_8,(BYTE)m_iAlarmlimitStateETCO2max);
 	}
 
 	m_iAlarmlimitETCO2min=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_ETCO2MIN_16);
@@ -3109,7 +3109,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitETCO2min<MINRANGE_HF_NEONATAL_ETCO2MIN_KPA || m_iAlarmlimitETCO2min>MAXRANGE_HF_NEONATAL_ETCO2MAX_KPA)
 			{
 				m_iAlarmlimitETCO2min=FACTORY_ALIMIT_VAL_ETCO2MIN_KPA;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_16,m_iAlarmlimitETCO2min);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_16,(SHORT)m_iAlarmlimitETCO2min);
 			}
 		}
 		break;
@@ -3118,7 +3118,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitETCO2min<MINRANGE_HF_NEONATAL_ETCO2MIN_VOL || m_iAlarmlimitETCO2min>MAXRANGE_HF_NEONATAL_ETCO2MAX_VOL)
 			{
 				m_iAlarmlimitETCO2min=FACTORY_ALIMIT_VAL_ETCO2MIN_VOL;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_16,m_iAlarmlimitETCO2min);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_16,(SHORT)m_iAlarmlimitETCO2min);
 			}
 		}
 		break;
@@ -3128,7 +3128,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitETCO2min<MINRANGE_HF_NEONATAL_ETCO2MIN_MMHG || m_iAlarmlimitETCO2min>MAXRANGE_HF_NEONATAL_ETCO2MAX_MMHG)
 			{
 				m_iAlarmlimitETCO2min=FACTORY_ALIMIT_VAL_ETCO2MIN_MMHG;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_16,m_iAlarmlimitETCO2min);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_16,(SHORT)m_iAlarmlimitETCO2min);
 			}
 		}
 		break;
@@ -3139,7 +3139,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStateETCO2min<AL_ON || m_iAlarmlimitStateETCO2min>AL_AUTO)
 	{
 		m_iAlarmlimitStateETCO2min=FACTORY_ALIMIT_STATE_ETCO2MIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MIN_8,m_iAlarmlimitStateETCO2min);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MIN_8,(BYTE)m_iAlarmlimitStateETCO2min);
 	}
 
 	//###################################################
@@ -3152,7 +3152,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitFICO2max<MINRANGE_HF_NEONATAL_FICO2MIN_KPA || m_iAlarmlimitFICO2max>MAXRANGE_HF_NEONATAL_FICO2MAX_KPA)
 			{
 				m_iAlarmlimitFICO2max=FACTORY_ALIMIT_VAL_FICO2MAX_KPA;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_16,m_iAlarmlimitFICO2max);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_16,(SHORT)m_iAlarmlimitFICO2max);
 			}
 		}
 		break;
@@ -3161,7 +3161,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitFICO2max<MINRANGE_HF_NEONATAL_FICO2MIN_VOL || m_iAlarmlimitFICO2max>MAXRANGE_HF_NEONATAL_FICO2MAX_VOL)
 			{
 				m_iAlarmlimitFICO2max=FACTORY_ALIMIT_VAL_FICO2MAX_VOL;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_16,m_iAlarmlimitFICO2max);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_16,(SHORT)m_iAlarmlimitFICO2max);
 			}
 		}
 		break;
@@ -3171,7 +3171,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitFICO2max<MINRANGE_HF_NEONATAL_FICO2MIN_MMHG || m_iAlarmlimitFICO2max>MAXRANGE_HF_NEONATAL_FICO2MAX_MMHG)
 			{
 				m_iAlarmlimitFICO2max=FACTORY_ALIMIT_VAL_FICO2MAX_MMHG;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_16,m_iAlarmlimitFICO2max);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_16,(SHORT)m_iAlarmlimitFICO2max);
 			}
 		}
 		break;
@@ -3182,7 +3182,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStateFICO2max<AL_ON || m_iAlarmlimitStateFICO2max>AL_AUTO)
 	{
 		m_iAlarmlimitStateFICO2max=FACTORY_ALIMIT_STATE_FICO2MAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MAX_8,m_iAlarmlimitStateFICO2max);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MAX_8,(BYTE)m_iAlarmlimitStateFICO2max);
 	}
 
 	m_iAlarmlimitFICO2min=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_FICO2MIN_16);
@@ -3197,7 +3197,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitFICO2min<MINRANGE_HF_NEONATAL_FICO2MIN_KPA || m_iAlarmlimitFICO2min>MAXRANGE_HF_NEONATAL_FICO2MAX_KPA)
 			{
 				m_iAlarmlimitFICO2min=FACTORY_ALIMIT_VAL_FICO2MIN_KPA;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_16,m_iAlarmlimitFICO2min);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_16,(SHORT)m_iAlarmlimitFICO2min);
 			}
 		}
 		break;
@@ -3206,7 +3206,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitFICO2min<MINRANGE_HF_NEONATAL_FICO2MIN_VOL || m_iAlarmlimitFICO2min>MAXRANGE_HF_NEONATAL_FICO2MAX_VOL)
 			{
 				m_iAlarmlimitFICO2min=FACTORY_ALIMIT_VAL_FICO2MIN_VOL;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_16,m_iAlarmlimitFICO2min);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_16,(SHORT)m_iAlarmlimitFICO2min);
 			}
 		}
 		break;
@@ -3216,7 +3216,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitFICO2min<MINRANGE_HF_NEONATAL_FICO2MIN_MMHG || m_iAlarmlimitFICO2min>MAXRANGE_HF_NEONATAL_FICO2MAX_MMHG)
 			{
 				m_iAlarmlimitFICO2min=FACTORY_ALIMIT_VAL_FICO2MIN_MMHG;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_16,m_iAlarmlimitFICO2min);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_16,(SHORT)m_iAlarmlimitFICO2min);
 			}
 		}
 		break;
@@ -3227,7 +3227,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStateFICO2min<AL_ON || m_iAlarmlimitStateFICO2min>AL_AUTO)
 	{
 		m_iAlarmlimitStateFICO2min=FACTORY_ALIMIT_STATE_FICO2MIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MIN_8,m_iAlarmlimitStateFICO2min);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MIN_8,(BYTE)m_iAlarmlimitStateFICO2min);
 	}
 	//###################################################
 
@@ -3235,7 +3235,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitMVmax<50 || m_iAlarmlimitMVmax>10000)
 	{
 		m_iAlarmlimitMVmax=FACTORY_ALIMIT_VAL_MVMAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMAX_16,m_iAlarmlimitMVmax);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMAX_16,(SHORT)m_iAlarmlimitMVmax);
 	}
 
 	m_iAlarmlimitStateMVmax=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_MVMAX_8);
@@ -3244,7 +3244,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStateMVmax<AL_ON || m_iAlarmlimitStateMVmax>AL_AUTO)
 	{
 		m_iAlarmlimitStateMVmax=FACTORY_ALIMIT_STATE_MVMAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMAX_8,m_iAlarmlimitStateMVmax);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMAX_8,(BYTE)m_iAlarmlimitStateMVmax);
 	}
 
 	m_iAlarmlimitMVmin=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_MVMIN_16);
@@ -3252,7 +3252,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitMVmin<0 || m_iAlarmlimitMVmin>10000)
 	{
 		m_iAlarmlimitMVmin=FACTORY_ALIMIT_VAL_MVMIN;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMIN_16,m_iAlarmlimitMVmin);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMIN_16,(SHORT)m_iAlarmlimitMVmin);
 	}
 
 	m_iAlarmlimitStateMVmin=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_MVMIN_8);
@@ -3262,14 +3262,14 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStateMVmin<AL_ON || m_iAlarmlimitStateMVmin>AL_AUTO)
 	{
 		m_iAlarmlimitStateMVmin=FACTORY_ALIMIT_STATE_MVMIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMIN_8,m_iAlarmlimitStateMVmin);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMIN_8,(BYTE)m_iAlarmlimitStateMVmin);
 	}
 
 	m_iAlarmlimitPIPmax=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_PIPMAX_16);
 	if(m_iAlarmlimitPIPmax<10 || m_iAlarmlimitPIPmax>900)
 	{
 		m_iAlarmlimitPIPmax=FACTORY_ALIMIT_VAL_PIPMAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PIPMAX_16,m_iAlarmlimitPIPmax);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PIPMAX_16,(SHORT)m_iAlarmlimitPIPmax);
 	}
 
 	m_iAlarmlimitStatePIPmax=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PIPMAX_8);
@@ -3278,7 +3278,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStatePIPmax<AL_ON || m_iAlarmlimitStatePIPmax>AL_AUTO)
 	{
 		m_iAlarmlimitStatePIPmax=FACTORY_ALIMIT_STATE_PIPMAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PIPMAX_8,m_iAlarmlimitStatePIPmax);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PIPMAX_8,(BYTE)m_iAlarmlimitStatePIPmax);
 	}
 
 	
@@ -3289,7 +3289,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitPEEPmin<-100 || m_iAlarmlimitPEEPmin>900)
 	{
 		m_iAlarmlimitPEEPmin=FACTORY_ALIMIT_VAL_PEEP;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_16,m_iAlarmlimitPEEPmin);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_16,(SHORT)m_iAlarmlimitPEEPmin);
 	}
 	m_iAlarmlimitStatePEEPmin=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PEEP_8);
 	if(m_iAlarmlimitStatePEEPmin==AL_OFF)
@@ -3297,7 +3297,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStatePEEPmin<AL_ON || m_iAlarmlimitStatePEEPmin>AL_AUTO)
 	{
 		m_iAlarmlimitStatePEEPmin=FACTORY_ALIMIT_STATE_PEEP;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_8,m_iAlarmlimitStatePEEPmin);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_8,(BYTE)m_iAlarmlimitStatePEEPmin);
 	}
 
 
@@ -3305,7 +3305,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitPIPmin<m_iAlarmlimitPEEPmin || m_iAlarmlimitPIPmin>m_iAlarmlimitPIPmax-10)
 	{
 		m_iAlarmlimitPIPmin=FACTORY_ALIMIT_VAL_PIPMIN;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PIPMIN_16,m_iAlarmlimitPIPmin);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PIPMIN_16,(SHORT)m_iAlarmlimitPIPmin);
 	}
 	m_iAlarmlimitStatePIPmin=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PIPMIN_8);
 	/*if(m_iAlarmlimitStatePIPmin==AL_OFF || m_iAlarmlimitStatePIPmin==AL_AUTO)
@@ -3313,49 +3313,49 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStatePIPmin<AL_ON || m_iAlarmlimitStatePIPmin>AL_AUTO)
 	{
 		m_iAlarmlimitStatePIPmin=FACTORY_ALIMIT_STATE_PIPMIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PIPMIN_8,m_iAlarmlimitStatePIPmin);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PIPMIN_8,(BYTE)m_iAlarmlimitStatePIPmin);
 	}
 
 	m_iAlarmlimitBPMmax=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_BPMMAX_16);
 	if(m_iAlarmlimitBPMmax<10 || m_iAlarmlimitBPMmax>220)
 	{
 		m_iAlarmlimitBPMmax=FACTORY_ALIMIT_VAL_BPMMAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_BPMMAX_16,m_iAlarmlimitBPMmax);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_BPMMAX_16,(SHORT)m_iAlarmlimitBPMmax);
 	}
 
 	m_iAlarmlimitStateBPMmax=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_BPMMAX_8);
 	if(m_iAlarmlimitStateBPMmax<AL_ON || m_iAlarmlimitStateBPMmax>AL_AUTO)
 	{
 		m_iAlarmlimitStateBPMmax=FACTORY_ALIMIT_STATE_BPMMAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_BPMMAX_8,m_iAlarmlimitStateBPMmax);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_BPMMAX_8,(BYTE)m_iAlarmlimitStateBPMmax);
 	}
 
 	m_iAlimitLeakmax=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_LEAKMAX_16);
 	if(m_iAlimitLeakmax<0 || m_iAlimitLeakmax>50)
 	{
 		m_iAlimitLeakmax=FACTORY_ALIMIT_VAL_LEAKMAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_LEAKMAX_16,m_iAlimitLeakmax);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_LEAKMAX_16,(SHORT)m_iAlimitLeakmax);
 	}
 
 	m_iAlarmlimitStateLeakmax=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_LEAKMAX_8);
 	if(m_iAlarmlimitStateLeakmax<AL_ON || m_iAlarmlimitStateLeakmax>AL_AUTO)
 	{
 		m_iAlarmlimitStateLeakmax=FACTORY_ALIMIT_STATE_LEAKMAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_LEAKMAX_8,m_iAlarmlimitStateLeakmax);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_LEAKMAX_8,(BYTE)m_iAlarmlimitStateLeakmax);
 	}
 
 	m_iAlarmlimitApnoe=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_APNOE_16);
 	if(m_iAlarmlimitApnoe<MINRANGE_NEONATAL_APNOE || m_iAlarmlimitApnoe>MAXRANGE_NEONATAL_APNOE)
 	{
 		m_iAlarmlimitApnoe=FACTORY_ALIMIT_VAL_APNOE;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_APNOE_16,m_iAlarmlimitApnoe);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_APNOE_16,(SHORT)m_iAlarmlimitApnoe);
 	}
 
 	m_iAlarmlimitStateApnoe=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_APNOE_8);
 	if(m_iAlarmlimitStateApnoe<AL_ON || m_iAlarmlimitStateApnoe>AL_AUTO)
 	{
 		m_iAlarmlimitStateApnoe=FACTORY_ALIMIT_STATE_APNOE;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_APNOE_8,m_iAlarmlimitStateApnoe);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_APNOE_8,(BYTE)m_iAlarmlimitStateApnoe);
 	}
 
 	
@@ -3364,7 +3364,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitSPO2maxHF<0 || m_iAlarmlimitSPO2maxHF>1000)
 	{
 		m_iAlarmlimitSPO2maxHF=FACTORY_ALIMIT_VAL_SPO2MAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MAX_HF_16,m_iAlarmlimitSPO2maxHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MAX_HF_16,(SHORT)m_iAlarmlimitSPO2maxHF);
 	}
 
 	m_iAlarmlimitStateSPO2maxHF=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_SPO2MAX_HF_8);
@@ -3373,7 +3373,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStateSPO2maxHF<AL_ON || m_iAlarmlimitStateSPO2maxHF>AL_AUTO)
 	{
 		m_iAlarmlimitStateSPO2maxHF=FACTORY_ALIMIT_STATE_SPO2MAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MAX_HF_8,m_iAlarmlimitStateSPO2maxHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MAX_HF_8,(BYTE)m_iAlarmlimitStateSPO2maxHF);
 	}
 
 
@@ -3381,7 +3381,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitSPO2minHF<0 || m_iAlarmlimitSPO2minHF>1000)
 	{
 		m_iAlarmlimitSPO2minHF=FACTORY_ALIMIT_VAL_SPO2MIN;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MIN_HF_16,m_iAlarmlimitSPO2minHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MIN_HF_16,(SHORT)m_iAlarmlimitSPO2minHF);
 	}
 
 	m_iAlarmlimitStateSPO2minHF=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_SPO2MIN_HF_8);
@@ -3390,14 +3390,14 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStateSPO2minHF<AL_ON || m_iAlarmlimitStateSPO2minHF>AL_AUTO)
 	{
 		m_iAlarmlimitStateSPO2minHF=FACTORY_ALIMIT_STATE_SPO2MIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MIN_HF_8,m_iAlarmlimitStateSPO2minHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MIN_HF_8,(BYTE)m_iAlarmlimitStateSPO2minHF);
 	}
 
 	m_iAlarmlimitPulseRatemaxHF=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_PULSERATEMAX_HF_16);
 	if(m_iAlarmlimitPulseRatemaxHF<0 || m_iAlarmlimitPulseRatemaxHF>240)
 	{
 		m_iAlarmlimitPulseRatemaxHF=FACTORY_ALIMIT_VAL_PULSERATEMAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMAX_HF_16,m_iAlarmlimitPulseRatemaxHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMAX_HF_16,(SHORT)m_iAlarmlimitPulseRatemaxHF);
 	}
 
 	m_iAlarmlimitStatePulseRatemaxHF=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PULSERATEMAX_HF_8);
@@ -3406,14 +3406,14 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStatePulseRatemaxHF<AL_ON || m_iAlarmlimitStatePulseRatemaxHF>AL_AUTO)
 	{
 		m_iAlarmlimitStatePulseRatemaxHF=FACTORY_ALIMIT_STATE_PULSERATEMAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMAX_HF_8,m_iAlarmlimitStatePulseRatemaxHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMAX_HF_8,(BYTE)m_iAlarmlimitStatePulseRatemaxHF);
 	}
 
 	m_iAlarmlimitPulseRateminHF=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_PULSERATEMIN_HF_16);
 	if(m_iAlarmlimitPulseRateminHF<0 || m_iAlarmlimitPulseRateminHF>240)
 	{
 		m_iAlarmlimitPulseRateminHF=FACTORY_ALIMIT_VAL_PULSERATEMIN;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMIN_HF_16,m_iAlarmlimitPulseRateminHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMIN_HF_16,(SHORT)m_iAlarmlimitPulseRateminHF);
 	}
 
 	m_iAlarmlimitStatePulseRateminHF=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PULSERATEMIN_HF_8);
@@ -3422,7 +3422,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStatePulseRateminHF<AL_ON || m_iAlarmlimitStatePulseRateminHF>AL_AUTO)
 	{
 		m_iAlarmlimitStatePulseRateminHF=FACTORY_ALIMIT_STATE_PULSERATEMIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMIN_HF_8,m_iAlarmlimitStatePulseRateminHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMIN_HF_8,(BYTE)m_iAlarmlimitStatePulseRateminHF);
 	}
 
 
@@ -3430,14 +3430,14 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitSPO2_PIminHF<0 || m_iAlarmlimitSPO2_PIminHF>20000)
 	{
 		m_iAlarmlimitSPO2_PIminHF=FACTORY_ALIMIT_VAL_SPO2_PIMIN;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_PIMIN_HF_16,m_iAlarmlimitSPO2_PIminHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_PIMIN_HF_16,(SHORT)m_iAlarmlimitSPO2_PIminHF);
 	}
 
 	m_iAlarmlimitStateSPO2_PIminHF=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_SPO2_PIMIN_HF_8);
 	if(m_iAlarmlimitStateSPO2_PIminHF<AL_ON || m_iAlarmlimitStateSPO2_PIminHF>AL_AUTO)
 	{
 		m_iAlarmlimitStateSPO2_PIminHF=FACTORY_ALIMIT_STATE_SPO2_PIMIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_PIMIN_HF_8,m_iAlarmlimitStateSPO2_PIminHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_PIMIN_HF_8,(BYTE)m_iAlarmlimitStateSPO2_PIminHF);
 	}
 
 
@@ -3448,14 +3448,14 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitSPO2_SIQminHF<0 || m_iAlarmlimitSPO2_SIQminHF>100)
 	{
 		m_iAlarmlimitSPO2_SIQminHF=FACTORY_ALIMIT_VAL_SPO2_SIQMIN;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_SIQMIN_HF_16,m_iAlarmlimitSPO2_SIQminHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_SIQMIN_HF_16,(SHORT)m_iAlarmlimitSPO2_SIQminHF);
 	}
 
 	m_iAlarmlimitStateSPO2_SIQminHF=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_SPO2_SIQMIN_HF_8);
 	if(m_iAlarmlimitStateSPO2_SIQminHF<AL_ON || m_iAlarmlimitStateSPO2_SIQminHF>AL_AUTO)
 	{
 		m_iAlarmlimitStateSPO2_SIQminHF=FACTORY_ALIMIT_STATE_SPO2_SIQMIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_SIQMIN_HF_8,m_iAlarmlimitStateSPO2_SIQminHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_SIQMIN_HF_8,(BYTE)m_iAlarmlimitStateSPO2_SIQminHF);
 	}
 
 
@@ -3472,7 +3472,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitETCO2maxHF<MINRANGE_HF_NEONATAL_ETCO2MIN_KPA || m_iAlarmlimitETCO2maxHF>MAXRANGE_HF_NEONATAL_ETCO2MAX_KPA)
 			{
 				m_iAlarmlimitETCO2maxHF=FACTORY_ALIMIT_VAL_ETCO2MAX_KPA;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_HF_16,m_iAlarmlimitETCO2maxHF);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_HF_16,(SHORT)m_iAlarmlimitETCO2maxHF);
 			}
 		}
 		break;
@@ -3481,7 +3481,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitETCO2maxHF<MINRANGE_HF_NEONATAL_ETCO2MIN_VOL || m_iAlarmlimitETCO2maxHF>MAXRANGE_HF_NEONATAL_ETCO2MAX_VOL)
 			{
 				m_iAlarmlimitETCO2maxHF=FACTORY_ALIMIT_VAL_ETCO2MAX_VOL;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_HF_16,m_iAlarmlimitETCO2maxHF);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_HF_16,(SHORT)m_iAlarmlimitETCO2maxHF);
 			}
 		}
 		break;
@@ -3491,7 +3491,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitETCO2maxHF<MINRANGE_HF_NEONATAL_ETCO2MIN_MMHG || m_iAlarmlimitETCO2maxHF>MAXRANGE_HF_NEONATAL_ETCO2MAX_MMHG)
 			{
 				m_iAlarmlimitETCO2maxHF=FACTORY_ALIMIT_VAL_ETCO2MAX_MMHG;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_HF_16,m_iAlarmlimitETCO2maxHF);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_HF_16,(SHORT)m_iAlarmlimitETCO2maxHF);
 			}
 		}
 		break;
@@ -3502,7 +3502,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStateETCO2maxHF<AL_ON || m_iAlarmlimitStateETCO2maxHF>AL_AUTO)
 	{
 		m_iAlarmlimitStateETCO2maxHF=FACTORY_ALIMIT_STATE_ETCO2MAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MAX_HF_8,m_iAlarmlimitStateETCO2maxHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MAX_HF_8,(BYTE)m_iAlarmlimitStateETCO2maxHF);
 	}
 
 	m_iAlarmlimitETCO2minHF=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_ETCO2MIN_HF_16);
@@ -3518,7 +3518,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitETCO2minHF<MINRANGE_HF_NEONATAL_ETCO2MIN_KPA || m_iAlarmlimitETCO2minHF>MAXRANGE_HF_NEONATAL_ETCO2MAX_KPA)
 			{
 				m_iAlarmlimitETCO2minHF=FACTORY_ALIMIT_VAL_ETCO2MIN_KPA;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_HF_16,m_iAlarmlimitETCO2minHF);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_HF_16,(SHORT)m_iAlarmlimitETCO2minHF);
 			}
 		}
 		break;
@@ -3527,7 +3527,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitETCO2minHF<MINRANGE_HF_NEONATAL_ETCO2MIN_VOL || m_iAlarmlimitETCO2minHF>MAXRANGE_HF_NEONATAL_ETCO2MAX_VOL)
 			{
 				m_iAlarmlimitETCO2minHF=FACTORY_ALIMIT_VAL_ETCO2MIN_VOL;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_HF_16,m_iAlarmlimitETCO2minHF);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_HF_16,(SHORT)m_iAlarmlimitETCO2minHF);
 			}
 		}
 		break;
@@ -3537,7 +3537,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitETCO2minHF<MINRANGE_HF_NEONATAL_ETCO2MIN_MMHG || m_iAlarmlimitETCO2minHF>MAXRANGE_HF_NEONATAL_ETCO2MAX_MMHG)
 			{
 				m_iAlarmlimitETCO2minHF=FACTORY_ALIMIT_VAL_ETCO2MIN_MMHG;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_HF_16,m_iAlarmlimitETCO2minHF);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_HF_16,(SHORT)m_iAlarmlimitETCO2minHF);
 			}
 		}
 		break;
@@ -3547,7 +3547,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStateETCO2minHF<AL_ON || m_iAlarmlimitStateETCO2minHF>AL_AUTO)
 	{
 		m_iAlarmlimitStateETCO2minHF=FACTORY_ALIMIT_STATE_ETCO2MIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MIN_HF_8,m_iAlarmlimitStateETCO2minHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MIN_HF_8,(BYTE)m_iAlarmlimitStateETCO2minHF);
 	}
 
 	//##########################################################
@@ -3560,7 +3560,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitFICO2maxHF<MINRANGE_HF_NEONATAL_FICO2MIN_KPA || m_iAlarmlimitFICO2maxHF>MAXRANGE_HF_NEONATAL_FICO2MAX_KPA)
 			{
 				m_iAlarmlimitFICO2maxHF=FACTORY_ALIMIT_VAL_FICO2MAX_KPA;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_HF_16,m_iAlarmlimitFICO2maxHF);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_HF_16,(SHORT)m_iAlarmlimitFICO2maxHF);
 			}
 		}
 		break;
@@ -3569,7 +3569,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitFICO2maxHF<MINRANGE_HF_NEONATAL_FICO2MIN_VOL || m_iAlarmlimitFICO2maxHF>MAXRANGE_HF_NEONATAL_FICO2MAX_VOL)
 			{
 				m_iAlarmlimitFICO2maxHF=FACTORY_ALIMIT_VAL_FICO2MAX_VOL;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_HF_16,m_iAlarmlimitFICO2maxHF);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_HF_16,(SHORT)m_iAlarmlimitFICO2maxHF);
 			}
 		}
 		break;
@@ -3579,7 +3579,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitFICO2maxHF<MINRANGE_HF_NEONATAL_FICO2MIN_MMHG || m_iAlarmlimitFICO2maxHF>MAXRANGE_HF_NEONATAL_FICO2MAX_MMHG)
 			{
 				m_iAlarmlimitFICO2maxHF=FACTORY_ALIMIT_VAL_FICO2MAX_MMHG;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_HF_16,m_iAlarmlimitFICO2maxHF);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_HF_16,(SHORT)m_iAlarmlimitFICO2maxHF);
 			}
 		}
 		break;
@@ -3590,7 +3590,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStateFICO2maxHF<AL_ON || m_iAlarmlimitStateFICO2maxHF>AL_AUTO)
 	{
 		m_iAlarmlimitStateFICO2maxHF=FACTORY_ALIMIT_STATE_FICO2MAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MAX_HF_8,m_iAlarmlimitStateFICO2maxHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MAX_HF_8,(BYTE)m_iAlarmlimitStateFICO2maxHF);
 	}
 
 	m_iAlarmlimitFICO2minHF=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_FICO2MIN_HF_16);
@@ -3605,7 +3605,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitFICO2minHF<MINRANGE_HF_NEONATAL_FICO2MIN_KPA || m_iAlarmlimitFICO2minHF>MAXRANGE_HF_NEONATAL_FICO2MAX_KPA)
 			{
 				m_iAlarmlimitFICO2minHF=FACTORY_ALIMIT_VAL_FICO2MIN_KPA;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_HF_16,m_iAlarmlimitFICO2minHF);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_HF_16,(SHORT)m_iAlarmlimitFICO2minHF);
 			}
 		}
 		break;
@@ -3614,7 +3614,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitFICO2minHF<MINRANGE_HF_NEONATAL_FICO2MIN_VOL || m_iAlarmlimitFICO2minHF>MAXRANGE_HF_NEONATAL_FICO2MAX_VOL)
 			{
 				m_iAlarmlimitFICO2minHF=FACTORY_ALIMIT_VAL_FICO2MIN_VOL;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_HF_16,m_iAlarmlimitFICO2minHF);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_HF_16,(SHORT)m_iAlarmlimitFICO2minHF);
 			}
 		}
 		break;
@@ -3624,7 +3624,7 @@ void CConfiguration::LoadSettings()
 			if(m_iAlarmlimitFICO2minHF<MINRANGE_HF_NEONATAL_FICO2MIN_MMHG || m_iAlarmlimitFICO2minHF>MAXRANGE_HF_NEONATAL_FICO2MAX_MMHG)
 			{
 				m_iAlarmlimitFICO2minHF=FACTORY_ALIMIT_VAL_FICO2MIN_MMHG;
-				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_HF_16,m_iAlarmlimitFICO2minHF);
+				getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_HF_16,(SHORT)m_iAlarmlimitFICO2minHF);
 			}
 		}
 		break;
@@ -3634,35 +3634,35 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStateFICO2minHF<AL_ON || m_iAlarmlimitStateFICO2minHF>AL_AUTO)
 	{
 		m_iAlarmlimitStateFICO2minHF=FACTORY_ALIMIT_STATE_FICO2MIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MIN_HF_8,m_iAlarmlimitStateFICO2minHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MIN_HF_8,(BYTE)m_iAlarmlimitStateFICO2minHF);
 	}
 	//##############################################################
 	m_iAlarmlimitMAPmaxHF=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_MAPMAX_HF_16);
 	if(m_iAlarmlimitMAPmaxHF<50 || m_iAlarmlimitMAPmaxHF>10000)
 	{
 		m_iAlarmlimitMAPmaxHF=FACTORY_ALIMIT_VAL_MAPMAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMAX_HF_16,m_iAlarmlimitMAPmaxHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMAX_HF_16,(SHORT)m_iAlarmlimitMAPmaxHF);
 	}
 
 	m_iAlarmlimitStateMAPmaxHF=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_MAPMAX_HF_8);
 	if(m_iAlarmlimitStateMAPmaxHF<AL_ON || m_iAlarmlimitStateMAPmaxHF>AL_AUTO)
 	{
 		m_iAlarmlimitStateMAPmaxHF=FACTORY_ALIMIT_STATE_MAPMAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMAX_HF_8,m_iAlarmlimitStateMAPmaxHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMAX_HF_8,(BYTE)m_iAlarmlimitStateMAPmaxHF);
 	}
 
 	m_iAlarmlimitMAPminHF=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_MAPMIN_HF_16);
 	if(m_iAlarmlimitMAPminHF<0 || m_iAlarmlimitMAPminHF>10000)
 	{
 		m_iAlarmlimitMAPminHF=FACTORY_ALIMIT_VAL_MAPMIN;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMIN_HF_16,m_iAlarmlimitMAPminHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMIN_HF_16,(SHORT)m_iAlarmlimitMAPminHF);
 	}
 
 	m_iAlarmlimitStateMAPminHF=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_MAPMIN_HF_8);
 	if(m_iAlarmlimitStateMAPminHF<AL_ON || m_iAlarmlimitStateMAPminHF>AL_AUTO)
 	{
 		m_iAlarmlimitStateMAPminHF=FACTORY_ALIMIT_STATE_MAPMIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMIN_HF_8,m_iAlarmlimitStateMAPminHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMIN_HF_8,(BYTE)m_iAlarmlimitStateMAPminHF);
 	}
 	//#############################################################
 
@@ -3670,63 +3670,63 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitDCO2maxHF<50 || m_iAlarmlimitDCO2maxHF>10000)
 	{
 		m_iAlarmlimitDCO2maxHF=FACTORY_ALIMIT_VAL_DCO2MAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_DCO2MAX_HF_16,m_iAlarmlimitDCO2maxHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_DCO2MAX_HF_16,(SHORT)m_iAlarmlimitDCO2maxHF);
 	}
 
 	m_iAlarmlimitStateDCO2maxHF=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_DCO2MAX_HF_8);
 	if(m_iAlarmlimitStateDCO2maxHF<AL_ON || m_iAlarmlimitStateDCO2maxHF>AL_AUTO)
 	{
 		m_iAlarmlimitStateDCO2maxHF=FACTORY_ALIMIT_STATE_DCO2MAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_DCO2MAX_HF_8,m_iAlarmlimitStateDCO2maxHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_DCO2MAX_HF_8,(BYTE)m_iAlarmlimitStateDCO2maxHF);
 	}
 
 	m_iAlarmlimitDCO2minHF=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_DCO2MIN_HF_16);
 	if(m_iAlarmlimitDCO2minHF<0 || m_iAlarmlimitDCO2minHF>10000)
 	{
 		m_iAlarmlimitDCO2minHF=FACTORY_ALIMIT_VAL_DCO2MIN;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_DCO2MIN_HF_16,m_iAlarmlimitDCO2minHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_DCO2MIN_HF_16,(SHORT)m_iAlarmlimitDCO2minHF);
 	}
 
 	m_iAlarmlimitStateDCO2minHF=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_DCO2MIN_HF_8);
 	if(m_iAlarmlimitStateDCO2minHF<AL_ON || m_iAlarmlimitStateDCO2minHF>AL_AUTO)
 	{
 		m_iAlarmlimitStateDCO2minHF=FACTORY_ALIMIT_STATE_DCO2MIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_DCO2MIN_HF_8,m_iAlarmlimitStateDCO2minHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_DCO2MIN_HF_8,(BYTE)m_iAlarmlimitStateDCO2minHF);
 	}
 
 	m_iAlarmlimitMVmaxHF=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_MVMAX_HF_16);
 	if(m_iAlarmlimitMVmaxHF<50 || m_iAlarmlimitMVmaxHF>20000)
 	{
 		m_iAlarmlimitMVmaxHF=FACTORY_ALIMIT_VAL_MVMAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMAX_HF_16,m_iAlarmlimitMVmaxHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMAX_HF_16,(SHORT)m_iAlarmlimitMVmaxHF);
 	}
 
 	m_iAlarmlimitStateMVmaxHF=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_MVMAX_HF_8);
 	if(m_iAlarmlimitStateMVmaxHF<AL_ON || m_iAlarmlimitStateMVmaxHF>AL_AUTO)
 	{
 		m_iAlarmlimitStateMVmaxHF=FACTORY_ALIMIT_STATE_MVMAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMAX_HF_8,m_iAlarmlimitStateMVmaxHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMAX_HF_8,(BYTE)m_iAlarmlimitStateMVmaxHF);
 	}
 
 	m_iAlarmlimitMVminHF=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_MVMIN_HF_16);
 	if(m_iAlarmlimitMVminHF<0 || m_iAlarmlimitMVminHF>10000)
 	{
 		m_iAlarmlimitMVminHF=FACTORY_ALIMIT_VAL_MVMIN_HF;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMIN_HF_16,m_iAlarmlimitMVminHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMIN_HF_16,(SHORT)m_iAlarmlimitMVminHF);
 	}
 
 	m_iAlarmlimitStateMVminHF=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_MVMIN_HF_8);
 	if(m_iAlarmlimitStateMVminHF<AL_ON || m_iAlarmlimitStateMVminHF>AL_AUTO)
 	{
 		m_iAlarmlimitStateMVminHF=FACTORY_ALIMIT_STATE_MVMIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMIN_HF_8,m_iAlarmlimitStateMVminHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMIN_HF_8,(BYTE)m_iAlarmlimitStateMVminHF);
 	}
 
 	m_iAlarmlimitPmaxHF=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_PMAX_HF_16);
 	if(m_iAlarmlimitPmaxHF<10 || m_iAlarmlimitPmaxHF>MAXRANGE_HF_NEONATAL_PMAX)
 	{
 		m_iAlarmlimitPmaxHF=FACTORY_ALIMIT_VAL_PIPMAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_HF_16,m_iAlarmlimitPmaxHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_HF_16,(SHORT)m_iAlarmlimitPmaxHF);
 	}
 	
 
@@ -3734,49 +3734,49 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStatePmaxHF<AL_ON || m_iAlarmlimitStatePmaxHF>AL_AUTO)
 	{
 		m_iAlarmlimitStatePmaxHF=FACTORY_ALIMIT_STATE_PIPMAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_HF_8,m_iAlarmlimitStatePmaxHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_HF_8,(BYTE)m_iAlarmlimitStatePmaxHF);
 	}
 
 	m_iAlarmlimitPEEPminHF=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_PEEP_HF_16);
 	if(m_iAlarmlimitPEEPminHF<-100 || m_iAlarmlimitPEEPminHF>200)
 	{
 		m_iAlarmlimitPEEPminHF=FACTORY_ALIMIT_VAL_PEEP;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_HF_16,m_iAlarmlimitPEEPminHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_HF_16,(SHORT)m_iAlarmlimitPEEPminHF);
 	}
 
 	m_iAlarmlimitStatePEEPminHF=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PEEP_HF_8);
 	if(m_iAlarmlimitStatePEEPminHF<AL_ON || m_iAlarmlimitStatePEEPminHF>AL_AUTO)
 	{
 		m_iAlarmlimitStatePEEPminHF=FACTORY_ALIMIT_STATE_PEEP;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_HF_8,m_iAlarmlimitStatePEEPminHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_HF_8,(BYTE)m_iAlarmlimitStatePEEPminHF);
 	}
 
 	m_iAlarmlimitBPMmaxHF=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_BPMMAX_HF_16);
 	if(m_iAlarmlimitBPMmaxHF<10 || m_iAlarmlimitBPMmaxHF>220)
 	{
 		m_iAlarmlimitBPMmaxHF=FACTORY_ALIMIT_VAL_BPMMAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_BPMMAX_HF_16,m_iAlarmlimitBPMmaxHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_BPMMAX_HF_16,(SHORT)m_iAlarmlimitBPMmaxHF);
 	}
 
 	m_iAlarmlimitStateBPMmaxHF=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_BPMMAX_HF_8);
 	if(m_iAlarmlimitStateBPMmaxHF<AL_ON || m_iAlarmlimitStateBPMmaxHF>AL_AUTO)
 	{
 		m_iAlarmlimitStateBPMmaxHF=FACTORY_ALIMIT_STATE_BPMMAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_BPMMAX_HF_8,m_iAlarmlimitStateBPMmaxHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_BPMMAX_HF_8,(BYTE)m_iAlarmlimitStateBPMmaxHF);
 	}
 
 	m_iAlarmlimitLeakmaxHF=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_LEAKMAX_HF_16);
 	if(m_iAlarmlimitLeakmaxHF<0 || m_iAlarmlimitLeakmaxHF>50)
 	{
 		m_iAlarmlimitLeakmaxHF=FACTORY_ALIMIT_VAL_LEAKMAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_LEAKMAX_HF_16,m_iAlarmlimitLeakmaxHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_LEAKMAX_HF_16,(SHORT)m_iAlarmlimitLeakmaxHF);
 	}
 
 	m_iAlarmlimitStateLeakmaxHF=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_LEAKMAX_HF_8);
 	if(m_iAlarmlimitStateLeakmaxHF<AL_ON || m_iAlarmlimitStateLeakmaxHF>AL_AUTO)
 	{
 		m_iAlarmlimitStateLeakmaxHF=FACTORY_ALIMIT_STATE_LEAKMAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_LEAKMAX_HF_8,m_iAlarmlimitStateLeakmaxHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_LEAKMAX_HF_8,(BYTE)m_iAlarmlimitStateLeakmaxHF);
 	}
 
 	m_iAlarmlimitApnoeHF=0;
@@ -3784,7 +3784,7 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitApnoeHF<0 || m_iAlarmlimitApnoeHF>20)
 	{
 		m_iAlarmlimitApnoeHF=FACTORY_ALIMIT_VAL_APNOE_HF;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_APNOE_HF_16,m_iAlarmlimitApnoeHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_APNOE_HF_16, (SHORT)m_iAlarmlimitApnoeHF);
 	}*/
 
 	m_iAlarmlimitStateApnoeHF=AL_OFF;
@@ -3792,35 +3792,35 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitStateApnoeHF<AL_ON || m_iAlarmlimitStateApnoeHF>AL_AUTO)
 	{
 		m_iAlarmlimitStateApnoeHF=FACTORY_ALIMIT_STATE_APNOE_HF;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_APNOE_HF_8,m_iAlarmlimitStateApnoeHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_APNOE_HF_8, (BYTE)m_iAlarmlimitStateApnoeHF);
 	}*/
 
 	m_iAlarmlimitPmaxCpap=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_PMAX_CPAP_16);
 	if(m_iAlarmlimitPmaxCpap<10 || m_iAlarmlimitPmaxCpap>700)
 	{
 		m_iAlarmlimitPmaxCpap=FACTORY_ALIMIT_VAL_PIPMAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_CPAP_16,m_iAlarmlimitPmaxCpap);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_CPAP_16,(SHORT)m_iAlarmlimitPmaxCpap);
 	}
 
 	m_iAlarmlimitStatePmaxCpap=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PMAX_CPAP_8);
 	if(m_iAlarmlimitStatePmaxCpap<AL_ON || m_iAlarmlimitStatePmaxCpap>AL_AUTO)
 	{
 		m_iAlarmlimitStatePmaxCpap=FACTORY_ALIMIT_STATE_PIPMAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_CPAP_8,m_iAlarmlimitStatePmaxCpap);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_CPAP_8,(BYTE)m_iAlarmlimitStatePmaxCpap);
 	}
 
 	m_iAlarmlimitPEEPminCpap=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_PEEP_CPAP_16);
 	if(m_iAlarmlimitPEEPminCpap<-100 || m_iAlarmlimitPEEPminCpap>400)
 	{
 		m_iAlarmlimitPEEPminCpap=FACTORY_ALIMIT_VAL_PEEP;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_CPAP_16,m_iAlarmlimitPEEPminCpap);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_CPAP_16,(SHORT)m_iAlarmlimitPEEPminCpap);
 	}
 
 	m_iAlarmlimitStatePEEPminCpap=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PEEP_CPAP_8);
 	if(m_iAlarmlimitStatePEEPminCpap<AL_ON || m_iAlarmlimitStatePEEPminCpap>AL_AUTO)
 	{
 		m_iAlarmlimitStatePEEPminCpap=FACTORY_ALIMIT_STATE_PEEP;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_CPAP_8,m_iAlarmlimitStatePEEPminCpap);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_CPAP_8,(BYTE)m_iAlarmlimitStatePEEPminCpap);
 	}
 
 	//NMODE
@@ -3828,42 +3828,42 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitPIPmaxNCPAP<10 || m_iAlarmlimitPIPmaxNCPAP>700)
 	{
 		m_iAlarmlimitPIPmaxNCPAP=FACTORY_ALIMIT_VAL_PIPMAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_NCPAP_16,m_iAlarmlimitPIPmaxNCPAP);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_NCPAP_16,(SHORT)m_iAlarmlimitPIPmaxNCPAP);
 	}
 
 	m_iAlarmlimitStatePmaxNCPAP=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PMAX_NCPAP_8);
 	if(m_iAlarmlimitStatePmaxNCPAP<AL_ON || m_iAlarmlimitStatePmaxNCPAP>AL_AUTO)
 	{
 		m_iAlarmlimitStatePmaxNCPAP=FACTORY_ALIMIT_STATE_PIPMAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_NCPAP_8,m_iAlarmlimitStatePmaxNCPAP);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_NCPAP_8,(BYTE)m_iAlarmlimitStatePmaxNCPAP);
 	}
 
 	m_iAlarmlimitPEEPminNCPAP=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_PEEP_NCPAP_16);
 	if(m_iAlarmlimitPEEPminNCPAP<-50 || m_iAlarmlimitPEEPminNCPAP>200)
 	{
 		m_iAlarmlimitPEEPminNCPAP=FACTORY_ALIMIT_VAL_PEEP;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_NCPAP_16,m_iAlarmlimitPEEPminNCPAP);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_NCPAP_16,(SHORT)m_iAlarmlimitPEEPminNCPAP);
 	}
 
 	m_iAlarmlimitStatePEEPminNCPAP=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PEEP_NCPAP_8);
 	if(m_iAlarmlimitStatePEEPminNCPAP<AL_ON || m_iAlarmlimitStatePEEPminNCPAP>AL_AUTO)
 	{
 		m_iAlarmlimitStatePEEPminNCPAP=FACTORY_ALIMIT_STATE_PEEP;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_NCPAP_8,m_iAlarmlimitStatePEEPminNCPAP);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_NCPAP_8,(BYTE)m_iAlarmlimitStatePEEPminNCPAP);
 	}
 	///////////////////////////////////////////////////////////////////////////////// 
 	m_iAlarmlimitPIPmaxDUOPAP=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_PMAX_DUOPAP_16);
 	if(m_iAlarmlimitPIPmaxDUOPAP<10 || m_iAlarmlimitPIPmaxDUOPAP>700)
 	{
 		m_iAlarmlimitPIPmaxDUOPAP=FACTORY_ALIMIT_VAL_PIPMAX;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_DUOPAP_16,m_iAlarmlimitPIPmaxDUOPAP);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_DUOPAP_16,(SHORT)m_iAlarmlimitPIPmaxDUOPAP);
 	}
 
 	m_iAlarmlimitStatePIPmaxDUOPAP=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PMAX_DUOPAP_8);
 	if(m_iAlarmlimitStatePIPmaxDUOPAP<AL_ON || m_iAlarmlimitStatePIPmaxDUOPAP>AL_AUTO)
 	{
 		m_iAlarmlimitStatePIPmaxDUOPAP=FACTORY_ALIMIT_STATE_PIPMAX;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_DUOPAP_8,m_iAlarmlimitStatePIPmaxDUOPAP);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_DUOPAP_8,(BYTE)m_iAlarmlimitStatePIPmaxDUOPAP);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////rku PIPLOW DUOPAP
@@ -3871,28 +3871,28 @@ void CConfiguration::LoadSettings()
 	if(m_iAlarmlimitPIPminDUOPAP<10 || m_iAlarmlimitPIPminDUOPAP>700)
 	{
 		m_iAlarmlimitPIPminDUOPAP=FACTORY_ALIMIT_VAL_PIPMIN;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMIN_DUOPAP_16,m_iAlarmlimitPIPminDUOPAP);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMIN_DUOPAP_16,(SHORT)m_iAlarmlimitPIPminDUOPAP);
 	}
 
 	m_iAlarmlimitStatePIPminDUOPAP=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PMIN_DUOPAP_8);
 	if(m_iAlarmlimitStatePIPminDUOPAP<AL_ON || m_iAlarmlimitStatePIPminDUOPAP>AL_AUTO)
 	{
 		m_iAlarmlimitStatePIPminDUOPAP=FACTORY_ALIMIT_STATE_PIPMIN;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMIN_DUOPAP_8,m_iAlarmlimitStatePIPminDUOPAP);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMIN_DUOPAP_8,(BYTE)m_iAlarmlimitStatePIPminDUOPAP);
 	}
 
 	m_iAlarmlimitPEEPminDUOPAP=getModel()->getI2C()->ReadConfigWord(ALIMIT_VAL_PEEP_DUOPAP_16);
 	if(m_iAlarmlimitPEEPminDUOPAP<-50 || m_iAlarmlimitPEEPminDUOPAP>200)
 	{
 		m_iAlarmlimitPEEPminDUOPAP=FACTORY_ALIMIT_VAL_PEEP;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_DUOPAP_16,m_iAlarmlimitPEEPminDUOPAP);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_DUOPAP_16,(SHORT)m_iAlarmlimitPEEPminDUOPAP);
 	}
 
 	m_iAlarmlimitStatePEEPminDUOPAP=getModel()->getI2C()->ReadConfigByte(ALIMIT_STATE_PEEP_DUOPAP_8);
 	if(m_iAlarmlimitStatePEEPminDUOPAP<AL_ON || m_iAlarmlimitStatePEEPminDUOPAP>AL_AUTO)
 	{
 		m_iAlarmlimitStatePEEPminDUOPAP=FACTORY_ALIMIT_STATE_PEEP;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_DUOPAP_8,m_iAlarmlimitStatePEEPminDUOPAP);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_DUOPAP_8,(BYTE)m_iAlarmlimitStatePEEPminDUOPAP);
 	}
 
 	//#####################numeric blocks######################################################
@@ -3900,70 +3900,70 @@ void CConfiguration::LoadSettings()
 	if(m_iCurNumericBlock_IPPV<0 || m_iCurNumericBlock_IPPV>2)
 	{
 		m_iCurNumericBlock_IPPV=FACTORY_NUMBLOCK;
-		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_IPPV_8,m_iCurNumericBlock_IPPV);
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_IPPV_8, (BYTE)m_iCurNumericBlock_IPPV);
 	}
 
 	m_iCurNumericBlock_SIPPV=getModel()->getI2C()->ReadConfigByte(NUMBLOCK_SIPPV_8);
 	if(m_iCurNumericBlock_SIPPV<0 || m_iCurNumericBlock_SIPPV>2)
 	{
 		m_iCurNumericBlock_SIPPV=FACTORY_NUMBLOCK;
-		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_SIPPV_8,m_iCurNumericBlock_SIPPV);
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_SIPPV_8, (BYTE)m_iCurNumericBlock_SIPPV);
 	}
 
 	m_iCurNumericBlock_SIMV=getModel()->getI2C()->ReadConfigByte(NUMBLOCK_SIMV_8);
 	if(m_iCurNumericBlock_SIMV<0 || m_iCurNumericBlock_SIMV>2)
 	{
 		m_iCurNumericBlock_SIMV=FACTORY_NUMBLOCK;
-		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_SIMV_8,m_iCurNumericBlock_SIMV);
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_SIMV_8, (BYTE)m_iCurNumericBlock_SIMV);
 	}
 
 	m_iCurNumericBlock_SIMVPSV=getModel()->getI2C()->ReadConfigByte(NUMBLOCK_SIMVPSV_8);
 	if(m_iCurNumericBlock_SIMVPSV<0 || m_iCurNumericBlock_SIMVPSV>2)
 	{
 		m_iCurNumericBlock_SIMVPSV=FACTORY_NUMBLOCK;
-		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_SIMVPSV_8,m_iCurNumericBlock_SIMVPSV);
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_SIMVPSV_8, (BYTE)m_iCurNumericBlock_SIMVPSV);
 	}
 
 	m_iCurNumericBlock_PSV=getModel()->getI2C()->ReadConfigByte(NUMBLOCK_PSV_8);
 	if(m_iCurNumericBlock_PSV<0 || m_iCurNumericBlock_PSV>2)
 	{
 		m_iCurNumericBlock_PSV=FACTORY_NUMBLOCK;
-		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_PSV_8,m_iCurNumericBlock_PSV);
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_PSV_8, (BYTE)m_iCurNumericBlock_PSV);
 	}
 
 	m_iCurNumericBlock_CPAP=getModel()->getI2C()->ReadConfigByte(NUMBLOCK_CPAP_8);
 	if(m_iCurNumericBlock_CPAP<0 || m_iCurNumericBlock_CPAP>2)
 	{
 		m_iCurNumericBlock_CPAP=FACTORY_NUMBLOCK;
-		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_CPAP_8,m_iCurNumericBlock_CPAP);
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_CPAP_8, (BYTE)m_iCurNumericBlock_CPAP);
 	}
 
 	m_iCurNumericBlock_HFO=getModel()->getI2C()->ReadConfigByte(NUMBLOCK_HFO_8);
 	if(m_iCurNumericBlock_HFO<0 || m_iCurNumericBlock_HFO>2)
 	{
 		m_iCurNumericBlock_HFO=FACTORY_NUMBLOCK;
-		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_HFO_8,m_iCurNumericBlock_HFO);
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_HFO_8, (BYTE)m_iCurNumericBlock_HFO);
 	}
 
 	m_iCurNumericBlock_NCPAP=getModel()->getI2C()->ReadConfigByte(NUMBLOCK_NCPAP_8);
 	if(m_iCurNumericBlock_NCPAP<0 || m_iCurNumericBlock_NCPAP>2)
 	{
 		m_iCurNumericBlock_NCPAP=FACTORY_NUMBLOCK;
-		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_NCPAP_8,m_iCurNumericBlock_NCPAP);
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_NCPAP_8, (BYTE)m_iCurNumericBlock_NCPAP);
 	}
 
 	m_iCurNumericBlock_DUOPAP=getModel()->getI2C()->ReadConfigByte(NUMBLOCK_DUOPAP_8);
 	if(m_iCurNumericBlock_DUOPAP<0 || m_iCurNumericBlock_DUOPAP>2)
 	{
 		m_iCurNumericBlock_DUOPAP=FACTORY_NUMBLOCK;
-		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_DUOPAP_8,m_iCurNumericBlock_DUOPAP);
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_DUOPAP_8, (BYTE)m_iCurNumericBlock_DUOPAP);
 	}
 
 	m_iCurNumericBlock_THERAPY=getModel()->getI2C()->ReadConfigByte(NUMBLOCK_THERAPY_8);
 	if(m_iCurNumericBlock_THERAPY<0 || m_iCurNumericBlock_THERAPY>2)
 	{
 		m_iCurNumericBlock_THERAPY=FACTORY_NUMBLOCK;
-		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_THERAPY_8,m_iCurNumericBlock_THERAPY);
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_THERAPY_8, (BYTE)m_iCurNumericBlock_THERAPY);
 	}
 
 	//m_iCurNumericBlock_FLOWOFFCONV=0;
@@ -3971,14 +3971,14 @@ void CConfiguration::LoadSettings()
 	if(m_iCurNumericBlock_FLOWOFFCONV<0 || m_iCurNumericBlock_FLOWOFFCONV>2)
 	{
 		m_iCurNumericBlock_FLOWOFFCONV=FACTORY_NUMBLOCK;
-		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_FLOWOFFCONV_8,m_iCurNumericBlock_FLOWOFFCONV);
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_FLOWOFFCONV_8, (BYTE)m_iCurNumericBlock_FLOWOFFCONV);
 	}
 
 	m_iCurNumericBlock_FLOWOFFCPAP=getModel()->getI2C()->ReadConfigByte(NUMBLOCK_FLOWOFFCPAP_8);
 	if(m_iCurNumericBlock_FLOWOFFCPAP<0 || m_iCurNumericBlock_FLOWOFFCPAP>2)
 	{
 		m_iCurNumericBlock_FLOWOFFCPAP=FACTORY_NUMBLOCK;
-		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_FLOWOFFCPAP_8,m_iCurNumericBlock_FLOWOFFCPAP);
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_FLOWOFFCPAP_8, (BYTE)m_iCurNumericBlock_FLOWOFFCPAP);
 	}
 
 	//m_iCurNumericBlock_FLOWOFFHFO=0;
@@ -3986,14 +3986,14 @@ void CConfiguration::LoadSettings()
 	if(m_iCurNumericBlock_FLOWOFFHFO<0 || m_iCurNumericBlock_FLOWOFFHFO>2)
 	{
 		m_iCurNumericBlock_FLOWOFFHFO=FACTORY_NUMBLOCK;
-		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_FLOWOFFHFO_8,m_iCurNumericBlock_FLOWOFFHFO);
+		getModel()->getI2C()->WriteConfigByte(NUMBLOCK_FLOWOFFHFO_8, (BYTE)m_iCurNumericBlock_FLOWOFFHFO);
 	}
 
 	m_eLeakCompensation=(eLeakCompensation)getModel()->getI2C()->ReadConfigByte(LEAKCOMPENSATIONOFF_8);
 	if(m_eLeakCompensation<LC_LOW || m_eLeakCompensation>LC_HIGH)
 	{
 		m_eLeakCompensation=LC_MIDDLE;
-		getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8,(int)m_eLeakCompensation);
+		getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8,(BYTE)m_eLeakCompensation);
 	}
 
 	WORD iServiceYear=getModel()->getI2C()->ReadConfigWord(SERVICE_YEAR_16);
@@ -4007,8 +4007,8 @@ void CConfiguration::LoadSettings()
 		iServiceDay=0;
 		theApp.WriteLog(_T("*** ServiceDateOn==false ***"));
 		getModel()->getI2C()->WriteConfigWord(SERVICE_YEAR_16, iServiceYear);
-		getModel()->getI2C()->WriteConfigByte(SERVICE_MONTH_8, iServiceMonth);
-		getModel()->getI2C()->WriteConfigByte(SERVICE_DAY_8, iServiceDay);
+		getModel()->getI2C()->WriteConfigByte(SERVICE_MONTH_8, (BYTE)iServiceMonth);
+		getModel()->getI2C()->WriteConfigByte(SERVICE_DAY_8, (BYTE)iServiceDay);
 		//status will be 1 (invalid)
 	}
 	else
@@ -4085,13 +4085,13 @@ void CConfiguration::LoadSettings()
 	if(m_iFOTconv_STEPS<iMINRANGE_NEO_FOTconv_STEPS || m_iFOTconv_STEPS>iMAXRANGE_PED_FOTconv_STEPS)
 	{
 		m_iFOTconv_STEPS=FACTORY_FOT_CONV_STEPS;
-		getModel()->getI2C()->WriteConfigByte(PARA_FOT_CONV_STEPS_8,m_iFOTconv_STEPS);
+		getModel()->getI2C()->WriteConfigByte(PARA_FOT_CONV_STEPS_8, (BYTE)m_iFOTconv_STEPS);
 	}
 
 	if(m_iFOTconv_STEPS%2==0)
 	{
 		m_iFOTconv_STEPS=FACTORY_FOT_CONV_STEPS;
-		getModel()->getI2C()->WriteConfigByte(PARA_FOT_CONV_STEPS_8,m_iFOTconv_STEPS);
+		getModel()->getI2C()->WriteConfigByte(PARA_FOT_CONV_STEPS_8, (BYTE)m_iFOTconv_STEPS);
 	}
 
 
@@ -4112,15 +4112,15 @@ void CConfiguration::LoadSettings()
 	{
 		m_iFOTconv_PEEPSTART=FACTORY_FOT_CONV_PEEP_START;
 		m_iFOTconv_PEEPEND=FACTORY_FOT_CONV_PEEP_END;
-		getModel()->getI2C()->WriteConfigWord(PARA_FOT_CONV_PEEPSTART_16,m_iFOTconv_PEEPSTART);
-		getModel()->getI2C()->WriteConfigWord(PARA_FOT_CONV_PEEPEND_16,m_iFOTconv_PEEPEND);
+		getModel()->getI2C()->WriteConfigWord(PARA_FOT_CONV_PEEPSTART_16, (SHORT)m_iFOTconv_PEEPSTART);
+		getModel()->getI2C()->WriteConfigWord(PARA_FOT_CONV_PEEPEND_16, (SHORT)m_iFOTconv_PEEPEND);
 	}
 	if(m_iFOTconv_PEEPEND<m_iFOTconv_PEEPSTART+m_iDiffPEEPFOT || m_iFOTconv_PEEPEND>iMAXRANGE_PEEPEND)
 	{
 		m_iFOTconv_PEEPSTART=FACTORY_FOT_CONV_PEEP_START;
 		m_iFOTconv_PEEPEND=FACTORY_FOT_CONV_PEEP_END;
-		getModel()->getI2C()->WriteConfigWord(PARA_FOT_CONV_PEEPSTART_16,m_iFOTconv_PEEPSTART);
-		getModel()->getI2C()->WriteConfigWord(PARA_FOT_CONV_PEEPEND_16,m_iFOTconv_PEEPEND);
+		getModel()->getI2C()->WriteConfigWord(PARA_FOT_CONV_PEEPSTART_16, (SHORT)m_iFOTconv_PEEPSTART);
+		getModel()->getI2C()->WriteConfigWord(PARA_FOT_CONV_PEEPEND_16, (SHORT)m_iFOTconv_PEEPEND);
 	}
 
 	//SETTINGS FOT HFO #################################################################
@@ -4154,13 +4154,13 @@ void CConfiguration::LoadSettings()
 	if(m_iFOThfo_STEPS<iMINRANGE_NEO_FOThfo_STEPS || m_iFOThfo_STEPS>iMAXRANGE_PED_FOThfo_STEPS)
 	{
 		m_iFOThfo_STEPS=FACTORY_FOT_HFO_STEPS;
-		getModel()->getI2C()->WriteConfigByte(PARA_FOT_HFO_STEPS_8,m_iFOThfo_STEPS);
+		getModel()->getI2C()->WriteConfigByte(PARA_FOT_HFO_STEPS_8, (BYTE)m_iFOThfo_STEPS);
 	}
 
 	if(m_iFOThfo_STEPS%2==0)
 	{
 		m_iFOThfo_STEPS=FACTORY_FOT_HFO_STEPS;
-		getModel()->getI2C()->WriteConfigByte(PARA_FOT_HFO_STEPS_8,m_iFOThfo_STEPS);
+		getModel()->getI2C()->WriteConfigByte(PARA_FOT_HFO_STEPS_8, (BYTE)m_iFOThfo_STEPS);
 	}
 
 
@@ -4182,15 +4182,15 @@ void CConfiguration::LoadSettings()
 	{
 		m_iFOThfo_PMEANSTART=FACTORY_FOT_HFO_PMEAN_START;
 		m_iFOThfo_PMEANEND=FACTORY_FOT_HFO_PMEAN_END;
-		getModel()->getI2C()->WriteConfigWord(PARA_FOT_HFO_PMEANSTART_16,m_iFOThfo_PMEANSTART);
-		getModel()->getI2C()->WriteConfigWord(PARA_FOT_HFO_PMEANEND_16,m_iFOThfo_PMEANEND);
+		getModel()->getI2C()->WriteConfigWord(PARA_FOT_HFO_PMEANSTART_16, (SHORT)m_iFOThfo_PMEANSTART);
+		getModel()->getI2C()->WriteConfigWord(PARA_FOT_HFO_PMEANEND_16, (SHORT)m_iFOThfo_PMEANEND);
 	}
 	if(m_iFOThfo_PMEANEND<m_iFOThfo_PMEANSTART+m_iDiffPmeanFOT || m_iFOThfo_PMEANEND>iMAXRANGE_PMEANEND)
 	{
 		m_iFOThfo_PMEANSTART=FACTORY_FOT_HFO_PMEAN_START;
 		m_iFOThfo_PMEANEND=FACTORY_FOT_HFO_PMEAN_END;
-		getModel()->getI2C()->WriteConfigWord(PARA_FOT_HFO_PMEANSTART_16,m_iFOThfo_PMEANSTART);
-		getModel()->getI2C()->WriteConfigWord(PARA_FOT_HFO_PMEANEND_16,m_iFOThfo_PMEANEND);
+		getModel()->getI2C()->WriteConfigWord(PARA_FOT_HFO_PMEANSTART_16, (SHORT)m_iFOThfo_PMEANSTART);
+		getModel()->getI2C()->WriteConfigWord(PARA_FOT_HFO_PMEANEND_16, (SHORT)m_iFOThfo_PMEANEND);
 	}
 
 	
@@ -4284,7 +4284,7 @@ CStringW CConfiguration::GetKernelVersionDate()
 void CConfiguration::GraphSetLastViewState(int state)
 {
 	m_GraphLastViewState=state;
-	getModel()->getI2C()->WriteConfigByte(GRAPHLASTVIEWSUBSTATE_8,m_GraphLastViewState);
+	getModel()->getI2C()->WriteConfigByte(GRAPHLASTVIEWSUBSTATE_8,(BYTE)m_GraphLastViewState);
 }
 
 /**********************************************************************************************//**
@@ -4712,7 +4712,7 @@ void CConfiguration::SetAlarmVolume(eAlarmLoudness state)
 	//regWorkState.WriteDWORD(_T("AlarmVolume"), (int)state);
 
 	m_eAlarmVolume=state;
-	getModel()->getI2C()->WriteConfigByte(ALARMVOLUME_8, (int)state);
+	getModel()->getI2C()->WriteConfigByte(ALARMVOLUME_8, (BYTE)state);
 
 	CTlsRegistry regVolume(_T("HKCU\\ControlPanel\\Volume"),true);
 	DWORD dwValue=0;
@@ -4887,7 +4887,7 @@ eIERelationMode CConfiguration::GetIERelationMode()
 void CConfiguration::SetIERelationMode(eIERelationMode mode)
 {
 	m_eIERelationMode=mode;
-	getModel()->getI2C()->WriteConfigByte(IERELATIONMODE_8, (int)mode);
+	getModel()->getI2C()->WriteConfigByte(IERELATIONMODE_8, (BYTE)mode);
 }
 
 /**********************************************************************************************//**
@@ -4960,7 +4960,7 @@ SHORT CConfiguration::GetCO2BaroPressure()
 void CConfiguration::SetCO2BaroPressure(SHORT value)
 {
 	m_iCO2BaroPressure=value;
-	getModel()->getI2C()->WriteConfigWord(CO2BAROPRESSURE_16, value);
+	getModel()->getI2C()->WriteConfigWord(CO2BAROPRESSURE_16, (SHORT)value);
 
 	if(getModel()->getETCO2()!=NULL)
 		getModel()->getETCO2()->set_BaroPressure(value);
@@ -5164,7 +5164,7 @@ eRefFlowSensor CConfiguration::GetRefFlowSensor()
 void CConfiguration::SetRefFlowSensor(eRefFlowSensor mode)
 {
 	m_eRefFlowSensor=mode;
-	getModel()->getI2C()->WriteConfigByte(REFFLOWSENSOR_8, (int)mode);
+	getModel()->getI2C()->WriteConfigByte(REFFLOWSENSOR_8, (BYTE)mode);
 }
 
 /**********************************************************************************************//**
@@ -5193,7 +5193,7 @@ ePressureUnit CConfiguration::GetPressureUnit()
 void CConfiguration::SetPressureUnit(ePressureUnit eUnit)
 {
 	m_ePressureUnit=eUnit;
-	getModel()->getI2C()->WriteConfigByte(PRESSUREUNIT_8, (int)eUnit);
+	getModel()->getI2C()->WriteConfigByte(PRESSUREUNIT_8, (BYTE)eUnit);
 
 	if(getModel()->getAcuLink()!=NULL)
 	{
@@ -5227,7 +5227,7 @@ eVolumeControl CConfiguration::GetVolumeControl()
 void CConfiguration::SetVolumeControl(eVolumeControl eCtrl)
 {
 	m_eVControl=eCtrl;
-	getModel()->getI2C()->WriteConfigByte(VOLUMECONTROL_8, (int)eCtrl);
+	getModel()->getI2C()->WriteConfigByte(VOLUMECONTROL_8, (BYTE)eCtrl);
 
 	if(VCTRL_VGARANT==eCtrl)//rku, VGVL check
 	{
@@ -5368,7 +5368,7 @@ BYTE CConfiguration::getPRICO_SPO2lowRange()
 void CConfiguration::setPRICO_SPO2lowRange(BYTE SPO2low)
 {
 	m_iPRICO_SPO2lowRange=SPO2low;
-	getModel()->getI2C()->WriteConfigByte(PRICOSPO2LOW_8,m_iPRICO_SPO2lowRange);
+	getModel()->getI2C()->WriteConfigByte(PRICOSPO2LOW_8, (BYTE)m_iPRICO_SPO2lowRange);
 }
 
 /**********************************************************************************************//**
@@ -5397,7 +5397,7 @@ BYTE CConfiguration::getPRICO_SPO2highRange()
 void CConfiguration::setPRICO_SPO2highRange(BYTE SPO2high)
 {
 	m_iPRICO_SPO2highRange=SPO2high;
-	getModel()->getI2C()->WriteConfigByte(PRICOSPO2HIGH_8,m_iPRICO_SPO2highRange);
+	getModel()->getI2C()->WriteConfigByte(PRICOSPO2HIGH_8, (BYTE)m_iPRICO_SPO2highRange);
 }
 
 /**********************************************************************************************//**
@@ -5426,7 +5426,7 @@ BYTE CConfiguration::getPRICO_FIO2lowRange()
 void CConfiguration::setPRICO_FIO2lowRange(BYTE FIO2low)
 {
 	m_iPRICO_FIO2lowRange=FIO2low;
-	getModel()->getI2C()->WriteConfigByte(PRICOFIO2LOW_8,m_iPRICO_FIO2lowRange);
+	getModel()->getI2C()->WriteConfigByte(PRICOFIO2LOW_8, (BYTE)m_iPRICO_FIO2lowRange);
 }
 
 /**********************************************************************************************//**
@@ -5455,7 +5455,7 @@ BYTE CConfiguration::getPRICO_FIO2highRange()
 void CConfiguration::setPRICO_FIO2highRange(BYTE FIO2high)
 {
 	m_iPRICO_FIO2highRange=FIO2high;
-	getModel()->getI2C()->WriteConfigByte(PRICOFIO2HIGH_8,m_iPRICO_FIO2highRange);
+	getModel()->getI2C()->WriteConfigByte(PRICOFIO2HIGH_8, (BYTE)m_iPRICO_FIO2highRange);
 }
 
 /**********************************************************************************************//**
@@ -5484,7 +5484,7 @@ eTubeSet CConfiguration::GetTubeSet()
 void CConfiguration::SetTubeSet(eTubeSet tube)
 {
 	m_eTubeSet=tube;
-	getModel()->getI2C()->WriteConfigByte(TUBESET_8, (int)tube);
+	getModel()->getI2C()->WriteConfigByte(TUBESET_8, (BYTE)tube);
 
 }
 
@@ -5536,7 +5536,7 @@ void CConfiguration::SetFlowSensorState(eFlowSensorState state)
 	else
 		m_eFlowSensorState=FLOWSENSOR_ON;
 
-	getModel()->getI2C()->WriteConfigByte(FLOWSENSORSTATE_8, (int)m_eFlowSensorState);
+	getModel()->getI2C()->WriteConfigByte(FLOWSENSORSTATE_8, (BYTE)m_eFlowSensorState);
 }
 
 /**********************************************************************************************//**
@@ -5834,7 +5834,7 @@ eTriggereType CConfiguration::getTriggerOption_NCPAP()
 void CConfiguration::SetAutoOxyCal(eAutoOxyCal state)
 {
 	m_eAutoOxyCal=state;
-	getModel()->getI2C()->WriteConfigByte(AUTOOXYCAL_8, (eAutoOxyCal)state);
+	getModel()->getI2C()->WriteConfigByte(AUTOOXYCAL_8, (BYTE)state);
 
 }
 
@@ -6314,7 +6314,7 @@ bool CConfiguration::GetPlayVlimitSound()
 void CConfiguration::SetPercentAbortCriterionPSV(int iVal)
 {
 	m_iPercentAbortCriterionPSV=iVal;
-	getModel()->getI2C()->WriteConfigByte(ABORTCRITERIONPSV_8, iVal);
+	getModel()->getI2C()->WriteConfigByte(ABORTCRITERIONPSV_8, (BYTE)iVal);
 }
 
 /**********************************************************************************************//**
@@ -6378,7 +6378,7 @@ void CConfiguration::SetManBreathTime(int iTime)
 {
 	
 	m_iManBreathTime=iTime;
-	getModel()->getI2C()->WriteConfigByte(MANBREATHTIME_8, iTime);
+	getModel()->getI2C()->WriteConfigByte(MANBREATHTIME_8, (BYTE)iTime);
 }
 
 /**********************************************************************************************//**
@@ -6579,8 +6579,8 @@ WORD CConfiguration::getDiffPEEPFOT()
 
 void CConfiguration::setFOThfo_AMPLITUDE(WORD amp)
 {
-	m_iFOThfo_AMPLITUDE=amp;
-	getModel()->getI2C()->WriteConfigByte(PARA_FOT_HFO_AMPLITUDE_16, amp);
+	m_iFOThfo_AMPLITUDE=amp;	// @todo there is a byte/word ERROR remaining, to be addressed in FSW-103
+	getModel()->getI2C()->WriteConfigByte(PARA_FOT_HFO_AMPLITUDE_16, (BYTE)amp);	
 }
 
 /**********************************************************************************************//**
@@ -6754,7 +6754,7 @@ void CConfiguration::SetNebulizerTime(int iTime)
 {
 
 	m_iNebulizerTime=iTime;
-	getModel()->getI2C()->WriteConfigByte(NEBULIZERTIME_8, iTime);
+	getModel()->getI2C()->WriteConfigByte(NEBULIZERTIME_8, (BYTE)iTime);
 }
 
 /**********************************************************************************************//**
@@ -6798,7 +6798,7 @@ void CConfiguration::SetCurPminAlarmDelay(int iTime)
 {
 
 	m_iPminAlarmDelay=iTime;
-	getModel()->getI2C()->WriteConfigByte(PMINALARMDELAY_8, iTime);
+	getModel()->getI2C()->WriteConfigByte(PMINALARMDELAY_8, (BYTE)iTime);
 }
 
 /**********************************************************************************************//**
@@ -6827,7 +6827,7 @@ int CConfiguration::getCurPatientAlarmDelay()
 void CConfiguration::setCurPatientAlarmDelay(int iTime)
 {
 	m_iPatientAlarmDelay=iTime;
-	getModel()->getI2C()->WriteConfigByte(PATIENTALARMDELAY_8, iTime);
+	getModel()->getI2C()->WriteConfigByte(PATIENTALARMDELAY_8, (BYTE)iTime);
 }
 
 //double CConfiguration::GetMAXSCALE_CLFIO2_GRAPH()
@@ -6878,7 +6878,7 @@ void CConfiguration::SetMAXSCALE_SPO2_GRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_SPO2_GRAPH=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_SPO2_GRAPH_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_SPO2_GRAPH_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -6908,7 +6908,7 @@ void CConfiguration::SetMAXSCALE_CO2_GRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_CO2_GRAPH=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_CO2_GRAPH_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_CO2_GRAPH_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -6938,7 +6938,7 @@ void CConfiguration::SetMAXSCALE_FLOW_GRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_FLOW_GRAPH=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_FLOW_GRAPH_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_FLOW_GRAPH_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -6968,7 +6968,7 @@ void CConfiguration::SetMAXSCALE_PRESSURE_GRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_PRESSURE_GRAPH=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_PRESSURE_GRAPH_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_PRESSURE_GRAPH_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -6998,7 +6998,7 @@ void CConfiguration::SetMAXSCALE_VOLUME_GRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_VOLUME_GRAPH=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_GRAPH_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_GRAPH_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -7028,7 +7028,7 @@ void CConfiguration::SetMAXSCALE_SPO2_HFGRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_SPO2_HFGRAPH=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_SPO2_HFGRAPH_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_SPO2_HFGRAPH_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -7058,7 +7058,7 @@ void CConfiguration::SetMAXSCALE_CO2_HFGRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_CO2_HFGRAPH=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_CO2_HFGRAPH_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_CO2_HFGRAPH_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -7088,7 +7088,7 @@ void CConfiguration::SetMAXSCALE_FLOW_HFGRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_FLOW_HFGRAPH=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_FLOW_HFGRAPH_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_FLOW_HFGRAPH_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -7118,7 +7118,7 @@ void CConfiguration::SetMAXSCALE_VOLUME_HFGRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_VOLUME_HFGRAPH=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_HFGRAPH_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_HFGRAPH_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -7148,7 +7148,7 @@ void CConfiguration::SetMAXSCALE_PRESSURE_HFGRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_PRESSURE_HFGRAPH=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_PRESSURE_HFGRAPH_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_PRESSURE_HFGRAPH_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -7178,7 +7178,7 @@ void CConfiguration::SetMINSCALE_PRESSURE_HFGRAPH(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMINSCALE_PRESSURE_HFGRAPH=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MINSCALE_PRESSURE_HFGRAPH_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MINSCALE_PRESSURE_HFGRAPH_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -7208,7 +7208,7 @@ void CConfiguration::SetMAXSCALE_PRESSURE_HFPVLOOP(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_PRESSURE_HFPVLOOP=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_PRESSURE_HFPVLOOP_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_PRESSURE_HFPVLOOP_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -7238,7 +7238,7 @@ void CConfiguration::SetMINSCALE_PRESSURE_HFPVLOOP(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMINSCALE_PRESSURE_HFPVLOOP=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MINSCALE_PRESSURE_HFPVLOOP_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MINSCALE_PRESSURE_HFPVLOOP_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -7268,7 +7268,7 @@ void CConfiguration::SetMAXSCALE_VOLUME_HFPVLOOP(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_VOLUME_HFPVLOOP=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_HFPVLOOP_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_HFPVLOOP_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -7298,7 +7298,7 @@ void CConfiguration::SetMAXSCALE_FLOW_HFVFLOOP(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_FLOW_HFVFLOOP=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_FLOW_HFVFLOOP_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_FLOW_HFVFLOOP_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -7328,7 +7328,7 @@ void CConfiguration::SetMAXSCALE_VOLUME_HFVFLOOP(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_VOLUME_HFVFLOOP=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_HFVFLOOP_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_HFVFLOOP_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -7358,7 +7358,7 @@ void CConfiguration::SetMAXSCALE_PRESSURE_PVLOOP(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_PRESSURE_PVLOOP=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_PRESSURE_PVLOOP_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_PRESSURE_PVLOOP_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -7388,7 +7388,7 @@ void CConfiguration::SetMAXSCALE_VOLUME_PVLOOP(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_VOLUME_PVLOOP=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_PVLOOP_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_PVLOOP_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -7418,7 +7418,7 @@ void CConfiguration::SetMAXSCALE_VOLUME_VFLOOP(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_VOLUME_VFLOOP=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_VFLOOP_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_VOLUME_VFLOOP_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -7448,7 +7448,7 @@ void CConfiguration::SetMAXSCALE_FLOW_VFLOOP(double value)
 {
 	int iTemp=(int)(value*10);
 	m_iMAXSCALE_FLOW_VFLOOP=iTemp;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_FLOW_VFLOOP_16, iTemp);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_FLOW_VFLOOP_16, (SHORT)iTemp);
 }
 
 /**********************************************************************************************//**
@@ -7477,7 +7477,7 @@ double CConfiguration::GetMAXSCALE_FOT_PRESSURE()
 void CConfiguration::SetMAXSCALE_FOT_PRESSURE(double value)
 {
 	m_iMAXSCALE_FOT_PRESSURE=value;
-	getModel()->getI2C()->WriteConfigWord(MAXSCALE_FOT_PRESSURE_16, value);
+	getModel()->getI2C()->WriteConfigWord(MAXSCALE_FOT_PRESSURE_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -7506,7 +7506,7 @@ double CConfiguration::GetMINSCALE_FOT_XRS()
 void CConfiguration::SetMINSCALE_FOT_XRS(double value)
 {
 	m_iMINSCALE_FOT_XRS=value;
-	//getModel()->getI2C()->WriteConfigWord(MINSCALE_FOT_XRS_16, value); //rku, check FOTGRAPH
+	//getModel()->getI2C()->WriteConfigWord(MINSCALE_FOT_XRS_16, (SHORT)value); //rku, check FOTGRAPH
 }
 
 /**********************************************************************************************//**
@@ -7535,7 +7535,7 @@ double CConfiguration::GetMAXSCALE_FOT_XRS()
 void CConfiguration::SetMAXSCALE_FOT_XRS(double value)
 {
 	m_iMAXSCALE_FOT_XRS=value;
-	//getModel()->getI2C()->WriteConfigWord(MINSCALE_FOT_XRS_16, value); //rku, check FOTGRAPH
+	//getModel()->getI2C()->WriteConfigWord(MINSCALE_FOT_XRS_16, (SHORT)value); //rku, check FOTGRAPH
 }
 
 /**********************************************************************************************//**
@@ -7550,7 +7550,7 @@ void CConfiguration::SetMAXSCALE_FOT_XRS(double value)
 void CConfiguration::TrendSetPInspMax(int value)
 {
 	m_iTrendPInspMax=value;
-	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_PINSP_16, value);
+	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_PINSP_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -7579,7 +7579,7 @@ int CConfiguration::TrendGetPInspMax()
 void CConfiguration::TrendSetPMeanMax(int value)
 {
 	m_iTrendPMeanMax=value;
-	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_PMEAN_16, value);
+	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_PMEAN_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -7608,7 +7608,7 @@ int CConfiguration::TrendGetPMeanMax()
 void CConfiguration::TrendSetFIO2Max(int value)
 {
 	m_iTrendFIO2Max=value;
-	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_FIO2_16, value);
+	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_FIO2_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -7637,7 +7637,7 @@ int CConfiguration::TrendGetFIO2Max()
 void CConfiguration::TrendSetVteMax(int value)
 {
 	m_iTrendVteMax=value;
-	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_VTE_16, value);
+	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_VTE_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -7666,7 +7666,7 @@ int CConfiguration::TrendGetVteMax()
 void CConfiguration::TrendSetComplianceMax(int value)
 {
 	m_iTrendComplianceMax=value;
-	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_COMPLIANCE_16, value);
+	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_COMPLIANCE_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -7695,7 +7695,7 @@ int CConfiguration::TrendGetComplianceMax()
 void CConfiguration::TrendSetDCO2Max(int value)
 {
 	m_iTrendDCO2Max=value;
-	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_DCO2_16, value);
+	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_DCO2_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -7724,7 +7724,7 @@ int CConfiguration::TrendGetDCO2Max()
 void CConfiguration::TrendSetMVMax(int value)
 {
 	m_iTrendMVMax=value;
-	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_MV_16, value);
+	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_MV_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -7753,7 +7753,7 @@ int CConfiguration::TrendGetMVMax()
 void CConfiguration::TrendSetHFAMPMax(int value)
 {
 	m_iTrendHFAMPMax=value;
-	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_HFAMP_16, value);
+	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_HFAMP_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -7782,7 +7782,7 @@ int CConfiguration::TrendGetHFAMPMax()
 void CConfiguration::TrendSetRSBIMax(int value)
 {
 	m_iTrendRSBIMax=value;
-	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_RSBI_16, value);
+	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_RSBI_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -7811,7 +7811,7 @@ int CConfiguration::TrendGetRSBIMax()
 void CConfiguration::TrendSetSHAREMVMANDMax(int value)
 {
 	m_iTrendSHAREMVMANDMax=value;
-	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SHAREMVMAND_16, value);
+	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SHAREMVMAND_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -7840,7 +7840,7 @@ int CConfiguration::TrendGetSHAREMVMANDMax()
 void CConfiguration::TrendSetRESISTANCEMax(int value)
 {
 	m_iTrendRESISTANCEMax=value;
-	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_RESISTANCE_16, value);
+	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_RESISTANCE_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -7869,7 +7869,7 @@ int CConfiguration::TrendGetRESISTANCEMax()
 void CConfiguration::TrendSetLEAKMax(int value)
 {
 	m_iTrendLEAKMax=value;
-	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_LEAK_16, value);
+	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_LEAK_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -7898,7 +7898,7 @@ int CConfiguration::TrendGetLEAKMax()
 void CConfiguration::TrendSetSPO2Max(int value)
 {
 	m_iTrendSPO2Max=value;
-	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SPO2_16, value);
+	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SPO2_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -7927,7 +7927,7 @@ int CConfiguration::TrendGetSPO2Max()
 void CConfiguration::TrendSetSPO2PRMax(int value)
 {
 	m_iTrendSPO2PRMax=value;
-	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SPO2PR_16, value);
+	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SPO2PR_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -7956,7 +7956,7 @@ int CConfiguration::TrendGetSPO2PRMax()
 void CConfiguration::TrendSetFREQUENCYMax(int value)
 {
 	m_iTrendFREQUENCYMax=value;
-	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_FREQUENCY_16, value);
+	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_FREQUENCY_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -7985,7 +7985,7 @@ int CConfiguration::TrendGetFREQUENCYMax()
 void CConfiguration::TrendSetSPO2PIMax(int value)
 {
 	m_iTrendSPO2PIMax=value;
-	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SPO2PI_16, value);
+	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_SPO2PI_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -8014,7 +8014,7 @@ int CConfiguration::TrendGetSPO2PIMax()
 void CConfiguration::TrendSetETCO2Max(int value)
 {
 	m_iTrendETCO2Max=value;
-	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_ETCO2_16, value);
+	getModel()->getI2C()->WriteConfigWord(TRENDSCALE_ETCO2_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -8045,12 +8045,12 @@ void CConfiguration::GraphSetActualSpeedGraph(int value)
 	if(getModel()->getVMODEHANDLER()->activeModeIsHFO())
 	{
 		m_iGraphSpeedHFO=value;
-		getModel()->getI2C()->WriteConfigByte(GRAPHSPEEDHFO_8, value);
+		getModel()->getI2C()->WriteConfigByte(GRAPHSPEEDHFO_8, (BYTE)value);
 	}
 	else
 	{
 		m_iGraphSpeedNORM=value;
-		getModel()->getI2C()->WriteConfigByte(GRAPHSPEEDNORM_8, value);
+		getModel()->getI2C()->WriteConfigByte(GRAPHSPEEDNORM_8, (BYTE)value);
 	}
 	
 }
@@ -8088,7 +8088,7 @@ int CConfiguration::GraphGetActualSpeedGraph()
 void CConfiguration::GraphSetActualSpeedCLFIO2(int value)
 {
 	m_iGraphSpeedCLFIO2=value;
-	getModel()->getI2C()->WriteConfigByte(GRAPHSPEEDCLFIO2_8, value);
+	getModel()->getI2C()->WriteConfigByte(GRAPHSPEEDCLFIO2_8, (BYTE)value);
 
 }
 
@@ -8118,7 +8118,7 @@ int CConfiguration::GraphGetActualSpeedCLFIO2()
 void CConfiguration::SetTrendSpan(UINT span)
 {
 	m_iTrendSpan=span;
-	getModel()->getI2C()->WriteConfigWord(TREND_SPAN_16, span);
+	getModel()->getI2C()->WriteConfigWord(TREND_SPAN_16, (SHORT)span);
 }
 
 /**********************************************************************************************//**
@@ -8147,7 +8147,7 @@ UINT CConfiguration::GetTrendSpan()
 void CConfiguration::SetTrendType1(UINT type)
 {
 	m_iTypeTrend1=type;
-	getModel()->getI2C()->WriteConfigByte(TREND_TYPE1_8, type);
+	getModel()->getI2C()->WriteConfigByte(TREND_TYPE1_8, (BYTE)type);
 }
 
 /**********************************************************************************************//**
@@ -8176,7 +8176,7 @@ UINT CConfiguration::GetTrendType1()
 void CConfiguration::SetTrendType2(UINT type)
 {
 	m_iTypeTrend2=type;
-	getModel()->getI2C()->WriteConfigByte(TREND_TYPE2_8, type);
+	getModel()->getI2C()->WriteConfigByte(TREND_TYPE2_8, (BYTE)type);
 }
 
 /**********************************************************************************************//**
@@ -8205,7 +8205,7 @@ UINT CConfiguration::GetTrendType2()
 void CConfiguration::SetTrendType3(UINT type)
 {
 	m_iTypeTrend3=type;
-	getModel()->getI2C()->WriteConfigByte(TREND_TYPE3_8, type);
+	getModel()->getI2C()->WriteConfigByte(TREND_TYPE3_8, (BYTE)type);
 }
 
 /**********************************************************************************************//**
@@ -8234,7 +8234,7 @@ UINT CConfiguration::GetTrendType3()
 void CConfiguration::setPpsvAsDeltaPEEPValue(BOOL bState)
 {
 	m_bPPSVasDeltaPEEPValue=bState;
-	getModel()->getI2C()->WriteConfigByte(PPSV_AS_PEEPDELTA_8, bState);
+	getModel()->getI2C()->WriteConfigByte(PPSV_AS_PEEPDELTA_8, (BYTE)bState);
 }
 
 /**********************************************************************************************//**
@@ -8263,7 +8263,7 @@ BOOL CConfiguration::isPpsvAsDeltaPEEPValue()
 void CConfiguration::setLeakCompensation(eLeakCompensation leakComp)
 {
 	m_eLeakCompensation=leakComp;
-	getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8, (int)m_eLeakCompensation);
+	getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8, (BYTE)m_eLeakCompensation);
 
 	getModel()->Send_MODE_OPTION2(true,true);
 	getModel()->writeLEAKCOMPENSATIONToLog();
@@ -8311,8 +8311,8 @@ COleDateTime CConfiguration::getNextServiceDate()
 void CConfiguration::setNextServiceDate(WORD iYear, WORD iMonth, WORD iDate)
 {
 	getModel()->getI2C()->WriteConfigWord(SERVICE_YEAR_16, iYear);
-	getModel()->getI2C()->WriteConfigByte(SERVICE_MONTH_8, iMonth);
-	getModel()->getI2C()->WriteConfigByte(SERVICE_DAY_8, iDate);
+	getModel()->getI2C()->WriteConfigByte(SERVICE_MONTH_8, (BYTE)iMonth);
+	getModel()->getI2C()->WriteConfigByte(SERVICE_DAY_8, (BYTE)iDate);
 	m_dtNextServiceDate.SetDate(iYear, iMonth, iDate);
 	getModel()->isMaintenanceNeeded();
 }
@@ -8329,7 +8329,7 @@ void CConfiguration::setNextServiceDate(WORD iYear, WORD iMonth, WORD iDate)
 void CConfiguration::GraphSetPrimaryLineDiagramm(int value)
 {
 	m_iPrimaryLineDiagramm=value;
-	getModel()->getI2C()->WriteConfigByte(CURLINEDIAGRAMM_8, value);
+	getModel()->getI2C()->WriteConfigByte(CURLINEDIAGRAMM_8, (BYTE)value);
 }
 
 /**********************************************************************************************//**
@@ -8442,7 +8442,7 @@ BYTE CConfiguration::GetMainBoardVersion()
 void CConfiguration::setMainBoardVersion(UINT vers)
 {
 	m_iMainBoard=vers;
-	getModel()->getI2C()->WriteConfigByte(HWCONF_MAINBOARD,vers);
+	getModel()->getI2C()->WriteConfigByte(HWCONF_MAINBOARD,(BYTE)vers);
 }
 
 /**********************************************************************************************//**
@@ -8860,7 +8860,7 @@ void CConfiguration::SetEthernetPort(UINT port)
 {
 	m_iEthernetPort=port;
 
-	getModel()->getI2C()->WriteConfigWord(ETHERNETPORT_16,m_iEthernetPort);
+	getModel()->getI2C()->WriteConfigWord(ETHERNETPORT_16,(SHORT)m_iEthernetPort);
 }
 
 /**********************************************************************************************//**
@@ -8958,7 +8958,7 @@ void CConfiguration::SetVentRange(int range)
 	}
 	
 	m_iVentRange=range;
-	getModel()->getI2C()->WriteConfigByte(VENTRANGE_8, range);
+	getModel()->getI2C()->WriteConfigByte(VENTRANGE_8, (BYTE)range);
 
 	if(bCheckSettings)
 	{
@@ -9112,7 +9112,7 @@ void CConfiguration::SetCurPressureRiseCtrl(eCurveForm form)
 		{
 			
 			m_eCurveForm=form;
-			getModel()->getI2C()->WriteConfigByte(PRESSURERISECTRL_8, (int)form);
+			getModel()->getI2C()->WriteConfigByte(PRESSURERISECTRL_8, (BYTE)form);
 		}
 		break;
 	}
@@ -9241,7 +9241,7 @@ void CConfiguration::SetCurMode(eVentMode state)//newSPI
 		&&	state != VM_SERVICE
 		&&	state != VM_PRE_THERAPIE)
 	{
-		getModel()->getI2C()->WriteConfigByte(CURVENTMODE_8, state);
+		getModel()->getI2C()->WriteConfigByte(CURVENTMODE_8, (BYTE)state);
 	}
 
 	eVentMode mode=VM_NONE;
@@ -9303,7 +9303,7 @@ void CConfiguration::SetPrevMode(eVentMode state)//newSPI
 	m_ePrevMode = state;
 	LeaveCriticalSection(&csVentMode);
 	
-	getModel()->getI2C()->WriteConfigByte(PREVVENTMODE_8, state);
+	getModel()->getI2C()->WriteConfigByte(PREVVENTMODE_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -9332,7 +9332,7 @@ eALimitNumeric CConfiguration::getCurALimitNumeric()
 void CConfiguration::setCurALimitNumeric(eALimitNumeric numeric)
 {
 	m_eLastALimitNumeric=numeric;
-	getModel()->getI2C()->WriteConfigByte(ALIMITLASTNUMERICSTATE_8,numeric);
+	getModel()->getI2C()->WriteConfigByte(ALIMITLASTNUMERICSTATE_8,(BYTE)numeric);
 }
 
 /**********************************************************************************************//**
@@ -10713,7 +10713,7 @@ BYTE CConfiguration::GetO2Difference()
 void CConfiguration::SetO2Difference(BYTE value)
 {
 	m_iO2Difference=value;
-	getModel()->getI2C()->WriteConfigWord(PARA_O2DIFF_16, value);
+	getModel()->getI2C()->WriteConfigWord(PARA_O2DIFF_16, (SHORT)value);
 
 }
 
@@ -10746,7 +10746,7 @@ void CConfiguration::setPEEP_PpsvDifference(int value)
 	{
 		DEBUGMSG(TRUE, (TEXT("CConfiguration::SetPPSVDifference %d\r\n"),value));
 		m_iPPSVDifference=value;
-		getModel()->getI2C()->WriteConfigWord(PARA_PPSVDIFF_16, value);
+		getModel()->getI2C()->WriteConfigWord(PARA_PPSVDIFF_16, (SHORT)value);
 	}
 	
 
@@ -10781,7 +10781,7 @@ void CConfiguration::SetPmeanDifference(int value)
 	{
 		DEBUGMSG(TRUE, (TEXT("CConfiguration::SetPmeanDifference %d\r\n"),value));
 		m_iPmeanDifference=value;
-		getModel()->getI2C()->WriteConfigWord(PARA_PMEANDIFF_16, value);
+		getModel()->getI2C()->WriteConfigWord(PARA_PMEANDIFF_16, (SHORT)value);
 	}
 }
 
@@ -11341,7 +11341,7 @@ void CConfiguration::SetParaDataHFAmplmax(WORD iVal)
 
 BYTE CConfiguration::GetParaDataHFFreq()
 {
-	return m_iParaDataHFFreq;
+	return (BYTE)m_iParaDataHFFreq;
 }
 
 /**********************************************************************************************//**
@@ -11583,7 +11583,7 @@ eRatioIE CConfiguration::GetParaDataHFIERatio()
 void CConfiguration::SetParaDataHFIERatio(eRatioIE iVal)
 {
 	m_iParaDataHFIERatio=iVal;
-	getModel()->getI2C()->WriteConfigByte(PARA_HFO_IERATIO_8, (int)iVal);
+	getModel()->getI2C()->WriteConfigByte(PARA_HFO_IERATIO_8, (BYTE)iVal);
 }
 
 /**********************************************************************************************//**
@@ -11675,7 +11675,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2max()
 void CConfiguration::SetAlarmlimitSPO2max(int value)
 {
 	m_iAlarmlimitSPO2max=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MAX_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MAX_16, (SHORT)value);
 	
 	if(getModel()->getAcuLink()!=NULL)
 	{
@@ -11698,7 +11698,7 @@ void CConfiguration::SetAlarmlimitSPO2max(int value)
 void CConfiguration::SetAlarmlimitStateSPO2max(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateSPO2max=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MAX_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MAX_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -11741,7 +11741,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2min()
 void CConfiguration::SetAlarmlimitSPO2min(int value)
 {
 	m_iAlarmlimitSPO2min=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MIN_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MIN_16, (SHORT)value);
 	
 	if(getModel()->getAcuLink()!=NULL)
 	{
@@ -11764,7 +11764,7 @@ void CConfiguration::SetAlarmlimitSPO2min(int value)
 void CConfiguration::SetAlarmlimitStateSPO2min(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateSPO2min=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MIN_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MIN_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -11807,7 +11807,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePulseRatemax()
 void CConfiguration::SetAlarmlimitPulseRatemax(int value)
 {
 	m_iAlarmlimitPulseRatemax=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMAX_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMAX_16, (SHORT)value);
 	
 	if(getModel()->getAcuLink()!=NULL)
 	{
@@ -11830,7 +11830,7 @@ void CConfiguration::SetAlarmlimitPulseRatemax(int value)
 void CConfiguration::SetAlarmlimitStatePulseRatemax(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePulseRatemax=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMAX_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMAX_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -11873,7 +11873,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePulseRatemin()
 void CConfiguration::SetAlarmlimitPulseRatemin(int value)
 {
 	m_iAlarmlimitPulseRatemin=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMIN_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMIN_16, (SHORT)value);
 	
 	if(getModel()->getAcuLink()!=NULL)
 	{
@@ -11896,7 +11896,7 @@ void CConfiguration::SetAlarmlimitPulseRatemin(int value)
 void CConfiguration::SetAlarmlimitStatePulseRatemin(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePulseRatemin=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMIN_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMIN_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -11939,7 +11939,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2_PImin()
 void CConfiguration::SetAlarmlimitSPO2_PImin(int value)
 {
 	m_iAlarmlimitSPO2_PImin=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_PIMIN_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_PIMIN_16, (SHORT)value);
 	
 	if(getModel()->getAcuLink()!=NULL)
 	{
@@ -11962,7 +11962,7 @@ void CConfiguration::SetAlarmlimitSPO2_PImin(int value)
 void CConfiguration::SetAlarmlimitStateSPO2_PImin(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateSPO2_PImin=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_PIMIN_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_PIMIN_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -12005,7 +12005,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2_SIQmin()
 void CConfiguration::SetAlarmlimitSPO2_SIQmin(int value)
 {
 	m_iAlarmlimitSPO2_SIQmin=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_SIQMIN_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_SIQMIN_16, (SHORT)value);
 
 	if(getModel()->getAcuLink()!=NULL)
 	{
@@ -12028,7 +12028,7 @@ void CConfiguration::SetAlarmlimitSPO2_SIQmin(int value)
 void CConfiguration::SetAlarmlimitStateSPO2_SIQmin(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateSPO2_SIQmin=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_SIQMIN_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_SIQMIN_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -12071,7 +12071,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateETCO2max()
 void CConfiguration::SetAlarmlimitETCO2max(int value)
 {
 	m_iAlarmlimitETCO2max=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_16, (SHORT)value);
 
 	if(getModel()->getAcuLink()!=NULL)
 	{
@@ -12094,7 +12094,7 @@ void CConfiguration::SetAlarmlimitETCO2max(int value)
 void CConfiguration::SetAlarmlimitStateETCO2max(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateETCO2max=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MAX_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MAX_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -12137,7 +12137,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateETCO2min()
 void CConfiguration::SetAlarmlimitETCO2min(int value)
 {
 	m_iAlarmlimitETCO2min=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_16, (SHORT)value);
 
 	if(getModel()->getAcuLink()!=NULL)
 	{
@@ -12160,7 +12160,7 @@ void CConfiguration::SetAlarmlimitETCO2min(int value)
 void CConfiguration::SetAlarmlimitStateETCO2min(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateETCO2min=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MIN_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MIN_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -12203,7 +12203,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateFICO2max()
 void CConfiguration::SetAlarmlimitFICO2max(int value)
 {
 	m_iAlarmlimitFICO2max=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_16, (SHORT)value);
 
 	if(getModel()->getAcuLink()!=NULL)
 	{
@@ -12226,7 +12226,7 @@ void CConfiguration::SetAlarmlimitFICO2max(int value)
 void CConfiguration::SetAlarmlimitStateFICO2max(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateFICO2max=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MAX_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MAX_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -12269,7 +12269,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateFICO2min()
 void CConfiguration::SetAlarmlimitFICO2min(int value)
 {
 	m_iAlarmlimitFICO2min=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_16, (SHORT)value);
 
 	if(getModel()->getAcuLink()!=NULL)
 	{
@@ -12292,7 +12292,7 @@ void CConfiguration::SetAlarmlimitFICO2min(int value)
 void CConfiguration::SetAlarmlimitStateFICO2min(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateFICO2min=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MIN_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MIN_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -12335,7 +12335,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateMVmax()
 void CConfiguration::SetAlarmlimitMVmax(int value)
 {
 	m_iAlarmlimitMVmax=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMAX_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMAX_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MVMAX,value);
 }
@@ -12352,7 +12352,7 @@ void CConfiguration::SetAlarmlimitMVmax(int value)
 void CConfiguration::SetAlarmlimitStateMVmax(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateMVmax=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMAX_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMAX_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -12395,7 +12395,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateMVmin()
 void CConfiguration::SetAlarmlimitMVmin(int value)
 {
 	m_iAlarmlimitMVmin=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMIN_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMIN_16, (SHORT)value);
 
 	if(getModel()->getAcuLink()!=NULL)
 	{
@@ -12422,7 +12422,7 @@ void CConfiguration::SetAlarmlimitMVmin(int value)
 void CConfiguration::SetAlarmlimitStateMVmin(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateMVmin=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMIN_8, m_iAlarmlimitStateMVmin);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMIN_8, (BYTE)m_iAlarmlimitStateMVmin);
 }
 
 /**********************************************************************************************//**
@@ -12465,7 +12465,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePIPmax()
 void CConfiguration::SetAlarmlimitPIPmax(int value)
 {
 	m_iAlarmlimitPIPmax=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PIPMAX_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PIPMAX_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMAX,value);
 }
@@ -12482,7 +12482,7 @@ void CConfiguration::SetAlarmlimitPIPmax(int value)
 void CConfiguration::SetAlarmlimitStatePIPmax(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePIPmax=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PIPMAX_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PIPMAX_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -12525,7 +12525,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePIPmin()
 void CConfiguration::SetAlarmlimitPIPmin(int value)
 {
 	m_iAlarmlimitPIPmin=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PIPMIN_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PIPMIN_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMIN,value);
 }
@@ -12542,7 +12542,7 @@ void CConfiguration::SetAlarmlimitPIPmin(int value)
 void CConfiguration::SetAlarmlimitStatePIPmin(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePIPmin=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PIPMIN_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PIPMIN_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -12585,7 +12585,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePEEPmin()
 void CConfiguration::SetAlarmlimitPEEPmin(int value)
 {
 	m_iAlarmlimitPEEPmin=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PEEPMIN,value);
 }
@@ -12602,7 +12602,7 @@ void CConfiguration::SetAlarmlimitPEEPmin(int value)
 void CConfiguration::SetAlarmlimitStatePEEPmin(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePEEPmin=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -12645,7 +12645,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateBPMmax()
 void CConfiguration::SetAlarmlimitBPMmax(int value)
 {
 	m_iAlarmlimitBPMmax=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_BPMMAX_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_BPMMAX_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 	{
 		if(getModel()->getALARMHANDLER()->getAlimitState_BPMmaxLimit()!=AL_OFF)
@@ -12667,7 +12667,7 @@ void CConfiguration::SetAlarmlimitBPMmax(int value)
 void CConfiguration::SetAlarmlimitStateBPMmax(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateBPMmax=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_BPMMAX_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_BPMMAX_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -12710,7 +12710,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateLeakmax()
 void CConfiguration::SetAlarmlimitLeakmax(int value)
 {
 	m_iAlimitLeakmax=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_LEAKMAX_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_LEAKMAX_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 	{
 		if(getModel()->getALARMHANDLER()->getAlimitState_LeakmaxLimit()!=AL_OFF)
@@ -12732,7 +12732,7 @@ void CConfiguration::SetAlarmlimitLeakmax(int value)
 void CConfiguration::SetAlarmlimitStateLeakmax(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateLeakmax=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_LEAKMAX_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_LEAKMAX_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -12796,7 +12796,7 @@ void CConfiguration::setAlimitApnoe(int value)
 		}
 	}
 	m_iAlarmlimitApnoe=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_APNOE_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_APNOE_16, (SHORT)value);
 }
 
 /**********************************************************************************************//**
@@ -12811,7 +12811,7 @@ void CConfiguration::setAlimitApnoe(int value)
 void CConfiguration::SetAlarmlimitStateApnoe(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateApnoe=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_APNOE_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_APNOE_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -12856,7 +12856,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2maxHF()
 void CConfiguration::SetAlarmlimitSPO2maxHF(int value)
 {
 	/*m_iAlarmlimitSPO2maxHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MAX_HF_16, value);*/
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MAX_HF_16, (SHORT)value);*/
 	SetAlarmlimitSPO2max(value);
 }
 
@@ -12872,7 +12872,7 @@ void CConfiguration::SetAlarmlimitSPO2maxHF(int value)
 void CConfiguration::SetAlarmlimitStateSPO2maxHF(eAlarmLimitState state)
 {
 	/*m_iAlarmlimitStateSPO2maxHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MAX_HF_8, state);*/
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MAX_HF_8, (BYTE)state);*/
 	SetAlarmlimitStateSPO2max(state);
 }
 
@@ -12918,7 +12918,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2minHF()
 void CConfiguration::SetAlarmlimitSPO2minHF(int value)
 {
 	/*m_iAlarmlimitSPO2minHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MIN_HF_16, value);*/
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MIN_HF_16, (SHORT)value);*/
 	SetAlarmlimitSPO2min(value);
 }
 
@@ -12934,7 +12934,7 @@ void CConfiguration::SetAlarmlimitSPO2minHF(int value)
 void CConfiguration::SetAlarmlimitStateSPO2minHF(eAlarmLimitState state)
 {
 	/*m_iAlarmlimitStateSPO2minHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MIN_HF_8, state);*/
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MIN_HF_8, (BYTE)state);*/
 	SetAlarmlimitStateSPO2min(state);
 }
 
@@ -12980,7 +12980,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePulseRatemaxHF()
 void CConfiguration::SetAlarmlimitPulseRatemaxHF(int value)
 {
 	/*m_iAlarmlimitPulseRatemaxHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMAX_HF_16, value);*/
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMAX_HF_16, (SHORT)value);*/
 	/*if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMAX,value);*/
 	SetAlarmlimitPulseRatemax(value);
@@ -12998,7 +12998,7 @@ void CConfiguration::SetAlarmlimitPulseRatemaxHF(int value)
 void CConfiguration::SetAlarmlimitStatePulseRatemaxHF(eAlarmLimitState state)
 {
 	/*m_iAlarmlimitStatePulseRatemaxHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMAX_HF_8, state);*/
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMAX_HF_8, (BYTE)state);*/
 	SetAlarmlimitStatePulseRatemax(state);
 }
 
@@ -13044,7 +13044,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePulseRateminHF()
 void CConfiguration::SetAlarmlimitPulseRateminHF(int value)
 {
 	//m_iAlarmlimitPulseRateminHF=value;
-	//getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMIN_HF_16, value);
+	//getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMIN_HF_16, (SHORT)value);
 	/*if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PULSERATEMIN,value);*/
 	SetAlarmlimitPulseRatemin(value);
@@ -13062,7 +13062,7 @@ void CConfiguration::SetAlarmlimitPulseRateminHF(int value)
 void CConfiguration::SetAlarmlimitStatePulseRateminHF(eAlarmLimitState state)
 {
 	/*m_iAlarmlimitStatePulseRateminHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMIN_HF_8, state);*/
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMIN_HF_8, (BYTE)state);*/
 	SetAlarmlimitStatePulseRatemin(state);
 }
 
@@ -13108,7 +13108,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2_PIminHF()
 void CConfiguration::SetAlarmlimitSPO2_PIminHF(int value)
 {
 	/*m_iAlarmlimitSPO2_PIminHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_PIMIN_HF_16, value);*/
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_PIMIN_HF_16, (SHORT)value);*/
 	/*if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_SPO2_PIMIN,value);*/
 	SetAlarmlimitSPO2_PImin(value);
@@ -13126,7 +13126,7 @@ void CConfiguration::SetAlarmlimitSPO2_PIminHF(int value)
 void CConfiguration::SetAlarmlimitStateSPO2_PIminHF(eAlarmLimitState state)
 {
 	/*m_iAlarmlimitStateSPO2_PIminHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_PIMIN_HF_8, state);*/
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_PIMIN_HF_8, (BYTE)state);*/
 	SetAlarmlimitStateSPO2_PImin(state);
 }
 
@@ -13172,7 +13172,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2_SIQminHF()
 void CConfiguration::SetAlarmlimitSPO2_SIQminHF(int value)
 {
 	/*m_iAlarmlimitSPO2_SIQminHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_PIMIN_HF_16, value);*/
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_PIMIN_HF_16, (SHORT)value);*/
 	SetAlarmlimitSPO2_SIQmin(value);
 }
 
@@ -13188,7 +13188,7 @@ void CConfiguration::SetAlarmlimitSPO2_SIQminHF(int value)
 void CConfiguration::SetAlarmlimitStateSPO2_SIQminHF(eAlarmLimitState state)
 {
 	/*m_iAlarmlimitStateSPO2_SIQminHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_SIQMIN_HF_8, state);*/
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_SIQMIN_HF_8, (BYTE)state);*/
 	SetAlarmlimitStateSPO2_SIQmin(state);
 }
 
@@ -13232,7 +13232,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateETCO2maxHF()
 void CConfiguration::SetAlarmlimitETCO2maxHF(int value)
 {
 	m_iAlarmlimitETCO2maxHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_HF_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_HF_16, (SHORT)value);
 
 	if(GetAlarmlimitStateETCO2maxHF()==AL_OFF)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MAX, ALINK_OFF);
@@ -13252,7 +13252,7 @@ void CConfiguration::SetAlarmlimitETCO2maxHF(int value)
 void CConfiguration::SetAlarmlimitStateETCO2maxHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateETCO2maxHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MAX_HF_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MAX_HF_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -13295,7 +13295,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateETCO2minHF()
 void CConfiguration::SetAlarmlimitETCO2minHF(int value)
 {
 	m_iAlarmlimitETCO2minHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_HF_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_HF_16, (SHORT)value);
 
 	if(GetAlarmlimitStateETCO2minHF()==AL_OFF)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_ETCO2MIN, ALINK_OFF);
@@ -13315,7 +13315,7 @@ void CConfiguration::SetAlarmlimitETCO2minHF(int value)
 void CConfiguration::SetAlarmlimitStateETCO2minHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateETCO2minHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MIN_HF_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MIN_HF_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -13358,7 +13358,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateFICO2maxHF()
 void CConfiguration::SetAlarmlimitFICO2maxHF(int value)
 {
 	m_iAlarmlimitFICO2maxHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_HF_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_HF_16, (SHORT)value);
 
 	if(GetAlarmlimitStateFICO2maxHF()==AL_OFF)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MAX, ALINK_OFF);
@@ -13378,7 +13378,7 @@ void CConfiguration::SetAlarmlimitFICO2maxHF(int value)
 void CConfiguration::SetAlarmlimitStateFICO2maxHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateFICO2maxHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MAX_HF_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MAX_HF_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -13421,7 +13421,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateFICO2minHF()
 void CConfiguration::SetAlarmlimitFICO2minHF(int value)
 {
 	m_iAlarmlimitFICO2minHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_HF_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_HF_16, (SHORT)value);
 
 	if(GetAlarmlimitStateFICO2minHF()==AL_OFF)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_FICO2MIN, ALINK_OFF);
@@ -13441,7 +13441,7 @@ void CConfiguration::SetAlarmlimitFICO2minHF(int value)
 void CConfiguration::SetAlarmlimitStateFICO2minHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateFICO2minHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MIN_HF_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MIN_HF_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -13484,7 +13484,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateMAPmaxHF()
 void CConfiguration::SetAlarmlimitMAPmaxHF(int value)
 {
 	m_iAlarmlimitMAPmaxHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMAX_HF_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMAX_HF_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 	{
 		if(GetAlarmlimitStateMAPmaxHF()==AL_OFF)
@@ -13510,7 +13510,7 @@ void CConfiguration::SetAlarmlimitMAPmaxHF(int value)
 void CConfiguration::SetAlarmlimitStateMAPmaxHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateMAPmaxHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMAX_HF_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMAX_HF_8, (BYTE)state);
 
 	if(getModel()->getAcuLink()!=NULL)
 	{
@@ -13565,7 +13565,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateMAPminHF()
 void CConfiguration::SetAlarmlimitMAPminHF(int value)
 {
 	m_iAlarmlimitMAPminHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMIN_HF_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMIN_HF_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 	{
 		if(GetAlarmlimitStateMAPminHF()==AL_OFF)
@@ -13591,7 +13591,7 @@ void CConfiguration::SetAlarmlimitMAPminHF(int value)
 void CConfiguration::SetAlarmlimitStateMAPminHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateMAPminHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMIN_HF_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMIN_HF_8, (BYTE)state);
 
 	if(getModel()->getAcuLink()!=NULL)
 	{
@@ -13647,7 +13647,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateDCO2maxHF()
 void CConfiguration::SetAlarmlimitDCO2maxHF(int value)
 {
 	m_iAlarmlimitDCO2maxHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_DCO2MAX_HF_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_DCO2MAX_HF_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 	{
 		if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
@@ -13677,7 +13677,7 @@ void CConfiguration::SetAlarmlimitDCO2maxHF(int value)
 void CConfiguration::SetAlarmlimitStateDCO2maxHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateDCO2maxHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_DCO2MAX_HF_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_DCO2MAX_HF_8, (BYTE)state);
 
 	if(getModel()->getAcuLink()!=NULL)
 	{
@@ -13736,7 +13736,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateDCO2minHF()
 void CConfiguration::SetAlarmlimitDCO2minHF(int value)
 {
 	m_iAlarmlimitDCO2minHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_DCO2MIN_HF_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_DCO2MIN_HF_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 	{
 		if(getModel()->getDATAHANDLER()->IsFlowSensorStateOff()==true)
@@ -13766,7 +13766,7 @@ void CConfiguration::SetAlarmlimitDCO2minHF(int value)
 void CConfiguration::SetAlarmlimitStateDCO2minHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateDCO2minHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_DCO2MIN_HF_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_DCO2MIN_HF_8, (BYTE)state);
 
 	if(getModel()->getAcuLink()!=NULL)
 	{
@@ -13826,7 +13826,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateMVmaxHF()
 void CConfiguration::SetAlarmlimitMVmaxHF(int value)
 {
 	m_iAlarmlimitMVmaxHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMAX_HF_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMAX_HF_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_MVMAX,value);
 }
@@ -13843,7 +13843,7 @@ void CConfiguration::SetAlarmlimitMVmaxHF(int value)
 void CConfiguration::SetAlarmlimitStateMVmaxHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateMVmaxHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMAX_HF_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMAX_HF_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -13886,7 +13886,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateMVminHF()
 void CConfiguration::SetAlarmlimitMVminHF(int value)
 {
 	m_iAlarmlimitMVminHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMIN_HF_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMIN_HF_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 	{
 		if(getModel()->getALARMHANDLER()->getAlimitState_MVminLimit()==AL_OFF)
@@ -13912,7 +13912,7 @@ void CConfiguration::SetAlarmlimitMVminHF(int value)
 void CConfiguration::SetAlarmlimitStateMVminHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateMVminHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMIN_HF_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMIN_HF_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -13955,7 +13955,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePmaxHF()
 void CConfiguration::SetAlarmlimitPmaxHF(int value)
 {
 	m_iAlarmlimitPmaxHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_HF_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_HF_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMAX,value);
 }
@@ -13972,7 +13972,7 @@ void CConfiguration::SetAlarmlimitPmaxHF(int value)
 void CConfiguration::SetAlarmlimitStatePmaxHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePmaxHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_HF_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_HF_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -14015,7 +14015,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePEEPminHF()
 void CConfiguration::SetAlarmlimitPEEPminHF(int value)
 {
 	m_iAlarmlimitPEEPminHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_HF_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_HF_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PEEPMIN,value);
 }
@@ -14032,7 +14032,7 @@ void CConfiguration::SetAlarmlimitPEEPminHF(int value)
 void CConfiguration::SetAlarmlimitStatePEEPminHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePEEPminHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_HF_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_HF_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -14075,7 +14075,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateBPMmaxHF()
 void CConfiguration::SetAlarmlimitBPMmaxHF(int value)
 {
 	m_iAlarmlimitBPMmaxHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_BPMMAX_HF_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_BPMMAX_HF_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 	{
 		if(getModel()->getALARMHANDLER()->getAlimitState_BPMmaxLimit()!=AL_OFF)
@@ -14097,7 +14097,7 @@ void CConfiguration::SetAlarmlimitBPMmaxHF(int value)
 void CConfiguration::SetAlarmlimitStateBPMmaxHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateBPMmaxHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_BPMMAX_HF_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_BPMMAX_HF_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -14140,7 +14140,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateLeakmaxHF()
 void CConfiguration::SetAlarmlimitLeakmaxHF(int value)
 {
 	m_iAlarmlimitLeakmaxHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_LEAKMAX_HF_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_LEAKMAX_HF_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 	{
 		if(getModel()->getALARMHANDLER()->getAlimitState_LeakmaxLimit()!=AL_OFF)
@@ -14162,7 +14162,7 @@ void CConfiguration::SetAlarmlimitLeakmaxHF(int value)
 void CConfiguration::SetAlarmlimitStateLeakmaxHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateLeakmaxHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_LEAKMAX_HF_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_LEAKMAX_HF_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -14205,7 +14205,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateApnoeHF()
 void CConfiguration::SetAlarmlimitApnoeHF(int value)
 {
 	m_iAlarmlimitApnoeHF=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_APNOE_HF_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_APNOE_HF_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 	{
 		if(getModel()->getALARMHANDLER()->getAlimitState_ApnoeLimit()!=AL_OFF)
@@ -14227,7 +14227,7 @@ void CConfiguration::SetAlarmlimitApnoeHF(int value)
 void CConfiguration::SetAlarmlimitStateApnoeHF(eAlarmLimitState state)
 {
 	m_iAlarmlimitStateApnoeHF=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_APNOE_HF_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_APNOE_HF_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -14270,7 +14270,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePmaxCpap()
 void CConfiguration::SetAlarmlimitPmaxCpap(int value)
 {
 	m_iAlarmlimitPmaxCpap=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_CPAP_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_CPAP_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMAX,value);
 }
@@ -14287,7 +14287,7 @@ void CConfiguration::SetAlarmlimitPmaxCpap(int value)
 void CConfiguration::SetAlarmlimitStatePmaxCpap(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePmaxCpap=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_CPAP_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_CPAP_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -14330,7 +14330,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePEEPminCpap()
 void CConfiguration::SetAlarmlimitPEEPminCpap(int value)
 {
 	m_iAlarmlimitPEEPminCpap=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_CPAP_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_CPAP_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PEEPMIN,value);
 }
@@ -14347,7 +14347,7 @@ void CConfiguration::SetAlarmlimitPEEPminCpap(int value)
 void CConfiguration::SetAlarmlimitStatePEEPminCpap(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePEEPminCpap=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_CPAP_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_CPAP_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -14390,7 +14390,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePIPmaxDUOPAP()
 void CConfiguration::SetAlarmlimitPIPmaxDUOPAP(int value)
 {
 	m_iAlarmlimitPIPmaxDUOPAP=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_DUOPAP_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_DUOPAP_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMAX,value);
 }
@@ -14407,7 +14407,7 @@ void CConfiguration::SetAlarmlimitPIPmaxDUOPAP(int value)
 void CConfiguration::SetAlarmlimitStatePIPmaxDUOPAP(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePIPmaxDUOPAP=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_DUOPAP_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_DUOPAP_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -14450,7 +14450,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePIPminDUOPAP()
 void CConfiguration::SetAlarmlimitPIPminDUOPAP(int value)
 {
 	m_iAlarmlimitPIPminDUOPAP=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMIN_DUOPAP_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMIN_DUOPAP_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMIN,value);
 }
@@ -14467,7 +14467,7 @@ void CConfiguration::SetAlarmlimitPIPminDUOPAP(int value)
 void CConfiguration::SetAlarmlimitStatePIPminDUOPAP(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePIPminDUOPAP=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMIN_DUOPAP_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMIN_DUOPAP_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -14510,7 +14510,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePmaxNCPAP()
 void CConfiguration::SetAlarmlimitPmaxNCPAP(int value)
 {
 	m_iAlarmlimitPIPmaxNCPAP=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_NCPAP_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_NCPAP_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PIPMAX,value);
 }
@@ -14527,7 +14527,7 @@ void CConfiguration::SetAlarmlimitPmaxNCPAP(int value)
 void CConfiguration::SetAlarmlimitStatePmaxNCPAP(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePmaxNCPAP=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_NCPAP_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_NCPAP_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -14570,7 +14570,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePEEPminDUOPAP()
 void CConfiguration::SetAlarmlimitPEEPminDUOPAP(int value)
 {
 	m_iAlarmlimitPEEPminDUOPAP=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_DUOPAP_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_DUOPAP_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PEEPMIN,value);
 }
@@ -14587,7 +14587,7 @@ void CConfiguration::SetAlarmlimitPEEPminDUOPAP(int value)
 void CConfiguration::SetAlarmlimitStatePEEPminDUOPAP(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePEEPminDUOPAP=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_DUOPAP_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_DUOPAP_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -14630,7 +14630,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePEEPminNCPAP()
 void CConfiguration::SetAlarmlimitPEEPminNCPAP(int value)
 {
 	m_iAlarmlimitPEEPminNCPAP=value;
-	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_NCPAP_16, value);
+	getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_NCPAP_16, (SHORT)value);
 	if(getModel()->getAcuLink()!=NULL)
 		getModel()->getAcuLink()->setParaData(ALINK_SETT_ALIMIT_PEEPMIN,value);
 }
@@ -14647,7 +14647,7 @@ void CConfiguration::SetAlarmlimitPEEPminNCPAP(int value)
 void CConfiguration::SetAlarmlimitStatePEEPminNCPAP(eAlarmLimitState state)
 {
 	m_iAlarmlimitStatePEEPminNCPAP=(int)state;
-	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_NCPAP_8, state);
+	getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_NCPAP_8, (BYTE)state);
 }
 
 /**********************************************************************************************//**
@@ -15639,11 +15639,11 @@ void CConfiguration::SerializeFile(CArchive& ar)
 				getModel()->getETCO2()->changeCO2Unit(m_eCO2unit,unitOld);
 			}
 			else
-				getModel()->getI2C()->WriteConfigByte(CO2UNIT_8, (int)m_eCO2unit);
+				getModel()->getI2C()->WriteConfigByte(CO2UNIT_8, (BYTE)m_eCO2unit);
 		}
 
 		ar>>m_iCO2BaroPressure;
-		getModel()->getI2C()->WriteConfigWord(CO2BAROPRESSURE_16, m_iCO2BaroPressure);
+		getModel()->getI2C()->WriteConfigWord(CO2BAROPRESSURE_16, (SHORT)m_iCO2BaroPressure);
 		if(getCO2module()!=CO2MODULE_NONE && getModel()->getETCO2()!=NULL)
 		{
 			getModel()->getETCO2()->set_BaroPressure(m_iCO2BaroPressure);
@@ -15670,55 +15670,55 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		SetTrendType3(m_iTypeTrend3);
 
 		ar>>m_iParaDataITime_IPPV;
-		getModel()->getI2C()->WriteConfigWord(PARA_ITIME_IPPV_16, m_iParaDataITime_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_ITIME_IPPV_16, (SHORT)m_iParaDataITime_IPPV);
 		ar>>m_iParaDataITime_NMODE;
-		getModel()->getI2C()->WriteConfigWord(PARA_ITIME_NMODE_16, m_iParaDataITime_NMODE);
+		getModel()->getI2C()->WriteConfigWord(PARA_ITIME_NMODE_16, (SHORT)m_iParaDataITime_NMODE);
 		ar>>m_iParaDataETIME_IPPV;
-		getModel()->getI2C()->WriteConfigWord(PARA_ETIME_IPPV_16, m_iParaDataETIME_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_ETIME_IPPV_16, (SHORT)m_iParaDataETIME_IPPV);
 		ar>>m_iParaDataETIME_NMODE;
-		getModel()->getI2C()->WriteConfigWord(PARA_ETIME_NMODE_16, m_iParaDataETIME_NMODE);
+		getModel()->getI2C()->WriteConfigWord(PARA_ETIME_NMODE_16, (SHORT)m_iParaDataETIME_NMODE);
 		ar>>m_iParaDataBPM_IPPV;
-		getModel()->getI2C()->WriteConfigWord(PARA_BPM_IPPV_16, m_iParaDataBPM_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_BPM_IPPV_16, (SHORT)m_iParaDataBPM_IPPV);
 		ar>>m_iParaDataBPM_NMODE;
-		getModel()->getI2C()->WriteConfigWord(PARA_BPM_NMODE_16, m_iParaDataBPM_NMODE);
+		getModel()->getI2C()->WriteConfigWord(PARA_BPM_NMODE_16, (SHORT)m_iParaDataBPM_NMODE);
 		ar>>m_iParaDataRisetime_IPPV;
-		getModel()->getI2C()->WriteConfigWord(PARA_RISETIME_IPPV_16, m_iParaDataRisetime_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_RISETIME_IPPV_16, (SHORT)m_iParaDataRisetime_IPPV);
 		ar>>m_iParaDataIFlow_IPPV;
-		getModel()->getI2C()->WriteConfigWord(PARA_IFLOW_IPPV_16, m_iParaDataIFlow_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_IFLOW_IPPV_16, (SHORT)m_iParaDataIFlow_IPPV);
 		ar>>m_iParaDataHFFlow;
-		getModel()->getI2C()->WriteConfigWord(PARA_HFFLOW_16, m_iParaDataHFFlow);
+		getModel()->getI2C()->WriteConfigWord(PARA_HFFLOW_16, (SHORT)m_iParaDataHFFlow);
 		ar>>m_iParaDataEFlow_IPPV;
-		getModel()->getI2C()->WriteConfigWord(PARA_EFLOW_IPPV_16, m_iParaDataEFlow_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_EFLOW_IPPV_16, (SHORT)m_iParaDataEFlow_IPPV);
 		ar>>m_iParaDataTherapieFlow;
-		getModel()->getI2C()->WriteConfigWord(PARA_THERAPYFLOW_16, m_iParaDataTherapieFlow);
+		getModel()->getI2C()->WriteConfigWord(PARA_THERAPYFLOW_16, (SHORT)m_iParaDataTherapieFlow);
 		ar>>m_iParaDataFlowMin;
-		getModel()->getI2C()->WriteConfigWord(PARA_FLOWMIN_16, m_iParaDataFlowMin);
+		getModel()->getI2C()->WriteConfigWord(PARA_FLOWMIN_16, (SHORT)m_iParaDataFlowMin);
 		ar>>m_iParaDataPEEP_IPPV;
-		getModel()->getI2C()->WriteConfigWord(PARA_PEEP_IPPV_16, m_iParaDataPEEP_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_PEEP_IPPV_16, (SHORT)m_iParaDataPEEP_IPPV);
 		ar>>m_iParaDataCpap;
-		getModel()->getI2C()->WriteConfigWord(PARA_CPAP_16, m_iParaDataCpap);
+		getModel()->getI2C()->WriteConfigWord(PARA_CPAP_16, (SHORT)m_iParaDataCpap);
 		ar>>m_iParaDataNmode;
-		getModel()->getI2C()->WriteConfigWord(PARA_CPAP_NMODE_16, m_iParaDataNmode);
+		getModel()->getI2C()->WriteConfigWord(PARA_CPAP_NMODE_16, (SHORT)m_iParaDataNmode);
 		ar>>m_iParaDataPInsp_IPPV;
-		getModel()->getI2C()->WriteConfigWord(PARA_PINSP_IPPV_16, m_iParaDataPInsp_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_PINSP_IPPV_16, (SHORT)m_iParaDataPInsp_IPPV);
 		ar>>m_iParaDataPmaxVolG_IPPV;
-		getModel()->getI2C()->WriteConfigWord(PARA_PMAXVOLG_IPPV_16, m_iParaDataPmaxVolG_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_PMAXVOLG_IPPV_16, (SHORT)m_iParaDataPmaxVolG_IPPV);
 		ar>>m_iParaDataPPSV;
-		getModel()->getI2C()->WriteConfigWord(PARA_PPSV_16, m_iParaDataPPSV);
+		getModel()->getI2C()->WriteConfigWord(PARA_PPSV_16, (SHORT)m_iParaDataPPSV);
 		ar>>m_iParaDataPManual_HFO;
-		getModel()->getI2C()->WriteConfigWord(PARA_PMAN_HFO_16, m_iParaDataPManual_HFO);
+		getModel()->getI2C()->WriteConfigWord(PARA_PMAN_HFO_16, (SHORT)m_iParaDataPManual_HFO);
 		ar>>m_iParaDataPManual_NMODE;
-		getModel()->getI2C()->WriteConfigWord(PARA_PMAN_NMODE_16, m_iParaDataPManual_NMODE);
+		getModel()->getI2C()->WriteConfigWord(PARA_PMAN_NMODE_16, (SHORT)m_iParaDataPManual_NMODE);
 		ar>>m_iParaDataO2;
-		getModel()->getI2C()->WriteConfigWord(PARA_O2_16, m_iParaDataO2);
+		getModel()->getI2C()->WriteConfigWord(PARA_O2_16, (SHORT)m_iParaDataO2);
 		ar>>m_iParaDataO2Flush;
-		getModel()->getI2C()->WriteConfigWord(PARA_O2FLUSH_16, m_iParaDataO2Flush);
+		getModel()->getI2C()->WriteConfigWord(PARA_O2FLUSH_16, (SHORT)m_iParaDataO2Flush);
 		ar>>m_iO2Difference;
-		getModel()->getI2C()->WriteConfigWord(PARA_O2DIFF_16, m_iO2Difference);
+		getModel()->getI2C()->WriteConfigWord(PARA_O2DIFF_16, (SHORT)m_iO2Difference);
 		ar>>m_iPmeanDifference;
-		getModel()->getI2C()->WriteConfigWord(PARA_PMEANDIFF_16, m_iPmeanDifference);
+		getModel()->getI2C()->WriteConfigWord(PARA_PMEANDIFF_16, (SHORT)m_iPmeanDifference);
 		ar>>m_iParaDataVLimit_IPPV;
-		getModel()->getI2C()->WriteConfigWord(PARA_VLIMIT_IPPV_16, m_iParaDataVLimit_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_VLIMIT_IPPV_16, (SHORT)m_iParaDataVLimit_IPPV);
 		ar>>m_bParaDataVLimitOn_IPPV;
 		if(m_bParaDataVLimitOn_IPPV)
 		{
@@ -15729,7 +15729,7 @@ void CConfiguration::SerializeFile(CArchive& ar)
 			getModel()->getI2C()->WriteConfigByte(PARA_VLIMITSTATE_IPPV_8, 0);
 		}
 		ar>>m_iParaDataVGarant_IPPV;
-		getModel()->getI2C()->WriteConfigWord(PARA_VGARANT_IPPV_16, m_iParaDataVGarant_IPPV);
+		getModel()->getI2C()->WriteConfigWord(PARA_VGARANT_IPPV_16, (SHORT)m_iParaDataVGarant_IPPV);
 		ar>>m_bParaDataVGarantOn_IPPV;
 		if(m_bParaDataVGarantOn_IPPV)
 		{
@@ -15740,19 +15740,19 @@ void CConfiguration::SerializeFile(CArchive& ar)
 			getModel()->getI2C()->WriteConfigByte(PARA_VGARANTSTATE_IPPV_8, 0);
 		}
 		ar>>m_iParaDataTrigger_CONV;
-		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CONVENT_16, m_iParaDataTrigger_CONV);
+		getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CONVENT_16, (SHORT)m_iParaDataTrigger_CONV);
 		ar>>m_iParaDataBackup;
-		getModel()->getI2C()->WriteConfigWord(PARA_BACKUP_16, m_iParaDataBackup);
+		getModel()->getI2C()->WriteConfigWord(PARA_BACKUP_16, (SHORT)m_iParaDataBackup);
 		ar>>m_iParaDataHFAmpl;
-		getModel()->getI2C()->WriteConfigWord(PARA_HFO_HFAMPL_16, m_iParaDataHFAmpl);
+		getModel()->getI2C()->WriteConfigWord(PARA_HFO_HFAMPL_16, (SHORT)m_iParaDataHFAmpl);
 		ar>>m_iParaDataHFAmplmax;
-		getModel()->getI2C()->WriteConfigWord(PARA_HFO_HFAMPL_VOLG_16, m_iParaDataHFAmplmax);
+		getModel()->getI2C()->WriteConfigWord(PARA_HFO_HFAMPL_VOLG_16, (SHORT)m_iParaDataHFAmplmax);
 		ar>>m_iParaDataHFFreq;
-		getModel()->getI2C()->WriteConfigWord(PARA_HFO_HFFREQ_16, m_iParaDataHFFreq);
+		getModel()->getI2C()->WriteConfigWord(PARA_HFO_HFFREQ_16, (SHORT)m_iParaDataHFFreq);
 		ar>>m_iParaDataHFPmean;
-		getModel()->getI2C()->WriteConfigWord(PARA_HFO_PMEAN_16, m_iParaDataHFPmean);
+		getModel()->getI2C()->WriteConfigWord(PARA_HFO_PMEAN_16, (SHORT)m_iParaDataHFPmean);
 		ar>>m_iParaDataHFVGarant;
-		getModel()->getI2C()->WriteConfigWord(PARA_HFO_VGARANT_16, m_iParaDataHFVGarant);
+		getModel()->getI2C()->WriteConfigWord(PARA_HFO_VGARANT_16, (SHORT)m_iParaDataHFVGarant);
 		ar>>m_bParaDataHFVGarantState;
 		if(m_bParaDataHFVGarantState)
 		{
@@ -15765,7 +15765,7 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		int iTempRatio=0;
 		ar>>iTempRatio;
 		m_iParaDataHFIERatio=(eRatioIE)iTempRatio;
-		getModel()->getI2C()->WriteConfigByte(PARA_HFO_IERATIO_8, m_iParaDataHFIERatio);
+		getModel()->getI2C()->WriteConfigByte(PARA_HFO_IERATIO_8, (BYTE)m_iParaDataHFIERatio);
 
 		ar>>m_iParaDataHFITimeRec;
 		getModel()->getI2C()->WriteConfigWord(PARA_HFO_ITIMEREC16, m_iParaDataHFITimeRec);
@@ -15776,93 +15776,93 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		
 
 		ar>>m_iAlarmlimitETCO2max;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_16, m_iAlarmlimitETCO2max);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_16, (SHORT)m_iAlarmlimitETCO2max);
 		ar>>m_iAlarmlimitStateETCO2max;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MAX_8, m_iAlarmlimitStateETCO2max);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MAX_8, (BYTE)m_iAlarmlimitStateETCO2max);
 		ar>>m_iAlarmlimitETCO2min;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_16, m_iAlarmlimitETCO2min);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_16, (SHORT)m_iAlarmlimitETCO2min);
 		ar>>m_iAlarmlimitStateETCO2min;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MIN_8, m_iAlarmlimitStateETCO2min);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MIN_8, (BYTE)m_iAlarmlimitStateETCO2min);
 		ar>>m_iAlarmlimitMVmax;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMAX_16, m_iAlarmlimitMVmax);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMAX_16, (SHORT)m_iAlarmlimitMVmax);
 		ar>>m_iAlarmlimitStateMVmax;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMAX_8, m_iAlarmlimitStateMVmax);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMAX_8, (BYTE)m_iAlarmlimitStateMVmax);
 		ar>>m_iAlarmlimitMVmin;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMIN_16, m_iAlarmlimitMVmin);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMIN_16, (SHORT)m_iAlarmlimitMVmin);
 		ar>>m_iAlarmlimitStateMVmin;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMIN_8, m_iAlarmlimitStateMVmin);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMIN_8, (BYTE)m_iAlarmlimitStateMVmin);
 		ar>>m_iAlarmlimitPIPmax;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PIPMAX_16, m_iAlarmlimitPIPmax);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PIPMAX_16, (SHORT)m_iAlarmlimitPIPmax);
 		ar>>m_iAlarmlimitStatePIPmax;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PIPMAX_8, m_iAlarmlimitStatePIPmax);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PIPMAX_8, (BYTE)m_iAlarmlimitStatePIPmax);
 		ar>>m_iAlarmlimitPEEPmin;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_16, m_iAlarmlimitPEEPmin);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_16, (SHORT)m_iAlarmlimitPEEPmin);
 		ar>>m_iAlarmlimitStatePEEPmin;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_8, m_iAlarmlimitStatePEEPmin);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_8, (BYTE)m_iAlarmlimitStatePEEPmin);
 		ar>>m_iAlarmlimitBPMmax;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_BPMMAX_16, m_iAlarmlimitBPMmax);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_BPMMAX_16, (SHORT)m_iAlarmlimitBPMmax);
 		ar>>m_iAlarmlimitStateBPMmax;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_BPMMAX_8, m_iAlarmlimitStateBPMmax);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_BPMMAX_8, (BYTE)m_iAlarmlimitStateBPMmax);
 		ar>>m_iAlimitLeakmax;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_LEAKMAX_16, m_iAlimitLeakmax);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_LEAKMAX_16, (SHORT)m_iAlimitLeakmax);
 		ar>>m_iAlarmlimitStateLeakmax;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_LEAKMAX_8, m_iAlarmlimitStateLeakmax);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_LEAKMAX_8, (BYTE)m_iAlarmlimitStateLeakmax);
 		ar>>m_iAlarmlimitApnoe;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_APNOE_16, m_iAlarmlimitApnoe);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_APNOE_16, (SHORT)m_iAlarmlimitApnoe);
 		ar>>m_iAlarmlimitStateApnoe;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_APNOE_8, m_iAlarmlimitStateApnoe);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_APNOE_8, (BYTE)m_iAlarmlimitStateApnoe);
 		ar>>m_iAlarmlimitETCO2maxHF;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_HF_16, m_iAlarmlimitETCO2maxHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MAX_HF_16, (SHORT)m_iAlarmlimitETCO2maxHF);
 		ar>>m_iAlarmlimitStateETCO2maxHF;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MAX_HF_8, m_iAlarmlimitStateETCO2maxHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MAX_HF_8, (BYTE)m_iAlarmlimitStateETCO2maxHF);
 		ar>>m_iAlarmlimitETCO2minHF;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_HF_16, m_iAlarmlimitETCO2minHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_ETCO2MIN_HF_16, (SHORT)m_iAlarmlimitETCO2minHF);
 		ar>>m_iAlarmlimitStateETCO2minHF;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MIN_HF_8, m_iAlarmlimitStateETCO2minHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_ETCO2MIN_HF_8, (BYTE)m_iAlarmlimitStateETCO2minHF);
 		ar>>m_iAlarmlimitDCO2maxHF;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_DCO2MAX_HF_16, m_iAlarmlimitDCO2maxHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_DCO2MAX_HF_16, (SHORT)m_iAlarmlimitDCO2maxHF);
 		ar>>m_iAlarmlimitStateDCO2maxHF;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_DCO2MAX_HF_8, m_iAlarmlimitStateDCO2maxHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_DCO2MAX_HF_8, (BYTE)m_iAlarmlimitStateDCO2maxHF);
 		ar>>m_iAlarmlimitDCO2minHF;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_DCO2MIN_HF_16, m_iAlarmlimitDCO2minHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_DCO2MIN_HF_16, (SHORT)m_iAlarmlimitDCO2minHF);
 		ar>>m_iAlarmlimitStateDCO2minHF;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_DCO2MIN_HF_8, m_iAlarmlimitStateDCO2minHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_DCO2MIN_HF_8, (BYTE)m_iAlarmlimitStateDCO2minHF);
 		ar>>m_iAlarmlimitMVmaxHF;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMAX_HF_16, m_iAlarmlimitMVmaxHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMAX_HF_16, (SHORT)m_iAlarmlimitMVmaxHF);
 		ar>>m_iAlarmlimitStateMVmaxHF;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMAX_HF_8, m_iAlarmlimitStateMVmaxHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMAX_HF_8, (BYTE)m_iAlarmlimitStateMVmaxHF);
 		ar>>m_iAlarmlimitMVminHF;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMIN_HF_16, m_iAlarmlimitMVminHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MVMIN_HF_16, (SHORT)m_iAlarmlimitMVminHF);
 		ar>>m_iAlarmlimitStateMVminHF;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMIN_HF_8, m_iAlarmlimitStateMVminHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MVMIN_HF_8, (BYTE)m_iAlarmlimitStateMVminHF);
 		ar>>m_iAlarmlimitPmaxHF;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_HF_16, m_iAlarmlimitPmaxHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_HF_16, (SHORT)m_iAlarmlimitPmaxHF);
 		ar>>m_iAlarmlimitStatePmaxHF;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_HF_8, m_iAlarmlimitStatePmaxHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_HF_8, (BYTE)m_iAlarmlimitStatePmaxHF);
 		ar>>m_iAlarmlimitPEEPminHF;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_HF_16, m_iAlarmlimitPEEPminHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_HF_16, (SHORT)m_iAlarmlimitPEEPminHF);
 		ar>>m_iAlarmlimitStatePEEPminHF;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_HF_8, m_iAlarmlimitStatePEEPminHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_HF_8, (BYTE)m_iAlarmlimitStatePEEPminHF);
 		ar>>m_iAlarmlimitBPMmaxHF;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_BPMMAX_HF_16, m_iAlarmlimitBPMmaxHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_BPMMAX_HF_16, (SHORT)m_iAlarmlimitBPMmaxHF);
 		ar>>m_iAlarmlimitStateBPMmaxHF;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_BPMMAX_HF_8, m_iAlarmlimitStateBPMmaxHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_BPMMAX_HF_8, (BYTE)m_iAlarmlimitStateBPMmaxHF);
 		ar>>m_iAlarmlimitLeakmaxHF;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_LEAKMAX_HF_16, m_iAlarmlimitLeakmaxHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_LEAKMAX_HF_16, (SHORT)m_iAlarmlimitLeakmaxHF);
 		ar>>m_iAlarmlimitStateLeakmaxHF;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_LEAKMAX_HF_8, m_iAlarmlimitStateLeakmaxHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_LEAKMAX_HF_8, (BYTE)m_iAlarmlimitStateLeakmaxHF);
 		ar>>m_iAlarmlimitApnoeHF;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_APNOE_HF_16, m_iAlarmlimitApnoeHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_APNOE_HF_16, (SHORT)m_iAlarmlimitApnoeHF);
 		ar>>m_iAlarmlimitStateApnoeHF;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_APNOE_HF_8, m_iAlarmlimitStateApnoeHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_APNOE_HF_8, (BYTE)m_iAlarmlimitStateApnoeHF);
 		ar>>m_iAlarmlimitPmaxCpap;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_CPAP_16, m_iAlarmlimitPmaxCpap);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_CPAP_16, (SHORT)m_iAlarmlimitPmaxCpap);
 		ar>>m_iAlarmlimitStatePmaxCpap;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_CPAP_8, m_iAlarmlimitStatePmaxCpap);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_CPAP_8, (BYTE)m_iAlarmlimitStatePmaxCpap);
 		ar>>m_iAlarmlimitPEEPminCpap;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_CPAP_16, m_iAlarmlimitPEEPminCpap);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_CPAP_16, (SHORT)m_iAlarmlimitPEEPminCpap);
 		ar>>m_iAlarmlimitStatePEEPminCpap;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_CPAP_8, m_iAlarmlimitStatePEEPminCpap);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_CPAP_8, (BYTE)m_iAlarmlimitStatePEEPminCpap);
 		int form=0;
 		ar>>form;
 		m_eCurveForm=(eCurveForm)form;
@@ -15870,51 +15870,51 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		//{
 		//	m_eCurveForm=CURVE_IFLOW;
 		//}
-		getModel()->getI2C()->WriteConfigByte(PRESSURERISECTRL_8, (int)m_eCurveForm);
+		getModel()->getI2C()->WriteConfigByte(PRESSURERISECTRL_8, (BYTE)m_eCurveForm);
 		ar>>m_iPPSVDifference;
-		getModel()->getI2C()->WriteConfigWord(PARA_PPSVDIFF_16, m_iPPSVDifference);
+		getModel()->getI2C()->WriteConfigWord(PARA_PPSVDIFF_16, (SHORT)m_iPPSVDifference);
 		ar>>m_bPPSVasDeltaPEEPValue;
-		getModel()->getI2C()->WriteConfigByte(PPSV_AS_PEEPDELTA_8, m_bPPSVasDeltaPEEPValue);
+		getModel()->getI2C()->WriteConfigByte(PPSV_AS_PEEPDELTA_8, (BYTE)m_bPPSVasDeltaPEEPValue);
 		ar>>m_iAlarmlimitSPO2max;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MAX_16, m_iAlarmlimitSPO2max);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MAX_16, (SHORT)m_iAlarmlimitSPO2max);
 		ar>>m_iAlarmlimitStateSPO2max;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MAX_8,m_iAlarmlimitStateSPO2max);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MAX_8, (BYTE)m_iAlarmlimitStateSPO2max);
 		ar>>m_iAlarmlimitSPO2min;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MIN_16, m_iAlarmlimitSPO2min);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MIN_16, (SHORT)m_iAlarmlimitSPO2min);
 		ar>>m_iAlarmlimitStateSPO2min;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MIN_8,m_iAlarmlimitStateSPO2min);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MIN_8, (BYTE)m_iAlarmlimitStateSPO2min);
 		ar>>m_iAlarmlimitPulseRatemax;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMAX_16, m_iAlarmlimitPulseRatemax);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMAX_16, (SHORT)m_iAlarmlimitPulseRatemax);
 		ar>>m_iAlarmlimitStatePulseRatemax;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMAX_8,m_iAlarmlimitStatePulseRatemax);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMAX_8, (BYTE)m_iAlarmlimitStatePulseRatemax);
 		ar>>m_iAlarmlimitPulseRatemin;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMIN_16, m_iAlarmlimitPulseRatemin);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMIN_16, (SHORT)m_iAlarmlimitPulseRatemin);
 		ar>>m_iAlarmlimitStatePulseRatemin;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMIN_8,m_iAlarmlimitStatePulseRatemin);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMIN_8, (BYTE)m_iAlarmlimitStatePulseRatemin);
 		ar>>m_iAlarmlimitSPO2_PImin;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_PIMIN_16, m_iAlarmlimitSPO2_PImin);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_PIMIN_16, (SHORT)m_iAlarmlimitSPO2_PImin);
 		ar>>m_iAlarmlimitStateSPO2_PImin;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_PIMIN_8,m_iAlarmlimitStateSPO2_PImin);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_PIMIN_8, (BYTE)m_iAlarmlimitStateSPO2_PImin);
 		ar>>m_iAlarmlimitSPO2maxHF;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MAX_HF_16,m_iAlarmlimitSPO2maxHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MAX_HF_16, (SHORT)m_iAlarmlimitSPO2maxHF);
 		ar>>m_iAlarmlimitStateSPO2maxHF;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MAX_HF_8,m_iAlarmlimitStateSPO2maxHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MAX_HF_8, (BYTE)m_iAlarmlimitStateSPO2maxHF);
 		ar>>m_iAlarmlimitSPO2minHF;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MIN_HF_16,m_iAlarmlimitSPO2minHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2MIN_HF_16, (SHORT)m_iAlarmlimitSPO2minHF);
 		ar>>m_iAlarmlimitStateSPO2minHF;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MIN_HF_8,m_iAlarmlimitStateSPO2minHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2MIN_HF_8, (BYTE)m_iAlarmlimitStateSPO2minHF);
 		ar>>m_iAlarmlimitPulseRatemaxHF;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMAX_HF_16,m_iAlarmlimitPulseRatemaxHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMAX_HF_16, (SHORT)m_iAlarmlimitPulseRatemaxHF);
 		ar>>m_iAlarmlimitStatePulseRatemaxHF;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMAX_HF_8,m_iAlarmlimitStatePulseRatemaxHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMAX_HF_8, (BYTE)m_iAlarmlimitStatePulseRatemaxHF);
 		ar>>m_iAlarmlimitPulseRateminHF;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMIN_HF_16,m_iAlarmlimitPulseRateminHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PULSERATEMIN_HF_16, (SHORT)m_iAlarmlimitPulseRateminHF);
 		ar>>m_iAlarmlimitStatePulseRateminHF;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMIN_HF_8,m_iAlarmlimitStatePulseRateminHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PULSERATEMIN_HF_8, (BYTE)m_iAlarmlimitStatePulseRateminHF);
 		ar>>m_iAlarmlimitSPO2_PIminHF;
-		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_PIMIN_HF_16,m_iAlarmlimitSPO2_PIminHF);
+		getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_PIMIN_HF_16, (SHORT)m_iAlarmlimitSPO2_PIminHF);
 		ar>>m_iAlarmlimitStateSPO2_PIminHF;
-		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_PIMIN_HF_8,m_iAlarmlimitStateSPO2_PIminHF);
+		getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_PIMIN_HF_8, (BYTE)m_iAlarmlimitStateSPO2_PIminHF);
 
 		ar>>m_bFastSATon;
 		if(m_bFastSATon)
@@ -15965,23 +15965,23 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		if(iConfigVersion>=2010)
 		{	
 			ar>>m_iAlarmlimitPIPmaxNCPAP;
-			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_NCPAP_16, m_iAlarmlimitPIPmaxNCPAP);
+			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_NCPAP_16, (SHORT)m_iAlarmlimitPIPmaxNCPAP);
 			ar>>m_iAlarmlimitStatePmaxNCPAP;
-			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_NCPAP_8, m_iAlarmlimitStatePmaxNCPAP);
+			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_NCPAP_8, (BYTE)m_iAlarmlimitStatePmaxNCPAP);
 			ar>>m_iAlarmlimitPEEPminNCPAP;
-			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_NCPAP_16, m_iAlarmlimitPEEPminNCPAP);
+			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_NCPAP_16, (SHORT)m_iAlarmlimitPEEPminNCPAP);
 			ar>>m_iAlarmlimitStatePEEPminNCPAP;
-			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_NCPAP_8, m_iAlarmlimitStatePEEPminNCPAP);
+			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_NCPAP_8, (BYTE)m_iAlarmlimitStatePEEPminNCPAP);
 
 
 			ar>>m_iAlarmlimitPIPmaxDUOPAP;
-			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_DUOPAP_16, m_iAlarmlimitPIPmaxDUOPAP);
+			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMAX_DUOPAP_16, (SHORT)m_iAlarmlimitPIPmaxDUOPAP);
 			ar>>m_iAlarmlimitStatePIPmaxDUOPAP;
-			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_DUOPAP_8, m_iAlarmlimitStatePIPmaxDUOPAP);
+			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMAX_DUOPAP_8, (BYTE)m_iAlarmlimitStatePIPmaxDUOPAP);
 			ar>>m_iAlarmlimitPEEPminDUOPAP;
-			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_DUOPAP_16, m_iAlarmlimitPEEPminDUOPAP);
+			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PEEP_DUOPAP_16, (SHORT)m_iAlarmlimitPEEPminDUOPAP);
 			ar>>m_iAlarmlimitStatePEEPminDUOPAP;
-			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_DUOPAP_8, m_iAlarmlimitStatePEEPminDUOPAP);
+			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PEEP_DUOPAP_8, (BYTE)m_iAlarmlimitStatePEEPminDUOPAP);
 		}
 
 
@@ -15990,26 +15990,26 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		if(iConfigVersion>=3000)
 		{
 			ar>>m_iParaDataITime_TRIGGER;
-			getModel()->getI2C()->WriteConfigWord(PARA_ITIME_TRIGGER_16, m_iParaDataITime_TRIGGER);
+			getModel()->getI2C()->WriteConfigWord(PARA_ITIME_TRIGGER_16, (SHORT)m_iParaDataITime_TRIGGER);
 			ar>>m_iParaDataETIME_TRIGGER;
-			getModel()->getI2C()->WriteConfigWord(PARA_ETIME_TRIGGER_16, m_iParaDataETIME_TRIGGER);
+			getModel()->getI2C()->WriteConfigWord(PARA_ETIME_TRIGGER_16, (SHORT)m_iParaDataETIME_TRIGGER);
 			ar>>m_iParaDataBPM_TRIGGER;
-			getModel()->getI2C()->WriteConfigWord(PARA_BPM_TRIGGER_16, m_iParaDataBPM_TRIGGER);
+			getModel()->getI2C()->WriteConfigWord(PARA_BPM_TRIGGER_16, (SHORT)m_iParaDataBPM_TRIGGER);
 			ar>>m_iParaDataRisetime_TRIGGER;
-			getModel()->getI2C()->WriteConfigWord(PARA_RISETIME_TRIGGER_16, m_iParaDataRisetime_TRIGGER);
+			getModel()->getI2C()->WriteConfigWord(PARA_RISETIME_TRIGGER_16, (SHORT)m_iParaDataRisetime_TRIGGER);
 			ar>>m_iParaDataIFlow_TRIGGER;
-			getModel()->getI2C()->WriteConfigWord(PARA_IFLOW_TRIGGER_16, m_iParaDataIFlow_TRIGGER);
+			getModel()->getI2C()->WriteConfigWord(PARA_IFLOW_TRIGGER_16, (SHORT)m_iParaDataIFlow_TRIGGER);
 			ar>>m_iParaDataEFlow_TRIGGER;
-			getModel()->getI2C()->WriteConfigWord(PARA_EFLOW_TRIGGER_16, m_iParaDataEFlow_TRIGGER);
+			getModel()->getI2C()->WriteConfigWord(PARA_EFLOW_TRIGGER_16, (SHORT)m_iParaDataEFlow_TRIGGER);
 			ar>>m_iParaDataPEEP_TRIGGER;
-			getModel()->getI2C()->WriteConfigWord(PARA_PEEP_TRIGGER_16, m_iParaDataPEEP_TRIGGER);
+			getModel()->getI2C()->WriteConfigWord(PARA_PEEP_TRIGGER_16, (SHORT)m_iParaDataPEEP_TRIGGER);
 			ar>>m_iParaDataPInsp_TRIGGER;
-			getModel()->getI2C()->WriteConfigWord(PARA_PINSP_TRIGGER_16, m_iParaDataPInsp_TRIGGER);
+			getModel()->getI2C()->WriteConfigWord(PARA_PINSP_TRIGGER_16, (SHORT)m_iParaDataPInsp_TRIGGER);
 			ar>>m_iParaDataPmaxVolG_TRIGGER;
-			getModel()->getI2C()->WriteConfigWord(PARA_PMAXVOLG_TRIGGER_16, m_iParaDataPmaxVolG_TRIGGER);
+			getModel()->getI2C()->WriteConfigWord(PARA_PMAXVOLG_TRIGGER_16, (SHORT)m_iParaDataPmaxVolG_TRIGGER);
 
 			ar>>m_iParaDataVLimit_TRIGGER;
-			getModel()->getI2C()->WriteConfigWord(PARA_VLIMIT_TRIGGER_16, m_iParaDataVLimit_TRIGGER);
+			getModel()->getI2C()->WriteConfigWord(PARA_VLIMIT_TRIGGER_16, (SHORT)m_iParaDataVLimit_TRIGGER);
 			ar>>m_bParaDataVLimitOn_TRIGGER;
 			if(m_bParaDataVLimitOn_TRIGGER)
 			{
@@ -16020,7 +16020,7 @@ void CConfiguration::SerializeFile(CArchive& ar)
 				getModel()->getI2C()->WriteConfigByte(PARA_VLIMITSTATE_TRIGGER_8, 0);
 			}
 			ar>>m_iParaDataVGarant_TRIGGER;
-			getModel()->getI2C()->WriteConfigWord(PARA_VGARANT_TRIGGER_16, m_iParaDataVGarant_TRIGGER);
+			getModel()->getI2C()->WriteConfigWord(PARA_VGARANT_TRIGGER_16, (SHORT)m_iParaDataVGarant_TRIGGER);
 			ar>>m_bParaDataVGarantOn_TRIGGER;
 			if(m_bParaDataVGarantOn_TRIGGER)
 			{
@@ -16069,32 +16069,32 @@ void CConfiguration::SerializeFile(CArchive& ar)
 		if(iConfigVersion>=3001)
 		{
 			ar>>m_iAlarmlimitFICO2max;
-			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_16, m_iAlarmlimitFICO2max);
+			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_16, (SHORT)m_iAlarmlimitFICO2max);
 			ar>>m_iAlarmlimitStateFICO2max;
-			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MAX_8, m_iAlarmlimitStateFICO2max);
+			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MAX_8, (BYTE)m_iAlarmlimitStateFICO2max);
 			ar>>m_iAlarmlimitFICO2min;
-			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_16, m_iAlarmlimitFICO2min);
+			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_16, (SHORT)m_iAlarmlimitFICO2min);
 			ar>>m_iAlarmlimitStateFICO2min;
-			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MIN_8, m_iAlarmlimitStateFICO2min);
+			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MIN_8, (BYTE)m_iAlarmlimitStateFICO2min);
 			ar>>m_iAlarmlimitFICO2maxHF;
-			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_HF_16, m_iAlarmlimitFICO2maxHF);
+			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MAX_HF_16, (SHORT)m_iAlarmlimitFICO2maxHF);
 			ar>>m_iAlarmlimitStateFICO2maxHF;
-			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MAX_HF_8, m_iAlarmlimitStateFICO2maxHF);
+			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MAX_HF_8, (BYTE)m_iAlarmlimitStateFICO2maxHF);
 			ar>>m_iAlarmlimitFICO2minHF;
-			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_HF_16, m_iAlarmlimitFICO2minHF);
+			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_FICO2MIN_HF_16, (SHORT)m_iAlarmlimitFICO2minHF);
 			ar>>m_iAlarmlimitStateFICO2minHF;
-			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MIN_HF_8, m_iAlarmlimitStateFICO2minHF);
+			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_FICO2MIN_HF_8, (BYTE)m_iAlarmlimitStateFICO2minHF);
 			ar>>m_iParaDataPManual_CPAP;
-			getModel()->getI2C()->WriteConfigWord(PARA_PMAN_CPAP_16, m_iParaDataPManual_CPAP);
+			getModel()->getI2C()->WriteConfigWord(PARA_PMAN_CPAP_16, (SHORT)m_iParaDataPManual_CPAP);
 		}
 
 		//##################### m_iConfigVersion 3003
 		if(iConfigVersion>=3003)
 		{
 			ar>>m_iPRICO_SPO2lowRange;
-			getModel()->getI2C()->WriteConfigByte(PRICOSPO2LOW_8,m_iPRICO_SPO2lowRange);
+			getModel()->getI2C()->WriteConfigByte(PRICOSPO2LOW_8, (BYTE)m_iPRICO_SPO2lowRange);
 			ar>>m_iPRICO_SPO2highRange;
-			getModel()->getI2C()->WriteConfigByte(PRICOSPO2HIGH_8,m_iPRICO_SPO2highRange);
+			getModel()->getI2C()->WriteConfigByte(PRICOSPO2HIGH_8, (BYTE)m_iPRICO_SPO2highRange);
 			
 			//PRICO02
 			ar>>m_iPRICO_FIO2lowRange;
@@ -16102,52 +16102,52 @@ void CConfiguration::SerializeFile(CArchive& ar)
 			{
 				m_iPRICO_FIO2lowRange=m_iParaDataO2;
 			}*/
-			getModel()->getI2C()->WriteConfigByte(PRICOFIO2LOW_8,m_iPRICO_FIO2lowRange);
+			getModel()->getI2C()->WriteConfigByte(PRICOFIO2LOW_8, (BYTE)m_iPRICO_FIO2lowRange);
 			ar>>m_iPRICO_FIO2highRange;
 			/*if(m_iPRICO_FIO2highRange<m_iParaDataO2)
 			{
 				m_iPRICO_FIO2highRange=m_iParaDataO2;
 			}*/
-			getModel()->getI2C()->WriteConfigByte(PRICOFIO2HIGH_8,m_iPRICO_FIO2highRange);
+			getModel()->getI2C()->WriteConfigByte(PRICOFIO2HIGH_8, (BYTE)m_iPRICO_FIO2highRange);
 
 			ar>>m_iAlarmlimitSPO2_SIQminHF;
-			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_SIQMIN_HF_16,m_iAlarmlimitSPO2_SIQminHF);
+			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_SIQMIN_HF_16, (SHORT)m_iAlarmlimitSPO2_SIQminHF);
 			ar>>m_iAlarmlimitStateSPO2_SIQminHF;
-			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_SIQMIN_HF_8,m_iAlarmlimitStateSPO2_SIQminHF);
+			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_SIQMIN_HF_8, (BYTE)m_iAlarmlimitStateSPO2_SIQminHF);
 			ar>>m_iAlarmlimitSPO2_SIQmin;
-			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_SIQMIN_16, m_iAlarmlimitSPO2_SIQmin);
+			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_SPO2_SIQMIN_16, (SHORT)m_iAlarmlimitSPO2_SIQmin);
 			ar>>m_iAlarmlimitStateSPO2_SIQmin;
-			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_SIQMIN_8,m_iAlarmlimitStateSPO2_SIQmin);
+			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_SPO2_SIQMIN_8, (BYTE)m_iAlarmlimitStateSPO2_SIQmin);
 		}
 		//##################### m_iConfigVersion 3004
 		if(iConfigVersion>=3004)
 		{
 			ar>>m_iFOTconv_AMPLITUDE;
-			getModel()->getI2C()->WriteConfigByte(PARA_FOT_CONV_AMPLITUDE_16, m_iFOTconv_AMPLITUDE);
+			getModel()->getI2C()->WriteConfigByte(PARA_FOT_CONV_AMPLITUDE_16, (BYTE)m_iFOTconv_AMPLITUDE); //@todo FSW-103
 			ar>>m_iFOTconv_FREQ;
-			getModel()->getI2C()->WriteConfigByte(PARA_FOT_CONV_FREQ_8, m_iFOTconv_FREQ);
+			getModel()->getI2C()->WriteConfigByte(PARA_FOT_CONV_FREQ_8, (BYTE)m_iFOTconv_FREQ);
 			ar>>m_iAlarmlimitStatePIPmin;
-			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PIPMIN_8, m_iAlarmlimitStatePIPmin);
+			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PIPMIN_8, (BYTE)m_iAlarmlimitStatePIPmin);
 			ar>>m_iAlarmlimitPIPmin;
-			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PIPMIN_16, m_iAlarmlimitPIPmin);
+			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PIPMIN_16, (SHORT)m_iAlarmlimitPIPmin);
 
 			ar>>m_iFOTconv_PEEPSTART;
-			getModel()->getI2C()->WriteConfigWord(PARA_FOT_CONV_PEEPSTART_16,m_iFOTconv_PEEPSTART);
+			getModel()->getI2C()->WriteConfigWord(PARA_FOT_CONV_PEEPSTART_16, (SHORT)m_iFOTconv_PEEPSTART);
 			ar>>m_iFOTconv_PEEPEND;
-			getModel()->getI2C()->WriteConfigWord(PARA_FOT_CONV_PEEPEND_16,m_iFOTconv_PEEPEND);
+			getModel()->getI2C()->WriteConfigWord(PARA_FOT_CONV_PEEPEND_16, (SHORT)m_iFOTconv_PEEPEND);
 			ar>>m_iFOTconv_STEPS;
-			getModel()->getI2C()->WriteConfigByte(PARA_FOT_CONV_STEPS_8,m_iFOTconv_STEPS);
+			getModel()->getI2C()->WriteConfigByte(PARA_FOT_CONV_STEPS_8, (BYTE)m_iFOTconv_STEPS);
 			
 			ar>>m_iFOThfo_AMPLITUDE;
-			getModel()->getI2C()->WriteConfigByte(PARA_FOT_HFO_AMPLITUDE_16, m_iFOThfo_AMPLITUDE);
+			getModel()->getI2C()->WriteConfigByte(PARA_FOT_HFO_AMPLITUDE_16, (BYTE)m_iFOThfo_AMPLITUDE); // @todo FSW-103
 			ar>>m_iFOThfo_PMEANSTART;
-			getModel()->getI2C()->WriteConfigWord(PARA_FOT_HFO_PMEANSTART_16,m_iFOThfo_PMEANSTART);
+			getModel()->getI2C()->WriteConfigWord(PARA_FOT_HFO_PMEANSTART_16, (SHORT)m_iFOThfo_PMEANSTART);
 			ar>>m_iFOThfo_PMEANEND;
-			getModel()->getI2C()->WriteConfigWord(PARA_FOT_HFO_PMEANEND_16,m_iFOThfo_PMEANEND);
+			getModel()->getI2C()->WriteConfigWord(PARA_FOT_HFO_PMEANEND_16, (SHORT)m_iFOThfo_PMEANEND);
 			ar>>m_iFOThfo_FREQ;
-			getModel()->getI2C()->WriteConfigByte(PARA_FOT_HFO_FREQ_8, m_iFOThfo_FREQ);
+			getModel()->getI2C()->WriteConfigByte(PARA_FOT_HFO_FREQ_8, (BYTE)m_iFOThfo_FREQ);
 			ar>>m_iFOThfo_STEPS;
-			getModel()->getI2C()->WriteConfigByte(PARA_FOT_HFO_STEPS_8,m_iFOThfo_STEPS);
+			getModel()->getI2C()->WriteConfigByte(PARA_FOT_HFO_STEPS_8, (BYTE)m_iFOThfo_STEPS);
 			
 			BYTE eTriggerTypeCONV=0;
 			ar>>eTriggerTypeCONV;
@@ -16160,7 +16160,7 @@ void CConfiguration::SerializeFile(CArchive& ar)
 			setTriggerOption_NCPAP(m_eTriggerType_NCPAP);
 
 			ar>>m_iParaDataTrigger_NCPAP;
-			getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NCPAP_16, m_iParaDataTrigger_NCPAP);
+			getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_NCPAP_16, (SHORT)m_iParaDataTrigger_NCPAP);
 
 			if(m_iParaDataTrigger_NCPAP!=MAXRANGE_TRIGGER_OFF && getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable()==false)
 				disableNIVTRIGGER();
@@ -16204,13 +16204,13 @@ void CConfiguration::SerializeFile(CArchive& ar)
 			SetAcuLinkVersion(m_eAcuLinkVersion);
 
 			ar>>m_iAlarmlimitMAPmaxHF;
-			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMAX_HF_16, m_iAlarmlimitMAPmaxHF);
+			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMAX_HF_16, (SHORT)m_iAlarmlimitMAPmaxHF);
 			ar>>m_iAlarmlimitStateMAPmaxHF;
-			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMAX_HF_8, m_iAlarmlimitStateMAPmaxHF);
+			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMAX_HF_8, (BYTE)m_iAlarmlimitStateMAPmaxHF);
 			ar>>m_iAlarmlimitMAPminHF;
-			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMIN_HF_16, m_iAlarmlimitMAPminHF);
+			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_MAPMIN_HF_16, (SHORT)m_iAlarmlimitMAPminHF);
 			ar>>m_iAlarmlimitStateMAPminHF;
-			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMIN_HF_8, m_iAlarmlimitStateMAPminHF);
+			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_MAPMIN_HF_8, (BYTE)m_iAlarmlimitStateMAPminHF);
 
 			//###########################
 
@@ -16220,7 +16220,7 @@ void CConfiguration::SerializeFile(CArchive& ar)
 			setTriggerOption_CPAP(m_eTriggerType_CPAP);
 
 			ar>>m_iParaDataTrigger_CPAP;
-			getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CPAP_16, m_iParaDataTrigger_CPAP);
+			getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_CPAP_16, (SHORT)m_iParaDataTrigger_CPAP);
 
 			//#############################
 			BYTE eTriggerTypeDUOPAP=0;
@@ -16237,7 +16237,7 @@ void CConfiguration::SerializeFile(CArchive& ar)
 			setTriggerOption_DUOPAP(m_eTriggerType_DUOPAP);
 
 			ar>>m_iParaDataTrigger_DUOPAP;
-			getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_DUOPAP_16, m_iParaDataTrigger_DUOPAP);
+			getModel()->getI2C()->WriteConfigWord(PARA_TRIGGER_DUOPAP_16, (SHORT)m_iParaDataTrigger_DUOPAP);
 
 			if(m_iParaDataTrigger_DUOPAP!=MAXRANGE_TRIGGER_OFF && getModel()->getDATAHANDLER()->isNIVTRIGGERAvailable()==false)
 				disableNIVTRIGGER();
@@ -16252,9 +16252,9 @@ void CConfiguration::SerializeFile(CArchive& ar)
 			setTriggerOption_CONV(m_ePrevTrigger_CONV);
 
 			ar>>m_iAlarmlimitPIPminDUOPAP;
-			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMIN_DUOPAP_16, m_iAlarmlimitPIPminDUOPAP);
+			getModel()->getI2C()->WriteConfigWord(ALIMIT_VAL_PMIN_DUOPAP_16, (SHORT)m_iAlarmlimitPIPminDUOPAP);
 			ar>>m_iAlarmlimitStatePIPminDUOPAP;
-			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMIN_DUOPAP_8, m_iAlarmlimitStatePIPminDUOPAP);
+			getModel()->getI2C()->WriteConfigByte(ALIMIT_STATE_PMIN_DUOPAP_8, (BYTE)m_iAlarmlimitStatePIPminDUOPAP);
 		}
 	}
 }
@@ -16789,8 +16789,8 @@ COleDateTime CConfiguration::GetNIVTRIGGERdemoTimestamp()
 		iDemoDay=0;
 		//theApp.WriteLog(_T("*** NIVTRIGGERdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_NIVTRIGGER_YEAR_16, iDemoYear);
-		getModel()->getI2C()->WriteConfigByte(DEMO_NIVTRIGGER_MONTH_8, iDemoMonth);
-		getModel()->getI2C()->WriteConfigByte(DEMO_NIVTRIGGER_DAY_8, iDemoDay);
+		getModel()->getI2C()->WriteConfigByte(DEMO_NIVTRIGGER_MONTH_8, (BYTE)iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_NIVTRIGGER_DAY_8, (BYTE)iDemoDay);
 	}
 	else
 	{
@@ -16832,8 +16832,8 @@ void CConfiguration::SetNIVTRIGGERdemoTimestamp(COleDateTime dateTime)
 		iDemoDay=dateTime.GetDay();
 	}
 	getModel()->getI2C()->WriteConfigWord(DEMO_NIVTRIGGER_YEAR_16, iDemoYear);
-	getModel()->getI2C()->WriteConfigByte(DEMO_NIVTRIGGER_MONTH_8, iDemoMonth);
-	getModel()->getI2C()->WriteConfigByte(DEMO_NIVTRIGGER_DAY_8, iDemoDay);
+	getModel()->getI2C()->WriteConfigByte(DEMO_NIVTRIGGER_MONTH_8, (BYTE)iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_NIVTRIGGER_DAY_8, (BYTE)iDemoDay);
 
 	CString szTxt=_T("");
 	szTxt.Format(_T("***Set NIVTRIGGERdemo license:%02d.%02d.%04d"),
@@ -16874,8 +16874,8 @@ COleDateTime CConfiguration::GetFOTdemoTimestamp()
 		iDemoDay=0;
 		//theApp.WriteLog(_T("*** FOTdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_FOT_YEAR_16, iDemoYear);
-		getModel()->getI2C()->WriteConfigByte(DEMO_FOT_MONTH_8, iDemoMonth);
-		getModel()->getI2C()->WriteConfigByte(DEMO_FOT_DAY_8, iDemoDay);
+		getModel()->getI2C()->WriteConfigByte(DEMO_FOT_MONTH_8, (BYTE)iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_FOT_DAY_8, (BYTE)iDemoDay);
 	}
 	else
 	{
@@ -16917,8 +16917,8 @@ void CConfiguration::SetFOTdemoTimestamp(COleDateTime dateTime)
 		iDemoDay=dateTime.GetDay();
 	}
 	getModel()->getI2C()->WriteConfigWord(DEMO_FOT_YEAR_16, iDemoYear);
-	getModel()->getI2C()->WriteConfigByte(DEMO_FOT_MONTH_8, iDemoMonth);
-	getModel()->getI2C()->WriteConfigByte(DEMO_FOT_DAY_8, iDemoDay);
+	getModel()->getI2C()->WriteConfigByte(DEMO_FOT_MONTH_8, (BYTE)iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_FOT_DAY_8, (BYTE)iDemoDay);
 
 	CString szTxt=_T("");
 	szTxt.Format(_T("***Set FOTdemo license:%02d.%02d.%04d"),
@@ -16952,8 +16952,8 @@ COleDateTime CConfiguration::GetPRICOdemoTimestamp()
 		iDemoDay=0;
 		//theApp.WriteLog(_T("*** PRICOdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_PRICO_YEAR_16, iDemoYear);
-		getModel()->getI2C()->WriteConfigByte(DEMO_PRICO_MONTH_8, iDemoMonth);
-		getModel()->getI2C()->WriteConfigByte(DEMO_PRICO_DAY_8, iDemoDay);
+		getModel()->getI2C()->WriteConfigByte(DEMO_PRICO_MONTH_8, (BYTE)iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_PRICO_DAY_8, (BYTE)iDemoDay);
 	}
 	else
 	{
@@ -16995,8 +16995,8 @@ void CConfiguration::SetPRICOdemoTimestamp(COleDateTime dateTime)
 		iDemoDay=dateTime.GetDay();
 	}
 	getModel()->getI2C()->WriteConfigWord(DEMO_PRICO_YEAR_16, iDemoYear);
-	getModel()->getI2C()->WriteConfigByte(DEMO_PRICO_MONTH_8, iDemoMonth);
-	getModel()->getI2C()->WriteConfigByte(DEMO_PRICO_DAY_8, iDemoDay);
+	getModel()->getI2C()->WriteConfigByte(DEMO_PRICO_MONTH_8, (BYTE)iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_PRICO_DAY_8, (BYTE)iDemoDay);
 
 	CString szTxt=_T("");
 	szTxt.Format(_T("***Set PRICOdemo license:%02d.%02d.%04d"),
@@ -17030,8 +17030,8 @@ COleDateTime CConfiguration::GetTHERAPYdemoTimestamp()
 		iDemoDay=0;
 		//theApp.WriteLog(_T("*** THERAPYdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_THERAPY_YEAR_16, iDemoYear);
-		getModel()->getI2C()->WriteConfigByte(DEMO_THERAPY_MONTH_8, iDemoMonth);
-		getModel()->getI2C()->WriteConfigByte(DEMO_THERAPY_DAY_8, iDemoDay);
+		getModel()->getI2C()->WriteConfigByte(DEMO_THERAPY_MONTH_8, (BYTE)iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_THERAPY_DAY_8, (BYTE)iDemoDay);
 	}
 	else
 	{
@@ -17073,8 +17073,8 @@ void CConfiguration::SetTHERAPYdemoTimestamp(COleDateTime dateTime)
 		iDemoDay=dateTime.GetDay();
 	}
 	getModel()->getI2C()->WriteConfigWord(DEMO_THERAPY_YEAR_16, iDemoYear);
-	getModel()->getI2C()->WriteConfigByte(DEMO_THERAPY_MONTH_8, iDemoMonth);
-	getModel()->getI2C()->WriteConfigByte(DEMO_THERAPY_DAY_8, iDemoDay);
+	getModel()->getI2C()->WriteConfigByte(DEMO_THERAPY_MONTH_8, (BYTE)iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_THERAPY_DAY_8, (BYTE)iDemoDay);
 
 	CString szTxt=_T("");
 	szTxt.Format(_T("***Set THERAPYdemo license:%02d.%02d.%04d"),
@@ -17108,8 +17108,8 @@ COleDateTime CConfiguration::GetTRENDdemoTimestamp()
 		iDemoDay=0;
 		//theApp.WriteLog(_T("*** TRENDdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_TREND_YEAR_16, iDemoYear);
-		getModel()->getI2C()->WriteConfigByte(DEMO_TREND_MONTH_8, iDemoMonth);
-		getModel()->getI2C()->WriteConfigByte(DEMO_TREND_DAY_8, iDemoDay);
+		getModel()->getI2C()->WriteConfigByte(DEMO_TREND_MONTH_8, (BYTE)iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_TREND_DAY_8, (BYTE)iDemoDay);
 	}
 	else
 	{
@@ -17151,8 +17151,8 @@ void CConfiguration::SetTRENDdemoTimestamp(COleDateTime dateTime)
 		iDemoDay=dateTime.GetDay();
 	}
 	getModel()->getI2C()->WriteConfigWord(DEMO_TREND_YEAR_16, iDemoYear);
-	getModel()->getI2C()->WriteConfigByte(DEMO_TREND_MONTH_8, iDemoMonth);
-	getModel()->getI2C()->WriteConfigByte(DEMO_TREND_DAY_8, iDemoDay);
+	getModel()->getI2C()->WriteConfigByte(DEMO_TREND_MONTH_8, (BYTE)iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_TREND_DAY_8, (BYTE)iDemoDay);
 
 	CString szTxt=_T("");
 	szTxt.Format(_T("***Set TRENDdemo license:%02d.%02d.%04d"),
@@ -17186,8 +17186,8 @@ COleDateTime CConfiguration::GetLUNGRECdemoTimestamp()
 		iDemoDay=0;
 		//theApp.WriteLog(_T("*** LUNGRECdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_LUNGREC_YEAR_16, iDemoYear);
-		getModel()->getI2C()->WriteConfigByte(DEMO_LUNGREC_MONTH_8, iDemoMonth);
-		getModel()->getI2C()->WriteConfigByte(DEMO_LUNGREC_DAY_8, iDemoDay);
+		getModel()->getI2C()->WriteConfigByte(DEMO_LUNGREC_MONTH_8, (BYTE)iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_LUNGREC_DAY_8, (BYTE)iDemoDay);
 	}
 	else
 	{
@@ -17229,8 +17229,8 @@ void CConfiguration::SetLUNGRECdemoTimestamp(COleDateTime dateTime)
 		iDemoDay=dateTime.GetDay();
 	}
 	getModel()->getI2C()->WriteConfigWord(DEMO_LUNGREC_YEAR_16, iDemoYear);
-	getModel()->getI2C()->WriteConfigByte(DEMO_LUNGREC_MONTH_8, iDemoMonth);
-	getModel()->getI2C()->WriteConfigByte(DEMO_LUNGREC_DAY_8, iDemoDay);
+	getModel()->getI2C()->WriteConfigByte(DEMO_LUNGREC_MONTH_8, (BYTE)iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_LUNGREC_DAY_8, (BYTE)iDemoDay);
 
 	CString szTxt=_T("");
 	szTxt.Format(_T("***Set LUNGRECdemo license:%02d.%02d.%04d"),
@@ -17264,8 +17264,8 @@ COleDateTime CConfiguration::GetVLIMITdemoTimestamp()
 		iDemoDay=0;
 		//theApp.WriteLog(_T("*** VLIMITdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_VLIMIT_YEAR_16, iDemoYear);
-		getModel()->getI2C()->WriteConfigByte(DEMO_VLIMIT_MONTH_8, iDemoMonth);
-		getModel()->getI2C()->WriteConfigByte(DEMO_VLIMIT_DAY_8, iDemoDay);
+		getModel()->getI2C()->WriteConfigByte(DEMO_VLIMIT_MONTH_8, (BYTE)iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_VLIMIT_DAY_8, (BYTE)iDemoDay);
 	}
 	else
 	{
@@ -17307,8 +17307,8 @@ void CConfiguration::SetVLIMITdemoTimestamp(COleDateTime dateTime)
 		iDemoDay=dateTime.GetDay();
 	}
 	getModel()->getI2C()->WriteConfigWord(DEMO_VLIMIT_YEAR_16, iDemoYear);
-	getModel()->getI2C()->WriteConfigByte(DEMO_VLIMIT_MONTH_8, iDemoMonth);
-	getModel()->getI2C()->WriteConfigByte(DEMO_VLIMIT_DAY_8, iDemoDay);
+	getModel()->getI2C()->WriteConfigByte(DEMO_VLIMIT_MONTH_8, (BYTE)iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_VLIMIT_DAY_8, (BYTE)iDemoDay);
 
 	CString szTxt=_T("");
 	szTxt.Format(_T("***Set VLIMITdemo license:%02d.%02d.%04d"),
@@ -17342,8 +17342,8 @@ COleDateTime CConfiguration::GetVGUARANTYdemoTimestamp()
 		iDemoDay=0;
 		//theApp.WriteLog(_T("*** VGUARANTYdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_VGUARANTY_YEAR_16, iDemoYear);
-		getModel()->getI2C()->WriteConfigByte(DEMO_VGUARANTY_MONTH_8, iDemoMonth);
-		getModel()->getI2C()->WriteConfigByte(DEMO_VGUARANTY_DAY_8, iDemoDay);
+		getModel()->getI2C()->WriteConfigByte(DEMO_VGUARANTY_MONTH_8, (BYTE)iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_VGUARANTY_DAY_8, (BYTE)iDemoDay);
 	}
 	else
 	{
@@ -17385,8 +17385,8 @@ void CConfiguration::SetVGUARANTYdemoTimestamp(COleDateTime dateTime)
 		iDemoDay=dateTime.GetDay();
 	}
 	getModel()->getI2C()->WriteConfigWord(DEMO_VGUARANTY_YEAR_16, iDemoYear);
-	getModel()->getI2C()->WriteConfigByte(DEMO_VGUARANTY_MONTH_8, iDemoMonth);
-	getModel()->getI2C()->WriteConfigByte(DEMO_VGUARANTY_DAY_8, iDemoDay);
+	getModel()->getI2C()->WriteConfigByte(DEMO_VGUARANTY_MONTH_8, (BYTE)iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_VGUARANTY_DAY_8, (BYTE)iDemoDay);
 
 	CString szTxt=_T("");
 	szTxt.Format(_T("***Set VGUARANTYdemo license:%02d.%02d.%04d"),
@@ -17420,8 +17420,8 @@ COleDateTime CConfiguration::GetNMODEdemoTimestamp()
 		iDemoDay=0;
 		//theApp.WriteLog(_T("*** NMODEdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_NMODE_YEAR_16, iDemoYear);
-		getModel()->getI2C()->WriteConfigByte(DEMO_NMODE_MONTH_8, iDemoMonth);
-		getModel()->getI2C()->WriteConfigByte(DEMO_NMODE_DAY_8, iDemoDay);
+		getModel()->getI2C()->WriteConfigByte(DEMO_NMODE_MONTH_8, (BYTE)iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_NMODE_DAY_8, (BYTE)iDemoDay);
 	}
 	else
 	{
@@ -17463,8 +17463,8 @@ void CConfiguration::SetNMODEdemoTimestamp(COleDateTime dateTime)
 		iDemoDay=dateTime.GetDay();
 	}
 	getModel()->getI2C()->WriteConfigWord(DEMO_NMODE_YEAR_16, iDemoYear);
-	getModel()->getI2C()->WriteConfigByte(DEMO_NMODE_MONTH_8, iDemoMonth);
-	getModel()->getI2C()->WriteConfigByte(DEMO_NMODE_DAY_8, iDemoDay);
+	getModel()->getI2C()->WriteConfigByte(DEMO_NMODE_MONTH_8, (BYTE)iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_NMODE_DAY_8, (BYTE)iDemoDay);
 
 	CString szTxt=_T("");
 	szTxt.Format(_T("***Set NMODEdemo license:%02d.%02d.%04d"),
@@ -17498,8 +17498,8 @@ COleDateTime CConfiguration::GetHFOdemoTimestamp()
 		iDemoDay=0;
 		//theApp.WriteLog(_T("*** HFOdemo license false ***"));
 		getModel()->getI2C()->WriteConfigWord(DEMO_HFO_YEAR_16, iDemoYear);
-		getModel()->getI2C()->WriteConfigByte(DEMO_HFO_MONTH_8, iDemoMonth);
-		getModel()->getI2C()->WriteConfigByte(DEMO_HFO_DAY_8, iDemoDay);
+		getModel()->getI2C()->WriteConfigByte(DEMO_HFO_MONTH_8, (BYTE)iDemoMonth);
+		getModel()->getI2C()->WriteConfigByte(DEMO_HFO_DAY_8, (BYTE)iDemoDay);
 	}
 	else
 	{
@@ -17542,8 +17542,8 @@ void CConfiguration::SetHFOdemoTimestamp(COleDateTime dateTime)
 	}
 	
 	getModel()->getI2C()->WriteConfigWord(DEMO_HFO_YEAR_16, iDemoYear);
-	getModel()->getI2C()->WriteConfigByte(DEMO_HFO_MONTH_8, iDemoMonth);
-	getModel()->getI2C()->WriteConfigByte(DEMO_HFO_DAY_8, iDemoDay);
+	getModel()->getI2C()->WriteConfigByte(DEMO_HFO_MONTH_8, (BYTE)iDemoMonth);
+	getModel()->getI2C()->WriteConfigByte(DEMO_HFO_DAY_8, (BYTE)iDemoDay);
 
 	CString szTxt=_T("");
 	szTxt.Format(_T("***Set HFOdemo license:%02d.%02d.%04d"),
