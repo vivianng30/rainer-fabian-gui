@@ -17,7 +17,7 @@ CConfiguration* CConfiguration::theConfig=0;
 /**********************************************************************************************//**
  * A macro that defines ampcorfactorini
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -26,7 +26,7 @@ CConfiguration* CConfiguration::theConfig=0;
 /**********************************************************************************************//**
  * Initializes a new instance of the CConfiguration class
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -426,7 +426,7 @@ CConfiguration::CConfiguration()
 /**********************************************************************************************//**
  * Finalizes an instance of the CConfiguration class
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -438,7 +438,7 @@ CConfiguration::~CConfiguration(void)
 /**********************************************************************************************//**
  * Gets the model
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	Null if it fails, else the model.
@@ -454,7 +454,7 @@ CMVModel *CConfiguration::getModel()
 /**********************************************************************************************//**
  * Gets the instance
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	Null if it fails, else the instance.
@@ -472,7 +472,7 @@ CConfiguration* CConfiguration::GetInstance()
 /**********************************************************************************************//**
  * Destroys the instance
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -488,7 +488,7 @@ void CConfiguration::DestroyInstance()
 /**********************************************************************************************//**
  * Initializes this object
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -887,7 +887,7 @@ void CConfiguration::Init()
 /**********************************************************************************************//**
  * Loads the settings
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -2633,7 +2633,7 @@ void CConfiguration::LoadSettings()
 	m_iPRICO_SPO2highRange=getModel()->getI2C()->ReadConfigByte(PRICOSPO2HIGH_8);
 	if(m_iPRICO_SPO2highRange>100 || m_iPRICO_SPO2highRange==0)
 	{
-		getModel()->getI2C()->WriteConfigByte(PRICOSPO2HIGH_8, (BYTE)FACTORY_ALIMIT_VAL_SPO2MAX);
+		getModel()->getI2C()->WriteConfigByte(PRICOSPO2HIGH_8, (BYTE)(FACTORY_ALIMIT_VAL_SPO2MAX/10));
 		m_iPRICO_SPO2highRange=FACTORY_ALIMIT_VAL_SPO2MAX/10;
 	}
 	if(m_iPRICO_SPO2lowRange>100 || m_iPRICO_SPO2lowRange>=m_iPRICO_SPO2highRange)
@@ -4219,7 +4219,7 @@ void CConfiguration::LoadSettings()
 /**********************************************************************************************//**
  * Gets board sub type
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The board sub type.
@@ -4233,7 +4233,7 @@ CStringW CConfiguration::GetBoardSubType()
 /**********************************************************************************************//**
  * Gets kernel version
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The kernel version.
@@ -4247,7 +4247,7 @@ CStringW CConfiguration::GetKernelVersion()
 /**********************************************************************************************//**
  * Gets kernel acu version
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The kernel acu version.
@@ -4261,7 +4261,7 @@ CStringW CConfiguration::GetKernelAcuVersion()
 /**********************************************************************************************//**
  * Gets kernel version date
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The kernel version date.
@@ -4275,7 +4275,7 @@ CStringW CConfiguration::GetKernelVersionDate()
 /**********************************************************************************************//**
  * Graph set last view state
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -4290,7 +4290,7 @@ void CConfiguration::GraphSetLastViewState(int state)
 /**********************************************************************************************//**
  * Graph get last view state
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -4304,7 +4304,7 @@ int CConfiguration::GraphGetLastViewState()
 /**********************************************************************************************//**
  * Gets the language
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The language.
@@ -4318,7 +4318,7 @@ CStringW CConfiguration::getLANGUAGE()
 /**********************************************************************************************//**
  * Gets language identifier
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The language identifier.
@@ -4332,7 +4332,7 @@ WORD CConfiguration::GetLanguageID()
 /**********************************************************************************************//**
  * Gets language ID from name
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	szLID	The lid.
@@ -4439,7 +4439,7 @@ WORD CConfiguration::GetLanguageIDfromName(CStringW szLID)
 /**********************************************************************************************//**
  * Gets language name from identifier
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iID	Zero-based index of the identifier.
@@ -4561,7 +4561,7 @@ CStringW CConfiguration::GetLanguageNamefromID(WORD iID)
 /**********************************************************************************************//**
  * Sets a language
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	szLID	The lid.
@@ -4685,7 +4685,7 @@ void CConfiguration::SetLanguage(CStringW szLID)
 /**********************************************************************************************//**
  * Gets alarm volume
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarm volume.
@@ -4699,7 +4699,7 @@ eAlarmLoudness CConfiguration::GetAlarmVolume()
 /**********************************************************************************************//**
  * Sets alarm volume
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -4742,7 +4742,7 @@ void CConfiguration::SetAlarmVolume(eAlarmLoudness state)
 /**********************************************************************************************//**
  * Determines if we can use tve btb
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -4756,7 +4756,7 @@ bool CConfiguration::useTveBTB()
 /**********************************************************************************************//**
  * Sets use tve btb
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	True to state.
@@ -4780,7 +4780,7 @@ void CConfiguration::setUseTveBTB(bool state)
 /**********************************************************************************************//**
  * Determines if we can use neo ped
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -4794,7 +4794,7 @@ bool CConfiguration::useNeoPed()
 /**********************************************************************************************//**
  * Sets use neo ped
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	True to state.
@@ -4825,7 +4825,7 @@ void CConfiguration::setUseNeoPed(bool state)
 /**********************************************************************************************//**
  * Gets the btps
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -4839,7 +4839,7 @@ bool CConfiguration::getBTPS()
 /**********************************************************************************************//**
  * Sets the btps
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	True to state.
@@ -4864,7 +4864,7 @@ void CConfiguration::setBTPS(bool state)
 /**********************************************************************************************//**
  * Gets IE relation mode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The IE relation mode.
@@ -4878,7 +4878,7 @@ eIERelationMode CConfiguration::GetIERelationMode()
 /**********************************************************************************************//**
  * Sets IE relation mode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	mode	The mode.
@@ -4893,7 +4893,7 @@ void CConfiguration::SetIERelationMode(eIERelationMode mode)
 /**********************************************************************************************//**
  * Gets co2unit
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The co2unit.
@@ -4907,7 +4907,7 @@ eCO2unit CConfiguration::GetCO2unit()
 /**********************************************************************************************//**
  * Sets co2unit
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	unit	The unit.
@@ -4937,7 +4937,7 @@ void CConfiguration::SetCO2unit(eCO2unit unit)
 /**********************************************************************************************//**
  * Gets co2 baro pressure
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The co2 baro pressure.
@@ -4951,7 +4951,7 @@ SHORT CConfiguration::GetCO2BaroPressure()
 /**********************************************************************************************//**
  * Sets co2 baro pressure
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -4974,7 +4974,7 @@ void CConfiguration::SetCO2BaroPressure(SHORT value)
 /**********************************************************************************************//**
  * Gets time pump automatic on
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The time pump automatic on.
@@ -4988,7 +4988,7 @@ BYTE CConfiguration::GetTimePumpAutoOn()
 /**********************************************************************************************//**
  * Sets time pump automatic on
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -5003,7 +5003,7 @@ void CConfiguration::SetTimePumpAutoOn(BYTE value)
 /**********************************************************************************************//**
  * Query if this object is fast sat on
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if fast sat on, false if not.
@@ -5017,7 +5017,7 @@ bool CConfiguration::isFastSATon()
 /**********************************************************************************************//**
  * Sets fast sa  t on
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	bFastSATon	True to fast sat on.
@@ -5039,7 +5039,7 @@ void CConfiguration::setFastSATon(bool bFastSATon)
 /**********************************************************************************************//**
  * Gets spo2alarm delay
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The spo2alarm delay.
@@ -5053,7 +5053,7 @@ eSPO2alarmdelay CConfiguration::getSPO2alarmDelay()
 /**********************************************************************************************//**
  * Sets spo2alarm delay
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	delay	The delay.
@@ -5075,7 +5075,7 @@ void CConfiguration::setSPO2alarmDelay(eSPO2alarmdelay delay)
 /**********************************************************************************************//**
  * Gets spo2averaging time
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The spo2averaging time.
@@ -5089,7 +5089,7 @@ eSPO2averagingtime CConfiguration::getSPO2averagingTime()
 /**********************************************************************************************//**
  * Sets spo2averaging time
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	avtime	The avtime.
@@ -5108,7 +5108,7 @@ void CConfiguration::setSPO2averagingTime(eSPO2averagingtime avtime)
 /**********************************************************************************************//**
  * Gets sensitivity mode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The sensitivity mode.
@@ -5122,7 +5122,7 @@ eSPO2sensitivitymode CConfiguration::getSensitivityMode()
 /**********************************************************************************************//**
  * Sets sensitivity mode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	mode	The mode.
@@ -5141,7 +5141,7 @@ void CConfiguration::setSensitivityMode(eSPO2sensitivitymode mode)
 /**********************************************************************************************//**
  * Gets reference flow sensor
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The reference flow sensor.
@@ -5155,7 +5155,7 @@ eRefFlowSensor CConfiguration::GetRefFlowSensor()
 /**********************************************************************************************//**
  * Sets reference flow sensor
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	mode	The mode.
@@ -5170,7 +5170,7 @@ void CConfiguration::SetRefFlowSensor(eRefFlowSensor mode)
 /**********************************************************************************************//**
  * Gets pressure unit
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The pressure unit.
@@ -5184,7 +5184,7 @@ ePressureUnit CConfiguration::GetPressureUnit()
 /**********************************************************************************************//**
  * Sets pressure unit
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	eUnit	The unit.
@@ -5204,7 +5204,7 @@ void CConfiguration::SetPressureUnit(ePressureUnit eUnit)
 /**********************************************************************************************//**
  * Gets volume control
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The volume control.
@@ -5218,7 +5218,7 @@ eVolumeControl CConfiguration::GetVolumeControl()
 /**********************************************************************************************//**
  * Sets volume control
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	eCtrl	The control.
@@ -5238,7 +5238,7 @@ void CConfiguration::SetVolumeControl(eVolumeControl eCtrl)
 /**********************************************************************************************//**
  * Sets freshgas extent
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	True to state.
@@ -5274,7 +5274,7 @@ void CConfiguration::setFreshgasExt(bool state)
 /**********************************************************************************************//**
  * Gets freshgas extent
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -5288,7 +5288,7 @@ bool CConfiguration::getFreshgasExt()
 /**********************************************************************************************//**
  * Queries if the bias flow is active
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if the bias flow is active, false if not.
@@ -5302,7 +5302,7 @@ bool CConfiguration::isBiasFlowActive()
 /**********************************************************************************************//**
  * Query if this object is spo2 registry enabled
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if spo2 registry enabled, false if not.
@@ -5316,7 +5316,7 @@ bool CConfiguration::isSPO2REGISTRYenabled()
  /**********************************************************************************************//**
   * Query if this object is co2 registry enabled
   *
-  * \author	Rainer Kühner
+  * \author	Rainer KÃ¼hner
   * \date	19.02.2018
   *
   * \return	True if co2 registry enabled, false if not.
@@ -5330,7 +5330,7 @@ bool CConfiguration::isSPO2REGISTRYenabled()
  /**********************************************************************************************//**
   * Query if this object is risetime registry enabled
   *
-  * \author	Rainer Kühner
+  * \author	Rainer KÃ¼hner
   * \date	19.02.2018
   *
   * \return	True if risetime registry enabled, false if not.
@@ -5345,7 +5345,7 @@ bool CConfiguration::isSPO2REGISTRYenabled()
 /**********************************************************************************************//**
  * Gets prico spo2low range
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The calculated prico spo2low range.
@@ -5359,7 +5359,7 @@ BYTE CConfiguration::getPRICO_SPO2lowRange()
 /**********************************************************************************************//**
  * Sets prico spo2low range
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	SPO2low	The spo2low.
@@ -5374,7 +5374,7 @@ void CConfiguration::setPRICO_SPO2lowRange(BYTE SPO2low)
 /**********************************************************************************************//**
  * Gets prico spo2high range
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The calculated prico spo2high range.
@@ -5388,7 +5388,7 @@ BYTE CConfiguration::getPRICO_SPO2highRange()
 /**********************************************************************************************//**
  * Sets prico spo2high range
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	SPO2high	The spo2high.
@@ -5403,7 +5403,7 @@ void CConfiguration::setPRICO_SPO2highRange(BYTE SPO2high)
 /**********************************************************************************************//**
  * Gets prico fio2low range
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The calculated prico fio2low range.
@@ -5417,7 +5417,7 @@ BYTE CConfiguration::getPRICO_FIO2lowRange()
 /**********************************************************************************************//**
  * Sets prico fio2low range
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	FIO2low	The fio2low.
@@ -5432,7 +5432,7 @@ void CConfiguration::setPRICO_FIO2lowRange(BYTE FIO2low)
 /**********************************************************************************************//**
  * Gets prico fio2high range
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The calculated prico fio2high range.
@@ -5446,7 +5446,7 @@ BYTE CConfiguration::getPRICO_FIO2highRange()
 /**********************************************************************************************//**
  * Sets prico fio2high range
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	FIO2high	The fio2high.
@@ -5461,7 +5461,7 @@ void CConfiguration::setPRICO_FIO2highRange(BYTE FIO2high)
 /**********************************************************************************************//**
  * Gets tube set
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The tube set.
@@ -5475,7 +5475,7 @@ eTubeSet CConfiguration::GetTubeSet()
 /**********************************************************************************************//**
  * Sets tube set
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	tube	The tube.
@@ -5491,7 +5491,7 @@ void CConfiguration::SetTubeSet(eTubeSet tube)
 /**********************************************************************************************//**
  * Gets tube configuration
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The tube configuration.
@@ -5505,7 +5505,7 @@ eTubeConfig CConfiguration::GetTubeConfig()
 /**********************************************************************************************//**
  * Gets flow sensor state
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The flow sensor state.
@@ -5519,7 +5519,7 @@ eFlowSensorState CConfiguration::GetFlowSensorState()
 /**********************************************************************************************//**
  * Sets flow sensor state
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5542,7 +5542,7 @@ void CConfiguration::SetFlowSensorState(eFlowSensorState state)
 /**********************************************************************************************//**
  * Graph set automatic scale
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	True to state.
@@ -5560,7 +5560,7 @@ void CConfiguration::GraphSetAutoScale(bool state)
 /**********************************************************************************************//**
  * Determines if we can graph is automatic scale
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -5574,7 +5574,7 @@ bool CConfiguration::GraphIsAutoScale()
 /**********************************************************************************************//**
  * Trend set automatic scale
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	True to state.
@@ -5592,7 +5592,7 @@ void CConfiguration::TrendSetAutoScale(bool state)
 /**********************************************************************************************//**
  * Determines if we can trend is automatic scale
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -5606,7 +5606,7 @@ bool CConfiguration::TrendIsAutoScale()
 /**********************************************************************************************//**
  * Graph set filled
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	True to state.
@@ -5624,7 +5624,7 @@ void CConfiguration::GraphSetFilled(bool state)
 /**********************************************************************************************//**
  * Determines if we can graph is filled
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -5638,7 +5638,7 @@ bool CConfiguration::GraphIsFilled()
 /**********************************************************************************************//**
  * Trend set filled
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	True to state.
@@ -5656,7 +5656,7 @@ void CConfiguration::TrendSetFilled(bool state)
 /**********************************************************************************************//**
  * Determines if we can trend is filled
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -5670,7 +5670,7 @@ bool CConfiguration::TrendIsFilled()
 /**********************************************************************************************//**
  * Sets trigger option convert
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	type	The type.
@@ -5687,7 +5687,7 @@ void CConfiguration::setTriggerOption_CONV(eTriggereType type)
 /**********************************************************************************************//**
  * Gets trigger option convert
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The trigger option convert.
@@ -5701,7 +5701,7 @@ eTriggereType CConfiguration::getTriggerOption_CONV()
 /**********************************************************************************************//**
  * Sets previous trigger option convert
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	type	The type.
@@ -5718,7 +5718,7 @@ void CConfiguration::setPrevTriggerOption_CONV(eTriggereType type)
 /**********************************************************************************************//**
  * Gets the previous trigger option convert
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The previous trigger option convert.
@@ -5732,7 +5732,7 @@ eTriggereType CConfiguration::getPrevTriggerOption_CONV()
 /**********************************************************************************************//**
  * Sets trigger option cpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	type	The type.
@@ -5749,7 +5749,7 @@ void CConfiguration::setTriggerOption_CPAP(eTriggereType type)
 /**********************************************************************************************//**
  * Gets trigger option cpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The trigger option cpap.
@@ -5763,7 +5763,7 @@ eTriggereType CConfiguration::getTriggerOption_CPAP()
 /**********************************************************************************************//**
  * Sets trigger option duopap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	type	The type.
@@ -5780,7 +5780,7 @@ void CConfiguration::setTriggerOption_DUOPAP(eTriggereType type)
 /**********************************************************************************************//**
  * Gets trigger option duopap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The trigger option duopap.
@@ -5794,7 +5794,7 @@ eTriggereType CConfiguration::getTriggerOption_DUOPAP()
 /**********************************************************************************************//**
  * Sets trigger option ncpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	type	The type.
@@ -5811,7 +5811,7 @@ void CConfiguration::setTriggerOption_NCPAP(eTriggereType type)
 /**********************************************************************************************//**
  * Gets trigger option ncpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The trigger option ncpap.
@@ -5825,7 +5825,7 @@ eTriggereType CConfiguration::getTriggerOption_NCPAP()
 /**********************************************************************************************//**
  * Sets automatic oxy calibration
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5841,7 +5841,7 @@ void CConfiguration::SetAutoOxyCal(eAutoOxyCal state)
 /**********************************************************************************************//**
  * Gets automatic oxy calibration
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The automatic oxy calibration.
@@ -5855,7 +5855,7 @@ eAutoOxyCal CConfiguration::GetAutoOxyCal()
 /**********************************************************************************************//**
  * Sets automatic screenlock time
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -5899,7 +5899,7 @@ void CConfiguration::SetAutoScreenlockTime(eAutoScreenlock state)
 /**********************************************************************************************//**
  * Gets automatic screenlock time
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The automatic screenlock time.
@@ -5913,7 +5913,7 @@ eAutoScreenlock CConfiguration::GetAutoScreenlockTime()
 /**********************************************************************************************//**
  * Sets automatic screenlock active
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	True to state.
@@ -5971,7 +5971,7 @@ void CConfiguration::SetAutoScreenlockActive(bool state)
 /**********************************************************************************************//**
  * Queries if the automatic screenlock is active
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if the automatic screenlock is active, false if not.
@@ -5985,7 +5985,7 @@ bool CConfiguration::IsAutoScreenlockActive()
 /**********************************************************************************************//**
  * Sets service password disabled
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	True to state.
@@ -6008,7 +6008,7 @@ void CConfiguration::SetServicePasswordDisabled(bool state)
 /**********************************************************************************************//**
  * Queries if the service password is disabled
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if the service password is disabled, false if not.
@@ -6022,7 +6022,7 @@ bool CConfiguration::IsServicePasswordDisabled()
 /**********************************************************************************************//**
  * Sets nursecall active
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	True to state.
@@ -6045,7 +6045,7 @@ void CConfiguration::SetNursecallActive(bool state)
 /**********************************************************************************************//**
  * Queries if the nursecall is active
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if the nursecall is active, false if not.
@@ -6059,7 +6059,7 @@ bool CConfiguration::IsNursecallActive()
 /**********************************************************************************************//**
  * Sets enable autolimit
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	True to state.
@@ -6079,7 +6079,7 @@ void CConfiguration::SetEnableAutolimit(bool state)
 /**********************************************************************************************//**
  * Queries if the enable autolimit is active
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if the enable autolimit is active, false if not.
@@ -6093,7 +6093,7 @@ bool CConfiguration::IsEnableAutolimitActive()
 /**********************************************************************************************//**
  * Sets enable factory
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	True to state.
@@ -6115,7 +6115,7 @@ void CConfiguration::SetEnableFactory(bool state)
 /**********************************************************************************************//**
  * Queries if the enable factory is active
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if the enable factory is active, false if not.
@@ -6129,7 +6129,7 @@ bool CConfiguration::IsEnableFactoryActive()
 /**********************************************************************************************//**
  * Sets hfo manager breath enabled
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	True to state.
@@ -6150,7 +6150,7 @@ void CConfiguration::SetHFOManBreathEnabled(bool state)
 /**********************************************************************************************//**
  * Queries if the hfo manager breath is enabled
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if the hfo manager breath is enabled, false if not.
@@ -6164,7 +6164,7 @@ bool CConfiguration::IsHFOManBreathEnabled()
 /**********************************************************************************************//**
  * Sets E-Flow equal I-Flow
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	True to state.
@@ -6192,7 +6192,7 @@ void CConfiguration::SetEFLOWequalILFOW(bool state)
 /**********************************************************************************************//**
  * Query if this object is E-Flow equal I-Flow
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if eflo wequal ilfow, false if not.
@@ -6206,7 +6206,7 @@ bool CConfiguration::IsEFLOWequalILFOW()
 /**********************************************************************************************//**
  * Gets show E-flow in settings
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -6220,7 +6220,7 @@ bool CConfiguration::getShowEFlowInSettings()
 /**********************************************************************************************//**
  * Sets show E-flow in settings
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	bState	True to state.
@@ -6243,7 +6243,7 @@ void CConfiguration::setShowEFlowInSettings(bool bState)
 /**********************************************************************************************//**
  * Gets play backup sound
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -6270,7 +6270,7 @@ bool CConfiguration::GetPlayBackupSound()
 /**********************************************************************************************//**
  * Gets play vlimit sound
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -6305,7 +6305,7 @@ bool CConfiguration::GetPlayVlimitSound()
 /**********************************************************************************************//**
  * Sets percent abort criterion psv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -6320,7 +6320,7 @@ void CConfiguration::SetPercentAbortCriterionPSV(int iVal)
 /**********************************************************************************************//**
  * Gets percent abort criterion psv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The percent abort criterion psv.
@@ -6334,7 +6334,7 @@ int CConfiguration::GetPercentAbortCriterionPSV()
 /**********************************************************************************************//**
  * Sets flush time
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	byTime	The by time.
@@ -6354,7 +6354,7 @@ void CConfiguration::SetFlushTime(BYTE byTime)
 /**********************************************************************************************//**
  * Gets flush time
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The flush time.
@@ -6368,7 +6368,7 @@ BYTE CConfiguration::GetFlushTime()
 /**********************************************************************************************//**
  * Sets manual breath time
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iTime	Zero-based index of the time.
@@ -6384,7 +6384,7 @@ void CConfiguration::SetManBreathTime(int iTime)
 /**********************************************************************************************//**
  * Gets manual breath time
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The manager breath time.
@@ -6398,7 +6398,7 @@ int CConfiguration::GetManBreathTime()
 /**********************************************************************************************//**
  * Sets fo tconventional amplitude
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	amp	The amplitude.
@@ -6413,7 +6413,7 @@ void CConfiguration::setFOTconv_AMPLITUDE(WORD amp)
 /**********************************************************************************************//**
  * Gets fot conventional amplitude
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The fot conventional amplitude.
@@ -6427,7 +6427,7 @@ WORD CConfiguration::getFOTconv_AMPLITUDE()
 /**********************************************************************************************//**
  * Sets fot conventional frequency
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	freq	The frequency.
@@ -6442,7 +6442,7 @@ void CConfiguration::setFOTconv_FREQ(BYTE freq)
 /**********************************************************************************************//**
  * Gets fot conventional frequency
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The fot conventional frequency.
@@ -6456,7 +6456,7 @@ BYTE CConfiguration::getFOTconv_FREQ()
 /**********************************************************************************************//**
  * Sets fot conventional PEEPend
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	peep	The peep.
@@ -6471,7 +6471,7 @@ void CConfiguration::setFOTconv_PEEPEND(WORD peep)
 /**********************************************************************************************//**
  * Gets fot conventional PEEPend
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The fot conventional PEEPend.
@@ -6485,7 +6485,7 @@ WORD CConfiguration::getFOTconv_PEEPEND()
 /**********************************************************************************************//**
  * Sets fot conventional PEEPstart
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	peep	The peep.
@@ -6500,7 +6500,7 @@ void CConfiguration::setFOTconv_PEEPSTART(WORD peep)
 /**********************************************************************************************//**
  * Gets fot conventional PEEPstart
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The fot conventional PEEPstart.
@@ -6514,7 +6514,7 @@ WORD CConfiguration::getFOTconv_PEEPSTART()
 /**********************************************************************************************//**
  * Sets fot conventional steps
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	steps	The steps.
@@ -6529,7 +6529,7 @@ void CConfiguration::setFOTconv_STEPS(BYTE steps)
 /**********************************************************************************************//**
  * Gets fot conventional steps
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The fot conventional steps.
@@ -6543,7 +6543,7 @@ BYTE CConfiguration::getFOTconv_STEPS()
 /**********************************************************************************************//**
  * Sets difference PEEP fot
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	diff	The difference.
@@ -6557,7 +6557,7 @@ void CConfiguration::setDiffPEEPFOT(WORD diff)
 /**********************************************************************************************//**
  * Gets difference PEEP fot
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The difference peepfot.
@@ -6571,7 +6571,7 @@ WORD CConfiguration::getDiffPEEPFOT()
 /**********************************************************************************************//**
  * Sets fot hfo amplitude
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	amp	The amp.
@@ -6586,7 +6586,7 @@ void CConfiguration::setFOThfo_AMPLITUDE(WORD amp)
 /**********************************************************************************************//**
  * Gets fot hfo amplitude
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The fo thfo amplitude.
@@ -6600,7 +6600,7 @@ WORD CConfiguration::getFOThfo_AMPLITUDE()
 /**********************************************************************************************//**
  * Sets fot hfo frequency
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	freq	The frequency.
@@ -6615,7 +6615,7 @@ void CConfiguration::setFOThfo_FREQ(BYTE freq)
 /**********************************************************************************************//**
  * Gets fot hfo frequency
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The fot hfo frequency.
@@ -6629,7 +6629,7 @@ BYTE CConfiguration::getFOThfo_FREQ()
 /**********************************************************************************************//**
  * Sets fot hfo pmeanend
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	pmean	The pmean.
@@ -6644,7 +6644,7 @@ void CConfiguration::setFOThfo_PMEANEND(WORD pmean)
 /**********************************************************************************************//**
  * Gets fot hfo pmeanend
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The fot hfo pmeanend.
@@ -6658,7 +6658,7 @@ WORD CConfiguration::getFOThfo_PMEANEND()
 /**********************************************************************************************//**
  * Sets fot hfo pmeanstart
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	pmean	The pmean.
@@ -6673,7 +6673,7 @@ void CConfiguration::setFOThfo_PMEANSTART(WORD pmean)
 /**********************************************************************************************//**
  * Gets fot hfo pmeanstart
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The fot hfo pmeanstart.
@@ -6687,7 +6687,7 @@ WORD CConfiguration::getFOThfo_PMEANSTART()
 /**********************************************************************************************//**
  * Sets fot hfo steps
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	steps	The steps.
@@ -6702,7 +6702,7 @@ void CConfiguration::setFOThfo_STEPS(BYTE steps)
 /**********************************************************************************************//**
  * Gets fot hfo steps
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The fot hfo steps.
@@ -6716,7 +6716,7 @@ BYTE CConfiguration::getFOThfo_STEPS()
 /**********************************************************************************************//**
  * Sets difference pmean fot
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	diff	The difference.
@@ -6730,7 +6730,7 @@ void CConfiguration::setDiffPmeanFOT(WORD diff)
 /**********************************************************************************************//**
  * Gets difference pmean fot
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The difference pmean fot.
@@ -6744,7 +6744,7 @@ WORD CConfiguration::getDiffPmeanFOT()
 /**********************************************************************************************//**
  * Sets nebulizer time
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iTime	Zero-based index of the time.
@@ -6760,7 +6760,7 @@ void CConfiguration::SetNebulizerTime(int iTime)
 /**********************************************************************************************//**
  * Gets nebulizer time
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The nebulizer time.
@@ -6774,7 +6774,7 @@ int CConfiguration::GetNebulizerTime()
 /**********************************************************************************************//**
  * Gets current pmin alarm delay
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The current pmin alarm delay.
@@ -6788,7 +6788,7 @@ int CConfiguration::GetCurPminAlarmDelay()
 /**********************************************************************************************//**
  * Sets current pmin alarm delay
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iTime	Zero-based index of the time.
@@ -6804,7 +6804,7 @@ void CConfiguration::SetCurPminAlarmDelay(int iTime)
 /**********************************************************************************************//**
  * Gets current patient alarm delay
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The current patient alarm delay.
@@ -6818,7 +6818,7 @@ int CConfiguration::getCurPatientAlarmDelay()
 /**********************************************************************************************//**
  * Sets current patient alarm delay
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iTime	Zero-based index of the time.
@@ -6854,7 +6854,7 @@ void CConfiguration::setCurPatientAlarmDelay(int iTime)
 /**********************************************************************************************//**
  * Gets maxscale spo2 graph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale spo2 graph.
@@ -6868,7 +6868,7 @@ double CConfiguration::GetMAXSCALE_SPO2_GRAPH()
 /**********************************************************************************************//**
  * Sets maxscale spo2 graph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -6884,7 +6884,7 @@ void CConfiguration::SetMAXSCALE_SPO2_GRAPH(double value)
 /**********************************************************************************************//**
  * Gets maxscale co2 graph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale co2 graph.
@@ -6898,7 +6898,7 @@ double CConfiguration::GetMAXSCALE_CO2_GRAPH()
 /**********************************************************************************************//**
  * Sets maxscale co2 graph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -6914,7 +6914,7 @@ void CConfiguration::SetMAXSCALE_CO2_GRAPH(double value)
 /**********************************************************************************************//**
  * Gets maxscale flow graph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale flow graph.
@@ -6928,7 +6928,7 @@ double CConfiguration::GetMAXSCALE_FLOW_GRAPH()
 /**********************************************************************************************//**
  * Sets maxscale flow graph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -6944,7 +6944,7 @@ void CConfiguration::SetMAXSCALE_FLOW_GRAPH(double value)
 /**********************************************************************************************//**
  * Gets maxscale pressure graph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale pressure graph.
@@ -6958,7 +6958,7 @@ double CConfiguration::GetMAXSCALE_PRESSURE_GRAPH()
 /**********************************************************************************************//**
  * Sets maxscale pressure graph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -6974,7 +6974,7 @@ void CConfiguration::SetMAXSCALE_PRESSURE_GRAPH(double value)
 /**********************************************************************************************//**
  * Gets maxscale volume graph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale volume graph.
@@ -6988,7 +6988,7 @@ double CConfiguration::GetMAXSCALE_VOLUME_GRAPH()
 /**********************************************************************************************//**
  * Sets maxscale volume graph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7004,7 +7004,7 @@ void CConfiguration::SetMAXSCALE_VOLUME_GRAPH(double value)
 /**********************************************************************************************//**
  * Gets maxscale spo2 hfgraph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale spo2 hfgraph.
@@ -7018,7 +7018,7 @@ double CConfiguration::GetMAXSCALE_SPO2_HFGRAPH()
 /**********************************************************************************************//**
  * Sets maxscale spo2 hfgraph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7034,7 +7034,7 @@ void CConfiguration::SetMAXSCALE_SPO2_HFGRAPH(double value)
 /**********************************************************************************************//**
  * Gets maxscale co2 hfgraph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale co2 hfgraph.
@@ -7048,7 +7048,7 @@ double CConfiguration::GetMAXSCALE_CO2_HFGRAPH()
 /**********************************************************************************************//**
  * Sets maxscale co2 hfgraph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7064,7 +7064,7 @@ void CConfiguration::SetMAXSCALE_CO2_HFGRAPH(double value)
 /**********************************************************************************************//**
  * Gets maxscale flow hfgraph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale flow hfgraph.
@@ -7078,7 +7078,7 @@ double CConfiguration::GetMAXSCALE_FLOW_HFGRAPH()
 /**********************************************************************************************//**
  * Sets maxscale flow hfgraph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7094,7 +7094,7 @@ void CConfiguration::SetMAXSCALE_FLOW_HFGRAPH(double value)
 /**********************************************************************************************//**
  * Gets maxscale volume hfgraph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale volume hfgraph.
@@ -7108,7 +7108,7 @@ double CConfiguration::GetMAXSCALE_VOLUME_HFGRAPH()
 /**********************************************************************************************//**
  * Sets maxscale volume hfgraph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7124,7 +7124,7 @@ void CConfiguration::SetMAXSCALE_VOLUME_HFGRAPH(double value)
 /**********************************************************************************************//**
  * Gets maxscale pressure hfgraph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale pressure hfgraph.
@@ -7138,7 +7138,7 @@ double CConfiguration::GetMAXSCALE_PRESSURE_HFGRAPH()
 /**********************************************************************************************//**
  * Sets maxscale pressure hfgraph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7154,7 +7154,7 @@ void CConfiguration::SetMAXSCALE_PRESSURE_HFGRAPH(double value)
 /**********************************************************************************************//**
  * Gets minscale pressure hfgraph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The minscale pressure hfgraph.
@@ -7168,7 +7168,7 @@ double CConfiguration::GetMINSCALE_PRESSURE_HFGRAPH()
 /**********************************************************************************************//**
  * Sets minscale pressure hfgraph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7184,7 +7184,7 @@ void CConfiguration::SetMINSCALE_PRESSURE_HFGRAPH(double value)
 /**********************************************************************************************//**
  * Gets maxscale pressure hfpvloop
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale pressure hfpvloop.
@@ -7198,7 +7198,7 @@ double CConfiguration::GetMAXSCALE_PRESSURE_HFPVLOOP()
 /**********************************************************************************************//**
  * Sets maxscale pressure hfpvloop
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7214,7 +7214,7 @@ void CConfiguration::SetMAXSCALE_PRESSURE_HFPVLOOP(double value)
 /**********************************************************************************************//**
  * Gets minscale pressure hfpvloop
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The minscale pressure hfpvloop.
@@ -7228,7 +7228,7 @@ double CConfiguration::GetMINSCALE_PRESSURE_HFPVLOOP()
 /**********************************************************************************************//**
  * Sets minscale pressure hfpvloop
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7244,7 +7244,7 @@ void CConfiguration::SetMINSCALE_PRESSURE_HFPVLOOP(double value)
 /**********************************************************************************************//**
  * Gets maxscale volume hfpvloop
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale volume hfpvloop.
@@ -7258,7 +7258,7 @@ double CConfiguration::GetMAXSCALE_VOLUME_HFPVLOOP()
 /**********************************************************************************************//**
  * Sets maxscale volume hfpvloop
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7274,7 +7274,7 @@ void CConfiguration::SetMAXSCALE_VOLUME_HFPVLOOP(double value)
 /**********************************************************************************************//**
  * Gets maxscale flow hfvfloop
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale flow hfvfloop.
@@ -7288,7 +7288,7 @@ double CConfiguration::GetMAXSCALE_FLOW_HFVFLOOP()
 /**********************************************************************************************//**
  * Sets maxscale flow hfvfloop
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7304,7 +7304,7 @@ void CConfiguration::SetMAXSCALE_FLOW_HFVFLOOP(double value)
 /**********************************************************************************************//**
  * Gets maxscale volume hfvfloop
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale volume hfvfloop.
@@ -7318,7 +7318,7 @@ double CConfiguration::GetMAXSCALE_VOLUME_HFVFLOOP()
 /**********************************************************************************************//**
  * Sets maxscale volume hfvfloop
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7334,7 +7334,7 @@ void CConfiguration::SetMAXSCALE_VOLUME_HFVFLOOP(double value)
 /**********************************************************************************************//**
  * Gets maxscale pressure pvloop
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale pressure pvloop.
@@ -7348,7 +7348,7 @@ double CConfiguration::GetMAXSCALE_PRESSURE_PVLOOP()
 /**********************************************************************************************//**
  * Sets maxscale pressure pvloop
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7364,7 +7364,7 @@ void CConfiguration::SetMAXSCALE_PRESSURE_PVLOOP(double value)
 /**********************************************************************************************//**
  * Gets maxscale volume pvloop
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale volume pvloop.
@@ -7378,7 +7378,7 @@ double CConfiguration::GetMAXSCALE_VOLUME_PVLOOP()
 /**********************************************************************************************//**
  * Sets maxscale volume pvloop
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7394,7 +7394,7 @@ void CConfiguration::SetMAXSCALE_VOLUME_PVLOOP(double value)
 /**********************************************************************************************//**
  * Gets maxscale volume vfloop
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale volume vfloop.
@@ -7408,7 +7408,7 @@ double CConfiguration::GetMAXSCALE_VOLUME_VFLOOP()
 /**********************************************************************************************//**
  * Sets maxscale volume vfloop
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7424,7 +7424,7 @@ void CConfiguration::SetMAXSCALE_VOLUME_VFLOOP(double value)
 /**********************************************************************************************//**
  * Gets maxscale flow vfloop
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale flow vfloop.
@@ -7438,7 +7438,7 @@ double CConfiguration::GetMAXSCALE_FLOW_VFLOOP()
 /**********************************************************************************************//**
  * Sets maxscale flow vfloop
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7454,7 +7454,7 @@ void CConfiguration::SetMAXSCALE_FLOW_VFLOOP(double value)
 /**********************************************************************************************//**
  * Gets maxscale fot pressure
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale fot pressure.
@@ -7468,7 +7468,7 @@ double CConfiguration::GetMAXSCALE_FOT_PRESSURE()
 /**********************************************************************************************//**
  * Sets maxscale fot pressure
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7483,7 +7483,7 @@ void CConfiguration::SetMAXSCALE_FOT_PRESSURE(double value)
 /**********************************************************************************************//**
  * Gets minscale fot xrs
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The minscale fot xrs.
@@ -7497,7 +7497,7 @@ double CConfiguration::GetMINSCALE_FOT_XRS()
 /**********************************************************************************************//**
  * Sets minscale fot xrs
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7512,7 +7512,7 @@ void CConfiguration::SetMINSCALE_FOT_XRS(double value)
 /**********************************************************************************************//**
  * Gets maxscale fot xrs
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The maxscale fot xrs.
@@ -7526,7 +7526,7 @@ double CConfiguration::GetMAXSCALE_FOT_XRS()
 /**********************************************************************************************//**
  * Sets maxscale fot xrs
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7541,7 +7541,7 @@ void CConfiguration::SetMAXSCALE_FOT_XRS(double value)
 /**********************************************************************************************//**
  * Trend set Pinsp maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7556,7 +7556,7 @@ void CConfiguration::TrendSetPInspMax(int value)
 /**********************************************************************************************//**
  * Trend get Pinsp maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -7570,7 +7570,7 @@ int CConfiguration::TrendGetPInspMax()
 /**********************************************************************************************//**
  * Trend set Pmean maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7585,7 +7585,7 @@ void CConfiguration::TrendSetPMeanMax(int value)
 /**********************************************************************************************//**
  * Trend get Pmean maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -7599,7 +7599,7 @@ int CConfiguration::TrendGetPMeanMax()
 /**********************************************************************************************//**
  * Trend set fio2 maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7614,7 +7614,7 @@ void CConfiguration::TrendSetFIO2Max(int value)
 /**********************************************************************************************//**
  * Trend get fio2 maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -7628,7 +7628,7 @@ int CConfiguration::TrendGetFIO2Max()
 /**********************************************************************************************//**
  * Trend set vte maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7643,7 +7643,7 @@ void CConfiguration::TrendSetVteMax(int value)
 /**********************************************************************************************//**
  * Trend get vte maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -7657,7 +7657,7 @@ int CConfiguration::TrendGetVteMax()
 /**********************************************************************************************//**
  * Trend set compliance maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7672,7 +7672,7 @@ void CConfiguration::TrendSetComplianceMax(int value)
 /**********************************************************************************************//**
  * Trend get compliance maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -7686,7 +7686,7 @@ int CConfiguration::TrendGetComplianceMax()
 /**********************************************************************************************//**
  * Trend set dco2 maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7701,7 +7701,7 @@ void CConfiguration::TrendSetDCO2Max(int value)
 /**********************************************************************************************//**
  * Trend get dco2 maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -7715,7 +7715,7 @@ int CConfiguration::TrendGetDCO2Max()
 /**********************************************************************************************//**
  * Trend set mv maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7730,7 +7730,7 @@ void CConfiguration::TrendSetMVMax(int value)
 /**********************************************************************************************//**
  * Trend get mv maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -7744,7 +7744,7 @@ int CConfiguration::TrendGetMVMax()
 /**********************************************************************************************//**
  * Trend set hfamp maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7759,7 +7759,7 @@ void CConfiguration::TrendSetHFAMPMax(int value)
 /**********************************************************************************************//**
  * Trend get hfamp maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -7773,7 +7773,7 @@ int CConfiguration::TrendGetHFAMPMax()
 /**********************************************************************************************//**
  * Trend set rsbi maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7788,7 +7788,7 @@ void CConfiguration::TrendSetRSBIMax(int value)
 /**********************************************************************************************//**
  * Trend get rsbi maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -7802,7 +7802,7 @@ int CConfiguration::TrendGetRSBIMax()
 /**********************************************************************************************//**
  * Trend set sharemvmand maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7817,7 +7817,7 @@ void CConfiguration::TrendSetSHAREMVMANDMax(int value)
 /**********************************************************************************************//**
  * Trend get sharemvmand maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -7831,7 +7831,7 @@ int CConfiguration::TrendGetSHAREMVMANDMax()
 /**********************************************************************************************//**
  * Trend set resistance maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7846,7 +7846,7 @@ void CConfiguration::TrendSetRESISTANCEMax(int value)
 /**********************************************************************************************//**
  * Trend get resistance maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -7860,7 +7860,7 @@ int CConfiguration::TrendGetRESISTANCEMax()
 /**********************************************************************************************//**
  * Trend set leak maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7875,7 +7875,7 @@ void CConfiguration::TrendSetLEAKMax(int value)
 /**********************************************************************************************//**
  * Trend get leak maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -7889,7 +7889,7 @@ int CConfiguration::TrendGetLEAKMax()
 /**********************************************************************************************//**
  * Trend set spo2 maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7904,7 +7904,7 @@ void CConfiguration::TrendSetSPO2Max(int value)
 /**********************************************************************************************//**
  * Trend get spo2 maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -7918,7 +7918,7 @@ int CConfiguration::TrendGetSPO2Max()
 /**********************************************************************************************//**
  * Trend set spo2 pulserate maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7933,7 +7933,7 @@ void CConfiguration::TrendSetSPO2PRMax(int value)
 /**********************************************************************************************//**
  * Trend get spo2 pulserate maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -7947,7 +7947,7 @@ int CConfiguration::TrendGetSPO2PRMax()
 /**********************************************************************************************//**
  * Trend set frequency maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7962,7 +7962,7 @@ void CConfiguration::TrendSetFREQUENCYMax(int value)
 /**********************************************************************************************//**
  * Trend get frequency maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -7976,7 +7976,7 @@ int CConfiguration::TrendGetFREQUENCYMax()
 /**********************************************************************************************//**
  * Trend set spo2 pi maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -7991,7 +7991,7 @@ void CConfiguration::TrendSetSPO2PIMax(int value)
 /**********************************************************************************************//**
  * Trend get spo2 pi maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -8005,7 +8005,7 @@ int CConfiguration::TrendGetSPO2PIMax()
 /**********************************************************************************************//**
  * Trend set etco2 maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -8020,7 +8020,7 @@ void CConfiguration::TrendSetETCO2Max(int value)
 /**********************************************************************************************//**
  * Trend get etco2 maximum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -8034,7 +8034,7 @@ int CConfiguration::TrendGetETCO2Max()
 /**********************************************************************************************//**
  * Graph set actual speed graph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -8058,7 +8058,7 @@ void CConfiguration::GraphSetActualSpeedGraph(int value)
 /**********************************************************************************************//**
  * Graph get actual speed graph
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -8079,7 +8079,7 @@ int CConfiguration::GraphGetActualSpeedGraph()
 /**********************************************************************************************//**
  * Graph set actual speed clfio2
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -8095,7 +8095,7 @@ void CConfiguration::GraphSetActualSpeedCLFIO2(int value)
 /**********************************************************************************************//**
  * Graph get actual speed clfio2
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -8109,7 +8109,7 @@ int CConfiguration::GraphGetActualSpeedCLFIO2()
 /**********************************************************************************************//**
  * Sets trend span
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	span	The span.
@@ -8124,7 +8124,7 @@ void CConfiguration::SetTrendSpan(UINT span)
 /**********************************************************************************************//**
  * Gets trend span
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The trend span.
@@ -8138,7 +8138,7 @@ UINT CConfiguration::GetTrendSpan()
 /**********************************************************************************************//**
  * Sets trend type 1
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	type	The type.
@@ -8153,7 +8153,7 @@ void CConfiguration::SetTrendType1(UINT type)
 /**********************************************************************************************//**
  * Gets trend type 1
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The trend type 1.
@@ -8167,7 +8167,7 @@ UINT CConfiguration::GetTrendType1()
 /**********************************************************************************************//**
  * Sets trend type 2
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	type	The type.
@@ -8182,7 +8182,7 @@ void CConfiguration::SetTrendType2(UINT type)
 /**********************************************************************************************//**
  * Gets trend type 2
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The trend type 2.
@@ -8196,7 +8196,7 @@ UINT CConfiguration::GetTrendType2()
 /**********************************************************************************************//**
  * Sets trend type 3
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	type	The type.
@@ -8211,7 +8211,7 @@ void CConfiguration::SetTrendType3(UINT type)
 /**********************************************************************************************//**
  * Gets trend type 3
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The trend type 3.
@@ -8225,7 +8225,7 @@ UINT CConfiguration::GetTrendType3()
 /**********************************************************************************************//**
  * Sets ppsv as delta peep value
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	bState	True to state.
@@ -8240,7 +8240,7 @@ void CConfiguration::setPpsvAsDeltaPEEPValue(BOOL bState)
 /**********************************************************************************************//**
  * Query if this object is ppsv as delta peep value
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if ppsv as delta peep value, false if not.
@@ -8254,7 +8254,7 @@ BOOL CConfiguration::isPpsvAsDeltaPEEPValue()
 /**********************************************************************************************//**
  * Sets leak compensation
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	leakComp	The leak component.
@@ -8272,7 +8272,7 @@ void CConfiguration::setLeakCompensation(eLeakCompensation leakComp)
 /**********************************************************************************************//**
  * Gets leak compensation
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The leak compensation.
@@ -8286,7 +8286,7 @@ eLeakCompensation CConfiguration::getLeakCompensation()
 /**********************************************************************************************//**
  * Gets the next service date
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The next service date.
@@ -8300,7 +8300,7 @@ COleDateTime CConfiguration::getNextServiceDate()
 /**********************************************************************************************//**
  * Sets next service date
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iYear 	Zero-based index of the year.
@@ -8320,7 +8320,7 @@ void CConfiguration::setNextServiceDate(WORD iYear, WORD iMonth, WORD iDate)
 /**********************************************************************************************//**
  * Graph set primary line diagramm
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -8335,7 +8335,7 @@ void CConfiguration::GraphSetPrimaryLineDiagramm(int value)
 /**********************************************************************************************//**
  * Graph get primary line diagramm
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	An int.
@@ -8349,7 +8349,7 @@ int CConfiguration::GraphGetPrimaryLineDiagramm()
 /**********************************************************************************************//**
  * Gets system hw revision
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The system hw revision.
@@ -8363,7 +8363,7 @@ BYTE CConfiguration::getSystemHWrevision()
 /**********************************************************************************************//**
  * Gets development type
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The development type.
@@ -8377,7 +8377,7 @@ eDevType CConfiguration::getDevType()
 /**********************************************************************************************//**
  * Gets flow sensor type
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The flow sensor type.
@@ -8391,7 +8391,7 @@ eFlowSensorType CConfiguration::getFlowSensorType()
 /**********************************************************************************************//**
  * Gets av revision
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	av revision.
@@ -8405,7 +8405,7 @@ eAVRevision CConfiguration::getAVRevision()
 /**********************************************************************************************//**
  * Gets hf module revision
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The hf module revision.
@@ -8419,7 +8419,7 @@ eHFModuleRevision CConfiguration::getHFModuleRevision()
 /**********************************************************************************************//**
  * Gets main board version
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The main board version.
@@ -8433,7 +8433,7 @@ BYTE CConfiguration::GetMainBoardVersion()
 /**********************************************************************************************//**
  * Sets main board version
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	vers	The vers.
@@ -8448,7 +8448,7 @@ void CConfiguration::setMainBoardVersion(UINT vers)
 /**********************************************************************************************//**
  * Sets temporary spo2module
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	mod	The modifier.
@@ -8462,7 +8462,7 @@ void CConfiguration::setTempSPO2module(BYTE mod)
 /**********************************************************************************************//**
  * Gets temporary spo2module
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The temporary spo2module.
@@ -8476,7 +8476,7 @@ BYTE CConfiguration::getTempSPO2module()
 /**********************************************************************************************//**
  * Gets spo2module
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The spo2module.
@@ -8490,7 +8490,7 @@ BYTE CConfiguration::getSPO2module()
 /**********************************************************************************************//**
  * Sets spo2module
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	mod	   	The modifier.
@@ -8646,7 +8646,7 @@ void CConfiguration::setSPO2module(BYTE mod, bool bReinit)
 /**********************************************************************************************//**
  * Query if this object is spo2 configuration in progress
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if spo2 configuration in progress, false if not.
@@ -8660,7 +8660,7 @@ bool CConfiguration::isSpO2ConfigInProgress()
 /**********************************************************************************************//**
  * Sets temporary co2module
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	mod	The modifier.
@@ -8674,7 +8674,7 @@ void CConfiguration::setTempCO2module(BYTE mod)
 /**********************************************************************************************//**
  * Gets temporary co2module
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The temporary co 2module.
@@ -8688,7 +8688,7 @@ BYTE CConfiguration::getTempCO2module()
 /**********************************************************************************************//**
  * Gets co2module
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The co2module.
@@ -8702,7 +8702,7 @@ BYTE CConfiguration::getCO2module()
 /**********************************************************************************************//**
  * Sets co2module
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	mod	The modifier.
@@ -8836,7 +8836,7 @@ void CConfiguration::setCO2module(BYTE mod)//CO2RKU
 /**********************************************************************************************//**
  * Gets ethernet port
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The ethernet port.
@@ -8850,7 +8850,7 @@ UINT CConfiguration::GetEthernetPort()
 /**********************************************************************************************//**
  * Sets ethernet port
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	port	The port.
@@ -8866,7 +8866,7 @@ void CConfiguration::SetEthernetPort(UINT port)
 /**********************************************************************************************//**
  * Gets pdms protocol
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The pdms protocol.
@@ -8880,7 +8880,7 @@ BYTE CConfiguration::GetPDMSprotocol()
 /**********************************************************************************************//**
  * Sets pdms protocol
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	prot	The prot.
@@ -8896,7 +8896,7 @@ void CConfiguration::SetPDMSprotocol(BYTE prot)
 /**********************************************************************************************//**
  * Gets acu link version
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The acu link version.
@@ -8910,7 +8910,7 @@ eAcuLinkVersion CConfiguration::GetAcuLinkVersion()
 /**********************************************************************************************//**
  * Sets acu link version
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	vers	The vers.
@@ -8924,7 +8924,7 @@ void CConfiguration::SetAcuLinkVersion(eAcuLinkVersion vers)
 /**********************************************************************************************//**
  * Gets vent range
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The calculated vent range.
@@ -8938,7 +8938,7 @@ int CConfiguration::GetVentRange()
 /**********************************************************************************************//**
  * Sets vent range
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	range	The range.
@@ -8994,7 +8994,7 @@ void CConfiguration::SetVentRange(int range)
 /**********************************************************************************************//**
  * Check vent range settings
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -9056,7 +9056,7 @@ void CConfiguration::checkVentRangeSettings()
 /**********************************************************************************************//**
  * Determines if we can current mode is preset mode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -9089,7 +9089,7 @@ bool CConfiguration::CurModeIsPresetMode()
 /**********************************************************************************************//**
  * Sets current pressure rise control
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	form	The form.
@@ -9173,7 +9173,7 @@ void CConfiguration::SetCurPressureRiseCtrl(eCurveForm form)
 /**********************************************************************************************//**
  * Gets current pressure rise control
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The current pressure rise control.
@@ -9202,7 +9202,7 @@ eCurveForm CConfiguration::GetCurPressureRiseCtrl()
 /**********************************************************************************************//**
  * Gets current mode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The current mode.
@@ -9221,7 +9221,7 @@ eVentMode CConfiguration::GetCurMode()//newSPI
 /**********************************************************************************************//**
  * Sets current mode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -9272,7 +9272,7 @@ void CConfiguration::SetCurMode(eVentMode state)//newSPI
 /**********************************************************************************************//**
  * Gets the previous mode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The previous mode.
@@ -9291,7 +9291,7 @@ eVentMode CConfiguration::GetPrevMode()//newSPI
 /**********************************************************************************************//**
  * Sets previous mode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -9309,7 +9309,7 @@ void CConfiguration::SetPrevMode(eVentMode state)//newSPI
 /**********************************************************************************************//**
  * Gets current a limit numeric
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The current a limit numeric.
@@ -9323,7 +9323,7 @@ eALimitNumeric CConfiguration::getCurALimitNumeric()
 /**********************************************************************************************//**
  * Sets current a limit numeric
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	numeric	The numeric.
@@ -9338,7 +9338,7 @@ void CConfiguration::setCurALimitNumeric(eALimitNumeric numeric)
 /**********************************************************************************************//**
  * Gets the last selected sv setting btns
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last selected sv setting btns.
@@ -9352,7 +9352,7 @@ int CConfiguration::GetLastSelectedSVSettingBtns()
 /**********************************************************************************************//**
  * Sets last selected sv setting btns
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	btns	The btns.
@@ -9366,7 +9366,7 @@ void CConfiguration::SetLastSelectedSVSettingBtns(int btns)
 /**********************************************************************************************//**
  * Gets the last selected sv co2 btns
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last selected sv co2 btns.
@@ -9380,7 +9380,7 @@ int CConfiguration::GetLastSelectedSVCO2Btns()
 /**********************************************************************************************//**
  * Sets last selected sv co2 btns
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	btns	The btns.
@@ -9394,7 +9394,7 @@ void CConfiguration::SetLastSelectedSVCO2Btns(int btns)
 /**********************************************************************************************//**
  * Gets the last selected sv spo2 btns
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last selected sv spo2 btns.
@@ -9408,7 +9408,7 @@ int CConfiguration::GetLastSelectedSVSPO2Btns()
 /**********************************************************************************************//**
  * Sets last selected sv spo2 btns
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	btns	The btns.
@@ -9422,7 +9422,7 @@ void CConfiguration::SetLastSelectedSVSPO2Btns(int btns)
 /**********************************************************************************************//**
  * Gets the last selected alimit btns
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last selected alimit btns.
@@ -9436,7 +9436,7 @@ int CConfiguration::GetLastSelectedALBtns()
 /**********************************************************************************************//**
  * Sets last selected alimit btns
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	btns	The btns.
@@ -9451,7 +9451,7 @@ void CConfiguration::SetLastSelectedALBtns(int btns)
 /**********************************************************************************************//**
  * Gets the last selected fot view btns
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last selected fot view btns.
@@ -9465,7 +9465,7 @@ int CConfiguration::getLastSelectedFOTViewBtns()
 /**********************************************************************************************//**
  * Sets last selected fot view btns
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	btns	The btns.
@@ -9479,7 +9479,7 @@ void CConfiguration::setLastSelectedFOTViewBtns(int btns)
 /**********************************************************************************************//**
  * Readin fot vent delay time
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -9497,7 +9497,7 @@ void CConfiguration::readinFOTventDelaytime()
 /**********************************************************************************************//**
  * Gets fot vent delay time
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The fot vent delaytime.
@@ -9516,7 +9516,7 @@ WORD CConfiguration::getFOTventDelaytime()
 /**********************************************************************************************//**
  * Gets the last selected para view btns
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last selected para view btns.
@@ -9599,7 +9599,7 @@ int CConfiguration::GetLastSelectedParaViewBtns()
 /**********************************************************************************************//**
  * Sets last selected para view btns
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	btns	The btns.
@@ -9681,7 +9681,7 @@ void CConfiguration::SetLastSelectedParaViewBtns(int btns)
 /**********************************************************************************************//**
  * Gets para data itime ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data itime ippv.
@@ -9700,7 +9700,7 @@ WORD CConfiguration::GetParaDataITime_IPPV()
 /**********************************************************************************************//**
  * Sets para data itime ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -9720,7 +9720,7 @@ void CConfiguration::SetParaDataITime_IPPV(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data itime trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data itime trigger.
@@ -9734,7 +9734,7 @@ WORD CConfiguration::GetParaDataITime_TRIGGER()
 /**********************************************************************************************//**
  * Sets para data itime trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -9749,7 +9749,7 @@ void CConfiguration::SetParaDataITime_TRIGGER(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data itime nmode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data itime nmode.
@@ -9763,7 +9763,7 @@ WORD CConfiguration::GetParaDataITime_NMODE()
 /**********************************************************************************************//**
  * Sets para data itime nmode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -9778,7 +9778,7 @@ void CConfiguration::SetParaDataITime_NMODE(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data etime ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data etime ippv.
@@ -9796,7 +9796,7 @@ WORD CConfiguration::GetParaDataETIME_IPPV()
 /**********************************************************************************************//**
  * Sets para data etime ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -9816,7 +9816,7 @@ void CConfiguration::SetParaDataETIME_IPPV(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data etime trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data etime trigger.
@@ -9830,7 +9830,7 @@ WORD CConfiguration::GetParaDataETIME_TRIGGER()
 /**********************************************************************************************//**
  * Sets para data etime trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -9845,7 +9845,7 @@ void CConfiguration::SetParaDataETIME_TRIGGER(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data etime nmode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data etime nmode.
@@ -9859,7 +9859,7 @@ WORD CConfiguration::GetParaDataETIME_NMODE()
 /**********************************************************************************************//**
  * Sets para data etime nmode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -9874,7 +9874,7 @@ void CConfiguration::SetParaDataETIME_NMODE(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data bpm ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data bpm ippv.
@@ -9892,7 +9892,7 @@ WORD CConfiguration::GetParaDataBPM_IPPV()
 /**********************************************************************************************//**
  * Sets para data bpm ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -9918,7 +9918,7 @@ void CConfiguration::SetParaDataBPM_IPPV(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data bpm trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data bpm trigger.
@@ -9932,7 +9932,7 @@ WORD CConfiguration::GetParaDataBPM_TRIGGER()
 /**********************************************************************************************//**
  * Sets para data bpm trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -9950,7 +9950,7 @@ void CConfiguration::SetParaDataBPM_TRIGGER(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data bpm nmode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data bpm nmode.
@@ -9964,7 +9964,7 @@ WORD CConfiguration::GetParaDataBPM_NMODE()
 /**********************************************************************************************//**
  * Sets para data bpm nmode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -9982,7 +9982,7 @@ void CConfiguration::SetParaDataBPM_NMODE(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data iflow ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data iflow ippv.
@@ -10000,7 +10000,7 @@ WORD CConfiguration::GetParaDataIFlow_IPPV()
 /**********************************************************************************************//**
  * Sets para data iflow ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10020,7 +10020,7 @@ void CConfiguration::SetParaDataIFlow_IPPV(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data iflow trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data iflow trigger.
@@ -10034,7 +10034,7 @@ WORD CConfiguration::GetParaDataIFlow_TRIGGER()
 /**********************************************************************************************//**
  * Sets para data iflow trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10049,7 +10049,7 @@ void CConfiguration::SetParaDataIFlow_TRIGGER(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data hf flow
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data hf flow.
@@ -10063,7 +10063,7 @@ WORD CConfiguration::GetParaDataHFFlow()
 /**********************************************************************************************//**
  * Sets para data hf flow
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10078,7 +10078,7 @@ void CConfiguration::SetParaDataHFFlow(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data risetime ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data risetime ippv.
@@ -10096,7 +10096,7 @@ WORD CConfiguration::GetParaDataRisetime_IPPV()
 /**********************************************************************************************//**
  * Sets para data risetime ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10116,7 +10116,7 @@ void CConfiguration::SetParaDataRisetime_IPPV(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data risetime trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data risetime trigger.
@@ -10130,7 +10130,7 @@ WORD CConfiguration::GetParaDataRisetime_TRIGGER()
 /**********************************************************************************************//**
  * Sets para data risetime trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10145,7 +10145,7 @@ void CConfiguration::SetParaDataRisetime_TRIGGER(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data therapie flow
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data therapie flow.
@@ -10159,7 +10159,7 @@ WORD CConfiguration::GetParaDataTherapieFlow()
 /**********************************************************************************************//**
  * Sets para data therapie flow
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10174,7 +10174,7 @@ void CConfiguration::SetParaDataTherapieFlow(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data eflow ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data eflow ippv.
@@ -10192,7 +10192,7 @@ WORD CConfiguration::GetParaDataEFlow_IPPV()
 /**********************************************************************************************//**
  * Sets para data eflow ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10212,7 +10212,7 @@ void CConfiguration::SetParaDataEFlow_IPPV(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data eflow trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data eflow trigger.
@@ -10226,7 +10226,7 @@ WORD CConfiguration::GetParaDataEFlow_TRIGGER()
 /**********************************************************************************************//**
  * Sets para data eflow trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10241,7 +10241,7 @@ void CConfiguration::SetParaDataEFlow_TRIGGER(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data flow minimum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The calculated para data flow minimum.
@@ -10255,7 +10255,7 @@ WORD CConfiguration::GetParaDataFlowMin()
 /**********************************************************************************************//**
  * Sets para data flow minimum
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10270,7 +10270,7 @@ void CConfiguration::SetParaDataFlowMin(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data peep ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data peep ippv.
@@ -10288,7 +10288,7 @@ SHORT CConfiguration::GetParaDataPEEP_IPPV()
 /**********************************************************************************************//**
  * Sets para data peep ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10308,7 +10308,7 @@ void CConfiguration::SetParaDataPEEP_IPPV(SHORT iVal)
 /**********************************************************************************************//**
  * Gets para data peep trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data peep trigger.
@@ -10322,7 +10322,7 @@ SHORT CConfiguration::GetParaDataPEEP_TRIGGER()
 /**********************************************************************************************//**
  * Sets para data peep trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10337,7 +10337,7 @@ void CConfiguration::SetParaDataPEEP_TRIGGER(SHORT iVal)
 /**********************************************************************************************//**
  * Sets para data cpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10352,7 +10352,7 @@ void CConfiguration::SetParaDataCPAP(SHORT iVal)
 /**********************************************************************************************//**
  * Gets para data cpap nmode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data cpap nmode.
@@ -10366,7 +10366,7 @@ SHORT CConfiguration::GetParaDataCPAP_NMODE()
 /**********************************************************************************************//**
  * Sets para data cpap nmode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10381,7 +10381,7 @@ void CConfiguration::SetParaDataCPAP_NMODE(SHORT iVal)
 /**********************************************************************************************//**
  * Gets para data p insp trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data p insp trigger.
@@ -10395,7 +10395,7 @@ SHORT CConfiguration::GetParaDataPInsp_TRIGGER()
 /**********************************************************************************************//**
  * Sets para data p insp trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10410,7 +10410,7 @@ void CConfiguration::SetParaDataPInsp_TRIGGER(SHORT iVal)
 /**********************************************************************************************//**
  * Gets para data p insp ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data p insp ippv.
@@ -10428,7 +10428,7 @@ SHORT CConfiguration::GetParaDataPInsp_IPPV()
 /**********************************************************************************************//**
  * Sets para data p insp ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10448,7 +10448,7 @@ void CConfiguration::SetParaDataPInsp_IPPV(SHORT iVal)
 /**********************************************************************************************//**
  * Gets para data pmax vg trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data pmax vg trigger.
@@ -10462,7 +10462,7 @@ SHORT CConfiguration::GetParaDataPmaxVolG_TRIGGER()
 /**********************************************************************************************//**
  * Sets para data pmax vg trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10477,7 +10477,7 @@ void CConfiguration::SetParaDataPmaxVolG_TRIGGER(SHORT iVal)
 /**********************************************************************************************//**
  * Gets para data pmax vg ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data pmax vg ippv.
@@ -10495,7 +10495,7 @@ SHORT CConfiguration::GetParaDataPmaxVolG_IPPV()
 /**********************************************************************************************//**
  * Sets para data pmax vg ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10515,7 +10515,7 @@ void CConfiguration::SetParaDataPmaxVolG_IPPV(SHORT iVal)
 /**********************************************************************************************//**
  * Gets para data ppsv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data ppsv.
@@ -10529,7 +10529,7 @@ SHORT CConfiguration::GetParaDataPpsv()
 /**********************************************************************************************//**
  * Sets para data ppsv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10544,7 +10544,7 @@ void CConfiguration::SetParaDataPpsv(SHORT iVal)
 /**********************************************************************************************//**
  * Gets para data p manual hfo
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data p manual hfo.
@@ -10558,7 +10558,7 @@ SHORT CConfiguration::GetParaDataPManual_HFO()
 /**********************************************************************************************//**
  * Sets para data p manual hfo
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal			Zero-based index of the value.
@@ -10581,7 +10581,7 @@ void CConfiguration::SetParaDataPManual_HFO(SHORT iVal, bool bSendAcuLink)//PMAN
 /**********************************************************************************************//**
  * Sets para data p manual cpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal			Zero-based index of the value.
@@ -10599,7 +10599,7 @@ void CConfiguration::SetParaDataPManual_CPAP(SHORT iVal, bool bSendAcuLink)//PMA
 /**********************************************************************************************//**
  * Gets para data p manual nmode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data p manual nmode.
@@ -10613,7 +10613,7 @@ SHORT CConfiguration::GetParaDataPManual_NMODE()
 /**********************************************************************************************//**
  * Sets para data p manual nmode
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10630,7 +10630,7 @@ void CConfiguration::SetParaDataPManual_NMODE(SHORT iVal)
 /**********************************************************************************************//**
  * Gets para data o2
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data o2.
@@ -10644,7 +10644,7 @@ BYTE CConfiguration::GetParaDataO2()
 /**********************************************************************************************//**
  * Sets para data o2
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10659,7 +10659,7 @@ void CConfiguration::SetParaDataO2(BYTE iVal)
 /**********************************************************************************************//**
  * Gets para data o2 flush
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data o2 flush.
@@ -10673,7 +10673,7 @@ BYTE CConfiguration::GetParaDataO2Flush()
 /**********************************************************************************************//**
  * Sets para data o2 flush
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10690,7 +10690,7 @@ void CConfiguration::SetParaDataO2Flush(BYTE iVal)
 /**********************************************************************************************//**
  * Gets o2 difference
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The o2 difference.
@@ -10704,7 +10704,7 @@ BYTE CConfiguration::GetO2Difference()
 /**********************************************************************************************//**
  * Sets o2 difference
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -10720,7 +10720,7 @@ void CConfiguration::SetO2Difference(BYTE value)
 /**********************************************************************************************//**
  * Gets peep ppsv difference
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The peep ppsv difference.
@@ -10734,7 +10734,7 @@ int CConfiguration::getPEEP_PpsvDifference()
 /**********************************************************************************************//**
  * Sets peep ppsv difference
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -10755,7 +10755,7 @@ void CConfiguration::setPEEP_PpsvDifference(int value)
 /**********************************************************************************************//**
  * Gets pmean difference
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The pmean difference.
@@ -10769,7 +10769,7 @@ int	CConfiguration::GetPmeanDifference()
 /**********************************************************************************************//**
  * Sets pmean difference
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -10788,7 +10788,7 @@ void CConfiguration::SetPmeanDifference(int value)
 /**********************************************************************************************//**
  * Gets para data vlimit trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data vlimit trigger.
@@ -10802,7 +10802,7 @@ WORD CConfiguration::GetParaDataVLimit_TRIGGER()
 /**********************************************************************************************//**
  * Gets para data vlimit ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data vlimit ippv.
@@ -10820,7 +10820,7 @@ WORD CConfiguration::GetParaDataVLimit_IPPV()
 /**********************************************************************************************//**
  * Sets para data vlimit trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10835,7 +10835,7 @@ void CConfiguration::SetParaDataVLimit_TRIGGER(WORD iVal)
 /**********************************************************************************************//**
  * Sets para data vlimit ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10855,7 +10855,7 @@ void CConfiguration::SetParaDataVLimit_IPPV(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data vlimit state trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -10869,7 +10869,7 @@ bool CConfiguration::GetParaDataVLimitState_TRIGGER()
 /**********************************************************************************************//**
  * Gets para data vlimit state ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -10887,7 +10887,7 @@ bool CConfiguration::GetParaDataVLimitState_IPPV()
 /**********************************************************************************************//**
  * Sets para data vlimit state trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	bState	True to state.
@@ -10910,7 +10910,7 @@ void CConfiguration::SetParaDataVLimitState_TRIGGER(bool bState)
 /**********************************************************************************************//**
  * Sets para data vlimit state ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	bState	True to state.
@@ -10947,7 +10947,7 @@ void CConfiguration::SetParaDataVLimitState_IPPV(bool bState)
 /**********************************************************************************************//**
  * Gets para data vg trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data vg trigger.
@@ -10961,7 +10961,7 @@ WORD CConfiguration::GetParaDataVGarant_TRIGGER()
 /**********************************************************************************************//**
  * Gets para data vg ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data vg ippv.
@@ -10980,7 +10980,7 @@ WORD CConfiguration::GetParaDataVGarant_IPPV()
 /**********************************************************************************************//**
  * Sets para data vg trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -10995,7 +10995,7 @@ void CConfiguration::SetParaDataVGarant_TRIGGER(WORD iVal)
 /**********************************************************************************************//**
  * Sets para data vg ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -11015,7 +11015,7 @@ void CConfiguration::SetParaDataVGarant_IPPV(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data vg state trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -11029,7 +11029,7 @@ bool CConfiguration::GetParaDataVGarantState_TRIGGER()
 /**********************************************************************************************//**
  * Gets para data vg state ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -11047,7 +11047,7 @@ bool CConfiguration::GetParaDataVGarantState_IPPV()
 /**********************************************************************************************//**
  * Sets para data vg state trigger
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	bState	True to state.
@@ -11069,7 +11069,7 @@ void CConfiguration::SetParaDataVGarantState_TRIGGER(bool bState)
 /**********************************************************************************************//**
  * Sets para data vg state ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	bState	True to state.
@@ -11122,7 +11122,7 @@ void CConfiguration::SetParaDataVGarantState_IPPV(bool bState)
 /**********************************************************************************************//**
  * Gets para data trigger convert
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data trigger convert.
@@ -11136,7 +11136,7 @@ BYTE CConfiguration::GetParaDataTrigger_CONV()
 /**********************************************************************************************//**
  * Sets para data trigger convert
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -11153,7 +11153,7 @@ void CConfiguration::SetParaDataTrigger_CONV(BYTE iVal)
 /**********************************************************************************************//**
  * Gets para data trigger cpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data trigger cpap.
@@ -11167,7 +11167,7 @@ BYTE CConfiguration::GetParaDataTrigger_CPAP()
 /**********************************************************************************************//**
  * Sets para data trigger cpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -11184,7 +11184,7 @@ void CConfiguration::SetParaDataTrigger_CPAP(BYTE iVal)
 /**********************************************************************************************//**
  * Gets para data trigger ncpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data trigger ncpap.
@@ -11198,7 +11198,7 @@ BYTE CConfiguration::GetParaDataTrigger_NCPAP()
 /**********************************************************************************************//**
  * Sets para data trigger ncpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -11215,7 +11215,7 @@ void CConfiguration::SetParaDataTrigger_NCPAP(BYTE iVal)
 /**********************************************************************************************//**
  * Gets para data trigger duopap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data trigger duopap.
@@ -11229,7 +11229,7 @@ BYTE CConfiguration::GetParaDataTrigger_DUOPAP()
 /**********************************************************************************************//**
  * Sets para data trigger duopap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -11246,7 +11246,7 @@ void CConfiguration::SetParaDataTrigger_DUOPAP(BYTE iVal)
 /**********************************************************************************************//**
  * Gets para data backup
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data backup.
@@ -11260,7 +11260,7 @@ BYTE CConfiguration::GetParaDataBackup()
 /**********************************************************************************************//**
  * Sets para data backup
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -11275,7 +11275,7 @@ void CConfiguration::SetParaDataBackup(BYTE iVal)
 /**********************************************************************************************//**
  * Gets para data hf ampl
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data hf ampl.
@@ -11289,7 +11289,7 @@ WORD CConfiguration::GetParaDataHFAmpl()
 /**********************************************************************************************//**
  * Sets para data hf ampl
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -11304,7 +11304,7 @@ void CConfiguration::SetParaDataHFAmpl(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data hf amplmax
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data hf amplmax.
@@ -11318,7 +11318,7 @@ WORD CConfiguration::GetParaDataHFAmplmax()
 /**********************************************************************************************//**
  * Sets para data hf amplmax
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -11333,7 +11333,7 @@ void CConfiguration::SetParaDataHFAmplmax(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data hf frequency
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data hf frequency.
@@ -11347,7 +11347,7 @@ BYTE CConfiguration::GetParaDataHFFreq()
 /**********************************************************************************************//**
  * Sets para data hf frequency
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -11362,7 +11362,7 @@ void CConfiguration::SetParaDataHFFreq(BYTE iVal)
 /**********************************************************************************************//**
  * Gets para data hf pmean
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data hf pmean.
@@ -11376,7 +11376,7 @@ WORD CConfiguration::GetParaDataHFPmean()
 /**********************************************************************************************//**
  * Sets para data hf pmean
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -11391,7 +11391,7 @@ void CConfiguration::SetParaDataHFPmean(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data itime record
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data itime record.
@@ -11405,7 +11405,7 @@ WORD	CConfiguration::GetParaDataITimeRec()
 /**********************************************************************************************//**
  * Sets para data itime record
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -11420,7 +11420,7 @@ void CConfiguration::SetParaDataITimeRec(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data frequency record
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data frequency record.
@@ -11434,7 +11434,7 @@ WORD	CConfiguration::GetParaDataFREQ_REC()
 /**********************************************************************************************//**
  * Sets para data frequency record
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -11466,7 +11466,7 @@ void CConfiguration::SetParaDataFREQ_REC(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data hfp mean record
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data hfp mean record.
@@ -11480,7 +11480,7 @@ WORD	CConfiguration::GetParaDataHFPMeanRec()
 /**********************************************************************************************//**
  * Sets para data hfp mean record
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -11495,7 +11495,7 @@ void CConfiguration::SetParaDataHFPMeanRec(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data hf vgarant
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data hf vgarant.
@@ -11509,7 +11509,7 @@ WORD CConfiguration::GetParaDataHFVGarant()
 /**********************************************************************************************//**
  * Sets para data hf vgarant
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -11524,7 +11524,7 @@ void CConfiguration::SetParaDataHFVGarant(WORD iVal)
 /**********************************************************************************************//**
  * Gets para data hf vgarant state
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -11538,7 +11538,7 @@ bool CConfiguration::GetParaDataHFVGarantState()
 /**********************************************************************************************//**
  * Sets para data hf vgarant state
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	bState	True to state.
@@ -11560,7 +11560,7 @@ void CConfiguration::SetParaDataHFVGarantState(bool bState)
 /**********************************************************************************************//**
  * Gets para data hf ie ratio
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The para data hf ie ratio.
@@ -11574,7 +11574,7 @@ eRatioIE CConfiguration::GetParaDataHFIERatio()
 /**********************************************************************************************//**
  * Sets para data hf ie ratio
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iVal	Zero-based index of the value.
@@ -11589,7 +11589,7 @@ void CConfiguration::SetParaDataHFIERatio(eRatioIE iVal)
 /**********************************************************************************************//**
  * Determines if we can deactivate vgarant state
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -11617,7 +11617,7 @@ bool CConfiguration::DeaktivateVGarantState()
 /**********************************************************************************************//**
  * Determines if we can deactivate vlimit state
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	True if it succeeds, false if it fails.
@@ -11638,7 +11638,7 @@ bool CConfiguration::DeaktivateVLimitState()
 /**********************************************************************************************//**
  * Current Alarmlimits
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit spo 2max.
@@ -11652,7 +11652,7 @@ int CConfiguration::GetAlarmlimitSPO2max()
 /**********************************************************************************************//**
  * Gets alarmlimit state spo2max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state spo2max.
@@ -11666,7 +11666,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2max()
 /**********************************************************************************************//**
  * Sets alarmlimit spo2max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -11689,7 +11689,7 @@ void CConfiguration::SetAlarmlimitSPO2max(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state spo2max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -11704,7 +11704,7 @@ void CConfiguration::SetAlarmlimitStateSPO2max(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit spo2min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit spo2min.
@@ -11718,7 +11718,7 @@ int CConfiguration::GetAlarmlimitSPO2min()
 /**********************************************************************************************//**
  * Gets alarmlimit state spo2min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state spo2min.
@@ -11732,7 +11732,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2min()
 /**********************************************************************************************//**
  * Sets alarmlimit spo2min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -11755,7 +11755,7 @@ void CConfiguration::SetAlarmlimitSPO2min(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state spo2min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -11770,7 +11770,7 @@ void CConfiguration::SetAlarmlimitStateSPO2min(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit pulseratemax
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit pulseratemax.
@@ -11784,7 +11784,7 @@ int CConfiguration::GetAlarmlimitPulseRatemax()
 /**********************************************************************************************//**
  * Gets alarmlimit state pulseratemax
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state pulse ratemax.
@@ -11798,7 +11798,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePulseRatemax()
 /**********************************************************************************************//**
  * Sets alarmlimit pulseratemax
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -11821,7 +11821,7 @@ void CConfiguration::SetAlarmlimitPulseRatemax(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state pulseratemax
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -11836,7 +11836,7 @@ void CConfiguration::SetAlarmlimitStatePulseRatemax(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit pulseratemin
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit pulse ratemin.
@@ -11850,7 +11850,7 @@ int CConfiguration::GetAlarmlimitPulseRatemin()
 /**********************************************************************************************//**
  * Gets alarmlimit state pulseratemin
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state pulse ratemin.
@@ -11864,7 +11864,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePulseRatemin()
 /**********************************************************************************************//**
  * Sets alarmlimit pulseratemin
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -11887,7 +11887,7 @@ void CConfiguration::SetAlarmlimitPulseRatemin(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state pulseratemin
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -11902,7 +11902,7 @@ void CConfiguration::SetAlarmlimitStatePulseRatemin(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit spo2 pi min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit spo2 pi min.
@@ -11916,7 +11916,7 @@ int CConfiguration::GetAlarmlimitSPO2_PImin()
 /**********************************************************************************************//**
  * Gets alarmlimit state spo2 pi min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state spo2 pi min.
@@ -11930,7 +11930,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2_PImin()
 /**********************************************************************************************//**
  * Sets alarmlimit spo2 pi min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -11953,7 +11953,7 @@ void CConfiguration::SetAlarmlimitSPO2_PImin(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state spo2 pi min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -11968,7 +11968,7 @@ void CConfiguration::SetAlarmlimitStateSPO2_PImin(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit spo2 SIQ min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit spo2 SIQ min.
@@ -11982,7 +11982,7 @@ int CConfiguration::GetAlarmlimitSPO2_SIQmin()
 /**********************************************************************************************//**
  * Gets alarmlimit state spo2 SIQ min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state spo2 SIQ min.
@@ -11996,7 +11996,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2_SIQmin()
 /**********************************************************************************************//**
  * Sets alarmlimit spo2 SIQ min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -12019,7 +12019,7 @@ void CConfiguration::SetAlarmlimitSPO2_SIQmin(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state spo2 SIQ min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -12034,7 +12034,7 @@ void CConfiguration::SetAlarmlimitStateSPO2_SIQmin(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit etco2max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit etco2max.
@@ -12048,7 +12048,7 @@ int CConfiguration::GetAlarmlimitETCO2max()
 /**********************************************************************************************//**
  * Gets alarmlimit state etco2max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state etco2max.
@@ -12062,7 +12062,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateETCO2max()
 /**********************************************************************************************//**
  * Sets alarmlimit etco2max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -12085,7 +12085,7 @@ void CConfiguration::SetAlarmlimitETCO2max(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state etco2max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -12100,7 +12100,7 @@ void CConfiguration::SetAlarmlimitStateETCO2max(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit etco2min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit etco2min.
@@ -12114,7 +12114,7 @@ int CConfiguration::GetAlarmlimitETCO2min()
 /**********************************************************************************************//**
  * Gets alarmlimit state etco2min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state etco2min.
@@ -12128,7 +12128,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateETCO2min()
 /**********************************************************************************************//**
  * Sets alarmlimit etco2min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -12151,7 +12151,7 @@ void CConfiguration::SetAlarmlimitETCO2min(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state etco2min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -12166,7 +12166,7 @@ void CConfiguration::SetAlarmlimitStateETCO2min(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit fico2max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit fico2max.
@@ -12180,7 +12180,7 @@ int CConfiguration::GetAlarmlimitFICO2max()
 /**********************************************************************************************//**
  * Gets alarmlimit state fico2max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state fico2max.
@@ -12194,7 +12194,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateFICO2max()
 /**********************************************************************************************//**
  * Sets alarmlimit fico2max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -12217,7 +12217,7 @@ void CConfiguration::SetAlarmlimitFICO2max(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state fico2max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -12232,7 +12232,7 @@ void CConfiguration::SetAlarmlimitStateFICO2max(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit fico2min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit fico2min.
@@ -12246,7 +12246,7 @@ int CConfiguration::GetAlarmlimitFICO2min()
 /**********************************************************************************************//**
  * Gets alarmlimit state fico2min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state fico2min.
@@ -12260,7 +12260,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateFICO2min()
 /**********************************************************************************************//**
  * Sets alarmlimit fico2min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -12283,7 +12283,7 @@ void CConfiguration::SetAlarmlimitFICO2min(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state fico2min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -12298,7 +12298,7 @@ void CConfiguration::SetAlarmlimitStateFICO2min(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit mv max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit mv max.
@@ -12312,7 +12312,7 @@ int CConfiguration::GetAlarmlimitMVmax()
 /**********************************************************************************************//**
  * Gets alarmlimit state mv max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state mv max.
@@ -12326,7 +12326,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateMVmax()
 /**********************************************************************************************//**
  * Sets alarmlimit mv max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -12343,7 +12343,7 @@ void CConfiguration::SetAlarmlimitMVmax(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state mv max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -12358,7 +12358,7 @@ void CConfiguration::SetAlarmlimitStateMVmax(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit mv min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit mv min.
@@ -12372,7 +12372,7 @@ int CConfiguration::GetAlarmlimitMVmin()
 /**********************************************************************************************//**
  * Gets alarmlimit state mv min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state mv min.
@@ -12386,7 +12386,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateMVmin()
 /**********************************************************************************************//**
  * Sets alarmlimit mv min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -12413,7 +12413,7 @@ void CConfiguration::SetAlarmlimitMVmin(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state mv min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -12428,7 +12428,7 @@ void CConfiguration::SetAlarmlimitStateMVmin(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit pip max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit pip max.
@@ -12442,7 +12442,7 @@ int CConfiguration::GetAlarmlimitPIPmax()
 /**********************************************************************************************//**
  * Gets alarmlimit state pip max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state pip max.
@@ -12456,7 +12456,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePIPmax()
 /**********************************************************************************************//**
  * Sets alarmlimit pip max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -12473,7 +12473,7 @@ void CConfiguration::SetAlarmlimitPIPmax(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state pip max
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -12488,7 +12488,7 @@ void CConfiguration::SetAlarmlimitStatePIPmax(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit pip min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit pip min.
@@ -12502,7 +12502,7 @@ int CConfiguration::GetAlarmlimitPIPmin()
 /**********************************************************************************************//**
  * Gets alarmlimit state pip min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state pip min.
@@ -12516,7 +12516,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePIPmin()
 /**********************************************************************************************//**
  * Sets alarmlimit pip min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -12533,7 +12533,7 @@ void CConfiguration::SetAlarmlimitPIPmin(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state pip min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -12548,7 +12548,7 @@ void CConfiguration::SetAlarmlimitStatePIPmin(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit peep min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit peep min.
@@ -12562,7 +12562,7 @@ int CConfiguration::GetAlarmlimitPEEPmin()
 /**********************************************************************************************//**
  * Gets alarmlimit state peep min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state peep min.
@@ -12576,7 +12576,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePEEPmin()
 /**********************************************************************************************//**
  * Sets alarmlimit peep min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -12593,7 +12593,7 @@ void CConfiguration::SetAlarmlimitPEEPmin(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state peep min
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -12608,7 +12608,7 @@ void CConfiguration::SetAlarmlimitStatePEEPmin(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit bpmmax
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit bpmmax.
@@ -12622,7 +12622,7 @@ int CConfiguration::GetAlarmlimitBPMmax()
 /**********************************************************************************************//**
  * Gets alarmlimit state bpmmax
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state bpmmax.
@@ -12636,7 +12636,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateBPMmax()
 /**********************************************************************************************//**
  * Sets alarmlimit bpmmax
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -12658,7 +12658,7 @@ void CConfiguration::SetAlarmlimitBPMmax(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state bpmmax
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -12673,7 +12673,7 @@ void CConfiguration::SetAlarmlimitStateBPMmax(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alimit leakmax
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alimit leakmax.
@@ -12687,7 +12687,7 @@ int CConfiguration::getAlimitLeakmax()
 /**********************************************************************************************//**
  * Gets alarmlimit state leakmax
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state leakmax.
@@ -12701,7 +12701,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateLeakmax()
 /**********************************************************************************************//**
  * Sets alarmlimit leakmax
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -12723,7 +12723,7 @@ void CConfiguration::SetAlarmlimitLeakmax(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state leakmax
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -12738,7 +12738,7 @@ void CConfiguration::SetAlarmlimitStateLeakmax(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit apnoe
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit apnoe.
@@ -12759,7 +12759,7 @@ int CConfiguration::GetAlarmlimitApnoe()
 /**********************************************************************************************//**
  * Gets alarmlimit state apnoe
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state apnoe.
@@ -12780,7 +12780,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateApnoe()
 /**********************************************************************************************//**
  * Sets alimit apnoe
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -12802,7 +12802,7 @@ void CConfiguration::setAlimitApnoe(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state apnoe
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -12817,7 +12817,7 @@ void CConfiguration::SetAlarmlimitStateApnoe(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Current Alarmlimits HFO
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit spo 2max hf.
@@ -12832,7 +12832,7 @@ int CConfiguration::GetAlarmlimitSPO2maxHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state spo2max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state spo2max hf.
@@ -12847,7 +12847,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2maxHF()
 /**********************************************************************************************//**
  * Sets alarmlimit spo2max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -12863,7 +12863,7 @@ void CConfiguration::SetAlarmlimitSPO2maxHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state spo2max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -12879,7 +12879,7 @@ void CConfiguration::SetAlarmlimitStateSPO2maxHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit spo2min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit spo2min hf.
@@ -12894,7 +12894,7 @@ int CConfiguration::GetAlarmlimitSPO2minHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state spo2min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state spo2min hf.
@@ -12909,7 +12909,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2minHF()
 /**********************************************************************************************//**
  * Sets alarmlimit spo2min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -12925,7 +12925,7 @@ void CConfiguration::SetAlarmlimitSPO2minHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state spo2min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -12941,7 +12941,7 @@ void CConfiguration::SetAlarmlimitStateSPO2minHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit pulseratemax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit pulseratemax hf.
@@ -12956,7 +12956,7 @@ int CConfiguration::GetAlarmlimitPulseRatemaxHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state pulseratemax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state pulseratemax hf.
@@ -12971,7 +12971,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePulseRatemaxHF()
 /**********************************************************************************************//**
  * Sets alarmlimit pulseratemax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -12989,7 +12989,7 @@ void CConfiguration::SetAlarmlimitPulseRatemaxHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state pulseratemax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -13005,7 +13005,7 @@ void CConfiguration::SetAlarmlimitStatePulseRatemaxHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit pulseratemin hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit pulseratemin hf.
@@ -13020,7 +13020,7 @@ int CConfiguration::GetAlarmlimitPulseRateminHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state pulseratemin hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state pulseratemin hf.
@@ -13035,7 +13035,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePulseRateminHF()
 /**********************************************************************************************//**
  * Sets alarmlimit pulseratemin hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -13053,7 +13053,7 @@ void CConfiguration::SetAlarmlimitPulseRateminHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state pulseratemin hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -13069,7 +13069,7 @@ void CConfiguration::SetAlarmlimitStatePulseRateminHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit spo2 pi min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit spo2 pi min hf.
@@ -13084,7 +13084,7 @@ int CConfiguration::GetAlarmlimitSPO2_PIminHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state spo2 pi min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state spo2 pi min hf.
@@ -13099,7 +13099,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2_PIminHF()
 /**********************************************************************************************//**
  * Sets alarmlimit spo2 pi min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -13117,7 +13117,7 @@ void CConfiguration::SetAlarmlimitSPO2_PIminHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state spo2 pi min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -13133,7 +13133,7 @@ void CConfiguration::SetAlarmlimitStateSPO2_PIminHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit spo2 SIQ min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit spo2 SIQ min hf.
@@ -13148,7 +13148,7 @@ int CConfiguration::GetAlarmlimitSPO2_SIQminHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state spo2 SIQ min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state spo2 SIQ min hf.
@@ -13163,7 +13163,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateSPO2_SIQminHF()
 /**********************************************************************************************//**
  * Sets alarmlimit spo2 SIQ min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -13179,7 +13179,7 @@ void CConfiguration::SetAlarmlimitSPO2_SIQminHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state spo2 SIQ min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -13195,7 +13195,7 @@ void CConfiguration::SetAlarmlimitStateSPO2_SIQminHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit etco2max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit etco2max hf.
@@ -13209,7 +13209,7 @@ int CConfiguration::GetAlarmlimitETCO2maxHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state etco2max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state etco2max hf.
@@ -13223,7 +13223,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateETCO2maxHF()
 /**********************************************************************************************//**
  * Sets alarmlimit etco2max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -13243,7 +13243,7 @@ void CConfiguration::SetAlarmlimitETCO2maxHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state etco2max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -13258,7 +13258,7 @@ void CConfiguration::SetAlarmlimitStateETCO2maxHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit etco2min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit etco2min hf.
@@ -13272,7 +13272,7 @@ int CConfiguration::GetAlarmlimitETCO2minHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state etco2min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state etco2min hf.
@@ -13286,7 +13286,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateETCO2minHF()
 /**********************************************************************************************//**
  * Sets alarmlimit etco2min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -13306,7 +13306,7 @@ void CConfiguration::SetAlarmlimitETCO2minHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state etco2min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -13321,7 +13321,7 @@ void CConfiguration::SetAlarmlimitStateETCO2minHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit fico2max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit fico2max hf.
@@ -13335,7 +13335,7 @@ int CConfiguration::GetAlarmlimitFICO2maxHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state fico2max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state fico2max hf.
@@ -13349,7 +13349,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateFICO2maxHF()
 /**********************************************************************************************//**
  * Sets alarmlimit fico2max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -13369,7 +13369,7 @@ void CConfiguration::SetAlarmlimitFICO2maxHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state fico2max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -13384,7 +13384,7 @@ void CConfiguration::SetAlarmlimitStateFICO2maxHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit fico2min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit fico2min hf.
@@ -13398,7 +13398,7 @@ int CConfiguration::GetAlarmlimitFICO2minHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state fico2min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state fico2min hf.
@@ -13412,7 +13412,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateFICO2minHF()
 /**********************************************************************************************//**
  * Sets alarmlimit fico2min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -13432,7 +13432,7 @@ void CConfiguration::SetAlarmlimitFICO2minHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state fico2min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -13447,7 +13447,7 @@ void CConfiguration::SetAlarmlimitStateFICO2minHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit map max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit map max hf.
@@ -13461,7 +13461,7 @@ int CConfiguration::GetAlarmlimitMAPmaxHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state map max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state map max hf.
@@ -13475,7 +13475,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateMAPmaxHF()
 /**********************************************************************************************//**
  * Sets alarmlimit map max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -13501,7 +13501,7 @@ void CConfiguration::SetAlarmlimitMAPmaxHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state map max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -13528,7 +13528,7 @@ void CConfiguration::SetAlarmlimitStateMAPmaxHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit map min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit map min hf.
@@ -13542,7 +13542,7 @@ int CConfiguration::GetAlarmlimitMAPminHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state map min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state map min hf.
@@ -13556,7 +13556,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateMAPminHF()
 /**********************************************************************************************//**
  * Sets alarmlimit map min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -13582,7 +13582,7 @@ void CConfiguration::SetAlarmlimitMAPminHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state map min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -13610,7 +13610,7 @@ void CConfiguration::SetAlarmlimitStateMAPminHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit dco2max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit dco2max hf.
@@ -13624,7 +13624,7 @@ int CConfiguration::GetAlarmlimitDCO2maxHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state dco2max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state dco2max hf.
@@ -13638,7 +13638,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateDCO2maxHF()
 /**********************************************************************************************//**
  * Sets alarmlimit dco2max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -13668,7 +13668,7 @@ void CConfiguration::SetAlarmlimitDCO2maxHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state dco2max hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -13699,7 +13699,7 @@ void CConfiguration::SetAlarmlimitStateDCO2maxHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit dco2min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit dco2min hf.
@@ -13713,7 +13713,7 @@ int CConfiguration::GetAlarmlimitDCO2minHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state dco2min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state dco2min hf.
@@ -13727,7 +13727,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateDCO2minHF()
 /**********************************************************************************************//**
  * Sets alarmlimit dco2min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -13757,7 +13757,7 @@ void CConfiguration::SetAlarmlimitDCO2minHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state dco2min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -13789,7 +13789,7 @@ void CConfiguration::SetAlarmlimitStateDCO2minHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit mvmax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit mvmax hf.
@@ -13803,7 +13803,7 @@ int CConfiguration::GetAlarmlimitMVmaxHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state mvmax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state mvmax hf.
@@ -13817,7 +13817,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateMVmaxHF()
 /**********************************************************************************************//**
  * Sets alarmlimit mvmax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -13834,7 +13834,7 @@ void CConfiguration::SetAlarmlimitMVmaxHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state mvmax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -13849,7 +13849,7 @@ void CConfiguration::SetAlarmlimitStateMVmaxHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit mvmin hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit mvmin hf.
@@ -13863,7 +13863,7 @@ int CConfiguration::GetAlarmlimitMVminHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state mvmin hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state mvmin hf.
@@ -13877,7 +13877,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateMVminHF()
 /**********************************************************************************************//**
  * Sets alarmlimit mvmin hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -13903,7 +13903,7 @@ void CConfiguration::SetAlarmlimitMVminHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state mvmin hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -13918,7 +13918,7 @@ void CConfiguration::SetAlarmlimitStateMVminHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit pmax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit pmax hf.
@@ -13932,7 +13932,7 @@ int CConfiguration::GetAlarmlimitPmaxHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state pmax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state pmax hf.
@@ -13946,7 +13946,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePmaxHF()
 /**********************************************************************************************//**
  * Sets alarmlimit pmax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -13963,7 +13963,7 @@ void CConfiguration::SetAlarmlimitPmaxHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state pmax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -13978,7 +13978,7 @@ void CConfiguration::SetAlarmlimitStatePmaxHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit pee pmin hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit pee pmin hf.
@@ -13992,7 +13992,7 @@ int CConfiguration::GetAlarmlimitPEEPminHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state peep min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state peep min hf.
@@ -14006,7 +14006,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePEEPminHF()
 /**********************************************************************************************//**
  * Sets alarmlimit peep min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -14023,7 +14023,7 @@ void CConfiguration::SetAlarmlimitPEEPminHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state peep min hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -14038,7 +14038,7 @@ void CConfiguration::SetAlarmlimitStatePEEPminHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit bpmmax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit bpmmax hf.
@@ -14052,7 +14052,7 @@ int CConfiguration::GetAlarmlimitBPMmaxHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state bpmmax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state bpmmax hf.
@@ -14066,7 +14066,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateBPMmaxHF()
 /**********************************************************************************************//**
  * Sets alarmlimit bpmmax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -14088,7 +14088,7 @@ void CConfiguration::SetAlarmlimitBPMmaxHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state bpmmax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -14103,7 +14103,7 @@ void CConfiguration::SetAlarmlimitStateBPMmaxHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit leakmax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit leakmax hf.
@@ -14117,7 +14117,7 @@ int CConfiguration::GetAlarmlimitLeakmaxHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state leakmax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state leakmax hf.
@@ -14131,7 +14131,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateLeakmaxHF()
 /**********************************************************************************************//**
  * Sets alarmlimit leakmax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -14153,7 +14153,7 @@ void CConfiguration::SetAlarmlimitLeakmaxHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state leakmax hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -14168,7 +14168,7 @@ void CConfiguration::SetAlarmlimitStateLeakmaxHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit apnoe hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit apnoe hf.
@@ -14182,7 +14182,7 @@ int CConfiguration::GetAlarmlimitApnoeHF()
 /**********************************************************************************************//**
  * Gets alarmlimit state apnoe hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state apnoe hf.
@@ -14196,7 +14196,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStateApnoeHF()
 /**********************************************************************************************//**
  * Sets alarmlimit apnoe hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -14218,7 +14218,7 @@ void CConfiguration::SetAlarmlimitApnoeHF(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state apnoe hf
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -14233,7 +14233,7 @@ void CConfiguration::SetAlarmlimitStateApnoeHF(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit pmax cpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit pmax cpap.
@@ -14247,7 +14247,7 @@ int CConfiguration::GetAlarmlimitPmaxCpap()
 /**********************************************************************************************//**
  * Gets alarmlimit state pmax cpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state pmax cpap.
@@ -14261,7 +14261,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePmaxCpap()
 /**********************************************************************************************//**
  * Sets alarmlimit pmax cpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -14278,7 +14278,7 @@ void CConfiguration::SetAlarmlimitPmaxCpap(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state pmax cpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -14293,7 +14293,7 @@ void CConfiguration::SetAlarmlimitStatePmaxCpap(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit peep min cpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit peep min cpap.
@@ -14307,7 +14307,7 @@ int CConfiguration::GetAlarmlimitPEEPminCpap()
 /**********************************************************************************************//**
  * Gets alarmlimit state peep min cpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state peep min cpap.
@@ -14321,7 +14321,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePEEPminCpap()
 /**********************************************************************************************//**
  * Sets alarmlimit peep min cpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -14338,7 +14338,7 @@ void CConfiguration::SetAlarmlimitPEEPminCpap(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state peep min cpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -14353,7 +14353,7 @@ void CConfiguration::SetAlarmlimitStatePEEPminCpap(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit pipmax duopap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit pipmax duopap.
@@ -14367,7 +14367,7 @@ int CConfiguration::GetAlarmlimitPIPmaxDUOPAP()
 /**********************************************************************************************//**
  * Gets alarmlimit state pipmax duopap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state pipmax duopap.
@@ -14381,7 +14381,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePIPmaxDUOPAP()
 /**********************************************************************************************//**
  * Sets alarmlimit pipmax duopap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -14398,7 +14398,7 @@ void CConfiguration::SetAlarmlimitPIPmaxDUOPAP(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state pmax duopap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -14413,7 +14413,7 @@ void CConfiguration::SetAlarmlimitStatePIPmaxDUOPAP(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit pipmin duopap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	05.03.2018
  *
  * \return	The alarmlimit pipmin duopap.
@@ -14427,7 +14427,7 @@ int CConfiguration::GetAlarmlimitPIPminDUOPAP()
 /**********************************************************************************************//**
  * Gets alarmlimit state pipmin duopap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	05.03.2018
  *
  * \return	The alarmlimit state pipmin duopap.
@@ -14441,7 +14441,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePIPminDUOPAP()
 /**********************************************************************************************//**
  * Sets alarmlimit pipmin duopap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	05.03.2018
  *
  * \param	value	The value.
@@ -14458,7 +14458,7 @@ void CConfiguration::SetAlarmlimitPIPminDUOPAP(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state pipmin duopap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	05.03.2018
  *
  * \param	state	The state.
@@ -14473,7 +14473,7 @@ void CConfiguration::SetAlarmlimitStatePIPminDUOPAP(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit pmax ncpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit pmax ncpap.
@@ -14487,7 +14487,7 @@ int CConfiguration::GetAlarmlimitPmaxNCPAP()
 /**********************************************************************************************//**
  * Gets alarmlimit state pmax ncpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state pmax ncpap.
@@ -14501,7 +14501,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePmaxNCPAP()
 /**********************************************************************************************//**
  * Sets alarmlimit pmax ncpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -14518,7 +14518,7 @@ void CConfiguration::SetAlarmlimitPmaxNCPAP(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state pmax ncpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -14533,7 +14533,7 @@ void CConfiguration::SetAlarmlimitStatePmaxNCPAP(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit peep min duopap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit peep min duopap.
@@ -14547,7 +14547,7 @@ int CConfiguration::GetAlarmlimitPEEPminDUOPAP()
 /**********************************************************************************************//**
  * Gets alarmlimit state peep min duopap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state peep min duopap.
@@ -14561,7 +14561,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePEEPminDUOPAP()
 /**********************************************************************************************//**
  * Sets alarmlimit peep min duopap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -14578,7 +14578,7 @@ void CConfiguration::SetAlarmlimitPEEPminDUOPAP(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state peep min duopap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -14593,7 +14593,7 @@ void CConfiguration::SetAlarmlimitStatePEEPminDUOPAP(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Gets alarmlimit peep min ncpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit peep min ncpap.
@@ -14607,7 +14607,7 @@ int CConfiguration::GetAlarmlimitPEEPminNCPAP()
 /**********************************************************************************************//**
  * Gets alarmlimit state peep min ncpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The alarmlimit state peep min ncpap.
@@ -14621,7 +14621,7 @@ eAlarmLimitState CConfiguration::GetAlarmlimitStatePEEPminNCPAP()
 /**********************************************************************************************//**
  * Sets alarmlimit peep min ncpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	value	The value.
@@ -14638,7 +14638,7 @@ void CConfiguration::SetAlarmlimitPEEPminNCPAP(int value)
 /**********************************************************************************************//**
  * Sets alarmlimit state peep min ncpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	state	The state.
@@ -14653,7 +14653,7 @@ void CConfiguration::SetAlarmlimitStatePEEPminNCPAP(eAlarmLimitState state)
 /**********************************************************************************************//**
  * Sets last written trend file
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	type 	The type.
@@ -14755,7 +14755,7 @@ void CConfiguration::SetLastWrittenTrendFile(UINT type, BYTE count)
 /**********************************************************************************************//**
  * Gets the last written trend file
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	type	The type.
@@ -14865,7 +14865,7 @@ BYTE CConfiguration::GetLastWrittenTrendFile(UINT type)
 /**********************************************************************************************//**
  * Gets patient remark
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The patient remark.
@@ -14880,7 +14880,7 @@ CStringW CConfiguration::GetPatientRemark()
 /**********************************************************************************************//**
  * Gets patient name
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The patient name.
@@ -14895,7 +14895,7 @@ CStringW CConfiguration::GetPatientName()
 /**********************************************************************************************//**
  * Gets patient firstname
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The patient firstname.
@@ -14910,7 +14910,7 @@ CStringW CConfiguration::GetPatientFirstname()
 /**********************************************************************************************//**
  * Gets patient identifier
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The patient identifier.
@@ -14926,7 +14926,7 @@ int CConfiguration::GetPatientID()
 /**********************************************************************************************//**
  * Gets patient weight
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The patient weight.
@@ -14941,7 +14941,7 @@ int CConfiguration::GetPatientWeight()
 /**********************************************************************************************//**
  * Gets patient birthday
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The patient birthday.
@@ -14957,7 +14957,7 @@ CStringW CConfiguration::GetPatientBirthday()
 /**********************************************************************************************//**
  * Sets patient data
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	name	 	The name.
@@ -14996,7 +14996,7 @@ void CConfiguration::SetPatientData(CStringW name, CStringW firstName, int persI
 /**********************************************************************************************//**
  * Gets the last calibration oxy 21
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last calibration oxy 21.
@@ -15011,7 +15011,7 @@ CStringW CConfiguration::GetLastCalOxy21()
 /**********************************************************************************************//**
  * Sets last calibration oxy 21
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	szDateTime	The date time.
@@ -15028,7 +15028,7 @@ void CConfiguration::SetLastCalOxy21(CStringW szDateTime)
 /**********************************************************************************************//**
  * Gets the last calibration oxy 100
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last calibration oxy 100.
@@ -15043,7 +15043,7 @@ CStringW CConfiguration::GetLastCalOxy100()
 /**********************************************************************************************//**
  * Sets last calibration oxy 100
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	szDateTime	The date time.
@@ -15060,7 +15060,7 @@ void CConfiguration::SetLastCalOxy100(CStringW szDateTime)
 /**********************************************************************************************//**
  * Gets the last calibration flow
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last calibration flow.
@@ -15075,7 +15075,7 @@ CStringW CConfiguration::GetLastCalFlow()
 /**********************************************************************************************//**
  * Sets last calibration flow
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	szDateTime	The date time.
@@ -15092,7 +15092,7 @@ void CConfiguration::SetLastCalFlow(CStringW szDateTime)
 /**********************************************************************************************//**
  * Gets the last calibration 0mbar
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last calibration 0mbar.
@@ -15107,7 +15107,7 @@ CStringW CConfiguration::GetLastCal0mbar()
 /**********************************************************************************************//**
  * Sets last calibration 0mbar
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	szDateTime	The date time.
@@ -15124,7 +15124,7 @@ void CConfiguration::SetLastCal0mbar(CStringW szDateTime)
 /**********************************************************************************************//**
  * Gets the last calibration 60mbar
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last calibration 60mbar.
@@ -15139,7 +15139,7 @@ CStringW CConfiguration::GetLastCal60mbar()
 /**********************************************************************************************//**
  * Sets last calibration 60mbar
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	szDateTime	The date time.
@@ -15156,7 +15156,7 @@ void CConfiguration::SetLastCal60mbar(CStringW szDateTime)
 /**********************************************************************************************//**
  * Gets operating minutes device
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The operating minutes device.
@@ -15173,7 +15173,7 @@ DWORD CConfiguration::getOperatingMinutesDevice()
 /**********************************************************************************************//**
  * Sets operating minutes device
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	min		 	The minimum.
@@ -15192,7 +15192,7 @@ void CConfiguration::setOperatingMinutesDevice(DWORD min, bool bFlushReg)
 /**********************************************************************************************//**
  * Gets operating minutes battery
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The operating minutes battery.
@@ -15209,7 +15209,7 @@ DWORD CConfiguration::getOperatingMinutesBattery()
 /**********************************************************************************************//**
  * Sets operating minutes battery
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	min		 	The minimum.
@@ -15227,7 +15227,7 @@ void CConfiguration::setOperatingMinutesBattery(DWORD min, bool bFlushReg)
 /**********************************************************************************************//**
  * Gets operating minutes hfo
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The operating minutes hfo.
@@ -15244,7 +15244,7 @@ DWORD CConfiguration::getOperatingMinutesHFO()
 /**********************************************************************************************//**
  * Sets operating minutes hfo
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	min		 	The minimum.
@@ -15262,7 +15262,7 @@ void CConfiguration::setOperatingMinutesHFO(DWORD min, bool bFlushReg)
 /**********************************************************************************************//**
  * Serialize file
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param [in,out]	ar	The archive.
@@ -16264,7 +16264,7 @@ void CConfiguration::SerializeFile(CArchive& ar)
 /**********************************************************************************************//**
  * Gets configuration version
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The configuration version.
@@ -16278,7 +16278,7 @@ int CConfiguration::getConfigVersion()
 /**********************************************************************************************//**
  * Gets the last numeric ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last numeric ippv.
@@ -16292,7 +16292,7 @@ BYTE CConfiguration::getLastNumericIPPV()
 /**********************************************************************************************//**
  * Sets last numeric ippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	num	Number of.
@@ -16308,7 +16308,7 @@ void CConfiguration::setLastNumericIPPV(BYTE num)
 /**********************************************************************************************//**
  * Gets the last numeric sippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last numeric sippv.
@@ -16322,7 +16322,7 @@ BYTE CConfiguration::getLastNumericSIPPV()
 /**********************************************************************************************//**
  * Sets last numeric sippv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	num	Number of.
@@ -16338,7 +16338,7 @@ void CConfiguration::setLastNumericSIPPV(BYTE num)
 /**********************************************************************************************//**
  * Gets the last numeric simv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last numeric simv.
@@ -16352,7 +16352,7 @@ BYTE CConfiguration::getLastNumericSIMV()
 /**********************************************************************************************//**
  * Sets last numeric simv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	num	Number of.
@@ -16368,7 +16368,7 @@ void CConfiguration::setLastNumericSIMV(BYTE num)
 /**********************************************************************************************//**
  * Gets the last numeric simvpsv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last numeric simvpsv.
@@ -16382,7 +16382,7 @@ BYTE CConfiguration::getLastNumericSIMVPSV()
 /**********************************************************************************************//**
  * Sets last numeric simvpsv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	num	Number of.
@@ -16398,7 +16398,7 @@ void CConfiguration::setLastNumericSIMVPSV(BYTE num)
 /**********************************************************************************************//**
  * Gets the last numeric psv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last numeric psv.
@@ -16412,7 +16412,7 @@ BYTE CConfiguration::getLastNumericPSV()
 /**********************************************************************************************//**
  * Sets last numeric psv
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	num	Number of.
@@ -16428,7 +16428,7 @@ void CConfiguration::setLastNumericPSV(BYTE num)
 /**********************************************************************************************//**
  * Gets the last numeric cpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last numeric cpap.
@@ -16442,7 +16442,7 @@ BYTE CConfiguration::getLastNumericCPAP()
 /**********************************************************************************************//**
  * Sets last numeric cpap
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	num	Number of.
@@ -16458,7 +16458,7 @@ void CConfiguration::setLastNumericCPAP(BYTE num)
 /**********************************************************************************************//**
  * Gets the last numeric hfo
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last numeric hfo.
@@ -16472,7 +16472,7 @@ BYTE CConfiguration::getLastNumericHFO()
 /**********************************************************************************************//**
  * Sets last numeric hfo
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	num	Number of.
@@ -16495,7 +16495,7 @@ void CConfiguration::setLastNumericHFO(BYTE num)
  * 
  * @return	The last numeric ncpap.
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last numeric ncpap.
@@ -16516,7 +16516,7 @@ BYTE CConfiguration::getLastNumericNCPAP()
  * 
  * @param	num	Number of.
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	num	Number of.
@@ -16539,7 +16539,7 @@ void CConfiguration::setLastNumericNCPAP(BYTE num)
  * 
  * @return	The last numeric duopap.
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last numeric duopap.
@@ -16560,7 +16560,7 @@ BYTE CConfiguration::getLastNumericDUOPAP()
  * 
  * @param	num	Number of.
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	num	Number of.
@@ -16583,7 +16583,7 @@ void CConfiguration::setLastNumericDUOPAP(BYTE num)
  * 
  * @return	The last numeric therapy.
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last numeric therapy.
@@ -16604,7 +16604,7 @@ BYTE CConfiguration::getLastNumericTHERAPY()
  * 
  * @param	num	Number of.
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	num	Number of.
@@ -16627,7 +16627,7 @@ void CConfiguration::setLastNumericTHERAPY(BYTE num)
  * 
  * @return	The last numeric flowoffconv.
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last numeric flowoffconv.
@@ -16648,7 +16648,7 @@ BYTE CConfiguration::getLastNumericFLOWOFFCONV()
  * 
  * @param	num	Number of.
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	num	Number of.
@@ -16671,7 +16671,7 @@ void CConfiguration::setLastNumericFLOWOFFCONV(BYTE num)
  * 
  * @return	The last numeric flowoffcpap.
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last numeric flowoffcpap.
@@ -16692,7 +16692,7 @@ BYTE CConfiguration::getLastNumericFLOWOFFCPAP()
  * 
  * @param	num	Number of.
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	num	Number of.
@@ -16715,7 +16715,7 @@ void CConfiguration::setLastNumericFLOWOFFCPAP(BYTE num)
  * 
  * @return	The last numeric flowoffhfo.
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The last numeric flowoffhfo.
@@ -16736,7 +16736,7 @@ BYTE CConfiguration::getLastNumericFLOWOFFHFO()
  * 
  * @param	num	Number of.
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	num	Number of.
@@ -16752,7 +16752,7 @@ void CConfiguration::setLastNumericFLOWOFFHFO(BYTE num)
 /**********************************************************************************************//**
  * Disables the nivtrigger and set trigger to off.
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	07.07.2017
  **************************************************************************************************/
 
@@ -16768,7 +16768,7 @@ void CConfiguration::disableNIVTRIGGER()
 /**********************************************************************************************//**
  * Gets nivtrigger demo timestamp.
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	07.07.2017
  *
  * \return	The nivtrigger demo timestamp.
@@ -16803,7 +16803,7 @@ COleDateTime CConfiguration::GetNIVTRIGGERdemoTimestamp()
 /**********************************************************************************************//**
  * Sets nivtrigger demo timestamp.
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	07.07.2017
  *
  * \param	dateTime	The date time.
@@ -16853,7 +16853,7 @@ void CConfiguration::SetNIVTRIGGERdemoTimestamp(COleDateTime dateTime)
  * 
  * @return	The fotdemo timestamp.
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The fo tdemo timestamp.
@@ -16888,7 +16888,7 @@ COleDateTime CConfiguration::GetFOTdemoTimestamp()
 /**********************************************************************************************//**
  * Sets fotdemo timestamp
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	dateTime	The date time.
@@ -16931,7 +16931,7 @@ void CConfiguration::SetFOTdemoTimestamp(COleDateTime dateTime)
 /**********************************************************************************************//**
  * Gets pricodemo timestamp
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The pricodemo timestamp.
@@ -16966,7 +16966,7 @@ COleDateTime CConfiguration::GetPRICOdemoTimestamp()
 /**********************************************************************************************//**
  * Sets pricodemo timestamp
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	dateTime	The date time.
@@ -17009,7 +17009,7 @@ void CConfiguration::SetPRICOdemoTimestamp(COleDateTime dateTime)
 /**********************************************************************************************//**
  * Gets therapydemo timestamp
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The therapydemo timestamp.
@@ -17044,7 +17044,7 @@ COleDateTime CConfiguration::GetTHERAPYdemoTimestamp()
 /**********************************************************************************************//**
  * Sets therapydemo timestamp
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	dateTime	The date time.
@@ -17087,7 +17087,7 @@ void CConfiguration::SetTHERAPYdemoTimestamp(COleDateTime dateTime)
 /**********************************************************************************************//**
  * Gets trenddemo timestamp
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The trenddemo timestamp.
@@ -17122,7 +17122,7 @@ COleDateTime CConfiguration::GetTRENDdemoTimestamp()
 /**********************************************************************************************//**
  * Sets trenddemo timestamp
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	dateTime	The date time.
@@ -17165,7 +17165,7 @@ void CConfiguration::SetTRENDdemoTimestamp(COleDateTime dateTime)
 /**********************************************************************************************//**
  * Gets lungrecdemo timestamp
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The lungrecdemo timestamp.
@@ -17200,7 +17200,7 @@ COleDateTime CConfiguration::GetLUNGRECdemoTimestamp()
 /**********************************************************************************************//**
  * Sets lungrecdemo timestamp
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	dateTime	The date time.
@@ -17243,7 +17243,7 @@ void CConfiguration::SetLUNGRECdemoTimestamp(COleDateTime dateTime)
 /**********************************************************************************************//**
  * Gets vlimitdemo timestamp
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The vlimitdemo timestamp.
@@ -17278,7 +17278,7 @@ COleDateTime CConfiguration::GetVLIMITdemoTimestamp()
 /**********************************************************************************************//**
  * Sets vlimitdemo timestamp
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	dateTime	The date time.
@@ -17321,7 +17321,7 @@ void CConfiguration::SetVLIMITdemoTimestamp(COleDateTime dateTime)
 /**********************************************************************************************//**
  * Gets vguarantydemo timestamp
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The vguarantydemo timestamp.
@@ -17356,7 +17356,7 @@ COleDateTime CConfiguration::GetVGUARANTYdemoTimestamp()
 /**********************************************************************************************//**
  * Sets vguarantydemo timestamp
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	dateTime	The date time.
@@ -17399,7 +17399,7 @@ void CConfiguration::SetVGUARANTYdemoTimestamp(COleDateTime dateTime)
 /**********************************************************************************************//**
  * Gets nmodedemo timestamp
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The nmodedemo timestamp.
@@ -17434,7 +17434,7 @@ COleDateTime CConfiguration::GetNMODEdemoTimestamp()
 /**********************************************************************************************//**
  * Sets nmodedemo timestamp
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	dateTime	The date time.
@@ -17477,7 +17477,7 @@ void CConfiguration::SetNMODEdemoTimestamp(COleDateTime dateTime)
 /**********************************************************************************************//**
  * Gets hfodemo timestamp
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The hfodemo timestamp.
@@ -17512,7 +17512,7 @@ COleDateTime CConfiguration::GetHFOdemoTimestamp()
 /**********************************************************************************************//**
  * Sets hfodemo timestamp
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	dateTime	The date time.
@@ -17556,7 +17556,7 @@ void CConfiguration::SetHFOdemoTimestamp(COleDateTime dateTime)
 /**********************************************************************************************//**
  * Reads amp cor factor
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  **************************************************************************************************/
 
@@ -17605,7 +17605,7 @@ void CConfiguration::readAmpCorFactor()
 /**********************************************************************************************//**
  * Gets amp cor factor
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \param	iFreq	Zero-based index of the frequency.
@@ -17624,7 +17624,7 @@ double CConfiguration::getAmpCorFactor(BYTE iFreq)
 /**********************************************************************************************//**
  * Gets amp cor factor conventional k
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The amp cor factor conventional k.
@@ -17638,7 +17638,7 @@ double CConfiguration::getAmpCorFactorCONV_K()
 /**********************************************************************************************//**
  * Gets amp cor factor conventional j
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The amp cor factor conventional j.
@@ -17652,7 +17652,7 @@ double CConfiguration::getAmpCorFactorCONV_J()
 /**********************************************************************************************//**
  * Gets amp cor factor hfo k
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The amp cor factor hfo k.
@@ -17666,7 +17666,7 @@ double CConfiguration::getAmpCorFactorHFO_K()
 /**********************************************************************************************//**
  * Gets amp cor factor hfo j
  *
- * \author	Rainer Kühner
+ * \author	Rainer KÃ¼hner
  * \date	19.02.2018
  *
  * \return	The amp cor factor hfo j.

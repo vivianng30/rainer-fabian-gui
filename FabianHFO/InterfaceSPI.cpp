@@ -4452,7 +4452,7 @@ int CInterfaceSPI::ReadSPIData()
 			if(iRes<MesData_Dyn_Compl_Min)
 				iRes=MesData_Dyn_Compl_Min;
 			else if(iRes>MesData_Dyn_Compl_Max)
-				iRes=MesData_Dyn_Compl_Max;
+				iRes=32767;	// @todo fix programmer intent with Jira FSW-112
 		}
 		//MessureDataAVG.m_iCompliance=(WORD)iRes;//IPPV 10
 		getModel()->getDATAHANDLER()->setMessureDataAVG(ALINK_MSMNT_DYNCOMPL,iRes);
@@ -5110,7 +5110,7 @@ int CInterfaceSPI::ReadSPIData()
 			if(iRes<MesData_Dyn_Compl_Min)
 				iRes=MesData_Dyn_Compl_Min;
 			else if(iRes>MesData_Dyn_Compl_Max)
-				iRes=MesData_Dyn_Compl_Max;
+				iRes=32767;	// @todo fix programmer intent with Jira FSW-112
 
 		}
 		//MessureDataBTB.m_iCompliance=(WORD)iRes;//IPPV 10
