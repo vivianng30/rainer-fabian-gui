@@ -155,7 +155,7 @@ BOOL CInterfaceDIO::Init()
  * \return	The pin.
  **************************************************************************************************/
 
-DWORD CInterfaceDIO::ReadPin (BYTE* pbyData,int nPort,BYTE chPin)
+DWORD CInterfaceDIO::ReadPin (BYTE* pbyData,int, BYTE chPin)
 {
 	DWORD dwReturn=1;
 
@@ -186,7 +186,7 @@ DWORD CInterfaceDIO::ReadPin (BYTE* pbyData,int nPort,BYTE chPin)
  * \return	The pin.
  **************************************************************************************************/
 
-BYTE CInterfaceDIO::ReadPin (int nPort,BYTE chPin)
+BYTE CInterfaceDIO::ReadPin (int, BYTE chPin)
 {
 	BYTE pbyData=0;
 

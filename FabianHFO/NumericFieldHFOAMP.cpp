@@ -86,7 +86,7 @@ void CNumericFieldHFOAMP::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldHFOAMP::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldHFOAMP::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -281,7 +281,7 @@ bool CNumericFieldHFOAMP::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldHFOAMP::drawLimits(CDC* pDC)
+bool CNumericFieldHFOAMP::drawLimits(CDC*)
 {
 
 	return true;

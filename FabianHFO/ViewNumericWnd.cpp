@@ -112,7 +112,7 @@ bool CViewNumericWnd::CreateView()
  *
  * @return	true if it succeeds, false if it fails.
  **************************************************************************************************/
-BOOL CViewNumericWnd::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CViewNumericWnd::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 	m_lX=rc.right-rc.left;
 	m_lY=rc.bottom-rc.top;

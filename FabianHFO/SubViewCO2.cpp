@@ -315,7 +315,7 @@ bool CSubViewCO2::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateCo
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CSubViewCO2::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CSubViewCO2::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 	m_lX=rc.right-rc.left;
 	m_lY=rc.bottom-rc.top;

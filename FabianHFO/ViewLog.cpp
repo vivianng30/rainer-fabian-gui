@@ -83,7 +83,7 @@ bool CViewLog::CreateView()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CViewLog::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CViewLog::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 
 

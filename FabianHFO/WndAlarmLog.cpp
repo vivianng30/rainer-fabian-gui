@@ -138,7 +138,7 @@ END_MESSAGE_MAP()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CWndAlarmLog::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext)
+bool CWndAlarmLog::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT, CCreateContext*)
 {
 	//RECT rcLd={6,220,600,535};
 
@@ -166,7 +166,7 @@ bool CWndAlarmLog::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateC
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CWndAlarmLog::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CWndAlarmLog::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 
 
@@ -211,7 +211,7 @@ BOOL CWndAlarmLog::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateCont
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CWndAlarmLog::Initialize(const RECT rc)
+bool CWndAlarmLog::Initialize(const RECT)
 {
 	/*RECT rcLd={rc.left+10,rc.top+10,rc.right-10,rc.bottom-10};*/
 

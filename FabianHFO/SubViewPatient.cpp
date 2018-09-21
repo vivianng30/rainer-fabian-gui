@@ -251,7 +251,7 @@ bool CSubViewPatient::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCrea
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CSubViewPatient::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CSubViewPatient::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 	m_lX=rc.right-rc.left;
 	m_lY=rc.bottom-rc.top;

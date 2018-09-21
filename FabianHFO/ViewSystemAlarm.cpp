@@ -172,7 +172,7 @@ bool CViewSystemAlarm::CreateView()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CViewSystemAlarm::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CViewSystemAlarm::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 
 

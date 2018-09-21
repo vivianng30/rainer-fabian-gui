@@ -99,7 +99,7 @@ void CNumericFieldETCO2::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldETCO2::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldETCO2::drawData(bool, bool bFrames, bool bText, bool bLimits, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;

@@ -80,7 +80,7 @@ void CNumericFieldSPO2PULSERATE::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldSPO2PULSERATE::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldSPO2PULSERATE::drawData(bool, bool bFrames, bool bText, bool bLimits, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;

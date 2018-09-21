@@ -45,8 +45,8 @@ public:
 
 
 	//EXTERNAL only
-	virtual void setShutdown(UINT uiVal){};
-	virtual void setProducerStarted(bool bState){};
+	virtual void setShutdown(UINT /*uiVal*/){};
+	virtual void setProducerStarted(bool /*bState*/){};
 	virtual CString getExeVersion(){return _T("");};
 	virtual CString getDllVersion(){return _T("");};
 

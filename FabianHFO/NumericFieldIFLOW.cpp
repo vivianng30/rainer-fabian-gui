@@ -79,7 +79,7 @@ void CNumericFieldIFLOW::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldIFLOW::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldIFLOW::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -274,7 +274,7 @@ bool CNumericFieldIFLOW::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldIFLOW::drawLimits(CDC* pDC)
+bool CNumericFieldIFLOW::drawLimits(CDC*)
 {
 	
 	return true;

@@ -190,7 +190,7 @@ CMVModel *CWndMenuMenu::getModel()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CWndMenuMenu::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CWndMenuMenu::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 	m_lX=rc.right-rc.left;
 	m_lY=rc.bottom-rc.top;

@@ -860,7 +860,7 @@ void CPasswordDlg::OnDestroy()
  * \return	A CString.
  **************************************************************************************************/
 
-CString CPasswordDlg::encryptKey(eModule module)
+CString CPasswordDlg::encryptKey(eModule)
 {
 	CString szEncryptedFormattedKey=_T("");
 	switch(m_eModule)
@@ -940,7 +940,7 @@ CString CPasswordDlg::encryptKey(eModule module)
  * \return	A CString.
  **************************************************************************************************/
 
-CString CPasswordDlg::encryptDemoKey(eModule module)
+CString CPasswordDlg::encryptDemoKey(eModule)
 {
 	CString szEncryptedFormattedKey=_T("");
 	switch(m_eModule)

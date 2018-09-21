@@ -137,7 +137,7 @@ bool CViewMenu::CreateView()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CViewMenu::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CViewMenu::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 	m_lX=rc.right-rc.left;
 	m_lY=rc.bottom-rc.top;
@@ -2622,7 +2622,7 @@ bool CViewMenu::DestroyWndMenuMenu()
  * \param	bMenuBtnReturn	True to menu button return.
  **************************************************************************************************/
 
-void CViewMenu::ShowWndMenuMenu(bool bShow, CStringW txt, bool bMenuBtnOpen, bool bMenuBtnReturn)
+void CViewMenu::ShowWndMenuMenu(bool bShow, CStringW txt, bool, bool)
 {
 	if(m_pWndMenuMenu)
 	{

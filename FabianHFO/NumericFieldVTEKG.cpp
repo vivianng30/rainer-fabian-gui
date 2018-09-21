@@ -87,7 +87,7 @@ void CNumericFieldVTEKG::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldVTEKG::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldVTEKG::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -330,7 +330,7 @@ bool CNumericFieldVTEKG::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldVTEKG::drawLimits(CDC* pDC)
+bool CNumericFieldVTEKG::drawLimits(CDC*)
 {
 	return true;
 }

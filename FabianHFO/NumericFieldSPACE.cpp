@@ -79,7 +79,7 @@ void CNumericFieldSPACE::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldSPACE::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldSPACE::drawData(bool, bool bFrames, bool, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -190,7 +190,7 @@ bool CNumericFieldSPACE::drawFrames(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldSPACE::drawStaticText(CDC* pDC)
+bool CNumericFieldSPACE::drawStaticText(CDC*)
 {
 
 	return true;
@@ -207,7 +207,7 @@ bool CNumericFieldSPACE::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldSPACE::drawLimits(CDC* pDC)
+bool CNumericFieldSPACE::drawLimits(CDC*)
 {
 	
 	return true;

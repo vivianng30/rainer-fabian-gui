@@ -79,7 +79,7 @@ void CNumericFieldFREQ::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldFREQ::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldFREQ::drawData(bool, bool bFrames, bool bText, bool bLimits, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;

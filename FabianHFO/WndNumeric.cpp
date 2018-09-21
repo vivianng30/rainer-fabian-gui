@@ -432,7 +432,7 @@ void CWndNumeric::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CWndNumeric::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CWndNumeric::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 	m_lX=rc.right-rc.left;
 	m_lY=rc.bottom-rc.top;

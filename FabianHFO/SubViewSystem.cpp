@@ -168,7 +168,7 @@ bool CSubViewSystem::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCreat
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CSubViewSystem::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CSubViewSystem::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 	m_lX=rc.right-rc.left;
 	m_lY=rc.bottom-rc.top;

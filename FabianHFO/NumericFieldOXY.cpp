@@ -79,7 +79,7 @@ void CNumericFieldOXY::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldOXY::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldOXY::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -296,7 +296,7 @@ bool CNumericFieldOXY::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldOXY::drawLimits(CDC* pDC)
+bool CNumericFieldOXY::drawLimits(CDC*)
 {
 	
 	return true;

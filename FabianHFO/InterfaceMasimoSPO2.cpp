@@ -113,7 +113,7 @@ CInterfaceMasimoSPO2::~CInterfaceMasimoSPO2(void)
  * \return	An int.
  **************************************************************************************************/
 
-int CInterfaceMasimoSPO2::Init(BYTE com)
+int CInterfaceMasimoSPO2::Init(BYTE)
 {
 	m_bSensorConnectedToUSB=false;
 
@@ -936,7 +936,7 @@ void CInterfaceMasimoSPO2::doInterpolationW0(SHORT iTempfaWaveBuf)
  * \param	eError	The error.
  **************************************************************************************************/
 
-void CInterfaceMasimoSPO2::OnEvent(EEvent eEvent, EError eError)
+void CInterfaceMasimoSPO2::OnEvent(EEvent eEvent, EError)
 {
 	WORD i;
 	BYTE c;

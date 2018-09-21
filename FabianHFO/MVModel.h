@@ -171,7 +171,7 @@ public:
 	bool IsSPIDisconnection();
 	bool IsSPI_TUBE_OCCLUSION();
 
-	void triggerEvent(CMVEvent* pEvent=0,int btnID=0, int iGroupId=0);
+	void triggerEvent(CMVEvent* pEvent=0,int btnID=0, int iGroupID=0);
 
 	bool ParseAlarmStateBytes(int iAlarmState);
 	int ParseFlowsensorAlarmStateBytes(int iState);

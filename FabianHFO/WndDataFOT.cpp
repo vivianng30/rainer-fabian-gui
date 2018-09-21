@@ -195,7 +195,7 @@ END_MESSAGE_MAP()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CWndDataFOT::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CWndDataFOT::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 	bool bRes=false;
 	m_lX=rc.right-rc.left;

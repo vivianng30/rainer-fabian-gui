@@ -79,7 +79,7 @@ void CNumericFieldHFOFREQ::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldHFOFREQ::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldHFOFREQ::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -271,7 +271,7 @@ bool CNumericFieldHFOFREQ::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldHFOFREQ::drawLimits(CDC* pDC)
+bool CNumericFieldHFOFREQ::drawLimits(CDC*)
 {
 	
 	return true;

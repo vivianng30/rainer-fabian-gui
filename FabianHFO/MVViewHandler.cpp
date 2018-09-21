@@ -1421,7 +1421,7 @@ void CMVViewHandler::drawView_TREND(bool bRedraw)
  * \param	bRedraw	True to redraw.
  **************************************************************************************************/
 
-void CMVViewHandler::drawView_PARA(bool bRedraw)
+void CMVViewHandler::drawView_PARA(bool)
 {
 	//closeNebulizer();
 
@@ -1622,7 +1622,7 @@ void CMVViewHandler::drawView_SETUP(bool bRedraw)
  * \param	bRedraw	True to redraw.
  **************************************************************************************************/
 
-void CMVViewHandler::drawView_ALARM_LIMIT(bool bRedraw)
+void CMVViewHandler::drawView_ALARM_LIMIT(bool)
 {
 	//closeNebulizer();
 
@@ -1748,7 +1748,7 @@ void CMVViewHandler::setPmeanDifference(int iValPmean,bool bSend)//PMAN1
  * \param	bSend			True to send.
  **************************************************************************************************/
 
-void CMVViewHandler::setPmeanRecDifference(int iValPmeanRec,bool bSend)//PMAN1
+void CMVViewHandler::setPmeanRecDifference(int iValPmeanRec, bool bSend)//PMAN1
 {
 	//rku cs1
 	EnterCriticalSection(&csViewParaBtn);
@@ -2767,7 +2767,7 @@ void CMVViewHandler::O2FlushChanged()
  * \param	iVal	Zero-based index of the value.
  **************************************************************************************************/
 
-void CMVViewHandler::HFPMEANRECFlushChanged(int iVal)
+void CMVViewHandler::HFPMEANRECFlushChanged(int)
 {
 	EnterCriticalSection(&csViewParaBtn);
 	if(m_vParaBtn)

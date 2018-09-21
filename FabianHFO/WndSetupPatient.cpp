@@ -266,7 +266,7 @@ bool CWndSetupPatient::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CCre
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CWndSetupPatient::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CWndSetupPatient::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 
 

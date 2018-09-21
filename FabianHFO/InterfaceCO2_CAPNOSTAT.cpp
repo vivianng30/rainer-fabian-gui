@@ -1263,7 +1263,7 @@ void CInterfaceCO2_CAPNOSTAT::doInterpolationWave(SHORT iTempfaWaveBuf)
  * \param	eError	The error.
  **************************************************************************************************/
 
-void CInterfaceCO2_CAPNOSTAT::OnEvent(EEvent eEvent, EError eError)
+void CInterfaceCO2_CAPNOSTAT::OnEvent(EEvent eEvent, EError)
 {
 	/*int i;
 	WORD lwValue;
@@ -1733,7 +1733,7 @@ bool CInterfaceCO2_CAPNOSTAT::isStateOk()
  * \param	state	The state.
  **************************************************************************************************/
 
-void CInterfaceCO2_CAPNOSTAT::setExtendedStateBytes(BYTE state)
+void CInterfaceCO2_CAPNOSTAT::setExtendedStateBytes(BYTE)
 {
 	/*EnterCriticalSection(&csErrorDataCO2);
 	m_byExtendedStateBytes=state;

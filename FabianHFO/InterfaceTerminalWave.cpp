@@ -131,7 +131,7 @@ bool CInterfaceTerminalWave::OpenCOM()
  * \param	eError	The error.
  **************************************************************************************************/
 
-void CInterfaceTerminalWave::OnEvent(EEvent eEvent, EError eError)
+void CInterfaceTerminalWave::OnEvent(EEvent, EError)
 {
 	//nothing to do here yet
 }

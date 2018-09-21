@@ -626,7 +626,7 @@ bool CViewDiagramm::CreateView()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CViewDiagramm::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CViewDiagramm::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 	m_lX=rc.right-rc.left;
 	m_lY=rc.bottom-rc.top;
@@ -10349,7 +10349,7 @@ int CViewDiagramm::drawSPO2Graph(int iNumItems)
  * \param	iNumItems	Number of items.
  **************************************************************************************************/
 
-void CViewDiagramm::DrawLoops(int iNumItems)
+void CViewDiagramm::DrawLoops(int)
 {
 	bool loopPV=false;
 	bool loopVF=false;

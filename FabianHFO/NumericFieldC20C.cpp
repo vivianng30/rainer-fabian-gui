@@ -80,7 +80,7 @@ void CNumericFieldC20C::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldC20C::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldC20C::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -291,7 +291,7 @@ bool CNumericFieldC20C::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldC20C::drawLimits(CDC* pDC)
+bool CNumericFieldC20C::drawLimits(CDC*)
 {
 	
 	return true;

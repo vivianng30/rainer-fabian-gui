@@ -1740,7 +1740,7 @@ void CAlarmMgmtHandler::setAutoSilent(bool bDelSysSilent, bool bDelSilent, bool 
  * \param	bRefreshTime	True to refresh time.
  **************************************************************************************************/
 
-void CAlarmMgmtHandler::setManualSilent(bool bRefreshTime)
+void CAlarmMgmtHandler::setManualSilent(bool)
 {
 	if(getAlarmSilentState()!=ASTATE_SYSTEM_SILENT)
 	{

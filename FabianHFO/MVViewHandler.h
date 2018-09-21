@@ -144,7 +144,7 @@ public:
 
 	//void setPmeanHFO(int iValPmean, bool bSendPmeanDif, bool bSendPmanual);//PMAN1
 	void setPmeanDifference(int iValPmean,bool bSend);//PMAN1
-	void setPmeanRecDifference(int iValPmeanRec,bool bSend);//PMAN1
+	void setPmeanRecDifference(int iValPmeanRec, bool bSend);//PMAN1
 
 	//void setOxyDiffParaBTN(int iValOxy);//PRICO03
 	//void setOxyPPRICO(int iValOxy);//PRICO04

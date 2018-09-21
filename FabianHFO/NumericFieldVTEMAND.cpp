@@ -79,7 +79,7 @@ void CNumericFieldVTEMAND::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldVTEMAND::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldVTEMAND::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -278,7 +278,7 @@ bool CNumericFieldVTEMAND::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldVTEMAND::drawLimits(CDC* pDC)
+bool CNumericFieldVTEMAND::drawLimits(CDC*)
 {
 	
 	return true;

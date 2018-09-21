@@ -88,7 +88,7 @@ void CNumericFieldPPEAK::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldPPEAK::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldPPEAK::drawData(bool, bool bFrames, bool bText, bool bLimits, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;

@@ -2776,7 +2776,7 @@ DWORD CInterfaceSPI::SPICommunicationData(void)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CInterfaceSPI::ReadNSPIdata(BYTE* pCommand,WORD wcommandSize, BYTE* pBuffer,WORD wBufSize, WORD wOffset)	//monitor data
+bool CInterfaceSPI::ReadNSPIdata(BYTE* pCommand,WORD wcommandSize, BYTE* pBuffer,WORD wBufSize, WORD)	//monitor data
 {
 	bool bResult=false;
 	DWORD dwIO=0;
@@ -3362,7 +3362,7 @@ void CInterfaceSPI::IncrementAlive()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CInterfaceSPI::WriteNSPIdata(BYTE* pCommand,WORD wcommandSize,WORD wValue, WORD wOffset)	//submit data
+BOOL CInterfaceSPI::WriteNSPIdata(BYTE* pCommand,WORD wcommandSize,WORD wValue, WORD)	//submit data
 {
 	BOOL bRes=true;
 
@@ -4070,7 +4070,7 @@ void CInterfaceSPI::Send_PARAVAL_HF_PMITT(int val)
  * \param	val	The value.
  **************************************************************************************************/
 
-void CInterfaceSPI::Send_PARAVAL_HF_PMEANREC(int val)
+void CInterfaceSPI::Send_PARAVAL_HF_PMEANREC(int)
 {
 	/*SPISENDMESSAGE* pMessage = new SPISENDMESSAGE();
 	pMessage->byteSPICommand[0]=S_PARA_HF_MEAN_AIRWAY_PRESS;
@@ -4088,7 +4088,7 @@ void CInterfaceSPI::Send_PARAVAL_HF_PMEANREC(int val)
  * \param	val	The value.
  **************************************************************************************************/
 
-void CInterfaceSPI::Send_PARAVAL_HF_FREQ_REC(int val)
+void CInterfaceSPI::Send_PARAVAL_HF_FREQ_REC(int)
 {
 	/*SPISENDMESSAGE* pMessage = new SPISENDMESSAGE();
 	pMessage->byteSPICommand[0]=S_PARA_HF_MEAN_AIRWAY_PRESS;
@@ -4106,7 +4106,7 @@ void CInterfaceSPI::Send_PARAVAL_HF_FREQ_REC(int val)
  * \param	val	The value.
  **************************************************************************************************/
 
-void CInterfaceSPI::Send_PARAVAL_HF_ITIME_REC(int val)
+void CInterfaceSPI::Send_PARAVAL_HF_ITIME_REC(int)
 {
 	/*SPISENDMESSAGE* pMessage = new SPISENDMESSAGE();
 	pMessage->byteSPICommand[0]=S_PARA_HF_MEAN_AIRWAY_PRESS;

@@ -119,7 +119,7 @@ void CNumericFieldTRIGGER::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldTRIGGER::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldTRIGGER::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -333,7 +333,7 @@ bool CNumericFieldTRIGGER::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldTRIGGER::drawLimits(CDC* pDC)
+bool CNumericFieldTRIGGER::drawLimits(CDC*)
 {
 	
 	return true;

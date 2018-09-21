@@ -92,7 +92,7 @@ END_MESSAGE_MAP()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CMVView::Create(CWnd* pParentWnd, const RECT &rc, UINT nID, CCreateContext* pContext) 
+BOOL CMVView::Create(CWnd* pParentWnd, const RECT &rc, UINT nID, CCreateContext*) 
 {
 	//csView.Lock();
 
@@ -184,7 +184,7 @@ void CMVView::Show()
  * \param	bRedraw	True to redraw.
  **************************************************************************************************/
 
-void CMVView::Show(bool bRedraw)
+void CMVView::Show(bool)
 {
 
 }

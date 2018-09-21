@@ -416,7 +416,7 @@ BEGIN_MESSAGE_MAP(CWndSetupKeyboard, CWnd)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CWndSetupKeyboard::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CWndSetupKeyboard::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 
 

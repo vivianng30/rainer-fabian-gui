@@ -4603,7 +4603,7 @@ void CDataHandler::loadNumerics()
  * \param 		  	szState	   	The state.
  **************************************************************************************************/
 
-void CDataHandler::setNumericINIstate(NUMERICINI* pbufNumeric,BYTE iBlock,CStringW szState)
+void CDataHandler::setNumericINIstate(NUMERICINI* pbufNumeric, BYTE, CStringW szState)
 {
 	if(szState==_T("FALSE"))
 	{
@@ -4631,7 +4631,7 @@ void CDataHandler::setNumericINIstate(NUMERICINI* pbufNumeric,BYTE iBlock,CStrin
  * \param 		  	szNum	   	Number of.
  **************************************************************************************************/
 
-void CDataHandler::readNumericINIvalues(NUMERICINI* pbufNumeric,BYTE iBlock,BYTE num,CStringW szNum)
+void CDataHandler::readNumericINIvalues(NUMERICINI* pbufNumeric, BYTE, BYTE num,CStringW szNum)
 {
 	switch(num)
 	{
@@ -8395,7 +8395,7 @@ bool CDataHandler::InitialCalculateETime_ITimeChanged_NMODE(int fITime, bool bTe
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CDataHandler::InitialCalculateBPM_ITimeChanged_TRIGGER(int fITime, bool bTemp)
+bool CDataHandler::InitialCalculateBPM_ITimeChanged_TRIGGER(int fITime, bool)
 {
 	//double fResult=0;
 	int iResult = CTlsFloat::Round(60000/(double)((PARADATA()->GetETIMEPara_TRIGGER()+fITime)), 0);
@@ -8429,7 +8429,7 @@ bool CDataHandler::InitialCalculateBPM_ITimeChanged_TRIGGER(int fITime, bool bTe
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CDataHandler::InitialCalculateBPM_ITimeChanged_IPPV(int fITime, bool bTemp)
+bool CDataHandler::InitialCalculateBPM_ITimeChanged_IPPV(int fITime, bool)
 {
 	//double fResult=0;
 	int iResult = CTlsFloat::Round(60000/(double)((PARADATA()->GetETIMEPara_IPPV()+fITime)), 0);
@@ -8463,7 +8463,7 @@ bool CDataHandler::InitialCalculateBPM_ITimeChanged_IPPV(int fITime, bool bTemp)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CDataHandler::InitialCalculateBPM_ITimeChanged_NMODE(int fITime, bool bTemp)
+bool CDataHandler::InitialCalculateBPM_ITimeChanged_NMODE(int fITime, bool)
 {
 	//double fResult=0;
 	int iResult = CTlsFloat::Round(60000/(double)((PARADATA()->GetETIMENMODEPara()+fITime)), 0);
@@ -8661,7 +8661,7 @@ bool CDataHandler::CalculateETime_ITimeChanged(int fITime, bool bTemp)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CDataHandler::CalculateBPM_ITimeChanged(int fITime, bool bTemp)
+bool CDataHandler::CalculateBPM_ITimeChanged(int fITime, bool)
 {
 	//double fResult=0;
 	int iResult=0;
@@ -21779,7 +21779,7 @@ void CDataHandler::SetHFAMPLParadata(WORD value, bool bSend)
 
 void CDataHandler::SetFOTconv_AMPLITUDEParadata(WORD value, bool bSend)
 {
-	PARADATA()->setFOTconv_AMPLITUDEPara(value, bSend,true);
+	PARADATA()->setFOTconv_AMPLITUDEPara(value, bSend, true);
 	PRESET()->setFOTconv_AMPLITUDEPara(value, false, false);
 }
 
@@ -21795,7 +21795,7 @@ void CDataHandler::SetFOTconv_AMPLITUDEParadata(WORD value, bool bSend)
 
 void CDataHandler::SetFOTconv_FREQParadata(WORD value, bool bSend)
 {
-	PARADATA()->setFOTconv_FREQPara(value, bSend,true);
+	PARADATA()->setFOTconv_FREQPara(value, bSend, true);
 	PRESET()->setFOTconv_FREQPara(value, false, false);
 }
 
@@ -21811,7 +21811,7 @@ void CDataHandler::SetFOTconv_FREQParadata(WORD value, bool bSend)
 
 void CDataHandler::SetFOTconv_STEPSParadata(WORD value, bool bSend)
 {
-	PARADATA()->setFOTconv_STEPSPara(value, bSend,true);
+	PARADATA()->setFOTconv_STEPSPara(value, bSend, true);
 	PRESET()->setFOTconv_STEPSPara(value, false, false);
 }
 
@@ -21827,7 +21827,7 @@ void CDataHandler::SetFOTconv_STEPSParadata(WORD value, bool bSend)
 
 void CDataHandler::SetFOTconv_PEEPSTARTParadata(WORD value, bool bSend)
 {
-	PARADATA()->setFOTconv_PEEPSTARTPara(value, bSend,true);
+	PARADATA()->setFOTconv_PEEPSTARTPara(value, bSend, true);
 	PRESET()->setFOTconv_PEEPSTARTPara(value, false, false);
 }
 
@@ -21843,7 +21843,7 @@ void CDataHandler::SetFOTconv_PEEPSTARTParadata(WORD value, bool bSend)
 
 void CDataHandler::SetFOTconv_PEEPENDParadata(WORD value, bool bSend)
 {
-	PARADATA()->setFOTconv_PEEPENDPara(value, bSend,true);
+	PARADATA()->setFOTconv_PEEPENDPara(value, bSend, true);
 	PRESET()->setFOTconv_PEEPENDPara(value, false, false);
 }
 
@@ -21859,7 +21859,7 @@ void CDataHandler::SetFOTconv_PEEPENDParadata(WORD value, bool bSend)
 
 void CDataHandler::SetFOThfo_AMPLITUDEParadata(WORD value, bool bSend)
 {
-	PARADATA()->setFOThfo_AMPLITUDEPara(value, bSend,true);
+	PARADATA()->setFOThfo_AMPLITUDEPara(value, bSend, true);
 	PRESET()->setFOThfo_AMPLITUDEPara(value, false, false);
 }
 
@@ -21875,7 +21875,7 @@ void CDataHandler::SetFOThfo_AMPLITUDEParadata(WORD value, bool bSend)
 
 void CDataHandler::SetFOThfo_FREQParadata(WORD value, bool bSend)
 {
-	PARADATA()->setFOThfo_FREQPara(value, bSend,true);
+	PARADATA()->setFOThfo_FREQPara(value, bSend, true);
 	PRESET()->setFOThfo_FREQPara(value, false, false);
 }
 
@@ -21891,7 +21891,7 @@ void CDataHandler::SetFOThfo_FREQParadata(WORD value, bool bSend)
 
 void CDataHandler::SetFOThfo_STEPSParadata(WORD value, bool bSend)
 {
-	PARADATA()->setFOThfo_STEPSPara(value, bSend,true);
+	PARADATA()->setFOThfo_STEPSPara(value, bSend, true);
 	PRESET()->setFOThfo_STEPSPara(value, false, false);
 }
 
@@ -21907,7 +21907,7 @@ void CDataHandler::SetFOThfo_STEPSParadata(WORD value, bool bSend)
 
 void CDataHandler::SetFOThfo_PMEANSTARTParadata(WORD value, bool bSend)
 {
-	PARADATA()->setFOThfo_PMEANSTARTPara(value, bSend,true);
+	PARADATA()->setFOThfo_PMEANSTARTPara(value, bSend, true);
 	PRESET()->setFOThfo_PMEANSTARTPara(value, false, false);
 }
 
@@ -21923,7 +21923,7 @@ void CDataHandler::SetFOThfo_PMEANSTARTParadata(WORD value, bool bSend)
 
 void CDataHandler::SetFOThfo_PMEANENDParadata(WORD value, bool bSend)
 {
-	PARADATA()->setFOThfo_PMEANENDPara(value, bSend,true);
+	PARADATA()->setFOThfo_PMEANENDPara(value, bSend, true);
 	PRESET()->setFOThfo_PMEANENDPara(value, false, false);
 }
 

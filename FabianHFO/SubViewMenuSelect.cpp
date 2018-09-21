@@ -388,7 +388,7 @@ bool CSubViewMenuSelect::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, CC
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CSubViewMenuSelect::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CSubViewMenuSelect::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 	m_lX=rc.right-rc.left;
 	m_lY=rc.bottom-rc.top;
@@ -842,7 +842,7 @@ void CSubViewMenuSelect::SetAllButtonUnpressed()
  * \param	btnID	Identifier for the button.
  **************************************************************************************************/
 
-void CSubViewMenuSelect::SetOneButtonFocused(int btnID)
+void CSubViewMenuSelect::SetOneButtonFocused(int)
 {
 	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
 	{

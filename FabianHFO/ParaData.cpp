@@ -4447,7 +4447,7 @@ WORD CParaData::getFOTconv_AMPLITUDEPara()
  * \param	bConfig	True to configuration.
  **************************************************************************************************/
 
-void CParaData::setFOTconv_AMPLITUDEPara(WORD ampl, bool bSend, bool bConfig)
+void CParaData::setFOTconv_AMPLITUDEPara(WORD ampl, bool, bool bConfig)
 {
 	m_data.m_iParaDataFOTconv_AMPLITUDE=ampl;
 	switch(ampl)
@@ -4536,7 +4536,7 @@ BYTE CParaData::getFOTconv_FREQPara()
  * \param	bConfig	True to configuration.
  **************************************************************************************************/
 
-void CParaData::setFOTconv_FREQPara(BYTE value, bool bSend, bool bConfig)
+void CParaData::setFOTconv_FREQPara(BYTE value, bool, bool bConfig)
 {
 	m_data.m_iParaDataFOTconv_FREQ=value;
 	switch(value)
@@ -4607,7 +4607,7 @@ WORD CParaData::getFOTconv_PEEPSTARTPara()
  * \param	bConfig	True to configuration.
  **************************************************************************************************/
 
-void CParaData::setFOTconv_PEEPSTARTPara(WORD value, bool bSend, bool bConfig)
+void CParaData::setFOTconv_PEEPSTARTPara(WORD value, bool, bool bConfig)
 {
 	m_data.m_iParaDataFOTconv_PEEPSTART=value;
 	if(bConfig)
@@ -4646,7 +4646,7 @@ WORD CParaData::getFOTconv_PEEPENDPara()
  * \param	bConfig	True to configuration.
  **************************************************************************************************/
 
-void CParaData::setFOTconv_PEEPENDPara(WORD value, bool bSend, bool bConfig)
+void CParaData::setFOTconv_PEEPENDPara(WORD value, bool, bool bConfig)
 {
 	m_data.m_iParaDataFOTconv_PEEPEND=value;
 	if(bConfig)
@@ -4685,7 +4685,7 @@ BYTE CParaData::getFOTconv_STEPSPara()
  * \param	bConfig	True to configuration.
  **************************************************************************************************/
 
-void CParaData::setFOTconv_STEPSPara(BYTE value, bool bSend, bool bConfig)
+void CParaData::setFOTconv_STEPSPara(BYTE value, bool, bool bConfig)
 {
 	m_data.m_iParaDataFOTconv_STEPS=value;
 	if(bConfig)
@@ -4726,7 +4726,7 @@ WORD CParaData::getFOThfo_AMPLITUDEPara()
  * \param	bConfig	True to configuration.
  **************************************************************************************************/
 
-void CParaData::setFOThfo_AMPLITUDEPara(WORD ampl, bool bSend, bool bConfig)
+void CParaData::setFOThfo_AMPLITUDEPara(WORD ampl, bool, bool bConfig)
 {
 	m_data.m_iParaDataFOThfo_AMPLITUDE=ampl;
 
@@ -4767,7 +4767,7 @@ BYTE CParaData::getFOThfo_FREQPara()
  * \param	bConfig	True to configuration.
  **************************************************************************************************/
 
-void CParaData::setFOThfo_FREQPara(BYTE value, bool bSend, bool bConfig)
+void CParaData::setFOThfo_FREQPara(BYTE value, bool, bool bConfig)
 {
 	m_data.m_iParaDataFOThfo_FREQ=value;
 	if(bConfig)
@@ -4806,7 +4806,7 @@ WORD CParaData::getFOThfo_PMEANSTARTPara()
  * \param	bConfig	True to configuration.
  **************************************************************************************************/
 
-void CParaData::setFOThfo_PMEANSTARTPara(WORD value, bool bSend, bool bConfig)
+void CParaData::setFOThfo_PMEANSTARTPara(WORD value, bool, bool bConfig)
 {
 	m_data.m_iParaDataFOThfo_PMEANSTART=value;
 	if(bConfig)
@@ -4845,7 +4845,7 @@ WORD CParaData::getFOThfo_PMEANENDPara()
  * \param	bConfig	True to configuration.
  **************************************************************************************************/
 
-void CParaData::setFOThfo_PMEANENDPara(WORD value, bool bSend, bool bConfig)
+void CParaData::setFOThfo_PMEANENDPara(WORD value, bool, bool bConfig)
 {
 	m_data.m_iParaDataFOThfo_PMEANEND=value;
 	if(bConfig)
@@ -4884,7 +4884,7 @@ BYTE CParaData::getFOThfo_STEPSPara()
  * \param	bConfig	True to configuration.
  **************************************************************************************************/
 
-void CParaData::setFOThfo_STEPSPara(BYTE value, bool bSend, bool bConfig)
+void CParaData::setFOThfo_STEPSPara(BYTE value, bool, bool bConfig)
 {
 	m_data.m_iParaDataFOThfo_STEPS=value;
 	if(bConfig)

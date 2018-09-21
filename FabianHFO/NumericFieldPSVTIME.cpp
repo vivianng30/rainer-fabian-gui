@@ -79,7 +79,7 @@ void CNumericFieldPSVTIME::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldPSVTIME::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldPSVTIME::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -270,7 +270,7 @@ bool CNumericFieldPSVTIME::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldPSVTIME::drawLimits(CDC* pDC)
+bool CNumericFieldPSVTIME::drawLimits(CDC*)
 {
 	
 	return true;

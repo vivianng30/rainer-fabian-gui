@@ -79,7 +79,7 @@ void CNumericFieldDEMANDFLOW::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldDEMANDFLOW::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldDEMANDFLOW::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -261,7 +261,7 @@ bool CNumericFieldDEMANDFLOW::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldDEMANDFLOW::drawLimits(CDC* pDC)
+bool CNumericFieldDEMANDFLOW::drawLimits(CDC*)
 {
 	
 	return true;

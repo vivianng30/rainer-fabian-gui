@@ -151,8 +151,8 @@ public:
 	void loadDiagrammColor();
 	void loadNumerics();
 	
-	void setNumericINIstate(NUMERICINI* pbufNumeric,BYTE iBlock,CStringW szNum);
-	void readNumericINIvalues(NUMERICINI* pbufNumeric,BYTE iBlock,BYTE num,CStringW szNum);
+	void setNumericINIstate(NUMERICINI* pbufNumeric, BYTE iBlock, CStringW szNum);
+	void readNumericINIvalues(NUMERICINI* pbufNumeric, BYTE iBlock, BYTE num,CStringW szNum);
 	eNumericType getNumericType(CStringW szVal);
 	eNumericSize getNumericSize(CStringW szSize);
 

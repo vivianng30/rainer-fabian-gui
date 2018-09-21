@@ -115,7 +115,7 @@ END_MESSAGE_MAP()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CWndTrendTimeaxis::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CWndTrendTimeaxis::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 	m_lX=rc.right-rc.left;
 	m_lY=rc.bottom-rc.top;

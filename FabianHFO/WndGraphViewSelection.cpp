@@ -197,7 +197,7 @@ END_MESSAGE_MAP()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CWndGraphViewSelection::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CWndGraphViewSelection::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 	m_lX=rc.right-rc.left;
 	m_lY=rc.bottom-rc.top;

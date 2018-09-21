@@ -283,7 +283,7 @@ bool CSubViewCalOxySensor::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID, 
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CSubViewCalOxySensor::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CSubViewCalOxySensor::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 	m_lX=rc.right-rc.left;
 	m_lY=rc.bottom-rc.top;
@@ -1140,7 +1140,7 @@ void CSubViewCalOxySensor::SetCalState(eOxySensCalibrationstate state,bool bRedr
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CSubViewCalOxySensor::CheckOxySensorState(bool bRedraw, bool bCalibrating)
+bool CSubViewCalOxySensor::CheckOxySensorState(bool bRedraw, bool)
 {
 	bool bRes=false;
 	eOxySensCalibrationstate eOxyCalState=OS_CHECKING;

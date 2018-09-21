@@ -85,7 +85,7 @@ void CNumericFieldINFOPATAL::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldINFOPATAL::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldINFOPATAL::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -207,7 +207,7 @@ bool CNumericFieldINFOPATAL::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldINFOPATAL::drawLimits(CDC* pDC)
+bool CNumericFieldINFOPATAL::drawLimits(CDC*)
 {
 	return true;
 }

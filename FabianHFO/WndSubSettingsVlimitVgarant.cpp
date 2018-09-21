@@ -278,7 +278,7 @@ BOOL CWndSubSettingsVlimitVgarant::PreTranslateMessage(MSG* pMsg)
  * \param	btn	The button.
  **************************************************************************************************/
 
-void CWndSubSettingsVlimitVgarant::SetControl(UINT btn)
+void CWndSubSettingsVlimitVgarant::SetControl(UINT)
 {
 	/*switch(btn)
 	{

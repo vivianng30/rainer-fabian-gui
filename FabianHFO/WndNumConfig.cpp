@@ -1016,7 +1016,7 @@ bool CWndNumConfig::DrawData(bool bData, bool bFrames, bool bText, bool bLimits,
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CWndNumConfig::DrawFrames(CDC* pDC)
+bool CWndNumConfig::DrawFrames(CDC*)
 {
 	return true;
 }
@@ -1203,7 +1203,7 @@ bool CWndNumConfig::drawCursor()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CWndNumConfig::DrawStaticText(CDC* pDC)
+bool CWndNumConfig::DrawStaticText(CDC*)
 {
 	return true;
 }
@@ -1219,7 +1219,7 @@ bool CWndNumConfig::DrawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CWndNumConfig::DrawLimits(CDC* pDC)
+bool CWndNumConfig::DrawLimits(CDC*)
 {
 	return true;
 }

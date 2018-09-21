@@ -86,7 +86,7 @@ void CNumericFieldMVEXP::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldMVEXP::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldMVEXP::drawData(bool, bool bFrames, bool bText, bool bLimits, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;

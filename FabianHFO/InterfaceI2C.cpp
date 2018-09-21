@@ -1787,7 +1787,7 @@ bool CInterfaceI2C::SetConfigRegister16(BYTE chDevAddr, WORD wReg, SHORT wValue)
  * \return	The configuration register 16.
  **************************************************************************************************/
 
-SHORT CInterfaceI2C::GetConfigRegister16(BYTE chDevAddr, WORD wReg, bool bIgnoreAlarm)
+SHORT CInterfaceI2C::GetConfigRegister16(BYTE chDevAddr, WORD wReg, bool)
 {
 	//NI2C_MSG_HEADER msg[2];               /* One write, one read message */
 	////BYTE buffer[4]; 

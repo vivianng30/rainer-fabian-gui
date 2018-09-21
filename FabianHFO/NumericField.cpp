@@ -114,7 +114,7 @@ CMVModel *CNumericField::getModel()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CNumericField::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CNumericField::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 	m_lX=rc.right-rc.left;
 	m_lY=rc.bottom-rc.top;

@@ -86,7 +86,7 @@ void CNumericFieldSHAREMV::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldSHAREMV::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldSHAREMV::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -277,7 +277,7 @@ bool CNumericFieldSHAREMV::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldSHAREMV::drawLimits(CDC* pDC)
+bool CNumericFieldSHAREMV::drawLimits(CDC*)
 {
 	
 	return true;

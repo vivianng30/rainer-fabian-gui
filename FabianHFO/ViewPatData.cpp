@@ -79,7 +79,7 @@ bool CViewPatData::CreateView()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CViewPatData::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CViewPatData::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 
 

@@ -202,7 +202,7 @@ bool CViewParaBtn::CreateView()
  *
  * \return true if it succeeds, false if it fails.
  *===============================================================================================**/
-BOOL CViewParaBtn::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CViewParaBtn::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 	m_lX=rc.right-rc.left;
 	m_lY=rc.bottom-rc.top;
@@ -12850,7 +12850,7 @@ void CViewParaBtn::setPmeanDiff(int iValPmean, bool bSend)//PMAN1
  * \param	bSend			True to send.
  **************************************************************************************************/
 
-void CViewParaBtn::setPmeanRecDiff(int iValPmeanRec, bool bSend)//PMAN1
+void CViewParaBtn::setPmeanRecDiff(int iValPmeanRec, bool)//PMAN1
 {
 	int iDifference=iValPmeanRec-getModel()->getDATAHANDLER()->GetCurrentPmeanPara();
 	if(iDifference<MAXDIFF_PMEANREC)
@@ -13080,7 +13080,7 @@ void CViewParaBtn::setPEEPvalue(int iValPEEP, bool bSend)
  * \param	bWriteConfig	True to write configuration.
  **************************************************************************************************/
 
-void CViewParaBtn::setPpsvValue(int iValPPSV, bool bWriteConfig)
+void CViewParaBtn::setPpsvValue(int iValPPSV, bool)
 {
 
     fVALUE fvPEEP = {0, 0, 0};

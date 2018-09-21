@@ -87,7 +87,7 @@ void CNumericFieldRESISTANCE::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldRESISTANCE::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldRESISTANCE::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -288,7 +288,7 @@ bool CNumericFieldRESISTANCE::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldRESISTANCE::drawLimits(CDC* pDC)
+bool CNumericFieldRESISTANCE::drawLimits(CDC*)
 {
 	
 	return true;

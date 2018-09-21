@@ -1417,7 +1417,7 @@ bool CInterfaceCO2_MICROPOD::PerformMsg()
  * \param	eError	The error.
  **************************************************************************************************/
 
-void CInterfaceCO2_MICROPOD::OnEvent(EEvent eEvent, EError eError)
+void CInterfaceCO2_MICROPOD::OnEvent(EEvent eEvent, EError)
 {
 	WORD i;
 	BYTE c;
@@ -1879,7 +1879,7 @@ void CInterfaceCO2_MICROPOD::changeCO2Unit(eCO2unit unitNew,eCO2unit unitOld)
  * \param	iAnestAgent			Zero-based index of the anest agent.
  **************************************************************************************************/
 
-void CInterfaceCO2_MICROPOD::set_GasCompensation(BYTE byO2Compensation, BYTE byBalanceGas, SHORT iAnestAgent)
+void CInterfaceCO2_MICROPOD::set_GasCompensation(BYTE, BYTE, SHORT)
 {
 	if(getModel()->getAcuLink()!=NULL)
 	{
@@ -1978,7 +1978,7 @@ void CInterfaceCO2_MICROPOD::get_MeasurementMode()
  * \param	val	The value.
  **************************************************************************************************/
 
-void CInterfaceCO2_MICROPOD::set_BaroPressure(SHORT val)
+void CInterfaceCO2_MICROPOD::set_BaroPressure(SHORT)
 {
 	/*if(getModel()->getAcuLink()!=NULL)
 	{

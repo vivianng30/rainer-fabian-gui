@@ -527,7 +527,7 @@ void CWndServiceMenu::SetAllButtonUnpressed()
  * \param	btnID	Identifier for the button.
  **************************************************************************************************/
 
-void CWndServiceMenu::SetOneButtonFocused(int btnID)
+void CWndServiceMenu::SetOneButtonFocused(int)
 {
 	//POSITION pos;
 

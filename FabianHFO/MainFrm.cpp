@@ -760,7 +760,7 @@ void CMainFrame::AssertValid() const
  * \param [in,out]	pOldWnd	If non-null, the old window.
  **************************************************************************************************/
 
-void CMainFrame::OnSetFocus(CWnd* pOldWnd)
+void CMainFrame::OnSetFocus(CWnd*)
 {
 	//CFrameWnd::OnSetFocus(pOldWnd);
 

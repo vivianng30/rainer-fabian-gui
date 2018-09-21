@@ -82,7 +82,7 @@ void CNumericFieldINFOTUBE::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldINFOTUBE::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldINFOTUBE::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -217,7 +217,7 @@ bool CNumericFieldINFOTUBE::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldINFOTUBE::drawLimits(CDC* pDC)
+bool CNumericFieldINFOTUBE::drawLimits(CDC*)
 {
 	return true;
 }

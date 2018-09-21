@@ -86,7 +86,7 @@ void CNumericFieldTAU::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldTAU::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldTAU::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -279,7 +279,7 @@ bool CNumericFieldTAU::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldTAU::drawLimits(CDC* pDC)
+bool CNumericFieldTAU::drawLimits(CDC*)
 {
 	
 	return true;

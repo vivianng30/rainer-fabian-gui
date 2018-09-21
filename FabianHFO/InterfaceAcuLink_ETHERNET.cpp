@@ -69,19 +69,19 @@ bool CInterfaceAcuLink_ETHERNET::deinit()
 
 
 
-int CInterfaceAcuLink_ETHERNET::setMeasurementData(int idx, int iValue)
+int CInterfaceAcuLink_ETHERNET::setMeasurementData(int, int)
 {
 	
 
 	return 0;
 }
 
-void CInterfaceAcuLink_ETHERNET::setParaData(UINT index, int val)
+void CInterfaceAcuLink_ETHERNET::setParaData(UINT, int)
 {
 	
 }
 
-void CInterfaceAcuLink_ETHERNET::setAlarmData(UINT index, int val)
+void CInterfaceAcuLink_ETHERNET::setAlarmData(UINT, int)
 {
 	
 }

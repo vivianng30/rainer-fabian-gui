@@ -259,7 +259,7 @@ END_MESSAGE_MAP()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CDiagramm::Create(CWnd* pParentWnd, const RECT &rc, UINT nID, CCreateContext* pContext) 
+BOOL CDiagramm::Create(CWnd* pParentWnd, const RECT &rc, UINT nID, CCreateContext*) 
 {
 	//m_iGraphX=rc.left;
 	//m_iGraphY=rc.top;
@@ -6005,7 +6005,7 @@ double CDiagramm::GetNegativeYoffset(double dwMaxY)
  * \param	bRedrawDiagrammData	True to redraw diagramm data.
  **************************************************************************************************/
 
-void CDiagramm::IncreaseXScale(bool bRedrawDiagrammData)
+void CDiagramm::IncreaseXScale(bool)
 {
 	if(m_bExit)
 		return;
@@ -10005,7 +10005,7 @@ void CDiagramm::DrawConnectLine(CPoint *pts, int iSize)
  * \param 		  	levelPlot	True to level plot.
  **************************************************************************************************/
 
-void CDiagramm::DrawConnectLoop(CPoint *pts, int iSize, bool levelPlot)
+void CDiagramm::DrawConnectLoop(CPoint *pts, int iSize, bool)
 {
 	if(m_bExit)
 		return;
@@ -10088,7 +10088,7 @@ void CDiagramm::DrawConnectLoop(CPoint *pts, int iSize, bool levelPlot)
  * \param 		  	levelPlot	True to level plot.
  **************************************************************************************************/
 
-void CDiagramm::DrawFOTLoop(CPoint *pts, int iSize, bool levelPlot)
+void CDiagramm::DrawFOTLoop(CPoint *pts, int iSize, bool)
 {
 	if(m_bExit)
 		return;

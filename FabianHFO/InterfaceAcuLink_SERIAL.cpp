@@ -499,11 +499,11 @@ bool CInterfaceAcuLink_SERIAL::deinit()
 //	return AfxGetInstanceHandle();
 //}
 
-void CInterfaceAcuLink_SERIAL::setGraphDataV3(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2)
+void CInterfaceAcuLink_SERIAL::setGraphDataV3(SHORT, SHORT, SHORT, SHORT)
 {
 
 }
-void CInterfaceAcuLink_SERIAL::setGraphDataV4(SHORT iValVolume ,SHORT iValPressure ,SHORT iValFlow, SHORT iValCO2, SHORT iValSPO2)
+void CInterfaceAcuLink_SERIAL::setGraphDataV4(SHORT, SHORT, SHORT, SHORT, SHORT)
 {
 
 }

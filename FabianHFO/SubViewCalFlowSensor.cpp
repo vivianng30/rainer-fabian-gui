@@ -420,7 +420,7 @@ bool CSubViewCalFlowSensor::CreateWnd(CWnd* pParentWnd, const RECT rc, UINT nID,
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CSubViewCalFlowSensor::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext* pContext) 
+BOOL CSubViewCalFlowSensor::Create(CWnd* pParentWnd, const RECT rc, UINT nID, CCreateContext*) 
 {
 	m_lX=rc.right-rc.left;
 	m_lY=rc.bottom-rc.top;

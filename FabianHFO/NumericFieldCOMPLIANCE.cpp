@@ -86,7 +86,7 @@ void CNumericFieldCOMPLIANCE::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldCOMPLIANCE::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldCOMPLIANCE::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -278,7 +278,7 @@ bool CNumericFieldCOMPLIANCE::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldCOMPLIANCE::drawLimits(CDC* pDC)
+bool CNumericFieldCOMPLIANCE::drawLimits(CDC*)
 {
 	return true;
 }

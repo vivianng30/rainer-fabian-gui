@@ -79,7 +79,7 @@ void CNumericFieldFREQETCO2::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldFREQETCO2::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldFREQETCO2::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -286,7 +286,7 @@ bool CNumericFieldFREQETCO2::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldFREQETCO2::drawLimits(CDC* pDC)
+bool CNumericFieldFREQETCO2::drawLimits(CDC*)
 {
 	
 	return true;

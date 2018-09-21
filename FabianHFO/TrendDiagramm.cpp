@@ -225,7 +225,7 @@ END_MESSAGE_MAP()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-BOOL CTrendDiagramm::Create(CWnd* pParentWnd, const RECT rc, UINT nID, UINT colorscheme, CCreateContext* pContext) 
+BOOL CTrendDiagramm::Create(CWnd* pParentWnd, const RECT rc, UINT nID, UINT colorscheme, CCreateContext*) 
 {
 	GraphSetAllDefaults();
 

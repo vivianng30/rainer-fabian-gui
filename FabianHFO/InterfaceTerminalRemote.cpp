@@ -274,7 +274,7 @@ bool CInterfaceTerminalRemote::OpenCOM()
  * \param	eError	The error.
  **************************************************************************************************/
 
-void CInterfaceTerminalRemote::OnEvent(EEvent eEvent, EError eError)
+void CInterfaceTerminalRemote::OnEvent(EEvent eEvent, EError)
 {
 	//SOM|NBF|CMD|DATA0|...|DATAn|CKS
 	//message header-0x02

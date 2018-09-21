@@ -156,7 +156,7 @@ void CModelObserver::NotifyLanguageChanged(){}
  * \param [in,out]	pEvent	If non-null, the event.
  **************************************************************************************************/
 
-void CModelObserver::NotifyEvent(CMVEvent* pEvent){}
+void CModelObserver::NotifyEvent(CMVEvent*){}
 
 /**********************************************************************************************//**
  * Notifies a para button event
@@ -167,7 +167,7 @@ void CModelObserver::NotifyEvent(CMVEvent* pEvent){}
  * \param [in,out]	pEvent	If non-null, the event.
  **************************************************************************************************/
 
-void CModelObserver::NotifyParaBtnEvent(CMVEvent* pEvent){}
+void CModelObserver::NotifyParaBtnEvent(CMVEvent*){}
 
 /**********************************************************************************************//**
  * Notifies a view focus changed
@@ -178,7 +178,7 @@ void CModelObserver::NotifyParaBtnEvent(CMVEvent* pEvent){}
  * \param	iViewID	Identifier for the view.
  **************************************************************************************************/
 
-void CModelObserver::NotifyViewFocusChanged(int iViewID){}
+void CModelObserver::NotifyViewFocusChanged(int){}
 
 /**********************************************************************************************//**
  * Initializes a new instance of the CMVModel class
@@ -4177,7 +4177,7 @@ void CMVModel::triggerDataEvent(CMVEvent* pEvent)
  * \param 		  	iGroupId	Identifier for the group.
  **************************************************************************************************/
 
-void CMVModel::triggerEvent(CMVEvent* pEvent, int btnID, int iGroupId)
+void CMVModel::triggerEvent(CMVEvent* pEvent, int, int)
 {
 	EnterCriticalSection(&m_csTrigger);
 
@@ -4284,7 +4284,7 @@ int CMVModel::_httoi(const TCHAR *value)
  * \param	state	True to state.
  **************************************************************************************************/
 
-void CMVModel::SetAlimitStateCalculating(bool state)
+void CMVModel::SetAlimitStateCalculating(bool)
 {
 	m_bCalculateAlarmlimitRunning=true;
 }
@@ -7515,7 +7515,7 @@ void CMVModel::setVentModeInitialized()
  * \param	bSPI   	True to spi.
  **************************************************************************************************/
 
-void CMVModel::Send_PARA_VOLUME_LIMIT(int iVal, bool bSerial, bool bSPI)
+void CMVModel::Send_PARA_VOLUME_LIMIT(int iVal, bool, bool bSPI)
 {
 	/*if(bSerial)
 	{
@@ -7548,7 +7548,7 @@ void CMVModel::Send_PARA_VOLUME_LIMIT(int iVal, bool bSerial, bool bSPI)
  * \param	bSPI   	True to spi.
  **************************************************************************************************/
 
-void CMVModel::Send_PARA_VOLUME_GARANT(int iVal, bool bSerial, bool bSPI)
+void CMVModel::Send_PARA_VOLUME_GARANT(int iVal, bool, bool bSPI)
 {
 	/*if(bSerial)
 	{

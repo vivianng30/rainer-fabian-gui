@@ -110,7 +110,7 @@ void CNumericFieldMECHANIC::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldMECHANIC::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldMECHANIC::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -380,7 +380,7 @@ bool CNumericFieldMECHANIC::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldMECHANIC::drawLimits(CDC* pDC)
+bool CNumericFieldMECHANIC::drawLimits(CDC*)
 {
 	
 	return true;

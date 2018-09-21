@@ -222,7 +222,7 @@ void CInterfaceSPO2::checkModuleState()
  * \param	bFastSATon	True to fast sa ton.
  **************************************************************************************************/
 
-void CInterfaceSPO2::set_FastSATon(bool bFastSATon)
+void CInterfaceSPO2::set_FastSATon(bool)
 {
 
 }
@@ -236,7 +236,7 @@ void CInterfaceSPO2::set_FastSATon(bool bFastSATon)
  * \param	mode	The mode.
  **************************************************************************************************/
 
-void CInterfaceSPO2::set_SensitivityMode(eSPO2sensitivitymode mode)
+void CInterfaceSPO2::set_SensitivityMode(eSPO2sensitivitymode)
 {
 
 }
@@ -250,7 +250,7 @@ void CInterfaceSPO2::set_SensitivityMode(eSPO2sensitivitymode mode)
  * \param	avtime	The avtime.
  **************************************************************************************************/
 
-void CInterfaceSPO2::set_SPO2averagingTime(eSPO2averagingtime avtime)
+void CInterfaceSPO2::set_SPO2averagingTime(eSPO2averagingtime)
 {
 
 }
@@ -264,7 +264,7 @@ void CInterfaceSPO2::set_SPO2averagingTime(eSPO2averagingtime avtime)
  * \param	delay	The delay.
  **************************************************************************************************/
 
-void CInterfaceSPO2::set_SPO2alarmDelay(eSPO2alarmdelay delay)
+void CInterfaceSPO2::set_SPO2alarmDelay(eSPO2alarmdelay)
 {
 
 }

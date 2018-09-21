@@ -377,7 +377,7 @@ bool CInterfaceCO2::isFICO2ValueValid()
  * \param	unitOld	The unit old.
  **************************************************************************************************/
 
-void CInterfaceCO2::changeCO2Unit(eCO2unit unitNew,eCO2unit unitOld)
+void CInterfaceCO2::changeCO2Unit(eCO2unit, eCO2unit)
 {
 
 }
@@ -417,7 +417,7 @@ void CInterfaceCO2::turnOff()
  * \param	iAnestAgent			Zero-based index of the anest agent.
  **************************************************************************************************/
 
-void CInterfaceCO2::set_GasCompensation(BYTE byO2Compensation, BYTE byBalanceGas, SHORT iAnestAgent)
+void CInterfaceCO2::set_GasCompensation(BYTE, BYTE, SHORT)
 {
 
 }
@@ -443,7 +443,7 @@ void CInterfaceCO2::get_GasCompensation()
  * \param	val	The value.
  **************************************************************************************************/
 
-void CInterfaceCO2::set_BaroPressure(SHORT val)
+void CInterfaceCO2::set_BaroPressure(SHORT)
 {
 
 }
@@ -469,7 +469,7 @@ void CInterfaceCO2::get_BaroPressure()
  * \param	val	The value.
  **************************************************************************************************/
 
-void CInterfaceCO2::set_PatientMode(BYTE val)
+void CInterfaceCO2::set_PatientMode(BYTE)
 {
 
 }
@@ -495,7 +495,7 @@ void CInterfaceCO2::get_PatientMode()
  * \param	val	The value.
  **************************************************************************************************/
 
-void CInterfaceCO2::set_MeasurementMode(BYTE val)
+void CInterfaceCO2::set_MeasurementMode(BYTE)
 {
 
 }
@@ -521,7 +521,7 @@ void CInterfaceCO2::get_MeasurementMode()
  * \param	bGetExState	True to get ex state.
  **************************************************************************************************/
 
-void CInterfaceCO2::set_PumpStateOn(bool bGetExState)
+void CInterfaceCO2::set_PumpStateOn(bool)
 {
 
 }
@@ -535,7 +535,7 @@ void CInterfaceCO2::set_PumpStateOn(bool bGetExState)
  * \param	bGetExState	True to get ex state.
  **************************************************************************************************/
 
-void CInterfaceCO2::set_PumpStateOff(bool bGetExState)
+void CInterfaceCO2::set_PumpStateOff(bool)
 {
 
 }
@@ -561,7 +561,7 @@ void CInterfaceCO2::set_Configuration()
  * \param	state	True to state.
  **************************************************************************************************/
 
-void CInterfaceCO2::set_StandbyMode(bool state)
+void CInterfaceCO2::set_StandbyMode(bool)
 {
 
 }

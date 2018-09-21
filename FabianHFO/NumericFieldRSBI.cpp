@@ -80,7 +80,7 @@ void CNumericFieldRSBI::OnDestroy()
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldRSBI::drawData(bool bData, bool bFrames, bool bText, bool bLimits, bool bFlowmeter)
+bool CNumericFieldRSBI::drawData(bool, bool bFrames, bool bText, bool, bool)
 {
 	EnterCriticalSection(&csDraw);
 	bool bReturn = true;
@@ -266,7 +266,7 @@ bool CNumericFieldRSBI::drawStaticText(CDC* pDC)
  * \return	True if it succeeds, false if it fails.
  **************************************************************************************************/
 
-bool CNumericFieldRSBI::drawLimits(CDC* pDC)
+bool CNumericFieldRSBI::drawLimits(CDC*)
 {
 	
 	return true;

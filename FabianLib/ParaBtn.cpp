@@ -480,7 +480,7 @@ bool CParaBtn::Depress()
 			}
 			else
 			{
-				getModel()->getDATAHANDLER()->CalculateBPM_ITimeChanged(m_v.iValue,false);
+				getModel()->getDATAHANDLER()->CalculateBPM_ITimeChanged(m_v.iValue, false);
 			}
 
 			int iIE = getModel()->getDATAHANDLER()->GetCurrentIERelation100();
