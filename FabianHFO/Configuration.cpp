@@ -4064,7 +4064,7 @@ void CConfiguration::LoadSettings()
 	WORD iMINRANGE_NEO_FOTconv_FREQ=(WORD)regFOTsetting.ReadDWORD(_T("MINRANGE_NEO_FOTCONV_FREQ"), MINRANGE_NEO_FOTCONV_FREQ);
 	WORD iMAXRANGE_PED_FOTconv_FREQ=(WORD)regFOTsetting.ReadDWORD(_T("MAXRANGE_PED_FOTCONV_FREQ"), MAXRANGE_PED_FOTCONV_FREQ);
 	//m_iFOTconv_FREQ=getModel()->getI2C()->ReadConfigByte(PARA_FOT_CONV_FREQ_8);
-	m_iFOTconv_FREQ=(WORD)regFOTsetting.ReadDWORD(_T("FOTCONV_FREQ"), FACTORY_FOT_CONV_FREQ);
+	m_iFOTconv_FREQ = (BYTE)regFOTsetting.ReadDWORD(_T("FOTCONV_FREQ"), FACTORY_FOT_CONV_FREQ);
 	if(m_iFOTconv_FREQ<iMINRANGE_NEO_FOTconv_FREQ || m_iFOTconv_FREQ>iMAXRANGE_PED_FOTconv_FREQ)
 	{
 		m_iFOTconv_FREQ=FACTORY_FOT_CONV_FREQ;
@@ -4139,7 +4139,7 @@ void CConfiguration::LoadSettings()
 	WORD iMINRANGE_NEO_FOThfo_FREQ=(WORD)regFOTsetting.ReadDWORD(_T("MINRANGE_NEO_FOTHFO_FREQ"), MINRANGE_NEO_FOTHFO_FREQ);
 	WORD iMAXRANGE_PED_FOThfo_FREQ=(WORD)regFOTsetting.ReadDWORD(_T("MAXRANGE_PED_FOTHFO_FREQ"), MAXRANGE_PED_FOTHFO_FREQ);
 	//m_iFOThfo_FREQ=getModel()->getI2C()->ReadConfigByte(PARA_FOT_HFO_FREQ_8);
-	m_iFOThfo_FREQ=(WORD)regFOTsetting.ReadDWORD(_T("FOTHFO_FREQ"), FACTORY_FOT_HFO_FREQ);
+	m_iFOThfo_FREQ = (BYTE)regFOTsetting.ReadDWORD(_T("FOTHFO_FREQ"), FACTORY_FOT_HFO_FREQ);
 	if(m_iFOThfo_FREQ<iMINRANGE_NEO_FOThfo_FREQ || m_iFOThfo_FREQ>iMAXRANGE_PED_FOThfo_FREQ)
 	{
 		m_iFOThfo_FREQ=FACTORY_FOT_HFO_FREQ;
@@ -4213,7 +4213,7 @@ void CConfiguration::LoadSettings()
 
 	readAmpCorFactor();
 
-	m_wOldConfigVersion=m_iConfigVersion;
+	m_wOldConfigVersion = (WORD)m_iConfigVersion;
 }
 
 /**********************************************************************************************//**
@@ -7476,7 +7476,7 @@ double CConfiguration::GetMAXSCALE_FOT_PRESSURE()
 
 void CConfiguration::SetMAXSCALE_FOT_PRESSURE(double value)
 {
-	m_iMAXSCALE_FOT_PRESSURE=value;
+	m_iMAXSCALE_FOT_PRESSURE = (int)value;
 	getModel()->getI2C()->WriteConfigWord(MAXSCALE_FOT_PRESSURE_16, (SHORT)value);
 }
 
@@ -8441,7 +8441,7 @@ BYTE CConfiguration::GetMainBoardVersion()
 
 void CConfiguration::setMainBoardVersion(UINT vers)
 {
-	m_iMainBoard=vers;
+	m_iMainBoard = (BYTE)vers;
 	getModel()->getI2C()->WriteConfigByte(HWCONF_MAINBOARD,(BYTE)vers);
 }
 
@@ -16172,7 +16172,7 @@ void CConfiguration::SerializeFile(CArchive& ar)
 			BYTE eLeakCompOff=0;
 			ar>>eLeakCompOff;
 			m_eLeakCompensation=(eLeakCompensation)eLeakCompOff;
-			getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8, (int)m_eLeakCompensation);
+			getModel()->getI2C()->WriteConfigByte(LEAKCOMPENSATIONOFF_8, (BYTE)m_eLeakCompensation);
 
 			ar>>m_iCurNumericBlock_NCPAP;
 			setLastNumericNCPAP(m_iCurNumericBlock_NCPAP);
@@ -16821,15 +16821,15 @@ void CConfiguration::SetNIVTRIGGERdemoTimestamp(COleDateTime dateTime)
 	}
 	else if(dateTime.GetStatus()!=COleDateTime::valid)
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	else
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	getModel()->getI2C()->WriteConfigWord(DEMO_NIVTRIGGER_YEAR_16, iDemoYear);
 	getModel()->getI2C()->WriteConfigByte(DEMO_NIVTRIGGER_MONTH_8, (BYTE)iDemoMonth);
@@ -16906,15 +16906,15 @@ void CConfiguration::SetFOTdemoTimestamp(COleDateTime dateTime)
 	}
 	else if(dateTime.GetStatus()!=COleDateTime::valid)
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	else
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	getModel()->getI2C()->WriteConfigWord(DEMO_FOT_YEAR_16, iDemoYear);
 	getModel()->getI2C()->WriteConfigByte(DEMO_FOT_MONTH_8, (BYTE)iDemoMonth);
@@ -16984,15 +16984,15 @@ void CConfiguration::SetPRICOdemoTimestamp(COleDateTime dateTime)
 	}
 	else if(dateTime.GetStatus()!=COleDateTime::valid)
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	else
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	getModel()->getI2C()->WriteConfigWord(DEMO_PRICO_YEAR_16, iDemoYear);
 	getModel()->getI2C()->WriteConfigByte(DEMO_PRICO_MONTH_8, (BYTE)iDemoMonth);
@@ -17062,15 +17062,15 @@ void CConfiguration::SetTHERAPYdemoTimestamp(COleDateTime dateTime)
 	}
 	else if(dateTime.GetStatus()!=COleDateTime::valid)
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	else
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	getModel()->getI2C()->WriteConfigWord(DEMO_THERAPY_YEAR_16, iDemoYear);
 	getModel()->getI2C()->WriteConfigByte(DEMO_THERAPY_MONTH_8, (BYTE)iDemoMonth);
@@ -17140,15 +17140,15 @@ void CConfiguration::SetTRENDdemoTimestamp(COleDateTime dateTime)
 	}
 	else if(dateTime.GetStatus()!=COleDateTime::valid)
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	else
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	getModel()->getI2C()->WriteConfigWord(DEMO_TREND_YEAR_16, iDemoYear);
 	getModel()->getI2C()->WriteConfigByte(DEMO_TREND_MONTH_8, (BYTE)iDemoMonth);
@@ -17218,15 +17218,15 @@ void CConfiguration::SetLUNGRECdemoTimestamp(COleDateTime dateTime)
 	}
 	else if(dateTime.GetStatus()!=COleDateTime::valid)
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	else
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	getModel()->getI2C()->WriteConfigWord(DEMO_LUNGREC_YEAR_16, iDemoYear);
 	getModel()->getI2C()->WriteConfigByte(DEMO_LUNGREC_MONTH_8, (BYTE)iDemoMonth);
@@ -17296,15 +17296,15 @@ void CConfiguration::SetVLIMITdemoTimestamp(COleDateTime dateTime)
 	}
 	else if(dateTime.GetStatus()!=COleDateTime::valid)
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	else
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	getModel()->getI2C()->WriteConfigWord(DEMO_VLIMIT_YEAR_16, iDemoYear);
 	getModel()->getI2C()->WriteConfigByte(DEMO_VLIMIT_MONTH_8, (BYTE)iDemoMonth);
@@ -17374,15 +17374,15 @@ void CConfiguration::SetVGUARANTYdemoTimestamp(COleDateTime dateTime)
 	}
 	else if(dateTime.GetStatus()!=COleDateTime::valid)
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	else
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	getModel()->getI2C()->WriteConfigWord(DEMO_VGUARANTY_YEAR_16, iDemoYear);
 	getModel()->getI2C()->WriteConfigByte(DEMO_VGUARANTY_MONTH_8, (BYTE)iDemoMonth);
@@ -17452,15 +17452,15 @@ void CConfiguration::SetNMODEdemoTimestamp(COleDateTime dateTime)
 	}
 	else if(dateTime.GetStatus()!=COleDateTime::valid)
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	else
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	getModel()->getI2C()->WriteConfigWord(DEMO_NMODE_YEAR_16, iDemoYear);
 	getModel()->getI2C()->WriteConfigByte(DEMO_NMODE_MONTH_8, (BYTE)iDemoMonth);
@@ -17530,15 +17530,15 @@ void CConfiguration::SetHFOdemoTimestamp(COleDateTime dateTime)
 	}
 	else if(dateTime.GetStatus()!=COleDateTime::valid)
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	else
 	{
-		iDemoYear=dateTime.GetYear();
-		iDemoMonth=dateTime.GetMonth();
-		iDemoDay=dateTime.GetDay();
+		iDemoYear = (WORD)dateTime.GetYear();
+		iDemoMonth = (WORD)dateTime.GetMonth();
+		iDemoDay = (WORD)dateTime.GetDay();
 	}
 	
 	getModel()->getI2C()->WriteConfigWord(DEMO_HFO_YEAR_16, iDemoYear);
