@@ -3451,14 +3451,14 @@ void CMVViewHandler::changeToPrevViewState()
 	LeaveCriticalSection(&csViewState);
 
 	//DEBUGMSG(TRUE, (TEXT("changeToPrevViewState\r\n")));
-	if(		(getModel()->getCONFIG()->getCO2module()==CO2MODULE_NONE) 
+	if(		(getModel()->getCONFIG()->getTempCO2module()==CO2MODULE_NONE) 
 		&&	ePrevGraphState==VS_GRAPH
 		&&	(eViewSubState)getModel()->getCONFIG()->GraphGetLastViewState()==VSS_GRAPH_CO2GRAPHS)
 	{
 		changeViewState(VS_GRAPH,VSS_GRAPH_MULTI_LINEGRAPHS);
 		getModel()->getCONFIG()->GraphSetLastViewState(VSS_GRAPH_MULTI_LINEGRAPHS);
 	}
-	else if(		(getModel()->getCONFIG()->getSPO2module()==SPO2MODULE_NONE) 
+	else if(		(getModel()->getCONFIG()->getTempSPO2module()==SPO2MODULE_NONE) 
 		&&	ePrevGraphState==VS_GRAPH
 		&&	(eViewSubState)getModel()->getCONFIG()->GraphGetLastViewState()==VSS_GRAPH_SPO2GRAPHS)
 	{
