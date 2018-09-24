@@ -46,10 +46,10 @@ public:
 	CTlsTime& operator=(CTlsTime& time);
 	CTlsTime& operator=(CTime time);
 
-	bool operator==(CTlsTime& time);
-	bool operator!=(CTlsTime& time);
+	bool operator==(const CTlsTime& time) const;
+	bool operator!=(const CTlsTime& time) const;
 	
-	bool operator<(CTlsTime& time);
+	bool operator<(const CTlsTime& time) const;
 };
 
 #endif

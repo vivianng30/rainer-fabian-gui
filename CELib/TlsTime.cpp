@@ -266,17 +266,17 @@ CTlsTime& CTlsTime::operator=(CTime time)
 	return (*this);
 }
 
-bool CTlsTime::operator==(CTlsTime& time)
+bool CTlsTime::operator==(const CTlsTime& time) const
 {
 	return (m_time == time.m_time) != 0;
 }
 
-bool CTlsTime::operator!=(CTlsTime& time)
+bool CTlsTime::operator!=(const CTlsTime& time) const
 {
 	return (m_time != time.m_time) != 0;
 }
 
-bool CTlsTime::operator<(CTlsTime& time)
+bool CTlsTime::operator<(const CTlsTime& time) const
 {
 	if((*this) == GetNullTime() || time == GetNullTime())
 		return false;
