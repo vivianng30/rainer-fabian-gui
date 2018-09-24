@@ -9904,12 +9904,12 @@ void CAlarmMgmtHandler::setAlimitSPO2max(int value)
 	int iAlimitSPO2max=value/10;
 	if(iAlimitSPO2max<getModel()->getDATAHANDLER()->getPRICO_SPO2highRange())
 	{
-		getModel()->getDATAHANDLER()->setPRICO_SPO2highRange(iAlimitSPO2max);
+		getModel()->getDATAHANDLER()->setPRICO_SPO2highRange((BYTE)iAlimitSPO2max);
 		bUpdateLimitData=true;
 	}
 	if(iAlimitSPO2max<=getModel()->getDATAHANDLER()->getPRICO_SPO2lowRange())
 	{
-		getModel()->getDATAHANDLER()->setPRICO_SPO2lowRange(iAlimitSPO2max-1);
+		getModel()->getDATAHANDLER()->setPRICO_SPO2lowRange((BYTE)iAlimitSPO2max-1);
 		bUpdateLimitData=true;
 	}
 
@@ -9941,12 +9941,12 @@ void CAlarmMgmtHandler::setAlimitSPO2min(int value)
 	int iAlimitSPO2min=value/10;
 	if(iAlimitSPO2min>getModel()->getDATAHANDLER()->getPRICO_SPO2lowRange())
 	{
-		getModel()->getDATAHANDLER()->setPRICO_SPO2lowRange(iAlimitSPO2min);
+		getModel()->getDATAHANDLER()->setPRICO_SPO2lowRange((BYTE)iAlimitSPO2min);
 		bUpdateLimitData=true;
 	}
 	if(iAlimitSPO2min>=getModel()->getDATAHANDLER()->getPRICO_SPO2highRange())
 	{
-		getModel()->getDATAHANDLER()->setPRICO_SPO2highRange(iAlimitSPO2min+1);
+		getModel()->getDATAHANDLER()->setPRICO_SPO2highRange((BYTE)iAlimitSPO2min+1);
 		bUpdateLimitData=true;
 	}
 	if(bUpdateLimitData)
@@ -12529,27 +12529,27 @@ void CAlarmMgmtHandler::checkVentilationLimits()
 	}
 
 	MESSURE_BLOCKDATA MessureData;
-	MessureData.m_iPmax=getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_P_PEAK);
-	MessureData.m_iPmitt=getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_P_MEAN);
-	MessureData.m_iPEEP=getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_PEEP);
-	MessureData.m_iCompliance=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_DYNCOMPL);
-	MessureData.m_iC20C=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_C20C);
-	MessureData.m_iResistance=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_RESISTANCE);
-	MessureData.m_iMV=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_MIN_VOL);
-	MessureData.m_iPercent=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_ANTEIL_RESP);
-	MessureData.m_iTVI=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVI);
-	MessureData.m_iTVE=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE);
-	MessureData.m_iTVEresp=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE_RESP);
-	MessureData.m_iTVEpat=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE_PATIENT);
-	MessureData.m_iBPM=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQ);
-	MessureData.m_iBPMco2=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQETCO2);
-	MessureData.m_iLeak=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_LEAK);
-	MessureData.m_iHFAmpl=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_HFO_AMP);
-	MessureData.m_iHFFreq=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_HFO_FREQ);
-	MessureData.m_iTVEHFO=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE_HFO);
-	MessureData.m_iDCO2=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_DCO2);
-	MessureData.m_iTrigVol=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TRIGGER);
-	MessureData.m_iITimePSV=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_T_INSP_PSV);
+	MessureData.m_iPmax = (SHORT)getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_P_PEAK);
+	MessureData.m_iPmitt = (SHORT)getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_P_MEAN);
+	MessureData.m_iPEEP = (SHORT)getModel()->getDATAHANDLER()->getMessureDataBTB(ALINK_MSMNT_PEEP);
+	MessureData.m_iCompliance = (WORD)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_DYNCOMPL);
+	MessureData.m_iC20C = (WORD)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_C20C);
+	MessureData.m_iResistance = (WORD)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_RESISTANCE);
+	MessureData.m_iMV = (WORD)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_MIN_VOL);
+	MessureData.m_iPercent = (BYTE)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_ANTEIL_RESP);
+	MessureData.m_iTVI = (WORD)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVI);
+	MessureData.m_iTVE = (WORD)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE);
+	MessureData.m_iTVEresp = (WORD)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE_RESP);
+	MessureData.m_iTVEpat = (WORD)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE_PATIENT);
+	MessureData.m_iBPM = (BYTE)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQ);
+	MessureData.m_iBPMco2 = (BYTE)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQETCO2);
+	MessureData.m_iLeak = (BYTE)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_LEAK);
+	MessureData.m_iHFAmpl = (BYTE)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_HFO_AMP);
+	MessureData.m_iHFFreq = (BYTE)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_HFO_FREQ);
+	MessureData.m_iTVEHFO = (WORD)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TVE_HFO);
+	MessureData.m_iDCO2 = (WORD)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_DCO2);
+	MessureData.m_iTrigVol = (WORD)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_TRIGGER);
+	MessureData.m_iITimePSV = (WORD)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_T_INSP_PSV);
 
 	bool bMVmax_Alarm=false;
 	bool bMVmin_Alarm=false;
@@ -13058,7 +13058,7 @@ void CAlarmMgmtHandler::checkCO2Limits()
 		bool bFICO2ValueValid = getModel()->getETCO2()->isFICO2ValueValid();
 		bool bFreqValueValid = getModel()->getETCO2()->isFreqValueValid();
 
-		BYTE iBPMco2=getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQETCO2);
+		BYTE iBPMco2 = (BYTE)getModel()->getDATAHANDLER()->getMessureDataAVG(ALINK_MSMNT_FREQETCO2);
 
 		bool bETCO2max_Alarm=false;
 		bool bETCO2min_Alarm=false;
@@ -13122,7 +13122,7 @@ void CAlarmMgmtHandler::checkCO2Limits()
 		else
 			bFICO2valid=true;
 
-		iFICO2=getModel()->getDATAHANDLER()->getAVGMessureDataFICO2();
+		iFICO2 = (SHORT)getModel()->getDATAHANDLER()->getAVGMessureDataFICO2();
 
 		if(bCO2valid && bFICO2valid)
 		{
@@ -13342,7 +13342,7 @@ void CAlarmMgmtHandler::checkSpO2Limits()
 		eAlarmLimitState stateSPO2_PImin = getAlimitState_SPO2_PIminLimit();
 
 
-		iSPO2=CTlsFloat::Round(((double)getModel()->getDATAHANDLER()->getAVGMessureDataSPO2())/10, 0)*10;
+		iSPO2 = (SHORT)CTlsFloat::Round(((double)getModel()->getDATAHANDLER()->getAVGMessureDataSPO2())/10, 0)*10;
 		iPulseRate=getModel()->getDATAHANDLER()->getAVGMessureDataSpO2PulseRate();
 		iPerfusionIndex=getModel()->getDATAHANDLER()->getAVGMessureDataSpO2PerfusionIndex();
 		eSPO2alarmdelay eDelayTime=getModel()->getCONFIG()->getSPO2alarmDelay();
@@ -13605,7 +13605,7 @@ void CAlarmMgmtHandler::checkSpO2Limits()
 
 		bool bSIQ_Alarm=false;
 		SHORT iSpO2SIQ = getModel()->getDATAHANDLER()->readSpO2SIQ();
-		SHORT iSpO2SIQlimit = getModel()->getALARMHANDLER()->getAlimitSPO2_SIQmin();
+		SHORT iSpO2SIQlimit = (SHORT)getModel()->getALARMHANDLER()->getAlimitSPO2_SIQmin();
 
 
 		if( iSpO2SIQ<iSpO2SIQlimit)
