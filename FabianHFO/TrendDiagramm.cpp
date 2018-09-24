@@ -1174,7 +1174,7 @@ void CTrendDiagramm::DrawGridNum(CDC* pDC)
 				pDC->MoveTo((int)(dataarea.right-i*GridSpacing-dXGridOffset), (int)dataarea.top);
 				pDC->LineTo((int)(dataarea.right-i*GridSpacing-dXGridOffset),(int)dataarea.bottom);
 
-				rect.left=dataarea.right-i*GridSpacing-3*m_iCharWidth-dXGridOffset;
+				rect.left = (LONG)(dataarea.right-i*GridSpacing-3*m_iCharWidth-dXGridOffset);
 				rect.right=rect.left+6*m_iCharWidth;//allow for 6 characters
 				/*rect.top=m_iGraphY+m_iGraphHeight-1*m_iCharHeight;
 				rect.bottom=rect.top+m_iCharHeight;*/
@@ -1220,7 +1220,7 @@ void CTrendDiagramm::DrawGridNum(CDC* pDC)
 				pDC->MoveTo((int)(dataarea.right-i*GridSpacing-dXGridOffset), (int)dataarea.top);
 				pDC->LineTo((int)(dataarea.right-i*GridSpacing-dXGridOffset),(int)dataarea.bottom);
 
-				rect.left=dataarea.right-i*GridSpacing-3*m_iCharWidth-dXGridOffset;
+				rect.left = (LONG)(dataarea.right-i*GridSpacing-3*m_iCharWidth-dXGridOffset);
 				rect.right=rect.left+6*m_iCharWidth;//allow for 6 characters
 				/*rect.top=m_iGraphY+m_iGraphHeight-1*m_iCharHeight;
 				rect.bottom=rect.top+m_iCharHeight;*/
@@ -1266,7 +1266,7 @@ void CTrendDiagramm::DrawGridNum(CDC* pDC)
 				pDC->MoveTo((int)(dataarea.right-i*GridSpacing-dXGridOffset), (int)dataarea.top);
 				pDC->LineTo((int)(dataarea.right-i*GridSpacing-dXGridOffset),(int)dataarea.bottom);
 				
-				rect.left=dataarea.right-i*GridSpacing-3*m_iCharWidth-dXGridOffset;
+				rect.left = (LONG)(dataarea.right-i*GridSpacing-3*m_iCharWidth-dXGridOffset);
 				rect.right=rect.left+6*m_iCharWidth;//allow for 6 characters
 				/*rect.top=m_iGraphY+m_iGraphHeight-1*m_iCharHeight;
 				rect.bottom=rect.top+m_iCharHeight;*/
@@ -1312,7 +1312,7 @@ void CTrendDiagramm::DrawGridNum(CDC* pDC)
 				pDC->MoveTo((int)(dataarea.right-i*GridSpacing-dXGridOffset), (int)dataarea.top);
 				pDC->LineTo((int)(dataarea.right-i*GridSpacing-dXGridOffset),(int)dataarea.bottom);
 
-				rect.left=dataarea.right-i*GridSpacing-3*m_iCharWidth-dXGridOffset;
+				rect.left = (LONG)(dataarea.right-i*GridSpacing-3*m_iCharWidth-dXGridOffset);
 				rect.right=rect.left+6*m_iCharWidth;//allow for 6 characters
 				/*rect.top=m_iGraphY+m_iGraphHeight-1*m_iCharHeight;
 				rect.bottom=rect.top+m_iCharHeight;*/
@@ -1358,7 +1358,7 @@ void CTrendDiagramm::DrawGridNum(CDC* pDC)
 				pDC->MoveTo((int)(dataarea.right-i*GridSpacing-dXGridOffset), (int)dataarea.top);
 				pDC->LineTo((int)(dataarea.right-i*GridSpacing-dXGridOffset),(int)dataarea.bottom);
 
-				rect.left=dataarea.right-i*GridSpacing-3*m_iCharWidth-dXGridOffset;
+				rect.left = (LONG)(dataarea.right-i*GridSpacing-3*m_iCharWidth-dXGridOffset);
 				rect.right=rect.left+6*m_iCharWidth;//allow for 6 characters
 				/*rect.top=m_iGraphY+m_iGraphHeight-1*m_iCharHeight;
 				rect.bottom=rect.top+m_iCharHeight;*/
@@ -1408,7 +1408,7 @@ void CTrendDiagramm::DrawGridNum(CDC* pDC)
 				pDC->MoveTo((int)(dataarea.right-i*GridSpacing-dXGridOffset), (int)dataarea.top);
 				pDC->LineTo((int)(dataarea.right-i*GridSpacing-dXGridOffset),(int)dataarea.bottom);
 
-				rect.left=dataarea.right-i*GridSpacing-3*m_iCharWidth-dXGridOffset;
+				rect.left = (LONG)(dataarea.right-i*GridSpacing-3*m_iCharWidth-dXGridOffset);
 				rect.right=rect.left+6*m_iCharWidth;//allow for 6 characters
 				/*rect.top=m_iGraphY+m_iGraphHeight-1*m_iCharHeight;
 				rect.bottom=rect.top+m_iCharHeight;*/
@@ -1456,7 +1456,7 @@ void CTrendDiagramm::DrawGridNum(CDC* pDC)
 				pDC->MoveTo((int)(dataarea.right-i*GridSpacing-dXGridOffset), (int)dataarea.top);
 				pDC->LineTo((int)(dataarea.right-i*GridSpacing-dXGridOffset),(int)dataarea.bottom);
 
-				rect.left=dataarea.right-i*GridSpacing-3*m_iCharWidth-dXGridOffset;
+				rect.left = (LONG)(dataarea.right-i*GridSpacing-3*m_iCharWidth-dXGridOffset);
 				rect.right=rect.left+6*m_iCharWidth;//allow for 6 characters
 				/*rect.top=m_iGraphY+m_iGraphHeight-1*m_iCharHeight;
 				rect.bottom=rect.top+m_iCharHeight;*/
@@ -1506,7 +1506,7 @@ void CTrendDiagramm::DrawGridNum(CDC* pDC)
 				pDC->MoveTo((int)(dataarea.right-i*GridSpacing-dXGridOffset), (int)dataarea.top);
 				pDC->LineTo((int)(dataarea.right-i*GridSpacing-dXGridOffset),(int)dataarea.bottom);
 
-				rect.left=dataarea.right-i*GridSpacing-3*m_iCharWidth-dXGridOffset;
+				rect.left = (LONG)(dataarea.right-i*GridSpacing-3*m_iCharWidth-dXGridOffset);
 				rect.right=rect.left+6*m_iCharWidth;//allow for 6 characters
 				/*rect.top=m_iGraphY+m_iGraphHeight-1*m_iCharHeight;
 				rect.bottom=rect.top+m_iCharHeight;*/
@@ -1552,7 +1552,7 @@ void CTrendDiagramm::DrawGridNum(CDC* pDC)
 				pDC->MoveTo((int)(dataarea.right-i*GridSpacing-dXGridOffset), (int)dataarea.top);
 				pDC->LineTo((int)(dataarea.right-i*GridSpacing-dXGridOffset),(int)dataarea.bottom);
 
-				rect.left=dataarea.right-i*GridSpacing-3*m_iCharWidth-dXGridOffset;
+				rect.left = (LONG)(dataarea.right-i*GridSpacing-3*m_iCharWidth-dXGridOffset);
 				rect.right=rect.left+6*m_iCharWidth;//allow for 6 characters
 				/*rect.top=m_iGraphY+m_iGraphHeight-1*m_iCharHeight;
 				rect.bottom=rect.top+m_iCharHeight;*/
@@ -1742,17 +1742,17 @@ void CTrendDiagramm::DrawTicks(CDC* pDC)
 	pDC->LineTo(m_iOriginX+GridSpacing*n,dataarea.bottom);
 	n++;
 	}*/
-	int n=iXpixels/GridSpacing;
+	int n = (int)(iXpixels/GridSpacing);
 	int i=1;
 	while(i<=n)
 	{
 		//loop and do the ticks
 		//topticks
 		//pDC->MoveTo(dataarea.right-i*GridSpacing , GraphBottom-m_iOriginY);
-		pDC->MoveTo(dataarea.right-i*GridSpacing,GraphBottom-m_iOriginY-xtoptick);
+		pDC->MoveTo((int)(dataarea.right-i*GridSpacing),GraphBottom-m_iOriginY-xtoptick);
 		//pDC->LineTo(dataarea.right-i*GridSpacing,GraphBottom-m_iOriginY-xtoptick);
 		//bottom ticks
-		pDC->LineTo(dataarea.right-i*GridSpacing,GraphBottom-m_iOriginY+xbottick);
+		pDC->LineTo((int)(dataarea.right-i*GridSpacing),GraphBottom-m_iOriginY+xbottick);
 		i++;
 	}
 
@@ -1804,11 +1804,11 @@ void CTrendDiagramm::DrawTicks(CDC* pDC)
 	int iYpixelsTop=Graphbottom-m_tmargin-m_iOriginY;
 	while(GridSpacing*n<iYpixelsTop)
 	{
-		pDC->MoveTo(x,Graphbottom-m_iOriginY-(n*GridSpacing));
+		pDC->MoveTo(x,(int)(Graphbottom-m_iOriginY-(n*GridSpacing)));
 		//do left side tick
-		pDC->LineTo(x-ylefttick,Graphbottom-m_iOriginY-(n*GridSpacing));
+		pDC->LineTo(x-ylefttick,(int)(Graphbottom-m_iOriginY-(n*GridSpacing)));
 		//do rightside tick
-		pDC->LineTo(x+yrighttick,Graphbottom-m_iOriginY-(n*GridSpacing));
+		pDC->LineTo(x+yrighttick,(int)(Graphbottom-m_iOriginY-(n*GridSpacing)));
 		n++;
 	}
 	//draw negative yticks
@@ -1816,11 +1816,11 @@ void CTrendDiagramm::DrawTicks(CDC* pDC)
 	n=1;
 	while(GridSpacing*n<iYpixelsBottom)
 	{
-		pDC->MoveTo(x,Graphbottom-m_iOriginY+(n*GridSpacing));
+		pDC->MoveTo(x,(int)(Graphbottom-m_iOriginY+(n*GridSpacing)));
 		//do left side tick
-		pDC->LineTo(x-ylefttick,Graphbottom-m_iOriginY+(n*GridSpacing));
+		pDC->LineTo(x-ylefttick,(int)(Graphbottom-m_iOriginY+(n*GridSpacing)));
 		//do rightside tick
-		pDC->LineTo(x+yrighttick,Graphbottom-m_iOriginY+(n*GridSpacing));
+		pDC->LineTo(x+yrighttick,(int)(Graphbottom-m_iOriginY+(n*GridSpacing)));
 		n++;
 	}
 
@@ -1998,7 +1998,7 @@ int CTrendDiagramm::GetTrendBufferXPos()
 
 int CTrendDiagramm::GetTrendCursorValue()
 {
-	WORD val=bufferPosValues[m_iPosbufferX].y;
+	WORD val = (WORD)bufferPosValues[m_iPosbufferX].y;
 	
 	return val;
 }
@@ -3059,7 +3059,7 @@ void CTrendDiagramm::DrawYAxisNumbers(CDC* pDC)
 
 		//format and print the number
 		rect.left=m_iGraphX+1;
-		rect.top=Graphbottom-m_iOriginY-GridSpacing*n-m_iCharHeight/2;
+		rect.top = (LONG)(Graphbottom-m_iOriginY-GridSpacing*n-m_iCharHeight/2);
 		rect.right=m_lmargin-2;//
 		rect.bottom=rect.top+m_iCharHeight;
 
@@ -3150,7 +3150,7 @@ void CTrendDiagramm::DrawYAxisNumbers(CDC* pDC)
 	while(GridSpacing*n<iYpixelsBottom)
 	{
 		rect.left=m_iGraphX+1;
-		rect.top=Graphbottom-m_iOriginY+GridSpacing*n-m_iCharHeight/2;
+		rect.top = (LONG)(Graphbottom-m_iOriginY+GridSpacing*n-m_iCharHeight/2);
 		rect.right=m_lmargin-2;//
 		rect.bottom=rect.top+m_iCharHeight;
 
@@ -3440,15 +3440,15 @@ LONG CTrendDiagramm::ConvertToGraphCoords(double x, double y)
 	//double y1 = y*m_dPixelsPerY;
 
 	//calc the abs difference between Xmin and x;
-	double xdif = abs(m_dXAxisMin - x);
+	double xdif = fabs(m_dXAxisMin - x);
 	//calc the abs difference between Ymin and y;
-	double ydif = abs(m_dYAxisMin - y);
+	double ydif = fabs(m_dYAxisMin - y);
 
 	//find the dataarea
 	CRect rect=CalcDataArea();
 
-	int xpos=rect.left+(xdif*m_dPixelsPerX); //from left
-	int ypos=rect.bottom-(ydif*m_dPixelsPerY); //from bottom
+	int xpos=rect.left+(int)(xdif*m_dPixelsPerX); //from left
+	int ypos=rect.bottom-(int)(ydif*m_dPixelsPerY); //from bottom
 
 	result=MAKELONG(xpos,ypos);	
 
@@ -3600,7 +3600,7 @@ void CTrendDiagramm::DoPlotXYPoints()
 
 				//rkuTRENDIMPR
 				x=m_pFunctionParams->pPlotXYItems[count].pPlotXYItems.x;
-				bufX=(x-m_dXAxisMin)/xperpixel;
+				bufX = (UINT)((x-m_dXAxisMin)/xperpixel);
 				y=m_pFunctionParams->pPlotXYItems[count].pPlotXYItems.y;				
 				
 				//if x is off scale - don't bother
@@ -3633,13 +3633,13 @@ void CTrendDiagramm::DoPlotXYPoints()
 						y=ConstrainY(y);
 						iAverageY+=y;
 						y=iAverageY/iCountAverage;
-						pixely=ystart-(y-m_dYAxisMin)/yperpixel;
+						pixely = (UINT)(ystart-(y-m_dYAxisMin)/yperpixel);
 
 						//rkuNEWFIX
 						//ptsTrend[iPointsCount].x=pixelx;
 						ptsTrend[iPointsCount].y=pixely;
 
-						bufferPosValues[iOldCountbuffer].y=yBufferVal/iCountAverage;
+						bufferPosValues[iOldCountbuffer].y = (LONG)(yBufferVal/iCountAverage);
 						//rkuNEWFIX
 						//bufferPosValues[iOldCountbuffer].x=bufX;
 					}
@@ -3661,7 +3661,7 @@ void CTrendDiagramm::DoPlotXYPoints()
 						pixelx= xstart+TREND_DATAAREA-bufX;
 						y=ConstrainY(y);
 						iAverageY=y;
-						pixely=ystart-(y-m_dYAxisMin)/yperpixel;
+						pixely = (UINT)(ystart-(y-m_dYAxisMin)/yperpixel);
 
 
 						if(pixelx<xstart)
@@ -3675,7 +3675,7 @@ void CTrendDiagramm::DoPlotXYPoints()
 
 						iPointsCount++;
 
-						bufferPosValues[m_iCountbuffer].y=yBufferVal;
+						bufferPosValues[m_iCountbuffer].y = (LONG)yBufferVal;
 						bufferPosValues[m_iCountbuffer].x=bufX;
 						iOldCountbuffer=m_iCountbuffer;
 						m_iCountbuffer++;
@@ -3705,7 +3705,7 @@ void CTrendDiagramm::DoPlotXYPoints()
 			int iPointsCount=0;
 
 			ptsTrend[0].x=xstart+TREND_DATAAREA;
-			ptsTrend[0].y=ystart-(0-m_dYAxisMin)/yperpixel;
+			ptsTrend[0].y = (LONG)(ystart-(0-m_dYAxisMin)/yperpixel);
 
 			iPointsCount++;
 
@@ -3714,7 +3714,7 @@ void CTrendDiagramm::DoPlotXYPoints()
 
 				//rkuTRENDIMPR
 				x=m_pFunctionParams->pPlotXYItems[count].pPlotXYItems.x;
-				bufX=(x-m_dXAxisMin)/xperpixel;
+				bufX = (UINT)((x-m_dXAxisMin)/xperpixel);
 				y=m_pFunctionParams->pPlotXYItems[count].pPlotXYItems.y;
 
 				//if x is off scale - don't bother
@@ -3747,13 +3747,13 @@ void CTrendDiagramm::DoPlotXYPoints()
 						y=ConstrainY(y);
 						iAverageY+=y;
 						y=iAverageY/iCountAverage;
-						pixely=ystart-(y-m_dYAxisMin)/yperpixel;
+						pixely = (UINT)(ystart-(y-m_dYAxisMin)/yperpixel);
 
 						//rkuNEWFIX
 						//ptsTrend[iPointsCount].x=pixelx;
 						ptsTrend[iPointsCount].y=pixely;
 
-						bufferPosValues[iOldCountbuffer].y=yBufferVal/iCountAverage;
+						bufferPosValues[iOldCountbuffer].y = (LONG)(yBufferVal/iCountAverage);
 						//rkuNEWFIX
 						//bufferPosValues[iOldCountbuffer].x=bufX;
 					}
@@ -3775,7 +3775,7 @@ void CTrendDiagramm::DoPlotXYPoints()
 						pixelx= xstart+TREND_DATAAREA-bufX;
 						y=ConstrainY(y);
 						iAverageY=y;
-						pixely=ystart-(y-m_dYAxisMin)/yperpixel;
+						pixely = (UINT)(ystart-(y-m_dYAxisMin)/yperpixel);
 
 
 						if(pixelx<xstart)
@@ -3788,7 +3788,7 @@ void CTrendDiagramm::DoPlotXYPoints()
 
 						iPointsCount++;
 
-						bufferPosValues[m_iCountbuffer].y=yBufferVal;
+						bufferPosValues[m_iCountbuffer].y = (LONG)yBufferVal;
 						bufferPosValues[m_iCountbuffer].x=bufX;
 						iOldCountbuffer=m_iCountbuffer;
 						m_iCountbuffer++;
@@ -3802,7 +3802,7 @@ void CTrendDiagramm::DoPlotXYPoints()
 			}
 
 			ptsTrend[iPointsCount].x=pixelx;
-			ptsTrend[iPointsCount].y=ystart-(0-m_dYAxisMin)/yperpixel;
+			ptsTrend[iPointsCount].y = (LONG)(ystart-(0-m_dYAxisMin)/yperpixel);
 
 			iPointsCount++;
 
