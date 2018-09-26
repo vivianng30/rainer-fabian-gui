@@ -259,7 +259,6 @@ CMainFrame::CMainFrame()
 	
 	m_nX=0;//WEC2013
 	m_nY=0;//WEC2013
-	m_pszFontName[0]=0x0000;//WEC2013
 
 	m_numtasks=0;//WEC2013
 	m_bExit=false;//WEC2013
@@ -341,6 +340,7 @@ CMainFrame::CMainFrame()
 
 
 	m_wLanguageID=0;//WEC2013
+	m_bIsSDCARDfontPresent = false;
 
 	//WEC2013
 	for (int i = 0; i < NUMFONTCATEGORY; ++i) {
@@ -387,8 +387,6 @@ CMainFrame::CMainFrame()
 		m_hf33AcuBoldNum[i]=NULL;
 		m_hf70BoldNum[i]=NULL;
 	}
-
-	m_hasFontCreated = false;
 
 	m_iOldOxyValue=0;
 
@@ -598,22 +596,21 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		theApp.writeLogError(GetLastError(), _T("***SECURITY: disable HTP"));
 	}
 
+	CreateAcuFonts();
 	CTlsRegistry regLang(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
-	m_wLanguageID=(WORD)regLang.ReadDWORD(_T("LanguageID"), 0);
-	
-	CreateAcuFonts(m_wLanguageID,false);
-	LoadGlobalAcuFonts(m_wLanguageID);
-	
+	WORD const regLangId=(WORD)regLang.ReadDWORD(_T("LanguageID"), 0);
+	CStringW const fontName = SetNewLanguageAndFont(regLangId);
+
 	SetTimer(WATCHDOGTIMER,2000,NULL);
 
 	CString szLAN=_T("");
-	szLAN.Format(_T("***Init LanguageID %s ID %d***"), m_pszFontName, m_wLanguageID);
+	szLAN.Format(_T("***Init LanguageID %s ID %d***"), fontName, m_wLanguageID);
 	theApp.WriteLog(szLAN);
 		
 	StartI2CWatchdogThread();
 
 
-	getModel()->Init(m_pszFontName,m_wLanguageID);
+	getModel()->Init(fontName,m_wLanguageID);
 
 	getModel()->getALARMHANDLER()->setSystemSilent();
 
@@ -797,453 +794,79 @@ void CMainFrame::OnSetFocus(CWnd* pOldWnd)
  *
  * \return	The new acu fonts.
  **************************************************************************************************/
-
-WORD CMainFrame::CreateAcuFonts(WORD wLanguageID, bool bSetFaceToModel)
+void CMainFrame::CreateAcuFonts()
 {
-//	CClientDC dc(this);
-
-	HANDLE hSearch;
-	WIN32_FIND_DATA fileData;
-	//BOOL bFinished = false;
-
-	bool bSDCARDfont=false;
-
-	//TCHAR szFileName[255];
-
-	hSearch = FindFirstFile(_T("\\sdcard\\fonts\\*.*"), &fileData);
-
-	if (hSearch != INVALID_HANDLE_VALUE)
-	{
-		bSDCARDfont=true;
-
-		FindClose(hSearch);
-	}
-	else
-		hSearch = NULL;
-
-	if(bSDCARDfont)
-	{
-		theApp.WriteLog(_T("***SDCARDfont true"));
-		//DEBUGMSG(TRUE, (TEXT("SDCARDfont true\r\n")));
-	}
-	else
-	{
-		theApp.WriteLog(_T("***SDCARDfont false"));
-		//DEBUGMSG(TRUE, (TEXT("SDCARDfont false\r\n")));
-	}
-	
-
-	if(bSDCARDfont)
-	{
-		if(wLanguageID==LAN_CHINESE)
-		{
-			theApp.WriteLog(_T("***CHN"));
-			_tcscpy_s(m_pszFontName,_countof(m_pszFontName),_T("Arial Unicode MS"));
-			//_tcscpy_s(m_pszFontName,_countof(m_pszFontName),_T("SimHei"));
-		}
-		else if(wLanguageID==LAN_JAPANESE)
-		{
-			theApp.WriteLog(_T("***JPN"));
-			_tcscpy_s(m_pszFontName,_countof(m_pszFontName),_T("MS PGothic"));
-			//_tcscpy_s(m_pszFontName,_countof(m_pszFontName),_T("SimHei"));
-		}
-		else
-		{
-			theApp.WriteLog(_T("***OTH"));
-			//RegisterFFSDISKFonts();
-			_tcscpy_s(m_pszFontName,_countof(m_pszFontName),_T("arial"));
-		}
-		
-//		theApp.WriteLog(_T("***RFF"));
-//		RegisterFFSDISKFonts();
-//		theApp.WriteLog(_T("***RSD"));
-//		RegisterSDCardFonts();
-	}
-	else
-	{
-		if(wLanguageID==LAN_CHINESE || wLanguageID==LAN_JAPANESE)
-		{
-			CTlsRegistry regLang(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
-			regLang.WriteDWORD(_T("LanguageID"), 0);
-			m_wLanguageID=0;
-		}
-		_tcscpy_s(m_pszFontName,_countof(m_pszFontName),_T("arial"));
-//		RegisterFFSDISKFonts();
-	}
-
-	theApp.WriteLog(_T("***SFF"));
-	theApp.WriteLog(m_pszFontName);
-
-	if(bSetFaceToModel)
-		getModel()->SetFontFace(m_pszFontName);
-	theApp.WriteLog(_T("***SFF1"));
-
-	if (!m_hasFontCreated) {
 		RegisterFFSDISKFonts();
-		if (bSDCARDfont) {
-			RegisterSDCardFonts();
-		}
-
+		RegisterSDCardFonts();
 		CreateFontHandles(CHINESE, _T("Arial Unicode MS"));
 		CreateFontHandles(JAPANESE, _T("MS PGothic"));
 		CreateFontHandles(OTHER, _T("arial"));
-		m_hasFontCreated = true;
+}
+
+CStringW CMainFrame::SetNewLanguageAndFont(WORD const wNewLanguageID)
+{
+	if(!m_bIsSDCARDfontPresent && (wNewLanguageID==LAN_CHINESE || wNewLanguageID==LAN_JAPANESE))
+	{
+		CTlsRegistry regLang(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
+		regLang.WriteDWORD(_T("LanguageID"), 0);
+		m_wLanguageID=0;
+	}
+	else {
+		m_wLanguageID=wNewLanguageID;
 	}
 
-
-//	if(m_hf10Norm!=NULL)
-//	{
-//		DeleteObject(m_hf10Norm);
-//		m_hf10Norm=NULL;
-//	}
-//	if(m_hf10Bold!=NULL)
-//	{
-//		DeleteObject(m_hf10Bold);
-//		m_hf10Bold=NULL;
-//	}
-//	if(m_hf13Bold!=NULL)
-//	{
-//		DeleteObject(m_hf13Bold);
-//		m_hf13Bold=NULL;
-//	}
-//
-//	theApp.WriteLog(_T("***SFF2"));
-//
-//	if(m_hf11Norm!=NULL)
-//	{
-//		DeleteObject(m_hf11Norm);
-//		m_hf11Norm=NULL;
-//	}
-//	if(m_hf12Norm!=NULL)
-//	{
-//		DeleteObject(m_hf12Norm);
-//		m_hf12Norm=NULL;
-//	}
-//	if(m_hf12Norm90degree!=NULL)
-//	{
-//		DeleteObject(m_hf12Norm90degree);
-//		m_hf12Norm90degree=NULL;
-//	}
-//
-//	theApp.WriteLog(_T("***SFF3"));
-//
-//	if(m_hf13Norm!=NULL)
-//	{
-//		DeleteObject(m_hf13Norm);
-//		m_hf13Norm=NULL;
-//	}
-//	if(m_hf14Norm!=NULL)
-//	{
-//		DeleteObject(m_hf14Norm);
-//		m_hf14Norm=NULL;
-//	}
-//	if(m_hf14Bold!=NULL)
-//	{
-//		DeleteObject(m_hf14Bold);
-//		m_hf14Bold=NULL;
-//	}
-//
-//	theApp.WriteLog(_T("***SFF4"));
-//
-//	if(m_hf14Bold90degree!=NULL)
-//	{
-//		theApp.WriteLog(_T("***14-A"));
-//		DeleteObject(m_hf14Bold90degree);
-//		theApp.WriteLog(_T("***14-B"));
-//		m_hf14Bold90degree=NULL;
-//
-//	}
-//	if(m_hf15Normal!=NULL)
-//	{
-//		theApp.WriteLog(_T("***15-A"));
-//		DeleteObject(m_hf15Normal);
-//		theApp.WriteLog(_T("***15-B"));
-//		m_hf15Normal=NULL;
-//	}
-//	if(m_hf12AcuNormNum!=NULL)
-//	{
-//		theApp.WriteLog(_T("***12-A"));
-//		DeleteObject(m_hf12AcuNormNum);
-//		theApp.WriteLog(_T("***12-B"));
-//		m_hf12AcuNormNum=NULL;
-//	}
-//	if(m_hf14AcuNormNum!=NULL)
-//	{
-//		theApp.WriteLog(_T("***14A-A"));
-//		DeleteObject(m_hf14AcuNormNum);
-//		theApp.WriteLog(_T("***14A-B"));
-//
-//		m_hf14AcuNormNum=NULL;
-//	}
-//
-//	theApp.WriteLog(_T("***SFF5"));
-//
-//	if(m_hf15Bold!=NULL)
-//	{
-//		DeleteObject(m_hf15Bold);
-//		m_hf15Bold=NULL;
-//	}
-//	if(m_hf16Normal!=NULL)
-//	{
-//		DeleteObject(m_hf16Normal);
-//		m_hf16Normal=NULL;
-//	}
-//	if(m_hf16Bold!=NULL)
-//	{
-//		DeleteObject(m_hf16Bold);
-//		m_hf16Bold=NULL;
-//	}
-//
-//	theApp.WriteLog(_T("***SFF6"));
-//
-//	if(m_hf16Bold90degree!=NULL)
-//	{
-//		DeleteObject(m_hf16Bold90degree);
-//		m_hf16Bold90degree=NULL;
-//	}
-//	if(m_hf17Bold!=NULL)
-//	{
-//		DeleteObject(m_hf17Bold);
-//		m_hf17Bold=NULL;
-//	}
-//	if(m_hf18Normal!=NULL)
-//	{
-//		DeleteObject(m_hf18Normal);
-//		m_hf18Normal=NULL;
-//	}
-//
-//	theApp.WriteLog(_T("***SFF7"));
-//
-//	if(m_hf18Bold!=NULL)
-//	{
-//		DeleteObject(m_hf18Bold);
-//		m_hf18Bold=NULL;
-//	}
-//	if(m_hf18BoldNum!=NULL)
-//	{
-//		DeleteObject(m_hf18BoldNum);
-//		m_hf18BoldNum=NULL;
-//	}
-//	if(m_hf20Bold!=NULL)
-//	{
-//		DeleteObject(m_hf20Bold);
-//		m_hf20Bold=NULL;
-//	}
-//
-//	theApp.WriteLog(_T("***SFF8"));
-//
-//	if(m_hf20BoldNum!=NULL)
-//	{
-//		DeleteObject(m_hf20BoldNum);
-//		m_hf20BoldNum=NULL;
-//	}
-//	if(m_hf21Medium!=NULL)
-//	{
-//		DeleteObject(m_hf21Medium);
-//		m_hf21Medium=NULL;
-//	}
-//	if(m_hf21Bold!=NULL)
-//	{
-//		DeleteObject(m_hf21Bold);
-//		m_hf21Bold=NULL;
-//	}
-//	if(m_hf22Medium!=NULL)
-//	{
-//		DeleteObject(m_hf22Medium);
-//		m_hf22Medium=NULL;
-//	}
-//	if(m_hf22Bold!=NULL)
-//	{
-//		DeleteObject(m_hf22Bold);
-//		m_hf22Bold=NULL;
-//	}
-//	if(m_hf24Bold!=NULL)
-//	{
-//		DeleteObject(m_hf24Bold);
-//		m_hf24Bold=NULL;
-//	}
-//
-//	theApp.WriteLog(_T("***SFF9"));
-//
-//	if(m_hf26Medium!=NULL)
-//	{
-//		DeleteObject(m_hf26Medium);
-//		m_hf26Medium=NULL;
-//	}
-//	if(m_hf28Bold!=NULL)
-//	{
-//		DeleteObject(m_hf28Bold);
-//		m_hf28Bold=NULL;
-//	}
-//	if(m_hf30Bold!=NULL)
-//	{
-//		DeleteObject(m_hf30Bold);
-//		m_hf30Bold=NULL;
-//	}
-//	if(m_hf32Medium!=NULL)
-//	{
-//		DeleteObject(m_hf32Medium);
-//		m_hf32Medium=NULL;
-//	}
-//	if(m_hf34Bold!=NULL)
-//	{
-//		DeleteObject(m_hf34Bold);
-//		m_hf34Bold=NULL;
-//	}
-//	if(m_hf34BoldNum!=NULL)
-//	{
-//		DeleteObject(m_hf34BoldNum);
-//		m_hf34BoldNum=NULL;
-//	}
-//
-//	theApp.WriteLog(_T("***SFF10"));
-//
-//	if(m_hf38Bold!=NULL)
-//	{
-//		DeleteObject(m_hf38Bold);
-//		m_hf38Bold=NULL;
-//	}
-//	if(m_hf40Bold!=NULL)
-//	{
-//		DeleteObject(m_hf40Bold);
-//		m_hf40Bold=NULL;
-//	}
-//	if(m_hf50Bold!=NULL)
-//	{
-//		DeleteObject(m_hf50Bold);
-//		m_hf50Bold=NULL;
-//	}
-//	if(m_hf60Bold!=NULL)
-//	{
-//		DeleteObject(m_hf60Bold);
-//		m_hf60Bold=NULL;
-//	}
-//
-//	theApp.WriteLog(_T("***SFF11"));
-//
-//	if(m_hf70Bold!=NULL)
-//	{
-//		DeleteObject(m_hf70Bold);
-//		m_hf70Bold=NULL;
-//	}
-//	if(m_hf31AcuBoldNum!=NULL)
-//	{
-//		DeleteObject(m_hf31AcuBoldNum);
-//		m_hf31AcuBoldNum=NULL;
-//	}
-//	if(m_hf33AcuBoldNum!=NULL)
-//	{
-//		DeleteObject(m_hf33AcuBoldNum);
-//		m_hf33AcuBoldNum=NULL;
-//	}
-//	if(m_hf70BoldNum!=NULL)
-//	{
-//		DeleteObject(m_hf70BoldNum);
-//		m_hf70BoldNum=NULL;
-//	}
-//
-//	theApp.WriteLog(_T("***CFH"));
-//
-	m_hf10Bold=CreateFontHandle(10,m_pszFontName,FW_BOLD);
-	m_hf13Bold=CreateFontHandle(13,m_pszFontName,FW_BOLD);
-	m_hf10Norm=CreateFontHandle(10,m_pszFontName,FW_NORMAL);
-	m_hf11Norm=CreateFontHandle(11,m_pszFontName,FW_NORMAL);
-	m_hf12Norm=CreateFontHandle(12,m_pszFontName,FW_NORMAL);
-	m_hf12Norm90degree=CreateFontHandle(-((8*dc.GetDeviceCaps(LOGPIXELSY))/72),m_pszFontName,FW_NORMAL,900);
-	m_hf13Norm=CreateFontHandle(13,m_pszFontName,FW_NORMAL);
-	m_hf14Norm=CreateFontHandle(14,m_pszFontName,FW_NORMAL);
-	m_hf14Bold=CreateFontHandle(14,m_pszFontName,FW_BOLD);
-	m_hf14Bold90degree=CreateFontHandle(-((9*dc.GetDeviceCaps(LOGPIXELSY))/72),m_pszFontName,FW_NORMAL,900);
-	m_hf15Normal=CreateFontHandle(15,m_pszFontName,FW_NORMAL);
-	m_hf15Bold=CreateFontHandle(15,m_pszFontName,FW_BOLD);
-	m_hf16Bold=CreateFontHandle(16,m_pszFontName,FW_BOLD);
-	m_hf16Normal=CreateFontHandle(16,m_pszFontName,FW_NORMAL);
-	m_hf16Bold90degree=CreateFontHandle(-((10*dc.GetDeviceCaps(LOGPIXELSY))/72),m_pszFontName,FW_NORMAL,900);
-	m_hf17Bold=CreateFontHandle(17,m_pszFontName,FW_BOLD);
-	m_hf18Normal=CreateFontHandle(18,m_pszFontName,FW_NORMAL);
-	m_hf18Bold=CreateFontHandle(18,m_pszFontName,FW_BOLD);
-	m_hf20Bold=CreateFontHandle(20,m_pszFontName,FW_BOLD);
-	m_hf21Medium=CreateFontHandle(21,m_pszFontName,FW_MEDIUM);
-	m_hf21Bold=CreateFontHandle(21,m_pszFontName,FW_BOLD);
-	m_hf22Medium=CreateFontHandle(22,m_pszFontName,FW_MEDIUM);
-	m_hf22Bold=CreateFontHandle(22,m_pszFontName,FW_BOLD);
-	m_hf24Bold=CreateFontHandle(24,m_pszFontName,FW_BOLD);
-	m_hf26Medium=CreateFontHandle(26,m_pszFontName,FW_MEDIUM);
-	m_hf28Bold=CreateFontHandle(28,m_pszFontName,FW_BOLD);
-	m_hf30Bold=CreateFontHandle(30,m_pszFontName,FW_BOLD);
-	m_hf32Medium=CreateFontHandle(32,m_pszFontName,FW_MEDIUM);
-	m_hf34Bold=CreateFontHandle(34,m_pszFontName,FW_BOLD);
-	m_hf38Bold=CreateFontHandle(38,m_pszFontName,FW_BOLD);
-	m_hf40Bold=CreateFontHandle(40,m_pszFontName,FW_BOLD);
-	m_hf50Bold=CreateFontHandle(50,m_pszFontName,FW_BOLD);
-	m_hf60Bold=CreateFontHandle(60,m_pszFontName,FW_BOLD);
-	m_hf70Bold=CreateFontHandle(70,m_pszFontName,FW_BOLD);
-	m_hf31AcuBoldNum=CreateFontHandle(38,m_pszFontName,FW_BOLD);
-	m_hf33AcuBoldNum=CreateFontHandle(40,m_pszFontName,FW_BOLD);
-	m_hf70BoldNum=CreateFontHandle(70,m_pszFontName,FW_BOLD);
-	m_hf14AcuNormNum=CreateFontHandle(14,m_pszFontName,FW_NORMAL);
-	m_hf12AcuNormNum=CreateFontHandle(12,m_pszFontName,FW_NORMAL);
-	m_hf34BoldNum=CreateFontHandle(34,m_pszFontName,FW_BOLD);
-	m_hf20BoldNum=CreateFontHandle(20,m_pszFontName,FW_BOLD);
-	m_hf18BoldNum=CreateFontHandle(18,m_pszFontName,FW_BOLD);
-
-	/*m_hf31AcuBoldNum=CreateFontHandle(&dc,38,_T("arial"),FW_BOLD);
-	m_hf33AcuBoldNum=CreateFontHandle(&dc,40,_T("arial"),FW_BOLD);
-	m_hf70BoldNum=CreateFontHandle(&dc,70,_T("arial"),FW_BOLD);
-	m_hf14AcuNormNum=CreateFontHandle(&dc,14,_T("arial"),FW_NORMAL);
-	m_hf34BoldNum=CreateFontHandle(&dc,34,_T("arial"),FW_BOLD);
-	m_hf20BoldNum=CreateFontHandle(&dc,20,_T("arial"),FW_BOLD);
-	m_hf18BoldNum=CreateFontHandle(&dc,18,_T("arial"),FW_BOLD);*/
-
-	return wLanguageID;
+	CStringW const fontName = LoadGlobalAcuFonts(m_wLanguageID);
+	return fontName;
 }
 
 void CMainFrame::CreateFontHandles(int const xIndex, TCHAR * const xFontName)
 {
+	_tcscpy_s(m_pszFontNames[xIndex],_countof(m_pszFontNames[xIndex]),xFontName);
+
 	CClientDC dc(this);
 
-	m_hf10Norm[xIndex]=CreateFontHandle(10,xFontName,FW_NORMAL);
-	m_hf10Bold[xIndex]=CreateFontHandle(10,xFontName,FW_BOLD);
-	m_hf11Norm[xIndex]=CreateFontHandle(11,xFontName,FW_NORMAL);
-	m_hf12Norm[xIndex]=CreateFontHandle(12,xFontName,FW_NORMAL);
-	m_hf12Norm90degree[xIndex]=CreateFontHandle(-((8*dc.GetDeviceCaps(LOGPIXELSY))/72),xFontName,FW_NORMAL,900);
-	m_hf12AcuNormNum[xIndex]=CreateFontHandle(12,xFontName,FW_NORMAL);
-	m_hf13Norm[xIndex]=CreateFontHandle(13,xFontName,FW_NORMAL);
-	m_hf13Bold[xIndex]=CreateFontHandle(13,xFontName,FW_BOLD);
-	m_hf14Norm[xIndex]=CreateFontHandle(14,xFontName,FW_NORMAL);
-	m_hf14Bold[xIndex]=CreateFontHandle(14,xFontName,FW_BOLD);
-	m_hf14Bold90degree[xIndex]=CreateFontHandle(-((9*dc.GetDeviceCaps(LOGPIXELSY))/72),xFontName,FW_NORMAL,900);
-	m_hf14AcuNormNum[xIndex]=CreateFontHandle(14,xFontName,FW_NORMAL);
-	m_hf15Normal[xIndex]=CreateFontHandle(15,xFontName,FW_NORMAL);
-	m_hf15Bold[xIndex]=CreateFontHandle(15,xFontName,FW_BOLD);
-	m_hf16Normal[xIndex]=CreateFontHandle(16,xFontName,FW_NORMAL);
-	m_hf16Bold[xIndex]=CreateFontHandle(16,xFontName,FW_BOLD);
-	m_hf16Bold90degree[xIndex]=CreateFontHandle(-((10*dc.GetDeviceCaps(LOGPIXELSY))/72),xFontName,FW_NORMAL,900);
-	m_hf17Bold[xIndex]=CreateFontHandle(17,xFontName,FW_BOLD);
-	m_hf18Normal[xIndex]=CreateFontHandle(18,xFontName,FW_NORMAL);
-	m_hf18Bold[xIndex]=CreateFontHandle(18,xFontName,FW_BOLD);
-	m_hf18BoldNum[xIndex]=CreateFontHandle(18,xFontName,FW_BOLD);
-	m_hf20Bold[xIndex]=CreateFontHandle(20,xFontName,FW_BOLD);
-	m_hf20BoldNum[xIndex]=CreateFontHandle(20,xFontName,FW_BOLD);
-	m_hf21Medium[xIndex]=CreateFontHandle(21,xFontName,FW_MEDIUM);
-	m_hf21Bold[xIndex]=CreateFontHandle(21,xFontName,FW_BOLD);
-	m_hf22Medium[xIndex]=CreateFontHandle(22,xFontName,FW_MEDIUM);
-	m_hf22Bold[xIndex]=CreateFontHandle(22,xFontName,FW_BOLD);
-	m_hf24Bold[xIndex]=CreateFontHandle(24,xFontName,FW_BOLD);
-	m_hf26Medium[xIndex]=CreateFontHandle(26,xFontName,FW_MEDIUM);
-	m_hf28Bold[xIndex]=CreateFontHandle(28,xFontName,FW_BOLD);
-	m_hf30Bold[xIndex]=CreateFontHandle(30,xFontName,FW_BOLD);
-	m_hf31AcuBoldNum[xIndex]=CreateFontHandle(38,xFontName,FW_BOLD);
-	m_hf32Medium[xIndex]=CreateFontHandle(32,xFontName,FW_MEDIUM);
-	m_hf33AcuBoldNum[xIndex]=CreateFontHandle(40,xFontName,FW_BOLD);
-	m_hf34Bold[xIndex]=CreateFontHandle(34,xFontName,FW_BOLD);
-	m_hf34BoldNum[xIndex]=CreateFontHandle(34,xFontName,FW_BOLD);
-	m_hf38Bold[xIndex]=CreateFontHandle(38,xFontName,FW_BOLD);
-	m_hf40Bold[xIndex]=CreateFontHandle(40,xFontName,FW_BOLD);
-	m_hf50Bold[xIndex]=CreateFontHandle(50,xFontName,FW_BOLD);
-	m_hf60Bold[xIndex]=CreateFontHandle(60,xFontName,FW_BOLD);
-	m_hf70BoldNum[xIndex]=CreateFontHandle(70,xFontName,FW_BOLD);
-	m_hf70Bold[xIndex]=CreateFontHandle(70,xFontName,FW_BOLD);
+	m_hf10Norm[xIndex]=CreateFontHandle(&dc,10,xFontName,FW_NORMAL);
+	m_hf10Bold[xIndex]=CreateFontHandle(&dc,10,xFontName,FW_BOLD);
+	m_hf11Norm[xIndex]=CreateFontHandle(&dc,11,xFontName,FW_NORMAL);
+	m_hf12Norm[xIndex]=CreateFontHandle(&dc,12,xFontName,FW_NORMAL);
+	m_hf12Norm90degree[xIndex]=CreateFontHandle(&dc,-((8*dc.GetDeviceCaps(LOGPIXELSY))/72),xFontName,FW_NORMAL,900);
+	m_hf12AcuNormNum[xIndex]=CreateFontHandle(&dc,12,xFontName,FW_NORMAL);
+	m_hf13Norm[xIndex]=CreateFontHandle(&dc,13,xFontName,FW_NORMAL);
+	m_hf13Bold[xIndex]=CreateFontHandle(&dc,13,xFontName,FW_BOLD);
+	m_hf14Norm[xIndex]=CreateFontHandle(&dc,14,xFontName,FW_NORMAL);
+	m_hf14Bold[xIndex]=CreateFontHandle(&dc,14,xFontName,FW_BOLD);
+	m_hf14Bold90degree[xIndex]=CreateFontHandle(&dc,-((9*dc.GetDeviceCaps(LOGPIXELSY))/72),xFontName,FW_NORMAL,900);
+	m_hf14AcuNormNum[xIndex]=CreateFontHandle(&dc,14,xFontName,FW_NORMAL);
+	m_hf15Normal[xIndex]=CreateFontHandle(&dc,15,xFontName,FW_NORMAL);
+	m_hf15Bold[xIndex]=CreateFontHandle(&dc,15,xFontName,FW_BOLD);
+	m_hf16Normal[xIndex]=CreateFontHandle(&dc,16,xFontName,FW_NORMAL);
+	m_hf16Bold[xIndex]=CreateFontHandle(&dc,16,xFontName,FW_BOLD);
+	m_hf16Bold90degree[xIndex]=CreateFontHandle(&dc,-((10*dc.GetDeviceCaps(LOGPIXELSY))/72),xFontName,FW_NORMAL,900);
+	m_hf17Bold[xIndex]=CreateFontHandle(&dc,17,xFontName,FW_BOLD);
+	m_hf18Normal[xIndex]=CreateFontHandle(&dc,18,xFontName,FW_NORMAL);
+	m_hf18Bold[xIndex]=CreateFontHandle(&dc,18,xFontName,FW_BOLD);
+	m_hf18BoldNum[xIndex]=CreateFontHandle(&dc,18,xFontName,FW_BOLD);
+	m_hf20Bold[xIndex]=CreateFontHandle(&dc,20,xFontName,FW_BOLD);
+	m_hf20BoldNum[xIndex]=CreateFontHandle(&dc,20,xFontName,FW_BOLD);
+	m_hf21Medium[xIndex]=CreateFontHandle(&dc,21,xFontName,FW_MEDIUM);
+	m_hf21Bold[xIndex]=CreateFontHandle(&dc,21,xFontName,FW_BOLD);
+	m_hf22Medium[xIndex]=CreateFontHandle(&dc,22,xFontName,FW_MEDIUM);
+	m_hf22Bold[xIndex]=CreateFontHandle(&dc,22,xFontName,FW_BOLD);
+	m_hf24Bold[xIndex]=CreateFontHandle(&dc,24,xFontName,FW_BOLD);
+	m_hf26Medium[xIndex]=CreateFontHandle(&dc,26,xFontName,FW_MEDIUM);
+	m_hf28Bold[xIndex]=CreateFontHandle(&dc,28,xFontName,FW_BOLD);
+	m_hf30Bold[xIndex]=CreateFontHandle(&dc,30,xFontName,FW_BOLD);
+	m_hf31AcuBoldNum[xIndex]=CreateFontHandle(&dc,38,xFontName,FW_BOLD);
+	m_hf32Medium[xIndex]=CreateFontHandle(&dc,32,xFontName,FW_MEDIUM);
+	m_hf33AcuBoldNum[xIndex]=CreateFontHandle(&dc,40,xFontName,FW_BOLD);
+	m_hf34Bold[xIndex]=CreateFontHandle(&dc,34,xFontName,FW_BOLD);
+	m_hf34BoldNum[xIndex]=CreateFontHandle(&dc,34,xFontName,FW_BOLD);
+	m_hf38Bold[xIndex]=CreateFontHandle(&dc,38,xFontName,FW_BOLD);
+	m_hf40Bold[xIndex]=CreateFontHandle(&dc,40,xFontName,FW_BOLD);
+	m_hf50Bold[xIndex]=CreateFontHandle(&dc,50,xFontName,FW_BOLD);
+	m_hf60Bold[xIndex]=CreateFontHandle(&dc,60,xFontName,FW_BOLD);
+	m_hf70BoldNum[xIndex]=CreateFontHandle(&dc,70,xFontName,FW_BOLD);
+	m_hf70Bold[xIndex]=CreateFontHandle(&dc,70,xFontName,FW_BOLD);
 }
 
 /**********************************************************************************************//**
@@ -1255,12 +878,15 @@ void CMainFrame::CreateFontHandles(int const xIndex, TCHAR * const xFontName)
  * \param	wLanguageID	Identifier for the language.
  **************************************************************************************************/
 
-void CMainFrame::LoadGlobalAcuFonts(WORD wLanguageID)
+CStringW CMainFrame::LoadGlobalAcuFonts(WORD wLanguageID)
 {
+	fontCategory font;
+
 	switch(wLanguageID)
 	{
 	case LAN_JAPANESE:
 		{
+			font=JAPANESE;
 			g_hf5AcuNorm=m_hf10Norm[JAPANESE];//m_hf12Norm;
 			g_hf6AcuNorm=m_hf10Norm[JAPANESE];//m_hf13Norm;
 			g_hf6AcuBold=m_hf10Bold[JAPANESE];
@@ -1299,6 +925,7 @@ void CMainFrame::LoadGlobalAcuFonts(WORD wLanguageID)
 		break;
 	case LAN_CHINESE:
 		{
+			font=CHINESE;
 			g_hf5AcuNorm=m_hf12Norm[CHINESE];
 			g_hf6AcuNorm=m_hf13Norm[CHINESE];
 			g_hf6AcuBold=m_hf13Bold[CHINESE];
@@ -1336,6 +963,7 @@ void CMainFrame::LoadGlobalAcuFonts(WORD wLanguageID)
 		break;
 	default:
 		{
+			font=OTHER;
 			g_hf5AcuNorm=m_hf12Norm[OTHER];
 			g_hf6AcuNorm=m_hf13Norm[OTHER];
 			g_hf6AcuBold=m_hf13Bold[OTHER];
@@ -1373,6 +1001,7 @@ void CMainFrame::LoadGlobalAcuFonts(WORD wLanguageID)
 		break;
 	}
 	
+	return m_pszFontNames[font];
 }
 
 /**********************************************************************************************//**
@@ -1435,6 +1064,7 @@ void CMainFrame::RegisterSDCardFonts()
 
 	if (hSearch != INVALID_HANDLE_VALUE)
 	{
+		theApp.WriteLog(_T("***SDCARDfont true"));
 		do
 		{
 			swprintf(szFileName/*,sizeof(szFileName)*/, _T("\\sdcard\\fonts\\%s"), fileData.cFileName);
@@ -1448,11 +1078,9 @@ void CMainFrame::RegisterSDCardFonts()
 		while (FindNextFile (hSearch, &fileData) && !m_bExit);
 
 		FindClose(hSearch);
+		m_bIsSDCARDfontPresent = true;
 
 	}
-
-	
-
 
 	//CloseHandle (hSearch);
 	hSearch = NULL;
@@ -1950,42 +1578,10 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 			break;
-		//case WM_LOAD_LANGUAGE:
-		//	{
-		//		/*CreateWndHourglass();
-		//		ShowWndHourglass(true);
-
-		//		m_wLanguageToLoad=wParam;
-		//		StartLoadLanguageThread();
-		//		eventLoadLanguage.SetEvent();*/
-
-		//		if(getModel()->GetLanguageID()!=m_wLanguageID)
-		//		{
-		//			bool bChangeFace=false;
-		//			if(m_wLanguageID==LAN_CHINESE)
-		//			{
-		//				bChangeFace=true;
-		//			}
-		//			else if(getModel()->GetLanguageID()==LAN_CHINESE)
-		//			{
-		//				bChangeFace=true;
-		//			}
-
-		//			if(bChangeFace)
-		//			{
-		//				CreateAcuFonts(getModel()->GetLanguageID());
-		//				LoadGlobalAcuFonts(getModel()->GetLanguageID());
-		//				m_wLanguageID=getModel()->GetLanguageID();
-		//			}
-		//		}
-		//	}
-		//	break;
 		case WM_LANGUAGE_CHANGED:
 			{
 				if(getModel()->GetLanguageID()!=m_wLanguageID)
 				{
-					theApp.WriteLog(_T("LGC"));
-
 					bool bChangeFace=false;
 					if(m_wLanguageID==LAN_CHINESE &&  getModel()->GetLanguageID()!=LAN_JAPANESE)
 					{
@@ -2006,41 +1602,23 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 					if(bChangeFace)
 					{
-						theApp.WriteLog(_T("CF"));
-						CreateAcuFonts(getModel()->GetLanguageID(),true);
-						theApp.WriteLog(_T("CF1"));
-						LoadGlobalAcuFonts(getModel()->GetLanguageID());
-						m_wLanguageID=getModel()->GetLanguageID();
+						CStringW const fontname = SetNewLanguageAndFont(getModel()->GetLanguageID());
+						getModel()->SetFontFace(fontname);
 
-						//todo call directly the event
 						CMVEventUI event(CMVEventUI::EV_LANGUAGE);
 						getModel()->triggerEvent(&event);
 
-						//to inform all other windows beside fabian
 						::SendMessage(HWND_BROADCAST,WM_FONTCHANGE,0,0);
 					}
 
 				}
 
-				//todo reset font loading flag
 				getModel()->setReloadLanguageProgress(false);
-
-				//close the language view
-				theApp.WriteLog(_T("RDV"));
 				PostMessage(WM_REDRAW_VIEW);
 
 				return 1;
 			}
 			break;
-		/*case WM_FONTCHANGE:
-			{
-				if(!m_bExit)
-				{
-					CMVEventUI event(CMVEventUI::EV_LANGUAGE);
-					getModel()->triggerEvent(&event);
-				}
-			}
-			break;*/
 		case WM_EXCEPTION:
 			{
 				CMVEventInfotext event(CMVEventInfotext::EV_TIMETEXT, _T("! EXCEPTION: please restart ASAP !"), 5000);
@@ -2107,7 +1685,6 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			break;*/
 		case WM_EV_TIMETEXT_RELOADCONFIG:
 			{
-				//set font loading flag
 				getModel()->setReloadLanguageProgress(true);
 
 				CStringW sData = getModel()->GetLanguageString(IDS_TXT_CONFIGLOADED);
@@ -4491,7 +4068,6 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case WM_RELOAD_CONFIG_ERROR:
 			{
-				//set font loading flag
 				getModel()->setReloadLanguageProgress(true);
 
 				CStringW sData = _T("ERROR: ");
@@ -6466,18 +6042,58 @@ void CMainFrame::QuitVentilator()
 	PostMessage(WM_CLOSE);
 }
 
-/**********************************************************************************************//**
- * Executes the destroy action
- *
- * \author	Rainer Kühner
- * \date	22.02.2018
- **************************************************************************************************/
+void CMainFrame::DeleteFontHandle(HFONT & hfFontHandle) {
+	if (hfFontHandle != NULL) {
+		DeleteObject(hfFontHandle);
+		hfFontHandle = NULL;
+	}
+}
 
-void CMainFrame::OnDestroy()
-{
-	CFrameWnd::OnDestroy();
-	
-
+void CMainFrame::DeleteFontHandles() {
+	for (int i = 0; i < NUMFONTCATEGORY; ++i) {
+		DeleteFontHandle(m_hf10Bold[i]);
+		DeleteFontHandle(m_hf13Bold[i]);
+		DeleteFontHandle(m_hf10Norm[i]);
+		DeleteFontHandle(m_hf11Norm[i]);
+		DeleteFontHandle(m_hf12Norm[i]);
+		DeleteFontHandle(m_hf12Norm90degree[i]);
+		DeleteFontHandle(m_hf13Norm[i]);
+		DeleteFontHandle(m_hf14Norm[i]);
+		DeleteFontHandle(m_hf14Bold[i]);
+		DeleteFontHandle(m_hf15Normal[i]);
+		DeleteFontHandle(m_hf12AcuNormNum[i]);
+		DeleteFontHandle(m_hf14AcuNormNum[i]);
+		DeleteFontHandle(m_hf14Bold90degree[i]);
+		DeleteFontHandle(m_hf15Bold[i]);
+		DeleteFontHandle(m_hf16Normal[i]);
+		DeleteFontHandle(m_hf16Bold[i]);
+		DeleteFontHandle(m_hf16Bold90degree[i]);
+		DeleteFontHandle(m_hf17Bold[i]);
+		DeleteFontHandle(m_hf18Normal[i]);
+		DeleteFontHandle(m_hf18Bold[i]);
+		DeleteFontHandle(m_hf18BoldNum[i]);
+		DeleteFontHandle(m_hf20Bold[i]);
+		DeleteFontHandle(m_hf20BoldNum[i]);
+		DeleteFontHandle(m_hf21Medium[i]);
+		DeleteFontHandle(m_hf21Bold[i]);
+		DeleteFontHandle(m_hf22Medium[i]);
+		DeleteFontHandle(m_hf22Bold[i]);
+		DeleteFontHandle(m_hf24Bold[i]);
+		DeleteFontHandle(m_hf26Medium[i]);
+		DeleteFontHandle(m_hf28Bold[i]);
+		DeleteFontHandle(m_hf30Bold[i]);
+		DeleteFontHandle(m_hf32Medium[i]);
+		DeleteFontHandle(m_hf34Bold[i]);
+		DeleteFontHandle(m_hf34BoldNum[i]);
+		DeleteFontHandle(m_hf38Bold[i]);
+		DeleteFontHandle(m_hf40Bold[i]);
+		DeleteFontHandle(m_hf50Bold[i]);
+		DeleteFontHandle(m_hf60Bold[i]);
+		DeleteFontHandle(m_hf70Bold[i]);
+		DeleteFontHandle(m_hf31AcuBoldNum[i]);
+		DeleteFontHandle(m_hf33AcuBoldNum[i]);
+		DeleteFontHandle(m_hf70BoldNum[i]);
+	}
 //	if(m_hf10Bold!=NULL)
 //	{
 //		DeleteObject(m_hf10Bold);
@@ -6689,7 +6305,21 @@ void CMainFrame::OnDestroy()
 //		DeleteObject(m_hf70BoldNum);
 //		m_hf70BoldNum=NULL;
 //	}
+}
 
+
+/**********************************************************************************************//**
+ * Executes the destroy action
+ *
+ * \author	Rainer Kühner
+ * \date	22.02.2018
+ **************************************************************************************************/
+
+void CMainFrame::OnDestroy()
+{
+	CFrameWnd::OnDestroy();
+
+	DeleteFontHandles();
 	UnregisterFFSDISKFonts();
 	UnregisterSDCardFonts();
 

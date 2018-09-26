@@ -375,8 +375,6 @@ void CViewMenu::Show(bool bRedraw)
 			{
 			case MV_MENU:
 				{
-					theApp.WriteLog(_T("MV_MENU"));
-
 					ShowSubViewMenu(true);
 					csMenuText=getModel()->GetLanguageString(IDS_TXT_SELMENU);
 				}
@@ -390,7 +388,6 @@ void CViewMenu::Show(bool bRedraw)
 				break;
 			default:
 				{
-					theApp.WriteLog(_T("MV_D"));
 					OpenMenuSelect();
 					csMenuText=getModel()->GetLanguageString(IDS_TXT_SELMENU);
 				}
@@ -1476,8 +1473,6 @@ void CViewMenu::NotifyEvent(CMVEvent* pEvent)
 
 void CViewMenu::OpenMenuSelect()
 {
-	theApp.WriteLog(_T("OMS-S"));
-
 	if(m_bExit)
 		return;
 
@@ -1524,9 +1519,7 @@ void CViewMenu::OpenMenuSelect()
 
 	this->ShowWindow(SW_SHOW);
 
-	theApp.WriteLog(_T("OMS-E"));
 	PostMessage(WM_SET_SETUPTIMER);
-
 }
 
 /**********************************************************************************************//**

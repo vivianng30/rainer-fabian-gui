@@ -37,21 +37,19 @@ public:
 
 // Operations
 public:
-	
-
-	//void DrawHeader(CStringW cs);
-
-	
-	
 
 protected:
 	HFONT CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation=0);
+	void CreateFontHandles(int const xIndex, TCHAR * const xFontName);
+	void DeleteFontHandles();
+	void DeleteFontHandle(HFONT & hfFontHandle);
 	void RegisterFFSDISKFonts();
 	void RegisterSDCardFonts();
 	void UnregisterFFSDISKFonts();
 	void UnregisterSDCardFonts();
-	WORD CreateAcuFonts(WORD wLanguageID, bool bSetFaceToModel);
-	void LoadGlobalAcuFonts(WORD wLanguageID);
+	void CreateAcuFonts();
+	CStringW SetNewLanguageAndFont(WORD const wNewLanguageID);
+	CStringW LoadGlobalAcuFonts(WORD wLanguageID);
 
 	bool CalOxySensor21();
 	bool CalOxySensor100();
@@ -108,6 +106,13 @@ public:
 #endif
 
 protected: 
+	typedef enum {
+	      CHINESE = 0,
+	      JAPANESE,
+	      OTHER,
+		  NUMFONTCATEGORY
+	} fontCategory;
+
 	//CRITICAL_SECTION	csThreadWatchdog;
 	static CRITICAL_SECTION m_csI2Cinit;
 	CMVModel *m_pModel;//WEC2013
@@ -158,18 +163,9 @@ protected:
 	int m_nX;//WEC2013
 	int m_nY;//WEC2013
 	
-	
-	TCHAR m_pszFontName[32];//WEC2013
 	WORD m_wLanguageID;//WEC2013
 
-	//WEC2013
-	typedef enum {
-	      CHINESE = 0,
-	      JAPANESE,
-	      OTHER,
-		  NUMFONTCATEGORY
-	} fontCategory;
-
+	TCHAR m_pszFontNames[NUMFONTCATEGORY][32];//WEC2013
 	HFONT m_hf10Norm[NUMFONTCATEGORY];
 	HFONT m_hf10Bold[NUMFONTCATEGORY];
 	HFONT m_hf11Norm[NUMFONTCATEGORY];
@@ -248,8 +244,6 @@ protected:
 
 	bool m_bShowCO2PumpOnMsg;//WEC2013
 
-
-	
 	//WEC2013
 	friend UINT CTimerThread(LPVOID pc);
 	CWinThread*	m_pcwtTimerThread;
@@ -298,15 +292,13 @@ protected:
 
 	bool m_bStartInstaller;
 	bool m_bI2Cinitialized;
+	bool m_bIsSDCARDfontPresent;
 
-	bool m_hasFontCreated;
 	// Generated message map functions
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSetFocus(CWnd *pOldWnd);
 	void deletehf(HFONT & xhfont, TCHAR const * const debugTxt);
-	void CreateFontHandles(int const xIndex, TCHAR * const xFontName);
-
 	
 	DECLARE_MESSAGE_MAP()
 public:
