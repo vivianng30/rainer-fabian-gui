@@ -785,39 +785,35 @@ void CSubViewLanguage::Draw()
 
 void CSubViewLanguage::SetOneButtonDepressed(int btnID)
 {
-	if(false==getModel()->getReloadLanguageProgress())
+	POSITION pos;
+
+	for( pos = m_plUsedLangBtn.GetHeadPosition(); pos != NULL; )
 	{
-		POSITION pos;
+		CSelectSetupBtn* pBtn = m_plUsedLangBtn.GetNext( pos );
 
-		for( pos = m_plUsedLangBtn.GetHeadPosition(); pos != NULL; )
+		if(pBtn->GetBtnId() != btnID)
 		{
-			CSelectSetupBtn* pBtn = m_plUsedLangBtn.GetNext( pos );
-
-			if(pBtn->GetBtnId() != btnID)
-			{
-				pBtn->DrawOK(false);
-				pBtn->SetState(BS_UP);
-			}
-			else
-			{
-				pBtn->SetState(BS_DOWN);
-				pBtn->DrawOK(true);
-				m_iCurPosInBlock=btnID;
-
-				SetLanguage(m_iCurPosInBlock);
-			}
+			pBtn->DrawOK(false);
+			pBtn->SetState(BS_UP);
 		}
-		SetFocusedPos(0);
-
-		if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
+		else
 		{
-			m_dwLastSetupTimer=GetTickCount();
-			if(GetParent())
-				GetParent()->PostMessage(WM_SET_SETUPTIMER);
+			pBtn->SetState(BS_DOWN);
+			pBtn->DrawOK(true);
+			m_iCurPosInBlock=btnID;
+
+			SetLanguage(m_iCurPosInBlock);
 		}
-		Draw();
 	}
-	
+	SetFocusedPos(0);
+
+	if(getModel()->isSafeTickCountDelayExpired(m_dwLastSetupTimer, 1000))
+	{
+		m_dwLastSetupTimer=GetTickCount();
+		if(GetParent())
+			GetParent()->PostMessage(WM_SET_SETUPTIMER);
+	}
+	Draw();
 }
 
 /**********************************************************************************************//**
@@ -1125,15 +1121,12 @@ void CSubViewLanguage::SetPrevButtonFocused()
 
 void CSubViewLanguage::OnBnClickedLang1()
 {
-	if(false==getModel()->getReloadLanguageProgress())
-	{
-		eBtnState eState = GetBtnState(IDC_BTN_SETUP_1);
+	eBtnState eState = GetBtnState(IDC_BTN_SETUP_1);
 
-		if(eState==BS_DOWN)
-			SetOneButtonFocused(IDC_BTN_SETUP_1);
-		else
-			SetOneButtonDepressed(IDC_BTN_SETUP_1);
-	}
+	if(eState==BS_DOWN)
+		SetOneButtonFocused(IDC_BTN_SETUP_1);
+	else
+		SetOneButtonDepressed(IDC_BTN_SETUP_1);
 }
 
 /**********************************************************************************************//**
@@ -1145,15 +1138,12 @@ void CSubViewLanguage::OnBnClickedLang1()
 
 void CSubViewLanguage::OnBnClickedLang2()
 {
-	if(false==getModel()->getReloadLanguageProgress())
-	{
-		eBtnState eState = GetBtnState(IDC_BTN_SETUP_2);
+	eBtnState eState = GetBtnState(IDC_BTN_SETUP_2);
 
-		if(eState==BS_DOWN)
-			SetOneButtonFocused(IDC_BTN_SETUP_2);
-		else
-			SetOneButtonDepressed(IDC_BTN_SETUP_2);
-	}
+	if(eState==BS_DOWN)
+		SetOneButtonFocused(IDC_BTN_SETUP_2);
+	else
+		SetOneButtonDepressed(IDC_BTN_SETUP_2);
 }
 
 /**********************************************************************************************//**
@@ -1165,15 +1155,12 @@ void CSubViewLanguage::OnBnClickedLang2()
 
 void CSubViewLanguage::OnBnClickedLang3()
 {
-	if(false==getModel()->getReloadLanguageProgress())
-	{
-		eBtnState eState = GetBtnState(IDC_BTN_SETUP_3);
+	eBtnState eState = GetBtnState(IDC_BTN_SETUP_3);
 
-		if(eState==BS_DOWN)
-			SetOneButtonFocused(IDC_BTN_SETUP_3);
-		else
-			SetOneButtonDepressed(IDC_BTN_SETUP_3);
-	}
+	if(eState==BS_DOWN)
+		SetOneButtonFocused(IDC_BTN_SETUP_3);
+	else
+		SetOneButtonDepressed(IDC_BTN_SETUP_3);
 }
 
 /**********************************************************************************************//**
@@ -1185,15 +1172,12 @@ void CSubViewLanguage::OnBnClickedLang3()
 
 void CSubViewLanguage::OnBnClickedLang4()
 {
-	if(false==getModel()->getReloadLanguageProgress())
-	{
-		eBtnState eState = GetBtnState(IDC_BTN_SETUP_4);
+	eBtnState eState = GetBtnState(IDC_BTN_SETUP_4);
 
-		if(eState==BS_DOWN)
-			SetOneButtonFocused(IDC_BTN_SETUP_4);
-		else
-			SetOneButtonDepressed(IDC_BTN_SETUP_4);
-	}
+	if(eState==BS_DOWN)
+		SetOneButtonFocused(IDC_BTN_SETUP_4);
+	else
+		SetOneButtonDepressed(IDC_BTN_SETUP_4);
 }
 
 /**********************************************************************************************//**
@@ -1205,15 +1189,12 @@ void CSubViewLanguage::OnBnClickedLang4()
 
 void CSubViewLanguage::OnBnClickedLang5()
 {
-	if(false==getModel()->getReloadLanguageProgress())
-	{
-		eBtnState eState = GetBtnState(IDC_BTN_SETUP_5);
+	eBtnState eState = GetBtnState(IDC_BTN_SETUP_5);
 
-		if(eState==BS_DOWN)
-			SetOneButtonFocused(IDC_BTN_SETUP_5);
-		else
-			SetOneButtonDepressed(IDC_BTN_SETUP_5);
-	}
+	if(eState==BS_DOWN)
+		SetOneButtonFocused(IDC_BTN_SETUP_5);
+	else
+		SetOneButtonDepressed(IDC_BTN_SETUP_5);
 }
 
 /**********************************************************************************************//**
@@ -1225,15 +1206,12 @@ void CSubViewLanguage::OnBnClickedLang5()
 
 void CSubViewLanguage::OnBnClickedLang6()
 {
-	if(false==getModel()->getReloadLanguageProgress())
-	{
-		eBtnState eState = GetBtnState(IDC_BTN_SETUP_6);
+	eBtnState eState = GetBtnState(IDC_BTN_SETUP_6);
 
-		if(eState==BS_DOWN)
-			SetOneButtonFocused(IDC_BTN_SETUP_6);
-		else
-			SetOneButtonDepressed(IDC_BTN_SETUP_6);
-	}
+	if(eState==BS_DOWN)
+		SetOneButtonFocused(IDC_BTN_SETUP_6);
+	else
+		SetOneButtonDepressed(IDC_BTN_SETUP_6);
 }
 
 /**********************************************************************************************//**
@@ -1245,15 +1223,12 @@ void CSubViewLanguage::OnBnClickedLang6()
 
 void CSubViewLanguage::OnBnClickedLang7()
 {
-	if(false==getModel()->getReloadLanguageProgress())
-	{
-		eBtnState eState = GetBtnState(IDC_BTN_SETUP_7);
+	eBtnState eState = GetBtnState(IDC_BTN_SETUP_7);
 
-		if(eState==BS_DOWN)
-			SetOneButtonFocused(IDC_BTN_SETUP_7);
-		else
-			SetOneButtonDepressed(IDC_BTN_SETUP_7);
-	}
+	if(eState==BS_DOWN)
+		SetOneButtonFocused(IDC_BTN_SETUP_7);
+	else
+		SetOneButtonDepressed(IDC_BTN_SETUP_7);
 }
 
 /**********************************************************************************************//**
@@ -1265,15 +1240,12 @@ void CSubViewLanguage::OnBnClickedLang7()
 
 void CSubViewLanguage::OnBnClickedNextUp()
 {
-	if(false==getModel()->getReloadLanguageProgress())
-	{
-		eBtnState eState = GetCurrentBtnState();
+	eBtnState eState = GetCurrentBtnState();
 
-		if(eState==BS_FOCUSED || eState==BS_DOWN)
-			SetPrevButtonFocused();
-		else
-			SetOneButtonFocused(IDC_BTN_SETUP_1);
-	}
+	if(eState==BS_FOCUSED || eState==BS_DOWN)
+		SetPrevButtonFocused();
+	else
+		SetOneButtonFocused(IDC_BTN_SETUP_1);
 }
 
 /**********************************************************************************************//**
@@ -1285,15 +1257,12 @@ void CSubViewLanguage::OnBnClickedNextUp()
 
 void CSubViewLanguage::OnBnClickedNextDw()
 {
-	if(false==getModel()->getReloadLanguageProgress())
-	{
-		eBtnState eState = GetCurrentBtnState();
+	eBtnState eState = GetCurrentBtnState();
 
-		if(eState==BS_FOCUSED || eState==BS_DOWN)
-			SetNextButtonFocused();
-		else
-			SetOneButtonFocused(IDC_BTN_SETUP_1);
-	}
+	if(eState==BS_FOCUSED || eState==BS_DOWN)
+		SetNextButtonFocused();
+	else
+		SetOneButtonFocused(IDC_BTN_SETUP_1);
 }
 
 /**********************************************************************************************//**

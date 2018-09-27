@@ -544,11 +544,8 @@ LRESULT CWndMenuMenu::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 				break;
 			case IDC_BTN_MENU_NUMERIC:
 				{
-					if(false==getModel()->getReloadLanguageProgress())
-					{
-						if(m_parentView)
-							m_parentView->PostMessage(WM_BN_BACK);
-					}
+					if(m_parentView)
+						m_parentView->PostMessage(WM_BN_BACK);
 					return 1;
 				}
 				break;

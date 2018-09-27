@@ -776,27 +776,6 @@ void CMainFrame::OnSetFocus(CWnd* pOldWnd)
 	getModel()->getVIEWHANDLER()->SetCurrentFocusedView(NULL);
 }
 
-//BOOL CMainFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
-//{
-//	// let the view have first crack at the command
-//	/*if (m_wndView.OnCmdMsg(nID, nCode, pExtra, pHandlerInfo))
-//		return TRUE;*/
-//
-//	// otherwise, do default handling
-//	return CFrameWnd::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
-//}
-
-/**********************************************************************************************//**
- * Creates acu fonts
- *
- * \author	Rainer Kühner
- * \date	22.02.2018
- *
- * \param	wLanguageID	   	Identifier for the language.
- * \param	bSetFaceToModel	True to set face to model.
- *
- * \return	The new acu fonts.
- **************************************************************************************************/
 void CMainFrame::CreateAcuFonts()
 {
 		RegisterFFSDISKFonts();
@@ -881,15 +860,6 @@ void CMainFrame::CreateFontHandles(int const xIndex, TCHAR * const xFontName)
 	m_hf70BoldNum[xIndex]=CreateFontHandle(&dc,70,xFontName,FW_BOLD);
 	m_hf70Bold[xIndex]=CreateFontHandle(&dc,70,xFontName,FW_BOLD);
 }
-
-/**********************************************************************************************//**
- * Loads global acu fonts
- *
- * \author	Rainer Kühner
- * \date	22.02.2018
- *
- * \param	wLanguageID	Identifier for the language.
- **************************************************************************************************/
 
 void CMainFrame::LoadGlobalAcuFonts(FontCategory const eFont)
 {
@@ -6752,11 +6722,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 		}
 		break;
 	case WM_KEYDOWN:
-		if(!m_bInitialized)
-		{
-			return 1;
-		}
-		else if(true==getModel()->getReloadLanguageProgress())
+		if(!m_bInitialized || true==getModel()->getReloadLanguageProgress())
 		{
 			return 1;
 		}

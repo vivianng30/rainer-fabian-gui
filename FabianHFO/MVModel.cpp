@@ -3486,14 +3486,11 @@ void CMVModel::triggerUIevent(CMVEvent* pEvent)
 				break;
 			case VS_SETUP:
 				{
-					if(false==getReloadLanguageProgress())
-					{
-						theApp.WriteLog(_T("$M37$"));
-						getVIEWHANDLER()->changeToPrevViewState();
+					theApp.WriteLog(_T("$M37$"));
+					getVIEWHANDLER()->changeToPrevViewState();
 
-						if(AfxGetApp())
-							AfxGetApp()->GetMainWnd()->PostMessage(WM_ALARMSTATE_CHANGED);
-					}
+					if(AfxGetApp())
+						AfxGetApp()->GetMainWnd()->PostMessage(WM_ALARMSTATE_CHANGED);
 				}
 				break;
 			case VS_ALARM_LIMIT:
