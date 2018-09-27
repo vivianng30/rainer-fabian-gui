@@ -39,6 +39,13 @@ public:
 public:
 
 protected:
+	typedef enum {
+		CHINESE = 0,
+		JAPANESE,
+		OTHER,
+		NUMFONTCATEGORY
+	} FontCategory;
+
 	HFONT CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation=0);
 	void CreateFontHandles(int const xIndex, TCHAR * const xFontName);
 	void DeleteFontHandles();
@@ -48,8 +55,9 @@ protected:
 	void UnregisterFFSDISKFonts();
 	void UnregisterSDCardFonts();
 	void CreateAcuFonts();
-	CStringW SetNewLanguageAndFont(WORD const wNewLanguageID);
-	CStringW LoadGlobalAcuFonts(WORD wLanguageID);
+	WORD CheckLanguage(WORD const wNewLanguageID);
+	FontCategory LookupFont(WORD const wLanguageID) const;
+	void LoadGlobalAcuFonts(FontCategory const eFont);
 
 	bool CalOxySensor21();
 	bool CalOxySensor100();
@@ -106,12 +114,7 @@ public:
 #endif
 
 protected: 
-	typedef enum {
-	      CHINESE = 0,
-	      JAPANESE,
-	      OTHER,
-		  NUMFONTCATEGORY
-	} fontCategory;
+
 
 	//CRITICAL_SECTION	csThreadWatchdog;
 	static CRITICAL_SECTION m_csI2Cinit;
@@ -164,6 +167,7 @@ protected:
 	int m_nY;//WEC2013
 	
 	WORD m_wLanguageID;//WEC2013
+	FontCategory m_eFont;
 
 	TCHAR m_pszFontNames[NUMFONTCATEGORY][32];//WEC2013
 	HFONT m_hf10Norm[NUMFONTCATEGORY];

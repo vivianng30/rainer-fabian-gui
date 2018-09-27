@@ -340,6 +340,7 @@ CMainFrame::CMainFrame()
 
 
 	m_wLanguageID=0;//WEC2013
+	m_eFont=OTHER;
 	m_bIsSDCARDfontPresent = false;
 
 	//WEC2013
@@ -599,18 +600,20 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CreateAcuFonts();
 	CTlsRegistry regLang(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
 	WORD const regLangId=(WORD)regLang.ReadDWORD(_T("LanguageID"), 0);
-	CStringW const fontName = SetNewLanguageAndFont(regLangId);
+	m_wLanguageID=CheckLanguage(regLangId);
+	m_eFont=LookupFont(m_wLanguageID);
+	LoadGlobalAcuFonts(m_eFont);
 
 	SetTimer(WATCHDOGTIMER,2000,NULL);
 
 	CString szLAN=_T("");
-	szLAN.Format(_T("***Init LanguageID %s ID %d***"), fontName, m_wLanguageID);
+	szLAN.Format(_T("***Init LanguageID %s ID %d***"), m_pszFontNames[m_eFont], m_wLanguageID);
 	theApp.WriteLog(szLAN);
 		
 	StartI2CWatchdogThread();
 
 
-	getModel()->Init(fontName,m_wLanguageID);
+	getModel()->Init(m_pszFontNames[m_eFont],m_wLanguageID);
 
 	getModel()->getALARMHANDLER()->setSystemSilent();
 
@@ -803,20 +806,30 @@ void CMainFrame::CreateAcuFonts()
 		CreateFontHandles(OTHER, _T("arial"));
 }
 
-CStringW CMainFrame::SetNewLanguageAndFont(WORD const wNewLanguageID)
+WORD CMainFrame::CheckLanguage(WORD const wNewLanguageID)
 {
+	WORD wLanguageID = wNewLanguageID;
 	if(!m_bIsSDCARDfontPresent && (wNewLanguageID==LAN_CHINESE || wNewLanguageID==LAN_JAPANESE))
 	{
 		CTlsRegistry regLang(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
 		regLang.WriteDWORD(_T("LanguageID"), 0);
-		m_wLanguageID=0;
-	}
-	else {
-		m_wLanguageID=wNewLanguageID;
+		wLanguageID=0;
 	}
 
-	CStringW const fontName = LoadGlobalAcuFonts(m_wLanguageID);
-	return fontName;
+	return wLanguageID;
+}
+
+CMainFrame::FontCategory CMainFrame::LookupFont(WORD const wLanguageID) const
+{
+	FontCategory eFont;
+	if (wLanguageID==LAN_CHINESE) {
+		eFont=CHINESE;
+	} else if (wLanguageID==LAN_JAPANESE) {
+		eFont=JAPANESE;
+	} else {
+		eFont=OTHER;
+	}
+	return eFont;
 }
 
 void CMainFrame::CreateFontHandles(int const xIndex, TCHAR * const xFontName)
@@ -878,130 +891,122 @@ void CMainFrame::CreateFontHandles(int const xIndex, TCHAR * const xFontName)
  * \param	wLanguageID	Identifier for the language.
  **************************************************************************************************/
 
-CStringW CMainFrame::LoadGlobalAcuFonts(WORD wLanguageID)
+void CMainFrame::LoadGlobalAcuFonts(FontCategory const eFont)
 {
-	fontCategory font;
-
-	switch(wLanguageID)
+	switch(eFont)
 	{
-	case LAN_JAPANESE:
+	case JAPANESE:
 		{
-			font=JAPANESE;
-			g_hf5AcuNorm=m_hf10Norm[JAPANESE];//m_hf12Norm;
-			g_hf6AcuNorm=m_hf10Norm[JAPANESE];//m_hf13Norm;
-			g_hf6AcuBold=m_hf10Bold[JAPANESE];
-			g_hf7AcuNorm=m_hf12Norm[JAPANESE];//m_hf15Normal;
-			g_hf7AcuBold=m_hf12Norm[JAPANESE];//m_hf16Normal;
-			g_hf7AcuBold90degree=m_hf12Norm90degree[JAPANESE];
-			g_hf8AcuNorm=m_hf13Norm[JAPANESE];//m_hf16Normal;
-			g_hf8AcuBold=m_hf14Norm[JAPANESE];//m_hf16Normal;
-			g_hf9AcuBold=m_hf14Norm[JAPANESE];//m_hf16Bold;
-			g_hf10AcuBold=m_hf14Norm[JAPANESE];//m_hf16Normal;
-			g_hf11AcuBold=m_hf14Bold[JAPANESE];//m_hf17Bold;
-			g_hf11AcuBoldNum=m_hf18BoldNum[JAPANESE];
-			g_hf13AcuBold=m_hf14Bold[JAPANESE];//m_hf22Bold;
-			g_hf14AcuMed=m_hf15Bold[JAPANESE];//m_hf22Bold;
-			g_hf14AcuBold=m_hf15Bold[JAPANESE];//m_hf21Bold;
-			//g_hf14AcuNormNum=m_hf14AcuNormNum;
-			g_hf14AcuNormNum=m_hf12AcuNormNum[JAPANESE];
-			g_hf15AcuMed=m_hf16Bold[JAPANESE];//m_hf24Bold;
-			g_hf17AcuBold=m_hf22Bold[JAPANESE];//m_hf26Medium;
-			g_hf19AcuMed=m_hf24Bold[JAPANESE];//m_hf28Bold;
-			g_hf21AcuBold=m_hf24Bold[JAPANESE];//m_hf28Bold;
-			g_hf23AcuBold=m_hf24Bold[JAPANESE];//m_hf30Bold;
-			g_hf25AcuMed=m_hf30Bold[JAPANESE];//m_hf34Bold;
-			g_hf27AcuBold=m_hf30Bold[JAPANESE];//m_hf34Bold;
-			g_hf31AcuBold=m_hf32Medium[JAPANESE];//m_hf38Bold;
-			g_hf31AcuBoldNum=m_hf31AcuBoldNum[JAPANESE];
-			g_hf33AcuBold=m_hf34Bold[JAPANESE];//m_hf40Bold;
-			g_hf33AcuBoldNum=m_hf33AcuBoldNum[JAPANESE];
-			g_hf43AcuBold=m_hf40Bold[JAPANESE];//m_hf50Bold;
-			g_hf53AcuBold=m_hf50Bold[JAPANESE];//m_hf60Bold;
-			g_hf70Bold=m_hf60Bold[JAPANESE];//m_hf70Bold;
-			g_hf70BoldNum=m_hf70BoldNum[JAPANESE];
-			g_hf34BoldNum=m_hf34BoldNum[JAPANESE];
-			g_hf13AcuBoldNum=m_hf20BoldNum[JAPANESE];
+			g_hf5AcuNorm=m_hf10Norm[eFont];//m_hf12Norm;
+			g_hf6AcuNorm=m_hf10Norm[eFont];//m_hf13Norm;
+			g_hf6AcuBold=m_hf10Bold[eFont];
+			g_hf7AcuNorm=m_hf12Norm[eFont];//m_hf15Normal;
+			g_hf7AcuBold=m_hf12Norm[eFont];//m_hf16Normal;
+			g_hf7AcuBold90degree=m_hf12Norm90degree[eFont];
+			g_hf8AcuNorm=m_hf13Norm[eFont];//m_hf16Normal;
+			g_hf8AcuBold=m_hf14Norm[eFont];//m_hf16Normal;
+			g_hf9AcuBold=m_hf14Norm[eFont];//m_hf16Bold;
+			g_hf10AcuBold=m_hf14Norm[eFont];//m_hf16Normal;
+			g_hf11AcuBold=m_hf14Bold[eFont];//m_hf17Bold;
+			g_hf11AcuBoldNum=m_hf18BoldNum[eFont];
+			g_hf13AcuBold=m_hf14Bold[eFont];//m_hf22Bold;
+			g_hf14AcuMed=m_hf15Bold[eFont];//m_hf22Bold;
+			g_hf14AcuBold=m_hf15Bold[eFont];//m_hf21Bold;
+			g_hf14AcuNormNum=m_hf12AcuNormNum[eFont];
+			g_hf15AcuMed=m_hf16Bold[eFont];//m_hf24Bold;
+			g_hf17AcuBold=m_hf22Bold[eFont];//m_hf26Medium;
+			g_hf19AcuMed=m_hf24Bold[eFont];//m_hf28Bold;
+			g_hf21AcuBold=m_hf24Bold[eFont];//m_hf28Bold;
+			g_hf23AcuBold=m_hf24Bold[eFont];//m_hf30Bold;
+			g_hf25AcuMed=m_hf30Bold[eFont];//m_hf34Bold;
+			g_hf27AcuBold=m_hf30Bold[eFont];//m_hf34Bold;
+			g_hf31AcuBold=m_hf32Medium[eFont];//m_hf38Bold;
+			g_hf31AcuBoldNum=m_hf31AcuBoldNum[eFont];
+			g_hf33AcuBold=m_hf34Bold[eFont];//m_hf40Bold;
+			g_hf33AcuBoldNum=m_hf33AcuBoldNum[eFont];
+			g_hf43AcuBold=m_hf40Bold[eFont];//m_hf50Bold;
+			g_hf53AcuBold=m_hf50Bold[eFont];//m_hf60Bold;
+			g_hf70Bold=m_hf60Bold[eFont];//m_hf70Bold;
+			g_hf70BoldNum=m_hf70BoldNum[eFont];
+			g_hf34BoldNum=m_hf34BoldNum[eFont];
+			g_hf13AcuBoldNum=m_hf20BoldNum[eFont];
 		}
 		break;
-	case LAN_CHINESE:
+	case CHINESE:
 		{
-			font=CHINESE;
-			g_hf5AcuNorm=m_hf12Norm[CHINESE];
-			g_hf6AcuNorm=m_hf13Norm[CHINESE];
-			g_hf6AcuBold=m_hf13Bold[CHINESE];
-			g_hf7AcuNorm=m_hf15Normal[CHINESE];//m_hf14Norm;
-			g_hf7AcuBold=m_hf16Bold[CHINESE];//m_hf14Bold;
-			g_hf7AcuBold90degree=m_hf16Bold90degree[CHINESE];
-			g_hf8AcuNorm=m_hf16Normal[CHINESE];//m_hf15Normal;
-			g_hf8AcuBold=m_hf16Normal[CHINESE];//m_hf15Bold;
-			g_hf9AcuBold=m_hf16Bold[CHINESE];
-			g_hf10AcuBold=m_hf18Bold[CHINESE];//m_hf17Bold;
-			g_hf11AcuBold=m_hf20Bold[CHINESE];//m_hf18Bold;
-			g_hf11AcuBoldNum=m_hf18BoldNum[CHINESE];
-			g_hf13AcuBold=m_hf22Bold[CHINESE];//m_hf20Bold;
-			g_hf14AcuMed=m_hf22Bold[CHINESE];//m_hf21Medium;
-			g_hf14AcuBold=m_hf24Bold[CHINESE];//m_hf21Bold;
-			g_hf14AcuNormNum=m_hf14AcuNormNum[CHINESE];
-			g_hf15AcuMed=m_hf24Bold[CHINESE];//m_hf22Medium;
-			g_hf17AcuBold=m_hf26Medium[CHINESE];//m_hf24Bold;
-			g_hf19AcuMed=m_hf28Bold[CHINESE];//m_hf26Medium;
-			g_hf21AcuBold=m_hf28Bold[CHINESE];
-			g_hf23AcuBold=m_hf30Bold[CHINESE];
-			g_hf25AcuMed=m_hf34Bold[CHINESE];//m_hf32Medium;
-			g_hf27AcuBold=m_hf34Bold[CHINESE];
-			g_hf31AcuBold=m_hf38Bold[CHINESE];
-			g_hf31AcuBoldNum=m_hf31AcuBoldNum[CHINESE];
-			g_hf33AcuBold=m_hf40Bold[CHINESE];
-			g_hf33AcuBoldNum=m_hf33AcuBoldNum[CHINESE];
-			g_hf43AcuBold=m_hf50Bold[CHINESE];
-			g_hf53AcuBold=m_hf60Bold[CHINESE];
-			g_hf70Bold=m_hf70Bold[CHINESE];
-			g_hf70BoldNum=m_hf70BoldNum[CHINESE];
-			g_hf34BoldNum=m_hf34BoldNum[CHINESE];
-			g_hf13AcuBoldNum=m_hf20BoldNum[CHINESE];
+			g_hf5AcuNorm=m_hf12Norm[eFont];
+			g_hf6AcuNorm=m_hf13Norm[eFont];
+			g_hf6AcuBold=m_hf13Bold[eFont];
+			g_hf7AcuNorm=m_hf15Normal[eFont];//m_hf14Norm;
+			g_hf7AcuBold=m_hf16Bold[eFont];//m_hf14Bold;
+			g_hf7AcuBold90degree=m_hf16Bold90degree[eFont];
+			g_hf8AcuNorm=m_hf16Normal[eFont];//m_hf15Normal;
+			g_hf8AcuBold=m_hf16Normal[eFont];//m_hf15Bold;
+			g_hf9AcuBold=m_hf16Bold[eFont];
+			g_hf10AcuBold=m_hf18Bold[eFont];//m_hf17Bold;
+			g_hf11AcuBold=m_hf20Bold[eFont];//m_hf18Bold;
+			g_hf11AcuBoldNum=m_hf18BoldNum[eFont];
+			g_hf13AcuBold=m_hf22Bold[eFont];//m_hf20Bold;
+			g_hf14AcuMed=m_hf22Bold[eFont];//m_hf21Medium;
+			g_hf14AcuBold=m_hf24Bold[eFont];//m_hf21Bold;
+			g_hf14AcuNormNum=m_hf14AcuNormNum[eFont];
+			g_hf15AcuMed=m_hf24Bold[eFont];//m_hf22Medium;
+			g_hf17AcuBold=m_hf26Medium[eFont];//m_hf24Bold;
+			g_hf19AcuMed=m_hf28Bold[eFont];//m_hf26Medium;
+			g_hf21AcuBold=m_hf28Bold[eFont];
+			g_hf23AcuBold=m_hf30Bold[eFont];
+			g_hf25AcuMed=m_hf34Bold[eFont];//m_hf32Medium;
+			g_hf27AcuBold=m_hf34Bold[eFont];
+			g_hf31AcuBold=m_hf38Bold[eFont];
+			g_hf31AcuBoldNum=m_hf31AcuBoldNum[eFont];
+			g_hf33AcuBold=m_hf40Bold[eFont];
+			g_hf33AcuBoldNum=m_hf33AcuBoldNum[eFont];
+			g_hf43AcuBold=m_hf50Bold[eFont];
+			g_hf53AcuBold=m_hf60Bold[eFont];
+			g_hf70Bold=m_hf70Bold[eFont];
+			g_hf70BoldNum=m_hf70BoldNum[eFont];
+			g_hf34BoldNum=m_hf34BoldNum[eFont];
+			g_hf13AcuBoldNum=m_hf20BoldNum[eFont];
 		}
 		break;
 	default:
 		{
-			font=OTHER;
-			g_hf5AcuNorm=m_hf12Norm[OTHER];
-			g_hf6AcuNorm=m_hf13Norm[OTHER];
-			g_hf6AcuBold=m_hf13Bold[OTHER];
-			g_hf7AcuNorm=m_hf14Norm[OTHER];
-			g_hf7AcuBold=m_hf14Bold[OTHER];
-			g_hf7AcuBold90degree=m_hf14Bold90degree[OTHER];
-			g_hf8AcuNorm=m_hf15Normal[OTHER];
-			g_hf8AcuBold=m_hf15Bold[OTHER];
-			g_hf9AcuBold=m_hf16Bold[OTHER];
-			g_hf10AcuBold=m_hf17Bold[OTHER];
-			g_hf11AcuBold=m_hf18Bold[OTHER];
-			g_hf11AcuBoldNum=m_hf18BoldNum[OTHER];
-			g_hf13AcuBold=m_hf20Bold[OTHER];
-			g_hf14AcuMed=m_hf21Medium[OTHER];
-			g_hf14AcuBold=m_hf21Bold[OTHER];
-			g_hf14AcuNormNum=m_hf14AcuNormNum[OTHER];
-			g_hf15AcuMed=m_hf22Medium[OTHER];
-			g_hf17AcuBold=m_hf24Bold[OTHER];
-			g_hf19AcuMed=m_hf26Medium[OTHER];
-			g_hf21AcuBold=m_hf28Bold[OTHER];
-			g_hf23AcuBold=m_hf30Bold[OTHER];
-			g_hf25AcuMed=m_hf32Medium[OTHER];
-			g_hf27AcuBold=m_hf34Bold[OTHER];
-			g_hf31AcuBold=m_hf38Bold[OTHER];
-			g_hf31AcuBoldNum=m_hf31AcuBoldNum[OTHER];
-			g_hf33AcuBold=m_hf40Bold[OTHER];
-			g_hf33AcuBoldNum=m_hf33AcuBoldNum[OTHER];
-			g_hf43AcuBold=m_hf50Bold[OTHER];
-			g_hf53AcuBold=m_hf60Bold[OTHER];
-			g_hf70Bold=m_hf70Bold[OTHER];
-			g_hf70BoldNum=m_hf70BoldNum[OTHER];
-			g_hf34BoldNum=m_hf34BoldNum[OTHER];
-			g_hf13AcuBoldNum=m_hf20BoldNum[OTHER];
+			g_hf5AcuNorm=m_hf12Norm[eFont];
+			g_hf6AcuNorm=m_hf13Norm[eFont];
+			g_hf6AcuBold=m_hf13Bold[eFont];
+			g_hf7AcuNorm=m_hf14Norm[eFont];
+			g_hf7AcuBold=m_hf14Bold[eFont];
+			g_hf7AcuBold90degree=m_hf14Bold90degree[eFont];
+			g_hf8AcuNorm=m_hf15Normal[eFont];
+			g_hf8AcuBold=m_hf15Bold[eFont];
+			g_hf9AcuBold=m_hf16Bold[eFont];
+			g_hf10AcuBold=m_hf17Bold[eFont];
+			g_hf11AcuBold=m_hf18Bold[eFont];
+			g_hf11AcuBoldNum=m_hf18BoldNum[eFont];
+			g_hf13AcuBold=m_hf20Bold[eFont];
+			g_hf14AcuMed=m_hf21Medium[eFont];
+			g_hf14AcuBold=m_hf21Bold[eFont];
+			g_hf14AcuNormNum=m_hf14AcuNormNum[eFont];
+			g_hf15AcuMed=m_hf22Medium[eFont];
+			g_hf17AcuBold=m_hf24Bold[eFont];
+			g_hf19AcuMed=m_hf26Medium[eFont];
+			g_hf21AcuBold=m_hf28Bold[eFont];
+			g_hf23AcuBold=m_hf30Bold[eFont];
+			g_hf25AcuMed=m_hf32Medium[eFont];
+			g_hf27AcuBold=m_hf34Bold[eFont];
+			g_hf31AcuBold=m_hf38Bold[eFont];
+			g_hf31AcuBoldNum=m_hf31AcuBoldNum[eFont];
+			g_hf33AcuBold=m_hf40Bold[eFont];
+			g_hf33AcuBoldNum=m_hf33AcuBoldNum[eFont];
+			g_hf43AcuBold=m_hf50Bold[eFont];
+			g_hf53AcuBold=m_hf60Bold[eFont];
+			g_hf70Bold=m_hf70Bold[eFont];
+			g_hf70BoldNum=m_hf70BoldNum[eFont];
+			g_hf34BoldNum=m_hf34BoldNum[eFont];
+			g_hf13AcuBoldNum=m_hf20BoldNum[eFont];
 		}
 		break;
 	}
-	
-	return m_pszFontNames[font];
 }
 
 /**********************************************************************************************//**
@@ -1582,35 +1587,17 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				if(getModel()->GetLanguageID()!=m_wLanguageID)
 				{
-					bool bChangeFace=false;
-					if(m_wLanguageID==LAN_CHINESE &&  getModel()->GetLanguageID()!=LAN_JAPANESE)
-					{
-						bChangeFace=true;
-					}
-					else if(getModel()->GetLanguageID()==LAN_CHINESE && m_wLanguageID!=LAN_JAPANESE)
-					{
-						bChangeFace=true;
-					}
-					else if(m_wLanguageID==LAN_JAPANESE &&  getModel()->GetLanguageID()!=LAN_CHINESE)
-					{
-						bChangeFace=true;
-					}
-					else if(getModel()->GetLanguageID()==LAN_JAPANESE && m_wLanguageID!=LAN_CHINESE)
-					{
-						bChangeFace=true;
-					}
+						m_wLanguageID=CheckLanguage(getModel()->GetLanguageID());
+						CMainFrame::FontCategory eNewFont=LookupFont(m_wLanguageID);
+						if (eNewFont != m_eFont) {
+							m_eFont=eNewFont;
+							LoadGlobalAcuFonts(m_eFont);
+							getModel()->SetFontFace(m_pszFontNames[m_eFont]);
 
-					if(bChangeFace)
-					{
-						CStringW const fontname = SetNewLanguageAndFont(getModel()->GetLanguageID());
-						getModel()->SetFontFace(fontname);
-
+							::SendMessage(HWND_BROADCAST,WM_FONTCHANGE,0,0);
+						}
 						CMVEventUI event(CMVEventUI::EV_LANGUAGE);
 						getModel()->triggerEvent(&event);
-
-						::SendMessage(HWND_BROADCAST,WM_FONTCHANGE,0,0);
-					}
-
 				}
 
 				getModel()->setReloadLanguageProgress(false);
