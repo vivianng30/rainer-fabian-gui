@@ -544,8 +544,6 @@ LRESULT CWndMenuMenu::WindowProc(UINT message, WPARAM wParam, LPARAM lParam )
 				{
 					if(m_parentView)
 						m_parentView->PostMessage(WM_BN_BACK);
-					/*if(AfxGetApp())
-						AfxGetApp()->GetMainWnd()->PostMessage(WM_EV_BN_NUMERIC);*/
 					return 1;
 				}
 				break;

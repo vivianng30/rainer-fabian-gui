@@ -51,15 +51,7 @@ protected:
 	void ShowWndHourglass(bool bShow);
 	bool DestroyWndHourglass();
 
-	void StartLoadLanguageThread(void);
-	void StopLoadLanguageThread(void);
-
-	static friend UINT CLoadLanguageThread(LPVOID pc);
-	CWinThread*	m_pcwtLoadLanguageThread;
 	DWORD LoadLanguage(void);
-	bool m_bDoLoadLanguageThread;
-	CEvent eventLoadLanguage;
-	HANDLE m_hThreadLoadLanguage;
 
 private:
 	CMVModel* m_pModel;

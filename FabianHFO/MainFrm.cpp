@@ -213,7 +213,6 @@ CEvent g_evCOM_M_EXP_FLOW;  ///< x
 CEvent g_evCOM_M_DEMAND_FLOW;   ///< b
 
 CRITICAL_SECTION CMainFrame::m_csI2Cinit;
-
 /**********************************************************************************************//**
  * CMainFrame
  *
@@ -259,7 +258,6 @@ CMainFrame::CMainFrame()
 	
 	m_nX=0;//WEC2013
 	m_nY=0;//WEC2013
-	m_pszFontName[0]=0x0000;//WEC2013
 
 	m_numtasks=0;//WEC2013
 	m_bExit=false;//WEC2013
@@ -341,50 +339,54 @@ CMainFrame::CMainFrame()
 
 
 	m_wLanguageID=0;//WEC2013
+	m_eFont=FONT_ARIAL;
+	m_bIsSDCARDfontPresent=false;
 
 	//WEC2013
-	m_hf10Bold=NULL;
-	m_hf13Bold=NULL;
-	m_hf10Norm=NULL;
-	m_hf11Norm=NULL;
-	m_hf12Norm=NULL;
-	m_hf12Norm90degree=NULL;
-	m_hf13Norm=NULL;
-	m_hf14Norm=NULL;
-	m_hf14Bold=NULL;
-	m_hf15Normal=NULL;
-	m_hf12AcuNormNum=NULL;
-	m_hf14AcuNormNum=NULL;
-	m_hf14Bold90degree=NULL;
-	m_hf15Bold=NULL;
-	m_hf16Normal=NULL;
-	m_hf16Bold=NULL;
-	m_hf16Bold90degree=NULL;
-	m_hf17Bold=NULL;
-	m_hf18Normal=NULL;
-	m_hf18Bold=NULL;
-	m_hf18BoldNum=NULL;
-	m_hf20Bold=NULL;
-	m_hf20BoldNum=NULL;
-	m_hf21Medium=NULL;
-	m_hf21Bold=NULL;
-	m_hf22Medium=NULL;
-	m_hf22Bold=NULL;
-	m_hf24Bold=NULL;
-	m_hf26Medium=NULL;
-	m_hf28Bold=NULL;
-	m_hf30Bold=NULL;
-	m_hf32Medium=NULL;
-	m_hf34Bold=NULL;
-	m_hf34BoldNum=NULL;
-	m_hf38Bold=NULL;
-	m_hf40Bold=NULL;
-	m_hf50Bold=NULL;
-	m_hf60Bold=NULL;
-	m_hf70Bold=NULL;
-	m_hf31AcuBoldNum=NULL;
-	m_hf33AcuBoldNum=NULL;
-	m_hf70BoldNum=NULL;
+	for (int i = 0; i < NUMFONTCATEGORY; ++i) {
+		m_hf10Bold[i]=NULL;
+		m_hf13Bold[i]=NULL;
+		m_hf10Norm[i]=NULL;
+		m_hf11Norm[i]=NULL;
+		m_hf12Norm[i]=NULL;
+		m_hf12Norm90degree[i]=NULL;
+		m_hf13Norm[i]=NULL;
+		m_hf14Norm[i]=NULL;
+		m_hf14Bold[i]=NULL;
+		m_hf15Normal[i]=NULL;
+		m_hf12AcuNormNum[i]=NULL;
+		m_hf14AcuNormNum[i]=NULL;
+		m_hf14Bold90degree[i]=NULL;
+		m_hf15Bold[i]=NULL;
+		m_hf16Normal[i]=NULL;
+		m_hf16Bold[i]=NULL;
+		m_hf16Bold90degree[i]=NULL;
+		m_hf17Bold[i]=NULL;
+		m_hf18Normal[i]=NULL;
+		m_hf18Bold[i]=NULL;
+		m_hf18BoldNum[i]=NULL;
+		m_hf20Bold[i]=NULL;
+		m_hf20BoldNum[i]=NULL;
+		m_hf21Medium[i]=NULL;
+		m_hf21Bold[i]=NULL;
+		m_hf22Medium[i]=NULL;
+		m_hf22Bold[i]=NULL;
+		m_hf24Bold[i]=NULL;
+		m_hf26Medium[i]=NULL;
+		m_hf28Bold[i]=NULL;
+		m_hf30Bold[i]=NULL;
+		m_hf32Medium[i]=NULL;
+		m_hf34Bold[i]=NULL;
+		m_hf34BoldNum[i]=NULL;
+		m_hf38Bold[i]=NULL;
+		m_hf40Bold[i]=NULL;
+		m_hf50Bold[i]=NULL;
+		m_hf60Bold[i]=NULL;
+		m_hf70Bold[i]=NULL;
+		m_hf31AcuBoldNum[i]=NULL;
+		m_hf33AcuBoldNum[i]=NULL;
+		m_hf70BoldNum[i]=NULL;
+	}
 
 	m_iOldOxyValue=0;
 
@@ -594,22 +596,23 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		theApp.writeLogError(GetLastError(), _T("***SECURITY: disable HTP"));
 	}
 
+	CreateAcuFonts();
 	CTlsRegistry regLang(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
-	m_wLanguageID=(WORD)regLang.ReadDWORD(_T("LanguageID"), 0);
-	
-	CreateAcuFonts(m_wLanguageID,false);
-	LoadGlobalAcuFonts(m_wLanguageID);
-	
+	WORD const regLangId=(WORD)regLang.ReadDWORD(_T("LanguageID"), 0);
+	m_wLanguageID=CheckLanguage(regLangId);
+	m_eFont=LookupFont(m_wLanguageID);
+	LoadGlobalAcuFonts(m_eFont);
+
 	SetTimer(WATCHDOGTIMER,2000,NULL);
 
 	CString szLAN=_T("");
-	szLAN.Format(_T("***Init LanguageID %s ID %d***"), m_pszFontName, m_wLanguageID);
+	szLAN.Format(_T("***Init LanguageID %s ID %d***"), m_pszFontNames[m_eFont], m_wLanguageID);
 	theApp.WriteLog(szLAN);
 		
 	StartI2CWatchdogThread();
 
 
-	getModel()->Init(m_pszFontName,m_wLanguageID);
+	getModel()->Init(m_pszFontNames[m_eFont],m_wLanguageID);
 
 	getModel()->getALARMHANDLER()->setSystemSilent();
 
@@ -772,493 +775,157 @@ void CMainFrame::OnSetFocus(CWnd*)
 	getModel()->getVIEWHANDLER()->SetCurrentFocusedView(NULL);
 }
 
-//BOOL CMainFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
-//{
-//	// let the view have first crack at the command
-//	/*if (m_wndView.OnCmdMsg(nID, nCode, pExtra, pHandlerInfo))
-//		return TRUE;*/
-//
-//	// otherwise, do default handling
-//	return CFrameWnd::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
-//}
-
-/**********************************************************************************************//**
- * Creates acu fonts
- *
- * \author	Rainer Kühner
- * \date	22.02.2018
- *
- * \param	wLanguageID	   	Identifier for the language.
- * \param	bSetFaceToModel	True to set face to model.
- *
- * \return	The new acu fonts.
- **************************************************************************************************/
-
-WORD CMainFrame::CreateAcuFonts(WORD wLanguageID, bool bSetFaceToModel)
+void CMainFrame::CreateAcuFonts()
 {
-	CClientDC dc(this);
-
-	HANDLE hSearch;
-	WIN32_FIND_DATA fileData;
-	//BOOL bFinished = false;
-
-	bool bSDCARDfont=false;
-
-	//TCHAR szFileName[255];
-
-	hSearch = FindFirstFile(_T("\\sdcard\\fonts\\*.*"), &fileData);
-
-	if (hSearch != INVALID_HANDLE_VALUE)
-	{
-		bSDCARDfont=true;
-
-		FindClose(hSearch);
-	}
-	else
-		hSearch = NULL;
-
-	if(bSDCARDfont)
-	{
-		theApp.WriteLog(_T("***SDCARDfont true"));
-		//DEBUGMSG(TRUE, (TEXT("SDCARDfont true\r\n")));
-	}
-	else
-	{
-		theApp.WriteLog(_T("***SDCARDfont false"));
-		//DEBUGMSG(TRUE, (TEXT("SDCARDfont false\r\n")));
-	}
-	
-
-	if(bSDCARDfont)
-	{
-		if(wLanguageID==LAN_CHINESE)
-		{
-			_tcscpy_s(m_pszFontName,_countof(m_pszFontName),_T("Arial Unicode MS"));
-			//_tcscpy_s(m_pszFontName,_countof(m_pszFontName),_T("SimHei"));
-		}
-		else if(wLanguageID==LAN_JAPANESE)
-		{
-			_tcscpy_s(m_pszFontName,_countof(m_pszFontName),_T("MS PGothic"));
-			//_tcscpy_s(m_pszFontName,_countof(m_pszFontName),_T("SimHei"));
-		}
-		else
-		{
-			//RegisterFFSDISKFonts();
-			_tcscpy_s(m_pszFontName,_countof(m_pszFontName),_T("arial"));
-		}
-		
 		RegisterFFSDISKFonts();
 		RegisterSDCardFonts();
-	}
-	else
-	{
-		if(wLanguageID==LAN_CHINESE || wLanguageID==LAN_JAPANESE)
-		{
-			CTlsRegistry regLang(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
-			regLang.WriteDWORD(_T("LanguageID"), 0);
-			m_wLanguageID=0;
-		}
-		_tcscpy_s(m_pszFontName,_countof(m_pszFontName),_T("arial"));
-		RegisterFFSDISKFonts();
-	}
+		CreateFontHandles(FONT_ARIAL_UNICODE, _T("Arial Unicode MS"));
+		CreateFontHandles(FONT_MS_PGOTHIC, _T("MS PGothic"));
+		CreateFontHandles(FONT_ARIAL, _T("arial"));
+}
 
-	if(bSetFaceToModel)
-		getModel()->SetFontFace(m_pszFontName);
-
-	if(m_hf10Norm!=NULL)
+WORD CMainFrame::CheckLanguage(WORD const wNewLanguageID)
+{
+	WORD wLanguageID=wNewLanguageID;
+	if(!m_bIsSDCARDfontPresent && (wNewLanguageID==LAN_CHINESE || wNewLanguageID==LAN_JAPANESE))
 	{
-		DeleteObject(m_hf10Norm);
-		m_hf10Norm=NULL;
+		CTlsRegistry regLang(_T("HKCU\\Software\\FabianHFO\\WorkState"),true);
+		regLang.WriteDWORD(_T("LanguageID"), 0);
+		wLanguageID=0;
 	}
-	if(m_hf10Bold!=NULL)
-	{
-		DeleteObject(m_hf10Bold);
-		m_hf10Bold=NULL;
-	}
-	if(m_hf13Bold!=NULL)
-	{
-		DeleteObject(m_hf13Bold);
-		m_hf13Bold=NULL;
-	}
-
-	if(m_hf11Norm!=NULL)
-	{
-		DeleteObject(m_hf11Norm);
-		m_hf11Norm=NULL;
-	}
-	if(m_hf12Norm!=NULL)
-	{
-		DeleteObject(m_hf12Norm);
-		m_hf12Norm=NULL;
-	}
-	if(m_hf12Norm90degree!=NULL)
-	{
-		DeleteObject(m_hf12Norm90degree);
-		m_hf12Norm90degree=NULL;
-	}
-	if(m_hf13Norm!=NULL)
-	{
-		DeleteObject(m_hf13Norm);
-		m_hf13Norm=NULL;
-	}
-	if(m_hf14Norm!=NULL)
-	{
-		DeleteObject(m_hf14Norm);
-		m_hf14Norm=NULL;
-	}
-	if(m_hf14Bold!=NULL)
-	{
-		DeleteObject(m_hf14Bold);
-		m_hf14Bold=NULL;
-	}
-	if(m_hf14Bold90degree!=NULL)
-	{
-		DeleteObject(m_hf14Bold90degree);
-		m_hf14Bold90degree=NULL;
-	}
-	if(m_hf15Normal!=NULL)
-	{
-		DeleteObject(m_hf15Normal);
-		m_hf15Normal=NULL;
-	}
-	if(m_hf12AcuNormNum!=NULL)
-	{
-		DeleteObject(m_hf12AcuNormNum);
-		m_hf12AcuNormNum=NULL;
-	}
-	if(m_hf14AcuNormNum!=NULL)
-	{
-		DeleteObject(m_hf14AcuNormNum);
-		m_hf14AcuNormNum=NULL;
-	}
-	if(m_hf15Bold!=NULL)
-	{
-		DeleteObject(m_hf15Bold);
-		m_hf15Bold=NULL;
-	}
-	if(m_hf16Normal!=NULL)
-	{
-		DeleteObject(m_hf16Normal);
-		m_hf16Normal=NULL;
-	}
-	if(m_hf16Bold!=NULL)
-	{
-		DeleteObject(m_hf16Bold);
-		m_hf16Bold=NULL;
-	}
-	if(m_hf16Bold90degree!=NULL)
-	{
-		DeleteObject(m_hf16Bold90degree);
-		m_hf16Bold90degree=NULL;
-	}
-	if(m_hf17Bold!=NULL)
-	{
-		DeleteObject(m_hf17Bold);
-		m_hf17Bold=NULL;
-	}
-	if(m_hf18Normal!=NULL)
-	{
-		DeleteObject(m_hf18Normal);
-		m_hf18Normal=NULL;
-	}
-	if(m_hf18Bold!=NULL)
-	{
-		DeleteObject(m_hf18Bold);
-		m_hf18Bold=NULL;
-	}
-	if(m_hf18BoldNum!=NULL)
-	{
-		DeleteObject(m_hf18BoldNum);
-		m_hf18BoldNum=NULL;
-	}
-	if(m_hf20Bold!=NULL)
-	{
-		DeleteObject(m_hf20Bold);
-		m_hf20Bold=NULL;
-	}
-	if(m_hf20BoldNum!=NULL)
-	{
-		DeleteObject(m_hf20BoldNum);
-		m_hf20BoldNum=NULL;
-	}
-	if(m_hf21Medium!=NULL)
-	{
-		DeleteObject(m_hf21Medium);
-		m_hf21Medium=NULL;
-	}
-	if(m_hf21Bold!=NULL)
-	{
-		DeleteObject(m_hf21Bold);
-		m_hf21Bold=NULL;
-	}
-	if(m_hf22Medium!=NULL)
-	{
-		DeleteObject(m_hf22Medium);
-		m_hf22Medium=NULL;
-	}
-	if(m_hf22Bold!=NULL)
-	{
-		DeleteObject(m_hf22Bold);
-		m_hf22Bold=NULL;
-	}
-	if(m_hf24Bold!=NULL)
-	{
-		DeleteObject(m_hf24Bold);
-		m_hf24Bold=NULL;
-	}
-	if(m_hf26Medium!=NULL)
-	{
-		DeleteObject(m_hf26Medium);
-		m_hf26Medium=NULL;
-	}
-	if(m_hf28Bold!=NULL)
-	{
-		DeleteObject(m_hf28Bold);
-		m_hf28Bold=NULL;
-	}
-	if(m_hf30Bold!=NULL)
-	{
-		DeleteObject(m_hf30Bold);
-		m_hf30Bold=NULL;
-	}
-	if(m_hf32Medium!=NULL)
-	{
-		DeleteObject(m_hf32Medium);
-		m_hf32Medium=NULL;
-	}
-	if(m_hf34Bold!=NULL)
-	{
-		DeleteObject(m_hf34Bold);
-		m_hf34Bold=NULL;
-	}
-	if(m_hf34BoldNum!=NULL)
-	{
-		DeleteObject(m_hf34BoldNum);
-		m_hf34BoldNum=NULL;
-	}
-	if(m_hf38Bold!=NULL)
-	{
-		DeleteObject(m_hf38Bold);
-		m_hf38Bold=NULL;
-	}
-	if(m_hf40Bold!=NULL)
-	{
-		DeleteObject(m_hf40Bold);
-		m_hf40Bold=NULL;
-	}
-	if(m_hf50Bold!=NULL)
-	{
-		DeleteObject(m_hf50Bold);
-		m_hf50Bold=NULL;
-	}
-	if(m_hf60Bold!=NULL)
-	{
-		DeleteObject(m_hf60Bold);
-		m_hf60Bold=NULL;
-	}
-	if(m_hf70Bold!=NULL)
-	{
-		DeleteObject(m_hf70Bold);
-		m_hf70Bold=NULL;
-	}
-	if(m_hf31AcuBoldNum!=NULL)
-	{
-		DeleteObject(m_hf31AcuBoldNum);
-		m_hf31AcuBoldNum=NULL;
-	}
-	if(m_hf33AcuBoldNum!=NULL)
-	{
-		DeleteObject(m_hf33AcuBoldNum);
-		m_hf33AcuBoldNum=NULL;
-	}
-	if(m_hf70BoldNum!=NULL)
-	{
-		DeleteObject(m_hf70BoldNum);
-		m_hf70BoldNum=NULL;
-	}
-
-	m_hf10Bold=CreateFontHandle(&dc,10,m_pszFontName,FW_BOLD);
-	m_hf13Bold=CreateFontHandle(&dc,13,m_pszFontName,FW_BOLD);
-	m_hf10Norm=CreateFontHandle(&dc,10,m_pszFontName,FW_NORMAL);
-	m_hf11Norm=CreateFontHandle(&dc,11,m_pszFontName,FW_NORMAL);
-	m_hf12Norm=CreateFontHandle(&dc,12,m_pszFontName,FW_NORMAL);
-	m_hf12Norm90degree=CreateFontHandle(&dc,-((8*dc.GetDeviceCaps(LOGPIXELSY))/72),m_pszFontName,FW_NORMAL,900);
-	m_hf13Norm=CreateFontHandle(&dc,13,m_pszFontName,FW_NORMAL);
-	m_hf14Norm=CreateFontHandle(&dc,14,m_pszFontName,FW_NORMAL);
-	m_hf14Bold=CreateFontHandle(&dc,14,m_pszFontName,FW_BOLD);
-	m_hf14Bold90degree=CreateFontHandle(&dc,-((9*dc.GetDeviceCaps(LOGPIXELSY))/72),m_pszFontName,FW_NORMAL,900);
-	m_hf15Normal=CreateFontHandle(&dc,15,m_pszFontName,FW_NORMAL);
-	m_hf15Bold=CreateFontHandle(&dc,15,m_pszFontName,FW_BOLD);
-	m_hf16Bold=CreateFontHandle(&dc,16,m_pszFontName,FW_BOLD);
-	m_hf16Normal=CreateFontHandle(&dc,16,m_pszFontName,FW_NORMAL);
-	m_hf16Bold90degree=CreateFontHandle(&dc,-((10*dc.GetDeviceCaps(LOGPIXELSY))/72),m_pszFontName,FW_NORMAL,900);
-	m_hf17Bold=CreateFontHandle(&dc,17,m_pszFontName,FW_BOLD);
-	m_hf18Normal=CreateFontHandle(&dc,18,m_pszFontName,FW_NORMAL);
-	m_hf18Bold=CreateFontHandle(&dc,18,m_pszFontName,FW_BOLD);
-	m_hf20Bold=CreateFontHandle(&dc,20,m_pszFontName,FW_BOLD);
-	m_hf21Medium=CreateFontHandle(&dc,21,m_pszFontName,FW_MEDIUM);
-	m_hf21Bold=CreateFontHandle(&dc,21,m_pszFontName,FW_BOLD);
-	m_hf22Medium=CreateFontHandle(&dc,22,m_pszFontName,FW_MEDIUM);
-	m_hf22Bold=CreateFontHandle(&dc,22,m_pszFontName,FW_BOLD);
-	m_hf24Bold=CreateFontHandle(&dc,24,m_pszFontName,FW_BOLD);
-	m_hf26Medium=CreateFontHandle(&dc,26,m_pszFontName,FW_MEDIUM);
-	m_hf28Bold=CreateFontHandle(&dc,28,m_pszFontName,FW_BOLD);
-	m_hf30Bold=CreateFontHandle(&dc,30,m_pszFontName,FW_BOLD);
-	m_hf32Medium=CreateFontHandle(&dc,32,m_pszFontName,FW_MEDIUM);
-	m_hf34Bold=CreateFontHandle(&dc,34,m_pszFontName,FW_BOLD);
-	m_hf38Bold=CreateFontHandle(&dc,38,m_pszFontName,FW_BOLD);
-	m_hf40Bold=CreateFontHandle(&dc,40,m_pszFontName,FW_BOLD);
-	m_hf50Bold=CreateFontHandle(&dc,50,m_pszFontName,FW_BOLD);
-	m_hf60Bold=CreateFontHandle(&dc,60,m_pszFontName,FW_BOLD);
-	m_hf70Bold=CreateFontHandle(&dc,70,m_pszFontName,FW_BOLD);
-
-	m_hf31AcuBoldNum=CreateFontHandle(&dc,38,m_pszFontName,FW_BOLD);
-	m_hf33AcuBoldNum=CreateFontHandle(&dc,40,m_pszFontName,FW_BOLD);
-	m_hf70BoldNum=CreateFontHandle(&dc,70,m_pszFontName,FW_BOLD);
-	m_hf14AcuNormNum=CreateFontHandle(&dc,14,m_pszFontName,FW_NORMAL);
-	m_hf12AcuNormNum=CreateFontHandle(&dc,12,m_pszFontName,FW_NORMAL);
-	m_hf34BoldNum=CreateFontHandle(&dc,34,m_pszFontName,FW_BOLD);
-	m_hf20BoldNum=CreateFontHandle(&dc,20,m_pszFontName,FW_BOLD);
-	m_hf18BoldNum=CreateFontHandle(&dc,18,m_pszFontName,FW_BOLD);
-
-	/*m_hf31AcuBoldNum=CreateFontHandle(&dc,38,_T("arial"),FW_BOLD);
-	m_hf33AcuBoldNum=CreateFontHandle(&dc,40,_T("arial"),FW_BOLD);
-	m_hf70BoldNum=CreateFontHandle(&dc,70,_T("arial"),FW_BOLD);
-	m_hf14AcuNormNum=CreateFontHandle(&dc,14,_T("arial"),FW_NORMAL);
-	m_hf34BoldNum=CreateFontHandle(&dc,34,_T("arial"),FW_BOLD);
-	m_hf20BoldNum=CreateFontHandle(&dc,20,_T("arial"),FW_BOLD);
-	m_hf18BoldNum=CreateFontHandle(&dc,18,_T("arial"),FW_BOLD);*/
 
 	return wLanguageID;
 }
 
-/**********************************************************************************************//**
- * Loads global acu fonts
- *
- * \author	Rainer Kühner
- * \date	22.02.2018
- *
- * \param	wLanguageID	Identifier for the language.
- **************************************************************************************************/
-
-void CMainFrame::LoadGlobalAcuFonts(WORD wLanguageID)
+CMainFrame::FontCategory CMainFrame::LookupFont(WORD const wLanguageID) const
 {
-	switch(wLanguageID)
+	FontCategory eFont;
+	if (wLanguageID==LAN_CHINESE) {
+		eFont=FONT_ARIAL_UNICODE;
+	} else if (wLanguageID==LAN_JAPANESE) {
+		eFont=FONT_MS_PGOTHIC;
+	} else {
+		eFont=FONT_ARIAL;
+	}
+	return eFont;
+}
+
+void CMainFrame::LoadGlobalAcuFonts(FontCategory const eFont)
+{
+	switch(eFont)
 	{
-	case LAN_JAPANESE:
+	case FONT_MS_PGOTHIC:
 		{
-			g_hf5AcuNorm=m_hf10Norm;//m_hf12Norm;
-			g_hf6AcuNorm=m_hf10Norm;//m_hf13Norm;
-			g_hf6AcuBold=m_hf10Bold;
-			g_hf7AcuNorm=m_hf12Norm;//m_hf15Normal;
-			g_hf7AcuBold=m_hf12Norm;//m_hf16Normal;
-			g_hf7AcuBold90degree=m_hf12Norm90degree;
-			g_hf8AcuNorm=m_hf13Norm;//m_hf16Normal;
-			g_hf8AcuBold=m_hf14Norm;//m_hf16Normal;
-			g_hf9AcuBold=m_hf14Norm;//m_hf16Bold;
-			g_hf10AcuBold=m_hf14Norm;//m_hf16Normal;
-			g_hf11AcuBold=m_hf14Bold;//m_hf17Bold;
-			g_hf11AcuBoldNum=m_hf18BoldNum;
-			g_hf13AcuBold=m_hf14Bold;//m_hf22Bold;
-			g_hf14AcuMed=m_hf15Bold;//m_hf22Bold;
-			g_hf14AcuBold=m_hf15Bold;//m_hf21Bold;
-			//g_hf14AcuNormNum=m_hf14AcuNormNum;
-			g_hf14AcuNormNum=m_hf12AcuNormNum;
-			g_hf15AcuMed=m_hf16Bold;//m_hf24Bold;
-			g_hf17AcuBold=m_hf22Bold;//m_hf26Medium;
-			g_hf19AcuMed=m_hf24Bold;//m_hf28Bold;
-			g_hf21AcuBold=m_hf24Bold;//m_hf28Bold;
-			g_hf23AcuBold=m_hf24Bold;//m_hf30Bold;
-			g_hf25AcuMed=m_hf30Bold;//m_hf34Bold;
-			g_hf27AcuBold=m_hf30Bold;//m_hf34Bold;
-			g_hf31AcuBold=m_hf32Medium;//m_hf38Bold;
-			g_hf31AcuBoldNum=m_hf31AcuBoldNum;
-			g_hf33AcuBold=m_hf34Bold;//m_hf40Bold;
-			g_hf33AcuBoldNum=m_hf33AcuBoldNum;
-			g_hf43AcuBold=m_hf40Bold;//m_hf50Bold;
-			g_hf53AcuBold=m_hf50Bold;//m_hf60Bold;
-			g_hf70Bold=m_hf60Bold;//m_hf70Bold;
-			g_hf70BoldNum=m_hf70BoldNum;
-			g_hf34BoldNum=m_hf34BoldNum;
-			g_hf13AcuBoldNum=m_hf20BoldNum;
+			g_hf5AcuNorm=m_hf10Norm[eFont];//m_hf12Norm;
+			g_hf6AcuNorm=m_hf10Norm[eFont];//m_hf13Norm;
+			g_hf6AcuBold=m_hf10Bold[eFont];
+			g_hf7AcuNorm=m_hf12Norm[eFont];//m_hf15Normal;
+			g_hf7AcuBold=m_hf12Norm[eFont];//m_hf16Normal;
+			g_hf7AcuBold90degree=m_hf12Norm90degree[eFont];
+			g_hf8AcuNorm=m_hf13Norm[eFont];//m_hf16Normal;
+			g_hf8AcuBold=m_hf14Norm[eFont];//m_hf16Normal;
+			g_hf9AcuBold=m_hf14Norm[eFont];//m_hf16Bold;
+			g_hf10AcuBold=m_hf14Norm[eFont];//m_hf16Normal;
+			g_hf11AcuBold=m_hf14Bold[eFont];//m_hf17Bold;
+			g_hf11AcuBoldNum=m_hf18BoldNum[eFont];
+			g_hf13AcuBold=m_hf14Bold[eFont];//m_hf22Bold;
+			g_hf14AcuMed=m_hf15Bold[eFont];//m_hf22Bold;
+			g_hf14AcuBold=m_hf15Bold[eFont];//m_hf21Bold;
+			g_hf14AcuNormNum=m_hf12AcuNormNum[eFont];
+			g_hf15AcuMed=m_hf16Bold[eFont];//m_hf24Bold;
+			g_hf17AcuBold=m_hf22Bold[eFont];//m_hf26Medium;
+			g_hf19AcuMed=m_hf24Bold[eFont];//m_hf28Bold;
+			g_hf21AcuBold=m_hf24Bold[eFont];//m_hf28Bold;
+			g_hf23AcuBold=m_hf24Bold[eFont];//m_hf30Bold;
+			g_hf25AcuMed=m_hf30Bold[eFont];//m_hf34Bold;
+			g_hf27AcuBold=m_hf30Bold[eFont];//m_hf34Bold;
+			g_hf31AcuBold=m_hf32Medium[eFont];//m_hf38Bold;
+			g_hf31AcuBoldNum=m_hf31AcuBoldNum[eFont];
+			g_hf33AcuBold=m_hf34Bold[eFont];//m_hf40Bold;
+			g_hf33AcuBoldNum=m_hf33AcuBoldNum[eFont];
+			g_hf43AcuBold=m_hf40Bold[eFont];//m_hf50Bold;
+			g_hf53AcuBold=m_hf50Bold[eFont];//m_hf60Bold;
+			g_hf70Bold=m_hf60Bold[eFont];//m_hf70Bold;
+			g_hf70BoldNum=m_hf70BoldNum[eFont];
+			g_hf34BoldNum=m_hf34BoldNum[eFont];
+			g_hf13AcuBoldNum=m_hf20BoldNum[eFont];
 		}
 		break;
-	case LAN_CHINESE:
+	case FONT_ARIAL_UNICODE:
 		{
-			g_hf5AcuNorm=m_hf12Norm;
-			g_hf6AcuNorm=m_hf13Norm;
-			g_hf6AcuBold=m_hf13Bold;
-			g_hf7AcuNorm=m_hf15Normal;//m_hf14Norm;
-			g_hf7AcuBold=m_hf16Bold;//m_hf14Bold;
-			g_hf7AcuBold90degree=m_hf16Bold90degree;
-			g_hf8AcuNorm=m_hf16Normal;//m_hf15Normal;
-			g_hf8AcuBold=m_hf16Normal;//m_hf15Bold;
-			g_hf9AcuBold=m_hf16Bold;
-			g_hf10AcuBold=m_hf18Bold;//m_hf17Bold;
-			g_hf11AcuBold=m_hf20Bold;//m_hf18Bold;
-			g_hf11AcuBoldNum=m_hf18BoldNum;
-			g_hf13AcuBold=m_hf22Bold;//m_hf20Bold;
-			g_hf14AcuMed=m_hf22Bold;//m_hf21Medium;
-			g_hf14AcuBold=m_hf24Bold;//m_hf21Bold;
-			g_hf14AcuNormNum=m_hf14AcuNormNum;
-			g_hf15AcuMed=m_hf24Bold;//m_hf22Medium;
-			g_hf17AcuBold=m_hf26Medium;//m_hf24Bold;
-			g_hf19AcuMed=m_hf28Bold;//m_hf26Medium;
-			g_hf21AcuBold=m_hf28Bold;
-			g_hf23AcuBold=m_hf30Bold;
-			g_hf25AcuMed=m_hf34Bold;//m_hf32Medium;
-			g_hf27AcuBold=m_hf34Bold;
-			g_hf31AcuBold=m_hf38Bold;
-			g_hf31AcuBoldNum=m_hf31AcuBoldNum;
-			g_hf33AcuBold=m_hf40Bold;
-			g_hf33AcuBoldNum=m_hf33AcuBoldNum;
-			g_hf43AcuBold=m_hf50Bold;
-			g_hf53AcuBold=m_hf60Bold;
-			g_hf70Bold=m_hf70Bold;
-			g_hf70BoldNum=m_hf70BoldNum;
-			g_hf34BoldNum=m_hf34BoldNum;
-			g_hf13AcuBoldNum=m_hf20BoldNum;
+			g_hf5AcuNorm=m_hf12Norm[eFont];
+			g_hf6AcuNorm=m_hf13Norm[eFont];
+			g_hf6AcuBold=m_hf13Bold[eFont];
+			g_hf7AcuNorm=m_hf15Normal[eFont];//m_hf14Norm;
+			g_hf7AcuBold=m_hf16Bold[eFont];//m_hf14Bold;
+			g_hf7AcuBold90degree=m_hf16Bold90degree[eFont];
+			g_hf8AcuNorm=m_hf16Normal[eFont];//m_hf15Normal;
+			g_hf8AcuBold=m_hf16Normal[eFont];//m_hf15Bold;
+			g_hf9AcuBold=m_hf16Bold[eFont];
+			g_hf10AcuBold=m_hf18Bold[eFont];//m_hf17Bold;
+			g_hf11AcuBold=m_hf20Bold[eFont];//m_hf18Bold;
+			g_hf11AcuBoldNum=m_hf18BoldNum[eFont];
+			g_hf13AcuBold=m_hf22Bold[eFont];//m_hf20Bold;
+			g_hf14AcuMed=m_hf22Bold[eFont];//m_hf21Medium;
+			g_hf14AcuBold=m_hf24Bold[eFont];//m_hf21Bold;
+			g_hf14AcuNormNum=m_hf14AcuNormNum[eFont];
+			g_hf15AcuMed=m_hf24Bold[eFont];//m_hf22Medium;
+			g_hf17AcuBold=m_hf26Medium[eFont];//m_hf24Bold;
+			g_hf19AcuMed=m_hf28Bold[eFont];//m_hf26Medium;
+			g_hf21AcuBold=m_hf28Bold[eFont];
+			g_hf23AcuBold=m_hf30Bold[eFont];
+			g_hf25AcuMed=m_hf34Bold[eFont];//m_hf32Medium;
+			g_hf27AcuBold=m_hf34Bold[eFont];
+			g_hf31AcuBold=m_hf38Bold[eFont];
+			g_hf31AcuBoldNum=m_hf31AcuBoldNum[eFont];
+			g_hf33AcuBold=m_hf40Bold[eFont];
+			g_hf33AcuBoldNum=m_hf33AcuBoldNum[eFont];
+			g_hf43AcuBold=m_hf50Bold[eFont];
+			g_hf53AcuBold=m_hf60Bold[eFont];
+			g_hf70Bold=m_hf70Bold[eFont];
+			g_hf70BoldNum=m_hf70BoldNum[eFont];
+			g_hf34BoldNum=m_hf34BoldNum[eFont];
+			g_hf13AcuBoldNum=m_hf20BoldNum[eFont];
 		}
 		break;
 	default:
 		{
-			g_hf5AcuNorm=m_hf12Norm;
-			g_hf6AcuNorm=m_hf13Norm;
-			g_hf6AcuBold=m_hf13Bold;
-			g_hf7AcuNorm=m_hf14Norm;
-			g_hf7AcuBold=m_hf14Bold;
-			g_hf7AcuBold90degree=m_hf14Bold90degree;
-			g_hf8AcuNorm=m_hf15Normal;
-			g_hf8AcuBold=m_hf15Bold;
-			g_hf9AcuBold=m_hf16Bold;
-			g_hf10AcuBold=m_hf17Bold;
-			g_hf11AcuBold=m_hf18Bold;
-			g_hf11AcuBoldNum=m_hf18BoldNum;
-			g_hf13AcuBold=m_hf20Bold;
-			g_hf14AcuMed=m_hf21Medium;
-			g_hf14AcuBold=m_hf21Bold;
-			g_hf14AcuNormNum=m_hf14AcuNormNum;
-			g_hf15AcuMed=m_hf22Medium;
-			g_hf17AcuBold=m_hf24Bold;
-			g_hf19AcuMed=m_hf26Medium;
-			g_hf21AcuBold=m_hf28Bold;
-			g_hf23AcuBold=m_hf30Bold;
-			g_hf25AcuMed=m_hf32Medium;
-			g_hf27AcuBold=m_hf34Bold;
-			g_hf31AcuBold=m_hf38Bold;
-			g_hf31AcuBoldNum=m_hf31AcuBoldNum;
-			g_hf33AcuBold=m_hf40Bold;
-			g_hf33AcuBoldNum=m_hf33AcuBoldNum;
-			g_hf43AcuBold=m_hf50Bold;
-			g_hf53AcuBold=m_hf60Bold;
-			g_hf70Bold=m_hf70Bold;
-			g_hf70BoldNum=m_hf70BoldNum;
-			g_hf34BoldNum=m_hf34BoldNum;
-			g_hf13AcuBoldNum=m_hf20BoldNum;
+			g_hf5AcuNorm=m_hf12Norm[eFont];
+			g_hf6AcuNorm=m_hf13Norm[eFont];
+			g_hf6AcuBold=m_hf13Bold[eFont];
+			g_hf7AcuNorm=m_hf14Norm[eFont];
+			g_hf7AcuBold=m_hf14Bold[eFont];
+			g_hf7AcuBold90degree=m_hf14Bold90degree[eFont];
+			g_hf8AcuNorm=m_hf15Normal[eFont];
+			g_hf8AcuBold=m_hf15Bold[eFont];
+			g_hf9AcuBold=m_hf16Bold[eFont];
+			g_hf10AcuBold=m_hf17Bold[eFont];
+			g_hf11AcuBold=m_hf18Bold[eFont];
+			g_hf11AcuBoldNum=m_hf18BoldNum[eFont];
+			g_hf13AcuBold=m_hf20Bold[eFont];
+			g_hf14AcuMed=m_hf21Medium[eFont];
+			g_hf14AcuBold=m_hf21Bold[eFont];
+			g_hf14AcuNormNum=m_hf14AcuNormNum[eFont];
+			g_hf15AcuMed=m_hf22Medium[eFont];
+			g_hf17AcuBold=m_hf24Bold[eFont];
+			g_hf19AcuMed=m_hf26Medium[eFont];
+			g_hf21AcuBold=m_hf28Bold[eFont];
+			g_hf23AcuBold=m_hf30Bold[eFont];
+			g_hf25AcuMed=m_hf32Medium[eFont];
+			g_hf27AcuBold=m_hf34Bold[eFont];
+			g_hf31AcuBold=m_hf38Bold[eFont];
+			g_hf31AcuBoldNum=m_hf31AcuBoldNum[eFont];
+			g_hf33AcuBold=m_hf40Bold[eFont];
+			g_hf33AcuBoldNum=m_hf33AcuBoldNum[eFont];
+			g_hf43AcuBold=m_hf50Bold[eFont];
+			g_hf53AcuBold=m_hf60Bold[eFont];
+			g_hf70Bold=m_hf70Bold[eFont];
+			g_hf70BoldNum=m_hf70BoldNum[eFont];
+			g_hf34BoldNum=m_hf34BoldNum[eFont];
+			g_hf13AcuBoldNum=m_hf20BoldNum[eFont];
 		}
 		break;
 	}
-	
 }
 
 /**********************************************************************************************//**
@@ -1321,6 +988,7 @@ void CMainFrame::RegisterSDCardFonts()
 
 	if (hSearch != INVALID_HANDLE_VALUE)
 	{
+		theApp.WriteLog(_T("***SDCARDfont true"));
 		do
 		{
 			swprintf(szFileName/*,sizeof(szFileName)*/, _T("\\sdcard\\fonts\\%s"), fileData.cFileName);
@@ -1334,11 +1002,9 @@ void CMainFrame::RegisterSDCardFonts()
 		while (FindNextFile (hSearch, &fileData) && !m_bExit);
 
 		FindClose(hSearch);
+		m_bIsSDCARDfontPresent = true;
 
 	}
-
-	
-
 
 	//CloseHandle (hSearch);
 	hSearch = NULL;
@@ -1471,6 +1137,111 @@ HFONT CMainFrame::CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacename,
 
 	return CreateFontIndirect( &lf );
 }
+
+void CMainFrame::CreateFontHandles(int const xIndex, TCHAR * const xFontName)
+{
+	_tcscpy_s(m_pszFontNames[xIndex],_countof(m_pszFontNames[xIndex]),xFontName);
+
+	CClientDC dc(this);
+
+	m_hf10Norm[xIndex]=CreateFontHandle(&dc,10,xFontName,FW_NORMAL);
+	m_hf10Bold[xIndex]=CreateFontHandle(&dc,10,xFontName,FW_BOLD);
+	m_hf11Norm[xIndex]=CreateFontHandle(&dc,11,xFontName,FW_NORMAL);
+	m_hf12Norm[xIndex]=CreateFontHandle(&dc,12,xFontName,FW_NORMAL);
+	m_hf12Norm90degree[xIndex]=CreateFontHandle(&dc,-((8*dc.GetDeviceCaps(LOGPIXELSY))/72),xFontName,FW_NORMAL,900);
+	m_hf12AcuNormNum[xIndex]=CreateFontHandle(&dc,12,xFontName,FW_NORMAL);
+	m_hf13Norm[xIndex]=CreateFontHandle(&dc,13,xFontName,FW_NORMAL);
+	m_hf13Bold[xIndex]=CreateFontHandle(&dc,13,xFontName,FW_BOLD);
+	m_hf14Norm[xIndex]=CreateFontHandle(&dc,14,xFontName,FW_NORMAL);
+	m_hf14Bold[xIndex]=CreateFontHandle(&dc,14,xFontName,FW_BOLD);
+	m_hf14Bold90degree[xIndex]=CreateFontHandle(&dc,-((9*dc.GetDeviceCaps(LOGPIXELSY))/72),xFontName,FW_NORMAL,900);
+	m_hf14AcuNormNum[xIndex]=CreateFontHandle(&dc,14,xFontName,FW_NORMAL);
+	m_hf15Normal[xIndex]=CreateFontHandle(&dc,15,xFontName,FW_NORMAL);
+	m_hf15Bold[xIndex]=CreateFontHandle(&dc,15,xFontName,FW_BOLD);
+	m_hf16Normal[xIndex]=CreateFontHandle(&dc,16,xFontName,FW_NORMAL);
+	m_hf16Bold[xIndex]=CreateFontHandle(&dc,16,xFontName,FW_BOLD);
+	m_hf16Bold90degree[xIndex]=CreateFontHandle(&dc,-((10*dc.GetDeviceCaps(LOGPIXELSY))/72),xFontName,FW_NORMAL,900);
+	m_hf17Bold[xIndex]=CreateFontHandle(&dc,17,xFontName,FW_BOLD);
+	m_hf18Normal[xIndex]=CreateFontHandle(&dc,18,xFontName,FW_NORMAL);
+	m_hf18Bold[xIndex]=CreateFontHandle(&dc,18,xFontName,FW_BOLD);
+	m_hf18BoldNum[xIndex]=CreateFontHandle(&dc,18,xFontName,FW_BOLD);
+	m_hf20Bold[xIndex]=CreateFontHandle(&dc,20,xFontName,FW_BOLD);
+	m_hf20BoldNum[xIndex]=CreateFontHandle(&dc,20,xFontName,FW_BOLD);
+	m_hf21Medium[xIndex]=CreateFontHandle(&dc,21,xFontName,FW_MEDIUM);
+	m_hf21Bold[xIndex]=CreateFontHandle(&dc,21,xFontName,FW_BOLD);
+	m_hf22Medium[xIndex]=CreateFontHandle(&dc,22,xFontName,FW_MEDIUM);
+	m_hf22Bold[xIndex]=CreateFontHandle(&dc,22,xFontName,FW_BOLD);
+	m_hf24Bold[xIndex]=CreateFontHandle(&dc,24,xFontName,FW_BOLD);
+	m_hf26Medium[xIndex]=CreateFontHandle(&dc,26,xFontName,FW_MEDIUM);
+	m_hf28Bold[xIndex]=CreateFontHandle(&dc,28,xFontName,FW_BOLD);
+	m_hf30Bold[xIndex]=CreateFontHandle(&dc,30,xFontName,FW_BOLD);
+	m_hf31AcuBoldNum[xIndex]=CreateFontHandle(&dc,38,xFontName,FW_BOLD);
+	m_hf32Medium[xIndex]=CreateFontHandle(&dc,32,xFontName,FW_MEDIUM);
+	m_hf33AcuBoldNum[xIndex]=CreateFontHandle(&dc,40,xFontName,FW_BOLD);
+	m_hf34Bold[xIndex]=CreateFontHandle(&dc,34,xFontName,FW_BOLD);
+	m_hf34BoldNum[xIndex]=CreateFontHandle(&dc,34,xFontName,FW_BOLD);
+	m_hf38Bold[xIndex]=CreateFontHandle(&dc,38,xFontName,FW_BOLD);
+	m_hf40Bold[xIndex]=CreateFontHandle(&dc,40,xFontName,FW_BOLD);
+	m_hf50Bold[xIndex]=CreateFontHandle(&dc,50,xFontName,FW_BOLD);
+	m_hf60Bold[xIndex]=CreateFontHandle(&dc,60,xFontName,FW_BOLD);
+	m_hf70BoldNum[xIndex]=CreateFontHandle(&dc,70,xFontName,FW_BOLD);
+	m_hf70Bold[xIndex]=CreateFontHandle(&dc,70,xFontName,FW_BOLD);
+}
+
+void CMainFrame::DeleteFontHandle(HFONT & hfFontHandle) {
+	if (hfFontHandle != NULL) {
+		DeleteObject(hfFontHandle);
+		hfFontHandle = NULL;
+	}
+}
+
+void CMainFrame::DeleteFontHandles() {
+	for (int i = 0; i < NUMFONTCATEGORY; ++i) {
+		DeleteFontHandle(m_hf10Bold[i]);
+		DeleteFontHandle(m_hf13Bold[i]);
+		DeleteFontHandle(m_hf10Norm[i]);
+		DeleteFontHandle(m_hf11Norm[i]);
+		DeleteFontHandle(m_hf12Norm[i]);
+		DeleteFontHandle(m_hf12Norm90degree[i]);
+		DeleteFontHandle(m_hf13Norm[i]);
+		DeleteFontHandle(m_hf14Norm[i]);
+		DeleteFontHandle(m_hf14Bold[i]);
+		DeleteFontHandle(m_hf15Normal[i]);
+		DeleteFontHandle(m_hf12AcuNormNum[i]);
+		DeleteFontHandle(m_hf14AcuNormNum[i]);
+		DeleteFontHandle(m_hf14Bold90degree[i]);
+		DeleteFontHandle(m_hf15Bold[i]);
+		DeleteFontHandle(m_hf16Normal[i]);
+		DeleteFontHandle(m_hf16Bold[i]);
+		DeleteFontHandle(m_hf16Bold90degree[i]);
+		DeleteFontHandle(m_hf17Bold[i]);
+		DeleteFontHandle(m_hf18Normal[i]);
+		DeleteFontHandle(m_hf18Bold[i]);
+		DeleteFontHandle(m_hf18BoldNum[i]);
+		DeleteFontHandle(m_hf20Bold[i]);
+		DeleteFontHandle(m_hf20BoldNum[i]);
+		DeleteFontHandle(m_hf21Medium[i]);
+		DeleteFontHandle(m_hf21Bold[i]);
+		DeleteFontHandle(m_hf22Medium[i]);
+		DeleteFontHandle(m_hf22Bold[i]);
+		DeleteFontHandle(m_hf24Bold[i]);
+		DeleteFontHandle(m_hf26Medium[i]);
+		DeleteFontHandle(m_hf28Bold[i]);
+		DeleteFontHandle(m_hf30Bold[i]);
+		DeleteFontHandle(m_hf32Medium[i]);
+		DeleteFontHandle(m_hf34Bold[i]);
+		DeleteFontHandle(m_hf34BoldNum[i]);
+		DeleteFontHandle(m_hf38Bold[i]);
+		DeleteFontHandle(m_hf40Bold[i]);
+		DeleteFontHandle(m_hf50Bold[i]);
+		DeleteFontHandle(m_hf60Bold[i]);
+		DeleteFontHandle(m_hf70Bold[i]);
+		DeleteFontHandle(m_hf31AcuBoldNum[i]);
+		DeleteFontHandle(m_hf33AcuBoldNum[i]);
+		DeleteFontHandle(m_hf70BoldNum[i]);
+	}
+}
+
 
 /**********************************************************************************************//**
  * Definition window proc
@@ -1836,83 +1607,27 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 			break;
-		//case WM_LOAD_LANGUAGE:
-		//	{
-		//		/*CreateWndHourglass();
-		//		ShowWndHourglass(true);
-
-		//		m_wLanguageToLoad=wParam;
-		//		StartLoadLanguageThread();
-		//		eventLoadLanguage.SetEvent();*/
-
-		//		if(getModel()->GetLanguageID()!=m_wLanguageID)
-		//		{
-		//			bool bChangeFace=false;
-		//			if(m_wLanguageID==LAN_CHINESE)
-		//			{
-		//				bChangeFace=true;
-		//			}
-		//			else if(getModel()->GetLanguageID()==LAN_CHINESE)
-		//			{
-		//				bChangeFace=true;
-		//			}
-
-		//			if(bChangeFace)
-		//			{
-		//				CreateAcuFonts(getModel()->GetLanguageID());
-		//				LoadGlobalAcuFonts(getModel()->GetLanguageID());
-		//				m_wLanguageID=getModel()->GetLanguageID();
-		//			}
-		//		}
-		//	}
-		//	break;
 		case WM_LANGUAGE_CHANGED:
 			{
 				if(getModel()->GetLanguageID()!=m_wLanguageID)
 				{
-					bool bChangeFace=false;
-					if(m_wLanguageID==LAN_CHINESE &&  getModel()->GetLanguageID()!=LAN_JAPANESE)
-					{
-						bChangeFace=true;
-					}
-					else if(getModel()->GetLanguageID()==LAN_CHINESE && m_wLanguageID!=LAN_JAPANESE)
-					{
-						bChangeFace=true;
-					}
-					else if(m_wLanguageID==LAN_JAPANESE &&  getModel()->GetLanguageID()!=LAN_CHINESE)
-					{
-						bChangeFace=true;
-					}
-					else if(getModel()->GetLanguageID()==LAN_JAPANESE && m_wLanguageID!=LAN_CHINESE)
-					{
-						bChangeFace=true;
-					}
+						m_wLanguageID=CheckLanguage(getModel()->GetLanguageID());
+						CMainFrame::FontCategory eNewFont=LookupFont(m_wLanguageID);
+						if (eNewFont != m_eFont) {
+							m_eFont=eNewFont;
+							LoadGlobalAcuFonts(m_eFont);
+							getModel()->SetFontFace(m_pszFontNames[m_eFont]);
 
-					if(bChangeFace)
-					{
-						CreateAcuFonts(getModel()->GetLanguageID(),true);
-						LoadGlobalAcuFonts(getModel()->GetLanguageID());
-						m_wLanguageID=getModel()->GetLanguageID();
-
-						::SendMessage(HWND_BROADCAST,WM_FONTCHANGE,0,0);
-					}
-
+							::SendMessage(HWND_BROADCAST,WM_FONTCHANGE,0,0);
+						}
+						CMVEventUI event(CMVEventUI::EV_LANGUAGE);
+						getModel()->triggerEvent(&event);
 				}
 
-				
+				getModel()->setReloadLanguageProgress(false);
+				PostMessage(WM_REDRAW_VIEW);
 
-				/*CMVEventUI event(CMVEventUI::EV_LANGUAGE);
-				getModel()->Trigger(&event);*/
 				return 1;
-			}
-			break;
-		case WM_FONTCHANGE:
-			{
-				if(!m_bExit)
-				{
-					CMVEventUI event(CMVEventUI::EV_LANGUAGE);
-					getModel()->triggerEvent(&event);
-				}
 			}
 			break;
 		case WM_EXCEPTION:
@@ -1981,6 +1696,8 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			break;*/
 		case WM_EV_TIMETEXT_RELOADCONFIG:
 			{
+				getModel()->setReloadLanguageProgress(true);
+
 				CStringW sData = getModel()->GetLanguageString(IDS_TXT_CONFIGLOADED);
 				CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  sData, 3000);
 				getModel()->triggerEvent(&event2);
@@ -4362,6 +4079,8 @@ LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case WM_RELOAD_CONFIG_ERROR:
 			{
+				getModel()->setReloadLanguageProgress(true);
+
 				CStringW sData = _T("ERROR: ");
 				sData += getModel()->GetLanguageString(IDS_TXT_CONFIGLOADED);
 				CMVEventInfotext event2(CMVEventInfotext::EV_TIMETEXT,  sData, 3000);
@@ -6343,220 +6062,8 @@ void CMainFrame::QuitVentilator()
 void CMainFrame::OnDestroy()
 {
 	CFrameWnd::OnDestroy();
-	
 
-	if(m_hf10Bold!=NULL)
-	{
-		DeleteObject(m_hf10Bold);
-		m_hf10Bold=NULL;
-	}
-	if(m_hf13Bold!=NULL)
-	{
-		DeleteObject(m_hf13Bold);
-		m_hf13Bold=NULL;
-	}
-
-	if(m_hf10Norm!=NULL)
-	{
-		DeleteObject(m_hf10Norm);
-		m_hf10Norm=NULL;
-	}
-	if(m_hf11Norm!=NULL)
-	{
-		DeleteObject(m_hf11Norm);
-		m_hf11Norm=NULL;
-	}
-	if(m_hf12Norm!=NULL)
-	{
-		DeleteObject(m_hf12Norm);
-		m_hf12Norm=NULL;
-	}
-	if(m_hf12Norm90degree!=NULL)
-	{
-		DeleteObject(m_hf12Norm90degree);
-		m_hf12Norm90degree=NULL;
-	}
-	if(m_hf13Norm!=NULL)
-	{
-		DeleteObject(m_hf13Norm);
-		m_hf13Norm=NULL;
-	}
-	if(m_hf14Norm!=NULL)
-	{
-		DeleteObject(m_hf14Norm);
-		m_hf14Norm=NULL;
-	}
-	if(m_hf14Bold!=NULL)
-	{
-		DeleteObject(m_hf14Bold);
-		m_hf14Bold=NULL;
-	}
-	if(m_hf14Bold90degree!=NULL)
-	{
-		DeleteObject(m_hf14Bold90degree);
-		m_hf14Bold90degree=NULL;
-	}
-	if(m_hf15Normal!=NULL)
-	{
-		DeleteObject(m_hf15Normal);
-		m_hf15Normal=NULL;
-	}
-	if(m_hf12AcuNormNum!=NULL)
-	{
-		DeleteObject(m_hf12AcuNormNum);
-		m_hf12AcuNormNum=NULL;
-	}
-	if(m_hf14AcuNormNum!=NULL)
-	{
-		DeleteObject(m_hf14AcuNormNum);
-		m_hf14AcuNormNum=NULL;
-	}
-	if(m_hf15Bold!=NULL)
-	{
-		DeleteObject(m_hf15Bold);
-		m_hf15Bold=NULL;
-	}
-	if(m_hf16Normal!=NULL)
-	{
-		DeleteObject(m_hf16Normal);
-		m_hf16Normal=NULL;
-	}
-	if(m_hf16Bold!=NULL)
-	{
-		DeleteObject(m_hf16Bold);
-		m_hf16Bold=NULL;
-	}
-	if(m_hf16Bold90degree!=NULL)
-	{
-		DeleteObject(m_hf16Bold90degree);
-		m_hf16Bold90degree=NULL;
-	}
-	if(m_hf17Bold!=NULL)
-	{
-		DeleteObject(m_hf17Bold);
-		m_hf17Bold=NULL;
-	}
-	if(m_hf18Normal!=NULL)
-	{
-		DeleteObject(m_hf18Normal);
-		m_hf18Normal=NULL;
-	}
-	if(m_hf18Bold!=NULL)
-	{
-		DeleteObject(m_hf18Bold);
-		m_hf18Bold=NULL;
-	}
-	if(m_hf18BoldNum!=NULL)
-	{
-		DeleteObject(m_hf18BoldNum);
-		m_hf18BoldNum=NULL;
-	}
-	if(m_hf20Bold!=NULL)
-	{
-		DeleteObject(m_hf20Bold);
-		m_hf20Bold=NULL;
-	}
-	if(m_hf20BoldNum!=NULL)
-	{
-		DeleteObject(m_hf20BoldNum);
-		m_hf20BoldNum=NULL;
-	}
-	if(m_hf21Medium!=NULL)
-	{
-		DeleteObject(m_hf21Medium);
-		m_hf21Medium=NULL;
-	}
-	if(m_hf21Bold!=NULL)
-	{
-		DeleteObject(m_hf21Bold);
-		m_hf21Bold=NULL;
-	}
-	if(m_hf22Medium!=NULL)
-	{
-		DeleteObject(m_hf22Medium);
-		m_hf22Medium=NULL;
-	}
-	if(m_hf22Bold!=NULL)
-	{
-		DeleteObject(m_hf22Bold);
-		m_hf22Bold=NULL;
-	}
-	if(m_hf24Bold!=NULL)
-	{
-		DeleteObject(m_hf24Bold);
-		m_hf24Bold=NULL;
-	}
-	if(m_hf26Medium!=NULL)
-	{
-		DeleteObject(m_hf26Medium);
-		m_hf26Medium=NULL;
-	}
-	if(m_hf28Bold!=NULL)
-	{
-		DeleteObject(m_hf28Bold);
-		m_hf28Bold=NULL;
-	}
-	if(m_hf30Bold!=NULL)
-	{
-		DeleteObject(m_hf30Bold);
-		m_hf30Bold=NULL;
-	}
-	if(m_hf32Medium!=NULL)
-	{
-		DeleteObject(m_hf32Medium);
-		m_hf32Medium=NULL;
-	}
-	if(m_hf34Bold!=NULL)
-	{
-		DeleteObject(m_hf34Bold);
-		m_hf34Bold=NULL;
-	}
-	if(m_hf34BoldNum!=NULL)
-	{
-		DeleteObject(m_hf34BoldNum);
-		m_hf34BoldNum=NULL;
-	}
-	if(m_hf38Bold!=NULL)
-	{
-		DeleteObject(m_hf38Bold);
-		m_hf38Bold=NULL;
-	}
-	if(m_hf40Bold!=NULL)
-	{
-		DeleteObject(m_hf40Bold);
-		m_hf40Bold=NULL;
-	}
-	if(m_hf50Bold!=NULL)
-	{
-		DeleteObject(m_hf50Bold);
-		m_hf50Bold=NULL;
-	}
-	if(m_hf60Bold!=NULL)
-	{
-		DeleteObject(m_hf60Bold);
-		m_hf60Bold=NULL;
-	}
-	if(m_hf70Bold!=NULL)
-	{
-		DeleteObject(m_hf70Bold);
-		m_hf70Bold=NULL;
-	}
-	if(m_hf31AcuBoldNum!=NULL)
-	{
-		DeleteObject(m_hf31AcuBoldNum);
-		m_hf31AcuBoldNum=NULL;
-	}
-	if(m_hf33AcuBoldNum!=NULL)
-	{
-		DeleteObject(m_hf33AcuBoldNum);
-		m_hf33AcuBoldNum=NULL;
-	}
-	if(m_hf70BoldNum!=NULL)
-	{
-		DeleteObject(m_hf70BoldNum);
-		m_hf70BoldNum=NULL;
-	}
-
+	DeleteFontHandles();
 	UnregisterFFSDISKFonts();
 	UnregisterSDCardFonts();
 
@@ -7002,8 +6509,10 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 		}
 		break;
 	case WM_KEYDOWN:
-		if(!m_bInitialized)
-			return 0;
+		if(!m_bInitialized || true==getModel()->getReloadLanguageProgress())
+		{
+			return 1;
+		}
 
 		switch(pMsg->wParam) 
 		{ 

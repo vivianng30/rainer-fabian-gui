@@ -37,21 +37,27 @@ public:
 
 // Operations
 public:
-	
-
-	//void DrawHeader(CStringW cs);
-
-	
-	
 
 protected:
+	typedef enum {
+		FONT_ARIAL_UNICODE = 0,
+		FONT_MS_PGOTHIC,
+		FONT_ARIAL,
+		NUMFONTCATEGORY
+	} FontCategory;
+
 	HFONT CreateFontHandle(CDC* pDC, int nPixHeight, TCHAR* pszFacename, LONG lFontWeight, int iOrientation=0);
+	void CreateFontHandles(int const xIndex, TCHAR * const xFontName);
+	void DeleteFontHandles();
+	void DeleteFontHandle(HFONT & hfFontHandle);
 	void RegisterFFSDISKFonts();
 	void RegisterSDCardFonts();
 	void UnregisterFFSDISKFonts();
 	void UnregisterSDCardFonts();
-	WORD CreateAcuFonts(WORD wLanguageID, bool bSetFaceToModel);
-	void LoadGlobalAcuFonts(WORD wLanguageID);
+	void CreateAcuFonts();
+	WORD CheckLanguage(WORD const wNewLanguageID);
+	FontCategory LookupFont(WORD const wLanguageID) const;
+	void LoadGlobalAcuFonts(FontCategory const eFont);
 
 	bool CalOxySensor21();
 	bool CalOxySensor100();
@@ -108,6 +114,8 @@ public:
 #endif
 
 protected: 
+
+
 	//CRITICAL_SECTION	csThreadWatchdog;
 	static CRITICAL_SECTION m_csI2Cinit;
 	CMVModel *m_pModel;//WEC2013
@@ -158,53 +166,52 @@ protected:
 	int m_nX;//WEC2013
 	int m_nY;//WEC2013
 	
-	
-	TCHAR m_pszFontName[32];//WEC2013
 	WORD m_wLanguageID;//WEC2013
+	FontCategory m_eFont;
 
-	//WEC2013
-	HFONT m_hf10Norm;
-	HFONT m_hf10Bold;
-	HFONT m_hf13Bold;
-	HFONT m_hf11Norm;
-	HFONT m_hf12Norm;
-	HFONT m_hf12Norm90degree;
-	HFONT m_hf13Norm;
-	HFONT m_hf14Norm;
-	HFONT m_hf14Bold;
-	HFONT m_hf15Normal;
-	HFONT m_hf12AcuNormNum;
-	HFONT m_hf14AcuNormNum;
-	HFONT m_hf14Bold90degree;
-	HFONT m_hf15Bold;
-	HFONT m_hf16Normal;
-	HFONT m_hf16Bold;
-	HFONT m_hf16Bold90degree;
-	HFONT m_hf17Bold;
-	HFONT m_hf18Normal;
-	HFONT m_hf18Bold;
-	HFONT m_hf18BoldNum;
-	HFONT m_hf20Bold;
-	HFONT m_hf20BoldNum;
-	HFONT m_hf21Medium;
-	HFONT m_hf21Bold;
-	HFONT m_hf22Medium;
-	HFONT m_hf22Bold;
-	HFONT m_hf24Bold;
-	HFONT m_hf26Medium;
-	HFONT m_hf28Bold;
-	HFONT m_hf30Bold;
-	HFONT m_hf32Medium;
-	HFONT m_hf34Bold;
-	HFONT m_hf34BoldNum;
-	HFONT m_hf38Bold;
-	HFONT m_hf40Bold;
-	HFONT m_hf50Bold;
-	HFONT m_hf60Bold;
-	HFONT m_hf70Bold;
-	HFONT m_hf31AcuBoldNum;
-	HFONT m_hf33AcuBoldNum;
-	HFONT m_hf70BoldNum;
+	TCHAR m_pszFontNames[NUMFONTCATEGORY][32];//WEC2013
+	HFONT m_hf10Norm[NUMFONTCATEGORY];
+	HFONT m_hf10Bold[NUMFONTCATEGORY];
+	HFONT m_hf11Norm[NUMFONTCATEGORY];
+	HFONT m_hf12Norm[NUMFONTCATEGORY];
+	HFONT m_hf12Norm90degree[NUMFONTCATEGORY];
+	HFONT m_hf12AcuNormNum[NUMFONTCATEGORY];
+	HFONT m_hf13Bold[NUMFONTCATEGORY];
+	HFONT m_hf13Norm[NUMFONTCATEGORY];
+	HFONT m_hf14Norm[NUMFONTCATEGORY];
+	HFONT m_hf14Bold[NUMFONTCATEGORY];
+	HFONT m_hf14Bold90degree[NUMFONTCATEGORY];
+	HFONT m_hf14AcuNormNum[NUMFONTCATEGORY];
+	HFONT m_hf15Normal[NUMFONTCATEGORY];
+	HFONT m_hf15Bold[NUMFONTCATEGORY];
+	HFONT m_hf16Normal[NUMFONTCATEGORY];
+	HFONT m_hf16Bold[NUMFONTCATEGORY];
+	HFONT m_hf16Bold90degree[NUMFONTCATEGORY];
+	HFONT m_hf17Bold[NUMFONTCATEGORY];
+	HFONT m_hf18Normal[NUMFONTCATEGORY];
+	HFONT m_hf18Bold[NUMFONTCATEGORY];
+	HFONT m_hf18BoldNum[NUMFONTCATEGORY];
+	HFONT m_hf20Bold[NUMFONTCATEGORY];
+	HFONT m_hf20BoldNum[NUMFONTCATEGORY];
+	HFONT m_hf21Medium[NUMFONTCATEGORY];
+	HFONT m_hf21Bold[NUMFONTCATEGORY];
+	HFONT m_hf22Medium[NUMFONTCATEGORY];
+	HFONT m_hf22Bold[NUMFONTCATEGORY];
+	HFONT m_hf24Bold[NUMFONTCATEGORY];
+	HFONT m_hf26Medium[NUMFONTCATEGORY];
+	HFONT m_hf28Bold[NUMFONTCATEGORY];
+	HFONT m_hf30Bold[NUMFONTCATEGORY];
+	HFONT m_hf31AcuBoldNum[NUMFONTCATEGORY];
+	HFONT m_hf32Medium[NUMFONTCATEGORY];
+	HFONT m_hf33AcuBoldNum[NUMFONTCATEGORY];
+	HFONT m_hf34Bold[NUMFONTCATEGORY];
+	HFONT m_hf34BoldNum[NUMFONTCATEGORY];
+	HFONT m_hf38Bold[NUMFONTCATEGORY];
+	HFONT m_hf40Bold[NUMFONTCATEGORY];
+	HFONT m_hf50Bold[NUMFONTCATEGORY];
+	HFONT m_hf60Bold[NUMFONTCATEGORY];
+	HFONT m_hf70Bold[NUMFONTCATEGORY];
+	HFONT m_hf70BoldNum[NUMFONTCATEGORY];
 
 	//rkuNEWFIX
 	/*friend UINT CThreadWatchdogThread(LPVOID pc);
@@ -241,8 +248,6 @@ protected:
 
 	bool m_bShowCO2PumpOnMsg;//WEC2013
 
-
-	
 	//WEC2013
 	static friend UINT CTimerThread(LPVOID pc);
 	CWinThread*	m_pcwtTimerThread;
@@ -291,10 +296,13 @@ protected:
 
 	bool m_bStartInstaller;
 	bool m_bI2Cinitialized;
-// Generated message map functions
+	bool m_bIsSDCARDfontPresent;
+
+	// Generated message map functions
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSetFocus(CWnd *pOldWnd);
+	void deletehf(HFONT & xhfont, TCHAR const * const debugTxt);
 	
 	DECLARE_MESSAGE_MAP()
 public:

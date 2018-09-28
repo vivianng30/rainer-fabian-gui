@@ -165,6 +165,8 @@ public:
 	void DetachObserver(CModelObserver* pObserver);
 
 	CStringW GetLanguageString(int nID);
+	void setReloadLanguageProgress(bool state);
+	bool getReloadLanguageProgress();
 
 	void notifyViewStateChanged();
 
@@ -462,6 +464,6 @@ private:
 	bool m_bVideoRunning;
 	bool m_bCO2inprogress;
 	bool m_bVentModeInitialized;
-	//bool m_bI2Cinitialized;
+	bool m_bReloadLangInProgress;
 
 };
